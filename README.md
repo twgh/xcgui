@@ -1,7 +1,7 @@
 # XCGUI
-DirectUI design idea: there is no sub-window in the window, the interface elements are logical areas (no HWND handle, security, flexibility), all UI elements are developed independently (not limited by the system), more flexible implementation of a variety of program interfaces to meet the needs of different users.
-
 DirectUI设计思想: 在窗口内没有子窗口，界面元素都是逻辑上的区域(无HWND句柄,安全,灵活), 所有UI元素都是自主开发(不受系统限制),  更加灵活的实现各种程序界面,满足不同用户的需求.
+
+DirectUI design idea: there is no sub-window in the window, the interface elements are logical areas (no HWND handle, security, flexibility), all UI elements are developed independently (not limited by the system), more flexible implementation of a variety of program interfaces to meet the needs of different users.
 
 # Get
 
@@ -72,4 +72,10 @@ func main() {
 	a.Exit()
 }
 ```
+
+# Const
+
+常量都在xcc包里，像这样使用：`xcc.Xc_Window_Style_Default`
+
+The constants are all in the xcc package and used like this: `xcc.Xc Window Style_Default`
 
