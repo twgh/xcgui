@@ -1,0 +1,146 @@
+package shape
+
+import (
+	xc "github.com/twgh/xcgui"
+)
+
+type Shape struct {
+	HXCGUI_ int
+}
+
+// 形状_创建, 获取所在元素句柄
+// hShape: 形状对象句柄.
+func NewShape(hShape int) *Shape {
+	p := &Shape{
+		HXCGUI_: xc.XShape_GetParentEle(hShape),
+	}
+	return p
+}
+
+// 形状_取窗口句柄, 获取窗口句柄
+func (s *Shape) GetHWINDOW() int {
+	return xc.XShape_GetHWINDOW(s.HXCGUI_)
+}
+
+// 形状_取父对象, 获取父对象, 父可能是元素或窗口, 返回父对象
+func (s *Shape) GetParent() int {
+	return xc.XShape_GetParent(s.HXCGUI_)
+}
+
+// 形状_移除, 从父UI元素或窗口,和父布局对象中移除
+func (s *Shape) RemoveShape() int {
+	return xc.XShape_RemoveShape(s.HXCGUI_)
+}
+
+// 形状_置ID
+// nID: ID值.
+func (s *Shape) SetID(nID int) int {
+	return xc.XShape_SetID(s.HXCGUI_, nID)
+}
+
+// 形状_取ID
+func (s *Shape) GetID() int {
+	return xc.XShape_GetID(s.HXCGUI_)
+}
+
+// 形状_置UID
+// nUID: UID值.
+func (s *Shape) SetUID(nUID int) int {
+	return xc.XShape_SetUID(s.HXCGUI_, nUID)
+}
+
+// 形状_取UID
+func (s *Shape) GetUID() int {
+	return xc.XShape_GetUID(s.HXCGUI_)
+}
+
+// 形状_置名称, 设置形状对象name
+// pName: name值
+func (s *Shape) SetName(pName string) int {
+	return xc.XShape_SetName(s.HXCGUI_, pName)
+}
+
+// 形状_取名称, 获取形状对象name
+func (s *Shape) GetName() string {
+	return xc.XShape_GetName(s.HXCGUI_)
+}
+
+// 形状_取Z序, 获取形状对象Z序, 成功返回索引值, 否则返回 XC_ID_ERROR
+func (s *Shape) GetZOrder() int {
+	return xc.XShape_GetZOrder(s.HXCGUI_)
+}
+
+// 形状_重绘, 重绘形状对象
+func (s *Shape) Redraw() int {
+	return xc.XShape_Redraw(s.HXCGUI_)
+}
+
+// 形状_取宽度, 获取内容宽度
+func (s *Shape) GetWidth() int {
+	return xc.XShape_GetWidth(s.HXCGUI_)
+}
+
+// 形状_取高度, 获取内容高度
+func (s *Shape) GetHeight() int {
+	return xc.XShape_GetHeight(s.HXCGUI_)
+}
+
+// 形状_移动位置
+// x: x坐标
+// y: y坐标
+func (s *Shape) Move(x int, y int) int {
+	return xc.XShape_Move(s.HXCGUI_, x, y)
+}
+
+// 形状_取坐标
+// pRect: 接收返回坐标.
+func (s *Shape) GetRect(pRect *xc.RECT) int {
+	return xc.XShape_GetRect(s.HXCGUI_, pRect)
+}
+
+// 形状_置坐标
+// pRect: 坐标.
+func (s *Shape) SetRect(pRect *xc.RECT) int {
+	return xc.XShape_SetRect(s.HXCGUI_, pRect)
+}
+
+// 形状_置逻辑坐标, 设置元素坐标, 逻辑坐标, 包含滚动视图偏移
+// pRect: 坐标.
+// bRedraw: 是否重绘.
+func (s *Shape) SetRectLogic(pRect *xc.RECT, bRedraw bool) bool {
+	return xc.XShape_SetRectLogic(s.HXCGUI_, pRect, bRedraw)
+}
+
+// 形状_取逻辑坐标, 获取元素坐标, 逻辑坐标, 包含滚动视图偏移
+// pRect: 坐标.
+func (s *Shape) GetRectLogic(pRect *xc.RECT) int {
+	return xc.XShape_GetRectLogic(s.HXCGUI_, pRect)
+}
+
+// 形状_取基于窗口客户区坐标, 基于窗口客户区坐标
+// pRect: 坐标.
+func (s *Shape) GetWndClientRect(pRect *xc.RECT) int {
+	return xc.XShape_GetWndClientRect(s.HXCGUI_, pRect)
+}
+
+// 形状_取内容大小 ,仅计算有效内容, 填充父, 权重依赖父级所以无法计算
+// pSize: 接收返回内容大小值.
+func (s *Shape) GetContentSize(pSize *xc.SIZE) int {
+	return xc.XShape_GetContentSize(s.HXCGUI_, pSize)
+}
+
+// 形状_显示布局边界, 是否显示布局边界.
+// bShow: 是否显示.
+func (s *Shape) ShowLayout(bShow bool) int {
+	return xc.XShape_ShowLayout(s.HXCGUI_, bShow)
+}
+
+// 形状_调整布局
+func (s *Shape) AdjustLayout() int {
+	return xc.XShape_AdjustLayout(s.HXCGUI_)
+}
+
+// 形状_销毁, 销毁形状对象
+func (s *Shape) Destroy() int {
+	return xc.XShape_Destroy(s.HXCGUI_)
+}
