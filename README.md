@@ -4,7 +4,9 @@
 
 DirectUI设计思想: 在窗口内没有子窗口，界面元素都是逻辑上的区域(无HWND句柄,安全,灵活), 所有UI元素都是自主开发(不受系统限制),  更加灵活的实现各种程序界面,满足不同用户的需求.
 
-# Get
+官方网站：[www.xcgui.com]([www.xcgui.com](http://www.xcgui.com/))
+
+# 获取
 
 ```go
 go get github.com/twgh/xcgui
@@ -20,7 +22,7 @@ go get github.com/twgh/xcgui
 
 程序运行时需要把help文件夹中的"XCGUI.dll"放到程序运行目录。最好是放到C:\Windows\System32目录，这样就不需要把dll放到程序运行目录了。
 
-# Example
+# 例子
 
 ![example](https://github.com/twgh/xcgui/blob/main/example/1/1.jpg)
 
@@ -80,7 +82,13 @@ func main() {
 }
 ```
 
-# Const
+# 常量
 
 常量都在xcc包里，像这样使用：`xcc.Xc_Window_Style_Default`
+
+# 命令介绍
+
+文件夹外面的xc开头的文件都是原本的api，可以直接使用。
+
+封装好的类都在文件夹里，使用起来更加方便。
 

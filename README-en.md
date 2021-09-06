@@ -4,6 +4,8 @@ English | [简体中文](./README.md)
 
 DirectUI design idea: there is no sub-window in the window, the interface elements are logical areas (no HWND handle, security, flexibility), all UI elements are developed independently (not limited by the system), more flexible implementation of a variety of program interfaces to meet the needs of different users.
 
+Official website：[www.xcgui.com]([www.xcgui.com](http://www.xcgui.com/))
+
 # Get
 
 ```go
@@ -12,7 +14,7 @@ go get github.com/twgh/xcgui
 
 # Documentation
 
-[项目文档](https://github.com/twgh/xcgui/blob/main/help/%E7%82%AB%E5%BD%A9%E7%95%8C%E9%9D%A2%E5%BA%93-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3(v3.0)-(2021-08-04).chm)
+[Project Documentation](https://github.com/twgh/xcgui/blob/main/help/%E7%82%AB%E5%BD%A9%E7%95%8C%E9%9D%A2%E5%BA%93-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3(v3.0)-(2021-08-04).chm)
 
 # Dynamic link library download
 
@@ -83,4 +85,10 @@ func main() {
 # Const
 
 The constants are all in the xcc package and used like this: `xcc.Xc Window Style_Default`
+
+# Command introduction
+
+The files beginning with xc outside the folder are the original api and can be used directly.
+
+The encapsulated classes are all in the folder, which is more convenient to use.
 
