@@ -20,7 +20,9 @@ go get github.com/twgh/xcgui
 
 [xcgui.dll](https://github.com/twgh/xcgui/blob/main/help/XCGUI.dll)
 
-程序运行时需要把help文件夹中的"XCGUI.dll"放到程序运行目录。最好是放到C:\Windows\System32目录，这样就不需要把dll放到程序运行目录了。
+程序运行时需要把"XCGUI.dll"放到程序运行目录。
+
+最好是放到C:\Windows\System32目录，这样就不需要把dll放到程序运行目录了。
 
 # 例子
 

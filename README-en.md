@@ -20,7 +20,9 @@ go get github.com/twgh/xcgui
 
 [xcgui.dll](https://github.com/twgh/xcgui/blob/main/help/XCGUI.dll)
 
-When the program is running, you need to put "XCGUI.dll" in the help folder in the program running directory.It is best to put it in the C:\Windows\System32 directory, so that there is no need to put the dll in the program running directory.
+When the program is running, you need to put "XCGUI.dll" in the program running directory.
+
+It is best to put it in the C:\Windows\System32 directory, so that there is no need to put the dll in the program running directory.
 
 # Example
 
