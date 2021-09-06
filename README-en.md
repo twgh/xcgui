@@ -4,7 +4,7 @@ English | [简体中文](./README.md)
 
 DirectUI design idea: there is no sub-window in the window, the interface elements are logical areas (no HWND handle, security, flexibility), all UI elements are developed independently (not limited by the system), more flexible implementation of a variety of program interfaces to meet the needs of different users.
 
-Official website：[www.xcgui.com]([www.xcgui.com](http://www.xcgui.com/))
+Official website：[www.xcgui.com](http://www.xcgui.com "xcgui 官方网站")
 
 # Get
 

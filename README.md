@@ -4,7 +4,7 @@
 
 DirectUI设计思想: 在窗口内没有子窗口，界面元素都是逻辑上的区域(无HWND句柄,安全,灵活), 所有UI元素都是自主开发(不受系统限制),  更加灵活的实现各种程序界面,满足不同用户的需求.
 
-官方网站：[www.xcgui.com]([www.xcgui.com](http://www.xcgui.com/))
+官方网站：[www.xcgui.com](http://www.xcgui.com "xcgui 官方网站")
 
 # 获取
 
