@@ -1,8 +1,8 @@
 # XCGUI
 
-[English](./README-en.md) | 简体中文
+English | [简体中文](./README.md)
 
-DirectUI设计思想: 在窗口内没有子窗口，界面元素都是逻辑上的区域(无HWND句柄,安全,灵活), 所有UI元素都是自主开发(不受系统限制),  更加灵活的实现各种程序界面,满足不同用户的需求.
+DirectUI design idea: there is no sub-window in the window, the interface elements are logical areas (no HWND handle, security, flexibility), all UI elements are developed independently (not limited by the system), more flexible implementation of a variety of program interfaces to meet the needs of different users.
 
 # Get
 
@@ -10,15 +10,15 @@ DirectUI设计思想: 在窗口内没有子窗口，界面元素都是逻辑上�
 go get github.com/twgh/xcgui
 ```
 
-# 项目文档
+# Documentation
 
 [项目文档](https://github.com/twgh/xcgui/blob/main/help/%E7%82%AB%E5%BD%A9%E7%95%8C%E9%9D%A2%E5%BA%93-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3(v3.0)-(2021-08-04).chm)
 
-# 动态链接库下载
+# Dynamic link library download
 
 [xcgui.dll](https://github.com/twgh/xcgui/blob/main/help/XCGUI.dll)
 
-程序运行时需要把help文件夹中的"XCGUI.dll"放到程序运行目录。最好是放到C:\Windows\System32目录，这样就不需要把dll放到程序运行目录了。
+When the program is running, you need to put "XCGUI.dll" in the help folder in the program running directory.It is best to put it in the C:\Windows\System32 directory, so that there is no need to put the dll in the program running directory.
 
 # Example
 
@@ -44,43 +44,43 @@ var (
 )
 
 func main() {
-	// 1.初始化UI库
+	// 1.Initialize XCGUI
 	a = app.New("")
-	// 2.创建窗口
+	// 2.Create window
 	win = window.NewWindow(0, 0, 766, 518, "炫彩窗口", 0, xcc.Xc_Window_Style_Default)
 
-	// 设置窗口边框大小
+	// Set the window border size
 	win.SetBorderSize(1, 30, 1, 1)
-	// 设置窗口透明类型
+	// Set window transparency type
 	win.SetTransparentType(xcc.Window_Transparent_Shadow)
-	// 设置窗口阴影
+	// Set window shadow
 	win.SetShadowInfo(10, 255, 10, false, 0)
-	// 窗口置顶
+	// Window on top
 	win.SetTop()
-	// 窗口居中
+	// Window centered
 	win.Center()
-	// 创建标签_窗口标题
+	// Create label window title
 	lbl_Title = shape.NewShapeText(15, 15, 56, 20, "Title", win.HWindow)
 	lbl_Title.SetTextColor(xc.RGB(255, 255, 255), 255)
 
-	// 创建最小化按钮
+	// Create a minimize button
 	widget.NewButton(636, 14, 38, 24, "Min", win.HWindow).SetType(xcc.Button_Type_Min)
-	// 创建最大化按钮
+	// Create a maximize button
 	widget.NewButton(675, 14, 38, 24, "Max", win.HWindow).SetType(xcc.Button_Type_Max)
-	// 创建结束按钮
+	// Create an end button
 	btn_Close = widget.NewButton(714, 14, 38, 24, "Close", win.HWindow)
 	btn_Close.SetType(xcc.Button_Type_Close)
 
-	// 3.显示窗口
+	// 3.Display window
 	win.ShowWindow(xcc.SW_SHOW)
-	// 4.运行程序
+	// 4.Run the program
 	a.Run()
-	// 5.退出程序
+	// 5.exit the program
 	a.Exit()
 }
 ```
 
 # Const
 
-常量都在xcc包里，像这样使用：`xcc.Xc_Window_Style_Default`
+The constants are all in the xcc package and used like this: `xcc.Xc Window Style_Default`
 
