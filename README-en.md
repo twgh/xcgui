@@ -26,7 +26,7 @@ It is best to put it in the C:\Windows\System32 directory, so that there is no n
 
 # Example
 
-![example](https://github.com/twgh/xcgui/blob/main/example/1/1.jpg)
+![example](https://github.com/twgh/xcgui/blob/main/example/simplewindow/simplewindow.jpg)
 
 ```go
 package main

@@ -2,6 +2,7 @@ package widget
 
 import (
 	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
 )
 
 type Element struct {
@@ -734,4 +735,23 @@ func (e *Element) AdjustLayout(nAdjustNo int) int {
 // nAdjustNo:
 func (e *Element) AdjustLayoutEx(nFlags int, nAdjustNo int) int {
 	return xc.XEle_AdjustLayoutEx(e.HEle_, nFlags, nAdjustNo)
+}
+
+/*
+下面都是事件
+*/
+
+// 事件_弹出菜单项被选择
+func (b *Element) Event_MENU_SELECT(pFun func(nID int, pbHandled *bool) int) bool {
+	return xc.XEle_RegEventC(b.HEle_, xcc.XE_MENU_SELECT, pFun)
+}
+
+// 事件_菜单弹出
+func (b *Element) Event_MENU_POPUP(pFun func(HMENUX int, pbHandled *bool) int) bool {
+	return xc.XEle_RegEventC(b.HEle_, xcc.XE_MENU_POPUP, pFun)
+}
+
+// 事件_菜单退出
+func (b *Element) Event_MENU_EXIT(pFun func(pbHandled *bool) int) bool {
+	return xc.XEle_RegEventC(b.HEle_, xcc.XE_MENU_EXIT, pFun)
 }

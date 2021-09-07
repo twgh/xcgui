@@ -26,7 +26,7 @@ go get github.com/twgh/xcgui
 
 # 例子
 
-![example](https://github.com/twgh/xcgui/blob/main/example/1/1.jpg)
+![example](https://github.com/twgh/xcgui/blob/main/example/simplewindow/simplewindow.jpg)
 
 ```go
 package main

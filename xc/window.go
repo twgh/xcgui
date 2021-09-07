@@ -1,6 +1,9 @@
 package xc
 
-import "unsafe"
+import (
+	"syscall"
+	"unsafe"
+)
 
 // 窗口_创建, 返回: GUI库窗口资源句柄
 // x: 窗口左上角x坐标.
@@ -50,8 +53,8 @@ func XWnd_SetTop(hWindow int) int {
 // hWindow: 窗口句柄.
 // nEvent: 事件类型.
 // pFun: 事件函数.
-func XWnd_RegEventC(hWindow int, nEvent int, pFun int) bool {
-	r, _, _ := xWnd_RegEventC.Call(uintptr(hWindow), uintptr(nEvent), uintptr(pFun))
+func XWnd_RegEventC(hWindow int, nEvent int, pFun interface{}) bool {
+	r, _, _ := xWnd_RegEventC.Call(uintptr(hWindow), uintptr(nEvent), syscall.NewCallback(pFun))
 	return int(r) != 0
 }
 
@@ -59,8 +62,8 @@ func XWnd_RegEventC(hWindow int, nEvent int, pFun int) bool {
 // hWindow: 窗口句柄.
 // nEvent: 事件类型.
 // pFun: 事件函数.
-func XWnd_RegEventC1(hWindow int, nEvent int, pFun int) bool {
-	r, _, _ := xWnd_RegEventC1.Call(uintptr(hWindow), uintptr(nEvent), uintptr(pFun))
+func XWnd_RegEventC1(hWindow int, nEvent int, pFun interface{}) bool {
+	r, _, _ := xWnd_RegEventC1.Call(uintptr(hWindow), uintptr(nEvent), syscall.NewCallback(pFun))
 	return int(r) != 0
 }
 
@@ -68,8 +71,8 @@ func XWnd_RegEventC1(hWindow int, nEvent int, pFun int) bool {
 // hWindow: 窗口句柄.
 // nEvent: 事件类型.
 // pFun: 事件函数.
-func XWnd_RemoveEventC(hWindow int, nEvent int, pFun int) bool {
-	r, _, _ := xWnd_RemoveEventC.Call(uintptr(hWindow), uintptr(nEvent), uintptr(pFun))
+func XWnd_RemoveEventC(hWindow int, nEvent int, pFun interface{}) bool {
+	r, _, _ := xWnd_RemoveEventC.Call(uintptr(hWindow), uintptr(nEvent), syscall.NewCallback(pFun))
 	return int(r) != 0
 }
 

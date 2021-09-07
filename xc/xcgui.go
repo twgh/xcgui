@@ -2927,3 +2927,12 @@ func HEX2RGB(str string) int {
 	b, _ := strconv.ParseInt(str[4:], 16, 10)
 	return RGB(byte(r), byte(g), byte(b))
 }
+
+// 客户区坐标转换到屏幕坐标
+// hWindow: GUI库窗口资源句柄
+func Client2Screen(hWindow int, pPoint *POINT) {
+	var r RECT
+	XWnd_GetRect(hWindow, &r)
+	pPoint.X += r.Left
+	pPoint.Y += r.Top
+}

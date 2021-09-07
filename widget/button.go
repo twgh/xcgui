@@ -221,14 +221,14 @@ func (b *Button) ClearBkInfo() int {
 下面都是事件
 */
 
-// 按钮_置单击事件
+// 事件_按钮被单击
 // pFun: 事件函数指针.
-func (b *Button) SetBnClick(pFun func(pbHandled *bool) int) bool {
+func (b *Button) Event_BnClick(pFun func(pbHandled *bool) int) bool {
 	return xc.XEle_RegEventC(b.HEle, xcc.XE_BNCLICK, pFun)
 }
 
-// 按钮_置单击事件1
+// 事件_按钮被单击1
 // pFun: 事件函数指针.
-func (b *Button) SetBnClick1(pFun func(hEle int, pbHandled *bool) int) bool {
+func (b *Button) Event_BnClick1(pFun func(hEle int, pbHandled *bool) int) bool {
 	return xc.XEle_RegEventC1(b.HEle, xcc.XE_BNCLICK, pFun)
 }

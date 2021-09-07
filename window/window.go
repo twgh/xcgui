@@ -60,21 +60,21 @@ func (w *Window) SetTop() int {
 // 窗口_注册事件C
 // nEvent: 事件类型.
 // pFun: 事件函数.
-func (w *Window) RegEventC(nEvent int, pFun int) bool {
+func (w *Window) RegEventC(nEvent int, pFun interface{}) bool {
 	return xc.XWnd_RegEventC(w.HWindow, nEvent, pFun)
 }
 
 // 窗口_注册事件C1
 // nEvent: 事件类型.
 // pFun: 事件函数.
-func (w *Window) RegEventC1(nEvent int, pFun int) bool {
+func (w *Window) RegEventC1(nEvent int, pFun interface{}) bool {
 	return xc.XWnd_RegEventC1(w.HWindow, nEvent, pFun)
 }
 
 // 窗口_移除事件C
 // nEvent: 事件类型.
 // pFun: 事件函数.
-func (w *Window) RemoveEventC(nEvent int, pFun int) bool {
+func (w *Window) RemoveEventC(nEvent int, pFun interface{}) bool {
 	return xc.XWnd_RemoveEventC(w.HWindow, nEvent, pFun)
 }
 
