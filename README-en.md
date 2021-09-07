@@ -32,26 +32,19 @@ It is best to put it in the C:\Windows\System32 directory, so that there is no n
 package main
 
 import (
-	xc "github.com/twgh/xcgui"
 	"github.com/twgh/xcgui/app"
 	"github.com/twgh/xcgui/shape"
 	"github.com/twgh/xcgui/widget"
 	"github.com/twgh/xcgui/window"
+	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
-)
-
-var (
-	a         *app.App
-	win       *window.Window
-	btn_Close *widget.Button
-	lbl_Title *shape.ShapeText
 )
 
 func main() {
 	// 1.Initialize XCGUI
-	a = app.New("")
+	a := app.New("")
 	// 2.Create window
-	win = window.NewWindow(0, 0, 766, 518, "炫彩窗口", 0, xcc.Xc_Window_Style_Default)
+	win := window.NewWindow(0, 0, 466, 300, "XC Window", 0, xcc.Xc_Window_Style_Default)
 
 	// Set the window border size
 	win.SetBorderSize(1, 30, 1, 1)
@@ -64,16 +57,19 @@ func main() {
 	// Window centered
 	win.Center()
 	// Create label window title
-	lbl_Title = shape.NewShapeText(15, 15, 56, 20, "Title", win.HWindow)
+	lbl_Title := shape.NewShapeText(15, 15, 56, 20, "Title", win.HWindow)
 	lbl_Title.SetTextColor(xc.RGB(255, 255, 255), 255)
 
 	// Create a minimize button
-	widget.NewButton(636, 14, 38, 24, "Min", win.HWindow).SetType(xcc.Button_Type_Min)
-	// Create a maximize button
-	widget.NewButton(675, 14, 38, 24, "Max", win.HWindow).SetType(xcc.Button_Type_Max)
+	btn_Min := widget.NewButton(396, 10, 30, 30, "-", win.HWindow)
+	btn_Min.SetTextColor(xc.RGB(255, 255, 255), 255)
+	btn_Min.SetType(xcc.Button_Type_Min)
+	btn_Min.EnableBkTransparent(true)
 	// Create an end button
-	btn_Close = widget.NewButton(714, 14, 38, 24, "Close", win.HWindow)
+	btn_Close := widget.NewButton(426, 10, 30, 30, "X", win.HWindow)
+	btn_Close.SetTextColor(xc.RGB(255, 255, 255), 255)
 	btn_Close.SetType(xcc.Button_Type_Close)
+	btn_Close.EnableBkTransparent(true)
 
 	// 3.Display window
 	win.ShowWindow(xcc.SW_SHOW)
@@ -90,7 +86,7 @@ The constants are all in the xcc package and used like this: `xcc.Xc Window Styl
 
 # Command introduction
 
-The files beginning with xc outside the folder are the original api and can be used directly.
+The functions in the xc package are the original functions in xcgui.dll and can be used directly.
 
-The encapsulated classes are all in the folder, which is more convenient to use.
+The encapsulated classes are in other folders.
 

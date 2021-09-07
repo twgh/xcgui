@@ -1,7 +1,7 @@
 package app
 
 import (
-	xc "github.com/twgh/xcgui"
+	"github.com/twgh/xcgui/xc"
 )
 
 type App struct {

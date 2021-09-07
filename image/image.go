@@ -1,7 +1,7 @@
 package image
 
 import (
-	xc "github.com/twgh/xcgui"
+	"github.com/twgh/xcgui/xc"
 )
 
 type Image struct {

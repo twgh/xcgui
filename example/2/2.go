@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	xc "github.com/twgh/xcgui"
+	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/app"
 	"github.com/twgh/xcgui/shape"
 	"github.com/twgh/xcgui/widget"

@@ -1,7 +1,7 @@
 package shape
 
 import (
-	xc "github.com/twgh/xcgui"
+	"github.com/twgh/xcgui/xc"
 )
 
 type ShapePicture struct {

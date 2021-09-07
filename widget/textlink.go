@@ -1,7 +1,7 @@
 package widget
 
 import (
-	xc "github.com/twgh/xcgui"
+	"github.com/twgh/xcgui/xc"
 )
 
 type TextLink struct {
