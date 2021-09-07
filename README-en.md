@@ -14,7 +14,7 @@ go get github.com/twgh/xcgui
 
 # Documentation
 
-[Project Documentation](https://github.com/twgh/xcgui/blob/main/help/%E7%82%AB%E5%BD%A9%E7%95%8C%E9%9D%A2%E5%BA%93-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3(v3.0)-(2021-08-04).chm)
+[Documentation](https://github.com/twgh/xcgui/blob/main/help/%E7%82%AB%E5%BD%A9%E7%95%8C%E9%9D%A2%E5%BA%93-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3(v3.0)-(2021-08-04).chm)
 
 # Dynamic link library download
 
@@ -86,7 +86,59 @@ The constants are all in the xcc package and used like this: `xcc.Xc Window Styl
 
 # Command introduction
 
-The functions in the xc package are the original functions in xcgui.dll and can be used directly.
+The functions in the xc package are the original functions in xcgui.dll, and there are more than 1,000 API interfaces that can be used directly.
 
 The encapsulated classes are in other folders.
 
+# Schedule
+
+These classes are encapsulated based on more than 1,000 API interfaces in xcgui.dll. Of course, you can also choose to use the native API directly.
+
+| Class name       | Finish |
+| ---------------- | ------ |
+| App              | √      |
+| Window           | √      |
+| FrameWindow      | √      |
+| ModalWindow      | √      |
+| Adapter          | √      |
+| AdapterListView  | √      |
+| AdapterMap       | √      |
+| AdapterTable     | √      |
+| AdapterTree      | √      |
+| BkManager        | √      |
+| FontX            | √      |
+| Image            | √      |
+| ListItemTemplate | √      |
+| Shape            | √      |
+| ShapeEllipse     | √      |
+| ShapeGif         | √      |
+| ShapeGroupBox    | √      |
+| ShapeLine        | √      |
+| ShapePicture     | √      |
+| ShapeRect        | √      |
+| ShapeText        | √      |
+| Table            | √      |
+| Button           | √      |
+| ComboBox         | √      |
+| Edit             | √      |
+| Editor           | √      |
+| Element          | √      |
+| List             | √      |
+| ListBox          | √      |
+| Menu             | √      |
+| ProgressBar      | √      |
+| TextLink         | √      |
+| Widget           | √      |
+| LayoutEle        |        |
+| LayoutFrame      |        |
+| ListView         |        |
+| MenuBar          |        |
+| Pane             |        |
+| ScrollBar        |        |
+| ScrollView       |        |
+| SliderBar        |        |
+| TabBar           |        |
+| ToolBar          |        |
+| Tree             |        |
+| DateTime         |        |
+| MonthCal         |        |

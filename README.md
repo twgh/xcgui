@@ -86,7 +86,60 @@ func main() {
 
 # 命令介绍
 
-xc包里的函数都是xcgui.dll里原本的函数，可以直接使用。
+xc包里的函数都是xcgui.dll里原本的函数，有一千多个API接口，可以直接使用。
 
 封装好的类都在其他文件夹里。
+
+# 封装进度
+
+这些类都是基于xcgui.dll里的一千多个API接口封装的，当然你也可以选择直接使用原生API。
+
+| 中文名称                              | 类名             | 是否封装完毕 |
+| ------------------------------------- | ---------------- | ------------ |
+| 程序                                  | App              | √            |
+| 窗口                                  | Window           | √            |
+| 框架窗口                              | FrameWindow      | √            |
+| 模态窗口                              | ModalWindow      | √            |
+| 数据适配器                            | Adapter          | √            |
+| 数据适配器-列表视元素                 | AdapterListView  | √            |
+| 数据适配器-单列Map-列表头(listHeader) | AdapterMap       | √            |
+| 数据适配器-XList-XListBox             | AdapterTable     | √            |
+| 数据适配器-树元素                     | AdapterTree      | √            |
+| 背景管理器                            | BkManager        | √            |
+| 字体                                  | FontX            | √            |
+| 图片操作                              | Image            | √            |
+| 列表项模板                            | ListItemTemplate | √            |
+| 形状对象                              | Shape            | √            |
+| 圆形形状对象                          | ShapeEllipse     | √            |
+| 形状对象GIF                           | ShapeGif         | √            |
+| 组框形状对象                          | ShapeGroupBox    | √            |
+| 直线形状对象                          | ShapeLine        | √            |
+| 形状对象图片                          | ShapePicture     | √            |
+| 矩形形状对象                          | ShapeRect        | √            |
+| 形状对象文本                          | ShapeText        | √            |
+| 表格                                  | Table            | √            |
+| 按钮                                  | Button           | √            |
+| 下拉组合框                            | ComboBox         | √            |
+| 编辑框(常规, 富文本, 聊天气泡)        | Edit             | √            |
+| 代码编辑框                            | Editor           | √            |
+| 基础元素                              | Element          | √            |
+| 列表                                  | List             | √            |
+| 列表框                                | ListBox          | √            |
+| 弹出菜单                              | Menu             | √            |
+| 进度条                                | ProgressBar      | √            |
+| 静态文本连接按钮                      | TextLink         | √            |
+| 窗口组件                              | Widget           | √            |
+| 布局元素                              | LayoutEle        |              |
+| 布局框架                              | LayoutFrame      |              |
+| 列表视图                              | ListView         |              |
+| 菜单条                                | MenuBar          |              |
+| Pane元素                              | Pane             |              |
+| 滚动条                                | ScrollBar        |              |
+| 滚动视图                              | ScrollView       |              |
+| 滑动条元素                            | SliderBar        |              |
+| 标签栏元素                            | TabBar           |              |
+| 工具条                                | ToolBar          |              |
+| 列表树元素                            | Tree             |              |
+| 日期时间                              | DateTime         |              |
+| 月历卡片                              | MonthCal         |              |
 
