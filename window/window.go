@@ -46,6 +46,13 @@ func NewWindowEx(dwExStyle int, lpClassName string, lpWindowName string, dwStyle
 	return p
 }
 
+// 给本类的HWindow赋值
+func (w *Window) SetHWindow(hWindow int) {
+	w.HWindow = hWindow
+	w.HWindow_ = w.HWindow
+	w.HWND = w.GetHWND()
+}
+
 // 窗口_显示
 // nCmdShow: 显示方式, SW_
 func (w *Window) ShowWindow(nCmdShow int) int {

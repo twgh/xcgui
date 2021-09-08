@@ -5,7 +5,7 @@ import (
 )
 
 type ModalWindow struct {
-	WindowPublic
+	Window
 
 	HWindow int
 	HWND    int
@@ -18,11 +18,12 @@ type ModalWindow struct {
 // hWndParent: 父窗口句柄.
 // XCStyle: 炫彩窗口样式, Xc_Window_Style_
 func NewModalWindow(nWidth int, nHeight int, pTitle string, hWndParent int, XCStyle int) *ModalWindow {
+	hWindow := xc.XModalWnd_Create(nWidth, nHeight, pTitle, hWndParent, XCStyle)
 	p := &ModalWindow{
-		HWindow: xc.XModalWnd_Create(nWidth, nHeight, pTitle, hWndParent, XCStyle),
+		HWindow: hWindow,
 	}
-	p.HWindow_ = p.HWindow
-	p.HWND = xc.XWnd_GetHWND(p.HWindow)
+	p.SetHWindow(hWindow)
+	p.HWND = xc.XWnd_GetHWND(hWindow)
 	return p
 }
 

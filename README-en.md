@@ -6,6 +6,12 @@ DirectUI design idea: there is no sub-window in the window, the interface elemen
 
 Official website：[www.xcgui.com](http://www.xcgui.com "xcgui 官方网站")
 
+# Visualization UI Designer
+
+Using the UI designer can quickly design the interface and save a lot of code.
+
+![uidesigner](https://github.com/twgh/xcgui/blob/main/example/uidesigner/uidesigner.png)
+
 # Get
 
 ```go
@@ -14,7 +20,7 @@ go get github.com/twgh/xcgui
 
 # Documentation
 
-[Documentation](https://github.com/twgh/xcgui/blob/main/help/%E7%82%AB%E5%BD%A9%E7%95%8C%E9%9D%A2%E5%BA%93-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3(v3.0)-(2021-08-04).chm)
+[Documentation](https://pkg.go.dev/github.com/twgh/xcgui)    [Chm Help Document](https://github.com/twgh/xcgui/blob/main/help/%E7%82%AB%E5%BD%A9%E7%95%8C%E9%9D%A2%E5%BA%93-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3(v3.0)-(2021-08-04).chm)
 
 # Dynamic link library download
 
@@ -88,11 +94,11 @@ The constants are all in the xcc package and used like this: `xcc.Xc Window Styl
 
 The functions in the xc package are the original functions in xcgui.dll, and there are more than 1,000 API interfaces that can be used directly.
 
-The encapsulated classes are in other folders.
+The encapsulated classes are in other packages.
 
 # Schedule
 
-These classes are encapsulated based on more than 1,000 API interfaces in xcgui.dll. Of course, you can also choose to use the native API directly.
+These classes are encapsulated based on more than a thousand functions in the xc package. Of course, you can also choose to use the functions in the xc package directly.
 
 | Class name       | Finish |
 | ---------------- | ------ |

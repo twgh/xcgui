@@ -367,14 +367,14 @@ func (c *ComboBox) GetCountColumn() int {
 下面都是事件
 */
 
-// 组合框_下拉列表项选择完成事件, 编辑框内容已经改变
+// 事件_组合框_下拉列表项选择完成, 编辑框内容已经改变
 // pFun: 事件函数指针.
-func (c *ComboBox) SetComboBoxSelectEnd(pFun func(iItem int, pbHandled *bool) int) bool {
+func (c *ComboBox) Event_ComboBox_Select_End(pFun func(iItem int, pbHandled *bool) int) bool {
 	return xc.XEle_RegEventC(c.HEle, xcc.XE_COMBOBOX_SELECT_END, pFun)
 }
 
-// 组合框_下拉列表项选择完成事件, 编辑框内容已经改变
+// 事件_组合框_下拉列表项选择完成, 编辑框内容已经改变
 // pFun: 事件函数指针.
-func (c *ComboBox) SetComboBoxSelectEnd1(pFun func(hEle int, iItem int, pbHandled *bool) int) bool {
+func (c *ComboBox) Event_ComboBox_Select_End1(pFun func(hEle int, iItem int, pbHandled *bool) int) bool {
 	return xc.XEle_RegEventC1(c.HEle, xcc.XE_COMBOBOX_SELECT_END, pFun)
 }

@@ -6,6 +6,12 @@ DirectUI设计思想: 在窗口内没有子窗口，界面元素都是逻辑上�
 
 官方网站：[www.xcgui.com](http://www.xcgui.com "xcgui 官方网站")
 
+# 可视化UI设计器
+
+使用UI设计器可以快速设计界面，节省大量代码。
+
+![uidesigner](https://github.com/twgh/xcgui/blob/main/example/uidesigner/uidesigner.png)
+
 # 获取
 
 ```go
@@ -14,7 +20,7 @@ go get github.com/twgh/xcgui
 
 # 项目文档
 
-[项目文档](https://github.com/twgh/xcgui/blob/main/help/%E7%82%AB%E5%BD%A9%E7%95%8C%E9%9D%A2%E5%BA%93-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3(v3.0)-(2021-08-04).chm)
+[项目文档](https://pkg.go.dev/github.com/twgh/xcgui)    [chm帮助文档](https://github.com/twgh/xcgui/blob/main/help/%E7%82%AB%E5%BD%A9%E7%95%8C%E9%9D%A2%E5%BA%93-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3(v3.0)-(2021-08-04).chm)
 
 # 动态链接库下载
 
@@ -82,17 +88,17 @@ func main() {
 
 # 常量
 
-常量都在xcc包里，像这样使用：`xcc.Xc_Window_Style_Default`
+xcc包里都是常量，像这样使用：`xcc.Xc_Window_Style_Default`
 
 # 命令介绍
 
 xc包里的函数都是xcgui.dll里原本的函数，有一千多个API接口，可以直接使用。
 
-封装好的类都在其他文件夹里。
+封装好的类都在其他包里。
 
 # 封装进度
 
-这些类都是基于xcgui.dll里的一千多个API接口封装的，当然你也可以选择直接使用原生API。
+这些类都是基于xc包里的一千多个函数封装的，当然你也可以选择直接使用xc包里的函数。
 
 | 中文名称                              | 类名             | 是否封装完毕 |
 | ------------------------------------- | ---------------- | ------------ |
