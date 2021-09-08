@@ -12,6 +12,37 @@ Using the UI designer can quickly design the interface and save a lot of code.
 
 ![uidesigner](https://github.com/twgh/xcgui/blob/main/example/uidesigner/uidesigner.png)
 
+```go
+package main
+
+import (
+	"github.com/twgh/xcgui/app"
+	"github.com/twgh/xcgui/window"
+	"github.com/twgh/xcgui/xcc"
+)
+
+func main() {
+	a := app.New("")
+	// Add file search path, you need to change to your own path when you run
+	a.AddFileSearchPath(`D:\GoProject\src\github.com\twgh\xcgui\example\uidesigner\res`)
+	// Load resource files from zip
+	a.LoadResourceZip("qqmusic.zip", "resource.res", "")
+	// Load layout file from zip
+	hWindow := a.LoadLayoutZip("qqmusic.zip", "main.xml", "", 0)
+
+	win := &window.Window{}
+	// Assign a value to the class window handle
+	win.SetHWindow(hWindow)
+	// Adjust the layout
+	win.AdjustLayout()
+	// Display window
+	win.ShowWindow(xcc.SW_SHOW)
+
+	a.Run()
+	a.Exit()
+}
+```
+
 # Get
 
 ```go
@@ -24,13 +55,13 @@ go get github.com/twgh/xcgui
 
 # Dynamic link library download
 
-[xcgui.dll](https://github.com/twgh/xcgui/blob/main/help/XCGUI.dll)
+[xcgui.dll(x64)](https://github.com/twgh/xcgui/blob/main/help/x64/XCGUI.dll)        [xcgui.dll(x86)](https://github.com/twgh/xcgui/blob/main/help/x86/XCGUI.dll)
 
 When the program is running, you need to put "XCGUI.dll" in the program running directory.
 
-It is best to put it in the C:\Windows\System32 directory, so that there is no need to put the dll in the program running directory.
+It is best to put it in the C:\Windows\System32 directory during development, so that there is no need to put the dll in the program running directory.
 
-# Example
+# Simple window(Pure code)
 
 ![example](https://github.com/twgh/xcgui/blob/main/example/simplewindow/simplewindow.jpg)
 

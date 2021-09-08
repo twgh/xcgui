@@ -320,7 +320,7 @@ func XC_SetDefaultFont(hFontX int) int {
 	return int(r)
 }
 
-// 炫彩_添加搜索路径, 添加文件搜索路径, 默认路为exe目录和程序当前运行目录
+// 炫彩_添加搜索路径, 添加文件搜索路径, 默认路径为exe目录和程序当前运行目录
 // pPath: 文件夹
 func XC_AddFileSearchPath(pPath string) int {
 	r, _, _ := xC_AddFileSearchPath.Call(strPtr(pPath))

@@ -285,7 +285,7 @@ func (a *App) SetDefaultFont(hFontX int) int {
 	return xc.XC_SetDefaultFont(hFontX)
 }
 
-// 炫彩_添加搜索路径, 添加文件搜索路径, 默认路为exe目录和程序当前运行目录
+// 炫彩_添加搜索路径, 添加文件搜索路径, 默认路径为exe目录和程序当前运行目录
 // pPath: 文件夹
 func (a *App) AddFileSearchPath(pPath string) int {
 	return xc.XC_AddFileSearchPath(pPath)
@@ -362,4 +362,104 @@ func (a *App) LoadDll(pDllFileName string) int {
 // nExitCode: 退出码.
 func (a *App) PostQuitMessage(nExitCode int) int {
 	return xc.XC_PostQuitMessage(nExitCode)
+}
+
+// 炫彩_加载布局文件, 返回窗口句柄或布局句柄或元素句柄
+// pFileName: 布局文件名.
+// hParent: 父对象句柄
+func (a *App) LoadLayout(pFileName string, hParent int) int {
+	return xc.XC_LoadLayout(pFileName, hParent)
+}
+
+// 炫彩_加载布局文件ZIP, 加载布局文件从zip压缩包中, 返回窗口句柄或布局句柄或元素句柄
+// pZipFileName: zip文件名.
+// pFileName: 布局文件名.
+// pPassword: zip密码.
+// hParent: 父对象句柄
+func (a *App) LoadLayoutZip(pZipFileName string, pFileName string, pPassword string, hParent int) int {
+	return xc.XC_LoadLayoutZip(pZipFileName, pFileName, pPassword, hParent)
+}
+
+// 炫彩_加载布局文件内存ZIP, 加载布局文件从zip压缩包中, 返回窗口句柄或布局句柄或元素句柄
+// data: 内存块指针
+// length: 内存块大小
+// pFileName: 布局文件名.
+// pPassword: zip密码.
+// hParent: 父对象句柄
+func (a *App) LoadLayoutZipMem(data int, length int, pFileName string, pPassword string, hParent int) int {
+	return xc.XC_LoadLayoutZipMem(data, length, pFileName, pPassword, hParent)
+}
+
+// 炫彩_加载布局文件从字符串, 加载布局文件从内存字符串, 返回窗口句柄或布局句柄或元素句柄
+// pStringXML: 字符串指针.
+// hParent: 父对象
+func (a *App) LoadLayoutFromString(pStringXML string, hParent int) int {
+	return xc.XC_LoadLayoutFromString(pStringXML, hParent)
+}
+
+// 炫彩_加载布局文件从字符串UTF8, 加载布局文件从内存字符串, 返回窗口句柄或布局句柄或元素句柄
+// pStringXML: 字符串指针.
+// hParent: 父对象
+func (a *App) LoadLayoutFromStringUtf8(pStringXML string, hParent int) int {
+	return xc.XC_LoadLayoutFromStringUtf8(pStringXML, hParent)
+}
+
+// 炫彩_加载样式文件
+// pFileName: 样式文件名称.
+func (a *App) LoadStyle(pFileName string) bool {
+	return xc.XC_LoadStyle(pFileName)
+}
+
+// 炫彩_加载样式文件ZIP
+// pZipFile: ZIP文件名
+// pFileName: 文件名
+// pPassword: 密码
+func (a *App) LoadStyleZip(pZipFile string, pFileName string, pPassword string) bool {
+	return xc.XC_LoadStyleZip(pZipFile, pFileName, pPassword)
+}
+
+// 炫彩_加载样式文件从内存ZIP
+// data: 内存块指针
+// length: 内存块大小
+// pFileName: 文件名
+// pPassword: 密码
+func (a *App) LoadStyleZipMem(data int, length int, pFileName string, pPassword string) bool {
+	return xc.XC_LoadStyleZipMem(data, length, pFileName, pPassword)
+}
+
+// 炫彩_加载资源文件
+// pFileName: 资源文件名.
+func (a *App) LoadResource(pFileName string) bool {
+	return xc.XC_LoadResource(pFileName)
+}
+
+// 炫彩_加载资源文件ZIP
+// pZipFileName: zip文件名.
+// pFileName: 资源文件名.
+// pPassword: zip压缩包密码.
+func (a *App) LoadResourceZip(pZipFileName string, pFileName string, pPassword string) bool {
+	return xc.XC_LoadResourceZip(pZipFileName, pFileName, pPassword)
+}
+
+// 炫彩_加载资源文件内存ZIP
+// data: 内存块指针
+// length: 内存块大小
+// pFileName: 资源文件名
+// pPassword: zip压缩包密码
+func (a *App) LoadResourceZipMem(data int, length int, pFileName string, pPassword string) bool {
+	return xc.XC_LoadResourceZipMem(data, length, pFileName, pPassword)
+}
+
+// 炫彩_加载资源文件从字符串
+// pStringXML: 字符串指针.
+// pFileName: 资源文件名
+func (a *App) LoadResourceFromString(pStringXML string, pFileName string) bool {
+	return xc.XC_LoadResourceFromString(pStringXML, pFileName)
+}
+
+// 炫彩_加载资源文件从字符串UTF8
+// pStringXML: 字符串指针.
+// pFileName: 资源文件名
+func (a *App) LoadResourceFromStringUtf8(pStringXML string, pFileName string) bool {
+	return xc.XC_LoadResourceFromStringUtf8(pStringXML, pFileName)
 }

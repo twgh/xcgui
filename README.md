@@ -12,6 +12,37 @@ DirectUI设计思想: 在窗口内没有子窗口，界面元素都是逻辑上�
 
 ![uidesigner](https://github.com/twgh/xcgui/blob/main/example/uidesigner/uidesigner.png)
 
+```go
+package main
+
+import (
+	"github.com/twgh/xcgui/app"
+	"github.com/twgh/xcgui/window"
+	"github.com/twgh/xcgui/xcc"
+)
+
+func main() {
+	a := app.New("")
+	// 添加文件搜索路径, 你运行时需要改成自己的路径
+	a.AddFileSearchPath(`D:\GoProject\src\github.com\twgh\xcgui\example\uidesigner\res`)
+	// 从zip中加载资源文件
+	a.LoadResourceZip("qqmusic.zip", "resource.res", "")
+	// 从zip中加载布局文件
+	hWindow := a.LoadLayoutZip("qqmusic.zip", "main.xml", "", 0)
+
+	win := &window.Window{}
+	// 给类窗口句柄赋值
+	win.SetHWindow(hWindow)
+	// 调整布局
+	win.AdjustLayout()
+	// 显示窗口
+	win.ShowWindow(xcc.SW_SHOW)
+
+	a.Run()
+	a.Exit()
+}
+```
+
 # 获取
 
 ```go
@@ -20,17 +51,17 @@ go get github.com/twgh/xcgui
 
 # 项目文档
 
-[项目文档](https://pkg.go.dev/github.com/twgh/xcgui)    [chm帮助文档](https://github.com/twgh/xcgui/blob/main/help/%E7%82%AB%E5%BD%A9%E7%95%8C%E9%9D%A2%E5%BA%93-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3(v3.0)-(2021-08-04).chm)
+[项目文档](https://pkg.go.dev/github.com/twgh/xcgui)        [chm帮助文档](https://github.com/twgh/xcgui/blob/main/help/%E7%82%AB%E5%BD%A9%E7%95%8C%E9%9D%A2%E5%BA%93-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3(v3.0)-(2021-08-04).chm)
 
 # 动态链接库下载
 
-[xcgui.dll](https://github.com/twgh/xcgui/blob/main/help/XCGUI.dll)
+[xcgui.dll(x64)](https://github.com/twgh/xcgui/blob/main/help/x64/XCGUI.dll)        [xcgui.dll(x86)](https://github.com/twgh/xcgui/blob/main/help/x86/XCGUI.dll)
 
 程序运行时需要把"XCGUI.dll"放到程序运行目录。
 
-最好是放到C:\Windows\System32目录，这样就不需要把dll放到程序运行目录了。
+在开发时最好是放到C:\Windows\System32目录，这样就不需要把dll放到程序运行目录了。
 
-# 例子
+# 简单窗口（纯代码）
 
 ![example](https://github.com/twgh/xcgui/blob/main/example/simplewindow/simplewindow.jpg)
 
