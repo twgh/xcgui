@@ -5,17 +5,13 @@ import (
 )
 
 type AdapterTable struct {
-	Adapter
-
-	HAdapter int
+	adapter
 }
 
 // 数据适配器表_创建, 创建列表框元素数据适配器, 返回数据适配器句柄
 func NewAdapterTable() *AdapterTable {
-	p := &AdapterTable{
-		HAdapter: xc.XAdTable_Create(),
-	}
-	p.HAdapter_ = p.HAdapter
+	p := &AdapterTable{}
+	p.SetHAdapter(xc.XAdTable_Create())
 	return p
 }
 

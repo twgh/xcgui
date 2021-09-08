@@ -6,8 +6,6 @@ import (
 
 type ShapeRect struct {
 	Shape
-
-	HXCGUI int
 }
 
 // 形状矩形_创建, 创建矩形形状对象, 返回句柄
@@ -17,10 +15,8 @@ type ShapeRect struct {
 // cy: 高度.
 // hParent: 父对象句柄.
 func NewShapeRect(x int, y int, cx int, cy int, hParent int) *ShapeRect {
-	p := &ShapeRect{
-		HXCGUI: xc.XShapeRect_Create(x, y, cx, cy, hParent),
-	}
-	p.HXCGUI_ = p.HXCGUI
+	p := &ShapeRect{}
+	p.SetHXCGUI(xc.XShapeRect_Create(x, y, cx, cy, hParent))
 	return p
 }
 

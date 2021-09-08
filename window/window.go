@@ -5,10 +5,7 @@ import (
 )
 
 type Window struct {
-	WindowPublic
-
-	HWindow int
-	HWND    int
+	windowBase
 }
 
 // 窗口_创建, 返回: GUI库窗口资源句柄
@@ -20,11 +17,8 @@ type Window struct {
 // hWndParent: 父窗口.
 // XCStyle: GUI库窗口样式, Xc_Window_Style_
 func NewWindow(x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle int) *Window {
-	p := &Window{
-		HWindow: xc.XFrameWnd_Create(x, y, cx, cy, pTitle, hWndParent, XCStyle),
-	}
-	p.HWindow_ = p.HWindow
-	p.HWND = p.GetHWND()
+	p := &Window{}
+	p.SetHWindow(xc.XFrameWnd_Create(x, y, cx, cy, pTitle, hWndParent, XCStyle))
 	return p
 }
 
@@ -40,17 +34,9 @@ func NewWindow(x int, y int, cx int, cy int, pTitle string, hWndParent int, XCSt
 // hWndParent: 父窗口.
 // XCStyle: GUI库窗口样式, Xc_Window_Style_
 func NewWindowEx(dwExStyle int, lpClassName string, lpWindowName string, dwStyle int, x int, y int, cx int, cy int, hWndParent int, XCStyle int) *Window {
-	p := &Window{
-		HWindow: xc.XWnd_CreateEx(dwExStyle, lpClassName, lpWindowName, dwStyle, x, y, cx, cy, hWndParent, XCStyle),
-	}
+	p := &Window{}
+	p.SetHWindow(xc.XWnd_CreateEx(dwExStyle, lpClassName, lpWindowName, dwStyle, x, y, cx, cy, hWndParent, XCStyle))
 	return p
-}
-
-// 给本类的HWindow赋值
-func (w *Window) SetHWindow(hWindow int) {
-	w.HWindow = hWindow
-	w.HWindow_ = w.HWindow
-	w.HWND = w.GetHWND()
 }
 
 // 窗口_显示

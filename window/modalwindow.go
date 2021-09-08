@@ -6,9 +6,6 @@ import (
 
 type ModalWindow struct {
 	Window
-
-	HWindow int
-	HWND    int
 }
 
 // 模态窗口_创建, 创建模态窗口, 然后调用DoModal()显示; 当模态窗口关闭时, 会自动销毁模态窗口资源句柄
@@ -18,12 +15,8 @@ type ModalWindow struct {
 // hWndParent: 父窗口句柄.
 // XCStyle: 炫彩窗口样式, Xc_Window_Style_
 func NewModalWindow(nWidth int, nHeight int, pTitle string, hWndParent int, XCStyle int) *ModalWindow {
-	hWindow := xc.XModalWnd_Create(nWidth, nHeight, pTitle, hWndParent, XCStyle)
-	p := &ModalWindow{
-		HWindow: hWindow,
-	}
-	p.SetHWindow(hWindow)
-	p.HWND = xc.XWnd_GetHWND(hWindow)
+	p := &ModalWindow{}
+	p.SetHWindow(xc.XModalWnd_Create(nWidth, nHeight, pTitle, hWndParent, XCStyle))
 	return p
 }
 
@@ -39,10 +32,8 @@ func NewModalWindow(nWidth int, nHeight int, pTitle string, hWndParent int, XCSt
 // hWndParent: 父窗口.
 // XCStyle: GUI库窗口样式, Xc_Window_Style_
 func NewModalWindowEx(dwExStyle int, lpClassName string, lpWindowName string, dwStyle int, x int, y int, cx int, cy int, hWndParent int, XCStyle int) *ModalWindow {
-	p := &ModalWindow{
-		HWindow: xc.XModalWnd_CreateEx(dwExStyle, lpClassName, lpWindowName, dwStyle, x, y, cx, cy, hWndParent, XCStyle),
-	}
-	p.HWindow_ = p.HWindow
+	p := &ModalWindow{}
+	p.SetHWindow(xc.XModalWnd_CreateEx(dwExStyle, lpClassName, lpWindowName, dwStyle, x, y, cx, cy, hWndParent, XCStyle))
 	return p
 }
 

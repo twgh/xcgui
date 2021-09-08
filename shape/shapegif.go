@@ -6,8 +6,6 @@ import (
 
 type ShapeGif struct {
 	Shape
-
-	HXCGUI int
 }
 
 // 形状GIF_创建, 创建形状对象GIF, 成功返回形状对象GIF句柄, 否则返回NULL
@@ -17,10 +15,8 @@ type ShapeGif struct {
 // cy: 高度.
 // hParent: 父对象句柄.
 func NewShapeGif(x int, y int, cx int, cy int, hParent int) *ShapeGif {
-	p := &ShapeGif{
-		HXCGUI: xc.XShapeGif_Create(x, y, cx, cy, hParent),
-	}
-	p.HXCGUI_ = p.HXCGUI
+	p := &ShapeGif{}
+	p.SetHXCGUI(xc.XShapeGif_Create(x, y, cx, cy, hParent))
 	return p
 }
 

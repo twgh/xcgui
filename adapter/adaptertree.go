@@ -5,17 +5,15 @@ import (
 )
 
 type AdapterTree struct {
-	Adapter
+	adapter
 
 	HAdapter int
 }
 
 // 数据适配器树_创建, 创建树元素数据适配器, 返回数据适配器句柄
 func NewAdapterTree() *AdapterTree {
-	p := &AdapterTree{
-		HAdapter: xc.XAdTree_Create(),
-	}
-	p.HAdapter_ = p.HAdapter
+	p := &AdapterTree{}
+	p.SetHAdapter(xc.XAdTree_Create())
 	return p
 }
 

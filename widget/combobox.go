@@ -7,8 +7,6 @@ import (
 
 type ComboBox struct {
 	Element
-
-	HEle int
 }
 
 // 组合框_创建, 返回元素句柄
@@ -18,10 +16,8 @@ type ComboBox struct {
 // cy: 高度.
 // hParent: 父是窗口资源句柄或UI元素资源句柄.如果是窗口资源句柄将被添加到窗口
 func NewComboBox(x int, y int, cx int, cy int, hParent int) *ComboBox {
-	p := &ComboBox{
-		HEle: xc.XComboBox_Create(x, y, cx, cy, hParent),
-	}
-	p.HEle_ = p.HEle
+	p := &ComboBox{}
+	p.HEle = xc.XComboBox_Create(x, y, cx, cy, hParent)
 	return p
 }
 

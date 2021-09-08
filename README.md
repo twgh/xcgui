@@ -106,7 +106,6 @@ xc包里的函数都是xcgui.dll里原本的函数，有一千多个API接口，
 | 窗口                                  | Window           | √            |
 | 框架窗口                              | FrameWindow      | √            |
 | 模态窗口                              | ModalWindow      | √            |
-| 数据适配器                            | Adapter          | √            |
 | 数据适配器-列表视元素                 | AdapterListView  | √            |
 | 数据适配器-单列Map-列表头(listHeader) | AdapterMap       | √            |
 | 数据适配器-XList-XListBox             | AdapterTable     | √            |

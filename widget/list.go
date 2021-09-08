@@ -6,8 +6,6 @@ import (
 
 type List struct {
 	Element
-
-	HEle int
 }
 
 // 列表_创建, 创建列表元素, 返回元素句柄
@@ -17,10 +15,8 @@ type List struct {
 // cy: 高度.
 // hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素
 func XList_Create(x int, y int, cx int, cy int, hParent int) *List {
-	p := &List{
-		HEle: xc.XList_Create(x, y, cx, cy, hParent),
-	}
-	p.HEle_ = p.HEle
+	p := &List{}
+	p.HEle = xc.XList_Create(x, y, cx, cy, hParent)
 	return p
 }
 

@@ -5,17 +5,13 @@ import (
 )
 
 type AdapterMap struct {
-	Adapter
-
-	HAdapter int
+	adapter
 }
 
 // 数据适配器MAP_创建, 创建数据适配器, 单列数据, 返回数据适配器句柄
 func NewAdapterMap() *AdapterMap {
-	p := &AdapterMap{
-		HAdapter: xc.XAdMap_Create(),
-	}
-	p.HAdapter_ = p.HAdapter
+	p := &AdapterMap{}
+	p.SetHAdapter(xc.XAdMap_Create())
 	return p
 }
 

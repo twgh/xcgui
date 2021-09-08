@@ -6,8 +6,6 @@ import (
 
 type ShapeGroupBox struct {
 	Shape
-
-	HXCGUI int
 }
 
 // 形状组框_创建, 创建组框形状对象, 返回句柄
@@ -18,10 +16,8 @@ type ShapeGroupBox struct {
 // pName: 名称.
 // hParent: 父对象句柄.
 func NewShapeGroupBox(x int, y int, cx int, cy int, pName string, hParent int) *ShapeGroupBox {
-	p := &ShapeGroupBox{
-		HXCGUI: xc.XShapeGroupBox_Create(x, y, cx, cy, pName, hParent),
-	}
-	p.HXCGUI_ = p.HXCGUI
+	p := &ShapeGroupBox{}
+	p.SetHXCGUI(xc.XShapeGroupBox_Create(x, y, cx, cy, pName, hParent))
 	return p
 }
 

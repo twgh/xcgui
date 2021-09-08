@@ -5,17 +5,13 @@ import (
 )
 
 type AdapterListView struct {
-	Adapter
-
-	HAdapter int
+	adapter
 }
 
 // 数据适配器列表视_创建, 创建列表视元素数据适配器, 返回数据适配器句柄
 func NewAdapterListView() *AdapterListView {
-	p := &AdapterListView{
-		HAdapter: xc.XAdListView_Create(),
-	}
-	p.HAdapter_ = p.HAdapter
+	p := &AdapterListView{}
+	p.SetHAdapter(xc.XAdListView_Create())
 	return p
 }
 

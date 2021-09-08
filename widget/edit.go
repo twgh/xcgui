@@ -6,8 +6,6 @@ import (
 
 type Edit struct {
 	Element
-
-	HEle int
 }
 
 // 编辑框_创建, 返回元素句柄
@@ -17,10 +15,8 @@ type Edit struct {
 // cy: 高度
 // hParent: 父为窗口句柄或元素句柄
 func NewEdit(x int, y int, cx int, cy int, hParent int) *Edit {
-	p := &Edit{
-		HEle: xc.XEdit_Create(x, y, cx, cy, hParent),
-	}
-	p.HEle_ = p.HEle
+	p := &Edit{}
+	p.HEle = xc.XEdit_Create(x, y, cx, cy, hParent)
 	return p
 }
 
@@ -32,10 +28,8 @@ func NewEdit(x int, y int, cx int, cy int, hParent int) *Edit {
 // nType: 类型, Edit_Type_
 // hParent: 父为窗口句柄或元素句柄
 func NewEditEx(x int, y int, cx int, cy int, nType int, hParent int) *Edit {
-	p := &Edit{
-		HEle: xc.XEdit_CreateEx(x, y, cx, cy, nType, hParent),
-	}
-	p.HEle_ = p.HEle
+	p := &Edit{}
+	p.HEle = xc.XEdit_CreateEx(x, y, cx, cy, nType, hParent)
 	return p
 }
 

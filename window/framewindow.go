@@ -5,9 +5,7 @@ import (
 )
 
 type FrameWindow struct {
-	WindowPublic
-
-	HWindow int
+	windowBase
 }
 
 // 框架窗口_创建, 返回GUI库窗口资源句柄
@@ -19,10 +17,8 @@ type FrameWindow struct {
 // hWndParent: 父窗口.
 // XCStyle: GUI库窗口样式, Xc_Window_Style_
 func NewFreamWindow(x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle int) *FrameWindow {
-	p := &FrameWindow{
-		HWindow: xc.XFrameWnd_Create(x, y, cx, cy, pTitle, hWndParent, XCStyle),
-	}
-	p.HWindow_ = p.HWindow
+	p := &FrameWindow{}
+	p.SetHWindow(xc.XFrameWnd_Create(x, y, cx, cy, pTitle, hWndParent, XCStyle))
 	return p
 }
 
@@ -38,10 +34,8 @@ func NewFreamWindow(x int, y int, cx int, cy int, pTitle string, hWndParent int,
 // hWndParent: 父窗口.
 // XCStyle: GUI库窗口样式, Xc_Window_Style_
 func NewFreamWindowEx(dwExStyle int, lpClassName string, lpWindowName string, dwStyle int, x int, y int, cx int, cy int, hWndParent int, XCStyle int) *FrameWindow {
-	p := &FrameWindow{
-		HWindow: xc.XFrameWnd_CreateEx(dwExStyle, lpClassName, lpWindowName, dwStyle, x, y, cx, cy, hWndParent, XCStyle),
-	}
-	p.HWindow_ = p.HWindow
+	p := &FrameWindow{}
+	p.SetHWindow(xc.XFrameWnd_CreateEx(dwExStyle, lpClassName, lpWindowName, dwStyle, x, y, cx, cy, hWndParent, XCStyle))
 	return p
 }
 

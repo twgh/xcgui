@@ -6,8 +6,6 @@ import (
 
 type Editor struct {
 	Element
-
-	HEle int
 }
 
 // 代码编辑框_创建, 返回元素句柄
@@ -17,10 +15,8 @@ type Editor struct {
 // cy: 高度.
 // hParent: 父为窗口句柄或元素句柄.
 func NewEditor(x int, y int, cx int, cy int, hParent int) *Editor {
-	p := &Editor{
-		HEle: xc.XEditor_Create(x, y, cx, cy, hParent),
-	}
-	p.HEle_ = p.HEle
+	p := &Editor{}
+	p.HEle = xc.XEditor_Create(x, y, cx, cy, hParent)
 	return p
 }
 

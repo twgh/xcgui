@@ -6,8 +6,6 @@ import (
 
 type ShapePicture struct {
 	Shape
-
-	HXCGUI int
 }
 
 // 形状图片_创建, 创建形状对象-图片, 成功返回图片对象句柄, 否则返回NULL
@@ -17,10 +15,8 @@ type ShapePicture struct {
 // cy: 高度.
 // hParent: 父对象句柄.
 func NewShapePicture(x int, y int, cx int, cy int, hParent int) *ShapePicture {
-	p := &ShapePicture{
-		HXCGUI: xc.XShapePic_Create(x, y, cx, cy, hParent),
-	}
-	p.HXCGUI_ = p.HXCGUI
+	p := &ShapePicture{}
+	p.SetHXCGUI(xc.XShapePic_Create(x, y, cx, cy, hParent))
 	return p
 }
 

@@ -6,8 +6,6 @@ import (
 
 type TextLink struct {
 	Element
-
-	HEle int
 }
 
 // 文本链接_创建, 创建静态文本连接元素, 返回元素句柄
@@ -18,10 +16,8 @@ type TextLink struct {
 // pName: 文本内容.
 // hParent: 父是窗口资源句柄或UI元素资源句柄.如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素
 func NewTextLink(x int, y int, cx int, cy int, pName string, hParent int) *TextLink {
-	p := &TextLink{
-		HEle: xc.XTextLink_Create(x, y, cx, cy, pName, hParent),
-	}
-	p.HEle_ = p.HEle
+	p := &TextLink{}
+	p.HEle = xc.XTextLink_Create(x, y, cx, cy, pName, hParent)
 	return p
 }
 

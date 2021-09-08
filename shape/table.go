@@ -6,8 +6,6 @@ import (
 
 type Table struct {
 	Shape
-
-	HXCGUI int
 }
 
 // 表格_创建, 返回句柄
@@ -17,10 +15,8 @@ type Table struct {
 // cy: 高度
 // hParent: 父为窗口句柄或元素句柄.
 func NewTable(x int, y int, cx int, cy int, hParent int) *Table {
-	p := &Table{
-		HXCGUI: xc.XTable_Create(x, y, cx, cy, hParent),
-	}
-	p.HXCGUI_ = p.HXCGUI
+	p := &Table{}
+	p.SetHXCGUI(xc.XTable_Create(x, y, cx, cy, hParent))
 	return p
 }
 

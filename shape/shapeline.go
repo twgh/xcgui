@@ -6,8 +6,6 @@ import (
 
 type ShapeLine struct {
 	Shape
-
-	HXCGUI int
 }
 
 // 形状线_创建
@@ -17,10 +15,8 @@ type ShapeLine struct {
 // y2: 坐标.
 // hParent: 父对象句柄.
 func NewShapeLine(x1 int, y1 int, x2 int, y2 int, hParent int) *ShapeLine {
-	p := &ShapeLine{
-		HXCGUI: xc.XShapeLine_Create(x1, y1, x2, y2, hParent),
-	}
-	p.HXCGUI_ = p.HXCGUI
+	p := &ShapeLine{}
+	p.SetHXCGUI(xc.XShapeLine_Create(x1, y1, x2, y2, hParent))
 	return p
 }
 

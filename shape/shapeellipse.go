@@ -6,8 +6,6 @@ import (
 
 type ShapeEllipse struct {
 	Shape
-
-	HXCGUI int
 }
 
 // 形状圆_创建, 创建圆形形状对象, 返回句柄
@@ -17,10 +15,8 @@ type ShapeEllipse struct {
 // cy: 高度.
 // hParent: 父对象句柄.
 func NewShapeEllipse(x int, y int, cx int, cy int, hParent int) *ShapeEllipse {
-	p := &ShapeEllipse{
-		HXCGUI: xc.XShapeEllipse_Create(x, y, cx, cy, hParent),
-	}
-	p.HXCGUI_ = p.HXCGUI
+	p := &ShapeEllipse{}
+	p.SetHXCGUI(xc.XShapeEllipse_Create(x, y, cx, cy, hParent))
 	return p
 }
 

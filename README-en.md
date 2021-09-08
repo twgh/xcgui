@@ -106,7 +106,6 @@ These classes are encapsulated based on more than a thousand functions in the xc
 | Window           | √      |
 | FrameWindow      | √      |
 | ModalWindow      | √      |
-| Adapter          | √      |
 | AdapterListView  | √      |
 | AdapterMap       | √      |
 | AdapterTable     | √      |

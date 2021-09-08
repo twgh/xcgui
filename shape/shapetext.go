@@ -6,8 +6,6 @@ import (
 
 type ShapeText struct {
 	Shape
-
-	HXCGUI int
 }
 
 // 形状文本_创建, 创建形状对象文本
@@ -18,10 +16,8 @@ type ShapeText struct {
 // pName: 文本内容.
 // hParent: 父对象句柄.
 func NewShapeText(x int, y int, cx int, cy int, pName string, hParent int) *ShapeText {
-	p := &ShapeText{
-		HXCGUI: xc.XShapeText_Create(x, y, cx, cy, pName, hParent),
-	}
-	p.HXCGUI_ = p.HXCGUI
+	p := &ShapeText{}
+	p.SetHXCGUI(xc.XShapeText_Create(x, y, cx, cy, pName, hParent))
 	return p
 }
 

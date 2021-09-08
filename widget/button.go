@@ -7,8 +7,6 @@ import (
 
 type Button struct {
 	Element
-
-	HEle int
 }
 
 // 按钮_创建
@@ -19,10 +17,8 @@ type Button struct {
 // pName: 标题
 // hParent: 父为窗口句柄或元素句柄.
 func NewButton(x int, y int, cx int, cy int, pName string, hParent int) *Button {
-	p := &Button{
-		HEle: xc.XBtn_Create(x, y, cx, cy, pName, hParent),
-	}
-	p.HEle_ = p.HEle
+	p := &Button{}
+	p.SetHEle(xc.XBtn_Create(x, y, cx, cy, pName, hParent))
 	return p
 }
 

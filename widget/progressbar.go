@@ -6,8 +6,6 @@ import (
 
 type ProgressBar struct {
 	Element
-
-	HEle int
 }
 
 // 进度条_创建, 创建进度条元素, 返回元素句柄
@@ -17,10 +15,8 @@ type ProgressBar struct {
 // cy: 高度.
 // hParent: 父是窗口资源句柄或UI元素资源句柄.如果是窗口资源句柄将被添加到窗口
 func NewProgressBar(x int, y int, cx int, cy int, hParent int) *ProgressBar {
-	p := &ProgressBar{
-		HEle: xc.XProgBar_Create(x, y, cx, cy, hParent),
-	}
-	p.HEle_ = p.HEle
+	p := &ProgressBar{}
+	p.HEle = xc.XProgBar_Create(x, y, cx, cy, hParent)
 	return p
 }
 
