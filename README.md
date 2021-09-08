@@ -12,6 +12,8 @@ DirectUI设计思想: 在窗口内没有子窗口，界面元素都是逻辑上�
 
 ![uidesigner](https://github.com/twgh/xcgui/blob/main/example/uidesigner/uidesigner.png)
 
+只有这么多代码：
+
 ```go
 package main
 

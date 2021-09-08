@@ -12,6 +12,8 @@ Using the UI designer can quickly design the interface and save a lot of code.
 
 ![uidesigner](https://github.com/twgh/xcgui/blob/main/example/uidesigner/uidesigner.png)
 
+Only so much code：
+
 ```go
 package main
 
