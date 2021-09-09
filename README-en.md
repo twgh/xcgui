@@ -33,8 +33,8 @@ func main() {
 	hWindow := a.LoadLayoutZip("qqmusic.zip", "main.xml", "", 0)
 
 	win := &window.Window{}
-	// Assign a value to the class window handle
-	win.SetHWindow(hWindow)
+	// Assign a value to the class handle
+	win.SetHandle(hWindow)
 	// Adjust the layout
 	win.AdjustLayout()
 	// Display window
@@ -72,7 +72,6 @@ package main
 
 import (
 	"github.com/twgh/xcgui/app"
-	"github.com/twgh/xcgui/shape"
 	"github.com/twgh/xcgui/widget"
 	"github.com/twgh/xcgui/window"
 	"github.com/twgh/xcgui/xc"
@@ -96,7 +95,7 @@ func main() {
 	// Window centered
 	win.Center()
 	// Create label window title
-	lbl_Title := shape.NewShapeText(15, 15, 56, 20, "Title", win.HWindow)
+	lbl_Title := wi.NewShapeText(15, 15, 56, 20, "Title", win.HWindow)
 	lbl_Title.SetTextColor(xc.RGB(255, 255, 255), 255)
 
 	// Create a minimize button
@@ -121,7 +120,7 @@ func main() {
 
 # Const
 
-The constants are all in the xcc package and used like this: `xcc.Xc Window Style_Default`
+The constants are all in the xcc package and used like this: `xcc.Xc_Window_Style_Default`
 
 # Command introduction
 
@@ -147,6 +146,7 @@ These classes are encapsulated based on more than a thousand functions in the xc
 | FontX            | √      |
 | Image            | √      |
 | ListItemTemplate | √      |
+| Node             | √      |
 | Shape            | √      |
 | ShapeEllipse     | √      |
 | ShapeGif         | √      |
@@ -167,16 +167,17 @@ These classes are encapsulated based on more than a thousand functions in the xc
 | ProgressBar      | √      |
 | TextLink         | √      |
 | Widget           | √      |
-| LayoutEle        |        |
-| LayoutFrame      |        |
-| ListView         |        |
-| MenuBar          |        |
-| Pane             |        |
-| ScrollBar        |        |
-| ScrollView       |        |
-| SliderBar        |        |
-| TabBar           |        |
-| ToolBar          |        |
-| Tree             |        |
-| DateTime         |        |
-| MonthCal         |        |
+| LayoutEle        | √      |
+| LayoutFrame      | √      |
+| ListView         | √      |
+| MenuBar          | √      |
+| Pane             | √      |
+| ScrollBar        | √      |
+| ScrollView       | √      |
+| SliderBar        | √      |
+| TabBar           | √      |
+| ToolBar          | √      |
+| Tree             | √      |
+| DateTime         | √      |
+| MonthCal         | √      |
+

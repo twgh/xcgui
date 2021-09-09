@@ -16,8 +16,8 @@ func main() {
 	hWindow := a.LoadLayoutZip("qqmusic.zip", "main.xml", "", 0)
 
 	win := &window.Window{}
-	// 给类窗口句柄赋值
-	win.SetHWindow(hWindow)
+	// 给类句柄赋值
+	win.SetHandle(hWindow)
 	// 调整布局
 	win.AdjustLayout()
 	// 显示窗口

@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/twgh/xcgui/app"
-	"github.com/twgh/xcgui/shape"
 	"github.com/twgh/xcgui/widget"
 	"github.com/twgh/xcgui/window"
 	"github.com/twgh/xcgui/xc"
@@ -28,17 +27,17 @@ func main() {
 	// 窗口居中
 	win.Center()
 	// 创建标签_窗口标题
-	lbl_Title := shape.NewShapeText(15, 15, 56, 20, "Title", win.HWindow)
+	lbl_Title := widget.NewShapeText(15, 15, 56, 20, "Title", win.Handle)
 	lbl_Title.SetTextColor(xc.RGB(255, 255, 255), 255)
 
 	// 创建结束按钮
-	btn_Close := widget.NewButton(326, 10, 30, 30, "X", win.HWindow)
+	btn_Close := widget.NewButton(326, 10, 30, 30, "X", win.Handle)
 	btn_Close.SetTextColor(xc.RGB(255, 255, 255), 255)
 	btn_Close.SetType(xcc.Button_Type_Close)
 	btn_Close.EnableBkTransparent(true)
 
 	// 创建菜单按钮
-	btn_Menu := widget.NewButton(50, 50, 30, 30, "menu", win.HWindow)
+	btn_Menu := widget.NewButton(50, 50, 30, 30, "menu", win.Handle)
 	selected := true // 控制item3是否选中
 	btn_Menu.Event_BnClick(func(pbHandled *bool) int {
 		// 创建菜单
@@ -63,9 +62,9 @@ func main() {
 		btn_Menu.GetRect(&r)
 		// 转换到屏幕坐标
 		pt := xc.POINT{X: r.Left, Y: r.Bottom}
-		xc.Client2Screen(win.HWindow, &pt)
+		xc.Client2Screen(win.Handle, &pt)
 		// 弹出菜单
-		menu.Popup(win.HWND, int(pt.X), int(pt.Y), btn_Menu.HEle, xcc.Menu_Popup_Position_Left_Top)
+		menu.Popup(win.Handle, int(pt.X), int(pt.Y), btn_Menu.Handle, xcc.Menu_Popup_Position_Left_Top)
 		return 0
 	})
 

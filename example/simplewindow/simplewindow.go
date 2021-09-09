@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/twgh/xcgui/app"
-	"github.com/twgh/xcgui/shape"
 	"github.com/twgh/xcgui/widget"
 	"github.com/twgh/xcgui/window"
 	"github.com/twgh/xcgui/xc"
@@ -26,16 +25,16 @@ func main() {
 	// 窗口居中
 	win.Center()
 	// 创建标签_窗口标题
-	lbl_Title := shape.NewShapeText(15, 15, 56, 20, "Title", win.HWindow)
+	lbl_Title := widget.NewShapeText(15, 15, 56, 20, "Title", win.Handle)
 	lbl_Title.SetTextColor(xc.RGB(255, 255, 255), 255)
 
 	// 创建最小化按钮
-	btn_Min := widget.NewButton(396, 10, 30, 30, "-", win.HWindow)
+	btn_Min := widget.NewButton(396, 10, 30, 30, "-", win.Handle)
 	btn_Min.SetTextColor(xc.RGB(255, 255, 255), 255)
 	btn_Min.SetType(xcc.Button_Type_Min)
 	btn_Min.EnableBkTransparent(true)
 	// 创建结束按钮
-	btn_Close := widget.NewButton(426, 10, 30, 30, "X", win.HWindow)
+	btn_Close := widget.NewButton(426, 10, 30, 30, "X", win.Handle)
 	btn_Close.SetTextColor(xc.RGB(255, 255, 255), 255)
 	btn_Close.SetType(xcc.Button_Type_Close)
 	btn_Close.EnableBkTransparent(true)

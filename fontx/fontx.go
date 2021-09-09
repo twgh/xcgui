@@ -1,14 +1,16 @@
+// 字体
 package fontx
 
 import (
 	"github.com/twgh/xcgui/xc"
 )
 
+// 字体
 type FontX struct {
-	HFontX int
+	HFontX int //字体句柄
 }
 
-// 字体_创建, 创建炫彩字体, 当字体句柄与元素关联后, 会自动释放, 返回字体句柄.
+// 字体_创建, 创建炫彩字体, 当字体句柄与元素关联后, 会自动释放
 // size: 字体大小
 func NewFontX(size int) *FontX {
 	p := &FontX{
@@ -17,7 +19,7 @@ func NewFontX(size int) *FontX {
 	return p
 }
 
-// 字体_创建2, 创建炫彩字体, 返回字体句柄.
+// 字体_创建2, 创建炫彩字体
 // pName: 字体名称.
 // size: 字体大小
 // style: 字体样式, FontStyle_
@@ -28,7 +30,7 @@ func NewFontX2(pName string, size int, style int) *FontX {
 	return p
 }
 
-// 字体_创建3, 创建炫彩字体, 返回字体句柄.
+// 字体_创建3, 创建炫彩字体
 // pInfo: 字体信息.
 func NewFontX3(pInfo *xc.Font_Info_) *FontX {
 	p := &FontX{
@@ -37,7 +39,7 @@ func NewFontX3(pInfo *xc.Font_Info_) *FontX {
 	return p
 }
 
-// 字体_创建扩展, 创建炫彩字体, 返回字体句柄.
+// 字体_创建扩展, 创建炫彩字体
 // pFontInfo: 字体信息.
 func NewFontXEx(pFontInfo *xc.LOGFONTW) *FontX {
 	p := &FontX{
@@ -46,7 +48,7 @@ func NewFontXEx(pFontInfo *xc.LOGFONTW) *FontX {
 	return p
 }
 
-// 字体_创建从HFONT, 创建炫彩字体从现有HFONT字体, 返回字体句柄.
+// 字体_创建从HFONT, 创建炫彩字体从现有HFONT字体
 // hFont: 字体句柄.
 func NewFontXFromHFONT(hFont int) *FontX {
 	p := &FontX{
@@ -55,7 +57,7 @@ func NewFontXFromHFONT(hFont int) *FontX {
 	return p
 }
 
-// 字体_创建从Font, 创建炫彩字体从GDI+字体(Font), 返回字体句柄.
+// 字体_创建从Font, 创建炫彩字体从GDI+字体(Font)
 // pFont: GDI+字体指针(Font*).
 func NewFontXFromFont(pFont int) *FontX {
 	p := &FontX{
@@ -64,7 +66,7 @@ func NewFontXFromFont(pFont int) *FontX {
 	return p
 }
 
-// 字体_创建从文件, 创建字体从文件, 返回炫彩字体句柄.
+// 字体_创建从文件, 创建字体从文件
 // pFontFile: 字体文件名.
 // size: 字体大小.
 // style: 样式, FontStyle_

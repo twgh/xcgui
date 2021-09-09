@@ -4,11 +4,12 @@ import (
 	"github.com/twgh/xcgui/xc"
 )
 
+// 数据适配器-单列Map-列表头(listHeader)
 type AdapterMap struct {
 	adapter
 }
 
-// 数据适配器MAP_创建, 创建数据适配器, 单列数据, 返回数据适配器句柄
+// 数据适配器MAP_创建, 创建数据适配器, 单列数据
 func NewAdapterMap() *AdapterMap {
 	p := &AdapterMap{}
 	p.SetHAdapter(xc.XAdMap_Create())

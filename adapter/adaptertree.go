@@ -4,13 +4,12 @@ import (
 	"github.com/twgh/xcgui/xc"
 )
 
+// 数据适配器-树元素
 type AdapterTree struct {
 	adapter
-
-	HAdapter int
 }
 
-// 数据适配器树_创建, 创建树元素数据适配器, 返回数据适配器句柄
+// 数据适配器树_创建, 创建树元素数据适配器
 func NewAdapterTree() *AdapterTree {
 	p := &AdapterTree{}
 	p.SetHAdapter(xc.XAdTree_Create())

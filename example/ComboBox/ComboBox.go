@@ -4,7 +4,6 @@ import (
 	"strconv"
 
 	"github.com/twgh/xcgui/app"
-	"github.com/twgh/xcgui/shape"
 	"github.com/twgh/xcgui/widget"
 	"github.com/twgh/xcgui/window"
 	"github.com/twgh/xcgui/xc"
@@ -30,17 +29,17 @@ func main() {
 	// 窗口居中
 	win.Center()
 	// 创建标签_窗口标题
-	lbl_Title := shape.NewShapeText(15, 15, 56, 20, "Title", win.HWindow)
+	lbl_Title := widget.NewShapeText(15, 15, 56, 20, "Title", win.Handle)
 	lbl_Title.SetTextColor(xc.RGB(255, 255, 255), 255)
 
 	// 创建结束按钮
-	btn_Close := widget.NewButton(426, 10, 30, 30, "X", win.HWindow)
+	btn_Close := widget.NewButton(426, 10, 30, 30, "X", win.Handle)
 	btn_Close.SetTextColor(xc.RGB(255, 255, 255), 255)
 	btn_Close.SetType(xcc.Button_Type_Close)
 	btn_Close.EnableBkTransparent(true)
 
 	// 创建组合框
-	cbb := widget.NewComboBox(24, 50, 100, 30, win.HWindow)
+	cbb := widget.NewComboBox(24, 50, 100, 30, win.Handle)
 	cbb.CreateAdapter()
 	// 组合框加入项
 	for i := 1; i <= 5; i++ {
@@ -58,7 +57,7 @@ func main() {
 	})
 
 	// 创建编辑框
-	edit = widget.NewEdit(138, 50, 100, 30, win.HWindow)
+	edit = widget.NewEdit(138, 50, 100, 30, win.Handle)
 	edit.SetText("hello")
 
 	// 3.显示窗口

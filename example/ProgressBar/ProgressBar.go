@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/twgh/xcgui/app"
-	"github.com/twgh/xcgui/shape"
 	"github.com/twgh/xcgui/widget"
 	"github.com/twgh/xcgui/window"
 	"github.com/twgh/xcgui/xc"
@@ -32,17 +31,17 @@ func main() {
 	// 窗口居中
 	win.Center()
 	// 创建标签_窗口标题
-	lbl_Title := shape.NewShapeText(15, 15, 56, 20, "Title", win.HWindow)
+	lbl_Title := widget.NewShapeText(15, 15, 56, 20, "Title", win.Handle)
 	lbl_Title.SetTextColor(xc.RGB(255, 255, 255), 255)
 
 	// 创建结束按钮
-	btn_Close := widget.NewButton(396, 10, 30, 30, "X", win.HWindow)
+	btn_Close := widget.NewButton(396, 10, 30, 30, "X", win.Handle)
 	btn_Close.SetTextColor(xc.RGB(255, 255, 255), 255)
 	btn_Close.SetType(xcc.Button_Type_Close)
 	btn_Close.EnableBkTransparent(true)
 
 	// 创建进度条
-	bar = widget.NewProgressBar(24, 60, 200, 10, win.HWindow)
+	bar = widget.NewProgressBar(24, 60, 200, 10, win.Handle)
 	// 设置进度条左右两边间隔大小
 	bar.SetSpaceTwo(0, 0)
 	// 设置进度条最大值
@@ -51,10 +50,10 @@ func main() {
 	bar.SetPos(0)
 
 	// 创建按钮_进度加
-	btn_Add = widget.NewButton(238, 50, 70, 30, "+", win.HWindow)
+	btn_Add = widget.NewButton(238, 50, 70, 30, "+", win.Handle)
 	btn_Add.Event_BnClick1(onBtnClick)
 	// 创建按钮_进度减
-	btn_Sub = widget.NewButton(318, 50, 70, 30, "-", win.HWindow)
+	btn_Sub = widget.NewButton(318, 50, 70, 30, "-", win.Handle)
 	btn_Sub.Event_BnClick1(onBtnClick)
 
 	// 3.显示窗口
@@ -68,10 +67,10 @@ func main() {
 // 事件_按钮被单击
 func onBtnClick(hEle int, pbHandled *bool) int {
 	switch hEle {
-	case btn_Add.HEle:
+	case btn_Add.Handle:
 		bar.SetPos(bar.GetPos() + 10)
 		bar.Redraw(true)
-	case btn_Sub.HEle:
+	case btn_Sub.Handle:
 		bar.SetPos(bar.GetPos() - 10)
 		bar.Redraw(true)
 	}

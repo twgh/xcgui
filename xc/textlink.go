@@ -1,12 +1,12 @@
 package xc
 
-// 文本链接_创建, 创建静态文本连接元素, 返回元素句柄
+// 文本链接_创建, 创建静态文本链接元素, 返回元素句柄
 // x: 元素x坐标.
 // y: 元素y坐标.
 // cx: 宽度.
 // cy: 高度.
 // pName: 文本内容.
-// hParent: 父是窗口资源句柄或UI元素资源句柄.如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素
+// hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素
 func XTextLink_Create(x int, y int, cx int, cy int, pName string, hParent int) int {
 	r, _, _ := xTextLink_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), strPtr(pName), uintptr(hParent))
 	return int(r)

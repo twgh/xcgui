@@ -1,11 +1,13 @@
+// 图片操作
 package image
 
 import (
 	"github.com/twgh/xcgui/xc"
 )
 
+// 图片操作
 type Image struct {
-	HImage int
+	HImage int //图片句柄
 }
 
 // 图片_加载从图片源

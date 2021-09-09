@@ -1,0 +1,87 @@
+package widget
+
+import "github.com/twgh/xcgui/xc"
+
+// 日期时间
+type DateTime struct {
+	Element
+}
+
+// 日期_创建, 创建日期时间元素
+// x: x坐标
+// y: y坐标
+// cx: 宽度
+// cy: 高度
+// hParent: 父为窗口句柄或元素句柄.
+func NewDateTime(x int, y int, cx int, cy int, hParent int) *DateTime {
+	p := &DateTime{}
+	p.SetHandle(xc.XDateTime_Create(x, y, cx, cy, hParent))
+	return p
+}
+
+// 日期_置样式, 设置样式
+// nStyle: 样式: 0为日期元素, 1为时间元素
+func (d *DateTime) SetStyle(nStyle int) int {
+	return xc.XDateTime_SetStyle(d.Handle, nStyle)
+}
+
+// 日期_取样式, 返回元素样式
+func (d *DateTime) GetStyle() int {
+	return xc.XDateTime_GetStyle(d.Handle)
+}
+
+// 日期_启用分割栏为斜线, 切换分割栏为: 斜线或横线
+// bSlash: TRUE: 斜线, FALSE: 横线
+func (d *DateTime) EnableSplitSlash(bSlash bool) int {
+	return xc.XDateTime_EnableSplitSlash(d.Handle, bSlash)
+}
+
+// 日期_取内部按钮, 获取内部按钮元素
+// nType: 按钮类型.
+func (d *DateTime) GetButton(nType int) int {
+	return xc.XDateTime_GetButton(d.Handle, nType)
+}
+
+// 日期_取选择日期背景颜色, 获取被选择文字的背景颜色
+func (d *DateTime) GetSelBkColor() int {
+	return xc.XDateTime_GetSelBkColor(d.Handle)
+}
+
+// 日期_置选择日期背景颜色, 设置被选择文字的背景颜色
+// crSelectBk: 文字被选中背景色.
+// alpha: 透明度
+func (d *DateTime) SetSelBkColor(crSelectBk int, alpha uint8) int {
+	return xc.XDateTime_SetSelBkColor(d.Handle, crSelectBk, alpha)
+}
+
+// 日期_取当前日期
+// pnYear: 年.[OUT]
+// pnMonth: 月.[OUT]
+// pnDay: 日.[OUT]
+func (d *DateTime) GetDate(pnYear *int, pnMonth *int, pnDay *int) int {
+	return xc.XDateTime_GetDate(d.Handle, pnYear, pnMonth, pnDay)
+}
+
+// 日期_置当前日期
+// nYear: 年.
+// nMonth: 月.
+// nDay: 日.
+func (d *DateTime) SetDate(nYear int, nMonth int, nDay int) int {
+	return xc.XDateTime_SetDate(d.Handle, nYear, nMonth, nDay)
+}
+
+// 日期_取当前时间
+// pnHour: 时.[OUT]
+// pnMinute: 分.[OUT]
+// pnSecond: 秒.[OUT]
+func (d *DateTime) GetTime(pnHour *int, pnMinute *int, pnSecond *int) int {
+	return xc.XDateTime_GetTime(d.Handle, pnHour, pnMinute, pnSecond)
+}
+
+// 日期_社区当前时间, 设置当前时分秒
+// nHour: 时.
+// nMinute: 分.
+// nSecond: 秒.
+func (d *DateTime) SetTime(nHour int, nMinute int, nSecond int) int {
+	return xc.XDateTime_SetTime(d.Handle, nHour, nMinute, nSecond)
+}

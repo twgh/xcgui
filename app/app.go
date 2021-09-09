@@ -1,9 +1,11 @@
+// 程序
 package app
 
 import (
 	"github.com/twgh/xcgui/xc"
 )
 
+// 程序
 type App struct {
 }
 

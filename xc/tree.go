@@ -2,18 +2,18 @@ package xc
 
 import "unsafe"
 
-// 列表树_创建
+// 列表树_创建, 创建树元素, 返回元素句柄.
 // x: 元素x坐标.
 // y: 元素y坐标.
 // cx: 宽度.
 // cy: 高度.
-// hParent: 父是窗口资源句柄或UI元素资源句柄.如果是窗口资源句柄将被添加到窗口
+// hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
 func XTree_Create(x int, y int, cx int, cy int, hParent int) int {
 	r, _, _ := xTree_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), uintptr(hParent))
 	return int(r)
 }
 
-// 列表树_启用拖动项
+// 列表树_启用拖动项, 启用拖动项功能
 // hEle: 元素句柄.
 // bEnable: 是否启用.
 func XTree_EnableDragItem(hEle int, bEnable bool) int {
@@ -21,16 +21,16 @@ func XTree_EnableDragItem(hEle int, bEnable bool) int {
 	return int(r)
 }
 
-// 列表树_启用连接线
+// 列表树_启用连接线, 启用或禁用显示项的连接线
 // hEle: 元素句柄.
 // bEnable: 是否启用.
-// bSolid: 实线或虚线;TRUE:实线
+// bSolid: 实线或虚线; TRUE: 实线, FALSE: 虚线
 func XTree_EnableConnectLine(hEle int, bEnable bool, bSolid bool) int {
 	r, _, _ := xTree_EnableConnectLine.Call(uintptr(hEle), boolPtr(bEnable), boolPtr(bSolid))
 	return int(r)
 }
 
-// 列表树_启用展开
+// 列表树_启用展开, 启动或关闭默认展开功能, 如果开启新插入的项将自动展开
 // hEle: 元素句柄.
 // bEnable: 是否启用.
 func XTree_EnableExpand(hEle int, bEnable bool) int {
@@ -55,7 +55,7 @@ func XTree_SetConnectLineColor(hEle int, color int, alpha uint8) int {
 	return int(r)
 }
 
-// 列表树_置展开按钮大小
+// 列表树_置展开按钮大小, 设置展开按钮占用空间大小
 // hEle: 元素句柄.
 // nWidth: 宽度.
 // nHeight: 高度.
@@ -64,7 +64,7 @@ func XTree_SetExpandButtonSize(hEle int, nWidth int, nHeight int) int {
 	return int(r)
 }
 
-// 列表树_置连接线长度
+// 列表树_置连接线长度, 设置连线绘制长度, 展开按钮与项内容之间的连线.
 // hEle: 元素句柄.
 // nLength: 连线绘制长度.
 func XTree_SetConnectLineLength(hEle int, nLength int) int {
@@ -72,7 +72,7 @@ func XTree_SetConnectLineLength(hEle int, nLength int) int {
 	return int(r)
 }
 
-// 列表树_置拖动项插入位置颜色
+// 列表树_置拖动项插入位置颜色, 设置拖动项插入位置颜色提示
 // hEle: 元素句柄.
 // color: RGB颜色.
 // alpha: 透明度.
@@ -89,7 +89,7 @@ func XTree_SetItemTemplateXML(hEle int, pXmlFile string) bool {
 	return int(r) != 0
 }
 
-// 列表树_置选择项模板文件
+// 列表树_置选择项模板文件, 设置项模板文件, 项选中状态
 // hEle: 元素句柄.
 // pXmlFile: 文件名.
 func XTree_SetItemTemplateXMLSel(hEle int, pXmlFile string) bool {
@@ -105,7 +105,7 @@ func XTree_SetItemTemplate(hEle int, hTemp int) bool {
 	return int(r) != 0
 }
 
-// 列表树_置选择项模板
+// 列表树_置选择项模板, 设置列表项模板, 项选中状态
 // hEle: 元素句柄.
 // hTemp: 模板句柄.
 func XTree_SetItemTemplateSel(hEle int, hTemp int) bool {
@@ -113,7 +113,7 @@ func XTree_SetItemTemplateSel(hEle int, hTemp int) bool {
 	return int(r) != 0
 }
 
-// 列表树_置项模板从字符串
+// 列表树_置项模板从字符串, 设置项模板文件
 // hEle: 元素句柄.
 // pStringXML: 字符串指针.
 func XTree_SetItemTemplateXMLFromString(hEle int, pStringXML int) bool {
@@ -121,7 +121,7 @@ func XTree_SetItemTemplateXMLFromString(hEle int, pStringXML int) bool {
 	return int(r) != 0
 }
 
-// 列表树_置选择项模板从字符串
+// 列表树_置选择项模板从字符串, 设置项模板文件, 项选中状态
 // hEle: 元素句柄.
 // pStringXML: 字符串指针.
 func XTree_SetItemTemplateXMLSelFromString(hEle int, pStringXML int) bool {
@@ -129,15 +129,15 @@ func XTree_SetItemTemplateXMLSelFromString(hEle int, pStringXML int) bool {
 	return int(r) != 0
 }
 
-// 列表树_置项背景绘制标志
+// 列表树_置项背景绘制标志, 设置是否绘制指定状态下项的背景
 // hEle: 元素句柄.
-// nFlags: 标志位@reflist_drawItemBk_flag_.
+// nFlags: 标志位: List_DrawItemBk_Flag_.
 func XTree_SetDrawItemBkFlags(hEle int, nFlags int) int {
 	r, _, _ := xTree_SetDrawItemBkFlags.Call(uintptr(hEle), uintptr(nFlags))
 	return int(r)
 }
 
-// 列表树_置项数据
+// 列表树_置项数据, 设置项用户数据
 // hEle: 元素句柄.
 // nID: 项ID.
 // nUserData: 用户数据.
@@ -146,7 +146,7 @@ func XTree_SetItemData(hEle int, nID int, nUserData int) bool {
 	return int(r) != 0
 }
 
-// 列表树_取项数据
+// 列表树_取项数据, 获取项用户数据
 // hEle: 元素句柄.
 // nID: 项ID.
 func XTree_GetItemData(hEle int, nID int) int {
@@ -162,14 +162,14 @@ func XTree_SetSelectItem(hEle int, nID int) bool {
 	return int(r) != 0
 }
 
-// 列表树_取选择项
+// 列表树_取选择项, 返回项ID
 // hEle: 元素句柄.
 func XTree_GetSelectItem(hEle int) int {
 	r, _, _ := xTree_GetSelectItem.Call(uintptr(hEle))
 	return int(r)
 }
 
-// 列表树_可视指定项
+// 列表树_可视指定项, 滚动视图让指定项可见
 // hEle: 元素句柄.
 // nID: 项索引.
 func XTree_VisibleItem(hEle int, nID int) int {
@@ -185,7 +185,7 @@ func XTree_IsExpand(hEle int, nID int) bool {
 	return int(r) != 0
 }
 
-// 列表树_展开项
+// 列表树_展开项, 判断项是否展开
 // hEle: 元素句柄.
 // nID: 项ID.
 // bExpand: 是否展开.
@@ -194,7 +194,7 @@ func XTree_ExpandItem(hEle int, nID int, bExpand bool) bool {
 	return int(r) != 0
 }
 
-// 列表树_展开全部子项
+// 列表树_展开全部子项, 展开所有的子项
 // hEle: 元素句柄.
 // nID: 项ID.
 // bExpand: 是否展开.
@@ -203,7 +203,7 @@ func XTree_ExpandAllChildItem(hEle int, nID int, bExpand bool) bool {
 	return int(r) != 0
 }
 
-// 列表树_测试点击项
+// 列表树_测试点击项, 检测坐标点所在项, 返回项ID
 // hEle: 元素句柄.
 // pPt: 坐标点.
 func XTree_HitTest(hEle int, pPt *POINT) int {
@@ -211,7 +211,7 @@ func XTree_HitTest(hEle int, pPt *POINT) int {
 	return int(r)
 }
 
-// 列表树_测试点击项扩展
+// 列表树_测试点击项扩展, 检测坐标点所在项, 自动添加滚动视图偏移坐标, 返回项ID
 // hEle: 元素句柄.
 // pPt: 坐标点.
 func XTree_HitTestOffset(hEle int, pPt *POINT) int {
@@ -219,7 +219,7 @@ func XTree_HitTestOffset(hEle int, pPt *POINT) int {
 	return int(r)
 }
 
-// 列表树_取第一个子项
+// 列表树_取第一个子项, 获取第一个子项. 成功返回项ID, 失败返回XC_ID_ERROR.
 // hEle: 元素句柄.
 // nID: 项ID.
 func XTree_GetFirstChildItem(hEle int, nID int) int {
@@ -227,7 +227,7 @@ func XTree_GetFirstChildItem(hEle int, nID int) int {
 	return int(r)
 }
 
-// 列表树_取末尾子项
+// 列表树_取末尾子项, 获取末尾子项. 成功返回项ID, 失败返回XC_ID_ERROR.
 // hEle: 元素句柄.
 // nID: 项ID.
 func XTree_GetEndChildItem(hEle int, nID int) int {
@@ -235,7 +235,7 @@ func XTree_GetEndChildItem(hEle int, nID int) int {
 	return int(r)
 }
 
-// 列表树_取上一个兄弟项
+// 列表树_取上一个兄弟项, 成功返回项ID, 失败返回XC_ID_ERROR.
 // hEle: 元素句柄.
 // nID: 项ID.
 func XTree_GetPrevSiblingItem(hEle int, nID int) int {
@@ -243,7 +243,7 @@ func XTree_GetPrevSiblingItem(hEle int, nID int) int {
 	return int(r)
 }
 
-// 列表树_取下一个兄弟项
+// 列表树_取下一个兄弟项, 成功返回项ID, 失败返回XC_ID_ERROR.
 // hEle: 元素句柄.
 // nID: 项ID.
 func XTree_GetNextSiblingItem(hEle int, nID int) int {
@@ -251,7 +251,7 @@ func XTree_GetNextSiblingItem(hEle int, nID int) int {
 	return int(r)
 }
 
-// 列表树_取父项
+// 列表树_取父项, 成功返回项ID, 失败返回XC_ID_ERROR.
 // hEle: 元素句柄.
 // nID: 项ID.
 func XTree_GetParentItem(hEle int, nID int) int {
@@ -259,7 +259,7 @@ func XTree_GetParentItem(hEle int, nID int) int {
 	return int(r)
 }
 
-// 列表树_创建数据适配器
+// 列表树_创建数据适配器, 创建数据适配器，根据绑定的项模板初始化数据适配器的列, 返回适配器句柄.
 // hEle: 元素句柄.
 func XTree_CreateAdapter(hEle int) int {
 	r, _, _ := xTree_CreateAdapter.Call(uintptr(hEle))
@@ -268,27 +268,27 @@ func XTree_CreateAdapter(hEle int) int {
 
 // 列表树_绑定数据适配器
 // hEle: 元素句柄.
-// hAdapter: 数据适配器句柄
+// hAdapter: 数据适配器句柄, XAdTree
 func XTree_BindAdapter(hEle int, hAdapter int) int {
 	r, _, _ := xTree_BindAdapter.Call(uintptr(hEle), uintptr(hAdapter))
 	return int(r)
 }
 
-// 列表树_取数据视频器
+// 列表树_取数据视频器, 返回数据适配器句柄
 // hEle: 元素句柄.
 func XTree_GetAdapter(hEle int) int {
 	r, _, _ := xTree_GetAdapter.Call(uintptr(hEle))
 	return int(r)
 }
 
-// 列表树_刷新数据
+// 列表树_刷新数据, 刷新所有项模板, 以便更新UI
 // hEle: 元素句柄.
 func XTree_RefreshData(hEle int) int {
 	r, _, _ := xTree_RefreshData.Call(uintptr(hEle))
 	return int(r)
 }
 
-// 列表树_刷新指定项
+// 列表树_刷新指定项, 刷新指定项模板, 以便更新UI
 // hEle: 元素句柄.
 // nID: 项ID.
 func XTree_RefreshItem(hEle int, nID int) int {
@@ -296,7 +296,7 @@ func XTree_RefreshItem(hEle int, nID int) int {
 	return int(r)
 }
 
-// 列表树_置缩进
+// 列表树_置缩进, 设置缩进大小
 // hEle: 元素句柄.
 // nWidth: 缩进宽度.
 func XTree_SetIndentation(hEle int, nWidth int) int {
@@ -304,7 +304,7 @@ func XTree_SetIndentation(hEle int, nWidth int) int {
 	return int(r)
 }
 
-// 列表树_取缩进
+// 列表树_取缩进, 返回缩进值大小
 // hEle: 元素句柄.
 func XTree_GetIndentation(hEle int) int {
 	r, _, _ := xTree_GetIndentation.Call(uintptr(hEle))
@@ -323,7 +323,7 @@ func XTree_SetItemHeightDefault(hEle int, nHeight int, nSelHeight int) int {
 // 列表树_取项默认高度
 // hEle: 元素句柄.
 // pHeight: 接收返回高度.
-// pSelHeight: 接收返回值
+// pSelHeight: 接收返回值, 当项选中时的高度
 func XTree_GetItemHeightDefault(hEle int, pHeight *int, pSelHeight *int) int {
 	r, _, _ := xTree_GetItemHeightDefault.Call(uintptr(hEle), uintptr(unsafe.Pointer(pHeight)), uintptr(unsafe.Pointer(pSelHeight)))
 	return int(r)
@@ -343,7 +343,7 @@ func XTree_SetItemHeight(hEle int, nID int, nHeight int, nSelHeight int) int {
 // hEle: 元素句柄.
 // nID: 项ID.
 // pHeight: 接收返回高度.
-// pSelHeight: 接收返回值
+// pSelHeight: 接收返回值, 当项选中时的高度
 func XTree_GetItemHeight(hEle int, nID int, pHeight *int, pSelHeight *int) int {
 	r, _, _ := xTree_GetItemHeight.Call(uintptr(hEle), uintptr(nID), uintptr(unsafe.Pointer(pHeight)), uintptr(unsafe.Pointer(pSelHeight)))
 	return int(r)
@@ -364,11 +364,11 @@ func XTree_GetRowSpace(hEle int) int {
 	return int(r)
 }
 
-// 列表树_移动项
+// 列表树_移动项, 移动项的位置
 // hEle: 元素句柄.
 // nMoveItem: 要移动的项ID.
-// nDestItem: 目标项ID
-// nFlag: 0:目标前面
+// nDestItem: 目标项ID, 参照位置
+// nFlag: 0:目标前面, 1:目标后面, 2:目标子项首, 3:目标子项尾
 func XTree_MoveItem(hEle int, nMoveItem int, nDestItem int, nFlag int) bool {
 	r, _, _ := xTree_MoveItem.Call(uintptr(hEle), uintptr(nMoveItem), uintptr(nDestItem), uintptr(nFlag))
 	return int(r) != 0
@@ -404,21 +404,21 @@ func XTree_AddItemBkImage(hEle int, nState int, hImage int) int {
 	return int(r)
 }
 
-// 列表树_取项背景对象数量
+// 列表树_取项背景对象数量, 返回项背景内容数量
 // hEle: 元素句柄.
 func XTree_GetItemBkInfoCount(hEle int) int {
 	r, _, _ := xTree_GetItemBkInfoCount.Call(uintptr(hEle))
 	return int(r)
 }
 
-// 列表树_清空项背景对象
+// 列表树_清空项背景对象, 清空项背景内容; 如果背景没有内容, 将使用系统默认内容, 以便保证背景正确.
 // hEle: 元素句柄.
 func XTree_ClearItemBkInfo(hEle int) int {
 	r, _, _ := xTree_ClearItemBkInfo.Call(uintptr(hEle))
 	return int(r)
 }
 
-// 列表树_取模板对象
+// 列表树_取模板对象, 通过模板项ID, 获取实例化模板项ID对应的对象句柄
 // hEle: 元素句柄.
 // nID: 树项ID.
 // nTempItemID: 模板项ID.
@@ -427,7 +427,7 @@ func XTree_GetTemplateObject(hEle int, nID int, nTempItemID int) int {
 	return int(r)
 }
 
-// 列表树_取对象所在项
+// 列表树_取对象所在项, 获取当前对象所在模板实例, 属于列表树中哪一个项. 成功返回项ID, 否则返回XC_ID_ERROR.
 // hEle: 元素句柄.
 // hXCGUI: 对象句柄
 func XTree_GetItemIDFromHXCGUI(hEle int, hXCGUI int) int {

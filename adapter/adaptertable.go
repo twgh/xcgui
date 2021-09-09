@@ -4,11 +4,12 @@ import (
 	"github.com/twgh/xcgui/xc"
 )
 
+// 数据适配器-XList-XListBox
 type AdapterTable struct {
 	adapter
 }
 
-// 数据适配器表_创建, 创建列表框元素数据适配器, 返回数据适配器句柄
+// 数据适配器表_创建, 创建列表框元素数据适配器
 func NewAdapterTable() *AdapterTable {
 	p := &AdapterTable{}
 	p.SetHAdapter(xc.XAdTable_Create())

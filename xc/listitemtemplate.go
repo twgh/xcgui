@@ -120,7 +120,7 @@ func XTemp_AddNode(pParentNode int, pNode int) bool {
 }
 
 // 模板_创建节点
-// nType: 对象类型.
+// nType: 对象类型: XC_
 func XTemp_CreateNode(nType int) int {
 	r, _, _ := xTemp_CreateNode.Call(uintptr(nType))
 	return int(r)
@@ -161,7 +161,7 @@ func XTemp_GetNode(pNode int, itemID int) int {
 	return int(r)
 }
 
-// 模板_克隆节点, 获取列表项模板类型, 返回: ListItemTemp_Type_
+// 模板_克隆节点, 克隆一个节点, 返回克隆的节点
 // pNode: 节点指针
 func XTemp_CloneNode(pNode int) int {
 	r, _, _ := xTemp_CloneNode.Call(uintptr(pNode))

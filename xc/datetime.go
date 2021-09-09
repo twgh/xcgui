@@ -2,7 +2,7 @@ package xc
 
 import "unsafe"
 
-// 日期_创建
+// 日期_创建, 创建日期时间元素, 返回元素句柄.
 // x: x坐标
 // y: y坐标
 // cx: 宽度
@@ -13,30 +13,30 @@ func XDateTime_Create(x int, y int, cx int, cy int, hParent int) int {
 	return int(r)
 }
 
-// 日期_置样式
+// 日期_置样式, 设置样式
 // hEle: 元素句柄.
-// nStyle: 样式
+// nStyle: 样式: 0为日期元素, 1为时间元素
 func XDateTime_SetStyle(hEle int, nStyle int) int {
 	r, _, _ := xDateTime_SetStyle.Call(uintptr(hEle), uintptr(nStyle))
 	return int(r)
 }
 
-// 日期_取样式
+// 日期_取样式, 返回元素样式
 // hEle: 元素句柄.
 func XDateTime_GetStyle(hEle int) int {
 	r, _, _ := xDateTime_GetStyle.Call(uintptr(hEle))
 	return int(r)
 }
 
-// 日期_启用分割栏为斜线
+// 日期_启用分割栏为斜线, 切换分割栏为: 斜线或横线
 // hEle: 元素句柄.
-// bSlash: TRUE:斜线
+// bSlash: TRUE: 斜线, FALSE: 横线
 func XDateTime_EnableSplitSlash(hEle int, bSlash bool) int {
 	r, _, _ := xDateTime_EnableSplitSlash.Call(uintptr(hEle), boolPtr(bSlash))
 	return int(r)
 }
 
-// 日期_取内部按钮
+// 日期_取内部按钮, 获取内部按钮元素
 // hEle: 元素句柄.
 // nType: 按钮类型.
 func XDateTime_GetButton(hEle int, nType int) int {
@@ -44,14 +44,14 @@ func XDateTime_GetButton(hEle int, nType int) int {
 	return int(r)
 }
 
-// 日期_取选择日期背景颜色
+// 日期_取选择日期背景颜色, 获取被选择文字的背景颜色
 // hEle: 元素句柄.
 func XDateTime_GetSelBkColor(hEle int) int {
 	r, _, _ := xDateTime_GetSelBkColor.Call(uintptr(hEle))
 	return int(r)
 }
 
-// 日期_置选择日期背景颜色
+// 日期_置选择日期背景颜色, 设置被选择文字的背景颜色
 // hEle: 元素句柄.
 // crSelectBk: 文字被选中背景色.
 // alpha: 透明度
@@ -90,7 +90,7 @@ func XDateTime_GetTime(hEle int, pnHour *int, pnMinute *int, pnSecond *int) int 
 	return int(r)
 }
 
-// 日期_社区当前时间
+// 日期_社区当前时间, 设置当前时分秒
 // hEle: 元素句柄.
 // nHour: 时.
 // nMinute: 分.

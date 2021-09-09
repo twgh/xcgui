@@ -2,18 +2,18 @@ package xc
 
 import "unsafe"
 
-// 列表视_创建
+// 列表视_创建, 返回元素句柄
 // x: 元素x坐标.
 // y: 元素y坐标.
 // cx: 宽度.
 // cy: 高度.
-// hParent: 父是窗口资源句柄或UI元素资源句柄.如果是窗口资源句柄将被添加到窗口
+// hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
 func XListView_Create(x int, y int, cx int, cy int, hParent int) int {
 	r, _, _ := xListView_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), uintptr(hParent))
 	return int(r)
 }
 
-// 列表视_创建数据适配器
+// 列表视_创建数据适配器, 创建数据适配器，根据绑定的项模板初始化数据适配器的列, 返回适配器句柄.
 // hEle: 元素句柄.
 func XListView_CreateAdapter(hEle int) int {
 	r, _, _ := xListView_CreateAdapter.Call(uintptr(hEle))
@@ -28,7 +28,7 @@ func XListView_BindAdapter(hEle int, hAdapter int) int {
 	return int(r)
 }
 
-// 列表视_取数据适配器
+// 列表视_取数据适配器, 返回数据适配器句柄
 // hEle: 元素句柄.
 func XListView_GetAdapter(hEle int) int {
 	r, _, _ := xListView_GetAdapter.Call(uintptr(hEle))
@@ -51,7 +51,7 @@ func XListView_SetItemTemplateXMLFromString(hEle int, pStringXML int) bool {
 	return int(r) != 0
 }
 
-// 列表视_置项模板
+// 列表视_置项模板, 置列表项模板
 // hEle: 元素句柄.
 // hTemp: 模板句柄.
 func XListView_SetItemTemplate(hEle int, hTemp int) bool {
@@ -59,7 +59,7 @@ func XListView_SetItemTemplate(hEle int, hTemp int) bool {
 	return int(r) != 0
 }
 
-// 列表视_取模板对象
+// 列表视_取模板对象, 通过模板项ID, 获取实例化模板项ID对应的对象句柄
 // hEle: 元素句柄.
 // iGroup: 组索引.
 // iItem: 项索引.
@@ -69,7 +69,7 @@ func XListView_GetTemplateObject(hEle int, iGroup int, iItem int, nTempItemID in
 	return int(r)
 }
 
-// 列表视_取模板对象组
+// 列表视_取模板对象组, 通过模板项ID, 获取实例化模板项ID对应的对象句柄
 // hEle: 元素句柄.
 // iGroup: 组索引.
 // nTempItemID: 模板项ID.
@@ -78,9 +78,9 @@ func XListView_GetTemplateObjectGroup(hEle int, iGroup int, nTempItemID int) int
 	return int(r)
 }
 
-// 列表视_取对象所在项
+// 列表视_取对象所在项, 获取当前对象所在模板实例, 属于列表视中哪一个项
 // hEle: 元素句柄.
-// hXCGUI: 对象句柄
+// hXCGUI: 对象句柄, UI元素句柄或形状对象句柄
 // piGroup: 接收组索引.
 // piItem: 接收项索引.
 func XListView_GetItemIDFromHXCGUI(hEle int, hXCGUI int, piGroup *int, piItem *int) bool {
@@ -88,7 +88,7 @@ func XListView_GetItemIDFromHXCGUI(hEle int, hXCGUI int, piGroup *int, piItem *i
 	return int(r) != 0
 }
 
-// 列表视_测试点击项
+// 列表视_测试点击项, 检查坐标点所在项
 // hEle: 元素句柄.
 // pPt: 坐标点.
 // pOutGroup: 接收组索引.
@@ -98,7 +98,7 @@ func XListView_HitTest(hEle int, pPt *POINT, pOutGroup *int, pOutItem *int) bool
 	return int(r) != 0
 }
 
-// 列表视_测试点击项扩展
+// 列表视_测试点击项扩展, 检查坐标点所在项, 自动添加滚动视图偏移量
 // hEle: 元素句柄.
 // pPt: 坐标点.
 // pOutGroup: 接收做索引.
@@ -141,9 +141,9 @@ func XListView_SetVirtualItemCount(hEle int, iGroup int, nCount int) bool {
 	return int(r) != 0
 }
 
-// 列表视_置项背景绘制标志
+// 列表视_置项背景绘制标志, 置是否绘制指定状态下项的背景
 // hEle: 元素句柄.
-// nFlags: 标志位@reflist_drawItemBk_flag_.
+// nFlags: 标志位: List_DrawItemBk_Flag_
 func XListView_SetDrawItemBkFlags(hEle int, nFlags int) int {
 	r, _, _ := xListView_SetDrawItemBkFlags.Call(uintptr(hEle), uintptr(nFlags))
 	return int(r)
@@ -185,7 +185,7 @@ func XListView_VisibleItem(hEle int, iGroup int, iItem int) int {
 	return int(r)
 }
 
-// 列表视_取可视项范围
+// 列表视_取可视项范围, 获取当前可见项范围
 // hEle: 元素句柄
 // piGroup1: 可视开始组
 // piGroup2: 可视结束组
@@ -205,7 +205,7 @@ func XListView_GetSelectItemCount(hEle int) int {
 	return int(r)
 }
 
-// 列表视_取选择项全部
+// 列表视_取选择项全部, 获取选择的项ID, 返回接收项数量
 // hEle: 元素句柄.
 // pArray: 数组
 // nArraySize: 数组大小.
@@ -214,21 +214,21 @@ func XListView_GetSelectAll(hEle int, pArray int, nArraySize int) int {
 	return int(r)
 }
 
-// 列表视_置选择项全部
+// 列表视_置选择项全部, 选择所有的项
 // hEle: 元素句柄.
 func XListView_SetSelectAll(hEle int) int {
 	r, _, _ := xListView_SetSelectAll.Call(uintptr(hEle))
 	return int(r)
 }
 
-// 列表视_取消选择项全部
+// 列表视_取消选择项全部, 取消选择所有项
 // hEle: 元素句柄.
 func XListView_CancelSelectAll(hEle int) int {
 	r, _, _ := xListView_CancelSelectAll.Call(uintptr(hEle))
 	return int(r)
 }
 
-// 列表视_置列间隔
+// 列表视_置列间隔, 置列间隔大小
 // hEle: 元素句柄.
 // space: 间隔大小.
 func XListView_SetColumnSpace(hEle int, space int) int {
@@ -236,7 +236,7 @@ func XListView_SetColumnSpace(hEle int, space int) int {
 	return int(r)
 }
 
-// 列表视_置行间隔
+// 列表视_置行间隔, 置行间隔大小
 // hEle: 元素句柄.
 // space: 间隔大小.
 func XListView_SetRowSpace(hEle int, space int) int {
@@ -342,14 +342,14 @@ func XListView_AddItemBkImage(hEle int, nState int, hImage int) int {
 	return int(r)
 }
 
-// 列表视_取项背景对象数量
+// 列表视_取项背景对象数量, 成功返回背景内容数量, 否则返回XC_ID_ERROR
 // hEle: 元素句柄.
 func XListView_GetItemBkInfoCount(hEle int) int {
 	r, _, _ := xListView_GetItemBkInfoCount.Call(uintptr(hEle))
 	return int(r)
 }
 
-// 列表视_清空项背景对象
+// 列表视_清空项背景对象, 清空项背景内容; 如果背景没有内容, 将使用系统默认内容, 以便保证背景正确.
 // hEle: 元素句柄.
 func XListView_ClearItemBkInfo(hEle int) int {
 	r, _, _ := xListView_ClearItemBkInfo.Call(uintptr(hEle))
@@ -363,16 +363,16 @@ func XListView_RefreshData(hEle int) int {
 	return int(r)
 }
 
-// 列表视_刷新指定项
+// 列表视_刷新指定项, 刷新指定项模板, 以便更新UI
 // hEle: 元素句柄.
 // iGroup: 组索引.
-// iItem: 项索引
+// iItem: 项索引, 如果为-1, 代表为组
 func XListView_RefreshItem(hEle int, iGroup int, iItem int) int {
 	r, _, _ := xListView_RefreshItem.Call(uintptr(hEle), uintptr(iGroup), uintptr(iItem))
 	return int(r)
 }
 
-// 列表视_展开组
+// 列表视_展开组, 成功返回TRUE否则返回FALSE, 如果状态没有改变返回FALSE
 // hEle: 元素句柄.
 // iGroup: 组索引.
 // bExpand: 是否展开.
@@ -381,7 +381,7 @@ func XListView_ExpandGroup(hEle int, iGroup int, bExpand bool) bool {
 	return int(r) != 0
 }
 
-// 列表视_组添加列
+// 列表视_组添加列, 返回列索引
 // hEle: 元素句柄
 // pName: 字段称
 func XListView_Group_AddColumn(hEle int, pName string) int {
@@ -389,7 +389,7 @@ func XListView_Group_AddColumn(hEle int, pName string) int {
 	return int(r)
 }
 
-// 列表视_组添加项文本
+// 列表视_组添加项文本, 返回组索引
 // hEle: 元素句柄
 // pValue: 值
 // iPos: 插入位置
@@ -398,7 +398,7 @@ func XListView_Group_AddItemText(hEle int, pValue string, iPos int) int {
 	return int(r)
 }
 
-// 列表视_组添加项文本扩展
+// 列表视_组添加项文本扩展, 返回组索引
 // hEle: 元素句柄
 // pName: 字段称
 // pValue: 值
@@ -408,7 +408,7 @@ func XListView_Group_AddItemTextEx(hEle int, pName string, pValue string, iPos i
 	return int(r)
 }
 
-// 列表视_组添加项图片
+// 列表视_组添加项图片, 返回组索引
 // hEle: 元素句柄
 // hImage: 图片句柄
 // iPos: 插入位置
@@ -417,7 +417,7 @@ func XListView_Group_AddItemImage(hEle int, hImage int, iPos int) int {
 	return int(r)
 }
 
-// 列表视_组添加项图片扩展
+// 列表视_组添加项图片扩展, 返回组索引
 // hEle: 元素句柄
 // pName: 字段称
 // hImage: 图片句柄
@@ -467,14 +467,14 @@ func XListView_Group_SetImageEx(hEle int, iGroup int, pName string, hImage int) 
 	return int(r) != 0
 }
 
-// 列表视_组获取数量
+// 列表视_组获取数量, 返回组数量
 // hEle: 元素句柄
 func XListView_Group_GetCount(hEle int) int {
 	r, _, _ := xListView_Group_GetCount.Call(uintptr(hEle))
 	return int(r)
 }
 
-// 列表视_项获取数量
+// 列表视_项获取数量, 成功返回项数量, 否则返回 XC_ID_ERROR
 // hEle: 元素句柄
 // iGroup: 组索引
 func XListView_Item_GetCount(hEle int, iGroup int) int {
@@ -482,7 +482,7 @@ func XListView_Item_GetCount(hEle int, iGroup int) int {
 	return int(r)
 }
 
-// 列表视_项添加列
+// 列表视_项添加列, 返回列索引
 // hEle: 元素句柄
 // pName: 字段名
 func XListView_Item_AddColumn(hEle int, pName string) int {
@@ -490,43 +490,43 @@ func XListView_Item_AddColumn(hEle int, pName string) int {
 	return int(r)
 }
 
-// 列表视_项添加文本
+// 列表视_项添加文本, 返回项索引
 // hEle: 元素句柄
 // iGroup: 组索引
 // pValue: 值
-// iPos: 插入位置
+// iPos: 插入位置, -1添加到末尾
 func XListView_Item_AddItemText(hEle int, iGroup int, pValue string, iPos int) int {
 	r, _, _ := xListView_Item_AddItemText.Call(uintptr(hEle), uintptr(iGroup), strPtr(pValue), uintptr(iPos))
 	return int(r)
 }
 
-// 列表视_项添加文本扩展
+// 列表视_项添加文本扩展, 返回项索引
 // hEle: 元素句柄
 // iGroup: 组索引
 // pName: 字段名
 // pValue: 值
-// iPos: 插入位置
+// iPos: 插入位置, -1添加到末尾
 func XListView_Item_AddItemTextEx(hEle int, iGroup int, pName string, pValue string, iPos int) int {
 	r, _, _ := xListView_Item_AddItemTextEx.Call(uintptr(hEle), uintptr(iGroup), strPtr(pName), strPtr(pValue), uintptr(iPos))
 	return int(r)
 }
 
-// 列表视_项添加图片
+// 列表视_项添加图片, 返回项索引
 // hEle: 元素句柄
 // iGroup: 组索引
 // hImage: 图片句柄
-// iPos: 插入位置
+// iPos: 插入位置, -1添加到末尾
 func XListView_Item_AddItemImage(hEle int, iGroup int, hImage int, iPos int) int {
 	r, _, _ := xListView_Item_AddItemImage.Call(uintptr(hEle), uintptr(iGroup), uintptr(hImage), uintptr(iPos))
 	return int(r)
 }
 
-// 列表视_项添加图片扩展
+// 列表视_项添加图片扩展, 返回项索引
 // hEle: 元素句柄
 // iGroup: 组索引
 // pName: 字段名
 // hImage: 图片句柄
-// iPos: 插入位置
+// iPos: 插入位置, -1添加到末尾
 func XListView_Item_AddItemImageEx(hEle int, iGroup int, pName string, hImage int, iPos int) int {
 	r, _, _ := xListView_Item_AddItemImageEx.Call(uintptr(hEle), uintptr(iGroup), strPtr(pName), uintptr(hImage), uintptr(iPos))
 	return int(r)
@@ -648,7 +648,7 @@ func XListView_Item_GetTextEx(hEle int, iGroup int, iItem int, pName string) str
 	return uintPtrToString(r)
 }
 
-// 列表视_项获取图片扩展
+// 列表视_项获取图片扩展, 返回图片句柄
 // hEle: 元素句柄
 // iGroup: 组索引
 // iItem: 项索引

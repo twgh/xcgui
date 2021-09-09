@@ -1,19 +1,20 @@
+// 背景管理器
 package bkmanager
 
 import (
 	"github.com/twgh/xcgui/xc"
 )
 
+// 背景管理器
 type BkManager struct {
 	HBKM int
 }
 
-// 背景_创建, 创建背景管理器, 返回背景管理器句柄
+// 背景_创建, 创建背景管理器
 func NewBkManager() *BkManager {
 	p := &BkManager{
 		HBKM: xc.XBkM_Create(),
 	}
-
 	return p
 }
 

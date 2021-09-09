@@ -9,7 +9,7 @@ import "unsafe"
 // cy: 窗口高度.
 // pTitle: 窗口标题.
 // hWndParent: 父窗口.
-// XCStyle: GUI库窗口样式, Xc_Window_Style_
+// XCStyle: GUI库窗口样式: Xc_Window_Style_
 func XFrameWnd_Create(x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle int) int {
 	r, _, _ := xFrameWnd_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), strPtr(pTitle), uintptr(hWndParent), uintptr(XCStyle))
 	return int(r)
@@ -25,7 +25,7 @@ func XFrameWnd_Create(x int, y int, cx int, cy int, pTitle string, hWndParent in
 // cx: 窗口宽度.
 // cy: 窗口高度.
 // hWndParent: 父窗口.
-// XCStyle: GUI库窗口样式, Xc_Window_Style_
+// XCStyle: GUI库窗口样式: Xc_Window_Style_
 func XFrameWnd_CreateEx(dwExStyle int, lpClassName string, lpWindowName string, dwStyle int, x int, y int, cx int, cy int, hWndParent int, XCStyle int) int {
 	r, _, _ := xFrameWnd_CreateEx.Call(uintptr(dwExStyle), strPtr(lpClassName), strPtr(lpWindowName), uintptr(dwStyle), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), uintptr(hWndParent), uintptr(XCStyle))
 	return int(r)

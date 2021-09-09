@@ -2,7 +2,7 @@ package xc
 
 // 可视对象_置样式, 设置UI对象样式
 // hXCGUI: 对象句柄.
-// nStyle: 样式值, Button_Style_ , FrameWnd_Style_ , ToolBar_Style_ , ListBox_Style_
+// nStyle: 样式值: Button_Style_ , FrameWnd_Style_ , ToolBar_Style_ , ListBox_Style_
 func XUI_SetStyle(hXCGUI, nStyle int) int {
 	r, _, _ := xUI_SetStyle.Call(uintptr(hXCGUI), uintptr(nStyle))
 	return int(r)

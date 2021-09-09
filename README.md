@@ -33,8 +33,8 @@ func main() {
 	hWindow := a.LoadLayoutZip("qqmusic.zip", "main.xml", "", 0)
 
 	win := &window.Window{}
-	// 给类窗口句柄赋值
-	win.SetHWindow(hWindow)
+	// 给类句柄赋值
+	win.SetHandle(hWindow)
 	// 调整布局
 	win.AdjustLayout()
 	// 显示窗口
@@ -72,7 +72,6 @@ package main
 
 import (
 	"github.com/twgh/xcgui/app"
-	"github.com/twgh/xcgui/shape"
 	"github.com/twgh/xcgui/widget"
 	"github.com/twgh/xcgui/window"
 	"github.com/twgh/xcgui/xc"
@@ -96,7 +95,7 @@ func main() {
 	// 窗口居中
 	win.Center()
 	// 创建标签_窗口标题
-	lbl_Title := shape.NewShapeText(15, 15, 56, 20, "Title", win.HWindow)
+	lbl_Title := wid.NewShapeText(15, 15, 56, 20, "Title", win.HWindow)
 	lbl_Title.SetTextColor(xc.RGB(255, 255, 255), 255)
 
 	// 创建最小化按钮
@@ -147,6 +146,7 @@ xc包里的函数都是xcgui.dll里原本的函数，有一千多个API接口，
 | 字体                                  | FontX            | √            |
 | 图片操作                              | Image            | √            |
 | 列表项模板                            | ListItemTemplate | √            |
+| 节点                                  | Node             | √            |
 | 形状对象                              | Shape            | √            |
 | 圆形形状对象                          | ShapeEllipse     | √            |
 | 形状对象GIF                           | ShapeGif         | √            |
@@ -167,17 +167,17 @@ xc包里的函数都是xcgui.dll里原本的函数，有一千多个API接口，
 | 进度条                                | ProgressBar      | √            |
 | 静态文本连接按钮                      | TextLink         | √            |
 | 窗口组件                              | Widget           | √            |
-| 布局元素                              | LayoutEle        |              |
-| 布局框架                              | LayoutFrame      |              |
-| 列表视图                              | ListView         |              |
-| 菜单条                                | MenuBar          |              |
-| Pane元素                              | Pane             |              |
-| 滚动条                                | ScrollBar        |              |
-| 滚动视图                              | ScrollView       |              |
-| 滑动条元素                            | SliderBar        |              |
-| 标签栏元素                            | TabBar           |              |
-| 工具条                                | ToolBar          |              |
-| 列表树元素                            | Tree             |              |
-| 日期时间                              | DateTime         |              |
-| 月历卡片                              | MonthCal         |              |
+| 布局元素                              | LayoutEle        | √            |
+| 布局框架                              | LayoutFrame      | √            |
+| 列表视图                              | ListView         | √            |
+| 菜单条                                | MenuBar          | √            |
+| Pane元素                              | Pane             | √            |
+| 滚动条                                | ScrollBar        | √            |
+| 滚动视图                              | ScrollView       | √            |
+| 滑动条元素                            | SliderBar        | √            |
+| 标签栏元素                            | TabBar           | √            |
+| 工具条                                | ToolBar          | √            |
+| 列表树元素                            | Tree             | √            |
+| 日期时间                              | DateTime         | √            |
+| 月历卡片                              | MonthCal         | √            |
 

@@ -1445,6 +1445,10 @@ var (
 	xMonthCal_SetToday   *syscall.LazyProc
 	xMonthCal_GetToday   *syscall.LazyProc
 	xMonthCal_GetSelDate *syscall.LazyProc
+	// XcObjectBase
+	xObj_GetType     *syscall.LazyProc
+	xObj_GetTypeBase *syscall.LazyProc
+	xObj_GetTypeEx   *syscall.LazyProc
 )
 
 // 初始化xcgui
@@ -2886,6 +2890,11 @@ func init() {
 	xMonthCal_SetToday = xcgui.NewProc("XMonthCal_SetToday")
 	xMonthCal_GetToday = xcgui.NewProc("XMonthCal_GetToday")
 	xMonthCal_GetSelDate = xcgui.NewProc("XMonthCal_GetSelDate")
+	// XcObjectBase
+	xObj_GetType = xcgui.NewProc("XObj_GetType")
+	xObj_GetTypeBase = xcgui.NewProc("XObj_GetTypeBase")
+	xObj_GetTypeEx = xcgui.NewProc("XObj_GetTypeEx")
+
 }
 
 // string到uintptr

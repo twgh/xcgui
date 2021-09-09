@@ -4,7 +4,6 @@ import (
 	"github.com/twgh/xcgui/app"
 	"github.com/twgh/xcgui/bkmanager"
 	"github.com/twgh/xcgui/image"
-	"github.com/twgh/xcgui/shape"
 	"github.com/twgh/xcgui/widget"
 	"github.com/twgh/xcgui/window"
 	"github.com/twgh/xcgui/xc"
@@ -32,14 +31,14 @@ func main() {
 	win.SetBkMagager(bkm_win.HBKM)
 
 	// 创建标签_窗口标题
-	lbl_Title := shape.NewShapeText(15, 15, 56, 20, "Title", win.HWindow)
+	lbl_Title := widget.NewShapeText(15, 15, 56, 20, "Title", win.Handle)
 	lbl_Title.SetTextColor(xc.RGB(255, 255, 255), 255)
 
 	// 创建最小化按钮
-	btn_Min := widget.NewButton(395, 10, 30, 30, "", win.HWindow)
+	btn_Min := widget.NewButton(395, 10, 30, 30, "", win.Handle)
 	btn_Min.SetType(xcc.Button_Type_Min)
 	// 创建结束按钮
-	btn_Close := widget.NewButton(425, 10, 30, 30, "", win.HWindow)
+	btn_Close := widget.NewButton(425, 10, 30, 30, "", win.Handle)
 	btn_Close.SetType(xcc.Button_Type_Close)
 	// 启用按钮背景透明
 	btn_Min.EnableBkTransparent(true)

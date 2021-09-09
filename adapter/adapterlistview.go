@@ -4,11 +4,12 @@ import (
 	"github.com/twgh/xcgui/xc"
 )
 
+// 数据适配器-列表视元素
 type AdapterListView struct {
 	adapter
 }
 
-// 数据适配器列表视_创建, 创建列表视元素数据适配器, 返回数据适配器句柄
+// 数据适配器列表视_创建, 创建列表视元素数据适配器
 func NewAdapterListView() *AdapterListView {
 	p := &AdapterListView{}
 	p.SetHAdapter(xc.XAdListView_Create())

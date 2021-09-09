@@ -1,9 +1,11 @@
+// 数据适配器
 package adapter
 
 import (
 	"github.com/twgh/xcgui/xc"
 )
 
+// 数据适配器
 type adapter struct {
 	HAdapter int
 }
