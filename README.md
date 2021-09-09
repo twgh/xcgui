@@ -95,7 +95,7 @@ func main() {
 	// 窗口居中
 	win.Center()
 	// 创建标签_窗口标题
-	lbl_Title := widg.NewShapeText(15, 15, 56, 20, "Title", win.HWindow)
+	lbl_Title := widget.NewShapeText(15, 15, 56, 20, "Title", win.Handle)
 	lbl_Title.SetTextColor(xc.RGB(255, 255, 255), 255)
 
 	// 创建最小化按钮
