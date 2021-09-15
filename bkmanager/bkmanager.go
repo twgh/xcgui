@@ -18,6 +18,11 @@ func NewBkManager() *BkManager {
 	return p
 }
 
+// 给本类的HBKM赋值
+func (b *BkManager) SetHBKM(hBkm int) {
+	b.HBKM = hBkm
+}
+
 // 背景_销毁
 func (b *BkManager) Destroy() int {
 	return xc.XBkM_Destroy(b.HBKM)

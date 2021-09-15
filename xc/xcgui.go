@@ -93,6 +93,7 @@ var (
 	xC_LoadResourceZipMem         *syscall.LazyProc
 	xC_LoadResourceFromString     *syscall.LazyProc
 	xC_LoadResourceFromStringUtf8 *syscall.LazyProc
+	xC_LoadStyleFromString        *syscall.LazyProc
 	// Window
 	xWnd_Create                    *syscall.LazyProc
 	xWnd_CreateEx                  *syscall.LazyProc
@@ -180,6 +181,8 @@ var (
 	xWnd_SetShadowInfo             *syscall.LazyProc
 	xWnd_GetShadowInfo             *syscall.LazyProc
 	xWnd_GetTransparentType        *syscall.LazyProc
+	xWnd_Attach                    *syscall.LazyProc
+	xWnd_EnableDragFiles           *syscall.LazyProc
 	// Widget
 	xWidget_IsShow                 *syscall.LazyProc
 	xWidget_Show                   *syscall.LazyProc
@@ -371,6 +374,7 @@ var (
 	xFrameWnd_LoadLayoutFile       *syscall.LazyProc
 	xFrameWnd_AddPane              *syscall.LazyProc
 	xFrameWnd_MergePane            *syscall.LazyProc
+	xFrameWnd_Attach               *syscall.LazyProc
 	// Menu
 	xMenu_Create               *syscall.LazyProc
 	xMenu_AddItem              *syscall.LazyProc
@@ -410,6 +414,7 @@ var (
 	xModalWnd_EnableEscClose  *syscall.LazyProc
 	xModalWnd_DoModal         *syscall.LazyProc
 	xModalWnd_EndModal        *syscall.LazyProc
+	xModalWnd_Attach          *syscall.LazyProc
 	// LayoutBox
 	xLayoutBox_EnableHorizon      *syscall.LazyProc
 	xLayoutBox_EnableAutoWrap     *syscall.LazyProc
@@ -887,6 +892,7 @@ var (
 	xDraw_TextOut                *syscall.LazyProc
 	xDraw_TextOutEx              *syscall.LazyProc
 	xDraw_TextOutA               *syscall.LazyProc
+	xDraw_DrawArc                *syscall.LazyProc
 	// Ease
 	xEase_Linear  *syscall.LazyProc
 	xEase_Quad    *syscall.LazyProc
@@ -1238,6 +1244,7 @@ var (
 	xMenuBar_GetMenu         *syscall.LazyProc
 	xMenuBar_DeleteButton    *syscall.LazyProc
 	xMenuBar_EnableAutoWidth *syscall.LazyProc
+	xMenuBar_GetButton       *syscall.LazyProc
 	// Pane
 	xPane_Create           *syscall.LazyProc
 	xPane_SetView          *syscall.LazyProc
@@ -1539,6 +1546,7 @@ func init() {
 	xC_LoadResourceZipMem = xcgui.NewProc("XC_LoadResourceZipMem")
 	xC_LoadResourceFromString = xcgui.NewProc("XC_LoadResourceFromString")
 	xC_LoadResourceFromStringUtf8 = xcgui.NewProc("XC_LoadResourceFromStringUtf8")
+	xC_LoadStyleFromString = xcgui.NewProc("XC_LoadStyleFromString")
 	// Window
 	xWnd_Create = xcgui.NewProc("XWnd_Create")
 	xWnd_CreateEx = xcgui.NewProc("XWnd_CreateEx")
@@ -1625,6 +1633,8 @@ func init() {
 	xWnd_SetShadowInfo = xcgui.NewProc("XWnd_SetShadowInfo")
 	xWnd_GetShadowInfo = xcgui.NewProc("XWnd_GetShadowInfo")
 	xWnd_GetTransparentType = xcgui.NewProc("XWnd_GetTransparentType")
+	xWnd_Attach = xcgui.NewProc("XWnd_Attach")
+	xWnd_EnableDragFiles = xcgui.NewProc("XWnd_EnableDragFiles")
 	// Widget
 	xWidget_IsShow = xcgui.NewProc("XWidget_IsShow")
 	xWidget_Show = xcgui.NewProc("XWidget_Show")
@@ -1816,6 +1826,7 @@ func init() {
 	xFrameWnd_LoadLayoutFile = xcgui.NewProc("XFrameWnd_LoadLayoutFile")
 	xFrameWnd_AddPane = xcgui.NewProc("XFrameWnd_AddPane")
 	xFrameWnd_MergePane = xcgui.NewProc("XFrameWnd_MergePane")
+	xFrameWnd_Attach = xcgui.NewProc("XFrameWnd_Attach")
 	// Menu
 	xMenu_Create = xcgui.NewProc("XMenu_Create")
 	xMenu_AddItem = xcgui.NewProc("XMenu_AddItem")
@@ -1855,6 +1866,7 @@ func init() {
 	xModalWnd_EnableEscClose = xcgui.NewProc("XModalWnd_EnableEscClose")
 	xModalWnd_DoModal = xcgui.NewProc("XModalWnd_DoModal")
 	xModalWnd_EndModal = xcgui.NewProc("XModalWnd_EndModal")
+	xModalWnd_Attach = xcgui.NewProc("XModalWnd_Attach")
 	// LayoutBox
 	xLayoutBox_EnableHorizon = xcgui.NewProc("XLayoutBox_EnableHorizon")
 	xLayoutBox_EnableAutoWrap = xcgui.NewProc("XLayoutBox_EnableAutoWrap")
@@ -2332,6 +2344,7 @@ func init() {
 	xDraw_TextOut = xcgui.NewProc("XDraw_TextOut")
 	xDraw_TextOutEx = xcgui.NewProc("XDraw_TextOutEx")
 	xDraw_TextOutA = xcgui.NewProc("XDraw_TextOutA")
+	xDraw_DrawArc = xcgui.NewProc("XDraw_DrawArc")
 	// Ease
 	xEase_Linear = xcgui.NewProc("XEase_Linear")
 	xEase_Quad = xcgui.NewProc("XEase_Quad")
@@ -2683,6 +2696,7 @@ func init() {
 	xMenuBar_GetMenu = xcgui.NewProc("XMenuBar_GetMenu")
 	xMenuBar_DeleteButton = xcgui.NewProc("XMenuBar_DeleteButton")
 	xMenuBar_EnableAutoWidth = xcgui.NewProc("XMenuBar_EnableAutoWidth")
+	xMenuBar_GetButton = xcgui.NewProc("XMenuBar_GetButton")
 	// Pane
 	xPane_Create = xcgui.NewProc("XPane_Create")
 	xPane_SetView = xcgui.NewProc("XPane_SetView")

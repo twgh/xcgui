@@ -146,6 +146,11 @@ func NewNode(nType int) *Node {
 	return p
 }
 
+// 给本类的PNode赋值
+func (n *Node) SetPNode(pNode int) {
+	n.PNode = pNode
+}
+
 // 模板_取节点, 获取节点, 根据itemID
 // pNode: 节点指针
 // itemID: ID.

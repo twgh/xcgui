@@ -683,8 +683,8 @@ func XDraw_DrawTextUnderline(hDraw int, lpString string, nCount int, lpRect *REC
 // nYStart: XX.
 // lpString: XX.
 // cbString: XX.
-func XDraw_TextOut(hDraw int, nXStart int, nYStart int, lpString string, cbString int) int {
-	r, _, _ := xDraw_TextOut.Call(uintptr(hDraw), uintptr(nXStart), uintptr(nYStart), strPtr(lpString), uintptr(cbString))
+func XDraw_TextOut(hDraw int, nXStart int, nYStart int, lpString string, cbString string) int {
+	r, _, _ := xDraw_TextOut.Call(uintptr(hDraw), uintptr(nXStart), uintptr(nYStart), strPtr(lpString), strPtr(cbString))
 	return int(r)
 }
 
@@ -703,7 +703,20 @@ func XDraw_TextOutEx(hDraw int, nXStart int, nYStart int, lpString string) int {
 // nXStart: XX.
 // nYStart: XX.
 // lpString: XX.
-func XDraw_TextOutA(hDraw int, nXStart int, nYStart int, lpString int) int {
-	r, _, _ := xDraw_TextOutA.Call(uintptr(hDraw), uintptr(nXStart), uintptr(nYStart), uintptr(lpString))
+func XDraw_TextOutA(hDraw int, nXStart int, nYStart int, lpString string) int {
+	r, _, _ := xDraw_TextOutA.Call(uintptr(hDraw), uintptr(nXStart), uintptr(nYStart), strPtr(lpString))
+	return int(r)
+}
+
+// 绘制_圆弧.
+// hDraw: 图形绘制句柄.
+// x: 坐标.
+// y: 坐标.
+// nWidth: 宽度.
+// nHeight: 高度.
+// startAngle: 起始角度.
+// sweepAngle: 绘制角度, 从起始角度开始计算.
+func XDraw_DrawArc(hDraw int, x, y int, nWidth int, nHeight int, startAngle float32, sweepAngle float32) int {
+	r, _, _ := xDraw_DrawArc.Call(uintptr(hDraw), uintptr(x), uintptr(y), uintptr(nWidth), uintptr(nHeight), uintptr(startAngle), uintptr(sweepAngle))
 	return int(r)
 }

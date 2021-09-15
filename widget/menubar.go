@@ -48,3 +48,9 @@ func (m *MenuBar) DeleteButton(nIndex int) bool {
 func (m *MenuBar) EnableAutoWidth(bEnable bool) int {
 	return xc.XMenuBar_EnableAutoWidth(m.Handle, bEnable)
 }
+
+// 菜单条_取菜单按钮. 返回按钮句柄.
+// nIndex: 菜单条按钮索引.
+func (m *MenuBar) GetButton(nIndex int) bool {
+	return xc.XMenuBar_GetButton(m.Handle, nIndex)
+}

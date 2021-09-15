@@ -100,3 +100,10 @@ func XFrameWnd_MergePane(hWindow int, hPaneDest int, hPaneNew int) bool {
 	r, _, _ := xFrameWnd_MergePane.Call(uintptr(hWindow), uintptr(hPaneDest), uintptr(hPaneNew))
 	return int(r) != 0
 }
+
+// 框架窗口_附加窗口, 返回窗口资源句柄.
+// hWnd: 要附加的外部窗口句柄.
+func XFrameWnd_Attach(hWnd int) int {
+	r, _, _ := xFrameWnd_Attach.Call(uintptr(hWnd))
+	return int(r)
+}

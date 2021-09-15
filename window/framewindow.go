@@ -93,3 +93,8 @@ func (fw *FrameWindow) AddPane(hPaneDest int, hPaneNew int, align int) bool {
 func (fw *FrameWindow) MergePane(hPaneDest int, hPaneNew int) bool {
 	return xc.XFrameWnd_MergePane(fw.Handle, hPaneDest, hPaneNew)
 }
+
+// 框架窗口_附加窗口, 返回窗口资源句柄.
+func (fm *FrameWindow) Attach() int {
+	return xc.XFrameWnd_Attach(fm.Handle)
+}

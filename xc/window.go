@@ -720,3 +720,18 @@ func XWnd_GetTransparentType(hWindow int) int {
 	r, _, _ := xWnd_GetTransparentType.Call(uintptr(hWindow))
 	return int(r)
 }
+
+// 窗口_附加窗口, 返回窗口资源句柄.
+// hWnd: 要附加的外部窗口句柄.
+func XWnd_Attach(hWnd int) int {
+	r, _, _ := xWnd_Attach.Call(uintptr(hWnd))
+	return int(r)
+}
+
+// 窗口_启用拖放文件
+// hWindow: 窗口句柄.
+// bEnable: 是否启用.
+func XWnd_EnableDragFiles(hWindow int, bEnable bool) bool {
+	r, _, _ := xWnd_EnableDragFiles.Call(uintptr(hWindow), boolPtr(bEnable))
+	return int(r) != 0
+}

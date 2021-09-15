@@ -10,7 +10,7 @@ DirectUI设计思想: 在窗口内没有子窗口，界面元素都是逻辑上�
 
 使用UI设计器可以快速设计界面，节省大量代码。
 
-![uidesigner](https://github.com/twgh/xcgui/blob/main/example/uidesigner/uidesigner.png)
+[![uidesigner](https://z3.ax1x.com/2021/09/15/4Vmh9S.png)](https://imgtu.com/i/4Vmh9S)
 
 只有这么多代码：
 
@@ -65,7 +65,7 @@ go get github.com/twgh/xcgui
 
 # 简单窗口（纯代码）
 
-![example](https://github.com/twgh/xcgui/blob/main/example/simplewindow/simplewindow.jpg)
+[![SimpleWindow](https://z3.ax1x.com/2021/09/15/4VnNuj.jpg)](https://imgtu.com/i/4VnNuj)
 
 ```go
 package main

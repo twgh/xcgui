@@ -571,6 +571,17 @@ func (w *windowBase) GetTransparentType() int {
 	return xc.XWnd_GetTransparentType(w.Handle)
 }
 
+// 窗口_附加窗口, 返回窗口资源句柄.
+func (w *windowBase) Attach() int {
+	return xc.XWnd_Attach(w.Handle)
+}
+
+// 窗口_启用拖放文件
+// bEnable: 是否启用.
+func (w *windowBase) EnableDragFiles(bEnable bool) bool {
+	return xc.XWnd_EnableDragFiles(w.Handle, bEnable)
+}
+
 /*
 下面都是事件
 */

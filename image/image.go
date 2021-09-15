@@ -211,6 +211,11 @@ func NewImage_LoadFromHBITMAP(hBitmap int) *Image {
 	return p
 }
 
+// 给本类的HImage赋值
+func (i *Image) SetHImage(hImage int) {
+	i.HImage = hImage
+}
+
 // 图片_判断缩放, 是否为拉伸图片句柄
 func (i *Image) IsStretch() bool {
 	return xc.XImage_IsStretch(i.HImage)

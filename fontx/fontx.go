@@ -77,6 +77,11 @@ func NewFontXFromFile(pFontFile string, size int, style int) *FontX {
 	return p
 }
 
+// 给本类的HFontX赋值
+func (f *FontX) SetHFontX(hFontX int) {
+	f.HFontX = hFontX
+}
+
 // 字体_启用自动销毁, 是否自动销毁
 // bEnable: 是否启用.
 func (f *FontX) EnableAutoDestroy(bEnable bool) int {

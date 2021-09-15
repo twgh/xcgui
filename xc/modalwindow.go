@@ -57,3 +57,10 @@ func XModalWnd_EndModal(hWindow int, nResult int) int {
 	r, _, _ := xModalWnd_EndModal.Call(uintptr(hWindow), uintptr(nResult))
 	return int(r)
 }
+
+// 模态窗口_附加窗口, 返回窗口资源句柄.
+// hWnd: 要附加的外部窗口句柄.
+func XModalWnd_Attach(hWnd int) int {
+	r, _, _ := xModalWnd_Attach.Call(uintptr(hWnd))
+	return int(r)
+}

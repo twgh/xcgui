@@ -465,3 +465,10 @@ func (a *App) LoadResourceFromString(pStringXML string, pFileName string) bool {
 func (a *App) LoadResourceFromStringUtf8(pStringXML string, pFileName string) bool {
 	return xc.XC_LoadResourceFromStringUtf8(pStringXML, pFileName)
 }
+
+// 炫彩_加载样式文件从字符串.
+// pFileName: 样式文件名, 用于打印错误文件和定位关联资源文件位置.
+// pString: 字符串.
+func (a *App) LoadStyleFromString(pFileName string, pString string) bool {
+	return xc.XC_LoadStyleFromString(pFileName, pString)
+}

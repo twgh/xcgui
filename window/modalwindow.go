@@ -60,3 +60,8 @@ func (m *ModalWindow) DoModal() int {
 func (m *ModalWindow) EndModal(nResult int) int {
 	return xc.XModalWnd_EndModal(m.Handle, nResult)
 }
+
+// 模态窗口_附加窗口, 返回窗口资源句柄.
+func (m *ModalWindow) Attach() int {
+	return xc.XModalWnd_Attach(m.Handle)
+}

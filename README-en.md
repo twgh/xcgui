@@ -10,7 +10,7 @@ Official website：[www.xcgui.com](http://www.xcgui.com "xcgui 官方网站")
 
 Using the UI designer can quickly design the interface and save a lot of code.
 
-![uidesigner](https://github.com/twgh/xcgui/blob/main/example/uidesigner/uidesigner.png)
+[![uidesigner](https://z3.ax1x.com/2021/09/15/4Vmh9S.png)](https://imgtu.com/i/4Vmh9S)
 
 Only so much code：
 
@@ -65,7 +65,7 @@ It is best to put it in the C:\Windows\System32 directory during development, so
 
 # Simple window(Pure code)
 
-![example](https://github.com/twgh/xcgui/blob/main/example/simplewindow/simplewindow.jpg)
+[![SimpleWindow](https://z3.ax1x.com/2021/09/15/4VnNuj.jpg)](https://imgtu.com/i/4VnNuj)
 
 ```go
 package main

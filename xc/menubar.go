@@ -50,3 +50,11 @@ func XMenuBar_EnableAutoWidth(hEle int, bEnable bool) int {
 	r, _, _ := xMenuBar_EnableAutoWidth.Call(uintptr(hEle), boolPtr(bEnable))
 	return int(r)
 }
+
+// 菜单条_取菜单按钮. 返回按钮句柄.
+// hEle: 元素句柄.
+// nIndex: 菜单条按钮索引.
+func XMenuBar_GetButton(hEle int, nIndex int) bool {
+	r, _, _ := xMenuBar_GetButton.Call(uintptr(hEle), uintptr(nIndex))
+	return int(r) != 0
+}

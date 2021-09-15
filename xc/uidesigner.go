@@ -112,3 +112,11 @@ func XC_LoadResourceFromStringUtf8(pStringXML string, pFileName string) bool {
 	r, _, _ := xC_LoadResourceFromStringUtf8.Call(strPtr(pStringXML), strPtr(pFileName))
 	return int(r) != 0
 }
+
+// 炫彩_加载样式文件从字符串.
+// pFileName: 样式文件名, 用于打印错误文件和定位关联资源文件位置.
+// pString: 字符串.
+func XC_LoadStyleFromString(pFileName string, pString string) bool {
+	r, _, _ := xC_LoadStyleFromString.Call(strPtr(pFileName), strPtr(pString))
+	return int(r) != 0
+}
