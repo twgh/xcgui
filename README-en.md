@@ -53,7 +53,7 @@ go get github.com/twgh/xcgui
 
 # Documentation
 
-[Documentation](https://pkg.go.dev/github.com/twgh/xcgui)    [Chm Help Document](https://github.com/twgh/xcgui-example/blob/main/help/%E7%82%AB%E5%BD%A9%E7%95%8C%E9%9D%A2%E5%BA%93-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3(v3.0)-(2021-08-04).chm)
+[Documentation](https://pkg.go.dev/github.com/twgh/xcgui)    [Chm Help Document](https://github.com/twgh/xcgui-example/blob/main/help/%E7%82%AB%E5%BD%A9%E7%95%8C%E9%9D%A2%E5%BA%93-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3(v3.0)-(2021-09-08).chm)
 
 # Dynamic link library download
 
