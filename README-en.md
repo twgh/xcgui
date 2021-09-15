@@ -10,7 +10,7 @@ Official website：[www.xcgui.com](http://www.xcgui.com "xcgui 官方网站")
 
 Using the UI designer can quickly design the interface and save a lot of code.
 
-[![uidesigner](https://z3.ax1x.com/2021/09/15/4Vmh9S.png)](https://imgtu.com/i/4Vmh9S)
+[![uidesigner](https://z3.ax1x.com/2021/09/15/4Vmh9S.png)](https://github.com/twgh/xcgui-example/blob/main/uidesigner/uidesigner.png)
 
 Only so much code：
 
@@ -53,11 +53,11 @@ go get github.com/twgh/xcgui
 
 # Documentation
 
-[Documentation](https://pkg.go.dev/github.com/twgh/xcgui)    [Chm Help Document](https://github.com/twgh/xcgui/blob/main/help/%E7%82%AB%E5%BD%A9%E7%95%8C%E9%9D%A2%E5%BA%93-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3(v3.0)-(2021-08-04).chm)
+[Documentation](https://pkg.go.dev/github.com/twgh/xcgui)    [Chm Help Document](https://github.com/twgh/xcgui-example/blob/main/help/%E7%82%AB%E5%BD%A9%E7%95%8C%E9%9D%A2%E5%BA%93-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3(v3.0)-(2021-08-04).chm)
 
 # Dynamic link library download
 
-[xcgui.dll(x64)](https://github.com/twgh/xcgui/blob/main/help/x64/XCGUI.dll)        [xcgui.dll(x86)](https://github.com/twgh/xcgui/blob/main/help/x86/XCGUI.dll)
+[xcgui.dll(x64)](https://github.com/twgh/xcgui-example/blob/main/help/x64/XCGUI.dll)        [xcgui.dll(x86)](https://github.com/twgh/xcgui-example/blob/main/help/x86/XCGUI.dll)
 
 When the program is running, you need to put "XCGUI.dll" in the program running directory.
 
@@ -65,7 +65,7 @@ It is best to put it in the C:\Windows\System32 directory during development, so
 
 # Simple window(Pure code)
 
-[![SimpleWindow](https://z3.ax1x.com/2021/09/15/4VnNuj.jpg)](https://imgtu.com/i/4VnNuj)
+[![SimpleWindow](https://z3.ax1x.com/2021/09/15/4VnNuj.jpg)](https://github.com/twgh/xcgui-example/blob/main/SimpleWindow/SimpleWindow.jpg)
 
 ```go
 package main

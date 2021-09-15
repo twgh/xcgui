@@ -10,7 +10,7 @@ DirectUI设计思想: 在窗口内没有子窗口，界面元素都是逻辑上�
 
 使用UI设计器可以快速设计界面，节省大量代码。
 
-[![uidesigner](https://z3.ax1x.com/2021/09/15/4Vmh9S.png)](https://imgtu.com/i/4Vmh9S)
+[![uidesigner](https://z3.ax1x.com/2021/09/15/4Vmh9S.png)](https://github.com/twgh/xcgui-example/blob/main/uidesigner/uidesigner.png)
 
 只有这么多代码：
 
@@ -53,11 +53,11 @@ go get github.com/twgh/xcgui
 
 # 项目文档
 
-[项目文档](https://pkg.go.dev/github.com/twgh/xcgui)        [chm帮助文档](https://github.com/twgh/xcgui/blob/main/help/%E7%82%AB%E5%BD%A9%E7%95%8C%E9%9D%A2%E5%BA%93-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3(v3.0)-(2021-08-04).chm)
+[项目文档](https://pkg.go.dev/github.com/twgh/xcgui)        [chm帮助文档](https://github.com/twgh/xcgui-example/blob/main/help/%E7%82%AB%E5%BD%A9%E7%95%8C%E9%9D%A2%E5%BA%93-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3(v3.0)-(2021-08-04).chm)
 
 # 动态链接库下载
 
-[xcgui.dll(x64)](https://github.com/twgh/xcgui/blob/main/help/x64/XCGUI.dll)        [xcgui.dll(x86)](https://github.com/twgh/xcgui/blob/main/help/x86/XCGUI.dll)
+[xcgui.dll(x64)](https://github.com/twgh/xcgui-example/blob/main/help/x64/XCGUI.dll)        [xcgui.dll(x86)](https://github.com/twgh/xcgui-example/blob/main/help/x86/XCGUI.dll)
 
 程序运行时需要把"XCGUI.dll"放到程序运行目录。
 
@@ -65,7 +65,7 @@ go get github.com/twgh/xcgui
 
 # 简单窗口（纯代码）
 
-[![SimpleWindow](https://z3.ax1x.com/2021/09/15/4VnNuj.jpg)](https://imgtu.com/i/4VnNuj)
+[![SimpleWindow](https://z3.ax1x.com/2021/09/15/4VnNuj.jpg)](https://github.com/twgh/xcgui-example/blob/main/SimpleWindow/SimpleWindow.jpg)
 
 ```go
 package main
