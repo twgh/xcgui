@@ -742,17 +742,448 @@ func (e *Element) AdjustLayoutEx(nFlags int, nAdjustNo int) int {
 下面都是事件
 */
 
+type XE_ELEPROCE func(nEvent int, wParam int, lParam int, pbHandled *bool) int            // 元素处理过程事件.
+type XE_ELEPROCE1 func(hEle int, nEvent int, wParam int, lParam int, pbHandled *bool) int // 元素处理过程事件.
+type XE_PAINT func(hDraw int, pbHandled *bool) int                                        // 元素绘制事件
+type XE_PAINT1 func(hEle int, hDraw int, pbHandled *bool) int                             // 元素绘制事件
+type XE_PAINT_END func(hDraw int, pbHandled *bool) int                                    // 该元素及子元素绘制完成事件.启用该功能需要调用XEle_EnableEvent_XE_PAINT_END()
+type XE_PAINT_END1 func(hEle int, hDraw int, pbHandled *bool) int                         // 该元素及子元素绘制完成事件.启用该功能需要调用XEle_EnableEvent_XE_PAINT_END()
+type XE_PAINT_SCROLLVIEW func(hDraw int, pbHandled *bool) int                             // 滚动视图绘制事件.
+type XE_PAINT_SCROLLVIEW1 func(hEle int, hDraw int, pbHandled *bool) int                  // 滚动视图绘制事件.
+type XE_MOUSEMOVE func(nFlags int, pPt *xc.POINT, pbHandled *bool) int                    // 元素鼠标移动事件.
+type XE_MOUSEMOVE1 func(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int         // 元素鼠标移动事件.
+type XE_MOUSESTAY func(pbHandled *bool) int                                               // 元素鼠标进入事件.
+type XE_MOUSESTAY1 func(hEle int, pbHandled *bool) int                                    // 元素鼠标进入事件.
+type XE_MOUSEHOVER func(nFlags int, pPt *xc.POINT, pbHandled *bool) int                   // 元素鼠标悬停事件.
+type XE_MOUSEHOVER1 func(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int        // 元素鼠标悬停事件.
+type XE_MOUSELEAVE func(hEleStay int, pbHandled *bool) int                                // 元素鼠标离开事件.
+type XE_MOUSELEAVE1 func(hEle int, hEleStay int, pbHandled *bool) int                     // 元素鼠标离开事件.
+type XE_MOUSEWHEEL func(nFlags int, pPt *xc.POINT, pbHandled *bool) int                   // 元素鼠标滚轮滚动事件. 如果非滚动视图需要调用 XEle_EnableEvent_XE_MOUSEWHEEL(). flags: 见MSDN中WM_MOUSEWHEEL消息wParam参数说明.
+type XE_MOUSEWHEEL1 func(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int        // 元素鼠标滚轮滚动事件. 如果非滚动视图需要调用 XEle_EnableEvent_XE_MOUSEWHEEL(). flags: 见MSDN中WM_MOUSEWHEEL消息wParam参数说明.
+type XE_LBUTTONDOWN func(nFlags int, pPt *xc.POINT, pbHandled *bool) int                  // 鼠标左键按下事件.
+type XE_LBUTTONDOWN1 func(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int       // 鼠标左键按下事件.
+type XE_LBUTTONUP func(nFlags int, pPt *xc.POINT, pbHandled *bool) int                    // 鼠标左键弹起事件.
+type XE_LBUTTONUP1 func(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int         // 鼠标左键弹起事件.
+type XE_RBUTTONDOWN func(nFlags int, pPt *xc.POINT, pbHandled *bool) int                  // 鼠标右键按下事件.
+type XE_RBUTTONDOWN1 func(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int       // 鼠标右键按下事件.
+type XE_RBUTTONUP func(nFlags int, pPt *xc.POINT, pbHandled *bool) int                    // 鼠标右键弹起事件.
+type XE_RBUTTONUP1 func(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int         // 鼠标右键弹起事件.
+type XE_LBUTTONDBCLICK func(nFlags int, pPt *xc.POINT, pbHandled *bool) int               // 鼠标左键双击事件.
+type XE_LBUTTONDBCLICK1 func(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int    // 鼠标左键双击事件.
+type XE_XC_TIMER func(nTimerID int, pbHandled *bool) int                                  // 炫彩定时器,非系统定时器,定时器消息 XM_TIMER.
+type XE_XC_TIMER1 func(hEle int, nTimerID int, pbHandled *bool) int                       // 炫彩定时器,非系统定时器,定时器消息 XM_TIMER.
+type XE_ADJUSTLAYOUT func(nFlags int, nAdjustNo int, pbHandled *bool) int                 // 调整布局事件. 暂停使用
+type XE_ADJUSTLAYOUT1 func(hEle int, nFlags int, nAdjustNo int, pbHandled *bool) int      // 调整布局事件. 暂停使用
+type XE_ADJUSTLAYOUT_END func(nFlags int, nAdjustNo int, pbHandled *bool) int             // 调整布局完成事件.
+type XE_ADJUSTLAYOUT_END1 func(hEle int, nFlags int, nAdjustNo int, pbHandled *bool) int  // 调整布局完成事件.
+type XE_SETFOCUS func(pbHandled *bool) int                                                // 元素获得焦点事件.
+type XE_SETFOCUS1 func(hEle int, pbHandled *bool) int                                     // 元素获得焦点事件.
+type XE_KILLFOCUS func(pbHandled *bool) int                                               // 元素失去焦点事件.
+type XE_KILLFOCUS1 func(hEle int, pbHandled *bool) int                                    // 元素失去焦点事件.
+type XE_DESTROY func(pbHandled *bool) int                                                 // 元素即将销毁事件. 在销毁子对象之前触发
+type XE_DESTROY1 func(hEle int, pbHandled *bool) int                                      // 元素即将销毁事件. 在销毁子对象之前触发
+type XE_DESTROY_END func(pbHandled *bool) int                                             // 元素销毁完成事件. 在销毁子对象之后触发
+type XE_DESTROY_END1 func(hEle int, pbHandled *bool) int                                  // 元素销毁完成事件. 在销毁子对象之后触发
+type XE_SIZE func(nFlags int, nAdjustNo int, pbHandled *bool) int                         // 元素大小改变事件. nFlags: AdjustLayout_
+type XE_SIZE1 func(hEle int, nFlags int, nAdjustNo int, pbHandled *bool) int              // 元素大小改变事件. nFlags: AdjustLayout_
+type XE_SHOW func(bShow bool, pbHandled *bool) int                                        // 元素显示隐藏事件.
+type XE_SHOW1 func(hEle int, bShow bool, pbHandled *bool) int                             // 元素显示隐藏事件.
+type XE_SETFONT func(pbHandled *bool) int                                                 // 元素设置字体事件.
+type XE_SETFONT1 func(hEle int, pbHandled *bool) int                                      // 元素设置字体事件.
+type XE_KEYDOWN func(wParam int, lParam int, pbHandled *bool) int                         // 元素按键事件.
+type XE_KEYDOWN1 func(hEle int, wParam int, lParam int, pbHandled *bool) int              // 元素按键事件.
+type XE_KEYUP func(wParam int, lParam int, pbHandled *bool) int                           // 元素按键事件.
+type XE_KEYUP1 func(hEle int, wParam int, lParam int, pbHandled *bool) int                // 元素按键事件.
+type XE_CHAR func(wParam int, lParam int, pbHandled *bool) int                            // 通过TranslateMessage函数翻译的字符事件.
+type XE_CHAR1 func(hEle int, wParam int, lParam int, pbHandled *bool) int                 // 通过TranslateMessage函数翻译的字符事件.
+type XE_SETCAPTURE func(pbHandled *bool) int                                              // 元素设置鼠标捕获.
+type XE_SETCAPTURE1 func(hEle int, pbHandled *bool) int                                   // 元素设置鼠标捕获.
+type XE_KILLCAPTURE func(pbHandled *bool) int                                             // 元素失去鼠标捕获.
+type XE_KILLCAPTURE1 func(hEle int, pbHandled *bool) int                                  // 元素失去鼠标捕获.
+type XE_SETCURSOR func(wParam int, lParam int, pbHandled *bool) int                       // 设置鼠标光标
+type XE_SETCURSOR1 func(hEle int, wParam int, lParam int, pbHandled *bool) int            // 设置鼠标光标
+type XE_DROPFILES func(hDropInfo int, pbHandled *bool) int                                // 文件拖放事件.
+type XE_DROPFILES1 func(hEle int, hDropInfo int, pbHandled *bool) int                     // 文件拖放事件.
+
+// 元素处理过程事件.
+func (e *Element) Event_ELEPROCE(pFun XE_ELEPROCE) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_ELEPROCE, pFun)
+}
+
+// 元素处理过程事件.
+func (e *Element) Event_ELEPROCE1(pFun XE_ELEPROCE1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_ELEPROCE, pFun)
+}
+
+// 元素绘制事件
+func (e *Element) Event_PAINT(pFun XE_PAINT) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_PAINT, pFun)
+}
+
+// 元素绘制事件
+func (e *Element) Event_PAINT1(pFun XE_PAINT1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_PAINT, pFun)
+}
+
+// 该元素及子元素绘制完成事件.启用该功能需要调用XEle_EnableEvent_XE_PAINT_END()
+func (e *Element) Event_PAINT_END(pFun XE_PAINT_END) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_PAINT_END, pFun)
+}
+
+// 该元素及子元素绘制完成事件.启用该功能需要调用XEle_EnableEvent_XE_PAINT_END()
+func (e *Element) Event_PAINT_END1(pFun XE_PAINT_END1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_PAINT_END, pFun)
+}
+
+// 滚动视图绘制事件.
+func (e *Element) Event_PAINT_SCROLLVIEW(pFun XE_PAINT_SCROLLVIEW) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_PAINT_SCROLLVIEW, pFun)
+}
+
+// 滚动视图绘制事件.
+func (e *Element) Event_PAINT_SCROLLVIEW1(pFun XE_PAINT_SCROLLVIEW1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_PAINT_SCROLLVIEW, pFun)
+}
+
+// 元素鼠标移动事件.
+func (e *Element) Event_MOUSEMOVE(pFun XE_MOUSEMOVE) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_MOUSEMOVE, pFun)
+}
+
+// 元素鼠标移动事件.
+func (e *Element) Event_MOUSEMOVE1(pFun XE_MOUSEMOVE1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_MOUSEMOVE, pFun)
+}
+
+// 元素鼠标进入事件.
+func (e *Element) Event_MOUSESTAY(pFun XE_MOUSESTAY) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_MOUSESTAY, pFun)
+}
+
+// 元素鼠标进入事件.
+func (e *Element) Event_MOUSESTAY1(pFun XE_MOUSESTAY1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_MOUSESTAY, pFun)
+}
+
+// 元素鼠标悬停事件.
+func (e *Element) Event_MOUSEHOVER(pFun XE_MOUSEHOVER) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_MOUSEHOVER, pFun)
+}
+
+// 元素鼠标悬停事件.
+func (e *Element) Event_MOUSEHOVER1(pFun XE_MOUSEHOVER1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_MOUSEHOVER, pFun)
+}
+
+// 元素鼠标离开事件.
+func (e *Element) Event_MOUSELEAVE(pFun XE_MOUSELEAVE) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_MOUSELEAVE, pFun)
+}
+
+// 元素鼠标离开事件.
+func (e *Element) Event_MOUSELEAVE1(pFun XE_MOUSELEAVE1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_MOUSELEAVE, pFun)
+}
+
+// 元素鼠标滚轮滚动事件. 如果非滚动视图需要调用 XEle_EnableEvent_XE_MOUSEWHEEL()
+func (e *Element) Event_MOUSEWHEEL(pFun XE_MOUSEWHEEL) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_MOUSEWHEEL, pFun)
+}
+
+// 元素鼠标滚轮滚动事件. 如果非滚动视图需要调用 XEle_EnableEvent_XE_MOUSEWHEEL()
+func (e *Element) Event_MOUSEWHEEL1(pFun XE_MOUSEWHEEL1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_MOUSEWHEEL, pFun)
+}
+
+// 鼠标左键按下事件.
+func (e *Element) Event_LBUTTONDOWN(pFun XE_LBUTTONDOWN) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_LBUTTONDOWN, pFun)
+}
+
+// 鼠标左键按下事件.
+func (e *Element) Event_LBUTTONDOWN1(pFun XE_LBUTTONDOWN1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_LBUTTONDOWN, pFun)
+}
+
+// 鼠标左键弹起事件.
+func (e *Element) Event_LBUTTONUP(pFun XE_LBUTTONUP) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_LBUTTONUP, pFun)
+}
+
+// 鼠标左键弹起事件.
+func (e *Element) Event_LBUTTONUP1(pFun XE_LBUTTONUP1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_LBUTTONUP, pFun)
+}
+
+// 鼠标右键按下事件.
+func (e *Element) Event_RBUTTONDOWN(pFun XE_RBUTTONDOWN) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_RBUTTONDOWN, pFun)
+}
+
+// 鼠标右键按下事件.
+func (e *Element) Event_RBUTTONDOWN1(pFun XE_RBUTTONDOWN1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_RBUTTONDOWN, pFun)
+}
+
+// 鼠标右键弹起事件.
+func (e *Element) Event_RBUTTONUP(pFun XE_RBUTTONUP) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_RBUTTONUP, pFun)
+}
+
+// 鼠标右键弹起事件.
+func (e *Element) Event_RBUTTONUP1(pFun XE_RBUTTONUP1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_RBUTTONUP, pFun)
+}
+
+// 鼠标左键双击事件.
+func (e *Element) Event_LBUTTONDBCLICK(pFun XE_LBUTTONDBCLICK) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_LBUTTONDBCLICK, pFun)
+}
+
+// 鼠标左键双击事件.
+func (e *Element) Event_LBUTTONDBCLICK1(pFun XE_LBUTTONDBCLICK1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_LBUTTONDBCLICK, pFun)
+}
+
+// 炫彩定时器,非系统定时器,定时器消息 XM_TIMER.
+func (e *Element) Event_XC_TIMER(pFun XE_XC_TIMER) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_XC_TIMER, pFun)
+}
+
+// 炫彩定时器,非系统定时器,定时器消息 XM_TIMER.
+func (e *Element) Event_XC_TIMER1(pFun XE_XC_TIMER1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_XC_TIMER, pFun)
+}
+
+// 调整布局事件. 暂停使用
+func (e *Element) Event_ADJUSTLAYOUT(pFun XE_ADJUSTLAYOUT) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_ADJUSTLAYOUT, pFun)
+}
+
+// 调整布局事件. 暂停使用
+func (e *Element) Event_ADJUSTLAYOUT1(pFun XE_ADJUSTLAYOUT1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_ADJUSTLAYOUT, pFun)
+}
+
+// 调整布局完成事件.
+func (e *Element) Event_ADJUSTLAYOUT_END(pFun XE_ADJUSTLAYOUT_END) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_ADJUSTLAYOUT_END, pFun)
+}
+
+// 调整布局完成事件.
+func (e *Element) Event_ADJUSTLAYOUT_END1(pFun XE_ADJUSTLAYOUT_END1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_ADJUSTLAYOUT_END, pFun)
+}
+
+// 元素获得焦点事件.
+func (e *Element) Event_SETFOCUS(pFun XE_SETFOCUS) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_SETFOCUS, pFun)
+}
+
+// 元素获得焦点事件.
+func (e *Element) Event_SETFOCUS1(pFun XE_SETFOCUS1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_SETFOCUS, pFun)
+}
+
+// 元素失去焦点事件.
+func (e *Element) Event_KILLFOCUS(pFun XE_KILLFOCUS) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_KILLFOCUS, pFun)
+}
+
+// 元素失去焦点事件.
+func (e *Element) Event_KILLFOCUS1(pFun XE_KILLFOCUS1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_KILLFOCUS, pFun)
+}
+
+// 元素即将销毁事件. 在销毁子对象之前触发
+func (e *Element) Event_DESTROY(pFun XE_DESTROY) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_DESTROY, pFun)
+}
+
+// 元素即将销毁事件. 在销毁子对象之前触发
+func (e *Element) Event_DESTROY1(pFun XE_DESTROY1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_DESTROY, pFun)
+}
+
+// 元素销毁完成事件. 在销毁子对象之后触发
+func (e *Element) Event_DESTROY_END(pFun XE_DESTROY_END) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_DESTROY_END, pFun)
+}
+
+// 元素销毁完成事件. 在销毁子对象之后触发
+func (e *Element) Event_DESTROY_END1(pFun XE_DESTROY_END1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_DESTROY_END, pFun)
+}
+
+// 元素大小改变事件.
+func (e *Element) Event_SIZE(pFun XE_SIZE) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_SIZE, pFun)
+}
+
+// 元素大小改变事件.
+func (e *Element) Event_SIZE1(pFun XE_SIZE1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_SIZE, pFun)
+}
+
+// 元素显示隐藏事件.
+func (e *Element) Event_SHOW(pFun XE_SHOW) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_SHOW, pFun)
+}
+
+// 元素显示隐藏事件.
+func (e *Element) Event_SHOW1(pFun XE_SHOW1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_SHOW, pFun)
+}
+
+// 元素设置字体事件.
+func (e *Element) Event_SETFONT(pFun XE_SETFONT) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_SETFONT, pFun)
+}
+
+// 元素设置字体事件.
+func (e *Element) Event_SETFONT1(pFun XE_SETFONT1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_SETFONT, pFun)
+}
+
+// 元素按键事件.
+func (e *Element) Event_KEYDOWN(pFun XE_KEYDOWN) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_KEYDOWN, pFun)
+}
+
+// 元素按键事件.
+func (e *Element) Event_KEYDOWN1(pFun XE_KEYDOWN1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_KEYDOWN, pFun)
+}
+
+// 元素按键事件.
+func (e *Element) Event_KEYUP(pFun XE_KEYUP) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_KEYUP, pFun)
+}
+
+// 元素按键事件.
+func (e *Element) Event_KEYUP1(pFun XE_KEYUP1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_KEYUP, pFun)
+}
+
+// 通过TranslateMessage函数翻译的字符事件.
+func (e *Element) Event_CHAR(pFun XE_CHAR) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_CHAR, pFun)
+}
+
+// 通过TranslateMessage函数翻译的字符事件.
+func (e *Element) Event_CHAR1(pFun XE_CHAR1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_CHAR, pFun)
+}
+
+// 元素设置鼠标捕获.
+func (e *Element) Event_SETCAPTURE(pFun XE_SETCAPTURE) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_SETCAPTURE, pFun)
+}
+
+// 元素设置鼠标捕获.
+func (e *Element) Event_SETCAPTURE1(pFun XE_SETCAPTURE1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_SETCAPTURE, pFun)
+}
+
+// 元素失去鼠标捕获.
+func (e *Element) Event_KILLCAPTURE(pFun XE_KILLCAPTURE) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_KILLCAPTURE, pFun)
+}
+
+// 元素失去鼠标捕获.
+func (e *Element) Event_KILLCAPTURE1(pFun XE_KILLCAPTURE1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_KILLCAPTURE, pFun)
+}
+
+// 设置鼠标光标
+func (e *Element) Event_SETCURSOR(pFun XE_SETCURSOR) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_SETCURSOR, pFun)
+}
+
+// 设置鼠标光标
+func (e *Element) Event_SETCURSOR1(pFun XE_SETCURSOR1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_SETCURSOR, pFun)
+}
+
+// 文件拖放事件.
+func (e *Element) Event_DROPFILES(pFun XE_DROPFILES) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_DROPFILES, pFun)
+}
+
+// 文件拖放事件.
+func (e *Element) Event_DROPFILES1(pFun XE_DROPFILES1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_DROPFILES, pFun)
+}
+
+type XE_MENU_SELECT func(nID int, pbHandled *bool) int                                                       // 弹出菜单项选择事件.
+type XE_MENU_SELECT1 func(hEle int, nID int, pbHandled *bool) int                                            // 弹出菜单项选择事件.
+type XE_MENU_POPUP func(HMENUX int, pbHandled *bool) int                                                     // 菜单弹出
+type XE_MENU_POPUP1 func(hEle int, HMENUX int, pbHandled *bool) int                                          // 菜单弹出
+type XE_MENU_EXIT func(pbHandled *bool) int                                                                  // 弹出菜单退出事件.
+type XE_MENU_EXIT1 func(hEle int, pbHandled *bool) int                                                       // 弹出菜单退出事件.
+type XE_MENU_POPUP_WND func(hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int                        // 菜单弹出窗口
+type XE_MENU_POPUP_WND1 func(hEle int, hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int             // 菜单弹出窗口
+type XE_MENU_DRAW_BACKGROUND func(hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int            // 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
+type XE_MENU_DRAW_BACKGROUND1 func(hEle int, hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int // 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
+type XE_MENU_DRAWITEM func(hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int                         // 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
+type XE_MENU_DRAWITEM1 func(hEle int, hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int              // 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
+
 // 事件_弹出菜单项被选择
-func (b *Element) Event_MENU_SELECT(pFun func(nID int, pbHandled *bool) int) bool {
-	return xc.XEle_RegEventC(b.Handle, xcc.XE_MENU_SELECT, pFun)
+func (e *Element) Event_MENU_SELECT(pFun XE_MENU_SELECT) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_SELECT, pFun)
+}
+
+// 事件_弹出菜单项被选择
+func (e *Element) Event_MENU_SELECT1(pFun XE_MENU_SELECT1) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_SELECT, pFun)
 }
 
 // 事件_菜单弹出
-func (b *Element) Event_MENU_POPUP(pFun func(HMENUX int, pbHandled *bool) int) bool {
-	return xc.XEle_RegEventC(b.Handle, xcc.XE_MENU_POPUP, pFun)
+func (e *Element) Event_MENU_POPUP(pFun XE_MENU_POPUP) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_POPUP, pFun)
+}
+
+// 事件_菜单弹出
+func (e *Element) Event_MENU_POPUP1(pFun XE_MENU_POPUP1) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_POPUP, pFun)
 }
 
 // 事件_菜单退出
-func (b *Element) Event_MENU_EXIT(pFun func(pbHandled *bool) int) bool {
-	return xc.XEle_RegEventC(b.Handle, xcc.XE_MENU_EXIT, pFun)
+func (e *Element) Event_MENU_EXIT(pFun XE_MENU_EXIT) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_EXIT, pFun)
+}
+
+// 事件_菜单退出
+func (e *Element) Event_MENU_EXIT1(pFun XE_MENU_EXIT1) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_EXIT, pFun)
+}
+
+// 菜单弹出窗口
+func (e *Element) Event_MENU_POPUP_WND(pFun XE_MENU_POPUP_WND) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_POPUP_WND, pFun)
+}
+
+// 菜单弹出窗口
+func (e *Element) Event_MENU_POPUP_WND1(pFun XE_MENU_POPUP_WND1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_MENU_POPUP_WND, pFun)
+}
+
+// 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
+func (e *Element) Event_MENU_DRAW_BACKGROUND(pFun XE_MENU_DRAW_BACKGROUND) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_DRAW_BACKGROUND, pFun)
+}
+
+// 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
+func (e *Element) Event_MENU_DRAW_BACKGROUND1(pFun XE_MENU_DRAW_BACKGROUND1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_MENU_DRAW_BACKGROUND, pFun)
+}
+
+// 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
+func (e *Element) Event_MENU_DRAWITEM(pFun XE_MENU_DRAWITEM) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_DRAWITEM, pFun)
+}
+
+// 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
+func (e *Element) Event_MENU_DRAWITEM1(pFun XE_MENU_DRAWITEM1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_MENU_DRAWITEM, pFun)
 }

@@ -2,6 +2,7 @@ package widget
 
 import (
 	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
 )
 
 // 编辑框(常规, 富文本, 聊天气泡)
@@ -457,4 +458,93 @@ func (e *Edit) AddChatEnd() int {
 // nIndentation: 缩进值
 func (e *Edit) SetChatIndentation(nIndentation int) int {
 	return xc.XEdit_SetChatIndentation(e.Handle, nIndentation)
+}
+
+/*
+以下都是事件
+*/
+
+type XE_EDIT_SET func(pbHandled *bool) int                                               // 编辑框_置文本
+type XE_EDIT_SET1 func(hEle int, pbHandled *bool) int                                    // 编辑框_置文本
+type XE_EDIT_DRAWROW func(hDraw int, iRow int, pbHandled *bool) int                      // 和XE_EDIT_CHANGED的对换
+type XE_EDIT_DRAWROW1 func(hEle int, hDraw int, iRow int, pbHandled *bool) int           // 和XE_EDIT_CHANGED的对换
+type XE_EDIT_CHANGED func(pbHandled *bool) int                                           // 编辑框_内容被改变
+type XE_EDIT_CHANGED1 func(hEle int, pbHandled *bool) int                                // 编辑框_内容被改变
+type XE_EDIT_POS_CHANGED func(iPos int, pbHandled *bool) int                             // 编辑框_光标位置_被改变
+type XE_EDIT_POS_CHANGED1 func(hEle int, iPos int, pbHandled *bool) int                  // 编辑框_光标位置_被改变
+type XE_EDIT_STYLE_CHANGED func(iStyle int, pbHandled *bool) int                         // 编辑框_样式_被改变
+type XE_EDIT_STYLE_CHANGED1 func(hEle int, iStyle int, pbHandled *bool) int              // 编辑框_样式_被改变
+type XE_EDIT_ENTER_GET_TABALIGN func(pbHandled *bool) int                                // 编辑框_回车_获取标签?
+type XE_EDIT_ENTER_GET_TABALIGN1 func(hEle int, pbHandled *bool) int                     // 编辑框_回车_获取标签?
+type XE_EDIT_ROW_CHANGED func(iRow int, nChangeRows int, pbHandled *bool) int            // 编辑框_行_被改变
+type XE_EDIT_ROW_CHANGED1 func(hEle int, iRow int, nChangeRows int, pbHandled *bool) int // 编辑框_行_被改变
+
+// 编辑框_置文本
+func (e *Edit) Event_EDIT_SET(pFun XE_EDIT_SET) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDIT_SET, pFun)
+}
+
+// 编辑框_置文本
+func (e *Edit) Event_EDIT_SET1(pFun XE_EDIT_SET1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_SET, pFun)
+}
+
+// 和XE_EDIT_CHANGED的对换
+func (e *Edit) Event_EDIT_DRAWROW(pFun XE_EDIT_DRAWROW) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDIT_DRAWROW, pFun)
+}
+
+// 和XE_EDIT_CHANGED的对换
+func (e *Edit) Event_EDIT_DRAWROW1(pFun XE_EDIT_DRAWROW1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_DRAWROW, pFun)
+}
+
+// 编辑框_内容被改变
+func (e *Edit) Event_EDIT_CHANGED(pFun XE_EDIT_CHANGED) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDIT_CHANGED, pFun)
+}
+
+// 编辑框_内容被改变
+func (e *Edit) Event_EDIT_CHANGED1(pFun XE_EDIT_CHANGED1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_CHANGED, pFun)
+}
+
+// 编辑框_光标位置_被改变
+func (e *Edit) Event_EDIT_POS_CHANGED(pFun XE_EDIT_POS_CHANGED) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDIT_POS_CHANGED, pFun)
+}
+
+// 编辑框_光标位置_被改变
+func (e *Edit) Event_EDIT_POS_CHANGED1(pFun XE_EDIT_POS_CHANGED1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_POS_CHANGED, pFun)
+}
+
+// 编辑框_样式_被改变
+func (e *Edit) Event_EDIT_STYLE_CHANGED(pFun XE_EDIT_STYLE_CHANGED) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDIT_STYLE_CHANGED, pFun)
+}
+
+// 编辑框_样式_被改变
+func (e *Edit) Event_EDIT_STYLE_CHANGED1(pFun XE_EDIT_STYLE_CHANGED1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_STYLE_CHANGED, pFun)
+}
+
+// 编辑框_回车_获取标签?
+func (e *Edit) Event_EDIT_ENTER_GET_TABALIGN(pFun XE_EDIT_ENTER_GET_TABALIGN) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDIT_ENTER_GET_TABALIGN, pFun)
+}
+
+// 编辑框_回车_获取标签?
+func (e *Edit) Event_EDIT_ENTER_GET_TABALIGN1(pFun XE_EDIT_ENTER_GET_TABALIGN1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_ENTER_GET_TABALIGN, pFun)
+}
+
+// 编辑框_行_被改变
+func (e *Edit) Event_EDIT_ROW_CHANGED(pFun XE_EDIT_ROW_CHANGED) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDIT_ROW_CHANGED, pFun)
+}
+
+// 编辑框_行_被改变
+func (e *Edit) Event_EDIT_ROW_CHANGED1(pFun XE_EDIT_ROW_CHANGED1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_ROW_CHANGED, pFun)
 }

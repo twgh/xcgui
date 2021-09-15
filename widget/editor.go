@@ -2,6 +2,7 @@ package widget
 
 import (
 	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
 )
 
 // 代码编辑框
@@ -195,4 +196,57 @@ func (e *Editor) AddFunction(pKey string) int {
 // pKeyword: 字符串
 func (e *Editor) AddExcludeDefVarKeyword(pKeyword string) int {
 	return xc.XEditor_AddExcludeDefVarKeyword(e.Handle, pKeyword)
+}
+
+/*
+以下都是事件
+*/
+
+type XE_EDITOR_MODIFY_ROWS func(iRow int, nRows int, pbHandled *bool) int                 // 多行内容改变事件 例如:区块注释操作, 区块缩进操作, 代码格式化. iRow: 开始行. nRows: 改变行数量.
+type XE_EDITOR_MODIFY_ROWS1 func(hEle int, iRow int, nRows int, pbHandled *bool) int      // 多行内容改变事件 例如:区块注释操作, 区块缩进操作, 代码格式化. iRow: 开始行. nRows: 改变行数量.
+type XE_EDITOR_SETBREAKPOINT func(iRow int, bCheck bool, pbHandled *bool) int             // 代码编辑框_设置断点
+type XE_EDITOR_SETBREAKPOINT1 func(hEle int, iRow int, bCheck bool, pbHandled *bool) int  // 代码编辑框_设置断点
+type XE_EDITOR_REMOVEBREAKPOINT func(iRow int, pbHandled *bool) int                       // 代码编辑框_移除断点
+type XE_EDITOR_REMOVEBREAKPOINT1 func(hEle int, iRow int, pbHandled *bool) int            // 代码编辑框_移除断点
+type XE_EDITOR_AUTOMATCH_SELECT func(iRow int, nRows int, pbHandled *bool) int            // 代码编辑框_自动匹配选择
+type XE_EDITOR_AUTOMATCH_SELECT1 func(hEle int, iRow int, nRows int, pbHandled *bool) int // 代码编辑框_自动匹配选择
+
+// 多行内容改变事件 例如:区块注释操作, 区块缩进操作, 代码格式化
+func (e *Editor) Event_EDITOR_MODIFY_ROWS(pFun XE_EDITOR_MODIFY_ROWS) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDITOR_MODIFY_ROWS, pFun)
+}
+
+// 多行内容改变事件 例如:区块注释操作, 区块缩进操作, 代码格式化
+func (e *Editor) Event_EDITOR_MODIFY_ROWS1(pFun XE_EDITOR_MODIFY_ROWS1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDITOR_MODIFY_ROWS, pFun)
+}
+
+// 代码编辑框_设置断点
+func (e *Editor) Event_EDITOR_SETBREAKPOINT(pFun XE_EDITOR_SETBREAKPOINT) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDITOR_SETBREAKPOINT, pFun)
+}
+
+// 代码编辑框_设置断点
+func (e *Editor) Event_EDITOR_SETBREAKPOINT1(pFun XE_EDITOR_SETBREAKPOINT1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDITOR_SETBREAKPOINT, pFun)
+}
+
+// 代码编辑框_移除断点
+func (e *Editor) Event_EDITOR_REMOVEBREAKPOINT(pFun XE_EDITOR_REMOVEBREAKPOINT) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDITOR_REMOVEBREAKPOINT, pFun)
+}
+
+// 代码编辑框_移除断点
+func (e *Editor) Event_EDITOR_REMOVEBREAKPOINT1(pFun XE_EDITOR_REMOVEBREAKPOINT1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDITOR_REMOVEBREAKPOINT, pFun)
+}
+
+// 代码编辑框_自动匹配选择
+func (e *Editor) Event_EDITOR_AUTOMATCH_SELECT(pFun XE_EDITOR_AUTOMATCH_SELECT) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDITOR_AUTOMATCH_SELECT, pFun)
+}
+
+// 代码编辑框_自动匹配选择
+func (e *Editor) Event_EDITOR_AUTOMATCH_SELECT1(pFun XE_EDITOR_AUTOMATCH_SELECT1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDITOR_AUTOMATCH_SELECT, pFun)
 }

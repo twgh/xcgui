@@ -2,6 +2,7 @@ package widget
 
 import (
 	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
 )
 
 // 列表框
@@ -494,4 +495,81 @@ func (l *ListBox) GetCount_AD() int {
 // 列表框_取列数量AD
 func (l *ListBox) GetCountColumn_AD() int {
 	return xc.XListBox_GetCountColumn_AD(l.Handle)
+}
+
+/*
+以下都是事件
+*/
+
+type XE_LISTBOX_TEMP_CREATE func(pItem *xc.ListBox_Item_, nFlag int, pbHandled *bool) int                // 列表框元素-项模板创建事件, 模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复
+type XE_LISTBOX_TEMP_CREATE1 func(hEle int, pItem *xc.ListBox_Item_, nFlag int, pbHandled *bool) int     // 列表框元素-项模板创建事件, 模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复
+type XE_LISTBOX_TEMP_CREATE_END func(pItem *xc.ListBox_Item_, nFlag int, pbHandled *bool) int            // 列表框元素-项模板创建完成事件,模板复用机制需先启用;不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册
+type XE_LISTBOX_TEMP_CREATE_END1 func(hEle int, pItem *xc.ListBox_Item_, nFlag int, pbHandled *bool) int // 列表框元素-项模板创建完成事件,模板复用机制需先启用;不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册
+type XE_LISTBOX_TEMP_DESTROY func(pItem *xc.ListBox_Item_, nFlag int, pbHandled *bool) int               // 列表框元素,项模板销毁.
+type XE_LISTBOX_TEMP_DESTROY1 func(hEle int, pItem *xc.ListBox_Item_, nFlag int, pbHandled *bool) int    // 列表框元素,项模板销毁.
+type XE_LISTBOX_TEMP_ADJUST_COORDINATE func(pItem *xc.ListBox_Item_, pbHandled *bool) int                // 列表框元素,项模板调整坐标. 已停用
+type XE_LISTBOX_TEMP_ADJUST_COORDINATE1 func(hEle int, pItem *xc.ListBox_Item_, pbHandled *bool) int     // 列表框元素,项模板调整坐标. 已停用
+type XE_LISTBOX_DRAWITEM func(hDraw int, pItem *xc.ListBox_Item_, pbHandled *bool) int                   // 列表框元素,项绘制事件.
+type XE_LISTBOX_DRAWITEM1 func(hEle int, hDraw int, pItem *xc.ListBox_Item_, pbHandled *bool) int        // 列表框元素,项绘制事件.
+type XE_LISTBOX_SELECT func(iItem int, pbHandled *bool) int                                              // 列表框元素,项选择事件.
+type XE_LISTBOX_SELECT1 func(hEle int, iItem int, pbHandled *bool) int                                   // 列表框元素,项选择事件.
+
+// 列表框元素-项模板创建事件, 模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复
+func (l *ListBox) Event_LISTBOX_TEMP_CREATE(pFun XE_LISTBOX_TEMP_CREATE) bool {
+	return xc.XEle_RegEventC(l.Handle, xcc.XE_LISTBOX_TEMP_CREATE, pFun)
+}
+
+// 列表框元素-项模板创建事件, 模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复
+func (l *ListBox) Event_LISTBOX_TEMP_CREATE1(pFun XE_LISTBOX_TEMP_CREATE1) bool {
+	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LISTBOX_TEMP_CREATE, pFun)
+}
+
+// 列表框元素-项模板创建完成事件,模板复用机制需先启用;不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册
+func (l *ListBox) Event_LISTBOX_TEMP_CREATE_END(pFun XE_LISTBOX_TEMP_CREATE_END) bool {
+	return xc.XEle_RegEventC(l.Handle, xcc.XE_LISTBOX_TEMP_CREATE_END, pFun)
+}
+
+// 列表框元素-项模板创建完成事件,模板复用机制需先启用;不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册
+func (l *ListBox) Event_LISTBOX_TEMP_CREATE_END1(pFun XE_LISTBOX_TEMP_CREATE_END1) bool {
+	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LISTBOX_TEMP_CREATE_END, pFun)
+}
+
+// 列表框元素,项模板销毁.
+func (l *ListBox) Event_LISTBOX_TEMP_DESTROY(pFun XE_LISTBOX_TEMP_DESTROY) bool {
+	return xc.XEle_RegEventC(l.Handle, xcc.XE_LISTBOX_TEMP_DESTROY, pFun)
+}
+
+// 列表框元素,项模板销毁.
+func (l *ListBox) Event_LISTBOX_TEMP_DESTROY1(pFun XE_LISTBOX_TEMP_DESTROY1) bool {
+	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LISTBOX_TEMP_DESTROY, pFun)
+}
+
+// 列表框元素,项模板调整坐标. 已停用
+func (l *ListBox) Event_LISTBOX_TEMP_ADJUST_COORDINATE(pFun XE_LISTBOX_TEMP_ADJUST_COORDINATE) bool {
+	return xc.XEle_RegEventC(l.Handle, xcc.XE_LISTBOX_TEMP_ADJUST_COORDINATE, pFun)
+}
+
+// 列表框元素,项模板调整坐标. 已停用
+func (l *ListBox) Event_LISTBOX_TEMP_ADJUST_COORDINATE1(pFun XE_LISTBOX_TEMP_ADJUST_COORDINATE1) bool {
+	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LISTBOX_TEMP_ADJUST_COORDINATE, pFun)
+}
+
+// 列表框元素,项绘制事件.
+func (l *ListBox) Event_LISTBOX_DRAWITEM(pFun XE_LISTBOX_DRAWITEM) bool {
+	return xc.XEle_RegEventC(l.Handle, xcc.XE_LISTBOX_DRAWITEM, pFun)
+}
+
+// 列表框元素,项绘制事件.
+func (l *ListBox) Event_LISTBOX_DRAWITEM1(pFun XE_LISTBOX_DRAWITEM1) bool {
+	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LISTBOX_DRAWITEM, pFun)
+}
+
+// 列表框元素,项选择事件.
+func (l *ListBox) Event_LISTBOX_SELECT(pFun XE_LISTBOX_SELECT) bool {
+	return xc.XEle_RegEventC(l.Handle, xcc.XE_LISTBOX_SELECT, pFun)
+}
+
+// 列表框元素,项选择事件.
+func (l *ListBox) Event_LISTBOX_SELECT1(pFun XE_LISTBOX_SELECT1) bool {
+	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LISTBOX_SELECT, pFun)
 }

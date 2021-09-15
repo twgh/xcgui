@@ -1,6 +1,9 @@
 package widget
 
-import "github.com/twgh/xcgui/xc"
+import (
+	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
+)
 
 type TabBar struct {
 	Element
@@ -170,4 +173,33 @@ func (t *TabBar) SetLabelWidth(index int, nWidth int) int {
 // bShow: 是否显示.
 func (t *TabBar) ShowLabel(index int, bShow bool) bool {
 	return xc.XTabBar_ShowLabel(t.Handle, index, bShow)
+}
+
+/*
+以下都是事件
+*/
+
+type XE_TABBAR_SELECT func(iItem int, pbHandled *bool) int            // TabBar标签按钮选择改变事件. iItem: 标签位置索引.
+type XE_TABBAR_SELECT1 func(hEle int, iItem int, pbHandled *bool) int // TabBar标签按钮选择改变事件. iItem: 标签位置索引.
+type XE_TABBAR_DELETE func(iItem int, pbHandled *bool) int            // TabBar标签按钮删除事件. iItem: 标签位置索引.
+type XE_TABBAR_DELETE1 func(hEle int, iItem int, pbHandled *bool) int // TabBar标签按钮删除事件. iItem: 标签位置索引.
+
+// TabBar标签按钮选择改变事件
+func (t *TabBar) Event_TABBAR_SELECT(pFun XE_TABBAR_SELECT) bool {
+	return xc.XEle_RegEventC(t.Handle, xcc.XE_TABBAR_SELECT, pFun)
+}
+
+// TabBar标签按钮选择改变事件
+func (t *TabBar) Event_TABBAR_SELECT1(pFun XE_TABBAR_SELECT1) bool {
+	return xc.XEle_RegEventC1(t.Handle, xcc.XE_TABBAR_SELECT, pFun)
+}
+
+// TabBar标签按钮删除事件
+func (t *TabBar) Event_TABBAR_DELETE(pFun XE_TABBAR_DELETE) bool {
+	return xc.XEle_RegEventC(t.Handle, xcc.XE_TABBAR_DELETE, pFun)
+}
+
+// TabBar标签按钮删除事件
+func (t *TabBar) Event_TABBAR_DELETE1(pFun XE_TABBAR_DELETE1) bool {
+	return xc.XEle_RegEventC1(t.Handle, xcc.XE_TABBAR_DELETE, pFun)
 }

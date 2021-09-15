@@ -1,6 +1,9 @@
 package widget
 
-import "github.com/twgh/xcgui/xc"
+import (
+	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
+)
 
 // 列表视图
 type ListView struct {
@@ -516,4 +519,93 @@ func (l *ListView) Item_GetTextEx(iGroup int, iItem int, pName string) string {
 // pName: 字段称
 func (l *ListView) Item_GetImageEx(iGroup int, iItem int, pName string) int {
 	return xc.XListView_Item_GetImageEx(l.Handle, iGroup, iItem, pName)
+}
+
+/*
+以下都是事件
+*/
+
+type XE_LISTVIEW_TEMP_CREATE func(pItem *xc.ListView_Item_, nFlag int, pbHandled *bool) int                // 列表视元素-项模板创建事件,模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复
+type XE_LISTVIEW_TEMP_CREATE1 func(hEle int, pItem *xc.ListView_Item_, nFlag int, pbHandled *bool) int     // 列表视元素-项模板创建事件,模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复
+type XE_LISTVIEW_TEMP_CREATE_END func(pItem *xc.ListView_Item_, nFlag int, pbHandled *bool) int            // 列表视元素-项模板创建完成事件,模板复用机制需先启用; 不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册
+type XE_LISTVIEW_TEMP_CREATE_END1 func(hEle int, pItem *xc.ListView_Item_, nFlag int, pbHandled *bool) int // 列表视元素-项模板创建完成事件,模板复用机制需先启用; 不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册
+type XE_LISTVIEW_TEMP_DESTROY func(pItem *xc.ListView_Item_, nFlag int, pbHandled *bool) int               // 列表视元素-项模板销毁, 模板复用机制需先启用;
+type XE_LISTVIEW_TEMP_DESTROY1 func(hEle int, pItem *xc.ListView_Item_, nFlag int, pbHandled *bool) int    // 列表视元素-项模板销毁, 模板复用机制需先启用;
+type XE_LISTVIEW_TEMP_ADJUST_COORDINATE func(pItem *xc.ListView_Item_, pbHandled *bool) int                // 列表视元素,项模板调整坐标.已停用
+type XE_LISTVIEW_TEMP_ADJUST_COORDINATE1 func(hEle int, pItem *xc.ListView_Item_, pbHandled *bool) int     // 列表视元素,项模板调整坐标.已停用
+type XE_LISTVIEW_DRAWITEM func(hDraw int, pItem *xc.ListView_Item_, pbHandled *bool) int                   // 列表视元素,自绘项.
+type XE_LISTVIEW_DRAWITEM1 func(hEle int, hDraw int, pItem *xc.ListView_Item_, pbHandled *bool) int        // 列表视元素,自绘项.
+type XE_LISTVIEW_SELECT func(iGroup int, iItem int, pbHandled *bool) int                                   // 列表视元素,项选择事件.
+type XE_LISTVIEW_SELECT1 func(hEle int, iGroup int, iItem int, pbHandled *bool) int                        // 列表视元素,项选择事件.
+type XE_LISTVIEW_EXPAND func(iGroup int, bExpand bool, pbHandled *bool) int                                // 列表视元素,组展开收缩事件.
+type XE_LISTVIEW_EXPAND1 func(hEle int, iGroup int, bExpand bool, pbHandled *bool) int                     // 列表视元素,组展开收缩事件.
+
+// 列表视元素-项模板创建事件,模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复
+func (l *ListView) Event_LISTVIEW_TEMP_CREATE(pFun XE_LISTVIEW_TEMP_CREATE) bool {
+	return xc.XEle_RegEventC(l.Handle, xcc.XE_LISTVIEW_TEMP_CREATE, pFun)
+}
+
+// 列表视元素-项模板创建事件,模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复
+func (l *ListView) Event_LISTVIEW_TEMP_CREATE1(pFun XE_LISTVIEW_TEMP_CREATE1) bool {
+	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LISTVIEW_TEMP_CREATE, pFun)
+}
+
+// 列表视元素-项模板创建完成事件,模板复用机制需先启用; 不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册
+func (l *ListView) Event_LISTVIEW_TEMP_CREATE_END(pFun XE_LISTVIEW_TEMP_CREATE_END) bool {
+	return xc.XEle_RegEventC(l.Handle, xcc.XE_LISTVIEW_TEMP_CREATE_END, pFun)
+}
+
+// 列表视元素-项模板创建完成事件,模板复用机制需先启用; 不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册
+func (l *ListView) Event_LISTVIEW_TEMP_CREATE_END1(pFun XE_LISTVIEW_TEMP_CREATE_END1) bool {
+	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LISTVIEW_TEMP_CREATE_END, pFun)
+}
+
+// 列表视元素-项模板销毁, 模板复用机制需先启用;
+func (l *ListView) Event_LISTVIEW_TEMP_DESTROY(pFun XE_LISTVIEW_TEMP_DESTROY) bool {
+	return xc.XEle_RegEventC(l.Handle, xcc.XE_LISTVIEW_TEMP_DESTROY, pFun)
+}
+
+// 列表视元素-项模板销毁, 模板复用机制需先启用;
+func (l *ListView) Event_LISTVIEW_TEMP_DESTROY1(pFun XE_LISTVIEW_TEMP_DESTROY1) bool {
+	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LISTVIEW_TEMP_DESTROY, pFun)
+}
+
+// 列表视元素,项模板调整坐标.已停用
+func (l *ListView) Event_LISTVIEW_TEMP_ADJUST_COORDINATE(pFun XE_LISTVIEW_TEMP_ADJUST_COORDINATE) bool {
+	return xc.XEle_RegEventC(l.Handle, xcc.XE_LISTVIEW_TEMP_ADJUST_COORDINATE, pFun)
+}
+
+// 列表视元素,项模板调整坐标.已停用
+func (l *ListView) Event_LISTVIEW_TEMP_ADJUST_COORDINATE1(pFun XE_LISTVIEW_TEMP_ADJUST_COORDINATE1) bool {
+	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LISTVIEW_TEMP_ADJUST_COORDINATE, pFun)
+}
+
+// 列表视元素,自绘项.
+func (l *ListView) Event_LISTVIEW_DRAWITEM(pFun XE_LISTVIEW_DRAWITEM) bool {
+	return xc.XEle_RegEventC(l.Handle, xcc.XE_LISTVIEW_DRAWITEM, pFun)
+}
+
+// 列表视元素,自绘项.
+func (l *ListView) Event_LISTVIEW_DRAWITEM1(pFun XE_LISTVIEW_DRAWITEM1) bool {
+	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LISTVIEW_DRAWITEM, pFun)
+}
+
+// 列表视元素,项选择事件.
+func (l *ListView) Event_LISTVIEW_SELECT(pFun XE_LISTVIEW_SELECT) bool {
+	return xc.XEle_RegEventC(l.Handle, xcc.XE_LISTVIEW_SELECT, pFun)
+}
+
+// 列表视元素,项选择事件.
+func (l *ListView) Event_LISTVIEW_SELECT1(pFun XE_LISTVIEW_SELECT1) bool {
+	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LISTVIEW_SELECT, pFun)
+}
+
+// 列表视元素,组展开收缩事件.
+func (l *ListView) Event_LISTVIEW_EXPAND(pFun XE_LISTVIEW_EXPAND) bool {
+	return xc.XEle_RegEventC(l.Handle, xcc.XE_LISTVIEW_EXPAND, pFun)
+}
+
+// 列表视元素,组展开收缩事件.
+func (l *ListView) Event_LISTVIEW_EXPAND1(pFun XE_LISTVIEW_EXPAND1) bool {
+	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LISTVIEW_EXPAND, pFun)
 }

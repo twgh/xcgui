@@ -1,6 +1,9 @@
 package widget
 
-import "github.com/twgh/xcgui/xc"
+import (
+	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
+)
 
 // 滑动条元素
 type SliderBar struct {
@@ -75,4 +78,21 @@ func (s *SliderBar) GetButton() int {
 // bHorizon: 水平或垂直.
 func (s *SliderBar) SetHorizon(bHorizon bool) int {
 	return xc.XSliderBar_SetHorizon(s.Handle, bHorizon)
+}
+
+/*
+以下都是事件
+*/
+
+type XE_SLIDERBAR_CHANGE func(pos int, pbHandled *bool) int            // 滑动条元素,滑块位置改变事件.
+type XE_SLIDERBAR_CHANGE1 func(hEle int, pos int, pbHandled *bool) int // 滑动条元素,滑块位置改变事件.
+
+// 滑动条元素,滑块位置改变事件.
+func (s *SliderBar) Event_SLIDERBAR_CHANGE(pFun XE_SLIDERBAR_CHANGE) bool {
+	return xc.XEle_RegEventC(s.Handle, xcc.XE_SLIDERBAR_CHANGE, pFun)
+}
+
+// 滑动条元素,滑块位置改变事件.
+func (s *SliderBar) Event_SLIDERBAR_CHANGE1(pFun XE_SLIDERBAR_CHANGE1) bool {
+	return xc.XEle_RegEventC1(s.Handle, xcc.XE_SLIDERBAR_CHANGE, pFun)
 }

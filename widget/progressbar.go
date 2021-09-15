@@ -2,6 +2,7 @@ package widget
 
 import (
 	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
 )
 
 // 进度条
@@ -60,4 +61,21 @@ func (p *ProgressBar) GetPos() int {
 // bHorizon: 水平或垂直.
 func (p *ProgressBar) SetHorizon(bHorizon bool) int {
 	return xc.XProgBar_SetHorizon(p.Handle, bHorizon)
+}
+
+/*
+以下都是事件
+*/
+
+type XE_PROGRESSBAR_CHANGE func(pos int, pbHandled *bool) int            // 进度条元素,进度改变事件.
+type XE_PROGRESSBAR_CHANGE1 func(hEle int, pos int, pbHandled *bool) int // 进度条元素,进度改变事件.
+
+// 进度条元素,进度改变事件.
+func (p *ProgressBar) Event_PROGRESSBAR_CHANGE(pFun XE_PROGRESSBAR_CHANGE) bool {
+	return xc.XEle_RegEventC(p.Handle, xcc.XE_PROGRESSBAR_CHANGE, pFun)
+}
+
+// 进度条元素,进度改变事件.
+func (p *ProgressBar) Event_PROGRESSBAR_CHANGE1(pFun XE_PROGRESSBAR_CHANGE1) bool {
+	return xc.XEle_RegEventC1(p.Handle, xcc.XE_PROGRESSBAR_CHANGE, pFun)
 }

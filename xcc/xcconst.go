@@ -360,17 +360,17 @@ const (
 	XE_PGRID_ITEM_DESTROY                 = 155 //
 	XE_PGRID_ITEM_EXPAND                  = 156 //
 	XE_RICHEDIT_CHANGE                    = 161 // 富文本元素 用户修改内容事件,只有当用户操作时才会触发,需要开启后有效, XRichEdit_EnableEvent_XE_RICHEDIT_CHANGE()； XRichEdit_SetText()、 XRichEdit_InsertString()不会触发此事件
-	XE_EDIT_SET                           = 162 //
-	XE_EDIT_DRAWROW                       = 181 //
-	XE_EDIT_CHANGED                       = 182 //
-	XE_EDIT_POS_CHANGED                   = 183 //
-	XE_EDIT_STYLE_CHANGED                 = 184 //
-	XE_EDIT_ENTER_GET_TABALIGN            = 185 //
+	XE_EDIT_SET                           = 162 // 编辑框_置文本
+	XE_EDIT_DRAWROW                       = 181 // 和XE_EDIT_CHANGED的对换?
+	XE_EDIT_CHANGED                       = 182 // 编辑框_内容被改变
+	XE_EDIT_POS_CHANGED                   = 183 // 编辑框_光标位置_被改变
+	XE_EDIT_STYLE_CHANGED                 = 184 // 编辑框_样式_被改变
+	XE_EDIT_ENTER_GET_TABALIGN            = 185 // 编辑框_回车_获取标签?
 	XE_EDITOR_MODIFY_ROWS                 = 186 // 多行内容改变事件 例如:区块注释操作, 区块缩进操作, 代码格式化
-	XE_EDITOR_SETBREAKPOINT               = 191 //
-	XE_EDITOR_REMOVEBREAKPOINT            = 192 //
-	XE_EDIT_ROW_CHANGED                   = 193 //
-	XE_EDITOR_AUTOMATCH_SELECT            = 194 //
+	XE_EDITOR_SETBREAKPOINT               = 191 // 代码编辑框_设置断点
+	XE_EDITOR_REMOVEBREAKPOINT            = 192 // 代码编辑框_移除断点
+	XE_EDIT_ROW_CHANGED                   = 193 // 编辑框_行_被改变
+	XE_EDITOR_AUTOMATCH_SELECT            = 194 // 编辑框_自动匹配选择
 	XE_TABBAR_SELECT                      = 221 // TabBar标签按钮选择改变事件
 	XE_TABBAR_DELETE                      = 222 // TabBar标签按钮删除事件
 	XE_MONTHCAL_CHANGE                    = 231 // 月历元素日期改变事件
@@ -703,6 +703,7 @@ const (
 )
 
 // 窗口事件
+// XWM_
 
 const (
 	XWM_WINDPROC             = 0x7000 + 2  // 窗口消息过程
@@ -718,12 +719,15 @@ const (
 	XWM_PAINT_DISPLAY        = 0x7000 + 20 // 窗口绘制完成并且已经显示到屏幕
 )
 
+// 窗口事件
+// WM_
+
 const (
 	WM_PAINT          = 15  // 窗口绘制消息
 	WM_CLOSE          = 16  // 窗口关闭消息.
 	WM_DESTROY        = 2   // 窗口销毁消息.
 	WM_NCDESTROY      = 130 // 窗口非客户区销毁消息.
-	WM_MOUSEMOVE512         // 窗口鼠标移动消息.
+	WM_MOUSEMOVE      = 512 // 窗口鼠标移动消息.
 	WM_LBUTTONDOWN    = 513 // 窗口鼠标左键按下消息
 	WM_LBUTTONUP      = 514 // 窗口鼠标左键弹起消息.
 	WM_RBUTTONDOWN    = 516 // 窗口鼠标右键按下消息.

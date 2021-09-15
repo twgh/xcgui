@@ -3,6 +3,7 @@ package window
 import (
 	"github.com/twgh/xcgui/objectbase"
 	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
 )
 
 // 窗口基类
@@ -568,4 +569,431 @@ func (w *windowBase) GetShadowInfo(nSize *int, nDepth *uint8, nAngeleSize *int, 
 // 窗口_取透明类型
 func (w *windowBase) GetTransparentType() int {
 	return xc.XWnd_GetTransparentType(w.Handle)
+}
+
+/*
+下面都是事件
+*/
+
+type XWM_MENU_POPUP func(hMenu int, pbHandled *bool) int                                                         // 菜单弹出
+type XWM_MENU_POPUP1 func(hWindow int, hMenu int, pbHandled *bool) int                                           // 菜单弹出
+type XWM_MENU_POPUP_WND func(hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int                           // 菜单弹出窗口
+type XWM_MENU_POPUP_WND1 func(hWindow int, hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int             // 菜单弹出窗口
+type XWM_MENU_SELECT func(nID int, pbHandled *bool) int                                                          // 菜单选择
+type XWM_MENU_SELECT1 func(hWindow int, nID int, pbHandled *bool) int                                            // 菜单选择
+type XWM_MENU_EXIT func(pbHandled *bool) int                                                                     // 菜单退出
+type XWM_MENU_EXIT1 func(hWindow int, pbHandled *bool) int                                                       // 菜单退出
+type XWM_MENU_DRAW_BACKGROUND func(hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int               // 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
+type XWM_MENU_DRAW_BACKGROUND1 func(hWindow int, hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int // 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
+type XWM_MENU_DRAWITEM func(hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int                            // 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
+type XWM_MENU_DRAWITEM1 func(hWindow int, hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int              // 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
+
+type XWM_WINDPROC func(message uint, wParam int, lParam int, pbHandled *bool) int               // 窗口消息过程
+type XWM_WINDPROC1 func(hWindow int, message uint, wParam int, lParam int, pbHandled *bool) int // 窗口消息过程
+type XWM_XC_TIMER func(nTimerID uint, pbHandled *bool) int                                      // 炫彩定时器, 非系统定时器, 注册消息XWM_TIMER接收
+type XWM_XC_TIMER1 func(hWindow int, nTimerID uint, pbHandled *bool) int                        // 炫彩定时器, 非系统定时器, 注册消息XWM_TIMER接收
+type XWM_FLOAT_PANE func(hFloatWnd int, hPane int, pbHandled *bool) int                         // 浮动窗格
+type XWM_FLOAT_PANE1 func(hWindow int, hFloatWnd int, hPane int, pbHandled *bool) int           // 浮动窗格
+type XWM_PAINT_END func(hDraw int, pbHandled *bool) int                                         // 窗口绘制完成消息
+type XWM_PAINT_END1 func(hWindow int, hDraw int, pbHandled *bool) int                           // 窗口绘制完成消息
+type XWM_PAINT_DISPLAY func(pbHandled *bool) int                                                // 窗口绘制完成并且已经显示到屏幕
+type XWM_PAINT_DISPLAY1 func(hWindow int, pbHandled *bool) int                                  // 窗口绘制完成并且已经显示到屏幕
+
+type WM_PAINT func(hwnd int, uMsg uint, wParam int, lParam int) int                        // 窗口绘制消息
+type WM_PAINT1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int          // 窗口绘制消息
+type WM_CLOSE func(hwnd int, uMsg uint, wParam int, lParam int) int                        // 窗口关闭消息.
+type WM_CLOSE1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int          // 窗口关闭消息.
+type WM_DESTROY func(hwnd int, uMsg uint, wParam int, lParam int) int                      // 窗口销毁消息.
+type WM_DESTROY1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int        // 窗口销毁消息.
+type WM_NCDESTROY func(hwnd int, uMsg uint, wParam int, lParam int) int                    // 窗口非客户区销毁消息.
+type WM_NCDESTROY1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int      // 窗口非客户区销毁消息.
+type WM_MOUSEMOVE func(hwnd int, uMsg uint, wParam int, lParam int) int                    // 窗口鼠标移动消息.
+type WM_MOUSEMOVE1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int      // 窗口鼠标移动消息.
+type WM_LBUTTONDOWN func(hwnd int, uMsg uint, wParam int, lParam int) int                  // 窗口鼠标左键按下消息
+type WM_LBUTTONDOWN1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int    // 窗口鼠标左键按下消息
+type WM_LBUTTONUP func(hwnd int, uMsg uint, wParam int, lParam int) int                    // 窗口鼠标左键弹起消息.
+type WM_LBUTTONUP1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int      // 窗口鼠标左键弹起消息.
+type WM_RBUTTONDOWN func(hwnd int, uMsg uint, wParam int, lParam int) int                  // 窗口鼠标右键按下消息.
+type WM_RBUTTONDOWN1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int    // 窗口鼠标右键按下消息.
+type WM_RBUTTONUP func(hwnd int, uMsg uint, wParam int, lParam int) int                    // 窗口鼠标右键弹起消息.
+type WM_RBUTTONUP1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int      // 窗口鼠标右键弹起消息.
+type WM_LBUTTONDBLCLK func(hwnd int, uMsg uint, wParam int, lParam int) int                // 窗口鼠标左键双击消息.
+type WM_LBUTTONDBLCLK1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int  // 窗口鼠标左键双击消息.
+type WM_RBUTTONDBLCLK func(hwnd int, uMsg uint, wParam int, lParam int) int                // 窗口鼠标右键双击消息.
+type WM_RBUTTONDBLCLK1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int  // 窗口鼠标右键双击消息.
+type WM_MOUSEWHEEL func(hwnd int, uMsg uint, wParam int, lParam int) int                   // 窗口鼠标滚轮滚动消息.
+type WM_MOUSEWHEEL1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int     // 窗口鼠标滚轮滚动消息.
+type WM_EXITSIZEMOVE func(hwnd int, uMsg uint, wParam int, lParam int) int                 // 窗口退出移动或调整大小模式循环改，详情参见MSDN.
+type WM_EXITSIZEMOVE1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int   // 窗口退出移动或调整大小模式循环改，详情参见MSDN.
+type WM_MOUSEHOVER func(hwnd int, uMsg uint, wParam int, lParam int) int                   // 窗口鼠标进入消息
+type WM_MOUSEHOVER1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int     // 窗口鼠标进入消息
+type WM_MOUSELEAVE func(hwnd int, uMsg uint, wParam int, lParam int) int                   // 窗口鼠标离开消息.
+type WM_MOUSELEAVE1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int     // 窗口鼠标离开消息.
+type WM_SIZE func(hwnd int, uMsg uint, wParam int, lParam int) int                         // 窗口大小改变消息.
+type WM_SIZE1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int           // 窗口大小改变消息.
+type WM_TIMER func(hwnd int, uMsg uint, wParam int, lParam int) int                        // 窗口定时器消息.
+type WM_TIMER1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int          // 窗口定时器消息.
+type WM_SETFOCUS func(hwnd int, uMsg uint, wParam int, lParam int) int                     // 窗口获得焦点.
+type WM_SETFOCUS1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int       // 窗口获得焦点.
+type WM_KILLFOCUS func(hwnd int, uMsg uint, wParam int, lParam int) int                    // 窗口失去焦点.
+type WM_KILLFOCUS1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int      // 窗口失去焦点.
+type WM_KEYDOWN func(hwnd int, uMsg uint, wParam int, lParam int) int                      // 窗口键盘按键消息.
+type WM_KEYDOWN1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int        // 窗口键盘按键消息.
+type WM_CAPTURECHANGED func(hwnd int, uMsg uint, wParam int, lParam int) int               // 窗口鼠标捕获改变消息.
+type WM_CAPTURECHANGED1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int // 窗口鼠标捕获改变消息.
+type WM_SETCURSOR func(hwnd int, uMsg uint, wParam int, lParam int) int                    // 窗口设置鼠标光标.
+type WM_SETCURSOR1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int      // 窗口设置鼠标光标.
+type WM_CHAR func(hwnd int, uMsg uint, wParam int, lParam int) int                         // 窗口字符消息.
+type WM_CHAR1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int           // 窗口字符消息.
+type WM_DROPFILES func(hwnd int, uMsg uint, wParam int, lParam int) int                    // 拖动文件到窗口.
+type WM_DROPFILES1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int      // 拖动文件到窗口.
+
+// 窗口消息过程
+func (w *windowBase) Event_WINDPROC(pFun XWM_WINDPROC) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_WINDPROC, pFun)
+}
+
+// 窗口消息过程
+func (w *windowBase) Event_WINDPROC1(pFun XWM_WINDPROC1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_WINDPROC, pFun)
+}
+
+// 炫彩定时器, 非系统定时器, 注册消息XWM_TIMER接收
+func (w *windowBase) Event_XC_TIMER(pFun XWM_XC_TIMER) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_XC_TIMER, pFun)
+}
+
+// 炫彩定时器, 非系统定时器, 注册消息XWM_TIMER接收
+func (w *windowBase) Event_XC_TIMER1(pFun XWM_XC_TIMER1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_XC_TIMER, pFun)
+}
+
+// 菜单弹出
+func (w *windowBase) Event_MENU_POPUP(pFun XWM_MENU_POPUP) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_POPUP, pFun)
+}
+
+// 菜单弹出
+func (w *windowBase) Event_MENU_POPUP1(pFun XWM_MENU_POPUP1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_POPUP, pFun)
+}
+
+// 菜单弹出窗口
+func (w *windowBase) Event_MENU_POPUP_WND(pFun XWM_MENU_POPUP_WND) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_POPUP_WND, pFun)
+}
+
+// 菜单弹出窗口
+func (w *windowBase) Event_MENU_POPUP_WND1(pFun XWM_MENU_POPUP_WND1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_POPUP_WND, pFun)
+}
+
+// 菜单选择
+func (w *windowBase) Event_MENU_SELECT(pFun XWM_MENU_SELECT) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_SELECT, pFun)
+}
+
+// 菜单选择
+func (w *windowBase) Event_MENU_SELECT1(pFun XWM_MENU_SELECT1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_SELECT, pFun)
+}
+
+// 菜单退出
+func (w *windowBase) Event_MENU_EXIT(pFun XWM_MENU_EXIT) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_EXIT, pFun)
+}
+
+// 菜单退出
+func (w *windowBase) Event_MENU_EXIT1(pFun XWM_MENU_EXIT1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_EXIT, pFun)
+}
+
+// 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
+func (w *windowBase) Event_MENU_DRAW_BACKGROUND(pFun XWM_MENU_DRAW_BACKGROUND) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_DRAW_BACKGROUND, pFun)
+}
+
+// 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
+func (w *windowBase) Event_MENU_DRAW_BACKGROUND1(pFun XWM_MENU_DRAW_BACKGROUND1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_DRAW_BACKGROUND, pFun)
+}
+
+// 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
+func (w *windowBase) Event_MENU_DRAWITEM(pFun XWM_MENU_DRAWITEM) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_DRAWITEM, pFun)
+}
+
+// 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
+func (w *windowBase) Event_MENU_DRAWITEM1(pFun XWM_MENU_DRAWITEM1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_DRAWITEM, pFun)
+}
+
+// 浮动窗格
+func (w *windowBase) Event_FLOAT_PANE(pFun XWM_FLOAT_PANE) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_FLOAT_PANE, pFun)
+}
+
+// 浮动窗格
+func (w *windowBase) Event_FLOAT_PANE1(pFun XWM_FLOAT_PANE1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_FLOAT_PANE, pFun)
+}
+
+// 窗口绘制完成消息
+func (w *windowBase) Event_PAINT_END(pFun XWM_PAINT_END) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_PAINT_END, pFun)
+}
+
+// 窗口绘制完成消息
+func (w *windowBase) Event_PAINT_END1(pFun XWM_PAINT_END1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_PAINT_END, pFun)
+}
+
+// 窗口绘制完成并且已经显示到屏幕
+func (w *windowBase) Event_PAINT_DISPLAY(pFun XWM_PAINT_DISPLAY) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_PAINT_DISPLAY, pFun)
+}
+
+// 窗口绘制完成并且已经显示到屏幕
+func (w *windowBase) Event_PAINT_DISPLAY1(pFun XWM_PAINT_DISPLAY1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_PAINT_DISPLAY, pFun)
+}
+
+// 窗口绘制消息
+func (w *windowBase) Event_PAINT(pFun WM_PAINT) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.WM_PAINT, pFun)
+}
+
+// 窗口绘制消息
+func (w *windowBase) Event_PAINT1(pFun WM_PAINT1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_PAINT, pFun)
+}
+
+// 窗口关闭消息.
+func (w *windowBase) Event_CLOSE(pFun WM_CLOSE) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.WM_CLOSE, pFun)
+}
+
+// 窗口关闭消息.
+func (w *windowBase) Event_CLOSE1(pFun WM_CLOSE1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_CLOSE, pFun)
+}
+
+// 窗口销毁消息.
+func (w *windowBase) Event_DESTROY(pFun WM_DESTROY) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.WM_DESTROY, pFun)
+}
+
+// 窗口销毁消息.
+func (w *windowBase) Event_DESTROY1(pFun WM_DESTROY1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_DESTROY, pFun)
+}
+
+// 窗口非客户区销毁消息.
+func (w *windowBase) Event_NCDESTROY(pFun WM_NCDESTROY) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.WM_NCDESTROY, pFun)
+}
+
+// 窗口非客户区销毁消息.
+func (w *windowBase) Event_NCDESTROY1(pFun WM_NCDESTROY1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_NCDESTROY, pFun)
+}
+
+// 窗口鼠标移动消息.
+func (w *windowBase) Event_MOUSEMOVE(pFun WM_MOUSEMOVE) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.WM_MOUSEMOVE, pFun)
+}
+
+// 窗口鼠标移动消息.
+func (w *windowBase) Event_MOUSEMOVE1(pFun WM_MOUSEMOVE1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_MOUSEMOVE, pFun)
+}
+
+// 窗口鼠标左键按下消息
+func (w *windowBase) Event_LBUTTONDOWN(pFun WM_LBUTTONDOWN) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.WM_LBUTTONDOWN, pFun)
+}
+
+// 窗口鼠标左键按下消息
+func (w *windowBase) Event_LBUTTONDOWN1(pFun WM_LBUTTONDOWN1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_LBUTTONDOWN, pFun)
+}
+
+// 窗口鼠标左键弹起消息.
+func (w *windowBase) Event_LBUTTONUP(pFun WM_LBUTTONUP) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.WM_LBUTTONUP, pFun)
+}
+
+// 窗口鼠标左键弹起消息.
+func (w *windowBase) Event_LBUTTONUP1(pFun WM_LBUTTONUP1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_LBUTTONUP, pFun)
+}
+
+// 窗口鼠标右键按下消息.
+func (w *windowBase) Event_RBUTTONDOWN(pFun WM_RBUTTONDOWN) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.WM_RBUTTONDOWN, pFun)
+}
+
+// 窗口鼠标右键按下消息.
+func (w *windowBase) Event_RBUTTONDOWN1(pFun WM_RBUTTONDOWN1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_RBUTTONDOWN, pFun)
+}
+
+// 窗口鼠标右键弹起消息.
+func (w *windowBase) Event_RBUTTONUP(pFun WM_RBUTTONUP) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.WM_RBUTTONUP, pFun)
+}
+
+// 窗口鼠标右键弹起消息.
+func (w *windowBase) Event_RBUTTONUP1(pFun WM_RBUTTONUP1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_RBUTTONUP, pFun)
+}
+
+// 窗口鼠标左键双击消息.
+func (w *windowBase) Event_LBUTTONDBLCLK(pFun WM_LBUTTONDBLCLK) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.WM_LBUTTONDBLCLK, pFun)
+}
+
+// 窗口鼠标左键双击消息.
+func (w *windowBase) Event_LBUTTONDBLCLK1(pFun WM_LBUTTONDBLCLK1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_LBUTTONDBLCLK, pFun)
+}
+
+// 窗口鼠标右键双击消息.
+func (w *windowBase) Event_RBUTTONDBLCLK(pFun WM_RBUTTONDBLCLK) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.WM_RBUTTONDBLCLK, pFun)
+}
+
+// 窗口鼠标右键双击消息.
+func (w *windowBase) Event_RBUTTONDBLCLK1(pFun WM_RBUTTONDBLCLK1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_RBUTTONDBLCLK, pFun)
+}
+
+// 窗口鼠标滚轮滚动消息.
+func (w *windowBase) Event_MOUSEWHEEL(pFun WM_MOUSEWHEEL) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.WM_MOUSEWHEEL, pFun)
+}
+
+// 窗口鼠标滚轮滚动消息.
+func (w *windowBase) Event_MOUSEWHEEL1(pFun WM_MOUSEWHEEL1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_MOUSEWHEEL, pFun)
+}
+
+// 窗口退出移动或调整大小模式循环改，详情参见MSDN.
+func (w *windowBase) Event_EXITSIZEMOVE(pFun WM_EXITSIZEMOVE) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.WM_EXITSIZEMOVE, pFun)
+}
+
+// 窗口退出移动或调整大小模式循环改，详情参见MSDN.
+func (w *windowBase) Event_EXITSIZEMOVE1(pFun WM_EXITSIZEMOVE1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_EXITSIZEMOVE, pFun)
+}
+
+// 窗口鼠标进入消息
+func (w *windowBase) Event_MOUSEHOVER(pFun WM_MOUSEHOVER) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.WM_MOUSEHOVER, pFun)
+}
+
+// 窗口鼠标进入消息
+func (w *windowBase) Event_MOUSEHOVER1(pFun WM_MOUSEHOVER1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_MOUSEHOVER, pFun)
+}
+
+// 窗口鼠标离开消息.
+func (w *windowBase) Event_MOUSELEAVE(pFun WM_MOUSELEAVE) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.WM_MOUSELEAVE, pFun)
+}
+
+// 窗口鼠标离开消息.
+func (w *windowBase) Event_MOUSELEAVE1(pFun WM_MOUSELEAVE1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_MOUSELEAVE, pFun)
+}
+
+// 窗口大小改变消息.
+func (w *windowBase) Event_SIZE(pFun WM_SIZE) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.WM_SIZE, pFun)
+}
+
+// 窗口大小改变消息.
+func (w *windowBase) Event_SIZE1(pFun WM_SIZE1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_SIZE, pFun)
+}
+
+// 窗口定时器消息.
+func (w *windowBase) Event_TIMER(pFun WM_TIMER) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.WM_TIMER, pFun)
+}
+
+// 窗口定时器消息.
+func (w *windowBase) Event_TIMER1(pFun WM_TIMER1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_TIMER, pFun)
+}
+
+// 窗口获得焦点.
+func (w *windowBase) Event_SETFOCUS(pFun WM_SETFOCUS) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.WM_SETFOCUS, pFun)
+}
+
+// 窗口获得焦点.
+func (w *windowBase) Event_SETFOCUS1(pFun WM_SETFOCUS1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_SETFOCUS, pFun)
+}
+
+// 窗口失去焦点.
+func (w *windowBase) Event_KILLFOCUS(pFun WM_KILLFOCUS) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.WM_KILLFOCUS, pFun)
+}
+
+// 窗口失去焦点.
+func (w *windowBase) Event_KILLFOCUS1(pFun WM_KILLFOCUS1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_KILLFOCUS, pFun)
+}
+
+// 窗口键盘按键消息.
+func (w *windowBase) Event_KEYDOWN(pFun WM_KEYDOWN) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.WM_KEYDOWN, pFun)
+}
+
+// 窗口键盘按键消息.
+func (w *windowBase) Event_KEYDOWN1(pFun WM_KEYDOWN1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_KEYDOWN, pFun)
+}
+
+// 窗口鼠标捕获改变消息.
+func (w *windowBase) Event_CAPTURECHANGED(pFun WM_CAPTURECHANGED) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.WM_CAPTURECHANGED, pFun)
+}
+
+// 窗口鼠标捕获改变消息.
+func (w *windowBase) Event_CAPTURECHANGED1(pFun WM_CAPTURECHANGED1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_CAPTURECHANGED, pFun)
+}
+
+// 窗口设置鼠标光标.
+func (w *windowBase) Event_SETCURSOR(pFun WM_SETCURSOR) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.WM_SETCURSOR, pFun)
+}
+
+// 窗口设置鼠标光标.
+func (w *windowBase) Event_SETCURSOR1(pFun WM_SETCURSOR1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_SETCURSOR, pFun)
+}
+
+// 窗口字符消息.
+func (w *windowBase) Event_CHAR(pFun WM_CHAR) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.WM_CHAR, pFun)
+}
+
+// 窗口字符消息.
+func (w *windowBase) Event_CHAR1(pFun WM_CHAR1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_CHAR, pFun)
+}
+
+// 拖动文件到窗口.
+func (w *windowBase) Event_DROPFILES(pFun WM_DROPFILES) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.WM_DROPFILES, pFun)
+}
+
+// 拖动文件到窗口.
+func (w *windowBase) Event_DROPFILES1(pFun WM_DROPFILES1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_DROPFILES, pFun)
 }

@@ -1,6 +1,9 @@
 package widget
 
-import "github.com/twgh/xcgui/xc"
+import (
+	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
+)
 
 // 月历卡片
 type MonthCal struct {
@@ -47,4 +50,21 @@ func (m *MonthCal) GetToday(pnYear *int, pnMonth *int, pnDay *int) int {
 // pnDay: 日.[INT
 func (m *MonthCal) GetSelDate(pnYear *int, pnMonth *int, pnDay *int) int {
 	return xc.XMonthCal_GetSelDate(m.Handle, pnYear, pnMonth, pnDay)
+}
+
+/*
+以下都是事件
+*/
+
+type XE_MONTHCAL_CHANGE func(pbHandled *bool) int            // 月历元素日期改变事件
+type XE_MONTHCAL_CHANGE1 func(hEle int, pbHandled *bool) int // 月历元素日期改变事件
+
+// 月历元素日期改变事件
+func (m *MonthCal) Event_MONTHCAL_CHANGE(pFun XE_MONTHCAL_CHANGE) bool {
+	return xc.XEle_RegEventC(m.Handle, xcc.XE_MONTHCAL_CHANGE, pFun)
+}
+
+// 月历元素日期改变事件
+func (m *MonthCal) Event_MONTHCAL_CHANGE1(pFun XE_MONTHCAL_CHANGE1) bool {
+	return xc.XEle_RegEventC1(m.Handle, xcc.XE_MONTHCAL_CHANGE, pFun)
 }

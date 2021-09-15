@@ -364,14 +364,55 @@ func (c *ComboBox) GetCountColumn() int {
 下面都是事件
 */
 
+type XE_COMBOBOX_SELECT_END func(iItem int, pbHandled *bool) int // 组合框下拉列表项选择完成事件,编辑框内容已经改变.
+type XE_COMBOBOX_SELECT_END1 func(hEle int,iItem int, pbHandled *bool) int// 组合框下拉列表项选择完成事件,编辑框内容已经改变.
+type XE_COMBOBOX_SELECT func( iItem int,pbHandled *bool) int // 组合框下拉列表项选择事件.
+type XE_COMBOBOX_SELECT1 func(hEle int,iItem int,pbHandled *bool) int// 组合框下拉列表项选择事件.
+type XE_COMBOBOX_POPUP_LIST func( hWindow int, hListBox int,pbHandled *bool) int // 组合框下拉列表弹出事件.
+type XE_COMBOBOX_POPUP_LIST1 func(hEle int,hWindow int, hListBox int,pbHandled *bool) int// 组合框下拉列表弹出事件.
+type XE_COMBOBOX_EXIT_LIST func(pbHandled *bool) int // 组合框下拉列表退出事件.
+type XE_COMBOBOX_EXIT_LIST1 func(hEle int,pbHandled *bool) int// 组合框下拉列表退出事件.
+
 // 事件_组合框_下拉列表项选择完成, 编辑框内容已经改变
 // pFun: 事件函数指针.
-func (c *ComboBox) Event_ComboBox_Select_End(pFun func(iItem int, pbHandled *bool) int) bool {
+func (c *ComboBox) Event_ComboBox_Select_End(pFun XE_COMBOBOX_SELECT_END) bool {
 	return xc.XEle_RegEventC(c.Handle, xcc.XE_COMBOBOX_SELECT_END, pFun)
 }
 
 // 事件_组合框_下拉列表项选择完成, 编辑框内容已经改变
 // pFun: 事件函数指针.
-func (c *ComboBox) Event_ComboBox_Select_End1(pFun func(hEle int, iItem int, pbHandled *bool) int) bool {
+func (c *ComboBox) Event_ComboBox_Select_End1(pFun XE_COMBOBOX_SELECT_END1) bool {
 	return xc.XEle_RegEventC1(c.Handle, xcc.XE_COMBOBOX_SELECT_END, pFun)
 }
+
+// 组合框下拉列表项选择事件.
+func (c*ComboBox) Event_COMBOBOX_SELECT(pFun XE_COMBOBOX_SELECT) bool {
+	return xc.XEle_RegEventC(c.Handle, xcc.XE_COMBOBOX_SELECT, pFun)
+}
+
+// 组合框下拉列表项选择事件.
+func (c*ComboBox) Event_COMBOBOX_SELECT1(pFun XE_COMBOBOX_SELECT1) bool {
+	return xc.XEle_RegEventC1(c.Handle, xcc.XE_COMBOBOX_SELECT, pFun)
+}
+
+// 组合框下拉列表弹出事件.
+func (c*ComboBox) Event_COMBOBOX_POPUP_LIST(pFun XE_COMBOBOX_POPUP_LIST) bool {
+	return xc.XEle_RegEventC(c.Handle, xcc.XE_COMBOBOX_POPUP_LIST, pFun)
+}
+
+// 组合框下拉列表弹出事件.
+func (c*ComboBox) Event_COMBOBOX_POPUP_LIST1(pFun XE_COMBOBOX_POPUP_LIST1) bool {
+	return xc.XEle_RegEventC1(c.Handle, xcc.XE_COMBOBOX_POPUP_LIST, pFun)
+}
+
+// 组合框下拉列表退出事件.
+func (c*ComboBox) Event_COMBOBOX_EXIT_LIST(pFun XE_COMBOBOX_EXIT_LIST) bool {
+	return xc.XEle_RegEventC(c.Handle, xcc.XE_COMBOBOX_EXIT_LIST, pFun)
+}
+
+// 组合框下拉列表退出事件.
+func (c*ComboBox) Event_COMBOBOX_EXIT_LIST1(pFun XE_COMBOBOX_EXIT_LIST1) bool {
+	return xc.XEle_RegEventC1(c.Handle, xcc.XE_COMBOBOX_EXIT_LIST, pFun)
+}
+
+

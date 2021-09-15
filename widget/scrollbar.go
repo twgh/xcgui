@@ -1,6 +1,9 @@
 package widget
 
-import "github.com/twgh/xcgui/xc"
+import (
+	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
+)
 
 // 滚动条
 type ScrollBar struct {
@@ -104,4 +107,21 @@ func (s *ScrollBar) GetButtonDown() int {
 // 滚动条_取滑块, 获取滑动按钮, 返回按钮句柄.
 func (s *ScrollBar) GetButtonSlider() int {
 	return xc.XSBar_GetButtonSlider(s.Handle)
+}
+
+/*
+以下都是事件
+*/
+
+type XE_SBAR_SCROLL func(pos int, pbHandled *bool) int            // 滚动条元素滚动事件,滚动条触发.
+type XE_SBAR_SCROLL1 func(hEle int, pos int, pbHandled *bool) int // 滚动条元素滚动事件,滚动条触发.
+
+// 滚动条元素滚动事件,滚动条触发.
+func (s *ScrollBar) Event_SBAR_SCROLL(pFun XE_SBAR_SCROLL) bool {
+	return xc.XEle_RegEventC(s.Handle, xcc.XE_SBAR_SCROLL, pFun)
+}
+
+// 滚动条元素滚动事件,滚动条触发.
+func (s *ScrollBar) Event_SBAR_SCROLL1(pFun XE_SBAR_SCROLL1) bool {
+	return xc.XEle_RegEventC1(s.Handle, xcc.XE_SBAR_SCROLL, pFun)
 }

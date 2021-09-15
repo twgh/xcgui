@@ -218,14 +218,29 @@ func (b *Button) ClearBkInfo() int {
 下面都是事件
 */
 
+type XE_BNCLICK func(pbHandled *bool) int                              // 按钮点击事件.
+type XE_BNCLICK1 func(hEle int, pbHandled *bool) int                   // 按钮点击事件.
+type XE_BUTTON_CHECK func(bCheck bool, pbHandled *bool) int            // 按钮选中事件.
+type XE_BUTTON_CHECK1 func(hEle int, bCheck bool, pbHandled *bool) int // 按钮选中事件.
+
 // 事件_按钮被单击
 // pFun: 事件函数指针.
-func (b *Button) Event_BnClick(pFun func(pbHandled *bool) int) bool {
+func (b *Button) Event_BnClick(pFun XE_BNCLICK) bool {
 	return xc.XEle_RegEventC(b.Handle, xcc.XE_BNCLICK, pFun)
 }
 
 // 事件_按钮被单击1
 // pFun: 事件函数指针.
-func (b *Button) Event_BnClick1(pFun func(hEle int, pbHandled *bool) int) bool {
+func (b *Button) Event_BnClick1(pFun XE_BNCLICK1) bool {
 	return xc.XEle_RegEventC1(b.Handle, xcc.XE_BNCLICK, pFun)
+}
+
+// 按钮选中事件.
+func (b *Button) Event_BUTTON_CHECK(pFun XE_BUTTON_CHECK) bool {
+	return xc.XEle_RegEventC(b.Handle, xcc.XE_BUTTON_CHECK, pFun)
+}
+
+// 按钮选中事件.
+func (b *Button) Event_BUTTON_CHECK1(pFun XE_BUTTON_CHECK1) bool {
+	return xc.XEle_RegEventC1(b.Handle, xcc.XE_BUTTON_CHECK, pFun)
 }

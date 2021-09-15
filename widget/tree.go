@@ -1,6 +1,9 @@
 package widget
 
-import "github.com/twgh/xcgui/xc"
+import (
+	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
+)
 
 // 列表树元素
 type Tree struct {
@@ -457,4 +460,117 @@ func (t *Tree) DeleteItemAll() int {
 // 列表树_删除列全部
 func (t *Tree) DeleteColumnAll() int {
 	return xc.XTree_DeleteColumnAll(t.Handle)
+}
+
+/*
+以下都是事件
+*/
+
+type XE_TREE_TEMP_CREATE func(pItem *xc.Tree_Item_, nFlag int, pbHandled *bool) int                // 列表树元素-项模板创建,模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复
+type XE_TREE_TEMP_CREATE1 func(hEle int, pItem *xc.Tree_Item_, nFlag int, pbHandled *bool) int     // 列表树元素-项模板创建,模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复
+type XE_TREE_TEMP_CREATE_END func(pItem *xc.Tree_Item_, nFlag int, pbHandled *bool) int            // 列表树元素-项模板创建完成,模板复用机制需先启用; 不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册
+type XE_TREE_TEMP_CREATE_END1 func(hEle int, pItem *xc.Tree_Item_, nFlag int, pbHandled *bool) int // 列表树元素-项模板创建完成,模板复用机制需先启用; 不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册
+type XE_TREE_TEMP_DESTROY func(pItem *xc.Tree_Item_, nFlag int, pbHandled *bool) int               // 列表树元素-项模板销毁,模板复用机制需先启用;
+type XE_TREE_TEMP_DESTROY1 func(hEle int, pItem *xc.Tree_Item_, nFlag int, pbHandled *bool) int    // 列表树元素-项模板销毁,模板复用机制需先启用;
+type XE_TREE_TEMP_ADJUST_COORDINATE func(pItem *xc.Tree_Item_, pbHandled *bool) int                // 树元素,项模板,调整项坐标. 已停用
+type XE_TREE_TEMP_ADJUST_COORDINATE1 func(hEle int, pItem *xc.Tree_Item_, pbHandled *bool) int     // 树元素,项模板,调整项坐标. 已停用
+type XE_TREE_DRAWITEM func(hDraw int, pItem *xc.Tree_Item_, pbHandled *bool) int                   // 树元素,绘制项.
+type XE_TREE_DRAWITEM1 func(hEle int, hDraw int, pItem *xc.Tree_Item_, pbHandled *bool) int        // 树元素,绘制项.
+type XE_TREE_SELECT func(nItemID int, pbHandled *bool) int                                         // 树元素,项选择事件.
+type XE_TREE_SELECT1 func(hEle int, nItemID int, pbHandled *bool) int                              // 树元素,项选择事件.
+type XE_TREE_EXPAND func(id int, bExpand bool, pbHandled *bool) int                                // 树元素,项展开收缩事件.
+type XE_TREE_EXPAND1 func(hEle int, id int, bExpand bool, pbHandled *bool) int                     // 树元素,项展开收缩事件.
+type XE_TREE_DRAG_ITEM_ING func(pInfo *xc.Tree_Drag_Item_, pbHandled *bool) int                    // 树元素,用户正在拖动项, 可对参数值修改.
+type XE_TREE_DRAG_ITEM_ING1 func(hEle int, pInfo *xc.Tree_Drag_Item_, pbHandled *bool) int         // 树元素,用户正在拖动项, 可对参数值修改.
+type XE_TREE_DRAG_ITEM func(pInfo *xc.Tree_Drag_Item_, pbHandled *bool) int                        // 树元素,拖动项事件.
+type XE_TREE_DRAG_ITEM1 func(hEle int, pInfo *xc.Tree_Drag_Item_, pbHandled *bool) int             // 树元素,拖动项事件.
+
+// 列表树元素-项模板创建,模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复
+func (t *Tree) Event_TREE_TEMP_CREATE(pFun XE_TREE_TEMP_CREATE) bool {
+	return xc.XEle_RegEventC(t.Handle, xcc.XE_TREE_TEMP_CREATE, pFun)
+}
+
+// 列表树元素-项模板创建,模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复
+func (t *Tree) Event_TREE_TEMP_CREATE1(pFun XE_TREE_TEMP_CREATE1) bool {
+	return xc.XEle_RegEventC1(t.Handle, xcc.XE_TREE_TEMP_CREATE, pFun)
+}
+
+// 列表树元素-项模板创建完成,模板复用机制需先启用; 不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册
+func (t *Tree) Event_TREE_TEMP_CREATE_END(pFun XE_TREE_TEMP_CREATE_END) bool {
+	return xc.XEle_RegEventC(t.Handle, xcc.XE_TREE_TEMP_CREATE_END, pFun)
+}
+
+// 列表树元素-项模板创建完成,模板复用机制需先启用; 不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册
+func (t *Tree) Event_TREE_TEMP_CREATE_END1(pFun XE_TREE_TEMP_CREATE_END1) bool {
+	return xc.XEle_RegEventC1(t.Handle, xcc.XE_TREE_TEMP_CREATE_END, pFun)
+}
+
+// 列表树元素-项模板销毁,模板复用机制需先启用;
+func (t *Tree) Event_TREE_TEMP_DESTROY(pFun XE_TREE_TEMP_DESTROY) bool {
+	return xc.XEle_RegEventC(t.Handle, xcc.XE_TREE_TEMP_DESTROY, pFun)
+}
+
+// 列表树元素-项模板销毁,模板复用机制需先启用;
+func (t *Tree) Event_TREE_TEMP_DESTROY1(pFun XE_TREE_TEMP_DESTROY1) bool {
+	return xc.XEle_RegEventC1(t.Handle, xcc.XE_TREE_TEMP_DESTROY, pFun)
+}
+
+// 树元素,项模板,调整项坐标. 已停用
+func (t *Tree) Event_TREE_TEMP_ADJUST_COORDINATE(pFun XE_TREE_TEMP_ADJUST_COORDINATE) bool {
+	return xc.XEle_RegEventC(t.Handle, xcc.XE_TREE_TEMP_ADJUST_COORDINATE, pFun)
+}
+
+// 树元素,项模板,调整项坐标. 已停用
+func (t *Tree) Event_TREE_TEMP_ADJUST_COORDINATE1(pFun XE_TREE_TEMP_ADJUST_COORDINATE1) bool {
+	return xc.XEle_RegEventC1(t.Handle, xcc.XE_TREE_TEMP_ADJUST_COORDINATE, pFun)
+}
+
+// 树元素,绘制项.
+func (t *Tree) Event_TREE_DRAWITEM(pFun XE_TREE_DRAWITEM) bool {
+	return xc.XEle_RegEventC(t.Handle, xcc.XE_TREE_DRAWITEM, pFun)
+}
+
+// 树元素,绘制项.
+func (t *Tree) Event_TREE_DRAWITEM1(pFun XE_TREE_DRAWITEM1) bool {
+	return xc.XEle_RegEventC1(t.Handle, xcc.XE_TREE_DRAWITEM, pFun)
+}
+
+// 树元素,项选择事件.
+func (t *Tree) Event_TREE_SELECT(pFun XE_TREE_SELECT) bool {
+	return xc.XEle_RegEventC(t.Handle, xcc.XE_TREE_SELECT, pFun)
+}
+
+// 树元素,项选择事件.
+func (t *Tree) Event_TREE_SELECT1(pFun XE_TREE_SELECT1) bool {
+	return xc.XEle_RegEventC1(t.Handle, xcc.XE_TREE_SELECT, pFun)
+}
+
+// 树元素,项展开收缩事件.
+func (t *Tree) Event_TREE_EXPAND(pFun XE_TREE_EXPAND) bool {
+	return xc.XEle_RegEventC(t.Handle, xcc.XE_TREE_EXPAND, pFun)
+}
+
+// 树元素,项展开收缩事件.
+func (t *Tree) Event_TREE_EXPAND1(pFun XE_TREE_EXPAND1) bool {
+	return xc.XEle_RegEventC1(t.Handle, xcc.XE_TREE_EXPAND, pFun)
+}
+
+// 树元素,用户正在拖动项, 可对参数值修改.
+func (t *Tree) Event_TREE_DRAG_ITEM_ING(pFun XE_TREE_DRAG_ITEM_ING) bool {
+	return xc.XEle_RegEventC(t.Handle, xcc.XE_TREE_DRAG_ITEM_ING, pFun)
+}
+
+// 树元素,用户正在拖动项, 可对参数值修改.
+func (t *Tree) Event_TREE_DRAG_ITEM_ING1(pFun XE_TREE_DRAG_ITEM_ING1) bool {
+	return xc.XEle_RegEventC1(t.Handle, xcc.XE_TREE_DRAG_ITEM_ING, pFun)
+}
+
+// 树元素,拖动项事件.
+func (t *Tree) Event_TREE_DRAG_ITEM(pFun XE_TREE_DRAG_ITEM) bool {
+	return xc.XEle_RegEventC(t.Handle, xcc.XE_TREE_DRAG_ITEM, pFun)
+}
+
+// 树元素,拖动项事件.
+func (t *Tree) Event_TREE_DRAG_ITEM1(pFun XE_TREE_DRAG_ITEM1) bool {
+	return xc.XEle_RegEventC1(t.Handle, xcc.XE_TREE_DRAG_ITEM, pFun)
 }
