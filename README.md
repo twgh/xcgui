@@ -118,6 +118,10 @@ func main() {
 }
 ```
 
+# 更多例子
+
+[xcgui-example](https://github.com/twgh/xcgui-example)
+
 # 常量
 
 xcc包里都是常量，像这样使用：`xcc.Xc_Window_Style_Default`

@@ -118,6 +118,10 @@ func main() {
 }
 ```
 
+# More examples
+
+[xcgui-example](https://github.com/twgh/xcgui-example)
+
 # Const
 
 The constants are all in the xcc package and used like this: `xcc.Xc_Window_Style_Default`
