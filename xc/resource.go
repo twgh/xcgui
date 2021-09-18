@@ -1,5 +1,7 @@
 package xc
 
+import "syscall"
+
 // 资源_启用延迟加载, 启用延迟加载; 图片文件, 列表项模板文件
 // bEnable: 是否启用.
 func XRes_EnableDelayLoad(bEnable bool) int {
@@ -9,8 +11,8 @@ func XRes_EnableDelayLoad(bEnable bool) int {
 
 // 资源_置文件加载回调, 设置文件加载回调函数
 // pFun: 回调函数.
-func XRes_SetLoadFileCallback(pFun int) int {
-	r, _, _ := xRes_SetLoadFileCallback.Call(uintptr(pFun))
+func XRes_SetLoadFileCallback(pFun interface{}) int {
+	r, _, _ := xRes_SetLoadFileCallback.Call(syscall.NewCallback(pFun))
 	return int(r)
 }
 

@@ -128,7 +128,7 @@ The constants are all in the xcc package and used like this: `xcc.Xc_Window_Styl
 
 # Command introduction
 
-The functions in the xc package are the original functions in xcgui.dll, and there are more than 1,000 API interfaces that can be used directly.
+The functions in the xc package are the original functions in xcgui.dll. There are more than a thousand functions that can be used directly.
 
 The encapsulated classes are in other packages.
 
@@ -136,52 +136,56 @@ The encapsulated classes are in other packages.
 
 These classes are encapsulated based on more than a thousand functions in the xc package. Of course, you can also choose to use the functions in the xc package directly.
 
-| Class name       | Finish |
-| ---------------- | ------ |
-| App              | √      |
-| Window           | √      |
-| FrameWindow      | √      |
-| ModalWindow      | √      |
-| AdapterListView  | √      |
-| AdapterMap       | √      |
-| AdapterTable     | √      |
-| AdapterTree      | √      |
-| BkManager        | √      |
-| FontX            | √      |
-| Image            | √      |
-| ListItemTemplate | √      |
-| Node             | √      |
-| Shape            | √      |
-| ShapeEllipse     | √      |
-| ShapeGif         | √      |
-| ShapeGroupBox    | √      |
-| ShapeLine        | √      |
-| ShapePicture     | √      |
-| ShapeRect        | √      |
-| ShapeText        | √      |
-| Table            | √      |
-| Button           | √      |
-| ComboBox         | √      |
-| Edit             | √      |
-| Editor           | √      |
-| Element          | √      |
-| List             | √      |
-| ListBox          | √      |
-| Menu             | √      |
-| ProgressBar      | √      |
-| TextLink         | √      |
-| Widget           | √      |
-| LayoutEle        | √      |
-| LayoutFrame      | √      |
-| ListView         | √      |
-| MenuBar          | √      |
-| Pane             | √      |
-| ScrollBar        | √      |
-| ScrollView       | √      |
-| SliderBar        | √      |
-| TabBar           | √      |
-| ToolBar          | √      |
-| Tree             | √      |
-| DateTime         | √      |
-| MonthCal         | √      |
+| Package Name | Class Name       | Finish |
+| ------------ | ---------------- | ------ |
+| app          | App              | √      |
+| window       | Window           | √      |
+| window       | FrameWindow      | √      |
+| window       | ModalWindow      | √      |
+| shape        | Shape            | √      |
+| shape        | ShapeEllipse     | √      |
+| shape        | ShapeGif         | √      |
+| shape        | ShapeGroupBox    | √      |
+| shape        | ShapeLine        | √      |
+| shape        | ShapePicture     | √      |
+| shape        | ShapeRect        | √      |
+| shape        | ShapeText        | √      |
+| widget       | Table            | √      |
+| widget       | Button           | √      |
+| widget       | ComboBox         | √      |
+| widget       | Edit             | √      |
+| widget       | Editor           | √      |
+| widget       | Element          | √      |
+| widget       | List             | √      |
+| widget       | ListBox          | √      |
+| widget       | Menu             | √      |
+| widget       | ProgressBar      | √      |
+| widget       | TextLink         | √      |
+| widget       | LayoutEle        | √      |
+| widget       | LayoutFrame      | √      |
+| widget       | ListView         | √      |
+| widget       | MenuBar          | √      |
+| widget       | Pane             | √      |
+| widget       | ScrollBar        | √      |
+| widget       | ScrollView       | √      |
+| widget       | SliderBar        | √      |
+| widget       | TabBar           | √      |
+| widget       | ToolBar          | √      |
+| widget       | Tree             | √      |
+| widget       | DateTime         | √      |
+| widget       | MonthCal         | √      |
+| adapter      | AdapterListView  | √      |
+| adapter      | AdapterMap       | √      |
+| adapter      | AdapterTable     | √      |
+| adapter      | AdapterTree      | √      |
+| bkmanager    | BkManager        | √      |
+| fontx        | FontX            | √      |
+| image        | Image            | √      |
+| template     | ListItemTemplate | √      |
+| template     | Node             | √      |
+| draw         | Draw             | √      |
+| xc           |                  | √      |
+| xcc          |                  | √      |
+| ease         |                  | √      |
+| res          |                  | √      |
 

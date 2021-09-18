@@ -24,3 +24,55 @@ func NewLayoutFrame(x int, y int, cx int, cy int, hParent int) *LayoutFrame {
 func (l *LayoutFrame) ShowLayoutFrame(bEnable bool) int {
 	return xc.XLayoutFrame_ShowLayoutFrame(l.Handle, bEnable)
 }
+
+/*
+LayoutBox-布局盒子
+*/
+
+// 布局盒子_启用水平
+// bEnable: 是否启用
+func (l *LayoutFrame) EnableHorizon(bEnable bool) int {
+	return xc.XLayoutBox_EnableHorizon(l.Handle, bEnable)
+}
+
+// 布局盒子_启用自动换行
+// bEnable: 是否启用
+func (l *LayoutFrame) EnableAutoWrap(bEnable bool) int {
+	return xc.XLayoutBox_EnableAutoWrap(l.Handle, bEnable)
+}
+
+// 布局盒子_启用溢出隐藏
+// bEnable: 是否启用
+func (l *LayoutFrame) EnableOverflowHide(bEnable bool) int {
+	return xc.XLayoutBox_EnableOverflowHide(l.Handle, bEnable)
+}
+
+// 布局盒子_置水平对齐
+// nAlign: 对齐方式
+func (l *LayoutFrame) SetAlignH(nAlign int) int {
+	return xc.XLayoutBox_SetAlignH(l.Handle, nAlign)
+}
+
+// 布局盒子_置垂直对齐
+// nAlign: 对齐方式
+func (l *LayoutFrame) SetAlignV(nAlign int) int {
+	return xc.XLayoutBox_SetAlignV(l.Handle, nAlign)
+}
+
+// 布局盒子_置对齐基线
+// nAlign: 对齐方式
+func (l *LayoutFrame) SetAlignBaseline(nAlign int) int {
+	return xc.XLayoutBox_SetAlignBaseline(l.Handle, nAlign)
+}
+
+// 布局盒子_置间距
+// nSpace: 项间距大小
+func (l *LayoutFrame) SetSpace(nSpace int) int {
+	return xc.XLayoutBox_SetSpace(l.Handle, nSpace)
+}
+
+// 布局盒子_置行距
+// nSpace: 行间距大小
+func (l *LayoutFrame) SetSpaceRow(nSpace int) int {
+	return xc.XLayoutBox_SetSpaceRow(l.Handle, nSpace)
+}

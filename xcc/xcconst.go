@@ -1,4 +1,5 @@
-package xcc // xcgui const
+// xcgui const
+package xcc
 
 // SW_
 

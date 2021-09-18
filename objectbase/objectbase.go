@@ -1,3 +1,4 @@
+// 基类
 package objectbase
 
 import "github.com/twgh/xcgui/xc"

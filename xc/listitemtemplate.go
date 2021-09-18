@@ -153,7 +153,7 @@ func XTemp_List_GetNode(hTemp int, index int) int {
 	return int(r)
 }
 
-// 模板_取节点, 获取节点, 根据itemID
+// 模板_取节点, 获取节点, 根据itemID. 返回itemID对应的节点指针.
 // pNode: 节点指针
 // itemID: ID.
 func XTemp_GetNode(pNode int, itemID int) int {

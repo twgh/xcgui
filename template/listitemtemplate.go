@@ -151,11 +151,14 @@ func (n *Node) SetPNode(pNode int) {
 	n.PNode = pNode
 }
 
-// 模板_取节点, 获取节点, 根据itemID
+// 模板_取节点, 获取节点, 根据itemID. 返回节点对象.
 // pNode: 节点指针
 // itemID: ID.
-func (n *Node) GetNode(itemID int) int {
-	return xc.XTemp_GetNode(n.PNode, itemID)
+func (n *Node) GetNode(itemID int) *Node {
+	p := &Node{
+		PNode: xc.XTemp_GetNode(n.PNode, itemID),
+	}
+	return p
 }
 
 // 模板_克隆节点, 获取列表项模板类型, 返回节点对象

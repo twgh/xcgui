@@ -55,3 +55,55 @@ func (l *LayoutEle) GetWidthIn() int {
 func (l *LayoutEle) GetHeightIn() int {
 	return xc.XLayout_GetHeightIn(l.Handle)
 }
+
+/*
+LayoutBox-布局盒子
+*/
+
+// 布局盒子_启用水平
+// bEnable: 是否启用
+func (l *LayoutEle) EnableHorizon(bEnable bool) int {
+	return xc.XLayoutBox_EnableHorizon(l.Handle, bEnable)
+}
+
+// 布局盒子_启用自动换行
+// bEnable: 是否启用
+func (l *LayoutEle) EnableAutoWrap(bEnable bool) int {
+	return xc.XLayoutBox_EnableAutoWrap(l.Handle, bEnable)
+}
+
+// 布局盒子_启用溢出隐藏
+// bEnable: 是否启用
+func (l *LayoutEle) EnableOverflowHide(bEnable bool) int {
+	return xc.XLayoutBox_EnableOverflowHide(l.Handle, bEnable)
+}
+
+// 布局盒子_置水平对齐
+// nAlign: 对齐方式
+func (l *LayoutEle) SetAlignH(nAlign int) int {
+	return xc.XLayoutBox_SetAlignH(l.Handle, nAlign)
+}
+
+// 布局盒子_置垂直对齐
+// nAlign: 对齐方式
+func (l *LayoutEle) SetAlignV(nAlign int) int {
+	return xc.XLayoutBox_SetAlignV(l.Handle, nAlign)
+}
+
+// 布局盒子_置对齐基线
+// nAlign: 对齐方式
+func (l *LayoutEle) SetAlignBaseline(nAlign int) int {
+	return xc.XLayoutBox_SetAlignBaseline(l.Handle, nAlign)
+}
+
+// 布局盒子_置间距
+// nSpace: 项间距大小
+func (l *LayoutEle) SetSpace(nSpace int) int {
+	return xc.XLayoutBox_SetSpace(l.Handle, nSpace)
+}
+
+// 布局盒子_置行距
+// nSpace: 行间距大小
+func (l *LayoutEle) SetSpaceRow(nSpace int) int {
+	return xc.XLayoutBox_SetSpaceRow(l.Handle, nSpace)
+}
