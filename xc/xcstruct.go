@@ -15,13 +15,13 @@ type Menu_DrawBackground_ struct {
 
 // 菜单项自绘结构
 type Menu_DrawItem_ struct {
-	HMenu   int     // 菜单句柄
-	HWindow int     // 当前弹出菜单项的窗口句柄
-	NID     int     // ID
-	NState  int     // 状态: Menu_Item_Flag_
-	RcItem  RECT    // 坐标
-	HIcon   int     // 菜单项图标句柄
-	PText   uintptr // 文本
+	HMenu   int  // 菜单句柄
+	HWindow int  // 当前弹出菜单项的窗口句柄
+	NID     int  // ID
+	NState  int  // 状态: Menu_Item_Flag_
+	RcItem  RECT // 坐标
+	HIcon   int  // 菜单项图标句柄
+	PText   int  // 文本
 }
 
 // 列表框项信息
@@ -111,20 +111,20 @@ type SIZE struct {
 
 // 字体属性
 type LOGFONTW struct {
-	LfHeight         int     // 高度
-	LfWidth          int     // 宽度
-	LfEscapement     int     // 指定角度
-	LfOrientation    int     // 字符基线
-	LfWeight         int     // 字体粗细
-	LfItalic         uint8   // 是否斜体
-	LfUnderline      uint8   // 是否下划线
-	LfStrikeOut      uint8   // 是否删除线
-	LfCharSet        uint8   // 字符集
-	LfOutPrecision   uint8   // 输出精度
-	LfClipPrecision  uint8   // 剪辑精度
-	LfQuality        uint8   // 输出质量
-	LfPitchAndFamily uint8   // 字符间距
-	LfFaceName       uintptr // 字体名称
+	LfHeight         int      // 高度
+	LfWidth          int      // 宽度
+	LfEscapement     int      // 指定角度
+	LfOrientation    int      // 字符基线
+	LfWeight         int      // 字体粗细
+	LfItalic         uint8    // 是否斜体
+	LfUnderline      uint8    // 是否下划线
+	LfStrikeOut      uint8    // 是否删除线
+	LfCharSet        uint8    // 字符集
+	LfOutPrecision   uint8    // 输出精度
+	LfClipPrecision  uint8    // 剪辑精度
+	LfQuality        uint8    // 输出质量
+	LfPitchAndFamily uint8    // 字符间距
+	LfFaceName       [64]byte // 字体名称
 }
 
 // Editor 颜色信息
@@ -170,9 +170,9 @@ type Position_ struct {
 
 // 字体信息
 type Font_Info_ struct {
-	NSize  int32   // 字体大小, 单位(pt,磅).
-	NStyle int32   // 字体样式: FontStyle_
-	Name   uintptr // 字体名称
+	NSize  int32      // 字体大小, 单位(pt,磅).
+	NStyle int32      // 字体样式: FontStyle_
+	Name   [32]uint16 // 字体名称
 }
 
 // ListBox 列表框项信息2

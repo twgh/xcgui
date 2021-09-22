@@ -16,7 +16,7 @@ type List struct {
 // cx: 宽度.
 // cy: 高度.
 // hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素
-func XList_Create(x int, y int, cx int, cy int, hParent int) *List {
+func NewList(x int, y int, cx int, cy int, hParent int) *List {
 	p := &List{}
 	p.SetHandle(xc.XList_Create(x, y, cx, cy, hParent))
 	return p
