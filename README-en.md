@@ -31,8 +31,12 @@ func main() {
 	a.LoadResourceZip("qqmusic.zip", "resource.res", "")
 	// Load layout file from zip
 	hWindow := a.LoadLayoutZip("qqmusic.zip", "main.xml", "", 0)
-
-	win := &window.Window{}
+	if hWindow == 0 {
+		panic("error")
+	}
+	// Create window object
+	win := window.NewWindowByHandle(hWindow)
+	
 	// Assign a value to the class handle
 	win.SetHandle(hWindow)
 	// Adjust the layout
