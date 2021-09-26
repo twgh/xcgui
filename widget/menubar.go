@@ -19,6 +19,49 @@ func NewMenuBar(x int, y int, cx int, cy int, hParent int) *MenuBar {
 	return p
 }
 
+// 从句柄创建对象
+func NewMenuBarByHandle(handle int) *MenuBar {
+	p := &MenuBar{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewMenuBarByName(name string) *MenuBar {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &MenuBar{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewMenuBarByUID(nUID int) *MenuBar {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &MenuBar{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewMenuBarByUIDName(name string) *MenuBar {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &MenuBar{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
 // 菜单条_添加按钮, 添加弹出菜单按钮, 返回菜单按钮索引.
 // pText: 文本内容.
 func (m *MenuBar) AddButton(pText string) int {

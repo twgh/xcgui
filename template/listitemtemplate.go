@@ -7,7 +7,7 @@ import (
 
 // 列表项模板
 type ListItemTemplate struct {
-	HTEMP int //模板句柄
+	Handle int // HTEMP
 }
 
 // 模板_加载从文件, 列表项模板文件载入
@@ -15,7 +15,7 @@ type ListItemTemplate struct {
 // pFileName: 文件名.
 func New_Load(nType int, pFileName string) *ListItemTemplate {
 	p := &ListItemTemplate{
-		HTEMP: xc.XTemp_Load(nType, pFileName),
+		Handle: xc.XTemp_Load(nType, pFileName),
 	}
 	return p
 }
@@ -27,7 +27,7 @@ func New_Load(nType int, pFileName string) *ListItemTemplate {
 // pPassword: zip密码
 func New_LoadZip(nType int, pZipFile string, pFileName string, pPassword string) *ListItemTemplate {
 	p := &ListItemTemplate{
-		HTEMP: xc.XTemp_LoadZip(nType, pZipFile, pFileName, pPassword),
+		Handle: xc.XTemp_LoadZip(nType, pZipFile, pFileName, pPassword),
 	}
 	return p
 }
@@ -40,7 +40,7 @@ func New_LoadZip(nType int, pZipFile string, pFileName string, pPassword string)
 // pPassword: zip密码
 func New_LoadZipMem(nType int, data int, length int, pFileName string, pPassword string) *ListItemTemplate {
 	p := &ListItemTemplate{
-		HTEMP: xc.XTemp_LoadZipMem(nType, data, length, pFileName, pPassword),
+		Handle: xc.XTemp_LoadZipMem(nType, data, length, pFileName, pPassword),
 	}
 	return p
 }
@@ -50,7 +50,7 @@ func New_LoadZipMem(nType int, data int, length int, pFileName string, pPassword
 // pStringXML: 字符串指针.
 func New_LoadFromString(nType int, pStringXML int) *ListItemTemplate {
 	p := &ListItemTemplate{
-		HTEMP: xc.XTemp_LoadFromString(nType, pStringXML),
+		Handle: xc.XTemp_LoadFromString(nType, pStringXML),
 	}
 	return p
 }
@@ -59,36 +59,43 @@ func New_LoadFromString(nType int, pStringXML int) *ListItemTemplate {
 // nType: 模板类型, ListItemTemp_Type_
 func New(nType int) *ListItemTemplate {
 	p := &ListItemTemplate{
-		HTEMP: xc.XTemp_Create(nType),
+		Handle: xc.XTemp_Create(nType),
 	}
 	return p
 }
 
-// 给本类的HTEMP赋值
-func (l *ListItemTemplate) SetHTemp(hTemp int) {
-	l.HTEMP = hTemp
+// 从句柄创建对象
+func NewByHandle(handle int) *ListItemTemplate {
+	p := &ListItemTemplate{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 给本类的Handle赋值
+func (l *ListItemTemplate) SetHandle(hTemp int) {
+	l.Handle = hTemp
 }
 
 // 模板_取类型, 获取列表项模板类型, 返回: ListItemTemp_Type_
 func (l *ListItemTemplate) GetType() int {
-	return xc.XTemp_GetType(l.HTEMP)
+	return xc.XTemp_GetType(l.Handle)
 }
 
 // 模板_销毁, 项模板销毁
 func (l *ListItemTemplate) Destroy() bool {
-	return xc.XTemp_Destroy(l.HTEMP)
+	return xc.XTemp_Destroy(l.Handle)
 }
 
 // 模板_添加根节点
 // pNode: 节点指针.
 func (l *ListItemTemplate) AddNodeRoot(pNode int) bool {
-	return xc.XTemp_AddNodeRoot(l.HTEMP, pNode)
+	return xc.XTemp_AddNodeRoot(l.Handle, pNode)
 }
 
 // 模板_取列表中的节点
 // index: 节点位置索引
 func (l *ListItemTemplate) List_GetNode(index int) int {
-	return xc.XTemp_List_GetNode(l.HTEMP, index)
+	return xc.XTemp_List_GetNode(l.Handle, index)
 }
 
 // 模板_加载从文件扩展, 加载列表项模板从文件

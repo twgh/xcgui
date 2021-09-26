@@ -4,6 +4,7 @@ import (
 	"github.com/twgh/xcgui/xc"
 )
 
+// ShapePicture 形状对象图片
 type ShapePicture struct {
 	Shape
 }
@@ -18,6 +19,49 @@ func NewShapePicture(x int, y int, cx int, cy int, hParent int) *ShapePicture {
 	p := &ShapePicture{}
 	p.SetHandle(xc.XShapePic_Create(x, y, cx, cy, hParent))
 	return p
+}
+
+// 从句柄创建对象
+func NewShapePictureByHandle(handle int) *ShapePicture {
+	p := &ShapePicture{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewShapePictureByName(name string) *ShapePicture {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &ShapePicture{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewShapePictureByUID(nUID int) *ShapePicture {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &ShapePicture{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewShapePictureByUIDName(name string) *ShapePicture {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &ShapePicture{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
 }
 
 // 形状图片_置图片, 设置图片

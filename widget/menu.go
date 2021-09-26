@@ -17,6 +17,49 @@ func NewMenu() *Menu {
 	return p
 }
 
+// 从句柄创建对象
+func NewMenuByHandle(handle int) *Menu {
+	p := &Menu{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewMenuByName(name string) *Menu {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &Menu{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewMenuByUID(nUID int) *Menu {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &Menu{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewMenuByUIDName(name string) *Menu {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &Menu{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
 // 菜单_添加项, 添加菜单项
 // nID: 项ID.
 // pText: 文本内容.

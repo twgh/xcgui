@@ -29,6 +29,49 @@ func NewLayoutEx(hParent int) *LayoutEle {
 	return p
 }
 
+// 从句柄创建对象
+func NewLayoutEleByHandle(handle int) *LayoutEle {
+	p := &LayoutEle{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewLayoutEleByName(name string) *LayoutEle {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &LayoutEle{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewLayoutEleByUID(nUID int) *LayoutEle {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &LayoutEle{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewLayoutEleByUIDName(name string) *LayoutEle {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &LayoutEle{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
 // 布局_判断启用, 是否已经启用布局功能
 func (l *LayoutEle) IsEnableLayout() bool {
 	return xc.XLayout_IsEnableLayout(l.Handle)

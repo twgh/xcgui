@@ -21,6 +21,49 @@ func NewTabBar(x int, y int, cx int, cy int, hParent int) *TabBar {
 	return p
 }
 
+// 从句柄创建对象
+func NewTabBarByHandle(handle int) *TabBar {
+	p := &TabBar{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewTabBarByName(name string) *TabBar {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &TabBar{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewTabBarByUID(nUID int) *TabBar {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &TabBar{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewTabBarByUIDName(name string) *TabBar {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &TabBar{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
 // TAB条_添加标签, 添加一个标签, 返回标签索引.
 // pName: 标签文本内容.
 func (t *TabBar) AddLabel(pName string) int {

@@ -2945,7 +2945,7 @@ func RGB(r, g, b byte) int {
 }
 
 // 将十六进制颜色转换到RGB颜色
-func HEX2RGB(str string) int {
+func HEXToRGB(str string) int {
 	r, _ := strconv.ParseInt(str[:2], 16, 10)
 	g, _ := strconv.ParseInt(str[2:4], 16, 18)
 	b, _ := strconv.ParseInt(str[4:], 16, 10)
@@ -2954,7 +2954,7 @@ func HEX2RGB(str string) int {
 
 // 客户区坐标转换到屏幕坐标
 // hWindow: GUI库窗口资源句柄
-func Client2Screen(hWindow int, pPoint *POINT) {
+func ClientToScreen(hWindow int, pPoint *POINT) {
 	var r RECT
 	XWnd_GetRect(hWindow, &r)
 	pPoint.X += r.Left

@@ -22,6 +22,49 @@ func NewTree(x int, y int, cx int, cy int, hParent int) *Tree {
 	return p
 }
 
+// 从句柄创建对象
+func NewTreeByHandle(handle int) *Tree {
+	p := &Tree{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewTreeByName(name string) *Tree {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &Tree{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewTreeByUID(nUID int) *Tree {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &Tree{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewTreeByUIDName(name string) *Tree {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &Tree{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
 // 列表树_启用拖动项, 启用拖动项功能
 // bEnable: 是否启用.
 func (t *Tree) EnableDragItem(bEnable bool) int {

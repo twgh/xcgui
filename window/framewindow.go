@@ -17,7 +17,7 @@ type FrameWindow struct {
 // pTitle: 窗口标题.
 // hWndParent: 父窗口.
 // XCStyle: GUI库窗口样式: Xc_Window_Style_
-func NewFreamWindow(x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle int) *FrameWindow {
+func NewFrameWindow(x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle int) *FrameWindow {
 	p := &FrameWindow{}
 	p.SetHandle(xc.XFrameWnd_Create(x, y, cx, cy, pTitle, hWndParent, XCStyle))
 	return p
@@ -34,10 +34,53 @@ func NewFreamWindow(x int, y int, cx int, cy int, pTitle string, hWndParent int,
 // cy: 窗口高度.
 // hWndParent: 父窗口.
 // XCStyle: GUI库窗口样式: Xc_Window_Style_
-func NewFreamWindowEx(dwExStyle int, lpClassName string, lpWindowName string, dwStyle int, x int, y int, cx int, cy int, hWndParent int, XCStyle int) *FrameWindow {
+func NewFrameWindowEx(dwExStyle int, lpClassName string, lpWindowName string, dwStyle int, x int, y int, cx int, cy int, hWndParent int, XCStyle int) *FrameWindow {
 	p := &FrameWindow{}
 	p.SetHandle(xc.XFrameWnd_CreateEx(dwExStyle, lpClassName, lpWindowName, dwStyle, x, y, cx, cy, hWndParent, XCStyle))
 	return p
+}
+
+// 从句柄创建对象
+func NewFrameWindowByHandle(handle int) *FrameWindow {
+	p := &FrameWindow{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewFrameWindowByName(name string) *FrameWindow {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &FrameWindow{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewFrameWindowByUID(nUID int) *FrameWindow {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &FrameWindow{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewFrameWindowByUIDName(name string) *FrameWindow {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &FrameWindow{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
 }
 
 // 框架窗口_取布局区域坐标, 用来布局窗格的区域坐标, 不包含码头

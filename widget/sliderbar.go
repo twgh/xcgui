@@ -22,6 +22,49 @@ func NewSliderBar(x int, y int, cx int, cy int, hParent int) *SliderBar {
 	return p
 }
 
+// 从句柄创建对象
+func NewSliderBarByHandle(handle int) *SliderBar {
+	p := &SliderBar{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewSliderBarByName(name string) *SliderBar {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &SliderBar{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewSliderBarByUID(nUID int) *SliderBar {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &SliderBar{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewSliderBarByUIDName(name string) *SliderBar {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &SliderBar{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
 // 滑动条_置范围, 设置滑动范围.
 // range_: 范围.
 func (s *SliderBar) SetRange(range_ int) int {

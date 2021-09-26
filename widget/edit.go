@@ -35,6 +35,49 @@ func NewEditEx(x int, y int, cx int, cy int, nType int, hParent int) *Edit {
 	return p
 }
 
+// 从句柄创建对象
+func NewEditByHandle(handle int) *Edit {
+	p := &Edit{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewEditByName(name string) *Edit {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &Edit{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewEditByUID(nUID int) *Edit {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &Edit{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewEditByUIDName(name string) *Edit {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &Edit{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
 // 编辑框_启用自动换行
 // bEnable: 是否启用
 func (e *Edit) EnableAutoWrap(bEnable bool) int {

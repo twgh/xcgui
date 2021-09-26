@@ -40,6 +40,49 @@ func NewWindowEx(dwExStyle int, lpClassName string, lpWindowName string, dwStyle
 	return p
 }
 
+// 从句柄创建对象
+func NewWindowByHandle(handle int) *Window {
+	p := &Window{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewWindowByName(name string) *Window {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &Window{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewWindowByUID(nUID int) *Window {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &Window{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewWindowByUIDName(name string) *Window {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &Window{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
 /*
 LayoutBox-布局盒子
 */

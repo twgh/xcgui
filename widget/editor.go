@@ -22,6 +22,49 @@ func NewEditor(x int, y int, cx int, cy int, hParent int) *Editor {
 	return p
 }
 
+// 从句柄创建对象
+func NewEditorByHandle(handle int) *Editor {
+	p := &Editor{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewEditorByName(name string) *Editor {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &Editor{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewEditorByUID(nUID int) *Editor {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &Editor{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewEditorByUIDName(name string) *Editor {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &Editor{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
 // 代码编辑框_启用空格选择自动匹配项
 // bEnable: 是否启用
 func (e *Editor) EnableAutoMatchSpaseSelect(bEnable bool) int {

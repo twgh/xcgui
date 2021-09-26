@@ -4,6 +4,7 @@ import (
 	"github.com/twgh/xcgui/xc"
 )
 
+// 圆形(形状对象)
 type ShapeEllipse struct {
 	Shape
 }
@@ -18,6 +19,49 @@ func NewShapeEllipse(x int, y int, cx int, cy int, hParent int) *ShapeEllipse {
 	p := &ShapeEllipse{}
 	p.SetHandle(xc.XShapeEllipse_Create(x, y, cx, cy, hParent))
 	return p
+}
+
+// 从句柄创建对象
+func NewShapeEllipseByHandle(handle int) *ShapeEllipse {
+	p := &ShapeEllipse{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewShapeEllipseByName(name string) *ShapeEllipse {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &ShapeEllipse{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewShapeEllipseByUID(nUID int) *ShapeEllipse {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &ShapeEllipse{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewShapeEllipseByUIDName(name string) *ShapeEllipse {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &ShapeEllipse{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
 }
 
 // 形状圆_置边框色

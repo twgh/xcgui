@@ -38,6 +38,49 @@ func NewModalWindowEx(dwExStyle int, lpClassName string, lpWindowName string, dw
 	return p
 }
 
+// 从句柄创建对象
+func NewModalWindowByHandle(handle int) *ModalWindow {
+	p := &ModalWindow{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewModalWindowByName(name string) *ModalWindow {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &ModalWindow{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewModalWindowByUID(nUID int) *ModalWindow {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &ModalWindow{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewModalWindowByUIDName(name string) *ModalWindow {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &ModalWindow{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
 // 模态窗口_启用自动关闭, 是否自动关闭窗口, 当窗口失去焦点时.
 // bEnable: 开启开关.
 func (m *ModalWindow) EnableAutoClose(bEnable bool) int {

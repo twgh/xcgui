@@ -22,6 +22,49 @@ func NewScrollBar(x int, y int, cx int, cy int, hParent int) *ScrollBar {
 	return p
 }
 
+// 从句柄创建对象
+func NewScrollBarByHandle(handle int) *ScrollBar {
+	p := &ScrollBar{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewScrollBarByName(name string) *ScrollBar {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &ScrollBar{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewScrollBarByUID(nUID int) *ScrollBar {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &ScrollBar{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewScrollBarByUIDName(name string) *ScrollBar {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &ScrollBar{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
 // 滚动条_置范围, 设置滚动范围
 // range_: 范围.
 func (s *ScrollBar) SetRange(range_ int) int {

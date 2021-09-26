@@ -4,6 +4,7 @@ import (
 	"github.com/twgh/xcgui/xc"
 )
 
+// 形状对象GIF
 type ShapeGif struct {
 	Shape
 }
@@ -18,6 +19,49 @@ func NewShapeGif(x int, y int, cx int, cy int, hParent int) *ShapeGif {
 	p := &ShapeGif{}
 	p.SetHandle(xc.XShapeGif_Create(x, y, cx, cy, hParent))
 	return p
+}
+
+// 从句柄创建对象
+func NewShapeGifByHandle(handle int) *ShapeGif {
+	p := &ShapeGif{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewShapeGifByName(name string) *ShapeGif {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &ShapeGif{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewShapeGifByUID(nUID int) *ShapeGif {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &ShapeGif{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewShapeGifByUIDName(name string) *ShapeGif {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &ShapeGif{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
 }
 
 // 形状GIF_置图片, 设置GIF图片

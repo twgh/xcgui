@@ -22,6 +22,49 @@ func NewTextLink(x int, y int, cx int, cy int, pName string, hParent int) *TextL
 	return p
 }
 
+// 从句柄创建对象
+func NewTextLinkByHandle(handle int) *TextLink {
+	p := &TextLink{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewTextLinkByName(name string) *TextLink {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &TextLink{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewTextLinkByUID(nUID int) *TextLink {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &TextLink{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewTextLinkByUIDName(name string) *TextLink {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &TextLink{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
 // 文本链接_启用离开状态下划线, 启用下划线, 鼠标离开状态
 // bEnable: 是否启用.
 func (t *TextLink) EnableUnderlineLeave(bEnable bool) int {

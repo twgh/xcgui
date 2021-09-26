@@ -2,42 +2,62 @@
 package bkmanager
 
 import (
+	"github.com/twgh/xcgui/res"
 	"github.com/twgh/xcgui/xc"
 )
 
 // 背景管理器
 type BkManager struct {
-	HBKM int
+	Handle int
 }
 
 // 背景_创建, 创建背景管理器
 func NewBkManager() *BkManager {
 	p := &BkManager{
-		HBKM: xc.XBkM_Create(),
+		Handle: xc.XBkM_Create(),
 	}
 	return p
 }
 
+// 从句柄创建对象
+func NewBkManagerByHandle(handle int) *BkManager {
+	p := &BkManager{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewBkManagerByName(name string) *BkManager {
+	handle := res.GetBkM(name)
+	if handle > 0 {
+		p := &BkManager{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
 // 给本类的HBKM赋值
-func (b *BkManager) SetHBKM(hBkm int) {
-	b.HBKM = hBkm
+func (b *BkManager) SetHandle(hBkm int) {
+	b.Handle = hBkm
 }
 
 // 背景_销毁
 func (b *BkManager) Destroy() int {
-	return xc.XBkM_Destroy(b.HBKM)
+	return xc.XBkM_Destroy(b.Handle)
 }
 
 // 背景_置内容, 设置背景内容, 返回设置的背景对象数量
 // pText: 背景内容字符串.
 func (b *BkManager) SetBkInfo(pText string) int {
-	return xc.XBkM_SetBkInfo(b.HBKM, pText)
+	return xc.XBkM_SetBkInfo(b.Handle, pText)
 }
 
 // 背景_添加内容, 添加背景内容, 返回添加的背景对象数量
 // pText: 背景内容字符串.
 func (b *BkManager) AddInfo(pText string) int {
-	return xc.XBkM_AddInfo(b.HBKM, pText)
+	return xc.XBkM_AddInfo(b.Handle, pText)
 }
 
 // 背景_添加边框, 添加背景内容边框
@@ -46,7 +66,7 @@ func (b *BkManager) AddInfo(pText string) int {
 // alpha: 透明度.
 // width: 线宽.
 func (b *BkManager) AddBorder(nState int, color int, alpha uint8, width int) int {
-	return xc.XBkM_AddBorder(b.HBKM, nState, color, alpha, width)
+	return xc.XBkM_AddBorder(b.Handle, nState, color, alpha, width)
 }
 
 // 背景_添加填充, 添加背景内容填充
@@ -54,24 +74,24 @@ func (b *BkManager) AddBorder(nState int, color int, alpha uint8, width int) int
 // color: RGB颜色.
 // alpha: 透明度.
 func (b *BkManager) AddFill(nState int, color int, alpha uint8) int {
-	return xc.XBkM_AddFill(b.HBKM, nState, color, alpha)
+	return xc.XBkM_AddFill(b.Handle, nState, color, alpha)
 }
 
 // 背景_添加图片, 添加背景内容图片
 // nState: 组合状态
 // hImage: 图片句柄.
 func (b *BkManager) AddImage(nState int, hImage int) int {
-	return xc.XBkM_AddImage(b.HBKM, nState, hImage)
+	return xc.XBkM_AddImage(b.Handle, nState, hImage)
 }
 
 // 背景_取数量, 获取背景内容数量
 func (b *BkManager) GetCount() int {
-	return xc.XBkM_GetCount(b.HBKM)
+	return xc.XBkM_GetCount(b.Handle)
 }
 
 // 背景_清空, 清空背景内容
 func (b *BkManager) Clear() int {
-	return xc.XBkM_Clear(b.HBKM)
+	return xc.XBkM_Clear(b.Handle)
 }
 
 // 背景_绘制, 绘制背景内容
@@ -79,7 +99,7 @@ func (b *BkManager) Clear() int {
 // hDraw: 图形绘制句柄.
 // pRect: 区域坐标.
 func (b *BkManager) Draw(nState int, hDraw int, pRect *xc.RECT) bool {
-	return xc.XBkM_Draw(b.HBKM, nState, hDraw, pRect)
+	return xc.XBkM_Draw(b.Handle, nState, hDraw, pRect)
 }
 
 // 背景_绘制扩展, 绘制背景内容, 设置条件
@@ -89,26 +109,26 @@ func (b *BkManager) Draw(nState int, hDraw int, pRect *xc.RECT) bool {
 // nStateEx: 当(nState)中包含(nStateEx)中的一个或多个状态时有效.
 // 注解: 例如用来绘制列表项时, nState中包含项的状态(nStateEx)才会绘制, 避免列表项与元素背景叠加
 func (b *BkManager) DrawEx(nState int, hDraw int, pRect *xc.RECT, nStateEx int) bool {
-	return xc.XBkM_DrawEx(b.HBKM, nState, hDraw, pRect, nStateEx)
+	return xc.XBkM_DrawEx(b.Handle, nState, hDraw, pRect, nStateEx)
 }
 
 // 背景_启用自动销毁, 是否自动销毁
 // bEnable: 是否启用
 func (b *BkManager) EnableAutoDestroy(bEnable bool) int {
-	return xc.XBkM_EnableAutoDestroy(b.HBKM, bEnable)
+	return xc.XBkM_EnableAutoDestroy(b.Handle, bEnable)
 }
 
 // 背景_增加引用计数
 func (b *BkManager) AddRef() int {
-	return xc.XBkM_AddRef(b.HBKM)
+	return xc.XBkM_AddRef(b.Handle)
 }
 
 // 背景_释放引用计数
 func (b *BkManager) Release() int {
-	return xc.XBkM_Release(b.HBKM)
+	return xc.XBkM_Release(b.Handle)
 }
 
 // 背景_取引用计数
 func (b *BkManager) GetRefCount() int {
-	return xc.XBkM_GetRefCount(b.HBKM)
+	return xc.XBkM_GetRefCount(b.Handle)
 }

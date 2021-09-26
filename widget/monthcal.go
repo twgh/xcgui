@@ -22,6 +22,49 @@ func NewMonthCal(x int, y int, cx int, cy int, hParent int) *MonthCal {
 	return p
 }
 
+// 从句柄创建对象
+func NewMonthCalByHandle(handle int) *MonthCal {
+	p := &MonthCal{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewMonthCalByName(name string) *MonthCal {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &MonthCal{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewMonthCalByUID(nUID int) *MonthCal {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &MonthCal{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewMonthCalByUIDName(name string) *MonthCal {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &MonthCal{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
 // 月历_取内部按钮, 获取内部按钮元素
 // nType: 按钮类型.
 func (m *MonthCal) GetButton(nType int) int {

@@ -22,6 +22,49 @@ func NewDateTime(x int, y int, cx int, cy int, hParent int) *DateTime {
 	return p
 }
 
+// 从句柄创建对象
+func NewDateTimeByHandle(handle int) *DateTime {
+	p := &DateTime{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewDateTimeByName(name string) *DateTime {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &DateTime{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewDateTimeByUID(nUID int) *DateTime {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &DateTime{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewDateTimeByUIDName(name string) *DateTime {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &DateTime{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
 // 日期_置样式, 设置样式
 // nStyle: 样式: 0为日期元素, 1为时间元素
 func (d *DateTime) SetStyle(nStyle int) int {

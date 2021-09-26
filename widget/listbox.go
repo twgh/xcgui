@@ -22,6 +22,49 @@ func NewListBox(x int, y int, cx int, cy int, hParent int) *ListBox {
 	return p
 }
 
+// 从句柄创建对象
+func NewListBoxByHandle(handle int) *ListBox {
+	p := &ListBox{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewListBoxByName(name string) *ListBox {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &ListBox{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewListBoxByUID(nUID int) *ListBox {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &ListBox{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewListBoxByUIDName(name string) *ListBox {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &ListBox{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
 // 列表框_启用固定行高
 // bEnable: 是否启用
 func (l *ListBox) EnableFixedRowHeight(bEnable bool) int {

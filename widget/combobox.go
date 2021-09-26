@@ -22,6 +22,49 @@ func NewComboBox(x int, y int, cx int, cy int, hParent int) *ComboBox {
 	return p
 }
 
+// 从句柄创建对象
+func NewComboBoxByHandle(handle int) *ComboBox {
+	p := &ComboBox{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewComboBoxByName(name string) *ComboBox {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &ComboBox{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewComboBoxByUID(nUID int) *ComboBox {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &ComboBox{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewComboBoxByUIDName(name string) *ComboBox {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &ComboBox{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
 // 组合框_置选择项
 // iIndex: 项索引.
 func (c *ComboBox) SetSelItem(iIndex int) bool {

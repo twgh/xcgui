@@ -19,6 +19,49 @@ func NewLayoutFrame(x int, y int, cx int, cy int, hParent int) *LayoutFrame {
 	return p
 }
 
+// 从句柄创建对象
+func NewLayoutFrameByHandle(handle int) *LayoutFrame {
+	p := &LayoutFrame{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewLayoutFrameByName(name string) *LayoutFrame {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &LayoutFrame{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewLayoutFrameByUID(nUID int) *LayoutFrame {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &LayoutFrame{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewLayoutFrameByUIDName(name string) *LayoutFrame {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &LayoutFrame{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
 // 布局框架_显示布局边界
 // bEnable: 是否启用
 func (l *LayoutFrame) ShowLayoutFrame(bEnable bool) int {

@@ -611,54 +611,54 @@ type XWM_PAINT_END1 func(hWindow int, hDraw int, pbHandled *bool) int           
 type XWM_PAINT_DISPLAY func(pbHandled *bool) int                                                // 窗口绘制完成并且已经显示到屏幕
 type XWM_PAINT_DISPLAY1 func(hWindow int, pbHandled *bool) int                                  // 窗口绘制完成并且已经显示到屏幕
 
-type WM_PAINT func(hwnd int, uMsg uint, wParam int, lParam int) int                        // 窗口绘制消息
-type WM_PAINT1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int          // 窗口绘制消息
-type WM_CLOSE func(hwnd int, uMsg uint, wParam int, lParam int) int                        // 窗口关闭消息.
-type WM_CLOSE1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int          // 窗口关闭消息.
-type WM_DESTROY func(hwnd int, uMsg uint, wParam int, lParam int) int                      // 窗口销毁消息.
-type WM_DESTROY1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int        // 窗口销毁消息.
-type WM_NCDESTROY func(hwnd int, uMsg uint, wParam int, lParam int) int                    // 窗口非客户区销毁消息.
-type WM_NCDESTROY1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int      // 窗口非客户区销毁消息.
-type WM_MOUSEMOVE func(hwnd int, uMsg uint, wParam int, lParam int) int                    // 窗口鼠标移动消息.
-type WM_MOUSEMOVE1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int      // 窗口鼠标移动消息.
-type WM_LBUTTONDOWN func(hwnd int, uMsg uint, wParam int, lParam int) int                  // 窗口鼠标左键按下消息
-type WM_LBUTTONDOWN1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int    // 窗口鼠标左键按下消息
-type WM_LBUTTONUP func(hwnd int, uMsg uint, wParam int, lParam int) int                    // 窗口鼠标左键弹起消息.
-type WM_LBUTTONUP1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int      // 窗口鼠标左键弹起消息.
-type WM_RBUTTONDOWN func(hwnd int, uMsg uint, wParam int, lParam int) int                  // 窗口鼠标右键按下消息.
-type WM_RBUTTONDOWN1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int    // 窗口鼠标右键按下消息.
-type WM_RBUTTONUP func(hwnd int, uMsg uint, wParam int, lParam int) int                    // 窗口鼠标右键弹起消息.
-type WM_RBUTTONUP1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int      // 窗口鼠标右键弹起消息.
-type WM_LBUTTONDBLCLK func(hwnd int, uMsg uint, wParam int, lParam int) int                // 窗口鼠标左键双击消息.
-type WM_LBUTTONDBLCLK1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int  // 窗口鼠标左键双击消息.
-type WM_RBUTTONDBLCLK func(hwnd int, uMsg uint, wParam int, lParam int) int                // 窗口鼠标右键双击消息.
-type WM_RBUTTONDBLCLK1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int  // 窗口鼠标右键双击消息.
-type WM_MOUSEWHEEL func(hwnd int, uMsg uint, wParam int, lParam int) int                   // 窗口鼠标滚轮滚动消息.
-type WM_MOUSEWHEEL1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int     // 窗口鼠标滚轮滚动消息.
-type WM_EXITSIZEMOVE func(hwnd int, uMsg uint, wParam int, lParam int) int                 // 窗口退出移动或调整大小模式循环改，详情参见MSDN.
-type WM_EXITSIZEMOVE1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int   // 窗口退出移动或调整大小模式循环改，详情参见MSDN.
-type WM_MOUSEHOVER func(hwnd int, uMsg uint, wParam int, lParam int) int                   // 窗口鼠标进入消息
-type WM_MOUSEHOVER1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int     // 窗口鼠标进入消息
-type WM_MOUSELEAVE func(hwnd int, uMsg uint, wParam int, lParam int) int                   // 窗口鼠标离开消息.
-type WM_MOUSELEAVE1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int     // 窗口鼠标离开消息.
-type WM_SIZE func(hwnd int, uMsg uint, wParam int, lParam int) int                         // 窗口大小改变消息.
-type WM_SIZE1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int           // 窗口大小改变消息.
-type WM_TIMER func(hwnd int, uMsg uint, wParam int, lParam int) int                        // 窗口定时器消息.
-type WM_TIMER1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int          // 窗口定时器消息.
-type WM_SETFOCUS func(hwnd int, uMsg uint, wParam int, lParam int) int                     // 窗口获得焦点.
-type WM_SETFOCUS1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int       // 窗口获得焦点.
-type WM_KILLFOCUS func(hwnd int, uMsg uint, wParam int, lParam int) int                    // 窗口失去焦点.
-type WM_KILLFOCUS1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int      // 窗口失去焦点.
-type WM_KEYDOWN func(hwnd int, uMsg uint, wParam int, lParam int) int                      // 窗口键盘按键消息.
-type WM_KEYDOWN1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int        // 窗口键盘按键消息.
-type WM_CAPTURECHANGED func(hwnd int, uMsg uint, wParam int, lParam int) int               // 窗口鼠标捕获改变消息.
-type WM_CAPTURECHANGED1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int // 窗口鼠标捕获改变消息.
-type WM_SETCURSOR func(hwnd int, uMsg uint, wParam int, lParam int) int                    // 窗口设置鼠标光标.
-type WM_SETCURSOR1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int      // 窗口设置鼠标光标.
-type WM_CHAR func(hwnd int, uMsg uint, wParam int, lParam int) int                         // 窗口字符消息.
-type WM_CHAR1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int           // 窗口字符消息.
-type WM_DROPFILES func(hwnd int, uMsg uint, wParam int, lParam int) int                    // 拖动文件到窗口.
-type WM_DROPFILES1 func(hWindow int, hwnd int, uMsg uint, wParam int, lParam int) int      // 拖动文件到窗口.
+type WM_PAINT func(hDraw int, pbHandled *bool) int                                        // 窗口绘制消息
+type WM_PAINT1 func(hWindow int, hDraw int, pbHandled *bool) int                          // 窗口绘制消息
+type WM_CLOSE func(pbHandled *bool) int                                                   // 窗口关闭消息.
+type WM_CLOSE1 func(hWindow int, pbHandled *bool) int                                     // 窗口关闭消息.
+type WM_DESTROY func(pbHandled *bool) int                                                 // 窗口销毁消息.
+type WM_DESTROY1 func(hWindow int, pbHandled *bool) int                                   // 窗口销毁消息.
+type WM_NCDESTROY func(pbHandled *bool) int                                               // 窗口非客户区销毁消息.
+type WM_NCDESTROY1 func(hWindow int, pbHandled *bool) int                                 // 窗口非客户区销毁消息.
+type WM_MOUSEMOVE func(nFlags uint, pPt *xc.POINT, pbHandled *bool) int                   // 窗口鼠标移动消息.
+type WM_MOUSEMOVE1 func(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int     // 窗口鼠标移动消息.
+type WM_LBUTTONDOWN func(nFlags uint, pPt *xc.POINT, pbHandled *bool) int                 // 窗口鼠标左键按下消息
+type WM_LBUTTONDOWN1 func(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int   // 窗口鼠标左键按下消息
+type WM_LBUTTONUP func(nFlags uint, pPt *xc.POINT, pbHandled *bool) int                   // 窗口鼠标左键弹起消息.
+type WM_LBUTTONUP1 func(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int     // 窗口鼠标左键弹起消息.
+type WM_RBUTTONDOWN func(nFlags uint, pPt *xc.POINT, pbHandled *bool) int                 // 窗口鼠标右键按下消息.
+type WM_RBUTTONDOWN1 func(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int   // 窗口鼠标右键按下消息.
+type WM_RBUTTONUP func(nFlags uint, pPt *xc.POINT, pbHandled *bool) int                   // 窗口鼠标右键弹起消息.
+type WM_RBUTTONUP1 func(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int     // 窗口鼠标右键弹起消息.
+type WM_LBUTTONDBLCLK func(nFlags uint, pPt *xc.POINT, pbHandled *bool) int               // 窗口鼠标左键双击消息.
+type WM_LBUTTONDBLCLK1 func(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int // 窗口鼠标左键双击消息.
+type WM_RBUTTONDBLCLK func(nFlags uint, pPt *xc.POINT, pbHandled *bool) int               // 窗口鼠标右键双击消息.
+type WM_RBUTTONDBLCLK1 func(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int // 窗口鼠标右键双击消息.
+type WM_MOUSEWHEEL func(nFlags uint, pPt *xc.POINT, pbHandled *bool) int                  // 窗口鼠标滚轮滚动消息.
+type WM_MOUSEWHEEL1 func(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int    // 窗口鼠标滚轮滚动消息.
+type WM_EXITSIZEMOVE func(pbHandled *bool) int                                            // 窗口退出移动或调整大小模式循环改，详情参见MSDN.
+type WM_EXITSIZEMOVE1 func(hWindow int, pbHandled *bool) int                              // 窗口退出移动或调整大小模式循环改，详情参见MSDN.
+type WM_MOUSEHOVER func(nFlags uint, pPt *xc.POINT, pbHandled *bool) int                  // 窗口鼠标进入消息
+type WM_MOUSEHOVER1 func(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int    // 窗口鼠标进入消息
+type WM_MOUSELEAVE func(pbHandled *bool) int                                              // 窗口鼠标离开消息.
+type WM_MOUSELEAVE1 func(hWindow int, pbHandled *bool) int                                // 窗口鼠标离开消息.
+type WM_SIZE func(nFlags uint, pPt *xc.SIZE, pbHandled *bool) int                         // 窗口大小改变消息.
+type WM_SIZE1 func(hWindow int, nFlags uint, pPt *xc.SIZE, pbHandled *bool) int           // 窗口大小改变消息.
+type WM_TIMER func(nIDEvent uint, pbHandled *bool) int                                    // 窗口定时器消息.
+type WM_TIMER1 func(hWindow int, nIDEvent uint, pbHandled *bool) int                      // 窗口定时器消息.
+type WM_SETFOCUS func(pbHandled *bool) int                                                // 窗口获得焦点.
+type WM_SETFOCUS1 func(hWindow int, pbHandled *bool) int                                  // 窗口获得焦点.
+type WM_KILLFOCUS func(pbHandled *bool) int                                               // 窗口失去焦点.
+type WM_KILLFOCUS1 func(hWindow int, pbHandled *bool) int                                 // 窗口失去焦点.
+type WM_KEYDOWN func(wParam int, lParam int, pbHandled *bool) int                         // 窗口键盘按键消息.
+type WM_KEYDOWN1 func(hWindow int, wParam int, lParam int, pbHandled *bool) int           // 窗口键盘按键消息.
+type WM_CAPTURECHANGED func(hWnd int, pbHandled *bool) int                                // 窗口鼠标捕获改变消息.
+type WM_CAPTURECHANGED1 func(hWindow int, hWnd int, pbHandled *bool) int                  // 窗口鼠标捕获改变消息.
+type WM_SETCURSOR func(wParam int, lParam int, pbHandled *bool) int                       // 窗口设置鼠标光标.
+type WM_SETCURSOR1 func(hWindow int, wParam int, lParam int, pbHandled *bool) int         // 窗口设置鼠标光标.
+type WM_CHAR func(wParam int, lParam int, pbHandled *bool) int                            // 窗口字符消息.
+type WM_CHAR1 func(hWindow int, wParam int, lParam int, pbHandled *bool) int              // 窗口字符消息.
+type WM_DROPFILES func(hDropInfo int, pbHandled *bool) int                                // 拖动文件到窗口.
+type WM_DROPFILES1 func(hWindow int, hDropInfo int, pbHandled *bool) int                  // 拖动文件到窗口.
 
 // 窗口消息过程
 func (w *windowBase) Event_WINDPROC(pFun XWM_WINDPROC) bool {

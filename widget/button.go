@@ -23,6 +23,49 @@ func NewButton(x int, y int, cx int, cy int, pName string, hParent int) *Button 
 	return p
 }
 
+// 从句柄创建对象
+func NewButtonByHandle(handle int) *Button {
+	p := &Button{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewButtonByName(name string) *Button {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &Button{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewButtonByUID(nUID int) *Button {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &Button{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewButtonByUIDName(name string) *Button {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &Button{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
 // 按钮_判断选中, 是否选中状态
 func (b *Button) IsCheck() bool {
 	return xc.XBtn_IsCheck(b.Handle)

@@ -4,6 +4,7 @@ import (
 	"github.com/twgh/xcgui/xc"
 )
 
+// ShapeText 形状对象文本
 type ShapeText struct {
 	Shape
 }
@@ -19,6 +20,49 @@ func NewShapeText(x int, y int, cx int, cy int, pName string, hParent int) *Shap
 	p := &ShapeText{}
 	p.SetHandle(xc.XShapeText_Create(x, y, cx, cy, pName, hParent))
 	return p
+}
+
+// 从句柄创建对象
+func NewShapeTextByHandle(handle int) *ShapeText {
+	p := &ShapeText{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewShapeTextByName(name string) *ShapeText {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &ShapeText{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewShapeTextByUID(nUID int) *ShapeText {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &ShapeText{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewShapeTextByUIDName(name string) *ShapeText {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &ShapeText{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
 }
 
 // 形状文本_置文本, 设置文本内容

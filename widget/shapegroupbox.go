@@ -4,6 +4,7 @@ import (
 	"github.com/twgh/xcgui/xc"
 )
 
+// 组框(形状对象)
 type ShapeGroupBox struct {
 	Shape
 }
@@ -19,6 +20,49 @@ func NewShapeGroupBox(x int, y int, cx int, cy int, pName string, hParent int) *
 	p := &ShapeGroupBox{}
 	p.SetHandle(xc.XShapeGroupBox_Create(x, y, cx, cy, pName, hParent))
 	return p
+}
+
+// 从句柄创建对象
+func NewShapeGroupBoxByHandle(handle int) *ShapeGroupBox {
+	p := &ShapeGroupBox{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewShapeGroupBoxByName(name string) *ShapeGroupBox {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &ShapeGroupBox{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewShapeGroupBoxByUID(nUID int) *ShapeGroupBox {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &ShapeGroupBox{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewShapeGroupBoxByUIDName(name string) *ShapeGroupBox {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &ShapeGroupBox{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
 }
 
 // 形状组框_置边框颜色

@@ -4,6 +4,7 @@ import (
 	"github.com/twgh/xcgui/xc"
 )
 
+// ShapeRect 矩形形状对象
 type ShapeRect struct {
 	Shape
 }
@@ -18,6 +19,49 @@ func NewShapeRect(x int, y int, cx int, cy int, hParent int) *ShapeRect {
 	p := &ShapeRect{}
 	p.SetHandle(xc.XShapeRect_Create(x, y, cx, cy, hParent))
 	return p
+}
+
+// 从句柄创建对象
+func NewShapeRectByHandle(handle int) *ShapeRect {
+	p := &ShapeRect{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewShapeRectByName(name string) *ShapeRect {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &ShapeRect{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewShapeRectByUID(nUID int) *ShapeRect {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &ShapeRect{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewShapeRectByUIDName(name string) *ShapeRect {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &ShapeRect{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
 }
 
 // 形状矩形_置边框色, 设置边框颜色

@@ -23,6 +23,49 @@ func NewElement(x int, y int, cx int, cy int, hParent int) *Element {
 	return p
 }
 
+// 从句柄创建对象
+func NewElementByHandle(handle int) *Element {
+	p := &Element{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewElementByName(name string) *Element {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &Element{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewElementByUID(nUID int) *Element {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &Element{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewElementByUIDName(name string) *Element {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &Element{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
 // 元素_注册事件C, 注册事件C方式, 省略2参数
 // nEvent: 事件类型, XE_
 // pFun: 事件函数指针.

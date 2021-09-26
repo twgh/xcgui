@@ -19,6 +19,49 @@ func NewToolBar(x int, y int, cx int, cy int, hParent int) *ToolBar {
 	return p
 }
 
+// 从句柄创建对象
+func NewToolBarByHandle(handle int) *ToolBar {
+	p := &ToolBar{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewToolBarByName(name string) *ToolBar {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &ToolBar{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewToolBarByUID(nUID int) *ToolBar {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &ToolBar{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewToolBarByUIDName(name string) *ToolBar {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &ToolBar{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
 // 工具条_插入元素, 插入元素到工具条, 返回插入位置索引.
 // hNewEle: 将要插入的元素.
 // index: 插入位置索引, (-1)插入末尾.

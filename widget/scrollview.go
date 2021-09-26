@@ -22,6 +22,49 @@ func NewScrollView(x int, y int, cx int, cy int, hParent int) *ScrollView {
 	return p
 }
 
+// 从句柄创建对象
+func NewScrollViewByHandle(handle int) *ScrollView {
+	p := &ScrollView{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewScrollViewByName(name string) *ScrollView {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &ScrollView{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewScrollViewByUID(nUID int) *ScrollView {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &ScrollView{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewScrollViewByUIDName(name string) *ScrollView {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &ScrollView{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
 // 滚动视_置视图大小, 设置内容大小, 如果内容改变返回TRUE否则返回FALSE.
 // cx: 宽度.
 // cy: 高度.

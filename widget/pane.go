@@ -18,6 +18,49 @@ func NewPane(pName string, nWidth int, nHeight int, hFrameWnd int) *Pane {
 	return p
 }
 
+// 从句柄创建对象
+func NewPaneByHandle(handle int) *Pane {
+	p := &Pane{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewPaneByName(name string) *Pane {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &Pane{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewPaneByUID(nUID int) *Pane {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &Pane{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewPaneByUIDName(name string) *Pane {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &Pane{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
 // 窗格_置视图, 设置窗格视图元素
 // hView: 绑定视图元素.
 func (p *Pane) SetView(hView int) int {

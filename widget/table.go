@@ -20,6 +20,49 @@ func NewTable(x int, y int, cx int, cy int, hParent int) *Table {
 	return p
 }
 
+// 从句柄创建对象
+func NewTableByHandle(handle int) *Table {
+	p := &Table{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewTableByName(name string) *Table {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &Table{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewTableByUID(nUID int) *Table {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &Table{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewTableByUIDName(name string) *Table {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &Table{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
 // 表格_重置
 // nRow: 行数量
 // nCol: 列数量

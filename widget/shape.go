@@ -5,6 +5,7 @@ import (
 	"github.com/twgh/xcgui/xc"
 )
 
+// 形状对象基类
 type Shape struct {
 	objectbase.Widget
 }
@@ -15,6 +16,49 @@ func NewShape(hShape int) *Shape {
 	p := &Shape{}
 	p.SetHandle(xc.XShape_GetParentEle(hShape))
 	return p
+}
+
+// 从句柄创建对象
+func NewShapeByHandle(handle int) *Shape {
+	p := &Shape{}
+	p.SetHandle(handle)
+	return p
+}
+
+// 从name创建对象, 失败返回nil
+func NewShapeByName(name string) *Shape {
+	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &Shape{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID创建对象, 失败返回nil
+func NewShapeByUID(nUID int) *Shape {
+	handle := xc.XC_GetObjectByUID(nUID)
+	if handle > 0 {
+		p := &Shape{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
+}
+
+// 从UID名称创建对象, 失败返回nil
+func NewShapeByUIDName(name string) *Shape {
+	handle := xc.XC_GetObjectByUIDName(name)
+	if handle > 0 {
+		p := &Shape{}
+		p.SetHandle(handle)
+		return p
+	} else {
+		return nil
+	}
 }
 
 // 形状_取窗口句柄, 获取窗口句柄
