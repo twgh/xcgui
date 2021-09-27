@@ -138,56 +138,56 @@ xc包里的函数都是xcgui.dll里原本的函数，有一千多个函数，可
 
 这些类都是基于xc包里的一千多个函数封装的，当然你也可以选择直接使用xc包里的函数。
 
-| 中文名称                              | 包名      | 类名             | 是否封装完毕 |
-| ------------------------------------- | --------- | ---------------- | ------------ |
-| 程序                                  | app       | App              | √            |
-| 窗口                                  | window    | Window           | √            |
-| 框架窗口                              | window    | FrameWindow      | √            |
-| 模态窗口                              | window    | ModalWindow      | √            |
-| 形状对象                              | shape     | Shape            | √            |
-| 圆形形状对象                          | shape     | ShapeEllipse     | √            |
-| 形状对象GIF                           | shape     | ShapeGif         | √            |
-| 组框形状对象                          | shape     | ShapeGroupBox    | √            |
-| 直线形状对象                          | shape     | ShapeLine        | √            |
-| 形状对象图片                          | shape     | ShapePicture     | √            |
-| 矩形形状对象                          | shape     | ShapeRect        | √            |
-| 形状对象文本                          | shape     | ShapeText        | √            |
-| 表格                                  | widget    | Table            | √            |
-| 按钮                                  | widget    | Button           | √            |
-| 下拉组合框                            | widget    | ComboBox         | √            |
-| 编辑框(常规, 富文本, 聊天气泡)        | widget    | Edit             | √            |
-| 代码编辑框                            | widget    | Editor           | √            |
-| 基础元素                              | widget    | Element          | √            |
-| 列表                                  | widget    | List             | √            |
-| 列表框                                | widget    | ListBox          | √            |
-| 弹出菜单                              | widget    | Menu             | √            |
-| 进度条                                | widget    | ProgressBar      | √            |
-| 静态文本连接按钮                      | widget    | TextLink         | √            |
-| 布局元素                              | widget    | LayoutEle        | √            |
-| 布局框架                              | widget    | LayoutFrame      | √            |
-| 列表视图                              | widget    | ListView         | √            |
-| 菜单条                                | widget    | MenuBar          | √            |
-| Pane元素                              | widget    | Pane             | √            |
-| 滚动条                                | widget    | ScrollBar        | √            |
-| 滚动视图                              | widget    | ScrollView       | √            |
-| 滑动条元素                            | widget    | SliderBar        | √            |
-| 标签栏元素                            | widget    | TabBar           | √            |
-| 工具条                                | widget    | ToolBar          | √            |
-| 列表树元素                            | widget    | Tree             | √            |
-| 日期时间                              | widget    | DateTime         | √            |
-| 月历卡片                              | widget    | MonthCal         | √            |
-| 数据适配器-列表视元素                 | adapter   | AdapterListView  | √            |
-| 数据适配器-单列Map-列表头(listHeader) | adapter   | AdapterMap       | √            |
-| 数据适配器-XList-XListBox             | adapter   | AdapterTable     | √            |
-| 数据适配器-树元素                     | adapter   | AdapterTree      | √            |
-| 背景管理器                            | bkmanager | BkManager        | √            |
-| 字体                                  | fontx     | FontX            | √            |
-| 图片操作                              | image     | Image            | √            |
-| 列表项模板                            | template  | ListItemTemplate | √            |
-| 节点                                  | template  | Node             | √            |
-| 图形绘制                              | draw      | Draw             | √            |
-| XCGUI所有函数                         | xc        |                  | √            |
-| XCGUI常量                             | xcc       |                  | √            |
-| 缓动                                  | ease      |                  | √            |
-| 资源操作                              | res       |                  | √            |
+| 中文名称                              | 包名             | 类名             | 是否封装完毕 |
+| ------------------------------------- | ---------------- | ---------------- | ------------ |
+| 程序                                  | app              | App              | √            |
+| 窗口                                  | window           | Window           | √            |
+| 框架窗口                              | window           | FrameWindow      | √            |
+| 模态窗口                              | window           | ModalWindow      | √            |
+| 形状对象                              | shape            | Shape            | √            |
+| 圆形形状对象                          | shape            | ShapeEllipse     | √            |
+| 形状对象GIF                           | shape            | ShapeGif         | √            |
+| 组框形状对象                          | shape            | ShapeGroupBox    | √            |
+| 直线形状对象                          | shape            | ShapeLine        | √            |
+| 形状对象图片                          | shape            | ShapePicture     | √            |
+| 矩形形状对象                          | shape            | ShapeRect        | √            |
+| 形状对象文本                          | shape            | ShapeText        | √            |
+| 表格                                  | widget           | Table            | √            |
+| 按钮                                  | widget           | Button           | √            |
+| 下拉组合框                            | widget           | ComboBox         | √            |
+| 编辑框(常规, 富文本, 聊天气泡)        | widget           | Edit             | √            |
+| 代码编辑框                            | widget           | Editor           | √            |
+| 基础元素                              | widget           | Element          | √            |
+| 列表                                  | widget           | List             | √            |
+| 列表框                                | widget           | ListBox          | √            |
+| 弹出菜单                              | widget           | Menu             | √            |
+| 进度条                                | widget           | ProgressBar      | √            |
+| 静态文本连接按钮                      | widget           | TextLink         | √            |
+| 布局元素                              | widget           | LayoutEle        | √            |
+| 布局框架                              | widget           | LayoutFrame      | √            |
+| 列表视图                              | widget           | ListView         | √            |
+| 菜单条                                | widget           | MenuBar          | √            |
+| Pane元素                              | widget           | Pane             | √            |
+| 滚动条                                | widget           | ScrollBar        | √            |
+| 滚动视图                              | widget           | ScrollView       | √            |
+| 滑动条元素                            | widget           | SliderBar        | √            |
+| 标签栏元素                            | widget           | TabBar           | √            |
+| 工具条                                | widget           | ToolBar          | √            |
+| 列表树元素                            | widget           | Tree             | √            |
+| 日期时间                              | widget           | DateTime         | √            |
+| 月历卡片                              | widget           | MonthCal         | √            |
+| 数据适配器-列表视元素                 | adapter          | AdapterListView  | √            |
+| 数据适配器-单列Map-列表头(listHeader) | adapter          | AdapterMap       | √            |
+| 数据适配器-XList-XListBox             | adapter          | AdapterTable     | √            |
+| 数据适配器-树元素                     | adapter          | AdapterTree      | √            |
+| 背景管理器                            | bkmanager        | BkManager        | √            |
+| 字体                                  | fontx            | FontX            | √            |
+| 图片操作                              | image            | Image            | √            |
+| 列表项模板                            | listitemtemplate | ListItemTemplate | √            |
+| 节点                                  | listitemtemplate | Node             | √            |
+| 图形绘制                              | draw             | Draw             | √            |
+| XCGUI所有函数                         | xc               |                  | √            |
+| XCGUI常量                             | xcc              |                  | √            |
+| 缓动                                  | ease             |                  | √            |
+| 资源操作                              | res              |                  | √            |
 

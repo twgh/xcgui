@@ -1,5 +1,5 @@
-// 模板
-package template
+// 列表项模板
+package listitemtemplate
 
 import (
 	"github.com/twgh/xcgui/xc"
@@ -13,7 +13,7 @@ type ListItemTemplate struct {
 // 模板_加载从文件, 列表项模板文件载入
 // nType: 模板类型, ListItemTemp_Type_
 // pFileName: 文件名.
-func New_Load(nType int, pFileName string) *ListItemTemplate {
+func NewListItemTemplate_Load(nType int, pFileName string) *ListItemTemplate {
 	p := &ListItemTemplate{
 		Handle: xc.XTemp_Load(nType, pFileName),
 	}
@@ -25,7 +25,7 @@ func New_Load(nType int, pFileName string) *ListItemTemplate {
 // pZipFile: zip文件
 // pFileName: 文件名
 // pPassword: zip密码
-func New_LoadZip(nType int, pZipFile string, pFileName string, pPassword string) *ListItemTemplate {
+func NewListItemTemplate_LoadZip(nType int, pZipFile string, pFileName string, pPassword string) *ListItemTemplate {
 	p := &ListItemTemplate{
 		Handle: xc.XTemp_LoadZip(nType, pZipFile, pFileName, pPassword),
 	}
@@ -38,7 +38,7 @@ func New_LoadZip(nType int, pZipFile string, pFileName string, pPassword string)
 // length: 内存块大小
 // pFileName: 文件名
 // pPassword: zip密码
-func New_LoadZipMem(nType int, data int, length int, pFileName string, pPassword string) *ListItemTemplate {
+func NewListItemTemplate_LoadZipMem(nType int, data int, length int, pFileName string, pPassword string) *ListItemTemplate {
 	p := &ListItemTemplate{
 		Handle: xc.XTemp_LoadZipMem(nType, data, length, pFileName, pPassword),
 	}
@@ -48,7 +48,7 @@ func New_LoadZipMem(nType int, data int, length int, pFileName string, pPassword
 // 模板_加载从字符串, 加载列表项模板文件从内存字符串
 // nType: 模板类型, ListItemTemp_Type_
 // pStringXML: 字符串指针.
-func New_LoadFromString(nType int, pStringXML int) *ListItemTemplate {
+func NewListItemTemplate_LoadFromString(nType int, pStringXML int) *ListItemTemplate {
 	p := &ListItemTemplate{
 		Handle: xc.XTemp_LoadFromString(nType, pStringXML),
 	}
@@ -57,7 +57,7 @@ func New_LoadFromString(nType int, pStringXML int) *ListItemTemplate {
 
 // 模板_创建, 创建项模板
 // nType: 模板类型, ListItemTemp_Type_
-func New(nType int) *ListItemTemplate {
+func NewListItemTemplate(nType int) *ListItemTemplate {
 	p := &ListItemTemplate{
 		Handle: xc.XTemp_Create(nType),
 	}
@@ -65,7 +65,7 @@ func New(nType int) *ListItemTemplate {
 }
 
 // 从句柄创建对象
-func NewByHandle(handle int) *ListItemTemplate {
+func NewListItemTemplateByHandle(handle int) *ListItemTemplate {
 	p := &ListItemTemplate{}
 	p.SetHandle(handle)
 	return p
