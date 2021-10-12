@@ -41,7 +41,7 @@ import (
 
 func main() {
 	a := app.New("")
-	// 添加文件搜索路径, 你运行时需要改成自己的路径
+	// 添加文件搜索路径, 你运行时需要改成自己的路径，也可以使用相对路径
 	a.AddFileSearchPath(`D:\GoProject\src\github.com\twgh\xcgui-example\uidesigner\res`)
 	// 从zip中加载资源文件
 	a.LoadResourceZip("qqmusic.zip", "resource.res", "")
