@@ -5,7 +5,7 @@ import "github.com/twgh/xcgui/xc"
 
 // 图形绘制
 type Draw struct {
-	Handle int
+	Handle int // HDRAW
 }
 
 // 绘制_创建, 创建图形绘制模块实例, 返回句柄

@@ -36,9 +36,8 @@ func NewMonthCalByName(name string) *MonthCal {
 		p := &MonthCal{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -48,9 +47,8 @@ func NewMonthCalByUID(nUID int) *MonthCal {
 		p := &MonthCal{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -60,9 +58,8 @@ func NewMonthCalByUIDName(name string) *MonthCal {
 		p := &MonthCal{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 月历_取内部按钮, 获取内部按钮元素

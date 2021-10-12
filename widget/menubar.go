@@ -33,9 +33,8 @@ func NewMenuBarByName(name string) *MenuBar {
 		p := &MenuBar{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -45,9 +44,8 @@ func NewMenuBarByUID(nUID int) *MenuBar {
 		p := &MenuBar{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -57,9 +55,8 @@ func NewMenuBarByUIDName(name string) *MenuBar {
 		p := &MenuBar{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 菜单条_添加按钮, 添加弹出菜单按钮, 返回菜单按钮索引.

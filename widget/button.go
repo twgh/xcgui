@@ -37,9 +37,8 @@ func NewButtonByName(name string) *Button {
 		p := &Button{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -49,9 +48,8 @@ func NewButtonByUID(nUID int) *Button {
 		p := &Button{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -61,9 +59,8 @@ func NewButtonByUIDName(name string) *Button {
 		p := &Button{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 按钮_判断选中, 是否选中状态

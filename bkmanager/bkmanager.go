@@ -8,7 +8,7 @@ import (
 
 // 背景管理器
 type BkManager struct {
-	Handle int
+	Handle int // HBKM
 }
 
 // 背景_创建, 创建背景管理器
@@ -33,9 +33,8 @@ func NewBkManagerByName(name string) *BkManager {
 		p := &BkManager{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 给本类的HBKM赋值

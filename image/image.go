@@ -8,7 +8,7 @@ import (
 
 // 图片操作
 type Image struct {
-	Handle int //图片句柄
+	Handle int // HIMAGE
 }
 
 // 图片_加载从图片源
@@ -226,9 +226,8 @@ func NewImageByName(name string) *Image {
 		p := &Image{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从指定的资源文件中, 根据name创建对象, 失败返回nil
@@ -238,9 +237,8 @@ func NewImageByNameEx(fileName, name string) *Image {
 		p := &Image{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 给本类的Handle赋值

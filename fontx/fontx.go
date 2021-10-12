@@ -8,7 +8,7 @@ import (
 
 // 字体
 type FontX struct {
-	Handle int //字体句柄
+	Handle int // HFONTX
 }
 
 // 字体_创建, 创建炫彩字体, 当字体句柄与元素关联后, 会自动释放
@@ -92,9 +92,8 @@ func NewFontXByName(name string) *FontX {
 		p := &FontX{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 给本类的Handle赋值

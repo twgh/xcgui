@@ -32,9 +32,8 @@ func NewPaneByName(name string) *Pane {
 		p := &Pane{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -44,9 +43,8 @@ func NewPaneByUID(nUID int) *Pane {
 		p := &Pane{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -56,9 +54,8 @@ func NewPaneByUIDName(name string) *Pane {
 		p := &Pane{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 窗格_置视图, 设置窗格视图元素

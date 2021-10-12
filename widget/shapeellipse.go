@@ -35,9 +35,8 @@ func NewShapeEllipseByName(name string) *ShapeEllipse {
 		p := &ShapeEllipse{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -47,9 +46,8 @@ func NewShapeEllipseByUID(nUID int) *ShapeEllipse {
 		p := &ShapeEllipse{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -59,9 +57,8 @@ func NewShapeEllipseByUIDName(name string) *ShapeEllipse {
 		p := &ShapeEllipse{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 形状圆_置边框色

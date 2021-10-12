@@ -36,9 +36,8 @@ func NewTreeByName(name string) *Tree {
 		p := &Tree{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -48,9 +47,8 @@ func NewTreeByUID(nUID int) *Tree {
 		p := &Tree{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -60,9 +58,8 @@ func NewTreeByUIDName(name string) *Tree {
 		p := &Tree{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 列表树_启用拖动项, 启用拖动项功能

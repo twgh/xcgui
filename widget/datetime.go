@@ -36,9 +36,8 @@ func NewDateTimeByName(name string) *DateTime {
 		p := &DateTime{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -48,9 +47,8 @@ func NewDateTimeByUID(nUID int) *DateTime {
 		p := &DateTime{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -60,9 +58,8 @@ func NewDateTimeByUIDName(name string) *DateTime {
 		p := &DateTime{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 日期_置样式, 设置样式

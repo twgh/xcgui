@@ -35,9 +35,8 @@ func NewShapePictureByName(name string) *ShapePicture {
 		p := &ShapePicture{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -47,9 +46,8 @@ func NewShapePictureByUID(nUID int) *ShapePicture {
 		p := &ShapePicture{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -59,9 +57,8 @@ func NewShapePictureByUIDName(name string) *ShapePicture {
 		p := &ShapePicture{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 形状图片_置图片, 设置图片

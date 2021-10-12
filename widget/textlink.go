@@ -36,9 +36,8 @@ func NewTextLinkByName(name string) *TextLink {
 		p := &TextLink{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -48,9 +47,8 @@ func NewTextLinkByUID(nUID int) *TextLink {
 		p := &TextLink{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -60,9 +58,8 @@ func NewTextLinkByUIDName(name string) *TextLink {
 		p := &TextLink{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 文本链接_启用离开状态下划线, 启用下划线, 鼠标离开状态

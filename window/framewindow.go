@@ -54,9 +54,8 @@ func NewFrameWindowByName(name string) *FrameWindow {
 		p := &FrameWindow{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -66,9 +65,8 @@ func NewFrameWindowByUID(nUID int) *FrameWindow {
 		p := &FrameWindow{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -78,9 +76,8 @@ func NewFrameWindowByUIDName(name string) *FrameWindow {
 		p := &FrameWindow{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 框架窗口_取布局区域坐标, 用来布局窗格的区域坐标, 不包含码头

@@ -35,9 +35,8 @@ func NewShapeRectByName(name string) *ShapeRect {
 		p := &ShapeRect{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -47,9 +46,8 @@ func NewShapeRectByUID(nUID int) *ShapeRect {
 		p := &ShapeRect{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -59,9 +57,8 @@ func NewShapeRectByUIDName(name string) *ShapeRect {
 		p := &ShapeRect{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 形状矩形_置边框色, 设置边框颜色

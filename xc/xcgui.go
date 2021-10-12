@@ -2923,10 +2923,6 @@ func uintPtrToString(ptr uintptr) string {
 	return syscall.UTF16ToString(*(*[]uint16)(unsafe.Pointer(&ptr)))
 }
 
-func UinPtrToBool(ptr uintptr) bool {
-	return *(*bool)(unsafe.Pointer(&ptr))
-}
-
 // bool到uintptr
 func boolPtr(b bool) uintptr {
 	if b {

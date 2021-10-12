@@ -7,7 +7,7 @@ import (
 
 // 数据适配器
 type adapter struct {
-	Handle int
+	Handle int // hAdapter
 }
 
 // 给本类的Handle赋值

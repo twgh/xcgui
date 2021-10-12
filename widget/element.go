@@ -37,9 +37,8 @@ func NewElementByName(name string) *Element {
 		p := &Element{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -49,9 +48,8 @@ func NewElementByUID(nUID int) *Element {
 		p := &Element{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -61,9 +59,8 @@ func NewElementByUIDName(name string) *Element {
 		p := &Element{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 元素_注册事件C, 注册事件C方式, 省略2参数

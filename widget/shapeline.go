@@ -35,9 +35,8 @@ func NewShapeLineByName(name string) *ShapeLine {
 		p := &ShapeLine{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -47,9 +46,8 @@ func NewShapeLineByUID(nUID int) *ShapeLine {
 		p := &ShapeLine{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -59,9 +57,8 @@ func NewShapeLineByUIDName(name string) *ShapeLine {
 		p := &ShapeLine{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 形状线_置位置

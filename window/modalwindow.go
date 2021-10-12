@@ -52,9 +52,8 @@ func NewModalWindowByName(name string) *ModalWindow {
 		p := &ModalWindow{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -64,9 +63,8 @@ func NewModalWindowByUID(nUID int) *ModalWindow {
 		p := &ModalWindow{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -76,9 +74,8 @@ func NewModalWindowByUIDName(name string) *ModalWindow {
 		p := &ModalWindow{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 模态窗口_启用自动关闭, 是否自动关闭窗口, 当窗口失去焦点时.

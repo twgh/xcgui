@@ -36,9 +36,8 @@ func NewScrollBarByName(name string) *ScrollBar {
 		p := &ScrollBar{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -48,9 +47,8 @@ func NewScrollBarByUID(nUID int) *ScrollBar {
 		p := &ScrollBar{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -60,9 +58,8 @@ func NewScrollBarByUIDName(name string) *ScrollBar {
 		p := &ScrollBar{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 滚动条_置范围, 设置滚动范围

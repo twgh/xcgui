@@ -9,8 +9,8 @@ type ObjectBase struct {
 }
 
 // 给本类的Handle赋值
-func (w *ObjectBase) SetHandle(handle int) {
-	w.Handle = handle
+func (o *ObjectBase) SetHandle(handle int) {
+	o.Handle = handle
 }
 
 // 炫彩对象_取类型, 获取对象最终类型, 返回对象类型: XC_

@@ -36,9 +36,8 @@ func NewScrollViewByName(name string) *ScrollView {
 		p := &ScrollView{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -48,9 +47,8 @@ func NewScrollViewByUID(nUID int) *ScrollView {
 		p := &ScrollView{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -60,9 +58,8 @@ func NewScrollViewByUIDName(name string) *ScrollView {
 		p := &ScrollView{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 滚动视_置视图大小, 设置内容大小, 如果内容改变返回TRUE否则返回FALSE.

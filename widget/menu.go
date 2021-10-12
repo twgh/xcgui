@@ -31,9 +31,8 @@ func NewMenuByName(name string) *Menu {
 		p := &Menu{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -43,9 +42,8 @@ func NewMenuByUID(nUID int) *Menu {
 		p := &Menu{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -55,9 +53,8 @@ func NewMenuByUIDName(name string) *Menu {
 		p := &Menu{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 菜单_添加项, 添加菜单项

@@ -32,9 +32,8 @@ func NewShapeByName(name string) *Shape {
 		p := &Shape{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -44,9 +43,8 @@ func NewShapeByUID(nUID int) *Shape {
 		p := &Shape{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -56,9 +54,8 @@ func NewShapeByUIDName(name string) *Shape {
 		p := &Shape{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 形状_取窗口句柄, 获取窗口句柄

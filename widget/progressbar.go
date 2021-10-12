@@ -36,9 +36,8 @@ func NewProgressBarByName(name string) *ProgressBar {
 		p := &ProgressBar{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -48,9 +47,8 @@ func NewProgressBarByUID(nUID int) *ProgressBar {
 		p := &ProgressBar{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -60,9 +58,8 @@ func NewProgressBarByUIDName(name string) *ProgressBar {
 		p := &ProgressBar{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 进度条_置范围, 设置范围

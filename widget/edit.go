@@ -49,9 +49,8 @@ func NewEditByName(name string) *Edit {
 		p := &Edit{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -61,9 +60,8 @@ func NewEditByUID(nUID int) *Edit {
 		p := &Edit{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -73,9 +71,8 @@ func NewEditByUIDName(name string) *Edit {
 		p := &Edit{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 编辑框_启用自动换行

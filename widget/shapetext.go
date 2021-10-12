@@ -36,9 +36,8 @@ func NewShapeTextByName(name string) *ShapeText {
 		p := &ShapeText{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -48,9 +47,8 @@ func NewShapeTextByUID(nUID int) *ShapeText {
 		p := &ShapeText{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -60,9 +58,8 @@ func NewShapeTextByUIDName(name string) *ShapeText {
 		p := &ShapeText{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 形状文本_置文本, 设置文本内容

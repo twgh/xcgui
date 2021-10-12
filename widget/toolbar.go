@@ -33,9 +33,8 @@ func NewToolBarByName(name string) *ToolBar {
 		p := &ToolBar{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -45,9 +44,8 @@ func NewToolBarByUID(nUID int) *ToolBar {
 		p := &ToolBar{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -57,9 +55,8 @@ func NewToolBarByUIDName(name string) *ToolBar {
 		p := &ToolBar{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 工具条_插入元素, 插入元素到工具条, 返回插入位置索引.

@@ -33,9 +33,8 @@ func NewLayoutFrameByName(name string) *LayoutFrame {
 		p := &LayoutFrame{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -45,9 +44,8 @@ func NewLayoutFrameByUID(nUID int) *LayoutFrame {
 		p := &LayoutFrame{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -57,9 +55,8 @@ func NewLayoutFrameByUIDName(name string) *LayoutFrame {
 		p := &LayoutFrame{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 布局框架_显示布局边界

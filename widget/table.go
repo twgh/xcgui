@@ -34,9 +34,8 @@ func NewTableByName(name string) *Table {
 		p := &Table{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -46,9 +45,8 @@ func NewTableByUID(nUID int) *Table {
 		p := &Table{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -58,9 +56,8 @@ func NewTableByUIDName(name string) *Table {
 		p := &Table{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 表格_重置

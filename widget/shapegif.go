@@ -35,9 +35,8 @@ func NewShapeGifByName(name string) *ShapeGif {
 		p := &ShapeGif{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -47,9 +46,8 @@ func NewShapeGifByUID(nUID int) *ShapeGif {
 		p := &ShapeGif{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -59,9 +57,8 @@ func NewShapeGifByUIDName(name string) *ShapeGif {
 		p := &ShapeGif{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 形状GIF_置图片, 设置GIF图片

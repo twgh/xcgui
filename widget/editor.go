@@ -36,9 +36,8 @@ func NewEditorByName(name string) *Editor {
 		p := &Editor{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -48,9 +47,8 @@ func NewEditorByUID(nUID int) *Editor {
 		p := &Editor{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -60,9 +58,8 @@ func NewEditorByUIDName(name string) *Editor {
 		p := &Editor{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 代码编辑框_启用空格选择自动匹配项

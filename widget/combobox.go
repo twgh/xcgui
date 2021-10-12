@@ -36,9 +36,8 @@ func NewComboBoxByName(name string) *ComboBox {
 		p := &ComboBox{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -48,9 +47,8 @@ func NewComboBoxByUID(nUID int) *ComboBox {
 		p := &ComboBox{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -60,9 +58,8 @@ func NewComboBoxByUIDName(name string) *ComboBox {
 		p := &ComboBox{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 组合框_置选择项

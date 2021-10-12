@@ -36,9 +36,8 @@ func NewShapeGroupBoxByName(name string) *ShapeGroupBox {
 		p := &ShapeGroupBox{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -48,9 +47,8 @@ func NewShapeGroupBoxByUID(nUID int) *ShapeGroupBox {
 		p := &ShapeGroupBox{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -60,9 +58,8 @@ func NewShapeGroupBoxByUIDName(name string) *ShapeGroupBox {
 		p := &ShapeGroupBox{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 形状组框_置边框颜色

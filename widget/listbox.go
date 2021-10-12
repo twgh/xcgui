@@ -36,9 +36,8 @@ func NewListBoxByName(name string) *ListBox {
 		p := &ListBox{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -48,9 +47,8 @@ func NewListBoxByUID(nUID int) *ListBox {
 		p := &ListBox{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -60,9 +58,8 @@ func NewListBoxByUIDName(name string) *ListBox {
 		p := &ListBox{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 列表框_启用固定行高

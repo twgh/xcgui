@@ -43,9 +43,8 @@ func NewLayoutEleByName(name string) *LayoutEle {
 		p := &LayoutEle{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -55,9 +54,8 @@ func NewLayoutEleByUID(nUID int) *LayoutEle {
 		p := &LayoutEle{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -67,9 +65,8 @@ func NewLayoutEleByUIDName(name string) *LayoutEle {
 		p := &LayoutEle{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 布局_判断启用, 是否已经启用布局功能

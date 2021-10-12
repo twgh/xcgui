@@ -36,9 +36,8 @@ func NewSliderBarByName(name string) *SliderBar {
 		p := &SliderBar{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -48,9 +47,8 @@ func NewSliderBarByUID(nUID int) *SliderBar {
 		p := &SliderBar{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -60,9 +58,8 @@ func NewSliderBarByUIDName(name string) *SliderBar {
 		p := &SliderBar{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 滑动条_置范围, 设置滑动范围.

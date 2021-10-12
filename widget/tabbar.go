@@ -35,9 +35,8 @@ func NewTabBarByName(name string) *TabBar {
 		p := &TabBar{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -47,9 +46,8 @@ func NewTabBarByUID(nUID int) *TabBar {
 		p := &TabBar{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -59,9 +57,8 @@ func NewTabBarByUIDName(name string) *TabBar {
 		p := &TabBar{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // TAB条_添加标签, 添加一个标签, 返回标签索引.
