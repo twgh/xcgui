@@ -1,6 +1,6 @@
 <h1 align="center">XCGUI</h1>
 <p align="center">
-    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/version-1.0.2-blue.svg?style=flat-square" alt="version"></a>
+    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/version-1.0.3-blue.svg?style=flat-square" alt="version"></a>
     <img src="https://img.shields.io/badge/golang-1.16-blue"/>
     <a href="https://pkg.go.dev/github.com/twgh/xcgui"><img src="https://img.shields.io/badge/go.dev-reference-007d9c ?logo=go&logoColor=white" alt="GoDoc"></a>
     <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat-square" alt="License"></a>
