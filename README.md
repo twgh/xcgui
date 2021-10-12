@@ -68,6 +68,7 @@ go get github.com/twgh/xcgui
 # 简单窗口（纯代码）
 
 [![SimpleWindow](https://z3.ax1x.com/2021/09/15/4VnNuj.jpg)](https://github.com/twgh/xcgui-example/blob/main/SimpleWindow/SimpleWindow.jpg)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftwgh%2Fxcgui.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftwgh%2Fxcgui?ref=badge_shield)
 
 ```go
 package main
@@ -191,3 +192,7 @@ xc包里的函数都是xcgui.dll里原本的函数，有一千多个函数，可
 | 缓动                                  | ease             |                  | √            |
 | 资源操作                              | res              |                  | √            |
 
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftwgh%2Fxcgui.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftwgh%2Fxcgui?ref=badge_large)
