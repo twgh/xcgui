@@ -19,7 +19,7 @@ type Window struct {
 // XCStyle: GUI库窗口样式: Xc_Window_Style_
 func NewWindow(x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle int) *Window {
 	p := &Window{}
-	p.SetHandle(xc.XFrameWnd_Create(x, y, cx, cy, pTitle, hWndParent, XCStyle))
+	p.SetHandle(xc.XWnd_Create(x, y, cx, cy, pTitle, hWndParent, XCStyle))
 	return p
 }
 
@@ -54,9 +54,8 @@ func NewWindowByName(name string) *Window {
 		p := &Window{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID创建对象, 失败返回nil
@@ -66,9 +65,8 @@ func NewWindowByUID(nUID int) *Window {
 		p := &Window{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 // 从UID名称创建对象, 失败返回nil
@@ -78,9 +76,8 @@ func NewWindowByUIDName(name string) *Window {
 		p := &Window{}
 		p.SetHandle(handle)
 		return p
-	} else {
-		return nil
 	}
+	return nil
 }
 
 /*
