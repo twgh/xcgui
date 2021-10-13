@@ -50,8 +50,6 @@ func main() {
 	// Create window object
 	win := window.NewWindowByHandle(hWindow)
 	
-	// Assign a value to the class handle
-	win.SetHandle(hWindow)
 	// Adjust the layout
 	win.AdjustLayout()
 	// Display window
