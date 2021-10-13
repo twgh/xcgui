@@ -6,12 +6,9 @@
     <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat-square" alt="License"></a>
     <br><br>
 	<a href="https://pkg.go.dev/github.com/twgh/xcgui">项目文档</a>&nbsp;&nbsp;
-	<a href="https://github.com/twgh/xcgui-example/blob/main/help/%E7%82%AB%E5%BD%A9%E7%95%8C%E9%9D%A2%E5%BA%93-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3(v3.0)-(2021-09-08).chm">帮助文档</a>&nbsp;&nbsp;
+	<a href="https://github.com/twgh/FileStorage/raw/main/xcgui/help/%E7%82%AB%E5%BD%A9%E7%95%8C%E9%9D%A2%E5%BA%93-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3(v3.0)-(2021-09-08).chm">帮助文档</a>&nbsp;&nbsp;
     <a href="https://github.com/twgh/xcgui-example">程序示例</a>
 </p>
-
-
-
 
 
 ## 介绍
@@ -71,11 +68,16 @@ go get github.com/twgh/xcgui
 
 ## 动态链接库下载
 
-[xcgui.dll(x64)](https://github.com/twgh/xcgui-example/blob/main/help/x64/XCGUI.dll)        [xcgui.dll(x86)](https://github.com/twgh/xcgui-example/blob/main/help/x86/XCGUI.dll)
+| 网盘         | 下载地址                                                     |
+| ------------ | ------------------------------------------------------------ |
+| 百度网盘     | [下载](https://pan.baidu.com/s/17zri2GlDOVUY8nvFTXWLFg)，提取码：wcs7 |
+| OneDrive     | [下载](https://1drv.ms/u/s!ApZP3niad5hpdGuodyU_GvugJ_g?e=yBEKmm) |
+| Google Drive | [下载](https://drive.google.com/drive/folders/1MuisSsDIr1rjqTkdFIewOgb89SYdf5s6?usp=sharing) |
+| GIthub       | [下载](https://github.com/twgh/FileStorage/tree/main/xcgui)  |
 
-程序运行时需要把"XCGUI.dll"放到程序运行目录。
+程序运行时需要把`XCGUI.dll`放到程序运行目录。
 
-在开发时最好是放到C:\Windows\System32目录，这样就不需要把dll放到程序运行目录了。
+在开发时最好是放到C:\Windows\System32目录，这样就不需要频繁把dll放到不同程序的运行目录了。
 
 ## 简单窗口（纯代码）
 
@@ -140,7 +142,9 @@ xcc包里都是常量，像这样使用：`xcc.Xc_Window_Style_Default`
 
 ## 命令介绍
 
-xc包里的函数都是xcgui.dll里原本的函数，有一千多个函数，可以直接使用，封装好的类都在其他包里。在有些情况下，xc包里的函数和类混合使用会更加方便。
+xc包里的函数都是xcgui.dll里原本的函数，有一千多个函数，可以直接使用，封装好的类都在其他包里。
+
+在某些情况下，把xc包里的原生函数与封装好的类混合起来使用会更加方便。
 
 ## 封装进度
 

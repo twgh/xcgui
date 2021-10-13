@@ -6,9 +6,10 @@
     <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat-square" alt="License"></a>
     <br><br>
 	<a href="https://pkg.go.dev/github.com/twgh/xcgui">Project Document</a>&nbsp;&nbsp;
-	<a href="https://github.com/twgh/xcgui-example/blob/main/help/%E7%82%AB%E5%BD%A9%E7%95%8C%E9%9D%A2%E5%BA%93-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3(v3.0)-(2021-09-08).chm">Help Document</a>&nbsp;&nbsp;
+	<a href="https://github.com/twgh/FileStorage/raw/main/xcgui/help/%E7%82%AB%E5%BD%A9%E7%95%8C%E9%9D%A2%E5%BA%93-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3(v3.0)-(2021-09-08).chm">Help Document</a>&nbsp;&nbsp;
     <a href="https://github.com/twgh/xcgui-example">Examples</a>
 </p>
+
 
 # Introduction
 
@@ -69,11 +70,15 @@ go get github.com/twgh/xcgui
 
 # Dynamic link library download
 
-[xcgui.dll(x64)](https://github.com/twgh/xcgui-example/blob/main/help/x64/XCGUI.dll)        [xcgui.dll(x86)](https://github.com/twgh/xcgui-example/blob/main/help/x86/XCGUI.dll)
+| NetDisc      | Link                                                         |
+| ------------ | ------------------------------------------------------------ |
+| OneDrive     | [download](https://1drv.ms/u/s!ApZP3niad5hpdGuodyU_GvugJ_g?e=yBEKmm) |
+| Google Drive | [download](https://drive.google.com/drive/folders/1MuisSsDIr1rjqTkdFIewOgb89SYdf5s6?usp=sharing) |
+| GIthub       | [download](https://github.com/twgh/FileStorage/tree/main/xcgui) |
 
 When the program is running, you need to put "XCGUI.dll" in the program running directory.
 
-It is best to put it in the C:\Windows\System32 directory during development, so that there is no need to put the dll in the program running directory.
+It is best to put it in the C:\Windows\System32 directory during development, so that there is no need to frequently put the dll in the running directory of different programs.
 
 # Simple window(Pure code)
 
@@ -136,7 +141,9 @@ The constants are all in the xcc package and used like this: `xcc.Xc_Window_Styl
 
 # Command introduction
 
-The functions in the xc package are the original functions in xcgui.dll. There are more than a thousand functions that can be used directly. The encapsulated classes are in other packages. In some cases, it is more convenient to mix the functions and classes in the xc package.
+The functions in the xc package are the original functions in xcgui.dll. There are more than a thousand functions that can be used directly. The encapsulated classes are in other packages.
+
+In some cases, it is more convenient to mix the native functions in the xc package with the encapsulated classes.
 
 # Schedule
 
