@@ -1,5 +1,5 @@
 // 图片操作
-package image
+package imagex
 
 import (
 	"github.com/twgh/xcgui/res"
