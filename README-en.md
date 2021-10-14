@@ -21,7 +21,7 @@ Official website：[www.xcgui.com](http://www.xcgui.com "xcgui 官方网站")
 
 # Visualization UI Designer
 
-Using the UI designer can quickly design the interface and save a lot of code.
+[UI Designer usage example](https://github.com/twgh/xcgui-example/tree/main/uidesigner), Using the UI designer can quickly design the interface and save a lot of code.
 
 [![uidesigner](https://z3.ax1x.com/2021/09/15/4Vmh9S.png)](https://github.com/twgh/xcgui-example/blob/main/uidesigner/uidesigner.png)
 
@@ -114,12 +114,12 @@ func main() {
 	lbl_Title.SetTextColor(xc.RGB(255, 255, 255), 255)
 
 	// Create a minimize button
-	btn_Min := widget.NewButton(396, 10, 30, 30, "-", win.HWindow)
+	btn_Min := widget.NewButton(396, 10, 30, 30, "-", win.Handle)
 	btn_Min.SetTextColor(xc.RGB(255, 255, 255), 255)
 	btn_Min.SetType(xcc.Button_Type_Min)
 	btn_Min.EnableBkTransparent(true)
 	// Create an end button
-	btn_Close := widget.NewButton(426, 10, 30, 30, "X", win.HWindow)
+	btn_Close := widget.NewButton(426, 10, 30, 30, "X", win.Handle)
 	btn_Close.SetTextColor(xc.RGB(255, 255, 255), 255)
 	btn_Close.SetType(xcc.Button_Type_Close)
 	btn_Close.EnableBkTransparent(true)

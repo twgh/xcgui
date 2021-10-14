@@ -25,7 +25,7 @@ DirectUI设计思想: 在窗口内没有子窗口，界面元素都是逻辑上�
 
 [![uidesigner](https://z3.ax1x.com/2021/09/15/4Vmh9S.png)](https://github.com/twgh/xcgui-example/blob/main/uidesigner/uidesigner.png)
 
-只有这么多代码：
+[设计器使用例子](https://github.com/twgh/xcgui-example/tree/main/uidesigner)，只有这么多代码：
 
 ```go
 package main
@@ -115,12 +115,12 @@ func main() {
 	lbl_Title.SetTextColor(xc.RGB(255, 255, 255), 255)
 
 	// 创建最小化按钮
-	btn_Min := widget.NewButton(396, 10, 30, 30, "-", win.HWindow)
+	btn_Min := widget.NewButton(396, 10, 30, 30, "-", win.Handle)
 	btn_Min.SetTextColor(xc.RGB(255, 255, 255), 255)
 	btn_Min.SetType(xcc.Button_Type_Min)
 	btn_Min.EnableBkTransparent(true)
 	// 创建结束按钮
-	btn_Close := widget.NewButton(426, 10, 30, 30, "X", win.HWindow)
+	btn_Close := widget.NewButton(426, 10, 30, 30, "X", win.Handle)
 	btn_Close.SetTextColor(xc.RGB(255, 255, 255), 255)
 	btn_Close.SetType(xcc.Button_Type_Close)
 	btn_Close.EnableBkTransparent(true)
