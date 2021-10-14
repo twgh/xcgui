@@ -1,5 +1,5 @@
 // 图形绘制
-package draw
+package drawx
 
 import "github.com/twgh/xcgui/xc"
 
