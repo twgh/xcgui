@@ -191,10 +191,10 @@ These classes are encapsulated based on more than a thousand functions in the xc
 | adapter          | AdapterTree      | √      | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.0.3/adapter#AdapterTree) |
 | bkmanager        | BkManager        | √      | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.0.3/bkmanager#BkManager) |
 | fontx            | FontX            | √      | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.0.3/fontx#FontX) |
-| image            | Image            | √      | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.0.3/image#Image) |
+| image            | Imagex           | √      | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.0.3/image#Image) |
 | listitemtemplate | ListItemTemplate | √      | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.0.3/listitemtemplate#ListItemTemplate) |
 | listitemtemplate | Node             | √      | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.0.3/listitemtemplate#Node) |
-| draw             | Draw             | √      | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.0.3/draw#Draw) |
+| draw             | Drawx            | √      | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.0.3/draw#Draw) |
 | xc               |                  | √      | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.0.3/xc#section-documentation) |
 | xcc              |                  | √      | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.0.3/xcc)   |
 | ease             |                  | √      | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.0.3/ease)  |

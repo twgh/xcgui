@@ -194,10 +194,10 @@ xc包里的函数都是xcgui.dll里原本的函数，有一千多个函数，可
 | 数据适配器-树元素                     | adapter          | AdapterTree      | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.0.3/adapter#AdapterTree) |
 | 背景管理器                            | bkmanager        | BkManager        | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.0.3/bkmanager#BkManager) |
 | 字体                                  | fontx            | FontX            | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.0.3/fontx#FontX) |
-| 图片操作                              | image            | Image            | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.0.3/image#Image) |
+| 图片操作                              | imagex           | Image            | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.0.3/image#Image) |
 | 列表项模板                            | listitemtemplate | ListItemTemplate | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.0.3/listitemtemplate#ListItemTemplate) |
 | 节点                                  | listitemtemplate | Node             | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.0.3/listitemtemplate#Node) |
-| 图形绘制                              | draw             | Draw             | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.0.3/draw#Draw) |
+| 图形绘制                              | drawx            | Draw             | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.0.3/draw#Draw) |
 | XCGUI所有函数                         | xc               |                  | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.0.3/xc#section-documentation) |
 | XCGUI常量                             | xcc              |                  | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.0.3/xcc)  |
 | 缓动                                  | ease             |                  | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.0.3/ease) |
