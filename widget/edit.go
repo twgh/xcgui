@@ -209,20 +209,18 @@ func (e *Edit) SetTextInt(nValue int) int {
 	return xc.XEdit_SetTextInt(e.Handle, nValue)
 }
 
-// 未实现
-// hEle: 元素句柄
+// 编辑框_取文本, 不包含非文本内容, 返回实际接收文本长度
 // pOut: 接收文本内存指针
 // nOutlen: 内存大小
-func (e *Edit) GetText(pOut string, nOutlen int) int {
+func (e *Edit) GetText(pOut *string, nOutlen int) int {
 	return xc.XEdit_GetText(e.Handle, pOut, nOutlen)
 }
 
-// 未实现
-// hEle: 元素句柄
+// 编辑框_取文本行
 // iRow: 行索引
 // pOut: 接收文本内存指针
 // nOutlen: 接收文本内存块长度
-func (e *Edit) GetTextRow(iRow int, pOut *string, nOutlen *int) int {
+func (e *Edit) GetTextRow(iRow int, pOut *string, nOutlen int) int {
 	return xc.XEdit_GetTextRow(e.Handle, iRow, pOut, nOutlen)
 }
 
@@ -419,11 +417,10 @@ func (e *Edit) SetSelect(iStartRow int, iStartCol int, iEndRow int, iEndCol int)
 	return xc.XEdit_SetSelect(e.Handle, iStartRow, iStartCol, iEndRow, iEndCol)
 }
 
-// 未实现
-// hEle: 元素句柄
+// 编辑框_取选择文本, 不包括非文本内容, 返回接收文本内容实际长度
 // pOut: 接收返回文本内容
 // nOutLen: 接收内存大小
-func (e *Edit) GetSelectText(pOut string, nOutLen int) int {
+func (e *Edit) GetSelectText(pOut *string, nOutLen int) int {
 	return xc.XEdit_GetSelectText(e.Handle, pOut, nOutLen)
 }
 

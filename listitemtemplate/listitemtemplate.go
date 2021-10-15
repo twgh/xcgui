@@ -103,7 +103,7 @@ func (l *ListItemTemplate) List_GetNode(index int) int {
 // pFileName: 文件名
 // pOutTemp1: 返回模板句柄1
 // pOutTemp2: 返回模板句柄2
-func LoadEx(nType int, pFileName string, pOutTemp1 int, pOutTemp2 int) bool {
+func LoadEx(nType int, pFileName string, pOutTemp1 *int, pOutTemp2 *int) bool {
 	return xc.XTemp_LoadEx(nType, pFileName, pOutTemp1, pOutTemp2)
 }
 
@@ -114,7 +114,7 @@ func LoadEx(nType int, pFileName string, pOutTemp1 int, pOutTemp2 int) bool {
 // pPassword: zip密码
 // pOutTemp1: 返回模板句柄1, 项模板
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板
-func LoadZipEx(nType int, pZipFile string, pFileName string, pPassword string, pOutTemp1 int, pOutTemp2 int) bool {
+func LoadZipEx(nType int, pZipFile string, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int) bool {
 	return xc.XTemp_LoadZipEx(nType, pZipFile, pFileName, pPassword, pOutTemp1, pOutTemp2)
 }
 
@@ -126,7 +126,7 @@ func LoadZipEx(nType int, pZipFile string, pFileName string, pPassword string, p
 // pPassword: zip密码
 // pOutTemp1: 返回模板句柄1, 项模板
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板
-func LoadZipMemEx(nType int, data int, length int, pFileName string, pPassword string, pOutTemp1 int, pOutTemp2 int) bool {
+func LoadZipMemEx(nType int, data int, length int, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int) bool {
 	return xc.XTemp_LoadZipMemEx(nType, data, length, pFileName, pPassword, pOutTemp1, pOutTemp2)
 }
 
@@ -135,7 +135,7 @@ func LoadZipMemEx(nType int, data int, length int, pFileName string, pPassword s
 // pStringXML: 字符串内容
 // pOutTemp1: 返回模板句柄1
 // pOutTemp2: 返回模板句柄2
-func LoadFromStringEx(nType int, pStringXML int, pOutTemp1 int, pOutTemp2 int) bool {
+func LoadFromStringEx(nType int, pStringXML int, pOutTemp1 *int, pOutTemp2 *int) bool {
 	return xc.XTemp_LoadFromStringEx(nType, pStringXML, pOutTemp1, pOutTemp2)
 }
 

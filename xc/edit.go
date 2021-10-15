@@ -1,6 +1,7 @@
 package xc
 
 import (
+	"syscall"
 	"unsafe"
 )
 
@@ -207,24 +208,26 @@ func XEdit_SetTextInt(hEle int, nValue int) int {
 	return int(r)
 }
 
-// 未实现
 // 编辑框_取文本, 不包含非文本内容, 返回实际接收文本长度
 // hEle: 元素句柄
 // pOut: 接收文本内存指针
 // nOutlen: 内存大小
-func XEdit_GetText(hEle int, pOut string, nOutlen int) int {
-	r, _, _ := xEdit_GetText.Call(uintptr(hEle), strPtr(pOut), uintptr(nOutlen))
+func XEdit_GetText(hEle int, pOut *string, nOutlen int) int {
+	buf := make([]uint16, nOutlen)
+	r, _, _ := xEdit_GetText.Call(uintptr(hEle), uintptr(unsafe.Pointer(&buf[0])), uintptr(nOutlen))
+	*pOut = syscall.UTF16ToString(buf[0:])
 	return int(r)
 }
 
-// 未实现
 // 编辑框_取文本行
 // hEle: 元素句柄
 // iRow: 行索引
 // pOut: 接收文本内存指针
 // nOutlen: 接收文本内存块长度
-func XEdit_GetTextRow(hEle int, iRow int, pOut *string, nOutlen *int) int {
-	r, _, _ := xEdit_GetTextRow.Call(uintptr(hEle), uintptr(iRow), uintptr(unsafe.Pointer(pOut)), uintptr(unsafe.Pointer(nOutlen)))
+func XEdit_GetTextRow(hEle int, iRow int, pOut *string, nOutlen int) int {
+	buf := make([]uint16, nOutlen)
+	r, _, _ := xEdit_GetTextRow.Call(uintptr(hEle), uintptr(iRow), uintptr(unsafe.Pointer(&buf[0])), uintptr(nOutlen))
+	*pOut = syscall.UTF16ToString(buf[0:])
 	return int(r)
 }
 
@@ -481,13 +484,14 @@ func XEdit_SetSelect(hEle int, iStartRow int, iStartCol int, iEndRow int, iEndCo
 	return int(r) != 0
 }
 
-// 未实现
 // 编辑框_取选择文本, 不包括非文本内容, 返回接收文本内容实际长度
 // hEle: 元素句柄
 // pOut: 接收返回文本内容
 // nOutLen: 接收内存大小
-func XEdit_GetSelectText(hEle int, pOut string, nOutLen int) int {
-	r, _, _ := xEdit_GetSelectText.Call(uintptr(hEle), strPtr(pOut), uintptr(nOutLen))
+func XEdit_GetSelectText(hEle int, pOut *string, nOutLen int) int {
+	buf := make([]uint16, nOutLen)
+	r, _, _ := xEdit_GetSelectText.Call(uintptr(hEle), uintptr(unsafe.Pointer(&buf[0])), uintptr(nOutLen))
+	*pOut = syscall.UTF16ToString(buf[0:])
 	return int(r)
 }
 
