@@ -99,9 +99,21 @@ type RECT struct {
 	Bottom int32
 }
 
+type RECTF struct {
+	Left   float32
+	Top    float32
+	Right  float32
+	Bottom float32
+}
+
 type POINT struct {
 	X int32
 	Y int32
+}
+
+type POINTF struct {
+	X float32
+	Y float32
 }
 
 type SIZE struct {

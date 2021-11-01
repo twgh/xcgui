@@ -1,6 +1,7 @@
 // xcgui const
 package xcc
 
+// 窗口消息
 // SW_
 
 const (
@@ -21,6 +22,7 @@ const (
 	XC_ID_LAST  = -3 // 插入末尾位置
 )
 
+// 调整布局标识位
 // XC_AdjustLayout_
 
 const (
@@ -29,6 +31,7 @@ const (
 	XC_AdjustLayout_Self        // 只调整自身布局, 不调整子对象布局
 )
 
+// 炫彩窗口透明标识
 // Window_Transparent_
 
 const (
@@ -39,6 +42,7 @@ const (
 	Window_Transparent_Win7          // 窗口透明_玻璃
 )
 
+// 布局轴对齐
 // Layout_Align_Axis_
 
 const (
@@ -48,6 +52,7 @@ const (
 	Layout_Align_Axis_End           // 水平布局(底部), 垂直布局(右侧)
 )
 
+// 布局大小类型
 // Layout_Size_
 
 const (
@@ -59,6 +64,7 @@ const (
 	Layout_Size_Disable        // 不使用
 )
 
+// 布局_对齐_
 // Layout_Align_
 
 const (
@@ -70,6 +76,7 @@ const (
 	Layout_Align_Equidistant        // 等距
 )
 
+// 对象样式(用于区分外观)
 // XC_OBJECT_STYLE
 
 const (
@@ -99,6 +106,7 @@ const (
 	ListBox_Style_ComboBox                 // 下拉组合框弹出的listBox
 )
 
+// 弹出消息框
 // MessageBox_Flag_
 
 const (
@@ -113,6 +121,7 @@ const (
 	MessageBox_Flag_Icon_Shield  = 131072 // 图标 盾牌/安全 IDI_SHIELD
 )
 
+// 普通三种状态
 // Common_State3_
 
 const (
@@ -121,6 +130,7 @@ const (
 	Common_State3_Down         // 按下
 )
 
+// 按钮状态
 // Button_State_
 
 const (
@@ -131,6 +141,7 @@ const (
 	Button_State_Disable        // 禁用状态
 )
 
+// 对象扩展类型(功能扩展)
 // XC_OBJECT_TYPE_EX
 
 const (
@@ -144,6 +155,7 @@ const (
 	Xc_Ex_Error         = -1   // 错误类型
 )
 
+// 文本对齐
 // TextFormatFlag_
 
 const (
@@ -171,6 +183,7 @@ const (
 	TextTrimming_EllipsisPath            = 0x20000 // 略去字符串中间部分，保证字符的首尾都能够显示
 )
 
+// 按钮图标对齐方式
 // Button_Icon_Align_
 
 const (
@@ -180,19 +193,31 @@ const (
 	Button_Icon_Align_Bottom        // 图标在底部
 )
 
-// Xc_Window_Style_
+// 窗口样式
+// Window_Style_
 
 const (
-	Xc_Window_Style_Nothing     = 0x00000000                                                                                                                              // 什么也没有
-	Xc_Window_Style_Caption     = 0x00000001                                                                                                                              // top布局,如果指定该属性,默认为绑定标题栏元素
-	Xc_Window_Style_Border      = 0x00000002                                                                                                                              // 边框,指定默认上下左右布局大小,如果没有指定,那么边框布局大小为0
-	Xc_Window_Style_Center      = 0x00000004                                                                                                                              // 窗口居中
-	Xc_Window_Style_Drag_Border = 0x00000008                                                                                                                              // 拖动窗口边框
-	Xc_Window_Style_Drag_Window = 0x00000010                                                                                                                              // 拖动窗口
-	Xc_Window_Style_Default     = (Xc_Window_Style_Caption | Xc_Window_Style_Border | Xc_Window_Style_Center | Xc_Window_Style_Drag_Border | Xc_Window_Style_Drag_Window) // 允许窗口最大化  窗口默认样式
-	Xc_Window_Style_Modal       = (Xc_Window_Style_Caption | Xc_Window_Style_Center | Xc_Window_Style_Border)                                                             // 模态窗口样式
+	Window_Style_Nothing         = 0x0000 // 什么也没有
+	Window_Style_Caption         = 0x0001 // 标题栏
+	Window_Style_Border          = 0x0002 // 边框,如果没有指定,那么边框大小为0
+	Window_Style_Center          = 0x0004 // 窗口居中
+	Window_Style_Drag_Border     = 0x0008 // 拖动窗口边框
+	Window_Style_Drag_Window     = 0x0010 // 拖动窗口
+	Window_Style_Allow_MaxWindow = 0x0020 // 允许窗口最大化
+	Window_Style_Icon            = 0x0040 // 图标
+	Window_Style_Title           = 0x0080 // 标题
+	Window_Style_Btn_Min         = 256    // 控制按钮-最小化
+	Window_Style_Btn_Max         = 512    // 控制按钮-最大化
+	Window_Style_Btn_Close       = 1024   // 控制按钮-关闭
+	Window_Style_Default         = 2031   // 窗口样式-控制按钮: 居中 图标, 标题, 关闭按钮, 最大化按钮, 最小化按钮
+
+	Window_Style_Simple = (Window_Style_Caption | Window_Style_Border | Window_Style_Center | Window_Style_Drag_Border | Window_Style_Allow_MaxWindow) // 窗口样式-简单: 居中
+	// Window_Style_Pop          = 48      // 窗口样式-弹出窗口: 图标, 标题, 关闭按钮
+	Window_Style_Modal        = 1223                                                               // 模态窗口样式-控制按钮: 居中, 图标, 标题, 关闭按钮
+	Window_Style_Modal_Simple = (Window_Style_Caption | Window_Style_Border | Window_Style_Center) // 模态窗口样式-简单: 居中
 )
 
+// 对象句柄类型
 // XC_OBJECT_TYPE
 
 const (
@@ -259,6 +284,7 @@ const (
 	XC_ADAPTER_MAP      = 106      // 数据适配器AdapterMap
 )
 
+// UI元素位置
 // Element_Position_
 
 const (
@@ -381,6 +407,7 @@ const (
 	XE_DROPFILES                          = 250 // 文件拖放事件.
 )
 
+// 窗格_对齐_
 // Pane_Align_
 
 const (
@@ -392,6 +419,7 @@ const (
 	Pane_Align_Error  = -1   // 错误
 )
 
+// 弹出菜单项标识
 // Menu_Item_Flag_
 
 const (
@@ -403,6 +431,7 @@ const (
 	Menu_Item_Flag_Disable   = 0x10 // 禁用
 )
 
+// 弹出菜单方向
 // Menu_Popup_Position_
 
 const (
@@ -416,6 +445,7 @@ const (
 	Menu_Popup_Position_Center_Bottom        // 下居中
 )
 
+// ComboBox状态
 // ComboBox_State_
 
 const (
@@ -424,6 +454,7 @@ const (
 	ComboBox_State_Down         // 按下状态
 )
 
+// 数据适配器数据类型
 // Adapter_Date_Type_
 
 const (
@@ -433,6 +464,7 @@ const (
 	Adapter_Date_Type_Image         // 图片
 )
 
+// Edit 聊天气泡对齐方式
 // Chat_Flag_
 
 const (
@@ -442,6 +474,7 @@ const (
 	Chat_Flag_Next_Row_Bubble = 0x8 // 下一行显示气泡
 )
 
+// 编辑框类型
 // Edit_Type_
 
 const (
@@ -452,6 +485,7 @@ const (
 	Edit_Type_CodeTable        // 代码表格,内部使用, 每行的高度相同
 )
 
+// 编辑框风格类型
 // Edit_Style_Type_
 
 const (
@@ -460,6 +494,7 @@ const (
 	Edit_Style_Type_Obj                   // UI对象
 )
 
+// 编辑框文本对齐标志
 // Edit_TextAlign_Flag_
 
 const (
@@ -471,6 +506,7 @@ const (
 	Edit_TextAlign_Flag_Center_V = 0x8 // 垂直居中
 )
 
+// Table 标识
 // Table_Flag_
 
 const (
@@ -486,6 +522,7 @@ const (
 	GRADIENT_FILL_TRIANGLE        //三角形
 )
 
+// 缓动标识
 // Ease_
 
 const (
@@ -494,6 +531,7 @@ const (
 	Ease_InOut        // 从慢到快再到慢
 )
 
+// 字体样式
 // FontStyle_
 
 const (
@@ -505,6 +543,7 @@ const (
 	FontStyle_Strikeout  = 8 // 删除线
 )
 
+// 图片绘制类型
 // Image_Draw_Type_
 
 const (
@@ -516,6 +555,7 @@ const (
 	Image_Draw_Type_Adaptive_Border        // 九宫格不绘制中间区域
 )
 
+// 列表项模板类型
 // ListItemTemp_Type_
 
 const (
@@ -529,6 +569,7 @@ const (
 	ListItemTemp_Type_ListView       = ListItemTemp_Type_ListView_Group | ListItemTemp_Type_ListView_Item // listView (列表视组)与(列表视项)组合
 )
 
+// 窗口位置
 // Window_Position_
 
 const (
@@ -541,6 +582,7 @@ const (
 	Window_Position_Error  = -1   // 错误
 )
 
+// List项状态
 //  List_Item_State_
 
 const (
@@ -550,6 +592,7 @@ const (
 	List_Item_State_Cache         // 缓存的项
 )
 
+// Tree项状态
 // Tree_Item_State_
 
 const (
@@ -558,6 +601,7 @@ const (
 	Tree_Item_State_Select        // 项选择状态
 )
 
+// List,ListBox,ListView,Tree,项背景绘制标志位
 // List_DrawItemBk_Flag_
 
 const (
@@ -569,6 +613,7 @@ const (
 	List_DrawItemBk_Flag_Group_Stay  = 0x010 // 绘制鼠标停留状态组背景,当项为组时
 )
 
+// 属性网格项类型
 //  PropertyGrid_Item_Type_
 
 const (
@@ -582,6 +627,7 @@ const (
 	PropertyGrid_Item_Type_Panel             // 面板
 )
 
+// Z序位置
 // Zorder_
 
 const (
@@ -591,6 +637,7 @@ const (
 	Zorder_After         // 指定目标上面
 )
 
+// 窗格状态
 // Pane_State_
 
 const (
@@ -599,6 +646,7 @@ const (
 	Pane_State_Float        // 浮动窗格
 )
 
+// 组合状态
 //  Window_State_Flag_
 
 const (
@@ -612,6 +660,7 @@ const (
 	Window_State_Flag_Layout_Body  = 0x20000000 // 布局内容区
 )
 
+// 组合状态
 // Tree_State_Flag_
 
 const (
@@ -623,6 +672,8 @@ const (
 	Tree_State_Flag_Group_No       = 0x1000 // 项不为组
 )
 
+// 组合状态
+// 元素状态标志
 // Element_State_Flag_
 
 const (
@@ -639,6 +690,8 @@ const (
 	Element_State_Flag_Down       = 0x0040                        // 为扩展模块保留
 )
 
+// 组合状态
+// 按钮状态标志
 // Button_State_Flag_
 
 const (
@@ -651,6 +704,8 @@ const (
 	Button_State_Flag_WindowMaximize = 0x0400                   // 窗口最大化
 )
 
+// 组合状态
+// 组合框状态标志
 // ComboBox_State_Flag_
 
 const (
@@ -659,6 +714,19 @@ const (
 	ComboBox_State_Flag_Down  = Element_State_Flag_Down  // 鼠标按下
 )
 
+// 组合状态
+// 列表项状态标志
+// List_State_Flag_Item_
+
+const (
+	List_State_Flag_Item_Leave     = iota // 项鼠标离开
+	List_State_Flag_Item_Stay             // 项鼠标停留
+	List_State_Flag_Item_Select           // 项选择
+	List_State_Flag_Item_Select_No        // 项未选择
+)
+
+// 组合状态
+// 列表框项状态标志
 // ListBox_State_Flag
 
 const (
@@ -668,6 +736,8 @@ const (
 	ListBox_State_Flag_Item_Select_No = 0x0400 // 项未选择
 )
 
+//组合状态
+// 列表视图状态标志
 // ListView_State_Flag_
 
 const (
@@ -681,7 +751,18 @@ const (
 	ListView_State_Flag_Group_Select_No = 0x4000 // 组未选择
 )
 
-//  MonthCal_State_Flag_
+// 组合状态
+// ListHeader_State_Flag_Item_
+
+const (
+	ListHeader_State_Flag_Item_Leave = iota // 项鼠标离开
+	ListHeader_State_Flag_Item_Stay         // 项鼠标停留
+	ListHeader_State_Flag_Item_Down         // 项鼠标按下
+)
+
+// 组合状态
+// 月历状态标志
+// MonthCal_State_Flag_
 
 const (
 	MonthCal_State_Flag_Leave           = Element_State_Flag_Leave // 离开状态
@@ -697,7 +778,9 @@ const (
 	MonthCal_State_Flag_Item_Next_Month = 0x10000                  // 项-下月
 )
 
-//  Layout_State_Flag_
+// 组合状态
+// 布局状态标志
+// Layout_State_Flag_
 
 const (
 	Layout_State_Flag_Nothing = iota // 无
@@ -748,4 +831,28 @@ const (
 	WM_SETCURSOR      = 32  // 窗口设置鼠标光标.
 	WM_CHAR           = 258 // 窗口字符消息.
 	WM_DROPFILES      = 563 // 拖动文件到窗口.
+)
+
+// D2D文本渲染模式
+// XC_DWRITE_RENDERING_MODE_
+
+const (
+	XC_DWRITE_RENDERING_MODE_DEFAULT                     = iota // 指定根据字体和大小自动确定呈现模式。
+	XC_DWRITE_RENDERING_MODE_ALIASED                            // 指定不执行抗锯齿。 每个像素要么设置为文本的前景色，要么保留背景的颜色。
+	XC_DWRITE_RENDERING_MODE_CLEARTYPE_GDI_CLASSIC              // 使用与别名文本相同的度量指定 ClearType 呈现。 字形只能定位在整个像素的边界上。
+	XC_DWRITE_RENDERING_MODE_CLEARTYPE_GDI_NATURAL              // 使用使用 CLEARTYPE_NATURAL_QUALITY 创建的字体，使用与使用 GDI 的文本呈现相同的指标指定 ClearType 呈现。 与使用别名文本相比，字形度量更接近其理想值，但字形仍然位于整个像素的边界上。
+	XC_DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL                  // 仅在水平维度中指定具有抗锯齿功能的 ClearType 渲染。 这通常用于中小字体大小（最多 16 ppem）。
+	XC_DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL_SYMMETRIC        // 指定在水平和垂直维度上具有抗锯齿的 ClearType 渲染。这通常用于较大的尺寸，以使曲线和对角线看起来更平滑，但会牺牲一些柔和度。
+	XC_DWRITE_RENDERING_MODE_OUTLINE                            // 指定渲染应绕过光栅化器并直接使用轮廓。 这通常用于非常大的尺寸。
+)
+
+// 月历元素上的按钮类型
+// MonthCal_Button_Type_
+
+const (
+	MonthCal_Button_Type_Today      = iota // 今天按钮
+	MonthCal_Button_Type_Last_Year         // 上一年
+	MonthCal_Button_Type_Next_Year         // 下一年
+	MonthCal_Button_Type_Last_Month        // 上一月
+	MonthCal_Button_Type_Next_Month        //下一月
 )
