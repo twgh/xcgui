@@ -118,7 +118,7 @@ func main() {
 
 xcc包里都是常量，像这样使用：`xcc.Xc_Window_Style_Default`
 
-需要用到xcc包常量的参数注释都是类似这样的，复制`Xc_Window_Style_`到[xcc包](https://github.com/twgh/xcgui/blob/main/xcc/xcconst.go)里搜索即可看到相关常量注释：[![5eX6pD.jpg](https://z3.ax1x.com/2021/10/12/5eX6pD.jpg)](https://github.com/twgh/xcgui/blob/main/window/window.go#L19)
+需要用到xcc包常量的参数注释都是类似这样的，复制`Xc_Window_Style_`到[xcc包](https://github.com/twgh/xcgui/blob/main/xcc/xcconst.go)里搜索即可看到相关常量注释：[![5eX6pD.jpg](https://z3.ax1x.com/2021/10/12/5eX6pD.jpg)](https://github.com/twgh/xcgui/blob/main/window/window.go#L26)
 
 ## 命令介绍
 
