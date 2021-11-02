@@ -163,7 +163,13 @@ func (fw *FrameWindow) MergePane(hPaneDest int, hPaneNew int) bool {
 	return xc.XFrameWnd_MergePane(fw.Handle, hPaneDest, hPaneNew)
 }
 
-// 框架窗口_附加窗口, 返回窗口资源句柄.
-func (fm *FrameWindow) Attach() int {
-	return xc.XFrameWnd_Attach(fm.Handle)
+// 框架窗口_附加窗口, 返回窗口对象.
+//
+// hWnd: 要附加的外部窗口句柄.
+//
+// XCStyle: 炫彩窗口样式: Window_Style_.
+func FrameWnd_Attach(hWnd, XCStyle int) *Window {
+	p := &Window{}
+	p.SetHandle(xc.XFrameWnd_Attach(hWnd, XCStyle))
+	return p
 }

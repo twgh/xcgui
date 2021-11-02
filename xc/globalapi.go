@@ -43,17 +43,35 @@ func XC_GetDefaultFont() int {
 	return int(r)
 }
 
-// 炫彩_消息框.
-//
-// hWindow: 窗口句柄.
+// 炫彩_消息框, 返回MessageBox_Flag_.
 //
 // pText: 内容文本.
 //
 // pCaption: 标题.
 //
 // nFlags: 标识, MessageBox_Flag_.
-func XC_MessageBox(hWindow int, pText string, pCaption string, nFlags int) int {
-	r, _, _ := xC_MessageBox.Call(uintptr(hWindow), strPtr(pText), strPtr(pCaption), uintptr(nFlags))
+//
+// hWndParent: 父窗口句柄.
+//
+// XCStyle: Window_Style_.
+func XC_MessageBox(pText string, pCaption string, nFlags, hWndParent, XCStyle int) int {
+	r, _, _ := xC_MessageBox.Call(strPtr(pText), strPtr(pCaption), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
+	return int(r)
+}
+
+// 信息框_创建, 返回信息框窗口句柄.
+//
+// pText: 内容文本.
+//
+// pTitle: 标题.
+//
+// nFlags: 标识, MessageBox_Flag_.
+//
+// hWndParent: 父窗口句柄.
+//
+// XCStyle: Window_Style_.
+func XMsg_Create(pText, pTitle string, nFlags, hWndParent, XCStyle int) int {
+	r, _, _ := xMsg_Create.Call(strPtr(pText), strPtr(pTitle), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
 	return int(r)
 }
 
@@ -509,6 +527,12 @@ func XC_PostQuitMessage(nExitCode int) int {
 func XC_SetD2dTextRenderingMode(mode int) int {
 	r, _, _ := xC_SetD2dTextRenderingMode.Call(uintptr(mode))
 	return int(r)
+}
+
+// 炫彩_是否启用了D2D.
+func XC_IsEnableD2D() bool {
+	r, _, _ := xC_IsEnableD2D.Call()
+	return int(r) != 0
 }
 
 /*

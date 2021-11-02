@@ -53,6 +53,17 @@ func NewModalWindowEx(dwExStyle int, lpClassName string, lpWindowName string, dw
 	return p
 }
 
+// 模态窗口_附加窗口, 返回窗口对象.
+//
+// hWnd: 要附加的外部窗口句柄.
+//
+// XCStyle: 炫彩窗口样式: Window_Style_.
+func ModalWnd_Attach(hWnd, XCStyle int) *Window {
+	p := &Window{}
+	p.SetHandle(xc.XModalWnd_Attach(hWnd, XCStyle))
+	return p
+}
+
 // 从句柄创建对象.
 func NewModalWindowByHandle(handle int) *ModalWindow {
 	p := &ModalWindow{}
@@ -117,9 +128,4 @@ func (m *ModalWindow) DoModal() int {
 // nResult: XModalWnd_DoModal()返回值.
 func (m *ModalWindow) EndModal(nResult int) int {
 	return xc.XModalWnd_EndModal(m.Handle, nResult)
-}
-
-// 模态窗口_附加窗口, 返回窗口资源句柄.
-func (m *ModalWindow) Attach() int {
-	return xc.XModalWnd_Attach(m.Handle)
 }

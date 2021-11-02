@@ -84,6 +84,8 @@ var (
 	xC_GetWicFactory           *syscall.LazyProc
 	xC_GetDWriteFactory        *syscall.LazyProc
 	xC_SetD2dTextRenderingMode *syscall.LazyProc
+	xC_IsEnableD2D             *syscall.LazyProc
+	xMsg_Create                *syscall.LazyProc
 
 	// UI Designer.
 	xC_LoadLayout                 *syscall.LazyProc
@@ -944,6 +946,7 @@ var (
 	xFont_GetRefCount       *syscall.LazyProc
 	xFont_Release           *syscall.LazyProc
 	xFont_CreateFromMem     *syscall.LazyProc
+	xFont_CreateFromRes     *syscall.LazyProc
 
 	// Image.
 	xImage_LoadSrc             *syscall.LazyProc
@@ -1538,6 +1541,8 @@ func init() {
 	xC_GetWicFactory = xcgui.NewProc("XC_GetWicFactory")
 	xC_GetDWriteFactory = xcgui.NewProc("XC_GetDWriteFactory")
 	xC_SetD2dTextRenderingMode = xcgui.NewProc("XC_SetD2dTextRenderingMode")
+	xC_IsEnableD2D = xcgui.NewProc("XC_IsEnableD2D")
+	xMsg_Create = xcgui.NewProc("XMsg_Create")
 
 	// UI Designer.
 	xC_LoadLayout = xcgui.NewProc("XC_LoadLayout")
@@ -2398,6 +2403,7 @@ func init() {
 	xFont_GetRefCount = xcgui.NewProc("XFont_GetRefCount")
 	xFont_Release = xcgui.NewProc("XFont_Release")
 	xFont_CreateFromMem = xcgui.NewProc("XFont_CreateFromMem")
+	xFont_CreateFromRes = xcgui.NewProc("XFont_CreateFromRes")
 
 	// Image.
 	xImage_LoadSrc = xcgui.NewProc("XImage_LoadSrc")

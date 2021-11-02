@@ -45,17 +45,34 @@ func (a *App) GetDefaultFont() int {
 	return xc.XC_GetDefaultFont()
 }
 
-// 炫彩_消息框.
-//
-// hWindow: 窗口句柄.
+// 炫彩_消息框, 返回MessageBox_Flag_.
 //
 // pText: 内容文本.
 //
 // pCaption: 标题.
 //
 // nFlags: 标识, MessageBox_Flag_.
-func (a *App) MessageBox(hWindow int, pText string, pCaption string, nFlags int) int {
-	return xc.XC_MessageBox(hWindow, pText, pCaption, nFlags)
+//
+// hWndParent: 父窗口句柄.
+//
+// XCStyle: Window_Style_.
+func (a *App) MessageBox(pText string, pCaption string, nFlags, hWndParent, XCStyle int) int {
+	return xc.XC_MessageBox(pText, pCaption, nFlags, hWndParent, XCStyle)
+}
+
+// 信息框_创建, 返回信息框窗口句柄.
+//
+// pText: 内容文本.
+//
+// pTitle: 标题.
+//
+// nFlags: 标识, MessageBox_Flag_.
+//
+// hWndParent: 父窗口句柄.
+//
+// XCStyle: Window_Style_.
+func (a *App) Msg_Create(pText, pTitle string, nFlags, hWndParent, XCStyle int) int {
+	return xc.XMsg_Create(pText, pTitle, nFlags, hWndParent, XCStyle)
 }
 
 // 炫彩_发送窗口消息.
@@ -623,4 +640,9 @@ func (a *App) GetWicFactory() int {
 // mode: 渲染模式, XC_DWRITE_RENDERING_MODE_ .
 func (a *App) SetD2dTextRenderingMode(mode int) int {
 	return xc.XC_SetD2dTextRenderingMode(mode)
+}
+
+// 炫彩_是否启用了D2D.
+func (a *App) IsEnableD2D() bool {
+	return xc.XC_IsEnableD2D()
 }

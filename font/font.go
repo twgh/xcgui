@@ -95,6 +95,24 @@ func NewFontFromMem(data, length, fontSize, style int) *Font {
 	return p
 }
 
+// 字体_创建从资源, 创建字体从资源, 返回炫彩字体句柄.
+//
+// id: xx.
+//
+// pType: xx.
+//
+// fontSize: 字体大小, 单位(pt,磅).
+//
+// style: 字体样式, FontStyle_.
+//
+// hModule: xx.
+func NewFontFromRes(id int, pType string, fontSize int, style int, hModule int) *Font {
+	p := &Font{
+		Handle: xc.XFont_CreateFromRes(id, pType, fontSize, style, hModule),
+	}
+	return p
+}
+
 // 从句柄创建对象.
 func NewFontByHandle(handle int) *Font {
 	p := &Font{}

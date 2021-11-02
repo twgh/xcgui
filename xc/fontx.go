@@ -72,6 +72,22 @@ func XFont_CreateFromMem(data, length, fontSize, style int) int {
 	return int(r)
 }
 
+// 字体_创建从资源, 创建字体从资源, 返回炫彩字体句柄.
+//
+// id: xx.
+//
+// pType: xx.
+//
+// fontSize: 字体大小, 单位(pt,磅).
+//
+// style: 字体样式, FontStyle_.
+//
+// hModule: xx.
+func XFont_CreateFromRes(id int, pType string, fontSize, style, hModule int) int {
+	r, _, _ := xFont_CreateFromRes.Call(uintptr(id), strPtr(pType), uintptr(fontSize), uintptr(style), uintptr(hModule))
+	return int(r)
+}
+
 // 字体_启用自动销毁, 是否自动销毁.
 //
 // hFontX: 字体句柄.

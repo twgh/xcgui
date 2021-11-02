@@ -900,8 +900,10 @@ func XWnd_GetTransparentType(hWindow int) int {
 // 窗口_附加窗口, 返回窗口资源句柄.
 //
 // hWnd: 要附加的外部窗口句柄.
-func XWnd_Attach(hWnd int) int {
-	r, _, _ := xWnd_Attach.Call(uintptr(hWnd))
+//
+// XCStyle: 炫彩窗口样式: Window_Style_.
+func XWnd_Attach(hWnd, XCStyle int) int {
+	r, _, _ := xWnd_Attach.Call(uintptr(hWnd), uintptr(XCStyle))
 	return int(r)
 }
 

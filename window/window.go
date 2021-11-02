@@ -57,6 +57,17 @@ func NewWindowEx(dwExStyle int, lpClassName string, lpWindowName string, dwStyle
 	return p
 }
 
+// 窗口_附加窗口, 返回窗口资源句柄.
+//
+// hWnd: 要附加的外部窗口句柄.
+//
+// XCStyle: 炫彩窗口样式: Window_Style_.
+func Attach(hWnd, XCStyle int) *Window {
+	p := &Window{}
+	p.SetHandle(xc.XWnd_Attach(hWnd, XCStyle))
+	return p
+}
+
 // 从句柄创建对象.
 func NewWindowByHandle(handle int) *Window {
 	p := &Window{}

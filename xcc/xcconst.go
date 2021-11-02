@@ -206,14 +206,19 @@ const (
 	Window_Style_Allow_MaxWindow = 0x0020 // 允许窗口最大化
 	Window_Style_Icon            = 0x0040 // 图标
 	Window_Style_Title           = 0x0080 // 标题
-	Window_Style_Btn_Min         = 256    // 控制按钮-最小化
-	Window_Style_Btn_Max         = 512    // 控制按钮-最大化
-	Window_Style_Btn_Close       = 1024   // 控制按钮-关闭
-	Window_Style_Default         = 2031   // 窗口样式-控制按钮: 居中 图标, 标题, 关闭按钮, 最大化按钮, 最小化按钮
+	Window_Style_Btn_Min         = 0x0100 // 控制按钮-最小化
+	Window_Style_Btn_Max         = 0x0200 // 控制按钮-最大化
+	Window_Style_Btn_Close       = 0x0400 // 控制按钮-关闭
+
+	Window_Style_Default = (Window_Style_Caption | Window_Style_Border | Window_Style_Center | Window_Style_Drag_Border | Window_Style_Allow_MaxWindow | Window_Style_Icon | Window_Style_Title | Window_Style_Btn_Min | Window_Style_Btn_Max | Window_Style_Btn_Close) // 窗口样式-控制按钮: 居中 图标, 标题, 关闭按钮, 最大化按钮, 最小化按钮
 
 	Window_Style_Simple = (Window_Style_Caption | Window_Style_Border | Window_Style_Center | Window_Style_Drag_Border | Window_Style_Allow_MaxWindow) // 窗口样式-简单: 居中
-	// Window_Style_Pop          = 48      // 窗口样式-弹出窗口: 图标, 标题, 关闭按钮
-	Window_Style_Modal        = 1223                                                               // 模态窗口样式-控制按钮: 居中, 图标, 标题, 关闭按钮
+
+	Window_Style_Pop = (Window_Style_Caption | Window_Style_Border | Window_Style_Center | Window_Style_Drag_Border | Window_Style_Allow_MaxWindow | Window_Style_Icon |
+		Window_Style_Title) // 窗口样式-弹出窗口: 图标, 标题, 关闭按钮
+
+	Window_Style_Modal = (Window_Style_Caption | Window_Style_Border | Window_Style_Center | Window_Style_Icon | Window_Style_Title | Window_Style_Btn_Close) // 模态窗口样式-控制按钮: 居中, 图标, 标题, 关闭按钮
+
 	Window_Style_Modal_Simple = (Window_Style_Caption | Window_Style_Border | Window_Style_Center) // 模态窗口样式-简单: 居中
 )
 

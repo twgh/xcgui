@@ -12,15 +12,32 @@ type windowBase struct {
 	objectbase.UI
 }
 
-// 炫彩_消息框.
+// 炫彩_消息框, 返回MessageBox_Flag_.
 //
 // pText: 内容文本.
 //
 // pCaption: 标题.
 //
 // nFlags: 标识, MessageBox_Flag_.
-func (w *windowBase) MessageBox(pText string, pCaption string, nFlags int) int {
-	return xc.XC_MessageBox(w.Handle, pText, pCaption, nFlags)
+//
+// XCStyle: Window_Style_.
+func (w *windowBase) MessageBox(pText string, pCaption string, nFlags, XCStyle int) int {
+	return xc.XC_MessageBox(pText, pCaption, nFlags, w.GetHWND(), XCStyle)
+}
+
+// 信息框_创建, 返回窗口对象.
+//
+// pText: 内容文本.
+//
+// pTitle: 标题.
+//
+// nFlags: 标识, MessageBox_Flag_.
+//
+// XCStyle: Window_Style_.
+func (w *windowBase) Msg_Create(pText, pTitle string, nFlags, XCStyle int) *Window {
+	p := &Window{}
+	p.SetHandle(xc.XMsg_Create(pText, pTitle, nFlags, w.GetHWND(), XCStyle))
+	return p
 }
 
 // 炫彩_发送窗口消息.
@@ -662,13 +679,6 @@ func (w *windowBase) GetShadowInfo(nSize *int, nDepth *uint8, nAngeleSize *int, 
 // 窗口_取透明类型.
 func (w *windowBase) GetTransparentType() int {
 	return xc.XWnd_GetTransparentType(w.Handle)
-}
-
-// 窗口_附加窗口, 返回窗口资源句柄.
-func (w *windowBase) Attach(hWnd int) int {
-	hWindow := xc.XWnd_Attach(hWnd)
-	w.SetHandle(hWindow)
-	return hWindow
 }
 
 // 窗口_启用拖放文件.
