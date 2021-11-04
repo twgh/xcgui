@@ -2,17 +2,16 @@
 <p align="center">
     <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.12-blue.svg?" alt="release"></a>
     <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-3.1.2-blue.svg?" alt="XCGUI"></a>
-    <a href="http://mall.xcgui.com"><img src="https://img.shields.io/badge/Resource-Mall-blue.svg?" alt="Resource Mall"></a>
    <a href="https://golang.org"> <img src="https://img.shields.io/badge/golang-1.16-brightgreen" alt="golang"></a>
-    <a href="https://pkg.go.dev/github.com/twgh/xcgui"><img src="https://img.shields.io/badge/go.dev-reference-007d9c ?logo=go&logoColor=white" alt="GoDoc"></a>
+    <a href="https://pkg.go.dev/github.com/twgh/xcgui@v1.3.12-1"><img src="https://img.shields.io/badge/go.dev-reference-brightgreen" alt="GoDoc"></a>
     <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-brightgreen.svg?" alt="License"></a>
     <br><br>
     <a href="https://github.com/twgh/xcgui-example">程序示例</a>&nbsp;&nbsp;
-	<a href="https://pkg.go.dev/github.com/twgh/xcgui">项目文档</a>&nbsp;&nbsp;
+	<a href="https://pkg.go.dev/github.com/twgh/xcgui@v1.3.12-1">项目文档</a>&nbsp;&nbsp;
     <a href="http://www.xcgui.com/doc-ui/">官方文档</a>&nbsp;&nbsp;
-	<a href="https://github.com/twgh/FileStorage/blob/main/xcgui/help/%E7%82%AB%E5%BD%A9%E7%95%8C%E9%9D%A2%E5%BA%93-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3(v3.1)-(2021-10-07).chm?raw=true">帮助文档</a>&nbsp;&nbsp;
-    <a href="http://mall.xcgui.com">资源商城</a>
+	<a href="https://github.com/twgh/FileStorage/blob/main/xcgui/help/%E7%82%AB%E5%BD%A9%E7%95%8C%E9%9D%A2%E5%BA%93-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3(v3.1)-(2021-10-07).chm?raw=true">帮助文档</a>
 </p>
+
 
 
 
