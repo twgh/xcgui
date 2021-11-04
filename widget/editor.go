@@ -7,7 +7,7 @@ import (
 
 // 代码编辑框.
 type Editor struct {
-	Element
+	Edit
 }
 
 // 代码编辑框_创建.

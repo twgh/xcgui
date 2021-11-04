@@ -2,20 +2,20 @@
 package bkmanager
 
 import (
+	"github.com/twgh/xcgui/objectbase"
 	"github.com/twgh/xcgui/res"
 	"github.com/twgh/xcgui/xc"
 )
 
 // 背景管理器.
 type BkManager struct {
-	Handle int // HBKM.
+	objectbase.ObjectBase
 }
 
 // 背景_创建, 创建背景管理器.
 func NewBkManager() *BkManager {
-	p := &BkManager{
-		Handle: xc.XBkM_Create(),
-	}
+	p := &BkManager{}
+	p.SetHandle(xc.XBkM_Create())
 	return p
 }
 
@@ -35,11 +35,6 @@ func NewBkManagerByName(name string) *BkManager {
 		return p
 	}
 	return nil
-}
-
-// 给本类的HBKM赋值.
-func (b *BkManager) SetHandle(hBkm int) {
-	b.Handle = hBkm
 }
 
 // 背景_销毁.

@@ -6,7 +6,7 @@ import (
 
 // 静态文本链接按钮.
 type TextLink struct {
-	Element
+	Button
 }
 
 // 文本链接_创建, 创建静态文本链接元素.

@@ -2,22 +2,22 @@
 package imagex
 
 import (
+	"github.com/twgh/xcgui/objectbase"
 	"github.com/twgh/xcgui/res"
 	"github.com/twgh/xcgui/xc"
 )
 
 // 图片操作.
 type Image struct {
-	Handle int // HIMAGE.
+	objectbase.ObjectBase
 }
 
 // 图片_加载从图片源.
 //
 // hImageSrc: 图片源句柄.
 func NewImage_LoadSrc(hImageSrc int) *Image {
-	p := &Image{
-		Handle: xc.XImage_LoadSrc(hImageSrc),
-	}
+	p := &Image{}
+	p.SetHandle(xc.XImage_LoadSrc(hImageSrc))
 	return p
 }
 
@@ -25,9 +25,8 @@ func NewImage_LoadSrc(hImageSrc int) *Image {
 //
 // pFileName: 图片文件.
 func NewImage_LoadFile(pFileName string) *Image {
-	p := &Image{
-		Handle: xc.XImage_LoadFile(pFileName),
-	}
+	p := &Image{}
+	p.SetHandle(xc.XImage_LoadFile(pFileName))
 	return p
 }
 
@@ -43,9 +42,8 @@ func NewImage_LoadFile(pFileName string) *Image {
 //
 // bottomSize: 坐标.
 func NewImage_LoadFileAdaptive(pFileName string, leftSize int, topSize int, rightSize int, bottomSize int) *Image {
-	p := &Image{
-		Handle: xc.XImage_LoadFileAdaptive(pFileName, leftSize, topSize, rightSize, bottomSize),
-	}
+	p := &Image{}
+	p.SetHandle(xc.XImage_LoadFileAdaptive(pFileName, leftSize, topSize, rightSize, bottomSize))
 	return p
 }
 
@@ -61,9 +59,8 @@ func NewImage_LoadFileAdaptive(pFileName string, leftSize int, topSize int, righ
 //
 // cy: 高度.
 func NewImage_LoadFileRect(pFileName string, x int, y int, cx int, cy int) *Image {
-	p := &Image{
-		Handle: xc.XImage_LoadFileRect(pFileName, x, y, cx, cy),
-	}
+	p := &Image{}
+	p.SetHandle(xc.XImage_LoadFileRect(pFileName, x, y, cx, cy))
 	return p
 }
 
@@ -83,9 +80,8 @@ func NewImage_LoadFileRect(pFileName string, x int, y int, cx int, cy int) *Imag
 //
 // hModule:	从指定模块加载, 例如:DLL, EXE; 如果为空, 从当前EXE加载.
 func NewImage_LoadResAdaptive(id int, pType string, leftSize int, topSize int, rightSize int, bottomSize, hModule int) *Image {
-	p := &Image{
-		Handle: xc.XImage_LoadResAdaptive(id, pType, leftSize, topSize, rightSize, bottomSize, hModule),
-	}
+	p := &Image{}
+	p.SetHandle(xc.XImage_LoadResAdaptive(id, pType, leftSize, topSize, rightSize, bottomSize, hModule))
 	return p
 }
 
@@ -99,9 +95,8 @@ func NewImage_LoadResAdaptive(id int, pType string, leftSize int, topSize int, r
 //
 // hModule:	从指定模块加载, 例如:DLL, EXE; 如果为空, 从当前EXE加载.
 func NewImage_LoadRes(id int, pType string, bStretch bool, hModule int) *Image {
-	p := &Image{
-		Handle: xc.XImage_LoadRes(id, pType, bStretch, hModule),
-	}
+	p := &Image{}
+	p.SetHandle(xc.XImage_LoadRes(id, pType, bStretch, hModule))
 	return p
 }
 
@@ -113,9 +108,8 @@ func NewImage_LoadRes(id int, pType string, bStretch bool, hModule int) *Image {
 //
 // pPassword: ZIP压缩包密码.
 func NewImage_LoadZip(pZipFileName string, pFileName string, pPassword string) *Image {
-	p := &Image{
-		Handle: xc.XImage_LoadZip(pZipFileName, pFileName, pPassword),
-	}
+	p := &Image{}
+	p.SetHandle(xc.XImage_LoadZip(pZipFileName, pFileName, pPassword))
 	return p
 }
 
@@ -135,9 +129,8 @@ func NewImage_LoadZip(pZipFileName string, pFileName string, pPassword string) *
 //
 // y2: 坐标.
 func NewImage_LoadZipAdaptive(pZipFileName string, pFileName string, pPassword string, x1 int, x2 int, y1 int, y2 int) *Image {
-	p := &Image{
-		Handle: xc.XImage_LoadZipAdaptive(pZipFileName, pFileName, pPassword, x1, x2, y1, y2),
-	}
+	p := &Image{}
+	p.SetHandle(xc.XImage_LoadZipAdaptive(pZipFileName, pFileName, pPassword, x1, x2, y1, y2))
 	return p
 }
 
@@ -157,9 +150,8 @@ func NewImage_LoadZipAdaptive(pZipFileName string, pFileName string, pPassword s
 //
 // cy: 高度.
 func NewImage_LoadZipRect(pZipFileName string, pFileName string, pPassword string, x int, y int, cx int, cy int) *Image {
-	p := &Image{
-		Handle: xc.XImage_LoadZipRect(pZipFileName, pFileName, pPassword, x, y, cx, cy),
-	}
+	p := &Image{}
+	p.SetHandle(xc.XImage_LoadZipRect(pZipFileName, pFileName, pPassword, x, y, cx, cy))
 	return p
 }
 
@@ -173,9 +165,8 @@ func NewImage_LoadZipRect(pZipFileName string, pFileName string, pPassword strin
 //
 // pPassword: zip压缩包密码.
 func NewImage_LoadZipMem(data int, length int, pFileName string, pPassword string) *Image {
-	p := &Image{
-		Handle: xc.XImage_LoadZipMem(data, length, pFileName, pPassword),
-	}
+	p := &Image{}
+	p.SetHandle(xc.XImage_LoadZipMem(data, length, pFileName, pPassword))
 	return p
 }
 
@@ -185,9 +176,8 @@ func NewImage_LoadZipMem(data int, length int, pFileName string, pPassword strin
 //
 // nSize: 图片缓冲区大小.
 func NewImage_LoadMemory(pBuffer int, nSize int) *Image {
-	p := &Image{
-		Handle: xc.XImage_LoadMemory(pBuffer, nSize),
-	}
+	p := &Image{}
+	p.SetHandle(xc.XImage_LoadMemory(pBuffer, nSize))
 	return p
 }
 
@@ -205,9 +195,8 @@ func NewImage_LoadMemory(pBuffer int, nSize int) *Image {
 //
 // cy: 高度.
 func NewImage_LoadMemoryRect(pBuffer int, nSize int, x int, y int, cx int, cy int) *Image {
-	p := &Image{
-		Handle: xc.XImage_LoadMemoryRect(pBuffer, nSize, x, y, cx, cy),
-	}
+	p := &Image{}
+	p.SetHandle(xc.XImage_LoadMemoryRect(pBuffer, nSize, x, y, cx, cy))
 	return p
 }
 
@@ -225,9 +214,8 @@ func NewImage_LoadMemoryRect(pBuffer int, nSize int, x int, y int, cx int, cy in
 //
 // bottomSize: 坐标.
 func NewImage_LoadMemoryAdaptive(pBuffer int, nSize int, leftSize int, topSize int, rightSize int, bottomSize int) *Image {
-	p := &Image{
-		Handle: xc.XImage_LoadMemoryAdaptive(pBuffer, nSize, leftSize, topSize, rightSize, bottomSize),
-	}
+	p := &Image{}
+	p.SetHandle(xc.XImage_LoadMemoryAdaptive(pBuffer, nSize, leftSize, topSize, rightSize, bottomSize))
 	return p
 }
 
@@ -235,9 +223,8 @@ func NewImage_LoadMemoryAdaptive(pBuffer int, nSize int, leftSize int, topSize i
 //
 // pImage: GDI图片对象指针Image*.
 func NewImage_LoadFromImage(pImage int) *Image {
-	p := &Image{
-		Handle: xc.XImage_LoadFromImage(pImage),
-	}
+	p := &Image{}
+	p.SetHandle(xc.XImage_LoadFromImage(pImage))
 	return p
 }
 
@@ -245,9 +232,8 @@ func NewImage_LoadFromImage(pImage int) *Image {
 //
 // pFileName: 文件名.
 func NewImage_LoadFromExtractIcon(pFileName string) *Image {
-	p := &Image{
-		Handle: xc.XImage_LoadFromExtractIcon(pFileName),
-	}
+	p := &Image{}
+	p.SetHandle(xc.XImage_LoadFromExtractIcon(pFileName))
 	return p
 }
 
@@ -255,9 +241,8 @@ func NewImage_LoadFromExtractIcon(pFileName string) *Image {
 //
 // hIcon: 图标句柄.
 func NewImage_LoadFromHICON(hIcon int) *Image {
-	p := &Image{
-		Handle: xc.XImage_LoadFromHICON(hIcon),
-	}
+	p := &Image{}
+	p.SetHandle(xc.XImage_LoadFromHICON(hIcon))
 	return p
 }
 
@@ -265,9 +250,8 @@ func NewImage_LoadFromHICON(hIcon int) *Image {
 //
 // hBitmap: 位图句柄.
 func NewImage_LoadFromHBITMAP(hBitmap int) *Image {
-	p := &Image{
-		Handle: xc.XImage_LoadFromHBITMAP(hBitmap),
-	}
+	p := &Image{}
+	p.SetHandle(xc.XImage_LoadFromHBITMAP(hBitmap))
 	return p
 }
 
@@ -298,11 +282,6 @@ func NewImageByNameEx(fileName, name string) *Image {
 		return p
 	}
 	return nil
-}
-
-// 给本类的Handle赋值.
-func (i *Image) SetHandle(hImage int) {
-	i.Handle = hImage
 }
 
 // 图片_判断缩放, 是否为拉伸图片句柄.

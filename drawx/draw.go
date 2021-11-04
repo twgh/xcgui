@@ -1,20 +1,22 @@
 // 图形绘制.
 package drawx
 
-import "github.com/twgh/xcgui/xc"
+import (
+	"github.com/twgh/xcgui/objectbase"
+	"github.com/twgh/xcgui/xc"
+)
 
 // 图形绘制.
 type Draw struct {
-	Handle int // HDRAW.
+	objectbase.ObjectBase
 }
 
 // 绘制_创建, 创建图形绘制模块实例, 返回句柄.
 //
 // hWindow: 窗口句柄.
 func NewDraw(hWindow int) *Draw {
-	p := &Draw{
-		Handle: xc.XDraw_Create(hWindow),
-	}
+	p := &Draw{}
+	p.SetHandle(xc.XDraw_Create(hWindow))
 	return p
 }
 
@@ -24,9 +26,8 @@ func NewDraw(hWindow int) *Draw {
 //
 // hdc: hdc句柄.
 func NewDrawGDI(hWindow, hdc int) *Draw {
-	p := &Draw{
-		Handle: xc.XDraw_CreateGDI(hWindow, hdc),
-	}
+	p := &Draw{}
+	p.SetHandle(xc.XDraw_CreateGDI(hWindow, hdc))
 	return p
 }
 
@@ -35,11 +36,6 @@ func NewDrawByHandle(handle int) *Draw {
 	p := &Draw{}
 	p.SetHandle(handle)
 	return p
-}
-
-// 给本类的Handle赋值.
-func (a *Draw) SetHandle(hDraw int) {
-	a.Handle = hDraw
 }
 
 // 绘制_销毁, 销毁图形绘制模块实例句柄.

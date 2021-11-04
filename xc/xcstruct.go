@@ -141,13 +141,14 @@ type LOGFONTW struct {
 
 // Editor 颜色信息
 type Editor_Color_ struct {
-	ClrMargin1         int32 // 背景色1
-	ClrMargin2         int32 // 背景色2
-	ClrMarginText      int32 // 文本色
-	ClrBreakpoint      int32 // 断点色
-	ClrBreakpointArrow int32 // 断点箭头色
-	ClrRun             int32 // 当前执行位置指示色
-	ClrMatch           int32 // 设置匹配文本背景色
+	ClrMargin1         int32 // 背景色1, ABGR颜色
+	ClrMargin2         int32 // 背景色2, ABGR颜色
+	ClrMarginText      int32 // 文本色, ABGR颜色
+	ClrBreakpoint      int32 // 断点色, ABGR颜色
+	ClrBreakpointArrow int32 // 断点箭头色, ABGR颜色
+	ClrRun             int32 // 当前执行位置指示色, ABGR颜色
+	ClrCurRow          int32 // 突出显示当前行颜色, ABGR颜色
+	ClrMatch           int32 // 设置匹配文本背景色, ABGR颜色
 }
 
 // Edit 数据复制

@@ -7,7 +7,7 @@ import (
 
 // 编辑框(常规, 富文本, 聊天气泡).
 type Edit struct {
-	Element
+	ScrollView
 }
 
 // 编辑框_创建.

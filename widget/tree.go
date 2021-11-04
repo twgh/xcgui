@@ -7,7 +7,7 @@ import (
 
 // 列表树元素.
 type Tree struct {
-	Element
+	ScrollView
 }
 
 // 列表树_创建, 创建树元素.

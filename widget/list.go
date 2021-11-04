@@ -7,7 +7,7 @@ import (
 
 // 列表.
 type List struct {
-	Element
+	ScrollView
 }
 
 // 列表_创建, 创建列表元素.

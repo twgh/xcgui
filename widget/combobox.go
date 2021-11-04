@@ -7,7 +7,7 @@ import (
 
 // 下拉组合框.
 type ComboBox struct {
-	Element
+	Edit
 }
 
 // 组合框_创建.

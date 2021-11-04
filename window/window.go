@@ -57,7 +57,7 @@ func NewWindowEx(dwExStyle int, lpClassName string, lpWindowName string, dwStyle
 	return p
 }
 
-// 窗口_附加窗口, 返回窗口资源句柄.
+// 窗口_附加窗口, 返回窗口对象.
 //
 // hWnd: 要附加的外部窗口句柄.
 //

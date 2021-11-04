@@ -2,22 +2,22 @@
 package font
 
 import (
+	"github.com/twgh/xcgui/objectbase"
 	"github.com/twgh/xcgui/res"
 	"github.com/twgh/xcgui/xc"
 )
 
 // 字体.
 type Font struct {
-	Handle int // HFONTX.
+	objectbase.ObjectBase
 }
 
 // 字体_创建, 创建炫彩字体, 当字体句柄与元素关联后, 会自动释放.
 //
 // size: 字体大小.
 func NewFont(size int) *Font {
-	p := &Font{
-		Handle: xc.XFont_Create(size),
-	}
+	p := &Font{}
+	p.SetHandle(xc.XFont_Create(size))
 	return p
 }
 
@@ -29,9 +29,8 @@ func NewFont(size int) *Font {
 //
 // style: 字体样式, FontStyle_.
 func NewFontEX(pName string, size int, style int) *Font {
-	p := &Font{
-		Handle: xc.XFont_CreateEx(pName, size, style),
-	}
+	p := &Font{}
+	p.SetHandle(xc.XFont_CreateEx(pName, size, style))
 	return p
 }
 
@@ -39,9 +38,8 @@ func NewFontEX(pName string, size int, style int) *Font {
 //
 // pFontInfo: 字体信息.
 func NewFontLOGFONTW(pFontInfo *xc.LOGFONTW) *Font {
-	p := &Font{
-		Handle: xc.XFont_CreateLOGFONTW(pFontInfo),
-	}
+	p := &Font{}
+	p.SetHandle(xc.XFont_CreateLOGFONTW(pFontInfo))
 	return p
 }
 
@@ -49,9 +47,8 @@ func NewFontLOGFONTW(pFontInfo *xc.LOGFONTW) *Font {
 //
 // hFont: 字体句柄.
 func NewFontFromHFONT(hFont int) *Font {
-	p := &Font{
-		Handle: xc.XFont_CreateFromHFONT(hFont),
-	}
+	p := &Font{}
+	p.SetHandle(xc.XFont_CreateFromHFONT(hFont))
 	return p
 }
 
@@ -59,9 +56,8 @@ func NewFontFromHFONT(hFont int) *Font {
 //
 // pFont: GDI+字体指针(Font*).
 func NewFontFromFont(pFont int) *Font {
-	p := &Font{
-		Handle: xc.XFont_CreateFromFont(pFont),
-	}
+	p := &Font{}
+	p.SetHandle(xc.XFont_CreateFromFont(pFont))
 	return p
 }
 
@@ -73,9 +69,8 @@ func NewFontFromFont(pFont int) *Font {
 //
 // style: 字体样式, FontStyle_.
 func NewFontFromFile(pFontFile string, size int, style int) *Font {
-	p := &Font{
-		Handle: xc.XFont_CreateFromFile(pFontFile, size, style),
-	}
+	p := &Font{}
+	p.SetHandle(xc.XFont_CreateFromFile(pFontFile, size, style))
 	return p
 }
 
@@ -89,9 +84,8 @@ func NewFontFromFile(pFontFile string, size int, style int) *Font {
 //
 // style: 字体样式, FontStyle_.
 func NewFontFromMem(data, length, fontSize, style int) *Font {
-	p := &Font{
-		Handle: xc.XFont_CreateFromMem(data, length, fontSize, style),
-	}
+	p := &Font{}
+	p.SetHandle(xc.XFont_CreateFromMem(data, length, fontSize, style))
 	return p
 }
 
@@ -107,9 +101,8 @@ func NewFontFromMem(data, length, fontSize, style int) *Font {
 //
 // hModule: xx.
 func NewFontFromRes(id int, pType string, fontSize int, style int, hModule int) *Font {
-	p := &Font{
-		Handle: xc.XFont_CreateFromRes(id, pType, fontSize, style, hModule),
-	}
+	p := &Font{}
+	p.SetHandle(xc.XFont_CreateFromRes(id, pType, fontSize, style, hModule))
 	return p
 }
 
@@ -129,11 +122,6 @@ func NewFontByName(name string) *Font {
 		return p
 	}
 	return nil
-}
-
-// 给本类的Handle赋值.
-func (f *Font) SetHandle(hFontX int) {
-	f.Handle = hFontX
 }
 
 // 字体_启用自动销毁, 是否自动销毁.

@@ -7,7 +7,7 @@ import (
 
 // 列表框.
 type ListBox struct {
-	Element
+	ScrollView
 }
 
 // 列表框_创建, 创建列表框元素.

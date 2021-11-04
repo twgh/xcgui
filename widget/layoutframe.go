@@ -4,7 +4,7 @@ import "github.com/twgh/xcgui/xc"
 
 // 布局框架.
 type LayoutFrame struct {
-	Element
+	ScrollView
 }
 
 // 布局框架_创建.

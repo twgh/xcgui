@@ -2,17 +2,13 @@
 package adapter
 
 import (
+	"github.com/twgh/xcgui/objectbase"
 	"github.com/twgh/xcgui/xc"
 )
 
 // 数据适配器.
 type adapter struct {
-	Handle int // hAdapter.
-}
-
-// 给本类的Handle赋值.
-func (a *adapter) SetHandle(hAdapter int) {
-	a.Handle = hAdapter
+	objectbase.ObjectBase
 }
 
 // 数据适配器_增加引用计数.

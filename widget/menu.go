@@ -7,7 +7,7 @@ import (
 
 // 弹出菜单.
 type Menu struct {
-	objectbase.UI
+	objectbase.ObjectBase
 }
 
 // 菜单_创建, 创建菜单, 默认弹出菜单窗口关闭后自动销毁.
