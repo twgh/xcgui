@@ -74,7 +74,7 @@ func main() {
 ## 获取
 
 ```go
-go get github.com/twgh/xcgui
+go get github.com/twgh/xcgui@v1.3.12-1
 ```
 
 ## 动态链接库下载

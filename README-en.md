@@ -75,7 +75,7 @@ func main() {
 # Get
 
 ```go
-go get github.com/twgh/xcgui
+go get github.com/twgh/xcgui@v1.3.12-1
 ```
 
 # Dynamic link library download
