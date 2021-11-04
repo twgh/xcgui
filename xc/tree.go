@@ -344,7 +344,7 @@ func XTree_BindAdapter(hEle int, hAdapter int) int {
 	return int(r)
 }
 
-// 列表树_取数据视频器, 返回数据适配器句柄.
+// 列表树_取数据适配器, 返回数据适配器句柄.
 //
 // hEle: 元素句柄.
 func XTree_GetAdapter(hEle int) int {

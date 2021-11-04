@@ -297,7 +297,7 @@ func (t *Tree) BindAdapter(hAdapter int) int {
 	return xc.XTree_BindAdapter(t.Handle, hAdapter)
 }
 
-// 列表树_取数据视频器, 返回数据适配器句柄.
+// 列表树_取数据适配器, 返回数据适配器句柄.
 func (t *Tree) GetAdapter() int {
 	return xc.XTree_GetAdapter(t.Handle)
 }
