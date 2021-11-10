@@ -48,7 +48,7 @@ func NewListItemTemplate_LoadZip(nType int, pZipFile string, pFileName string, p
 // pFileName: 文件名.
 //
 // pPassword: zip密码.
-func NewListItemTemplate_LoadZipMem(nType int, data int, length int, pFileName string, pPassword string) *ListItemTemplate {
+func NewListItemTemplate_LoadZipMem(nType int, data *[]byte, length int, pFileName string, pPassword string) *ListItemTemplate {
 	p := &ListItemTemplate{}
 	p.SetHandle(xc.XTemp_LoadZipMem(nType, data, length, pFileName, pPassword))
 	return p
@@ -150,7 +150,7 @@ func LoadZipEx(nType int, pZipFile string, pFileName string, pPassword string, p
 // pOutTemp1: 返回模板句柄1, 项模板.
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
-func LoadZipMemEx(nType int, data int, length int, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int) bool {
+func LoadZipMemEx(nType int, data *[]byte, length int, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int) bool {
 	return xc.XTemp_LoadZipMemEx(nType, data, length, pFileName, pPassword, pOutTemp1, pOutTemp2)
 }
 

@@ -509,7 +509,7 @@ func (a *App) LoadLayoutZip(pZipFileName string, pFileName string, pPassword str
 // pPassword: zip密码.
 //
 // hParent: 父对象句柄.
-func (a *App) LoadLayoutZipMem(data int, length int, pFileName string, pPassword string, hParent int) int {
+func (a *App) LoadLayoutZipMem(data *[]byte, length int, pFileName string, pPassword string, hParent int) int {
 	return xc.XC_LoadLayoutZipMem(data, length, pFileName, pPassword, hParent)
 }
 
@@ -558,7 +558,7 @@ func (a *App) LoadStyleZip(pZipFile string, pFileName string, pPassword string) 
 // pFileName: 文件名.
 //
 // pPassword: 密码.
-func (a *App) LoadStyleZipMem(data int, length int, pFileName string, pPassword string) bool {
+func (a *App) LoadStyleZipMem(data *[]byte, length int, pFileName string, pPassword string) bool {
 	return xc.XC_LoadStyleZipMem(data, length, pFileName, pPassword)
 }
 
@@ -589,7 +589,7 @@ func (a *App) LoadResourceZip(pZipFileName string, pFileName string, pPassword s
 // pFileName: 资源文件名.
 //
 // pPassword: zip压缩包密码.
-func (a *App) LoadResourceZipMem(data int, length int, pFileName string, pPassword string) bool {
+func (a *App) LoadResourceZipMem(data *[]byte, length int, pFileName string, pPassword string) bool {
 	return xc.XC_LoadResourceZipMem(data, length, pFileName, pPassword)
 }
 

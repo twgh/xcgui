@@ -67,8 +67,8 @@ func XFont_CreateFromFile(pFontFile string, size int, style int) int {
 // fontSize: 字体大小, 单位(pt,磅).
 //
 // style: 字体样式, FontStyle_.
-func XFont_CreateFromMem(data, length, fontSize, style int) int {
-	r, _, _ := xFont_CreateFromMem.Call(uintptr(data), uintptr(length), uintptr(fontSize), uintptr(style))
+func XFont_CreateFromMem(data *[]byte, length, fontSize, style int) int {
+	r, _, _ := xFont_CreateFromMem.Call(bytePtr2(data), uintptr(length), uintptr(fontSize), uintptr(style))
 	return int(r)
 }
 

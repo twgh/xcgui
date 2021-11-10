@@ -164,18 +164,18 @@ func NewImage_LoadZipRect(pZipFileName string, pFileName string, pPassword strin
 // pFileName: 图片名称.
 //
 // pPassword: zip压缩包密码.
-func NewImage_LoadZipMem(data int, length int, pFileName string, pPassword string) *Image {
+func NewImage_LoadZipMem(data *[]byte, length int, pFileName string, pPassword string) *Image {
 	p := &Image{}
 	p.SetHandle(xc.XImage_LoadZipMem(data, length, pFileName, pPassword))
 	return p
 }
 
-// 图片_加载从内存, 加载流图片, 指定区位置及大小.
+// 图片_加载从内存, 加载流图片.
 //
 // pBuffer: 图片缓冲区.
 //
 // nSize: 图片缓冲区大小.
-func NewImage_LoadMemory(pBuffer int, nSize int) *Image {
+func NewImage_LoadMemory(pBuffer *[]byte, nSize int) *Image {
 	p := &Image{}
 	p.SetHandle(xc.XImage_LoadMemory(pBuffer, nSize))
 	return p
@@ -194,7 +194,7 @@ func NewImage_LoadMemory(pBuffer int, nSize int) *Image {
 // cx: 宽度.
 //
 // cy: 高度.
-func NewImage_LoadMemoryRect(pBuffer int, nSize int, x int, y int, cx int, cy int) *Image {
+func NewImage_LoadMemoryRect(pBuffer *[]byte, nSize int, x int, y int, cx int, cy int) *Image {
 	p := &Image{}
 	p.SetHandle(xc.XImage_LoadMemoryRect(pBuffer, nSize, x, y, cx, cy))
 	return p
@@ -213,7 +213,7 @@ func NewImage_LoadMemoryRect(pBuffer int, nSize int, x int, y int, cx int, cy in
 // rightSize: 坐标.
 //
 // bottomSize: 坐标.
-func NewImage_LoadMemoryAdaptive(pBuffer int, nSize int, leftSize int, topSize int, rightSize int, bottomSize int) *Image {
+func NewImage_LoadMemoryAdaptive(pBuffer *[]byte, nSize int, leftSize int, topSize int, rightSize int, bottomSize int) *Image {
 	p := &Image{}
 	p.SetHandle(xc.XImage_LoadMemoryAdaptive(pBuffer, nSize, leftSize, topSize, rightSize, bottomSize))
 	return p

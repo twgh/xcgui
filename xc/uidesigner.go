@@ -35,8 +35,8 @@ func XC_LoadLayoutZip(pZipFileName string, pFileName string, pPassword string, h
 // pPassword: zip密码.
 //
 // hParent: 父对象句柄.
-func XC_LoadLayoutZipMem(data int, length int, pFileName string, pPassword string, hParent int) int {
-	r, _, _ := xC_LoadLayoutZipMem.Call(uintptr(data), uintptr(length), strPtr(pFileName), strPtr(pPassword), uintptr(hParent))
+func XC_LoadLayoutZipMem(data *[]byte, length int, pFileName string, pPassword string, hParent int) int {
+	r, _, _ := xC_LoadLayoutZipMem.Call(bytePtr2(data), uintptr(length), strPtr(pFileName), strPtr(pPassword), uintptr(hParent))
 	return int(r)
 }
 
@@ -89,8 +89,8 @@ func XC_LoadStyleZip(pZipFile string, pFileName string, pPassword string) bool {
 // pFileName: 文件名.
 //
 // pPassword: 密码.
-func XC_LoadStyleZipMem(data int, length int, pFileName string, pPassword string) bool {
-	r, _, _ := xC_LoadStyleZipMem.Call(uintptr(data), uintptr(length), strPtr(pFileName), strPtr(pPassword))
+func XC_LoadStyleZipMem(data *[]byte, length int, pFileName string, pPassword string) bool {
+	r, _, _ := xC_LoadStyleZipMem.Call(bytePtr2(data), uintptr(length), strPtr(pFileName), strPtr(pPassword))
 	return int(r) != 0
 }
 
@@ -123,8 +123,8 @@ func XC_LoadResourceZip(pZipFileName string, pFileName string, pPassword string)
 // pFileName: 资源文件名.
 //
 // pPassword: zip压缩包密码.
-func XC_LoadResourceZipMem(data int, length int, pFileName string, pPassword string) bool {
-	r, _, _ := xC_LoadResourceZipMem.Call(uintptr(data), uintptr(length), strPtr(pFileName), strPtr(pPassword))
+func XC_LoadResourceZipMem(data *[]byte, length int, pFileName string, pPassword string) bool {
+	r, _, _ := xC_LoadResourceZipMem.Call(bytePtr2(data), uintptr(length), strPtr(pFileName), strPtr(pPassword))
 	return int(r) != 0
 }
 

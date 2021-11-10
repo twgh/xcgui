@@ -2945,13 +2945,19 @@ func float32Ptr(f float32) uintptr {
 	return uintptr(*(*uint)(unsafe.Pointer(&f)))
 }
 
+// byte指针到uintptr.
+// func bytePtr(p *byte) uintptr {
+// 	return uintptr(unsafe.Pointer(p))
+// }
+
+// byte[0]指针到uintptr.
+func bytePtr2(p *[]byte) uintptr {
+	return uintptr(unsafe.Pointer(&(*p)[0]))
+}
+
 // uintptr到float32.
 // func uintptrToFloat32(ptr uintptr) float32 {
 // 	return *((*float32)(unsafe.Pointer(&ptr)))
-// }
-
-// func bytePtr(s []byte) uintptr {
-// 	return uintptr(unsafe.Pointer(&s[0]))
 // }
 
 // 根据r, g, b, a组合成十进制ABGR颜色.

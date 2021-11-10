@@ -13,6 +13,17 @@ const (
 	SW_SHOWNA         = 8 // 原来的状态显示
 )
 
+// XC_NAME
+
+const (
+	XC_NAME1 = "name1"
+	XC_NAME2 = "name2"
+	XC_NAME3 = "name3"
+	XC_NAME4 = "name4"
+	XC_NAME5 = "name5"
+	XC_NAME6 = "name6"
+)
+
 // 特殊ID
 
 const (

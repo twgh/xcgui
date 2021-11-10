@@ -143,18 +143,18 @@ func XImage_LoadZipRect(pZipFileName string, pFileName string, pPassword string,
 // pFileName: 图片名称.
 //
 // pPassword: zip压缩包密码.
-func XImage_LoadZipMem(data int, length int, pFileName string, pPassword string) int {
-	r, _, _ := xImage_LoadZipMem.Call(uintptr(data), uintptr(length), strPtr(pFileName), strPtr(pPassword))
+func XImage_LoadZipMem(data *[]byte, length int, pFileName string, pPassword string) int {
+	r, _, _ := xImage_LoadZipMem.Call(bytePtr2(data), uintptr(length), strPtr(pFileName), strPtr(pPassword))
 	return int(r)
 }
 
-// 图片_加载从内存, 加载流图片, 指定区位置及大小.
+// 图片_加载从内存, 加载流图片.
 //
 // pBuffer: 图片缓冲区.
 //
 // nSize: 图片缓冲区大小.
-func XImage_LoadMemory(pBuffer int, nSize int) int {
-	r, _, _ := xImage_LoadMemory.Call(uintptr(pBuffer), uintptr(nSize))
+func XImage_LoadMemory(pBuffer *[]byte, nSize int) int {
+	r, _, _ := xImage_LoadMemory.Call(bytePtr2(pBuffer), uintptr(nSize))
 	return int(r)
 }
 
@@ -171,8 +171,8 @@ func XImage_LoadMemory(pBuffer int, nSize int) int {
 // cx: 宽度.
 //
 // cy: 高度.
-func XImage_LoadMemoryRect(pBuffer int, nSize int, x int, y int, cx int, cy int) int {
-	r, _, _ := xImage_LoadMemoryRect.Call(uintptr(pBuffer), uintptr(nSize), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy))
+func XImage_LoadMemoryRect(pBuffer *[]byte, nSize int, x int, y int, cx int, cy int) int {
+	r, _, _ := xImage_LoadMemoryRect.Call(bytePtr2(pBuffer), uintptr(nSize), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy))
 	return int(r)
 }
 
@@ -189,8 +189,8 @@ func XImage_LoadMemoryRect(pBuffer int, nSize int, x int, y int, cx int, cy int)
 // rightSize: 坐标.
 //
 // bottomSize: 坐标.
-func XImage_LoadMemoryAdaptive(pBuffer int, nSize int, leftSize int, topSize int, rightSize int, bottomSize int) int {
-	r, _, _ := xImage_LoadMemoryAdaptive.Call(uintptr(pBuffer), uintptr(nSize), uintptr(leftSize), uintptr(topSize), uintptr(rightSize), uintptr(bottomSize))
+func XImage_LoadMemoryAdaptive(pBuffer *[]byte, nSize int, leftSize int, topSize int, rightSize int, bottomSize int) int {
+	r, _, _ := xImage_LoadMemoryAdaptive.Call(bytePtr2(pBuffer), uintptr(nSize), uintptr(leftSize), uintptr(topSize), uintptr(rightSize), uintptr(bottomSize))
 	return int(r)
 }
 
