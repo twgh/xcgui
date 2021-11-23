@@ -147,7 +147,7 @@ Multiple processing functions can be registered for an event. The execution orde
 
 ## Module relationship
 
-[![xcgui模块关系图.png](https://z3.ax1x.com/2021/11/18/ITAXJf.png)](
+[![xcgui模块关系图.png](https://z3.ax1x.com/2021/11/18/ITAXJf.png)](https://z3.ax1x.com/2021/11/18/ITAXJf.png)
 
 ## Schedule
 
