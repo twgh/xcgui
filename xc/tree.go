@@ -147,8 +147,8 @@ func XTree_SetItemTemplateSel(hEle int, hTemp int) bool {
 // hEle: 元素句柄.
 //
 // pStringXML: 字符串指针.
-func XTree_SetItemTemplateXMLFromString(hEle int, pStringXML int) bool {
-	r, _, _ := xTree_SetItemTemplateXMLFromString.Call(uintptr(hEle), uintptr(pStringXML))
+func XTree_SetItemTemplateXMLFromString(hEle int, pStringXML string) bool {
+	r, _, _ := xTree_SetItemTemplateXMLFromString.Call(uintptr(hEle), XC_wtoa(pStringXML))
 	return int(r) != 0
 }
 
@@ -157,8 +157,8 @@ func XTree_SetItemTemplateXMLFromString(hEle int, pStringXML int) bool {
 // hEle: 元素句柄.
 //
 // pStringXML: 字符串指针.
-func XTree_SetItemTemplateXMLSelFromString(hEle int, pStringXML int) bool {
-	r, _, _ := xTree_SetItemTemplateXMLSelFromString.Call(uintptr(hEle), uintptr(pStringXML))
+func XTree_SetItemTemplateXMLSelFromString(hEle int, pStringXML string) bool {
+	r, _, _ := xTree_SetItemTemplateXMLSelFromString.Call(uintptr(hEle), XC_wtoa(pStringXML))
 	return int(r) != 0
 }
 
@@ -635,7 +635,7 @@ func XTree_SetItemImageEx(hEle int, nID int, pName string, hImage int) bool {
 // iColumn:.
 func XTree_GetItemText(hEle int, nID int, iColumn int) string {
 	r, _, _ := xTree_GetItemText.Call(uintptr(hEle), uintptr(nID), uintptr(iColumn))
-	return uintPtrToString(r)
+	return UintPtrToString(r)
 }
 
 // 列表树_取项文本扩展.
@@ -647,7 +647,7 @@ func XTree_GetItemText(hEle int, nID int, iColumn int) string {
 // pName:.
 func XTree_GetItemTextEx(hEle int, nID int, pName string) string {
 	r, _, _ := xTree_GetItemTextEx.Call(uintptr(hEle), uintptr(nID), strPtr(pName))
-	return uintPtrToString(r)
+	return UintPtrToString(r)
 }
 
 // 列表树_取项图片.

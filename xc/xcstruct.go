@@ -15,13 +15,13 @@ type Menu_DrawBackground_ struct {
 
 // 菜单项自绘结构
 type Menu_DrawItem_ struct {
-	HMenu   int  // 菜单句柄
-	HWindow int  // 当前弹出菜单项的窗口句柄
-	NID     int  // ID
-	NState  int  // 状态: Menu_Item_Flag_
-	RcItem  RECT // 坐标
-	HIcon   int  // 菜单项图标句柄
-	PText   int  // 文本
+	HMenu   int     // 菜单句柄
+	HWindow int     // 当前弹出菜单项的窗口句柄
+	NID     int     // ID
+	NState  int     // 状态: Menu_Item_Flag_
+	RcItem  RECT    // 坐标
+	HIcon   int     // 菜单项图标句柄
+	PText   uintptr // 文本, 使用xc.UintPtrToString()函数转换到string
 }
 
 // 列表框项信息
@@ -185,7 +185,7 @@ type Position_ struct {
 type Font_Info_ struct {
 	NSize  int32      // 字体大小, 单位(pt,磅).
 	NStyle int32      // 字体样式: FontStyle_
-	Name   [32]uint16 // 字体名称
+	Name   [32]uint16 // 字体名称, 使用xc.Font_Info_Name()函数转换为string.
 }
 
 // ListBox 列表框项信息2

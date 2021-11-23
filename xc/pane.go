@@ -41,7 +41,7 @@ func XPane_SetTitle(hEle int, pTitle string) int {
 // hEle: 元素句柄.
 func XPane_GetTitle(hEle int) string {
 	r, _, _ := xPane_GetTitle.Call(uintptr(hEle))
-	return uintPtrToString(r)
+	return UintPtrToString(r)
 }
 
 // 窗格_置标题栏高度, 设置标题栏高度.

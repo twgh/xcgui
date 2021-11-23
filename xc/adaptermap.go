@@ -55,7 +55,7 @@ func XAdMap_GetCount(hAdapter int) int {
 // pName: 字段称.
 func XAdMap_GetItemText(hAdapter int, pName string) string {
 	r, _, _ := xAdMap_GetItemText.Call(uintptr(hAdapter), strPtr(pName))
-	return uintPtrToString(r)
+	return UintPtrToString(r)
 }
 
 // 数据适配器MAP_取项图片, 获取项内容, 如果内容为图片句柄, 返回图片句柄.

@@ -217,7 +217,7 @@ func XMenu_SetItemText(hMenu int, nID int, pText string) bool {
 // nID: 项ID.
 func XMenu_GetItemText(hMenu int, nID int) string {
 	r, _, _ := xMenu_GetItemText.Call(uintptr(hMenu), uintptr(nID))
-	return uintPtrToString(r)
+	return UintPtrToString(r)
 }
 
 // 菜单_取项文本长度, 获取项文本长度, 不包含字符串空终止符.

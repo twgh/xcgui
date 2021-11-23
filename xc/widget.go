@@ -255,5 +255,5 @@ func XWidget_GetUID(hXCGUI int) int {
 // hXCGUI: UI对象句柄.
 func XWidget_GetName(hXCGUI int) string {
 	r, _, _ := xWidget_GetName.Call(uintptr(hXCGUI))
-	return uintPtrToString(r)
+	return UintPtrToString(r)
 }

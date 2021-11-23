@@ -118,7 +118,7 @@ func XComboBox_SetItemTemplateXML(hEle int, pXmlFile string) int {
 //
 // pStringXML: 字符串指针.
 func XComboBox_SetItemTemplateXMLFromString(hEle int, pStringXML string) int {
-	r, _, _ := xComboBox_SetItemTemplateXMLFromString.Call(uintptr(hEle), strPtr(pStringXML))
+	r, _, _ := xComboBox_SetItemTemplateXMLFromString.Call(uintptr(hEle), XC_wtoa(pStringXML))
 	return int(r)
 }
 
@@ -385,7 +385,7 @@ func XComboBox_SetItemFloatEx(hEle int, iItem int, pName string, fFloat float32)
 // iColumn: 列索引.
 func XComboBox_GetItemText(hEle int, iItem int, iColumn int) string {
 	r, _, _ := xComboBox_GetItemText.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn))
-	return uintPtrToString(r)
+	return UintPtrToString(r)
 }
 
 // 组合框_取项文本扩展.
@@ -397,7 +397,7 @@ func XComboBox_GetItemText(hEle int, iItem int, iColumn int) string {
 // pName: 字段名.
 func XComboBox_GetItemTextEx(hEle int, iItem int, pName string) string {
 	r, _, _ := xComboBox_GetItemTextEx.Call(uintptr(hEle), uintptr(iItem), strPtr(pName))
-	return uintPtrToString(r)
+	return UintPtrToString(r)
 }
 
 // 组合框_取项图片.

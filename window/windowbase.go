@@ -181,7 +181,7 @@ func (w *windowBase) GetStayEle() int {
 	return xc.XWnd_GetStayEle(w.Handle)
 }
 
-// 窗口_绘制.
+// 窗口_绘制, 在自绘事件函数中,用户手动调用绘制窗口, 以便控制绘制顺序.
 //
 // hDraw: 图形绘制句柄.
 func (w *windowBase) DrawWindow(hDraw int) int {
@@ -751,6 +751,45 @@ func (w *windowBase) GetTitle() string {
 // 窗口_取标题颜色, 返回ABGR颜色.
 func (w *windowBase) GetTitleColor() int {
 	return xc.XWnd_GetTitleColor(w.Handle)
+}
+
+// 窗口_添加背景边框.
+//
+// nState: 组合状态.
+//
+// color: ABGR颜色.
+//
+// width: 线宽.
+func (w *windowBase) AddBkBorder(nState int, color int, width int) int {
+	return xc.XWnd_AddBkBorder(w.Handle, nState, color, width)
+}
+
+// 窗口_添加背景填充.
+//
+// nState: 组合状态.
+//
+// color: ABGR颜色.
+func (w *windowBase) AddBkFill(nState int, color int) int {
+	return xc.XWnd_AddBkFill(w.Handle, nState, color)
+}
+
+// 窗口_添加背景图片.
+//
+// nState: 组合状态.
+//
+// hImage: 图片句柄.
+func (w *windowBase) AddBkImage(nState int, hImage int) int {
+	return xc.XWnd_AddBkImage(w.Handle, nState, hImage)
+}
+
+// 窗口_取背景对象数量.
+func (w *windowBase) GetBkInfoCount() int {
+	return xc.XWnd_GetBkInfoCount(w.Handle)
+}
+
+// 窗口_清空背景对象.
+func (w *windowBase) ClearBkInfo() int {
+	return xc.XWnd_ClearBkInfo(w.Handle)
 }
 
 /*

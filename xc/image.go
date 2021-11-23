@@ -421,3 +421,37 @@ func XImage_Destroy(hImage int) int {
 	r, _, _ := xImage_Destroy.Call(uintptr(hImage))
 	return int(r)
 }
+
+// 图片_加载从SVG.
+//
+// hSvg: SVG句柄.
+func XImage_LoadSvg(hSvg int) int {
+	r, _, _ := xImage_LoadSvg.Call(uintptr(hSvg))
+	return int(r)
+}
+
+// 图片_加载从SVG文件.
+//
+// pFileName: 文件名.
+func XImage_LoadSvgFile(pFileName string) int {
+	r, _, _ := xImage_LoadSvgFile.Call(strPtr(pFileName))
+	return int(r)
+}
+
+// 图片_加载从SVG字符串.
+//
+// pString: 字符串指针.
+//
+// nLength: 字符串长度, 可填-1.
+func XImage_LoadSvgString(pString string, nLength int) int {
+	r, _, _ := xImage_LoadSvgString.Call(XC_wtoa(pString), uintptr(nLength))
+	return int(r)
+}
+
+// 图片_取SVG, 返回SVG句柄.
+//
+// hImage: 图片句柄.
+func XImage_GetSvg(hImage int) int {
+	r, _, _ := xImage_GetSvg.Call(uintptr(hImage))
+	return int(r)
+}

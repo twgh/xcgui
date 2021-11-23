@@ -59,8 +59,8 @@ func XListView_SetItemTemplateXML(hEle int, pXmlFile string) bool {
 // hEle: 元素句柄.
 //
 // pStringXML: 字符串指针.
-func XListView_SetItemTemplateXMLFromString(hEle int, pStringXML int) bool {
-	r, _, _ := xListView_SetItemTemplateXMLFromString.Call(uintptr(hEle), uintptr(pStringXML))
+func XListView_SetItemTemplateXMLFromString(hEle int, pStringXML string) bool {
+	r, _, _ := xListView_SetItemTemplateXMLFromString.Call(uintptr(hEle), XC_wtoa(pStringXML))
 	return int(r) != 0
 }
 
@@ -795,7 +795,7 @@ func XListView_DeleteColumnItem(hEle int, iColumn int) int {
 // pName: 字段称.
 func XListView_Item_GetTextEx(hEle int, iGroup int, iItem int, pName string) string {
 	r, _, _ := xListView_Item_GetTextEx.Call(uintptr(hEle), uintptr(iGroup), uintptr(iItem), strPtr(pName))
-	return uintPtrToString(r)
+	return UintPtrToString(r)
 }
 
 // 列表视_项获取图片扩展, 返回图片句柄.

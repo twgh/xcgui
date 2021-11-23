@@ -315,8 +315,8 @@ func XListBox_SetItemTemplate(hEle int, hTemp int) bool {
 // hEle: 元素句柄.
 //
 // pStringXML: 字符串指针.
-func XListBox_SetItemTemplateXMLFromString(hEle int, pStringXML int) bool {
-	r, _, _ := xListBox_SetItemTemplateXMLFromString.Call(uintptr(hEle), uintptr(pStringXML))
+func XListBox_SetItemTemplateXMLFromString(hEle int, pStringXML string) bool {
+	r, _, _ := xListBox_SetItemTemplateXMLFromString.Call(uintptr(hEle), XC_wtoa(pStringXML))
 	return int(r) != 0
 }
 
@@ -615,7 +615,7 @@ func XListBox_SetItemFloatEx(hEle int, iItem int, pName string, fFloat float32) 
 // iColumn:.
 func XListBox_GetItemText(hEle int, iItem int, iColumn int) string {
 	r, _, _ := xListBox_GetItemText.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn))
-	return uintPtrToString(r)
+	return UintPtrToString(r)
 }
 
 // 列表框_取项文本扩展.
@@ -627,7 +627,7 @@ func XListBox_GetItemText(hEle int, iItem int, iColumn int) string {
 // pName:.
 func XListBox_GetItemTextEx(hEle int, iItem int, pName string) string {
 	r, _, _ := xListBox_GetItemTextEx.Call(uintptr(hEle), uintptr(iItem), strPtr(pName))
-	return uintPtrToString(r)
+	return UintPtrToString(r)
 }
 
 // 列表框_取项图片.

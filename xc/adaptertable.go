@@ -335,7 +335,7 @@ func XAdTable_GetCountColumn(hAdapter int) int {
 // iColumn: 列索引.
 func XAdTable_GetItemText(hAdapter int, iItem int, iColumn int) string {
 	r, _, _ := xAdTable_GetItemText.Call(uintptr(hAdapter), uintptr(iItem), uintptr(iColumn))
-	return uintPtrToString(r)
+	return UintPtrToString(r)
 }
 
 // 数据适配器表_取项文本扩展, 获取项文本内容.
@@ -347,7 +347,7 @@ func XAdTable_GetItemText(hAdapter int, iItem int, iColumn int) string {
 // pName: 字段称.
 func XAdTable_GetItemTextEx(hAdapter int, iItem int, pName string) string {
 	r, _, _ := xAdTable_GetItemTextEx.Call(uintptr(hAdapter), uintptr(iItem), strPtr(pName))
-	return uintPtrToString(r)
+	return UintPtrToString(r)
 }
 
 // 数据适配器表_取项图片, 获取项图片句柄.

@@ -193,7 +193,7 @@ func XWnd_GetStayEle(hWindow int) int {
 	return int(r)
 }
 
-// 窗口_绘制.
+// 窗口_绘制, 在自绘事件函数中,用户手动调用绘制窗口, 以便控制绘制顺序.
 //
 // hWindow: 窗口资源句柄.
 //
@@ -464,7 +464,7 @@ func XWnd_SetName(hWindow int, pName string) int {
 // hWindow: 窗口句柄.
 func XWnd_GetName(hWindow int) string {
 	r, _, _ := xWnd_GetName.Call(uintptr(hWindow))
-	return uintPtrToString(r)
+	return UintPtrToString(r)
 }
 
 // 窗口_置边大小.
@@ -996,7 +996,7 @@ func XWnd_GetIcon(hWindow int) int {
 // hWindow: 窗口句柄.
 func XWnd_GetTitle(hWindow int) string {
 	r, _, _ := xWnd_GetTitle.Call(uintptr(hWindow))
-	return uintPtrToString(r)
+	return UintPtrToString(r)
 }
 
 // 窗口_取标题颜色, 返回ABGR颜色.
@@ -1004,5 +1004,59 @@ func XWnd_GetTitle(hWindow int) string {
 // hWindow: 窗口句柄.
 func XWnd_GetTitleColor(hWindow int) int {
 	r, _, _ := xWnd_GetTitleColor.Call(uintptr(hWindow))
+	return int(r)
+}
+
+// 窗口_添加背景边框.
+//
+// hWindow: 窗口句柄.
+//
+// nState: 组合状态.
+//
+// color: ABGR颜色.
+//
+// width: 线宽.
+func XWnd_AddBkBorder(hWindow int, nState int, color int, width int) int {
+	r, _, _ := xWnd_AddBkBorder.Call(uintptr(hWindow), uintptr(nState), uintptr(color), uintptr(width))
+	return int(r)
+}
+
+// 窗口_添加背景填充.
+//
+// hWindow: 窗口句柄.
+//
+// nState: 组合状态.
+//
+// color: ABGR颜色.
+func XWnd_AddBkFill(hWindow int, nState int, color int) int {
+	r, _, _ := xWnd_AddBkFill.Call(uintptr(hWindow), uintptr(nState), uintptr(color))
+	return int(r)
+}
+
+// 窗口_添加背景图片.
+//
+// hWindow: 窗口句柄.
+//
+// nState: 组合状态.
+//
+// hImage: 图片句柄.
+func XWnd_AddBkImage(hWindow int, nState int, hImage int) int {
+	r, _, _ := xWnd_AddBkImage.Call(uintptr(hWindow), uintptr(nState), uintptr(hImage))
+	return int(r)
+}
+
+// 窗口_取背景对象数量.
+//
+// hWindow: 窗口句柄.
+func XWnd_GetBkInfoCount(hWindow int) int {
+	r, _, _ := xWnd_GetBkInfoCount.Call(uintptr(hWindow))
+	return int(r)
+}
+
+// 窗口_清空背景对象.
+//
+// hWindow: 窗口句柄.
+func XWnd_ClearBkInfo(hWindow int) int {
+	r, _, _ := xWnd_ClearBkInfo.Call(uintptr(hWindow))
 	return int(r)
 }

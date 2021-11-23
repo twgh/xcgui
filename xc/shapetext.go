@@ -33,7 +33,7 @@ func XShapeText_SetText(hTextBlock int, pName string) int {
 // hTextBlock: 形状对象文本句柄.
 func XShapeText_GetText(hTextBlock int) string {
 	r, _, _ := xShapeText_GetText.Call(uintptr(hTextBlock))
-	return uintPtrToString(r)
+	return UintPtrToString(r)
 }
 
 // 形状文本_取文本长度, 获取文本长度.

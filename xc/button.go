@@ -185,7 +185,7 @@ func XBtn_SetText(hEle int, pName string) int {
 // hEle: 元素句柄.
 func XBtn_GetText(hEle int) string {
 	r, _, _ := xBtn_GetText.Call(uintptr(hEle))
-	return uintPtrToString(r)
+	return UintPtrToString(r)
 }
 
 // 按钮_置图标.

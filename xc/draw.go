@@ -1373,3 +1373,59 @@ func XDraw_SetTextRenderingHint(hDraw int, nType int) int {
 	r, _, _ := xDraw_SetTextRenderingHint.Call(uintptr(hDraw), uintptr(nType))
 	return int(r)
 }
+
+// 绘制_SVG源.
+//
+// hDraw: 图形绘制句柄.
+//
+// hSvg: SVG句柄.
+func XDraw_DrawSvgSrc(hDraw int, hSvg int) int {
+	r, _, _ := xDraw_DrawSvgSrc.Call(uintptr(hDraw), uintptr(hSvg))
+	return int(r)
+}
+
+// 绘制_SVG.
+//
+// hDraw: 图形绘制句柄.
+//
+// hSvg: SVG句柄.
+//
+// x: x坐标.
+//
+// y: y坐标.
+func XDraw_DrawSvg(hDraw int, hSvg int, x int, y int) int {
+	r, _, _ := xDraw_DrawSvg.Call(uintptr(hDraw), uintptr(hSvg), uintptr(x), uintptr(y))
+	return int(r)
+}
+
+// 绘制_SVG扩展.
+//
+// hDraw: 图形绘制句柄.
+//
+// hSvg: SVG句柄.
+//
+// x: x坐标.
+//
+// y: y坐标.
+//
+// nWidth: 宽度.
+//
+// nHeight: 高度.
+func XDraw_DrawSvgEx(hDraw int, hSvg int, x int, y int, nWidth int, nHeight int) int {
+	r, _, _ := xDraw_DrawSvgEx.Call(uintptr(hDraw), uintptr(hSvg), uintptr(x), uintptr(y), uintptr(nWidth), uintptr(nHeight))
+	return int(r)
+}
+
+// 绘制_SVG大小.
+//
+// hDraw: 图形绘制句柄.
+//
+// hSvg: SVG句柄.
+//
+// nWidth: 宽度.
+//
+// nHeight: 高度.
+func XDraw_DrawSvgSize(hDraw int, hSvg int, nWidth int, nHeight int) int {
+	r, _, _ := xDraw_DrawSvgSize.Call(uintptr(hDraw), uintptr(hSvg), uintptr(nWidth), uintptr(nHeight))
+	return int(r)
+}

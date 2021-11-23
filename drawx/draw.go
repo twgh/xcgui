@@ -1100,3 +1100,47 @@ func (d *Draw) TextOutAF(nXStart, nYStart float32, lpString string) int {
 func (d *Draw) SetTextRenderingHint(nType int) int {
 	return xc.XDraw_SetTextRenderingHint(d.Handle, nType)
 }
+
+// 绘制_SVG源.
+//
+// hSvg: SVG句柄.
+func (d *Draw) DrawSvgSrc(hSvg int) int {
+	return xc.XDraw_DrawSvgSrc(d.Handle, hSvg)
+}
+
+// 绘制_SVG.
+//
+// hSvg: SVG句柄.
+//
+// x: x坐标.
+//
+// y: y坐标.
+func (d *Draw) DrawSvg(hSvg int, x int, y int) int {
+	return xc.XDraw_DrawSvg(d.Handle, hSvg, x, y)
+}
+
+// 绘制_SVG扩展.
+//
+// hSvg: SVG句柄.
+//
+// x: x坐标.
+//
+// y: y坐标.
+//
+// nWidth: 宽度.
+//
+// nHeight: 高度.
+func (d *Draw) DrawSvgEx(hSvg int, x int, y int, nWidth int, nHeight int) int {
+	return xc.XDraw_DrawSvgEx(d.Handle, hSvg, x, y, nWidth, nHeight)
+}
+
+// 绘制_SVG大小.
+//
+// hSvg: SVG句柄.
+//
+// nWidth: 宽度.
+//
+// nHeight: 高度.
+func (d *Draw) DrawSvgSize(hSvg int, nWidth int, nHeight int) int {
+	return xc.XDraw_DrawSvgSize(d.Handle, hSvg, nWidth, nHeight)
+}

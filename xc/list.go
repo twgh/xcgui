@@ -401,8 +401,8 @@ func XList_SetItemTemplateXML(hEle int, pXmlFile string) bool {
 // hEle: 元素句柄.
 //
 // pStringXML: 字符串指针.
-func XList_SetItemTemplateXMLFromString(hEle int, pStringXML int) bool {
-	r, _, _ := xList_SetItemTemplateXMLFromString.Call(uintptr(hEle), uintptr(pStringXML))
+func XList_SetItemTemplateXMLFromString(hEle int, pStringXML string) bool {
+	r, _, _ := xList_SetItemTemplateXMLFromString.Call(uintptr(hEle), XC_wtoa(pStringXML))
 	return int(r) != 0
 }
 
@@ -865,7 +865,7 @@ func XList_SetItemFloatEx(hEle int, iItem int, pName string, fFloat float32) boo
 // iColumn:.
 func XList_GetItemText(hEle int, iItem int, iColumn int) string {
 	r, _, _ := xList_GetItemText.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn))
-	return uintPtrToString(r)
+	return UintPtrToString(r)
 }
 
 // 列表_取项文本扩展.
@@ -877,7 +877,7 @@ func XList_GetItemText(hEle int, iItem int, iColumn int) string {
 // pName:.
 func XList_GetItemTextEx(hEle int, iItem int, pName string) string {
 	r, _, _ := xList_GetItemTextEx.Call(uintptr(hEle), uintptr(iItem), strPtr(pName))
-	return uintPtrToString(r)
+	return UintPtrToString(r)
 }
 
 // 列表_取项图片.

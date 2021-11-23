@@ -34,7 +34,7 @@ func (a *AdapterListView) Group_AddColumn(pName string) int {
 //
 // pValue: 值.
 //
-// iPos: 插入位置.
+// iPos: 插入位置, 可为-1.
 func (a *AdapterListView) Group_AddItemText(pValue string, iPos int) int {
 	return xc.XAdListView_Group_AddItemText(a.Handle, pValue, iPos)
 }
@@ -45,7 +45,7 @@ func (a *AdapterListView) Group_AddItemText(pValue string, iPos int) int {
 //
 // pValue: 值.
 //
-// iPos: 插入位置.
+// iPos: 插入位置, 可为-1.
 func (a *AdapterListView) Group_AddItemTextEx(pName string, pValue string, iPos int) int {
 	return xc.XAdListView_Group_AddItemTextEx(a.Handle, pName, pValue, iPos)
 }
@@ -54,7 +54,7 @@ func (a *AdapterListView) Group_AddItemTextEx(pName string, pValue string, iPos 
 //
 // hImage: 图片句柄.
 //
-// iPos: 插入位置.
+// iPos: 插入位置, 可为-1.
 func (a *AdapterListView) Group_AddItemImage(hImage int, iPos int) int {
 	return xc.XAdListView_Group_AddItemImage(a.Handle, hImage, iPos)
 }
@@ -65,7 +65,7 @@ func (a *AdapterListView) Group_AddItemImage(hImage int, iPos int) int {
 //
 // hImage: 图片句柄.
 //
-// iPos: 插入位置.
+// iPos: 插入位置, 可为-1.
 func (a *AdapterListView) Group_AddItemImageEx(pName string, hImage int, iPos int) int {
 	return xc.XAdListView_Group_AddItemImageEx(a.Handle, pName, hImage, iPos)
 }
@@ -139,7 +139,7 @@ func (a *AdapterListView) Item_GetCount(iGroup int) int {
 //
 // pValue: 值.
 //
-// iPos: 插入位置.
+// iPos: 插入位置, 可为-1.
 func (a *AdapterListView) Item_AddItemText(iGroup int, pValue string, iPos int) int {
 	return xc.XAdListView_Item_AddItemText(a.Handle, iGroup, pValue, iPos)
 }
@@ -152,7 +152,7 @@ func (a *AdapterListView) Item_AddItemText(iGroup int, pValue string, iPos int) 
 //
 // pValue: 值.
 //
-// iPos: 插入位置.
+// iPos: 插入位置, 可为-1.
 func (a *AdapterListView) Item_AddItemTextEx(iGroup int, pName string, pValue string, iPos int) int {
 	return xc.XAdListView_Item_AddItemTextEx(a.Handle, iGroup, pName, pValue, iPos)
 }
@@ -163,7 +163,7 @@ func (a *AdapterListView) Item_AddItemTextEx(iGroup int, pName string, pValue st
 //
 // hImage: 图片句柄.
 //
-// iPos: 插入位置.
+// iPos: 插入位置, 可为-1.
 func (a *AdapterListView) Item_AddItemImage(iGroup int, hImage int, iPos int) int {
 	return xc.XAdListView_Item_AddItemImage(a.Handle, iGroup, hImage, iPos)
 }
@@ -176,7 +176,7 @@ func (a *AdapterListView) Item_AddItemImage(iGroup int, hImage int, iPos int) in
 //
 // hImage: 图片句柄.
 //
-// iPos: 插入位置.
+// iPos: 插入位置, 可为-1.
 func (a *AdapterListView) Item_AddItemImageEx(iGroup int, pName string, hImage int, iPos int) int {
 	return xc.XAdListView_Item_AddItemImageEx(a.Handle, iGroup, pName, hImage, iPos)
 }

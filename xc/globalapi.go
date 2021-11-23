@@ -27,7 +27,7 @@ func XExitXCGUI() int {
 
 // 炫彩_输出调试信息到文件, 打印调试信息到文件xcgui_debug.txt.
 func XC_DebugToFileInfo(pInfo string) int {
-	r, _, _ := xC_DebugToFileInfo.Call(strPtr(pInfo))
+	r, _, _ := xC_DebugToFileInfo.Call(XC_wtoa(pInfo))
 	return int(r)
 }
 
@@ -174,7 +174,7 @@ func XC_SetProperty(hXCGUI int, pName string, pValue string) bool {
 // pName: 属性名.
 func XC_GetProperty(hXCGUI int, pName string) string {
 	r, _, _ := xC_GetProperty.Call(uintptr(hXCGUI), strPtr(pName))
-	return uintPtrToString(r)
+	return UintPtrToString(r)
 }
 
 // 炫彩_注册窗口类名, 如果是在DLL中使用, 那么DLL卸载时需要注销窗口类名, 否则DLL卸载后, 类名所指向的窗口过程地址失效.
@@ -493,7 +493,7 @@ func XC_LoadLibrary(lpFileName string) int {
 //
 // lpProcName: 函数名.
 func XC_GetProcAddress(hModule int, lpProcName string) int {
-	r, _, _ := xC_GetProcAddress.Call(uintptr(hModule), strPtr(lpProcName))
+	r, _, _ := xC_GetProcAddress.Call(uintptr(hModule), XC_wtoa(lpProcName))
 	return int(r)
 }
 
@@ -535,6 +535,108 @@ func XC_IsEnableD2D() bool {
 	return int(r) != 0
 }
 
+// 炫彩_W2A.
+//
+// pValue: 参数.
+func XC_wtoa(pValue string) uintptr {
+	r, _, _ := xC_wtoa.Call(strPtr(pValue))
+	return r
+}
+
+// 炫彩_A2W.
+//
+// pValue: 参数.
+func XC_atow(pValue uintptr) string {
+	r, _, _ := xC_atow.Call(pValue)
+	return UintPtrToString(r)
+}
+
+// 炫彩_UTF8到文本W.
+//
+// pUtf8: 参数.
+func XC_utf8tow(pUtf8 uintptr) string {
+	r, _, _ := xC_utf8tow.Call(pUtf8)
+	return UintPtrToString(r)
+}
+
+// 炫彩_UTF8到文本W扩展.
+//
+// pUtf8: utf8字符串指针.
+//
+// length: utf8字符串长度.
+func XC_utf8towEx(pUtf8 uintptr, length int) string {
+	r, _, _ := xC_utf8towEx.Call(pUtf8, uintptr(length))
+	return UintPtrToString(r)
+}
+
+// 炫彩_UTF8到文本A.
+//
+// pUtf8: utf8字符串指针.
+func XC_utf8toa(pUtf8 uintptr) uintptr {
+	r, _, _ := xC_utf8toa.Call(pUtf8)
+	return r
+}
+
+// 炫彩_文本A到UTF8.
+//
+// pValue: 参数.
+func XC_atoutf8(pValue uintptr) uintptr {
+	r, _, _ := xC_atoutf8.Call(pValue)
+	return r
+}
+
+// 炫彩_文本W到UTF8.
+//
+// pValue: 字符串指针.
+func XC_wtoutf8(pValue string) uintptr {
+	r, _, _ := xC_wtoutf8.Call(strPtr(pValue))
+	return r
+}
+
+// 炫彩_文本W到UTF8扩展.
+//
+// pValue: 字符串指针.
+//
+// length: 字符串长度.
+func XC_wtoutf8Ex(pValue string, length int) uintptr {
+	r, _, _ := xC_wtoutf8Ex.Call(strPtr(pValue), uintptr(length))
+	return r
+}
+
+// 炫彩_打印调试信息, 打印调试信息到文件xcgui_debug.txt.
+//
+// level: 级别.
+//
+// pInfo: 信息.
+func XDebug_Print(level int, pInfo string) int {
+	r, _, _ := xDebug_Print.Call(uintptr(level), XC_wtoa(pInfo))
+	return int(r)
+}
+
+// 炫彩_打印调试信息, 打印调试信息到文件xcgui_debug.txt.[无效]
+//
+// pString: 字符串.
+func XDebug_OutputDebugStringW(pString string) int {
+	r, _, _ := xDebug_OutputDebugStringW.Call(strPtr(pString))
+	return int(r)
+}
+
+// 炫彩_设置debug输出编码方式为utf8.[无效]
+//
+// bUTF8: 是否开启utf8编码.
+func XDebug_Set_OutputDebugString_UTF8(bUTF8 bool) int {
+	r, _, _ := xDebug_Set_OutputDebugString_UTF8.Call(boolPtr(bUTF8))
+	return int(r)
+}
+
+// 炫彩_显示边界.
+//
+// bShow: 是否显示.
+func XC_ShowSvgFrame(bShow bool) int {
+	r, _, _ := xC_ShowSvgFrame.Call(boolPtr(bShow))
+	return int(r)
+}
+
 /*
 // 炫彩_整数到文本A.
 //
@@ -567,76 +669,9 @@ func XC_ftow(fValue int) int {
 	r, _, _ := xC_ftow.Call(uintptr(fValue))
 	return int(r)
 }
+*/
 
-// 炫彩_A2W.
-//
-// pValue: 参数.
-func XC_atow(pValue int) int {
-	r, _, _ := xC_atow.Call(uintptr(pValue))
-	return int(r)
-}
-
-// 炫彩_W2A.
-//
-// pValue: 参数.
-func XC_wtoa(pValue string) int {
-	r, _, _ := xC_wtoa.Call(strPtr(pValue))
-	return int(r)
-}
-
-// 炫彩_UTF8到文本W.
-//
-// pUtf8: 参数.
-func XC_utf8tow(pUtf8 int) int {
-	r, _, _ := xC_utf8tow.Call(uintptr(pUtf8))
-	return int(r)
-}
-
-// 炫彩_UTF8到文本W扩展.
-//
-// pUtf8: utf8字符串指针.
-//
-// length: utf8字符串长度.
-func XC_utf8towEx(pUtf8 int, length int) int {
-	r, _, _ := xC_utf8towEx.Call(uintptr(pUtf8), uintptr(length))
-	return int(r)
-}
-
-// 炫彩_UTF8到文本A.
-//
-// pUtf8: utf8字符串指针.
-func XC_utf8toa(pUtf8 int) int {
-	r, _, _ := xC_utf8toa.Call(uintptr(pUtf8))
-	return int(r)
-}
-
-// 炫彩_文本A到UTF8.
-//
-// pValue: 参数.
-func XC_atoutf8(pValue int) int {
-	r, _, _ := xC_atoutf8.Call(uintptr(pValue))
-	return int(r)
-}
-
-// 炫彩_文本W到UTF8.
-//
-// pValue: 字符串指针.
-func XC_wtoutf8(pValue string) int {
-	r, _, _ := xC_wtoutf8.Call(strPtr(pValue))
-	return int(r)
-}
-
-// 炫彩_文本W到UTF8扩展.
-//
-// pValue: 字符串指针.
-//
-// length: 字符串长度.
-func XC_wtoutf8Ex(pValue string, length int) int {
-	r, _, _ := xC_wtoutf8Ex.Call(strPtr(pValue), uintptr(length))
-	return int(r)
-}
-
-// 炫彩_U2A.
+/* // 炫彩_U2A, 返回写入接收缓冲区字节数量.
 //
 // pIn: 待转换的Unicode字符串.
 //
@@ -644,13 +679,13 @@ func XC_wtoutf8Ex(pValue string, length int) int {
 //
 // pOut: 指向接收转换后的Ansi字符串缓冲区指针.
 //
-// outLen: pOut缓冲区大小,字节单位.
-func XC_UnicodeToAnsi(pIn string, inLen int, pOut int, outLen int) int {
-	r, _, _ := xC_UnicodeToAnsi.Call(strPtr(pIn), uintptr(inLen), uintptr(pOut), uintptr(outLen))
+// outLen: pOut缓冲区大小, 字节单位.
+func XC_UnicodeToAnsi(pIn string, inLen int, pOut *uintptr, outLen int) int {
+	r, _, _ := xC_UnicodeToAnsi.Call(strPtr(pIn), uintptr(inLen), *pOut, uintptr(outLen))
 	return int(r)
 }
 
-// 炫彩_A2U.
+// 炫彩_A2U, 返回写入接收缓冲区字符数量.
 //
 // pIn: 指向待转换的Ansi字符串指针.
 //
@@ -659,11 +694,9 @@ func XC_UnicodeToAnsi(pIn string, inLen int, pOut int, outLen int) int {
 // pOut: 指向接收转换后的Unicode字符串缓冲区指针.
 //
 // outLen: pOut缓冲区大小,字符wchar_t单位.
-func XC_AnsiToUnicode(pIn int, inLen int, pOut *string, outLen int) int {
-	var p uintptr
-	r, _, _ := xC_AnsiToUnicode.Call(uintptr(pIn), uintptr(inLen), p, uintptr(outLen))
-	*pOut = uintPtrToString(p)
+func XC_AnsiToUnicode(pIn uintptr, inLen int, pOut *string, outLen int) int {
+	buf := make([]uint16, outLen)
+	r, _, _ := xC_AnsiToUnicode.Call(pIn, uintptr(inLen), uint16Ptr2(&buf), uintptr(outLen))
+	*pOut = syscall.UTF16ToString(buf[0:])
 	return int(r)
-}
-
-*/
+} */

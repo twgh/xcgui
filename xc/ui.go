@@ -43,5 +43,5 @@ func XUI_SetCssName(hXCGUI int, pName string) int {
 // hXCGUI: 对象句柄.
 func XUI_GetCssName(hXCGUI int) string {
 	r, _, _ := xUI_GetCssName.Call(uintptr(hXCGUI))
-	return uintPtrToString(r)
+	return UintPtrToString(r)
 }

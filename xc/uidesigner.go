@@ -40,15 +40,15 @@ func XC_LoadLayoutZipMem(data *[]byte, length int, pFileName string, pPassword s
 	return int(r)
 }
 
-// 炫彩_加载布局文件从字符串, 加载布局文件从内存字符串, 返回窗口句柄或布局句柄或元素句柄.
+/* // 炫彩_加载布局文件从字符串, 加载布局文件从内存字符串, 返回窗口句柄或布局句柄或元素句柄.
 //
 // pStringXML: 字符串指针.
 //
 // hParent: 父对象.
-func XC_LoadLayoutFromString(pStringXML string, hParent int) int {
-	r, _, _ := xC_LoadLayoutFromString.Call(strPtr(pStringXML), uintptr(hParent))
+func XC_LoadLayoutFromString(pStringXML uintptr, hParent int) int {
+	r, _, _ := xC_LoadLayoutFromString.Call(pStringXML, uintptr(hParent))
 	return int(r)
-}
+} */
 
 // 炫彩_加载布局文件从字符串UTF8, 加载布局文件从内存字符串, 返回窗口句柄或布局句柄或元素句柄.
 //
@@ -56,7 +56,7 @@ func XC_LoadLayoutFromString(pStringXML string, hParent int) int {
 //
 // hParent: 父对象.
 func XC_LoadLayoutFromStringUtf8(pStringXML string, hParent int) int {
-	r, _, _ := xC_LoadLayoutFromStringUtf8.Call(strPtr(pStringXML), uintptr(hParent))
+	r, _, _ := xC_LoadLayoutFromStringUtf8.Call(XC_wtoutf8(pStringXML), uintptr(hParent))
 	return int(r)
 }
 
@@ -128,6 +128,27 @@ func XC_LoadResourceZipMem(data *[]byte, length int, pFileName string, pPassword
 	return int(r) != 0
 }
 
+// 炫彩_加载资源文件从字符串UTF8.
+//
+// pStringXML: 字符串指针.
+//
+// pFileName: 资源文件名.
+func XC_LoadResourceFromStringUtf8(pStringXML string, pFileName string) bool {
+	r, _, _ := xC_LoadResourceFromStringUtf8.Call(XC_wtoutf8(pStringXML), strPtr(pFileName))
+	return int(r) != 0
+}
+
+// 炫彩_加载样式文件从字符串W.
+//
+// pFileName: 样式文件名.
+//
+// pString: 字符串.
+func XC_LoadStyleFromStringW(pFileName string, pString string) bool {
+	r, _, _ := xC_LoadStyleFromStringW.Call(strPtr(pFileName), strPtr(pString))
+	return int(r) != 0
+}
+
+/*
 // 炫彩_加载资源文件从字符串.
 //
 // pStringXML: 字符串指针.
@@ -135,16 +156,6 @@ func XC_LoadResourceZipMem(data *[]byte, length int, pFileName string, pPassword
 // pFileName: 资源文件名.
 func XC_LoadResourceFromString(pStringXML string, pFileName string) bool {
 	r, _, _ := xC_LoadResourceFromString.Call(strPtr(pStringXML), strPtr(pFileName))
-	return int(r) != 0
-}
-
-// 炫彩_加载资源文件从字符串UTF8.
-//
-// pStringXML: 字符串指针.
-//
-// pFileName: 资源文件名.
-func XC_LoadResourceFromStringUtf8(pStringXML string, pFileName string) bool {
-	r, _, _ := xC_LoadResourceFromStringUtf8.Call(strPtr(pStringXML), strPtr(pFileName))
 	return int(r) != 0
 }
 
@@ -156,4 +167,4 @@ func XC_LoadResourceFromStringUtf8(pStringXML string, pFileName string) bool {
 func XC_LoadStyleFromString(pFileName string, pString string) bool {
 	r, _, _ := xC_LoadStyleFromString.Call(strPtr(pFileName), strPtr(pString))
 	return int(r) != 0
-}
+} */

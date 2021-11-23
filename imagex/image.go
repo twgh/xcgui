@@ -255,6 +255,35 @@ func NewImage_LoadFromHBITMAP(hBitmap int) *Image {
 	return p
 }
 
+// 图片_加载从SVG.
+//
+// hSvg: SVG句柄.
+func NewImage_LoadSvg(hSvg int) *Image {
+	p := &Image{}
+	p.SetHandle(xc.XImage_LoadSvg(hSvg))
+	return p
+}
+
+// 图片_加载从SVG文件.
+//
+// pFileName: 文件名.
+func NewImage_LoadSvgFile(pFileName string) *Image {
+	p := &Image{}
+	p.SetHandle(xc.XImage_LoadSvgFile(pFileName))
+	return p
+}
+
+// 图片_加载从SVG字符串.
+//
+// pString: 字符串指针.
+//
+// nLength: 字符串长度, 可填-1.
+func NewImage_LoadSvgString(pString string, nLength int) *Image {
+	p := &Image{}
+	p.SetHandle(xc.XImage_LoadSvgString(pString, nLength))
+	return p
+}
+
 // 从句柄创建对象.
 func NewImageByHandle(handle int) *Image {
 	p := &Image{}
@@ -263,6 +292,8 @@ func NewImageByHandle(handle int) *Image {
 }
 
 // 根据资源文件中的name创建对象, 失败返回nil.
+//
+// pName: 资源名称.
 func NewImageByName(name string) *Image {
 	handle := res.GetImage(name)
 	if handle > 0 {
@@ -274,6 +305,10 @@ func NewImageByName(name string) *Image {
 }
 
 // 从指定的资源文件中, 根据name创建对象, 失败返回nil.
+//
+// pFileName: 资源文件名.
+//
+// pName: 资源名称.
 func NewImageByNameEx(fileName, name string) *Image {
 	handle := res.GetImageEx(fileName, name)
 	if handle > 0 {
@@ -282,6 +317,13 @@ func NewImageByNameEx(fileName, name string) *Image {
 		return p
 	}
 	return nil
+}
+
+// 图片_取SVG, 返回SVG句柄.
+//
+// hImage: 图片句柄.
+func (i *Image) GetSvg() int {
+	return xc.XImage_GetSvg(i.Handle)
 }
 
 // 图片_判断缩放, 是否为拉伸图片句柄.

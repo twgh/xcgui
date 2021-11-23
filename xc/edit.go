@@ -268,7 +268,7 @@ func XEdit_SetTextInt(hEle int, nValue int) int {
 // nOutlen: 内存大小.
 func XEdit_GetText(hEle int, pOut *string, nOutlen int) int {
 	buf := make([]uint16, nOutlen)
-	r, _, _ := xEdit_GetText.Call(uintptr(hEle), uintptr(unsafe.Pointer(&buf[0])), uintptr(nOutlen))
+	r, _, _ := xEdit_GetText.Call(uintptr(hEle), uint16Ptr2(&buf), uintptr(nOutlen))
 	*pOut = syscall.UTF16ToString(buf[0:])
 	return int(r)
 }
@@ -284,7 +284,7 @@ func XEdit_GetText(hEle int, pOut *string, nOutlen int) int {
 // nOutlen: 接收文本内存块长度.
 func XEdit_GetTextRow(hEle int, iRow int, pOut *string, nOutlen int) int {
 	buf := make([]uint16, nOutlen)
-	r, _, _ := xEdit_GetTextRow.Call(uintptr(hEle), uintptr(iRow), uintptr(unsafe.Pointer(&buf[0])), uintptr(nOutlen))
+	r, _, _ := xEdit_GetTextRow.Call(uintptr(hEle), uintptr(iRow), uint16Ptr2(&buf), uintptr(nOutlen))
 	*pOut = syscall.UTF16ToString(buf[0:])
 	return int(r)
 }
@@ -622,7 +622,7 @@ func XEdit_SetSelect(hEle int, iStartRow int, iStartCol int, iEndRow int, iEndCo
 // nOutLen: 接收内存大小.
 func XEdit_GetSelectText(hEle int, pOut *string, nOutLen int) int {
 	buf := make([]uint16, nOutLen)
-	r, _, _ := xEdit_GetSelectText.Call(uintptr(hEle), uintptr(unsafe.Pointer(&buf[0])), uintptr(nOutLen))
+	r, _, _ := xEdit_GetSelectText.Call(uintptr(hEle), uint16Ptr2(&buf), uintptr(nOutLen))
 	*pOut = syscall.UTF16ToString(buf[0:])
 	return int(r)
 }

@@ -513,15 +513,6 @@ func (a *App) LoadLayoutZipMem(data *[]byte, length int, pFileName string, pPass
 	return xc.XC_LoadLayoutZipMem(data, length, pFileName, pPassword, hParent)
 }
 
-// 炫彩_加载布局文件从字符串, 加载布局文件从内存字符串, 返回窗口句柄或布局句柄或元素句柄.
-//
-// pStringXML: 字符串指针.
-//
-// hParent: 父对象.
-func (a *App) LoadLayoutFromString(pStringXML string, hParent int) int {
-	return xc.XC_LoadLayoutFromString(pStringXML, hParent)
-}
-
 // 炫彩_加载布局文件从字符串UTF8, 加载布局文件从内存字符串, 返回窗口句柄或布局句柄或元素句柄.
 //
 // pStringXML: 字符串指针.
@@ -530,6 +521,17 @@ func (a *App) LoadLayoutFromString(pStringXML string, hParent int) int {
 func (a *App) LoadLayoutFromStringUtf8(pStringXML string, hParent int) int {
 	return xc.XC_LoadLayoutFromStringUtf8(pStringXML, hParent)
 }
+
+/*
+// 炫彩_加载布局文件从字符串, 加载布局文件从内存字符串, 返回窗口句柄或布局句柄或元素句柄.
+//
+// pStringXML: 字符串指针.
+//
+// hParent: 父对象.
+func (a *App) LoadLayoutFromString(pStringXML string, hParent int) int {
+	return xc.XC_LoadLayoutFromString(pStringXML, hParent)
+}
+*/
 
 // 炫彩_加载样式文件.
 //
@@ -593,15 +595,6 @@ func (a *App) LoadResourceZipMem(data *[]byte, length int, pFileName string, pPa
 	return xc.XC_LoadResourceZipMem(data, length, pFileName, pPassword)
 }
 
-// 炫彩_加载资源文件从字符串.
-//
-// pStringXML: 字符串指针.
-//
-// pFileName: 资源文件名.
-func (a *App) LoadResourceFromString(pStringXML string, pFileName string) bool {
-	return xc.XC_LoadResourceFromString(pStringXML, pFileName)
-}
-
 // 炫彩_加载资源文件从字符串UTF8.
 //
 // pStringXML: 字符串指针.
@@ -611,6 +604,85 @@ func (a *App) LoadResourceFromStringUtf8(pStringXML string, pFileName string) bo
 	return xc.XC_LoadResourceFromStringUtf8(pStringXML, pFileName)
 }
 
+// 炫彩_W2A.
+//
+// pValue: 参数.
+func (a *App) WtoA(pValue string) uintptr {
+	return xc.XC_wtoa(pValue)
+}
+
+// 炫彩_A2W.
+//
+// pValue: 参数.
+func (a *App) AtoW(pValue uintptr) string {
+	return xc.XC_atow(pValue)
+}
+
+// 炫彩_UTF8到文本W.
+//
+// pUtf8: 参数.
+func (a *App) Utf8toW(pUtf8 uintptr) string {
+	return xc.XC_utf8tow(pUtf8)
+}
+
+// 炫彩_UTF8到文本W扩展.
+//
+// pUtf8: utf8字符串指针.
+//
+// length: utf8字符串长度.
+func (a *App) Utf8toWEx(pUtf8 uintptr, length int) string {
+	return xc.XC_utf8towEx(pUtf8, length)
+}
+
+// 炫彩_UTF8到文本A.
+//
+// pUtf8: utf8字符串指针.
+func (a *App) Utf8toA(pUtf8 uintptr) uintptr {
+	return xc.XC_utf8toa(pUtf8)
+}
+
+// 炫彩_文本A到UTF8.
+//
+// pValue: 参数.
+func (a *App) AtoUtf8(pValue uintptr) uintptr {
+	return xc.XC_atoutf8(pValue)
+}
+
+// 炫彩_文本W到UTF8.
+//
+// pValue: 字符串指针.
+func (a *App) WtoUtf8(pValue string) uintptr {
+	return xc.XC_wtoutf8(pValue)
+}
+
+// 炫彩_文本W到UTF8扩展.
+//
+// pValue: 字符串指针.
+//
+// length: 字符串长度.
+func (a *App) WtoUtf8Ex(pValue string, length int) uintptr {
+	return xc.XC_wtoutf8Ex(pValue, length)
+}
+
+// 炫彩_打印调试信息, 打印调试信息到文件xcgui_debug.txt.
+//
+// level: 级别.
+//
+// pInfo: 信息.
+func (a *App) Print(level int, pInfo string) int {
+	return xc.XDebug_Print(level, pInfo)
+}
+
+/*
+// 炫彩_加载资源文件从字符串.
+//
+// pStringXML: 字符串指针.
+//
+// pFileName: 资源文件名.
+func (a *App) LoadResourceFromString(pStringXML string, pFileName string) bool {
+	return xc.XC_LoadResourceFromString(pStringXML, pFileName)
+}
+
 // 炫彩_加载样式文件从字符串.
 //
 // pFileName: 样式文件名, 用于打印错误文件和定位关联资源文件位置.
@@ -618,7 +690,7 @@ func (a *App) LoadResourceFromStringUtf8(pStringXML string, pFileName string) bo
 // pString: 字符串.
 func (a *App) LoadStyleFromString(pFileName string, pString string) bool {
 	return xc.XC_LoadStyleFromString(pFileName, pString)
-}
+} */
 
 // 炫彩_取D2D工厂, 开启D2D有效, 返回 ID2D1Factory* .
 func (a *App) GetD2dFactory() int {
@@ -645,4 +717,20 @@ func (a *App) SetD2dTextRenderingMode(mode int) int {
 // 炫彩_是否启用了D2D.
 func (a *App) IsEnableD2D() bool {
 	return xc.XC_IsEnableD2D()
+}
+
+// 炫彩_加载样式文件从字符串W.
+//
+// pFileName: 样式文件名.
+//
+// pString: 字符串.
+func (a *App) LoadStyleFromStringW(pFileName string, pString string) bool {
+	return xc.XC_LoadStyleFromStringW(pFileName, pString)
+}
+
+// 炫彩_显示边界.
+//
+// bShow: 是否显示.
+func (a *App) ShowSvgFrame(bShow bool) int {
+	return xc.XC_ShowSvgFrame(bShow)
 }

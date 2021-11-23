@@ -167,7 +167,7 @@ func XAdTree_SetItemImageEx(hAdapter int, nID int, pName string, hImage int) boo
 // iColumn: 列索引.
 func XAdTree_GetItemText(hAdapter int, nID int, iColumn int) string {
 	r, _, _ := xAdTree_GetItemText.Call(uintptr(hAdapter), uintptr(nID), uintptr(iColumn))
-	return uintPtrToString(r)
+	return UintPtrToString(r)
 }
 
 // 数据适配器树_取项文本扩展, 获取项文本内容.
@@ -179,7 +179,7 @@ func XAdTree_GetItemText(hAdapter int, nID int, iColumn int) string {
 // pName: 字段称.
 func XAdTree_GetItemTextEx(hAdapter int, nID int, pName string) string {
 	r, _, _ := xAdTree_GetItemTextEx.Call(uintptr(hAdapter), uintptr(nID), strPtr(pName))
-	return uintPtrToString(r)
+	return UintPtrToString(r)
 }
 
 // 数据适配器树_取项图片, 获取项内容, 返回图片句柄.

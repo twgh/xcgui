@@ -275,7 +275,7 @@ func (l *ListBox) SetItemTemplate(hTemp int) bool {
 // 列表框_置项模板从字符串, 设置项布局模板文件.
 //
 // pStringXML: 字符串指针.
-func (l *ListBox) SetItemTemplateXMLFromString(pStringXML int) bool {
+func (l *ListBox) SetItemTemplateXMLFromString(pStringXML string) bool {
 	return xc.XListBox_SetItemTemplateXMLFromString(l.Handle, pStringXML)
 }
 
