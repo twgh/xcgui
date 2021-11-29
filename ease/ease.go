@@ -6,7 +6,7 @@ import "github.com/twgh/xcgui/xc"
 // 缓动_Linear.
 //
 // p: 位置, 0.0f - 1.0f.
-func Linear(p float32) int {
+func Linear(p float32) float32 {
 	return xc.XEase_Linear(p)
 }
 
@@ -15,7 +15,7 @@ func Linear(p float32) int {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动方式, Ease_.
-func Quad(p float32, flag int) int {
+func Quad(p float32, flag int) float32 {
 	return xc.XEase_Quad(p, flag)
 }
 
@@ -24,7 +24,7 @@ func Quad(p float32, flag int) int {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动方式, Ease_.
-func Cubic(p float32, flag int) int {
+func Cubic(p float32, flag int) float32 {
 	return xc.XEase_Cubic(p, flag)
 }
 
@@ -33,7 +33,7 @@ func Cubic(p float32, flag int) int {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动方式, Ease_.
-func Quart(p float32, flag int) int {
+func Quart(p float32, flag int) float32 {
 	return xc.XEase_Quart(p, flag)
 }
 
@@ -42,7 +42,7 @@ func Quart(p float32, flag int) int {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动方式, Ease_.
-func Quint(p float32, flag int) int {
+func Quint(p float32, flag int) float32 {
 	return xc.XEase_Quint(p, flag)
 }
 
@@ -51,7 +51,7 @@ func Quint(p float32, flag int) int {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动方式, Ease_.
-func Sine(p float32, flag int) int {
+func Sine(p float32, flag int) float32 {
 	return xc.XEase_Sine(p, flag)
 }
 
@@ -60,7 +60,7 @@ func Sine(p float32, flag int) int {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动方式, Ease_.
-func Expo(p float32, flag int) int {
+func Expo(p float32, flag int) float32 {
 	return xc.XEase_Expo(p, flag)
 }
 
@@ -69,7 +69,7 @@ func Expo(p float32, flag int) int {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动方式, Ease_.
-func Circ(p float32, flag int) int {
+func Circ(p float32, flag int) float32 {
 	return xc.XEase_Circ(p, flag)
 }
 
@@ -78,7 +78,7 @@ func Circ(p float32, flag int) int {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动方式, Ease_.
-func Elastic(p float32, flag int) int {
+func Elastic(p float32, flag int) float32 {
 	return xc.XEase_Elastic(p, flag)
 }
 
@@ -87,7 +87,7 @@ func Elastic(p float32, flag int) int {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动方式, Ease_.
-func Back(p float32, flag int) int {
+func Back(p float32, flag int) float32 {
 	return xc.XEase_Back(p, flag)
 }
 
@@ -96,6 +96,6 @@ func Back(p float32, flag int) int {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动方式, Ease_.
-func Bounce(p float32, flag int) int {
+func Bounce(p float32, flag int) float32 {
 	return xc.XEase_Bounce(p, flag)
 }

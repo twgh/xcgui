@@ -3,9 +3,9 @@ package xc
 // 缓动_Linear.
 //
 // p: 位置, 0.0f - 1.0f.
-func XEase_Linear(p float32) int {
-	r, _, _ := xEase_Linear.Call(float32Ptr(p))
-	return int(r)
+func XEase_Linear(p float32) float32 {
+	_, r, _ := xEase_Linear.Call(float32Ptr(p))
+	return uintPtrToFloat32(r)
 }
 
 // 缓动_Quad.
@@ -13,9 +13,9 @@ func XEase_Linear(p float32) int {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动方式, Ease_.
-func XEase_Quad(p float32, flag int) int {
-	r, _, _ := xEase_Quad.Call(float32Ptr(p), uintptr(flag))
-	return int(r)
+func XEase_Quad(p float32, flag int) float32 {
+	_, r, _ := xEase_Quad.Call(float32Ptr(p), uintptr(flag))
+	return uintPtrToFloat32(r)
 }
 
 // 缓动_Cubic.
@@ -23,9 +23,9 @@ func XEase_Quad(p float32, flag int) int {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动方式, Ease_.
-func XEase_Cubic(p float32, flag int) int {
-	r, _, _ := xEase_Cubic.Call(float32Ptr(p), uintptr(flag))
-	return int(r)
+func XEase_Cubic(p float32, flag int) float32 {
+	_, r, _ := xEase_Cubic.Call(float32Ptr(p), uintptr(flag))
+	return uintPtrToFloat32(r)
 }
 
 // 缓动_Quart.
@@ -33,9 +33,9 @@ func XEase_Cubic(p float32, flag int) int {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动方式, Ease_.
-func XEase_Quart(p float32, flag int) int {
-	r, _, _ := xEase_Quart.Call(float32Ptr(p), uintptr(flag))
-	return int(r)
+func XEase_Quart(p float32, flag int) float32 {
+	_, r, _ := xEase_Quart.Call(float32Ptr(p), uintptr(flag))
+	return uintPtrToFloat32(r)
 }
 
 // 缓动_Quint.
@@ -43,9 +43,9 @@ func XEase_Quart(p float32, flag int) int {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动方式, Ease_.
-func XEase_Quint(p float32, flag int) int {
-	r, _, _ := xEase_Quint.Call(float32Ptr(p), uintptr(flag))
-	return int(r)
+func XEase_Quint(p float32, flag int) float32 {
+	_, r, _ := xEase_Quint.Call(float32Ptr(p), uintptr(flag))
+	return uintPtrToFloat32(r)
 }
 
 // 缓动_Sine.
@@ -53,9 +53,9 @@ func XEase_Quint(p float32, flag int) int {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动方式, Ease_.
-func XEase_Sine(p float32, flag int) int {
-	r, _, _ := xEase_Sine.Call(float32Ptr(p), uintptr(flag))
-	return int(r)
+func XEase_Sine(p float32, flag int) float32 {
+	_, r, _ := xEase_Sine.Call(float32Ptr(p), uintptr(flag))
+	return uintPtrToFloat32(r)
 }
 
 // 缓动_Expo.
@@ -63,9 +63,9 @@ func XEase_Sine(p float32, flag int) int {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动方式, Ease_.
-func XEase_Expo(p float32, flag int) int {
-	r, _, _ := xEase_Expo.Call(float32Ptr(p), uintptr(flag))
-	return int(r)
+func XEase_Expo(p float32, flag int) float32 {
+	_, r, _ := xEase_Expo.Call(float32Ptr(p), uintptr(flag))
+	return uintPtrToFloat32(r)
 }
 
 // 缓动_Circ.
@@ -73,9 +73,9 @@ func XEase_Expo(p float32, flag int) int {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动方式, Ease_.
-func XEase_Circ(p float32, flag int) int {
-	r, _, _ := xEase_Circ.Call(float32Ptr(p), uintptr(flag))
-	return int(r)
+func XEase_Circ(p float32, flag int) float32 {
+	_, r, _ := xEase_Circ.Call(float32Ptr(p), uintptr(flag))
+	return uintPtrToFloat32(r)
 }
 
 // 缓动_Elastic.
@@ -83,9 +83,9 @@ func XEase_Circ(p float32, flag int) int {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动方式, Ease_.
-func XEase_Elastic(p float32, flag int) int {
-	r, _, _ := xEase_Elastic.Call(float32Ptr(p), uintptr(flag))
-	return int(r)
+func XEase_Elastic(p float32, flag int) float32 {
+	_, r, _ := xEase_Elastic.Call(float32Ptr(p), uintptr(flag))
+	return uintPtrToFloat32(r)
 }
 
 // 缓动_Back.
@@ -93,9 +93,9 @@ func XEase_Elastic(p float32, flag int) int {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动方式, Ease_.
-func XEase_Back(p float32, flag int) int {
-	r, _, _ := xEase_Back.Call(float32Ptr(p), uintptr(flag))
-	return int(r)
+func XEase_Back(p float32, flag int) float32 {
+	_, r, _ := xEase_Back.Call(float32Ptr(p), uintptr(flag))
+	return uintPtrToFloat32(r)
 }
 
 // 缓动_Bounce.
@@ -103,7 +103,7 @@ func XEase_Back(p float32, flag int) int {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动方式, Ease_.
-func XEase_Bounce(p float32, flag int) int {
-	r, _, _ := xEase_Bounce.Call(float32Ptr(p), uintptr(flag))
-	return int(r)
+func XEase_Bounce(p float32, flag int) float32 {
+	_, r, _ := xEase_Bounce.Call(float32Ptr(p), uintptr(flag))
+	return uintPtrToFloat32(r)
 }
