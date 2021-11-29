@@ -895,7 +895,6 @@ var (
 	xDraw_GradientFill4           *syscall.LazyProc
 	xDraw_GradientFill4F          *syscall.LazyProc
 	xDraw_GDI_FrameRgn            *syscall.LazyProc
-	xDraw_FrameRect               *syscall.LazyProc
 	xDraw_DrawLine                *syscall.LazyProc
 	xDraw_DrawLineF               *syscall.LazyProc
 	xDraw_DrawCurve               *syscall.LazyProc
@@ -2407,7 +2406,6 @@ func init() {
 	xDraw_GradientFill4 = xcgui.NewProc("XDraw_GradientFill4")
 	xDraw_GradientFill4F = xcgui.NewProc("XDraw_GradientFill4F")
 	xDraw_GDI_FrameRgn = xcgui.NewProc("XDraw_GDI_FrameRgn")
-	xDraw_FrameRect = xcgui.NewProc("XDraw_FrameRect")
 	xDraw_DrawLine = xcgui.NewProc("XDraw_DrawLine")
 	xDraw_DrawLineF = xcgui.NewProc("XDraw_DrawLineF")
 	xDraw_DrawCurve = xcgui.NewProc("XDraw_DrawCurve")
@@ -2945,6 +2943,7 @@ func init() {
 	xToolBar_SetSpace = xcgui.NewProc("XToolBar_SetSpace")
 	xToolBar_DeleteEle = xcgui.NewProc("XToolBar_DeleteEle")
 	xToolBar_DeleteAllEle = xcgui.NewProc("XToolBar_DeleteAllEle")
+
 	// Tree.
 	xTree_Create = xcgui.NewProc("XTree_Create")
 	xTree_EnableDragItem = xcgui.NewProc("XTree_EnableDragItem")
@@ -3010,6 +3009,7 @@ func init() {
 	xTree_DeleteItem = xcgui.NewProc("XTree_DeleteItem")
 	xTree_DeleteItemAll = xcgui.NewProc("XTree_DeleteItemAll")
 	xTree_DeleteColumnAll = xcgui.NewProc("XTree_DeleteColumnAll")
+
 	// DateTime.
 	xDateTime_Create = xcgui.NewProc("XDateTime_Create")
 	xDateTime_SetStyle = xcgui.NewProc("XDateTime_SetStyle")
@@ -3022,18 +3022,19 @@ func init() {
 	xDateTime_SetDate = xcgui.NewProc("XDateTime_SetDate")
 	xDateTime_GetTime = xcgui.NewProc("XDateTime_GetTime")
 	xDateTime_SetTime = xcgui.NewProc("XDateTime_SetTime")
+
 	// MonthCal.
 	xMonthCal_Create = xcgui.NewProc("XMonthCal_Create")
 	xMonthCal_GetButton = xcgui.NewProc("XMonthCal_GetButton")
 	xMonthCal_SetToday = xcgui.NewProc("XMonthCal_SetToday")
 	xMonthCal_GetToday = xcgui.NewProc("XMonthCal_GetToday")
 	xMonthCal_GetSelDate = xcgui.NewProc("XMonthCal_GetSelDate")
+
 	// XcObjectBase.
 	xObj_GetType = xcgui.NewProc("XObj_GetType")
 	xObj_GetTypeBase = xcgui.NewProc("XObj_GetTypeBase")
 	xObj_GetTypeEx = xcgui.NewProc("XObj_GetTypeEx")
 	xObj_SetTypeEx = xcgui.NewProc("XObj_SetTypeEx")
-
 }
 
 // string到uintptr.
@@ -3067,23 +3068,38 @@ func boolPtr(b bool) uintptr {
 
 // float32到uintptr.
 func float32Ptr(f float32) uintptr {
-	return uintptr(*(*uint)(unsafe.Pointer(&f)))
+	return uintptr(*(*uint32)(unsafe.Pointer(&f)))
 }
 
-// byte指针到uintptr.
-// func bytePtr(p *byte) uintptr {
-// 	return uintptr(unsafe.Pointer(p))
-// }
+// uintptr到float32.
+func uintPtrToFloat32(ptr uintptr) float32 {
+	u := uint32(ptr)
+	return *(*float32)(unsafe.Pointer(&u))
+}
 
 // byte[0]指针到uintptr.
 func bytePtr2(p *[]byte) uintptr {
 	return uintptr(unsafe.Pointer(&(*p)[0]))
 }
 
-// uintptr到float32.
-// func uintptrToFloat32(ptr uintptr) float32 {
-// 	return *((*float32)(unsafe.Pointer(&ptr)))
-// }
+/* // byte指针到uintptr.
+func bytePtr(p *byte) uintptr {
+	return uintptr(unsafe.Pointer(p))
+} */
+
+/* func UintPtrToString2(r uintptr) string {
+    p := (*uint16)(unsafe.Pointer(r))
+    if p == nil {
+        return ""
+    }
+
+    n, end, add := 0, unsafe.Pointer(p), unsafe.Sizeof(*p)
+    for *(*uint16)(end) != 0 {
+        end = unsafe.Add(end, add)
+        n++
+    }
+    return string(utf16.Decode(unsafe.Slice(p, n)))
+} */
 
 // 根据r, g, b, a组合成十进制ABGR颜色.
 func ABGR(r, g, b, a byte) int {
