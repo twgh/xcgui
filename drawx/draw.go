@@ -632,13 +632,6 @@ func (d *Draw) GDI_FrameRgn(hrgn int, hbr int, nWidth int, nHeight int) bool {
 	return xc.XDraw_GDI_FrameRgn(d.Handle, hrgn, hbr, nWidth, nHeight)
 }
 
-// 绘制_边框矩形, 绘制矩形边框, 使用指定的画刷. 如果函数成功,返回非零值,如果函数失败,返回值是零.
-//
-// pRect: 矩形坐标.
-func (d *Draw) FrameRect(pRect *xc.RECT) int {
-	return xc.XDraw_FrameRect(d.Handle, pRect)
-}
-
 // 绘制_焦点矩形.
 //
 // pRect: 矩形坐标.
