@@ -778,16 +778,6 @@ func XDraw_GDI_FrameRgn(hDraw int, hrgn int, hbr int, nWidth int, nHeight int) b
 	return int(r) != 0
 }
 
-// 绘制_边框矩形, 绘制矩形边框, 使用指定的画刷. 如果函数成功,返回非零值,如果函数失败,返回值是零.
-//
-// hDraw: 图形绘制句柄.
-//
-// pRect: 矩形坐标.
-func XDraw_FrameRect(hDraw int, pRect *RECT) int {
-	r, _, _ := xDraw_FrameRect.Call(uintptr(hDraw), uintptr(unsafe.Pointer(pRect)))
-	return int(r)
-}
-
 // 绘制_焦点矩形.
 //
 // hDraw: 图形绘制句柄.
