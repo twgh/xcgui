@@ -49,8 +49,8 @@ func XShape_GetHeight(hShape int) int {
 // x: x坐标.
 //
 // y: y坐标.
-func XShape_Move(hShape int, x int, y int) int {
-	r, _, _ := xShape_Move.Call(uintptr(hShape), uintptr(x), uintptr(y))
+func XShape_SetPosition(hShape int, x int, y int) int {
+	r, _, _ := xShape_SetPosition.Call(uintptr(hShape), uintptr(x), uintptr(y))
 	return int(r)
 }
 
@@ -139,5 +139,59 @@ func XShape_AdjustLayout(hShape int) int {
 // hShape: 形状对象句柄.
 func XShape_Destroy(hShape int) int {
 	r, _, _ := xShape_Destroy.Call(uintptr(hShape))
+	return int(r)
+}
+
+// 形状_取位置.
+//
+// hShape: 形状对象句柄.
+//
+// pOutX: 返回X坐标.
+//
+// pOutY: 返回Y坐标.
+func XShape_GetPosition(hShape int, pOutX *int, pOutY *int) int {
+	r, _, _ := xShape_GetPosition.Call(uintptr(hShape), uintptr(unsafe.Pointer(pOutX)), uintptr(unsafe.Pointer(pOutY)))
+	return int(r)
+}
+
+// 形状_置大小.
+//
+// hShape: 形状对象句柄.
+//
+// nWidth: 宽度.
+//
+// nHeight: 高度.
+func XShape_SetSize(hShape int, nWidth int, nHeight int) int {
+	r, _, _ := xShape_SetSize.Call(uintptr(hShape), uintptr(nWidth), uintptr(nHeight))
+	return int(r)
+}
+
+// 形状_取大小.
+//
+// hShape: 形状对象句柄.
+//
+// pOutWidth: 返回宽度.
+//
+// pOutHeight: 返回高度.
+func XShape_GetSize(hShape int, pOutWidth *int, pOutHeight *int) int {
+	r, _, _ := xShape_GetSize.Call(uintptr(hShape), uintptr(unsafe.Pointer(pOutWidth)), uintptr(unsafe.Pointer(pOutHeight)))
+	return int(r)
+}
+
+// 形状_置透明度.
+//
+// hShape: 形状对象句柄.
+//
+// alpha: 透明度.
+func XShape_SetAlpha(hShape int, alpha uint8) int {
+	r, _, _ := xShape_SetAlpha.Call(uintptr(hShape), uintptr(alpha))
+	return int(r)
+}
+
+// 形状_取透明度, 返回透明度.
+//
+// hShape: 形状对象句柄.
+func XShape_GetAlpha(hShape int) int {
+	r, _, _ := xShape_GetAlpha.Call(uintptr(hShape))
 	return int(r)
 }
