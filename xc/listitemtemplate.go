@@ -30,15 +30,13 @@ func XTemp_LoadZip(nType int, pZipFile string, pFileName string, pPassword strin
 //
 // nType: 模板类型, ListItemTemp_Type_.
 //
-// data: 内存块指针.
-//
-// length: 内存块大小.
+// data: 模板文件数据.
 //
 // pFileName: 文件名.
 //
 // pPassword: zip密码.
-func XTemp_LoadZipMem(nType int, data *[]byte, length int, pFileName string, pPassword string) int {
-	r, _, _ := xTemp_LoadZipMem.Call(uintptr(nType), bytePtr2(data), uintptr(length), strPtr(pFileName), strPtr(pPassword))
+func XTemp_LoadZipMem(nType int, data []byte, pFileName string, pPassword string) int {
+	r, _, _ := xTemp_LoadZipMem.Call(uintptr(nType), bytePtr2(&data), uintptr(len(data)), strPtr(pFileName), strPtr(pPassword))
 	return int(r)
 }
 
@@ -78,9 +76,7 @@ func XTemp_LoadZipEx(nType int, pZipFile string, pFileName string, pPassword str
 //
 // nType: 模板类型, ListItemTemp_Type_.
 //
-// data: 内存块指针.
-//
-// length: 内存块大小, 字节为单位.
+// data: 模板文件数据.
 //
 // pFileName: 文件名.
 //
@@ -89,8 +85,8 @@ func XTemp_LoadZipEx(nType int, pZipFile string, pFileName string, pPassword str
 // pOutTemp1: 返回模板句柄1, 项模板.
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
-func XTemp_LoadZipMemEx(nType int, data *[]byte, length int, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int) bool {
-	r, _, _ := xTemp_LoadZipMemEx.Call(uintptr(nType), bytePtr2(data), uintptr(length), strPtr(pFileName), strPtr(pPassword), uintptr(unsafe.Pointer(&pOutTemp1)), uintptr(unsafe.Pointer(&pOutTemp2)))
+func XTemp_LoadZipMemEx(nType int, data []byte, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int) bool {
+	r, _, _ := xTemp_LoadZipMemEx.Call(uintptr(nType), bytePtr2(&data), uintptr(len(data)), strPtr(pFileName), strPtr(pPassword), uintptr(unsafe.Pointer(&pOutTemp1)), uintptr(unsafe.Pointer(&pOutTemp2)))
 	return int(r) != 0
 }
 

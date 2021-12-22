@@ -60,15 +60,13 @@ func XFont_CreateFromFile(pFontFile string, size int, style int) int {
 
 // 字体_创建从内存, 创建炫彩字体从内存, 返回字体句柄.
 //
-// data: xx.
-//
-// length: xx.
+// data: 字体文件数据.
 //
 // fontSize: 字体大小, 单位(pt,磅).
 //
 // style: 字体样式, FontStyle_.
-func XFont_CreateFromMem(data *[]byte, length, fontSize, style int) int {
-	r, _, _ := xFont_CreateFromMem.Call(bytePtr2(data), uintptr(length), uintptr(fontSize), uintptr(style))
+func XFont_CreateFromMem(data []byte, fontSize, style int) int {
+	r, _, _ := xFont_CreateFromMem.Call(bytePtr2(&data), uintptr(len(data)), uintptr(fontSize), uintptr(style))
 	return int(r)
 }
 

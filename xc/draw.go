@@ -109,8 +109,8 @@ func XDraw_DrawArcF(hDraw int, x, y, nWidth, nHeight, startAngle, sweepAngle flo
 // count: 数组大小.
 //
 // tension: 大于或等于0.0F的值，指定曲线的张力, D2D 忽略此参数.
-func XDraw_DrawCurve(hDraw int, points *[]POINT, count int, tension float32) int {
-	r, _, _ := xDraw_DrawCurve.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&(*points)[0])), uintptr(count), float32Ptr(tension))
+func XDraw_DrawCurve(hDraw int, points []POINT, count int, tension float32) int {
+	r, _, _ := xDraw_DrawCurve.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&points[0])), uintptr(count), float32Ptr(tension))
 	return int(r)
 }
 
@@ -123,8 +123,8 @@ func XDraw_DrawCurve(hDraw int, points *[]POINT, count int, tension float32) int
 // count: 数组大小.
 //
 // tension: 大于或等于0.0F的值，指定曲线的张力, D2D 忽略此参数。.
-func XDraw_DrawCurveF(hDraw int, points *[]POINTF, count int, tension float32) int {
-	r, _, _ := xDraw_DrawCurveF.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&(*points)[0])), uintptr(count), float32Ptr(tension))
+func XDraw_DrawCurveF(hDraw int, points []POINTF, count int, tension float32) int {
+	r, _, _ := xDraw_DrawCurveF.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&points[0])), uintptr(count), float32Ptr(tension))
 	return int(r)
 }
 
@@ -167,8 +167,8 @@ func XDraw_DrawLineF(hDraw int, x1, y1, x2, y2 float32) int {
 // points: 顶点坐标数组.
 //
 // nCount: 顶点数量.
-func XDraw_DrawPolygon(hDraw int, points *[]POINT, nCount int) int {
-	r, _, _ := xDraw_DrawPolygon.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&(*points)[0])), uintptr(nCount))
+func XDraw_DrawPolygon(hDraw int, points []POINT, nCount int) int {
+	r, _, _ := xDraw_DrawPolygon.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&points[0])), uintptr(nCount))
 	return int(r)
 }
 
@@ -179,8 +179,8 @@ func XDraw_DrawPolygon(hDraw int, points *[]POINT, nCount int) int {
 // points: 顶点坐标数组.
 //
 // nCount: 顶点数量.
-func XDraw_DrawPolygonF(hDraw int, points *[]POINTF, nCount int) int {
-	r, _, _ := xDraw_DrawPolygonF.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&(*points)[0])), uintptr(nCount))
+func XDraw_DrawPolygonF(hDraw int, points []POINTF, nCount int) int {
+	r, _, _ := xDraw_DrawPolygonF.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&points[0])), uintptr(nCount))
 	return int(r)
 }
 
@@ -831,8 +831,8 @@ func XDraw_GDI_LineTo(hDraw int, nXEnd int, nYEnd int) bool {
 // pArrayPt: 参见MSDN.
 //
 // arrayPtSize: 参见MSDN.
-func XDraw_GDI_Polyline(hDraw int, pArrayPt *[]POINT, arrayPtSize int) bool {
-	r, _, _ := xDraw_GDI_Polyline.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&(*pArrayPt)[0])), uintptr(arrayPtSize))
+func XDraw_GDI_Polyline(hDraw int, pArrayPt []POINT, arrayPtSize int) bool {
+	r, _, _ := xDraw_GDI_Polyline.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&pArrayPt[0])), uintptr(arrayPtSize))
 	return int(r) != 0
 }
 
@@ -975,8 +975,8 @@ func XDraw_GDI_Ellipse(hDraw int, pRect *RECT) bool {
 // points: 顶点坐标数组.
 //
 // nCount: 顶点数量.
-func XDraw_FillPolygon(hDraw int, points *[]POINT, nCount int) int {
-	r, _, _ := xDraw_FillPolygon.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&(*points)[0])), uintptr(nCount))
+func XDraw_FillPolygon(hDraw int, points []POINT, nCount int) int {
+	r, _, _ := xDraw_FillPolygon.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&points[0])), uintptr(nCount))
 	return int(r)
 }
 
