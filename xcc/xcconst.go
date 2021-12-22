@@ -34,12 +34,12 @@ const (
 )
 
 // 调整布局标识位
-// XC_AdjustLayout_
+// AdjustLayout_
 
 const (
-	XC_AdjustLayout_No   = iota // 不调整布局
-	XC_AdjustLayout_All         // 强制调整自身和子对象布局
-	XC_AdjustLayout_Self        // 只调整自身布局, 不调整子对象布局
+	AdjustLayout_No   = iota // 不调整布局
+	AdjustLayout_All         // 强制调整自身和子对象布局
+	AdjustLayout_Self        // 只调整自身布局, 不调整子对象布局
 )
 
 // 炫彩窗口透明标识
@@ -311,6 +311,21 @@ const (
 	Element_Position_Bottom = 0x08 // 下边
 )
 
+// 位置标识
+// Position_Flag_
+
+const (
+	Position_Flag_Left        = iota // 左
+	Position_Flag_Top                // 上
+	Position_Flag_Right              // 右
+	Position_Flag_Bottom             // 下
+	Position_Flag_LeftTop            // 左上角
+	Position_Flag_LeftBottom         // 左下角
+	Position_Flag_RightTop           // 右上角
+	Position_Flag_RightBottom        // 右下角
+	Position_Flag_Center             // 中心
+)
+
 // 元素事件
 
 const (
@@ -538,13 +553,35 @@ const (
 	GRADIENT_FILL_TRIANGLE        //三角形
 )
 
-// 缓动标识
-// Ease_
+// 缓动类型
+// Ease_Type_
 
 const (
-	Ease_In    = iota // 从慢到快
-	Ease_Out          // 从快到慢
-	Ease_InOut        // 从慢到快再到慢
+	Ease_Type_In    = iota // 从慢到快
+	Ease_Type_Out          // 从快到慢
+	Ease_Type_InOut        // 从慢到快再到慢
+)
+
+// 缓动标识
+// Ease_Flag_
+
+const (
+	Ease_Flag_Linear = iota // 线性, 直线
+	Ease_Flag_Quad          // 二次方曲线
+	Ease_Flag_Cubic         // 三次方曲线, 圆弧
+	Ease_Flag_Quart         // 四次方曲线
+	Ease_Flag_Quint         // 五次方曲线
+
+	Ease_Flag_Sine    // 正弦, 在末端变化
+	Ease_Flag_Expo    // 突击, 突然一下
+	Ease_Flag_Circ    // 圆环, 好比绕过一个圆环
+	Ease_Flag_Elastic // 强力回弹
+	Ease_Flag_Back    // 回弹, 比较缓慢
+	Ease_Flag_Bounce  // 弹跳, 模拟小球落地弹跳
+
+	Ease_Flag_In    = 0x010000 // 从慢到快
+	Ease_Flag_Out   = 0x020000 // 从快到慢
+	Ease_Flag_InOut = 0x030000 // 从慢到快再到慢
 )
 
 // 字体样式
@@ -589,17 +626,32 @@ const (
 // Window_Position_
 
 const (
-	Window_Position_Top    = iota // top
-	Window_Position_Bottom        // bottom
-	Window_Position_Left          // left
-	Window_Position_Right         // right
+	Window_Position_Top    = iota // 上
+	Window_Position_Bottom        // 下
+	Window_Position_Left          // 左
+	Window_Position_Right         // 右
 	Window_Position_Body          // body
 	Window_Position_Window        // window 整个窗口
 	Window_Position_Error  = -1   // 错误
 )
 
+// 窗口位置
+
+const (
+	WINDOW_TOP         = iota + 1 // 上
+	WINDOW_BOTTOM                 // 下
+	WINDOW_LEFT                   // 左
+	WINDOW_RIGHT                  // 右
+	WINDOW_TOPLEFT                // 左上角
+	WINDOW_TOPRIGHT               // 右上角
+	WINDOW_BOTTOMLEFT             // 左下角
+	WINDOW_BOTTOMRIGHT            // 右下角
+	WINDOW_CAPTION                // 标题栏移动窗口区域
+	WINDOW_BODY
+)
+
 // List项状态
-//  List_Item_State_
+// List_Item_State_
 
 const (
 	List_Item_State_Leave  = iota // 项鼠标离开状态
@@ -617,7 +669,7 @@ const (
 	Tree_Item_State_Select        // 项选择状态
 )
 
-// List,ListBox,ListView,Tree,项背景绘制标志位
+// List, ListBox, ListView, Tree, 项背景绘制标志位
 // List_DrawItemBk_Flag_
 
 const (
@@ -630,7 +682,7 @@ const (
 )
 
 // 属性网格项类型
-//  PropertyGrid_Item_Type_
+// PropertyGrid_Item_Type_
 
 const (
 	PropertyGrid_Item_Type_Text       = iota // 默认,字符串类型
@@ -663,7 +715,7 @@ const (
 )
 
 // 组合状态
-//  Window_State_Flag_
+// Window_State_Flag_
 
 const (
 	Window_State_Flag_Nothing      = 0x0000     // 无
@@ -677,6 +729,7 @@ const (
 )
 
 // 组合状态
+// 列表树状态
 // Tree_State_Flag_
 
 const (
@@ -752,7 +805,7 @@ const (
 	ListBox_State_Flag_Item_Select_No = 0x0400 // 项未选择
 )
 
-//组合状态
+// 组合状态
 // 列表视图状态标志
 // ListView_State_Flag_
 
@@ -768,6 +821,7 @@ const (
 )
 
 // 组合状态
+// 列表头状态
 // ListHeader_State_Flag_Item_
 
 const (
@@ -777,7 +831,7 @@ const (
 )
 
 // 组合状态
-// 月历状态标志
+// 月历卡片状态标志
 // MonthCal_State_Flag_
 
 const (
@@ -799,7 +853,34 @@ const (
 // Layout_State_Flag_
 
 const (
-	Layout_State_Flag_Nothing = iota // 无
+	Layout_State_Flag_Nothing = Window_State_Flag_Nothing // 无
+	Layout_State_Flag_Full    = 0x0001                    // 完整背景
+	Layout_State_Flag_Body    = 0x0002                    // 内容区域, 不包含边大小
+)
+
+// 组合状态
+// 属性网格状态
+// propertyGrid_state_flag_
+
+const (
+	PropertyGrid_State_Flag_Item_Leave      = 0x0080 //离开
+	PropertyGrid_State_Flag_Item_Stay       = 0x0100 //停留
+	PropertyGrid_State_Flag_Item_Select     = 0x0200 //选择
+	PropertyGrid_State_Flag_Item_Select_No  = 0x0400 //未选择
+	PropertyGrid_State_Flag_Group_Leave     = 0x0800 //组离开
+	PropertyGrid_State_Flag_Group_Expand    = 0x1000 //组展开
+	PropertyGrid_State_Flag_Group_Expand_No = 0x2000 //组未展开
+)
+
+// 组合状态
+// 窗格状态
+// Pane_State_Flag_
+
+const (
+	Pane_State_Flag_Leave   = Element_State_Flag_Leave // 离开
+	Pane_State_Flag_Stay    = Element_State_Flag_Stay  // 停留
+	Pane_State_Flag_Caption = 0x0080                   // 标题
+	Pane_State_Flag_Body    = 0x0100                   // 内容区
 )
 
 // 窗口事件
@@ -871,4 +952,37 @@ const (
 	MonthCal_Button_Type_Next_Year         // 下一年
 	MonthCal_Button_Type_Last_Month        // 上一月
 	MonthCal_Button_Type_Next_Month        //下一月
+)
+
+// 窗格菜单 当前未使用
+
+const (
+	IDM_LOCK  = 1000000006 // 锁定
+	IDM_DOCK  = 1000000007 // 停靠
+	IDM_FLOAT = 1000000008 // 浮动
+	IDM_HIDE  = 1000000009 // 隐藏
+
+	Edit_Style_No = 0xFFFF // 无效样式
+)
+
+// 菜单ID, 当前未使用
+
+const (
+	IDM_CLIP      = 1000000000 // 剪切
+	IDM_COPY      = 1000000001 // 复制
+	IDM_PASTE     = 1000000002 // 粘贴
+	IDM_DELETE    = 1000000003 // 删除
+	IDM_SELECTALL = 1000000004 // 全选
+	IDM_DELETEALL = 1000000005 // 清空
+)
+
+// 通知消息外观
+// NotifyMsg_Skin_
+
+const (
+	NotifyMsg_Skin_No      = iota // 默认
+	NotifyMsg_Skin_Success        // 成功
+	NotifyMsg_Skin_Warning        // 警告
+	NotifyMsg_Skin_Message        // 消息
+	NotifyMsg_Skin_Error          // 错误
 )
