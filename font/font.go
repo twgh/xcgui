@@ -76,16 +76,14 @@ func NewFontFromFile(pFontFile string, size int, style int) *Font {
 
 // 字体_创建从内存, 创建炫彩字体从内存, 返回字体句柄.
 //
-// data: xx.
-//
-// length: xx.
+// data: 字体文件数据.
 //
 // fontSize: 字体大小, 单位(pt,磅).
 //
 // style: 字体样式, FontStyle_.
-func NewFontFromMem(data *[]byte, length, fontSize, style int) *Font {
+func NewFontFromMem(data []byte, fontSize, style int) *Font {
 	p := &Font{}
-	p.SetHandle(xc.XFont_CreateFromMem(data, length, fontSize, style))
+	p.SetHandle(xc.XFont_CreateFromMem(data, fontSize, style))
 	return p
 }
 
