@@ -110,7 +110,7 @@ func (d *Draw) DrawArcF(x, y, nWidth, nHeight, startAngle, sweepAngle float32) i
 // count: 数组大小.
 //
 // tension: 大于或等于0.0F的值，指定曲线的张力, D2D 忽略此参数。.
-func (d *Draw) DrawCurve(points *[]xc.POINT, count int, tension float32) int {
+func (d *Draw) DrawCurve(points []xc.POINT, count int, tension float32) int {
 	return xc.XDraw_DrawCurve(d.Handle, points, count, tension)
 }
 
@@ -121,7 +121,7 @@ func (d *Draw) DrawCurve(points *[]xc.POINT, count int, tension float32) int {
 // count: 数组大小.
 //
 // tension: 大于或等于0.0F的值，指定曲线的张力, D2D 忽略此参数。.
-func (d *Draw) DrawCurveF(points *[]xc.POINTF, count int, tension float32) int {
+func (d *Draw) DrawCurveF(points []xc.POINTF, count int, tension float32) int {
 	return xc.XDraw_DrawCurveF(d.Handle, points, count, tension)
 }
 
@@ -156,7 +156,7 @@ func (d *Draw) DrawLineF(x1, y1, x2, y2 float32) int {
 // points: 顶点坐标数组.
 //
 // nCount: 顶点数量.
-func (d *Draw) DrawPolygon(points *[]xc.POINT, nCount int) int {
+func (d *Draw) DrawPolygon(points []xc.POINT, nCount int) int {
 	return xc.XDraw_DrawPolygon(d.Handle, points, nCount)
 }
 
@@ -165,7 +165,7 @@ func (d *Draw) DrawPolygon(points *[]xc.POINT, nCount int) int {
 // points: 顶点坐标数组.
 //
 // nCount: 顶点数量.
-func (d *Draw) DrawPolygonF(points *[]xc.POINTF, nCount int) int {
+func (d *Draw) DrawPolygonF(points []xc.POINTF, nCount int) int {
 	return xc.XDraw_DrawPolygonF(d.Handle, points, nCount)
 }
 
@@ -671,7 +671,7 @@ func (d *Draw) GDI_LineTo(nXEnd int, nYEnd int) bool {
 // pArrayPt: 参见MSDN.
 //
 // arrayPtSize: 参见MSDN.
-func (d *Draw) GDI_Polyline(pArrayPt *[]xc.POINT, arrayPtSize int) bool {
+func (d *Draw) GDI_Polyline(pArrayPt []xc.POINT, arrayPtSize int) bool {
 	return xc.XDraw_GDI_Polyline(d.Handle, pArrayPt, arrayPtSize)
 }
 
@@ -784,7 +784,7 @@ func (d *Draw) GDI_AlphaBlend(nXOriginDest int, nYOriginDest int, nWidthDest int
 // points: 顶点坐标数组.
 //
 // nCount: 顶点数量.
-func (d *Draw) FillPolygon(points *[]xc.POINT, nCount int) int {
+func (d *Draw) FillPolygon(points []xc.POINT, nCount int) int {
 	return xc.XDraw_FillPolygon(d.Handle, points, nCount)
 }
 
