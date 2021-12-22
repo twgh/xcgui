@@ -13,10 +13,8 @@ func XSvg_LoadFile(pFileName string) int {
 // SVG_加载从字符串, 返回SVG句柄.
 //
 // pString: 字符串指针.
-//
-// nLength: 字符串长度.
-func XSvg_LoadString(pString string, nLength int) int {
-	r, _, _ := xSvg_LoadString.Call(XC_wtoa(pString), uintptr(nLength))
+func XSvg_LoadString(pString string) int {
+	r, _, _ := xSvg_LoadString.Call(XC_wtoa(pString))
 	return int(r)
 }
 
@@ -91,8 +89,8 @@ func XSvg_GetHeight(hSvg int) int {
 // x: x轴偏移.
 //
 // y: y轴偏移.
-func XSvg_SetOffset(hSvg int, x int, y int) int {
-	r, _, _ := xSvg_SetOffset.Call(uintptr(hSvg), uintptr(x), uintptr(y))
+func XSvg_SetPosition(hSvg int, x, y int) int {
+	r, _, _ := xSvg_SetPosition.Call(uintptr(hSvg), uintptr(x), uintptr(y))
 	return int(r)
 }
 
@@ -103,8 +101,32 @@ func XSvg_SetOffset(hSvg int, x int, y int) int {
 // pX: x轴偏移.
 //
 // pY: y轴偏移.
-func XSvg_GetOffset(hSvg int, pX, pY *int) int {
-	r, _, _ := xSvg_GetOffset.Call(uintptr(hSvg), uintptr(unsafe.Pointer(pX)), uintptr(unsafe.Pointer(pY)))
+func XSvg_GetPosition(hSvg int, pX, pY *int) int {
+	r, _, _ := xSvg_GetPosition.Call(uintptr(hSvg), uintptr(unsafe.Pointer(pX)), uintptr(unsafe.Pointer(pY)))
+	return int(r)
+}
+
+// SVG_置偏移F.
+//
+// hSvg: SVG句柄.
+//
+// x: x轴偏移.
+//
+// y: y轴偏移.
+func XSvg_SetPositionF(hSvg int, x, y float32) int {
+	r, _, _ := xSvg_SetPositionF.Call(uintptr(hSvg), float32Ptr(x), float32Ptr(y))
+	return int(r)
+}
+
+// SVG_取偏移F.
+//
+// hSvg: SVG句柄.
+//
+// pX: x轴偏移.
+//
+// pY: y轴偏移.
+func XSvg_GetPositionF(hSvg int, pX, pY *float32) int {
+	r, _, _ := xSvg_GetPositionF.Call(uintptr(hSvg), uintptr(unsafe.Pointer(pX)), uintptr(unsafe.Pointer(pY)))
 	return int(r)
 }
 
@@ -157,5 +179,147 @@ func XSvg_GetRefCount(hSvg int) int {
 // hSvg: SVG句柄.
 func XSvg_Destroy(hSvg int) int {
 	r, _, _ := xSvg_Destroy.Call(uintptr(hSvg))
+	return int(r)
+}
+
+// SVG_置透明度.
+//
+// hSvg: SVG句柄.
+//
+// alpha: 透明度.
+func XSvg_SetAlpha(hSvg int, alpha byte) int {
+	r, _, _ := xSvg_SetAlpha.Call(uintptr(hSvg), uintptr(alpha))
+	return int(r)
+}
+
+// SVG_取透明度, 返回透明度.
+//
+// hSvg: SVG句柄.
+func XSvg_GetAlpha(hSvg int) int {
+	r, _, _ := xSvg_GetAlpha.Call(uintptr(hSvg))
+	return int(r)
+}
+
+// SVG_置用户填充颜色, 用户颜色将覆盖默认样式.
+//
+// hSvg: SVG句柄.
+//
+// color: 颜色, AGBR颜色.
+//
+// bEnable: 是否有效.
+func XSvg_SetUserFillColor(hSvg int, color int, bEnable bool) int {
+	r, _, _ := xSvg_SetUserFillColor.Call(uintptr(hSvg), uintptr(color), boolPtr(bEnable))
+	return int(r)
+}
+
+// SVG_置用户笔触颜色, 用户颜色将覆盖默认样式.
+//
+// hSvg: SVG句柄.
+//
+// color: 颜色, AGBR颜色.
+//
+// strokeWidth: 笔触宽度.
+//
+// bEnable: 是否有效.
+func XSvg_SetUserStrokeColor(hSvg int, color int, strokeWidth float32, bEnable bool) int {
+	r, _, _ := xSvg_SetUserStrokeColor.Call(uintptr(hSvg), uintptr(color), float32Ptr(strokeWidth), boolPtr(bEnable))
+	return int(r)
+}
+
+// SVG_取用户填充颜色.
+//
+// hSvg: SVG句柄.
+//
+// pColor: 返回颜色值, AGBR颜色.
+func XSvg_GetUserFillColor(hSvg int, pColor *int) bool {
+	r, _, _ := xSvg_GetUserFillColor.Call(uintptr(hSvg), uintptr(unsafe.Pointer(pColor)))
+	return int(r) != 0
+}
+
+// SVG_取用户笔触颜色.
+//
+// hSvg: SVG句柄.
+//
+// pColor: 返回颜色值, AGBR颜色.
+//
+// pStrokeWidth: .
+func XSvg_GetUserStrokeColor(hSvg int, pColor *int, pStrokeWidth *float32) bool {
+	r, _, _ := xSvg_GetUserStrokeColor.Call(uintptr(hSvg), uintptr(unsafe.Pointer(pColor)), uintptr(unsafe.Pointer(pStrokeWidth)))
+	return int(r) != 0
+}
+
+// SVG_置旋转角度, 默认以自身中心点旋转.
+//
+// hSvg: SVG句柄.
+//
+// angle: 转角度.
+func XSvg_SetRotateAngle(hSvg int, angle float32) int {
+	r, _, _ := xSvg_SetRotateAngle.Call(uintptr(hSvg), float32Ptr(angle))
+	return int(r)
+}
+
+// SVG_取旋转角度, 返回旋转角度.
+//
+// hSvg: SVG句柄.
+func XSvg_GetRotateAngle(hSvg int) float32 {
+	_, r, _ := xSvg_GetRotateAngle.Call(uintptr(hSvg))
+	return uintPtrToFloat32(r)
+}
+
+// SVG_置旋转.
+//
+// hSvg: SVG句柄.
+//
+// angle: 角度.
+//
+// x: 旋转中心点X.
+//
+// y: 旋转中心点Y.
+//
+// bOffset: TRUE: 旋转中心点相对于自身中心偏移, FALSE:使用绝对坐标.
+func XSvg_SetRotate(hSvg int, angle float32, x float32, y float32, bOffset bool) int {
+	r, _, _ := xSvg_SetRotate.Call(uintptr(hSvg), float32Ptr(angle), float32Ptr(x), float32Ptr(y), boolPtr(bOffset))
+	return int(r)
+}
+
+// SVG_取旋转.
+//
+// hSvg: SVG句柄.
+//
+// pAngle: 返回角度.
+//
+// pX: 返回 旋转中心点X.
+//
+// pY: 返回 旋转中心点Y.
+//
+// pbOffset: 返回TRUE: 旋转中心点相对于自身中心偏移, FALSE:使用绝对坐标.
+func XSvg_GetRotate(hSvg int, pAngle *float32, pX *float32, pY *float32, pbOffset *bool) int {
+	r, _, _ := xSvg_GetRotate.Call(uintptr(hSvg), uintptr(unsafe.Pointer(pAngle)), uintptr(unsafe.Pointer(pX)), uintptr(unsafe.Pointer(pY)), uintptr(unsafe.Pointer(pbOffset)))
+	return int(r)
+}
+
+// SVG_显示, 显示或隐藏.
+//
+// hSvg: SVG句柄.
+//
+// bShow: 是否显示.
+func XSvg_Show(hSvg int, bShow bool) int {
+	r, _, _ := xSvg_Show.Call(uintptr(hSvg), boolPtr(bShow))
+	return int(r)
+}
+
+// SVG_加载从字符串W.
+//
+// pString: 字符串指针.
+func XSvg_LoadStringW(pString string) int {
+	r, _, _ := xSvg_LoadStringW.Call(strPtr(pString))
+	return int(r)
+}
+
+// SVG_加载从字符串UTF8.
+//
+// pString: 字符串指针.
+func XSvg_LoadStringUtf8(pString string) int {
+	r, _, _ := xSvg_LoadStringUtf8.Call(XC_wtoutf8(pString))
 	return int(r)
 }
