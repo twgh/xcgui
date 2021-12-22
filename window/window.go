@@ -34,11 +34,9 @@ func NewWindow(x int, y int, cx int, cy int, pTitle string, hWndParent int, XCSt
 //
 // dwExStyle: 窗口扩展样式.
 //
-// lpClassName: 窗口类名.
-//
-// lpWindowName: 窗口名.
-//
 // dwStyle: 窗口样式.
+//
+// lpClassName: 窗口类名.
 //
 // x: 窗口左上角x坐标.
 //
@@ -48,12 +46,14 @@ func NewWindow(x int, y int, cx int, cy int, pTitle string, hWndParent int, XCSt
 //
 // cy: 窗口高度.
 //
+// pTitle: 窗口名.
+//
 // hWndParent: 父窗口.
 //
-// XCStyle: GUI库窗口样式: Window_Style_.
-func NewWindowEx(dwExStyle int, lpClassName string, lpWindowName string, dwStyle int, x int, y int, cx int, cy int, hWndParent int, XCStyle int) *Window {
+// XCStyle: GUI库窗口样式, Window_Style_.
+func NewWindowEx(dwExStyle int, dwStyle int, lpClassName string, x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle int) *Window {
 	p := &Window{}
-	p.SetHandle(xc.XWnd_CreateEx(dwExStyle, lpClassName, lpWindowName, dwStyle, x, y, cx, cy, hWndParent, XCStyle))
+	p.SetHandle(xc.XWnd_CreateEx(dwExStyle, dwStyle, lpClassName, x, y, cx, cy, pTitle, hWndParent, XCStyle))
 	return p
 }
 

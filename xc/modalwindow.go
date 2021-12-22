@@ -20,11 +20,9 @@ func XModalWnd_Create(nWidth int, nHeight int, pTitle string, hWndParent int, XC
 //
 // dwExStyle: 窗口扩展样式.
 //
-// lpClassName: 窗口类名.
-//
-// lpWindowName: 窗口名.
-//
 // dwStyle: 窗口样式.
+//
+// lpClassName: 窗口类名.
 //
 // x: 窗口左上角x坐标.
 //
@@ -34,11 +32,13 @@ func XModalWnd_Create(nWidth int, nHeight int, pTitle string, hWndParent int, XC
 //
 // cy: 窗口高度.
 //
+// pTitle: 窗口名.
+//
 // hWndParent: 父窗口.
 //
 // XCStyle: GUI库窗口样式: Window_Style_.
-func XModalWnd_CreateEx(dwExStyle int, lpClassName string, lpWindowName string, dwStyle int, x int, y int, cx int, cy int, hWndParent int, XCStyle int) int {
-	r, _, _ := xModalWnd_CreateEx.Call(uintptr(dwExStyle), strPtr(lpClassName), strPtr(lpWindowName), uintptr(dwStyle), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), uintptr(hWndParent), uintptr(XCStyle))
+func XModalWnd_CreateEx(dwExStyle int, dwStyle int, lpClassName string, x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle int) int {
+	r, _, _ := xModalWnd_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), strPtr(lpClassName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), strPtr(pTitle), uintptr(hWndParent), uintptr(XCStyle))
 	return int(r)
 }
 
