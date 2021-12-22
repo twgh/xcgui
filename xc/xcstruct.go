@@ -194,3 +194,30 @@ type ListBox_Item_Info_ struct {
 	NHeight    int32 // 项高度, -1使用默认高度
 	NSelHeight int32 // 项选中时高度, -1使用默认高度
 }
+
+// 月历元素项数据
+type MonthCal_item_ struct {
+	NDay   int  // 日期
+	NType  int  // 1上月, 2当月, 3下月
+	NState int  // 组合状态, MonthCal_State_Flag_
+	RcItem RECT // 项坐标
+}
+
+// PGrid 属性网格项信息
+type PropertyGrid_item_ struct {
+	NType         int  // 类型
+	NID           int  // 项ID
+	NDepth        int  // 深度
+	NUserData     int  // 用户数据
+	NNameColWidth int  // 名称列宽度
+	RcItem        RECT // 坐标
+	RcExpand      RECT // 展开
+	BExpand       bool // 是否展开
+	BShow         bool // 是否可见
+}
+
+// 列表视项ID
+type ListView_Item_Id_ struct {
+	IGroup int // 组索引
+	IItem  int // 项索引
+}
