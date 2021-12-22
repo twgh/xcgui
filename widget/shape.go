@@ -80,8 +80,8 @@ func (s *Shape) GetHeight() int {
 // x: x坐标.
 //
 // y: y坐标.
-func (s *Shape) Move(x int, y int) int {
-	return xc.XShape_Move(s.Handle, x, y)
+func (s *Shape) SetPosition(x int, y int) int {
+	return xc.XShape_SetPosition(s.Handle, x, y)
 }
 
 // 形状_取坐标.
@@ -143,4 +143,43 @@ func (s *Shape) AdjustLayout() int {
 // 形状_销毁, 销毁形状对象.
 func (s *Shape) Destroy() int {
 	return xc.XShape_Destroy(s.Handle)
+}
+
+// 形状_取位置.
+//
+// pOutX: 返回X坐标.
+//
+// pOutY: 返回Y坐标.
+func (s *Shape) GetPosition(pOutX *int, pOutY *int) int {
+	return xc.XShape_GetPosition(s.Handle, pOutX, pOutY)
+}
+
+// 形状_置大小.
+//
+// nWidth: 宽度.
+//
+// nHeight: 高度.
+func (s *Shape) SetSize(nWidth int, nHeight int) int {
+	return xc.XShape_SetSize(s.Handle, nWidth, nHeight)
+}
+
+// 形状_取大小.
+//
+// pOutWidth: 返回宽度.
+//
+// pOutHeight: 返回高度.
+func (s *Shape) GetSize(pOutWidth *int, pOutHeight *int) int {
+	return xc.XShape_GetSize(s.Handle, pOutWidth, pOutHeight)
+}
+
+// 形状_置透明度.
+//
+// alpha: 透明度.
+func (s *Shape) SetAlpha(alpha uint8) int {
+	return xc.XShape_SetAlpha(s.Handle, alpha)
+}
+
+// 形状_取透明度, 返回透明度.
+func (s *Shape) GetAlpha() int {
+	return xc.XShape_GetAlpha(s.Handle)
 }

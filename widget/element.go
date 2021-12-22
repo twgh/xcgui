@@ -230,7 +230,7 @@ func (e *Element) InsertChild(hChild int, index int) bool {
 //
 // bRedraw: 是否重绘.
 //
-// nFlags: 调整布局标识位, XC_AdjustLayout_.
+// nFlags: 调整布局标识位, AdjustLayout_.
 //
 // nAdjustNo:.
 func (e *Element) SetRect(pRect *xc.RECT, bRedraw bool, nFlags int, nAdjustNo int) int {
@@ -249,7 +249,7 @@ func (e *Element) SetRect(pRect *xc.RECT, bRedraw bool, nFlags int, nAdjustNo in
 //
 // bRedraw: 是否重绘.
 //
-// nFlags: 调整布局标识位, XC_AdjustLayout_.
+// nFlags: 调整布局标识位, AdjustLayout_.
 //
 // nAdjustNo:.
 func (e *Element) SetRectEx(x int, y int, cx int, cy int, bRedraw bool, nFlags int, nAdjustNo int) int {
@@ -262,7 +262,7 @@ func (e *Element) SetRectEx(x int, y int, cx int, cy int, bRedraw bool, nFlags i
 //
 // bRedraw: 是否重绘.
 //
-// nFlags: 参数将被带入XE_SIZE ,XE_ADJUSTLAYOUT 事件回调.xc_adjustLayout_.
+// nFlags: 参数将被带入XE_SIZE ,XE_ADJUSTLAYOUT 事件回调.AdjustLayout_.
 //
 // nAdjustNo:.
 func (e *Element) SetRectLogic(pRect *xc.RECT, bRedraw bool, nFlags int, nAdjustNo int) int {
@@ -277,11 +277,11 @@ func (e *Element) SetRectLogic(pRect *xc.RECT, bRedraw bool, nFlags int, nAdjust
 //
 // bRedraw: 是否重绘.
 //
-// nFlags: 调整布局标识位, XC_AdjustLayout_.
+// nFlags: 调整布局标识位, AdjustLayout_.
 //
 // nAdjustNo:.
-func (e *Element) Move(x int, y int, bRedraw bool, nFlags int, nAdjustNo int) int {
-	return xc.XEle_Move(e.Handle, x, y, bRedraw, nFlags, nAdjustNo)
+func (e *Element) SetPosition(x int, y int, bRedraw bool, nFlags int, nAdjustNo int) int {
+	return xc.XEle_SetPosition(e.Handle, x, y, bRedraw, nFlags, nAdjustNo)
 }
 
 // 元素_移动逻辑坐标, 移动元素坐标, 逻辑坐标, 包含滚动视图偏移. 如果坐标未改变返回0, 如果大小改变返回2(触发XE_SIZE), 否则返回1.
@@ -292,11 +292,11 @@ func (e *Element) Move(x int, y int, bRedraw bool, nFlags int, nAdjustNo int) in
 //
 // bRedraw: 是否重绘.
 //
-// nFlags: 调整布局标识位, XC_AdjustLayout_.
+// nFlags: 调整布局标识位, AdjustLayout_.
 //
 // nAdjustNo:.
-func (e *Element) MoveLogic(x int, y int, bRedraw bool, nFlags int, nAdjustNo int) int {
-	return xc.XEle_MoveLogic(e.Handle, x, y, bRedraw, nFlags, nAdjustNo)
+func (e *Element) SetPositionLogic(x int, y int, bRedraw bool, nFlags int, nAdjustNo int) int {
+	return xc.XEle_SetPositionLogic(e.Handle, x, y, bRedraw, nFlags, nAdjustNo)
 }
 
 // 元素_判断绘制焦点.
@@ -837,6 +837,44 @@ func (e *Element) AdjustLayoutEx(nFlags int, nAdjustNo int) int {
 	return xc.XEle_AdjustLayoutEx(e.Handle, nFlags, nAdjustNo)
 }
 
+// 元素_取透明度, 返回透明度.
+func (e *Element) GetAlpha() int {
+	return xc.XEle_GetAlpha(e.Handle)
+}
+
+// 元素_取位置.
+//
+// pOutX: 返回X坐标.
+//
+// pOutY: 返回Y坐标.
+func (e *Element) GetPosition(pOutX *int, pOutY *int) int {
+	return xc.XEle_GetPosition(e.Handle, pOutX, pOutY)
+}
+
+// 元素_置大小.
+//
+// nWidth: 宽度.
+//
+// nHeight: 高度.
+//
+// bRedraw: 是否重绘.
+//
+// nFlags: 调整布局标识位, AdjustLayout_.
+//
+// nAdjustNo: 调整布局流水号.
+func (e *Element) SetSize(nWidth int, nHeight int, bRedraw bool, nFlags int, nAdjustNo int) int {
+	return xc.XEle_SetSize(e.Handle, nWidth, nHeight, bRedraw, nFlags, nAdjustNo)
+}
+
+// 元素_取大小.
+//
+// pOutWidth: 返回宽度.
+//
+// pOutHeight: 返回高度.
+func (e *Element) GetSize(pOutWidth *int, pOutHeight *int) int {
+	return xc.XEle_GetSize(e.Handle, pOutWidth, pOutHeight)
+}
+
 /*
 下面都是事件
 */
@@ -901,8 +939,8 @@ type XE_KILLCAPTURE func(pbHandled *bool) int                                   
 type XE_KILLCAPTURE1 func(hEle int, pbHandled *bool) int                                  // 元素失去鼠标捕获.
 type XE_SETCURSOR func(wParam int, lParam int, pbHandled *bool) int                       // 设置鼠标光标.
 type XE_SETCURSOR1 func(hEle int, wParam int, lParam int, pbHandled *bool) int            // 设置鼠标光标.
-type XE_DROPFILES func(hDropInfo int, pbHandled *bool) int                                // 文件拖放事件.
-type XE_DROPFILES1 func(hEle int, hDropInfo int, pbHandled *bool) int                     // 文件拖放事件.
+type XE_DROPFILES func(hDropInfo int, pbHandled *bool) int                                // 文件拖放事件, 需先启用:XWnd_EnableDragFiles().
+type XE_DROPFILES1 func(hEle int, hDropInfo int, pbHandled *bool) int                     // 文件拖放事件, 需先启用:XWnd_EnableDragFiles().
 
 // 元素处理过程事件.
 func (e *Element) Event_ELEPROCE(pFun XE_ELEPROCE) bool {
@@ -1204,12 +1242,12 @@ func (e *Element) Event_SETCURSOR1(pFun XE_SETCURSOR1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_SETCURSOR, pFun)
 }
 
-// 文件拖放事件.
+// 文件拖放事件, 需先启用:XWnd_EnableDragFiles().
 func (e *Element) Event_DROPFILES(pFun XE_DROPFILES) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_DROPFILES, pFun)
 }
 
-// 文件拖放事件.
+// 文件拖放事件, 需先启用:XWnd_EnableDragFiles().
 func (e *Element) Event_DROPFILES1(pFun XE_DROPFILES1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_DROPFILES, pFun)
 }
