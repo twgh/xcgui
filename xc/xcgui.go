@@ -90,6 +90,7 @@ var (
 	xC_SetD2dTextRenderingMode        *syscall.LazyProc
 	xC_IsEnableD2D                    *syscall.LazyProc
 	xMsg_Create                       *syscall.LazyProc
+	xMsg_CreateEx                     *syscall.LazyProc
 	xC_ShowSvgFrame                   *syscall.LazyProc
 
 	// UI Designer.
@@ -178,7 +179,7 @@ var (
 	xWnd_GetClientRect             *syscall.LazyProc
 	xWnd_GetBodyRect               *syscall.LazyProc
 	xWnd_GetLayoutRect             *syscall.LazyProc
-	xWnd_Move                      *syscall.LazyProc
+	xWnd_SetPosition               *syscall.LazyProc
 	xWnd_GetRect                   *syscall.LazyProc
 	xWnd_SetRect                   *syscall.LazyProc
 	xWnd_MaxWindow                 *syscall.LazyProc
@@ -297,8 +298,8 @@ var (
 	xEle_SetRect                    *syscall.LazyProc
 	xEle_SetRectEx                  *syscall.LazyProc
 	xEle_SetRectLogic               *syscall.LazyProc
-	xEle_Move                       *syscall.LazyProc
-	xEle_MoveLogic                  *syscall.LazyProc
+	xEle_SetPosition                *syscall.LazyProc
+	xEle_SetPositionLogic           *syscall.LazyProc
 	xEle_IsDrawFocus                *syscall.LazyProc
 	xEle_IsEnable                   *syscall.LazyProc
 	xEle_IsEnableFocus              *syscall.LazyProc
@@ -377,6 +378,11 @@ var (
 	xEle_PopupToolTip               *syscall.LazyProc
 	xEle_AdjustLayout               *syscall.LazyProc
 	xEle_AdjustLayoutEx             *syscall.LazyProc
+	xEle_GetAlpha                   *syscall.LazyProc
+	xEle_GetPosition                *syscall.LazyProc
+	xEle_SetSize                    *syscall.LazyProc
+	xEle_GetSize                    *syscall.LazyProc
+
 	// FreameWindow.
 	xFrameWnd_Create               *syscall.LazyProc
 	xFrameWnd_CreateEx             *syscall.LazyProc
@@ -389,6 +395,7 @@ var (
 	xFrameWnd_AddPane              *syscall.LazyProc
 	xFrameWnd_MergePane            *syscall.LazyProc
 	xFrameWnd_Attach               *syscall.LazyProc
+
 	// Menu.
 	xMenu_Create               *syscall.LazyProc
 	xMenu_AddItem              *syscall.LazyProc
@@ -745,7 +752,7 @@ var (
 	xShape_Redraw           *syscall.LazyProc
 	xShape_GetWidth         *syscall.LazyProc
 	xShape_GetHeight        *syscall.LazyProc
-	xShape_Move             *syscall.LazyProc
+	xShape_SetPosition      *syscall.LazyProc
 	xShape_GetRect          *syscall.LazyProc
 	xShape_SetRect          *syscall.LazyProc
 	xShape_SetRectLogic     *syscall.LazyProc
@@ -755,6 +762,11 @@ var (
 	xShape_ShowLayout       *syscall.LazyProc
 	xShape_AdjustLayout     *syscall.LazyProc
 	xShape_Destroy          *syscall.LazyProc
+	xShape_GetPosition      *syscall.LazyProc
+	xShape_SetSize          *syscall.LazyProc
+	xShape_GetSize          *syscall.LazyProc
+	xShape_SetAlpha         *syscall.LazyProc
+	xShape_GetAlpha         *syscall.LazyProc
 
 	// ShapeText.
 	xShapeText_Create        *syscall.LazyProc
@@ -965,6 +977,7 @@ var (
 	xEase_Elastic *syscall.LazyProc
 	xEase_Back    *syscall.LazyProc
 	xEase_Bounce  *syscall.LazyProc
+	xEase_Ex      *syscall.LazyProc
 
 	// FontX.
 	xFont_Create            *syscall.LazyProc
@@ -1027,24 +1040,41 @@ var (
 	xImage_LoadSvgFile         *syscall.LazyProc
 	xImage_LoadSvgString       *syscall.LazyProc
 	xImage_GetSvg              *syscall.LazyProc
+	xImage_LoadSvgStringW      *syscall.LazyProc
+	xImage_LoadSvgStringUtf8   *syscall.LazyProc
 
 	// Svg.
-	xSvg_LoadFile          *syscall.LazyProc
-	xSvg_LoadString        *syscall.LazyProc
-	xSvg_LoadZip           *syscall.LazyProc
-	xSvg_LoadRes           *syscall.LazyProc
-	xSvg_SetSize           *syscall.LazyProc
-	xSvg_GetSize           *syscall.LazyProc
-	xSvg_GetWidth          *syscall.LazyProc
-	xSvg_GetHeight         *syscall.LazyProc
-	xSvg_SetOffset         *syscall.LazyProc
-	xSvg_GetOffset         *syscall.LazyProc
-	xSvg_GetViewBox        *syscall.LazyProc
-	xSvg_EnableAutoDestroy *syscall.LazyProc
-	xSvg_AddRef            *syscall.LazyProc
-	xSvg_Release           *syscall.LazyProc
-	xSvg_GetRefCount       *syscall.LazyProc
-	xSvg_Destroy           *syscall.LazyProc
+	xSvg_LoadFile           *syscall.LazyProc
+	xSvg_LoadString         *syscall.LazyProc
+	xSvg_LoadZip            *syscall.LazyProc
+	xSvg_LoadRes            *syscall.LazyProc
+	xSvg_SetSize            *syscall.LazyProc
+	xSvg_GetSize            *syscall.LazyProc
+	xSvg_GetWidth           *syscall.LazyProc
+	xSvg_GetHeight          *syscall.LazyProc
+	xSvg_SetPosition        *syscall.LazyProc
+	xSvg_GetPosition        *syscall.LazyProc
+	xSvg_SetPositionF       *syscall.LazyProc
+	xSvg_GetPositionF       *syscall.LazyProc
+	xSvg_GetViewBox         *syscall.LazyProc
+	xSvg_EnableAutoDestroy  *syscall.LazyProc
+	xSvg_AddRef             *syscall.LazyProc
+	xSvg_Release            *syscall.LazyProc
+	xSvg_GetRefCount        *syscall.LazyProc
+	xSvg_Destroy            *syscall.LazyProc
+	xSvg_SetAlpha           *syscall.LazyProc
+	xSvg_GetAlpha           *syscall.LazyProc
+	xSvg_SetUserFillColor   *syscall.LazyProc
+	xSvg_SetUserStrokeColor *syscall.LazyProc
+	xSvg_GetUserFillColor   *syscall.LazyProc
+	xSvg_GetUserStrokeColor *syscall.LazyProc
+	xSvg_SetRotateAngle     *syscall.LazyProc
+	xSvg_GetRotateAngle     *syscall.LazyProc
+	xSvg_SetRotate          *syscall.LazyProc
+	xSvg_GetRotate          *syscall.LazyProc
+	xSvg_Show               *syscall.LazyProc
+	xSvg_LoadStringW        *syscall.LazyProc
+	xSvg_LoadStringUtf8     *syscall.LazyProc
 
 	// ListItemTemplate.
 	xTemp_Load               *syscall.LazyProc
@@ -1535,6 +1565,57 @@ var (
 	xObj_GetTypeBase *syscall.LazyProc
 	xObj_GetTypeEx   *syscall.LazyProc
 	xObj_SetTypeEx   *syscall.LazyProc
+
+	// Animation.
+	xAnima_Run                       *syscall.LazyProc
+	xAnima_Release                   *syscall.LazyProc
+	xAnima_ReleaseEx                 *syscall.LazyProc
+	xAnima_Create                    *syscall.LazyProc
+	xAnima_Move                      *syscall.LazyProc
+	xAnima_MoveEx                    *syscall.LazyProc
+	xAnima_Rotate                    *syscall.LazyProc
+	xAnima_RotateEx                  *syscall.LazyProc
+	xAnima_Scale                     *syscall.LazyProc
+	xAnima_ScaleSize                 *syscall.LazyProc
+	xAnima_Alpha                     *syscall.LazyProc
+	xAnima_AlphaEx                   *syscall.LazyProc
+	xAnima_Color                     *syscall.LazyProc
+	xAnima_ColorEx                   *syscall.LazyProc
+	xAnima_LayoutWidth               *syscall.LazyProc
+	xAnima_LayoutHeight              *syscall.LazyProc
+	xAnima_LayoutSize                *syscall.LazyProc
+	xAnima_Delay                     *syscall.LazyProc
+	xAnima_Show                      *syscall.LazyProc
+	xAnimaGroup_Create               *syscall.LazyProc
+	xAnimaGroup_AddItem              *syscall.LazyProc
+	xAnimaRotate_SetCenter           *syscall.LazyProc
+	xAnimaScale_SetPosition          *syscall.LazyProc
+	xAnima_GetObjectUI               *syscall.LazyProc
+	xAnimaItem_EnableCompleteRelease *syscall.LazyProc
+	xAnima_EnableAutoDestroy         *syscall.LazyProc
+	xAnima_DestroyObjectUI           *syscall.LazyProc
+	xAnima_SetCallBack               *syscall.LazyProc
+	xAnima_SetUserData               *syscall.LazyProc
+	xAnima_GetUserData               *syscall.LazyProc
+	xAnima_Stop                      *syscall.LazyProc
+	xAnima_Start                     *syscall.LazyProc
+	xAnima_Pause                     *syscall.LazyProc
+	xAnimaItem_SetCallback           *syscall.LazyProc
+	xAnimaItem_SetUserData           *syscall.LazyProc
+	xAnimaItem_GetUserData           *syscall.LazyProc
+	xAnimaItem_EnableAutoDestroy     *syscall.LazyProc
+
+	// 通知消息.
+	xNotifyMsg_Popup            *syscall.LazyProc
+	xNotifyMsg_PopupEx          *syscall.LazyProc
+	xNotifyMsg_SetDuration      *syscall.LazyProc
+	xNotifyMsg_SetParentMargin  *syscall.LazyProc
+	xNotifyMsg_WindowPopup      *syscall.LazyProc
+	xNotifyMsg_WindowPopupEx    *syscall.LazyProc
+	xNotifyMsg_SetCaptionHeight *syscall.LazyProc
+	xNotifyMsg_SetWidth         *syscall.LazyProc
+	xNotifyMsg_SetSpace         *syscall.LazyProc
+	xNotifyMsg_SetBorderSize    *syscall.LazyProc
 )
 
 // 初始化xcgui.
@@ -1620,6 +1701,7 @@ func init() {
 	xC_SetD2dTextRenderingMode = xcgui.NewProc("XC_SetD2dTextRenderingMode")
 	xC_IsEnableD2D = xcgui.NewProc("XC_IsEnableD2D")
 	xMsg_Create = xcgui.NewProc("XMsg_Create")
+	xMsg_CreateEx = xcgui.NewProc("XMsg_CreateEx")
 	xC_ShowSvgFrame = xcgui.NewProc("XC_ShowSvgFrame")
 
 	// UI Designer.
@@ -1706,7 +1788,7 @@ func init() {
 	xWnd_GetClientRect = xcgui.NewProc("XWnd_GetClientRect")
 	xWnd_GetBodyRect = xcgui.NewProc("XWnd_GetBodyRect")
 	xWnd_GetLayoutRect = xcgui.NewProc("XWnd_GetLayoutRect")
-	xWnd_Move = xcgui.NewProc("XWnd_Move")
+	xWnd_SetPosition = xcgui.NewProc("XWnd_SetPosition")
 	xWnd_GetRect = xcgui.NewProc("XWnd_GetRect")
 	xWnd_SetRect = xcgui.NewProc("XWnd_SetRect")
 	xWnd_MaxWindow = xcgui.NewProc("XWnd_MaxWindow")
@@ -1827,8 +1909,8 @@ func init() {
 	xEle_SetRect = xcgui.NewProc("XEle_SetRect")
 	xEle_SetRectEx = xcgui.NewProc("XEle_SetRectEx")
 	xEle_SetRectLogic = xcgui.NewProc("XEle_SetRectLogic")
-	xEle_Move = xcgui.NewProc("XEle_Move")
-	xEle_MoveLogic = xcgui.NewProc("XEle_MoveLogic")
+	xEle_SetPosition = xcgui.NewProc("XEle_SetPosition")
+	xEle_SetPositionLogic = xcgui.NewProc("XEle_SetPositionLogic")
 	xEle_IsDrawFocus = xcgui.NewProc("XEle_IsDrawFocus")
 	xEle_IsEnable = xcgui.NewProc("XEle_IsEnable")
 	xEle_IsEnableFocus = xcgui.NewProc("XEle_IsEnableFocus")
@@ -1907,6 +1989,11 @@ func init() {
 	xEle_PopupToolTip = xcgui.NewProc("XEle_PopupToolTip")
 	xEle_AdjustLayout = xcgui.NewProc("XEle_AdjustLayout")
 	xEle_AdjustLayoutEx = xcgui.NewProc("XEle_AdjustLayoutEx")
+	xEle_GetAlpha = xcgui.NewProc("XEle_GetAlpha")
+	xEle_GetPosition = xcgui.NewProc("XEle_GetPosition")
+	xEle_SetSize = xcgui.NewProc("XEle_SetSize")
+	xEle_GetSize = xcgui.NewProc("XEle_GetSize")
+
 	// FreameWindow.
 	xFrameWnd_Create = xcgui.NewProc("XFrameWnd_Create")
 	xFrameWnd_CreateEx = xcgui.NewProc("XFrameWnd_CreateEx")
@@ -1919,6 +2006,7 @@ func init() {
 	xFrameWnd_AddPane = xcgui.NewProc("XFrameWnd_AddPane")
 	xFrameWnd_MergePane = xcgui.NewProc("XFrameWnd_MergePane")
 	xFrameWnd_Attach = xcgui.NewProc("XFrameWnd_Attach")
+
 	// Menu.
 	xMenu_Create = xcgui.NewProc("XMenu_Create")
 	xMenu_AddItem = xcgui.NewProc("XMenu_AddItem")
@@ -2252,6 +2340,7 @@ func init() {
 	xProgBar_EnableHorizon = xcgui.NewProc("XProgBar_EnableHorizon")
 	xProgBar_EnableShowText = xcgui.NewProc("XProgBar_EnableShowText")
 	xProgBar_EnableStretch = xcgui.NewProc("XProgBar_EnableStretch")
+
 	// TextLink.
 	xTextLink_Create = xcgui.NewProc("XTextLink_Create")
 	xTextLink_EnableUnderlineLeave = xcgui.NewProc("XTextLink_EnableUnderlineLeave")
@@ -2259,13 +2348,14 @@ func init() {
 	xTextLink_SetTextColorStay = xcgui.NewProc("XTextLink_SetTextColorStay")
 	xTextLink_SetUnderlineColorLeave = xcgui.NewProc("XTextLink_SetUnderlineColorLeave")
 	xTextLink_SetUnderlineColorStay = xcgui.NewProc("XTextLink_SetUnderlineColorStay")
+
 	// Shape.
 	xShape_RemoveShape = xcgui.NewProc("XShape_RemoveShape")
 	xShape_GetZOrder = xcgui.NewProc("XShape_GetZOrder")
 	xShape_Redraw = xcgui.NewProc("XShape_Redraw")
 	xShape_GetWidth = xcgui.NewProc("XShape_GetWidth")
 	xShape_GetHeight = xcgui.NewProc("XShape_GetHeight")
-	xShape_Move = xcgui.NewProc("XShape_Move")
+	xShape_SetPosition = xcgui.NewProc("XShape_SetPosition")
 	xShape_GetRect = xcgui.NewProc("XShape_GetRect")
 	xShape_SetRect = xcgui.NewProc("XShape_SetRect")
 	xShape_SetRectLogic = xcgui.NewProc("XShape_SetRectLogic")
@@ -2275,6 +2365,12 @@ func init() {
 	xShape_ShowLayout = xcgui.NewProc("XShape_ShowLayout")
 	xShape_AdjustLayout = xcgui.NewProc("XShape_AdjustLayout")
 	xShape_Destroy = xcgui.NewProc("XShape_Destroy")
+	xShape_GetPosition = xcgui.NewProc("XShape_GetPosition")
+	xShape_SetSize = xcgui.NewProc("XShape_SetSize")
+	xShape_GetSize = xcgui.NewProc("XShape_GetSize")
+	xShape_SetAlpha = xcgui.NewProc("XShape_SetAlpha")
+	xShape_GetAlpha = xcgui.NewProc("XShape_GetAlpha")
+
 	// ShapeText.
 	xShapeText_Create = xcgui.NewProc("XShapeText_Create")
 	xShapeText_SetText = xcgui.NewProc("XShapeText_SetText")
@@ -2286,14 +2382,17 @@ func init() {
 	xShapeText_GetTextColor = xcgui.NewProc("XShapeText_GetTextColor")
 	xShapeText_SetTextAlign = xcgui.NewProc("XShapeText_SetTextAlign")
 	xShapeText_SetOffset = xcgui.NewProc("XShapeText_SetOffset")
+
 	// ShapePicture.
 	xShapePic_Create = xcgui.NewProc("XShapePic_Create")
 	xShapePic_SetImage = xcgui.NewProc("XShapePic_SetImage")
 	xShapePic_GetImage = xcgui.NewProc("XShapePic_GetImage")
+
 	// ShapeGif.
 	xShapeGif_Create = xcgui.NewProc("XShapeGif_Create")
 	xShapeGif_SetImage = xcgui.NewProc("XShapeGif_SetImage")
 	xShapeGif_GetImage = xcgui.NewProc("XShapeGif_GetImage")
+
 	// ShapeRect.
 	xShapeRect_Create = xcgui.NewProc("XShapeRect_Create")
 	xShapeRect_SetBorderColor = xcgui.NewProc("XShapeRect_SetBorderColor")
@@ -2303,12 +2402,14 @@ func init() {
 	xShapeRect_EnableBorder = xcgui.NewProc("XShapeRect_EnableBorder")
 	xShapeRect_EnableFill = xcgui.NewProc("XShapeRect_EnableFill")
 	xShapeRect_EnableRoundAngle = xcgui.NewProc("XShapeRect_EnableRoundAngle")
+
 	// ShapeEllipse.
 	xShapeEllipse_Create = xcgui.NewProc("XShapeEllipse_Create")
 	xShapeEllipse_SetBorderColor = xcgui.NewProc("XShapeEllipse_SetBorderColor")
 	xShapeEllipse_SetFillColor = xcgui.NewProc("XShapeEllipse_SetFillColor")
 	xShapeEllipse_EnableBorder = xcgui.NewProc("XShapeEllipse_EnableBorder")
 	xShapeEllipse_EnableFill = xcgui.NewProc("XShapeEllipse_EnableFill")
+
 	// ShapeGroupBox.
 	xShapeGroupBox_Create = xcgui.NewProc("XShapeGroupBox_Create")
 	xShapeGroupBox_SetBorderColor = xcgui.NewProc("XShapeGroupBox_SetBorderColor")
@@ -2320,10 +2421,12 @@ func init() {
 	xShapeGroupBox_GetTextOffset = xcgui.NewProc("XShapeGroupBox_GetTextOffset")
 	xShapeGroupBox_GetRoundAngle = xcgui.NewProc("XShapeGroupBox_GetRoundAngle")
 	xShapeGroupBox_EnableRoundAngle = xcgui.NewProc("XShapeGroupBox_EnableRoundAngle")
+
 	// ShapeLine.
 	xShapeLine_Create = xcgui.NewProc("XShapeLine_Create")
 	xShapeLine_SetPosition = xcgui.NewProc("XShapeLine_SetPosition")
 	xShapeLine_SetColor = xcgui.NewProc("XShapeLine_SetColor")
+
 	// Table.
 	xTable_Create = xcgui.NewProc("XTable_Create")
 	xTable_Reset = xcgui.NewProc("XTable_Reset")
@@ -2343,6 +2446,7 @@ func init() {
 	xTable_SetItemLine = xcgui.NewProc("XTable_SetItemLine")
 	xTable_SetItemFlag = xcgui.NewProc("XTable_SetItemFlag")
 	xTable_GetItemRect = xcgui.NewProc("XTable_GetItemRect")
+
 	// BkManager.
 	xBkM_Create = xcgui.NewProc("XBkM_Create")
 	xBkM_Destroy = xcgui.NewProc("XBkM_Destroy")
@@ -2476,6 +2580,7 @@ func init() {
 	xEase_Elastic = xcgui.NewProc("XEase_Elastic")
 	xEase_Back = xcgui.NewProc("XEase_Back")
 	xEase_Bounce = xcgui.NewProc("XEase_Bounce")
+	xEase_Ex = xcgui.NewProc("XEase_Ex")
 
 	// FontX.
 	xFont_Create = xcgui.NewProc("XFont_Create")
@@ -2538,6 +2643,8 @@ func init() {
 	xImage_LoadSvgFile = xcgui.NewProc("XImage_LoadSvgFile")
 	xImage_LoadSvgString = xcgui.NewProc("XImage_LoadSvgString")
 	xImage_GetSvg = xcgui.NewProc("XImage_GetSvg")
+	xImage_LoadSvgStringW = xcgui.NewProc("XImage_LoadSvgStringW")
+	xImage_LoadSvgStringUtf8 = xcgui.NewProc("XImage_LoadSvgStringUtf8")
 
 	// Svg.
 	xSvg_LoadFile = xcgui.NewProc("XSvg_LoadFile")
@@ -2548,14 +2655,29 @@ func init() {
 	xSvg_GetSize = xcgui.NewProc("XSvg_GetSize")
 	xSvg_GetWidth = xcgui.NewProc("XSvg_GetWidth")
 	xSvg_GetHeight = xcgui.NewProc("XSvg_GetHeight")
-	xSvg_SetOffset = xcgui.NewProc("XSvg_SetOffset")
-	xSvg_GetOffset = xcgui.NewProc("XSvg_GetOffset")
+	xSvg_SetPosition = xcgui.NewProc("XSvg_SetPosition")
+	xSvg_GetPosition = xcgui.NewProc("XSvg_GetPosition")
+	xSvg_SetPositionF = xcgui.NewProc("XSvg_SetPositionF")
+	xSvg_GetPositionF = xcgui.NewProc("XSvg_GetPositionF")
 	xSvg_GetViewBox = xcgui.NewProc("XSvg_GetViewBox")
 	xSvg_EnableAutoDestroy = xcgui.NewProc("XSvg_EnableAutoDestroy")
 	xSvg_AddRef = xcgui.NewProc("XSvg_AddRef")
 	xSvg_Release = xcgui.NewProc("XSvg_Release")
 	xSvg_GetRefCount = xcgui.NewProc("XSvg_GetRefCount")
 	xSvg_Destroy = xcgui.NewProc("XSvg_Destroy")
+	xSvg_SetAlpha = xcgui.NewProc("XSvg_SetAlpha")
+	xSvg_GetAlpha = xcgui.NewProc("XSvg_GetAlpha")
+	xSvg_SetUserFillColor = xcgui.NewProc("XSvg_SetUserFillColor")
+	xSvg_SetUserStrokeColor = xcgui.NewProc("XSvg_SetUserStrokeColor")
+	xSvg_GetUserFillColor = xcgui.NewProc("XSvg_GetUserFillColor")
+	xSvg_GetUserStrokeColor = xcgui.NewProc("XSvg_GetUserStrokeColor")
+	xSvg_SetRotateAngle = xcgui.NewProc("XSvg_SetRotateAngle")
+	xSvg_GetRotateAngle = xcgui.NewProc("XSvg_GetRotateAngle")
+	xSvg_SetRotate = xcgui.NewProc("XSvg_SetRotate")
+	xSvg_GetRotate = xcgui.NewProc("XSvg_GetRotate")
+	xSvg_Show = xcgui.NewProc("XSvg_Show")
+	xSvg_LoadStringW = xcgui.NewProc("XSvg_LoadStringW")
+	xSvg_LoadStringUtf8 = xcgui.NewProc("XSvg_LoadStringUtf8")
 
 	// ListItemTemplate.
 	xTemp_Load = xcgui.NewProc("XTemp_Load")
@@ -2577,6 +2699,7 @@ func init() {
 	xTemp_List_GetNode = xcgui.NewProc("XTemp_List_GetNode")
 	xTemp_GetNode = xcgui.NewProc("XTemp_GetNode")
 	xTemp_CloneNode = xcgui.NewProc("XTemp_CloneNode")
+
 	// Resource.
 	xRes_EnableDelayLoad = xcgui.NewProc("XRes_EnableDelayLoad")
 	xRes_SetLoadFileCallback = xcgui.NewProc("XRes_SetLoadFileCallback")
@@ -2586,6 +2709,7 @@ func init() {
 	xRes_GetColor = xcgui.NewProc("XRes_GetColor")
 	xRes_GetFont = xcgui.NewProc("XRes_GetFont")
 	xRes_GetBkM = xcgui.NewProc("XRes_GetBkM")
+
 	// ListBox.
 	xListBox_Create = xcgui.NewProc("XListBox_Create")
 	xListBox_EnableFixedRowHeight = xcgui.NewProc("XListBox_EnableFixedRowHeight")
@@ -2656,6 +2780,7 @@ func init() {
 	xListBox_DeleteColumnAll = xcgui.NewProc("XListBox_DeleteColumnAll")
 	xListBox_GetCount_AD = xcgui.NewProc("XListBox_GetCount_AD")
 	xListBox_GetCountColumn_AD = xcgui.NewProc("XListBox_GetCountColumn_AD")
+
 	// List.
 	xList_Create = xcgui.NewProc("XList_Create")
 	xList_AddColumn = xcgui.NewProc("XList_AddColumn")
@@ -2749,6 +2874,7 @@ func init() {
 	xList_DeleteColumnAll_AD = xcgui.NewProc("XList_DeleteColumnAll_AD")
 	xList_GetCount_AD = xcgui.NewProc("XList_GetCount_AD")
 	xList_GetCountColumn_AD = xcgui.NewProc("XList_GetCountColumn_AD")
+
 	// ListView.
 	xListView_Create = xcgui.NewProc("XListView_Create")
 	xListView_CreateAdapter = xcgui.NewProc("XListView_CreateAdapter")
@@ -2819,6 +2945,7 @@ func init() {
 	xListView_DeleteColumnItem = xcgui.NewProc("XListView_DeleteColumnItem")
 	xListView_Item_GetTextEx = xcgui.NewProc("XListView_Item_GetTextEx")
 	xListView_Item_GetImageEx = xcgui.NewProc("XListView_Item_GetImageEx")
+
 	// MenuBar.
 	xMenuBar_Create = xcgui.NewProc("XMenuBar_Create")
 	xMenuBar_AddButton = xcgui.NewProc("XMenuBar_AddButton")
@@ -2827,6 +2954,7 @@ func init() {
 	xMenuBar_DeleteButton = xcgui.NewProc("XMenuBar_DeleteButton")
 	xMenuBar_EnableAutoWidth = xcgui.NewProc("XMenuBar_EnableAutoWidth")
 	xMenuBar_GetButton = xcgui.NewProc("XMenuBar_GetButton")
+
 	// Pane.
 	xPane_Create = xcgui.NewProc("XPane_Create")
 	xPane_SetView = xcgui.NewProc("XPane_SetView")
@@ -2845,6 +2973,7 @@ func init() {
 	xPane_FloatPane = xcgui.NewProc("XPane_FloatPane")
 	xPane_DrawPane = xcgui.NewProc("XPane_DrawPane")
 	xPane_SetSelect = xcgui.NewProc("XPane_SetSelect")
+
 	// ScrollBar.
 	xSBar_Create = xcgui.NewProc("XSBar_Create")
 	xSBar_SetRange = xcgui.NewProc("XSBar_SetRange")
@@ -2863,6 +2992,7 @@ func init() {
 	xSBar_GetButtonUp = xcgui.NewProc("XSBar_GetButtonUp")
 	xSBar_GetButtonDown = xcgui.NewProc("XSBar_GetButtonDown")
 	xSBar_GetButtonSlider = xcgui.NewProc("XSBar_GetButtonSlider")
+
 	// ScrollView.
 	xSView_Create = xcgui.NewProc("XSView_Create")
 	xSView_SetTotalSize = xcgui.NewProc("XSView_SetTotalSize")
@@ -2892,6 +3022,7 @@ func init() {
 	xSView_ScrollRight = xcgui.NewProc("XSView_ScrollRight")
 	xSView_ScrollTop = xcgui.NewProc("XSView_ScrollTop")
 	xSView_ScrollBottom = xcgui.NewProc("XSView_ScrollBottom")
+
 	// SliderBar.
 	xSliderBar_Create = xcgui.NewProc("XSliderBar_Create")
 	xSliderBar_SetRange = xcgui.NewProc("XSliderBar_SetRange")
@@ -2903,6 +3034,7 @@ func init() {
 	xSliderBar_GetPos = xcgui.NewProc("XSliderBar_GetPos")
 	xSliderBar_GetButton = xcgui.NewProc("XSliderBar_GetButton")
 	xSliderBar_EnableHorizon = xcgui.NewProc("XSliderBar_EnableHorizon")
+
 	// TabBar.
 	xTabBar_Create = xcgui.NewProc("XTabBar_Create")
 	xTabBar_AddLabel = xcgui.NewProc("XTabBar_AddLabel")
@@ -2931,6 +3063,7 @@ func init() {
 	xTabBar_SetTurnButtonSize = xcgui.NewProc("XTabBar_SetTurnButtonSize")
 	xTabBar_SetLabelWidth = xcgui.NewProc("XTabBar_SetLabelWidth")
 	xTabBar_ShowLabel = xcgui.NewProc("XTabBar_ShowLabel")
+
 	// ToolBar.
 	xToolBar_Create = xcgui.NewProc("XToolBar_Create")
 	xToolBar_InsertEle = xcgui.NewProc("XToolBar_InsertEle")
@@ -3035,6 +3168,57 @@ func init() {
 	xObj_GetTypeBase = xcgui.NewProc("XObj_GetTypeBase")
 	xObj_GetTypeEx = xcgui.NewProc("XObj_GetTypeEx")
 	xObj_SetTypeEx = xcgui.NewProc("XObj_SetTypeEx")
+
+	// Animation.
+	xAnima_Run = xcgui.NewProc("XAnima_Run")
+	xAnima_Release = xcgui.NewProc("XAnima_Release")
+	xAnima_ReleaseEx = xcgui.NewProc("XAnima_ReleaseEx")
+	xAnima_Create = xcgui.NewProc("XAnima_Create")
+	xAnima_Move = xcgui.NewProc("XAnima_Move")
+	xAnima_MoveEx = xcgui.NewProc("XAnima_MoveEx")
+	xAnima_Rotate = xcgui.NewProc("XAnima_Rotate")
+	xAnima_RotateEx = xcgui.NewProc("XAnima_RotateEx")
+	xAnima_Scale = xcgui.NewProc("XAnima_Scale")
+	xAnima_ScaleSize = xcgui.NewProc("XAnima_ScaleSize")
+	xAnima_Alpha = xcgui.NewProc("XAnima_Alpha")
+	xAnima_AlphaEx = xcgui.NewProc("XAnima_AlphaEx")
+	xAnima_Color = xcgui.NewProc("XAnima_Color")
+	xAnima_ColorEx = xcgui.NewProc("XAnima_ColorEx")
+	xAnima_LayoutWidth = xcgui.NewProc("XAnima_LayoutWidth")
+	xAnima_LayoutHeight = xcgui.NewProc("XAnima_LayoutHeight")
+	xAnima_LayoutSize = xcgui.NewProc("XAnima_LayoutSize")
+	xAnima_Delay = xcgui.NewProc("XAnima_Delay")
+	xAnima_Show = xcgui.NewProc("XAnima_Show")
+	xAnimaGroup_Create = xcgui.NewProc("XAnimaGroup_Create")
+	xAnimaGroup_AddItem = xcgui.NewProc("XAnimaGroup_AddItem")
+	xAnimaRotate_SetCenter = xcgui.NewProc("XAnimaRotate_SetCenter")
+	xAnimaScale_SetPosition = xcgui.NewProc("XAnimaScale_SetPosition")
+	xAnima_GetObjectUI = xcgui.NewProc("XAnima_GetObjectUI")
+	xAnimaItem_EnableCompleteRelease = xcgui.NewProc("XAnimaItem_EnableCompleteRelease")
+	xAnima_EnableAutoDestroy = xcgui.NewProc("XAnima_EnableAutoDestroy")
+	xAnima_DestroyObjectUI = xcgui.NewProc("XAnima_DestroyObjectUI")
+	xAnima_SetCallBack = xcgui.NewProc("XAnima_SetCallBack")
+	xAnima_SetUserData = xcgui.NewProc("XAnima_SetUserData")
+	xAnima_GetUserData = xcgui.NewProc("XAnima_GetUserData")
+	xAnima_Stop = xcgui.NewProc("XAnima_Stop")
+	xAnima_Start = xcgui.NewProc("XAnima_Start")
+	xAnima_Pause = xcgui.NewProc("XAnima_Pause")
+	xAnimaItem_SetCallback = xcgui.NewProc("XAnimaItem_SetCallback")
+	xAnimaItem_SetUserData = xcgui.NewProc("XAnimaItem_SetUserData")
+	xAnimaItem_GetUserData = xcgui.NewProc("XAnimaItem_GetUserData")
+	xAnimaItem_EnableAutoDestroy = xcgui.NewProc("XAnimaItem_EnableAutoDestroy")
+
+	// 通知消息.
+	xNotifyMsg_Popup = xcgui.NewProc("XNotifyMsg_Popup")
+	xNotifyMsg_PopupEx = xcgui.NewProc("XNotifyMsg_PopupEx")
+	xNotifyMsg_SetDuration = xcgui.NewProc("XNotifyMsg_SetDuration")
+	xNotifyMsg_SetParentMargin = xcgui.NewProc("XNotifyMsg_SetParentMargin")
+	xNotifyMsg_WindowPopup = xcgui.NewProc("XNotifyMsg_WindowPopup")
+	xNotifyMsg_WindowPopupEx = xcgui.NewProc("XNotifyMsg_WindowPopupEx")
+	xNotifyMsg_SetCaptionHeight = xcgui.NewProc("XNotifyMsg_SetCaptionHeight")
+	xNotifyMsg_SetWidth = xcgui.NewProc("XNotifyMsg_SetWidth")
+	xNotifyMsg_SetSpace = xcgui.NewProc("XNotifyMsg_SetSpace")
+	xNotifyMsg_SetBorderSize = xcgui.NewProc("XNotifyMsg_SetBorderSize")
 }
 
 // string到uintptr.
@@ -3078,8 +3262,8 @@ func uintPtrToFloat32(ptr uintptr) float32 {
 }
 
 // byte[0]指针到uintptr.
-func bytePtr2(p *[]byte) uintptr {
-	return uintptr(unsafe.Pointer(&(*p)[0]))
+func bytePtr2(b *[]byte) uintptr {
+	return uintptr(unsafe.Pointer(&(*b)[0]))
 }
 
 /* // byte指针到uintptr.
