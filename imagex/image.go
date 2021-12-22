@@ -157,35 +157,29 @@ func NewImage_LoadZipRect(pZipFileName string, pFileName string, pPassword strin
 
 // 图片_加载从内存ZIP.
 //
-// data: 内存块指针.
-//
-// length: 内存块大小.
+// data: 图片数据.
 //
 // pFileName: 图片名称.
 //
 // pPassword: zip压缩包密码.
-func NewImage_LoadZipMem(data *[]byte, length int, pFileName string, pPassword string) *Image {
+func NewImage_LoadZipMem(data []byte, pFileName string, pPassword string) *Image {
 	p := &Image{}
-	p.SetHandle(xc.XImage_LoadZipMem(data, length, pFileName, pPassword))
+	p.SetHandle(xc.XImage_LoadZipMem(data, pFileName, pPassword))
 	return p
 }
 
 // 图片_加载从内存, 加载流图片.
 //
-// pBuffer: 图片缓冲区.
-//
-// nSize: 图片缓冲区大小.
-func NewImage_LoadMemory(pBuffer *[]byte, nSize int) *Image {
+// pBuffer: 图片数据.
+func NewImage_LoadMemory(pBuffer []byte) *Image {
 	p := &Image{}
-	p.SetHandle(xc.XImage_LoadMemory(pBuffer, nSize))
+	p.SetHandle(xc.XImage_LoadMemory(pBuffer))
 	return p
 }
 
 // 图片_加载从内存指定区域, 加载流图片, 指定区位置及大小.
 //
-// pBuffer: 图片缓冲区.
-//
-// nSize: 图片缓冲区大小.
+// pBuffer: 图片数据.
 //
 // x: 坐标.
 //
@@ -194,17 +188,15 @@ func NewImage_LoadMemory(pBuffer *[]byte, nSize int) *Image {
 // cx: 宽度.
 //
 // cy: 高度.
-func NewImage_LoadMemoryRect(pBuffer *[]byte, nSize int, x int, y int, cx int, cy int) *Image {
+func NewImage_LoadMemoryRect(pBuffer []byte, x int, y int, cx int, cy int) *Image {
 	p := &Image{}
-	p.SetHandle(xc.XImage_LoadMemoryRect(pBuffer, nSize, x, y, cx, cy))
+	p.SetHandle(xc.XImage_LoadMemoryRect(pBuffer, x, y, cx, cy))
 	return p
 }
 
 // 图片_加载从内存自适应, 加载流图片压缩包, 自适应图片(九宫格).
 //
-// pBuffer: 图片缓冲区.
-//
-// nSize: 图片缓冲区大小.
+// pBuffer: 图片数据.
 //
 // leftSize: 坐标.
 //
@@ -213,9 +205,9 @@ func NewImage_LoadMemoryRect(pBuffer *[]byte, nSize int, x int, y int, cx int, c
 // rightSize: 坐标.
 //
 // bottomSize: 坐标.
-func NewImage_LoadMemoryAdaptive(pBuffer *[]byte, nSize int, leftSize int, topSize int, rightSize int, bottomSize int) *Image {
+func NewImage_LoadMemoryAdaptive(pBuffer []byte, leftSize int, topSize int, rightSize int, bottomSize int) *Image {
 	p := &Image{}
-	p.SetHandle(xc.XImage_LoadMemoryAdaptive(pBuffer, nSize, leftSize, topSize, rightSize, bottomSize))
+	p.SetHandle(xc.XImage_LoadMemoryAdaptive(pBuffer, leftSize, topSize, rightSize, bottomSize))
 	return p
 }
 
@@ -276,11 +268,27 @@ func NewImage_LoadSvgFile(pFileName string) *Image {
 // 图片_加载从SVG字符串.
 //
 // pString: 字符串指针.
-//
-// nLength: 字符串长度, 可填-1.
-func NewImage_LoadSvgString(pString string, nLength int) *Image {
+func NewImage_LoadSvgString(pString string) *Image {
 	p := &Image{}
-	p.SetHandle(xc.XImage_LoadSvgString(pString, nLength))
+	p.SetHandle(xc.XImage_LoadSvgString(pString))
+	return p
+}
+
+// 图片_加载从SVG字符串W.
+//
+// pString: 字符串指针.
+func NewImage_LoadSvgStringW(pString string) *Image {
+	p := &Image{}
+	p.SetHandle(xc.XImage_LoadSvgStringW(pString))
+	return p
+}
+
+// 图片_加载从SVG字符串UTF8.
+//
+// pString: 字符串指针.
+func NewImage_LoadSvgStringUtf8(pString string) *Image {
+	p := &Image{}
+	p.SetHandle(xc.XImage_LoadSvgStringUtf8(pString))
 	return p
 }
 
