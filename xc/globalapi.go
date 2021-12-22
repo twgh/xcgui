@@ -45,33 +45,55 @@ func XC_GetDefaultFont() int {
 
 // 炫彩_消息框, 返回MessageBox_Flag_.
 //
-// pText: 内容文本.
+// pTitle: 标题.
 //
-// pCaption: 标题.
+// pText: 内容文本.
 //
 // nFlags: 标识, MessageBox_Flag_.
 //
-// hWndParent: 父窗口句柄.
+// hWndParent: 父窗口句柄(真实的窗口句柄).
 //
 // XCStyle: Window_Style_.
-func XC_MessageBox(pText string, pCaption string, nFlags, hWndParent, XCStyle int) int {
-	r, _, _ := xC_MessageBox.Call(strPtr(pText), strPtr(pCaption), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
+func XC_MessageBox(pTitle, pText string, nFlags, hWndParent, XCStyle int) int {
+	r, _, _ := xC_MessageBox.Call(strPtr(pTitle), strPtr(pText), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
 	return int(r)
 }
 
-// 信息框_创建, 返回信息框窗口句柄.
-//
-// pText: 内容文本.
+// 消息框_创建, 弹出窗口请调用 XModalWnd_DoModal(), 此窗口是一个模态窗口, 返回消息框窗口句柄.
 //
 // pTitle: 标题.
 //
+// pText: 内容文本.
+//
 // nFlags: 标识, MessageBox_Flag_.
 //
-// hWndParent: 父窗口句柄.
+// hWndParent: 父窗口句柄(真实的窗口句柄).
 //
 // XCStyle: Window_Style_.
-func XMsg_Create(pText, pTitle string, nFlags, hWndParent, XCStyle int) int {
-	r, _, _ := xMsg_Create.Call(strPtr(pText), strPtr(pTitle), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
+func XMsg_Create(pTitle, pText string, nFlags, hWndParent, XCStyle int) int {
+	r, _, _ := xMsg_Create.Call(strPtr(pTitle), strPtr(pText), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
+	return int(r)
+}
+
+// 消息框_创建扩展, 弹出窗口请调用 XModalWnd_DoModal(), 此窗口是一个模态窗口, 返回消息框窗口句柄.
+//
+// dwExStyle: 窗口扩展样式.
+//
+// dwStyle: 窗口样式.
+//
+// lpClassName: 窗口类名.
+//
+// pTitle: 标题.
+//
+// pText: 内容文本.
+//
+// nFlags: 标识, MessageBox_Flag_.
+//
+// hWndParent: 父窗口句柄(真实的窗口句柄).
+//
+// XCStyle: Window_Style_.
+func XMsg_CreateEx(dwExStyle int, dwStyle int, lpClassName, pTitle, pText string, nFlags, hWndParent, XCStyle int) int {
+	r, _, _ := xMsg_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), strPtr(lpClassName), strPtr(pTitle), strPtr(pText), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
 	return int(r)
 }
 
@@ -453,11 +475,11 @@ func XC_Free(p int) int {
 
 // 炫彩_弹框, 弹出提示框.
 //
-// pText: 提示内容.
-//
 // pTitle: 提示框标题.
-func XC_Alert(pText string, pTitle string) int {
-	r, _, _ := xC_Alert.Call(strPtr(pText), strPtr(pTitle))
+//
+// pText: 提示内容.
+func XC_Alert(pTitle, pText string) int {
+	r, _, _ := xC_Alert.Call(strPtr(pTitle), strPtr(pText))
 	return int(r)
 }
 
