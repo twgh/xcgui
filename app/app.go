@@ -1,4 +1,4 @@
-// 程序.
+// 程序(炫彩全局API).
 package app
 
 import (
@@ -9,7 +9,7 @@ import (
 type App struct {
 }
 
-// 炫彩_初始化.
+// 炫彩_初始化, 失败返回nil.
 //
 // bD2D: 是否启用D2D.
 func New(bD2D bool) *App {
@@ -47,32 +47,53 @@ func (a *App) GetDefaultFont() int {
 
 // 炫彩_消息框, 返回MessageBox_Flag_.
 //
-// pText: 内容文本.
+// pTitle: 标题.
 //
-// pCaption: 标题.
+// pText: 内容文本.
 //
 // nFlags: 标识, MessageBox_Flag_.
 //
-// hWndParent: 父窗口句柄.
+// hWndParent: 父窗口句柄(真实的窗口句柄).
 //
 // XCStyle: Window_Style_.
-func (a *App) MessageBox(pText string, pCaption string, nFlags, hWndParent, XCStyle int) int {
-	return xc.XC_MessageBox(pText, pCaption, nFlags, hWndParent, XCStyle)
+func (a *App) MessageBox(pTitle, pText string, nFlags, hWndParent, XCStyle int) int {
+	return xc.XC_MessageBox(pTitle, pText, nFlags, hWndParent, XCStyle)
 }
 
-// 信息框_创建, 返回信息框窗口句柄.
-//
-// pText: 内容文本.
+// 消息框_创建, 弹出窗口请调用 XModalWnd_DoModal(), 此窗口是一个模态窗口, 返回消息框窗口句柄.
 //
 // pTitle: 标题.
 //
+// pText: 内容文本.
+//
 // nFlags: 标识, MessageBox_Flag_.
 //
-// hWndParent: 父窗口句柄.
+// hWndParent: 父窗口句柄(真实的窗口句柄).
 //
 // XCStyle: Window_Style_.
-func (a *App) Msg_Create(pText, pTitle string, nFlags, hWndParent, XCStyle int) int {
-	return xc.XMsg_Create(pText, pTitle, nFlags, hWndParent, XCStyle)
+func (a *App) Msg_Create(pTitle, pText string, nFlags, hWndParent, XCStyle int) int {
+	return xc.XMsg_Create(pTitle, pText, nFlags, hWndParent, XCStyle)
+}
+
+// 消息框_创建扩展, 弹出窗口请调用 XModalWnd_DoModal(), 此窗口是一个模态窗口, 返回消息框窗口句柄.
+//
+// dwExStyle: 窗口扩展样式.
+//
+// dwStyle: 窗口样式.
+//
+// lpClassName: 窗口类名.
+//
+// pTitle: 标题.
+//
+// pText: 内容文本.
+//
+// nFlags: 标识, MessageBox_Flag_.
+//
+// hWndParent: 父窗口句柄(真实的窗口句柄).
+//
+// XCStyle: Window_Style_.
+func (a *App) Msg_CreateEx(dwExStyle int, dwStyle int, lpClassName string, pTitle, pText string, nFlags, hWndParent, XCStyle int) int {
+	return xc.XMsg_CreateEx(dwExStyle, dwStyle, lpClassName, pTitle, pText, nFlags, hWndParent, XCStyle)
 }
 
 // 炫彩_发送窗口消息.
@@ -415,11 +436,11 @@ func (a *App) Free(p int) int {
 
 // 炫彩_弹框, 弹出提示框.
 //
-// pText: 提示内容.
-//
 // pTitle: 提示框标题.
-func (a *App) Alert(pText string, pTitle string) int {
-	return xc.XC_Alert(pText, pTitle)
+//
+// pText: 提示内容.
+func (a *App) Alert(pTitle string, pText string) int {
+	return xc.XC_Alert(pTitle, pText)
 }
 
 // 炫彩_系统_ShellExecute, 参见系统API ShellExecute().
@@ -502,15 +523,13 @@ func (a *App) LoadLayoutZip(pZipFileName string, pFileName string, pPassword str
 //
 // data: 内存块指针.
 //
-// length: 内存块大小.
-//
 // pFileName: 布局文件名.
 //
 // pPassword: zip密码.
 //
 // hParent: 父对象句柄.
-func (a *App) LoadLayoutZipMem(data *[]byte, length int, pFileName string, pPassword string, hParent int) int {
-	return xc.XC_LoadLayoutZipMem(data, length, pFileName, pPassword, hParent)
+func (a *App) LoadLayoutZipMem(data []byte, pFileName string, pPassword string, hParent int) int {
+	return xc.XC_LoadLayoutZipMem(data, pFileName, pPassword, hParent)
 }
 
 // 炫彩_加载布局文件从字符串UTF8, 加载布局文件从内存字符串, 返回窗口句柄或布局句柄或元素句柄.
@@ -553,15 +572,13 @@ func (a *App) LoadStyleZip(pZipFile string, pFileName string, pPassword string) 
 
 // 炫彩_加载样式文件从内存ZIP.
 //
-// data: 内存块指针.
-//
-// length: 内存块大小.
+// data: 样式文件数据.
 //
 // pFileName: 文件名.
 //
 // pPassword: 密码.
-func (a *App) LoadStyleZipMem(data *[]byte, length int, pFileName string, pPassword string) bool {
-	return xc.XC_LoadStyleZipMem(data, length, pFileName, pPassword)
+func (a *App) LoadStyleZipMem(data []byte, pFileName string, pPassword string) bool {
+	return xc.XC_LoadStyleZipMem(data, pFileName, pPassword)
 }
 
 // 炫彩_加载资源文件.
@@ -584,15 +601,13 @@ func (a *App) LoadResourceZip(pZipFileName string, pFileName string, pPassword s
 
 // 炫彩_加载资源文件内存ZIP.
 //
-// data: 内存块指针.
-//
-// length: 内存块大小.
+// data: 资源文件数据.
 //
 // pFileName: 资源文件名.
 //
 // pPassword: zip压缩包密码.
-func (a *App) LoadResourceZipMem(data *[]byte, length int, pFileName string, pPassword string) bool {
-	return xc.XC_LoadResourceZipMem(data, length, pFileName, pPassword)
+func (a *App) LoadResourceZipMem(data []byte, pFileName string, pPassword string) bool {
+	return xc.XC_LoadResourceZipMem(data, pFileName, pPassword)
 }
 
 // 炫彩_加载资源文件从字符串UTF8.
@@ -733,4 +748,108 @@ func (a *App) LoadStyleFromStringW(pFileName string, pString string) bool {
 // bShow: 是否显示.
 func (a *App) ShowSvgFrame(bShow bool) int {
 	return xc.XC_ShowSvgFrame(bShow)
+}
+
+// 通知消息_弹出, 未实现, 预留接口.
+//
+// position: 位置, Position_Flag_.
+//
+// pTitle: 标题.
+//
+// pText: 内容.
+//
+// hIcon: 图标.
+//
+// skin: 外观类型, NotifyMsg_Skin_.
+func (a *App) NotifyMsg_Popup(position int, pTitle, pText string, hIcon, skin int) int {
+	return xc.XNotifyMsg_Popup(position, pTitle, pText, hIcon, skin)
+}
+
+// 通知消息_弹出扩展, 未实现, 预留接口.
+//
+// position: 位置, Position_Flag_.
+//
+// pTitle: 标题.
+//
+// pText: 内容.
+//
+// hIcon: 图标.
+//
+// skin: 外观类型, NotifyMsg_Skin_.
+//
+// bBtnClose: 是否启用关闭按钮.
+//
+// bAutoClose: 是否自动关闭.
+//
+// nWidth: 自定义宽度, -1(使用默认值).
+//
+// nHeight: 自定义高度, -1(使用默认值).
+func (a *App) NotifyMsg_PopupEx(position int, pTitle, pText string, hIcon, skin int, bBtnClose, bAutoClose bool, nWidth, nHeight int) int {
+	return xc.XNotifyMsg_PopupEx(position, pTitle, pText, hIcon, skin, bBtnClose, bAutoClose, nWidth, nHeight)
+}
+
+// 通知消息_置持续时间.
+//
+// hWindow: 通知消息所属窗口句柄, 如果未指定那么认为是桌面通知消息.
+//
+// duration: 持续时间.
+func (a *App) NotifyMsg_SetDuration(hWindow, duration int) int {
+	return xc.XNotifyMsg_SetDuration(hWindow, duration)
+}
+
+// 通知消息_置父边距 设置通知消息与父对象的四边间隔.
+//
+// hWindow: 通知消息所属窗口句柄, 如果未指定那么认为是桌面通知消息.
+//
+// left: 左侧间隔, 未实现, 预留功能.
+//
+// top: 顶部间隔.
+//
+// right: 右侧间隔.
+//
+// bottom: 底部间隔, 未实现, 预留功能.
+func (a *App) NotifyMsg_SetParentMargin(hWindow, left, top, right, bottom int) int {
+	return xc.XNotifyMsg_SetParentMargin(hWindow, left, top, right, bottom)
+}
+
+// 通知消息_置标题高度.
+//
+// hWindow: 通知消息所属窗口句柄, 如果未指定那么认为是桌面通知消息.
+//
+// nHeight: 高度.
+func (a *App) NotifyMsg_SetCaptionHeight(hWindow, nHeight int) int {
+	return xc.XNotifyMsg_SetCaptionHeight(hWindow, nHeight)
+}
+
+// 通知消息_置宽度, 设置默认宽度.
+//
+// hWindow: 通知消息所属窗口句柄, 如果未指定那么认为是桌面通知消息.
+//
+// nWidth: 宽度.
+func (a *App) NotifyMsg_SetWidth(hWindow, nWidth int) int {
+	return xc.XNotifyMsg_SetWidth(hWindow, nWidth)
+}
+
+// 通知消息_置间隔.
+//
+// hWindow: 通知消息所属窗口句柄, 如果未指定那么认为是桌面通知消息.
+//
+// nSpace: 间隔大小.
+func (a *App) NotifyMsg_SetSpace(hWindow, nSpace int) int {
+	return xc.XNotifyMsg_SetSpace(hWindow, nSpace)
+}
+
+// 通知消息_置边大小, 设置通知消息面板边大小.
+//
+// hWindow: 通知消息所属窗口句柄, 如果未指定那么认为是桌面通知消息.
+//
+// left: 左边.
+//
+// top: 顶边.
+//
+// right: 右边.
+//
+// bottom: 底边.
+func (a *App) NotifyMsg_SetBorderSize(hWindow, left, top, right, bottom int) int {
+	return xc.XNotifyMsg_SetBorderSize(hWindow, left, top, right, bottom)
 }
