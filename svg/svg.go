@@ -23,11 +23,27 @@ func NewSvg_LoadFile(pFileName string) *Svg {
 // SVG_加载从字符串, 返回Svg对象.
 //
 // pString: 字符串指针.
-//
-// nLength: 字符串长度.
-func NewSvg_LoadString(pString string, nLength int) *Svg {
+func NewSvg_LoadString(pString string) *Svg {
 	p := &Svg{}
-	p.SetHandle(xc.XSvg_LoadString(pString, nLength))
+	p.SetHandle(xc.XSvg_LoadString(pString))
+	return p
+}
+
+// SVG_加载从字符串W.
+//
+// pString: 字符串指针.
+func NewSvg_LoadStringW(pString string) *Svg {
+	p := &Svg{}
+	p.SetHandle(xc.XSvg_LoadStringW(pString))
+	return p
+}
+
+// SVG_加载从字符串UTF8.
+//
+// pString: 字符串指针.
+func NewSvg_LoadStringUtf8(pString string) *Svg {
+	p := &Svg{}
+	p.SetHandle(xc.XSvg_LoadStringUtf8(pString))
 	return p
 }
 
@@ -90,8 +106,8 @@ func (s *Svg) GetHeight() int {
 // x: x轴偏移.
 //
 // y: y轴偏移.
-func (s *Svg) SetOffset(x int, y int) int {
-	return xc.XSvg_SetOffset(s.Handle, x, y)
+func (s *Svg) SetPosition(x, y int) int {
+	return xc.XSvg_SetPosition(s.Handle, x, y)
 }
 
 // SVG_取偏移.
@@ -99,8 +115,26 @@ func (s *Svg) SetOffset(x int, y int) int {
 // pX: x轴偏移.
 //
 // pY: y轴偏移.
-func (s *Svg) GetOffset(pX, pY *int) int {
-	return xc.XSvg_GetOffset(s.Handle, pX, pY)
+func (s *Svg) GetPosition(pX, pY *int) int {
+	return xc.XSvg_GetPosition(s.Handle, pX, pY)
+}
+
+// SVG_置偏移F.
+//
+// x: x轴偏移.
+//
+// y: y轴偏移.
+func (s *Svg) SetPositionF(x, y float32) int {
+	return xc.XSvg_SetPositionF(s.Handle, x, y)
+}
+
+// SVG_取偏移F.
+//
+// pX: x轴偏移.
+//
+// pY: y轴偏移.
+func (s *Svg) GetPositionF(pX, pY *float32) int {
+	return xc.XSvg_GetPositionF(s.Handle, pX, pY)
 }
 
 // SVG_取视图框.
@@ -135,4 +169,97 @@ func (s *Svg) GetRefCount() int {
 // SVG_销毁.
 func (s *Svg) Destroy() int {
 	return xc.XSvg_Destroy(s.Handle)
+}
+
+// SVG_置透明度.
+//
+// alpha: 透明度.
+func (s *Svg) SetAlpha(alpha byte) int {
+	return xc.XSvg_SetAlpha(s.Handle, alpha)
+}
+
+// SVG_取透明度, 返回透明度.
+func (s *Svg) GetAlpha() int {
+	return xc.XSvg_GetAlpha(s.Handle)
+}
+
+// SVG_置用户填充颜色, 用户颜色将覆盖默认样式.
+//
+// color: 颜色, AGBR颜色.
+//
+// bEnable: 是否有效.
+func (s *Svg) SetUserFillColor(color int, bEnable bool) int {
+	return xc.XSvg_SetUserFillColor(s.Handle, color, bEnable)
+}
+
+// SVG_置用户笔触颜色, 用户颜色将覆盖默认样式.
+//
+// color: 颜色, AGBR颜色.
+//
+// strokeWidth: 笔触宽度.
+//
+// bEnable: 是否有效.
+func (s *Svg) SetUserStrokeColor(color int, strokeWidth float32, bEnable bool) int {
+	return xc.XSvg_SetUserStrokeColor(s.Handle, color, strokeWidth, bEnable)
+}
+
+// SVG_取用户填充颜色.
+//
+// pColor: 返回颜色值, AGBR颜色.
+func (s *Svg) GetUserFillColor(pColor *int) bool {
+	return xc.XSvg_GetUserFillColor(s.Handle, pColor)
+}
+
+// SVG_取用户笔触颜色.
+//
+// pColor: 返回颜色值, AGBR颜色.
+//
+// pStrokeWidth: .
+func (s *Svg) GetUserStrokeColor(pColor *int, pStrokeWidth *float32) bool {
+	return xc.XSvg_GetUserStrokeColor(s.Handle, pColor, pStrokeWidth)
+}
+
+// SVG_置旋转角度, 默认以自身中心点旋转.
+//
+// angle: 转角度.
+func (s *Svg) SetRotateAngle(angle float32) int {
+	return xc.XSvg_SetRotateAngle(s.Handle, angle)
+}
+
+// SVG_取旋转角度, 返回旋转角度.
+func (s *Svg) GetRotateAngle() float32 {
+	return xc.XSvg_GetRotateAngle(s.Handle)
+}
+
+// SVG_置旋转.
+//
+// angle: 角度.
+//
+// x: 旋转中心点X.
+//
+// y: 旋转中心点Y.
+//
+// bOffset: TRUE: 旋转中心点相对于自身中心偏移, FALSE:使用绝对坐标.
+func (s *Svg) SetRotate(angle float32, x float32, y float32, bOffset bool) int {
+	return xc.XSvg_SetRotate(s.Handle, angle, x, y, bOffset)
+}
+
+// SVG_取旋转.
+//
+// pAngle: 返回角度.
+//
+// pX: 返回 旋转中心点X.
+//
+// pY: 返回 旋转中心点Y.
+//
+// pbOffset: 返回TRUE: 旋转中心点相对于自身中心偏移, FALSE:使用绝对坐标.
+func (s *Svg) GetRotate(pAngle *float32, pX *float32, pY *float32, pbOffset *bool) int {
+	return xc.XSvg_GetRotate(s.Handle, pAngle, pX, pY, pbOffset)
+}
+
+// SVG_显示, 显示或隐藏.
+//
+// bShow: 是否显示.
+func (s *Svg) Show(bShow bool) int {
+	return xc.XSvg_Show(s.Handle, bShow)
 }
