@@ -14,29 +14,50 @@ type windowBase struct {
 
 // 炫彩_消息框, 返回MessageBox_Flag_.
 //
-// pText: 内容文本.
+// pTitle: 标题.
 //
-// pCaption: 标题.
+// pText: 内容文本.
 //
 // nFlags: 标识, MessageBox_Flag_.
 //
 // XCStyle: Window_Style_.
-func (w *windowBase) MessageBox(pText string, pCaption string, nFlags, XCStyle int) int {
-	return xc.XC_MessageBox(pText, pCaption, nFlags, w.GetHWND(), XCStyle)
+func (w *windowBase) MessageBox(pTitle, pText string, nFlags, XCStyle int) int {
+	return xc.XC_MessageBox(pTitle, pText, nFlags, w.GetHWND(), XCStyle)
 }
 
-// 信息框_创建, 返回窗口对象.
-//
-// pText: 内容文本.
+// 消息框_创建, 返回模态窗口对象, 然后请调用DoModal()方法显示模态窗口.
 //
 // pTitle: 标题.
 //
+// pText: 内容文本.
+//
 // nFlags: 标识, MessageBox_Flag_.
 //
 // XCStyle: Window_Style_.
-func (w *windowBase) Msg_Create(pText, pTitle string, nFlags, XCStyle int) *Window {
-	p := &Window{}
-	p.SetHandle(xc.XMsg_Create(pText, pTitle, nFlags, w.GetHWND(), XCStyle))
+func (w *windowBase) Msg_Create(pTitle, pText string, nFlags, XCStyle int) *ModalWindow {
+	p := &ModalWindow{}
+	p.SetHandle(xc.XMsg_Create(pTitle, pText, nFlags, w.GetHWND(), XCStyle))
+	return p
+}
+
+// 消息框_创建扩展, 返回模态窗口对象, 然后请调用DoModal()方法显示模态窗口.
+//
+// dwExStyle: 窗口扩展样式.
+//
+// dwStyle: 窗口样式.
+//
+// lpClassName: 窗口类名.
+//
+// pTitle: 标题.
+//
+// pText: 内容文本.
+//
+// nFlags: 标识, MessageBox_Flag_.
+//
+// XCStyle: Window_Style_.
+func (w *windowBase) Msg_CreateEx(dwExStyle, dwStyle int, lpClassName, pTitle, pText string, nFlags, XCStyle int) *ModalWindow {
+	p := &ModalWindow{}
+	p.SetHandle(xc.XMsg_CreateEx(dwExStyle, dwStyle, lpClassName, pTitle, pText, nFlags, w.GetHWND(), XCStyle))
 	return p
 }
 
@@ -558,8 +579,8 @@ func (w *windowBase) GetLayoutRect(pRect *xc.RECT) int {
 // x: X坐标.
 //
 // y: Y坐标.
-func (w *windowBase) Move(x, y int) int {
-	return xc.XWnd_Move(w.Handle, x, y)
+func (w *windowBase) SetPosition(x, y int) int {
+	return xc.XWnd_SetPosition(w.Handle, x, y)
 }
 
 // 窗口_取坐标.
@@ -627,7 +648,7 @@ func (w *windowBase) SetBkMagager(hBkInfoM int) int {
 
 // 窗口_置透明类型.
 //
-// nType: 窗口透明类型.
+// nType: 窗口透明类型, Window_Transparent_.
 func (w *windowBase) SetTransparentType(nType int) int {
 	return xc.XWnd_SetTransparentType(w.Handle, nType)
 }
@@ -790,6 +811,98 @@ func (w *windowBase) GetBkInfoCount() int {
 // 窗口_清空背景对象.
 func (w *windowBase) ClearBkInfo() int {
 	return xc.XWnd_ClearBkInfo(w.Handle)
+}
+
+// 通知消息_窗口中弹出, 使用基础元素作为面板, 弹出一个通知消息, 返回元素句柄, 通过此句柄可对其操作.
+//
+// position: 位置, Position_Flag_.
+//
+// pTitle: 标题.
+//
+// pText: 内容.
+//
+// hIcon: 图标.
+//
+// skin: 外观类型, NotifyMsg_Skin_.
+func (w *windowBase) NotifyMsg_WindowPopup(position int, pTitle, pText string, hIcon, skin int) int {
+	return xc.XNotifyMsg_WindowPopup(w.Handle, position, pTitle, pText, hIcon, skin)
+}
+
+// 通知消息_窗口中弹出扩展, 使用基础元素作为面板, 弹出一个通知消息, 返回元素句柄, 通过此句柄可对其操作.
+//
+// position: 位置, Position_Flag_.
+//
+// pTitle: 标题.
+//
+// pText: 内容.
+//
+// hIcon: 图标.
+//
+// skin: 外观类型, NotifyMsg_Skin_.
+//
+// bBtnClose: 是否启用关闭按钮.
+//
+// bAutoClose: 是否自动关闭.
+//
+// nWidth: 自定义宽度, -1(使用默认值).
+//
+// nHeight: 自定义高度, -1(使用默认值).
+func (w *windowBase) NotifyMsg_WindowPopupEx(position int, pTitle, pText string, hIcon, skin int, bBtnClose, bAutoClose bool, nWidth, nHeight int) int {
+	return xc.XNotifyMsg_WindowPopupEx(w.Handle, position, pTitle, pText, hIcon, skin, bBtnClose, bAutoClose, nWidth, nHeight)
+}
+
+// 通知消息_置持续时间.
+//
+// duration: 持续时间.
+func (w *windowBase) NotifyMsg_SetDuration(duration int) int {
+	return xc.XNotifyMsg_SetDuration(w.Handle, duration)
+}
+
+// 通知消息_置父边距 设置通知消息与父对象的四边间隔.
+//
+// left: 左侧间隔, 未实现, 预留功能.
+//
+// top: 顶部间隔.
+//
+// right: 右侧间隔.
+//
+// bottom: 底部间隔, 未实现, 预留功能.
+func (w *windowBase) NotifyMsg_SetParentMargin(left, top, right, bottom int) int {
+	return xc.XNotifyMsg_SetParentMargin(w.Handle, left, top, right, bottom)
+}
+
+// 通知消息_置标题高度.
+//
+// nHeight: 高度.
+func (w *windowBase) NotifyMsg_SetCaptionHeight(nHeight int) int {
+	return xc.XNotifyMsg_SetCaptionHeight(w.Handle, nHeight)
+}
+
+// 通知消息_置宽度, 设置默认宽度.
+//
+// nWidth: 宽度.
+func (w *windowBase) NotifyMsg_SetWidth(nWidth int) int {
+	return xc.XNotifyMsg_SetWidth(w.Handle, nWidth)
+}
+
+// 通知消息_置间隔.
+//
+// nSpace: 间隔大小.
+func (w *windowBase) NotifyMsg_SetSpace(nSpace int) int {
+	return xc.XNotifyMsg_SetSpace(w.Handle, nSpace)
+}
+
+// 通知消息_置边大小, 设置通知消息面板边大小.
+//
+// left: 左边.
+//
+// top: 顶边.
+//
+// right: 右边.
+//
+// bottom: 底边.
+func (w *windowBase) NotifyMsg_SetBorderSize(left, top, right, bottom int) int {
+	return xc.XNotifyMsg_SetBorderSize(w.Handle, left, top, right, bottom)
 }
 
 /*
