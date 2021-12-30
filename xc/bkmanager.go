@@ -16,6 +16,8 @@ func XBkM_Destroy(hBkInfoM int) int {
 	return int(r)
 }
 
+// !废弃函数, 保留为了兼容旧版; 请使用 XBkM_SetInfo().
+//
 // 背景_置内容, 设置背景内容, 返回设置的背景对象数量.
 //
 // hBkInfoM: 背景管理器句柄.
@@ -153,5 +155,15 @@ func XBkM_Release(hBkInfoM int) int {
 // hBkInfoM: 背景管理器句柄.
 func XBkM_GetRefCount(hBkInfoM int) int {
 	r, _, _ := xBkM_GetRefCount.Call(uintptr(hBkInfoM))
+	return int(r)
+}
+
+// 背景_取引用计数, 设置背景内容, 返回设置的背景对象数量.
+//
+// hBkInfoM: 背景管理器句柄.
+//
+// pText: 背景内容字符串.
+func XBkM_SetInfo(hBkInfoM int, pText string) int {
+	r, _, _ := xBkM_SetInfo.Call(uintptr(hBkInfoM), strPtr(pText))
 	return int(r)
 }
