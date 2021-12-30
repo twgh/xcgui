@@ -905,6 +905,41 @@ func (w *windowBase) NotifyMsg_SetBorderSize(left, top, right, bottom int) int {
 	return xc.XNotifyMsg_SetBorderSize(w.Handle, left, top, right, bottom)
 }
 
+// 窗口_置背景, 返回设置的背景对象数量.
+//
+// pText: 背景内容字符串.
+func (w *windowBase) SetBkInfo(pText string) int {
+	return xc.XWnd_SetBkInfo(w.Handle, pText)
+}
+
+// 窗口_是否可拖动标题栏.
+func (w *windowBase) IsDragCaption() bool {
+	return xc.XWnd_IsDragCaption(w.Handle)
+}
+
+// 窗口_是否可拖动窗口.
+func (w *windowBase) IsDragWindow() bool {
+	return xc.XWnd_IsDragWindow(w.Handle)
+}
+
+// 窗口_是否可拖动边框.
+func (w *windowBase) IsDragBorder() bool {
+	return xc.XWnd_IsDragBorder(w.Handle)
+}
+
+// 窗口_置标题外间距, 设置标题内容(图标, 标题, 控制按钮)外间距.
+//
+// left: 左边间距.
+//
+// top: 上边间距.
+//
+// right: 右边间距.
+//
+// bottom: 下边间距.
+func (w *windowBase) SetCaptionMargin(left int, top int, right int, bottom int) int {
+	return xc.XWnd_SetCaptionMargin(w.Handle, left, top, right, bottom)
+}
+
 /*
 下面都是事件
 */
@@ -932,6 +967,23 @@ type XWM_PAINT_END func(hDraw int, pbHandled *bool) int                         
 type XWM_PAINT_END1 func(hWindow int, hDraw int, pbHandled *bool) int                           // 窗口绘制完成消息.
 type XWM_PAINT_DISPLAY func(pbHandled *bool) int                                                // 窗口绘制完成并且已经显示到屏幕.
 type XWM_PAINT_DISPLAY1 func(hWindow int, pbHandled *bool) int                                  // 窗口绘制完成并且已经显示到屏幕.
+type XWM_DOCK_POPUP func(hWindowDock, hPane int, pbHandled *bool) int                           // 框架窗口码头弹出窗格, 当用户点击码头上的按钮时, 显示对应的窗格, 当失去焦点时自动隐藏窗格.
+type XWM_DOCK_POPUP1 func(hWindow int, hWindowDock, hPane int, pbHandled *bool) int             // 框架窗口码头弹出窗格, 当用户点击码头上的按钮时, 显示对应的窗格, 当失去焦点时自动隐藏窗格.
+// 浮动窗口拖动, 用户拖动浮动窗口移动, 显示停靠提示.
+//
+// hFloatWnd: 拖动的浮动窗口句柄.
+//
+// hArray: HWINDOW array[6], 窗格停靠提示窗口句柄数组, 有6个成员, 分别为:[0]中间十字, [1]左侧, [2]顶部, [3]右侧, [4]底部, [5]停靠位置预览.
+type XWM_FLOATWND_DRAG func(hFloatWnd int, hArray *[6]int, pbHandled *bool) int
+
+// 浮动窗口拖动, 用户拖动浮动窗口移动, 显示停靠提示.
+//
+// hWindow: 传入的窗口资源句柄.
+//
+// hFloatWnd: 拖动的浮动窗口句柄.
+//
+// hArray: HWINDOW array[6], 窗格停靠提示窗口句柄数组, 有6个成员, 分别为:[0]中间十字, [1]左侧, [2]顶部, [3]右侧, [4]底部, [5]停靠位置预览.
+type XWM_FLOATWND_DRAG1 func(hWindow int, hFloatWnd int, hArray *[6]int, pbHandled *bool) int
 
 type WM_PAINT func(hDraw int, pbHandled *bool) int                                        // 窗口绘制消息.
 type WM_PAINT1 func(hWindow int, hDraw int, pbHandled *bool) int                          // 窗口绘制消息.
@@ -1090,6 +1142,36 @@ func (w *windowBase) Event_PAINT_DISPLAY(pFun XWM_PAINT_DISPLAY) bool {
 // 窗口绘制完成并且已经显示到屏幕.
 func (w *windowBase) Event_PAINT_DISPLAY1(pFun XWM_PAINT_DISPLAY1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_PAINT_DISPLAY, pFun)
+}
+
+// 框架窗口码头弹出窗格, 当用户点击码头上的按钮时, 显示对应的窗格, 当失去焦点时自动隐藏窗格.
+func (w *windowBase) Event_DOCK_POPUP(pFun XWM_DOCK_POPUP) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_DOCK_POPUP, pFun)
+}
+
+// 框架窗口码头弹出窗格, 当用户点击码头上的按钮时, 显示对应的窗格, 当失去焦点时自动隐藏窗格.
+func (w *windowBase) Event_DOCK_POPUP1(pFun XWM_DOCK_POPUP1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_DOCK_POPUP, pFun)
+}
+
+// 浮动窗口拖动, 用户拖动浮动窗口移动, 显示停靠提示.
+//
+// hFloatWnd: 拖动的浮动窗口句柄.
+//
+// hArray: HWINDOW array[6], 窗格停靠提示窗口句柄数组, 有6个成员, 分别为:[0]中间十字, [1]左侧, [2]顶部, [3]右侧, [4]底部, [5]停靠位置预览.
+func (w *windowBase) Event_FLOATWND_DRAG(pFun XWM_FLOATWND_DRAG) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_FLOATWND_DRAG, pFun)
+}
+
+// 浮动窗口拖动, 用户拖动浮动窗口移动, 显示停靠提示.
+//
+// hWindow: 传入的窗口资源句柄.
+//
+// hFloatWnd: 拖动的浮动窗口句柄.
+//
+// hArray: HWINDOW array[6], 窗格停靠提示窗口句柄数组, 有6个成员, 分别为:[0]中间十字, [1]左侧, [2]顶部, [3]右侧, [4]底部, [5]停靠位置预览.
+func (w *windowBase) Event_FLOATWND_DRAG1(pFun XWM_FLOATWND_DRAG1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_FLOATWND_DRAG, pFun)
 }
 
 // 窗口绘制消息.

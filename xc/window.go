@@ -1060,3 +1060,53 @@ func XWnd_ClearBkInfo(hWindow int) int {
 	r, _, _ := xWnd_ClearBkInfo.Call(uintptr(hWindow))
 	return int(r)
 }
+
+// 窗口_置背景, 返回设置的背景对象数量.
+//
+// hWindow: 窗口句柄.
+//
+// pText: 背景内容字符串.
+func XWnd_SetBkInfo(hWindow int, pText string) int {
+	r, _, _ := xWnd_SetBkInfo.Call(uintptr(hWindow), strPtr(pText))
+	return int(r)
+}
+
+// 窗口_是否可拖动标题栏.
+//
+// hWindow: 窗口句柄.
+func XWnd_IsDragCaption(hWindow int) bool {
+	r, _, _ := xWnd_IsDragCaption.Call(uintptr(hWindow))
+	return int(r) != 0
+}
+
+// 窗口_是否可拖动窗口.
+//
+// hWindow: 窗口句柄.
+func XWnd_IsDragWindow(hWindow int) bool {
+	r, _, _ := xWnd_IsDragWindow.Call(uintptr(hWindow))
+	return int(r) != 0
+}
+
+// 窗口_是否可拖动边框.
+//
+// hWindow: 窗口句柄.
+func XWnd_IsDragBorder(hWindow int) bool {
+	r, _, _ := xWnd_IsDragBorder.Call(uintptr(hWindow))
+	return int(r) != 0
+}
+
+// 窗口_置标题外间距, 设置标题内容(图标, 标题, 控制按钮)外间距.
+//
+// hWindow: 窗口句柄.
+//
+// left: 左边间距.
+//
+// top: 上边间距.
+//
+// right: 右边间距.
+//
+// bottom: 下边间距.
+func XWnd_SetCaptionMargin(hWindow int, left int, top int, right int, bottom int) int {
+	r, _, _ := xWnd_SetCaptionMargin.Call(uintptr(hWindow), uintptr(left), uintptr(top), uintptr(right), uintptr(bottom))
+	return int(r)
+}
