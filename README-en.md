@@ -64,7 +64,7 @@ func main() {
 	// Load resource files from memory zip
 	a.LoadResourceZipMem(qqmusic, "resource.res", "")
 	// Load layout file from memory zip
-	hWindow := a.LoadLayoutZipMem(qqmusic, "main.xml", "", 0)
+	hWindow := a.LoadLayoutZipMem(qqmusic, "main.xml", "", 0, 0)
 	// Create window object
 	w := window.NewWindowByHandle(hWindow)
 	// Adjust the layout
