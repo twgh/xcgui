@@ -898,6 +898,14 @@ const (
 	XWM_FLOAT_PANE           = 0x7000 + 18 // 浮动窗格
 	XWM_PAINT_END            = 0x7000 + 19 // 窗口绘制完成消息
 	XWM_PAINT_DISPLAY        = 0x7000 + 20 // 窗口绘制完成并且已经显示到屏幕
+	XWM_DOCK_POPUP           = 0x7000 + 21 // 框架窗口码头弹出窗格, 当用户点击码头上的按钮时, 显示对应的窗格, 当失去焦点时自动隐藏窗格
+
+	// 浮动窗口拖动, 用户拖动浮动窗口移动, 显示停靠提示.
+	//
+	// hFloatWnd: 拖动的浮动窗口句柄.
+	//
+	// hArray: HWINDOW array[6], 窗格停靠提示窗口句柄数组, 有6个成员, 分别为:[0]中间十字, [1]左侧, [2]顶部, [3]右侧, [4]底部, [5]停靠位置预览.
+	XWM_FLOATWND_DRAG = 0x7000 + 22
 )
 
 // 窗口事件
@@ -985,4 +993,12 @@ const (
 	NotifyMsg_Skin_Warning        // 警告
 	NotifyMsg_Skin_Message        // 消息
 	NotifyMsg_Skin_Error          // 错误
+)
+
+// 动画移动标识
+// Animation_Move_
+
+const (
+	Animation_Move_X = 0x01 // X轴移动.
+	Animation_Move_Y = 0x02 // Y轴移动.
 )
