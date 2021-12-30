@@ -502,8 +502,10 @@ func (a *App) PostQuitMessage(nExitCode int) int {
 // pFileName: 布局文件名.
 //
 // hParent: 父对象句柄.
-func (a *App) LoadLayout(pFileName string, hParent int) int {
-	return xc.XC_LoadLayout(pFileName, hParent)
+//
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
+func (a *App) LoadLayout(pFileName string, hParent, hAttachWnd int) int {
+	return xc.XC_LoadLayout(pFileName, hParent, hAttachWnd)
 }
 
 // 炫彩_加载布局文件ZIP, 加载布局文件从zip压缩包中, 返回窗口句柄或布局句柄或元素句柄.
@@ -515,8 +517,10 @@ func (a *App) LoadLayout(pFileName string, hParent int) int {
 // pPassword: zip密码.
 //
 // hParent: 父对象句柄.
-func (a *App) LoadLayoutZip(pZipFileName string, pFileName string, pPassword string, hParent int) int {
-	return xc.XC_LoadLayoutZip(pZipFileName, pFileName, pPassword, hParent)
+//
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
+func (a *App) LoadLayoutZip(pZipFileName string, pFileName string, pPassword string, hParent, hAttachWnd int) int {
+	return xc.XC_LoadLayoutZip(pZipFileName, pFileName, pPassword, hParent, hAttachWnd)
 }
 
 // 炫彩_加载布局文件内存ZIP, 加载布局文件从zip压缩包中, 返回窗口句柄或布局句柄或元素句柄.
@@ -528,8 +532,10 @@ func (a *App) LoadLayoutZip(pZipFileName string, pFileName string, pPassword str
 // pPassword: zip密码.
 //
 // hParent: 父对象句柄.
-func (a *App) LoadLayoutZipMem(data []byte, pFileName string, pPassword string, hParent int) int {
-	return xc.XC_LoadLayoutZipMem(data, pFileName, pPassword, hParent)
+//
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
+func (a *App) LoadLayoutZipMem(data []byte, pFileName string, pPassword string, hParent, hAttachWnd int) int {
+	return xc.XC_LoadLayoutZipMem(data, pFileName, pPassword, hParent, hAttachWnd)
 }
 
 // 炫彩_加载布局文件从字符串UTF8, 加载布局文件从内存字符串, 返回窗口句柄或布局句柄或元素句柄.
@@ -537,8 +543,10 @@ func (a *App) LoadLayoutZipMem(data []byte, pFileName string, pPassword string, 
 // pStringXML: 字符串指针.
 //
 // hParent: 父对象.
-func (a *App) LoadLayoutFromStringUtf8(pStringXML string, hParent int) int {
-	return xc.XC_LoadLayoutFromStringUtf8(pStringXML, hParent)
+//
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
+func (a *App) LoadLayoutFromStringUtf8(pStringXML string, hParent, hAttachWnd int) int {
+	return xc.XC_LoadLayoutFromStringUtf8(pStringXML, hParent, hAttachWnd)
 }
 
 /*
@@ -547,8 +555,10 @@ func (a *App) LoadLayoutFromStringUtf8(pStringXML string, hParent int) int {
 // pStringXML: 字符串指针.
 //
 // hParent: 父对象.
-func (a *App) LoadLayoutFromString(pStringXML string, hParent int) int {
-	return xc.XC_LoadLayoutFromString(pStringXML, hParent)
+//
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
+func (a *App) LoadLayoutFromString(pStringXML string, hParent, hAttachWnd int) int {
+	return xc.XC_LoadLayoutFromString(pStringXML, hParent, hAttachWnd)
 }
 */
 
