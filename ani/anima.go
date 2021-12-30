@@ -297,3 +297,16 @@ func (a *Anima) DestroyObjectUI(duration float32) *AnimaItem {
 	p.SetHandle(xc.XAnima_DestroyObjectUI(a.Handle, duration))
 	return p
 }
+
+// 动画_延迟扩展, 可以作为一个空动画, 然后在回调里处理自己的算法, 返回动画项句柄.
+//
+// duration: 持续时间.
+//
+// nLoopCount: 动画循环次数, 0:无限循环.
+//
+// ease_flag: 缓动标识, Ease_Flag_.
+//
+// bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
+func (a *Anima) DelayEx(duration float32, nLoopCount int, ease_flag int, bGoBack bool) int {
+	return xc.XAnima_DelayEx(a.Handle, duration, nLoopCount, ease_flag, bGoBack)
+}

@@ -499,3 +499,31 @@ func XAnimaItem_EnableAutoDestroy(hAnimationItem int, bEnable bool) int {
 	r, _, _ := xAnimaItem_EnableAutoDestroy.Call(uintptr(hAnimationItem), boolPtr(bEnable))
 	return int(r)
 }
+
+// 动画_延迟扩展, 可以作为一个空动画, 然后在回调里处理自己的算法, 返回动画项句柄.
+//
+// hSequence: 动画序列句柄.
+//
+// duration: 持续时间.
+//
+// nLoopCount: 动画循环次数, 0:无限循环.
+//
+// ease_flag: 缓动标识, Ease_Flag_.
+//
+// bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
+func XAnima_DelayEx(hSequence int, duration float32, nLoopCount int, ease_flag int, bGoBack bool) int {
+	r, _, _ := xAnima_DelayEx.Call(uintptr(hSequence), float32Ptr(duration), uintptr(nLoopCount), uintptr(ease_flag), boolPtr(bGoBack))
+	return int(r)
+}
+
+// 动画移动_置标识, 此接口可独立设置x轴移动或y轴移动.
+//
+// hAnimationMove: 动画移动项句柄.
+//
+// flags: 动画移动标识, 可组合使用, Animation_Move_.
+//
+// TODO: 此函数尚未封装到类中.
+func XAnimaMove_SetFlag(hAnimationMove int, flags int) int {
+	r, _, _ := xAnimaMove_SetFlag.Call(uintptr(hAnimationMove), uintptr(flags))
+	return int(r)
+}
