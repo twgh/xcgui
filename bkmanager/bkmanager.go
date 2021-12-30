@@ -42,6 +42,8 @@ func (b *BkManager) Destroy() int {
 	return xc.XBkM_Destroy(b.Handle)
 }
 
+// !废弃函数, 保留为了兼容旧版; 请使用SetInfo().
+//
 // 背景_置内容, 设置背景内容, 返回设置的背景对象数量.
 //
 // pText: 背景内容字符串.
@@ -141,4 +143,11 @@ func (b *BkManager) Release() int {
 // 背景_取引用计数.
 func (b *BkManager) GetRefCount() int {
 	return xc.XBkM_GetRefCount(b.Handle)
+}
+
+// 背景_取引用计数, 设置背景内容, 返回设置的背景对象数量.
+//
+// pText: 背景内容字符串.
+func (b *BkManager) SetInfo(pText string) int {
+	return xc.XBkM_SetInfo(b.Handle, pText)
 }
