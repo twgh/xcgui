@@ -875,6 +875,13 @@ func (e *Element) GetSize(pOutWidth *int, pOutHeight *int) int {
 	return xc.XEle_GetSize(e.Handle, pOutWidth, pOutHeight)
 }
 
+// 元素_置背景, 设置背景内容, 返回设置的背景对象数量.
+//
+// pText: 背景内容字符串.
+func (e *Element) SetBkInfo(pText int) int {
+	return xc.XEle_SetBkInfo(e.Handle, pText)
+}
+
 /*
 下面都是事件
 */

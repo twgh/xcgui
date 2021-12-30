@@ -1152,3 +1152,13 @@ func XEle_GetSize(hEle int, pOutWidth *int, pOutHeight *int) int {
 	r, _, _ := xEle_GetSize.Call(uintptr(hEle), uintptr(unsafe.Pointer(pOutWidth)), uintptr(unsafe.Pointer(pOutHeight)))
 	return int(r)
 }
+
+// 元素_置背景, 设置背景内容, 返回设置的背景对象数量.
+//
+// hEle: 元素句柄.
+//
+// pText: 背景内容字符串.
+func XEle_SetBkInfo(hEle int, pText int) int {
+	r, _, _ := xEle_SetBkInfo.Call(uintptr(hEle), uintptr(pText))
+	return int(r)
+}
