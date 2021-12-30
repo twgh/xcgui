@@ -212,6 +212,11 @@ var (
 	xWnd_AddBkImage                *syscall.LazyProc
 	xWnd_GetBkInfoCount            *syscall.LazyProc
 	xWnd_ClearBkInfo               *syscall.LazyProc
+	xWnd_SetBkInfo                 *syscall.LazyProc
+	xWnd_IsDragCaption             *syscall.LazyProc
+	xWnd_IsDragWindow              *syscall.LazyProc
+	xWnd_IsDragBorder              *syscall.LazyProc
+	xWnd_SetCaptionMargin          *syscall.LazyProc
 
 	// Widget.
 	xWidget_IsShow                 *syscall.LazyProc
@@ -382,6 +387,7 @@ var (
 	xEle_GetPosition                *syscall.LazyProc
 	xEle_SetSize                    *syscall.LazyProc
 	xEle_GetSize                    *syscall.LazyProc
+	xEle_SetBkInfo                  *syscall.LazyProc
 
 	// FreameWindow.
 	xFrameWnd_Create               *syscall.LazyProc
@@ -860,6 +866,7 @@ var (
 	xBkM_AddRef            *syscall.LazyProc
 	xBkM_Release           *syscall.LazyProc
 	xBkM_GetRefCount       *syscall.LazyProc
+	xBkM_SetInfo           *syscall.LazyProc
 
 	// Draw.
 	xDraw_Create                  *syscall.LazyProc
@@ -1604,6 +1611,8 @@ var (
 	xAnimaItem_SetUserData           *syscall.LazyProc
 	xAnimaItem_GetUserData           *syscall.LazyProc
 	xAnimaItem_EnableAutoDestroy     *syscall.LazyProc
+	xAnima_DelayEx                   *syscall.LazyProc
+	xAnimaMove_SetFlag               *syscall.LazyProc
 
 	// 通知消息.
 	xNotifyMsg_Popup            *syscall.LazyProc
@@ -1821,6 +1830,11 @@ func init() {
 	xWnd_AddBkImage = xcgui.NewProc("XWnd_AddBkImage")
 	xWnd_GetBkInfoCount = xcgui.NewProc("XWnd_GetBkInfoCount")
 	xWnd_ClearBkInfo = xcgui.NewProc("XWnd_ClearBkInfo")
+	xWnd_SetBkInfo = xcgui.NewProc("XWnd_SetBkInfo")
+	xWnd_IsDragCaption = xcgui.NewProc("XWnd_IsDragCaption")
+	xWnd_IsDragWindow = xcgui.NewProc("XWnd_IsDragWindow")
+	xWnd_IsDragBorder = xcgui.NewProc("XWnd_IsDragBorder")
+	xWnd_SetCaptionMargin = xcgui.NewProc("XWnd_SetCaptionMargin")
 
 	// Widget.
 	xWidget_IsShow = xcgui.NewProc("XWidget_IsShow")
@@ -1993,6 +2007,7 @@ func init() {
 	xEle_GetPosition = xcgui.NewProc("XEle_GetPosition")
 	xEle_SetSize = xcgui.NewProc("XEle_SetSize")
 	xEle_GetSize = xcgui.NewProc("XEle_GetSize")
+	xEle_SetBkInfo = xcgui.NewProc("XEle_SetBkInfo")
 
 	// FreameWindow.
 	xFrameWnd_Create = xcgui.NewProc("XFrameWnd_Create")
@@ -2463,6 +2478,7 @@ func init() {
 	xBkM_AddRef = xcgui.NewProc("XBkM_AddRef")
 	xBkM_Release = xcgui.NewProc("XBkM_Release")
 	xBkM_GetRefCount = xcgui.NewProc("XBkM_GetRefCount")
+	xBkM_SetInfo = xcgui.NewProc("XBkM_SetInfo")
 
 	// Draw.
 	xDraw_Create = xcgui.NewProc("XDraw_Create")
@@ -3207,6 +3223,8 @@ func init() {
 	xAnimaItem_SetUserData = xcgui.NewProc("XAnimaItem_SetUserData")
 	xAnimaItem_GetUserData = xcgui.NewProc("XAnimaItem_GetUserData")
 	xAnimaItem_EnableAutoDestroy = xcgui.NewProc("XAnimaItem_EnableAutoDestroy")
+	xAnima_DelayEx = xcgui.NewProc("XAnima_DelayEx")
+	xAnimaMove_SetFlag = xcgui.NewProc("XAnimaMove_SetFlag")
 
 	// 通知消息.
 	xNotifyMsg_Popup = xcgui.NewProc("XNotifyMsg_Popup")
