@@ -609,6 +609,13 @@ func (l *ListBox) GetCountColumn_AD() int {
 	return xc.XListBox_GetCountColumn_AD(l.Handle)
 }
 
+// 列表框_置分割线颜色.
+//
+// color: ABGR颜色值.
+func (l *ListBox) SetSplitLineColor(color int) int {
+	return xc.XListBox_SetSplitLineColor(l.Handle, color)
+}
+
 /*
 以下都是事件
 */
