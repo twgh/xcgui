@@ -18,7 +18,7 @@ func XMenu_Create() int {
 //
 // nFlags: 标识, Menu_Item_Flag_.
 func XMenu_AddItem(hMenu int, nID int, pText string, nParentID int, nFlags int) int {
-	r, _, _ := xMenu_AddItem.Call(uintptr(hMenu), uintptr(nID), strPtr(pText), uintptr(nParentID), uintptr(nFlags))
+	r, _, _ := xMenu_AddItem.Call(uintptr(hMenu), uintptr(nID), StrPtr(pText), uintptr(nParentID), uintptr(nFlags))
 	return int(r)
 }
 
@@ -36,7 +36,7 @@ func XMenu_AddItem(hMenu int, nID int, pText string, nParentID int, nFlags int) 
 //
 // nFlags: 标识, Menu_Item_Flag_.
 func XMenu_AddItemIcon(hMenu int, nID int, pText string, nParentID int, hIcon int, nFlags int) int {
-	r, _, _ := xMenu_AddItemIcon.Call(uintptr(hMenu), uintptr(nID), strPtr(pText), uintptr(nParentID), uintptr(hIcon), uintptr(nFlags))
+	r, _, _ := xMenu_AddItemIcon.Call(uintptr(hMenu), uintptr(nID), StrPtr(pText), uintptr(nParentID), uintptr(hIcon), uintptr(nFlags))
 	return int(r)
 }
 
@@ -52,7 +52,7 @@ func XMenu_AddItemIcon(hMenu int, nID int, pText string, nParentID int, hIcon in
 //
 // insertID: 插入位置ID.
 func XMenu_InsertItem(hMenu int, nID int, pText string, nFlags int, insertID int) int {
-	r, _, _ := xMenu_InsertItem.Call(uintptr(hMenu), uintptr(nID), strPtr(pText), uintptr(nFlags), uintptr(insertID))
+	r, _, _ := xMenu_InsertItem.Call(uintptr(hMenu), uintptr(nID), StrPtr(pText), uintptr(nFlags), uintptr(insertID))
 	return int(r)
 }
 
@@ -70,7 +70,7 @@ func XMenu_InsertItem(hMenu int, nID int, pText string, nFlags int, insertID int
 //
 // insertID: 插入位置ID.
 func XMenu_InsertItemIcon(hMenu int, nID int, pText string, hIcon int, nFlags int, insertID int) int {
-	r, _, _ := xMenu_InsertItemIcon.Call(uintptr(hMenu), uintptr(nID), strPtr(pText), uintptr(hIcon), uintptr(nFlags), uintptr(insertID))
+	r, _, _ := xMenu_InsertItemIcon.Call(uintptr(hMenu), uintptr(nID), StrPtr(pText), uintptr(hIcon), uintptr(nFlags), uintptr(insertID))
 	return int(r)
 }
 
@@ -130,7 +130,7 @@ func XMenu_GetParentItem(hMenu int, nID int) int {
 //
 // bAuto: 是否自动销毁.
 func XMenu_SetAutoDestroy(hMenu int, bAuto bool) int {
-	r, _, _ := xMenu_SetAutoDestroy.Call(uintptr(hMenu), boolPtr(bAuto))
+	r, _, _ := xMenu_SetAutoDestroy.Call(uintptr(hMenu), BoolPtr(bAuto))
 	return int(r)
 }
 
@@ -140,7 +140,7 @@ func XMenu_SetAutoDestroy(hMenu int, bAuto bool) int {
 //
 // bEnable: 是否启用.
 func XMenu_EnableDrawBackground(hMenu int, bEnable bool) int {
-	r, _, _ := xMenu_EnableDrawBackground.Call(uintptr(hMenu), boolPtr(bEnable))
+	r, _, _ := xMenu_EnableDrawBackground.Call(uintptr(hMenu), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -150,7 +150,7 @@ func XMenu_EnableDrawBackground(hMenu int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XMenu_EnableDrawItem(hMenu int, bEnable bool) int {
-	r, _, _ := xMenu_EnableDrawItem.Call(uintptr(hMenu), boolPtr(bEnable))
+	r, _, _ := xMenu_EnableDrawItem.Call(uintptr(hMenu), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -206,7 +206,7 @@ func XMenu_SetBkImage(hMenu int, hImage int) int {
 //
 // pText: 文本内容.
 func XMenu_SetItemText(hMenu int, nID int, pText string) bool {
-	r, _, _ := xMenu_SetItemText.Call(uintptr(hMenu), uintptr(nID), strPtr(pText))
+	r, _, _ := xMenu_SetItemText.Call(uintptr(hMenu), uintptr(nID), StrPtr(pText))
 	return int(r) != 0
 }
 
@@ -330,7 +330,7 @@ func XMenu_GetItemCount(hMenu int) int {
 //
 // bCheck: 勾选TRUE.
 func XMenu_SetItemCheck(hMenu int, nID int, bCheck bool) bool {
-	r, _, _ := xMenu_SetItemCheck.Call(uintptr(hMenu), uintptr(nID), boolPtr(bCheck))
+	r, _, _ := xMenu_SetItemCheck.Call(uintptr(hMenu), uintptr(nID), BoolPtr(bCheck))
 	return int(r) != 0
 }
 
@@ -341,5 +341,17 @@ func XMenu_SetItemCheck(hMenu int, nID int, bCheck bool) bool {
 // nID: 菜单项ID.
 func XMenu_IsItemCheck(hMenu int, nID int) bool {
 	r, _, _ := xMenu_IsItemCheck.Call(uintptr(hMenu), uintptr(nID))
+	return int(r) != 0
+}
+
+// 菜单_置项宽度, 此宽度为文本显示区域宽度, 不包含侧边条和与文本间隔.
+//
+// hMenu: 菜单句柄.
+//
+// nID: 项ID.
+//
+// nWidth: 指定文本区域宽度.
+func XMenu_SetItemWidth(hMenu int, nID int, nWidth int) bool {
+	r, _, _ := xMenu_SetItemWidth.Call(uintptr(hMenu), uintptr(nID), uintptr(nWidth))
 	return int(r) != 0
 }
