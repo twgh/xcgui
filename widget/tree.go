@@ -560,6 +560,13 @@ func (t *Tree) DeleteColumnAll() int {
 	return xc.XTree_DeleteColumnAll(t.Handle)
 }
 
+// 列表树_置分割线颜色.
+//
+// color: ABGR颜色值.
+func (t *Tree) SetSplitLineColor(color int) int {
+	return xc.XTree_SetSplitLineColor(t.Handle, color)
+}
+
 /*
 以下都是事件
 */
