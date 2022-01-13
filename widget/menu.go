@@ -304,3 +304,12 @@ func (m *Menu) SetItemCheck(nID int, bCheck bool) bool {
 func (m *Menu) IsItemCheck(nID int) bool {
 	return xc.XMenu_IsItemCheck(m.Handle, nID)
 }
+
+// 菜单_置项宽度, 此宽度为文本显示区域宽度, 不包含侧边条和与文本间隔.
+//
+// nID: 项ID.
+//
+// nWidth: 指定文本区域宽度.
+func (m *Menu) SetItemWidth(nID int, nWidth int) bool {
+	return xc.XMenu_SetItemWidth(m.Handle, nID, nWidth)
+}
