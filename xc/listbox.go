@@ -24,7 +24,7 @@ func XListBox_Create(x int, y int, cx int, cy int, hParent int) int {
 //
 // bEnable: 是否启用.
 func XListBox_EnableFixedRowHeight(hEle int, bEnable bool) int {
-	r, _, _ := xListBox_EnableFixedRowHeight.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xListBox_EnableFixedRowHeight.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -34,7 +34,7 @@ func XListBox_EnableFixedRowHeight(hEle int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XListBox_EnablemTemplateReuse(hEle int, bEnable bool) int {
-	r, _, _ := xListBox_EnablemTemplateReuse.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xListBox_EnablemTemplateReuse.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -44,7 +44,7 @@ func XListBox_EnablemTemplateReuse(hEle int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XListBox_EnableVirtualTable(hEle int, bEnable bool) int {
-	r, _, _ := xListBox_EnableVirtualTable.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xListBox_EnableVirtualTable.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -296,7 +296,7 @@ func XListBox_HitTestOffset(hEle int, pPt *POINT) int {
 //
 // pXmlFile: 文件名.
 func XListBox_SetItemTemplateXML(hEle int, pXmlFile string) bool {
-	r, _, _ := xListBox_SetItemTemplateXML.Call(uintptr(hEle), strPtr(pXmlFile))
+	r, _, _ := xListBox_SetItemTemplateXML.Call(uintptr(hEle), StrPtr(pXmlFile))
 	return int(r) != 0
 }
 
@@ -338,7 +338,7 @@ func XListBox_GetTemplateObject(hEle int, iItem int, nTempItemID int) int {
 //
 // bEnable: 是否启用.
 func XListBox_EnableMultiSel(hEle int, bEnable bool) int {
-	r, _, _ := xListBox_EnableMultiSel.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xListBox_EnableMultiSel.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -376,7 +376,7 @@ func XListBox_GetAdapter(hEle int) int {
 //
 // bAscending: 升序(TRUE)或降序(FALSE).
 func XListBox_Sort(hEle int, iColumnAdapter int, bAscending bool) int {
-	r, _, _ := xListBox_Sort.Call(uintptr(hEle), uintptr(iColumnAdapter), boolPtr(bAscending))
+	r, _, _ := xListBox_Sort.Call(uintptr(hEle), uintptr(iColumnAdapter), BoolPtr(bAscending))
 	return int(r)
 }
 
@@ -404,7 +404,7 @@ func XListBox_RefreshItem(hEle int, iItem int) int {
 //
 // pText:.
 func XListBox_AddItemText(hEle int, pText string) int {
-	r, _, _ := xListBox_AddItemText.Call(uintptr(hEle), strPtr(pText))
+	r, _, _ := xListBox_AddItemText.Call(uintptr(hEle), StrPtr(pText))
 	return int(r)
 }
 
@@ -416,7 +416,7 @@ func XListBox_AddItemText(hEle int, pText string) int {
 //
 // pText:.
 func XListBox_AddItemTextEx(hEle int, pName string, pText string) int {
-	r, _, _ := xListBox_AddItemTextEx.Call(uintptr(hEle), strPtr(pName), strPtr(pText))
+	r, _, _ := xListBox_AddItemTextEx.Call(uintptr(hEle), StrPtr(pName), StrPtr(pText))
 	return int(r)
 }
 
@@ -438,7 +438,7 @@ func XListBox_AddItemImage(hEle int, hImage int) int {
 //
 // hImage:.
 func XListBox_AddItemImageEx(hEle int, pName string, hImage int) int {
-	r, _, _ := xListBox_AddItemImageEx.Call(uintptr(hEle), strPtr(pName), uintptr(hImage))
+	r, _, _ := xListBox_AddItemImageEx.Call(uintptr(hEle), StrPtr(pName), uintptr(hImage))
 	return int(r)
 }
 
@@ -450,7 +450,7 @@ func XListBox_AddItemImageEx(hEle int, pName string, hImage int) int {
 //
 // pValue:.
 func XListBox_InsertItemText(hEle int, iItem int, pValue string) int {
-	r, _, _ := xListBox_InsertItemText.Call(uintptr(hEle), uintptr(iItem), strPtr(pValue))
+	r, _, _ := xListBox_InsertItemText.Call(uintptr(hEle), uintptr(iItem), StrPtr(pValue))
 	return int(r)
 }
 
@@ -464,7 +464,7 @@ func XListBox_InsertItemText(hEle int, iItem int, pValue string) int {
 //
 // pValue:.
 func XListBox_InsertItemTextEx(hEle int, iItem int, pName string, pValue string) int {
-	r, _, _ := xListBox_InsertItemTextEx.Call(uintptr(hEle), uintptr(iItem), strPtr(pName), strPtr(pValue))
+	r, _, _ := xListBox_InsertItemTextEx.Call(uintptr(hEle), uintptr(iItem), StrPtr(pName), StrPtr(pValue))
 	return int(r)
 }
 
@@ -490,7 +490,7 @@ func XListBox_InsertItemImage(hEle int, iItem int, hImage int) int {
 //
 // hImage:.
 func XListBox_InsertItemImageEx(hEle int, iItem int, pName string, hImage int) int {
-	r, _, _ := xListBox_InsertItemImageEx.Call(uintptr(hEle), uintptr(iItem), strPtr(pName), uintptr(hImage))
+	r, _, _ := xListBox_InsertItemImageEx.Call(uintptr(hEle), uintptr(iItem), StrPtr(pName), uintptr(hImage))
 	return int(r)
 }
 
@@ -504,7 +504,7 @@ func XListBox_InsertItemImageEx(hEle int, iItem int, pName string, hImage int) i
 //
 // pText:.
 func XListBox_SetItemText(hEle int, iItem int, iColumn int, pText string) bool {
-	r, _, _ := xListBox_SetItemText.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), strPtr(pText))
+	r, _, _ := xListBox_SetItemText.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), StrPtr(pText))
 	return int(r) != 0
 }
 
@@ -518,7 +518,7 @@ func XListBox_SetItemText(hEle int, iItem int, iColumn int, pText string) bool {
 //
 // pText:.
 func XListBox_SetItemTextEx(hEle int, iItem int, pName string, pText string) bool {
-	r, _, _ := xListBox_SetItemTextEx.Call(uintptr(hEle), uintptr(iItem), strPtr(pName), strPtr(pText))
+	r, _, _ := xListBox_SetItemTextEx.Call(uintptr(hEle), uintptr(iItem), StrPtr(pName), StrPtr(pText))
 	return int(r) != 0
 }
 
@@ -546,7 +546,7 @@ func XListBox_SetItemImage(hEle int, iItem int, iColumn int, hImage int) bool {
 //
 // hImage:.
 func XListBox_SetItemImageEx(hEle int, iItem int, pName string, hImage int) bool {
-	r, _, _ := xListBox_SetItemImageEx.Call(uintptr(hEle), uintptr(iItem), strPtr(pName), uintptr(hImage))
+	r, _, _ := xListBox_SetItemImageEx.Call(uintptr(hEle), uintptr(iItem), StrPtr(pName), uintptr(hImage))
 	return int(r) != 0
 }
 
@@ -574,7 +574,7 @@ func XListBox_SetItemInt(hEle int, iItem int, iColumn int, nValue int) bool {
 //
 // nValue:.
 func XListBox_SetItemIntEx(hEle int, iItem int, pName string, nValue int) bool {
-	r, _, _ := xListBox_SetItemIntEx.Call(uintptr(hEle), uintptr(iItem), strPtr(pName), uintptr(nValue))
+	r, _, _ := xListBox_SetItemIntEx.Call(uintptr(hEle), uintptr(iItem), StrPtr(pName), uintptr(nValue))
 	return int(r) != 0
 }
 
@@ -588,7 +588,7 @@ func XListBox_SetItemIntEx(hEle int, iItem int, pName string, nValue int) bool {
 //
 // fFloat:.
 func XListBox_SetItemFloat(hEle int, iItem int, iColumn int, fFloat float32) bool {
-	r, _, _ := xListBox_SetItemFloat.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), float32Ptr(fFloat))
+	r, _, _ := xListBox_SetItemFloat.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), Float32Ptr(fFloat))
 	return int(r) != 0
 }
 
@@ -602,7 +602,7 @@ func XListBox_SetItemFloat(hEle int, iItem int, iColumn int, fFloat float32) boo
 //
 // fFloat:.
 func XListBox_SetItemFloatEx(hEle int, iItem int, pName string, fFloat float32) bool {
-	r, _, _ := xListBox_SetItemFloatEx.Call(uintptr(hEle), uintptr(iItem), strPtr(pName), float32Ptr(fFloat))
+	r, _, _ := xListBox_SetItemFloatEx.Call(uintptr(hEle), uintptr(iItem), StrPtr(pName), Float32Ptr(fFloat))
 	return int(r) != 0
 }
 
@@ -626,7 +626,7 @@ func XListBox_GetItemText(hEle int, iItem int, iColumn int) string {
 //
 // pName:.
 func XListBox_GetItemTextEx(hEle int, iItem int, pName string) string {
-	r, _, _ := xListBox_GetItemTextEx.Call(uintptr(hEle), uintptr(iItem), strPtr(pName))
+	r, _, _ := xListBox_GetItemTextEx.Call(uintptr(hEle), uintptr(iItem), StrPtr(pName))
 	return UintPtrToString(r)
 }
 
@@ -650,7 +650,7 @@ func XListBox_GetItemImage(hEle int, iItem int, iColumn int) int {
 //
 // pName:.
 func XListBox_GetItemImageEx(hEle int, iItem int, pName string) int {
-	r, _, _ := xListBox_GetItemImageEx.Call(uintptr(hEle), uintptr(iItem), strPtr(pName))
+	r, _, _ := xListBox_GetItemImageEx.Call(uintptr(hEle), uintptr(iItem), StrPtr(pName))
 	return int(r)
 }
 
@@ -678,7 +678,7 @@ func XListBox_GetItemInt(hEle int, iItem int, iColumn int, pOutValue *int) bool 
 //
 // pOutValue:.
 func XListBox_GetItemIntEx(hEle int, iItem int, pName string, pOutValue *int) bool {
-	r, _, _ := xListBox_GetItemIntEx.Call(uintptr(hEle), uintptr(iItem), strPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
+	r, _, _ := xListBox_GetItemIntEx.Call(uintptr(hEle), uintptr(iItem), StrPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
 	return int(r) != 0
 }
 
@@ -706,7 +706,7 @@ func XListBox_GetItemFloat(hEle int, iItem int, iColumn int, pOutValue *float32)
 //
 // pOutValue:.
 func XListBox_GetItemFloatEx(hEle int, iItem int, pName string, pOutValue *float32) bool {
-	r, _, _ := xListBox_GetItemFloatEx.Call(uintptr(hEle), uintptr(iItem), strPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
+	r, _, _ := xListBox_GetItemFloatEx.Call(uintptr(hEle), uintptr(iItem), StrPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
 	return int(r) != 0
 }
 
@@ -761,5 +761,15 @@ func XListBox_GetCount_AD(hEle int) int {
 // hEle:.
 func XListBox_GetCountColumn_AD(hEle int) int {
 	r, _, _ := xListBox_GetCountColumn_AD.Call(uintptr(hEle))
+	return int(r)
+}
+
+// 列表框_置分割线颜色.
+//
+// hEle: 元素句柄.
+//
+// color: ABGR颜色值.
+func XListBox_SetSplitLineColor(hEle int, color int) int {
+	r, _, _ := xListBox_SetSplitLineColor.Call(uintptr(hEle), uintptr(color))
 	return int(r)
 }
