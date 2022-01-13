@@ -65,8 +65,10 @@ func (b *BkManager) AddInfo(pText string) int {
 // color: ABGR颜色.
 //
 // width: 线宽.
-func (b *BkManager) AddBorder(nState int, color int, width int) int {
-	return xc.XBkM_AddBorder(b.Handle, nState, color, width)
+//
+// id: 背景对象ID, 可忽略(填0).
+func (b *BkManager) AddBorder(nState, color, width, id int) int {
+	return xc.XBkM_AddBorder(b.Handle, nState, color, width, id)
 }
 
 // 背景_添加填充, 添加背景内容填充.
@@ -74,8 +76,10 @@ func (b *BkManager) AddBorder(nState int, color int, width int) int {
 // nState: 组合状态, Window_State_Flag_.
 //
 // color: ABGR颜色.
-func (b *BkManager) AddFill(nState int, color int) int {
-	return xc.XBkM_AddFill(b.Handle, nState, color)
+//
+// id: 背景对象ID, 可忽略(填0).
+func (b *BkManager) AddFill(nState, color, id int) int {
+	return xc.XBkM_AddFill(b.Handle, nState, color, id)
 }
 
 // 背景_添加图片, 添加背景内容图片.
@@ -83,8 +87,10 @@ func (b *BkManager) AddFill(nState int, color int) int {
 // nState: 组合状态.
 //
 // hImage: 图片句柄.
-func (b *BkManager) AddImage(nState int, hImage int) int {
-	return xc.XBkM_AddImage(b.Handle, nState, hImage)
+//
+// id: 背景对象ID, 可忽略(填0).
+func (b *BkManager) AddImage(nState, hImage, id int) int {
+	return xc.XBkM_AddImage(b.Handle, nState, hImage, id)
 }
 
 // 背景_取数量, 获取背景内容数量.
@@ -150,4 +156,20 @@ func (b *BkManager) GetRefCount() int {
 // pText: 背景内容字符串.
 func (b *BkManager) SetInfo(pText string) int {
 	return xc.XBkM_SetInfo(b.Handle, pText)
+}
+
+// 背景_取指定状态文本颜色.
+//
+// nState: 状态.
+//
+// color: 接收返回的ABGR颜色.
+func (b *BkManager) GetStateTextColor(nState int, color *int) bool {
+	return xc.XBkM_GetStateTextColor(b.Handle, nState, color)
+}
+
+// 背景_取背景对象, 返回BkObj对象句柄.
+//
+// id: 背景对象ID.
+func (b *BkManager) GetObject(id int) int {
+	return xc.XBkM_GetObject(b.Handle, id)
 }
