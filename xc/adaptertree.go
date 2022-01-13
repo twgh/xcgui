@@ -12,7 +12,7 @@ func XAdTree_Create() int {
 //
 // pName: 字段称.
 func XAdTree_AddColumn(hAdapter int, pName string) int {
-	r, _, _ := xAdTree_AddColumn.Call(uintptr(hAdapter), strPtr(pName))
+	r, _, _ := xAdTree_AddColumn.Call(uintptr(hAdapter), StrPtr(pName))
 	return int(r)
 }
 
@@ -22,7 +22,7 @@ func XAdTree_AddColumn(hAdapter int, pName string) int {
 //
 // pColName: 列名, 列名, 多个列名用逗号分开.
 func XAdTree_SetColumn(hAdapter int, pColName string) int {
-	r, _, _ := xAdTree_SetColumn.Call(uintptr(hAdapter), strPtr(pColName))
+	r, _, _ := xAdTree_SetColumn.Call(uintptr(hAdapter), StrPtr(pColName))
 	return int(r)
 }
 
@@ -36,7 +36,7 @@ func XAdTree_SetColumn(hAdapter int, pColName string) int {
 //
 // insertID: 插入位置ID.
 func XAdTree_InsertItemText(hAdapter int, pValue string, nParentID int, insertID int) int {
-	r, _, _ := xAdTree_InsertItemText.Call(uintptr(hAdapter), strPtr(pValue), uintptr(nParentID), uintptr(insertID))
+	r, _, _ := xAdTree_InsertItemText.Call(uintptr(hAdapter), StrPtr(pValue), uintptr(nParentID), uintptr(insertID))
 	return int(r)
 }
 
@@ -52,7 +52,7 @@ func XAdTree_InsertItemText(hAdapter int, pValue string, nParentID int, insertID
 //
 // insertID: 插入位置ID.
 func XAdTree_InsertItemTextEx(hAdapter int, pName string, pValue string, nParentID int, insertID int) int {
-	r, _, _ := xAdTree_InsertItemTextEx.Call(uintptr(hAdapter), strPtr(pName), strPtr(pValue), uintptr(nParentID), uintptr(insertID))
+	r, _, _ := xAdTree_InsertItemTextEx.Call(uintptr(hAdapter), StrPtr(pName), StrPtr(pValue), uintptr(nParentID), uintptr(insertID))
 	return int(r)
 }
 
@@ -82,7 +82,7 @@ func XAdTree_InsertItemImage(hAdapter int, hImage int, nParentID int, insertID i
 //
 // insertID: 插入位置ID.
 func XAdTree_InsertItemImageEx(hAdapter int, pName string, hImage int, nParentID int, insertID int) int {
-	r, _, _ := xAdTree_InsertItemImageEx.Call(uintptr(hAdapter), strPtr(pName), uintptr(hImage), uintptr(nParentID), uintptr(insertID))
+	r, _, _ := xAdTree_InsertItemImageEx.Call(uintptr(hAdapter), StrPtr(pName), uintptr(hImage), uintptr(nParentID), uintptr(insertID))
 	return int(r)
 }
 
@@ -112,7 +112,7 @@ func XAdTree_GetCountColumn(hAdapter int) int {
 //
 // pValue: 值.
 func XAdTree_SetItemText(hAdapter int, nID int, iColumn int, pValue string) bool {
-	r, _, _ := xAdTree_SetItemText.Call(uintptr(hAdapter), uintptr(nID), uintptr(iColumn), strPtr(pValue))
+	r, _, _ := xAdTree_SetItemText.Call(uintptr(hAdapter), uintptr(nID), uintptr(iColumn), StrPtr(pValue))
 	return int(r) != 0
 }
 
@@ -126,7 +126,7 @@ func XAdTree_SetItemText(hAdapter int, nID int, iColumn int, pValue string) bool
 //
 // pValue: 值.
 func XAdTree_SetItemTextEx(hAdapter int, nID int, pName string, pValue string) bool {
-	r, _, _ := xAdTree_SetItemTextEx.Call(uintptr(hAdapter), uintptr(nID), strPtr(pName), strPtr(pValue))
+	r, _, _ := xAdTree_SetItemTextEx.Call(uintptr(hAdapter), uintptr(nID), StrPtr(pName), StrPtr(pValue))
 	return int(r) != 0
 }
 
@@ -154,7 +154,7 @@ func XAdTree_SetItemImage(hAdapter int, nID int, iColumn int, hImage int) bool {
 //
 // hImage: 图片句柄.
 func XAdTree_SetItemImageEx(hAdapter int, nID int, pName string, hImage int) bool {
-	r, _, _ := xAdTree_SetItemImageEx.Call(uintptr(hAdapter), uintptr(nID), strPtr(pName), uintptr(hImage))
+	r, _, _ := xAdTree_SetItemImageEx.Call(uintptr(hAdapter), uintptr(nID), StrPtr(pName), uintptr(hImage))
 	return int(r) != 0
 }
 
@@ -178,7 +178,7 @@ func XAdTree_GetItemText(hAdapter int, nID int, iColumn int) string {
 //
 // pName: 字段称.
 func XAdTree_GetItemTextEx(hAdapter int, nID int, pName string) string {
-	r, _, _ := xAdTree_GetItemTextEx.Call(uintptr(hAdapter), uintptr(nID), strPtr(pName))
+	r, _, _ := xAdTree_GetItemTextEx.Call(uintptr(hAdapter), uintptr(nID), StrPtr(pName))
 	return UintPtrToString(r)
 }
 
@@ -202,7 +202,7 @@ func XAdTree_GetItemImage(hAdapter int, nID int, iColumn int) int {
 //
 // pName: 字段称.
 func XAdTree_GetItemImageEx(hAdapter int, nID int, pName string) int {
-	r, _, _ := xAdTree_GetItemImageEx.Call(uintptr(hAdapter), uintptr(nID), strPtr(pName))
+	r, _, _ := xAdTree_GetItemImageEx.Call(uintptr(hAdapter), uintptr(nID), StrPtr(pName))
 	return int(r)
 }
 
