@@ -12,7 +12,7 @@ package xc
 //
 // XCStyle: 炫彩窗口样式: Window_Style_.
 func XModalWnd_Create(nWidth int, nHeight int, pTitle string, hWndParent int, XCStyle int) int {
-	r, _, _ := xModalWnd_Create.Call(uintptr(nWidth), uintptr(nHeight), strPtr(pTitle), uintptr(hWndParent), uintptr(XCStyle))
+	r, _, _ := xModalWnd_Create.Call(uintptr(nWidth), uintptr(nHeight), StrPtr(pTitle), uintptr(hWndParent), uintptr(XCStyle))
 	return int(r)
 }
 
@@ -38,7 +38,7 @@ func XModalWnd_Create(nWidth int, nHeight int, pTitle string, hWndParent int, XC
 //
 // XCStyle: GUI库窗口样式: Window_Style_.
 func XModalWnd_CreateEx(dwExStyle int, dwStyle int, lpClassName string, x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle int) int {
-	r, _, _ := xModalWnd_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), strPtr(lpClassName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), strPtr(pTitle), uintptr(hWndParent), uintptr(XCStyle))
+	r, _, _ := xModalWnd_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), StrPtr(lpClassName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), StrPtr(pTitle), uintptr(hWndParent), uintptr(XCStyle))
 	return int(r)
 }
 
@@ -48,7 +48,7 @@ func XModalWnd_CreateEx(dwExStyle int, dwStyle int, lpClassName string, x int, y
 //
 // bEnable: 开启开关.
 func XModalWnd_EnableAutoClose(hWindow int, bEnable bool) int {
-	r, _, _ := xModalWnd_EnableAutoClose.Call(uintptr(hWindow), boolPtr(bEnable))
+	r, _, _ := xModalWnd_EnableAutoClose.Call(uintptr(hWindow), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -58,7 +58,7 @@ func XModalWnd_EnableAutoClose(hWindow int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XModalWnd_EnableEscClose(hWindow int, bEnable bool) int {
-	r, _, _ := xModalWnd_EnableEscClose.Call(uintptr(hWindow), boolPtr(bEnable))
+	r, _, _ := xModalWnd_EnableEscClose.Call(uintptr(hWindow), BoolPtr(bEnable))
 	return int(r)
 }
 

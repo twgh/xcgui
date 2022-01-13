@@ -12,7 +12,7 @@ package xc
 //
 // skin: 外观类型, NotifyMsg_Skin_.
 func XNotifyMsg_Popup(position int, pTitle, pText string, hIcon, skin int) int {
-	r, _, _ := xNotifyMsg_Popup.Call(uintptr(position), strPtr(pTitle), strPtr(pText), uintptr(hIcon), uintptr(skin))
+	r, _, _ := xNotifyMsg_Popup.Call(uintptr(position), StrPtr(pTitle), StrPtr(pText), uintptr(hIcon), uintptr(skin))
 	return int(r)
 }
 
@@ -36,7 +36,7 @@ func XNotifyMsg_Popup(position int, pTitle, pText string, hIcon, skin int) int {
 //
 // nHeight: 自定义高度, -1(使用默认值).
 func XNotifyMsg_PopupEx(position int, pTitle, pText string, hIcon, skin int, bBtnClose, bAutoClose bool, nWidth, nHeight int) int {
-	r, _, _ := xNotifyMsg_PopupEx.Call(uintptr(position), strPtr(pTitle), strPtr(pText), uintptr(hIcon), uintptr(skin), boolPtr(bBtnClose), boolPtr(bAutoClose), uintptr(nWidth), uintptr(nHeight))
+	r, _, _ := xNotifyMsg_PopupEx.Call(uintptr(position), StrPtr(pTitle), StrPtr(pText), uintptr(hIcon), uintptr(skin), BoolPtr(bBtnClose), BoolPtr(bAutoClose), uintptr(nWidth), uintptr(nHeight))
 	return int(r)
 }
 
@@ -54,7 +54,7 @@ func XNotifyMsg_PopupEx(position int, pTitle, pText string, hIcon, skin int, bBt
 //
 // skin: 外观类型, NotifyMsg_Skin_.
 func XNotifyMsg_WindowPopup(hWindow, position int, pTitle, pText string, hIcon, skin int) int {
-	r, _, _ := xNotifyMsg_WindowPopup.Call(uintptr(hWindow), uintptr(position), strPtr(pTitle), strPtr(pText), uintptr(hIcon), uintptr(skin))
+	r, _, _ := xNotifyMsg_WindowPopup.Call(uintptr(hWindow), uintptr(position), StrPtr(pTitle), StrPtr(pText), uintptr(hIcon), uintptr(skin))
 	return int(r)
 }
 
@@ -80,7 +80,7 @@ func XNotifyMsg_WindowPopup(hWindow, position int, pTitle, pText string, hIcon, 
 //
 // nHeight: 自定义高度, -1(使用默认值).
 func XNotifyMsg_WindowPopupEx(hWindow, position int, pTitle, pText string, hIcon, skin int, bBtnClose, bAutoClose bool, nWidth, nHeight int) int {
-	r, _, _ := xNotifyMsg_WindowPopupEx.Call(uintptr(hWindow), uintptr(position), strPtr(pTitle), strPtr(pText), uintptr(hIcon), uintptr(skin), boolPtr(bBtnClose), boolPtr(bAutoClose), uintptr(nWidth), uintptr(nHeight))
+	r, _, _ := xNotifyMsg_WindowPopupEx.Call(uintptr(hWindow), uintptr(position), StrPtr(pTitle), StrPtr(pText), uintptr(hIcon), uintptr(skin), BoolPtr(bBtnClose), BoolPtr(bAutoClose), uintptr(nWidth), uintptr(nHeight))
 	return int(r)
 }
 

@@ -14,7 +14,7 @@ package xc
 //
 // hParent: 父对象句柄.
 func XShapeText_Create(x int, y int, cx int, cy int, pName string, hParent int) int {
-	r, _, _ := xShapeText_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), strPtr(pName), uintptr(hParent))
+	r, _, _ := xShapeText_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), StrPtr(pName), uintptr(hParent))
 	return int(r)
 }
 
@@ -24,7 +24,7 @@ func XShapeText_Create(x int, y int, cx int, cy int, pName string, hParent int) 
 //
 // pName: 文本内容.
 func XShapeText_SetText(hTextBlock int, pName string) int {
-	r, _, _ := xShapeText_SetText.Call(uintptr(hTextBlock), strPtr(pName))
+	r, _, _ := xShapeText_SetText.Call(uintptr(hTextBlock), StrPtr(pName))
 	return int(r)
 }
 

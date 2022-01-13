@@ -138,7 +138,7 @@ func XTable_SetItemPadding(hShape int, leftSize int, topSize int, rightSize int,
 //
 // pText: 文本.
 func XTable_SetItemText(hShape int, iRow int, iCol int, pText string) int {
-	r, _, _ := xTable_SetItemText.Call(uintptr(hShape), uintptr(iRow), uintptr(iCol), strPtr(pText))
+	r, _, _ := xTable_SetItemText.Call(uintptr(hShape), uintptr(iRow), uintptr(iCol), StrPtr(pText))
 	return int(r)
 }
 
@@ -182,7 +182,7 @@ func XTable_SetItemTextAlign(hShape int, iRow int, iCol int, nAlign int) int {
 //
 // bColor: 是否使用.
 func XTable_SetItemTextColor(hShape int, iRow int, iCol int, color int, bColor bool) int {
-	r, _, _ := xTable_SetItemTextColor.Call(uintptr(hShape), uintptr(iRow), uintptr(iCol), uintptr(color), boolPtr(bColor))
+	r, _, _ := xTable_SetItemTextColor.Call(uintptr(hShape), uintptr(iRow), uintptr(iCol), uintptr(color), BoolPtr(bColor))
 	return int(r)
 }
 
@@ -198,7 +198,7 @@ func XTable_SetItemTextColor(hShape int, iRow int, iCol int, color int, bColor b
 //
 // bColor: 是否使用.
 func XTable_SetItemBkColor(hShape int, iRow int, iCol int, color int, bColor bool) int {
-	r, _, _ := xTable_SetItemBkColor.Call(uintptr(hShape), uintptr(iRow), uintptr(iCol), uintptr(color), boolPtr(bColor))
+	r, _, _ := xTable_SetItemBkColor.Call(uintptr(hShape), uintptr(iRow), uintptr(iCol), uintptr(color), BoolPtr(bColor))
 	return int(r)
 }
 

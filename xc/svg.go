@@ -6,7 +6,7 @@ import "unsafe"
 //
 // pFileName: 文件名.
 func XSvg_LoadFile(pFileName string) int {
-	r, _, _ := xSvg_LoadFile.Call(strPtr(pFileName))
+	r, _, _ := xSvg_LoadFile.Call(StrPtr(pFileName))
 	return int(r)
 }
 
@@ -26,7 +26,7 @@ func XSvg_LoadString(pString string) int {
 //
 // pPassword: zip密码.
 func XSvg_LoadZip(pZipFileName, pFileName, pPassword string) int {
-	r, _, _ := xSvg_LoadZip.Call(strPtr(pZipFileName), strPtr(pFileName), strPtr(pPassword))
+	r, _, _ := xSvg_LoadZip.Call(StrPtr(pZipFileName), StrPtr(pFileName), StrPtr(pPassword))
 	return int(r)
 }
 
@@ -38,7 +38,7 @@ func XSvg_LoadZip(pZipFileName, pFileName, pPassword string) int {
 //
 // hModule: 从指定模块加载.
 func XSvg_LoadRes(id int, pType string, hModule int) int {
-	r, _, _ := xSvg_LoadRes.Call(uintptr(id), strPtr(pType), uintptr(hModule))
+	r, _, _ := xSvg_LoadRes.Call(uintptr(id), StrPtr(pType), uintptr(hModule))
 	return int(r)
 }
 
@@ -114,7 +114,7 @@ func XSvg_GetPosition(hSvg int, pX, pY *int) int {
 //
 // y: y轴偏移.
 func XSvg_SetPositionF(hSvg int, x, y float32) int {
-	r, _, _ := xSvg_SetPositionF.Call(uintptr(hSvg), float32Ptr(x), float32Ptr(y))
+	r, _, _ := xSvg_SetPositionF.Call(uintptr(hSvg), Float32Ptr(x), Float32Ptr(y))
 	return int(r)
 }
 
@@ -146,7 +146,7 @@ func XSvg_GetViewBox(hSvg int, pViewBox *RECT) int {
 //
 // bEnable: 是否自动销毁.
 func XSvg_EnableAutoDestroy(hSvg int, bEnable bool) int {
-	r, _, _ := xSvg_EnableAutoDestroy.Call(uintptr(hSvg), boolPtr(bEnable))
+	r, _, _ := xSvg_EnableAutoDestroy.Call(uintptr(hSvg), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -208,7 +208,7 @@ func XSvg_GetAlpha(hSvg int) int {
 //
 // bEnable: 是否有效.
 func XSvg_SetUserFillColor(hSvg int, color int, bEnable bool) int {
-	r, _, _ := xSvg_SetUserFillColor.Call(uintptr(hSvg), uintptr(color), boolPtr(bEnable))
+	r, _, _ := xSvg_SetUserFillColor.Call(uintptr(hSvg), uintptr(color), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -222,7 +222,7 @@ func XSvg_SetUserFillColor(hSvg int, color int, bEnable bool) int {
 //
 // bEnable: 是否有效.
 func XSvg_SetUserStrokeColor(hSvg int, color int, strokeWidth float32, bEnable bool) int {
-	r, _, _ := xSvg_SetUserStrokeColor.Call(uintptr(hSvg), uintptr(color), float32Ptr(strokeWidth), boolPtr(bEnable))
+	r, _, _ := xSvg_SetUserStrokeColor.Call(uintptr(hSvg), uintptr(color), Float32Ptr(strokeWidth), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -254,7 +254,7 @@ func XSvg_GetUserStrokeColor(hSvg int, pColor *int, pStrokeWidth *float32) bool 
 //
 // angle: 转角度.
 func XSvg_SetRotateAngle(hSvg int, angle float32) int {
-	r, _, _ := xSvg_SetRotateAngle.Call(uintptr(hSvg), float32Ptr(angle))
+	r, _, _ := xSvg_SetRotateAngle.Call(uintptr(hSvg), Float32Ptr(angle))
 	return int(r)
 }
 
@@ -263,7 +263,7 @@ func XSvg_SetRotateAngle(hSvg int, angle float32) int {
 // hSvg: SVG句柄.
 func XSvg_GetRotateAngle(hSvg int) float32 {
 	_, r, _ := xSvg_GetRotateAngle.Call(uintptr(hSvg))
-	return uintPtrToFloat32(r)
+	return UintPtrToFloat32(r)
 }
 
 // SVG_置旋转.
@@ -278,7 +278,7 @@ func XSvg_GetRotateAngle(hSvg int) float32 {
 //
 // bOffset: TRUE: 旋转中心点相对于自身中心偏移, FALSE:使用绝对坐标.
 func XSvg_SetRotate(hSvg int, angle float32, x float32, y float32, bOffset bool) int {
-	r, _, _ := xSvg_SetRotate.Call(uintptr(hSvg), float32Ptr(angle), float32Ptr(x), float32Ptr(y), boolPtr(bOffset))
+	r, _, _ := xSvg_SetRotate.Call(uintptr(hSvg), Float32Ptr(angle), Float32Ptr(x), Float32Ptr(y), BoolPtr(bOffset))
 	return int(r)
 }
 
@@ -304,7 +304,7 @@ func XSvg_GetRotate(hSvg int, pAngle *float32, pX *float32, pY *float32, pbOffse
 //
 // bShow: 是否显示.
 func XSvg_Show(hSvg int, bShow bool) int {
-	r, _, _ := xSvg_Show.Call(uintptr(hSvg), boolPtr(bShow))
+	r, _, _ := xSvg_Show.Call(uintptr(hSvg), BoolPtr(bShow))
 	return int(r)
 }
 
@@ -312,7 +312,7 @@ func XSvg_Show(hSvg int, bShow bool) int {
 //
 // pString: 字符串指针.
 func XSvg_LoadStringW(pString string) int {
-	r, _, _ := xSvg_LoadStringW.Call(strPtr(pString))
+	r, _, _ := xSvg_LoadStringW.Call(StrPtr(pString))
 	return int(r)
 }
 

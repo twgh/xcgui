@@ -12,7 +12,7 @@ import "unsafe"
 //
 // hFrameWnd: 框架窗口.
 func XPane_Create(pName string, nWidth int, nHeight int, hFrameWnd int) int {
-	r, _, _ := xPane_Create.Call(strPtr(pName), uintptr(nWidth), uintptr(nHeight), uintptr(hFrameWnd))
+	r, _, _ := xPane_Create.Call(StrPtr(pName), uintptr(nWidth), uintptr(nHeight), uintptr(hFrameWnd))
 	return int(r)
 }
 
@@ -32,7 +32,7 @@ func XPane_SetView(hEle int, hView int) int {
 //
 // pTitle: 文本内容.
 func XPane_SetTitle(hEle int, pTitle string) int {
-	r, _, _ := xPane_SetTitle.Call(uintptr(hEle), strPtr(pTitle))
+	r, _, _ := xPane_SetTitle.Call(uintptr(hEle), StrPtr(pTitle))
 	return int(r)
 }
 

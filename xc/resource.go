@@ -6,7 +6,7 @@ import "syscall"
 //
 // bEnable: 是否启用.
 func XRes_EnableDelayLoad(bEnable bool) int {
-	r, _, _ := xRes_EnableDelayLoad.Call(boolPtr(bEnable))
+	r, _, _ := xRes_EnableDelayLoad.Call(BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -22,7 +22,7 @@ func XRes_SetLoadFileCallback(pFun interface{}) int {
 //
 // pName: 资源ID名称.
 func XRes_GetIDValue(pName string) int {
-	r, _, _ := xRes_GetIDValue.Call(strPtr(pName))
+	r, _, _ := xRes_GetIDValue.Call(StrPtr(pName))
 	return int(r)
 }
 
@@ -30,7 +30,7 @@ func XRes_GetIDValue(pName string) int {
 //
 // pName: 资源名称.
 func XRes_GetImage(pName string) int {
-	r, _, _ := xRes_GetImage.Call(strPtr(pName))
+	r, _, _ := xRes_GetImage.Call(StrPtr(pName))
 	return int(r)
 }
 
@@ -40,7 +40,7 @@ func XRes_GetImage(pName string) int {
 //
 // pName: 资源名称.
 func XRes_GetImageEx(pFileName string, pName string) int {
-	r, _, _ := xRes_GetImageEx.Call(strPtr(pFileName), strPtr(pName))
+	r, _, _ := xRes_GetImageEx.Call(StrPtr(pFileName), StrPtr(pName))
 	return int(r)
 }
 
@@ -48,7 +48,7 @@ func XRes_GetImageEx(pFileName string, pName string) int {
 //
 // pName: 资源名称.
 func XRes_GetColor(pName string) int {
-	r, _, _ := xRes_GetColor.Call(strPtr(pName))
+	r, _, _ := xRes_GetColor.Call(StrPtr(pName))
 	return int(r)
 }
 
@@ -56,7 +56,7 @@ func XRes_GetColor(pName string) int {
 //
 // pName: 资源名称.
 func XRes_GetFont(pName string) int {
-	r, _, _ := xRes_GetFont.Call(strPtr(pName))
+	r, _, _ := xRes_GetFont.Call(StrPtr(pName))
 	return int(r)
 }
 
@@ -64,6 +64,6 @@ func XRes_GetFont(pName string) int {
 //
 // pName: 资源名称.
 func XRes_GetBkM(pName string) int {
-	r, _, _ := xRes_GetBkM.Call(strPtr(pName))
+	r, _, _ := xRes_GetBkM.Call(StrPtr(pName))
 	return int(r)
 }

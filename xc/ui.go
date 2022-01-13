@@ -24,7 +24,7 @@ func XUI_GetStyle(hXCGUI int) int {
 //
 // bEnable: 是否启用.
 func XUI_EnableCSS(hXCGUI int, bEnable bool) int {
-	r, _, _ := xUI_EnableCSS.Call(uintptr(hXCGUI), boolPtr(bEnable))
+	r, _, _ := xUI_EnableCSS.Call(uintptr(hXCGUI), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -34,7 +34,7 @@ func XUI_EnableCSS(hXCGUI int, bEnable bool) int {
 //
 // pName: 套用样式名称.
 func XUI_SetCssName(hXCGUI int, pName string) int {
-	r, _, _ := xUI_SetCssName.Call(uintptr(hXCGUI), strPtr(pName))
+	r, _, _ := xUI_SetCssName.Call(uintptr(hXCGUI), StrPtr(pName))
 	return int(r)
 }
 

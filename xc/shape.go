@@ -82,7 +82,7 @@ func XShape_SetRect(hShape int, pRect *RECT) int {
 //
 // bRedraw: 是否重绘.
 func XShape_SetRectLogic(hShape int, pRect *RECT, bRedraw bool) bool {
-	r, _, _ := xShape_SetRectLogic.Call(uintptr(hShape), uintptr(unsafe.Pointer(pRect)), boolPtr(bRedraw))
+	r, _, _ := xShape_SetRectLogic.Call(uintptr(hShape), uintptr(unsafe.Pointer(pRect)), BoolPtr(bRedraw))
 	return int(r) != 0
 }
 
@@ -122,7 +122,7 @@ func XShape_GetContentSize(hShape int, pSize *SIZE) int {
 //
 // bShow: 是否显示.
 func XShape_ShowLayout(hShape int, bShow bool) int {
-	r, _, _ := xShape_ShowLayout.Call(uintptr(hShape), boolPtr(bShow))
+	r, _, _ := xShape_ShowLayout.Call(uintptr(hShape), BoolPtr(bShow))
 	return int(r)
 }
 

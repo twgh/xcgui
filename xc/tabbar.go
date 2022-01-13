@@ -24,7 +24,7 @@ func XTabBar_Create(x int, y int, cx int, cy int, hParent int) int {
 //
 // pName: 标签文本内容.
 func XTabBar_AddLabel(hEle int, pName string) int {
-	r, _, _ := xTabBar_AddLabel.Call(uintptr(hEle), strPtr(pName))
+	r, _, _ := xTabBar_AddLabel.Call(uintptr(hEle), StrPtr(pName))
 	return int(r)
 }
 
@@ -36,7 +36,7 @@ func XTabBar_AddLabel(hEle int, pName string) int {
 //
 // pName: 标签文本内容.
 func XTabBar_InsertLabel(hEle int, index int, pName string) int {
-	r, _, _ := xTabBar_InsertLabel.Call(uintptr(hEle), uintptr(index), strPtr(pName))
+	r, _, _ := xTabBar_InsertLabel.Call(uintptr(hEle), uintptr(index), StrPtr(pName))
 	return int(r)
 }
 
@@ -206,7 +206,7 @@ func XTabBar_SetDown(hEle int) int {
 //
 // bTile: 是否启用.
 func XTabBar_EnableTile(hEle int, bTile bool) int {
-	r, _, _ := xTabBar_EnableTile.Call(uintptr(hEle), boolPtr(bTile))
+	r, _, _ := xTabBar_EnableTile.Call(uintptr(hEle), BoolPtr(bTile))
 	return int(r)
 }
 
@@ -216,7 +216,7 @@ func XTabBar_EnableTile(hEle int, bTile bool) int {
 //
 // bEnable:.
 func XTabBar_EnableDropMenu(hEle int, bEnable bool) int {
-	r, _, _ := xTabBar_EnableDropMenu.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xTabBar_EnableDropMenu.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -226,7 +226,7 @@ func XTabBar_EnableDropMenu(hEle int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XTabBar_EnableClose(hEle int, bEnable bool) int {
-	r, _, _ := xTabBar_EnableClose.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xTabBar_EnableClose.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -270,6 +270,6 @@ func XTabBar_SetLabelWidth(hEle int, index int, nWidth int) int {
 //
 // bShow: 是否显示.
 func XTabBar_ShowLabel(hEle int, index int, bShow bool) bool {
-	r, _, _ := xTabBar_ShowLabel.Call(uintptr(hEle), uintptr(index), boolPtr(bShow))
+	r, _, _ := xTabBar_ShowLabel.Call(uintptr(hEle), uintptr(index), BoolPtr(bShow))
 	return int(r) != 0
 }

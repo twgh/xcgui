@@ -96,6 +96,6 @@ func XSliderBar_GetButton(hEle int) int {
 //
 // bHorizon: 水平或垂直.
 func XSliderBar_EnableHorizon(hEle int, bHorizon bool) int {
-	r, _, _ := xSliderBar_EnableHorizon.Call(uintptr(hEle), boolPtr(bHorizon))
+	r, _, _ := xSliderBar_EnableHorizon.Call(uintptr(hEle), BoolPtr(bHorizon))
 	return int(r)
 }

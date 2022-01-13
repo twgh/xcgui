@@ -16,7 +16,7 @@ func XWidget_IsShow(hXCGUI int) bool {
 //
 // bShow: 是否显示.
 func XWidget_Show(hXCGUI int, bShow bool) int {
-	r, _, _ := xWidget_Show.Call(uintptr(hXCGUI), boolPtr(bShow))
+	r, _, _ := xWidget_Show.Call(uintptr(hXCGUI), BoolPtr(bShow))
 	return int(r)
 }
 
@@ -26,7 +26,7 @@ func XWidget_Show(hXCGUI int, bShow bool) int {
 //
 // bEnable:.
 func XWidget_EnableLayoutControl(hXCGUI int, bEnable bool) int {
-	r, _, _ := xWidget_EnableLayoutControl.Call(uintptr(hXCGUI), boolPtr(bEnable))
+	r, _, _ := xWidget_EnableLayoutControl.Call(uintptr(hXCGUI), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -76,7 +76,7 @@ func XWidget_GetHWINDOW(hXCGUI int) int {
 //
 // bWrap: 是否换行.
 func XWidget_LayoutItem_EnableWrap(hXCGUI int, bWrap bool) int {
-	r, _, _ := xWidget_LayoutItem_EnableWrap.Call(uintptr(hXCGUI), boolPtr(bWrap))
+	r, _, _ := xWidget_LayoutItem_EnableWrap.Call(uintptr(hXCGUI), BoolPtr(bWrap))
 	return int(r)
 }
 
@@ -86,7 +86,7 @@ func XWidget_LayoutItem_EnableWrap(hXCGUI int, bWrap bool) int {
 //
 // bEnable: 是否启用.
 func XWidget_LayoutItem_EnableSwap(hXCGUI int, bEnable bool) int {
-	r, _, _ := xWidget_LayoutItem_EnableSwap.Call(uintptr(hXCGUI), boolPtr(bEnable))
+	r, _, _ := xWidget_LayoutItem_EnableSwap.Call(uintptr(hXCGUI), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -96,7 +96,7 @@ func XWidget_LayoutItem_EnableSwap(hXCGUI int, bEnable bool) int {
 //
 // bFloat: 是否浮动.
 func XWidget_LayoutItem_EnableFloat(hXCGUI int, bFloat bool) int {
-	r, _, _ := xWidget_LayoutItem_EnableFloat.Call(uintptr(hXCGUI), boolPtr(bFloat))
+	r, _, _ := xWidget_LayoutItem_EnableFloat.Call(uintptr(hXCGUI), BoolPtr(bFloat))
 	return int(r)
 }
 
@@ -230,7 +230,7 @@ func XWidget_SetUID(hXCGUI, nUID int) int {
 //
 // pName: name值.
 func XWidget_SetName(hXCGUI int, pName string) int {
-	r, _, _ := xWidget_SetName.Call(uintptr(hXCGUI), strPtr(pName))
+	r, _, _ := xWidget_SetName.Call(uintptr(hXCGUI), StrPtr(pName))
 	return int(r)
 }
 

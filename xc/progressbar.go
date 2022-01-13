@@ -68,7 +68,7 @@ func XProgBar_GetPos(hEle int) int {
 //
 // bHorizon: 水平或垂直.
 func XProgBar_EnableHorizon(hEle int, bHorizon bool) int {
-	r, _, _ := xProgBar_EnableHorizon.Call(uintptr(hEle), boolPtr(bHorizon))
+	r, _, _ := xProgBar_EnableHorizon.Call(uintptr(hEle), BoolPtr(bHorizon))
 	return int(r)
 }
 
@@ -78,7 +78,7 @@ func XProgBar_EnableHorizon(hEle int, bHorizon bool) int {
 //
 // bStretch: 缩放.
 func XProgBar_EnableStretch(hEle int, bStretch bool) bool {
-	r, _, _ := xProgBar_EnableStretch.Call(uintptr(hEle), boolPtr(bStretch))
+	r, _, _ := xProgBar_EnableStretch.Call(uintptr(hEle), BoolPtr(bStretch))
 	return int(r) != 0
 }
 
@@ -88,6 +88,6 @@ func XProgBar_EnableStretch(hEle int, bStretch bool) bool {
 //
 // bShow: 是否启用.
 func XProgBar_EnableShowText(hEle int, bShow bool) bool {
-	r, _, _ := xProgBar_EnableShowText.Call(uintptr(hEle), boolPtr(bShow))
+	r, _, _ := xProgBar_EnableShowText.Call(uintptr(hEle), BoolPtr(bShow))
 	return int(r) != 0
 }

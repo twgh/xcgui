@@ -16,7 +16,7 @@ import "unsafe"
 //
 // hParent: 父对象句柄.
 func XShapeGroupBox_Create(x int, y int, cx int, cy int, pName string, hParent int) int {
-	r, _, _ := xShapeGroupBox_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), strPtr(pName), uintptr(hParent))
+	r, _, _ := xShapeGroupBox_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), StrPtr(pName), uintptr(hParent))
 	return int(r)
 }
 
@@ -80,7 +80,7 @@ func XShapeGroupBox_SetRoundAngle(hShape int, nWidth int, nHeight int) int {
 //
 // pText: 文本内容.
 func XShapeGroupBox_SetText(hShape int, pText string) int {
-	r, _, _ := xShapeGroupBox_SetText.Call(uintptr(hShape), strPtr(pText))
+	r, _, _ := xShapeGroupBox_SetText.Call(uintptr(hShape), StrPtr(pText))
 	return int(r)
 }
 
@@ -114,6 +114,6 @@ func XShapeGroupBox_GetRoundAngle(hShape int, pWidth *int, pHeight *int) int {
 //
 // bEnable: 是否启用.
 func XShapeGroupBox_EnableRoundAngle(hShape int, bEnable bool) int {
-	r, _, _ := xShapeGroupBox_EnableRoundAngle.Call(uintptr(hShape), boolPtr(bEnable))
+	r, _, _ := xShapeGroupBox_EnableRoundAngle.Call(uintptr(hShape), BoolPtr(bEnable))
 	return int(r)
 }

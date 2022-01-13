@@ -22,7 +22,7 @@ func XMenuBar_Create(x int, y int, cx int, cy int, hParent int) int {
 //
 // pText: 文本内容.
 func XMenuBar_AddButton(hEle int, pText string) int {
-	r, _, _ := xMenuBar_AddButton.Call(uintptr(hEle), strPtr(pText))
+	r, _, _ := xMenuBar_AddButton.Call(uintptr(hEle), StrPtr(pText))
 	return int(r)
 }
 
@@ -62,7 +62,7 @@ func XMenuBar_DeleteButton(hEle int, nIndex int) bool {
 //
 // bEnable: 是否启用.
 func XMenuBar_EnableAutoWidth(hEle int, bEnable bool) int {
-	r, _, _ := xMenuBar_EnableAutoWidth.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xMenuBar_EnableAutoWidth.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 

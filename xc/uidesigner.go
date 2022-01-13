@@ -8,7 +8,7 @@ package xc
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func XC_LoadLayout(pFileName string, hParent, hAttachWnd int) int {
-	r, _, _ := xC_LoadLayout.Call(strPtr(pFileName), uintptr(hParent), uintptr(hAttachWnd))
+	r, _, _ := xC_LoadLayout.Call(StrPtr(pFileName), uintptr(hParent), uintptr(hAttachWnd))
 	return int(r)
 }
 
@@ -24,7 +24,7 @@ func XC_LoadLayout(pFileName string, hParent, hAttachWnd int) int {
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func XC_LoadLayoutZip(pZipFileName string, pFileName string, pPassword string, hParent, hAttachWnd int) int {
-	r, _, _ := xC_LoadLayoutZip.Call(strPtr(pZipFileName), strPtr(pFileName), strPtr(pPassword), uintptr(hParent), uintptr(hAttachWnd))
+	r, _, _ := xC_LoadLayoutZip.Call(StrPtr(pZipFileName), StrPtr(pFileName), StrPtr(pPassword), uintptr(hParent), uintptr(hAttachWnd))
 	return int(r)
 }
 
@@ -40,7 +40,7 @@ func XC_LoadLayoutZip(pZipFileName string, pFileName string, pPassword string, h
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func XC_LoadLayoutZipMem(data []byte, pFileName string, pPassword string, hParent, hAttachWnd int) int {
-	r, _, _ := xC_LoadLayoutZipMem.Call(bytePtr2(&data), uintptr(len(data)), strPtr(pFileName), strPtr(pPassword), uintptr(hParent), uintptr(hAttachWnd))
+	r, _, _ := xC_LoadLayoutZipMem.Call(ByteSliceDataPtr(&data), uintptr(len(data)), StrPtr(pFileName), StrPtr(pPassword), uintptr(hParent), uintptr(hAttachWnd))
 	return int(r)
 }
 
@@ -72,7 +72,7 @@ func XC_LoadLayoutFromStringUtf8(pStringXML string, hParent, hAttachWnd int) int
 //
 // pFileName: 样式文件名称.
 func XC_LoadStyle(pFileName string) bool {
-	r, _, _ := xC_LoadStyle.Call(strPtr(pFileName))
+	r, _, _ := xC_LoadStyle.Call(StrPtr(pFileName))
 	return int(r) != 0
 }
 
@@ -84,7 +84,7 @@ func XC_LoadStyle(pFileName string) bool {
 //
 // pPassword: 密码.
 func XC_LoadStyleZip(pZipFile string, pFileName string, pPassword string) bool {
-	r, _, _ := xC_LoadStyleZip.Call(strPtr(pZipFile), strPtr(pFileName), strPtr(pPassword))
+	r, _, _ := xC_LoadStyleZip.Call(StrPtr(pZipFile), StrPtr(pFileName), StrPtr(pPassword))
 	return int(r) != 0
 }
 
@@ -96,7 +96,7 @@ func XC_LoadStyleZip(pZipFile string, pFileName string, pPassword string) bool {
 //
 // pPassword: 密码.
 func XC_LoadStyleZipMem(data []byte, pFileName string, pPassword string) bool {
-	r, _, _ := xC_LoadStyleZipMem.Call(bytePtr2(&data), uintptr(len(data)), strPtr(pFileName), strPtr(pPassword))
+	r, _, _ := xC_LoadStyleZipMem.Call(ByteSliceDataPtr(&data), uintptr(len(data)), StrPtr(pFileName), StrPtr(pPassword))
 	return int(r) != 0
 }
 
@@ -104,7 +104,7 @@ func XC_LoadStyleZipMem(data []byte, pFileName string, pPassword string) bool {
 //
 // pFileName: 资源文件名.
 func XC_LoadResource(pFileName string) bool {
-	r, _, _ := xC_LoadResource.Call(strPtr(pFileName))
+	r, _, _ := xC_LoadResource.Call(StrPtr(pFileName))
 	return int(r) != 0
 }
 
@@ -116,7 +116,7 @@ func XC_LoadResource(pFileName string) bool {
 //
 // pPassword: zip压缩包密码.
 func XC_LoadResourceZip(pZipFileName string, pFileName string, pPassword string) bool {
-	r, _, _ := xC_LoadResourceZip.Call(strPtr(pZipFileName), strPtr(pFileName), strPtr(pPassword))
+	r, _, _ := xC_LoadResourceZip.Call(StrPtr(pZipFileName), StrPtr(pFileName), StrPtr(pPassword))
 	return int(r) != 0
 }
 
@@ -128,7 +128,7 @@ func XC_LoadResourceZip(pZipFileName string, pFileName string, pPassword string)
 //
 // pPassword: zip压缩包密码.
 func XC_LoadResourceZipMem(data []byte, pFileName string, pPassword string) bool {
-	r, _, _ := xC_LoadResourceZipMem.Call(bytePtr2(&data), uintptr(len(data)), strPtr(pFileName), strPtr(pPassword))
+	r, _, _ := xC_LoadResourceZipMem.Call(ByteSliceDataPtr(&data), uintptr(len(data)), StrPtr(pFileName), StrPtr(pPassword))
 	return int(r) != 0
 }
 
@@ -138,7 +138,7 @@ func XC_LoadResourceZipMem(data []byte, pFileName string, pPassword string) bool
 //
 // pFileName: 资源文件名.
 func XC_LoadResourceFromStringUtf8(pStringXML string, pFileName string) bool {
-	r, _, _ := xC_LoadResourceFromStringUtf8.Call(XC_wtoutf8(pStringXML), strPtr(pFileName))
+	r, _, _ := xC_LoadResourceFromStringUtf8.Call(XC_wtoutf8(pStringXML), StrPtr(pFileName))
 	return int(r) != 0
 }
 
@@ -148,7 +148,7 @@ func XC_LoadResourceFromStringUtf8(pStringXML string, pFileName string) bool {
 //
 // pString: 字符串.
 func XC_LoadStyleFromStringW(pFileName string, pString string) bool {
-	r, _, _ := xC_LoadStyleFromStringW.Call(strPtr(pFileName), strPtr(pString))
+	r, _, _ := xC_LoadStyleFromStringW.Call(StrPtr(pFileName), StrPtr(pString))
 	return int(r) != 0
 }
 
