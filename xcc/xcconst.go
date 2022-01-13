@@ -669,16 +669,18 @@ const (
 	Tree_Item_State_Select        // 项选择状态
 )
 
-// List, ListBox, ListView, Tree, 项背景绘制标志位
+// 项背景绘制标志位(List, ListBox, ListView, Tree)
 // List_DrawItemBk_Flag_
 
 const (
-	List_DrawItemBk_Flag_Nothing     = 0x000 // 不绘制
-	List_DrawItemBk_Flag_Leave       = 0x001 // 绘制鼠标离开状态项背景
-	List_DrawItemBk_Flag_Stay        = 0x002 // 绘制鼠标选择状态项背景
-	List_DrawItemBk_Flag_Select      = 0x004 // 绘制鼠标停留状态项项背景
-	List_DrawItemBk_Flag_Group_Leave = 0x008 // 绘制鼠标离开状态组背景,当项为组时
-	List_DrawItemBk_Flag_Group_Stay  = 0x010 // 绘制鼠标停留状态组背景,当项为组时
+	List_DrawItemBk_Flag_Leave       = 1 << iota // 绘制鼠标离开状态项背景
+	List_DrawItemBk_Flag_Stay                    // 绘制鼠标选择状态项背景
+	List_DrawItemBk_Flag_Select                  // 绘制鼠标停留状态项项背景
+	List_DrawItemBk_Flag_Group_Leave             // 绘制鼠标离开状态组背景, 当项为组时
+	List_DrawItemBk_Flag_Group_Stay              // 绘制鼠标停留状态组背景, 当项为组时
+	List_DrawItemBk_Flag_Line                    // 列表绘制水平分割线
+	List_DrawItemBk_Flag_LineV                   // 列表绘制垂直分割线
+	List_DrawItemBk_Flag_Nothing     = 0         // 不绘制
 )
 
 // 属性网格项类型
@@ -1001,4 +1003,17 @@ const (
 const (
 	Animation_Move_X = 0x01 // X轴移动.
 	Animation_Move_Y = 0x02 // Y轴移动.
+)
+
+// 背景对象对齐方式
+// BkObject_Align_Flag_
+
+const (
+	BkObject_Align_Flag_Left     = 1 << iota // 左对齐, 当设置此标识时, 外间距(margin.left)代表左侧间距; 当right未设置时,那么外间距(margin.right)代表宽度;
+	BkObject_Align_Flag_Top                  // 顶对齐, 当设置此标识时, 外间距(margin.top)代表顶部间距; 当bottom未设置时,那么外间距(margin.bottom)代表高度;
+	BkObject_Align_Flag_Right                // 右对齐, 当设置此标识时, 外间距(margin.right)代表右侧间距; 当left未设置时,那么外间距(margin.left)代表宽度;
+	BkObject_Align_Flag_Bottom               // 底对齐, 当设置此标识时, 外间距(margin.bottom)代表底部间距; 当top未设置时,那么外间距(margin.top)代表高度;
+	BkObject_Align_Flag_Center               // 水平居中, 当设置此标识时, 外间距(margin.left)代表宽度;
+	BkObject_Align_Flag_Center_v             // 垂直居中, 当设置此标识时, 外间距(margin.top)代表高度;
+	BkObject_Align_Flag_No       = 0         // 无
 )
