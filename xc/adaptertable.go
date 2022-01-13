@@ -16,7 +16,7 @@ func XAdTable_Create() int {
 //
 // bAscending: 是否按照升序方式排序.
 func XAdTable_Sort(hAdapter int, iColumn int, bAscending bool) int {
-	r, _, _ := xAdTable_Sort.Call(uintptr(hAdapter), uintptr(iColumn), boolPtr(bAscending))
+	r, _, _ := xAdTable_Sort.Call(uintptr(hAdapter), uintptr(iColumn), BoolPtr(bAscending))
 	return int(r)
 }
 
@@ -40,7 +40,7 @@ func XAdTable_GetItemDataType(hAdapter int, iItem int, iColumn int) int {
 //
 // pName: 字段称.
 func XAdTable_GetItemDataTypeEx(hAdapter int, iItem int, pName string) int {
-	r, _, _ := xAdTable_GetItemDataTypeEx.Call(uintptr(hAdapter), uintptr(iItem), strPtr(pName))
+	r, _, _ := xAdTable_GetItemDataTypeEx.Call(uintptr(hAdapter), uintptr(iItem), StrPtr(pName))
 	return int(r)
 }
 
@@ -50,7 +50,7 @@ func XAdTable_GetItemDataTypeEx(hAdapter int, iItem int, pName string) int {
 //
 // pName: 字段称.
 func XAdTable_AddColumn(hAdapter int, pName string) int {
-	r, _, _ := xAdTable_AddColumn.Call(uintptr(hAdapter), strPtr(pName))
+	r, _, _ := xAdTable_AddColumn.Call(uintptr(hAdapter), StrPtr(pName))
 	return int(r)
 }
 
@@ -60,7 +60,7 @@ func XAdTable_AddColumn(hAdapter int, pName string) int {
 //
 // pColName: 列名, 多个列名用逗号分开.
 func XAdTable_SetColumn(hAdapter int, pColName string) int {
-	r, _, _ := xAdTable_SetColumn.Call(uintptr(hAdapter), strPtr(pColName))
+	r, _, _ := xAdTable_SetColumn.Call(uintptr(hAdapter), StrPtr(pColName))
 	return int(r)
 }
 
@@ -70,7 +70,7 @@ func XAdTable_SetColumn(hAdapter int, pColName string) int {
 //
 // pValue: 值.
 func XAdTable_AddItemText(hAdapter int, pValue string) int {
-	r, _, _ := xAdTable_AddItemText.Call(uintptr(hAdapter), strPtr(pValue))
+	r, _, _ := xAdTable_AddItemText.Call(uintptr(hAdapter), StrPtr(pValue))
 	return int(r)
 }
 
@@ -82,7 +82,7 @@ func XAdTable_AddItemText(hAdapter int, pValue string) int {
 //
 // pValue: 值.
 func XAdTable_AddItemTextEx(hAdapter int, pName string, pValue string) int {
-	r, _, _ := xAdTable_AddItemTextEx.Call(uintptr(hAdapter), strPtr(pName), strPtr(pValue))
+	r, _, _ := xAdTable_AddItemTextEx.Call(uintptr(hAdapter), StrPtr(pName), StrPtr(pValue))
 	return int(r)
 }
 
@@ -104,7 +104,7 @@ func XAdTable_AddItemImage(hAdapter int, hImage int) int {
 //
 // hImage: 图片句柄.
 func XAdTable_AddItemImageEx(hAdapter int, pName string, hImage int) int {
-	r, _, _ := xAdTable_AddItemImageEx.Call(uintptr(hAdapter), strPtr(pName), uintptr(hImage))
+	r, _, _ := xAdTable_AddItemImageEx.Call(uintptr(hAdapter), StrPtr(pName), uintptr(hImage))
 	return int(r)
 }
 
@@ -116,7 +116,7 @@ func XAdTable_AddItemImageEx(hAdapter int, pName string, hImage int) int {
 //
 // pValue: 值.
 func XAdTable_InsertItemText(hAdapter int, iItem int, pValue string) int {
-	r, _, _ := xAdTable_InsertItemText.Call(uintptr(hAdapter), uintptr(iItem), strPtr(pValue))
+	r, _, _ := xAdTable_InsertItemText.Call(uintptr(hAdapter), uintptr(iItem), StrPtr(pValue))
 	return int(r)
 }
 
@@ -130,7 +130,7 @@ func XAdTable_InsertItemText(hAdapter int, iItem int, pValue string) int {
 //
 // pValue: 值.
 func XAdTable_InsertItemTextEx(hAdapter int, iItem int, pName string, pValue string) int {
-	r, _, _ := xAdTable_InsertItemTextEx.Call(uintptr(hAdapter), uintptr(iItem), strPtr(pName), strPtr(pValue))
+	r, _, _ := xAdTable_InsertItemTextEx.Call(uintptr(hAdapter), uintptr(iItem), StrPtr(pName), StrPtr(pValue))
 	return int(r)
 }
 
@@ -156,7 +156,7 @@ func XAdTable_InsertItemImage(hAdapter int, iItem int, hImage int) int {
 //
 // hImage: 图片句柄.
 func XAdTable_InsertItemImageEx(hAdapter int, iItem int, pName string, hImage int) int {
-	r, _, _ := xAdTable_InsertItemImageEx.Call(uintptr(hAdapter), uintptr(iItem), strPtr(pName), uintptr(hImage))
+	r, _, _ := xAdTable_InsertItemImageEx.Call(uintptr(hAdapter), uintptr(iItem), StrPtr(pName), uintptr(hImage))
 	return int(r)
 }
 
@@ -170,7 +170,7 @@ func XAdTable_InsertItemImageEx(hAdapter int, iItem int, pName string, hImage in
 //
 // pValue: 值.
 func XAdTable_SetItemText(hAdapter int, iItem int, iColumn int, pValue string) bool {
-	r, _, _ := xAdTable_SetItemText.Call(uintptr(hAdapter), uintptr(iItem), uintptr(iColumn), strPtr(pValue))
+	r, _, _ := xAdTable_SetItemText.Call(uintptr(hAdapter), uintptr(iItem), uintptr(iColumn), StrPtr(pValue))
 	return int(r) != 0
 }
 
@@ -184,7 +184,7 @@ func XAdTable_SetItemText(hAdapter int, iItem int, iColumn int, pValue string) b
 //
 // pValue: 值.
 func XAdTable_SetItemTextEx(hAdapter int, iItem int, pName string, pValue string) bool {
-	r, _, _ := xAdTable_SetItemTextEx.Call(uintptr(hAdapter), uintptr(iItem), strPtr(pName), strPtr(pValue))
+	r, _, _ := xAdTable_SetItemTextEx.Call(uintptr(hAdapter), uintptr(iItem), StrPtr(pName), StrPtr(pValue))
 	return int(r) != 0
 }
 
@@ -212,7 +212,7 @@ func XAdTable_SetItemInt(hAdapter int, iItem int, iColumn int, nValue int) bool 
 //
 // nValue: 值.
 func XAdTable_SetItemIntEx(hAdapter int, iItem int, pName string, nValue int) bool {
-	r, _, _ := xAdTable_SetItemIntEx.Call(uintptr(hAdapter), uintptr(iItem), strPtr(pName), uintptr(nValue))
+	r, _, _ := xAdTable_SetItemIntEx.Call(uintptr(hAdapter), uintptr(iItem), StrPtr(pName), uintptr(nValue))
 	return int(r) != 0
 }
 
@@ -226,7 +226,7 @@ func XAdTable_SetItemIntEx(hAdapter int, iItem int, pName string, nValue int) bo
 //
 // fValue: 值.
 func XAdTable_SetItemFloat(hAdapter int, iItem int, iColumn int, fValue float32) bool {
-	r, _, _ := xAdTable_SetItemFloat.Call(uintptr(hAdapter), uintptr(iItem), uintptr(iColumn), float32Ptr(fValue))
+	r, _, _ := xAdTable_SetItemFloat.Call(uintptr(hAdapter), uintptr(iItem), uintptr(iColumn), Float32Ptr(fValue))
 	return int(r) != 0
 }
 
@@ -240,7 +240,7 @@ func XAdTable_SetItemFloat(hAdapter int, iItem int, iColumn int, fValue float32)
 //
 // fValue: 值.
 func XAdTable_SetItemFloatEx(hAdapter int, iItem int, pName string, fValue float32) bool {
-	r, _, _ := xAdTable_SetItemFloatEx.Call(uintptr(hAdapter), uintptr(iItem), strPtr(pName), float32Ptr(fValue))
+	r, _, _ := xAdTable_SetItemFloatEx.Call(uintptr(hAdapter), uintptr(iItem), StrPtr(pName), Float32Ptr(fValue))
 	return int(r) != 0
 }
 
@@ -268,7 +268,7 @@ func XAdTable_SetItemImage(hAdapter int, iItem int, iColumn int, hImage int) boo
 //
 // hImage: 图片句柄.
 func XAdTable_SetItemImageEx(hAdapter int, iItem int, pName string, hImage int) bool {
-	r, _, _ := xAdTable_SetItemImageEx.Call(uintptr(hAdapter), uintptr(iItem), strPtr(pName), uintptr(hImage))
+	r, _, _ := xAdTable_SetItemImageEx.Call(uintptr(hAdapter), uintptr(iItem), StrPtr(pName), uintptr(hImage))
 	return int(r) != 0
 }
 
@@ -346,7 +346,7 @@ func XAdTable_GetItemText(hAdapter int, iItem int, iColumn int) string {
 //
 // pName: 字段称.
 func XAdTable_GetItemTextEx(hAdapter int, iItem int, pName string) string {
-	r, _, _ := xAdTable_GetItemTextEx.Call(uintptr(hAdapter), uintptr(iItem), strPtr(pName))
+	r, _, _ := xAdTable_GetItemTextEx.Call(uintptr(hAdapter), uintptr(iItem), StrPtr(pName))
 	return UintPtrToString(r)
 }
 
@@ -370,7 +370,7 @@ func XAdTable_GetItemImage(hAdapter int, iItem int, iColumn int) int {
 //
 // pName: 字段称.
 func XAdTable_GetItemImageEx(hAdapter int, iItem int, pName string) int {
-	r, _, _ := xAdTable_GetItemImageEx.Call(uintptr(hAdapter), uintptr(iItem), strPtr(pName))
+	r, _, _ := xAdTable_GetItemImageEx.Call(uintptr(hAdapter), uintptr(iItem), StrPtr(pName))
 	return int(r)
 }
 
@@ -398,7 +398,7 @@ func XAdTable_GetItemInt(hAdapter int, iItem int, iColumn int, pOutValue *int) b
 //
 // pOutValue: 接收返还值.
 func XAdTable_GetItemIntEx(hAdapter int, iItem int, pName string, pOutValue *int) bool {
-	r, _, _ := xAdTable_GetItemIntEx.Call(uintptr(hAdapter), uintptr(iItem), strPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
+	r, _, _ := xAdTable_GetItemIntEx.Call(uintptr(hAdapter), uintptr(iItem), StrPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
 	return int(r) != 0
 }
 
@@ -426,6 +426,6 @@ func XAdTable_GetItemFloat(hAdapter int, iItem int, iColumn int, pOutValue *floa
 //
 // pOutValue: 接收返还值.
 func XAdTable_GetItemFloatEx(hAdapter int, iItem int, pName string, pOutValue *float32) bool {
-	r, _, _ := xAdTable_GetItemFloatEx.Call(uintptr(hAdapter), uintptr(iItem), strPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
+	r, _, _ := xAdTable_GetItemFloatEx.Call(uintptr(hAdapter), uintptr(iItem), StrPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
 	return int(r) != 0
 }
