@@ -434,6 +434,7 @@ var (
 	xMenu_GetItemCount         *syscall.LazyProc
 	xMenu_SetItemCheck         *syscall.LazyProc
 	xMenu_IsItemCheck          *syscall.LazyProc
+	xMenu_SetItemWidth         *syscall.LazyProc
 
 	// ModalWindow.
 	xModalWnd_Create          *syscall.LazyProc
@@ -867,6 +868,8 @@ var (
 	xBkM_Release           *syscall.LazyProc
 	xBkM_GetRefCount       *syscall.LazyProc
 	xBkM_SetInfo           *syscall.LazyProc
+	xBkM_GetStateTextColor *syscall.LazyProc
+	xBkM_GetObject         *syscall.LazyProc
 
 	// Draw.
 	xDraw_Create                  *syscall.LazyProc
@@ -971,6 +974,7 @@ var (
 	xDraw_DrawSvg                 *syscall.LazyProc
 	xDraw_DrawSvgEx               *syscall.LazyProc
 	xDraw_DrawSvgSize             *syscall.LazyProc
+	xDraw_D2D_Clear               *syscall.LazyProc
 
 	// Ease.
 	xEase_Linear  *syscall.LazyProc
@@ -1184,6 +1188,7 @@ var (
 	xListBox_DeleteColumnAll              *syscall.LazyProc
 	xListBox_GetCount_AD                  *syscall.LazyProc
 	xListBox_GetCountColumn_AD            *syscall.LazyProc
+	xListBox_SetSplitLineColor            *syscall.LazyProc
 
 	// List.
 	xList_Create                       *syscall.LazyProc
@@ -1278,6 +1283,7 @@ var (
 	xList_DeleteColumnAll_AD           *syscall.LazyProc
 	xList_GetCount_AD                  *syscall.LazyProc
 	xList_GetCountColumn_AD            *syscall.LazyProc
+	xList_SetSplitLineColor            *syscall.LazyProc
 
 	// ListView.
 	xListView_Create                       *syscall.LazyProc
@@ -1546,6 +1552,7 @@ var (
 	xTree_DeleteItem                      *syscall.LazyProc
 	xTree_DeleteItemAll                   *syscall.LazyProc
 	xTree_DeleteColumnAll                 *syscall.LazyProc
+	xTree_SetSplitLineColor               *syscall.LazyProc
 
 	// DateTime.
 	xDateTime_Create           *syscall.LazyProc
@@ -1625,6 +1632,34 @@ var (
 	xNotifyMsg_SetWidth         *syscall.LazyProc
 	xNotifyMsg_SetSpace         *syscall.LazyProc
 	xNotifyMsg_SetBorderSize    *syscall.LazyProc
+
+	// 背景对象.
+	xBkObj_SetMargin         *syscall.LazyProc
+	xBkObj_SetAlign          *syscall.LazyProc
+	xBkObj_SetImage          *syscall.LazyProc
+	xBkObj_SetRotate         *syscall.LazyProc
+	xBkObj_SetFillColor      *syscall.LazyProc
+	xBkObj_SetBorderWidth    *syscall.LazyProc
+	xBkObj_SetBorderColor    *syscall.LazyProc
+	xBkObj_SetRectRoundAngle *syscall.LazyProc
+	xBkObj_EnableFill        *syscall.LazyProc
+	xBkObj_EnableBorder      *syscall.LazyProc
+	xBkObj_SetText           *syscall.LazyProc
+	xBkObj_SetFont           *syscall.LazyProc
+	xBkObj_SetTextAlign      *syscall.LazyProc
+	xBkObj_GetMargin         *syscall.LazyProc
+	xBkObj_GetAlign          *syscall.LazyProc
+	xBkObj_GetImage          *syscall.LazyProc
+	xBkObj_GetRotate         *syscall.LazyProc
+	xBkObj_GetFillColor      *syscall.LazyProc
+	xBkObj_GetBorderColor    *syscall.LazyProc
+	xBkObj_GetBorderWidth    *syscall.LazyProc
+	xBkObj_GetRectRoundAngle *syscall.LazyProc
+	xBkObj_IsFill            *syscall.LazyProc
+	xBkObj_IsBorder          *syscall.LazyProc
+	xBkObj_GetText           *syscall.LazyProc
+	xBkObj_GetFont           *syscall.LazyProc
+	xBkObj_GetTextAlign      *syscall.LazyProc
 )
 
 // 初始化xcgui.
@@ -2054,6 +2089,7 @@ func init() {
 	xMenu_GetItemCount = xcgui.NewProc("XMenu_GetItemCount")
 	xMenu_SetItemCheck = xcgui.NewProc("XMenu_SetItemCheck")
 	xMenu_IsItemCheck = xcgui.NewProc("XMenu_IsItemCheck")
+	xMenu_SetItemWidth = xcgui.NewProc("XMenu_SetItemWidth")
 
 	// ModalWindow.
 	xModalWnd_Create = xcgui.NewProc("XModalWnd_Create")
@@ -2479,6 +2515,8 @@ func init() {
 	xBkM_Release = xcgui.NewProc("XBkM_Release")
 	xBkM_GetRefCount = xcgui.NewProc("XBkM_GetRefCount")
 	xBkM_SetInfo = xcgui.NewProc("XBkM_SetInfo")
+	xBkM_GetStateTextColor = xcgui.NewProc("XBkM_GetStateTextColor")
+	xBkM_GetObject = xcgui.NewProc("XBkM_GetObject")
 
 	// Draw.
 	xDraw_Create = xcgui.NewProc("XDraw_Create")
@@ -2583,6 +2621,7 @@ func init() {
 	xDraw_DrawSvg = xcgui.NewProc("XDraw_DrawSvg")
 	xDraw_DrawSvgEx = xcgui.NewProc("XDraw_DrawSvgEx")
 	xDraw_DrawSvgSize = xcgui.NewProc("XDraw_DrawSvgSize")
+	xDraw_D2D_Clear = xcgui.NewProc("XDraw_D2D_Clear")
 
 	// Ease.
 	xEase_Linear = xcgui.NewProc("XEase_Linear")
@@ -2796,6 +2835,7 @@ func init() {
 	xListBox_DeleteColumnAll = xcgui.NewProc("XListBox_DeleteColumnAll")
 	xListBox_GetCount_AD = xcgui.NewProc("XListBox_GetCount_AD")
 	xListBox_GetCountColumn_AD = xcgui.NewProc("XListBox_GetCountColumn_AD")
+	xListBox_SetSplitLineColor = xcgui.NewProc("XListBox_SetSplitLineColor")
 
 	// List.
 	xList_Create = xcgui.NewProc("XList_Create")
@@ -2890,6 +2930,7 @@ func init() {
 	xList_DeleteColumnAll_AD = xcgui.NewProc("XList_DeleteColumnAll_AD")
 	xList_GetCount_AD = xcgui.NewProc("XList_GetCount_AD")
 	xList_GetCountColumn_AD = xcgui.NewProc("XList_GetCountColumn_AD")
+	xList_SetSplitLineColor = xcgui.NewProc("XList_SetSplitLineColor")
 
 	// ListView.
 	xListView_Create = xcgui.NewProc("XListView_Create")
@@ -3158,6 +3199,7 @@ func init() {
 	xTree_DeleteItem = xcgui.NewProc("XTree_DeleteItem")
 	xTree_DeleteItemAll = xcgui.NewProc("XTree_DeleteItemAll")
 	xTree_DeleteColumnAll = xcgui.NewProc("XTree_DeleteColumnAll")
+	xTree_SetSplitLineColor = xcgui.NewProc("XTree_SetSplitLineColor")
 
 	// DateTime.
 	xDateTime_Create = xcgui.NewProc("XDateTime_Create")
@@ -3237,10 +3279,39 @@ func init() {
 	xNotifyMsg_SetWidth = xcgui.NewProc("XNotifyMsg_SetWidth")
 	xNotifyMsg_SetSpace = xcgui.NewProc("XNotifyMsg_SetSpace")
 	xNotifyMsg_SetBorderSize = xcgui.NewProc("XNotifyMsg_SetBorderSize")
+
+	// 背景对象.
+	xBkObj_SetMargin = xcgui.NewProc("XBkObj_SetMargin")
+	xBkObj_SetAlign = xcgui.NewProc("XBkObj_SetAlign")
+	xBkObj_SetImage = xcgui.NewProc("XBkObj_SetImage")
+	xBkObj_SetRotate = xcgui.NewProc("XBkObj_SetRotate")
+	xBkObj_SetFillColor = xcgui.NewProc("XBkObj_SetFillColor")
+	xBkObj_SetBorderWidth = xcgui.NewProc("XBkObj_SetBorderWidth")
+	xBkObj_SetBorderColor = xcgui.NewProc("XBkObj_SetBorderColor")
+	xBkObj_SetRectRoundAngle = xcgui.NewProc("XBkObj_SetRectRoundAngle")
+	xBkObj_EnableFill = xcgui.NewProc("XBkObj_EnableFill")
+	xBkObj_EnableBorder = xcgui.NewProc("XBkObj_EnableBorder")
+	xBkObj_SetText = xcgui.NewProc("XBkObj_SetText")
+	xBkObj_SetFont = xcgui.NewProc("XBkObj_SetFont")
+	xBkObj_SetTextAlign = xcgui.NewProc("XBkObj_SetTextAlign")
+	xBkObj_GetMargin = xcgui.NewProc("XBkObj_GetMargin")
+	xBkObj_GetAlign = xcgui.NewProc("XBkObj_GetAlign")
+	xBkObj_GetImage = xcgui.NewProc("XBkObj_GetImage")
+	xBkObj_GetRotate = xcgui.NewProc("XBkObj_GetRotate")
+	xBkObj_GetFillColor = xcgui.NewProc("XBkObj_GetFillColor")
+	xBkObj_GetBorderColor = xcgui.NewProc("XBkObj_GetBorderColor")
+	xBkObj_GetBorderWidth = xcgui.NewProc("XBkObj_GetBorderWidth")
+	xBkObj_GetRectRoundAngle = xcgui.NewProc("XBkObj_GetRectRoundAngle")
+	xBkObj_IsFill = xcgui.NewProc("XBkObj_IsFill")
+	xBkObj_IsBorder = xcgui.NewProc("XBkObj_IsBorder")
+	xBkObj_GetText = xcgui.NewProc("XBkObj_GetText")
+	xBkObj_GetFont = xcgui.NewProc("XBkObj_GetFont")
+	xBkObj_GetTextAlign = xcgui.NewProc("XBkObj_GetTextAlign")
+
 }
 
 // string到uintptr.
-func strPtr(s string) uintptr {
+func StrPtr(s string) uintptr {
 	p, _ := syscall.UTF16PtrFromString(s)
 	return uintptr(unsafe.Pointer(p))
 }
@@ -3251,7 +3322,10 @@ func UintPtrToString(ptr uintptr) string {
 }
 
 // uint16[0]指针到uintptr.
-func uint16Ptr2(p *[]uint16) uintptr {
+func Uint16SliceDataPtr(p *[]uint16) uintptr {
+	if len(*p) == 0 {
+		return uintptr(0)
+	}
 	return uintptr(unsafe.Pointer(&(*p)[0]))
 }
 
@@ -3261,7 +3335,7 @@ func Font_Info_Name(str [32]uint16) string {
 }
 
 // bool到uintptr.
-func boolPtr(b bool) uintptr {
+func BoolPtr(b bool) uintptr {
 	if b {
 		return uintptr(1)
 	}
@@ -3269,18 +3343,21 @@ func boolPtr(b bool) uintptr {
 }
 
 // float32到uintptr.
-func float32Ptr(f float32) uintptr {
+func Float32Ptr(f float32) uintptr {
 	return uintptr(*(*uint32)(unsafe.Pointer(&f)))
 }
 
 // uintptr到float32.
-func uintPtrToFloat32(ptr uintptr) float32 {
+func UintPtrToFloat32(ptr uintptr) float32 {
 	u := uint32(ptr)
 	return *(*float32)(unsafe.Pointer(&u))
 }
 
 // byte[0]指针到uintptr.
-func bytePtr2(b *[]byte) uintptr {
+func ByteSliceDataPtr(b *[]byte) uintptr {
+	if len(*b) == 0 {
+		return uintptr(0)
+	}
 	return uintptr(unsafe.Pointer(&(*b)[0]))
 }
 
@@ -3316,6 +3393,20 @@ func ABGR2(rgb int, a byte) int {
 // 根据r, g, b组合成十进制RGB颜色.
 func RGB(r, g, b byte) int {
 	return int(uint32(r) | uint32(g)<<8 | uint32(b)<<16)
+}
+
+// 根据r, g, b, a组合成十进制ABGR颜色.
+//
+// 和ABGR函数一模一样, 只是为了符合部分人使用习惯.
+func RGBA(r, g, b, a byte) int {
+	return int((uint32(r) & 255) | (uint32(g)&255)<<8 | (uint32(b)&255)<<16 | (uint32(a)&255)<<24)
+}
+
+// 根据rgb, a组合成十进制ABGR颜色.
+//
+// 和ABGR2函数一模一样, 只是为了符合部分人使用习惯.
+func RGBA2(rgb int, a byte) int {
+	return int((uint32(rgb) & 16777215) | (uint32(a)&255)<<24)
 }
 
 // 将十六进制颜色转换到RGB颜色.
