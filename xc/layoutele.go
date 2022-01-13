@@ -38,7 +38,7 @@ func XLayout_IsEnableLayout(hEle int) bool {
 //
 // bEnable: 是否启用.
 func XLayout_EnableLayout(hEle int, bEnable bool) int {
-	r, _, _ := xLayout_EnableLayout.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xLayout_EnableLayout.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -48,7 +48,7 @@ func XLayout_EnableLayout(hEle int, bEnable bool) int {
 //
 // bEnable: 是否显示.
 func XLayout_ShowLayoutFrame(hEle int, bEnable bool) int {
-	r, _, _ := xLayout_ShowLayoutFrame.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xLayout_ShowLayoutFrame.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 

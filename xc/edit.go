@@ -45,7 +45,7 @@ func XEdit_CreateEx(x int, y int, cx int, cy int, nType int, hParent int) int {
 //
 // bEnable: 是否启用.
 func XEdit_EnableAutoWrap(hEle int, bEnable bool) int {
-	r, _, _ := xEdit_EnableAutoWrap.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xEdit_EnableAutoWrap.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -55,7 +55,7 @@ func XEdit_EnableAutoWrap(hEle int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XEdit_EnableReadOnly(hEle int, bEnable bool) int {
-	r, _, _ := xEdit_EnableReadOnly.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xEdit_EnableReadOnly.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -65,7 +65,7 @@ func XEdit_EnableReadOnly(hEle int, bEnable bool) int {
 //
 // bEnable:.
 func XEdit_EnableMultiLine(hEle int, bEnable bool) int {
-	r, _, _ := xEdit_EnableMultiLine.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xEdit_EnableMultiLine.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -75,7 +75,7 @@ func XEdit_EnableMultiLine(hEle int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XEdit_EnablePassword(hEle int, bEnable bool) int {
-	r, _, _ := xEdit_EnablePassword.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xEdit_EnablePassword.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -85,7 +85,7 @@ func XEdit_EnablePassword(hEle int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XEdit_EnableAutoSelAll(hEle int, bEnable bool) int {
-	r, _, _ := xEdit_EnableAutoSelAll.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xEdit_EnableAutoSelAll.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -95,7 +95,7 @@ func XEdit_EnableAutoSelAll(hEle int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XEdit_EnableAutoCancelSel(hEle int, bEnable bool) int {
-	r, _, _ := xEdit_EnableAutoCancelSel.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xEdit_EnableAutoCancelSel.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -195,7 +195,7 @@ func XEdit_FreeData(pData *Edit_Data_Copy_) int {
 //
 // pString: 文本内容.
 func XEdit_SetDefaultText(hEle int, pString string) int {
-	r, _, _ := xEdit_SetDefaultText.Call(uintptr(hEle), strPtr(pString))
+	r, _, _ := xEdit_SetDefaultText.Call(uintptr(hEle), StrPtr(pString))
 	return int(r)
 }
 
@@ -245,7 +245,7 @@ func XEdit_SetTabSpace(hEle int, nSpace int) int {
 //
 // pString: 字符串.
 func XEdit_SetText(hEle int, pString string) int {
-	r, _, _ := xEdit_SetText.Call(uintptr(hEle), strPtr(pString))
+	r, _, _ := xEdit_SetText.Call(uintptr(hEle), StrPtr(pString))
 	return int(r)
 }
 
@@ -268,7 +268,7 @@ func XEdit_SetTextInt(hEle int, nValue int) int {
 // nOutlen: 内存大小.
 func XEdit_GetText(hEle int, pOut *string, nOutlen int) int {
 	buf := make([]uint16, nOutlen)
-	r, _, _ := xEdit_GetText.Call(uintptr(hEle), uint16Ptr2(&buf), uintptr(nOutlen))
+	r, _, _ := xEdit_GetText.Call(uintptr(hEle), Uint16SliceDataPtr(&buf), uintptr(nOutlen))
 	*pOut = syscall.UTF16ToString(buf[0:])
 	return int(r)
 }
@@ -284,7 +284,7 @@ func XEdit_GetText(hEle int, pOut *string, nOutlen int) int {
 // nOutlen: 接收文本内存块长度.
 func XEdit_GetTextRow(hEle int, iRow int, pOut *string, nOutlen int) int {
 	buf := make([]uint16, nOutlen)
-	r, _, _ := xEdit_GetTextRow.Call(uintptr(hEle), uintptr(iRow), uint16Ptr2(&buf), uintptr(nOutlen))
+	r, _, _ := xEdit_GetTextRow.Call(uintptr(hEle), uintptr(iRow), Uint16SliceDataPtr(&buf), uintptr(nOutlen))
 	*pOut = syscall.UTF16ToString(buf[0:])
 	return int(r)
 }
@@ -329,7 +329,7 @@ func XEdit_GetAt(hEle int, iRow int, iCol int) int {
 //
 // pString: 字符串.
 func XEdit_InsertText(hEle int, iRow int, iCol int, pString string) int {
-	r, _, _ := xEdit_InsertText.Call(uintptr(hEle), uintptr(iRow), uintptr(iCol), strPtr(pString))
+	r, _, _ := xEdit_InsertText.Call(uintptr(hEle), uintptr(iRow), uintptr(iCol), StrPtr(pString))
 	return int(r)
 }
 
@@ -339,7 +339,7 @@ func XEdit_InsertText(hEle int, iRow int, iCol int, pString string) int {
 //
 // pString: 字符串.
 func XEdit_InsertTextUser(hEle int, pString string) int {
-	r, _, _ := xEdit_InsertTextUser.Call(uintptr(hEle), strPtr(pString))
+	r, _, _ := xEdit_InsertTextUser.Call(uintptr(hEle), StrPtr(pString))
 	return int(r)
 }
 
@@ -349,7 +349,7 @@ func XEdit_InsertTextUser(hEle int, pString string) int {
 //
 // pString: 字符串.
 func XEdit_AddText(hEle int, pString string) int {
-	r, _, _ := xEdit_AddText.Call(uintptr(hEle), strPtr(pString))
+	r, _, _ := xEdit_AddText.Call(uintptr(hEle), StrPtr(pString))
 	return int(r)
 }
 
@@ -361,7 +361,7 @@ func XEdit_AddText(hEle int, pString string) int {
 //
 // iStyle: 样式索引.
 func XEdit_AddTextEx(hEle int, pString string, iStyle int) int {
-	r, _, _ := xEdit_AddTextEx.Call(uintptr(hEle), strPtr(pString), uintptr(iStyle))
+	r, _, _ := xEdit_AddTextEx.Call(uintptr(hEle), StrPtr(pString), uintptr(iStyle))
 	return int(r)
 }
 
@@ -395,7 +395,7 @@ func XEdit_AddByStyle(hEle int, iStyle int) int {
 //
 // bColor: 是否使用颜色.
 func XEdit_AddStyle(hEle int, hFont_image_Obj int, color int, bColor bool) int {
-	r, _, _ := xEdit_AddStyle.Call(uintptr(hEle), uintptr(hFont_image_Obj), uintptr(color), boolPtr(bColor))
+	r, _, _ := xEdit_AddStyle.Call(uintptr(hEle), uintptr(hFont_image_Obj), uintptr(color), BoolPtr(bColor))
 	return int(r)
 }
 
@@ -413,7 +413,7 @@ func XEdit_AddStyle(hEle int, hFont_image_Obj int, color int, bColor bool) int {
 //
 // bColor: 是否使用颜色.
 func XEdit_AddStyleEx(hEle int, fontName string, fontSize int, fontStyle int, color int, bColor bool) int {
-	r, _, _ := xEdit_AddStyleEx.Call(uintptr(hEle), strPtr(fontName), uintptr(fontSize), uintptr(fontStyle), uintptr(color), boolPtr(bColor))
+	r, _, _ := xEdit_AddStyleEx.Call(uintptr(hEle), StrPtr(fontName), uintptr(fontSize), uintptr(fontStyle), uintptr(color), BoolPtr(bColor))
 	return int(r)
 }
 
@@ -622,7 +622,7 @@ func XEdit_SetSelect(hEle int, iStartRow int, iStartCol int, iEndRow int, iEndCo
 // nOutLen: 接收内存大小.
 func XEdit_GetSelectText(hEle int, pOut *string, nOutLen int) int {
 	buf := make([]uint16, nOutLen)
-	r, _, _ := xEdit_GetSelectText.Call(uintptr(hEle), uint16Ptr2(&buf), uintptr(nOutLen))
+	r, _, _ := xEdit_GetSelectText.Call(uintptr(hEle), Uint16SliceDataPtr(&buf), uintptr(nOutLen))
 	*pOut = syscall.UTF16ToString(buf[0:])
 	return int(r)
 }

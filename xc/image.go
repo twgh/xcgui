@@ -12,7 +12,7 @@ func XImage_LoadSrc(hImageSrc int) int {
 //
 // pFileName: 图片文件.
 func XImage_LoadFile(pFileName string) int {
-	r, _, _ := xImage_LoadFile.Call(strPtr(pFileName))
+	r, _, _ := xImage_LoadFile.Call(StrPtr(pFileName))
 	return int(r)
 }
 
@@ -28,7 +28,7 @@ func XImage_LoadFile(pFileName string) int {
 //
 // bottomSize: 坐标.
 func XImage_LoadFileAdaptive(pFileName string, leftSize int, topSize int, rightSize int, bottomSize int) int {
-	r, _, _ := xImage_LoadFileAdaptive.Call(strPtr(pFileName), uintptr(leftSize), uintptr(topSize), uintptr(rightSize), uintptr(bottomSize))
+	r, _, _ := xImage_LoadFileAdaptive.Call(StrPtr(pFileName), uintptr(leftSize), uintptr(topSize), uintptr(rightSize), uintptr(bottomSize))
 	return int(r)
 }
 
@@ -44,7 +44,7 @@ func XImage_LoadFileAdaptive(pFileName string, leftSize int, topSize int, rightS
 //
 // cy: 高度.
 func XImage_LoadFileRect(pFileName string, x int, y int, cx int, cy int) int {
-	r, _, _ := xImage_LoadFileRect.Call(strPtr(pFileName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy))
+	r, _, _ := xImage_LoadFileRect.Call(StrPtr(pFileName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy))
 	return int(r)
 }
 
@@ -64,7 +64,7 @@ func XImage_LoadFileRect(pFileName string, x int, y int, cx int, cy int) int {
 //
 // hModule:	从指定模块加载, 例如:DLL, EXE; 如果为空, 从当前EXE加载.
 func XImage_LoadResAdaptive(id int, pType string, leftSize int, topSize int, rightSize int, bottomSize, hModule int) int {
-	r, _, _ := xImage_LoadResAdaptive.Call(uintptr(id), strPtr(pType), uintptr(leftSize), uintptr(topSize), uintptr(rightSize), uintptr(bottomSize), uintptr(hModule))
+	r, _, _ := xImage_LoadResAdaptive.Call(uintptr(id), StrPtr(pType), uintptr(leftSize), uintptr(topSize), uintptr(rightSize), uintptr(bottomSize), uintptr(hModule))
 	return int(r)
 }
 
@@ -78,7 +78,7 @@ func XImage_LoadResAdaptive(id int, pType string, leftSize int, topSize int, rig
 //
 // hModule:	从指定模块加载, 例如:DLL, EXE; 如果为空, 从当前EXE加载.
 func XImage_LoadRes(id int, pType string, bStretch bool, hModule int) int {
-	r, _, _ := xImage_LoadRes.Call(uintptr(id), strPtr(pType), boolPtr(bStretch), uintptr(hModule))
+	r, _, _ := xImage_LoadRes.Call(uintptr(id), StrPtr(pType), BoolPtr(bStretch), uintptr(hModule))
 	return int(r)
 }
 
@@ -90,7 +90,7 @@ func XImage_LoadRes(id int, pType string, bStretch bool, hModule int) int {
 //
 // pPassword: ZIP压缩包密码.
 func XImage_LoadZip(pZipFileName string, pFileName string, pPassword string) int {
-	r, _, _ := xImage_LoadZip.Call(strPtr(pZipFileName), strPtr(pFileName), strPtr(pPassword))
+	r, _, _ := xImage_LoadZip.Call(StrPtr(pZipFileName), StrPtr(pFileName), StrPtr(pPassword))
 	return int(r)
 }
 
@@ -110,7 +110,7 @@ func XImage_LoadZip(pZipFileName string, pFileName string, pPassword string) int
 //
 // y2: 坐标.
 func XImage_LoadZipAdaptive(pZipFileName string, pFileName string, pPassword string, x1 int, x2 int, y1 int, y2 int) int {
-	r, _, _ := xImage_LoadZipAdaptive.Call(strPtr(pZipFileName), strPtr(pFileName), strPtr(pPassword), uintptr(x1), uintptr(x2), uintptr(y1), uintptr(y2))
+	r, _, _ := xImage_LoadZipAdaptive.Call(StrPtr(pZipFileName), StrPtr(pFileName), StrPtr(pPassword), uintptr(x1), uintptr(x2), uintptr(y1), uintptr(y2))
 	return int(r)
 }
 
@@ -130,7 +130,7 @@ func XImage_LoadZipAdaptive(pZipFileName string, pFileName string, pPassword str
 //
 // cy: 高度.
 func XImage_LoadZipRect(pZipFileName string, pFileName string, pPassword string, x int, y int, cx int, cy int) int {
-	r, _, _ := xImage_LoadZipRect.Call(strPtr(pZipFileName), strPtr(pFileName), strPtr(pPassword), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy))
+	r, _, _ := xImage_LoadZipRect.Call(StrPtr(pZipFileName), StrPtr(pFileName), StrPtr(pPassword), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy))
 	return int(r)
 }
 
@@ -142,7 +142,7 @@ func XImage_LoadZipRect(pZipFileName string, pFileName string, pPassword string,
 //
 // pPassword: zip压缩包密码.
 func XImage_LoadZipMem(data []byte, pFileName string, pPassword string) int {
-	r, _, _ := xImage_LoadZipMem.Call(bytePtr2(&data), uintptr(len(data)), strPtr(pFileName), strPtr(pPassword))
+	r, _, _ := xImage_LoadZipMem.Call(ByteSliceDataPtr(&data), uintptr(len(data)), StrPtr(pFileName), StrPtr(pPassword))
 	return int(r)
 }
 
@@ -150,7 +150,7 @@ func XImage_LoadZipMem(data []byte, pFileName string, pPassword string) int {
 //
 // pBuffer: 图片数据.
 func XImage_LoadMemory(pBuffer []byte) int {
-	r, _, _ := xImage_LoadMemory.Call(bytePtr2(&pBuffer), uintptr(len(pBuffer)))
+	r, _, _ := xImage_LoadMemory.Call(ByteSliceDataPtr(&pBuffer), uintptr(len(pBuffer)))
 	return int(r)
 }
 
@@ -166,7 +166,7 @@ func XImage_LoadMemory(pBuffer []byte) int {
 //
 // cy: 高度.
 func XImage_LoadMemoryRect(pBuffer []byte, x int, y int, cx int, cy int) int {
-	r, _, _ := xImage_LoadMemoryRect.Call(bytePtr2(&pBuffer), uintptr(len(pBuffer)), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy))
+	r, _, _ := xImage_LoadMemoryRect.Call(ByteSliceDataPtr(&pBuffer), uintptr(len(pBuffer)), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy))
 	return int(r)
 }
 
@@ -182,7 +182,7 @@ func XImage_LoadMemoryRect(pBuffer []byte, x int, y int, cx int, cy int) int {
 //
 // bottomSize: 坐标.
 func XImage_LoadMemoryAdaptive(pBuffer []byte, leftSize int, topSize int, rightSize int, bottomSize int) int {
-	r, _, _ := xImage_LoadMemoryAdaptive.Call(bytePtr2(&pBuffer), uintptr(len(pBuffer)), uintptr(leftSize), uintptr(topSize), uintptr(rightSize), uintptr(bottomSize))
+	r, _, _ := xImage_LoadMemoryAdaptive.Call(ByteSliceDataPtr(&pBuffer), uintptr(len(pBuffer)), uintptr(leftSize), uintptr(topSize), uintptr(rightSize), uintptr(bottomSize))
 	return int(r)
 }
 
@@ -198,7 +198,7 @@ func XImage_LoadFromImage(pImage int) int {
 //
 // pFileName: 文件名.
 func XImage_LoadFromExtractIcon(pFileName string) int {
-	r, _, _ := xImage_LoadFromExtractIcon.Call(strPtr(pFileName))
+	r, _, _ := xImage_LoadFromExtractIcon.Call(StrPtr(pFileName))
 	return int(r)
 }
 
@@ -296,7 +296,7 @@ func XImage_SetTranColorEx(hImage int, color int, tranColor uint8) int {
 //
 // fAngle: 选择角度.
 func XImage_SetRotateAngle(hImage int, fAngle float32) int {
-	r, _, _ := xImage_SetRotateAngle.Call(uintptr(hImage), float32Ptr(fAngle))
+	r, _, _ := xImage_SetRotateAngle.Call(uintptr(hImage), Float32Ptr(fAngle))
 	return int(r)
 }
 
@@ -318,7 +318,7 @@ func XImage_SetSplitEqual(hImage int, nCount int, iIndex int) int {
 //
 // bEnable: 启用TRUE.
 func XImage_EnableTranColor(hImage int, bEnable bool) int {
-	r, _, _ := xImage_EnableTranColor.Call(uintptr(hImage), boolPtr(bEnable))
+	r, _, _ := xImage_EnableTranColor.Call(uintptr(hImage), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -328,7 +328,7 @@ func XImage_EnableTranColor(hImage int, bEnable bool) int {
 //
 // bEnable: 启用自动销毁TRUE.
 func XImage_EnableAutoDestroy(hImage int, bEnable bool) int {
-	r, _, _ := xImage_EnableAutoDestroy.Call(uintptr(hImage), boolPtr(bEnable))
+	r, _, _ := xImage_EnableAutoDestroy.Call(uintptr(hImage), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -338,7 +338,7 @@ func XImage_EnableAutoDestroy(hImage int, bEnable bool) int {
 //
 // bCenter: 是否居中显示.
 func XImage_EnableCenter(hImage int, bCenter bool) int {
-	r, _, _ := xImage_EnableCenter.Call(uintptr(hImage), boolPtr(bCenter))
+	r, _, _ := xImage_EnableCenter.Call(uintptr(hImage), BoolPtr(bCenter))
 	return int(r)
 }
 
@@ -426,7 +426,7 @@ func XImage_LoadSvg(hSvg int) int {
 //
 // pFileName: 文件名.
 func XImage_LoadSvgFile(pFileName string) int {
-	r, _, _ := xImage_LoadSvgFile.Call(strPtr(pFileName))
+	r, _, _ := xImage_LoadSvgFile.Call(StrPtr(pFileName))
 	return int(r)
 }
 
@@ -450,7 +450,7 @@ func XImage_GetSvg(hImage int) int {
 //
 // pString: 字符串指针.
 func XImage_LoadSvgStringW(pString string) int {
-	r, _, _ := xImage_LoadSvgStringW.Call(strPtr(pString))
+	r, _, _ := xImage_LoadSvgStringW.Call(StrPtr(pString))
 	return int(r)
 }
 

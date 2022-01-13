@@ -6,7 +6,7 @@ package xc
 //
 // bEnable: 是否启用.
 func XLayoutBox_EnableHorizon(hLayoutBox int, bEnable bool) int {
-	r, _, _ := xLayoutBox_EnableHorizon.Call(uintptr(hLayoutBox), boolPtr(bEnable))
+	r, _, _ := xLayoutBox_EnableHorizon.Call(uintptr(hLayoutBox), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -16,7 +16,7 @@ func XLayoutBox_EnableHorizon(hLayoutBox int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XLayoutBox_EnableAutoWrap(hLayoutBox int, bEnable bool) int {
-	r, _, _ := xLayoutBox_EnableAutoWrap.Call(uintptr(hLayoutBox), boolPtr(bEnable))
+	r, _, _ := xLayoutBox_EnableAutoWrap.Call(uintptr(hLayoutBox), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -26,7 +26,7 @@ func XLayoutBox_EnableAutoWrap(hLayoutBox int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XLayoutBox_EnableOverflowHide(hLayoutBox int, bEnable bool) int {
-	r, _, _ := xLayoutBox_EnableOverflowHide.Call(uintptr(hLayoutBox), boolPtr(bEnable))
+	r, _, _ := xLayoutBox_EnableOverflowHide.Call(uintptr(hLayoutBox), BoolPtr(bEnable))
 	return int(r)
 }
 

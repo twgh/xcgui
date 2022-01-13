@@ -18,7 +18,7 @@ func XFont_Create(size int) int {
 //
 // style: 字体样式, FontStyle_.
 func XFont_CreateEx(pName string, size int, style int) int {
-	r, _, _ := xFont_CreateEx.Call(strPtr(pName), uintptr(size), uintptr(style))
+	r, _, _ := xFont_CreateEx.Call(StrPtr(pName), uintptr(size), uintptr(style))
 	return int(r)
 }
 
@@ -54,7 +54,7 @@ func XFont_CreateFromFont(pFont int) int {
 //
 // style: 字体样式, FontStyle_.
 func XFont_CreateFromFile(pFontFile string, size int, style int) int {
-	r, _, _ := xFont_CreateFromFile.Call(strPtr(pFontFile), uintptr(size), uintptr(style))
+	r, _, _ := xFont_CreateFromFile.Call(StrPtr(pFontFile), uintptr(size), uintptr(style))
 	return int(r)
 }
 
@@ -66,7 +66,7 @@ func XFont_CreateFromFile(pFontFile string, size int, style int) int {
 //
 // style: 字体样式, FontStyle_.
 func XFont_CreateFromMem(data []byte, fontSize, style int) int {
-	r, _, _ := xFont_CreateFromMem.Call(bytePtr2(&data), uintptr(len(data)), uintptr(fontSize), uintptr(style))
+	r, _, _ := xFont_CreateFromMem.Call(ByteSliceDataPtr(&data), uintptr(len(data)), uintptr(fontSize), uintptr(style))
 	return int(r)
 }
 
@@ -82,7 +82,7 @@ func XFont_CreateFromMem(data []byte, fontSize, style int) int {
 //
 // hModule: xx.
 func XFont_CreateFromRes(id int, pType string, fontSize, style, hModule int) int {
-	r, _, _ := xFont_CreateFromRes.Call(uintptr(id), strPtr(pType), uintptr(fontSize), uintptr(style), uintptr(hModule))
+	r, _, _ := xFont_CreateFromRes.Call(uintptr(id), StrPtr(pType), uintptr(fontSize), uintptr(style), uintptr(hModule))
 	return int(r)
 }
 
@@ -92,7 +92,7 @@ func XFont_CreateFromRes(id int, pType string, fontSize, style, hModule int) int
 //
 // bEnable: 是否启用.
 func XFont_EnableAutoDestroy(hFontX int, bEnable bool) int {
-	r, _, _ := xFont_EnableAutoDestroy.Call(uintptr(hFontX), boolPtr(bEnable))
+	r, _, _ := xFont_EnableAutoDestroy.Call(uintptr(hFontX), BoolPtr(bEnable))
 	return int(r)
 }
 

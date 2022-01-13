@@ -253,7 +253,7 @@ func XEle_InsertChild(hEle int, hChild int, index int) bool {
 //
 // nAdjustNo:.
 func XEle_SetRect(hEle int, pRect *RECT, bRedraw bool, nFlags int, nAdjustNo int) int {
-	r, _, _ := xEle_SetRect.Call(uintptr(hEle), uintptr(unsafe.Pointer(pRect)), boolPtr(bRedraw), uintptr(nFlags), uintptr(nAdjustNo))
+	r, _, _ := xEle_SetRect.Call(uintptr(hEle), uintptr(unsafe.Pointer(pRect)), BoolPtr(bRedraw), uintptr(nFlags), uintptr(nAdjustNo))
 	return int(r)
 }
 
@@ -275,7 +275,7 @@ func XEle_SetRect(hEle int, pRect *RECT, bRedraw bool, nFlags int, nAdjustNo int
 //
 // nAdjustNo:.
 func XEle_SetRectEx(hEle int, x int, y int, cx int, cy int, bRedraw bool, nFlags int, nAdjustNo int) int {
-	r, _, _ := xEle_SetRectEx.Call(uintptr(hEle), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), boolPtr(bRedraw), uintptr(nFlags), uintptr(nAdjustNo))
+	r, _, _ := xEle_SetRectEx.Call(uintptr(hEle), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), BoolPtr(bRedraw), uintptr(nFlags), uintptr(nAdjustNo))
 	return int(r)
 }
 
@@ -291,7 +291,7 @@ func XEle_SetRectEx(hEle int, x int, y int, cx int, cy int, bRedraw bool, nFlags
 //
 // nAdjustNo:.
 func XEle_SetRectLogic(hEle int, pRect *RECT, bRedraw bool, nFlags int, nAdjustNo int) int {
-	r, _, _ := xEle_SetRectLogic.Call(uintptr(hEle), uintptr(unsafe.Pointer(pRect)), boolPtr(bRedraw), uintptr(nFlags), uintptr(nAdjustNo))
+	r, _, _ := xEle_SetRectLogic.Call(uintptr(hEle), uintptr(unsafe.Pointer(pRect)), BoolPtr(bRedraw), uintptr(nFlags), uintptr(nAdjustNo))
 	return int(r)
 }
 
@@ -309,7 +309,7 @@ func XEle_SetRectLogic(hEle int, pRect *RECT, bRedraw bool, nFlags int, nAdjustN
 //
 // nAdjustNo:.
 func XEle_SetPosition(hEle int, x int, y int, bRedraw bool, nFlags int, nAdjustNo int) int {
-	r, _, _ := xEle_SetPosition.Call(uintptr(hEle), uintptr(x), uintptr(y), boolPtr(bRedraw), uintptr(nFlags), uintptr(nAdjustNo))
+	r, _, _ := xEle_SetPosition.Call(uintptr(hEle), uintptr(x), uintptr(y), BoolPtr(bRedraw), uintptr(nFlags), uintptr(nAdjustNo))
 	return int(r)
 }
 
@@ -327,7 +327,7 @@ func XEle_SetPosition(hEle int, x int, y int, bRedraw bool, nFlags int, nAdjustN
 //
 // nAdjustNo:.
 func XEle_SetPositionLogic(hEle int, x int, y int, bRedraw bool, nFlags int, nAdjustNo int) int {
-	r, _, _ := xEle_SetPositionLogic.Call(uintptr(hEle), uintptr(x), uintptr(y), boolPtr(bRedraw), uintptr(nFlags), uintptr(nAdjustNo))
+	r, _, _ := xEle_SetPositionLogic.Call(uintptr(hEle), uintptr(x), uintptr(y), BoolPtr(bRedraw), uintptr(nFlags), uintptr(nAdjustNo))
 	return int(r)
 }
 
@@ -453,7 +453,7 @@ func XEle_IsFocusEx(hEle int) bool {
 //
 // bEnable: 启用或禁用.
 func XEle_Enable(hEle int, bEnable bool) int {
-	r, _, _ := xEle_Enable.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xEle_Enable.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -463,7 +463,7 @@ func XEle_Enable(hEle int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XEle_EnableFocus(hEle int, bEnable bool) int {
-	r, _, _ := xEle_EnableFocus.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xEle_EnableFocus.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -473,7 +473,7 @@ func XEle_EnableFocus(hEle int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XEle_EnableDrawFocus(hEle int, bEnable bool) int {
-	r, _, _ := xEle_EnableDrawFocus.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xEle_EnableDrawFocus.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -483,7 +483,7 @@ func XEle_EnableDrawFocus(hEle int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XEle_EnableDrawBorder(hEle int, bEnable bool) int {
-	r, _, _ := xEle_EnableDrawBorder.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xEle_EnableDrawBorder.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -493,7 +493,7 @@ func XEle_EnableDrawBorder(hEle int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XEle_EnableCanvas(hEle int, bEnable bool) int {
-	r, _, _ := xEle_EnableCanvas.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xEle_EnableCanvas.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -503,7 +503,7 @@ func XEle_EnableCanvas(hEle int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XEle_EnableEvent_XE_PAINT_END(hEle int, bEnable bool) int {
-	r, _, _ := xEle_EnableEvent_XE_PAINT_END.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xEle_EnableEvent_XE_PAINT_END.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -513,7 +513,7 @@ func XEle_EnableEvent_XE_PAINT_END(hEle int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XEle_EnableBkTransparent(hEle int, bEnable bool) int {
-	r, _, _ := xEle_EnableBkTransparent.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xEle_EnableBkTransparent.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -523,7 +523,7 @@ func XEle_EnableBkTransparent(hEle int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XEle_EnableMouseThrough(hEle int, bEnable bool) int {
-	r, _, _ := xEle_EnableMouseThrough.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xEle_EnableMouseThrough.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -533,7 +533,7 @@ func XEle_EnableMouseThrough(hEle int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XEle_EnableKeyTab(hEle int, bEnable bool) int {
-	r, _, _ := xEle_EnableKeyTab.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xEle_EnableKeyTab.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -543,7 +543,7 @@ func XEle_EnableKeyTab(hEle int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XEle_EnableSwitchFocus(hEle int, bEnable bool) int {
-	r, _, _ := xEle_EnableSwitchFocus.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xEle_EnableSwitchFocus.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -553,7 +553,7 @@ func XEle_EnableSwitchFocus(hEle int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XEle_EnableEvent_XE_MOUSEWHEEL(hEle int, bEnable bool) int {
-	r, _, _ := xEle_EnableEvent_XE_MOUSEWHEEL.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xEle_EnableEvent_XE_MOUSEWHEEL.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -601,7 +601,7 @@ func XEle_GetZOrder(hEle int) int {
 //
 // bTopmost: 是否置顶显示.
 func XEle_EnableTopmost(hEle int, bTopmost bool) bool {
-	r, _, _ := xEle_EnableTopmost.Call(uintptr(hEle), boolPtr(bTopmost))
+	r, _, _ := xEle_EnableTopmost.Call(uintptr(hEle), BoolPtr(bTopmost))
 	return int(r) != 0
 }
 
@@ -611,7 +611,7 @@ func XEle_EnableTopmost(hEle int, bTopmost bool) bool {
 //
 // bImmediate: 是否立即重绘.
 func XEle_Redraw(hEle int, bImmediate bool) int {
-	r, _, _ := xEle_Redraw.Call(uintptr(hEle), boolPtr(bImmediate))
+	r, _, _ := xEle_Redraw.Call(uintptr(hEle), BoolPtr(bImmediate))
 	return int(r)
 }
 
@@ -623,7 +623,7 @@ func XEle_Redraw(hEle int, bImmediate bool) int {
 //
 // bImmediate: 是否立即重绘.
 func XEle_RedrawRect(hEle int, pRect *RECT, bImmediate bool) int {
-	r, _, _ := xEle_RedrawRect.Call(uintptr(hEle), uintptr(unsafe.Pointer(pRect)), boolPtr(bImmediate))
+	r, _, _ := xEle_RedrawRect.Call(uintptr(hEle), uintptr(unsafe.Pointer(pRect)), BoolPtr(bImmediate))
 	return int(r)
 }
 
@@ -763,7 +763,7 @@ func XEle_SetMaxSize(hEle int, nWidth int, nHeight int) int {
 //
 // bVertical: 是否锁定垂直滚动.
 func XEle_SetLockScroll(hEle int, bHorizon bool, bVertical bool) int {
-	r, _, _ := xEle_SetLockScroll.Call(uintptr(hEle), boolPtr(bHorizon), boolPtr(bVertical))
+	r, _, _ := xEle_SetLockScroll.Call(uintptr(hEle), BoolPtr(bHorizon), BoolPtr(bVertical))
 	return int(r)
 }
 
@@ -993,7 +993,7 @@ func XEle_GetUserData(hEle int) int {
 //
 // pSize: 返回大小.
 func XEle_GetContentSize(hEle int, bHorizon bool, cx int, cy int, pSize *SIZE) int {
-	r, _, _ := xEle_GetContentSize.Call(uintptr(hEle), boolPtr(bHorizon), uintptr(cx), uintptr(cy), uintptr(unsafe.Pointer(pSize)))
+	r, _, _ := xEle_GetContentSize.Call(uintptr(hEle), BoolPtr(bHorizon), uintptr(cx), uintptr(cy), uintptr(unsafe.Pointer(pSize)))
 	return int(r)
 }
 
@@ -1003,7 +1003,7 @@ func XEle_GetContentSize(hEle int, bHorizon bool, cx int, cy int, pSize *SIZE) i
 //
 // b: TRUE设置.
 func XEle_SetCapture(hEle int, b bool) int {
-	r, _, _ := xEle_SetCapture.Call(uintptr(hEle), boolPtr(b))
+	r, _, _ := xEle_SetCapture.Call(uintptr(hEle), BoolPtr(b))
 	return int(r)
 }
 
@@ -1013,7 +1013,7 @@ func XEle_SetCapture(hEle int, b bool) int {
 //
 // bEnable: 启用或关闭.
 func XEle_EnableTransparentChannel(hEle int, bEnable bool) int {
-	r, _, _ := xEle_EnableTransparentChannel.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xEle_EnableTransparentChannel.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -1045,7 +1045,7 @@ func XEle_KillXCTimer(hEle int, nIDEvent int) bool {
 //
 // pText: 工具提示内容.
 func XEle_SetToolTip(hEle int, pText string) int {
-	r, _, _ := xEle_SetToolTip.Call(uintptr(hEle), strPtr(pText))
+	r, _, _ := xEle_SetToolTip.Call(uintptr(hEle), StrPtr(pText))
 	return int(r)
 }
 
@@ -1057,7 +1057,7 @@ func XEle_SetToolTip(hEle int, pText string) int {
 //
 // nTextAlign: 文本对齐方式, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
 func XEle_SetToolTipEx(hEle int, pText string, nTextAlign int) int {
-	r, _, _ := xEle_SetToolTipEx.Call(uintptr(hEle), strPtr(pText), uintptr(nTextAlign))
+	r, _, _ := xEle_SetToolTipEx.Call(uintptr(hEle), StrPtr(pText), uintptr(nTextAlign))
 	return int(r)
 }
 
@@ -1137,7 +1137,7 @@ func XEle_GetPosition(hEle int, pOutX *int, pOutY *int) int {
 //
 // nAdjustNo: 调整布局流水号.
 func XEle_SetSize(hEle int, nWidth int, nHeight int, bRedraw bool, nFlags int, nAdjustNo int) int {
-	r, _, _ := xEle_SetSize.Call(uintptr(hEle), uintptr(nWidth), uintptr(nHeight), boolPtr(bRedraw), uintptr(nFlags), uintptr(nAdjustNo))
+	r, _, _ := xEle_SetSize.Call(uintptr(hEle), uintptr(nWidth), uintptr(nHeight), BoolPtr(bRedraw), uintptr(nFlags), uintptr(nAdjustNo))
 	return int(r)
 }
 
