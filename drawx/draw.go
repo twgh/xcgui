@@ -1137,3 +1137,10 @@ func (d *Draw) DrawSvgEx(hSvg int, x int, y int, nWidth int, nHeight int) int {
 func (d *Draw) DrawSvgSize(hSvg int, nWidth int, nHeight int) int {
 	return xc.XDraw_DrawSvgSize(d.Handle, hSvg, nWidth, nHeight)
 }
+
+// 绘制_D2D_清理, 使用指定颜色清理画布.
+//
+// color: ABGR颜色值.
+func (d *Draw) D2D_Clear(color int) int {
+	return xc.XDraw_D2D_Clear(d.Handle, color)
+}
