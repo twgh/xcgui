@@ -790,6 +790,13 @@ func (l *List) GetCountColumn_AD() int {
 	return xc.XList_GetCountColumn_AD(l.Handle)
 }
 
+// 列表_置分割线颜色.
+//
+// color: ABGR颜色值.
+func (l *List) SetSplitLineColor(color int) int {
+	return xc.XList_SetSplitLineColor(l.Handle, color)
+}
+
 /*
 以下都是事件
 */
