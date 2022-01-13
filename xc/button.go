@@ -14,7 +14,7 @@ package xc
 //
 // hParent: 父为窗口句柄或元素句柄.
 func XBtn_Create(x int, y int, cx int, cy int, pName string, hParent int) int {
-	r, _, _ := xBtn_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), strPtr(pName), uintptr(hParent))
+	r, _, _ := xBtn_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), StrPtr(pName), uintptr(hParent))
 	return int(r)
 }
 
@@ -32,7 +32,7 @@ func XBtn_IsCheck(hEle int) bool {
 //
 // bCheck: 是否选中.
 func XBtn_SetCheck(hEle int, bCheck bool) bool {
-	r, _, _ := xBtn_SetCheck.Call(uintptr(hEle), boolPtr(bCheck))
+	r, _, _ := xBtn_SetCheck.Call(uintptr(hEle), BoolPtr(bCheck))
 	return int(r) != 0
 }
 
@@ -176,7 +176,7 @@ func XBtn_SetIconSpace(hEle int, size int) int {
 //
 // pName: 文本内容.
 func XBtn_SetText(hEle int, pName string) int {
-	r, _, _ := xBtn_SetText.Call(uintptr(hEle), strPtr(pName))
+	r, _, _ := xBtn_SetText.Call(uintptr(hEle), StrPtr(pName))
 	return int(r)
 }
 
@@ -238,6 +238,6 @@ func XBtn_AddAnimationFrame(hEle int, hImage int, uElapse int) int {
 //
 // bLoopPlay: 是否循环播放.
 func XBtn_EnableAnimation(hEle int, bEnable bool, bLoopPlay bool) int {
-	r, _, _ := xBtn_EnableAnimation.Call(uintptr(hEle), boolPtr(bEnable), boolPtr(bLoopPlay))
+	r, _, _ := xBtn_EnableAnimation.Call(uintptr(hEle), BoolPtr(bEnable), BoolPtr(bLoopPlay))
 	return int(r)
 }
