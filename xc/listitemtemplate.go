@@ -8,7 +8,7 @@ import "unsafe"
 //
 // pFileName: 文件名.
 func XTemp_Load(nType int, pFileName string) int {
-	r, _, _ := xTemp_Load.Call(uintptr(nType), strPtr(pFileName))
+	r, _, _ := xTemp_Load.Call(uintptr(nType), StrPtr(pFileName))
 	return int(r)
 }
 
@@ -22,7 +22,7 @@ func XTemp_Load(nType int, pFileName string) int {
 //
 // pPassword: zip密码.
 func XTemp_LoadZip(nType int, pZipFile string, pFileName string, pPassword string) int {
-	r, _, _ := xTemp_LoadZip.Call(uintptr(nType), strPtr(pZipFile), strPtr(pFileName), strPtr(pPassword))
+	r, _, _ := xTemp_LoadZip.Call(uintptr(nType), StrPtr(pZipFile), StrPtr(pFileName), StrPtr(pPassword))
 	return int(r)
 }
 
@@ -36,7 +36,7 @@ func XTemp_LoadZip(nType int, pZipFile string, pFileName string, pPassword strin
 //
 // pPassword: zip密码.
 func XTemp_LoadZipMem(nType int, data []byte, pFileName string, pPassword string) int {
-	r, _, _ := xTemp_LoadZipMem.Call(uintptr(nType), bytePtr2(&data), uintptr(len(data)), strPtr(pFileName), strPtr(pPassword))
+	r, _, _ := xTemp_LoadZipMem.Call(uintptr(nType), ByteSliceDataPtr(&data), uintptr(len(data)), StrPtr(pFileName), StrPtr(pPassword))
 	return int(r)
 }
 
@@ -50,7 +50,7 @@ func XTemp_LoadZipMem(nType int, data []byte, pFileName string, pPassword string
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
 func XTemp_LoadEx(nType int, pFileName string, pOutTemp1 *int, pOutTemp2 *int) bool {
-	r, _, _ := xTemp_LoadEx.Call(uintptr(nType), strPtr(pFileName), uintptr(unsafe.Pointer(&pOutTemp1)), uintptr(unsafe.Pointer(&pOutTemp2)))
+	r, _, _ := xTemp_LoadEx.Call(uintptr(nType), StrPtr(pFileName), uintptr(unsafe.Pointer(&pOutTemp1)), uintptr(unsafe.Pointer(&pOutTemp2)))
 	return int(r) != 0
 }
 
@@ -68,7 +68,7 @@ func XTemp_LoadEx(nType int, pFileName string, pOutTemp1 *int, pOutTemp2 *int) b
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
 func XTemp_LoadZipEx(nType int, pZipFile string, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int) bool {
-	r, _, _ := xTemp_LoadZipEx.Call(uintptr(nType), strPtr(pZipFile), strPtr(pFileName), strPtr(pPassword), uintptr(unsafe.Pointer(&pOutTemp1)), uintptr(unsafe.Pointer(&pOutTemp2)))
+	r, _, _ := xTemp_LoadZipEx.Call(uintptr(nType), StrPtr(pZipFile), StrPtr(pFileName), StrPtr(pPassword), uintptr(unsafe.Pointer(&pOutTemp1)), uintptr(unsafe.Pointer(&pOutTemp2)))
 	return int(r) != 0
 }
 
@@ -86,7 +86,7 @@ func XTemp_LoadZipEx(nType int, pZipFile string, pFileName string, pPassword str
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
 func XTemp_LoadZipMemEx(nType int, data []byte, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int) bool {
-	r, _, _ := xTemp_LoadZipMemEx.Call(uintptr(nType), bytePtr2(&data), uintptr(len(data)), strPtr(pFileName), strPtr(pPassword), uintptr(unsafe.Pointer(&pOutTemp1)), uintptr(unsafe.Pointer(&pOutTemp2)))
+	r, _, _ := xTemp_LoadZipMemEx.Call(uintptr(nType), ByteSliceDataPtr(&data), uintptr(len(data)), StrPtr(pFileName), StrPtr(pPassword), uintptr(unsafe.Pointer(&pOutTemp1)), uintptr(unsafe.Pointer(&pOutTemp2)))
 	return int(r) != 0
 }
 
@@ -174,7 +174,7 @@ func XTemp_CreateNode(nType int) int {
 //
 // pAttr: 属性值.
 func XTemp_SetNodeAttribute(pNode int, pName string, pAttr string) bool {
-	r, _, _ := xTemp_SetNodeAttribute.Call(uintptr(pNode), strPtr(pName), strPtr(pAttr))
+	r, _, _ := xTemp_SetNodeAttribute.Call(uintptr(pNode), StrPtr(pName), StrPtr(pAttr))
 	return int(r) != 0
 }
 
@@ -188,7 +188,7 @@ func XTemp_SetNodeAttribute(pNode int, pName string, pAttr string) bool {
 //
 // pAttr: 属性值.
 func XTemp_SetNodeAttributeEx(pNode int, itemID int, pName string, pAttr string) bool {
-	r, _, _ := xTemp_SetNodeAttributeEx.Call(uintptr(pNode), uintptr(itemID), strPtr(pName), strPtr(pAttr))
+	r, _, _ := xTemp_SetNodeAttributeEx.Call(uintptr(pNode), uintptr(itemID), StrPtr(pName), StrPtr(pAttr))
 	return int(r) != 0
 }
 

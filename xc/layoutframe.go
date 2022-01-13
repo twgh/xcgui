@@ -22,6 +22,6 @@ func XLayoutFrame_Create(x int, y int, cx int, cy int, hParent int) int {
 //
 // bEnable: 是否启用.
 func XLayoutFrame_ShowLayoutFrame(hEle int, bEnable bool) int {
-	r, _, _ := xLayoutFrame_ShowLayoutFrame.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xLayoutFrame_ShowLayoutFrame.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }

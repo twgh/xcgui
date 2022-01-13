@@ -50,7 +50,7 @@ func XListView_GetAdapter(hEle int) int {
 //
 // pXmlFile: 文件名.
 func XListView_SetItemTemplateXML(hEle int, pXmlFile string) bool {
-	r, _, _ := xListView_SetItemTemplateXML.Call(uintptr(hEle), strPtr(pXmlFile))
+	r, _, _ := xListView_SetItemTemplateXML.Call(uintptr(hEle), StrPtr(pXmlFile))
 	return int(r) != 0
 }
 
@@ -148,7 +148,7 @@ func XListView_HitTestOffset(hEle int, pPt *POINT, pOutGroup *int, pOutItem *int
 //
 // bEnable: 是否启用.
 func XListView_EnableMultiSel(hEle int, bEnable bool) int {
-	r, _, _ := xListView_EnableMultiSel.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xListView_EnableMultiSel.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -158,7 +158,7 @@ func XListView_EnableMultiSel(hEle int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XListView_EnablemTemplateReuse(hEle int, bEnable bool) int {
-	r, _, _ := xListView_EnablemTemplateReuse.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xListView_EnablemTemplateReuse.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -168,7 +168,7 @@ func XListView_EnablemTemplateReuse(hEle int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XListView_EnableVirtualTable(hEle int, bEnable bool) int {
-	r, _, _ := xListView_EnableVirtualTable.Call(uintptr(hEle), boolPtr(bEnable))
+	r, _, _ := xListView_EnableVirtualTable.Call(uintptr(hEle), BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -434,7 +434,7 @@ func XListView_RefreshItem(hEle int, iGroup int, iItem int) int {
 //
 // bExpand: 是否展开.
 func XListView_ExpandGroup(hEle int, iGroup int, bExpand bool) bool {
-	r, _, _ := xListView_ExpandGroup.Call(uintptr(hEle), uintptr(iGroup), boolPtr(bExpand))
+	r, _, _ := xListView_ExpandGroup.Call(uintptr(hEle), uintptr(iGroup), BoolPtr(bExpand))
 	return int(r) != 0
 }
 
@@ -444,7 +444,7 @@ func XListView_ExpandGroup(hEle int, iGroup int, bExpand bool) bool {
 //
 // pName: 字段称.
 func XListView_Group_AddColumn(hEle int, pName string) int {
-	r, _, _ := xListView_Group_AddColumn.Call(uintptr(hEle), strPtr(pName))
+	r, _, _ := xListView_Group_AddColumn.Call(uintptr(hEle), StrPtr(pName))
 	return int(r)
 }
 
@@ -456,7 +456,7 @@ func XListView_Group_AddColumn(hEle int, pName string) int {
 //
 // iPos: 插入位置.
 func XListView_Group_AddItemText(hEle int, pValue string, iPos int) int {
-	r, _, _ := xListView_Group_AddItemText.Call(uintptr(hEle), strPtr(pValue), uintptr(iPos))
+	r, _, _ := xListView_Group_AddItemText.Call(uintptr(hEle), StrPtr(pValue), uintptr(iPos))
 	return int(r)
 }
 
@@ -470,7 +470,7 @@ func XListView_Group_AddItemText(hEle int, pValue string, iPos int) int {
 //
 // iPos: 插入位置.
 func XListView_Group_AddItemTextEx(hEle int, pName string, pValue string, iPos int) int {
-	r, _, _ := xListView_Group_AddItemTextEx.Call(uintptr(hEle), strPtr(pName), strPtr(pValue), uintptr(iPos))
+	r, _, _ := xListView_Group_AddItemTextEx.Call(uintptr(hEle), StrPtr(pName), StrPtr(pValue), uintptr(iPos))
 	return int(r)
 }
 
@@ -496,7 +496,7 @@ func XListView_Group_AddItemImage(hEle int, hImage int, iPos int) int {
 //
 // iPos: 插入位置.
 func XListView_Group_AddItemImageEx(hEle int, pName string, hImage int, iPos int) int {
-	r, _, _ := xListView_Group_AddItemImageEx.Call(uintptr(hEle), strPtr(pName), uintptr(hImage), uintptr(iPos))
+	r, _, _ := xListView_Group_AddItemImageEx.Call(uintptr(hEle), StrPtr(pName), uintptr(hImage), uintptr(iPos))
 	return int(r)
 }
 
@@ -510,7 +510,7 @@ func XListView_Group_AddItemImageEx(hEle int, pName string, hImage int, iPos int
 //
 // pValue: 值.
 func XListView_Group_SetText(hEle int, iGroup int, iColumn int, pValue string) bool {
-	r, _, _ := xListView_Group_SetText.Call(uintptr(hEle), uintptr(iGroup), uintptr(iColumn), strPtr(pValue))
+	r, _, _ := xListView_Group_SetText.Call(uintptr(hEle), uintptr(iGroup), uintptr(iColumn), StrPtr(pValue))
 	return int(r) != 0
 }
 
@@ -524,7 +524,7 @@ func XListView_Group_SetText(hEle int, iGroup int, iColumn int, pValue string) b
 //
 // pValue: 值.
 func XListView_Group_SetTextEx(hEle int, iGroup int, pName string, pValue string) bool {
-	r, _, _ := xListView_Group_SetTextEx.Call(uintptr(hEle), uintptr(iGroup), strPtr(pName), strPtr(pValue))
+	r, _, _ := xListView_Group_SetTextEx.Call(uintptr(hEle), uintptr(iGroup), StrPtr(pName), StrPtr(pValue))
 	return int(r) != 0
 }
 
@@ -552,7 +552,7 @@ func XListView_Group_SetImage(hEle int, iGroup int, iColumn int, hImage int) boo
 //
 // hImage: 图片句柄.
 func XListView_Group_SetImageEx(hEle int, iGroup int, pName string, hImage int) bool {
-	r, _, _ := xListView_Group_SetImageEx.Call(uintptr(hEle), uintptr(iGroup), strPtr(pName), uintptr(hImage))
+	r, _, _ := xListView_Group_SetImageEx.Call(uintptr(hEle), uintptr(iGroup), StrPtr(pName), uintptr(hImage))
 	return int(r) != 0
 }
 
@@ -580,7 +580,7 @@ func XListView_Item_GetCount(hEle int, iGroup int) int {
 //
 // pName: 字段名.
 func XListView_Item_AddColumn(hEle int, pName string) int {
-	r, _, _ := xListView_Item_AddColumn.Call(uintptr(hEle), strPtr(pName))
+	r, _, _ := xListView_Item_AddColumn.Call(uintptr(hEle), StrPtr(pName))
 	return int(r)
 }
 
@@ -594,7 +594,7 @@ func XListView_Item_AddColumn(hEle int, pName string) int {
 //
 // iPos: 插入位置, -1添加到末尾.
 func XListView_Item_AddItemText(hEle int, iGroup int, pValue string, iPos int) int {
-	r, _, _ := xListView_Item_AddItemText.Call(uintptr(hEle), uintptr(iGroup), strPtr(pValue), uintptr(iPos))
+	r, _, _ := xListView_Item_AddItemText.Call(uintptr(hEle), uintptr(iGroup), StrPtr(pValue), uintptr(iPos))
 	return int(r)
 }
 
@@ -610,7 +610,7 @@ func XListView_Item_AddItemText(hEle int, iGroup int, pValue string, iPos int) i
 //
 // iPos: 插入位置, -1添加到末尾.
 func XListView_Item_AddItemTextEx(hEle int, iGroup int, pName string, pValue string, iPos int) int {
-	r, _, _ := xListView_Item_AddItemTextEx.Call(uintptr(hEle), uintptr(iGroup), strPtr(pName), strPtr(pValue), uintptr(iPos))
+	r, _, _ := xListView_Item_AddItemTextEx.Call(uintptr(hEle), uintptr(iGroup), StrPtr(pName), StrPtr(pValue), uintptr(iPos))
 	return int(r)
 }
 
@@ -640,7 +640,7 @@ func XListView_Item_AddItemImage(hEle int, iGroup int, hImage int, iPos int) int
 //
 // iPos: 插入位置, -1添加到末尾.
 func XListView_Item_AddItemImageEx(hEle int, iGroup int, pName string, hImage int, iPos int) int {
-	r, _, _ := xListView_Item_AddItemImageEx.Call(uintptr(hEle), uintptr(iGroup), strPtr(pName), uintptr(hImage), uintptr(iPos))
+	r, _, _ := xListView_Item_AddItemImageEx.Call(uintptr(hEle), uintptr(iGroup), StrPtr(pName), uintptr(hImage), uintptr(iPos))
 	return int(r)
 }
 
@@ -656,7 +656,7 @@ func XListView_Item_AddItemImageEx(hEle int, iGroup int, pName string, hImage in
 //
 // pValue: 值.
 func XListView_Item_SetText(hEle int, iGroup int, iItem int, iColumn int, pValue string) bool {
-	r, _, _ := xListView_Item_SetText.Call(uintptr(hEle), uintptr(iGroup), uintptr(iItem), uintptr(iColumn), strPtr(pValue))
+	r, _, _ := xListView_Item_SetText.Call(uintptr(hEle), uintptr(iGroup), uintptr(iItem), uintptr(iColumn), StrPtr(pValue))
 	return int(r) != 0
 }
 
@@ -672,7 +672,7 @@ func XListView_Item_SetText(hEle int, iGroup int, iItem int, iColumn int, pValue
 //
 // pValue: 值.
 func XListView_Item_SetTextEx(hEle int, iGroup int, iItem int, pName string, pValue string) bool {
-	r, _, _ := xListView_Item_SetTextEx.Call(uintptr(hEle), uintptr(iGroup), uintptr(iItem), strPtr(pName), strPtr(pValue))
+	r, _, _ := xListView_Item_SetTextEx.Call(uintptr(hEle), uintptr(iGroup), uintptr(iItem), StrPtr(pName), StrPtr(pValue))
 	return int(r) != 0
 }
 
@@ -704,7 +704,7 @@ func XListView_Item_SetImage(hEle int, iGroup int, iItem int, iColumn int, hImag
 //
 // hImage: 图片句柄.
 func XListView_Item_SetImageEx(hEle int, iGroup int, iItem int, pName string, hImage int) bool {
-	r, _, _ := xListView_Item_SetImageEx.Call(uintptr(hEle), uintptr(iGroup), uintptr(iItem), strPtr(pName), uintptr(hImage))
+	r, _, _ := xListView_Item_SetImageEx.Call(uintptr(hEle), uintptr(iGroup), uintptr(iItem), StrPtr(pName), uintptr(hImage))
 	return int(r) != 0
 }
 
@@ -794,7 +794,7 @@ func XListView_DeleteColumnItem(hEle int, iColumn int) int {
 //
 // pName: 字段称.
 func XListView_Item_GetTextEx(hEle int, iGroup int, iItem int, pName string) string {
-	r, _, _ := xListView_Item_GetTextEx.Call(uintptr(hEle), uintptr(iGroup), uintptr(iItem), strPtr(pName))
+	r, _, _ := xListView_Item_GetTextEx.Call(uintptr(hEle), uintptr(iGroup), uintptr(iItem), StrPtr(pName))
 	return UintPtrToString(r)
 }
 
@@ -808,6 +808,6 @@ func XListView_Item_GetTextEx(hEle int, iGroup int, iItem int, pName string) str
 //
 // pName: 字段称.
 func XListView_Item_GetImageEx(hEle int, iGroup int, iItem int, pName string) int {
-	r, _, _ := xListView_Item_GetImageEx.Call(uintptr(hEle), uintptr(iGroup), uintptr(iItem), strPtr(pName))
+	r, _, _ := xListView_Item_GetImageEx.Call(uintptr(hEle), uintptr(iGroup), uintptr(iItem), StrPtr(pName))
 	return int(r)
 }
