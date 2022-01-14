@@ -55,7 +55,7 @@ func XC_GetDefaultFont() int {
 //
 // XCStyle: Window_Style_.
 func XC_MessageBox(pTitle, pText string, nFlags, hWndParent, XCStyle int) int {
-	r, _, _ := xC_MessageBox.Call(StrPtr(pText), StrPtr(pTitle), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
+	r, _, _ := xC_MessageBox.Call(StrPtr(pTitle), StrPtr(pText), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
 	return int(r)
 }
 
@@ -71,7 +71,7 @@ func XC_MessageBox(pTitle, pText string, nFlags, hWndParent, XCStyle int) int {
 //
 // XCStyle: Window_Style_.
 func XMsg_Create(pTitle, pText string, nFlags, hWndParent, XCStyle int) int {
-	r, _, _ := xMsg_Create.Call(StrPtr(pText), StrPtr(pTitle), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
+	r, _, _ := xMsg_Create.Call(StrPtr(pTitle), StrPtr(pText), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
 	return int(r)
 }
 
@@ -479,7 +479,7 @@ func XC_Free(p int) int {
 //
 // pText: 提示内容.
 func XC_Alert(pTitle, pText string) int {
-	r, _, _ := xC_Alert.Call(StrPtr(pText), StrPtr(pTitle))
+	r, _, _ := xC_Alert.Call(StrPtr(pTitle), StrPtr(pText))
 	return int(r)
 }
 
