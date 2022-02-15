@@ -613,7 +613,7 @@ func XWnd_AdjustLayout(hWindow int) int {
 //
 // hWindow: 窗口句柄.
 //
-// nFlags: 调整标识, AdjustLayout_.
+// nFlags: 调整布局标识位, AdjustLayout_.
 func XWnd_AdjustLayoutEx(hWindow, nFlags int) int {
 	r, _, _ := xWnd_AdjustLayoutEx.Call(uintptr(hWindow), uintptr(nFlags))
 	return int(r)

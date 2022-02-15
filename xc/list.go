@@ -275,8 +275,9 @@ func XList_SetSelectAll(hEle int) int {
 // pArray: 接收行索引数组.
 //
 // nArraySize: 数组大小.
-func XList_GetSelectAll(hEle int, pArray int, nArraySize int) int {
-	r, _, _ := xList_GetSelectAll.Call(uintptr(hEle), uintptr(pArray), uintptr(nArraySize))
+func XList_GetSelectAll(hEle int, pArray *[]int32, nArraySize int) int {
+	*pArray = make([]int32, nArraySize)
+	r, _, _ := xList_GetSelectAll.Call(uintptr(hEle), uintptr(unsafe.Pointer(&(*pArray)[0])), uintptr(nArraySize))
 	return int(r)
 }
 

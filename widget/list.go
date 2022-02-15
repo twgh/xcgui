@@ -250,7 +250,7 @@ func (l *List) SetSelectAll() int {
 // pArray: 接收行索引数组.
 //
 // nArraySize: 数组大小.
-func (l *List) GetSelectAll(pArray int, nArraySize int) int {
+func (l *List) GetSelectAll(pArray *[]int32, nArraySize int) int {
 	return xc.XList_GetSelectAll(l.Handle, pArray, nArraySize)
 }
 

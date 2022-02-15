@@ -232,7 +232,7 @@ func (e *Element) InsertChild(hChild int, index int) bool {
 //
 // nFlags: 调整布局标识位, AdjustLayout_.
 //
-// nAdjustNo:.
+// nAdjustNo: 调整布局流水号, 可填0.
 func (e *Element) SetRect(pRect *xc.RECT, bRedraw bool, nFlags int, nAdjustNo int) int {
 	return xc.XEle_SetRect(e.Handle, pRect, bRedraw, nFlags, nAdjustNo)
 }
@@ -251,7 +251,7 @@ func (e *Element) SetRect(pRect *xc.RECT, bRedraw bool, nFlags int, nAdjustNo in
 //
 // nFlags: 调整布局标识位, AdjustLayout_.
 //
-// nAdjustNo:.
+// nAdjustNo: 调整布局流水号, 可填0.
 func (e *Element) SetRectEx(x int, y int, cx int, cy int, bRedraw bool, nFlags int, nAdjustNo int) int {
 	return xc.XEle_SetRectEx(e.Handle, x, y, cx, cy, bRedraw, nFlags, nAdjustNo)
 }
@@ -262,9 +262,9 @@ func (e *Element) SetRectEx(x int, y int, cx int, cy int, bRedraw bool, nFlags i
 //
 // bRedraw: 是否重绘.
 //
-// nFlags: 参数将被带入XE_SIZE ,XE_ADJUSTLAYOUT 事件回调.AdjustLayout_.
+// nFlags: 调整布局标识位, AdjustLayout_. 此参数将会传入XE_SIZE ,XE_ADJUSTLAYOUT 事件回调.
 //
-// nAdjustNo:.
+// nAdjustNo: 调整布局流水号, 可填0.
 func (e *Element) SetRectLogic(pRect *xc.RECT, bRedraw bool, nFlags int, nAdjustNo int) int {
 	return xc.XEle_SetRectLogic(e.Handle, pRect, bRedraw, nFlags, nAdjustNo)
 }
@@ -279,7 +279,7 @@ func (e *Element) SetRectLogic(pRect *xc.RECT, bRedraw bool, nFlags int, nAdjust
 //
 // nFlags: 调整布局标识位, AdjustLayout_.
 //
-// nAdjustNo:.
+// nAdjustNo: 调整布局流水号, 可填0.
 func (e *Element) SetPosition(x int, y int, bRedraw bool, nFlags int, nAdjustNo int) int {
 	return xc.XEle_SetPosition(e.Handle, x, y, bRedraw, nFlags, nAdjustNo)
 }
@@ -294,7 +294,7 @@ func (e *Element) SetPosition(x int, y int, bRedraw bool, nFlags int, nAdjustNo 
 //
 // nFlags: 调整布局标识位, AdjustLayout_.
 //
-// nAdjustNo:.
+// nAdjustNo: 调整布局流水号, 可填0.
 func (e *Element) SetPositionLogic(x int, y int, bRedraw bool, nFlags int, nAdjustNo int) int {
 	return xc.XEle_SetPositionLogic(e.Handle, x, y, bRedraw, nFlags, nAdjustNo)
 }
@@ -823,16 +823,16 @@ func (e *Element) PopupToolTip(x int, y int) int {
 
 // 元素_调整布局.
 //
-// nAdjustNo:.
+// nAdjustNo: 调整布局流水号, 可填0.
 func (e *Element) AdjustLayout(nAdjustNo int) int {
 	return xc.XEle_AdjustLayout(e.Handle, nAdjustNo)
 }
 
 // 元素_调整布局扩展.
 //
-// nFlags: 调整标识.
+// nFlags: 调整布局标识位, AdjustLayout_.
 //
-// nAdjustNo:.
+// nAdjustNo: 调整布局流水号, 可填0.
 func (e *Element) AdjustLayoutEx(nFlags int, nAdjustNo int) int {
 	return xc.XEle_AdjustLayoutEx(e.Handle, nFlags, nAdjustNo)
 }
@@ -861,7 +861,7 @@ func (e *Element) GetPosition(pOutX *int, pOutY *int) int {
 //
 // nFlags: 调整布局标识位, AdjustLayout_.
 //
-// nAdjustNo: 调整布局流水号.
+// nAdjustNo: 调整布局流水号, 可填0.
 func (e *Element) SetSize(nWidth int, nHeight int, bRedraw bool, nFlags int, nAdjustNo int) int {
 	return xc.XEle_SetSize(e.Handle, nWidth, nHeight, bRedraw, nFlags, nAdjustNo)
 }
@@ -928,26 +928,40 @@ type XE_DESTROY func(pbHandled *bool) int                                       
 type XE_DESTROY1 func(hEle int, pbHandled *bool) int                                      // 元素即将销毁事件. 在销毁子对象之前触发.
 type XE_DESTROY_END func(pbHandled *bool) int                                             // 元素销毁完成事件. 在销毁子对象之后触发.
 type XE_DESTROY_END1 func(hEle int, pbHandled *bool) int                                  // 元素销毁完成事件. 在销毁子对象之后触发.
-type XE_SIZE func(nFlags int, nAdjustNo int, pbHandled *bool) int                         // 元素大小改变事件. nFlags: AdjustLayout_.
-type XE_SIZE1 func(hEle int, nFlags int, nAdjustNo int, pbHandled *bool) int              // 元素大小改变事件. nFlags: AdjustLayout_.
-type XE_SHOW func(bShow bool, pbHandled *bool) int                                        // 元素显示隐藏事件.
-type XE_SHOW1 func(hEle int, bShow bool, pbHandled *bool) int                             // 元素显示隐藏事件.
-type XE_SETFONT func(pbHandled *bool) int                                                 // 元素设置字体事件.
-type XE_SETFONT1 func(hEle int, pbHandled *bool) int                                      // 元素设置字体事件.
-type XE_KEYDOWN func(wParam int, lParam int, pbHandled *bool) int                         // 元素按键事件.
-type XE_KEYDOWN1 func(hEle int, wParam int, lParam int, pbHandled *bool) int              // 元素按键事件.
-type XE_KEYUP func(wParam int, lParam int, pbHandled *bool) int                           // 元素按键事件.
-type XE_KEYUP1 func(hEle int, wParam int, lParam int, pbHandled *bool) int                // 元素按键事件.
-type XE_CHAR func(wParam int, lParam int, pbHandled *bool) int                            // 通过TranslateMessage函数翻译的字符事件.
-type XE_CHAR1 func(hEle int, wParam int, lParam int, pbHandled *bool) int                 // 通过TranslateMessage函数翻译的字符事件.
-type XE_SETCAPTURE func(pbHandled *bool) int                                              // 元素设置鼠标捕获.
-type XE_SETCAPTURE1 func(hEle int, pbHandled *bool) int                                   // 元素设置鼠标捕获.
-type XE_KILLCAPTURE func(pbHandled *bool) int                                             // 元素失去鼠标捕获.
-type XE_KILLCAPTURE1 func(hEle int, pbHandled *bool) int                                  // 元素失去鼠标捕获.
-type XE_SETCURSOR func(wParam int, lParam int, pbHandled *bool) int                       // 设置鼠标光标.
-type XE_SETCURSOR1 func(hEle int, wParam int, lParam int, pbHandled *bool) int            // 设置鼠标光标.
-type XE_DROPFILES func(hDropInfo int, pbHandled *bool) int                                // 文件拖放事件, 需先启用:XWnd_EnableDragFiles().
-type XE_DROPFILES1 func(hEle int, hDropInfo int, pbHandled *bool) int                     // 文件拖放事件, 需先启用:XWnd_EnableDragFiles().
+
+// 元素大小改变事件.
+//
+// nFlags: 调整布局标识位, AdjustLayout_.
+//
+// nAdjustNo: 调整布局流水号.
+type XE_SIZE func(nFlags int, nAdjustNo int, pbHandled *bool) int
+
+// 元素大小改变事件1.
+//
+// hEle: 元素句柄.
+//
+// nFlags: 调整布局标识位, AdjustLayout_.
+//
+// nAdjustNo: 调整布局流水号.
+type XE_SIZE1 func(hEle int, nFlags int, nAdjustNo int, pbHandled *bool) int
+type XE_SHOW func(bShow bool, pbHandled *bool) int                             // 元素显示隐藏事件.
+type XE_SHOW1 func(hEle int, bShow bool, pbHandled *bool) int                  // 元素显示隐藏事件.
+type XE_SETFONT func(pbHandled *bool) int                                      // 元素设置字体事件.
+type XE_SETFONT1 func(hEle int, pbHandled *bool) int                           // 元素设置字体事件.
+type XE_KEYDOWN func(wParam int, lParam int, pbHandled *bool) int              // 元素按键事件.
+type XE_KEYDOWN1 func(hEle int, wParam int, lParam int, pbHandled *bool) int   // 元素按键事件.
+type XE_KEYUP func(wParam int, lParam int, pbHandled *bool) int                // 元素按键事件.
+type XE_KEYUP1 func(hEle int, wParam int, lParam int, pbHandled *bool) int     // 元素按键事件.
+type XE_CHAR func(wParam int, lParam int, pbHandled *bool) int                 // 通过TranslateMessage函数翻译的字符事件.
+type XE_CHAR1 func(hEle int, wParam int, lParam int, pbHandled *bool) int      // 通过TranslateMessage函数翻译的字符事件.
+type XE_SETCAPTURE func(pbHandled *bool) int                                   // 元素设置鼠标捕获.
+type XE_SETCAPTURE1 func(hEle int, pbHandled *bool) int                        // 元素设置鼠标捕获.
+type XE_KILLCAPTURE func(pbHandled *bool) int                                  // 元素失去鼠标捕获.
+type XE_KILLCAPTURE1 func(hEle int, pbHandled *bool) int                       // 元素失去鼠标捕获.
+type XE_SETCURSOR func(wParam int, lParam int, pbHandled *bool) int            // 设置鼠标光标.
+type XE_SETCURSOR1 func(hEle int, wParam int, lParam int, pbHandled *bool) int // 设置鼠标光标.
+type XE_DROPFILES func(hDropInfo int, pbHandled *bool) int                     // 文件拖放事件, 需先启用:XWnd_EnableDragFiles().
+type XE_DROPFILES1 func(hEle int, hDropInfo int, pbHandled *bool) int          // 文件拖放事件, 需先启用:XWnd_EnableDragFiles().
 
 // 元素处理过程事件.
 func (e *Element) Event_ELEPROCE(pFun XE_ELEPROCE) bool {
@@ -1259,26 +1273,15 @@ func (e *Element) Event_DROPFILES1(pFun XE_DROPFILES1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_DROPFILES, pFun)
 }
 
-type XE_MENU_SELECT func(nID int, pbHandled *bool) int                                                       // 弹出菜单项选择事件.
-type XE_MENU_SELECT1 func(hEle int, nID int, pbHandled *bool) int                                            // 弹出菜单项选择事件.
-type XE_MENU_POPUP func(HMENUX int, pbHandled *bool) int                                                     // 菜单弹出.
-type XE_MENU_POPUP1 func(hEle int, HMENUX int, pbHandled *bool) int                                          // 菜单弹出.
-type XE_MENU_EXIT func(pbHandled *bool) int                                                                  // 弹出菜单退出事件.
-type XE_MENU_EXIT1 func(hEle int, pbHandled *bool) int                                                       // 弹出菜单退出事件.
-type XE_MENU_POPUP_WND func(hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int                        // 菜单弹出窗口.
-type XE_MENU_POPUP_WND1 func(hEle int, hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int             // 菜单弹出窗口.
-type XE_MENU_DRAW_BACKGROUND func(hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int            // 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
-type XE_MENU_DRAW_BACKGROUND1 func(hEle int, hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int // 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
-type XE_MENU_DRAWITEM func(hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int                         // 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
-type XE_MENU_DRAWITEM1 func(hEle int, hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int              // 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
+type XE_MENU_SELECT func(nID int, pbHandled *bool) int                                            // 弹出菜单项选择事件.
+type XE_MENU_POPUP func(HMENUX int, pbHandled *bool) int                                          // 菜单弹出.
+type XE_MENU_EXIT func(pbHandled *bool) int                                                       // 弹出菜单退出事件.
+type XE_MENU_POPUP_WND func(hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int             // 菜单弹出窗口.
+type XE_MENU_DRAW_BACKGROUND func(hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int // 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
+type XE_MENU_DRAWITEM func(hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int              // 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
 
 // 事件_弹出菜单项被选择.
 func (e *Element) Event_MENU_SELECT(pFun XE_MENU_SELECT) bool {
-	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_SELECT, pFun)
-}
-
-// 事件_弹出菜单项被选择.
-func (e *Element) Event_MENU_SELECT1(pFun XE_MENU_SELECT1) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_SELECT, pFun)
 }
 
@@ -1287,18 +1290,8 @@ func (e *Element) Event_MENU_POPUP(pFun XE_MENU_POPUP) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_POPUP, pFun)
 }
 
-// 事件_菜单弹出.
-func (e *Element) Event_MENU_POPUP1(pFun XE_MENU_POPUP1) bool {
-	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_POPUP, pFun)
-}
-
 // 事件_菜单退出.
 func (e *Element) Event_MENU_EXIT(pFun XE_MENU_EXIT) bool {
-	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_EXIT, pFun)
-}
-
-// 事件_菜单退出.
-func (e *Element) Event_MENU_EXIT1(pFun XE_MENU_EXIT1) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_EXIT, pFun)
 }
 
@@ -1307,14 +1300,41 @@ func (e *Element) Event_MENU_POPUP_WND(pFun XE_MENU_POPUP_WND) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_POPUP_WND, pFun)
 }
 
-// 菜单弹出窗口.
-func (e *Element) Event_MENU_POPUP_WND1(pFun XE_MENU_POPUP_WND1) bool {
-	return xc.XEle_RegEventC1(e.Handle, xcc.XE_MENU_POPUP_WND, pFun)
-}
-
 // 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
 func (e *Element) Event_MENU_DRAW_BACKGROUND(pFun XE_MENU_DRAW_BACKGROUND) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_DRAW_BACKGROUND, pFun)
+}
+
+// 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
+func (e *Element) Event_MENU_DRAWITEM(pFun XE_MENU_DRAWITEM) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_DRAWITEM, pFun)
+}
+
+/* type XE_MENU_SELECT1 func(hEle int, nID int, pbHandled *bool) int                                            // 弹出菜单项选择事件.
+type XE_MENU_POPUP1 func(hEle int, HMENUX int, pbHandled *bool) int                                          // 菜单弹出.
+type XE_MENU_EXIT1 func(hEle int, pbHandled *bool) int                                                       // 弹出菜单退出事件.
+type XE_MENU_POPUP_WND1 func(hEle int, hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int             // 菜单弹出窗口.
+type XE_MENU_DRAW_BACKGROUND1 func(hEle int, hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int // 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
+type XE_MENU_DRAWITEM1 func(hEle int, hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int              // 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
+
+// 事件_弹出菜单项被选择.
+func (e *Element) Event_MENU_SELECT1(pFun XE_MENU_SELECT1) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_SELECT, pFun)
+}
+
+// 事件_菜单弹出.
+func (e *Element) Event_MENU_POPUP1(pFun XE_MENU_POPUP1) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_POPUP, pFun)
+}
+
+// 事件_菜单退出.
+func (e *Element) Event_MENU_EXIT1(pFun XE_MENU_EXIT1) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_EXIT, pFun)
+}
+
+// 菜单弹出窗口.
+func (e *Element) Event_MENU_POPUP_WND1(pFun XE_MENU_POPUP_WND1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_MENU_POPUP_WND, pFun)
 }
 
 // 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
@@ -1323,11 +1343,6 @@ func (e *Element) Event_MENU_DRAW_BACKGROUND1(pFun XE_MENU_DRAW_BACKGROUND1) boo
 }
 
 // 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
-func (e *Element) Event_MENU_DRAWITEM(pFun XE_MENU_DRAWITEM) bool {
-	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_DRAWITEM, pFun)
-}
-
-// 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
 func (e *Element) Event_MENU_DRAWITEM1(pFun XE_MENU_DRAWITEM1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_MENU_DRAWITEM, pFun)
-}
+} */

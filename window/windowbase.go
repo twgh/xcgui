@@ -494,7 +494,7 @@ func (w *windowBase) AdjustLayout() int {
 
 // 窗口_调整布局扩展.
 //
-// nFlags: 调整标识, AdjustLayout_.
+// nFlags: 调整布局标识位, AdjustLayout_.
 func (w *windowBase) AdjustLayoutEx(nFlags int) int {
 	return xc.XWnd_AdjustLayoutEx(w.Handle, nFlags)
 }
@@ -944,19 +944,6 @@ func (w *windowBase) SetCaptionMargin(left int, top int, right int, bottom int) 
 下面都是事件
 */
 
-type XWM_MENU_POPUP func(hMenu int, pbHandled *bool) int                                                         // 菜单弹出.
-type XWM_MENU_POPUP1 func(hWindow int, hMenu int, pbHandled *bool) int                                           // 菜单弹出.
-type XWM_MENU_POPUP_WND func(hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int                           // 菜单弹出窗口.
-type XWM_MENU_POPUP_WND1 func(hWindow int, hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int             // 菜单弹出窗口.
-type XWM_MENU_SELECT func(nID int, pbHandled *bool) int                                                          // 菜单选择.
-type XWM_MENU_SELECT1 func(hWindow int, nID int, pbHandled *bool) int                                            // 菜单选择.
-type XWM_MENU_EXIT func(pbHandled *bool) int                                                                     // 菜单退出.
-type XWM_MENU_EXIT1 func(hWindow int, pbHandled *bool) int                                                       // 菜单退出.
-type XWM_MENU_DRAW_BACKGROUND func(hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int               // 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
-type XWM_MENU_DRAW_BACKGROUND1 func(hWindow int, hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int // 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
-type XWM_MENU_DRAWITEM func(hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int                            // 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
-type XWM_MENU_DRAWITEM1 func(hWindow int, hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int              // 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
-
 type XWM_WINDPROC func(message uint, wParam int, lParam int, pbHandled *bool) int               // 窗口消息过程.
 type XWM_WINDPROC1 func(hWindow int, message uint, wParam int, lParam int, pbHandled *bool) int // 窗口消息过程.
 type XWM_XC_TIMER func(nTimerID uint, pbHandled *bool) int                                      // 炫彩定时器, 非系统定时器, 注册消息XWM_TIMER接收.
@@ -1052,66 +1039,6 @@ func (w *windowBase) Event_XC_TIMER(pFun XWM_XC_TIMER) bool {
 // 炫彩定时器, 非系统定时器, 注册消息XWM_TIMER接收.
 func (w *windowBase) Event_XC_TIMER1(pFun XWM_XC_TIMER1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_XC_TIMER, pFun)
-}
-
-// 菜单弹出.
-func (w *windowBase) Event_MENU_POPUP(pFun XWM_MENU_POPUP) bool {
-	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_POPUP, pFun)
-}
-
-// 菜单弹出.
-func (w *windowBase) Event_MENU_POPUP1(pFun XWM_MENU_POPUP1) bool {
-	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_POPUP, pFun)
-}
-
-// 菜单弹出窗口.
-func (w *windowBase) Event_MENU_POPUP_WND(pFun XWM_MENU_POPUP_WND) bool {
-	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_POPUP_WND, pFun)
-}
-
-// 菜单弹出窗口.
-func (w *windowBase) Event_MENU_POPUP_WND1(pFun XWM_MENU_POPUP_WND1) bool {
-	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_POPUP_WND, pFun)
-}
-
-// 菜单选择.
-func (w *windowBase) Event_MENU_SELECT(pFun XWM_MENU_SELECT) bool {
-	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_SELECT, pFun)
-}
-
-// 菜单选择.
-func (w *windowBase) Event_MENU_SELECT1(pFun XWM_MENU_SELECT1) bool {
-	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_SELECT, pFun)
-}
-
-// 菜单退出.
-func (w *windowBase) Event_MENU_EXIT(pFun XWM_MENU_EXIT) bool {
-	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_EXIT, pFun)
-}
-
-// 菜单退出.
-func (w *windowBase) Event_MENU_EXIT1(pFun XWM_MENU_EXIT1) bool {
-	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_EXIT, pFun)
-}
-
-// 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
-func (w *windowBase) Event_MENU_DRAW_BACKGROUND(pFun XWM_MENU_DRAW_BACKGROUND) bool {
-	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_DRAW_BACKGROUND, pFun)
-}
-
-// 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
-func (w *windowBase) Event_MENU_DRAW_BACKGROUND1(pFun XWM_MENU_DRAW_BACKGROUND1) bool {
-	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_DRAW_BACKGROUND, pFun)
-}
-
-// 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
-func (w *windowBase) Event_MENU_DRAWITEM(pFun XWM_MENU_DRAWITEM) bool {
-	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_DRAWITEM, pFun)
-}
-
-// 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
-func (w *windowBase) Event_MENU_DRAWITEM1(pFun XWM_MENU_DRAWITEM1) bool {
-	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_DRAWITEM, pFun)
 }
 
 // 浮动窗格.
@@ -1413,3 +1340,77 @@ func (w *windowBase) Event_DROPFILES(pFun WM_DROPFILES) bool {
 func (w *windowBase) Event_DROPFILES1(pFun WM_DROPFILES1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_DROPFILES, pFun)
 }
+
+type XWM_MENU_POPUP func(hMenu int, pbHandled *bool) int                                           // 菜单弹出.
+type XWM_MENU_POPUP_WND func(hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int             // 菜单弹出窗口.
+type XWM_MENU_SELECT func(nID int, pbHandled *bool) int                                            // 菜单选择.
+type XWM_MENU_EXIT func(pbHandled *bool) int                                                       // 菜单退出.
+type XWM_MENU_DRAW_BACKGROUND func(hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int // 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
+type XWM_MENU_DRAWITEM func(hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int              // 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
+
+// 菜单弹出.
+func (w *windowBase) Event_MENU_POPUP(pFun XWM_MENU_POPUP) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_POPUP, pFun)
+}
+
+// 菜单弹出窗口.
+func (w *windowBase) Event_MENU_POPUP_WND(pFun XWM_MENU_POPUP_WND) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_POPUP_WND, pFun)
+}
+
+// 菜单选择.
+func (w *windowBase) Event_MENU_SELECT(pFun XWM_MENU_SELECT) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_SELECT, pFun)
+}
+
+// 菜单退出.
+func (w *windowBase) Event_MENU_EXIT(pFun XWM_MENU_EXIT) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_EXIT, pFun)
+}
+
+// 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
+func (w *windowBase) Event_MENU_DRAW_BACKGROUND(pFun XWM_MENU_DRAW_BACKGROUND) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_DRAW_BACKGROUND, pFun)
+}
+
+// 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
+func (w *windowBase) Event_MENU_DRAWITEM(pFun XWM_MENU_DRAWITEM) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_DRAWITEM, pFun)
+}
+
+/* type XWM_MENU_POPUP1 func(hWindow int, hMenu int, pbHandled *bool) int                                           // 菜单弹出.
+type XWM_MENU_POPUP_WND1 func(hWindow int, hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int             // 菜单弹出窗口.
+type XWM_MENU_SELECT1 func(hWindow int, nID int, pbHandled *bool) int                                            // 菜单选择.
+type XWM_MENU_EXIT1 func(hWindow int, pbHandled *bool) int                                                       // 菜单退出.
+type XWM_MENU_DRAW_BACKGROUND1 func(hWindow int, hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int // 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
+type XWM_MENU_DRAWITEM1 func(hWindow int, hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int              // 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
+
+// 菜单弹出.
+func (w *windowBase) Event_MENU_POPUP1(pFun XWM_MENU_POPUP1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_POPUP, pFun)
+}
+
+// 菜单弹出窗口.
+func (w *windowBase) Event_MENU_POPUP_WND1(pFun XWM_MENU_POPUP_WND1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_POPUP_WND, pFun)
+}
+
+// 菜单选择.
+func (w *windowBase) Event_MENU_SELECT1(pFun XWM_MENU_SELECT1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_SELECT, pFun)
+}
+
+// 菜单退出.
+func (w *windowBase) Event_MENU_EXIT1(pFun XWM_MENU_EXIT1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_EXIT, pFun)
+}
+
+// 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
+func (w *windowBase) Event_MENU_DRAW_BACKGROUND1(pFun XWM_MENU_DRAW_BACKGROUND1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_DRAW_BACKGROUND, pFun)
+}
+
+// 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
+func (w *windowBase) Event_MENU_DRAWITEM1(pFun XWM_MENU_DRAWITEM1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_DRAWITEM, pFun)
+} */
