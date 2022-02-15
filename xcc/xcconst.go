@@ -5,12 +5,17 @@ package xcc
 // SW_
 
 const (
-	SW_SHOW           = 5 // 显示
-	SW_HIDE           = 0 // 隐藏
-	SW_SHOWMAXIMIZED  = 3 // 最大化
-	SW_SHOWMINIMIZED  = 2 // 最小化
-	SW_SHOWNOACTIVATE = 4 // 不激活
-	SW_SHOWNA         = 8 // 原来的状态显示
+	SW_HIDE            = iota // 隐藏窗口，活动状态给另一个窗口
+	SW_SHOWNORMAL             // 用原来的大小和位置显示一个窗口，并将其激活
+	SW_SHOWMINIMIZED          // 最小化窗口，并将其激活
+	SW_SHOWMAXIMIZED          // 最大化窗口，并将其激活
+	SW_SHOWNOACTIVATE         // 用最近的大小和位置显示一个窗口，同时不激活该窗口
+	SW_SHOW                   // 用当前的大小和位置显示一个窗口，并将其激活
+	SW_MINIMIZE               // 最小化窗口，活动状态给另一个窗口
+	SW_SHOWMINNOACTIVE        // 最小化窗口，同时不改变活动窗口
+	SW_SHOWNA                 // 原来的状态显示
+	SW_RESTORE                // 激活并还原显示窗口
+	SW_SHOWDEFAULT            // 按默认状态显示
 )
 
 // XC_NAME
