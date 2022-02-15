@@ -167,8 +167,9 @@ func XListBox_CancelSelectAll(hEle int) bool {
 // pArray: 数组缓冲区.
 //
 // nArraySize: 数组大小.
-func XListBox_GetSelectAll(hEle int, pArray int, nArraySize int) int {
-	r, _, _ := xListBox_GetSelectAll.Call(uintptr(hEle), uintptr(pArray), uintptr(nArraySize))
+func XListBox_GetSelectAll(hEle int, pArray *[]int32, nArraySize int) int {
+	*pArray = make([]int32, nArraySize)
+	r, _, _ := xListBox_GetSelectAll.Call(uintptr(hEle), uintptr(unsafe.Pointer(&(*pArray)[0])), uintptr(nArraySize))
 	return int(r)
 }
 

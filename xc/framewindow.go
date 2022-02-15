@@ -107,8 +107,8 @@ func XFrameWnd_SaveLayoutToFile(hWindow int, pFileName string) bool {
 // nPaneCount: 窗格数量.
 //
 // pFileName: 文件名，如果文件名为空，将使用默认文件名frameWnd_layout.xml.
-func XFrameWnd_LoadLayoutFile(hWindow int, aPaneList int, nPaneCount int, pFileName string) bool {
-	r, _, _ := xFrameWnd_LoadLayoutFile.Call(uintptr(hWindow), uintptr(aPaneList), uintptr(nPaneCount), StrPtr(pFileName))
+func XFrameWnd_LoadLayoutFile(hWindow int, aPaneList []int, nPaneCount int, pFileName string) bool {
+	r, _, _ := xFrameWnd_LoadLayoutFile.Call(uintptr(hWindow), uintptr(unsafe.Pointer(&aPaneList[0])), uintptr(nPaneCount), StrPtr(pFileName))
 	return int(r) != 0
 }
 

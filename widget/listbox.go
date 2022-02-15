@@ -172,7 +172,7 @@ func (l *ListBox) CancelSelectAll() bool {
 // pArray: 数组缓冲区.
 //
 // nArraySize: 数组大小.
-func (l *ListBox) GetSelectAll(pArray int, nArraySize int) int {
+func (l *ListBox) GetSelectAll(pArray *[]int32, nArraySize int) int {
 	return xc.XListBox_GetSelectAll(l.Handle, pArray, nArraySize)
 }
 

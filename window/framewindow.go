@@ -139,7 +139,7 @@ func (fw *FrameWindow) SaveLayoutToFile(pFileName string) bool {
 // nPaneCount: 窗格数量.
 //
 // pFileName: 文件名，如果文件名为空，将使用默认文件名frameWnd_layout.xml.
-func (fw *FrameWindow) LoadLayoutFile(aPaneList int, nPaneCount int, pFileName string) bool {
+func (fw *FrameWindow) LoadLayoutFile(aPaneList []int, nPaneCount int, pFileName string) bool {
 	return xc.XFrameWnd_LoadLayoutFile(fw.Handle, aPaneList, nPaneCount, pFileName)
 }
 
