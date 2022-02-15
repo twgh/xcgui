@@ -122,7 +122,7 @@ func XDraw_DrawCurve(hDraw int, points []POINT, count int, tension float32) int 
 //
 // count: 数组大小.
 //
-// tension: 大于或等于0.0F的值，指定曲线的张力, D2D 忽略此参数。.
+// tension: 大于或等于0.0F的值，指定曲线的张力, D2D 忽略此参数.
 func XDraw_DrawCurveF(hDraw int, points []POINTF, count int, tension float32) int {
 	r, _, _ := xDraw_DrawCurveF.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&points[0])), uintptr(count), Float32Ptr(tension))
 	return int(r)
@@ -435,8 +435,8 @@ func XDraw_GDI_CreateRoundRectRgn(hDraw int, nLeftRect int, nTopRect int, nRight
 // ALTERNATE Selects alternate mode (fills area between odd-numbered and even-numbered polygon sides on each scan line).
 //
 // WINDING Selects winding mode (fills any region with a nonzero winding value).
-func XDraw_GDI_CreatePolygonRgn(hDraw int, pPt *POINT, cPoints int, fnPolyFillMode int) int {
-	r, _, _ := xDraw_GDI_CreatePolygonRgn.Call(uintptr(hDraw), uintptr(unsafe.Pointer(pPt)), uintptr(cPoints), uintptr(fnPolyFillMode))
+func XDraw_GDI_CreatePolygonRgn(hDraw int, pPt []POINT, cPoints int, fnPolyFillMode int) int {
+	r, _, _ := xDraw_GDI_CreatePolygonRgn.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&pPt[0])), uintptr(cPoints), uintptr(fnPolyFillMode))
 	return int(r)
 }
 
@@ -987,8 +987,8 @@ func XDraw_FillPolygon(hDraw int, points []POINT, nCount int) int {
 // points: 顶点坐标数组.
 //
 // nCount: 顶点数量.
-func XDraw_FillPolygonF(hDraw int, points int, nCount int) int {
-	r, _, _ := xDraw_FillPolygonF.Call(uintptr(hDraw), uintptr(points), uintptr(nCount))
+func XDraw_FillPolygonF(hDraw int, points []POINTF, nCount int) int {
+	r, _, _ := xDraw_FillPolygonF.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&points[0])), uintptr(nCount))
 	return int(r)
 }
 
@@ -1212,11 +1212,9 @@ func XDraw_ImageMask(hDraw int, hImageFrame int, hImageFrameMask int, x int, y i
 //
 // lpString: 字符串.
 //
-// nCount: 字符串长度.
-//
 // lpRect: 坐标.
-func XDraw_DrawText(hDraw int, lpString string, nCount int, lpRect *RECT) int {
-	r, _, _ := xDraw_DrawText.Call(uintptr(hDraw), StrPtr(lpString), uintptr(nCount), uintptr(unsafe.Pointer(lpRect)))
+func XDraw_DrawText(hDraw int, lpString string, lpRect *RECT) int {
+	r, _, _ := xDraw_DrawText.Call(uintptr(hDraw), StrPtr(lpString), uintptr(len([]rune(lpString))), uintptr(unsafe.Pointer(lpRect)))
 	return int(r)
 }
 
@@ -1226,11 +1224,9 @@ func XDraw_DrawText(hDraw int, lpString string, nCount int, lpRect *RECT) int {
 //
 // lpString: 字符串.
 //
-// nCount: 字符串长度.
-//
 // lpRect: 坐标.
-func XDraw_DrawTextF(hDraw int, lpString string, nCount int, lpRect *RECTF) int {
-	r, _, _ := xDraw_DrawTextF.Call(uintptr(hDraw), StrPtr(lpString), uintptr(nCount), uintptr(unsafe.Pointer(lpRect)))
+func XDraw_DrawTextF(hDraw int, lpString string, lpRect *RECTF) int {
+	r, _, _ := xDraw_DrawTextF.Call(uintptr(hDraw), StrPtr(lpString), uintptr(len([]rune(lpString))), uintptr(unsafe.Pointer(lpRect)))
 	return int(r)
 }
 
@@ -1240,13 +1236,11 @@ func XDraw_DrawTextF(hDraw int, lpString string, nCount int, lpRect *RECTF) int 
 //
 // lpString: 字符串.
 //
-// nCount: 字符串长度.
-//
 // lpRect: 坐标.
 //
 // colorLine: 下划线颜色, ABGR颜色.
-func XDraw_DrawTextUnderline(hDraw int, lpString string, nCount int, lpRect *RECT, colorLine int) int {
-	r, _, _ := xDraw_DrawTextUnderline.Call(uintptr(hDraw), StrPtr(lpString), uintptr(nCount), uintptr(unsafe.Pointer(lpRect)), uintptr(colorLine))
+func XDraw_DrawTextUnderline(hDraw int, lpString string, lpRect *RECT, colorLine int) int {
+	r, _, _ := xDraw_DrawTextUnderline.Call(uintptr(hDraw), StrPtr(lpString), uintptr(len([]rune(lpString))), uintptr(unsafe.Pointer(lpRect)), uintptr(colorLine))
 	return int(r)
 }
 
@@ -1256,13 +1250,11 @@ func XDraw_DrawTextUnderline(hDraw int, lpString string, nCount int, lpRect *REC
 //
 // lpString: 字符串.
 //
-// nCount: 字符串长度.
-//
 // lpRect: 坐标.
 //
 // colorLine: 下划线颜色, ABGR颜色.
-func XDraw_DrawTextUnderlineF(hDraw int, lpString string, nCount int, lpRect *RECTF, colorLine int) int {
-	r, _, _ := xDraw_DrawTextUnderlineF.Call(uintptr(hDraw), StrPtr(lpString), uintptr(nCount), uintptr(unsafe.Pointer(lpRect)), uintptr(colorLine))
+func XDraw_DrawTextUnderlineF(hDraw int, lpString string, lpRect *RECTF, colorLine int) int {
+	r, _, _ := xDraw_DrawTextUnderlineF.Call(uintptr(hDraw), StrPtr(lpString), uintptr(len([]rune(lpString))), uintptr(unsafe.Pointer(lpRect)), uintptr(colorLine))
 	return int(r)
 }
 

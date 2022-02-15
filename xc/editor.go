@@ -1,6 +1,8 @@
 package xc
 
-import "unsafe"
+import (
+	"unsafe"
+)
 
 // 代码编辑框_创建, 返回元素句柄.
 //
@@ -203,8 +205,9 @@ func XEditor_GetBreakpointCount(hEle int) int {
 // aPoints: 接收断点数组.
 //
 // nCount: 数组大小.
-func XEditor_GetBreakpoints(hEle int, aPoints int, nCount int) int {
-	r, _, _ := xEditor_GetBreakpoints.Call(uintptr(hEle), uintptr(aPoints), uintptr(nCount))
+func XEditor_GetBreakpoints(hEle int, aPoints *[]int32, nCount int) int {
+	*aPoints = make([]int32, nCount)
+	r, _, _ := xEditor_GetBreakpoints.Call(uintptr(hEle), uintptr(unsafe.Pointer(&(*aPoints)[0])), uintptr(nCount))
 	return int(r)
 }
 

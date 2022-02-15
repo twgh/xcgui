@@ -352,7 +352,7 @@ func (d *Draw) GDI_CreateRoundRectRgn(nLeftRect int, nTopRect int, nRightRect in
 // ALTERNATE Selects alternate mode (fills area between odd-numbered and even-numbered polygon sides on each scan line).
 //
 // WINDING Selects winding mode (fills any region with a nonzero winding value).
-func (d *Draw) GDI_CreatePolygonRgn(pPt *xc.POINT, cPoints int, fnPolyFillMode int) int {
+func (d *Draw) GDI_CreatePolygonRgn(pPt []xc.POINT, cPoints, fnPolyFillMode int) int {
 	return xc.XDraw_GDI_CreatePolygonRgn(d.Handle, pPt, cPoints, fnPolyFillMode)
 }
 
@@ -793,7 +793,7 @@ func (d *Draw) FillPolygon(points []xc.POINT, nCount int) int {
 // points: 顶点坐标数组.
 //
 // nCount: 顶点数量.
-func (d *Draw) FillPolygonF(points int, nCount int) int {
+func (d *Draw) FillPolygonF(points []xc.POINTF, nCount int) int {
 	return xc.XDraw_FillPolygonF(d.Handle, points, nCount)
 }
 
@@ -973,48 +973,40 @@ func (d *Draw) ImageMask(hImageFrame int, hImageFrameMask int, x int, y int, x2 
 //
 // lpString: 字符串.
 //
-// nCount: 字符串长度.
-//
 // lpRect: 坐标.
-func (d *Draw) DrawText(lpString string, nCount int, lpRect *xc.RECT) int {
-	return xc.XDraw_DrawText(d.Handle, lpString, nCount, lpRect)
+func (d *Draw) DrawText(lpString string, lpRect *xc.RECT) int {
+	return xc.XDraw_DrawText(d.Handle, lpString, lpRect)
 }
 
 // 绘制_文本指定矩形F, DrawText() 参见MSDN.
 //
 // lpString: 字符串.
 //
-// nCount: 字符串长度.
-//
 // lpRect: 坐标.
-func (d *Draw) DrawTextF(lpString string, nCount int, lpRect *xc.RECTF) int {
-	return xc.XDraw_DrawTextF(d.Handle, lpString, nCount, lpRect)
+func (d *Draw) DrawTextF(lpString string, lpRect *xc.RECTF) int {
+	return xc.XDraw_DrawTextF(d.Handle, lpString, lpRect)
 }
 
 // 绘制_文本下划线.
 //
 // lpString: 字符串.
 //
-// nCount: 字符串长度.
-//
 // lpRect: 坐标.
 //
 // colorLine: 下划线颜色, ABGR颜色.
-func (d *Draw) DrawTextUnderline(lpString string, nCount int, lpRect *xc.RECT, colorLine int) int {
-	return xc.XDraw_DrawTextUnderline(d.Handle, lpString, nCount, lpRect, colorLine)
+func (d *Draw) DrawTextUnderline(lpString string, lpRect *xc.RECT, colorLine int) int {
+	return xc.XDraw_DrawTextUnderline(d.Handle, lpString, lpRect, colorLine)
 }
 
 // 绘制_文本下划线F.
 //
 // lpString: 字符串.
 //
-// nCount: 字符串长度.
-//
 // lpRect: 坐标.
 //
 // colorLine: 下划线颜色, ABGR颜色.
-func (d *Draw) DrawTextUnderlineF(lpString string, nCount int, lpRect *xc.RECTF, colorLine int) int {
-	return xc.XDraw_DrawTextUnderlineF(d.Handle, lpString, nCount, lpRect, colorLine)
+func (d *Draw) DrawTextUnderlineF(lpString string, lpRect *xc.RECTF, colorLine int) int {
+	return xc.XDraw_DrawTextUnderlineF(d.Handle, lpString, lpRect, colorLine)
 }
 
 // 绘制_文本, TextOut() 参见MSDN.

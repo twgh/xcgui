@@ -196,7 +196,7 @@ func (e *Editor) GetBreakpointCount() int {
 // aPoints: 接收断点数组.
 //
 // nCount: 数组大小.
-func (e *Editor) GetBreakpoints(aPoints int, nCount int) int {
+func (e *Editor) GetBreakpoints(aPoints *[]int32, nCount int) int {
 	return xc.XEditor_GetBreakpoints(e.Handle, aPoints, nCount)
 }
 
