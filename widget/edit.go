@@ -40,7 +40,7 @@ func NewEdit(x int, y int, cx int, cy int, hParent int) *Edit {
 // nType: 类型, Edit_Type_.
 //
 // hParent: 父为窗口句柄或元素句柄.
-func NewEditEx(x int, y int, cx int, cy int, nType int, hParent int) *Edit {
+func NewEditEx(x int, y int, cx int, cy int, nType xcc.Edit_Type_, hParent int) *Edit {
 	p := &Edit{}
 	p.Handle = xc.XEdit_CreateEx(x, y, cx, cy, nType, hParent)
 	return p
@@ -212,7 +212,7 @@ func (e *Edit) SetPasswordCharacter(ch int) int {
 // 编辑框_置文本对齐, 单行模式下有效.
 //
 // align: 对齐方式, Edit_TextAlign_Flag_.
-func (e *Edit) SetTextAlign(align int) int {
+func (e *Edit) SetTextAlign(align xcc.Edit_TextAlign_Flag_) int {
 	return xc.XEdit_SetTextAlign(e.Handle, align)
 }
 
@@ -343,12 +343,12 @@ func (e *Edit) AddStyle(hFont_image_Obj int, color int, bColor bool) int {
 //
 // fontSize: 字体大小.
 //
-// fontStyle: 字体样式.
+// fontStyle: 字体样式, FontStyle_.
 //
 // color: 颜色.
 //
 // bColor: 是否使用颜色.
-func (e *Edit) AddStyleEx(fontName string, fontSize int, fontStyle int, color int, bColor bool) int {
+func (e *Edit) AddStyleEx(fontName string, fontSize int, fontStyle xcc.FontStyle_, color int, bColor bool) int {
 	return xc.XEdit_AddStyleEx(e.Handle, fontName, fontSize, fontStyle, color, bColor)
 }
 
@@ -570,7 +570,7 @@ func (e *Edit) Redo() bool {
 // hImageBubble: 气泡背景.
 //
 // nFlag: 标志, Chat_Flag_.
-func (e *Edit) AddChatBegin(hImageAvatar int, hImageBubble int, nFlag int) int {
+func (e *Edit) AddChatBegin(hImageAvatar int, hImageBubble int, nFlag xcc.Chat_Flag_) int {
 	return xc.XEdit_AddChatBegin(e.Handle, hImageAvatar, hImageBubble, nFlag)
 }
 

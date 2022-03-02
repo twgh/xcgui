@@ -172,7 +172,7 @@ func (t *Tree) SetItemTemplateXMLSelFromString(pStringXML string) bool {
 // 列表树_置项背景绘制标志, 设置是否绘制指定状态下项的背景.
 //
 // nFlags: 标志位: List_DrawItemBk_Flag_.
-func (t *Tree) SetDrawItemBkFlags(nFlags int) int {
+func (t *Tree) SetDrawItemBkFlags(nFlags xcc.List_DrawItemBk_Flag_) int {
 	return xc.XTree_SetDrawItemBkFlags(t.Handle, nFlags)
 }
 

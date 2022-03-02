@@ -3,6 +3,8 @@ package xc
 import (
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/xcc"
 )
 
 // 元素_创建, 创建基础元素.
@@ -252,7 +254,7 @@ func XEle_InsertChild(hEle int, hChild int, index int) bool {
 // nFlags: 调整布局标识位, AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
-func XEle_SetRect(hEle int, pRect *RECT, bRedraw bool, nFlags int, nAdjustNo int) int {
+func XEle_SetRect(hEle int, pRect *RECT, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
 	r, _, _ := xEle_SetRect.Call(uintptr(hEle), uintptr(unsafe.Pointer(pRect)), BoolPtr(bRedraw), uintptr(nFlags), uintptr(nAdjustNo))
 	return int(r)
 }
@@ -274,7 +276,7 @@ func XEle_SetRect(hEle int, pRect *RECT, bRedraw bool, nFlags int, nAdjustNo int
 // nFlags: 调整布局标识位, AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
-func XEle_SetRectEx(hEle int, x int, y int, cx int, cy int, bRedraw bool, nFlags int, nAdjustNo int) int {
+func XEle_SetRectEx(hEle int, x int, y int, cx int, cy int, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
 	r, _, _ := xEle_SetRectEx.Call(uintptr(hEle), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), BoolPtr(bRedraw), uintptr(nFlags), uintptr(nAdjustNo))
 	return int(r)
 }
@@ -290,7 +292,7 @@ func XEle_SetRectEx(hEle int, x int, y int, cx int, cy int, bRedraw bool, nFlags
 // nFlags: 调整布局标识位, AdjustLayout_. 此参数将会传入XE_SIZE ,XE_ADJUSTLAYOUT 事件回调.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
-func XEle_SetRectLogic(hEle int, pRect *RECT, bRedraw bool, nFlags int, nAdjustNo int) int {
+func XEle_SetRectLogic(hEle int, pRect *RECT, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
 	r, _, _ := xEle_SetRectLogic.Call(uintptr(hEle), uintptr(unsafe.Pointer(pRect)), BoolPtr(bRedraw), uintptr(nFlags), uintptr(nAdjustNo))
 	return int(r)
 }
@@ -308,7 +310,7 @@ func XEle_SetRectLogic(hEle int, pRect *RECT, bRedraw bool, nFlags int, nAdjustN
 // nFlags: 调整布局标识位, AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
-func XEle_SetPosition(hEle int, x int, y int, bRedraw bool, nFlags int, nAdjustNo int) int {
+func XEle_SetPosition(hEle int, x int, y int, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
 	r, _, _ := xEle_SetPosition.Call(uintptr(hEle), uintptr(x), uintptr(y), BoolPtr(bRedraw), uintptr(nFlags), uintptr(nAdjustNo))
 	return int(r)
 }
@@ -326,7 +328,7 @@ func XEle_SetPosition(hEle int, x int, y int, bRedraw bool, nFlags int, nAdjustN
 // nFlags: 调整布局标识位, AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
-func XEle_SetPositionLogic(hEle int, x int, y int, bRedraw bool, nFlags int, nAdjustNo int) int {
+func XEle_SetPositionLogic(hEle int, x int, y int, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
 	r, _, _ := xEle_SetPositionLogic.Call(uintptr(hEle), uintptr(x), uintptr(y), BoolPtr(bRedraw), uintptr(nFlags), uintptr(nAdjustNo))
 	return int(r)
 }
@@ -581,8 +583,8 @@ func XEle_SetZOrder(hEle int, index int) bool {
 //
 // hDestEle: 目标元素.
 //
-// nType: 类型.
-func XEle_SetZOrderEx(hEle int, hDestEle int, nType int) bool {
+// nType: 类型, Zorder_.
+func XEle_SetZOrderEx(hEle int, hDestEle int, nType xcc.Zorder_) bool {
 	r, _, _ := xEle_SetZOrderEx.Call(uintptr(hEle), uintptr(hDestEle), uintptr(nType))
 	return int(r) != 0
 }
@@ -712,7 +714,7 @@ func XEle_GetPadding(hEle int, pPadding *RECT) int {
 // hEle: 元素句柄.
 //
 // nFlags: 边框位置组合, Element_Position_.
-func XEle_SetDragBorder(hEle int, nFlags int) int {
+func XEle_SetDragBorder(hEle int, nFlags xcc.Element_Position_) int {
 	r, _, _ := xEle_SetDragBorder.Call(uintptr(hEle), uintptr(nFlags))
 	return int(r)
 }
@@ -726,7 +728,7 @@ func XEle_SetDragBorder(hEle int, nFlags int) int {
 // hBindEle: 绑定元素.
 //
 // nSpace: 元素间隔大小.
-func XEle_SetDragBorderBindEle(hEle int, nFlags int, hBindEle int, nSpace int) int {
+func XEle_SetDragBorderBindEle(hEle int, nFlags xcc.Element_Position_, hBindEle int, nSpace int) int {
 	r, _, _ := xEle_SetDragBorderBindEle.Call(uintptr(hEle), uintptr(nFlags), uintptr(hBindEle), uintptr(nSpace))
 	return int(r)
 }
@@ -857,12 +859,12 @@ func XEle_Destroy(hEle int) int {
 //
 // hEle: 元素句柄.
 //
-// nState: 状态标识.
+// nState: 组合状态.
 //
 // color: ABGR颜色.
 //
 // width: 线宽.
-func XEle_AddBkBorder(hEle, nState, color int, width int) int {
+func XEle_AddBkBorder(hEle int, nState xcc.CombinedState, color int, width int) int {
 	r, _, _ := xEle_AddBkBorder.Call(uintptr(hEle), uintptr(color), uintptr(color), uintptr(width))
 	return int(r)
 }
@@ -871,10 +873,10 @@ func XEle_AddBkBorder(hEle, nState, color int, width int) int {
 //
 // hEle: 元素句柄.
 //
-// nState: 状态标识.
+// nState: 组合状态.
 //
 // color: ABGR颜色.
-func XEle_AddBkFill(hEle, nState, color int) int {
+func XEle_AddBkFill(hEle int, nState xcc.CombinedState, color int) int {
 	r, _, _ := xEle_AddBkFill.Call(uintptr(hEle), uintptr(nState), uintptr(color))
 	return int(r)
 }
@@ -883,10 +885,10 @@ func XEle_AddBkFill(hEle, nState, color int) int {
 //
 // hEle: 元素句柄.
 //
-// nState: 状态标识.
+// nState: 组合状态.
 //
 // hImage: 图片句柄.
-func XEle_AddBkImage(hEle, nState, hImage int) int {
+func XEle_AddBkImage(hEle int, nState xcc.CombinedState, hImage int) int {
 	r, _, _ := xEle_AddBkImage.Call(uintptr(hEle), uintptr(nState), uintptr(hImage))
 	return int(r)
 }
@@ -936,9 +938,9 @@ func XEle_SetBkManager(hEle int, hBkInfoM int) int {
 // 元素_取状态, 获取组合状态.
 //
 // hEle: 元素句柄.
-func XEle_GetStateFlags(hEle int) int {
+func XEle_GetStateFlags(hEle int) xcc.CombinedState {
 	r, _, _ := xEle_GetStateFlags.Call(uintptr(hEle))
-	return int(r)
+	return xcc.CombinedState(r)
 }
 
 // 元素_绘制焦点, 绘制元素焦点.
@@ -1056,7 +1058,7 @@ func XEle_SetToolTip(hEle int, pText string) int {
 // pText: 工具提示内容.
 //
 // nTextAlign: 文本对齐方式, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
-func XEle_SetToolTipEx(hEle int, pText string, nTextAlign int) int {
+func XEle_SetToolTipEx(hEle int, pText string, nTextAlign xcc.TextFormatFlag_) int {
 	r, _, _ := xEle_SetToolTipEx.Call(uintptr(hEle), StrPtr(pText), uintptr(nTextAlign))
 	return int(r)
 }
@@ -1086,7 +1088,7 @@ func XEle_PopupToolTip(hEle int, x int, y int) int {
 // hEle: 元素句柄.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
-func XEle_AdjustLayout(hEle int, nAdjustNo int) int {
+func XEle_AdjustLayout(hEle int, nAdjustNo uint32) int {
 	r, _, _ := xEle_AdjustLayout.Call(uintptr(hEle), uintptr(nAdjustNo))
 	return int(r)
 }
@@ -1098,7 +1100,7 @@ func XEle_AdjustLayout(hEle int, nAdjustNo int) int {
 // nFlags: 调整标识.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
-func XEle_AdjustLayoutEx(hEle int, nFlags int, nAdjustNo int) int {
+func XEle_AdjustLayoutEx(hEle int, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
 	r, _, _ := xEle_AdjustLayoutEx.Call(uintptr(hEle), uintptr(nFlags), uintptr(nAdjustNo))
 	return int(r)
 }
@@ -1106,9 +1108,9 @@ func XEle_AdjustLayoutEx(hEle int, nFlags int, nAdjustNo int) int {
 // 元素_取透明度, 返回透明度.
 //
 // hEle: 元素句柄.
-func XEle_GetAlpha(hEle int) int {
+func XEle_GetAlpha(hEle int) byte {
 	r, _, _ := xEle_GetAlpha.Call(uintptr(hEle))
-	return int(r)
+	return byte(r)
 }
 
 // 元素_取位置.
@@ -1136,7 +1138,7 @@ func XEle_GetPosition(hEle int, pOutX *int, pOutY *int) int {
 // nFlags: 调整布局标识位, AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
-func XEle_SetSize(hEle int, nWidth int, nHeight int, bRedraw bool, nFlags int, nAdjustNo int) int {
+func XEle_SetSize(hEle int, nWidth int, nHeight int, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
 	r, _, _ := xEle_SetSize.Call(uintptr(hEle), uintptr(nWidth), uintptr(nHeight), BoolPtr(bRedraw), uintptr(nFlags), uintptr(nAdjustNo))
 	return int(r)
 }

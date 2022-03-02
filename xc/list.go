@@ -1,6 +1,10 @@
 package xc
 
-import "unsafe"
+import (
+	"unsafe"
+
+	"github.com/twgh/xcgui/xcc"
+)
 
 // 列表_创建, 创建列表元素, 返回元素句柄.
 //
@@ -139,7 +143,7 @@ func XList_SetSort(hEle int, iColumn int, iColumnAdapter int, bEnable bool) int 
 // hEle: 元素句柄.
 //
 // nFlags: 标志位, List_DrawItemBk_Flag_.
-func XList_SetDrawItemBkFlags(hEle int, nFlags int) int {
+func XList_SetDrawItemBkFlags(hEle int, nFlags xcc.List_DrawItemBk_Flag_) int {
 	r, _, _ := xList_SetDrawItemBkFlags.Call(uintptr(hEle), uintptr(nFlags))
 	return int(r)
 }

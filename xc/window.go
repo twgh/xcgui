@@ -3,6 +3,8 @@ package xc
 import (
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/xcc"
 )
 
 // 窗口_创建, 返回: GUI库窗口资源句柄.
@@ -20,7 +22,7 @@ import (
 // hWndParent: 父窗口.
 //
 // XCStyle: GUI库窗口样式, Window_Style_.
-func XWnd_Create(x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle int) int {
+func XWnd_Create(x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle xcc.Window_Style_) int {
 	r, _, _ := xWnd_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), StrPtr(pTitle), uintptr(hWndParent), uintptr(XCStyle))
 	return int(r)
 }
@@ -46,7 +48,7 @@ func XWnd_Create(x int, y int, cx int, cy int, pTitle string, hWndParent int, XC
 // hWndParent: 父窗口.
 //
 // XCStyle: GUI库窗口样式, Window_Style_.
-func XWnd_CreateEx(dwExStyle int, dwStyle int, lpClassName string, x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle int) int {
+func XWnd_CreateEx(dwExStyle int, dwStyle int, lpClassName string, x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle xcc.Window_Style_) int {
 	r, _, _ := xWnd_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), StrPtr(lpClassName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), StrPtr(pTitle), uintptr(hWndParent), uintptr(XCStyle))
 	return int(r)
 }
@@ -56,7 +58,7 @@ func XWnd_CreateEx(dwExStyle int, dwStyle int, lpClassName string, x int, y int,
 // hWindow: 窗口句柄.
 //
 // nCmdShow: 显示方式, SW_.
-func XWnd_ShowWindow(hWindow int, nCmdShow int) int {
+func XWnd_ShowWindow(hWindow int, nCmdShow xcc.SW_) int {
 	r, _, _ := xWnd_ShowWindow.Call(uintptr(hWindow), uintptr(nCmdShow))
 	return int(r)
 }
@@ -614,7 +616,7 @@ func XWnd_AdjustLayout(hWindow int) int {
 // hWindow: 窗口句柄.
 //
 // nFlags: 调整布局标识位, AdjustLayout_.
-func XWnd_AdjustLayoutEx(hWindow, nFlags int) int {
+func XWnd_AdjustLayoutEx(hWindow int, nFlags xcc.AdjustLayout_) int {
 	r, _, _ := xWnd_AdjustLayoutEx.Call(uintptr(hWindow), uintptr(nFlags))
 	return int(r)
 }
@@ -828,7 +830,7 @@ func XWnd_SetBkMagager(hWindow, hBkInfoM int) int {
 // hWindow: 窗口句柄.
 //
 // nType: 窗口透明类型, Window_Transparent_.
-func XWnd_SetTransparentType(hWindow, nType int) int {
+func XWnd_SetTransparentType(hWindow int, nType xcc.Window_Transparent_) int {
 	r, _, _ := xWnd_SetTransparentType.Call(uintptr(hWindow), uintptr(nType))
 	return int(r)
 }
@@ -889,12 +891,12 @@ func XWnd_GetShadowInfo(hWindow int, nSize *int, nDepth *uint8, nAngeleSize *int
 	return int(r)
 }
 
-// 窗口_取透明类型.
+// 窗口_取透明类型, 返回: Window_Transparent_.
 //
 // hWindow: 窗口句柄.
-func XWnd_GetTransparentType(hWindow int) int {
+func XWnd_GetTransparentType(hWindow int) xcc.Window_Transparent_ {
 	r, _, _ := xWnd_GetTransparentType.Call(uintptr(hWindow))
-	return int(r)
+	return xcc.Window_Transparent_(r)
 }
 
 // 窗口_附加窗口, 返回窗口资源句柄.
@@ -902,7 +904,7 @@ func XWnd_GetTransparentType(hWindow int) int {
 // hWnd: 要附加的外部窗口句柄.
 //
 // XCStyle: 炫彩窗口样式: Window_Style_.
-func XWnd_Attach(hWnd, XCStyle int) int {
+func XWnd_Attach(hWnd int, XCStyle xcc.Window_Style_) int {
 	r, _, _ := xWnd_Attach.Call(uintptr(hWnd), uintptr(XCStyle))
 	return int(r)
 }
@@ -1016,7 +1018,7 @@ func XWnd_GetTitleColor(hWindow int) int {
 // color: ABGR颜色.
 //
 // width: 线宽.
-func XWnd_AddBkBorder(hWindow int, nState int, color int, width int) int {
+func XWnd_AddBkBorder(hWindow int, nState xcc.Window_State_Flag_, color int, width int) int {
 	r, _, _ := xWnd_AddBkBorder.Call(uintptr(hWindow), uintptr(nState), uintptr(color), uintptr(width))
 	return int(r)
 }
@@ -1028,7 +1030,7 @@ func XWnd_AddBkBorder(hWindow int, nState int, color int, width int) int {
 // nState: 组合状态.
 //
 // color: ABGR颜色.
-func XWnd_AddBkFill(hWindow int, nState int, color int) int {
+func XWnd_AddBkFill(hWindow int, nState xcc.Window_State_Flag_, color int) int {
 	r, _, _ := xWnd_AddBkFill.Call(uintptr(hWindow), uintptr(nState), uintptr(color))
 	return int(r)
 }
@@ -1040,7 +1042,7 @@ func XWnd_AddBkFill(hWindow int, nState int, color int) int {
 // nState: 组合状态.
 //
 // hImage: 图片句柄.
-func XWnd_AddBkImage(hWindow int, nState int, hImage int) int {
+func XWnd_AddBkImage(hWindow int, nState xcc.Window_State_Flag_, hImage int) int {
 	r, _, _ := xWnd_AddBkImage.Call(uintptr(hWindow), uintptr(nState), uintptr(hImage))
 	return int(r)
 }

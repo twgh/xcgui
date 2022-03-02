@@ -1,8 +1,12 @@
 package xc
 
-import "unsafe"
+import (
+	"unsafe"
 
-// 背景对象_置外间距, 外间距与对齐标识互相依赖, BkObject_Align_Flag_.
+	"github.com/twgh/xcgui/xcc"
+)
+
+// 背景对象_置外间距, 外间距与对齐标识(BkObject_Align_Flag_)互相依赖.
 //
 // hObj: 背景对象句柄.
 //
@@ -23,7 +27,7 @@ func XBkObj_SetMargin(hObj int, left int, top int, right int, bottom int) int {
 // hObj: 背景对象句柄.
 //
 // nFlags: 对齐方式, BkObject_Align_Flag_.
-func XBkObj_SetAlign(hObj int, nFlags int) int {
+func XBkObj_SetAlign(hObj int, nFlags xcc.BkObject_Align_Flag_) int {
 	r, _, _ := xBkObj_SetAlign.Call(uintptr(hObj), uintptr(nFlags))
 	return int(r)
 }
@@ -138,8 +142,8 @@ func XBkObj_SetFont(hObj int, hFont int) int {
 //
 // hObj: 背景对象句柄.
 //
-// nAlign: 文本对齐方式, TextFormatFlag_.
-func XBkObj_SetTextAlign(hObj int, nAlign int) int {
+// nAlign: 文本对齐方式, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
+func XBkObj_SetTextAlign(hObj int, nAlign xcc.TextFormatFlag_) int {
 	r, _, _ := xBkObj_SetTextAlign.Call(uintptr(hObj), uintptr(nAlign))
 	return int(r)
 }

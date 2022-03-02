@@ -233,7 +233,7 @@ func (e *Element) InsertChild(hChild int, index int) bool {
 // nFlags: 调整布局标识位, AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
-func (e *Element) SetRect(pRect *xc.RECT, bRedraw bool, nFlags int, nAdjustNo int) int {
+func (e *Element) SetRect(pRect *xc.RECT, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
 	return xc.XEle_SetRect(e.Handle, pRect, bRedraw, nFlags, nAdjustNo)
 }
 
@@ -252,7 +252,7 @@ func (e *Element) SetRect(pRect *xc.RECT, bRedraw bool, nFlags int, nAdjustNo in
 // nFlags: 调整布局标识位, AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
-func (e *Element) SetRectEx(x int, y int, cx int, cy int, bRedraw bool, nFlags int, nAdjustNo int) int {
+func (e *Element) SetRectEx(x int, y int, cx int, cy int, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
 	return xc.XEle_SetRectEx(e.Handle, x, y, cx, cy, bRedraw, nFlags, nAdjustNo)
 }
 
@@ -265,7 +265,7 @@ func (e *Element) SetRectEx(x int, y int, cx int, cy int, bRedraw bool, nFlags i
 // nFlags: 调整布局标识位, AdjustLayout_. 此参数将会传入XE_SIZE ,XE_ADJUSTLAYOUT 事件回调.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
-func (e *Element) SetRectLogic(pRect *xc.RECT, bRedraw bool, nFlags int, nAdjustNo int) int {
+func (e *Element) SetRectLogic(pRect *xc.RECT, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
 	return xc.XEle_SetRectLogic(e.Handle, pRect, bRedraw, nFlags, nAdjustNo)
 }
 
@@ -280,7 +280,7 @@ func (e *Element) SetRectLogic(pRect *xc.RECT, bRedraw bool, nFlags int, nAdjust
 // nFlags: 调整布局标识位, AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
-func (e *Element) SetPosition(x int, y int, bRedraw bool, nFlags int, nAdjustNo int) int {
+func (e *Element) SetPosition(x int, y int, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
 	return xc.XEle_SetPosition(e.Handle, x, y, bRedraw, nFlags, nAdjustNo)
 }
 
@@ -295,7 +295,7 @@ func (e *Element) SetPosition(x int, y int, bRedraw bool, nFlags int, nAdjustNo 
 // nFlags: 调整布局标识位, AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
-func (e *Element) SetPositionLogic(x int, y int, bRedraw bool, nFlags int, nAdjustNo int) int {
+func (e *Element) SetPositionLogic(x int, y int, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
 	return xc.XEle_SetPositionLogic(e.Handle, x, y, bRedraw, nFlags, nAdjustNo)
 }
 
@@ -466,8 +466,8 @@ func (e *Element) SetZOrder(index int) bool {
 //
 // hDestEle: 目标元素.
 //
-// nType: 类型.
-func (e *Element) SetZOrderEx(hDestEle int, nType int) bool {
+// nType: 类型, Zorder_.
+func (e *Element) SetZOrderEx(hDestEle int, nType xcc.Zorder_) bool {
 	return xc.XEle_SetZOrderEx(e.Handle, hDestEle, nType)
 }
 
@@ -561,7 +561,7 @@ func (e *Element) GetPadding(pPadding *xc.RECT) int {
 // 元素_置拖动边框.
 //
 // nFlags: 边框位置组合, Element_Position_.
-func (e *Element) SetDragBorder(nFlags int) int {
+func (e *Element) SetDragBorder(nFlags xcc.Element_Position_) int {
 	return xc.XEle_SetDragBorder(e.Handle, nFlags)
 }
 
@@ -572,7 +572,7 @@ func (e *Element) SetDragBorder(nFlags int) int {
 // hBindEle: 绑定元素.
 //
 // nSpace: 元素间隔大小.
-func (e *Element) SetDragBorderBindEle(nFlags int, hBindEle int, nSpace int) int {
+func (e *Element) SetDragBorderBindEle(nFlags xcc.Element_Position_, hBindEle int, nSpace int) int {
 	return xc.XEle_SetDragBorderBindEle(e.Handle, nFlags, hBindEle, nSpace)
 }
 
@@ -661,30 +661,30 @@ func (e *Element) Destroy() int {
 
 // 元素_添加背景边框, 添加背景内容边框.
 //
-// nState: 状态标识.
+// nState: 组合状态.
 //
 // color: ABGR颜色.
 //
 // width: 线宽.
-func (e *Element) AddBkBorder(nState, color int, width int) int {
+func (e *Element) AddBkBorder(nState xcc.CombinedState, color int, width int) int {
 	return xc.XEle_AddBkBorder(e.Handle, nState, color, width)
 }
 
 // 元素_添加背景填充, 添加背景内容填充.
 //
-// nState: 状态标识.
+// nState: 组合状态.
 //
 // color: ABGR颜色.
-func (e *Element) AddBkFill(nState, color int) int {
+func (e *Element) AddBkFill(nState xcc.CombinedState, color int) int {
 	return xc.XEle_AddBkFill(e.Handle, nState, color)
 }
 
 // 元素_添加背景图片, 添加背景内容图片.
 //
-// nState: 状态标识.
+// nState: 组合状态.
 //
 // hImage: 图片句柄.
-func (e *Element) AddBkImage(nState, hImage int) int {
+func (e *Element) AddBkImage(nState xcc.CombinedState, hImage int) int {
 	return xc.XEle_AddBkImage(e.Handle, nState, hImage)
 }
 
@@ -716,7 +716,7 @@ func (e *Element) SetBkManager(hBkInfoM int) int {
 }
 
 // 元素_取状态, 获取组合状态.
-func (e *Element) GetStateFlags() int {
+func (e *Element) GetStateFlags() xcc.CombinedState {
 	return xc.XEle_GetStateFlags(e.Handle)
 }
 
@@ -803,7 +803,7 @@ func (e *Element) SetToolTip(pText string) int {
 // pText: 工具提示内容.
 //
 // nTextAlign: 文本对齐方式, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
-func (e *Element) SetToolTipEx(pText string, nTextAlign int) int {
+func (e *Element) SetToolTipEx(pText string, nTextAlign xcc.TextFormatFlag_) int {
 	return xc.XEle_SetToolTipEx(e.Handle, pText, nTextAlign)
 }
 
@@ -824,7 +824,7 @@ func (e *Element) PopupToolTip(x int, y int) int {
 // 元素_调整布局.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
-func (e *Element) AdjustLayout(nAdjustNo int) int {
+func (e *Element) AdjustLayout(nAdjustNo uint32) int {
 	return xc.XEle_AdjustLayout(e.Handle, nAdjustNo)
 }
 
@@ -833,12 +833,12 @@ func (e *Element) AdjustLayout(nAdjustNo int) int {
 // nFlags: 调整布局标识位, AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
-func (e *Element) AdjustLayoutEx(nFlags int, nAdjustNo int) int {
+func (e *Element) AdjustLayoutEx(nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
 	return xc.XEle_AdjustLayoutEx(e.Handle, nFlags, nAdjustNo)
 }
 
 // 元素_取透明度, 返回透明度.
-func (e *Element) GetAlpha() int {
+func (e *Element) GetAlpha() byte {
 	return xc.XEle_GetAlpha(e.Handle)
 }
 
@@ -862,7 +862,7 @@ func (e *Element) GetPosition(pOutX *int, pOutY *int) int {
 // nFlags: 调整布局标识位, AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
-func (e *Element) SetSize(nWidth int, nHeight int, bRedraw bool, nFlags int, nAdjustNo int) int {
+func (e *Element) SetSize(nWidth int, nHeight int, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
 	return xc.XEle_SetSize(e.Handle, nWidth, nHeight, bRedraw, nFlags, nAdjustNo)
 }
 
@@ -916,25 +916,40 @@ type XE_LBUTTONDBCLICK func(nFlags int, pPt *xc.POINT, pbHandled *bool) int     
 type XE_LBUTTONDBCLICK1 func(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int    // 鼠标左键双击事件.
 type XE_XC_TIMER func(nTimerID int, pbHandled *bool) int                                  // 炫彩定时器,非系统定时器,定时器消息 XM_TIMER.
 type XE_XC_TIMER1 func(hEle int, nTimerID int, pbHandled *bool) int                       // 炫彩定时器,非系统定时器,定时器消息 XM_TIMER.
-type XE_ADJUSTLAYOUT func(nFlags int, nAdjustNo int, pbHandled *bool) int                 // 调整布局事件. 暂停使用.
-type XE_ADJUSTLAYOUT1 func(hEle int, nFlags int, nAdjustNo int, pbHandled *bool) int      // 调整布局事件. 暂停使用.
-type XE_ADJUSTLAYOUT_END func(nFlags int, nAdjustNo int, pbHandled *bool) int             // 调整布局完成事件.
-type XE_ADJUSTLAYOUT_END1 func(hEle int, nFlags int, nAdjustNo int, pbHandled *bool) int  // 调整布局完成事件.
-type XE_SETFOCUS func(pbHandled *bool) int                                                // 元素获得焦点事件.
-type XE_SETFOCUS1 func(hEle int, pbHandled *bool) int                                     // 元素获得焦点事件.
-type XE_KILLFOCUS func(pbHandled *bool) int                                               // 元素失去焦点事件.
-type XE_KILLFOCUS1 func(hEle int, pbHandled *bool) int                                    // 元素失去焦点事件.
-type XE_DESTROY func(pbHandled *bool) int                                                 // 元素即将销毁事件. 在销毁子对象之前触发.
-type XE_DESTROY1 func(hEle int, pbHandled *bool) int                                      // 元素即将销毁事件. 在销毁子对象之前触发.
-type XE_DESTROY_END func(pbHandled *bool) int                                             // 元素销毁完成事件. 在销毁子对象之后触发.
-type XE_DESTROY_END1 func(hEle int, pbHandled *bool) int                                  // 元素销毁完成事件. 在销毁子对象之后触发.
+type XE_ADJUSTLAYOUT func(nFlags int, nAdjustNo uint32, pbHandled *bool) int              // 调整布局事件. 暂停使用.
+type XE_ADJUSTLAYOUT1 func(hEle int, nFlags int, nAdjustNo uint32, pbHandled *bool) int   // 调整布局事件. 暂停使用.
+
+// 调整布局完成事件.
+//
+// nFlags: 调整布局标识位, AdjustLayout_.
+//
+// nAdjustNo: 调整布局流水号.
+type XE_ADJUSTLAYOUT_END func(nFlags xcc.AdjustLayout_, nAdjustNo uint32, pbHandled *bool) int
+
+// 调整布局完成事件.
+//
+// hEle: 元素句柄.
+//
+// nFlags: 调整布局标识位, AdjustLayout_.
+//
+// nAdjustNo: 调整布局流水号.
+type XE_ADJUSTLAYOUT_END1 func(hEle int, nFlags xcc.AdjustLayout_, nAdjustNo uint32, pbHandled *bool) int
+
+type XE_SETFOCUS func(pbHandled *bool) int               // 元素获得焦点事件.
+type XE_SETFOCUS1 func(hEle int, pbHandled *bool) int    // 元素获得焦点事件.
+type XE_KILLFOCUS func(pbHandled *bool) int              // 元素失去焦点事件.
+type XE_KILLFOCUS1 func(hEle int, pbHandled *bool) int   // 元素失去焦点事件.
+type XE_DESTROY func(pbHandled *bool) int                // 元素即将销毁事件. 在销毁子对象之前触发.
+type XE_DESTROY1 func(hEle int, pbHandled *bool) int     // 元素即将销毁事件. 在销毁子对象之前触发.
+type XE_DESTROY_END func(pbHandled *bool) int            // 元素销毁完成事件. 在销毁子对象之后触发.
+type XE_DESTROY_END1 func(hEle int, pbHandled *bool) int // 元素销毁完成事件. 在销毁子对象之后触发.
 
 // 元素大小改变事件.
 //
 // nFlags: 调整布局标识位, AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号.
-type XE_SIZE func(nFlags int, nAdjustNo int, pbHandled *bool) int
+type XE_SIZE func(nFlags xcc.AdjustLayout_, nAdjustNo uint32, pbHandled *bool) int
 
 // 元素大小改变事件1.
 //
@@ -943,7 +958,8 @@ type XE_SIZE func(nFlags int, nAdjustNo int, pbHandled *bool) int
 // nFlags: 调整布局标识位, AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号.
-type XE_SIZE1 func(hEle int, nFlags int, nAdjustNo int, pbHandled *bool) int
+type XE_SIZE1 func(hEle int, nFlags xcc.AdjustLayout_, nAdjustNo uint32, pbHandled *bool) int
+
 type XE_SHOW func(bShow bool, pbHandled *bool) int                             // 元素显示隐藏事件.
 type XE_SHOW1 func(hEle int, bShow bool, pbHandled *bool) int                  // 元素显示隐藏事件.
 type XE_SETFONT func(pbHandled *bool) int                                      // 元素设置字体事件.

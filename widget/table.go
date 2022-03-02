@@ -2,6 +2,7 @@ package widget
 
 import (
 	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
 )
 
 type Table struct {
@@ -177,7 +178,7 @@ func (t *Table) SetItemFont(iRow int, iCol int, hFont int) int {
 // iCol: 列索引.
 //
 // nAlign: 对齐方式, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
-func (t *Table) SetItemTextAlign(iRow int, iCol int, nAlign int) int {
+func (t *Table) SetItemTextAlign(iRow int, iCol int, nAlign xcc.TextFormatFlag_) int {
 	return xc.XTable_SetItemTextAlign(t.Handle, iRow, iCol, nAlign)
 }
 
@@ -231,7 +232,7 @@ func (t *Table) SetItemLine(iRow1 int, iCol1 int, iRow2 int, iCol2 int, nFlag in
 // iCol: 列索引.
 //
 // flag: 标识, Table_Flag_.
-func (t *Table) SetItemFlag(iRow int, iCol int, flag int) int {
+func (t *Table) SetItemFlag(iRow int, iCol int, flag xcc.Table_Flag_) int {
 	return xc.XTable_SetItemFlag(t.Handle, iRow, iCol, flag)
 }
 

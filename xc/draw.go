@@ -1,6 +1,10 @@
 package xc
 
-import "unsafe"
+import (
+	"unsafe"
+
+	"github.com/twgh/xcgui/xcc"
+)
 
 // 绘制_创建, 创建图形绘制模块实例, 返回句柄.
 //
@@ -269,7 +273,7 @@ func XDraw_SetTextVertical(hDraw int, bVertical bool) int {
 // hDraw: 图形绘制句柄.
 //
 // nFlags: 对齐标识, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
-func XDraw_SetTextAlign(hDraw int, nFlags int) int {
+func XDraw_SetTextAlign(hDraw int, nFlags xcc.TextFormatFlag_) int {
 	r, _, _ := xDraw_SetTextAlign.Call(uintptr(hDraw), uintptr(nFlags))
 	return int(r)
 }
@@ -329,7 +333,7 @@ func XDraw_SetClipRect(hDraw int, pRect *RECT) int {
 // hDraw: 图形绘制句柄.
 //
 // mode	渲染模式 XC_DWRITE_RENDERING_MODE_.
-func XDraw_SetD2dTextRenderingMode(hDraw int, mode int) int {
+func XDraw_SetD2dTextRenderingMode(hDraw int, mode xcc.XC_DWRITE_RENDERING_MODE_) int {
 	r, _, _ := xDraw_SetD2dTextRenderingMode.Call(uintptr(hDraw), uintptr(mode))
 	return int(r)
 }
@@ -701,7 +705,7 @@ func XDraw_GDI_Rectangle(hDraw int, nLeftRect int, nTopRect int, nRightRect int,
 // color2: 结束颜色, ABGR颜色.
 //
 // mode: 模式, GRADIENT_FILL_.
-func XDraw_GradientFill2(hDraw int, pRect *RECT, color1 int, color2 int, mode int) int {
+func XDraw_GradientFill2(hDraw int, pRect *RECT, color1 int, color2 int, mode xcc.GRADIENT_FILL_) int {
 	r, _, _ := xDraw_GradientFill2.Call(uintptr(hDraw), uintptr(unsafe.Pointer(pRect)), uintptr(color1), uintptr(color2), uintptr(mode))
 	return int(r)
 }
@@ -717,7 +721,7 @@ func XDraw_GradientFill2(hDraw int, pRect *RECT, color1 int, color2 int, mode in
 // color2: 结束颜色, ABGR颜色.
 //
 // mode: 模式, GRADIENT_FILL_.
-func XDraw_GradientFill2F(hDraw int, pRect *RECTF, color1 int, color2 int, mode int) int {
+func XDraw_GradientFill2F(hDraw int, pRect *RECTF, color1 int, color2 int, mode xcc.GRADIENT_FILL_) int {
 	r, _, _ := xDraw_GradientFill2F.Call(uintptr(hDraw), uintptr(unsafe.Pointer(pRect)), uintptr(color1), uintptr(color2), uintptr(mode))
 	return int(r)
 }
@@ -737,7 +741,7 @@ func XDraw_GradientFill2F(hDraw int, pRect *RECTF, color1 int, color2 int, mode 
 // color4: 结束颜色, ABGR颜色.
 //
 // mode: 模式, GRADIENT_FILL_.
-func XDraw_GradientFill4(hDraw int, pRect *RECT, color1 int, color2 int, color3 int, color4 int, mode int) bool {
+func XDraw_GradientFill4(hDraw int, pRect *RECT, color1 int, color2 int, color3 int, color4 int, mode xcc.GRADIENT_FILL_) bool {
 	r, _, _ := xDraw_GradientFill4.Call(uintptr(hDraw), uintptr(unsafe.Pointer(pRect)), uintptr(color1), uintptr(color2), uintptr(color3), uintptr(color4), uintptr(mode))
 	return int(r) != 0
 }
@@ -757,7 +761,7 @@ func XDraw_GradientFill4(hDraw int, pRect *RECT, color1 int, color2 int, color3 
 // color4: 结束颜色, ABGR颜色.
 //
 // mode: 模式, GRADIENT_FILL_.
-func XDraw_GradientFill4F(hDraw int, pRect *RECTF, color1 int, color2 int, color3 int, color4 int, mode int) bool {
+func XDraw_GradientFill4F(hDraw int, pRect *RECTF, color1 int, color2 int, color3 int, color4 int, mode xcc.GRADIENT_FILL_) bool {
 	r, _, _ := xDraw_GradientFill4F.Call(uintptr(hDraw), uintptr(unsafe.Pointer(pRect)), uintptr(color1), uintptr(color2), uintptr(color3), uintptr(color4), uintptr(mode))
 	return int(r) != 0
 }

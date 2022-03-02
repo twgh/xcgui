@@ -191,7 +191,7 @@ func (l *ListView) SetVirtualItemCount(iGroup int, nCount int) bool {
 // 列表视_置项背景绘制标志, 置是否绘制指定状态下项的背景.
 //
 // nFlags: 标志位: List_DrawItemBk_Flag_.
-func (l *ListView) SetDrawItemBkFlags(nFlags int) int {
+func (l *ListView) SetDrawItemBkFlags(nFlags xcc.List_DrawItemBk_Flag_) int {
 	return xc.XListView_SetDrawItemBkFlags(l.Handle, nFlags)
 }
 

@@ -1,6 +1,10 @@
 package xc
 
-import "unsafe"
+import (
+	"unsafe"
+
+	"github.com/twgh/xcgui/xcc"
+)
 
 // 组合框_创建, 返回元素句柄.
 //
@@ -163,9 +167,9 @@ func XComboBox_GetSelItem(hEle int) int {
 // 组合框_取状态, 返回: ComboBox_State_.
 //
 // hEle: 元素句柄.
-func XComboBox_GetState(hEle int) int {
+func XComboBox_GetState(hEle int) xcc.ComboBox_State_ {
 	r, _, _ := xComboBox_GetState.Call(uintptr(hEle))
-	return int(r)
+	return xcc.ComboBox_State_(r)
 }
 
 // 组合框_添加项文本, 返回项索引.

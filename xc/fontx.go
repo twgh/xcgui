@@ -1,6 +1,10 @@
 package xc
 
-import "unsafe"
+import (
+	"unsafe"
+
+	"github.com/twgh/xcgui/xcc"
+)
 
 // 字体_创建, 创建炫彩字体, 当字体句柄与元素关联后, 会自动释放, 返回字体句柄.
 //
@@ -17,7 +21,7 @@ func XFont_Create(size int) int {
 // size: 字体大小, 单位(pt,磅).
 //
 // style: 字体样式, FontStyle_.
-func XFont_CreateEx(pName string, size int, style int) int {
+func XFont_CreateEx(pName string, size int, style xcc.FontStyle_) int {
 	r, _, _ := xFont_CreateEx.Call(StrPtr(pName), uintptr(size), uintptr(style))
 	return int(r)
 }
@@ -53,7 +57,7 @@ func XFont_CreateFromFont(pFont int) int {
 // size: 字体大小, 单位(pt,磅).
 //
 // style: 字体样式, FontStyle_.
-func XFont_CreateFromFile(pFontFile string, size int, style int) int {
+func XFont_CreateFromFile(pFontFile string, size int, style xcc.FontStyle_) int {
 	r, _, _ := xFont_CreateFromFile.Call(StrPtr(pFontFile), uintptr(size), uintptr(style))
 	return int(r)
 }
@@ -65,7 +69,7 @@ func XFont_CreateFromFile(pFontFile string, size int, style int) int {
 // fontSize: 字体大小, 单位(pt,磅).
 //
 // style: 字体样式, FontStyle_.
-func XFont_CreateFromMem(data []byte, fontSize, style int) int {
+func XFont_CreateFromMem(data []byte, fontSize int, style xcc.FontStyle_) int {
 	r, _, _ := xFont_CreateFromMem.Call(ByteSliceDataPtr(&data), uintptr(len(data)), uintptr(fontSize), uintptr(style))
 	return int(r)
 }
@@ -81,7 +85,7 @@ func XFont_CreateFromMem(data []byte, fontSize, style int) int {
 // style: 字体样式, FontStyle_.
 //
 // hModule: xx.
-func XFont_CreateFromRes(id int, pType string, fontSize, style, hModule int) int {
+func XFont_CreateFromRes(id int, pType string, fontSize int, style xcc.FontStyle_, hModule int) int {
 	r, _, _ := xFont_CreateFromRes.Call(uintptr(id), StrPtr(pType), uintptr(fontSize), uintptr(style), uintptr(hModule))
 	return int(r)
 }

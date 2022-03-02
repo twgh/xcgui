@@ -1,6 +1,10 @@
 package xc
 
-import "unsafe"
+import (
+	"unsafe"
+
+	"github.com/twgh/xcgui/xcc"
+)
 
 // 数据适配器表_创建, 创建列表框元素数据适配器, 返回数据适配器句柄.
 func XAdTable_Create() int {
@@ -27,9 +31,9 @@ func XAdTable_Sort(hAdapter int, iColumn int, bAscending bool) int {
 // iItem: 项索引.
 //
 // iColumn: 列索引.
-func XAdTable_GetItemDataType(hAdapter int, iItem int, iColumn int) int {
+func XAdTable_GetItemDataType(hAdapter int, iItem int, iColumn int) xcc.Adapter_Date_Type_ {
 	r, _, _ := xAdTable_GetItemDataType.Call(uintptr(hAdapter), uintptr(iItem), uintptr(iColumn))
-	return int(r)
+	return xcc.Adapter_Date_Type_(r)
 }
 
 // 数据适配器表_取项数据类型扩展, 返回: Adapter_Date_Type_.
@@ -39,9 +43,9 @@ func XAdTable_GetItemDataType(hAdapter int, iItem int, iColumn int) int {
 // iItem: 项索引.
 //
 // pName: 字段称.
-func XAdTable_GetItemDataTypeEx(hAdapter int, iItem int, pName string) int {
+func XAdTable_GetItemDataTypeEx(hAdapter int, iItem int, pName string) xcc.Adapter_Date_Type_ {
 	r, _, _ := xAdTable_GetItemDataTypeEx.Call(uintptr(hAdapter), uintptr(iItem), StrPtr(pName))
-	return int(r)
+	return xcc.Adapter_Date_Type_(r)
 }
 
 // 数据适配器表_添加列, 添加数据列.

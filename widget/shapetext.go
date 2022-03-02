@@ -2,6 +2,7 @@ package widget
 
 import (
 	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
 )
 
 // ShapeText 形状对象文本.
@@ -112,7 +113,7 @@ func (s *ShapeText) GetTextColor() int {
 // 形状文本_置文本对齐.
 //
 // align: 文本对齐方式, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
-func (s *ShapeText) SetTextAlign(align int) int {
+func (s *ShapeText) SetTextAlign(align xcc.TextFormatFlag_) int {
 	return xc.XShapeText_SetTextAlign(s.Handle, align)
 }
 

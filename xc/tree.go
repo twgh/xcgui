@@ -1,6 +1,10 @@
 package xc
 
-import "unsafe"
+import (
+	"unsafe"
+
+	"github.com/twgh/xcgui/xcc"
+)
 
 // 列表树_创建, 创建树元素, 返回元素句柄.
 //
@@ -167,7 +171,7 @@ func XTree_SetItemTemplateXMLSelFromString(hEle int, pStringXML string) bool {
 // hEle: 元素句柄.
 //
 // nFlags: 标志位: List_DrawItemBk_Flag_.
-func XTree_SetDrawItemBkFlags(hEle int, nFlags int) int {
+func XTree_SetDrawItemBkFlags(hEle int, nFlags xcc.List_DrawItemBk_Flag_) int {
 	r, _, _ := xTree_SetDrawItemBkFlags.Call(uintptr(hEle), uintptr(nFlags))
 	return int(r)
 }

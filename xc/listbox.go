@@ -1,6 +1,10 @@
 package xc
 
-import "unsafe"
+import (
+	"unsafe"
+
+	"github.com/twgh/xcgui/xcc"
+)
 
 // 列表框_创建, 创建列表框元素, 返回元素句柄.
 //
@@ -63,7 +67,7 @@ func XListBox_SetVirtualRowCount(hEle int, nRowCount int) int {
 // hEle: 元素句柄.
 //
 // nFlags: 标志位, List_DrawItemBk_Flag_.
-func XListBox_SetDrawItemBkFlags(hEle int, nFlags int) int {
+func XListBox_SetDrawItemBkFlags(hEle int, nFlags xcc.List_DrawItemBk_Flag_) int {
 	r, _, _ := xListBox_SetDrawItemBkFlags.Call(uintptr(hEle), uintptr(nFlags))
 	return int(r)
 }

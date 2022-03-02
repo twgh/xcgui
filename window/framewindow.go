@@ -2,6 +2,7 @@ package window
 
 import (
 	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
 )
 
 // 框架窗口.
@@ -24,7 +25,7 @@ type FrameWindow struct {
 // hWndParent: 父窗口.
 //
 // XCStyle: GUI库窗口样式: Window_Style_.
-func NewFrameWindow(x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle int) *FrameWindow {
+func NewFrameWindow(x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle xcc.Window_Style_) *FrameWindow {
 	p := &FrameWindow{}
 	p.SetHandle(xc.XFrameWnd_Create(x, y, cx, cy, pTitle, hWndParent, XCStyle))
 	return p
@@ -51,7 +52,7 @@ func NewFrameWindow(x int, y int, cx int, cy int, pTitle string, hWndParent int,
 // hWndParent: 父窗口.
 //
 // XCStyle: GUI库窗口样式: Window_Style_.
-func NewFrameWindowEx(dwExStyle int, dwStyle int, lpClassName string, x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle int) *FrameWindow {
+func NewFrameWindowEx(dwExStyle int, dwStyle int, lpClassName string, x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle xcc.Window_Style_) *FrameWindow {
 	p := &FrameWindow{}
 	p.SetHandle(xc.XFrameWnd_CreateEx(dwExStyle, dwStyle, lpClassName, x, y, cx, cy, pTitle, hWndParent, XCStyle))
 	return p
@@ -150,7 +151,7 @@ func (fw *FrameWindow) LoadLayoutFile(aPaneList []int, nPaneCount int, pFileName
 // hPaneNew: 当前窗格.
 //
 // align: 对齐方式, Pane_Align_.
-func (fw *FrameWindow) AddPane(hPaneDest int, hPaneNew int, align int) bool {
+func (fw *FrameWindow) AddPane(hPaneDest int, hPaneNew int, align xcc.Pane_Align_) bool {
 	return xc.XFrameWnd_AddPane(fw.Handle, hPaneDest, hPaneNew, align)
 }
 

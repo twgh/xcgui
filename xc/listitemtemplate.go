@@ -1,13 +1,17 @@
 package xc
 
-import "unsafe"
+import (
+	"unsafe"
+
+	"github.com/twgh/xcgui/xcc"
+)
 
 // 模板_加载从文件, 列表项模板文件载入, 返回模板句柄.
 //
 // nType: 模板类型, ListItemTemp_Type_.
 //
 // pFileName: 文件名.
-func XTemp_Load(nType int, pFileName string) int {
+func XTemp_Load(nType xcc.ListItemTemp_Type_, pFileName string) int {
 	r, _, _ := xTemp_Load.Call(uintptr(nType), StrPtr(pFileName))
 	return int(r)
 }
@@ -35,7 +39,7 @@ func XTemp_LoadZip(nType int, pZipFile string, pFileName string, pPassword strin
 // pFileName: 文件名.
 //
 // pPassword: zip密码.
-func XTemp_LoadZipMem(nType int, data []byte, pFileName string, pPassword string) int {
+func XTemp_LoadZipMem(nType xcc.ListItemTemp_Type_, data []byte, pFileName string, pPassword string) int {
 	r, _, _ := xTemp_LoadZipMem.Call(uintptr(nType), ByteSliceDataPtr(&data), uintptr(len(data)), StrPtr(pFileName), StrPtr(pPassword))
 	return int(r)
 }
@@ -49,7 +53,7 @@ func XTemp_LoadZipMem(nType int, data []byte, pFileName string, pPassword string
 // pOutTemp1: 返回模板句柄1, 项模板.
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
-func XTemp_LoadEx(nType int, pFileName string, pOutTemp1 *int, pOutTemp2 *int) bool {
+func XTemp_LoadEx(nType xcc.ListItemTemp_Type_, pFileName string, pOutTemp1 *int, pOutTemp2 *int) bool {
 	r, _, _ := xTemp_LoadEx.Call(uintptr(nType), StrPtr(pFileName), uintptr(unsafe.Pointer(&pOutTemp1)), uintptr(unsafe.Pointer(&pOutTemp2)))
 	return int(r) != 0
 }
@@ -67,7 +71,7 @@ func XTemp_LoadEx(nType int, pFileName string, pOutTemp1 *int, pOutTemp2 *int) b
 // pOutTemp1: 返回模板句柄1, 项模板.
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
-func XTemp_LoadZipEx(nType int, pZipFile string, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int) bool {
+func XTemp_LoadZipEx(nType xcc.ListItemTemp_Type_, pZipFile string, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int) bool {
 	r, _, _ := xTemp_LoadZipEx.Call(uintptr(nType), StrPtr(pZipFile), StrPtr(pFileName), StrPtr(pPassword), uintptr(unsafe.Pointer(&pOutTemp1)), uintptr(unsafe.Pointer(&pOutTemp2)))
 	return int(r) != 0
 }
@@ -85,7 +89,7 @@ func XTemp_LoadZipEx(nType int, pZipFile string, pFileName string, pPassword str
 // pOutTemp1: 返回模板句柄1, 项模板.
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
-func XTemp_LoadZipMemEx(nType int, data []byte, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int) bool {
+func XTemp_LoadZipMemEx(nType xcc.ListItemTemp_Type_, data []byte, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int) bool {
 	r, _, _ := xTemp_LoadZipMemEx.Call(uintptr(nType), ByteSliceDataPtr(&data), uintptr(len(data)), StrPtr(pFileName), StrPtr(pPassword), uintptr(unsafe.Pointer(&pOutTemp1)), uintptr(unsafe.Pointer(&pOutTemp2)))
 	return int(r) != 0
 }
@@ -95,7 +99,7 @@ func XTemp_LoadZipMemEx(nType int, data []byte, pFileName string, pPassword stri
 // nType: 模板类型, ListItemTemp_Type_.
 //
 // pStringXML: 字符串指针.
-func XTemp_LoadFromString(nType int, pStringXML string) int {
+func XTemp_LoadFromString(nType xcc.ListItemTemp_Type_, pStringXML string) int {
 	r, _, _ := xTemp_LoadFromString.Call(uintptr(nType), XC_wtoa(pStringXML))
 	return int(r)
 }
@@ -109,7 +113,7 @@ func XTemp_LoadFromString(nType int, pStringXML string) int {
 // pOutTemp1: 返回模板句柄1, 项模板.
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
-func XTemp_LoadFromStringEx(nType int, pStringXML string, pOutTemp1 *int, pOutTemp2 *int) bool {
+func XTemp_LoadFromStringEx(nType xcc.ListItemTemp_Type_, pStringXML string, pOutTemp1 *int, pOutTemp2 *int) bool {
 	r, _, _ := xTemp_LoadFromStringEx.Call(uintptr(nType), XC_wtoa(pStringXML), uintptr(unsafe.Pointer(&pOutTemp1)), uintptr(unsafe.Pointer(&pOutTemp2)))
 	return int(r) != 0
 }
@@ -117,9 +121,9 @@ func XTemp_LoadFromStringEx(nType int, pStringXML string, pOutTemp1 *int, pOutTe
 // 模板_取类型, 获取列表项模板类型, 返回: ListItemTemp_Type_.
 //
 // hTemp: 列表项模板句柄.
-func XTemp_GetType(hTemp int) int {
+func XTemp_GetType(hTemp int) xcc.ListItemTemp_Type_ {
 	r, _, _ := xTemp_GetType.Call(uintptr(hTemp))
-	return int(r)
+	return xcc.ListItemTemp_Type_(r)
 }
 
 // 模板_销毁, 项模板销毁.
@@ -133,7 +137,7 @@ func XTemp_Destroy(hTemp int) bool {
 // 模板_创建, 创建项模板, 返回模板句柄.
 //
 // nType: 模板类型, ListItemTemp_Type_.
-func XTemp_Create(nType int) int {
+func XTemp_Create(nType xcc.ListItemTemp_Type_) int {
 	r, _, _ := xTemp_Create.Call(uintptr(nType))
 	return int(r)
 }
@@ -161,7 +165,7 @@ func XTemp_AddNode(pParentNode int, pNode int) bool {
 // 模板_创建节点.
 //
 // nType: 对象类型: XC_.
-func XTemp_CreateNode(nType int) int {
+func XTemp_CreateNode(nType xcc.XC_OBJECT_TYPE) int {
 	r, _, _ := xTemp_CreateNode.Call(uintptr(nType))
 	return int(r)
 }

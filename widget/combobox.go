@@ -165,7 +165,7 @@ func (c *ComboBox) GetSelItem() int {
 }
 
 // 组合框_取状态, 返回: ComboBox_State_.
-func (c *ComboBox) GetState() int {
+func (c *ComboBox) GetState() xcc.ComboBox_State_ {
 	return xc.XComboBox_GetState(c.Handle)
 }
 

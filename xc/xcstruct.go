@@ -1,5 +1,7 @@
 package xc
 
+import "github.com/twgh/xcgui/xcc"
+
 // 菜单-弹出窗口信息
 type Menu_PopupWnd_ struct {
 	HWindow   int   // 窗口句柄
@@ -15,63 +17,63 @@ type Menu_DrawBackground_ struct {
 
 // 菜单项自绘结构
 type Menu_DrawItem_ struct {
-	HMenu   int     // 菜单句柄
-	HWindow int     // 当前弹出菜单项的窗口句柄
-	NID     int32   // ID
-	NState  int32   // 状态: Menu_Item_Flag_
-	RcItem  RECT    // 坐标
-	HIcon   int     // 菜单项图标句柄
-	PText   uintptr // 文本, 使用xc.UintPtrToString()函数转换到string
+	HMenu   int                 // 菜单句柄
+	HWindow int                 // 当前弹出菜单项的窗口句柄
+	NID     int32               // ID
+	NState  xcc.Menu_Item_Flag_ // 状态: Menu_Item_Flag_
+	RcItem  RECT                // 坐标
+	HIcon   int                 // 菜单项图标句柄
+	PText   uintptr             // 文本, 使用xc.UintPtrToString()函数转换到string
 }
 
 // 列表框项信息
 type ListBox_Item_ struct {
-	Index      int32 // 项索引
-	NUserData  int   // 用户绑定数据
-	NHeight    int32 // 项默认高度
-	NSelHeight int32 // 项选中时高度
-	NState     int32 // 状态: List_Item_State_
-	RcItem     RECT  // 项坐标
-	HLayout    int   // 布局对象句柄
-	HTemp      int   // 列表项模板句柄
+	Index      int32                // 项索引
+	NUserData  int                  // 用户绑定数据
+	NHeight    int32                // 项默认高度
+	NSelHeight int32                // 项选中时高度
+	NState     xcc.List_Item_State_ // 状态: List_Item_State_
+	RcItem     RECT                 // 项坐标
+	HLayout    int                  // 布局对象句柄
+	HTemp      int                  // 列表项模板句柄
 }
 
 // List 列表头项信息
 type List_Header_Item_ struct {
-	Index          int32 // 项索引
-	NUserData      int   // 用户绑定数据
-	BSort          bool  // 是否支持排序
-	NSortType      int32 // 排序方式,0无效,1升序,2降序
-	IColumnAdapter int32 // 对应数据适配器中的列索引
-	NState         int32 // 状态: Common_State3_
-	RcItem         RECT  // 项坐标
-	HLayout        int   // 布局对象句柄
-	HTemp          int   // 列表项模板句柄
+	Index          int32              // 项索引
+	NUserData      int                // 用户绑定数据
+	BSort          bool               // 是否支持排序
+	NSortType      int32              // 排序方式,0无效,1升序,2降序
+	IColumnAdapter int32              // 对应数据适配器中的列索引
+	NState         xcc.Common_State3_ // 状态: Common_State3_
+	RcItem         RECT               // 项坐标
+	HLayout        int                // 布局对象句柄
+	HTemp          int                // 列表项模板句柄
 }
 
 // List 列表项信息
 type List_Item_ struct {
-	Index     int32 // 项索引
-	ISubItem  int32 // 子项索引
-	NUserData int   // 用户数据
-	NState    int32 // 状态: List_Item_State_
-	RcItem    RECT  // 未使用
-	HLayout   int   // 布局对象句柄
-	HTemp     int   // 列表项模板句柄
+	Index     int32                // 项索引
+	ISubItem  int32                // 子项索引
+	NUserData int                  // 用户数据
+	NState    xcc.List_Item_State_ // 状态: List_Item_State_
+	RcItem    RECT                 // 未使用
+	HLayout   int                  // 布局对象句柄
+	HTemp     int                  // 列表项模板句柄
 }
 
 // Tree 树项信息
 type Tree_Item_ struct {
-	NID        int32 // 项ID
-	NDepth     int32 // 深度
-	NHeight    int32 // 项高度
-	NSelHeight int32 // 项选中状态高度
-	NUserData  int   // 用户数据
-	BExpand    bool  // 展开
-	NState     int32 // 状态:　Tree_Item_State_
-	RcItem     RECT  // 坐标
-	HLayout    int   // 布局对象句柄
-	HTemp      int   // 列表项模板句柄
+	NID        int32                // 项ID
+	NDepth     int32                // 深度
+	NHeight    int32                // 项高度
+	NSelHeight int32                // 项选中状态高度
+	NUserData  int                  // 用户数据
+	BExpand    bool                 // 展开
+	NState     xcc.Tree_Item_State_ // 状态:　Tree_Item_State_
+	RcItem     RECT                 // 坐标
+	HLayout    int                  // 布局对象句柄
+	HTemp      int                  // 列表项模板句柄
 }
 
 // 树UI元素拖动项
@@ -83,13 +85,13 @@ type Tree_Drag_Item_ struct {
 
 // ListView 列表视项信息
 type ListView_Item_ struct {
-	IGroup    int32 // 项所述组索引 -1没有组
-	IItem     int32 // 项在数组中位置索引,如果此致为-1,那么为组
-	NUserData int   // 用户绑定数据
-	NState    int32 // 状态: List_Item_State_
-	RcItem    RECT  // 整个区域,包含边框
-	HLayout   int   // 布局对象
-	HTemp     int   // 列表项模板
+	IGroup    int32                // 项所述组索引 -1没有组
+	IItem     int32                // 项在数组中位置索引,如果此致为-1,那么为组
+	NUserData int                  // 用户绑定数据
+	NState    xcc.List_Item_State_ // 状态: List_Item_State_
+	RcItem    RECT                 // 整个区域,包含边框
+	HLayout   int                  // 布局对象
+	HTemp     int                  // 列表项模板
 }
 
 type RECT struct {
@@ -161,11 +163,11 @@ type Edit_Data_Copy_ struct {
 
 // Edit 样式信息
 type Edit_Style_Info_ struct {
-	Type            int32  // 样式类型: Edit_Style_Type_
-	NRef            uint16 // 引用计数
-	HFont_image_obj int    // 字体,图片,UI对象句柄
-	Color           int32  // 颜色
-	BColor          bool   // 是否使用颜色
+	Type            xcc.Edit_Style_Type_ // 样式类型: Edit_Style_Type_
+	NRef            uint16               // 引用计数
+	HFont_image_obj int                  // 字体,图片,UI对象句柄
+	Color           int32                // 颜色
+	BColor          bool                 // 是否使用颜色
 }
 
 // Edit 数据复制-样式
@@ -183,9 +185,9 @@ type Position_ struct {
 
 // 字体信息
 type Font_Info_ struct {
-	NSize  int32      // 字体大小, 单位(pt,磅).
-	NStyle int32      // 字体样式: FontStyle_
-	Name   [32]uint16 // 字体名称, 使用xc.Font_Info_Name()函数转换为string.
+	NSize  int32          // 字体大小, 单位(pt,磅).
+	NStyle xcc.FontStyle_ // 字体样式: FontStyle_
+	Name   [32]uint16     // 字体名称, 使用xc.Font_Info_Name()函数转换为string.
 }
 
 // ListBox 列表框项信息2
@@ -197,10 +199,10 @@ type ListBox_Item_Info_ struct {
 
 // 月历元素项数据
 type MonthCal_item_ struct {
-	NDay   int32 // 日期
-	NType  int32 // 1上月, 2当月, 3下月
-	NState int32 // 组合状态, MonthCal_State_Flag_
-	RcItem RECT  // 项坐标
+	NDay   int32             // 日期
+	NType  int32             // 1上月, 2当月, 3下月
+	NState xcc.CombinedState // 组合状态, MonthCal_State_Flag_
+	RcItem RECT              // 项坐标
 }
 
 // PGrid 属性网格项信息

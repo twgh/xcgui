@@ -3,6 +3,7 @@ package widget
 import (
 	"github.com/twgh/xcgui/objectbase"
 	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
 )
 
 // 弹出菜单.
@@ -66,7 +67,7 @@ func NewMenuByUIDName(name string) *Menu {
 // nParentID: 父项ID.
 //
 // nFlags: 标识, Menu_Item_Flag_.
-func (m *Menu) AddItem(nID int, pText string, nParentID int, nFlags int) int {
+func (m *Menu) AddItem(nID int, pText string, nParentID int, nFlags xcc.Menu_Item_Flag_) int {
 	return xc.XMenu_AddItem(m.Handle, nID, pText, nParentID, nFlags)
 }
 
@@ -81,7 +82,7 @@ func (m *Menu) AddItem(nID int, pText string, nParentID int, nFlags int) int {
 // hIcon: 菜单项图标句柄.
 //
 // nFlags: 标识, Menu_Item_Flag_.
-func (m *Menu) AddItemIcon(nID int, pText string, nParentID int, hIcon int, nFlags int) int {
+func (m *Menu) AddItemIcon(nID int, pText string, nParentID int, hIcon int, nFlags xcc.Menu_Item_Flag_) int {
 	return xc.XMenu_AddItemIcon(m.Handle, nID, pText, nParentID, hIcon, nFlags)
 }
 
@@ -94,7 +95,7 @@ func (m *Menu) AddItemIcon(nID int, pText string, nParentID int, hIcon int, nFla
 // nFlags: 标识, Menu_Item_Flag_.
 //
 // insertID: 插入位置ID.
-func (m *Menu) InsertItem(nID int, pText string, nFlags int, insertID int) int {
+func (m *Menu) InsertItem(nID int, pText string, nFlags xcc.Menu_Item_Flag_, insertID int) int {
 	return xc.XMenu_InsertItem(m.Handle, nID, pText, nFlags, insertID)
 }
 
@@ -109,7 +110,7 @@ func (m *Menu) InsertItem(nID int, pText string, nFlags int, insertID int) int {
 // nFlags: 标识, Menu_Item_Flag_.
 //
 // insertID: 插入位置ID.
-func (m *Menu) InsertItemIcon(nID int, pText string, hIcon int, nFlags int, insertID int) int {
+func (m *Menu) InsertItemIcon(nID int, pText string, hIcon int, nFlags xcc.Menu_Item_Flag_, insertID int) int {
 	return xc.XMenu_InsertItemIcon(m.Handle, nID, pText, hIcon, nFlags, insertID)
 }
 
@@ -180,7 +181,7 @@ func (m *Menu) EnableDrawItem(bEnable bool) int {
 // hParentEle: 父元素句柄, 如果该值不为NULL, hParentEle元素将接收菜单消息事件, 否则将由hParentWnd窗口接收菜单的消息事件.
 //
 // nPosition: 弹出位置, Menu_Popup_Position_.
-func (m *Menu) Popup(hParentWnd int, x int, y int, hParentEle int, nPosition int) bool {
+func (m *Menu) Popup(hParentWnd int, x int, y int, hParentEle int, nPosition xcc.Menu_Popup_Position_) bool {
 	return xc.XMenu_Popup(m.Handle, hParentWnd, x, y, hParentEle, nPosition)
 }
 

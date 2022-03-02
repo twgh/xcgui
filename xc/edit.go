@@ -3,6 +3,8 @@ package xc
 import (
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/xcc"
 )
 
 // 编辑框_创建, 返回元素句柄.
@@ -34,7 +36,7 @@ func XEdit_Create(x int, y int, cx int, cy int, hParent int) int {
 // nType: 类型, Edit_Type_.
 //
 // hParent: 父为窗口句柄或元素句柄.
-func XEdit_CreateEx(x int, y int, cx int, cy int, nType int, hParent int) int {
+func XEdit_CreateEx(x int, y int, cx int, cy int, nType xcc.Edit_Type_, hParent int) int {
 	r, _, _ := xEdit_CreateEx.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), uintptr(nType), uintptr(hParent))
 	return int(r)
 }
@@ -224,7 +226,7 @@ func XEdit_SetPasswordCharacter(hEle int, ch int) int {
 // hEle: 元素句柄.
 //
 // align: 对齐方式, Edit_TextAlign_Flag_.
-func XEdit_SetTextAlign(hEle int, align int) int {
+func XEdit_SetTextAlign(hEle int, align xcc.Edit_TextAlign_Flag_) int {
 	r, _, _ := xEdit_SetTextAlign.Call(uintptr(hEle), uintptr(align))
 	return int(r)
 }
@@ -407,12 +409,12 @@ func XEdit_AddStyle(hEle int, hFont_image_Obj int, color int, bColor bool) int {
 //
 // fontSize: 字体大小.
 //
-// fontStyle: 字体样式.
+// fontStyle: 字体样式, FontStyle_.
 //
 // color: 颜色.
 //
 // bColor: 是否使用颜色.
-func XEdit_AddStyleEx(hEle int, fontName string, fontSize int, fontStyle int, color int, bColor bool) int {
+func XEdit_AddStyleEx(hEle int, fontName string, fontSize int, fontStyle xcc.FontStyle_, color int, bColor bool) int {
 	r, _, _ := xEdit_AddStyleEx.Call(uintptr(hEle), StrPtr(fontName), uintptr(fontSize), uintptr(fontStyle), uintptr(color), BoolPtr(bColor))
 	return int(r)
 }
@@ -726,7 +728,7 @@ func XEdit_Redo(hEle int) bool {
 // hImageBubble: 气泡背景.
 //
 // nFlag: 标志, Chat_Flag_.
-func XEdit_AddChatBegin(hEle int, hImageAvatar int, hImageBubble int, nFlag int) int {
+func XEdit_AddChatBegin(hEle int, hImageAvatar int, hImageBubble int, nFlag xcc.Chat_Flag_) int {
 	r, _, _ := xEdit_AddChatBegin.Call(uintptr(hEle), uintptr(hImageAvatar), uintptr(hImageBubble), uintptr(nFlag))
 	return int(r)
 }

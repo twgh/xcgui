@@ -1,6 +1,10 @@
 package xc
 
-import "unsafe"
+import (
+	"unsafe"
+
+	"github.com/twgh/xcgui/xcc"
+)
 
 // 窗口组件_判断显示, 判断UI对象是否显示.
 //
@@ -107,7 +111,7 @@ func XWidget_LayoutItem_EnableFloat(hXCGUI int, bFloat bool) int {
 // nType: 类型, Layout_Size_.
 //
 // nWidth: 宽度.
-func XWidget_LayoutItem_SetWidth(hXCGUI, nType, nWidth int) int {
+func XWidget_LayoutItem_SetWidth(hXCGUI int, nType xcc.Layout_Size_, nWidth int) int {
 	r, _, _ := xWidget_LayoutItem_SetWidth.Call(uintptr(hXCGUI), uintptr(nType), uintptr(nWidth))
 	return int(r)
 }
@@ -119,7 +123,7 @@ func XWidget_LayoutItem_SetWidth(hXCGUI, nType, nWidth int) int {
 // nType: 类型, Layout_Size_.
 //
 // nHeight: 高度.
-func XWidget_LayoutItem_SetHeight(hXCGUI, nType, nHeight int) int {
+func XWidget_LayoutItem_SetHeight(hXCGUI int, nType xcc.Layout_Size_, nHeight int) int {
 	r, _, _ := xWidget_LayoutItem_SetHeight.Call(uintptr(hXCGUI), uintptr(nType), uintptr(nHeight))
 	return int(r)
 }
@@ -153,7 +157,7 @@ func XWidget_LayoutItem_GetHeight(hXCGUI int, pType, pHeight *int) int {
 // hXCGUI: UI对象句柄.
 //
 // nAlign: 对齐方式, Layout_Align_Axis_.
-func XWidget_LayoutItem_SetAlign(hXCGUI, nAlign int) int {
+func XWidget_LayoutItem_SetAlign(hXCGUI int, nAlign xcc.Layout_Align_Axis_) int {
 	r, _, _ := xWidget_LayoutItem_SetAlign.Call(uintptr(hXCGUI), uintptr(nAlign))
 	return int(r)
 }

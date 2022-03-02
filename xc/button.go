@@ -1,5 +1,7 @@
 package xc
 
+import "github.com/twgh/xcgui/xcc"
+
 // 按钮_创建.
 //
 // x: 按钮x坐标.
@@ -41,7 +43,7 @@ func XBtn_SetCheck(hEle int, bCheck bool) bool {
 // hEle: 元素句柄.
 //
 // nState: 按钮状态, Common_State3_.
-func XBtn_SetState(hEle int, nState int) int {
+func XBtn_SetState(hEle int, nState xcc.Common_State3_) int {
 	r, _, _ := xBtn_SetState.Call(uintptr(hEle), uintptr(nState))
 	return int(r)
 }
@@ -49,25 +51,25 @@ func XBtn_SetState(hEle int, nState int) int {
 // 按钮_取状态, 返回: Common_State3_.
 //
 // hEle: 元素句柄.
-func XBtn_GetState(hEle int) int {
+func XBtn_GetState(hEle int) xcc.Common_State3_ {
 	r, _, _ := xBtn_GetState.Call(uintptr(hEle))
-	return int(r)
+	return xcc.Common_State3_(r)
 }
 
 // 按钮_取状态扩展, 返回: Button_State_.
 //
 // hEle: 元素句柄.
-func XBtn_GetStateEx(hEle int) int {
+func XBtn_GetStateEx(hEle int) xcc.Button_State_ {
 	r, _, _ := xBtn_GetStateEx.Call(uintptr(hEle))
-	return int(r)
+	return xcc.Button_State_(r)
 }
 
 // 按钮_置类型扩展, 设置按钮类型并自动修改样式和文本对齐方式.
 //
 // hEle: 元素句柄.
 //
-// nType: 按钮类型, Button_Type_.
-func XBtn_SetTypeEx(hEle int, nType int) int {
+// nType: 按钮类型, Button_Type_ , element_type_ , xc_ex_error.
+func XBtn_SetTypeEx(hEle int, nType xcc.XC_OBJECT_TYPE_EX) int {
 	r, _, _ := xBtn_SetTypeEx.Call(uintptr(hEle), uintptr(nType))
 	return int(r)
 }
@@ -113,7 +115,7 @@ func XBtn_GetBindEle(hEle int) int {
 // hEle: 元素句柄.
 //
 // nFlags: 对齐方式, TextFormatFlag_ , TextAlignFlag_ , TextTrimming_.
-func XBtn_SetTextAlign(hEle int, nFlags int) int {
+func XBtn_SetTextAlign(hEle int, nFlags xcc.TextFormatFlag_) int {
 	r, _, _ := xBtn_SetTextAlign.Call(uintptr(hEle), uintptr(nFlags))
 	return int(r)
 }
@@ -121,9 +123,9 @@ func XBtn_SetTextAlign(hEle int, nFlags int) int {
 // 按钮_取文本对齐方式, 返回: TextFormatFlag_ , TextAlignFlag_ , TextTrimming_.
 //
 // hEle: 元素句柄.
-func XBtn_GetTextAlign(hEle int) int {
+func XBtn_GetTextAlign(hEle int) xcc.TextFormatFlag_ {
 	r, _, _ := xBtn_GetTextAlign.Call(uintptr(hEle))
-	return int(r)
+	return xcc.TextFormatFlag_(r)
 }
 
 // 按钮_置图标对齐.
@@ -131,7 +133,7 @@ func XBtn_GetTextAlign(hEle int) int {
 // hEle: 元素句柄.
 //
 // align: 对齐方式, Button_Icon_Align_.
-func XBtn_SetIconAlign(hEle int, align int) int {
+func XBtn_SetIconAlign(hEle int, align xcc.Button_Icon_Align_) int {
 	r, _, _ := xBtn_SetIconAlign.Call(uintptr(hEle), uintptr(align))
 	return int(r)
 }

@@ -1,5 +1,7 @@
 package xc
 
+import "github.com/twgh/xcgui/xcc"
+
 // 菜单_创建, 创建菜单, 默认弹出菜单窗口关闭后自动销毁.
 func XMenu_Create() int {
 	r, _, _ := xMenu_Create.Call()
@@ -17,7 +19,7 @@ func XMenu_Create() int {
 // nParentID: 父项ID.
 //
 // nFlags: 标识, Menu_Item_Flag_.
-func XMenu_AddItem(hMenu int, nID int, pText string, nParentID int, nFlags int) int {
+func XMenu_AddItem(hMenu int, nID int, pText string, nParentID int, nFlags xcc.Menu_Item_Flag_) int {
 	r, _, _ := xMenu_AddItem.Call(uintptr(hMenu), uintptr(nID), StrPtr(pText), uintptr(nParentID), uintptr(nFlags))
 	return int(r)
 }
@@ -35,7 +37,7 @@ func XMenu_AddItem(hMenu int, nID int, pText string, nParentID int, nFlags int) 
 // hIcon: 菜单项图标句柄.
 //
 // nFlags: 标识, Menu_Item_Flag_.
-func XMenu_AddItemIcon(hMenu int, nID int, pText string, nParentID int, hIcon int, nFlags int) int {
+func XMenu_AddItemIcon(hMenu int, nID int, pText string, nParentID int, hIcon int, nFlags xcc.Menu_Item_Flag_) int {
 	r, _, _ := xMenu_AddItemIcon.Call(uintptr(hMenu), uintptr(nID), StrPtr(pText), uintptr(nParentID), uintptr(hIcon), uintptr(nFlags))
 	return int(r)
 }
@@ -51,7 +53,7 @@ func XMenu_AddItemIcon(hMenu int, nID int, pText string, nParentID int, hIcon in
 // nFlags: 标识, Menu_Item_Flag_.
 //
 // insertID: 插入位置ID.
-func XMenu_InsertItem(hMenu int, nID int, pText string, nFlags int, insertID int) int {
+func XMenu_InsertItem(hMenu int, nID int, pText string, nFlags xcc.Menu_Item_Flag_, insertID int) int {
 	r, _, _ := xMenu_InsertItem.Call(uintptr(hMenu), uintptr(nID), StrPtr(pText), uintptr(nFlags), uintptr(insertID))
 	return int(r)
 }
@@ -69,7 +71,7 @@ func XMenu_InsertItem(hMenu int, nID int, pText string, nFlags int, insertID int
 // nFlags: 标识, Menu_Item_Flag_.
 //
 // insertID: 插入位置ID.
-func XMenu_InsertItemIcon(hMenu int, nID int, pText string, hIcon int, nFlags int, insertID int) int {
+func XMenu_InsertItemIcon(hMenu int, nID int, pText string, hIcon int, nFlags xcc.Menu_Item_Flag_, insertID int) int {
 	r, _, _ := xMenu_InsertItemIcon.Call(uintptr(hMenu), uintptr(nID), StrPtr(pText), uintptr(hIcon), uintptr(nFlags), uintptr(insertID))
 	return int(r)
 }
@@ -167,7 +169,7 @@ func XMenu_EnableDrawItem(hMenu int, bEnable bool) int {
 // hParentEle: 父元素句柄, 如果该值不为NULL, hParentEle元素将接收菜单消息事件, 否则将由hParentWnd窗口接收菜单的消息事件.
 //
 // nPosition: 弹出位置, Menu_Popup_Position_.
-func XMenu_Popup(hMenu int, hParentWnd int, x int, y int, hParentEle int, nPosition int) bool {
+func XMenu_Popup(hMenu int, hParentWnd int, x int, y int, hParentEle int, nPosition xcc.Menu_Popup_Position_) bool {
 	r, _, _ := xMenu_Popup.Call(uintptr(hMenu), uintptr(hParentWnd), uintptr(x), uintptr(y), uintptr(hParentEle), uintptr(nPosition))
 	return int(r) != 0
 }

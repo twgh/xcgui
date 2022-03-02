@@ -84,24 +84,24 @@ func (b *Button) SetCheck(bCheck bool) bool {
 // 按钮_置状态.
 //
 // nState: 按钮状态, Common_State3_.
-func (b *Button) SetState(nState int) int {
+func (b *Button) SetState(nState xcc.Common_State3_) int {
 	return xc.XBtn_SetState(b.Handle, nState)
 }
 
 // 按钮_取状态, 返回: Common_State3_.
-func (b *Button) GetState() int {
+func (b *Button) GetState() xcc.Common_State3_ {
 	return xc.XBtn_GetState(b.Handle)
 }
 
 // 按钮_取状态扩展, 返回: Button_State_.
-func (b *Button) GetStateEx() int {
+func (b *Button) GetStateEx() xcc.Button_State_ {
 	return xc.XBtn_GetStateEx(b.Handle)
 }
 
 // 按钮_置类型扩展, 设置按钮类型并自动修改样式和文本对齐方式.
 //
-// nType: 按钮类型, Button_Type_.
-func (b *Button) SetTypeEx(nType int) int {
+// nType: 按钮类型, Button_Type_ , element_type_ , xc_ex_error.
+func (b *Button) SetTypeEx(nType xcc.XC_OBJECT_TYPE_EX) int {
 	return xc.XBtn_SetTypeEx(b.Handle, nType)
 }
 
@@ -132,19 +132,19 @@ func (b *Button) GetBindEle() int {
 // 按钮_置文本对齐.
 //
 // nFlags: 对齐方式, TextFormatFlag_ , TextAlignFlag_ , TextTrimming_.
-func (b *Button) SetTextAlign(nFlags int) int {
+func (b *Button) SetTextAlign(nFlags xcc.TextFormatFlag_) int {
 	return xc.XBtn_SetTextAlign(b.Handle, nFlags)
 }
 
 // 按钮_取文本对齐方式, 返回: TextFormatFlag_ , TextAlignFlag_ , TextTrimming_.
-func (b *Button) GetTextAlign() int {
+func (b *Button) GetTextAlign() xcc.TextFormatFlag_ {
 	return xc.XBtn_GetTextAlign(b.Handle)
 }
 
 // 按钮_置图标对齐.
 //
 // align: 对齐方式, Button_Icon_Align_.
-func (b *Button) SetIconAlign(align int) int {
+func (b *Button) SetIconAlign(align xcc.Button_Icon_Align_) int {
 	return xc.XBtn_SetIconAlign(b.Handle, align)
 }
 

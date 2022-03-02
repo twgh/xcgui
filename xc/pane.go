@@ -1,6 +1,10 @@
 package xc
 
-import "unsafe"
+import (
+	"unsafe"
+
+	"github.com/twgh/xcgui/xcc"
+)
 
 // 窗格_创建, 创建窗格元素, 返回元素句柄.
 //
@@ -85,9 +89,9 @@ func XPane_SetSize(hEle int, nWidth int, nHeight int) int {
 // 窗格_取状态, 获取窗格停靠状态, 返回: Pane_State_.
 //
 // hEle: 元素句柄.
-func XPane_GetState(hEle int) int {
+func XPane_GetState(hEle int) xcc.Pane_State_ {
 	r, _, _ := xPane_GetState.Call(uintptr(hEle))
-	return int(r)
+	return xcc.Pane_State_(r)
 }
 
 // 窗格_取视图坐标, 获取窗格视图坐标.

@@ -1,6 +1,10 @@
 package xc
 
-import "unsafe"
+import (
+	"unsafe"
+
+	"github.com/twgh/xcgui/xcc"
+)
 
 // 表格_创建, 返回句柄.
 //
@@ -165,7 +169,7 @@ func XTable_SetItemFont(hShape int, iRow int, iCol int, hFont int) int {
 // iCol: 列索引.
 //
 // nAlign: 对齐方式, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
-func XTable_SetItemTextAlign(hShape int, iRow int, iCol int, nAlign int) int {
+func XTable_SetItemTextAlign(hShape int, iRow int, iCol int, nAlign xcc.TextFormatFlag_) int {
 	r, _, _ := xTable_SetItemTextAlign.Call(uintptr(hShape), uintptr(iRow), uintptr(iCol), uintptr(nAlign))
 	return int(r)
 }
@@ -231,7 +235,7 @@ func XTable_SetItemLine(hShape int, iRow1 int, iCol1 int, iRow2 int, iCol2 int, 
 // iCol: 列索引.
 //
 // flag: 标识, Table_Flag_.
-func XTable_SetItemFlag(hShape int, iRow int, iCol int, flag int) int {
+func XTable_SetItemFlag(hShape int, iRow int, iCol int, flag xcc.Table_Flag_) int {
 	r, _, _ := xTable_SetItemFlag.Call(uintptr(hShape), uintptr(iRow), uintptr(iCol), uintptr(flag))
 	return int(r)
 }

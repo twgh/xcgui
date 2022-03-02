@@ -153,7 +153,7 @@ func (l *List) SetSort(iColumn int, iColumnAdapter int, bEnable bool) int {
 // 列表_置绘制项背景标志, 设置是否绘制指定状态下项的背景.
 //
 // nFlags: 标志位, List_DrawItemBk_Flag_.
-func (l *List) SetDrawItemBkFlags(nFlags int) int {
+func (l *List) SetDrawItemBkFlags(nFlags xcc.List_DrawItemBk_Flag_) int {
 	return xc.XList_SetDrawItemBkFlags(l.Handle, nFlags)
 }
 

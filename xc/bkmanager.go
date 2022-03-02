@@ -1,6 +1,10 @@
 package xc
 
-import "unsafe"
+import (
+	"unsafe"
+
+	"github.com/twgh/xcgui/xcc"
+)
 
 // 背景_创建, 创建背景管理器, 返回背景管理器句柄.
 func XBkM_Create() int {
@@ -49,7 +53,7 @@ func XBkM_AddInfo(hBkInfoM int, pText string) int {
 // width: 线宽.
 //
 // id: 背景对象ID, 可忽略(填0).
-func XBkM_AddBorder(hBkInfoM, nState, color, width, id int) int {
+func XBkM_AddBorder(hBkInfoM int, nState xcc.CombinedState, color, width, id int) int {
 	r, _, _ := xBkM_AddBorder.Call(uintptr(hBkInfoM), uintptr(nState), uintptr(color), uintptr(width), uintptr(id))
 	return int(r)
 }
@@ -58,12 +62,12 @@ func XBkM_AddBorder(hBkInfoM, nState, color, width, id int) int {
 //
 // hBkInfoM: 背景管理器句柄.
 //
-// nState: 组合状态, Window_State_Flag_.
+// nState: 组合状态.
 //
 // color: ABGR颜色.
 //
 // id: 背景对象ID, 可忽略(填0).
-func XBkM_AddFill(hBkInfoM, nState, color, id int) int {
+func XBkM_AddFill(hBkInfoM int, nState xcc.CombinedState, color, id int) int {
 	r, _, _ := xBkM_AddFill.Call(uintptr(hBkInfoM), uintptr(nState), uintptr(color), uintptr(id))
 	return int(r)
 }
@@ -77,7 +81,7 @@ func XBkM_AddFill(hBkInfoM, nState, color, id int) int {
 // hImage: 图片句柄.
 //
 // id: 背景对象ID, 可忽略(填0).
-func XBkM_AddImage(hBkInfoM, nState, hImage, id int) int {
+func XBkM_AddImage(hBkInfoM int, nState xcc.CombinedState, hImage, id int) int {
 	r, _, _ := xBkM_AddImage.Call(uintptr(hBkInfoM), uintptr(nState), uintptr(hImage), uintptr(id))
 	return int(r)
 }
@@ -107,7 +111,7 @@ func XBkM_Clear(hBkInfoM int) int {
 // hDraw: 图形绘制句柄.
 //
 // pRect: 区域坐标.
-func XBkM_Draw(hBkInfoM int, nState int, hDraw int, pRect *RECT) bool {
+func XBkM_Draw(hBkInfoM int, nState xcc.CombinedState, hDraw int, pRect *RECT) bool {
 	r, _, _ := xBkM_Draw.Call(uintptr(hBkInfoM), uintptr(nState), uintptr(hDraw), uintptr(unsafe.Pointer(pRect)))
 	return int(r) != 0
 }
@@ -125,7 +129,7 @@ func XBkM_Draw(hBkInfoM int, nState int, hDraw int, pRect *RECT) bool {
 // nStateEx: 当(nState)中包含(nStateEx)中的一个或多个状态时有效.
 //
 // 注解: 例如用来绘制列表项时, nState中包含项的状态(nStateEx)才会绘制, 避免列表项与元素背景叠加.
-func XBkM_DrawEx(hBkInfoM int, nState int, hDraw int, pRect *RECT, nStateEx int) bool {
+func XBkM_DrawEx(hBkInfoM int, nState xcc.CombinedState, hDraw int, pRect *RECT, nStateEx xcc.CombinedState) bool {
 	r, _, _ := xBkM_DrawEx.Call(uintptr(hBkInfoM), uintptr(nState), uintptr(hDraw), uintptr(unsafe.Pointer(pRect)), uintptr(nStateEx))
 	return int(r) != 0
 }
@@ -178,10 +182,10 @@ func XBkM_SetInfo(hBkInfoM int, pText string) int {
 //
 // hBkInfoM: 背景管理器句柄.
 //
-// nState: 状态.
+// nState: 组合状态.
 //
 // color: 接收返回的ABGR颜色.
-func XBkM_GetStateTextColor(hBkInfoM int, nState int, color *int) bool {
+func XBkM_GetStateTextColor(hBkInfoM int, nState xcc.CombinedState, color *int) bool {
 	r, _, _ := xBkM_GetStateTextColor.Call(uintptr(hBkInfoM), uintptr(nState), uintptr(unsafe.Pointer(color)))
 	return int(r) != 0
 }

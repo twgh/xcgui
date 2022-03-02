@@ -1,5 +1,7 @@
 package xc
 
+import "github.com/twgh/xcgui/xcc"
+
 // 图片_加载从图片源.
 //
 // hImageSrc: 图片源句柄.
@@ -247,7 +249,7 @@ func XImage_IsTile(hImage int) bool {
 // hImage: 图片句柄.
 //
 // nType: 图片绘制类型, Image_Draw_Type_.
-func XImage_SetDrawType(hImage int, nType int) bool {
+func XImage_SetDrawType(hImage int, nType xcc.Image_Draw_Type_) bool {
 	r, _, _ := xImage_SetDrawType.Call(uintptr(hImage), uintptr(nType))
 	return int(r) != 0
 }

@@ -1,6 +1,9 @@
 package widget
 
-import "github.com/twgh/xcgui/xc"
+import (
+	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
+)
 
 // Pane元素.
 type Pane struct {
@@ -108,7 +111,7 @@ func (p *Pane) SetSize(nWidth int, nHeight int) int {
 }
 
 // 窗格_取状态, 获取窗格停靠状态, 返回: Pane_State_.
-func (p *Pane) GetState() int {
+func (p *Pane) GetState() xcc.Pane_State_ {
 	return xc.XPane_GetState(p.Handle)
 }
 

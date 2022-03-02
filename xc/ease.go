@@ -1,5 +1,7 @@
 package xc
 
+import "github.com/twgh/xcgui/xcc"
+
 // 缓动_Linear, 线性.
 //
 // p: 位置, 0.0f - 1.0f.
@@ -13,7 +15,7 @@ func XEase_Linear(p float32) float32 {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动类型, Ease_Type_.
-func XEase_Quad(p float32, flag int) float32 {
+func XEase_Quad(p float32, flag xcc.Ease_Type_) float32 {
 	_, r, _ := xEase_Quad.Call(Float32Ptr(p), uintptr(flag))
 	return UintPtrToFloat32(r)
 }
@@ -23,7 +25,7 @@ func XEase_Quad(p float32, flag int) float32 {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动类型, Ease_Type_.
-func XEase_Cubic(p float32, flag int) float32 {
+func XEase_Cubic(p float32, flag xcc.Ease_Type_) float32 {
 	_, r, _ := xEase_Cubic.Call(Float32Ptr(p), uintptr(flag))
 	return UintPtrToFloat32(r)
 }
@@ -33,7 +35,7 @@ func XEase_Cubic(p float32, flag int) float32 {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动类型, Ease_Type_.
-func XEase_Quart(p float32, flag int) float32 {
+func XEase_Quart(p float32, flag xcc.Ease_Type_) float32 {
 	_, r, _ := xEase_Quart.Call(Float32Ptr(p), uintptr(flag))
 	return UintPtrToFloat32(r)
 }
@@ -43,7 +45,7 @@ func XEase_Quart(p float32, flag int) float32 {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动类型, Ease_Type_.
-func XEase_Quint(p float32, flag int) float32 {
+func XEase_Quint(p float32, flag xcc.Ease_Type_) float32 {
 	_, r, _ := xEase_Quint.Call(Float32Ptr(p), uintptr(flag))
 	return UintPtrToFloat32(r)
 }
@@ -53,7 +55,7 @@ func XEase_Quint(p float32, flag int) float32 {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动类型, Ease_Type_.
-func XEase_Sine(p float32, flag int) float32 {
+func XEase_Sine(p float32, flag xcc.Ease_Type_) float32 {
 	_, r, _ := xEase_Sine.Call(Float32Ptr(p), uintptr(flag))
 	return UintPtrToFloat32(r)
 }
@@ -63,7 +65,7 @@ func XEase_Sine(p float32, flag int) float32 {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动类型, Ease_Type_.
-func XEase_Expo(p float32, flag int) float32 {
+func XEase_Expo(p float32, flag xcc.Ease_Type_) float32 {
 	_, r, _ := xEase_Expo.Call(Float32Ptr(p), uintptr(flag))
 	return UintPtrToFloat32(r)
 }
@@ -73,7 +75,7 @@ func XEase_Expo(p float32, flag int) float32 {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动类型, Ease_Type_.
-func XEase_Circ(p float32, flag int) float32 {
+func XEase_Circ(p float32, flag xcc.Ease_Type_) float32 {
 	_, r, _ := xEase_Circ.Call(Float32Ptr(p), uintptr(flag))
 	return UintPtrToFloat32(r)
 }
@@ -83,7 +85,7 @@ func XEase_Circ(p float32, flag int) float32 {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动类型, Ease_Type_.
-func XEase_Elastic(p float32, flag int) float32 {
+func XEase_Elastic(p float32, flag xcc.Ease_Type_) float32 {
 	_, r, _ := xEase_Elastic.Call(Float32Ptr(p), uintptr(flag))
 	return UintPtrToFloat32(r)
 }
@@ -93,7 +95,7 @@ func XEase_Elastic(p float32, flag int) float32 {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动类型, Ease_Type_.
-func XEase_Back(p float32, flag int) float32 {
+func XEase_Back(p float32, flag xcc.Ease_Type_) float32 {
 	_, r, _ := xEase_Back.Call(Float32Ptr(p), uintptr(flag))
 	return UintPtrToFloat32(r)
 }
@@ -103,7 +105,7 @@ func XEase_Back(p float32, flag int) float32 {
 // p: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动类型, Ease_Type_.
-func XEase_Bounce(p float32, flag int) float32 {
+func XEase_Bounce(p float32, flag xcc.Ease_Type_) float32 {
 	_, r, _ := xEase_Bounce.Call(Float32Ptr(p), uintptr(flag))
 	return UintPtrToFloat32(r)
 }
@@ -113,7 +115,7 @@ func XEase_Bounce(p float32, flag int) float32 {
 // pos: 位置, 0.0f - 1.0f.
 //
 // flag: 缓动标识, Ease_Flag_.
-func XEase_Ex(pos float32, flag int) float32 {
+func XEase_Ex(pos float32, flag xcc.Ease_Flag_) float32 {
 	_, r, _ := xEase_Ex.Call(Float32Ptr(pos), uintptr(flag))
 	return UintPtrToFloat32(r)
 }

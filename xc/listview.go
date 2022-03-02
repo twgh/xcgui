@@ -1,6 +1,10 @@
 package xc
 
-import "unsafe"
+import (
+	"unsafe"
+
+	"github.com/twgh/xcgui/xcc"
+)
 
 // 列表视_创建, 返回元素句柄.
 //
@@ -189,7 +193,7 @@ func XListView_SetVirtualItemCount(hEle int, iGroup int, nCount int) bool {
 // hEle: 元素句柄.
 //
 // nFlags: 标志位: List_DrawItemBk_Flag_.
-func XListView_SetDrawItemBkFlags(hEle int, nFlags int) int {
+func XListView_SetDrawItemBkFlags(hEle int, nFlags xcc.List_DrawItemBk_Flag_) int {
 	r, _, _ := xListView_SetDrawItemBkFlags.Call(uintptr(hEle), uintptr(nFlags))
 	return int(r)
 }

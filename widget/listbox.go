@@ -98,7 +98,7 @@ func (l *ListBox) SetVirtualRowCount(nRowCount int) int {
 // 列表框_置绘制项背景标志, 设置是否绘制指定状态下项的背景.
 //
 // nFlags: 标志位, List_DrawItemBk_Flag_.
-func (l *ListBox) SetDrawItemBkFlags(nFlags int) int {
+func (l *ListBox) SetDrawItemBkFlags(nFlags xcc.List_DrawItemBk_Flag_) int {
 	return xc.XListBox_SetDrawItemBkFlags(l.Handle, nFlags)
 }
 

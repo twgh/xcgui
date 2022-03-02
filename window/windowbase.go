@@ -12,7 +12,7 @@ type windowBase struct {
 	objectbase.UI
 }
 
-// 炫彩_消息框, 返回MessageBox_Flag_.
+// 炫彩_消息框, 返回: MessageBox_Flag_Ok: 点击确定按钮退出, MessageBox_Flag_Cancel: 点击取消按钮退出, MessageBox_Flag_Other: 其他方式退出.
 //
 // pTitle: 标题.
 //
@@ -21,7 +21,7 @@ type windowBase struct {
 // nFlags: 标识, MessageBox_Flag_.
 //
 // XCStyle: Window_Style_.
-func (w *windowBase) MessageBox(pTitle, pText string, nFlags, XCStyle int) int {
+func (w *windowBase) MessageBox(pTitle, pText string, nFlags xcc.MessageBox_Flag_, XCStyle xcc.Window_Style_) xcc.MessageBox_Flag_ {
 	return xc.XC_MessageBox(pTitle, pText, nFlags, w.GetHWND(), XCStyle)
 }
 
@@ -34,7 +34,7 @@ func (w *windowBase) MessageBox(pTitle, pText string, nFlags, XCStyle int) int {
 // nFlags: 标识, MessageBox_Flag_.
 //
 // XCStyle: Window_Style_.
-func (w *windowBase) Msg_Create(pTitle, pText string, nFlags, XCStyle int) *ModalWindow {
+func (w *windowBase) Msg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, XCStyle xcc.Window_Style_) *ModalWindow {
 	p := &ModalWindow{}
 	p.SetHandle(xc.XMsg_Create(pTitle, pText, nFlags, w.GetHWND(), XCStyle))
 	return p
@@ -55,7 +55,7 @@ func (w *windowBase) Msg_Create(pTitle, pText string, nFlags, XCStyle int) *Moda
 // nFlags: 标识, MessageBox_Flag_.
 //
 // XCStyle: Window_Style_.
-func (w *windowBase) Msg_CreateEx(dwExStyle, dwStyle int, lpClassName, pTitle, pText string, nFlags, XCStyle int) *ModalWindow {
+func (w *windowBase) Msg_CreateEx(dwExStyle, dwStyle int, lpClassName, pTitle, pText string, nFlags xcc.MessageBox_Flag_, XCStyle xcc.Window_Style_) *ModalWindow {
 	p := &ModalWindow{}
 	p.SetHandle(xc.XMsg_CreateEx(dwExStyle, dwStyle, lpClassName, pTitle, pText, nFlags, w.GetHWND(), XCStyle))
 	return p
@@ -105,7 +105,7 @@ func (w *windowBase) GetObjectByIDName(pName string) int {
 // 窗口_显示.
 //
 // nCmdShow: 显示方式, SW_.
-func (w *windowBase) ShowWindow(nCmdShow int) int {
+func (w *windowBase) ShowWindow(nCmdShow xcc.SW_) int {
 	return xc.XWnd_ShowWindow(w.Handle, nCmdShow)
 }
 
@@ -495,7 +495,7 @@ func (w *windowBase) AdjustLayout() int {
 // 窗口_调整布局扩展.
 //
 // nFlags: 调整布局标识位, AdjustLayout_.
-func (w *windowBase) AdjustLayoutEx(nFlags int) int {
+func (w *windowBase) AdjustLayoutEx(nFlags xcc.AdjustLayout_) int {
 	return xc.XWnd_AdjustLayoutEx(w.Handle, nFlags)
 }
 
@@ -649,7 +649,7 @@ func (w *windowBase) SetBkMagager(hBkInfoM int) int {
 // 窗口_置透明类型.
 //
 // nType: 窗口透明类型, Window_Transparent_.
-func (w *windowBase) SetTransparentType(nType int) int {
+func (w *windowBase) SetTransparentType(nType xcc.Window_Transparent_) int {
 	return xc.XWnd_SetTransparentType(w.Handle, nType)
 }
 
@@ -697,8 +697,8 @@ func (w *windowBase) GetShadowInfo(nSize *int, nDepth *uint8, nAngeleSize *int, 
 	return xc.XWnd_GetShadowInfo(w.Handle, nSize, nDepth, nAngeleSize, bRightAngle, color)
 }
 
-// 窗口_取透明类型.
-func (w *windowBase) GetTransparentType() int {
+// 窗口_取透明类型, 返回: Window_Transparent_.
+func (w *windowBase) GetTransparentType() xcc.Window_Transparent_ {
 	return xc.XWnd_GetTransparentType(w.Handle)
 }
 
@@ -781,7 +781,7 @@ func (w *windowBase) GetTitleColor() int {
 // color: ABGR颜色.
 //
 // width: 线宽.
-func (w *windowBase) AddBkBorder(nState int, color int, width int) int {
+func (w *windowBase) AddBkBorder(nState xcc.Window_State_Flag_, color int, width int) int {
 	return xc.XWnd_AddBkBorder(w.Handle, nState, color, width)
 }
 
@@ -790,7 +790,7 @@ func (w *windowBase) AddBkBorder(nState int, color int, width int) int {
 // nState: 组合状态.
 //
 // color: ABGR颜色.
-func (w *windowBase) AddBkFill(nState int, color int) int {
+func (w *windowBase) AddBkFill(nState xcc.Window_State_Flag_, color int) int {
 	return xc.XWnd_AddBkFill(w.Handle, nState, color)
 }
 
@@ -799,7 +799,7 @@ func (w *windowBase) AddBkFill(nState int, color int) int {
 // nState: 组合状态.
 //
 // hImage: 图片句柄.
-func (w *windowBase) AddBkImage(nState int, hImage int) int {
+func (w *windowBase) AddBkImage(nState xcc.Window_State_Flag_, hImage int) int {
 	return xc.XWnd_AddBkImage(w.Handle, nState, hImage)
 }
 
@@ -824,7 +824,7 @@ func (w *windowBase) ClearBkInfo() int {
 // hIcon: 图标.
 //
 // skin: 外观类型, NotifyMsg_Skin_.
-func (w *windowBase) NotifyMsg_WindowPopup(position int, pTitle, pText string, hIcon, skin int) int {
+func (w *windowBase) NotifyMsg_WindowPopup(position xcc.Position_Flag_, pTitle, pText string, hIcon int, skin xcc.NotifyMsg_Skin_) int {
 	return xc.XNotifyMsg_WindowPopup(w.Handle, position, pTitle, pText, hIcon, skin)
 }
 
@@ -847,7 +847,7 @@ func (w *windowBase) NotifyMsg_WindowPopup(position int, pTitle, pText string, h
 // nWidth: 自定义宽度, -1(使用默认值).
 //
 // nHeight: 自定义高度, -1(使用默认值).
-func (w *windowBase) NotifyMsg_WindowPopupEx(position int, pTitle, pText string, hIcon, skin int, bBtnClose, bAutoClose bool, nWidth, nHeight int) int {
+func (w *windowBase) NotifyMsg_WindowPopupEx(position xcc.Position_Flag_, pTitle, pText string, hIcon int, skin xcc.NotifyMsg_Skin_, bBtnClose, bAutoClose bool, nWidth, nHeight int) int {
 	return xc.XNotifyMsg_WindowPopupEx(w.Handle, position, pTitle, pText, hIcon, skin, bBtnClose, bAutoClose, nWidth, nHeight)
 }
 

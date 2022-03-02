@@ -1,5 +1,7 @@
 package xc
 
+import "github.com/twgh/xcgui/xcc"
+
 // 形状文本_创建, 创建形状对象文本.
 //
 // x: X坐标.
@@ -85,7 +87,7 @@ func XShapeText_GetTextColor(hTextBlock int) int {
 // hTextBlock: 形状对象文本句柄.
 //
 // align: 文本对齐方式, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
-func XShapeText_SetTextAlign(hTextBlock int, align int) int {
+func XShapeText_SetTextAlign(hTextBlock int, align xcc.TextFormatFlag_) int {
 	r, _, _ := xShapeText_SetTextAlign.Call(uintptr(hTextBlock), uintptr(align))
 	return int(r)
 }

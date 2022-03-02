@@ -3,6 +3,8 @@ package xc
 import (
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/xcc"
 )
 
 // 炫彩_初始化.
@@ -43,7 +45,7 @@ func XC_GetDefaultFont() int {
 	return int(r)
 }
 
-// 炫彩_消息框, 返回MessageBox_Flag_.
+// 炫彩_消息框, 返回: MessageBox_Flag_Ok: 点击确定按钮退出, MessageBox_Flag_Cancel: 点击取消按钮退出, MessageBox_Flag_Other: 其他方式退出.
 //
 // pTitle: 标题.
 //
@@ -54,9 +56,9 @@ func XC_GetDefaultFont() int {
 // hWndParent: 父窗口句柄(真实的窗口句柄).
 //
 // XCStyle: Window_Style_.
-func XC_MessageBox(pTitle, pText string, nFlags, hWndParent, XCStyle int) int {
+func XC_MessageBox(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) xcc.MessageBox_Flag_ {
 	r, _, _ := xC_MessageBox.Call(StrPtr(pTitle), StrPtr(pText), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
-	return int(r)
+	return xcc.MessageBox_Flag_(r)
 }
 
 // 消息框_创建, 弹出窗口请调用 XModalWnd_DoModal(), 此窗口是一个模态窗口, 返回消息框窗口句柄.
@@ -70,7 +72,7 @@ func XC_MessageBox(pTitle, pText string, nFlags, hWndParent, XCStyle int) int {
 // hWndParent: 父窗口句柄(真实的窗口句柄).
 //
 // XCStyle: Window_Style_.
-func XMsg_Create(pTitle, pText string, nFlags, hWndParent, XCStyle int) int {
+func XMsg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) int {
 	r, _, _ := xMsg_Create.Call(StrPtr(pTitle), StrPtr(pText), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
 	return int(r)
 }
@@ -92,7 +94,7 @@ func XMsg_Create(pTitle, pText string, nFlags, hWndParent, XCStyle int) int {
 // hWndParent: 父窗口句柄(真实的窗口句柄).
 //
 // XCStyle: Window_Style_.
-func XMsg_CreateEx(dwExStyle int, dwStyle int, lpClassName, pTitle, pText string, nFlags, hWndParent, XCStyle int) int {
+func XMsg_CreateEx(dwExStyle int, dwStyle int, lpClassName, pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) int {
 	r, _, _ := xMsg_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), StrPtr(lpClassName), StrPtr(pText), StrPtr(pTitle), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
 	return int(r)
 }
@@ -164,7 +166,7 @@ func XC_IsShape(hShape int) bool {
 // hXCGUI: 炫彩句柄.
 //
 // nType: 句柄类型, XC_OBJECT_TYPE, 以XC_开头的常量.
-func XC_IsHXCGUI(hXCGUI int, nType int) bool {
+func XC_IsHXCGUI(hXCGUI int, nType xcc.XC_OBJECT_TYPE) bool {
 	r, _, _ := xC_IsHXCGUI.Call(uintptr(hXCGUI), uintptr(nType))
 	return int(r) != 0
 }
@@ -218,9 +220,9 @@ func XC_IsSViewExtend(hEle int) bool {
 // 炫彩_取对象类型, 获取句柄类型, 返回: XC_OBJECT_TYPE.
 //
 // hXCGUI: 炫彩对象句柄.
-func XC_GetObjectType(hXCGUI int) int {
+func XC_GetObjectType(hXCGUI int) xcc.XC_OBJECT_TYPE {
 	r, _, _ := xC_GetObjectType.Call(uintptr(hXCGUI))
-	return int(r)
+	return xcc.XC_OBJECT_TYPE(r)
 }
 
 // 炫彩_取对象从ID, 通过ID获取对象句柄, 不包括窗口对象.
@@ -397,10 +399,10 @@ func XC_GetTextShowSize(pString string, length int, hFontX int, pOutSize *SIZE) 
 //
 // hFontX: 字体.
 //
-// nTextAlign: 文本对齐方式, TextFormatFlag_.
+// nTextAlign: 文本对齐方式, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
 //
 // pOutSize: 接收返回大小.
-func XC_GetTextShowSizeEx(pString string, length int, hFontX int, nTextAlign int, pOutSize *SIZE) int {
+func XC_GetTextShowSizeEx(pString string, length int, hFontX int, nTextAlign xcc.TextFormatFlag_, pOutSize *SIZE) int {
 	r, _, _ := xC_GetTextShowSizeEx.Call(StrPtr(pString), uintptr(length), uintptr(hFontX), uintptr(nTextAlign), uintptr(unsafe.Pointer(pOutSize)))
 	return int(r)
 }
@@ -483,20 +485,20 @@ func XC_Alert(pTitle, pText string) int {
 	return int(r)
 }
 
-// 炫彩_系统_ShellExecute, 参见系统API ShellExecute().
+// 对指定文件执行操作. 如果函数成功，则返回大于 32 的值。如果函数失败，则返回指示失败原因的错误值.
 //
-// hwnd:.
+// hwnd: 用于显示 UI 或错误消息的父窗口的句柄。如果操作与窗口无关，则此值可以为0.
 //
-// lpOperation:.
+// lpOperation: 填“open”则打开lpFlie文档. 其它操作详见: https://docs.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shellexecutew.
 //
-// lpFile:.
+// lpFile: 想用关联的程序打印或打开的一个程序名或文件名.
 //
-// lpParameters:.
+// lpParameters: 如果lpFile是一个可执行文件，则这个字串包含了传递给执行程序的参数.
 //
-// lpDirectory:.
+// lpDirectory: 想使用的默认路径完整路径.
 //
-// nShowCmd:.
-func XC_Sys_ShellExecute(hwnd int, lpOperation string, lpFile string, lpParameters string, lpDirectory string, nShowCmd int) int {
+// nShowCmd: 定义了如何显示启动程序的常数值, SW_.
+func XC_Sys_ShellExecute(hwnd int, lpOperation string, lpFile string, lpParameters string, lpDirectory string, nShowCmd xcc.SW_) int {
 	r, _, _ := xC_Sys_ShellExecute.Call(uintptr(hwnd), StrPtr(lpOperation), StrPtr(lpFile), StrPtr(lpParameters), StrPtr(lpDirectory), uintptr(nShowCmd))
 	return int(r)
 }
@@ -546,7 +548,7 @@ func XC_PostQuitMessage(nExitCode int) int {
 // 炫彩_置D2D文本渲染模式.
 //
 // mode: 渲染模式, XC_DWRITE_RENDERING_MODE_ .
-func XC_SetD2dTextRenderingMode(mode int) int {
+func XC_SetD2dTextRenderingMode(mode xcc.XC_DWRITE_RENDERING_MODE_) int {
 	r, _, _ := xC_SetD2dTextRenderingMode.Call(uintptr(mode))
 	return int(r)
 }
