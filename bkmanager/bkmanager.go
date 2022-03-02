@@ -5,6 +5,7 @@ import (
 	"github.com/twgh/xcgui/objectbase"
 	"github.com/twgh/xcgui/res"
 	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
 )
 
 // 背景管理器.
@@ -67,18 +68,18 @@ func (b *BkManager) AddInfo(pText string) int {
 // width: 线宽.
 //
 // id: 背景对象ID, 可忽略(填0).
-func (b *BkManager) AddBorder(nState, color, width, id int) int {
+func (b *BkManager) AddBorder(nState xcc.CombinedState, color, width, id int) int {
 	return xc.XBkM_AddBorder(b.Handle, nState, color, width, id)
 }
 
 // 背景_添加填充, 添加背景内容填充.
 //
-// nState: 组合状态, Window_State_Flag_.
+// nState: 组合状态.
 //
 // color: ABGR颜色.
 //
 // id: 背景对象ID, 可忽略(填0).
-func (b *BkManager) AddFill(nState, color, id int) int {
+func (b *BkManager) AddFill(nState xcc.CombinedState, color, id int) int {
 	return xc.XBkM_AddFill(b.Handle, nState, color, id)
 }
 
@@ -89,7 +90,7 @@ func (b *BkManager) AddFill(nState, color, id int) int {
 // hImage: 图片句柄.
 //
 // id: 背景对象ID, 可忽略(填0).
-func (b *BkManager) AddImage(nState, hImage, id int) int {
+func (b *BkManager) AddImage(nState xcc.CombinedState, hImage, id int) int {
 	return xc.XBkM_AddImage(b.Handle, nState, hImage, id)
 }
 
@@ -110,7 +111,7 @@ func (b *BkManager) Clear() int {
 // hDraw: 图形绘制句柄.
 //
 // pRect: 区域坐标.
-func (b *BkManager) Draw(nState int, hDraw int, pRect *xc.RECT) bool {
+func (b *BkManager) Draw(nState xcc.CombinedState, hDraw int, pRect *xc.RECT) bool {
 	return xc.XBkM_Draw(b.Handle, nState, hDraw, pRect)
 }
 
@@ -125,7 +126,7 @@ func (b *BkManager) Draw(nState int, hDraw int, pRect *xc.RECT) bool {
 // nStateEx: 当(nState)中包含(nStateEx)中的一个或多个状态时有效.
 //
 // 注解: 例如用来绘制列表项时, nState中包含项的状态(nStateEx)才会绘制, 避免列表项与元素背景叠加.
-func (b *BkManager) DrawEx(nState int, hDraw int, pRect *xc.RECT, nStateEx int) bool {
+func (b *BkManager) DrawEx(nState xcc.CombinedState, hDraw int, pRect *xc.RECT, nStateEx xcc.CombinedState) bool {
 	return xc.XBkM_DrawEx(b.Handle, nState, hDraw, pRect, nStateEx)
 }
 
@@ -160,10 +161,10 @@ func (b *BkManager) SetInfo(pText string) int {
 
 // 背景_取指定状态文本颜色.
 //
-// nState: 状态.
+// nState: 组合状态.
 //
 // color: 接收返回的ABGR颜色.
-func (b *BkManager) GetStateTextColor(nState int, color *int) bool {
+func (b *BkManager) GetStateTextColor(nState xcc.CombinedState, color *int) bool {
 	return xc.XBkM_GetStateTextColor(b.Handle, nState, color)
 }
 
