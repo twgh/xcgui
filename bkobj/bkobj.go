@@ -5,6 +5,7 @@ import (
 	"github.com/twgh/xcgui/bkmanager"
 	"github.com/twgh/xcgui/objectbase"
 	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
 )
 
 // 背景对象.
@@ -49,7 +50,7 @@ func NewBkObjByBkManagerHandle(hBkm, id int) *BkObj {
 	return p
 }
 
-// 背景对象_置外间距, 外间距与对齐标识互相依赖, BkObject_Align_Flag_.
+// 背景对象_置外间距, 外间距与对齐标识(BkObject_Align_Flag_)互相依赖.
 //
 // left: 左边间距.
 //
@@ -65,7 +66,7 @@ func (b *BkObj) SetMargin(left int, top int, right int, bottom int) int {
 // 背景对象_置对齐.
 //
 // nFlags: 对齐方式, BkObject_Align_Flag_.
-func (b *BkObj) SetAlign(nFlags int) int {
+func (b *BkObj) SetAlign(nFlags xcc.BkObject_Align_Flag_) int {
 	return xc.XBkObj_SetAlign(b.Handle, nFlags)
 }
 
@@ -147,8 +148,8 @@ func (b *BkObj) SetFont(hFont int) int {
 
 // 背景对象_置文本对齐.
 //
-// nAlign: 文本对齐方式, TextFormatFlag_.
-func (b *BkObj) SetTextAlign(nAlign int) int {
+// nAlign: 文本对齐方式, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
+func (b *BkObj) SetTextAlign(nAlign xcc.TextFormatFlag_) int {
 	return xc.XBkObj_SetTextAlign(b.Handle, nAlign)
 }
 
