@@ -5,6 +5,7 @@ import (
 	"github.com/twgh/xcgui/objectbase"
 	"github.com/twgh/xcgui/res"
 	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
 )
 
 // 字体.
@@ -28,7 +29,7 @@ func NewFont(size int) *Font {
 // size: 字体大小, 单位(pt,磅).
 //
 // style: 字体样式, FontStyle_.
-func NewFontEX(pName string, size int, style int) *Font {
+func NewFontEX(pName string, size int, style xcc.FontStyle_) *Font {
 	p := &Font{}
 	p.SetHandle(xc.XFont_CreateEx(pName, size, style))
 	return p
@@ -68,7 +69,7 @@ func NewFontFromFont(pFont int) *Font {
 // size: 字体大小, 单位(pt,磅).
 //
 // style: 字体样式, FontStyle_.
-func NewFontFromFile(pFontFile string, size int, style int) *Font {
+func NewFontFromFile(pFontFile string, size int, style xcc.FontStyle_) *Font {
 	p := &Font{}
 	p.SetHandle(xc.XFont_CreateFromFile(pFontFile, size, style))
 	return p
@@ -81,7 +82,7 @@ func NewFontFromFile(pFontFile string, size int, style int) *Font {
 // fontSize: 字体大小, 单位(pt,磅).
 //
 // style: 字体样式, FontStyle_.
-func NewFontFromMem(data []byte, fontSize, style int) *Font {
+func NewFontFromMem(data []byte, fontSize int, style xcc.FontStyle_) *Font {
 	p := &Font{}
 	p.SetHandle(xc.XFont_CreateFromMem(data, fontSize, style))
 	return p
@@ -98,7 +99,7 @@ func NewFontFromMem(data []byte, fontSize, style int) *Font {
 // style: 字体样式, FontStyle_.
 //
 // hModule: xx.
-func NewFontFromRes(id int, pType string, fontSize int, style int, hModule int) *Font {
+func NewFontFromRes(id int, pType string, fontSize int, style xcc.FontStyle_, hModule int) *Font {
 	p := &Font{}
 	p.SetHandle(xc.XFont_CreateFromRes(id, pType, fontSize, style, hModule))
 	return p
