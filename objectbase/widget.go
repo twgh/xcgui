@@ -2,6 +2,7 @@ package objectbase
 
 import (
 	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
 )
 
 // 窗口组件.
@@ -79,7 +80,7 @@ func (w *Widget) LayoutItem_EnableFloat(bFloat bool) int {
 // nType: 类型, Layout_Size_.
 //
 // nWidth: 宽度.
-func (w *Widget) LayoutItem_SetWidth(nType, nWidth int) int {
+func (w *Widget) LayoutItem_SetWidth(nType xcc.Layout_Size_, nWidth int) int {
 	return xc.XWidget_LayoutItem_SetWidth(w.Handle, nType, nWidth)
 }
 
@@ -88,7 +89,7 @@ func (w *Widget) LayoutItem_SetWidth(nType, nWidth int) int {
 // nType: 类型, Layout_Size_.
 //
 // nHeight: 高度.
-func (w *Widget) LayoutItem_SetHeight(nType, nHeight int) int {
+func (w *Widget) LayoutItem_SetHeight(nType xcc.Layout_Size_, nHeight int) int {
 	return xc.XWidget_LayoutItem_SetHeight(w.Handle, nType, nHeight)
 }
 
@@ -113,7 +114,7 @@ func (w *Widget) LayoutItem_GetHeight(pType, pHeight *int) int {
 // 窗口组件_布局项_置对齐, 根据水平垂直轴变化对齐.
 //
 // nAlign: 对齐方式, Layout_Align_Axis_.
-func (w *Widget) LayoutItem_SetAlign(nAlign int) int {
+func (w *Widget) LayoutItem_SetAlign(nAlign xcc.Layout_Align_Axis_) int {
 	return xc.XWidget_LayoutItem_SetAlign(w.Handle, nAlign)
 }
 
