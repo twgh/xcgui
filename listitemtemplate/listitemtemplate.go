@@ -4,6 +4,7 @@ package listitemtemplate
 import (
 	"github.com/twgh/xcgui/objectbase"
 	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
 )
 
 // 列表项模板.
@@ -16,7 +17,7 @@ type ListItemTemplate struct {
 // nType: 模板类型, ListItemTemp_Type_.
 //
 // pFileName: 文件名.
-func NewListItemTemplate_Load(nType int, pFileName string) *ListItemTemplate {
+func NewListItemTemplate_Load(nType xcc.ListItemTemp_Type_, pFileName string) *ListItemTemplate {
 	p := &ListItemTemplate{}
 	p.SetHandle(xc.XTemp_Load(nType, pFileName))
 	return p
@@ -46,7 +47,7 @@ func NewListItemTemplate_LoadZip(nType int, pZipFile string, pFileName string, p
 // pFileName: 文件名.
 //
 // pPassword: zip密码.
-func NewListItemTemplate_LoadZipMem(nType int, data []byte, pFileName string, pPassword string) *ListItemTemplate {
+func NewListItemTemplate_LoadZipMem(nType xcc.ListItemTemp_Type_, data []byte, pFileName string, pPassword string) *ListItemTemplate {
 	p := &ListItemTemplate{}
 	p.SetHandle(xc.XTemp_LoadZipMem(nType, data, pFileName, pPassword))
 	return p
@@ -57,7 +58,7 @@ func NewListItemTemplate_LoadZipMem(nType int, data []byte, pFileName string, pP
 // nType: 模板类型, ListItemTemp_Type_.
 //
 // pStringXML: 字符串指针.
-func NewListItemTemplate_LoadFromString(nType int, pStringXML string) *ListItemTemplate {
+func NewListItemTemplate_LoadFromString(nType xcc.ListItemTemp_Type_, pStringXML string) *ListItemTemplate {
 	p := &ListItemTemplate{}
 	p.SetHandle(xc.XTemp_LoadFromString(nType, pStringXML))
 	return p
@@ -66,7 +67,7 @@ func NewListItemTemplate_LoadFromString(nType int, pStringXML string) *ListItemT
 // 模板_创建, 创建项模板.
 //
 // nType: 模板类型, ListItemTemp_Type_.
-func NewListItemTemplate(nType int) *ListItemTemplate {
+func NewListItemTemplate(nType xcc.ListItemTemp_Type_) *ListItemTemplate {
 	p := &ListItemTemplate{}
 	p.SetHandle(xc.XTemp_Create(nType))
 	return p
@@ -80,7 +81,7 @@ func NewListItemTemplateByHandle(handle int) *ListItemTemplate {
 }
 
 // 模板_取类型, 获取列表项模板类型, 返回: ListItemTemp_Type_.
-func (l *ListItemTemplate) GetType() int {
+func (l *ListItemTemplate) GetType() xcc.ListItemTemp_Type_ {
 	return xc.XTemp_GetType(l.Handle)
 }
 
@@ -112,7 +113,7 @@ func (l *ListItemTemplate) List_GetNode(index int) int {
 // pOutTemp1: 返回模板句柄1, 项模板.
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
-func LoadEx(nType int, pFileName string, pOutTemp1 *int, pOutTemp2 *int) bool {
+func LoadEx(nType xcc.ListItemTemp_Type_, pFileName string, pOutTemp1 *int, pOutTemp2 *int) bool {
 	return xc.XTemp_LoadEx(nType, pFileName, pOutTemp1, pOutTemp2)
 }
 
@@ -129,7 +130,7 @@ func LoadEx(nType int, pFileName string, pOutTemp1 *int, pOutTemp2 *int) bool {
 // pOutTemp1: 返回模板句柄1, 项模板.
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
-func LoadZipEx(nType int, pZipFile string, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int) bool {
+func LoadZipEx(nType xcc.ListItemTemp_Type_, pZipFile string, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int) bool {
 	return xc.XTemp_LoadZipEx(nType, pZipFile, pFileName, pPassword, pOutTemp1, pOutTemp2)
 }
 
@@ -146,7 +147,7 @@ func LoadZipEx(nType int, pZipFile string, pFileName string, pPassword string, p
 // pOutTemp1: 返回模板句柄1, 项模板.
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
-func LoadZipMemEx(nType int, data []byte, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int) bool {
+func LoadZipMemEx(nType xcc.ListItemTemp_Type_, data []byte, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int) bool {
 	return xc.XTemp_LoadZipMemEx(nType, data, pFileName, pPassword, pOutTemp1, pOutTemp2)
 }
 
@@ -159,7 +160,7 @@ func LoadZipMemEx(nType int, data []byte, pFileName string, pPassword string, pO
 // pOutTemp1: 返回模板句柄1, 项模板.
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
-func LoadFromStringEx(nType int, pStringXML string, pOutTemp1 *int, pOutTemp2 *int) bool {
+func LoadFromStringEx(nType xcc.ListItemTemp_Type_, pStringXML string, pOutTemp1 *int, pOutTemp2 *int) bool {
 	return xc.XTemp_LoadFromStringEx(nType, pStringXML, pOutTemp1, pOutTemp2)
 }
 
@@ -171,7 +172,7 @@ type Node struct {
 // 模板_创建节点.
 //
 // nType: 对象类型: XC_.
-func NewNode(nType int) *Node {
+func NewNode(nType xcc.XC_OBJECT_TYPE) *Node {
 	p := &Node{
 		PNode: xc.XTemp_CreateNode(nType),
 	}
