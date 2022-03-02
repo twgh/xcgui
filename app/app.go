@@ -3,6 +3,7 @@ package app
 
 import (
 	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
 )
 
 // 程序.
@@ -45,7 +46,7 @@ func (a *App) GetDefaultFont() int {
 	return xc.XC_GetDefaultFont()
 }
 
-// 炫彩_消息框, 返回MessageBox_Flag_.
+// 炫彩_消息框, 返回: MessageBox_Flag_Ok: 点击确定按钮退出, MessageBox_Flag_Cancel: 点击取消按钮退出, MessageBox_Flag_Other: 其他方式退出..
 //
 // pTitle: 标题.
 //
@@ -56,7 +57,7 @@ func (a *App) GetDefaultFont() int {
 // hWndParent: 父窗口句柄(真实的窗口句柄).
 //
 // XCStyle: Window_Style_.
-func (a *App) MessageBox(pTitle, pText string, nFlags, hWndParent, XCStyle int) int {
+func (a *App) MessageBox(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) xcc.MessageBox_Flag_ {
 	return xc.XC_MessageBox(pTitle, pText, nFlags, hWndParent, XCStyle)
 }
 
@@ -71,7 +72,7 @@ func (a *App) MessageBox(pTitle, pText string, nFlags, hWndParent, XCStyle int) 
 // hWndParent: 父窗口句柄(真实的窗口句柄).
 //
 // XCStyle: Window_Style_.
-func (a *App) Msg_Create(pTitle, pText string, nFlags, hWndParent, XCStyle int) int {
+func (a *App) Msg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) int {
 	return xc.XMsg_Create(pTitle, pText, nFlags, hWndParent, XCStyle)
 }
 
@@ -92,7 +93,7 @@ func (a *App) Msg_Create(pTitle, pText string, nFlags, hWndParent, XCStyle int) 
 // hWndParent: 父窗口句柄(真实的窗口句柄).
 //
 // XCStyle: Window_Style_.
-func (a *App) Msg_CreateEx(dwExStyle int, dwStyle int, lpClassName string, pTitle, pText string, nFlags, hWndParent, XCStyle int) int {
+func (a *App) Msg_CreateEx(dwExStyle int, dwStyle int, lpClassName string, pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) int {
 	return xc.XMsg_CreateEx(dwExStyle, dwStyle, lpClassName, pTitle, pText, nFlags, hWndParent, XCStyle)
 }
 
@@ -157,7 +158,7 @@ func (a *App) IsShape(hShape int) bool {
 // hXCGUI: 炫彩句柄.
 //
 // nType: 句柄类型, XC_OBJECT_TYPE, 以XC_开头的常量.
-func (a *App) IsHXCGUI(hXCGUI int, nType int) bool {
+func (a *App) IsHXCGUI(hXCGUI int, nType xcc.XC_OBJECT_TYPE) bool {
 	return xc.XC_IsHXCGUI(hXCGUI, nType)
 }
 
@@ -205,7 +206,7 @@ func (a *App) IsSViewExtend(hEle int) bool {
 // 炫彩_取对象类型, 获取句柄类型, 返回: XC_OBJECT_TYPE.
 //
 // hXCGUI: 炫彩对象句柄.
-func (a *App) GetObjectType(hXCGUI int) int {
+func (a *App) GetObjectType(hXCGUI int) xcc.XC_OBJECT_TYPE {
 	return xc.XC_GetObjectType(hXCGUI)
 }
 
@@ -365,10 +366,10 @@ func (a *App) GetTextShowSize(pString string, length int, hFontX int, pOutSize *
 //
 // hFontX: 字体.
 //
-// nTextAlign: 文本对齐方式, TextFormatFlag_.
+// nTextAlign: 文本对齐方式, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
 //
 // pOutSize: 接收返回大小.
-func (a *App) GetTextShowSizeEx(pString string, length int, hFontX int, nTextAlign int, pOutSize *xc.SIZE) int {
+func (a *App) GetTextShowSizeEx(pString string, length int, hFontX int, nTextAlign xcc.TextFormatFlag_, pOutSize *xc.SIZE) int {
 	return xc.XC_GetTextShowSizeEx(pString, length, hFontX, nTextAlign, pOutSize)
 }
 
@@ -443,20 +444,20 @@ func (a *App) Alert(pTitle string, pText string) int {
 	return xc.XC_Alert(pTitle, pText)
 }
 
-// 炫彩_系统_ShellExecute, 参见系统API ShellExecute().
+// 对指定文件执行操作. 如果函数成功，则返回大于 32 的值。如果函数失败，则返回指示失败原因的错误值.
 //
-// hwnd:.
+// hwnd: 用于显示 UI 或错误消息的父窗口的句柄。如果操作与窗口无关，则此值可以为0.
 //
-// lpOperation:.
+// lpOperation: 填“open”则打开lpFlie文档. 其它操作详见: https://docs.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shellexecutew.
 //
-// lpFile:.
+// lpFile: 想用关联的程序打印或打开的一个程序名或文件名.
 //
-// lpParameters:.
+// lpParameters: 如果lpFile是一个可执行文件，则这个字串包含了传递给执行程序的参数.
 //
-// lpDirectory:.
+// lpDirectory: 想使用的默认路径完整路径.
 //
-// nShowCmd:.
-func (a *App) Sys_ShellExecute(hwnd int, lpOperation string, lpFile string, lpParameters string, lpDirectory string, nShowCmd int) int {
+// nShowCmd: 定义了如何显示启动程序的常数值, SW_.
+func (a *App) Sys_ShellExecute(hwnd int, lpOperation string, lpFile string, lpParameters string, lpDirectory string, nShowCmd xcc.SW_) int {
 	return xc.XC_Sys_ShellExecute(hwnd, lpOperation, lpFile, lpParameters, lpDirectory, nShowCmd)
 }
 
@@ -735,7 +736,7 @@ func (a *App) GetWicFactory() int {
 // 炫彩_置D2D文本渲染模式.
 //
 // mode: 渲染模式, XC_DWRITE_RENDERING_MODE_ .
-func (a *App) SetD2dTextRenderingMode(mode int) int {
+func (a *App) SetD2dTextRenderingMode(mode xcc.XC_DWRITE_RENDERING_MODE_) int {
 	return xc.XC_SetD2dTextRenderingMode(mode)
 }
 
@@ -771,7 +772,7 @@ func (a *App) ShowSvgFrame(bShow bool) int {
 // hIcon: 图标.
 //
 // skin: 外观类型, NotifyMsg_Skin_.
-func (a *App) NotifyMsg_Popup(position int, pTitle, pText string, hIcon, skin int) int {
+func (a *App) NotifyMsg_Popup(position xcc.Position_Flag_, pTitle, pText string, hIcon int, skin xcc.NotifyMsg_Skin_) int {
 	return xc.XNotifyMsg_Popup(position, pTitle, pText, hIcon, skin)
 }
 
@@ -794,7 +795,7 @@ func (a *App) NotifyMsg_Popup(position int, pTitle, pText string, hIcon, skin in
 // nWidth: 自定义宽度, -1(使用默认值).
 //
 // nHeight: 自定义高度, -1(使用默认值).
-func (a *App) NotifyMsg_PopupEx(position int, pTitle, pText string, hIcon, skin int, bBtnClose, bAutoClose bool, nWidth, nHeight int) int {
+func (a *App) NotifyMsg_PopupEx(position xcc.Position_Flag_, pTitle, pText string, hIcon int, skin xcc.NotifyMsg_Skin_, bBtnClose, bAutoClose bool, nWidth, nHeight int) int {
 	return xc.XNotifyMsg_PopupEx(position, pTitle, pText, hIcon, skin, bBtnClose, bAutoClose, nWidth, nHeight)
 }
 
