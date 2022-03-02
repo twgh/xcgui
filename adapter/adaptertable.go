@@ -2,6 +2,7 @@ package adapter
 
 import (
 	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
 )
 
 // 数据适配器-XList-XListBox.
@@ -37,7 +38,7 @@ func (a *AdapterTable) Sort(iColumn int, bAscending bool) int {
 // iItem: 项索引.
 //
 // iColumn: 列索引.
-func (a *AdapterTable) GetItemDataType(iItem int, iColumn int) int {
+func (a *AdapterTable) GetItemDataType(iItem int, iColumn int) xcc.Adapter_Date_Type_ {
 	return xc.XAdTable_GetItemDataType(a.Handle, iItem, iColumn)
 }
 
@@ -46,7 +47,7 @@ func (a *AdapterTable) GetItemDataType(iItem int, iColumn int) int {
 // iItem: 项索引.
 //
 // pName: 字段称.
-func (a *AdapterTable) GetItemDataTypeEx(iItem int, pName string) int {
+func (a *AdapterTable) GetItemDataTypeEx(iItem int, pName string) xcc.Adapter_Date_Type_ {
 	return xc.XAdTable_GetItemDataTypeEx(a.Handle, iItem, pName)
 }
 
