@@ -1,6 +1,9 @@
 package objectbase
 
-import "github.com/twgh/xcgui/xc"
+import (
+	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
+)
 
 // 可视对象.
 type UI struct {
@@ -9,13 +12,13 @@ type UI struct {
 
 // 可视对象_置样式, 设置UI对象样式.
 //
-// nStyle: 样式值: Button_Style_ , FrameWnd_Style_ , ToolBar_Style_ , ListBox_Style_.
-func (u *UI) SetStyle(nStyle int) int {
+// nStyle: 样式值: Button_Style_ , Element_Style_ , ListBox_Style_.
+func (u *UI) SetStyle(nStyle xcc.XC_OBJECT_STYLE) int {
 	return xc.XUI_SetStyle(u.Handle, nStyle)
 }
 
-// 可视对象_取样式, 获取UI对象样式, 返回: Button_Style_ , FrameWnd_Style_ , ToolBar_Style_ , ListBox_Style_.
-func (u *UI) GetStyle() int {
+// 可视对象_取样式, 获取UI对象样式, 返回: Button_Style_ , Element_Style_ , ListBox_Style_.
+func (u *UI) GetStyle() xcc.XC_OBJECT_STYLE {
 	return xc.XUI_GetStyle(u.Handle)
 }
 
