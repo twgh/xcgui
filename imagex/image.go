@@ -5,6 +5,7 @@ import (
 	"github.com/twgh/xcgui/objectbase"
 	"github.com/twgh/xcgui/res"
 	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
 )
 
 // 图片操作.
@@ -352,7 +353,7 @@ func (i *Image) IsTile() bool {
 // 图片_置绘制类型, 设置图片绘制类型.
 //
 // nType: 图片绘制类型, Image_Draw_Type_.
-func (i *Image) SetDrawType(nType int) bool {
+func (i *Image) SetDrawType(nType xcc.Image_Draw_Type_) bool {
 	return xc.XImage_SetDrawType(i.Handle, nType)
 }
 
