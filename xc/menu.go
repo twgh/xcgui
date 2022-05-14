@@ -1,6 +1,9 @@
 package xc
 
-import "github.com/twgh/xcgui/xcc"
+import (
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/xcc"
+)
 
 // 菜单_创建, 创建菜单, 默认弹出菜单窗口关闭后自动销毁.
 func XMenu_Create() int {
@@ -20,7 +23,7 @@ func XMenu_Create() int {
 //
 // nFlags: 标识, Menu_Item_Flag_.
 func XMenu_AddItem(hMenu int, nID int, pText string, nParentID int, nFlags xcc.Menu_Item_Flag_) int {
-	r, _, _ := xMenu_AddItem.Call(uintptr(hMenu), uintptr(nID), StrPtr(pText), uintptr(nParentID), uintptr(nFlags))
+	r, _, _ := xMenu_AddItem.Call(uintptr(hMenu), uintptr(nID), common.StrPtr(pText), uintptr(nParentID), uintptr(nFlags))
 	return int(r)
 }
 
@@ -38,7 +41,7 @@ func XMenu_AddItem(hMenu int, nID int, pText string, nParentID int, nFlags xcc.M
 //
 // nFlags: 标识, Menu_Item_Flag_.
 func XMenu_AddItemIcon(hMenu int, nID int, pText string, nParentID int, hIcon int, nFlags xcc.Menu_Item_Flag_) int {
-	r, _, _ := xMenu_AddItemIcon.Call(uintptr(hMenu), uintptr(nID), StrPtr(pText), uintptr(nParentID), uintptr(hIcon), uintptr(nFlags))
+	r, _, _ := xMenu_AddItemIcon.Call(uintptr(hMenu), uintptr(nID), common.StrPtr(pText), uintptr(nParentID), uintptr(hIcon), uintptr(nFlags))
 	return int(r)
 }
 
@@ -54,7 +57,7 @@ func XMenu_AddItemIcon(hMenu int, nID int, pText string, nParentID int, hIcon in
 //
 // insertID: 插入位置ID.
 func XMenu_InsertItem(hMenu int, nID int, pText string, nFlags xcc.Menu_Item_Flag_, insertID int) int {
-	r, _, _ := xMenu_InsertItem.Call(uintptr(hMenu), uintptr(nID), StrPtr(pText), uintptr(nFlags), uintptr(insertID))
+	r, _, _ := xMenu_InsertItem.Call(uintptr(hMenu), uintptr(nID), common.StrPtr(pText), uintptr(nFlags), uintptr(insertID))
 	return int(r)
 }
 
@@ -72,7 +75,7 @@ func XMenu_InsertItem(hMenu int, nID int, pText string, nFlags xcc.Menu_Item_Fla
 //
 // insertID: 插入位置ID.
 func XMenu_InsertItemIcon(hMenu int, nID int, pText string, hIcon int, nFlags xcc.Menu_Item_Flag_, insertID int) int {
-	r, _, _ := xMenu_InsertItemIcon.Call(uintptr(hMenu), uintptr(nID), StrPtr(pText), uintptr(hIcon), uintptr(nFlags), uintptr(insertID))
+	r, _, _ := xMenu_InsertItemIcon.Call(uintptr(hMenu), uintptr(nID), common.StrPtr(pText), uintptr(hIcon), uintptr(nFlags), uintptr(insertID))
 	return int(r)
 }
 
@@ -132,7 +135,7 @@ func XMenu_GetParentItem(hMenu int, nID int) int {
 //
 // bAuto: 是否自动销毁.
 func XMenu_SetAutoDestroy(hMenu int, bAuto bool) int {
-	r, _, _ := xMenu_SetAutoDestroy.Call(uintptr(hMenu), BoolPtr(bAuto))
+	r, _, _ := xMenu_SetAutoDestroy.Call(uintptr(hMenu), common.BoolPtr(bAuto))
 	return int(r)
 }
 
@@ -142,7 +145,7 @@ func XMenu_SetAutoDestroy(hMenu int, bAuto bool) int {
 //
 // bEnable: 是否启用.
 func XMenu_EnableDrawBackground(hMenu int, bEnable bool) int {
-	r, _, _ := xMenu_EnableDrawBackground.Call(uintptr(hMenu), BoolPtr(bEnable))
+	r, _, _ := xMenu_EnableDrawBackground.Call(uintptr(hMenu), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -152,7 +155,7 @@ func XMenu_EnableDrawBackground(hMenu int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XMenu_EnableDrawItem(hMenu int, bEnable bool) int {
-	r, _, _ := xMenu_EnableDrawItem.Call(uintptr(hMenu), BoolPtr(bEnable))
+	r, _, _ := xMenu_EnableDrawItem.Call(uintptr(hMenu), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -208,7 +211,7 @@ func XMenu_SetBkImage(hMenu int, hImage int) int {
 //
 // pText: 文本内容.
 func XMenu_SetItemText(hMenu int, nID int, pText string) bool {
-	r, _, _ := xMenu_SetItemText.Call(uintptr(hMenu), uintptr(nID), StrPtr(pText))
+	r, _, _ := xMenu_SetItemText.Call(uintptr(hMenu), uintptr(nID), common.StrPtr(pText))
 	return int(r) != 0
 }
 
@@ -219,7 +222,7 @@ func XMenu_SetItemText(hMenu int, nID int, pText string) bool {
 // nID: 项ID.
 func XMenu_GetItemText(hMenu int, nID int) string {
 	r, _, _ := xMenu_GetItemText.Call(uintptr(hMenu), uintptr(nID))
-	return UintPtrToString(r)
+	return common.UintPtrToString(r)
 }
 
 // 菜单_取项文本长度, 获取项文本长度, 不包含字符串空终止符.
@@ -332,7 +335,7 @@ func XMenu_GetItemCount(hMenu int) int {
 //
 // bCheck: 勾选TRUE.
 func XMenu_SetItemCheck(hMenu int, nID int, bCheck bool) bool {
-	r, _, _ := xMenu_SetItemCheck.Call(uintptr(hMenu), uintptr(nID), BoolPtr(bCheck))
+	r, _, _ := xMenu_SetItemCheck.Call(uintptr(hMenu), uintptr(nID), common.BoolPtr(bCheck))
 	return int(r) != 0
 }
 
