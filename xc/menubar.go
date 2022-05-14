@@ -1,5 +1,7 @@
 package xc
 
+import "github.com/twgh/xcgui/common"
+
 // 菜单条_创建, 创建菜单条元素; 如果指定了父为窗口, 默认调用XWnd_AddMenuBar()函数, 将菜单条添加到窗口非客户区. 返回元素句柄.
 //
 // x: 元素x坐标.
@@ -22,7 +24,7 @@ func XMenuBar_Create(x int, y int, cx int, cy int, hParent int) int {
 //
 // pText: 文本内容.
 func XMenuBar_AddButton(hEle int, pText string) int {
-	r, _, _ := xMenuBar_AddButton.Call(uintptr(hEle), StrPtr(pText))
+	r, _, _ := xMenuBar_AddButton.Call(uintptr(hEle), common.StrPtr(pText))
 	return int(r)
 }
 
@@ -62,7 +64,7 @@ func XMenuBar_DeleteButton(hEle int, nIndex int) bool {
 //
 // bEnable: 是否启用.
 func XMenuBar_EnableAutoWidth(hEle int, bEnable bool) int {
-	r, _, _ := xMenuBar_EnableAutoWidth.Call(uintptr(hEle), BoolPtr(bEnable))
+	r, _, _ := xMenuBar_EnableAutoWidth.Call(uintptr(hEle), common.BoolPtr(bEnable))
 	return int(r)
 }
 
