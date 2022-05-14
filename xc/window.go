@@ -1,6 +1,7 @@
 package xc
 
 import (
+	"github.com/twgh/xcgui/common"
 	"syscall"
 	"unsafe"
 
@@ -23,7 +24,7 @@ import (
 //
 // XCStyle: GUI库窗口样式, Window_Style_.
 func XWnd_Create(x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xWnd_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), StrPtr(pTitle), uintptr(hWndParent), uintptr(XCStyle))
+	r, _, _ := xWnd_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pTitle), uintptr(hWndParent), uintptr(XCStyle))
 	return int(r)
 }
 
@@ -49,7 +50,7 @@ func XWnd_Create(x int, y int, cx int, cy int, pTitle string, hWndParent int, XC
 //
 // XCStyle: GUI库窗口样式, Window_Style_.
 func XWnd_CreateEx(dwExStyle int, dwStyle int, lpClassName string, x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xWnd_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), StrPtr(lpClassName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), StrPtr(pTitle), uintptr(hWndParent), uintptr(XCStyle))
+	r, _, _ := xWnd_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pTitle), uintptr(hWndParent), uintptr(XCStyle))
 	return int(r)
 }
 
@@ -75,10 +76,10 @@ func XWnd_SetTop(hWindow int) int {
 //
 // hWindow: 窗口句柄.
 //
-// nEvent: 事件类型.
+// nEvent: 事件类型: WM_, XWM_.
 //
 // pFun: 事件函数.
-func XWnd_RegEventC(hWindow int, nEvent int, pFun interface{}) bool {
+func XWnd_RegEventC(hWindow int, nEvent xcc.WM_, pFun interface{}) bool {
 	r, _, _ := xWnd_RegEventC.Call(uintptr(hWindow), uintptr(nEvent), syscall.NewCallback(pFun))
 	return int(r) != 0
 }
@@ -87,10 +88,10 @@ func XWnd_RegEventC(hWindow int, nEvent int, pFun interface{}) bool {
 //
 // hWindow: 窗口句柄.
 //
-// nEvent: 事件类型.
+// nEvent: 事件类型: WM_, XWM_.
 //
 // pFun: 事件函数.
-func XWnd_RegEventC1(hWindow int, nEvent int, pFun interface{}) bool {
+func XWnd_RegEventC1(hWindow int, nEvent xcc.WM_, pFun interface{}) bool {
 	r, _, _ := xWnd_RegEventC1.Call(uintptr(hWindow), uintptr(nEvent), syscall.NewCallback(pFun))
 	return int(r) != 0
 }
@@ -99,10 +100,10 @@ func XWnd_RegEventC1(hWindow int, nEvent int, pFun interface{}) bool {
 //
 // hWindow: 窗口句柄.
 //
-// nEvent: 事件类型.
+// nEvent: 事件类型: WM_, XWM_.
 //
 // pFun: 事件函数.
-func XWnd_RemoveEventC(hWindow int, nEvent int, pFun interface{}) bool {
+func XWnd_RemoveEventC(hWindow int, nEvent xcc.WM_, pFun interface{}) bool {
 	r, _, _ := xWnd_RemoveEventC.Call(uintptr(hWindow), uintptr(nEvent), syscall.NewCallback(pFun))
 	return int(r) != 0
 }
@@ -143,7 +144,7 @@ func XWnd_GetHWND(hWindow int) int {
 //
 // bImmediate: 是否立即重绘, 默认为否.
 func XWnd_Redraw(hWindow int, bImmediate bool) int {
-	r, _, _ := xWnd_Redraw.Call(uintptr(hWindow), BoolPtr(bImmediate))
+	r, _, _ := xWnd_Redraw.Call(uintptr(hWindow), common.BoolPtr(bImmediate))
 	return int(r)
 }
 
@@ -155,7 +156,7 @@ func XWnd_Redraw(hWindow int, bImmediate bool) int {
 //
 // bImmediate: TRUE立即重绘, FALSE放入消息队列延迟重绘.
 func XWnd_RedrawRect(hWindow int, pRect *RECT, bImmediate bool) int {
-	r, _, _ := xWnd_RedrawRect.Call(uintptr(hWindow), uintptr(unsafe.Pointer(pRect)), BoolPtr(bImmediate))
+	r, _, _ := xWnd_RedrawRect.Call(uintptr(hWindow), uintptr(unsafe.Pointer(pRect)), common.BoolPtr(bImmediate))
 	return int(r)
 }
 
@@ -249,7 +250,7 @@ func XWnd_GetCursor(hWindow int) int {
 //
 // bEnable: 是否启用.
 func XWnd_EnableDragBorder(hWindow int, bEnable bool) int {
-	r, _, _ := xWnd_EnableDragBorder.Call(uintptr(hWindow), BoolPtr(bEnable))
+	r, _, _ := xWnd_EnableDragBorder.Call(uintptr(hWindow), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -259,7 +260,7 @@ func XWnd_EnableDragBorder(hWindow int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XWnd_EnableDragWindow(hWindow int, bEnable bool) int {
-	r, _, _ := xWnd_EnableDragWindow.Call(uintptr(hWindow), BoolPtr(bEnable))
+	r, _, _ := xWnd_EnableDragWindow.Call(uintptr(hWindow), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -269,7 +270,7 @@ func XWnd_EnableDragWindow(hWindow int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XWnd_EnableDragCaption(hWindow int, bEnable bool) int {
-	r, _, _ := xWnd_EnableDragCaption.Call(uintptr(hWindow), BoolPtr(bEnable))
+	r, _, _ := xWnd_EnableDragCaption.Call(uintptr(hWindow), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -279,7 +280,7 @@ func XWnd_EnableDragCaption(hWindow int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XWnd_EnableDrawBk(hWindow int, bEnable bool) int {
-	r, _, _ := xWnd_EnableDrawBk.Call(uintptr(hWindow), BoolPtr(bEnable))
+	r, _, _ := xWnd_EnableDrawBk.Call(uintptr(hWindow), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -289,7 +290,7 @@ func XWnd_EnableDrawBk(hWindow int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XWnd_EnableAutoFocus(hWindow int, bEnable bool) int {
-	r, _, _ := xWnd_EnableAutoFocus.Call(uintptr(hWindow), BoolPtr(bEnable))
+	r, _, _ := xWnd_EnableAutoFocus.Call(uintptr(hWindow), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -299,7 +300,7 @@ func XWnd_EnableAutoFocus(hWindow int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XWnd_EnableMaxWindow(hWindow int, bEnable bool) int {
-	r, _, _ := xWnd_EnableMaxWindow.Call(uintptr(hWindow), BoolPtr(bEnable))
+	r, _, _ := xWnd_EnableMaxWindow.Call(uintptr(hWindow), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -309,7 +310,7 @@ func XWnd_EnableMaxWindow(hWindow int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XWnd_EnablemLimitWindowSize(hWindow int, bEnable bool) int {
-	r, _, _ := xWnd_EnablemLimitWindowSize.Call(uintptr(hWindow), BoolPtr(bEnable))
+	r, _, _ := xWnd_EnablemLimitWindowSize.Call(uintptr(hWindow), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -319,7 +320,7 @@ func XWnd_EnablemLimitWindowSize(hWindow int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XWnd_EnableLayout(hWindow int, bEnable bool) int {
-	r, _, _ := xWnd_EnableLayout.Call(uintptr(hWindow), BoolPtr(bEnable))
+	r, _, _ := xWnd_EnableLayout.Call(uintptr(hWindow), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -329,7 +330,7 @@ func XWnd_EnableLayout(hWindow int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XWnd_EnableLayoutOverlayBorder(hWindow int, bEnable bool) int {
-	r, _, _ := xWnd_EnableLayoutOverlayBorder.Call(uintptr(hWindow), BoolPtr(bEnable))
+	r, _, _ := xWnd_EnableLayoutOverlayBorder.Call(uintptr(hWindow), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -339,7 +340,7 @@ func XWnd_EnableLayoutOverlayBorder(hWindow int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XWnd_ShowLayoutFrame(hWindow int, bEnable bool) int {
-	r, _, _ := xWnd_ShowLayoutFrame.Call(uintptr(hWindow), BoolPtr(bEnable))
+	r, _, _ := xWnd_ShowLayoutFrame.Call(uintptr(hWindow), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -457,7 +458,7 @@ func XWnd_GetID(hWindow int) int {
 //
 // pName: name值, 字符串.
 func XWnd_SetName(hWindow int, pName string) int {
-	r, _, _ := xWnd_SetName.Call(uintptr(hWindow), StrPtr(pName))
+	r, _, _ := xWnd_SetName.Call(uintptr(hWindow), common.StrPtr(pName))
 	return int(r)
 }
 
@@ -466,7 +467,7 @@ func XWnd_SetName(hWindow int, pName string) int {
 // hWindow: 窗口句柄.
 func XWnd_GetName(hWindow int) string {
 	r, _, _ := xWnd_GetName.Call(uintptr(hWindow))
-	return UintPtrToString(r)
+	return common.UintPtrToString(r)
 }
 
 // 窗口_置边大小.
@@ -653,7 +654,7 @@ func XWnd_CreateCaret(hWindow, hEle, x, y, width, height int) int {
 //
 // bUpdate: 是否立即更新UI.
 func XWnd_SetCaretPos(hWindow, x, y, width, height int, bUpdate bool) int {
-	r, _, _ := xWnd_SetCaretPos.Call(uintptr(hWindow), uintptr(x), uintptr(y), uintptr(width), uintptr(height), BoolPtr(bUpdate))
+	r, _, _ := xWnd_SetCaretPos.Call(uintptr(hWindow), uintptr(x), uintptr(y), uintptr(width), uintptr(height), common.BoolPtr(bUpdate))
 	return int(r)
 }
 
@@ -673,7 +674,7 @@ func XWnd_SetCaretColor(hWindow, color int) int {
 //
 // bShow: 是否显示.
 func XWnd_ShowCaret(hWindow int, bShow bool) int {
-	r, _, _ := xWnd_ShowCaret.Call(uintptr(hWindow), BoolPtr(bShow))
+	r, _, _ := xWnd_ShowCaret.Call(uintptr(hWindow), common.BoolPtr(bShow))
 	return int(r)
 }
 
@@ -751,7 +752,7 @@ func XWnd_GetRect(hWindow int, pRect *RECT) int {
 //
 // bMaximize: 是否最大化.
 func XWnd_MaxWindow(hWindow int, bMaximize bool) int {
-	r, _, _ := xWnd_MaxWindow.Call(uintptr(hWindow), BoolPtr(bMaximize))
+	r, _, _ := xWnd_MaxWindow.Call(uintptr(hWindow), common.BoolPtr(bMaximize))
 	return int(r)
 }
 
@@ -840,7 +841,7 @@ func XWnd_SetTransparentType(hWindow int, nType xcc.Window_Transparent_) int {
 // hWindow: 窗口句柄.
 //
 // alpha: 窗口透明度, 范围0-255之间, 0透明, 255不透明.
-func XWnd_SetTransparentAlpha(hWindow int, alpha uint8) int {
+func XWnd_SetTransparentAlpha(hWindow int, alpha byte) int {
 	r, _, _ := xWnd_SetTransparentAlpha.Call(uintptr(hWindow), uintptr(alpha))
 	return int(r)
 }
@@ -868,8 +869,8 @@ func XWnd_SetTransparentColor(hWindow, color int) int {
 // bRightAngle: 是否强制直角.
 //
 // color: 阴影颜色.
-func XWnd_SetShadowInfo(hWindow, nSize int, nDepth uint8, nAngeleSize int, bRightAngle bool, color int) int {
-	r, _, _ := xWnd_SetShadowInfo.Call(uintptr(hWindow), uintptr(nSize), uintptr(nDepth), uintptr(nAngeleSize), BoolPtr(bRightAngle), uintptr(color))
+func XWnd_SetShadowInfo(hWindow, nSize int, nDepth byte, nAngeleSize int, bRightAngle bool, color int) int {
+	r, _, _ := xWnd_SetShadowInfo.Call(uintptr(hWindow), uintptr(nSize), uintptr(nDepth), uintptr(nAngeleSize), common.BoolPtr(bRightAngle), uintptr(color))
 	return int(r)
 }
 
@@ -886,7 +887,7 @@ func XWnd_SetShadowInfo(hWindow, nSize int, nDepth uint8, nAngeleSize int, bRigh
 // pbRightAngle: 是否强制直角.
 //
 // pColor: 阴影颜色.
-func XWnd_GetShadowInfo(hWindow int, nSize *int, nDepth *uint8, nAngeleSize *int, bRightAngle *bool, color *int) int {
+func XWnd_GetShadowInfo(hWindow int, nSize *int, nDepth *byte, nAngeleSize *int, bRightAngle *bool, color *int) int {
 	r, _, _ := xWnd_GetShadowInfo.Call(uintptr(hWindow), uintptr(unsafe.Pointer(nSize)), uintptr(unsafe.Pointer(nDepth)), uintptr(unsafe.Pointer(nAngeleSize)), uintptr(unsafe.Pointer(bRightAngle)), uintptr(unsafe.Pointer(color)))
 	return int(r)
 }
@@ -915,7 +916,7 @@ func XWnd_Attach(hWnd int, XCStyle xcc.Window_Style_) int {
 //
 // bEnable: 是否启用.
 func XWnd_EnableDragFiles(hWindow int, bEnable bool) bool {
-	r, _, _ := xWnd_EnableDragFiles.Call(uintptr(hWindow), BoolPtr(bEnable))
+	r, _, _ := xWnd_EnableDragFiles.Call(uintptr(hWindow), common.BoolPtr(bEnable))
 	return int(r) != 0
 }
 
@@ -925,7 +926,7 @@ func XWnd_EnableDragFiles(hWindow int, bEnable bool) bool {
 //
 // bShow: 是否显示.
 func XWnd_Show(hWindow int, bShow bool) int {
-	r, _, _ := xWnd_Show.Call(uintptr(hWindow), BoolPtr(bShow))
+	r, _, _ := xWnd_Show.Call(uintptr(hWindow), common.BoolPtr(bShow))
 	return int(r)
 }
 
@@ -961,7 +962,7 @@ func XWnd_SetIcon(hWindow, hImage int) int {
 //
 // pTitle: 标题文本.
 func XWnd_SetTitle(hWindow int, pTitle string) int {
-	r, _, _ := xWnd_SetTitle.Call(uintptr(hWindow), StrPtr(pTitle))
+	r, _, _ := xWnd_SetTitle.Call(uintptr(hWindow), common.StrPtr(pTitle))
 	return int(r)
 }
 
@@ -998,7 +999,7 @@ func XWnd_GetIcon(hWindow int) int {
 // hWindow: 窗口句柄.
 func XWnd_GetTitle(hWindow int) string {
 	r, _, _ := xWnd_GetTitle.Call(uintptr(hWindow))
-	return UintPtrToString(r)
+	return common.UintPtrToString(r)
 }
 
 // 窗口_取标题颜色, 返回ABGR颜色.
@@ -1069,7 +1070,7 @@ func XWnd_ClearBkInfo(hWindow int) int {
 //
 // pText: 背景内容字符串.
 func XWnd_SetBkInfo(hWindow int, pText string) int {
-	r, _, _ := xWnd_SetBkInfo.Call(uintptr(hWindow), StrPtr(pText))
+	r, _, _ := xWnd_SetBkInfo.Call(uintptr(hWindow), common.StrPtr(pText))
 	return int(r)
 }
 
