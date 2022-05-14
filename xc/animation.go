@@ -1,6 +1,7 @@
 package xc
 
 import (
+	"github.com/twgh/xcgui/common"
 	"syscall"
 
 	"github.com/twgh/xcgui/xcc"
@@ -22,7 +23,7 @@ func XAnima_Run(hAnimation int, hRedrawObjectUI int) int {
 //
 // bEnd: 是否立即执行到终点.
 func XAnima_Release(hAnimation int, bEnd bool) bool {
-	r, _, _ := xAnima_Release.Call(uintptr(hAnimation), BoolPtr(bEnd))
+	r, _, _ := xAnima_Release.Call(uintptr(hAnimation), common.BoolPtr(bEnd))
 	return int(r) != 0
 }
 
@@ -32,7 +33,7 @@ func XAnima_Release(hAnimation int, bEnd bool) bool {
 //
 // bEnd: 是否立即执行到终点.
 func XAnima_ReleaseEx(hObjectUI int, bEnd bool) int {
-	r, _, _ := xAnima_ReleaseEx.Call(uintptr(hObjectUI), BoolPtr(bEnd))
+	r, _, _ := xAnima_ReleaseEx.Call(uintptr(hObjectUI), common.BoolPtr(bEnd))
 	return int(r)
 }
 
@@ -62,7 +63,7 @@ func XAnima_Create(hObjectUI int, nLoopCount int) int {
 //
 // bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
 func XAnima_Move(hSequence int, duration int, x float32, y float32, nLoopCount int, ease_flag xcc.Ease_Flag_, bGoBack bool) int {
-	r, _, _ := xAnima_Move.Call(uintptr(hSequence), uintptr(duration), Float32Ptr(x), Float32Ptr(y), uintptr(nLoopCount), uintptr(ease_flag), BoolPtr(bGoBack))
+	r, _, _ := xAnima_Move.Call(uintptr(hSequence), uintptr(duration), common.Float32Ptr(x), common.Float32Ptr(y), uintptr(nLoopCount), uintptr(ease_flag), common.BoolPtr(bGoBack))
 	return int(r)
 }
 
@@ -86,7 +87,7 @@ func XAnima_Move(hSequence int, duration int, x float32, y float32, nLoopCount i
 //
 // bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
 func XAnima_MoveEx(hSequence int, duration int, from_x float32, from_y float32, to_x float32, to_y float32, nLoopCount int, ease_flag xcc.Ease_Flag_, bGoBack bool) int {
-	r, _, _ := xAnima_MoveEx.Call(uintptr(hSequence), uintptr(duration), Float32Ptr(from_x), Float32Ptr(from_y), Float32Ptr(to_x), Float32Ptr(to_y), uintptr(nLoopCount), uintptr(ease_flag), BoolPtr(bGoBack))
+	r, _, _ := xAnima_MoveEx.Call(uintptr(hSequence), uintptr(duration), common.Float32Ptr(from_x), common.Float32Ptr(from_y), common.Float32Ptr(to_x), common.Float32Ptr(to_y), uintptr(nLoopCount), uintptr(ease_flag), common.BoolPtr(bGoBack))
 	return int(r)
 }
 
@@ -104,7 +105,7 @@ func XAnima_MoveEx(hSequence int, duration int, from_x float32, from_y float32, 
 //
 // bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
 func XAnima_Rotate(hSequence int, duration int, angle float32, nLoopCount int, ease_flag xcc.Ease_Flag_, bGoBack bool) int {
-	r, _, _ := xAnima_Rotate.Call(uintptr(hSequence), uintptr(duration), Float32Ptr(angle), uintptr(nLoopCount), uintptr(ease_flag), BoolPtr(bGoBack))
+	r, _, _ := xAnima_Rotate.Call(uintptr(hSequence), uintptr(duration), common.Float32Ptr(angle), uintptr(nLoopCount), uintptr(ease_flag), common.BoolPtr(bGoBack))
 	return int(r)
 }
 
@@ -124,7 +125,7 @@ func XAnima_Rotate(hSequence int, duration int, angle float32, nLoopCount int, e
 //
 // bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
 func XAnima_RotateEx(hSequence int, duration int, from float32, to float32, nLoopCount int, ease_flag xcc.Ease_Flag_, bGoBack bool) int {
-	r, _, _ := xAnima_RotateEx.Call(uintptr(hSequence), uintptr(duration), Float32Ptr(from), Float32Ptr(to), uintptr(nLoopCount), uintptr(ease_flag), BoolPtr(bGoBack))
+	r, _, _ := xAnima_RotateEx.Call(uintptr(hSequence), uintptr(duration), common.Float32Ptr(from), common.Float32Ptr(to), uintptr(nLoopCount), uintptr(ease_flag), common.BoolPtr(bGoBack))
 	return int(r)
 }
 
@@ -144,7 +145,7 @@ func XAnima_RotateEx(hSequence int, duration int, from float32, to float32, nLoo
 //
 // bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
 func XAnima_Scale(hSequence int, duration int, scaleX float32, scaleY float32, nLoopCount int, ease_flag xcc.Ease_Flag_, bGoBack bool) int {
-	r, _, _ := xAnima_Scale.Call(uintptr(hSequence), uintptr(duration), Float32Ptr(scaleX), Float32Ptr(scaleY), uintptr(nLoopCount), uintptr(ease_flag), BoolPtr(bGoBack))
+	r, _, _ := xAnima_Scale.Call(uintptr(hSequence), uintptr(duration), common.Float32Ptr(scaleX), common.Float32Ptr(scaleY), uintptr(nLoopCount), uintptr(ease_flag), common.BoolPtr(bGoBack))
 	return int(r)
 }
 
@@ -164,7 +165,7 @@ func XAnima_Scale(hSequence int, duration int, scaleX float32, scaleY float32, n
 //
 // bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
 func XAnima_ScaleSize(hSequence int, duration int, width float32, height float32, nLoopCount int, ease_flag xcc.Ease_Flag_, bGoBack bool) int {
-	r, _, _ := xAnima_ScaleSize.Call(uintptr(hSequence), uintptr(duration), Float32Ptr(width), Float32Ptr(height), uintptr(nLoopCount), uintptr(ease_flag), BoolPtr(bGoBack))
+	r, _, _ := xAnima_ScaleSize.Call(uintptr(hSequence), uintptr(duration), common.Float32Ptr(width), common.Float32Ptr(height), uintptr(nLoopCount), uintptr(ease_flag), common.BoolPtr(bGoBack))
 	return int(r)
 }
 
@@ -182,7 +183,7 @@ func XAnima_ScaleSize(hSequence int, duration int, width float32, height float32
 //
 // bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
 func XAnima_Alpha(hSequence int, duration int, alpha uint8, nLoopCount int, ease_flag xcc.Ease_Flag_, bGoBack bool) int {
-	r, _, _ := xAnima_Alpha.Call(uintptr(hSequence), uintptr(duration), uintptr(alpha), uintptr(nLoopCount), uintptr(ease_flag), BoolPtr(bGoBack))
+	r, _, _ := xAnima_Alpha.Call(uintptr(hSequence), uintptr(duration), uintptr(alpha), uintptr(nLoopCount), uintptr(ease_flag), common.BoolPtr(bGoBack))
 	return int(r)
 }
 
@@ -202,7 +203,7 @@ func XAnima_Alpha(hSequence int, duration int, alpha uint8, nLoopCount int, ease
 //
 // bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
 func XAnima_AlphaEx(hSequence int, duration int, from_alpha uint8, to_alpha uint8, nLoopCount int, ease_flag xcc.Ease_Flag_, bGoBack bool) int {
-	r, _, _ := xAnima_AlphaEx.Call(uintptr(hSequence), uintptr(duration), uintptr(from_alpha), uintptr(to_alpha), uintptr(nLoopCount), uintptr(ease_flag), BoolPtr(bGoBack))
+	r, _, _ := xAnima_AlphaEx.Call(uintptr(hSequence), uintptr(duration), uintptr(from_alpha), uintptr(to_alpha), uintptr(nLoopCount), uintptr(ease_flag), common.BoolPtr(bGoBack))
 	return int(r)
 }
 
@@ -220,7 +221,7 @@ func XAnima_AlphaEx(hSequence int, duration int, from_alpha uint8, to_alpha uint
 //
 // bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
 func XAnima_Color(hSequence int, duration int, color int, nLoopCount int, ease_flag xcc.Ease_Flag_, bGoBack bool) int {
-	r, _, _ := xAnima_Color.Call(uintptr(hSequence), uintptr(duration), uintptr(color), uintptr(nLoopCount), uintptr(ease_flag), BoolPtr(bGoBack))
+	r, _, _ := xAnima_Color.Call(uintptr(hSequence), uintptr(duration), uintptr(color), uintptr(nLoopCount), uintptr(ease_flag), common.BoolPtr(bGoBack))
 	return int(r)
 }
 
@@ -240,7 +241,7 @@ func XAnima_Color(hSequence int, duration int, color int, nLoopCount int, ease_f
 //
 // bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
 func XAnima_ColorEx(hSequence int, duration int, from int, to int, nLoopCount int, ease_flag xcc.Ease_Flag_, bGoBack bool) int {
-	r, _, _ := xAnima_ColorEx.Call(uintptr(hSequence), uintptr(duration), uintptr(from), uintptr(to), uintptr(nLoopCount), uintptr(ease_flag), BoolPtr(bGoBack))
+	r, _, _ := xAnima_ColorEx.Call(uintptr(hSequence), uintptr(duration), uintptr(from), uintptr(to), uintptr(nLoopCount), uintptr(ease_flag), common.BoolPtr(bGoBack))
 	return int(r)
 }
 
@@ -260,7 +261,7 @@ func XAnima_ColorEx(hSequence int, duration int, from int, to int, nLoopCount in
 //
 // bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
 func XAnima_LayoutWidth(hSequence int, duration int, nType xcc.Layout_Size_, width float32, nLoopCount int, ease_flag xcc.Ease_Flag_, bGoBack bool) int {
-	r, _, _ := xAnima_LayoutWidth.Call(uintptr(hSequence), uintptr(duration), uintptr(nType), Float32Ptr(width), uintptr(nLoopCount), uintptr(ease_flag), BoolPtr(bGoBack))
+	r, _, _ := xAnima_LayoutWidth.Call(uintptr(hSequence), uintptr(duration), uintptr(nType), common.Float32Ptr(width), uintptr(nLoopCount), uintptr(ease_flag), common.BoolPtr(bGoBack))
 	return int(r)
 }
 
@@ -280,7 +281,7 @@ func XAnima_LayoutWidth(hSequence int, duration int, nType xcc.Layout_Size_, wid
 //
 // bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
 func XAnima_LayoutHeight(hSequence int, duration int, nType xcc.Layout_Size_, height float32, nLoopCount int, ease_flag xcc.Ease_Flag_, bGoBack bool) int {
-	r, _, _ := xAnima_LayoutHeight.Call(uintptr(hSequence), uintptr(duration), uintptr(nType), Float32Ptr(height), uintptr(nLoopCount), uintptr(ease_flag), BoolPtr(bGoBack))
+	r, _, _ := xAnima_LayoutHeight.Call(uintptr(hSequence), uintptr(duration), uintptr(nType), common.Float32Ptr(height), uintptr(nLoopCount), uintptr(ease_flag), common.BoolPtr(bGoBack))
 	return int(r)
 }
 
@@ -304,7 +305,7 @@ func XAnima_LayoutHeight(hSequence int, duration int, nType xcc.Layout_Size_, he
 //
 // bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
 func XAnima_LayoutSize(hSequence int, duration int, nWidthType xcc.Layout_Size_, width float32, nHeightType xcc.Layout_Size_, height float32, nLoopCount int, ease_flag xcc.Ease_Flag_, bGoBack bool) int {
-	r, _, _ := xAnima_LayoutSize.Call(uintptr(hSequence), uintptr(duration), uintptr(nWidthType), Float32Ptr(width), uintptr(nHeightType), Float32Ptr(height), uintptr(nLoopCount), uintptr(ease_flag), BoolPtr(bGoBack))
+	r, _, _ := xAnima_LayoutSize.Call(uintptr(hSequence), uintptr(duration), uintptr(nWidthType), common.Float32Ptr(width), uintptr(nHeightType), common.Float32Ptr(height), uintptr(nLoopCount), uintptr(ease_flag), common.BoolPtr(bGoBack))
 	return int(r)
 }
 
@@ -314,7 +315,7 @@ func XAnima_LayoutSize(hSequence int, duration int, nWidthType xcc.Layout_Size_,
 //
 // duration: 持续时间.
 func XAnima_Delay(hSequence int, duration float32) int {
-	r, _, _ := xAnima_Delay.Call(uintptr(hSequence), Float32Ptr(duration))
+	r, _, _ := xAnima_Delay.Call(uintptr(hSequence), common.Float32Ptr(duration))
 	return int(r)
 }
 
@@ -326,7 +327,7 @@ func XAnima_Delay(hSequence int, duration float32) int {
 //
 // bShow: 显示或隐藏.
 func XAnima_Show(hSequence int, duration float32, bShow bool) int {
-	r, _, _ := xAnima_Show.Call(uintptr(hSequence), Float32Ptr(duration), BoolPtr(bShow))
+	r, _, _ := xAnima_Show.Call(uintptr(hSequence), common.Float32Ptr(duration), common.BoolPtr(bShow))
 	return int(r)
 }
 
@@ -360,7 +361,7 @@ func XAnimaGroup_AddItem(hGroup int, hSequence int) int {
 //
 // bOffset: TRUE: 相对于自身中心点偏移, FALSE: 绝对坐标.
 func XAnimaRotate_SetCenter(hAnimationRotate int, x float32, y float32, bOffset bool) bool {
-	r, _, _ := xAnimaRotate_SetCenter.Call(uintptr(hAnimationRotate), Float32Ptr(x), Float32Ptr(y), BoolPtr(bOffset))
+	r, _, _ := xAnimaRotate_SetCenter.Call(uintptr(hAnimationRotate), common.Float32Ptr(x), common.Float32Ptr(y), common.BoolPtr(bOffset))
 	return int(r) != 0
 }
 
@@ -390,7 +391,7 @@ func XAnima_GetObjectUI(hAnimation int) int {
 //
 // bEnable: 是否启用.
 func XAnimaItem_EnableCompleteRelease(hAnimationItem int, bEnable bool) int {
-	r, _, _ := xAnimaItem_EnableCompleteRelease.Call(uintptr(hAnimationItem), BoolPtr(bEnable))
+	r, _, _ := xAnimaItem_EnableCompleteRelease.Call(uintptr(hAnimationItem), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -400,7 +401,7 @@ func XAnimaItem_EnableCompleteRelease(hAnimationItem int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XAnima_EnableAutoDestroy(hAnimation int, bEnable bool) int {
-	r, _, _ := xAnima_EnableAutoDestroy.Call(uintptr(hAnimation), BoolPtr(bEnable))
+	r, _, _ := xAnima_EnableAutoDestroy.Call(uintptr(hAnimation), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -410,7 +411,7 @@ func XAnima_EnableAutoDestroy(hAnimation int, bEnable bool) int {
 //
 // duration: 持续时间.
 func XAnima_DestroyObjectUI(hSequence int, duration float32) int {
-	r, _, _ := xAnima_DestroyObjectUI.Call(uintptr(hSequence), Float32Ptr(duration))
+	r, _, _ := xAnima_DestroyObjectUI.Call(uintptr(hSequence), common.Float32Ptr(duration))
 	return int(r)
 }
 
@@ -500,7 +501,7 @@ func XAnimaItem_GetUserData(hAnimationItem int) int {
 //
 // bEnable: 是否启用.
 func XAnimaItem_EnableAutoDestroy(hAnimationItem int, bEnable bool) int {
-	r, _, _ := xAnimaItem_EnableAutoDestroy.Call(uintptr(hAnimationItem), BoolPtr(bEnable))
+	r, _, _ := xAnimaItem_EnableAutoDestroy.Call(uintptr(hAnimationItem), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -516,7 +517,7 @@ func XAnimaItem_EnableAutoDestroy(hAnimationItem int, bEnable bool) int {
 //
 // bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
 func XAnima_DelayEx(hSequence int, duration float32, nLoopCount int, ease_flag xcc.Ease_Flag_, bGoBack bool) int {
-	r, _, _ := xAnima_DelayEx.Call(uintptr(hSequence), Float32Ptr(duration), uintptr(nLoopCount), uintptr(ease_flag), BoolPtr(bGoBack))
+	r, _, _ := xAnima_DelayEx.Call(uintptr(hSequence), common.Float32Ptr(duration), uintptr(nLoopCount), uintptr(ease_flag), common.BoolPtr(bGoBack))
 	return int(r)
 }
 
