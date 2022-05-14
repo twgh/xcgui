@@ -1,6 +1,9 @@
 package xc
 
-import "github.com/twgh/xcgui/xcc"
+import (
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/xcc"
+)
 
 // 可视对象_置样式, 设置UI对象样式.
 //
@@ -26,7 +29,7 @@ func XUI_GetStyle(hXCGUI int) xcc.XC_OBJECT_STYLE {
 //
 // bEnable: 是否启用.
 func XUI_EnableCSS(hXCGUI int, bEnable bool) int {
-	r, _, _ := xUI_EnableCSS.Call(uintptr(hXCGUI), BoolPtr(bEnable))
+	r, _, _ := xUI_EnableCSS.Call(uintptr(hXCGUI), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -36,7 +39,7 @@ func XUI_EnableCSS(hXCGUI int, bEnable bool) int {
 //
 // pName: 套用样式名称.
 func XUI_SetCssName(hXCGUI int, pName string) int {
-	r, _, _ := xUI_SetCssName.Call(uintptr(hXCGUI), StrPtr(pName))
+	r, _, _ := xUI_SetCssName.Call(uintptr(hXCGUI), common.StrPtr(pName))
 	return int(r)
 }
 
@@ -45,5 +48,5 @@ func XUI_SetCssName(hXCGUI int, pName string) int {
 // hXCGUI: 对象句柄.
 func XUI_GetCssName(hXCGUI int) string {
 	r, _, _ := xUI_GetCssName.Call(uintptr(hXCGUI))
-	return UintPtrToString(r)
+	return common.UintPtrToString(r)
 }
