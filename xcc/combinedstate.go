@@ -1,9 +1,9 @@
 package xcc
 
-// 组合状态 uint32
+// CombinedState 组合状态.
 type CombinedState uint32
 
-// 组合状态
+// Window_State_Flag_ 组合状态
 // 窗口状态
 type Window_State_Flag_ uint32
 
@@ -168,15 +168,15 @@ const (
 // type PropertyGrid_State_Flag_ CombinedState
 
 const (
-	PropertyGrid_State_Flag_Item_Leave CombinedState = 0x0080 //离开
-	PropertyGrid_State_Flag_Item_Stay  CombinedState = 0x0100 //停留
+	PropertyGrid_State_Flag_Item_Leave CombinedState = 0x0080 // 离开
+	PropertyGrid_State_Flag_Item_Stay  CombinedState = 0x0100 // 停留
 
-	PropertyGrid_State_Flag_Item_Select    CombinedState = 0x0200 //选择
-	PropertyGrid_State_Flag_Item_Select_No CombinedState = 0x0400 //未选择
+	PropertyGrid_State_Flag_Item_Select    CombinedState = 0x0200 // 选择
+	PropertyGrid_State_Flag_Item_Select_No CombinedState = 0x0400 // 未选择
 
-	PropertyGrid_State_Flag_Group_Leave     CombinedState = 0x0800 //组离开
-	PropertyGrid_State_Flag_Group_Expand    CombinedState = 0x1000 //组展开
-	PropertyGrid_State_Flag_Group_Expand_No CombinedState = 0x2000 //组未展开
+	PropertyGrid_State_Flag_Group_Leave     CombinedState = 0x0800 // 组离开
+	PropertyGrid_State_Flag_Group_Expand    CombinedState = 0x1000 // 组展开
+	PropertyGrid_State_Flag_Group_Expand_No CombinedState = 0x2000 // 组未展开
 )
 
 // 组合状态
