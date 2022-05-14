@@ -1,5 +1,7 @@
 package xc
 
+import "github.com/twgh/xcgui/common"
+
 // 滚动条_创建, 创建滚动条元素, 返回元素句柄.
 //
 // x: 元素x坐标.
@@ -40,7 +42,7 @@ func XSBar_GetRange(hEle int) int {
 //
 // bShow: 是否显示.
 func XSBar_ShowButton(hEle int, bShow bool) int {
-	r, _, _ := xSBar_ShowButton.Call(uintptr(hEle), BoolPtr(bShow))
+	r, _, _ := xSBar_ShowButton.Call(uintptr(hEle), common.BoolPtr(bShow))
 	return int(r)
 }
 
@@ -80,7 +82,7 @@ func XSBar_SetSliderPadding(hEle int, nPadding int) int {
 //
 // bHorizon: 水平或垂直.
 func XSBar_EnableHorizon(hEle int, bHorizon bool) bool {
-	r, _, _ := xSBar_EnableHorizon.Call(uintptr(hEle), BoolPtr(bHorizon))
+	r, _, _ := xSBar_EnableHorizon.Call(uintptr(hEle), common.BoolPtr(bHorizon))
 	return int(r) != 0
 }
 
