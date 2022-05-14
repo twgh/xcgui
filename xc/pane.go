@@ -1,6 +1,7 @@
 package xc
 
 import (
+	"github.com/twgh/xcgui/common"
 	"unsafe"
 
 	"github.com/twgh/xcgui/xcc"
@@ -16,7 +17,7 @@ import (
 //
 // hFrameWnd: 框架窗口.
 func XPane_Create(pName string, nWidth int, nHeight int, hFrameWnd int) int {
-	r, _, _ := xPane_Create.Call(StrPtr(pName), uintptr(nWidth), uintptr(nHeight), uintptr(hFrameWnd))
+	r, _, _ := xPane_Create.Call(common.StrPtr(pName), uintptr(nWidth), uintptr(nHeight), uintptr(hFrameWnd))
 	return int(r)
 }
 
@@ -36,7 +37,7 @@ func XPane_SetView(hEle int, hView int) int {
 //
 // pTitle: 文本内容.
 func XPane_SetTitle(hEle int, pTitle string) int {
-	r, _, _ := xPane_SetTitle.Call(uintptr(hEle), StrPtr(pTitle))
+	r, _, _ := xPane_SetTitle.Call(uintptr(hEle), common.StrPtr(pTitle))
 	return int(r)
 }
 
@@ -45,7 +46,7 @@ func XPane_SetTitle(hEle int, pTitle string) int {
 // hEle: 元素句柄.
 func XPane_GetTitle(hEle int) string {
 	r, _, _ := xPane_GetTitle.Call(uintptr(hEle))
-	return UintPtrToString(r)
+	return common.UintPtrToString(r)
 }
 
 // 窗格_置标题栏高度, 设置标题栏高度.
