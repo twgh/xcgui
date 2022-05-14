@@ -1,6 +1,9 @@
 package xc
 
-import "unsafe"
+import (
+	"github.com/twgh/xcgui/common"
+	"unsafe"
+)
 
 // 形状_移除, 从父UI元素或窗口,和父布局对象中移除.
 //
@@ -82,7 +85,7 @@ func XShape_SetRect(hShape int, pRect *RECT) int {
 //
 // bRedraw: 是否重绘.
 func XShape_SetRectLogic(hShape int, pRect *RECT, bRedraw bool) bool {
-	r, _, _ := xShape_SetRectLogic.Call(uintptr(hShape), uintptr(unsafe.Pointer(pRect)), BoolPtr(bRedraw))
+	r, _, _ := xShape_SetRectLogic.Call(uintptr(hShape), uintptr(unsafe.Pointer(pRect)), common.BoolPtr(bRedraw))
 	return int(r) != 0
 }
 
@@ -122,7 +125,7 @@ func XShape_GetContentSize(hShape int, pSize *SIZE) int {
 //
 // bShow: 是否显示.
 func XShape_ShowLayout(hShape int, bShow bool) int {
-	r, _, _ := xShape_ShowLayout.Call(uintptr(hShape), BoolPtr(bShow))
+	r, _, _ := xShape_ShowLayout.Call(uintptr(hShape), common.BoolPtr(bShow))
 	return int(r)
 }
 
