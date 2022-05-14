@@ -1,6 +1,7 @@
 package xc
 
 import (
+	"github.com/twgh/xcgui/common"
 	"unsafe"
 
 	"github.com/twgh/xcgui/xcc"
@@ -22,7 +23,7 @@ import (
 //
 // XCStyle: GUI库窗口样式: Window_Style_.
 func XFrameWnd_Create(x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xFrameWnd_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), StrPtr(pTitle), uintptr(hWndParent), uintptr(XCStyle))
+	r, _, _ := xFrameWnd_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pTitle), uintptr(hWndParent), uintptr(XCStyle))
 	return int(r)
 }
 
@@ -48,7 +49,7 @@ func XFrameWnd_Create(x int, y int, cx int, cy int, pTitle string, hWndParent in
 //
 // XCStyle: GUI库窗口样式: Window_Style_.
 func XFrameWnd_CreateEx(dwExStyle int, dwStyle int, lpClassName string, x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xFrameWnd_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), StrPtr(lpClassName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), StrPtr(pTitle), uintptr(hWndParent), uintptr(XCStyle))
+	r, _, _ := xFrameWnd_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pTitle), uintptr(hWndParent), uintptr(XCStyle))
 	return int(r)
 }
 
@@ -98,7 +99,7 @@ func XFrameWnd_SetTabBarHeight(hWindow int, nHeight int) int {
 //
 // pFileName: 文件名，如果文件名为空，将使用默认文件名frameWnd_layout.xml.
 func XFrameWnd_SaveLayoutToFile(hWindow int, pFileName string) bool {
-	r, _, _ := xFrameWnd_SaveLayoutToFile.Call(uintptr(hWindow), StrPtr(pFileName))
+	r, _, _ := xFrameWnd_SaveLayoutToFile.Call(uintptr(hWindow), common.StrPtr(pFileName))
 	return int(r) != 0
 }
 
@@ -112,7 +113,7 @@ func XFrameWnd_SaveLayoutToFile(hWindow int, pFileName string) bool {
 //
 // pFileName: 文件名，如果文件名为空，将使用默认文件名frameWnd_layout.xml.
 func XFrameWnd_LoadLayoutFile(hWindow int, aPaneList []int, nPaneCount int, pFileName string) bool {
-	r, _, _ := xFrameWnd_LoadLayoutFile.Call(uintptr(hWindow), uintptr(unsafe.Pointer(&aPaneList[0])), uintptr(nPaneCount), StrPtr(pFileName))
+	r, _, _ := xFrameWnd_LoadLayoutFile.Call(uintptr(hWindow), uintptr(unsafe.Pointer(&aPaneList[0])), uintptr(nPaneCount), common.StrPtr(pFileName))
 	return int(r) != 0
 }
 
