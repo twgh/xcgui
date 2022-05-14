@@ -1,5 +1,7 @@
 package xc
 
+import "github.com/twgh/xcgui/common"
+
 // 数据适配器_增加引用计数.
 //
 // hAdapter: 数据适配器句柄.
@@ -38,6 +40,6 @@ func XAd_Destroy(hAdapter int) int {
 //
 // bEnable: 是否启用.
 func XAd_EnableAutoDestroy(hAdapter int, bEnable bool) int {
-	r, _, _ := xAd_EnableAutoDestroy.Call(uintptr(hAdapter), BoolPtr(bEnable))
+	r, _, _ := xAd_EnableAutoDestroy.Call(uintptr(hAdapter), common.BoolPtr(bEnable))
 	return int(r)
 }
