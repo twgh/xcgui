@@ -1,6 +1,9 @@
 package xc
 
-import "github.com/twgh/xcgui/xcc"
+import (
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/xcc"
+)
 
 // 形状文本_创建, 创建形状对象文本.
 //
@@ -16,7 +19,7 @@ import "github.com/twgh/xcgui/xcc"
 //
 // hParent: 父对象句柄.
 func XShapeText_Create(x int, y int, cx int, cy int, pName string, hParent int) int {
-	r, _, _ := xShapeText_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), StrPtr(pName), uintptr(hParent))
+	r, _, _ := xShapeText_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pName), uintptr(hParent))
 	return int(r)
 }
 
@@ -26,7 +29,7 @@ func XShapeText_Create(x int, y int, cx int, cy int, pName string, hParent int) 
 //
 // pName: 文本内容.
 func XShapeText_SetText(hTextBlock int, pName string) int {
-	r, _, _ := xShapeText_SetText.Call(uintptr(hTextBlock), StrPtr(pName))
+	r, _, _ := xShapeText_SetText.Call(uintptr(hTextBlock), common.StrPtr(pName))
 	return int(r)
 }
 
@@ -35,7 +38,7 @@ func XShapeText_SetText(hTextBlock int, pName string) int {
 // hTextBlock: 形状对象文本句柄.
 func XShapeText_GetText(hTextBlock int) string {
 	r, _, _ := xShapeText_GetText.Call(uintptr(hTextBlock))
-	return UintPtrToString(r)
+	return common.UintPtrToString(r)
 }
 
 // 形状文本_取文本长度, 获取文本长度.
