@@ -1,6 +1,9 @@
 package xc
 
-import "github.com/twgh/xcgui/xcc"
+import (
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/xcc"
+)
 
 // 通知消息_弹出, 未实现, 预留接口.
 //
@@ -14,7 +17,7 @@ import "github.com/twgh/xcgui/xcc"
 //
 // skin: 外观类型, NotifyMsg_Skin_.
 func XNotifyMsg_Popup(position xcc.Position_Flag_, pTitle, pText string, hIcon int, skin xcc.NotifyMsg_Skin_) int {
-	r, _, _ := xNotifyMsg_Popup.Call(uintptr(position), StrPtr(pTitle), StrPtr(pText), uintptr(hIcon), uintptr(skin))
+	r, _, _ := xNotifyMsg_Popup.Call(uintptr(position), common.StrPtr(pTitle), common.StrPtr(pText), uintptr(hIcon), uintptr(skin))
 	return int(r)
 }
 
@@ -38,7 +41,7 @@ func XNotifyMsg_Popup(position xcc.Position_Flag_, pTitle, pText string, hIcon i
 //
 // nHeight: 自定义高度, -1(使用默认值).
 func XNotifyMsg_PopupEx(position xcc.Position_Flag_, pTitle, pText string, hIcon int, skin xcc.NotifyMsg_Skin_, bBtnClose, bAutoClose bool, nWidth, nHeight int) int {
-	r, _, _ := xNotifyMsg_PopupEx.Call(uintptr(position), StrPtr(pTitle), StrPtr(pText), uintptr(hIcon), uintptr(skin), BoolPtr(bBtnClose), BoolPtr(bAutoClose), uintptr(nWidth), uintptr(nHeight))
+	r, _, _ := xNotifyMsg_PopupEx.Call(uintptr(position), common.StrPtr(pTitle), common.StrPtr(pText), uintptr(hIcon), uintptr(skin), common.BoolPtr(bBtnClose), common.BoolPtr(bAutoClose), uintptr(nWidth), uintptr(nHeight))
 	return int(r)
 }
 
@@ -56,7 +59,7 @@ func XNotifyMsg_PopupEx(position xcc.Position_Flag_, pTitle, pText string, hIcon
 //
 // skin: 外观类型, NotifyMsg_Skin_.
 func XNotifyMsg_WindowPopup(hWindow int, position xcc.Position_Flag_, pTitle, pText string, hIcon int, skin xcc.NotifyMsg_Skin_) int {
-	r, _, _ := xNotifyMsg_WindowPopup.Call(uintptr(hWindow), uintptr(position), StrPtr(pTitle), StrPtr(pText), uintptr(hIcon), uintptr(skin))
+	r, _, _ := xNotifyMsg_WindowPopup.Call(uintptr(hWindow), uintptr(position), common.StrPtr(pTitle), common.StrPtr(pText), uintptr(hIcon), uintptr(skin))
 	return int(r)
 }
 
@@ -82,7 +85,7 @@ func XNotifyMsg_WindowPopup(hWindow int, position xcc.Position_Flag_, pTitle, pT
 //
 // nHeight: 自定义高度, -1(使用默认值).
 func XNotifyMsg_WindowPopupEx(hWindow int, position xcc.Position_Flag_, pTitle, pText string, hIcon int, skin xcc.NotifyMsg_Skin_, bBtnClose, bAutoClose bool, nWidth, nHeight int) int {
-	r, _, _ := xNotifyMsg_WindowPopupEx.Call(uintptr(hWindow), uintptr(position), StrPtr(pTitle), StrPtr(pText), uintptr(hIcon), uintptr(skin), BoolPtr(bBtnClose), BoolPtr(bAutoClose), uintptr(nWidth), uintptr(nHeight))
+	r, _, _ := xNotifyMsg_WindowPopupEx.Call(uintptr(hWindow), uintptr(position), common.StrPtr(pTitle), common.StrPtr(pText), uintptr(hIcon), uintptr(skin), common.BoolPtr(bBtnClose), common.BoolPtr(bAutoClose), uintptr(nWidth), uintptr(nHeight))
 	return int(r)
 }
 
