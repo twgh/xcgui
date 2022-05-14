@@ -1,12 +1,15 @@
 package xc
 
-import "syscall"
+import (
+	"github.com/twgh/xcgui/common"
+	"syscall"
+)
 
 // 资源_启用延迟加载, 启用延迟加载; 图片文件, 列表项模板文件.
 //
 // bEnable: 是否启用.
 func XRes_EnableDelayLoad(bEnable bool) int {
-	r, _, _ := xRes_EnableDelayLoad.Call(BoolPtr(bEnable))
+	r, _, _ := xRes_EnableDelayLoad.Call(common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -22,7 +25,7 @@ func XRes_SetLoadFileCallback(pFun interface{}) int {
 //
 // pName: 资源ID名称.
 func XRes_GetIDValue(pName string) int {
-	r, _, _ := xRes_GetIDValue.Call(StrPtr(pName))
+	r, _, _ := xRes_GetIDValue.Call(common.StrPtr(pName))
 	return int(r)
 }
 
@@ -30,7 +33,7 @@ func XRes_GetIDValue(pName string) int {
 //
 // pName: 资源名称.
 func XRes_GetImage(pName string) int {
-	r, _, _ := xRes_GetImage.Call(StrPtr(pName))
+	r, _, _ := xRes_GetImage.Call(common.StrPtr(pName))
 	return int(r)
 }
 
@@ -40,7 +43,7 @@ func XRes_GetImage(pName string) int {
 //
 // pName: 资源名称.
 func XRes_GetImageEx(pFileName string, pName string) int {
-	r, _, _ := xRes_GetImageEx.Call(StrPtr(pFileName), StrPtr(pName))
+	r, _, _ := xRes_GetImageEx.Call(common.StrPtr(pFileName), common.StrPtr(pName))
 	return int(r)
 }
 
@@ -48,7 +51,7 @@ func XRes_GetImageEx(pFileName string, pName string) int {
 //
 // pName: 资源名称.
 func XRes_GetColor(pName string) int {
-	r, _, _ := xRes_GetColor.Call(StrPtr(pName))
+	r, _, _ := xRes_GetColor.Call(common.StrPtr(pName))
 	return int(r)
 }
 
@@ -56,7 +59,7 @@ func XRes_GetColor(pName string) int {
 //
 // pName: 资源名称.
 func XRes_GetFont(pName string) int {
-	r, _, _ := xRes_GetFont.Call(StrPtr(pName))
+	r, _, _ := xRes_GetFont.Call(common.StrPtr(pName))
 	return int(r)
 }
 
@@ -64,6 +67,6 @@ func XRes_GetFont(pName string) int {
 //
 // pName: 资源名称.
 func XRes_GetBkM(pName string) int {
-	r, _, _ := xRes_GetBkM.Call(StrPtr(pName))
+	r, _, _ := xRes_GetBkM.Call(common.StrPtr(pName))
 	return int(r)
 }
