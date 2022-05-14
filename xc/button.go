@@ -1,6 +1,9 @@
 package xc
 
-import "github.com/twgh/xcgui/xcc"
+import (
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/xcc"
+)
 
 // 按钮_创建.
 //
@@ -16,7 +19,7 @@ import "github.com/twgh/xcgui/xcc"
 //
 // hParent: 父为窗口句柄或元素句柄.
 func XBtn_Create(x int, y int, cx int, cy int, pName string, hParent int) int {
-	r, _, _ := xBtn_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), StrPtr(pName), uintptr(hParent))
+	r, _, _ := xBtn_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pName), uintptr(hParent))
 	return int(r)
 }
 
@@ -34,7 +37,7 @@ func XBtn_IsCheck(hEle int) bool {
 //
 // bCheck: 是否选中.
 func XBtn_SetCheck(hEle int, bCheck bool) bool {
-	r, _, _ := xBtn_SetCheck.Call(uintptr(hEle), BoolPtr(bCheck))
+	r, _, _ := xBtn_SetCheck.Call(uintptr(hEle), common.BoolPtr(bCheck))
 	return int(r) != 0
 }
 
@@ -178,7 +181,7 @@ func XBtn_SetIconSpace(hEle int, size int) int {
 //
 // pName: 文本内容.
 func XBtn_SetText(hEle int, pName string) int {
-	r, _, _ := xBtn_SetText.Call(uintptr(hEle), StrPtr(pName))
+	r, _, _ := xBtn_SetText.Call(uintptr(hEle), common.StrPtr(pName))
 	return int(r)
 }
 
@@ -187,7 +190,7 @@ func XBtn_SetText(hEle int, pName string) int {
 // hEle: 元素句柄.
 func XBtn_GetText(hEle int) string {
 	r, _, _ := xBtn_GetText.Call(uintptr(hEle))
-	return UintPtrToString(r)
+	return common.UintPtrToString(r)
 }
 
 // 按钮_置图标.
@@ -240,6 +243,6 @@ func XBtn_AddAnimationFrame(hEle int, hImage int, uElapse int) int {
 //
 // bLoopPlay: 是否循环播放.
 func XBtn_EnableAnimation(hEle int, bEnable bool, bLoopPlay bool) int {
-	r, _, _ := xBtn_EnableAnimation.Call(uintptr(hEle), BoolPtr(bEnable), BoolPtr(bLoopPlay))
+	r, _, _ := xBtn_EnableAnimation.Call(uintptr(hEle), common.BoolPtr(bEnable), common.BoolPtr(bLoopPlay))
 	return int(r)
 }
