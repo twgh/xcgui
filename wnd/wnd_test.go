@@ -7,7 +7,7 @@ import (
 
 func TestGetWindowTitle(t *testing.T) {
 	hwnd := wapi.FindWindowExW(0, 0, "", "任务管理器")
-	t.Log(GetWindowTitle(hwnd))
+	t.Log(GetTitle(hwnd))
 }
 
 func TestSetTop(t *testing.T) {
@@ -16,5 +16,5 @@ func TestSetTop(t *testing.T) {
 }
 
 func TestGetWindowHWND(t *testing.T) {
-	t.Log(GetWindowHWND("", "管理器"))
+	t.Log(GetHWND("", "管理器"))
 }
