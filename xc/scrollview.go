@@ -1,6 +1,9 @@
 package xc
 
-import "unsafe"
+import (
+	"github.com/twgh/xcgui/common"
+	"unsafe"
+)
 
 // 滚动视_创建, 创建滚动视图元素, 返回元素句柄.
 //
@@ -176,7 +179,7 @@ func XSView_ScrollPosYV(hEle int, posY int) bool {
 //
 // bShow: 是否显示.
 func XSView_ShowSBarH(hEle int, bShow bool) int {
-	r, _, _ := xSView_ShowSBarH.Call(uintptr(hEle), BoolPtr(bShow))
+	r, _, _ := xSView_ShowSBarH.Call(uintptr(hEle), common.BoolPtr(bShow))
 	return int(r)
 }
 
@@ -186,7 +189,7 @@ func XSView_ShowSBarH(hEle int, bShow bool) int {
 //
 // bShow: 是否显示.
 func XSView_ShowSBarV(hEle int, bShow bool) int {
-	r, _, _ := xSView_ShowSBarV.Call(uintptr(hEle), BoolPtr(bShow))
+	r, _, _ := xSView_ShowSBarV.Call(uintptr(hEle), common.BoolPtr(bShow))
 	return int(r)
 }
 
@@ -196,7 +199,7 @@ func XSView_ShowSBarV(hEle int, bShow bool) int {
 //
 // bEnable: 是否启用.
 func XSView_EnableAutoShowScrollBar(hEle int, bEnable bool) int {
-	r, _, _ := xSView_EnableAutoShowScrollBar.Call(uintptr(hEle), BoolPtr(bEnable))
+	r, _, _ := xSView_EnableAutoShowScrollBar.Call(uintptr(hEle), common.BoolPtr(bEnable))
 	return int(r)
 }
 
