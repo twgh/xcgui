@@ -1,6 +1,9 @@
 package xc
 
-import "unsafe"
+import (
+	"github.com/twgh/xcgui/common"
+	"unsafe"
+)
 
 // 形状矩形_创建, 创建矩形形状对象, 返回句柄.
 //
@@ -68,7 +71,7 @@ func XShapeRect_GetRoundAngle(hShape int, pWidth *int, pHeight *int) int {
 //
 // bEnable: 是否启用.
 func XShapeRect_EnableBorder(hShape int, bEnable bool) int {
-	r, _, _ := xShapeRect_EnableBorder.Call(uintptr(hShape), BoolPtr(bEnable))
+	r, _, _ := xShapeRect_EnableBorder.Call(uintptr(hShape), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -78,7 +81,7 @@ func XShapeRect_EnableBorder(hShape int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XShapeRect_EnableFill(hShape int, bEnable bool) int {
-	r, _, _ := xShapeRect_EnableFill.Call(uintptr(hShape), BoolPtr(bEnable))
+	r, _, _ := xShapeRect_EnableFill.Call(uintptr(hShape), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -88,6 +91,6 @@ func XShapeRect_EnableFill(hShape int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XShapeRect_EnableRoundAngle(hShape int, bEnable bool) int {
-	r, _, _ := xShapeRect_EnableRoundAngle.Call(uintptr(hShape), BoolPtr(bEnable))
+	r, _, _ := xShapeRect_EnableRoundAngle.Call(uintptr(hShape), common.BoolPtr(bEnable))
 	return int(r)
 }
