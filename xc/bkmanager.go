@@ -1,6 +1,7 @@
 package xc
 
 import (
+	"github.com/twgh/xcgui/common"
 	"unsafe"
 
 	"github.com/twgh/xcgui/xcc"
@@ -28,7 +29,7 @@ func XBkM_Destroy(hBkInfoM int) int {
 //
 // pText: 背景内容字符串.
 func XBkM_SetBkInfo(hBkInfoM int, pText string) int {
-	r, _, _ := xBkM_SetBkInfo.Call(uintptr(hBkInfoM), StrPtr(pText))
+	r, _, _ := xBkM_SetBkInfo.Call(uintptr(hBkInfoM), common.StrPtr(pText))
 	return int(r)
 }
 
@@ -38,7 +39,7 @@ func XBkM_SetBkInfo(hBkInfoM int, pText string) int {
 //
 // pText: 背景内容字符串.
 func XBkM_AddInfo(hBkInfoM int, pText string) int {
-	r, _, _ := xBkM_AddInfo.Call(uintptr(hBkInfoM), StrPtr(pText))
+	r, _, _ := xBkM_AddInfo.Call(uintptr(hBkInfoM), common.StrPtr(pText))
 	return int(r)
 }
 
@@ -140,7 +141,7 @@ func XBkM_DrawEx(hBkInfoM int, nState xcc.CombinedState, hDraw int, pRect *RECT,
 //
 // bEnable: 是否启用.
 func XBkM_EnableAutoDestroy(hBkInfoM int, bEnable bool) int {
-	r, _, _ := xBkM_EnableAutoDestroy.Call(uintptr(hBkInfoM), BoolPtr(bEnable))
+	r, _, _ := xBkM_EnableAutoDestroy.Call(uintptr(hBkInfoM), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -174,7 +175,7 @@ func XBkM_GetRefCount(hBkInfoM int) int {
 //
 // pText: 背景内容字符串.
 func XBkM_SetInfo(hBkInfoM int, pText string) int {
-	r, _, _ := xBkM_SetInfo.Call(uintptr(hBkInfoM), StrPtr(pText))
+	r, _, _ := xBkM_SetInfo.Call(uintptr(hBkInfoM), common.StrPtr(pText))
 	return int(r)
 }
 
