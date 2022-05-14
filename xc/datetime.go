@@ -1,6 +1,9 @@
 package xc
 
-import "unsafe"
+import (
+	"github.com/twgh/xcgui/common"
+	"unsafe"
+)
 
 // 日期_创建, 创建日期时间元素, 返回元素句柄.
 //
@@ -42,7 +45,7 @@ func XDateTime_GetStyle(hEle int) int {
 //
 // bSlash: TRUE: 斜线, FALSE: 横线.
 func XDateTime_EnableSplitSlash(hEle int, bSlash bool) int {
-	r, _, _ := xDateTime_EnableSplitSlash.Call(uintptr(hEle), BoolPtr(bSlash))
+	r, _, _ := xDateTime_EnableSplitSlash.Call(uintptr(hEle), common.BoolPtr(bSlash))
 	return int(r)
 }
 
