@@ -1,6 +1,7 @@
 package xc
 
 import (
+	"github.com/twgh/xcgui/common"
 	"unsafe"
 
 	"github.com/twgh/xcgui/xcc"
@@ -28,7 +29,7 @@ func XTree_Create(x int, y int, cx int, cy int, hParent int) int {
 //
 // bEnable: 是否启用.
 func XTree_EnableDragItem(hEle int, bEnable bool) int {
-	r, _, _ := xTree_EnableDragItem.Call(uintptr(hEle), BoolPtr(bEnable))
+	r, _, _ := xTree_EnableDragItem.Call(uintptr(hEle), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -40,7 +41,7 @@ func XTree_EnableDragItem(hEle int, bEnable bool) int {
 //
 // bSolid: 实线或虚线; TRUE: 实线, FALSE: 虚线.
 func XTree_EnableConnectLine(hEle int, bEnable bool, bSolid bool) int {
-	r, _, _ := xTree_EnableConnectLine.Call(uintptr(hEle), BoolPtr(bEnable), BoolPtr(bSolid))
+	r, _, _ := xTree_EnableConnectLine.Call(uintptr(hEle), common.BoolPtr(bEnable), common.BoolPtr(bSolid))
 	return int(r)
 }
 
@@ -50,7 +51,7 @@ func XTree_EnableConnectLine(hEle int, bEnable bool, bSolid bool) int {
 //
 // bEnable: 是否启用.
 func XTree_EnableExpand(hEle int, bEnable bool) int {
-	r, _, _ := xTree_EnableExpand.Call(uintptr(hEle), BoolPtr(bEnable))
+	r, _, _ := xTree_EnableExpand.Call(uintptr(hEle), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -60,7 +61,7 @@ func XTree_EnableExpand(hEle int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XTree_EnablemTemplateReuse(hEle int, bEnable bool) int {
-	r, _, _ := xTree_EnablemTemplateReuse.Call(uintptr(hEle), BoolPtr(bEnable))
+	r, _, _ := xTree_EnablemTemplateReuse.Call(uintptr(hEle), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -112,7 +113,7 @@ func XTree_SetDragInsertPositionColor(hEle int, color int) int {
 //
 // pXmlFile: 文件名.
 func XTree_SetItemTemplateXML(hEle int, pXmlFile string) bool {
-	r, _, _ := xTree_SetItemTemplateXML.Call(uintptr(hEle), StrPtr(pXmlFile))
+	r, _, _ := xTree_SetItemTemplateXML.Call(uintptr(hEle), common.StrPtr(pXmlFile))
 	return int(r) != 0
 }
 
@@ -122,7 +123,7 @@ func XTree_SetItemTemplateXML(hEle int, pXmlFile string) bool {
 //
 // pXmlFile: 文件名.
 func XTree_SetItemTemplateXMLSel(hEle int, pXmlFile string) bool {
-	r, _, _ := xTree_SetItemTemplateXMLSel.Call(uintptr(hEle), StrPtr(pXmlFile))
+	r, _, _ := xTree_SetItemTemplateXMLSel.Call(uintptr(hEle), common.StrPtr(pXmlFile))
 	return int(r) != 0
 }
 
@@ -150,7 +151,7 @@ func XTree_SetItemTemplateSel(hEle int, hTemp int) bool {
 //
 // hEle: 元素句柄.
 //
-// pStringXML: 字符串指针.
+// pStringXML: 字符串.
 func XTree_SetItemTemplateXMLFromString(hEle int, pStringXML string) bool {
 	r, _, _ := xTree_SetItemTemplateXMLFromString.Call(uintptr(hEle), XC_wtoa(pStringXML))
 	return int(r) != 0
@@ -160,7 +161,7 @@ func XTree_SetItemTemplateXMLFromString(hEle int, pStringXML string) bool {
 //
 // hEle: 元素句柄.
 //
-// pStringXML: 字符串指针.
+// pStringXML: 字符串.
 func XTree_SetItemTemplateXMLSelFromString(hEle int, pStringXML string) bool {
 	r, _, _ := xTree_SetItemTemplateXMLSelFromString.Call(uintptr(hEle), XC_wtoa(pStringXML))
 	return int(r) != 0
@@ -244,7 +245,7 @@ func XTree_IsExpand(hEle int, nID int) bool {
 //
 // bExpand: 是否展开.
 func XTree_ExpandItem(hEle int, nID int, bExpand bool) bool {
-	r, _, _ := xTree_ExpandItem.Call(uintptr(hEle), uintptr(nID), BoolPtr(bExpand))
+	r, _, _ := xTree_ExpandItem.Call(uintptr(hEle), uintptr(nID), common.BoolPtr(bExpand))
 	return int(r) != 0
 }
 
@@ -256,7 +257,7 @@ func XTree_ExpandItem(hEle int, nID int, bExpand bool) bool {
 //
 // bExpand: 是否展开.
 func XTree_ExpandAllChildItem(hEle int, nID int, bExpand bool) bool {
-	r, _, _ := xTree_ExpandAllChildItem.Call(uintptr(hEle), uintptr(nID), BoolPtr(bExpand))
+	r, _, _ := xTree_ExpandAllChildItem.Call(uintptr(hEle), uintptr(nID), common.BoolPtr(bExpand))
 	return int(r) != 0
 }
 
@@ -508,7 +509,7 @@ func XTree_GetItemIDFromHXCGUI(hEle int, hXCGUI int) int {
 //
 // insertID:.
 func XTree_InsertItemText(hEle int, pValue string, nParentID int, insertID int) int {
-	r, _, _ := xTree_InsertItemText.Call(uintptr(hEle), StrPtr(pValue), uintptr(nParentID), uintptr(insertID))
+	r, _, _ := xTree_InsertItemText.Call(uintptr(hEle), common.StrPtr(pValue), uintptr(nParentID), uintptr(insertID))
 	return int(r)
 }
 
@@ -524,7 +525,7 @@ func XTree_InsertItemText(hEle int, pValue string, nParentID int, insertID int) 
 //
 // insertID:.
 func XTree_InsertItemTextEx(hEle int, pName string, pValue string, nParentID int, insertID int) int {
-	r, _, _ := xTree_InsertItemTextEx.Call(uintptr(hEle), StrPtr(pName), StrPtr(pValue), uintptr(nParentID), uintptr(insertID))
+	r, _, _ := xTree_InsertItemTextEx.Call(uintptr(hEle), common.StrPtr(pName), common.StrPtr(pValue), uintptr(nParentID), uintptr(insertID))
 	return int(r)
 }
 
@@ -554,7 +555,7 @@ func XTree_InsertItemImage(hEle int, hImage int, nParentID int, insertID int) in
 //
 // insertID:.
 func XTree_InsertItemImageEx(hEle int, pName string, hImage int, nParentID int, insertID int) int {
-	r, _, _ := xTree_InsertItemImageEx.Call(uintptr(hEle), StrPtr(pName), uintptr(hImage), uintptr(nParentID), uintptr(insertID))
+	r, _, _ := xTree_InsertItemImageEx.Call(uintptr(hEle), common.StrPtr(pName), uintptr(hImage), uintptr(nParentID), uintptr(insertID))
 	return int(r)
 }
 
@@ -584,7 +585,7 @@ func XTree_GetCountColumn(hEle int) int {
 //
 // pValue:.
 func XTree_SetItemText(hEle int, nID int, iColumn int, pValue string) bool {
-	r, _, _ := xTree_SetItemText.Call(uintptr(hEle), uintptr(nID), uintptr(iColumn), StrPtr(pValue))
+	r, _, _ := xTree_SetItemText.Call(uintptr(hEle), uintptr(nID), uintptr(iColumn), common.StrPtr(pValue))
 	return int(r) != 0
 }
 
@@ -598,7 +599,7 @@ func XTree_SetItemText(hEle int, nID int, iColumn int, pValue string) bool {
 //
 // pValue:.
 func XTree_SetItemTextEx(hEle int, nID int, pName string, pValue string) bool {
-	r, _, _ := xTree_SetItemTextEx.Call(uintptr(hEle), uintptr(nID), StrPtr(pName), StrPtr(pValue))
+	r, _, _ := xTree_SetItemTextEx.Call(uintptr(hEle), uintptr(nID), common.StrPtr(pName), common.StrPtr(pValue))
 	return int(r) != 0
 }
 
@@ -626,7 +627,7 @@ func XTree_SetItemImage(hEle int, nID int, iColumn int, hImage int) bool {
 //
 // hImage:.
 func XTree_SetItemImageEx(hEle int, nID int, pName string, hImage int) bool {
-	r, _, _ := xTree_SetItemImageEx.Call(uintptr(hEle), uintptr(nID), StrPtr(pName), uintptr(hImage))
+	r, _, _ := xTree_SetItemImageEx.Call(uintptr(hEle), uintptr(nID), common.StrPtr(pName), uintptr(hImage))
 	return int(r) != 0
 }
 
@@ -639,7 +640,7 @@ func XTree_SetItemImageEx(hEle int, nID int, pName string, hImage int) bool {
 // iColumn:.
 func XTree_GetItemText(hEle int, nID int, iColumn int) string {
 	r, _, _ := xTree_GetItemText.Call(uintptr(hEle), uintptr(nID), uintptr(iColumn))
-	return UintPtrToString(r)
+	return common.UintPtrToString(r)
 }
 
 // 列表树_取项文本扩展.
@@ -650,8 +651,8 @@ func XTree_GetItemText(hEle int, nID int, iColumn int) string {
 //
 // pName:.
 func XTree_GetItemTextEx(hEle int, nID int, pName string) string {
-	r, _, _ := xTree_GetItemTextEx.Call(uintptr(hEle), uintptr(nID), StrPtr(pName))
-	return UintPtrToString(r)
+	r, _, _ := xTree_GetItemTextEx.Call(uintptr(hEle), uintptr(nID), common.StrPtr(pName))
+	return common.UintPtrToString(r)
 }
 
 // 列表树_取项图片.
@@ -674,7 +675,7 @@ func XTree_GetItemImage(hEle int, nID int, iColumn int) int {
 //
 // pName:.
 func XTree_GetItemImageEx(hEle int, nID int, pName string) int {
-	r, _, _ := xTree_GetItemImageEx.Call(uintptr(hEle), uintptr(nID), StrPtr(pName))
+	r, _, _ := xTree_GetItemImageEx.Call(uintptr(hEle), uintptr(nID), common.StrPtr(pName))
 	return int(r)
 }
 
