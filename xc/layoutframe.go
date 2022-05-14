@@ -1,5 +1,7 @@
 package xc
 
+import "github.com/twgh/xcgui/common"
+
 // 布局框架_创建.
 //
 // x: 元素x坐标.
@@ -22,6 +24,6 @@ func XLayoutFrame_Create(x int, y int, cx int, cy int, hParent int) int {
 //
 // bEnable: 是否启用.
 func XLayoutFrame_ShowLayoutFrame(hEle int, bEnable bool) int {
-	r, _, _ := xLayoutFrame_ShowLayoutFrame.Call(uintptr(hEle), BoolPtr(bEnable))
+	r, _, _ := xLayoutFrame_ShowLayoutFrame.Call(uintptr(hEle), common.BoolPtr(bEnable))
 	return int(r)
 }
