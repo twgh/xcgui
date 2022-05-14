@@ -1,5 +1,7 @@
 package xc
 
+import "github.com/twgh/xcgui/common"
+
 // 形状圆_创建, 创建圆形形状对象, 返回句柄.
 //
 // x: X坐标.
@@ -42,7 +44,7 @@ func XShapeEllipse_SetFillColor(hShape int, color int) int {
 //
 // bEnable: 是否启用.
 func XShapeEllipse_EnableBorder(hShape int, bEnable bool) int {
-	r, _, _ := xShapeEllipse_EnableBorder.Call(uintptr(hShape), BoolPtr(bEnable))
+	r, _, _ := xShapeEllipse_EnableBorder.Call(uintptr(hShape), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -52,6 +54,6 @@ func XShapeEllipse_EnableBorder(hShape int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XShapeEllipse_EnableFill(hShape int, bEnable bool) int {
-	r, _, _ := xShapeEllipse_EnableFill.Call(uintptr(hShape), BoolPtr(bEnable))
+	r, _, _ := xShapeEllipse_EnableFill.Call(uintptr(hShape), common.BoolPtr(bEnable))
 	return int(r)
 }
