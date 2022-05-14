@@ -1,6 +1,7 @@
 package xc
 
 import (
+	"github.com/twgh/xcgui/common"
 	"unsafe"
 
 	"github.com/twgh/xcgui/xcc"
@@ -48,7 +49,7 @@ func XBkObj_SetImage(hObj int, hImage int) int {
 //
 // angle: 旋转角度.
 func XBkObj_SetRotate(hObj int, angle float32) int {
-	r, _, _ := xBkObj_SetRotate.Call(uintptr(hObj), Float32Ptr(angle))
+	r, _, _ := xBkObj_SetRotate.Call(uintptr(hObj), common.Float32Ptr(angle))
 	return int(r)
 }
 
@@ -104,7 +105,7 @@ func XBkObj_SetRectRoundAngle(hObj int, leftTop int, leftBottom int, rightTop in
 //
 // bEnable: 是否启用.
 func XBkObj_EnableFill(hObj int, bEnable bool) int {
-	r, _, _ := xBkObj_EnableFill.Call(uintptr(hObj), BoolPtr(bEnable))
+	r, _, _ := xBkObj_EnableFill.Call(uintptr(hObj), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -114,7 +115,7 @@ func XBkObj_EnableFill(hObj int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XBkObj_EnableBorder(hObj int, bEnable bool) int {
-	r, _, _ := xBkObj_EnableBorder.Call(uintptr(hObj), BoolPtr(bEnable))
+	r, _, _ := xBkObj_EnableBorder.Call(uintptr(hObj), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -124,7 +125,7 @@ func XBkObj_EnableBorder(hObj int, bEnable bool) int {
 //
 // pText: 文本字符串.
 func XBkObj_SetText(hObj int, pText string) int {
-	r, _, _ := xBkObj_SetText.Call(uintptr(hObj), StrPtr(pText))
+	r, _, _ := xBkObj_SetText.Call(uintptr(hObj), common.StrPtr(pText))
 	return int(r)
 }
 
@@ -237,7 +238,7 @@ func XBkObj_IsBorder(hObj int) bool {
 // hObj: 背景对象句柄.
 func XBkObj_GetText(hObj int) string {
 	r, _, _ := xBkObj_GetText.Call(uintptr(hObj))
-	return UintPtrToString(r)
+	return common.UintPtrToString(r)
 }
 
 // 背景对象_取字体, 返回字体句柄.
