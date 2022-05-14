@@ -1,4 +1,3 @@
-// xcgui const
 package xcc
 
 // XC_NAME
@@ -21,7 +20,7 @@ const (
 	XC_ID_LAST  = -3 // 插入末尾位置
 )
 
-// 显示窗口的形式
+// SW_ 是显示窗口的形式.
 type SW_ int32
 
 const (
@@ -39,7 +38,7 @@ const (
 	SW_FORCEMINIMIZE              // 最小化窗口，即使拥有该窗口的线程被挂起也会最小化。在从其他线程最小化窗口时才使用这个参数
 )
 
-// 调整布局标识位
+// AdjustLayout_ 是调整布局标识位.
 type AdjustLayout_ int
 
 const (
@@ -48,7 +47,7 @@ const (
 	AdjustLayout_Self                      // 只调整自身布局, 不调整子对象布局
 )
 
-// 炫彩窗口透明标识
+// Window_Transparent_ 是炫彩窗口透明标识.
 type Window_Transparent_ int
 
 const (
@@ -59,7 +58,7 @@ const (
 	Window_Transparent_Win7                              // WIN7玻璃窗口, 需要WIN7开启特效, 当前未启用
 )
 
-// 布局轴对齐
+// Layout_Align_Axis_ 是布局轴对齐.
 type Layout_Align_Axis_ int
 
 const (
@@ -69,7 +68,7 @@ const (
 	Layout_Align_Axis_End                              // 水平布局(底部), 垂直布局(右侧)
 )
 
-// 布局大小类型
+// Layout_Size_ 是布局大小类型.
 type Layout_Size_ int
 
 const (
@@ -81,7 +80,7 @@ const (
 	Layout_Size_Disable                     // 不使用
 )
 
-// 布局_对齐_
+// Layout_Align_ 是布局_对齐.
 type Layout_Align_ int
 
 const (
@@ -93,7 +92,7 @@ const (
 	Layout_Align_Equidistant                      // 等距
 )
 
-// 对象样式(用于区分外观)
+// XC_OBJECT_STYLE 对象样式(用于区分外观).
 type XC_OBJECT_STYLE int
 
 const (
@@ -139,7 +138,7 @@ const (
 	ListBox_Style_ComboBox          // 组合框-下拉列表框, 下拉组合框弹出的ListBox
 )
 
-// 弹出消息框
+// MessageBox_Flag_ 弹出消息框.
 type MessageBox_Flag_ int
 
 const (
@@ -155,7 +154,7 @@ const (
 	MessageBox_Flag_Icon_Shield  MessageBox_Flag_ = 0x20000 // 图标 盾牌/安全 IDI_SHIELD
 )
 
-// 普通三种状态
+// Common_State3_ 普通三种状态.
 type Common_State3_ int32
 
 const (
@@ -164,7 +163,7 @@ const (
 	Common_State3_Down                        // 按下
 )
 
-// 按钮状态
+// Button_State_ 按钮状态.
 type Button_State_ int
 
 const (
@@ -175,7 +174,7 @@ const (
 	Button_State_Disable                      // 禁用状态
 )
 
-// 文本对齐
+// TextFormatFlag_ 文本对齐.
 type TextFormatFlag_ int
 
 const (
@@ -205,7 +204,7 @@ const (
 	TextTrimming_EllipsisPath      TextFormatFlag_ = 0x20000 // 略去字符串中间部分，保证字符的首尾都能够显示
 )
 
-// 按钮图标对齐方式
+// Button_Icon_Align_ 按钮图标对齐方式.
 type Button_Icon_Align_ int
 
 const (
@@ -215,7 +214,7 @@ const (
 	Button_Icon_Align_Bottom                           // 图标在底部
 )
 
-// 窗口样式
+// Window_Style_ 窗口样式.
 type Window_Style_ int
 
 const (
@@ -233,19 +232,19 @@ const (
 	Window_Style_Btn_Max   Window_Style_ = 0x0200 // 控制按钮-最大化
 	Window_Style_Btn_Close Window_Style_ = 0x0400 // 控制按钮-关闭
 
-	Window_Style_Default Window_Style_ = (Window_Style_Caption | Window_Style_Border | Window_Style_Center | Window_Style_Drag_Border | Window_Style_Allow_MaxWindow | Window_Style_Icon | Window_Style_Title | Window_Style_Btn_Min | Window_Style_Btn_Max | Window_Style_Btn_Close) // 窗口样式-控制按钮: 居中 图标, 标题, 关闭按钮, 最大化按钮, 最小化按钮
+	Window_Style_Default = Window_Style_Caption | Window_Style_Border | Window_Style_Center | Window_Style_Drag_Border | Window_Style_Allow_MaxWindow | Window_Style_Icon | Window_Style_Title | Window_Style_Btn_Min | Window_Style_Btn_Max | Window_Style_Btn_Close // 窗口样式-控制按钮: 居中 图标, 标题, 关闭按钮, 最大化按钮, 最小化按钮
 
-	Window_Style_Simple Window_Style_ = (Window_Style_Caption | Window_Style_Border | Window_Style_Center | Window_Style_Drag_Border | Window_Style_Allow_MaxWindow) // 窗口样式-简单: 居中
+	Window_Style_Simple = Window_Style_Caption | Window_Style_Border | Window_Style_Center | Window_Style_Drag_Border | Window_Style_Allow_MaxWindow // 窗口样式-简单: 居中
 
-	Window_Style_Pop Window_Style_ = (Window_Style_Caption | Window_Style_Border | Window_Style_Center | Window_Style_Drag_Border | Window_Style_Allow_MaxWindow | Window_Style_Icon |
-		Window_Style_Title) // 窗口样式-弹出窗口: 图标, 标题, 关闭按钮
+	Window_Style_Pop = Window_Style_Caption | Window_Style_Border | Window_Style_Center | Window_Style_Drag_Border | Window_Style_Allow_MaxWindow | Window_Style_Icon |
+		Window_Style_Title // 窗口样式-弹出窗口: 图标, 标题, 关闭按钮
 
-	Window_Style_Modal Window_Style_ = (Window_Style_Caption | Window_Style_Border | Window_Style_Center | Window_Style_Icon | Window_Style_Title | Window_Style_Btn_Close) // 模态窗口样式-控制按钮: 居中, 图标, 标题, 关闭按钮
+	Window_Style_Modal = Window_Style_Caption | Window_Style_Border | Window_Style_Center | Window_Style_Icon | Window_Style_Title | Window_Style_Btn_Close // 模态窗口样式-控制按钮: 居中, 图标, 标题, 关闭按钮
 
-	Window_Style_Modal_Simple Window_Style_ = (Window_Style_Caption | Window_Style_Border | Window_Style_Center) // 模态窗口样式-简单: 居中
+	Window_Style_Modal_Simple = Window_Style_Caption | Window_Style_Border | Window_Style_Center // 模态窗口样式-简单: 居中
 )
 
-// 对象句柄类型
+// XC_OBJECT_TYPE 对象句柄类型.
 type XC_OBJECT_TYPE int
 
 const (
@@ -306,7 +305,7 @@ const (
 
 	XC_MENU          XC_OBJECT_TYPE = 81       // 弹出菜单
 	XC_IMAGE         XC_OBJECT_TYPE = 82       // 图片
-	XC_IMAGE_TEXTURE XC_OBJECT_TYPE = XC_IMAGE // 图片纹理, 图片源, 图片素材
+	XC_IMAGE_TEXTURE                = XC_IMAGE // 图片纹理, 图片源, 图片素材
 	XC_HDRAW         XC_OBJECT_TYPE = 83       // 绘图操作
 	XC_FONT          XC_OBJECT_TYPE = 84       // 炫彩字体
 	XC_FLASH         XC_OBJECT_TYPE = 85       // flash
@@ -344,7 +343,7 @@ const (
 	XC_ANIMATION_ITEM     XC_OBJECT_TYPE = 133 // 动画项
 )
 
-// 对象扩展类型(功能扩展)
+// XC_OBJECT_TYPE_EX 对象扩展类型(功能扩展).
 type XC_OBJECT_TYPE_EX int
 
 const (
@@ -360,7 +359,7 @@ const (
 	Xc_Ex_Error XC_OBJECT_TYPE_EX = -1 // 错误类型
 )
 
-// UI元素位置
+// Element_Position_ UI元素位置.
 type Element_Position_ int
 
 const (
@@ -371,7 +370,7 @@ const (
 	Element_Position_Bottom Element_Position_ = 0x08 // 下边
 )
 
-// 位置标识
+// Position_Flag_ 位置标识.
 type Position_Flag_ int
 
 const (
@@ -386,7 +385,7 @@ const (
 	Position_Flag_Center                            // 中心
 )
 
-// 窗格_对齐_
+// Pane_Align_ 窗格_对齐.
 type Pane_Align_ int
 
 const (
@@ -398,7 +397,7 @@ const (
 	Pane_Align_Error  = -1               // 错误
 )
 
-// 弹出菜单项标识
+// Menu_Item_Flag_ 弹出菜单项标识.
 type Menu_Item_Flag_ int32
 
 const (
@@ -411,7 +410,7 @@ const (
 	Menu_Item_Flag_Disable   Menu_Item_Flag_ = 0x10 // 禁用
 )
 
-// 弹出菜单方向
+// Menu_Popup_Position_ 弹出菜单方向.
 type Menu_Popup_Position_ int
 
 const (
@@ -425,7 +424,7 @@ const (
 	Menu_Popup_Position_Center_Bottom                             // 下居中
 )
 
-// ComboBox状态
+// ComboBox_State_ ComboBox状态.
 type ComboBox_State_ int
 
 const (
@@ -434,7 +433,7 @@ const (
 	ComboBox_State_Down                         // 按下状态
 )
 
-// 数据适配器数据类型
+// Adapter_Date_Type_ 数据适配器数据类型.
 type Adapter_Date_Type_ int
 
 const (
@@ -445,7 +444,7 @@ const (
 	Adapter_Date_Type_Error  Adapter_Date_Type_ = -1
 )
 
-// Edit 聊天气泡对齐方式
+// Chat_Flag_ Edit 聊天气泡对齐方式.
 type Chat_Flag_ int
 
 const (
@@ -455,7 +454,7 @@ const (
 	Chat_Flag_Next_Row_Bubble Chat_Flag_ = 0x8 // 下一行显示气泡
 )
 
-// 编辑框类型
+// Edit_Type_ 编辑框类型.
 type Edit_Type_ int
 
 const (
@@ -466,7 +465,7 @@ const (
 	Edit_Type_CodeTable                   // 代码表格, 内部使用, 每行的高度相同
 )
 
-// 编辑框风格类型
+// Edit_Style_Type_ 编辑框风格类型.
 type Edit_Style_Type_ int32
 
 const (
@@ -475,7 +474,7 @@ const (
 	Edit_Style_Type_Obj                                    // UI对象
 )
 
-// 编辑框文本对齐标志
+// Edit_TextAlign_Flag_ 编辑框文本对齐标志.
 type Edit_TextAlign_Flag_ int
 
 const (
@@ -488,7 +487,7 @@ const (
 	Edit_TextAlign_Flag_Center_V Edit_TextAlign_Flag_ = 0x8 // 垂直居中
 )
 
-// Table 标识
+// Table_Flag_ Table 标识.
 type Table_Flag_ int
 
 const (
@@ -496,7 +495,7 @@ const (
 	Table_Flag_None                    // 正常最小单元格
 )
 
-// 渐变填充模式
+// GRADIENT_FILL_ 渐变填充模式.
 type GRADIENT_FILL_ int
 
 const (
@@ -505,7 +504,7 @@ const (
 	GRADIENT_FILL_TRIANGLE                       // 三角形
 )
 
-// 缓动类型
+// Ease_Type_ 缓动类型.
 type Ease_Type_ int
 
 const (
@@ -514,7 +513,7 @@ const (
 	Ease_Type_InOut                   // 从慢到快再到慢
 )
 
-// 缓动标识
+// Ease_Flag_ 缓动标识.
 type Ease_Flag_ int
 
 const (
@@ -536,7 +535,7 @@ const (
 	Ease_Flag_InOut Ease_Flag_ = 0x030000 // 从慢到快再到慢
 )
 
-// 字体样式
+// FontStyle_ 字体样式.
 type FontStyle_ int32
 
 const (
@@ -548,7 +547,7 @@ const (
 	FontStyle_Strikeout  FontStyle_ = 8 // 删除线
 )
 
-// 图片绘制类型
+// Image_Draw_Type_ 图片绘制类型.
 type Image_Draw_Type_ int
 
 const (
@@ -560,7 +559,7 @@ const (
 	Image_Draw_Type_Adaptive_Border                         // 九宫格不绘制中间区域
 )
 
-// 列表项模板类型
+// ListItemTemp_Type_ 列表项模板类型.
 type ListItemTemp_Type_ int
 
 const (
@@ -570,11 +569,11 @@ const (
 	ListItemTemp_Type_List_Item      ListItemTemp_Type_ = 0x08                                                               // list 列表项
 	ListItemTemp_Type_ListView_Group ListItemTemp_Type_ = 0x10                                                               // listView 列表视组
 	ListItemTemp_Type_ListView_Item  ListItemTemp_Type_ = 0x20                                                               // listView 列表视项
-	ListItemTemp_Type_List           ListItemTemp_Type_ = ListItemTemp_Type_List_Head | ListItemTemp_Type_List_Item          // list (列表头)与(列表项)组合
-	ListItemTemp_Type_ListView       ListItemTemp_Type_ = ListItemTemp_Type_ListView_Group | ListItemTemp_Type_ListView_Item // listView (列表视组)与(列表视项)组合
+	ListItemTemp_Type_List                              = ListItemTemp_Type_List_Head | ListItemTemp_Type_List_Item          // list (列表头)与(列表项)组合
+	ListItemTemp_Type_ListView                          = ListItemTemp_Type_ListView_Group | ListItemTemp_Type_ListView_Item // listView (列表视组)与(列表视项)组合
 )
 
-// 窗口位置
+// Window_Position_ 窗口位置.
 type Window_Position_ int
 
 const (
@@ -602,7 +601,7 @@ const (
 	WINDOW_BODY
 )
 
-// List项状态
+// List_Item_State_ List项状态.
 type List_Item_State_ int32
 
 const (
@@ -612,7 +611,7 @@ const (
 	List_Item_State_Cache                          // 缓存的项
 )
 
-// Tree项状态
+// Tree_Item_State_ Tree项状态.
 type Tree_Item_State_ int32
 
 const (
@@ -621,7 +620,7 @@ const (
 	Tree_Item_State_Select                         // 项选择状态
 )
 
-// 项背景绘制标志位(List, ListBox, ListView, Tree)
+// List_DrawItemBk_Flag_ 项背景绘制标志位(List, ListBox, ListView, Tree).
 type List_DrawItemBk_Flag_ int
 
 const (
@@ -637,7 +636,7 @@ const (
 	List_DrawItemBk_Flag_Nothing List_DrawItemBk_Flag_ = 0 // 不绘制
 )
 
-// 属性网格项类型
+// PropertyGrid_Item_Type_ 属性网格项类型.
 type PropertyGrid_Item_Type_ int
 
 const (
@@ -651,7 +650,7 @@ const (
 	PropertyGrid_Item_Type_Panel                                     // 面板
 )
 
-// Z序位置
+// Zorder_ Z序位置.
 type Zorder_ int
 
 const (
@@ -661,7 +660,7 @@ const (
 	Zorder_After                 // 指定目标上面
 )
 
-// 窗格状态
+// Pane_State_ 窗格状态.
 type Pane_State_ int
 
 const (
@@ -672,7 +671,7 @@ const (
 	Pane_State_Error Pane_State_ = -1
 )
 
-// D2D文本渲染模式
+// XC_DWRITE_RENDERING_MODE_ D2D文本渲染模式.
 type XC_DWRITE_RENDERING_MODE_ int
 
 const (
@@ -685,7 +684,7 @@ const (
 	XC_DWRITE_RENDERING_MODE_OUTLINE                                                      // 指定渲染应绕过光栅化器并直接使用轮廓。 这通常用于非常大的尺寸。
 )
 
-// 月历元素上的按钮类型
+// MonthCal_Button_Type_ 月历元素上的按钮类型.
 type MonthCal_Button_Type_ int
 
 const (
@@ -693,7 +692,7 @@ const (
 	MonthCal_Button_Type_Last_Year                               // 上一年
 	MonthCal_Button_Type_Next_Year                               // 下一年
 	MonthCal_Button_Type_Last_Month                              // 上一月
-	MonthCal_Button_Type_Next_Month                              //下一月
+	MonthCal_Button_Type_Next_Month                              // 下一月
 )
 
 // 窗格菜单 当前未使用
@@ -718,7 +717,7 @@ const (
 	IDM_DELETEALL = 1000000005 // 清空
 )
 
-// 通知消息外观
+// NotifyMsg_Skin_ 通知消息外观.
 type NotifyMsg_Skin_ int
 
 const (
@@ -729,7 +728,7 @@ const (
 	NotifyMsg_Skin_Error                          // 错误
 )
 
-// 动画移动标识
+// Animation_Move_ 动画移动标识.
 type Animation_Move_ int
 
 const (
@@ -737,7 +736,7 @@ const (
 	Animation_Move_Y Animation_Move_ = 0x02 // Y轴移动.
 )
 
-// 背景对象对齐方式
+// BkObject_Align_Flag_ 背景对象对齐方式.
 type BkObject_Align_Flag_ int
 
 const (
