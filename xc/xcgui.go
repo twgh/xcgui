@@ -1,10 +1,8 @@
-// xcgui functions.
 package xc
 
 import (
 	"strconv"
 	"syscall"
-	"unsafe"
 )
 
 var (
@@ -97,7 +95,7 @@ var (
 	xC_LoadLayout       *syscall.LazyProc
 	xC_LoadLayoutZip    *syscall.LazyProc
 	xC_LoadLayoutZipMem *syscall.LazyProc
-	//xC_LoadLayoutFromString     *syscall.LazyProc
+	// xC_LoadLayoutFromString     *syscall.LazyProc
 	xC_LoadLayoutFromStringUtf8   *syscall.LazyProc
 	xC_LoadStyle                  *syscall.LazyProc
 	xC_LoadStyleZip               *syscall.LazyProc
@@ -1662,7 +1660,8 @@ var (
 	xBkObj_GetTextAlign      *syscall.LazyProc
 )
 
-// 初始化xcgui.
+// init 初始化xcgui.
+//
 func init() {
 	// Library.
 	xcgui = syscall.NewLazyDLL("xcgui.dll")
@@ -1752,7 +1751,7 @@ func init() {
 	xC_LoadLayout = xcgui.NewProc("XC_LoadLayout")
 	xC_LoadLayoutZip = xcgui.NewProc("XC_LoadLayoutZip")
 	xC_LoadLayoutZipMem = xcgui.NewProc("XC_LoadLayoutZipMem")
-	//xC_LoadLayoutFromString = xcgui.NewProc("XC_LoadLayoutFromString")
+	// xC_LoadLayoutFromString = xcgui.NewProc("XC_LoadLayoutFromString")
 	xC_LoadLayoutFromStringUtf8 = xcgui.NewProc("XC_LoadLayoutFromStringUtf8")
 	xC_LoadStyle = xcgui.NewProc("XC_LoadStyle")
 	xC_LoadStyleZip = xcgui.NewProc("XC_LoadStyleZip")
@@ -3310,106 +3309,68 @@ func init() {
 
 }
 
-// string到uintptr.
-func StrPtr(s string) uintptr {
-	p, _ := syscall.UTF16PtrFromString(s)
-	return uintptr(unsafe.Pointer(p))
+// Font_Info_Name 将[32]uint16转换到string.
+//	@param arr [32]uint16.
+//	@return string
+//
+func Font_Info_Name(arr [32]uint16) string {
+	return syscall.UTF16ToString(arr[0:])
 }
 
-// uintptr到string.
-func UintPtrToString(ptr uintptr) string {
-	return syscall.UTF16ToString(*(*[]uint16)(unsafe.Pointer(&ptr)))
-}
-
-// uint16[0]指针到uintptr.
-func Uint16SliceDataPtr(p *[]uint16) uintptr {
-	if len(*p) == 0 {
-		return uintptr(0)
-	}
-	return uintptr(unsafe.Pointer(&(*p)[0]))
-}
-
-// 转换[32]uint16到string
-func Font_Info_Name(str [32]uint16) string {
-	return syscall.UTF16ToString(str[0:])
-}
-
-// bool到uintptr.
-func BoolPtr(b bool) uintptr {
-	if b {
-		return uintptr(1)
-	}
-	return uintptr(0)
-}
-
-// float32到uintptr.
-func Float32Ptr(f float32) uintptr {
-	return uintptr(*(*uint32)(unsafe.Pointer(&f)))
-}
-
-// uintptr到float32.
-func UintPtrToFloat32(ptr uintptr) float32 {
-	u := uint32(ptr)
-	return *(*float32)(unsafe.Pointer(&u))
-}
-
-// byte[0]指针到uintptr.
-func ByteSliceDataPtr(b *[]byte) uintptr {
-	if len(*b) == 0 {
-		return uintptr(0)
-	}
-	return uintptr(unsafe.Pointer(&(*b)[0]))
-}
-
-/* // byte指针到uintptr.
-func bytePtr(p *byte) uintptr {
-	return uintptr(unsafe.Pointer(p))
-} */
-
-/* func UintPtrToString2(r uintptr) string {
-    p := (*uint16)(unsafe.Pointer(r))
-    if p == nil {
-        return ""
-    }
-
-    n, end, add := 0, unsafe.Pointer(p), unsafe.Sizeof(*p)
-    for *(*uint16)(end) != 0 {
-        end = unsafe.Add(end, add)
-        n++
-    }
-    return string(utf16.Decode(unsafe.Slice(p, n)))
-} */
-
-// 根据r, g, b, a组合成十进制ABGR颜色.
+// ABGR 根据r, g, b, a组合成十进制ABGR颜色.
+//	@param r 红色分量.
+//	@param g 绿色分量.
+//	@param b 蓝色分量.
+//	@param a 透明度.
+//	@return int ABGR颜色.
+//
 func ABGR(r, g, b, a byte) int {
 	return int((uint32(r) & 255) | (uint32(g)&255)<<8 | (uint32(b)&255)<<16 | (uint32(a)&255)<<24)
 }
 
-// 根据rgb, a组合成十进制ABGR颜色.
+// ABGR2 根据rgb, a组合成十进制ABGR颜色.
+//	@param rgb RGB颜色.
+//	@param a 透明度.
+//	@return int ABGR颜色.
+//
 func ABGR2(rgb int, a byte) int {
 	return int((uint32(rgb) & 16777215) | (uint32(a)&255)<<24)
 }
 
-// 根据r, g, b组合成十进制RGB颜色.
+// RGB 根据r, g, b组合成十进制RGB颜色.
+//	@param r 红色分量.
+//	@param g 绿色分量.
+//	@param b 蓝色分量.
+//	@return int RGB颜色.
+//
 func RGB(r, g, b byte) int {
 	return int(uint32(r) | uint32(g)<<8 | uint32(b)<<16)
 }
 
-// 根据r, g, b, a组合成十进制ABGR颜色.
+// RGBA 根据r, g, b, a组合成十进制ABGR颜色. 和 ABGR 函数一模一样, 只是为了符合部分人使用习惯.
+//	@param r 红色分量.
+//	@param g 绿色分量.
+//	@param b 蓝色分量.
+//	@param a 透明度.
+//	@return int ABGR颜色.
 //
-// 和ABGR函数一模一样, 只是为了符合部分人使用习惯.
 func RGBA(r, g, b, a byte) int {
 	return int((uint32(r) & 255) | (uint32(g)&255)<<8 | (uint32(b)&255)<<16 | (uint32(a)&255)<<24)
 }
 
-// 根据rgb, a组合成十进制ABGR颜色.
+// RGBA2 根据rgb, a组合成十进制ABGR颜色. 和 ABGR2 函数一模一样, 只是为了符合部分人使用习惯.
+//	@param rgb RGB颜色.
+//	@param a 透明度.
+//	@return int ABGR颜色.
 //
-// 和ABGR2函数一模一样, 只是为了符合部分人使用习惯.
 func RGBA2(rgb int, a byte) int {
 	return int((uint32(rgb) & 16777215) | (uint32(a)&255)<<24)
 }
 
-// 将十六进制颜色转换到RGB颜色.
+// HEXToRGB 将十六进制颜色转换到RGB颜色.
+//	@param str 十六进制颜色.
+//	@return int RGB颜色.
+//
 func HEXToRGB(str string) int {
 	r, _ := strconv.ParseInt(str[:2], 16, 10)
 	g, _ := strconv.ParseInt(str[2:4], 16, 18)
@@ -3417,11 +3378,10 @@ func HEXToRGB(str string) int {
 	return RGB(byte(r), byte(g), byte(b))
 }
 
-// 客户区坐标转换到屏幕坐标.
+// ClientToScreen 将窗口客户区坐标转换到屏幕坐标.
+//	@param hWindow GUI库窗口资源句柄.
+//	@param pPoint 坐标.
 //
-// hWindow: GUI库窗口资源句柄.
-//
-// pPoint: 坐标.
 func ClientToScreen(hWindow int, pPoint *POINT) {
 	var r RECT
 	XWnd_GetRect(hWindow, &r)
