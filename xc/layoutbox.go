@@ -1,12 +1,14 @@
 package xc
 
+import "github.com/twgh/xcgui/common"
+
 // 布局盒子_启用水平.
 //
 // hLayoutBox: 窗口或布局元素或布局框架句柄.
 //
 // bEnable: 是否启用.
 func XLayoutBox_EnableHorizon(hLayoutBox int, bEnable bool) int {
-	r, _, _ := xLayoutBox_EnableHorizon.Call(uintptr(hLayoutBox), BoolPtr(bEnable))
+	r, _, _ := xLayoutBox_EnableHorizon.Call(uintptr(hLayoutBox), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -16,7 +18,7 @@ func XLayoutBox_EnableHorizon(hLayoutBox int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XLayoutBox_EnableAutoWrap(hLayoutBox int, bEnable bool) int {
-	r, _, _ := xLayoutBox_EnableAutoWrap.Call(uintptr(hLayoutBox), BoolPtr(bEnable))
+	r, _, _ := xLayoutBox_EnableAutoWrap.Call(uintptr(hLayoutBox), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -26,7 +28,7 @@ func XLayoutBox_EnableAutoWrap(hLayoutBox int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XLayoutBox_EnableOverflowHide(hLayoutBox int, bEnable bool) int {
-	r, _, _ := xLayoutBox_EnableOverflowHide.Call(uintptr(hLayoutBox), BoolPtr(bEnable))
+	r, _, _ := xLayoutBox_EnableOverflowHide.Call(uintptr(hLayoutBox), common.BoolPtr(bEnable))
 	return int(r)
 }
 
