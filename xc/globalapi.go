@@ -1,6 +1,7 @@
 package xc
 
 import (
+	"github.com/twgh/xcgui/common"
 	"syscall"
 	"unsafe"
 
@@ -11,7 +12,7 @@ import (
 //
 // bD2D: 是否启用D2D.
 func XInitXCGUI(bD2D bool) bool {
-	r, _, _ := xInitXCGUI.Call(BoolPtr(bD2D))
+	r, _, _ := xInitXCGUI.Call(common.BoolPtr(bD2D))
 	return int(r) != 0
 }
 
@@ -57,7 +58,7 @@ func XC_GetDefaultFont() int {
 //
 // XCStyle: Window_Style_.
 func XC_MessageBox(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) xcc.MessageBox_Flag_ {
-	r, _, _ := xC_MessageBox.Call(StrPtr(pTitle), StrPtr(pText), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
+	r, _, _ := xC_MessageBox.Call(common.StrPtr(pTitle), common.StrPtr(pText), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
 	return xcc.MessageBox_Flag_(r)
 }
 
@@ -73,7 +74,7 @@ func XC_MessageBox(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent
 //
 // XCStyle: Window_Style_.
 func XMsg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xMsg_Create.Call(StrPtr(pTitle), StrPtr(pText), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
+	r, _, _ := xMsg_Create.Call(common.StrPtr(pTitle), common.StrPtr(pText), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
 	return int(r)
 }
 
@@ -95,7 +96,7 @@ func XMsg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent i
 //
 // XCStyle: Window_Style_.
 func XMsg_CreateEx(dwExStyle int, dwStyle int, lpClassName, pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xMsg_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), StrPtr(lpClassName), StrPtr(pText), StrPtr(pTitle), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
+	r, _, _ := xMsg_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), common.StrPtr(pText), common.StrPtr(pTitle), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
 	return int(r)
 }
 
@@ -187,7 +188,7 @@ func XC_hWindowFromHWnd(hWnd int) int {
 //
 // pValue: 属性值.
 func XC_SetProperty(hXCGUI int, pName string, pValue string) bool {
-	r, _, _ := xC_SetProperty.Call(uintptr(hXCGUI), StrPtr(pName), StrPtr(pValue))
+	r, _, _ := xC_SetProperty.Call(uintptr(hXCGUI), common.StrPtr(pName), common.StrPtr(pValue))
 	return int(r) != 0
 }
 
@@ -197,15 +198,15 @@ func XC_SetProperty(hXCGUI int, pName string, pValue string) bool {
 //
 // pName: 属性名.
 func XC_GetProperty(hXCGUI int, pName string) string {
-	r, _, _ := xC_GetProperty.Call(uintptr(hXCGUI), StrPtr(pName))
-	return UintPtrToString(r)
+	r, _, _ := xC_GetProperty.Call(uintptr(hXCGUI), common.StrPtr(pName))
+	return common.UintPtrToString(r)
 }
 
 // 炫彩_注册窗口类名, 如果是在DLL中使用, 那么DLL卸载时需要注销窗口类名, 否则DLL卸载后, 类名所指向的窗口过程地址失效.
 //
 // pClassName: 类名.
 func XC_RegisterWindowClassName(pClassName string) bool {
-	r, _, _ := xC_RegisterWindowClassName.Call(StrPtr(pClassName))
+	r, _, _ := xC_RegisterWindowClassName.Call(common.StrPtr(pClassName))
 	return int(r) != 0
 }
 
@@ -241,7 +242,7 @@ func XC_GetObjectByID(hWindow int, nID int) int {
 //
 // pName: ID名称.
 func XC_GetObjectByIDName(hWindow int, pName string) int {
-	r, _, _ := xC_GetObjectByIDName.Call(uintptr(hWindow), StrPtr(pName))
+	r, _, _ := xC_GetObjectByIDName.Call(uintptr(hWindow), common.StrPtr(pName))
 	return int(r)
 }
 
@@ -257,7 +258,7 @@ func XC_GetObjectByUID(nUID int) int {
 //
 // pName: UID名称.
 func XC_GetObjectByUIDName(pName string) int {
-	r, _, _ := xC_GetObjectByUIDName.Call(StrPtr(pName))
+	r, _, _ := xC_GetObjectByUIDName.Call(common.StrPtr(pName))
 	return int(r)
 }
 
@@ -265,7 +266,7 @@ func XC_GetObjectByUIDName(pName string) int {
 //
 // pName: name名称.
 func XC_GetObjectByName(pName string) int {
-	r, _, _ := xC_GetObjectByName.Call(StrPtr(pName))
+	r, _, _ := xC_GetObjectByName.Call(common.StrPtr(pName))
 	return int(r)
 }
 
@@ -289,7 +290,7 @@ func XC_SetTextRenderingHint(nType int) int {
 //
 // bEnable: 是否启用.
 func XC_EnableGdiDrawText(bEnable bool) int {
-	r, _, _ := xC_EnableGdiDrawText.Call(BoolPtr(bEnable))
+	r, _, _ := xC_EnableGdiDrawText.Call(common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -319,7 +320,7 @@ func XC_CombineRect(pDest *RECT, pSrc1 *RECT, pSrc2 *RECT) int {
 //
 // bShow: 是否显示.
 func XC_ShowLayoutFrame(bShow bool) int {
-	r, _, _ := xC_ShowLayoutFrame.Call(BoolPtr(bShow))
+	r, _, _ := xC_ShowLayoutFrame.Call(common.BoolPtr(bShow))
 	return int(r)
 }
 
@@ -327,7 +328,7 @@ func XC_ShowLayoutFrame(bShow bool) int {
 //
 // bEnable: 是否启用.
 func XC_EnableDebugFile(bEnable bool) int {
-	r, _, _ := xC_EnableDebugFile.Call(BoolPtr(bEnable))
+	r, _, _ := xC_EnableDebugFile.Call(common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -335,7 +336,7 @@ func XC_EnableDebugFile(bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XC_EnableResMonitor(bEnable bool) int {
-	r, _, _ := xC_EnableResMonitor.Call(BoolPtr(bEnable))
+	r, _, _ := xC_EnableResMonitor.Call(common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -351,7 +352,7 @@ func XC_SetLayoutFrameColor(color int) int {
 //
 // bEnabel: 是否启用.
 func XC_EnableErrorMessageBox(bEnabel bool) int {
-	r, _, _ := xC_EnableErrorMessageBox.Call(BoolPtr(bEnabel))
+	r, _, _ := xC_EnableErrorMessageBox.Call(common.BoolPtr(bEnabel))
 	return int(r)
 }
 
@@ -359,7 +360,7 @@ func XC_EnableErrorMessageBox(bEnabel bool) int {
 //
 // bEnabel: 是否启用.
 func XC_EnableAutoExitApp(bEnabel bool) int {
-	r, _, _ := xC_EnableAutoExitApp.Call(BoolPtr(bEnabel))
+	r, _, _ := xC_EnableAutoExitApp.Call(common.BoolPtr(bEnabel))
 	return int(r)
 }
 
@@ -373,7 +374,7 @@ func XC_EnableAutoExitApp(bEnabel bool) int {
 //
 // pOutSize: 接收返回大小.
 func XC_GetTextSize(pString string, length int, hFontX int, pOutSize *SIZE) int {
-	r, _, _ := xC_GetTextSize.Call(StrPtr(pString), uintptr(length), uintptr(hFontX), uintptr(unsafe.Pointer(pOutSize)))
+	r, _, _ := xC_GetTextSize.Call(common.StrPtr(pString), uintptr(length), uintptr(hFontX), uintptr(unsafe.Pointer(pOutSize)))
 	return int(r)
 }
 
@@ -387,7 +388,7 @@ func XC_GetTextSize(pString string, length int, hFontX int, pOutSize *SIZE) int 
 //
 // pOutSize: 接收返回大小.
 func XC_GetTextShowSize(pString string, length int, hFontX int, pOutSize *SIZE) int {
-	r, _, _ := xC_GetTextShowSize.Call(StrPtr(pString), uintptr(length), uintptr(hFontX), uintptr(unsafe.Pointer(pOutSize)))
+	r, _, _ := xC_GetTextShowSize.Call(common.StrPtr(pString), uintptr(length), uintptr(hFontX), uintptr(unsafe.Pointer(pOutSize)))
 	return int(r)
 }
 
@@ -403,7 +404,7 @@ func XC_GetTextShowSize(pString string, length int, hFontX int, pOutSize *SIZE) 
 //
 // pOutSize: 接收返回大小.
 func XC_GetTextShowSizeEx(pString string, length int, hFontX int, nTextAlign xcc.TextFormatFlag_, pOutSize *SIZE) int {
-	r, _, _ := xC_GetTextShowSizeEx.Call(StrPtr(pString), uintptr(length), uintptr(hFontX), uintptr(nTextAlign), uintptr(unsafe.Pointer(pOutSize)))
+	r, _, _ := xC_GetTextShowSizeEx.Call(common.StrPtr(pString), uintptr(length), uintptr(hFontX), uintptr(nTextAlign), uintptr(unsafe.Pointer(pOutSize)))
 	return int(r)
 }
 
@@ -419,7 +420,7 @@ func XC_GetTextShowSizeEx(pString string, length int, hFontX int, nTextAlign xcc
 //
 // pOutSize: 接收返回大小.
 func XC_GetTextShowRect(pString string, length int, hFontX int, width int, pOutSize *SIZE) int {
-	r, _, _ := xC_GetTextShowRect.Call(StrPtr(pString), uintptr(length), uintptr(hFontX), uintptr(width), uintptr(unsafe.Pointer(pOutSize)))
+	r, _, _ := xC_GetTextShowRect.Call(common.StrPtr(pString), uintptr(length), uintptr(hFontX), uintptr(width), uintptr(unsafe.Pointer(pOutSize)))
 	return int(r)
 }
 
@@ -435,7 +436,7 @@ func XC_SetDefaultFont(hFontX int) int {
 //
 // pPath: 文件夹.
 func XC_AddFileSearchPath(pPath string) int {
-	r, _, _ := xC_AddFileSearchPath.Call(StrPtr(pPath))
+	r, _, _ := xC_AddFileSearchPath.Call(common.StrPtr(pPath))
 	return int(r)
 }
 
@@ -455,7 +456,7 @@ func XC_AddFileSearchPath(pPath string) int {
 //
 // bStrikeOut: 是否有删除线.
 func XC_InitFont(pFont *LOGFONTW, pName string, size int, bBold bool, bItalic bool, bUnderline bool, bStrikeOut bool) int {
-	r, _, _ := xC_InitFont.Call(uintptr(unsafe.Pointer(pFont)), StrPtr(pName), uintptr(size), BoolPtr(bBold), BoolPtr(bItalic), BoolPtr(bUnderline), BoolPtr(bStrikeOut))
+	r, _, _ := xC_InitFont.Call(uintptr(unsafe.Pointer(pFont)), common.StrPtr(pName), uintptr(size), common.BoolPtr(bBold), common.BoolPtr(bItalic), common.BoolPtr(bUnderline), common.BoolPtr(bStrikeOut))
 	return int(r)
 }
 
@@ -481,7 +482,7 @@ func XC_Free(p int) int {
 //
 // pText: 提示内容.
 func XC_Alert(pTitle, pText string) int {
-	r, _, _ := xC_Alert.Call(StrPtr(pTitle), StrPtr(pText))
+	r, _, _ := xC_Alert.Call(common.StrPtr(pTitle), common.StrPtr(pText))
 	return int(r)
 }
 
@@ -499,7 +500,7 @@ func XC_Alert(pTitle, pText string) int {
 //
 // nShowCmd: 定义了如何显示启动程序的常数值, SW_.
 func XC_Sys_ShellExecute(hwnd int, lpOperation string, lpFile string, lpParameters string, lpDirectory string, nShowCmd xcc.SW_) int {
-	r, _, _ := xC_Sys_ShellExecute.Call(uintptr(hwnd), StrPtr(lpOperation), StrPtr(lpFile), StrPtr(lpParameters), StrPtr(lpDirectory), uintptr(nShowCmd))
+	r, _, _ := xC_Sys_ShellExecute.Call(uintptr(hwnd), common.StrPtr(lpOperation), common.StrPtr(lpFile), common.StrPtr(lpParameters), common.StrPtr(lpDirectory), uintptr(nShowCmd))
 	return int(r)
 }
 
@@ -507,7 +508,7 @@ func XC_Sys_ShellExecute(hwnd int, lpOperation string, lpFile string, lpParamete
 //
 // lpFileName: 文件名.
 func XC_LoadLibrary(lpFileName string) int {
-	r, _, _ := xC_LoadLibrary.Call(StrPtr(lpFileName))
+	r, _, _ := xC_LoadLibrary.Call(common.StrPtr(lpFileName))
 	return int(r)
 }
 
@@ -533,7 +534,7 @@ func XC_FreeLibrary(hModule int) bool {
 //
 // pDllFileName: DLL文件名.
 func XC_LoadDll(pDllFileName string) int {
-	r, _, _ := xC_LoadDll.Call(StrPtr(pDllFileName))
+	r, _, _ := xC_LoadDll.Call(common.StrPtr(pDllFileName))
 	return int(r)
 }
 
@@ -563,7 +564,7 @@ func XC_IsEnableD2D() bool {
 //
 // pValue: 参数.
 func XC_wtoa(pValue string) uintptr {
-	r, _, _ := xC_wtoa.Call(StrPtr(pValue))
+	r, _, _ := xC_wtoa.Call(common.StrPtr(pValue))
 	return r
 }
 
@@ -572,7 +573,7 @@ func XC_wtoa(pValue string) uintptr {
 // pValue: 参数.
 func XC_atow(pValue uintptr) string {
 	r, _, _ := xC_atow.Call(pValue)
-	return UintPtrToString(r)
+	return common.UintPtrToString(r)
 }
 
 // 炫彩_UTF8到文本W.
@@ -580,7 +581,7 @@ func XC_atow(pValue uintptr) string {
 // pUtf8: 参数.
 func XC_utf8tow(pUtf8 uintptr) string {
 	r, _, _ := xC_utf8tow.Call(pUtf8)
-	return UintPtrToString(r)
+	return common.UintPtrToString(r)
 }
 
 // 炫彩_UTF8到文本W扩展.
@@ -590,7 +591,7 @@ func XC_utf8tow(pUtf8 uintptr) string {
 // length: utf8字符串长度.
 func XC_utf8towEx(pUtf8 uintptr, length int) string {
 	r, _, _ := xC_utf8towEx.Call(pUtf8, uintptr(length))
-	return UintPtrToString(r)
+	return common.UintPtrToString(r)
 }
 
 // 炫彩_UTF8到文本A.
@@ -611,19 +612,19 @@ func XC_atoutf8(pValue uintptr) uintptr {
 
 // 炫彩_文本W到UTF8.
 //
-// pValue: 字符串指针.
+// pValue: 字符串.
 func XC_wtoutf8(pValue string) uintptr {
-	r, _, _ := xC_wtoutf8.Call(StrPtr(pValue))
+	r, _, _ := xC_wtoutf8.Call(common.StrPtr(pValue))
 	return r
 }
 
 // 炫彩_文本W到UTF8扩展.
 //
-// pValue: 字符串指针.
+// pValue: 字符串.
 //
 // length: 字符串长度.
 func XC_wtoutf8Ex(pValue string, length int) uintptr {
-	r, _, _ := xC_wtoutf8Ex.Call(StrPtr(pValue), uintptr(length))
+	r, _, _ := xC_wtoutf8Ex.Call(common.StrPtr(pValue), uintptr(length))
 	return r
 }
 
@@ -641,7 +642,7 @@ func XDebug_Print(level int, pInfo string) int {
 //
 // pString: 字符串.
 func XDebug_OutputDebugStringW(pString string) int {
-	r, _, _ := xDebug_OutputDebugStringW.Call(StrPtr(pString))
+	r, _, _ := xDebug_OutputDebugStringW.Call(common.StrPtr(pString))
 	return int(r)
 }
 
@@ -649,7 +650,7 @@ func XDebug_OutputDebugStringW(pString string) int {
 //
 // bUTF8: 是否开启utf8编码.
 func XDebug_Set_OutputDebugString_UTF8(bUTF8 bool) int {
-	r, _, _ := xDebug_Set_OutputDebugString_UTF8.Call(BoolPtr(bUTF8))
+	r, _, _ := xDebug_Set_OutputDebugString_UTF8.Call(common.BoolPtr(bUTF8))
 	return int(r)
 }
 
@@ -657,7 +658,7 @@ func XDebug_Set_OutputDebugString_UTF8(bUTF8 bool) int {
 //
 // bShow: 是否显示.
 func XC_ShowSvgFrame(bShow bool) int {
-	r, _, _ := xC_ShowSvgFrame.Call(BoolPtr(bShow))
+	r, _, _ := xC_ShowSvgFrame.Call(common.BoolPtr(bShow))
 	return int(r)
 }
 
