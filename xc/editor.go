@@ -1,6 +1,7 @@
 package xc
 
 import (
+	"github.com/twgh/xcgui/common"
 	"unsafe"
 )
 
@@ -26,7 +27,7 @@ func XEditor_Create(x int, y int, cx int, cy int, hParent int) int {
 //
 // bEnable: 是否启用.
 func XEidtor_EnableAutoMatchSpaseSelect(hEle int, bEnable bool) int {
-	r, _, _ := xEidtor_EnableAutoMatchSpaseSelect.Call(uintptr(hEle), BoolPtr(bEnable))
+	r, _, _ := xEidtor_EnableAutoMatchSpaseSelect.Call(uintptr(hEle), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -48,7 +49,7 @@ func XEditor_IsBreakpoint(hEle int, iRow int) bool {
 //
 // bActivate: 是否激活.
 func XEditor_SetBreakpoint(hEle int, iRow int, bActivate bool) bool {
-	r, _, _ := xEditor_SetBreakpoint.Call(uintptr(hEle), uintptr(iRow), BoolPtr(bActivate))
+	r, _, _ := xEditor_SetBreakpoint.Call(uintptr(hEle), uintptr(iRow), common.BoolPtr(bActivate))
 	return int(r) != 0
 }
 
@@ -257,7 +258,7 @@ func XEditor_ExpandEx(hEle int, iRow int) int {
 //
 // bExpand: 是否展开.
 func XEditor_ExpandAll(hEle int, bExpand bool) int {
-	r, _, _ := xEditor_ExpandAll.Call(uintptr(hEle), BoolPtr(bExpand))
+	r, _, _ := xEditor_ExpandAll.Call(uintptr(hEle), common.BoolPtr(bExpand))
 	return int(r)
 }
 
@@ -269,7 +270,7 @@ func XEditor_ExpandAll(hEle int, bExpand bool) int {
 //
 // bExpand: 是否展开.
 func XEditor_Expand(hEle int, iRow int, bExpand bool) int {
-	r, _, _ := xEditor_Expand.Call(uintptr(hEle), uintptr(iRow), BoolPtr(bExpand))
+	r, _, _ := xEditor_Expand.Call(uintptr(hEle), uintptr(iRow), common.BoolPtr(bExpand))
 	return int(r)
 }
 
@@ -281,7 +282,7 @@ func XEditor_Expand(hEle int, iRow int, bExpand bool) int {
 //
 // iStyle: 样式.
 func XEditor_AddKeyword(hEle int, pKey string, iStyle int) int {
-	r, _, _ := xEditor_AddKeyword.Call(uintptr(hEle), StrPtr(pKey), uintptr(iStyle))
+	r, _, _ := xEditor_AddKeyword.Call(uintptr(hEle), common.StrPtr(pKey), uintptr(iStyle))
 	return int(r)
 }
 
@@ -291,7 +292,7 @@ func XEditor_AddKeyword(hEle int, pKey string, iStyle int) int {
 //
 // pKey: 字符串.
 func XEditor_AddConst(hEle int, pKey string) int {
-	r, _, _ := xEditor_AddConst.Call(uintptr(hEle), StrPtr(pKey))
+	r, _, _ := xEditor_AddConst.Call(uintptr(hEle), common.StrPtr(pKey))
 	return int(r)
 }
 
@@ -301,7 +302,7 @@ func XEditor_AddConst(hEle int, pKey string) int {
 //
 // pKey: 字符串.
 func XEditor_AddFunction(hEle int, pKey string) int {
-	r, _, _ := xEditor_AddFunction.Call(uintptr(hEle), StrPtr(pKey))
+	r, _, _ := xEditor_AddFunction.Call(uintptr(hEle), common.StrPtr(pKey))
 	return int(r)
 }
 
@@ -311,6 +312,6 @@ func XEditor_AddFunction(hEle int, pKey string) int {
 //
 // pKeyword: 字符串.
 func XEditor_AddExcludeDefVarKeyword(hEle int, pKeyword string) int {
-	r, _, _ := xEditor_AddExcludeDefVarKeyword.Call(uintptr(hEle), StrPtr(pKeyword))
+	r, _, _ := xEditor_AddExcludeDefVarKeyword.Call(uintptr(hEle), common.StrPtr(pKeyword))
 	return int(r)
 }
