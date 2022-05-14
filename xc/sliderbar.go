@@ -1,5 +1,7 @@
 package xc
 
+import "github.com/twgh/xcgui/common"
+
 // 滑动条_创建, 创建滑动条元素, 返回元素句柄.
 //
 // x: 元素x坐标.
@@ -96,6 +98,6 @@ func XSliderBar_GetButton(hEle int) int {
 //
 // bHorizon: 水平或垂直.
 func XSliderBar_EnableHorizon(hEle int, bHorizon bool) int {
-	r, _, _ := xSliderBar_EnableHorizon.Call(uintptr(hEle), BoolPtr(bHorizon))
+	r, _, _ := xSliderBar_EnableHorizon.Call(uintptr(hEle), common.BoolPtr(bHorizon))
 	return int(r)
 }
