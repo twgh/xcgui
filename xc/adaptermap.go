@@ -1,5 +1,7 @@
 package xc
 
+import "github.com/twgh/xcgui/common"
+
 // 数据适配器MAP_创建, 创建数据适配器, 单列数据, 返回数据适配器句柄.
 func XAdMap_Create() int {
 	r, _, _ := xAdMap_Create.Call()
@@ -14,7 +16,7 @@ func XAdMap_Create() int {
 //
 // pValue: 值.
 func XAdMap_AddItemText(hAdapter int, pName string, pValue string) bool {
-	r, _, _ := xAdMap_AddItemText.Call(uintptr(hAdapter), StrPtr(pName), StrPtr(pValue))
+	r, _, _ := xAdMap_AddItemText.Call(uintptr(hAdapter), common.StrPtr(pName), common.StrPtr(pValue))
 	return int(r) != 0
 }
 
@@ -26,7 +28,7 @@ func XAdMap_AddItemText(hAdapter int, pName string, pValue string) bool {
 //
 // hImage: 图片句柄.
 func XAdMap_AddItemImage(hAdapter int, pName string, hImage int) bool {
-	r, _, _ := xAdMap_AddItemImage.Call(uintptr(hAdapter), StrPtr(pName), uintptr(hImage))
+	r, _, _ := xAdMap_AddItemImage.Call(uintptr(hAdapter), common.StrPtr(pName), uintptr(hImage))
 	return int(r) != 0
 }
 
@@ -36,7 +38,7 @@ func XAdMap_AddItemImage(hAdapter int, pName string, hImage int) bool {
 //
 // pName: 字段称.
 func XAdMap_DeleteItem(hAdapter int, pName string) bool {
-	r, _, _ := xAdMap_DeleteItem.Call(uintptr(hAdapter), StrPtr(pName))
+	r, _, _ := xAdMap_DeleteItem.Call(uintptr(hAdapter), common.StrPtr(pName))
 	return int(r) != 0
 }
 
@@ -54,8 +56,8 @@ func XAdMap_GetCount(hAdapter int) int {
 //
 // pName: 字段称.
 func XAdMap_GetItemText(hAdapter int, pName string) string {
-	r, _, _ := xAdMap_GetItemText.Call(uintptr(hAdapter), StrPtr(pName))
-	return UintPtrToString(r)
+	r, _, _ := xAdMap_GetItemText.Call(uintptr(hAdapter), common.StrPtr(pName))
+	return common.UintPtrToString(r)
 }
 
 // 数据适配器MAP_取项图片, 获取项内容, 如果内容为图片句柄, 返回图片句柄.
@@ -64,7 +66,7 @@ func XAdMap_GetItemText(hAdapter int, pName string) string {
 //
 // pName: 字段称.
 func XAdMap_GetItemImage(hAdapter int, pName string) int {
-	r, _, _ := xAdMap_GetItemImage.Call(uintptr(hAdapter), StrPtr(pName))
+	r, _, _ := xAdMap_GetItemImage.Call(uintptr(hAdapter), common.StrPtr(pName))
 	return int(r)
 }
 
@@ -76,7 +78,7 @@ func XAdMap_GetItemImage(hAdapter int, pName string) int {
 //
 // pValue: 值.
 func XAdMap_SetItemText(hAdapter int, pName string, pValue string) bool {
-	r, _, _ := xAdMap_SetItemText.Call(uintptr(hAdapter), StrPtr(pName), StrPtr(pValue))
+	r, _, _ := xAdMap_SetItemText.Call(uintptr(hAdapter), common.StrPtr(pName), common.StrPtr(pValue))
 	return int(r) != 0
 }
 
@@ -88,6 +90,6 @@ func XAdMap_SetItemText(hAdapter int, pName string, pValue string) bool {
 //
 // hImage: 值.
 func XAdMap_SetItemImage(hAdapter int, pName string, hImage int) bool {
-	r, _, _ := xAdMap_SetItemImage.Call(uintptr(hAdapter), StrPtr(pName), uintptr(hImage))
+	r, _, _ := xAdMap_SetItemImage.Call(uintptr(hAdapter), common.StrPtr(pName), uintptr(hImage))
 	return int(r) != 0
 }
