@@ -1,6 +1,7 @@
 package xc
 
 import (
+	"github.com/twgh/xcgui/common"
 	"unsafe"
 
 	"github.com/twgh/xcgui/xcc"
@@ -12,7 +13,7 @@ import (
 //
 // pFileName: 文件名.
 func XTemp_Load(nType xcc.ListItemTemp_Type_, pFileName string) int {
-	r, _, _ := xTemp_Load.Call(uintptr(nType), StrPtr(pFileName))
+	r, _, _ := xTemp_Load.Call(uintptr(nType), common.StrPtr(pFileName))
 	return int(r)
 }
 
@@ -26,7 +27,7 @@ func XTemp_Load(nType xcc.ListItemTemp_Type_, pFileName string) int {
 //
 // pPassword: zip密码.
 func XTemp_LoadZip(nType int, pZipFile string, pFileName string, pPassword string) int {
-	r, _, _ := xTemp_LoadZip.Call(uintptr(nType), StrPtr(pZipFile), StrPtr(pFileName), StrPtr(pPassword))
+	r, _, _ := xTemp_LoadZip.Call(uintptr(nType), common.StrPtr(pZipFile), common.StrPtr(pFileName), common.StrPtr(pPassword))
 	return int(r)
 }
 
@@ -40,7 +41,7 @@ func XTemp_LoadZip(nType int, pZipFile string, pFileName string, pPassword strin
 //
 // pPassword: zip密码.
 func XTemp_LoadZipMem(nType xcc.ListItemTemp_Type_, data []byte, pFileName string, pPassword string) int {
-	r, _, _ := xTemp_LoadZipMem.Call(uintptr(nType), ByteSliceDataPtr(&data), uintptr(len(data)), StrPtr(pFileName), StrPtr(pPassword))
+	r, _, _ := xTemp_LoadZipMem.Call(uintptr(nType), common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(pFileName), common.StrPtr(pPassword))
 	return int(r)
 }
 
@@ -54,7 +55,7 @@ func XTemp_LoadZipMem(nType xcc.ListItemTemp_Type_, data []byte, pFileName strin
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
 func XTemp_LoadEx(nType xcc.ListItemTemp_Type_, pFileName string, pOutTemp1 *int, pOutTemp2 *int) bool {
-	r, _, _ := xTemp_LoadEx.Call(uintptr(nType), StrPtr(pFileName), uintptr(unsafe.Pointer(&pOutTemp1)), uintptr(unsafe.Pointer(&pOutTemp2)))
+	r, _, _ := xTemp_LoadEx.Call(uintptr(nType), common.StrPtr(pFileName), uintptr(unsafe.Pointer(&pOutTemp1)), uintptr(unsafe.Pointer(&pOutTemp2)))
 	return int(r) != 0
 }
 
@@ -72,7 +73,7 @@ func XTemp_LoadEx(nType xcc.ListItemTemp_Type_, pFileName string, pOutTemp1 *int
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
 func XTemp_LoadZipEx(nType xcc.ListItemTemp_Type_, pZipFile string, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int) bool {
-	r, _, _ := xTemp_LoadZipEx.Call(uintptr(nType), StrPtr(pZipFile), StrPtr(pFileName), StrPtr(pPassword), uintptr(unsafe.Pointer(&pOutTemp1)), uintptr(unsafe.Pointer(&pOutTemp2)))
+	r, _, _ := xTemp_LoadZipEx.Call(uintptr(nType), common.StrPtr(pZipFile), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(unsafe.Pointer(&pOutTemp1)), uintptr(unsafe.Pointer(&pOutTemp2)))
 	return int(r) != 0
 }
 
@@ -90,7 +91,7 @@ func XTemp_LoadZipEx(nType xcc.ListItemTemp_Type_, pZipFile string, pFileName st
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
 func XTemp_LoadZipMemEx(nType xcc.ListItemTemp_Type_, data []byte, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int) bool {
-	r, _, _ := xTemp_LoadZipMemEx.Call(uintptr(nType), ByteSliceDataPtr(&data), uintptr(len(data)), StrPtr(pFileName), StrPtr(pPassword), uintptr(unsafe.Pointer(&pOutTemp1)), uintptr(unsafe.Pointer(&pOutTemp2)))
+	r, _, _ := xTemp_LoadZipMemEx.Call(uintptr(nType), common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(unsafe.Pointer(&pOutTemp1)), uintptr(unsafe.Pointer(&pOutTemp2)))
 	return int(r) != 0
 }
 
@@ -98,7 +99,7 @@ func XTemp_LoadZipMemEx(nType xcc.ListItemTemp_Type_, data []byte, pFileName str
 //
 // nType: 模板类型, ListItemTemp_Type_.
 //
-// pStringXML: 字符串指针.
+// pStringXML: 字符串.
 func XTemp_LoadFromString(nType xcc.ListItemTemp_Type_, pStringXML string) int {
 	r, _, _ := xTemp_LoadFromString.Call(uintptr(nType), XC_wtoa(pStringXML))
 	return int(r)
@@ -178,7 +179,7 @@ func XTemp_CreateNode(nType xcc.XC_OBJECT_TYPE) int {
 //
 // pAttr: 属性值.
 func XTemp_SetNodeAttribute(pNode int, pName string, pAttr string) bool {
-	r, _, _ := xTemp_SetNodeAttribute.Call(uintptr(pNode), StrPtr(pName), StrPtr(pAttr))
+	r, _, _ := xTemp_SetNodeAttribute.Call(uintptr(pNode), common.StrPtr(pName), common.StrPtr(pAttr))
 	return int(r) != 0
 }
 
@@ -192,7 +193,7 @@ func XTemp_SetNodeAttribute(pNode int, pName string, pAttr string) bool {
 //
 // pAttr: 属性值.
 func XTemp_SetNodeAttributeEx(pNode int, itemID int, pName string, pAttr string) bool {
-	r, _, _ := xTemp_SetNodeAttributeEx.Call(uintptr(pNode), uintptr(itemID), StrPtr(pName), StrPtr(pAttr))
+	r, _, _ := xTemp_SetNodeAttributeEx.Call(uintptr(pNode), uintptr(itemID), common.StrPtr(pName), common.StrPtr(pAttr))
 	return int(r) != 0
 }
 
