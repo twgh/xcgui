@@ -1,5 +1,7 @@
 package xc
 
+import "github.com/twgh/xcgui/common"
+
 // 工具条_创建, 创建工具条元素, 返回元素句柄; 如果指定了父为窗口, 默认调用XWnd_AddToolBar()函数, 将工具条添加到窗口非客户区.
 //
 // x: 元素x坐标.
@@ -46,7 +48,7 @@ func XToolBar_InsertSeparator(hEle int, index int, color int) int {
 //
 // bEnable: 是否启用.
 func XToolBar_EnableButtonMenu(hEle int, bEnable bool) int {
-	r, _, _ := xToolBar_EnableButtonMenu.Call(uintptr(hEle), BoolPtr(bEnable))
+	r, _, _ := xToolBar_EnableButtonMenu.Call(uintptr(hEle), common.BoolPtr(bEnable))
 	return int(r)
 }
 
