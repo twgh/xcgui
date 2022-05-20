@@ -1,9 +1,15 @@
 package xc
 
 import (
+	"errors"
+	"os"
 	"strconv"
 	"syscall"
 )
+
+// xcguiPath 是xcgui.dll的路径(不是目录, 是文件名), 默认值为'xcgui.dll'.
+//	如果你想要更改它的位置, 可以在 xc.LoadXCGUI() 之前调用 xc.SetXcguiPath() 更改为其他路径.
+var xcguiPath = "xcgui.dll"
 
 var (
 	// Library.
@@ -1660,11 +1666,55 @@ var (
 	xBkObj_GetTextAlign      *syscall.LazyProc
 )
 
-// init 初始化xcgui.
+// SetXcguiPath 手动设置xcgui.dll的路径. 未设置时, 默认值为'xcgui.dll'.
+//	@param XcguiPath dll文件名, 不是目录.
+//	@return error 如果出错, 要么你输入的文件不存在, 要么你输入的不是dll文件.
 //
-func init() {
+func SetXcguiPath(XcguiPath string) error {
+	// 判断是否为dll文件
+	if len(XcguiPath) < 5 {
+		return errors.New("XcguiPath 必须是一个dll文件")
+	}
+
+	// 判断文件是否存在
+	if err := pathExists(XcguiPath); err != nil {
+		return errors.New("XcguiPath 指向的文件不存在")
+	}
+	XcguiPath = XcguiPath
+	return nil
+}
+
+// GetxcguiPath 获取设置的xcgui.dll的路径.
+//	@return string
+//
+func GetxcguiPath() string {
+	return xcguiPath
+}
+
+// pathExists 判断文件或文件夹是否存在.
+//	@param path 文件或文件夹.
+//	@return error
+//
+func pathExists(path string) error {
+	_, err := os.Stat(path)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return err
+		}
+		return err
+	}
+	return nil
+}
+
+// LoadXCGUI 将从 xcguiPath 加载xcgui.dll. xcguiPath 的默认值是'xcgui.dll'.
+//	如果你想要更改xcgui.dll的路径, 那么请在调用本函数之前调用 xc.SetXcguiPath().
+//
+//	注意: app.New() 函数内部会自动调用 xc.LoadXCGUI().
+//	所以一般是不需要手动调用的, 除非你没有使用 app.New() 函数, 而是使用了 xc.XInitXCGUI(), 那么你需要在 xc.XInitXCGUI() 之前调用 xc.LoadXCGUI().
+//
+func LoadXCGUI() {
 	// Library.
-	xcgui = syscall.NewLazyDLL("xcgui.dll")
+	xcgui = syscall.NewLazyDLL(xcguiPath)
 
 	// Global Functions.
 	xC_MessageBox = xcgui.NewProc("XC_MessageBox")
