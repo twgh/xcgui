@@ -133,7 +133,7 @@ func (c *ComboBox) SetItemTemplateXML(pXmlFile string) int {
 
 // 组合框_置项模板从字符串, 设置下拉列表项模板.
 //
-// pStringXML: 字符串指针.
+// pStringXML: 字符串.
 func (c *ComboBox) SetItemTemplateXMLFromString(pStringXML string) int {
 	return xc.XComboBox_SetItemTemplateXMLFromString(c.Handle, pStringXML)
 }
