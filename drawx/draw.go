@@ -1,4 +1,3 @@
-// 图形绘制.
 package drawx
 
 import (
