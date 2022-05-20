@@ -1,4 +1,3 @@
-// 图片操作.
 package imagex
 
 import (
@@ -268,7 +267,7 @@ func NewImage_LoadSvgFile(pFileName string) *Image {
 
 // 图片_加载从SVG字符串.
 //
-// pString: 字符串指针.
+// pString: 字符串.
 func NewImage_LoadSvgString(pString string) *Image {
 	p := &Image{}
 	p.SetHandle(xc.XImage_LoadSvgString(pString))
@@ -277,7 +276,7 @@ func NewImage_LoadSvgString(pString string) *Image {
 
 // 图片_加载从SVG字符串W.
 //
-// pString: 字符串指针.
+// pString: 字符串.
 func NewImage_LoadSvgStringW(pString string) *Image {
 	p := &Image{}
 	p.SetHandle(xc.XImage_LoadSvgStringW(pString))
@@ -286,7 +285,7 @@ func NewImage_LoadSvgStringW(pString string) *Image {
 
 // 图片_加载从SVG字符串UTF8.
 //
-// pString: 字符串指针.
+// pString: 字符串.
 func NewImage_LoadSvgStringUtf8(pString string) *Image {
 	p := &Image{}
 	p.SetHandle(xc.XImage_LoadSvgStringUtf8(pString))

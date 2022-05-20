@@ -1,4 +1,3 @@
-// 列表项模板.
 package listitemtemplate
 
 import (
@@ -57,7 +56,7 @@ func NewListItemTemplate_LoadZipMem(nType xcc.ListItemTemp_Type_, data []byte, p
 //
 // nType: 模板类型, ListItemTemp_Type_.
 //
-// pStringXML: 字符串指针.
+// pStringXML: 字符串.
 func NewListItemTemplate_LoadFromString(nType xcc.ListItemTemp_Type_, pStringXML string) *ListItemTemplate {
 	p := &ListItemTemplate{}
 	p.SetHandle(xc.XTemp_LoadFromString(nType, pStringXML))
