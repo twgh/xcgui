@@ -251,7 +251,7 @@ func XAnima_ColorEx(hSequence int, duration int, from int, to int, nLoopCount in
 //
 // duration: 持续时间.
 //
-// nType: 布局宽度类型, Layout_Size_.
+// nType: 布局宽度类型: xcc.Layout_Size_.
 //
 // width: 布局宽度.
 //
@@ -271,7 +271,7 @@ func XAnima_LayoutWidth(hSequence int, duration int, nType xcc.Layout_Size_, wid
 //
 // duration: 持续时间.
 //
-// nType: 布局高度类型, Layout_Size_.
+// nType: 布局高度类型: xcc.Layout_Size_.
 //
 // height: 布局高度.
 //
@@ -291,11 +291,11 @@ func XAnima_LayoutHeight(hSequence int, duration int, nType xcc.Layout_Size_, he
 //
 // duration: 持续时间.
 //
-// nWidthType: 布局宽度类型, Layout_Size_.
+// nWidthType: 布局宽度类型: xcc.Layout_Size_.
 //
 // width: 布局宽度.
 //
-// nHeightType: 布局高度类型, Layout_Size_.
+// nHeightType: 布局高度类型: xcc.Layout_Size_.
 //
 // height: 布局高度.
 //
