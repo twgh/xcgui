@@ -58,7 +58,7 @@ func XWnd_CreateEx(dwExStyle int, dwStyle int, lpClassName string, x int, y int,
 //
 // hWindow: 窗口句柄.
 //
-// nCmdShow: 显示方式, SW_.
+// nCmdShow: 显示方式: xcc.SW_.
 func XWnd_ShowWindow(hWindow int, nCmdShow xcc.SW_) int {
 	r, _, _ := xWnd_ShowWindow.Call(uintptr(hWindow), uintptr(nCmdShow))
 	return int(r)
@@ -76,7 +76,7 @@ func XWnd_SetTop(hWindow int) int {
 //
 // hWindow: 窗口句柄.
 //
-// nEvent: 事件类型: WM_, XWM_.
+// nEvent: 事件类型: xcc.WM_, xcc.XWM_.
 //
 // pFun: 事件函数.
 func XWnd_RegEventC(hWindow int, nEvent xcc.WM_, pFun interface{}) bool {
@@ -88,7 +88,7 @@ func XWnd_RegEventC(hWindow int, nEvent xcc.WM_, pFun interface{}) bool {
 //
 // hWindow: 窗口句柄.
 //
-// nEvent: 事件类型: WM_, XWM_.
+// nEvent: 事件类型: xcc.WM_, xcc.XWM_.
 //
 // pFun: 事件函数.
 func XWnd_RegEventC1(hWindow int, nEvent xcc.WM_, pFun interface{}) bool {
@@ -100,7 +100,7 @@ func XWnd_RegEventC1(hWindow int, nEvent xcc.WM_, pFun interface{}) bool {
 //
 // hWindow: 窗口句柄.
 //
-// nEvent: 事件类型: WM_, XWM_.
+// nEvent: 事件类型: xcc.WM_, xcc.XWM_.
 //
 // pFun: 事件函数.
 func XWnd_RemoveEventC(hWindow int, nEvent xcc.WM_, pFun interface{}) bool {
@@ -616,7 +616,7 @@ func XWnd_AdjustLayout(hWindow int) int {
 //
 // hWindow: 窗口句柄.
 //
-// nFlags: 调整布局标识位, AdjustLayout_.
+// nFlags: 调整布局标识位: xcc.AdjustLayout_.
 func XWnd_AdjustLayoutEx(hWindow int, nFlags xcc.AdjustLayout_) int {
 	r, _, _ := xWnd_AdjustLayoutEx.Call(uintptr(hWindow), uintptr(nFlags))
 	return int(r)
@@ -830,7 +830,7 @@ func XWnd_SetBkMagager(hWindow, hBkInfoM int) int {
 //
 // hWindow: 窗口句柄.
 //
-// nType: 窗口透明类型, Window_Transparent_.
+// nType: 窗口透明类型: xcc.Window_Transparent_.
 func XWnd_SetTransparentType(hWindow int, nType xcc.Window_Transparent_) int {
 	r, _, _ := xWnd_SetTransparentType.Call(uintptr(hWindow), uintptr(nType))
 	return int(r)
@@ -892,7 +892,7 @@ func XWnd_GetShadowInfo(hWindow int, nSize *int, nDepth *byte, nAngeleSize *int,
 	return int(r)
 }
 
-// 窗口_取透明类型, 返回: Window_Transparent_.
+// 窗口_取透明类型, 返回: xcc.Window_Transparent_.
 //
 // hWindow: 窗口句柄.
 func XWnd_GetTransparentType(hWindow int) xcc.Window_Transparent_ {
