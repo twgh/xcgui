@@ -109,7 +109,7 @@ func XWidget_LayoutItem_EnableFloat(hXCGUI int, bFloat bool) int {
 //
 // hXCGUI: UI对象句柄.
 //
-// nType: 类型, Layout_Size_.
+// nType: 类型: xcc.Layout_Size_.
 //
 // nWidth: 宽度.
 func XWidget_LayoutItem_SetWidth(hXCGUI int, nType xcc.Layout_Size_, nWidth int) int {
@@ -121,7 +121,7 @@ func XWidget_LayoutItem_SetWidth(hXCGUI int, nType xcc.Layout_Size_, nWidth int)
 //
 // hXCGUI: UI对象句柄.
 //
-// nType: 类型, Layout_Size_.
+// nType: 类型: xcc.Layout_Size_.
 //
 // nHeight: 高度.
 func XWidget_LayoutItem_SetHeight(hXCGUI int, nType xcc.Layout_Size_, nHeight int) int {
@@ -157,7 +157,7 @@ func XWidget_LayoutItem_GetHeight(hXCGUI int, pType, pHeight *int) int {
 //
 // hXCGUI: UI对象句柄.
 //
-// nAlign: 对齐方式, Layout_Align_Axis_.
+// nAlign: 对齐方式: xcc.Layout_Align_Axis_.
 func XWidget_LayoutItem_SetAlign(hXCGUI int, nAlign xcc.Layout_Align_Axis_) int {
 	r, _, _ := xWidget_LayoutItem_SetAlign.Call(uintptr(hXCGUI), uintptr(nAlign))
 	return int(r)
