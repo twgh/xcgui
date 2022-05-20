@@ -1,60 +1,51 @@
-// 窗口.
 package window
 
 import (
 	"github.com/twgh/xcgui/objectbase"
+	"github.com/twgh/xcgui/wnd"
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
 )
 
-// 窗口基类.
+// windowBase 窗口基类.
 type windowBase struct {
 	objectbase.UI
 }
 
-// 炫彩_消息框, 返回: MessageBox_Flag_Ok: 点击确定按钮退出, MessageBox_Flag_Cancel: 点击取消按钮退出, MessageBox_Flag_Other: 其他方式退出.
+// MessageBox 炫彩_消息框.
+//	@param pTitle 标题.
+//	@param pText 内容文本.
+//	@param nFlags 标识: xcc.MessageBox_Flag_.
+//	@param XCStyle xcc.Window_Style_.
+//	@return xcc.MessageBox_Flag_. 返回: xcc.MessageBox_Flag_Ok: 点击确定按钮退出. xcc.MessageBox_Flag_Cancel: 点击取消按钮退出. xcc.MessageBox_Flag_Other: 其他方式退出.
 //
-// pTitle: 标题.
-//
-// pText: 内容文本.
-//
-// nFlags: 标识, MessageBox_Flag_.
-//
-// XCStyle: Window_Style_.
 func (w *windowBase) MessageBox(pTitle, pText string, nFlags xcc.MessageBox_Flag_, XCStyle xcc.Window_Style_) xcc.MessageBox_Flag_ {
 	return xc.XC_MessageBox(pTitle, pText, nFlags, w.GetHWND(), XCStyle)
 }
 
-// 消息框_创建, 返回模态窗口对象, 然后请调用DoModal()方法显示模态窗口.
+// Msg_Create 消息框_创建, 然后请调用 DoModal() 方法显示模态窗口.
+//	@param pTitle 标题.
+//	@param pText 内容文本.
+//	@param nFlags 标识: xcc.MessageBox_Flag_.
+//	@param XCStyle xcc.Window_Style_.
+//	@return *ModalWindow 模态窗口对象.
 //
-// pTitle: 标题.
-//
-// pText: 内容文本.
-//
-// nFlags: 标识, MessageBox_Flag_.
-//
-// XCStyle: Window_Style_.
 func (w *windowBase) Msg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, XCStyle xcc.Window_Style_) *ModalWindow {
 	p := &ModalWindow{}
 	p.SetHandle(xc.XMsg_Create(pTitle, pText, nFlags, w.GetHWND(), XCStyle))
 	return p
 }
 
-// 消息框_创建扩展, 返回模态窗口对象, 然后请调用DoModal()方法显示模态窗口.
+// Msg_CreateEx 消息框_创建扩展, 然后请调用 DoModal() 方法显示模态窗口.
+//	@param dwExStyle 窗口扩展样式.
+//	@param dwStyle 窗口样式.
+//	@param lpClassName 窗口类名.
+//	@param pTitle 标题.
+//	@param pText 内容文本.
+//	@param nFlags 标识: xcc.MessageBox_Flag_.
+//	@param XCStyle xcc.Window_Style_.
+//	@return *ModalWindow 模态窗口对象.
 //
-// dwExStyle: 窗口扩展样式.
-//
-// dwStyle: 窗口样式.
-//
-// lpClassName: 窗口类名.
-//
-// pTitle: 标题.
-//
-// pText: 内容文本.
-//
-// nFlags: 标识, MessageBox_Flag_.
-//
-// XCStyle: Window_Style_.
 func (w *windowBase) Msg_CreateEx(dwExStyle, dwStyle int, lpClassName, pTitle, pText string, nFlags xcc.MessageBox_Flag_, XCStyle xcc.Window_Style_) *ModalWindow {
 	p := &ModalWindow{}
 	p.SetHandle(xc.XMsg_CreateEx(dwExStyle, dwStyle, lpClassName, pTitle, pText, nFlags, w.GetHWND(), XCStyle))
@@ -104,7 +95,7 @@ func (w *windowBase) GetObjectByIDName(pName string) int {
 
 // 窗口_显示.
 //
-// nCmdShow: 显示方式, SW_.
+// nCmdShow: 显示方式: xcc.SW_.
 func (w *windowBase) ShowWindow(nCmdShow xcc.SW_) int {
 	return xc.XWnd_ShowWindow(w.Handle, nCmdShow)
 }
@@ -116,28 +107,28 @@ func (w *windowBase) SetTop() int {
 
 // 窗口_注册事件C.
 //
-// nEvent: 事件类型.
+// nEvent: 事件类型: xcc.WM_, xcc.XWM_.
 //
 // pFun: 事件函数.
-func (w *windowBase) RegEventC(nEvent int, pFun interface{}) bool {
+func (w *windowBase) RegEventC(nEvent xcc.WM_, pFun interface{}) bool {
 	return xc.XWnd_RegEventC(w.Handle, nEvent, pFun)
 }
 
 // 窗口_注册事件C1.
 //
-// nEvent: 事件类型.
+// nEvent: 事件类型: xcc.WM_, xcc.XWM_.
 //
 // pFun: 事件函数.
-func (w *windowBase) RegEventC1(nEvent int, pFun interface{}) bool {
+func (w *windowBase) RegEventC1(nEvent xcc.WM_, pFun interface{}) bool {
 	return xc.XWnd_RegEventC1(w.Handle, nEvent, pFun)
 }
 
 // 窗口_移除事件C.
 //
-// nEvent: 事件类型.
+// nEvent: 事件类型: xcc.WM_, xcc.XWM_.
 //
 // pFun: 事件函数.
-func (w *windowBase) RemoveEventC(nEvent int, pFun interface{}) bool {
+func (w *windowBase) RemoveEventC(nEvent xcc.WM_, pFun interface{}) bool {
 	return xc.XWnd_RemoveEventC(w.Handle, nEvent, pFun)
 }
 
@@ -355,12 +346,12 @@ func (w *windowBase) SetTextColor(color int) int {
 	return xc.XWnd_SetTextColor(w.Handle, color)
 }
 
-// 窗口_取文本颜色.
+// 窗口_取文本颜色, 返回ABGR颜色.
 func (w *windowBase) GetTextColor() int {
 	return xc.XWnd_GetTextColor(w.Handle)
 }
 
-// 窗口_取文本颜色扩展.
+// 窗口_取文本颜色扩展, 返回ABGR颜色.
 func (w *windowBase) GetTextColorEx() int {
 	return xc.XWnd_GetTextColorEx(w.Handle)
 }
@@ -494,7 +485,7 @@ func (w *windowBase) AdjustLayout() int {
 
 // 窗口_调整布局扩展.
 //
-// nFlags: 调整布局标识位, AdjustLayout_.
+// nFlags: 调整布局标识位: xcc.AdjustLayout_.
 func (w *windowBase) AdjustLayoutEx(nFlags xcc.AdjustLayout_) int {
 	return xc.XWnd_AdjustLayoutEx(w.Handle, nFlags)
 }
@@ -531,7 +522,7 @@ func (w *windowBase) SetCaretPos(x, y, width, height int, bUpdate bool) int {
 
 // 窗口_置插入符颜色.
 //
-// color: 颜色值.
+// color: 颜色值, ABGR颜色.
 func (w *windowBase) SetCaretColor(color int) int {
 	return xc.XWnd_SetCaretColor(w.Handle, color)
 }
@@ -648,7 +639,7 @@ func (w *windowBase) SetBkMagager(hBkInfoM int) int {
 
 // 窗口_置透明类型.
 //
-// nType: 窗口透明类型, Window_Transparent_.
+// nType: 窗口透明类型: xcc.Window_Transparent_.
 func (w *windowBase) SetTransparentType(nType xcc.Window_Transparent_) int {
 	return xc.XWnd_SetTransparentType(w.Handle, nType)
 }
@@ -656,13 +647,13 @@ func (w *windowBase) SetTransparentType(nType xcc.Window_Transparent_) int {
 // 窗口_置透明度.
 //
 // alpha: 窗口透明度, 范围0-255之间, 0透明, 255不透明.
-func (w *windowBase) SetTransparentAlpha(alpha uint8) int {
+func (w *windowBase) SetTransparentAlpha(alpha byte) int {
 	return xc.XWnd_SetTransparentAlpha(w.Handle, alpha)
 }
 
 // 窗口_置透明色.
 //
-// color: 窗口透明色.
+// color: 窗口透明色, ABGR颜色.
 func (w *windowBase) SetTransparentColor(color int) int {
 	return xc.XWnd_SetTransparentColor(w.Handle, color)
 }
@@ -677,8 +668,8 @@ func (w *windowBase) SetTransparentColor(color int) int {
 //
 // bRightAngle: 是否强制直角.
 //
-// color: 阴影颜色.
-func (w *windowBase) SetShadowInfo(nSize int, nDepth uint8, nAngeleSize int, bRightAngle bool, color int) int {
+// color: 阴影颜色, ABGR颜色.
+func (w *windowBase) SetShadowInfo(nSize int, nDepth byte, nAngeleSize int, bRightAngle bool, color int) int {
 	return xc.XWnd_SetShadowInfo(w.Handle, nSize, nDepth, nAngeleSize, bRightAngle, color)
 }
 
@@ -692,12 +683,12 @@ func (w *windowBase) SetShadowInfo(nSize int, nDepth uint8, nAngeleSize int, bRi
 //
 // pbRightAngle: 是否强制直角.
 //
-// pColor: 阴影颜色.
-func (w *windowBase) GetShadowInfo(nSize *int, nDepth *uint8, nAngeleSize *int, bRightAngle *bool, color *int) int {
+// pColor: 阴影颜色, ABGR颜色.
+func (w *windowBase) GetShadowInfo(nSize *int, nDepth *byte, nAngeleSize *int, bRightAngle *bool, color *int) int {
 	return xc.XWnd_GetShadowInfo(w.Handle, nSize, nDepth, nAngeleSize, bRightAngle, color)
 }
 
-// 窗口_取透明类型, 返回: Window_Transparent_.
+// 窗口_取透明类型, 返回: xcc.Window_Transparent_.
 func (w *windowBase) GetTransparentType() xcc.Window_Transparent_ {
 	return xc.XWnd_GetTransparentType(w.Handle)
 }
@@ -938,6 +929,14 @@ func (w *windowBase) IsDragBorder() bool {
 // bottom: 下边间距.
 func (w *windowBase) SetCaptionMargin(left int, top int, right int, bottom int) int {
 	return xc.XWnd_SetCaptionMargin(w.Handle, left, top, right, bottom)
+}
+
+// SetTopEx 窗口_置顶Ex.
+//	@param b 是否置顶.
+//	@return bool
+//
+func (w *windowBase) SetTopEx(b bool) bool {
+	return wnd.SetTop(w.GetHWND(), b)
 }
 
 /*
