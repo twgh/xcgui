@@ -5,7 +5,7 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// 按钮.
+// Button 按钮.
 type Button struct {
 	Element
 }
@@ -81,19 +81,24 @@ func (b *Button) SetCheck(bCheck bool) bool {
 	return xc.XBtn_SetCheck(b.Handle, bCheck)
 }
 
-// 按钮_置状态.
+// SetState 按钮_置状态.
+//	@param nState 按钮状态: xcc.Common_State3_.
+//	@return int
 //
-// nState: 按钮状态, Common_State3_.
 func (b *Button) SetState(nState xcc.Common_State3_) int {
 	return xc.XBtn_SetState(b.Handle, nState)
 }
 
-// 按钮_取状态, 返回: Common_State3_.
+// GetState 按钮_取状态.
+//	@return xcc.Common_State3_
+//
 func (b *Button) GetState() xcc.Common_State3_ {
 	return xc.XBtn_GetState(b.Handle)
 }
 
-// 按钮_取状态扩展, 返回: Button_State_.
+// GetStateEx 按钮_取状态扩展.
+//	@return xcc.Button_State_
+//
 func (b *Button) GetStateEx() xcc.Button_State_ {
 	return xc.XBtn_GetStateEx(b.Handle)
 }
