@@ -1,4 +1,3 @@
-// 程序(炫彩全局API).
 package app
 
 import (
@@ -6,14 +5,18 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// 程序.
+// App 程序. 封装了炫彩的全局API.
 type App struct {
 }
 
-// 炫彩_初始化, 失败返回nil.
+// New 炫彩_初始化, 失败返回nil.
+//	@Description 默认会在程序运行目录和系统目录寻找并加载xcgui.dll.
+//	如果你想要更改xcgui.dll的路径, 那么请在调用本函数之前调用 xc.SetXcguiPath().
+//	@param bD2D 是否启用D2D.
+//	@return *App
 //
-// bD2D: 是否启用D2D.
 func New(bD2D bool) *App {
+	xc.LoadXCGUI()
 	p := &App{}
 	if !xc.XInitXCGUI(bD2D) {
 		return nil
@@ -21,78 +24,76 @@ func New(bD2D bool) *App {
 	return p
 }
 
-// 炫彩_运行, 运行消息循环,当炫彩窗口数量为0时退出.
+// Run 炫彩_运行. 运行消息循环, 当炫彩窗口数量为0时退出.
+//	@return int
+//
 func (a *App) Run() int {
 	return xc.XRunXCGUI()
 }
 
-// 炫彩_退出, 退出界面库释放资源.
+// Exit 炫彩_退出, 退出界面库释放资源.
+//	@return int
+//
 func (a *App) Exit() int {
 	return xc.XExitXCGUI()
 }
 
-// 炫彩_输出调试信息到文件, 打印调试信息到文件xcgui_debug.txt.
+// DebugToFileInfo 炫彩_输出调试信息到文件, 打印调试信息到文件xcgui_debug.txt.
+//	@param pInfo 文本.
+//	@return int
+//
 func (a *App) DebugToFileInfo(pInfo string) int {
 	return xc.XC_DebugToFileInfo(pInfo)
 }
 
-// 炫彩_激活窗口, 激活当前进程最上层窗口.
+// SetActivateTopWindow 炫彩_激活窗口, 激活当前进程最上层窗口.
+//	@return bool
+//
 func (a *App) SetActivateTopWindow() bool {
 	return xc.XC_SetActivateTopWindow()
 }
 
-// 炫彩_取默认字体, 返回默认字体句柄.
+// GetDefaultFont 炫彩_取默认字体.
+//	@return int 字体句柄.
+//
 func (a *App) GetDefaultFont() int {
 	return xc.XC_GetDefaultFont()
 }
 
-// 炫彩_消息框, 返回: MessageBox_Flag_Ok: 点击确定按钮退出, MessageBox_Flag_Cancel: 点击取消按钮退出, MessageBox_Flag_Other: 其他方式退出..
+// MessageBox 炫彩_消息框.
+//	@param pTitle 标题.
+//	@param pText 内容文本.
+//	@param nFlags 标识: xcc.MessageBox_Flag_.
+//	@param XCStyle xcc.Window_Style_.
+//	@return xcc.MessageBox_Flag_. 返回: xcc.MessageBox_Flag_Ok: 点击确定按钮退出. xcc.MessageBox_Flag_Cancel: 点击取消按钮退出. xcc.MessageBox_Flag_Other: 其他方式退出.
 //
-// pTitle: 标题.
-//
-// pText: 内容文本.
-//
-// nFlags: 标识, MessageBox_Flag_.
-//
-// hWndParent: 父窗口句柄(真实的窗口句柄).
-//
-// XCStyle: Window_Style_.
 func (a *App) MessageBox(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) xcc.MessageBox_Flag_ {
 	return xc.XC_MessageBox(pTitle, pText, nFlags, hWndParent, XCStyle)
 }
 
-// 消息框_创建, 弹出窗口请调用 XModalWnd_DoModal(), 此窗口是一个模态窗口, 返回消息框窗口句柄.
+// Msg_Create 消息框_创建, 此窗口是一个模态窗口, 弹出窗口请调用 XModalWnd_DoModal().
+//	@param pTitle 标题.
+//	@param pText 内容文本.
+//	@param nFlags 标识: xcc.MessageBox_Flag_.
+//	@param hWndParent 父窗口句柄(真实的窗口句柄).
+//	@param XCStyle xcc.Window_Style_.
+//	@return int 返回消息框窗口句柄.
 //
-// pTitle: 标题.
-//
-// pText: 内容文本.
-//
-// nFlags: 标识, MessageBox_Flag_.
-//
-// hWndParent: 父窗口句柄(真实的窗口句柄).
-//
-// XCStyle: Window_Style_.
 func (a *App) Msg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) int {
 	return xc.XMsg_Create(pTitle, pText, nFlags, hWndParent, XCStyle)
 }
 
-// 消息框_创建扩展, 弹出窗口请调用 XModalWnd_DoModal(), 此窗口是一个模态窗口, 返回消息框窗口句柄.
+// Msg_CreateEx 消息框_创建扩展, 此窗口是一个模态窗口, 弹出窗口请调用 XModalWnd_DoModal().
+//	@param dwExStyle 窗口扩展样式.
+//	@param dwStyle 窗口样式.
+//	@param lpClassName 窗口类名.
+//	@param pTitle 标题.
+//	@param pText 内容文本.
+//	@param nFlags 标识: xcc.MessageBox_Flag_.
+//	@param hWndParent 父窗口句柄(真实的窗口句柄).
+//	@param XCStyle xcc.Window_Style_.
+//	@return int 消息框窗口句柄.
 //
-// dwExStyle: 窗口扩展样式.
-//
-// dwStyle: 窗口样式.
-//
-// lpClassName: 窗口类名.
-//
-// pTitle: 标题.
-//
-// pText: 内容文本.
-//
-// nFlags: 标识, MessageBox_Flag_.
-//
-// hWndParent: 父窗口句柄(真实的窗口句柄).
-//
-// XCStyle: Window_Style_.
 func (a *App) Msg_CreateEx(dwExStyle int, dwStyle int, lpClassName string, pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) int {
 	return xc.XMsg_CreateEx(dwExStyle, dwStyle, lpClassName, pTitle, pText, nFlags, hWndParent, XCStyle)
 }
@@ -456,7 +457,7 @@ func (a *App) Alert(pTitle string, pText string) int {
 //
 // lpDirectory: 想使用的默认路径完整路径.
 //
-// nShowCmd: 定义了如何显示启动程序的常数值, SW_.
+// nShowCmd: 定义了如何显示启动程序的常数值: xcc.SW_.
 func (a *App) Sys_ShellExecute(hwnd int, lpOperation string, lpFile string, lpParameters string, lpDirectory string, nShowCmd xcc.SW_) int {
 	return xc.XC_Sys_ShellExecute(hwnd, lpOperation, lpFile, lpParameters, lpDirectory, nShowCmd)
 }
@@ -539,21 +540,21 @@ func (a *App) LoadLayoutZipMem(data []byte, pFileName string, pPassword string, 
 	return xc.XC_LoadLayoutZipMem(data, pFileName, pPassword, hParent, hAttachWnd)
 }
 
-// 炫彩_加载布局文件从字符串UTF8, 加载布局文件从内存字符串, 返回窗口句柄或布局句柄或元素句柄.
+// 炫彩_加载布局文件从字符串W, 加载布局文件从内存字符串, 返回窗口句柄或布局句柄或元素句柄.
 //
-// pStringXML: 字符串指针.
+// pStringXML: 字符串.
 //
 // hParent: 父对象.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func (a *App) LoadLayoutFromStringUtf8(pStringXML string, hParent, hAttachWnd int) int {
-	return xc.XC_LoadLayoutFromStringUtf8(pStringXML, hParent, hAttachWnd)
+func (a *App) LoadLayoutFromStringW(pStringXML string, hParent, hAttachWnd int) int {
+	return xc.XC_LoadLayoutFromStringW(pStringXML, hParent, hAttachWnd)
 }
 
 /*
 // 炫彩_加载布局文件从字符串, 加载布局文件从内存字符串, 返回窗口句柄或布局句柄或元素句柄.
 //
-// pStringXML: 字符串指针.
+// pStringXML: 字符串.
 //
 // hParent: 父对象.
 //
@@ -621,13 +622,13 @@ func (a *App) LoadResourceZipMem(data []byte, pFileName string, pPassword string
 	return xc.XC_LoadResourceZipMem(data, pFileName, pPassword)
 }
 
-// 炫彩_加载资源文件从字符串UTF8.
+// 炫彩_加载资源文件从字符串W.
 //
-// pStringXML: 字符串指针.
+// pStringXML: 字符串.
 //
 // pFileName: 资源文件名.
-func (a *App) LoadResourceFromStringUtf8(pStringXML string, pFileName string) bool {
-	return xc.XC_LoadResourceFromStringUtf8(pStringXML, pFileName)
+func (a *App) LoadResourceFromStringW(pStringXML string, pFileName string) bool {
+	return xc.XC_LoadResourceFromStringW(pStringXML, pFileName)
 }
 
 // 炫彩_W2A.
@@ -676,14 +677,14 @@ func (a *App) AtoUtf8(pValue uintptr) uintptr {
 
 // 炫彩_文本W到UTF8.
 //
-// pValue: 字符串指针.
+// pValue: 字符串.
 func (a *App) WtoUtf8(pValue string) uintptr {
 	return xc.XC_wtoutf8(pValue)
 }
 
 // 炫彩_文本W到UTF8扩展.
 //
-// pValue: 字符串指针.
+// pValue: 字符串.
 //
 // length: 字符串长度.
 func (a *App) WtoUtf8Ex(pValue string, length int) uintptr {
@@ -702,7 +703,7 @@ func (a *App) Print(level int, pInfo string) int {
 /*
 // 炫彩_加载资源文件从字符串.
 //
-// pStringXML: 字符串指针.
+// pStringXML: 字符串.
 //
 // pFileName: 资源文件名.
 func (a *App) LoadResourceFromString(pStringXML string, pFileName string) bool {
