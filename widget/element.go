@@ -1,4 +1,3 @@
-// 组件.
 package widget
 
 import (
@@ -7,7 +6,7 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// 元素基类.
+// Element 基础元素.
 type Element struct {
 	objectbase.Widget
 }
@@ -69,50 +68,50 @@ func NewElementByUIDName(name string) *Element {
 
 // 元素_注册事件C, 注册事件C方式, 省略2参数.
 //
-// nEvent: 事件类型, XE_.
+// nEvent: 事件类型: xcc.XE_.
 //
 // pFun: 事件函数指针.
-func (e *Element) RegEventC(nEvent int, pFun interface{}) bool {
+func (e *Element) RegEventC(nEvent xcc.XE_, pFun interface{}) bool {
 	return xc.XEle_RegEventC(e.Handle, nEvent, pFun)
 }
 
 // 元素_注册事件C1, 注册事件C1方式, 省略1参数.
 //
-// nEvent: 事件类型, XE_.
+// nEvent: 事件类型: xcc.XE_.
 //
 // pFun: 事件函数指针.
-func (e *Element) RegEventC1(nEvent int, pFun interface{}) bool {
+func (e *Element) RegEventC1(nEvent xcc.XE_, pFun interface{}) bool {
 	return xc.XEle_RegEventC1(e.Handle, nEvent, pFun)
 }
 
 // 元素_移除事件C.
 //
-// nEvent: 事件类型, XE_.
+// nEvent: 事件类型: xcc.XE_.
 //
 // pFun: 事件函数指针.
-func (e *Element) RemoveEventC(nEvent int, pFun interface{}) bool {
+func (e *Element) RemoveEventC(nEvent xcc.XE_, pFun interface{}) bool {
 	return xc.XEle_RemoveEventC(e.Handle, nEvent, pFun)
 }
 
 // 元素_发送事件.
 //
-// nEvent: 事件类型, XE_.
+// nEvent: 事件类型: xcc.XE_.
 //
 // wParam: 参数.
 //
 // lParam: 参数.
-func (e *Element) SendEvent(nEvent int, wParam int, lParam int) int {
+func (e *Element) SendEvent(nEvent xcc.XE_, wParam int, lParam int) int {
 	return xc.XEle_SendEvent(e.Handle, nEvent, wParam, lParam)
 }
 
 // 元素_投递事件.
 //
-// nEvent: 事件类型, XE_.
+// nEvent: 事件类型: xcc.XE_.
 //
 // wParam: 参数.
 //
 // lParam: 参数.
-func (e *Element) PostEvent(nEvent int, wParam int, lParam int) int {
+func (e *Element) PostEvent(nEvent xcc.XE_, wParam int, lParam int) int {
 	return xc.XEle_PostEvent(e.Handle, nEvent, wParam, lParam)
 }
 
@@ -230,7 +229,7 @@ func (e *Element) InsertChild(hChild int, index int) bool {
 //
 // bRedraw: 是否重绘.
 //
-// nFlags: 调整布局标识位, AdjustLayout_.
+// nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
 func (e *Element) SetRect(pRect *xc.RECT, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
@@ -249,7 +248,7 @@ func (e *Element) SetRect(pRect *xc.RECT, bRedraw bool, nFlags xcc.AdjustLayout_
 //
 // bRedraw: 是否重绘.
 //
-// nFlags: 调整布局标识位, AdjustLayout_.
+// nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
 func (e *Element) SetRectEx(x int, y int, cx int, cy int, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
@@ -262,7 +261,7 @@ func (e *Element) SetRectEx(x int, y int, cx int, cy int, bRedraw bool, nFlags x
 //
 // bRedraw: 是否重绘.
 //
-// nFlags: 调整布局标识位, AdjustLayout_. 此参数将会传入XE_SIZE ,XE_ADJUSTLAYOUT 事件回调.
+// nFlags: 调整布局标识位: xcc.AdjustLayout_. 此参数将会传入XE_SIZE ,XE_ADJUSTLAYOUT 事件回调.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
 func (e *Element) SetRectLogic(pRect *xc.RECT, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
@@ -277,7 +276,7 @@ func (e *Element) SetRectLogic(pRect *xc.RECT, bRedraw bool, nFlags xcc.AdjustLa
 //
 // bRedraw: 是否重绘.
 //
-// nFlags: 调整布局标识位, AdjustLayout_.
+// nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
 func (e *Element) SetPosition(x int, y int, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
@@ -292,7 +291,7 @@ func (e *Element) SetPosition(x int, y int, bRedraw bool, nFlags xcc.AdjustLayou
 //
 // bRedraw: 是否重绘.
 //
-// nFlags: 调整布局标识位, AdjustLayout_.
+// nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
 func (e *Element) SetPositionLogic(x int, y int, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
@@ -830,7 +829,7 @@ func (e *Element) AdjustLayout(nAdjustNo uint32) int {
 
 // 元素_调整布局扩展.
 //
-// nFlags: 调整布局标识位, AdjustLayout_.
+// nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
 func (e *Element) AdjustLayoutEx(nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
@@ -859,7 +858,7 @@ func (e *Element) GetPosition(pOutX *int, pOutY *int) int {
 //
 // bRedraw: 是否重绘.
 //
-// nFlags: 调整布局标识位, AdjustLayout_.
+// nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
 func (e *Element) SetSize(nWidth int, nHeight int, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
@@ -878,7 +877,7 @@ func (e *Element) GetSize(pOutWidth *int, pOutHeight *int) int {
 // 元素_置背景, 设置背景内容, 返回设置的背景对象数量.
 //
 // pText: 背景内容字符串.
-func (e *Element) SetBkInfo(pText int) int {
+func (e *Element) SetBkInfo(pText string) int {
 	return xc.XEle_SetBkInfo(e.Handle, pText)
 }
 
@@ -921,7 +920,7 @@ type XE_ADJUSTLAYOUT1 func(hEle int, nFlags int, nAdjustNo uint32, pbHandled *bo
 
 // 调整布局完成事件.
 //
-// nFlags: 调整布局标识位, AdjustLayout_.
+// nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号.
 type XE_ADJUSTLAYOUT_END func(nFlags xcc.AdjustLayout_, nAdjustNo uint32, pbHandled *bool) int
@@ -930,7 +929,7 @@ type XE_ADJUSTLAYOUT_END func(nFlags xcc.AdjustLayout_, nAdjustNo uint32, pbHand
 //
 // hEle: 元素句柄.
 //
-// nFlags: 调整布局标识位, AdjustLayout_.
+// nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号.
 type XE_ADJUSTLAYOUT_END1 func(hEle int, nFlags xcc.AdjustLayout_, nAdjustNo uint32, pbHandled *bool) int
@@ -946,7 +945,7 @@ type XE_DESTROY_END1 func(hEle int, pbHandled *bool) int // 元素销毁完成�
 
 // 元素大小改变事件.
 //
-// nFlags: 调整布局标识位, AdjustLayout_.
+// nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号.
 type XE_SIZE func(nFlags xcc.AdjustLayout_, nAdjustNo uint32, pbHandled *bool) int
@@ -955,7 +954,7 @@ type XE_SIZE func(nFlags xcc.AdjustLayout_, nAdjustNo uint32, pbHandled *bool) i
 //
 // hEle: 元素句柄.
 //
-// nFlags: 调整布局标识位, AdjustLayout_.
+// nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号.
 type XE_SIZE1 func(hEle int, nFlags xcc.AdjustLayout_, nAdjustNo uint32, pbHandled *bool) int
