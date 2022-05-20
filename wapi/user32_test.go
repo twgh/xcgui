@@ -1,21 +1,22 @@
-package wapi
+package wapi_test
 
 import (
+	"github.com/twgh/xcgui/wapi"
 	"testing"
 )
 
 func TestGetDesktopWindow(t *testing.T) {
-	t.Log(GetDesktopWindow())
+	t.Log(wapi.GetDesktopWindow())
 }
 
 func TestMessageBoxW(t *testing.T) {
-	id := MessageBoxW(0, "context", "title", MB_CanaelTryContinue|MB_IconInformation)
+	id := wapi.MessageBoxW(0, "context", "title", wapi.MB_CanaelTryContinue|wapi.MB_IconInformation)
 	switch id {
-	case ID_Cancel:
+	case wapi.ID_Cancel:
 		t.Log("Cancel")
-	case ID_TryAgain:
+	case wapi.ID_TryAgain:
 		t.Log("TryAgain")
-	case ID_Continue:
+	case wapi.ID_Continue:
 		t.Log("Continue")
 	default:
 		t.Log(id)
@@ -23,11 +24,11 @@ func TestMessageBoxW(t *testing.T) {
 }
 
 func TestFindWindowExW(t *testing.T) {
-	t.Log(FindWindowExW(0, 0, "", "任务管理器"))
-	t.Log(FindWindowExW(0, 0, "TaskManagerWindow", ""))
-	t.Log(FindWindowExW(0, 0, "TaskManagerWindow", "任务管理器"))
+	t.Log(wapi.FindWindowExW(0, 0, "", "任务管理器"))
+	t.Log(wapi.FindWindowExW(0, 0, "TaskManagerWindow", ""))
+	t.Log(wapi.FindWindowExW(0, 0, "TaskManagerWindow", "任务管理器"))
 }
 
 func TestGetWindowTextLengthW(t *testing.T) {
-	t.Log(GetWindowTextLengthW(FindWindowExW(0, 0, "", "任务管理器")))
+	t.Log(wapi.GetWindowTextLengthW(wapi.FindWindowExW(0, 0, "", "任务管理器")))
 }
