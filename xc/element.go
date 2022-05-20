@@ -28,7 +28,7 @@ func XEle_Create(x int, y int, cx int, cy int, hParent int) int {
 //
 // hEle: 元素句柄.
 //
-// nEvent: 事件类型, XE_.
+// nEvent: 事件类型: xcc.XE_.
 //
 // pFun: 事件函数指针.
 func XEle_RegEventC(hEle int, nEvent xcc.XE_, pFun interface{}) bool {
@@ -40,7 +40,7 @@ func XEle_RegEventC(hEle int, nEvent xcc.XE_, pFun interface{}) bool {
 //
 // hEle: 元素句柄.
 //
-// nEvent: 事件类型, XE_.
+// nEvent: 事件类型: xcc.XE_.
 //
 // pFun: 事件函数指针.
 func XEle_RegEventC1(hEle int, nEvent xcc.XE_, pFun interface{}) bool {
@@ -52,7 +52,7 @@ func XEle_RegEventC1(hEle int, nEvent xcc.XE_, pFun interface{}) bool {
 //
 // hEle: 元素句柄.
 //
-// nEvent: 事件类型, XE_.
+// nEvent: 事件类型: xcc.XE_.
 //
 // pFun: 事件函数指针.
 func XEle_RemoveEventC(hEle int, nEvent xcc.XE_, pFun interface{}) bool {
@@ -64,7 +64,7 @@ func XEle_RemoveEventC(hEle int, nEvent xcc.XE_, pFun interface{}) bool {
 //
 // hEle: 目标元素句柄.
 //
-// nEvent: 事件类型, XE_.
+// nEvent: 事件类型: xcc.XE_.
 //
 // wParam: 参数.
 //
@@ -78,7 +78,7 @@ func XEle_SendEvent(hEle int, nEvent xcc.XE_, wParam int, lParam int) int {
 //
 // hEle: 元素句柄.
 //
-// nEvent: 事件类型, XE_.
+// nEvent: 事件类型: xcc.XE_.
 //
 // wParam: 参数.
 //
@@ -252,7 +252,7 @@ func XEle_InsertChild(hEle int, hChild int, index int) bool {
 //
 // bRedraw: 是否重绘.
 //
-// nFlags: 调整布局标识位, AdjustLayout_.
+// nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
 func XEle_SetRect(hEle int, pRect *RECT, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
@@ -274,7 +274,7 @@ func XEle_SetRect(hEle int, pRect *RECT, bRedraw bool, nFlags xcc.AdjustLayout_,
 //
 // bRedraw: 是否重绘.
 //
-// nFlags: 调整布局标识位, AdjustLayout_.
+// nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
 func XEle_SetRectEx(hEle int, x int, y int, cx int, cy int, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
@@ -290,7 +290,7 @@ func XEle_SetRectEx(hEle int, x int, y int, cx int, cy int, bRedraw bool, nFlags
 //
 // bRedraw: 是否重绘.
 //
-// nFlags: 调整布局标识位, AdjustLayout_. 此参数将会传入XE_SIZE ,XE_ADJUSTLAYOUT 事件回调.
+// nFlags: 调整布局标识位: xcc.AdjustLayout_ , 此参数将会传入XE_SIZE ,XE_ADJUSTLAYOUT 事件回调.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
 func XEle_SetRectLogic(hEle int, pRect *RECT, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
@@ -308,7 +308,7 @@ func XEle_SetRectLogic(hEle int, pRect *RECT, bRedraw bool, nFlags xcc.AdjustLay
 //
 // bRedraw: 是否重绘.
 //
-// nFlags: 调整布局标识位, AdjustLayout_.
+// nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
 func XEle_SetPosition(hEle int, x int, y int, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
@@ -326,7 +326,7 @@ func XEle_SetPosition(hEle int, x int, y int, bRedraw bool, nFlags xcc.AdjustLay
 //
 // bRedraw: 是否重绘.
 //
-// nFlags: 调整布局标识位, AdjustLayout_.
+// nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
 func XEle_SetPositionLogic(hEle int, x int, y int, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
@@ -1136,7 +1136,7 @@ func XEle_GetPosition(hEle int, pOutX *int, pOutY *int) int {
 //
 // bRedraw: 是否重绘.
 //
-// nFlags: 调整布局标识位, AdjustLayout_.
+// nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
 func XEle_SetSize(hEle int, nWidth int, nHeight int, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
