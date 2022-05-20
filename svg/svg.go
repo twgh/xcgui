@@ -1,4 +1,3 @@
-// SVG矢量图形.
 package svg
 
 import (
@@ -22,7 +21,7 @@ func NewSvg_LoadFile(pFileName string) *Svg {
 
 // SVG_加载从字符串, 返回Svg对象.
 //
-// pString: 字符串指针.
+// pString: 字符串.
 func NewSvg_LoadString(pString string) *Svg {
 	p := &Svg{}
 	p.SetHandle(xc.XSvg_LoadString(pString))
@@ -31,7 +30,7 @@ func NewSvg_LoadString(pString string) *Svg {
 
 // SVG_加载从字符串W.
 //
-// pString: 字符串指针.
+// pString: 字符串.
 func NewSvg_LoadStringW(pString string) *Svg {
 	p := &Svg{}
 	p.SetHandle(xc.XSvg_LoadStringW(pString))
@@ -40,7 +39,7 @@ func NewSvg_LoadStringW(pString string) *Svg {
 
 // SVG_加载从字符串UTF8.
 //
-// pString: 字符串指针.
+// pString: 字符串.
 func NewSvg_LoadStringUtf8(pString string) *Svg {
 	p := &Svg{}
 	p.SetHandle(xc.XSvg_LoadStringUtf8(pString))

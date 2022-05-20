@@ -77,7 +77,7 @@ func (w *Widget) LayoutItem_EnableFloat(bFloat bool) int {
 
 // 窗口组件_布局项_置宽度.
 //
-// nType: 类型, Layout_Size_.
+// nType: 类型: xcc.Layout_Size_.
 //
 // nWidth: 宽度.
 func (w *Widget) LayoutItem_SetWidth(nType xcc.Layout_Size_, nWidth int) int {
@@ -86,7 +86,7 @@ func (w *Widget) LayoutItem_SetWidth(nType xcc.Layout_Size_, nWidth int) int {
 
 // 窗口组件_布局项_置高度.
 //
-// nType: 类型, Layout_Size_.
+// nType: 类型: xcc.Layout_Size_.
 //
 // nHeight: 高度.
 func (w *Widget) LayoutItem_SetHeight(nType xcc.Layout_Size_, nHeight int) int {
@@ -113,7 +113,7 @@ func (w *Widget) LayoutItem_GetHeight(pType, pHeight *int) int {
 
 // 窗口组件_布局项_置对齐, 根据水平垂直轴变化对齐.
 //
-// nAlign: 对齐方式, Layout_Align_Axis_.
+// nAlign: 对齐方式: xcc.Layout_Align_Axis_.
 func (w *Widget) LayoutItem_SetAlign(nAlign xcc.Layout_Align_Axis_) int {
 	return xc.XWidget_LayoutItem_SetAlign(w.Handle, nAlign)
 }

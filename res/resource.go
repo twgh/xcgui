@@ -1,4 +1,3 @@
-// 资源操作.
 package res
 
 import "github.com/twgh/xcgui/xc"

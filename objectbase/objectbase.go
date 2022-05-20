@@ -1,4 +1,3 @@
-// 基类.
 package objectbase
 
 import (
