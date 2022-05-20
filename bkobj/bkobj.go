@@ -1,4 +1,3 @@
-// 背景对象.
 package bkobj
 
 import (
