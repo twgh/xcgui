@@ -1,4 +1,3 @@
-// 缓动.
 package ease
 
 import (
