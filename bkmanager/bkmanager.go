@@ -1,4 +1,3 @@
-// 背景管理器.
 package bkmanager
 
 import (
