@@ -229,3 +229,4 @@ xc包里包含xcgui.dll里所有的API，有一千多个函数，可以直接使
 | 缓动                                  | ease             |                  | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.333/ease) |
 | 资源操作                              | res              |                  | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.333/res) |
 
+建议使用Goland进行开发，以获得最好的开发体验。我所使用的注释格式在Goland里看起来是最好的。
