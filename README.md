@@ -2,7 +2,7 @@
 <p align="center">
     <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.333-blue.svg?" alt="release"></a>
     <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-3.3.3-blue.svg?" alt="XCGUI"></a>
-   <a href="https://golang.org"> <img src="https://img.shields.io/badge/golang-1.16-blue" alt="golang"></a>
+   <a href="https://golang.org"> <img src="https://img.shields.io/badge/golang-1.17-blue" alt="golang"></a>
     <a href="https://pkg.go.dev/github.com/twgh/xcgui"><img src="https://img.shields.io/badge/go.dev-reference-brightgreen" alt="GoDoc"></a>
     <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-brightgreen.svg?" alt="License"></a>
     <br><br>
@@ -26,15 +26,20 @@
 
 
 
+
 ## 介绍
 
 [English](./README-en.md) | 简体中文
 
-DirectUI设计思想：在窗口内没有子窗口，界面元素都是逻辑上的区域(无HWND句柄，安全，灵活)，所有UI元素都是自主开发(不受系统限制)，更加灵活的实现各种程序界面，满足不同用户的需求。
-
-XCGUI官网：[www.xcgui.com](http://www.xcgui.com "xcgui 官方网站")
-
-官方资源商城：[mall.xcgui.com](http://mall.xcgui.com "xcgui 资源商城")
+- 本库封装自炫彩界面库，功能丰富(1000多个API接口)，简单易用，轻量级，高度DIY自定义，支持一键换肤。
+- 炫彩界面库是由C/C++语言开发：软件运行效率高，不需要第三方库的支持，不依赖MFC，ATL，WINDOWS标准控件等。
+- DirectUI设计思想：在窗口内没有子窗口，界面元素都是逻辑上的区域(无HWND句柄，安全，灵活)，所有UI元素都是自主开发(不受系统限制)，更加灵活的实现各种程序界面，满足不同用户的需求。
+- 拥有免费的UI设计器：快速开发工具，所见即所得，高度自定义系统(DIY)，让UI开发变的更加简单。
+- 支持Direct2D，硬件加速，能更大程度的发挥硬件特性，创建高性能，高质量的2D图形。
+- 编译后，只需携带一个大小为2.5MB的xcgui.dll，没有其他依赖。如果不想携带，可咨询开发者获取静态库，即可编译为1个二进制文件。
+- 有完善的中文官方文档：[中文官方文档](http://www.xcgui.com/doc-ui/)
+- XCGUI官网：[www.xcgui.com](http://www.xcgui.com "xcgui 官方网站")
+- 官方资源商城：[mall.xcgui.com](http://mall.xcgui.com "xcgui 资源商城")
 
 ## 获取
 
@@ -146,11 +151,11 @@ xc包里包含xcgui.dll里所有的API，有一千多个函数，可以直接使
 
 炫彩的全部事件都已经定义好了，都是以Event开头的， 以1结尾的事件是会传进去元素的句柄。
 
-事件回调函数尽量不要使用匿名函数，使用匿名函数意味着您每次都在创建1个新的回调，最终您将会遇到因创建过多回调导致程序崩溃的报错。
+事件回调函数尽量不要使用匿名函数，使用匿名函数意味着您每次都在创建1个新的回调，最终您将会遇到因创建过多回调导致程序崩溃的报错（大概在2000个回调时会遇到），事件回调函数不使用匿名函数即可避免此问题。
 
 [![xc-event.png](https://z3.ax1x.com/2021/11/23/opdyh6.png)](https://z3.ax1x.com/2021/11/23/opdyh6.png)
 
-一个事件可以注册多个处理函数，执行顺序为先执行最后注册的函数，最后执行第一个注册的函数，当你想拦截当前事件或不想向后传递，只需要将参数*pbHandled=true即可。
+一个事件可以注册多个处理函数，执行顺序为先执行最后注册的函数，最后执行第一个注册的函数，当你想拦截当前事件或不想向后传递，只需要将参数`*pbHandled=true`即可。
 
 ## 关于版本号
 
