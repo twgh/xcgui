@@ -21,7 +21,7 @@ var (
 )
 
 // DragQueryFileW 检索由成功的拖放操作产生的文件路径.
-//	@Description: 详见: https://docs.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-DragQueryFileW.
+//	@Description 详见: https://docs.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-DragQueryFileW.
 //	@param hDrop 句柄.
 //	@param iFile 文件索引.
 //	@param lpszFile 返回的文件路径.
@@ -36,7 +36,7 @@ func DragQueryFileW(hDrop int, iFile int, lpszFile *string, cch uint32) int {
 }
 
 // DragFinish 释放系统分配用于将文件名传输到应用程序的内存.
-//	@Description: 详见: https://docs.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-DragFinish.
+//	@Description 详见: https://docs.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-DragFinish.
 //	@param hDrop 句柄.
 //
 func DragFinish(hDrop int) {
@@ -44,7 +44,7 @@ func DragFinish(hDrop int) {
 }
 
 // DragQueryPoint 检索在拖放文件时鼠标指针的位置.
-//	@Description: 详见: https://docs.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-DragQueryPoint.
+//	@Description 详见: https://docs.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-DragQueryPoint.
 //	@param hDrop 句柄.
 //	@param ppt 接收鼠标指针的坐标.
 //	@return bool 如果拖放发生在窗口的客户区, 返回true；否则返回false.
@@ -55,7 +55,7 @@ func DragQueryPoint(hDrop int, ppt *xc.POINT) bool {
 }
 
 // ShellExecuteW 对指定文件执行操作.
-//	@Description: 详见: https://docs.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shellexecutew.
+//	@Description 详见: https://docs.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shellexecutew.
 //	@param hwnd 用于显示 UI 或错误消息的父窗口的句柄。如果操作与窗口无关，则此值可以为0.
 //	@param lpOperation 填“open”则打开lpFlie文档.
 //	@param lpFile 想用关联的程序打印或打开的一个程序名或文件名.
