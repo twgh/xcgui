@@ -41,27 +41,29 @@ func XBtn_SetCheck(hEle int, bCheck bool) bool {
 	return int(r) != 0
 }
 
-// 按钮_置状态.
+// XBtn_SetState 按钮_置状态.
+//	@param hEle 元素句柄.
+//	@param nState 按钮状态: xcc.Common_State3_
+//	@return int
 //
-// hEle: 元素句柄.
-//
-// nState: 按钮状态, Common_State3_.
 func XBtn_SetState(hEle int, nState xcc.Common_State3_) int {
 	r, _, _ := xBtn_SetState.Call(uintptr(hEle), uintptr(nState))
 	return int(r)
 }
 
-// 按钮_取状态, 返回: Common_State3_.
+// XBtn_GetState 按钮_取状态.
+//	@param hEle 元素句柄.
+//	@return xcc.Common_State3_
 //
-// hEle: 元素句柄.
 func XBtn_GetState(hEle int) xcc.Common_State3_ {
 	r, _, _ := xBtn_GetState.Call(uintptr(hEle))
 	return xcc.Common_State3_(r)
 }
 
-// 按钮_取状态扩展, 返回: Button_State_.
+// XBtn_GetStateEx 按钮_取状态扩展.
+//	@param hEle 元素句柄.
+//	@return xcc.Button_State_
 //
-// hEle: 元素句柄.
 func XBtn_GetStateEx(hEle int) xcc.Button_State_ {
 	r, _, _ := xBtn_GetStateEx.Call(uintptr(hEle))
 	return xcc.Button_State_(r)
