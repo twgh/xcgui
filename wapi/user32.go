@@ -56,7 +56,7 @@ const (
 )
 
 // SetWindowPos 改变一个子窗口，弹出式窗口或顶层窗口的尺寸，位置和Z序。子窗口，弹出式窗口，及顶层窗口根据它们在屏幕上出现的顺序排序、顶层窗口设置的级别最高，并且被设置为Z序的第一个窗口.
-//	@Description: 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-SetWindowPos.
+//	@Description 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-SetWindowPos.
 //	@param hWnd 欲定位的窗口句柄.
 //	@param hWndInsertAfter 在Z序中位于定位窗口之前的窗口句柄. 此参数必须是窗口句柄或以下值之一: wapi.HWND_.
 //	@param x 窗口新的x坐标。如hwnd是一个子窗口，则x用父窗口的客户区坐标表示.
@@ -72,7 +72,7 @@ func SetWindowPos(hWnd int, hWndInsertAfter HWND_, x, y, cx, cy int32, wFlags SW
 }
 
 // GetDesktopWindow 获取桌面窗口的句柄.
-//	@Description: 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetDesktopWindow.
+//	@Description 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetDesktopWindow.
 //	@return int
 //
 func GetDesktopWindow() int {
@@ -157,7 +157,7 @@ const (
 )
 
 // MessageBoxW 显示一个模式对话框，其中包含一个系统图标、一组按钮和一条特定于应用程序的简短消息.
-//	@Description: 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-MessageBoxW.
+//	@Description 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-MessageBoxW.
 //	@param hWnd 要创建的消息框的所有者窗口的句柄。如果此参数为0，则消息框没有所有者窗口.
 //	@param lpText 要显示的消息。如果字符串由多行组成，您可以在每行之间使用换行符分隔各行.
 //	@param lpCaption 对话框标题。如果此参数为空，则默认标题为Error.
@@ -170,7 +170,7 @@ func MessageBoxW(hWnd int, lpText, lpCaption string, uType MB_) ID_ {
 }
 
 // OpenClipboard 打开剪贴板进行检查并防止其他应用程序修改剪贴板内容.
-//	@Description: 如果另一个窗口打开了剪贴板，则 OpenClipboard 会失败.
+//	@Description 如果另一个窗口打开了剪贴板，则 OpenClipboard 会失败.
 //	应用程序应在每次成功调用 OpenClipboard 后调用 CloseClipboard 函数.
 //	除非调用 EmptyClipboard 函数，否则由hWndNewOwner参数标识的窗口不会成为剪贴板所有者.
 //	如果应用程序在 hwnd 设置为0的情况下调用 OpenClipboard, EmptyClipboard 会将剪贴板所有者设置为NULL；这会导致 SetClipboardData 失败.
@@ -184,7 +184,7 @@ func OpenClipboard(hWnd int) bool {
 }
 
 // CloseClipboard 关闭剪贴板.
-//	@Description: 当窗口完成检查或更改剪贴板时，通过调用 CloseClipboard 关闭剪贴板。这使其他窗口能够访问剪贴板.
+//	@Description 当窗口完成检查或更改剪贴板时，通过调用 CloseClipboard 关闭剪贴板。这使其他窗口能够访问剪贴板.
 //	详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-CloseClipboard.
 //	@return bool
 //
@@ -194,7 +194,7 @@ func CloseClipboard() bool {
 }
 
 // EmptyClipboard 清空剪贴板并释放剪贴板中数据的句柄。然后该函数将剪贴板的所有权分配给当前打开剪贴板的窗口。
-//	@Description: 在调用 EmptyClipboard 之前，应用程序必须使用 OpenClipboard 函数打开剪贴板。
+//	@Description 在调用 EmptyClipboard 之前，应用程序必须使用 OpenClipboard 函数打开剪贴板。
 //	如果应用程序在打开剪贴板时指定了NULL窗口句柄，则 EmptyClipboard 会成功，但会将剪贴板所有者设置为NULL。请注意，这会导致 SetClipboardData 失败。
 //	详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-EmptyClipboard.
 //	@return bool
@@ -226,7 +226,7 @@ const (
 )
 
 // IsClipboardFormatAvailable 确定剪贴板是否包含指定格式的数据.
-//	@Description: 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-IsClipboardFormatAvailable.
+//	@Description 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-IsClipboardFormatAvailable.
 //	@param uFormat 标准或注册的剪贴板格式, wapi.CF_ .
 //	@return bool
 //
@@ -236,7 +236,7 @@ func IsClipboardFormatAvailable(uFormat CF_) bool {
 }
 
 // GetClipboardData 从剪贴板中检索指定格式的数据。剪贴板必须先前已打开.
-//	@Description: 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetClipboardData.
+//	@Description 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetClipboardData.
 //	@param uFormat 剪贴板格式, wapi.CF_ .
 //	@return uintptr 如果函数成功，则返回值是指定格式的剪贴板对象的句柄. 如果函数失败，则返回值为NULL.
 //
@@ -246,7 +246,7 @@ func GetClipboardData(uFormat CF_) uintptr {
 }
 
 // SetClipboardData 以指定的剪贴板格式将数据放在剪贴板上。该窗口必须是当前剪贴板所有者，并且应用程序必须调用 OpenClipboard 函数.
-//	@Description: 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-setclipboarddata.
+//	@Description 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-setclipboarddata.
 //	@param uFormat 标准或注册的剪贴板格式, wapi.CF_ .
 //	@param hMem 指定格式的数据的句柄。该参数可以为0，表示窗口根据请求提供指定剪贴板格式的数据（渲染格式）.
 //	@return uintptr 如果函数成功，则返回值是数据的句柄. 如果函数失败，则返回值为NULL.
@@ -257,7 +257,7 @@ func SetClipboardData(uFormat CF_, hMem uintptr) uintptr {
 }
 
 // SetForegroundWindow 将创建指定窗口的线程带到前台并激活窗口. 键盘输入被定向到窗口, 并且为用户改变了各种视觉提示. 系统为创建前台窗口的线程分配比其他线程稍高的优先级.
-//	@Description: 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-SetForegroundWindow.
+//	@Description 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-SetForegroundWindow.
 //	@param hWnd 应激活并置于前台的窗口句柄.
 //	@return bool
 //
@@ -267,7 +267,7 @@ func SetForegroundWindow(hWnd int) bool {
 }
 
 // FindWindowExW 检索类名称和窗口名称与指定字符串匹配的窗口的句柄. 该函数搜索子窗口，从指定子窗口后面的那个开始. 此函数不执行区分大小写的搜索.
-//	@Description: 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-FindWindowExW.
+//	@Description 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-FindWindowExW.
 //	@param hWndParent 要搜索其子窗口的父窗口的句柄. 如果hwndParent为0，该函数使用桌面窗口作为父窗口. 该函数在作为桌面子窗口的窗口中进行搜索.
 //	@param hWndChildAfter 子窗口的句柄。搜索从 Z 顺序中的下一个子窗口开始。子窗口必须是hwndParent的直接子窗口，而不仅仅是后代窗口。 如果hwndChildAfter为0，则搜索从hwndParent的第一个子窗口开始。 请注意，如果hwndParent和hwndChildAfter都是0，则该函数将搜索所有顶级和仅消息窗口。
 //	@param lpszClass 窗口类名, 可空.
@@ -280,7 +280,7 @@ func FindWindowExW(hWndParent, hWndChildAfter int, lpszClass, lpszWindow string)
 }
 
 // GetWindowTextLengthW 检索指定窗口标题栏文本的长度（以字符为单位）（如果窗口有标题栏）。如果指定的窗口是控件，则该函数检索控件内文本的长度。但是无法检索另一个应用程序中编辑控件的文本长度。
-//	@Description: 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetWindowTextLengthW.
+//	@Description 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetWindowTextLengthW.
 //	@param hWnd 窗口或控件的句柄。
 //	@return int 如果成功，则返回值是文本的长度（以字符为单位）。在某些情况下，此值可能大于文本的长度。如果窗口没有文本，则返回值为零。
 //
@@ -290,7 +290,7 @@ func GetWindowTextLengthW(hWnd int) int {
 }
 
 // GetWindowTextW 将指定窗口标题栏（如果有）的文本复制到缓冲区中。如果指定的窗口是控件，则复制控件的文本。但是无法检索另一个应用程序中控件的文本。
-//	@Description: 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetWindowTextW.
+//	@Description 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetWindowTextW.
 //	@param hWnd 包含文本的窗口或控件的句柄。
 //	@param lpString 接收文本.
 //	@param nMaxCount 复制到缓冲区的最大字符数，包括空字符。如果文本超出此限制，则将其截断.
