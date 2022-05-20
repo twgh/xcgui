@@ -54,6 +54,74 @@ func NewModalWindowEx(dwExStyle int, dwStyle int, lpClassName string, x int, y i
 	return p
 }
 
+// NewModalWindowByLayout 从布局文件创建对象, 失败返回nil.
+//	@param pFileName 布局文件名.
+//	@param hParent 父对象句柄.
+//	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
+//	@return *ModalWindow
+//
+func NewModalWindowByLayout(pFileName string, hParent, hAttachWnd int) *ModalWindow {
+	handle := xc.XC_LoadLayout(pFileName, hParent, hAttachWnd)
+	if handle > 0 {
+		p := &ModalWindow{}
+		p.SetHandle(handle)
+		return p
+	}
+	return nil
+}
+
+// NewModalWindowByLayoutZip 从压缩包中的布局文件创建对象, 失败返回nil.
+//	@param pZipFileName zip文件名.
+//	@param pFileName 布局文件名.
+//	@param pPassword zip密码.
+//	@param hParent 父对象句柄.
+//	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
+//	@return *ModalWindow
+//
+func NewModalWindowByLayoutZip(pZipFileName string, pFileName string, pPassword string, hParent, hAttachWnd int) *ModalWindow {
+	handle := xc.XC_LoadLayoutZip(pZipFileName, pFileName, pPassword, hParent, hAttachWnd)
+	if handle > 0 {
+		p := &ModalWindow{}
+		p.SetHandle(handle)
+		return p
+	}
+	return nil
+}
+
+// NewModalWindowByLayoutZipMem 从内存压缩包中的布局文件创建对象, 失败返回nil.
+//	@param data 布局文件数据.
+//	@param pFileName 布局文件名.
+//	@param pPassword zip密码.
+//	@param hParent 父对象句柄.
+//	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
+//	@return *ModalWindow
+//
+func NewModalWindowByLayoutZipMem(data []byte, pFileName string, pPassword string, hParent int, hAttachWnd int) *ModalWindow {
+	handle := xc.XC_LoadLayoutZipMem(data, pFileName, pPassword, hParent, hAttachWnd)
+	if handle > 0 {
+		p := &ModalWindow{}
+		p.SetHandle(handle)
+		return p
+	}
+	return nil
+}
+
+// NewModalWindowByLayoutStringW 从布局文件字符串W创建对象, 失败返回nil.
+//	@param pStringXML 字符串.
+//	@param hParent 父对象.
+//	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
+//	@return *Window
+//
+func NewModalWindowByLayoutStringW(pStringXML string, hParent int, hAttachWnd int) *ModalWindow {
+	handle := xc.XC_LoadLayoutFromStringW(pStringXML, hParent, hAttachWnd)
+	if handle > 0 {
+		p := &ModalWindow{}
+		p.SetHandle(handle)
+		return p
+	}
+	return nil
+}
+
 // 模态窗口_附加窗口, 返回窗口对象.
 //
 // hWnd: 要附加的外部窗口句柄.
