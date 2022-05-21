@@ -1680,14 +1680,14 @@ func SetXcguiPath(XcguiPath string) error {
 	if err := pathExists(XcguiPath); err != nil {
 		return errors.New("XcguiPath 指向的文件不存在")
 	}
-	XcguiPath = XcguiPath
+	xcguiPath = XcguiPath
 	return nil
 }
 
-// GetxcguiPath 获取设置的xcgui.dll的路径.
+// GetXcguiPath 获取设置的xcgui.dll的路径.
 //	@return string
 //
-func GetxcguiPath() string {
+func GetXcguiPath() string {
 	return xcguiPath
 }
 
