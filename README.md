@@ -43,7 +43,7 @@
 
 ## 获取
 
-```go
+```
 go get github.com/twgh/xcgui
 ```
 
