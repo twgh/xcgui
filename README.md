@@ -9,8 +9,9 @@
     <a href="https://github.com/twgh/xcgui-example">程序示例</a>&nbsp;&nbsp;
     <a href="http://www.xcgui.com/doc-ui/">官方文档</a>&nbsp;&nbsp;
 	<a href="https://pkg.go.dev/github.com/twgh/xcgui">项目文档</a>&nbsp;&nbsp;
-	<a href="http://www.xcgui.com">官方网站</a>
+	<a href="http://mall.xcgui.com">官方资源</a>
 </p>
+
 
 
 
@@ -36,10 +37,8 @@
 - DirectUI设计思想：在窗口内没有子窗口，界面元素都是逻辑上的区域(无HWND句柄，安全，灵活)，所有UI元素都是自主开发(不受系统限制)，更加灵活的实现各种程序界面，满足不同用户的需求。
 - 拥有免费的UI设计器：快速开发工具，所见即所得，高度自定义系统(DIY)，让UI开发变的更加简单。
 - 支持Direct2D，硬件加速，能更大程度的发挥硬件特性，创建高性能，高质量的2D图形。
-- 编译后，只需携带一个大小为2.5MB的xcgui.dll，没有其他依赖。如果不想携带，可咨询开发者获取静态库，即可编译为1个二进制文件。
+- 编译后，只需携带一个大小为2.5MB的xcgui.dll，没有其他依赖。
 - 有完善的中文官方文档：[中文官方文档](http://www.xcgui.com/doc-ui/)
-- XCGUI官网：[www.xcgui.com](http://www.xcgui.com "xcgui 官方网站")
-- 官方资源商城：[mall.xcgui.com](http://mall.xcgui.com "xcgui 资源商城")
 
 ## 获取
 
@@ -147,6 +146,8 @@ xc包里包含xcgui.dll里所有的API，有一千多个函数，可以直接使
 
 炫彩所有的结构体也都在xc包里。
 
+建议使用Goland进行开发，以获得最好的开发体验。我所使用的注释格式在Goland里看起来是最好的。
+
 ## 事件
 
 炫彩的全部事件都已经定义好了，都是以Event开头的， 以1结尾的事件是会传进去元素的句柄。
@@ -228,5 +229,3 @@ xc包里包含xcgui.dll里所有的API，有一千多个函数，可以直接使
 | XCGUI常量                             | xcc              |                  | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.333/xcc) |
 | 缓动                                  | ease             |                  | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.333/ease) |
 | 资源操作                              | res              |                  | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.333/res) |
-
-建议使用Goland进行开发，以获得最好的开发体验。我所使用的注释格式在Goland里看起来是最好的。
