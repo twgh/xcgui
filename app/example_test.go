@@ -18,3 +18,10 @@ func ExampleNew() {
 	a.Run()
 	a.Exit()
 }
+
+func ExampleApp_ShowAndRun() {
+	a := app.New(true)
+	w := window.NewWindow(0, 0, 500, 500, "", 0, xcc.Window_Style_Default)
+	a.ShowAndRun(w.Handle)
+	a.Exit()
+}
