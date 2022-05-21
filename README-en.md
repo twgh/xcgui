@@ -33,7 +33,7 @@ Resource Mall：[mall.xcgui.com](http://mall.xcgui.com "xcgui Resource Mall")
 
 ## Get
 
-```go
+```
 go get github.com/twgh/xcgui
 ```
 
