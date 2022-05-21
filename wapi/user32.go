@@ -2,7 +2,9 @@ package wapi
 
 import (
 	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/xc"
 	"syscall"
+	"unsafe"
 )
 
 var (
@@ -23,6 +25,7 @@ var (
 	findWindowExW              = user32.NewProc("FindWindowExW")
 	getWindowTextLengthW       = user32.NewProc("GetWindowTextLengthW")
 	getWindowTextW             = user32.NewProc("GetWindowTextW")
+	clientToScreen             = user32.NewProc("ClientToScreen")
 )
 
 type HWND_ int
@@ -301,4 +304,15 @@ func GetWindowTextW(hWnd int, lpString *string, nMaxCount int) int {
 	r, _, _ := getWindowTextW.Call(uintptr(hWnd), common.Uint16SliceDataPtr(&buf), uintptr(nMaxCount))
 	*lpString = syscall.UTF16ToString(buf[0:])
 	return int(r)
+}
+
+// ClientToScreen 将指定点的客户区坐标转换为屏幕坐标。
+//	@Description 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-ClientToScreen.
+//	@param hWnd 窗口真实句柄
+//	@param lpPoint xc.POINT 指针. 如果函数成功，则将新的屏幕坐标复制到此结构中.
+//	@return bool
+//
+func ClientToScreen(hWnd int, lpPoint *xc.POINT) bool {
+	r, _, _ := clientToScreen.Call(uintptr(hWnd), uintptr(unsafe.Pointer(lpPoint)))
+	return int(r) != 0
 }
