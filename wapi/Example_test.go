@@ -2,7 +2,11 @@ package wapi_test
 
 import (
 	"fmt"
+	"github.com/twgh/xcgui/app"
 	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/window"
+	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
 )
 
 func ExampleMessageBoxW() {
@@ -23,4 +27,16 @@ func ExampleFindWindowExW() {
 	fmt.Println(wapi.FindWindowExW(0, 0, "", "任务管理器"))
 	fmt.Println(wapi.FindWindowExW(0, 0, "TaskManagerWindow", ""))
 	fmt.Println(wapi.FindWindowExW(0, 0, "TaskManagerWindow", "任务管理器"))
+}
+
+func ExampleClientToScreen() {
+	a := app.New(true)
+	w := window.NewWindow(0, 0, 300, 300, "", 0, xcc.Window_Style_Default)
+
+	pt := xc.POINT{X: 0, Y: 0}
+	wapi.ClientToScreen(w.GetHWND(), &pt)
+	fmt.Println(pt)
+
+	a.ShowAndRun(w.Handle)
+	a.Exit()
 }
