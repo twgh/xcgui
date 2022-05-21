@@ -1,6 +1,7 @@
 package wnd_test
 
 import (
+	"fmt"
 	"github.com/twgh/xcgui/wapi"
 	"github.com/twgh/xcgui/wnd"
 	"testing"
@@ -8,14 +9,14 @@ import (
 
 func TestGetWindowTitle(t *testing.T) {
 	hwnd := wapi.FindWindowExW(0, 0, "", "任务管理器")
-	t.Log(wnd.GetTitle(hwnd))
+	fmt.Println(wnd.GetTitle(hwnd))
 }
 
 func TestSetTop(t *testing.T) {
 	hwnd := wapi.FindWindowExW(0, 0, "", "任务管理器")
-	t.Log(wnd.SetTop(hwnd, true))
+	fmt.Println(wnd.SetTop(hwnd, true))
 }
 
 func TestGetWindowHWND(t *testing.T) {
-	t.Log(wnd.GetHWND("", "管理器"))
+	fmt.Println(wnd.GetHWND("", "管理器"))
 }
