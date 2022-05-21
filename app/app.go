@@ -38,6 +38,14 @@ func (a *App) Exit() int {
 	return xc.XExitXCGUI()
 }
 
+// ShowAndRun 显示窗口并调用炫彩_运行.
+//	@param hWindow 炫彩窗口句柄.
+//
+func (a *App) ShowAndRun(hWindow int) {
+	xc.XWnd_ShowWindow(hWindow, xcc.SW_SHOW)
+	xc.XRunXCGUI()
+}
+
 // DebugToFileInfo 炫彩_输出调试信息到文件, 打印调试信息到文件xcgui_debug.txt.
 //	@param pInfo 文本.
 //	@return int
