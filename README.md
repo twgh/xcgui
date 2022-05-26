@@ -31,7 +31,7 @@
 ## 获取
 
 ```
-go - get github.com/twgh/xcgui
+go  get github.com/twgh/xcgui
 ```
 
 ## 可视化UI设计器
@@ -150,6 +150,7 @@ xc包里包含xcgui.dll里所有的API，有一千多个函数，可以直接使
 ## JetBrains 开源证书支持
 
 `xcgui` 项目一直以来都是在 [JetBrains](https://www.jetbrains.com/?from=xcgui) 公司旗下的 [GoLand](https://www.jetbrains.com/go/?from=xcgui) 集成开发环境中进行开发，基于 **free JetBrains Open Source license(s)** 正版免费授权，在此表达我的谢意。
+
 [<img src="https://s1.ax1x.com/2022/05/24/XiFI6x.png" alt="jetbrains.png" />](https://www.jetbrains.com/?from=xcgui)
 
 ## 模块继承关系
