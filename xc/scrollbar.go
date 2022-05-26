@@ -83,7 +83,7 @@ func XSBar_SetSliderPadding(hEle int, nPadding int) int {
 // bHorizon: 水平或垂直.
 func XSBar_EnableHorizon(hEle int, bHorizon bool) bool {
 	r, _, _ := xSBar_EnableHorizon.Call(uintptr(hEle), common.BoolPtr(bHorizon))
-	return int(r) != 0
+	return r != 0
 }
 
 // 滚动条_取滑块最大长度.
@@ -99,7 +99,7 @@ func XSBar_GetSliderMaxLength(hEle int) int {
 // hEle: 元素句柄.
 func XSBar_ScrollUp(hEle int) bool {
 	r, _, _ := xSBar_ScrollUp.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 滚动条_向下滚动.
@@ -107,7 +107,7 @@ func XSBar_ScrollUp(hEle int) bool {
 // hEle: 元素句柄.
 func XSBar_ScrollDown(hEle int) bool {
 	r, _, _ := xSBar_ScrollDown.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 滚动条_滚动到顶部.
@@ -115,7 +115,7 @@ func XSBar_ScrollDown(hEle int) bool {
 // hEle: 元素句柄.
 func XSBar_ScrollTop(hEle int) bool {
 	r, _, _ := xSBar_ScrollTop.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 滚动条_滚动到底部.
@@ -123,7 +123,7 @@ func XSBar_ScrollTop(hEle int) bool {
 // hEle: 元素句柄.
 func XSBar_ScrollBottom(hEle int) bool {
 	r, _, _ := xSBar_ScrollBottom.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 滚动条_滚动到指定位置, 滚动到指定位置点, 触发事件: XE_SBAR_SCROLL.
@@ -133,7 +133,7 @@ func XSBar_ScrollBottom(hEle int) bool {
 // pos: 位置点.
 func XSBar_ScrollPos(hEle int, pos int) bool {
 	r, _, _ := xSBar_ScrollPos.Call(uintptr(hEle), uintptr(pos))
-	return int(r) != 0
+	return r != 0
 }
 
 // 滚动条_取上按钮, 获取上按钮, 返回按钮句柄.

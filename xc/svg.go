@@ -236,7 +236,7 @@ func XSvg_SetUserStrokeColor(hSvg int, color int, strokeWidth float32, bEnable b
 // pColor: 返回颜色值, AGBR颜色.
 func XSvg_GetUserFillColor(hSvg int, pColor *int) bool {
 	r, _, _ := xSvg_GetUserFillColor.Call(uintptr(hSvg), uintptr(unsafe.Pointer(pColor)))
-	return int(r) != 0
+	return r != 0
 }
 
 // SVG_取用户笔触颜色.
@@ -248,7 +248,7 @@ func XSvg_GetUserFillColor(hSvg int, pColor *int) bool {
 // pStrokeWidth: .
 func XSvg_GetUserStrokeColor(hSvg int, pColor *int, pStrokeWidth *float32) bool {
 	r, _, _ := xSvg_GetUserStrokeColor.Call(uintptr(hSvg), uintptr(unsafe.Pointer(pColor)), uintptr(unsafe.Pointer(pStrokeWidth)))
-	return int(r) != 0
+	return r != 0
 }
 
 // SVG_置旋转角度, 默认以自身中心点旋转.

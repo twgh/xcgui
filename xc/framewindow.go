@@ -100,7 +100,7 @@ func XFrameWnd_SetTabBarHeight(hWindow int, nHeight int) int {
 // pFileName: 文件名，如果文件名为空，将使用默认文件名frameWnd_layout.xml.
 func XFrameWnd_SaveLayoutToFile(hWindow int, pFileName string) bool {
 	r, _, _ := xFrameWnd_SaveLayoutToFile.Call(uintptr(hWindow), common.StrPtr(pFileName))
-	return int(r) != 0
+	return r != 0
 }
 
 // 框架窗口_加载布局信息文件, 加载布局信息文件.
@@ -114,7 +114,7 @@ func XFrameWnd_SaveLayoutToFile(hWindow int, pFileName string) bool {
 // pFileName: 文件名，如果文件名为空，将使用默认文件名frameWnd_layout.xml.
 func XFrameWnd_LoadLayoutFile(hWindow int, aPaneList []int, nPaneCount int, pFileName string) bool {
 	r, _, _ := xFrameWnd_LoadLayoutFile.Call(uintptr(hWindow), uintptr(unsafe.Pointer(&aPaneList[0])), uintptr(nPaneCount), common.StrPtr(pFileName))
-	return int(r) != 0
+	return r != 0
 }
 
 // 框架窗口_添加窗格, 添加窗格到框架窗口.
@@ -128,7 +128,7 @@ func XFrameWnd_LoadLayoutFile(hWindow int, aPaneList []int, nPaneCount int, pFil
 // align: 对齐方式, Pane_Align_.
 func XFrameWnd_AddPane(hWindow int, hPaneDest int, hPaneNew int, align xcc.Pane_Align_) bool {
 	r, _, _ := xFrameWnd_AddPane.Call(uintptr(hWindow), uintptr(hPaneDest), uintptr(hPaneNew), uintptr(align))
-	return int(r) != 0
+	return r != 0
 }
 
 // 框架窗口_合并窗格.
@@ -140,7 +140,7 @@ func XFrameWnd_AddPane(hWindow int, hPaneDest int, hPaneNew int, align xcc.Pane_
 // hPaneNew: 当前窗格.
 func XFrameWnd_MergePane(hWindow int, hPaneDest int, hPaneNew int) bool {
 	r, _, _ := xFrameWnd_MergePane.Call(uintptr(hWindow), uintptr(hPaneDest), uintptr(hPaneNew))
-	return int(r) != 0
+	return r != 0
 }
 
 // 框架窗口_附加窗口, 返回窗口资源句柄.
@@ -151,4 +151,12 @@ func XFrameWnd_MergePane(hWindow int, hPaneDest int, hPaneNew int) bool {
 func XFrameWnd_Attach(hWnd, XCStyle int) int {
 	r, _, _ := xFrameWnd_Attach.Call(uintptr(hWnd), uintptr(XCStyle))
 	return int(r)
+}
+
+// 框架窗口_取拖动浮动窗格停留位置标识, 返回框架窗口单元格类型: xcc.FrameWnd_Cell_Type_.
+//
+// hWindow: 窗口句柄.
+func XFrameWnd_GetDragFloatWndTopFlag(hWindow int) xcc.FrameWnd_Cell_Type_ {
+	r, _, _ := xFrameWnd_GetDragFloatWndTopFlag.Call(uintptr(hWindow))
+	return xcc.FrameWnd_Cell_Type_(r)
 }

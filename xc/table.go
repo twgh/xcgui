@@ -252,5 +252,5 @@ func XTable_SetItemFlag(hShape int, iRow int, iCol int, flag xcc.Table_Flag_) in
 // pRect: 接收返回坐标.
 func XTable_GetItemRect(hShape int, iRow int, iCol int, pRect *RECT) bool {
 	r, _, _ := xTable_GetItemRect.Call(uintptr(hShape), uintptr(iRow), uintptr(iCol), uintptr(unsafe.Pointer(pRect)))
-	return int(r) != 0
+	return r != 0
 }

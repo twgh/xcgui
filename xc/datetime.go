@@ -132,3 +132,11 @@ func XDateTime_SetTime(hEle int, nHour int, nMinute int, nSecond int) int {
 	r, _, _ := xDateTime_SetTime.Call(uintptr(hEle), uintptr(nHour), uintptr(nMinute), uintptr(nSecond))
 	return int(r)
 }
+
+// 日期_弹出.
+//
+// hEle: 元素句柄.
+func XDateTime_Popup(hEle int) int {
+	r, _, _ := xDateTime_Popup.Call(uintptr(hEle))
+	return int(r)
+}

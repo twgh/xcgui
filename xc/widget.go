@@ -12,7 +12,7 @@ import (
 // hXCGUI: 对象句柄.
 func XWidget_IsShow(hXCGUI int) bool {
 	r, _, _ := xWidget_IsShow.Call(uintptr(hXCGUI))
-	return int(r) != 0
+	return r != 0
 }
 
 // 窗口组件_显示.
@@ -40,7 +40,7 @@ func XWidget_EnableLayoutControl(hXCGUI int, bEnable bool) int {
 // hXCGUI:.
 func XWidget_IsLayoutControl(hXCGUI int) bool {
 	r, _, _ := xWidget_IsLayoutControl.Call(uintptr(hXCGUI))
-	return int(r) != 0
+	return r != 0
 }
 
 // 窗口组件_取父元素.

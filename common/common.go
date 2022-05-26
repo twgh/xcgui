@@ -2,6 +2,7 @@ package common
 
 import (
 	"syscall"
+	"unicode/utf16"
 	"unsafe"
 )
 
@@ -93,3 +94,31 @@ func bytePtr(p *byte) uintptr {
     }
     return string(utf16.Decode(unsafe.Slice(p, n)))
 } */
+
+/*// RuneToUint16Ptr 返回指向 UTF-8 字符串 r 的 UTF-16 编码的指针.
+func RuneToUint16Ptr(r []rune) *uint16 {
+	return &utf16.Encode(r)[0]
+}*/
+
+// StringToUint16Ptr 返回指向 UTF-8 字符串 s 的 UTF-16 编码的指针，与 syscall.UTF16PtrFromString 不同的是末尾没有添加终止 NUL。
+func StringToUint16Ptr(s string) *uint16 {
+	return &utf16.Encode([]rune(s))[0]
+}
+
+// Uint16SliceToStringSlice 按null字符分割, 把 []uint16 转换到 []string.
+func Uint16SliceToStringSlice(s []uint16) []string {
+	strSlice := make([]string, 0)
+	start := 0
+	for i := 0; i < len(s); i++ {
+		if s[i] == 0 {
+			strSlice = append(strSlice, string(utf16.Decode(s[start:i])))
+			start = i + 1
+
+			// 连续null字符, 所以跳出
+			if s[start] == 0 {
+				break
+			}
+		}
+	}
+	return strSlice
+}

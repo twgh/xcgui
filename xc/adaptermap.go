@@ -17,7 +17,7 @@ func XAdMap_Create() int {
 // pValue: 值.
 func XAdMap_AddItemText(hAdapter int, pName string, pValue string) bool {
 	r, _, _ := xAdMap_AddItemText.Call(uintptr(hAdapter), common.StrPtr(pName), common.StrPtr(pValue))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器MAP_添加项图片, 增加数据项.
@@ -29,7 +29,7 @@ func XAdMap_AddItemText(hAdapter int, pName string, pValue string) bool {
 // hImage: 图片句柄.
 func XAdMap_AddItemImage(hAdapter int, pName string, hImage int) bool {
 	r, _, _ := xAdMap_AddItemImage.Call(uintptr(hAdapter), common.StrPtr(pName), uintptr(hImage))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器MAP_删除项, 删除数据项.
@@ -39,7 +39,7 @@ func XAdMap_AddItemImage(hAdapter int, pName string, hImage int) bool {
 // pName: 字段称.
 func XAdMap_DeleteItem(hAdapter int, pName string) bool {
 	r, _, _ := xAdMap_DeleteItem.Call(uintptr(hAdapter), common.StrPtr(pName))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器MAP_取项数量, 返回项数量.
@@ -79,7 +79,7 @@ func XAdMap_GetItemImage(hAdapter int, pName string) int {
 // pValue: 值.
 func XAdMap_SetItemText(hAdapter int, pName string, pValue string) bool {
 	r, _, _ := xAdMap_SetItemText.Call(uintptr(hAdapter), common.StrPtr(pName), common.StrPtr(pValue))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器MAP_置项图片, 设置项内容.
@@ -91,5 +91,5 @@ func XAdMap_SetItemText(hAdapter int, pName string, pValue string) bool {
 // hImage: 值.
 func XAdMap_SetItemImage(hAdapter int, pName string, hImage int) bool {
 	r, _, _ := xAdMap_SetItemImage.Call(uintptr(hAdapter), common.StrPtr(pName), uintptr(hImage))
-	return int(r) != 0
+	return r != 0
 }

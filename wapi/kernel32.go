@@ -77,7 +77,7 @@ func GlobalAlloc(uFlags GMEM_, dwBytes uint64) uintptr {
 //
 func GlobalUnlock(hMem uintptr) bool {
 	r, _, _ := globalUnlock.Call(hMem)
-	return int(r) != 0
+	return r != 0
 }
 
 // GlobalSize 检索指定全局内存对象的当前大小，以字节为单位.

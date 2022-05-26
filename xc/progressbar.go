@@ -81,7 +81,7 @@ func XProgBar_EnableHorizon(hEle int, bHorizon bool) int {
 // bStretch: 缩放.
 func XProgBar_EnableStretch(hEle int, bStretch bool) bool {
 	r, _, _ := xProgBar_EnableStretch.Call(uintptr(hEle), common.BoolPtr(bStretch))
-	return int(r) != 0
+	return r != 0
 }
 
 // 进度条_启用进度文本 显示进度值文本.
@@ -91,5 +91,5 @@ func XProgBar_EnableStretch(hEle int, bStretch bool) bool {
 // bShow: 是否启用.
 func XProgBar_EnableShowText(hEle int, bShow bool) bool {
 	r, _, _ := xProgBar_EnableShowText.Call(uintptr(hEle), common.BoolPtr(bShow))
-	return int(r) != 0
+	return r != 0
 }

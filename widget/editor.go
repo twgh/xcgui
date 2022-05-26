@@ -274,6 +274,32 @@ func (e *Editor) AddExcludeDefVarKeyword(pKeyword string) int {
 	return xc.XEditor_AddExcludeDefVarKeyword(e.Handle, pKeyword)
 }
 
+// 代码编辑框_获取折叠状态.
+func (Editor *Edit) GetExpandState() string {
+	return xc.XEditor_GetExpandState(Editor.Handle)
+}
+
+// 代码编辑框_设置折叠状态.
+//
+// pString: .
+func (Editor *Edit) SetExpandState(pString string) int {
+	return xc.XEditor_SetExpandState(Editor.Handle, pString)
+}
+
+// 代码编辑框_获取缩进.
+//
+// iRow: 行.
+func (Editor *Edit) GetIndentation(iRow int) int {
+	return xc.XEditor_GetIndentation(Editor.Handle, iRow)
+}
+
+// 代码编辑框_是否为空行.
+//
+// iRow: 行.
+func (Editor *Edit) IsEmptyRow(iRow int) int {
+	return xc.XEidtor_IsEmptyRow(Editor.Handle, iRow)
+}
+
 /*
 以下都是事件
 */

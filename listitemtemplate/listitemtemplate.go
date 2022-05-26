@@ -79,6 +79,13 @@ func NewListItemTemplateByHandle(handle int) *ListItemTemplate {
 	return p
 }
 
+// 模板_克隆, 返回模板对象.
+func (l *ListItemTemplate) Clone() *ListItemTemplate {
+	p := &ListItemTemplate{}
+	p.SetHandle(xc.XTemp_Clone(l.Handle))
+	return p
+}
+
 // 模板_取类型, 获取列表项模板类型, 返回: ListItemTemp_Type_.
 func (l *ListItemTemplate) GetType() xcc.ListItemTemp_Type_ {
 	return xc.XTemp_GetType(l.Handle)

@@ -75,7 +75,7 @@ func XC_LoadLayoutFromStringW(pStringXML string, hParent, hAttachWnd int) int {
 // pFileName: 样式文件名称.
 func XC_LoadStyle(pFileName string) bool {
 	r, _, _ := xC_LoadStyle.Call(common.StrPtr(pFileName))
-	return int(r) != 0
+	return r != 0
 }
 
 // 炫彩_加载样式文件ZIP.
@@ -87,7 +87,7 @@ func XC_LoadStyle(pFileName string) bool {
 // pPassword: 密码.
 func XC_LoadStyleZip(pZipFile string, pFileName string, pPassword string) bool {
 	r, _, _ := xC_LoadStyleZip.Call(common.StrPtr(pZipFile), common.StrPtr(pFileName), common.StrPtr(pPassword))
-	return int(r) != 0
+	return r != 0
 }
 
 // 炫彩_加载样式文件从内存ZIP.
@@ -99,7 +99,7 @@ func XC_LoadStyleZip(pZipFile string, pFileName string, pPassword string) bool {
 // pPassword: 密码.
 func XC_LoadStyleZipMem(data []byte, pFileName string, pPassword string) bool {
 	r, _, _ := xC_LoadStyleZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(pFileName), common.StrPtr(pPassword))
-	return int(r) != 0
+	return r != 0
 }
 
 // 炫彩_加载资源文件.
@@ -107,7 +107,7 @@ func XC_LoadStyleZipMem(data []byte, pFileName string, pPassword string) bool {
 // pFileName: 资源文件名.
 func XC_LoadResource(pFileName string) bool {
 	r, _, _ := xC_LoadResource.Call(common.StrPtr(pFileName))
-	return int(r) != 0
+	return r != 0
 }
 
 // 炫彩_加载资源文件ZIP.
@@ -119,7 +119,7 @@ func XC_LoadResource(pFileName string) bool {
 // pPassword: zip压缩包密码.
 func XC_LoadResourceZip(pZipFileName string, pFileName string, pPassword string) bool {
 	r, _, _ := xC_LoadResourceZip.Call(common.StrPtr(pZipFileName), common.StrPtr(pFileName), common.StrPtr(pPassword))
-	return int(r) != 0
+	return r != 0
 }
 
 // 炫彩_加载资源文件内存ZIP.
@@ -131,7 +131,7 @@ func XC_LoadResourceZip(pZipFileName string, pFileName string, pPassword string)
 // pPassword: zip压缩包密码.
 func XC_LoadResourceZipMem(data []byte, pFileName string, pPassword string) bool {
 	r, _, _ := xC_LoadResourceZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(pFileName), common.StrPtr(pPassword))
-	return int(r) != 0
+	return r != 0
 }
 
 // 炫彩_加载资源文件从字符串W.
@@ -141,7 +141,7 @@ func XC_LoadResourceZipMem(data []byte, pFileName string, pPassword string) bool
 // pFileName: 资源文件名.
 func XC_LoadResourceFromStringW(pStringXML string, pFileName string) bool {
 	r, _, _ := xC_LoadResourceFromStringUtf8.Call(XC_wtoutf8(pStringXML), common.StrPtr(pFileName))
-	return int(r) != 0
+	return r != 0
 }
 
 // 炫彩_加载样式文件从字符串W.
@@ -151,7 +151,7 @@ func XC_LoadResourceFromStringW(pStringXML string, pFileName string) bool {
 // pString: 字符串.
 func XC_LoadStyleFromStringW(pFileName string, pString string) bool {
 	r, _, _ := xC_LoadStyleFromStringW.Call(common.StrPtr(pFileName), common.StrPtr(pString))
-	return int(r) != 0
+	return r != 0
 }
 
 /*
@@ -162,7 +162,7 @@ func XC_LoadStyleFromStringW(pFileName string, pString string) bool {
 // pFileName: 资源文件名.
 func XC_LoadResourceFromString(pStringXML string, pFileName string) bool {
 	r, _, _ := xC_LoadResourceFromString.Call(strPtr(pStringXML), strPtr(pFileName))
-	return int(r) != 0
+	return r!=0
 }
 
 // 炫彩_加载样式文件从字符串.
@@ -172,5 +172,5 @@ func XC_LoadResourceFromString(pStringXML string, pFileName string) bool {
 // pString: 字符串.
 func XC_LoadStyleFromString(pFileName string, pString string) bool {
 	r, _, _ := xC_LoadStyleFromString.Call(strPtr(pFileName), strPtr(pString))
-	return int(r) != 0
+	return r!=0
 } */

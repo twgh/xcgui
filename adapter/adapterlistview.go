@@ -306,3 +306,61 @@ func (a *AdapterListView) Item_SetImage(iGroup int, iItem int, iColumn int, hIma
 func (a *AdapterListView) Item_SetImageEx(iGroup int, iItem int, pName string, hImage int) bool {
 	return xc.XAdListView_Item_SetImageEx(a.Handle, iGroup, iItem, pName, hImage)
 }
+
+// 数据适配器列表视_组取文本, 返回文本内容.
+//
+// iGroup: 组索引.
+//
+// iColumn: 列索引.
+func (a *AdapterListView) Group_GetText(iGroup int, iColumn int) string {
+	return xc.XAdListView_Group_GetText(a.Handle, iGroup, iColumn)
+}
+
+// 数据适配器列表视_组取文本扩展, 返回文本内容.
+//
+// iGroup: 组索引.
+//
+// pName: 字段名称.
+func (a *AdapterListView) Group_GetTextEx(iGroup int, pName string) string {
+	return xc.XAdListView_Group_GetTextEx(a.Handle, iGroup, pName)
+}
+
+// 数据适配器列表视_组取图片, 返回图片句柄.
+//
+// iGroup: 组索引.
+//
+// iColumn: 列索引.
+func (a *AdapterListView) Group_GetImage(iGroup int, iColumn int) int {
+	return xc.XAdListView_Group_GetImage(a.Handle, iGroup, iColumn)
+}
+
+// 数据适配器列表视_组取图片扩展, 返回图片句柄.
+//
+// iGroup: 组索引.
+//
+// pName: 字段名称.
+func (a *AdapterListView) Group_GetImageEx(iGroup int, pName string) int {
+	return xc.XAdListView_Group_GetImageEx(a.Handle, iGroup, pName)
+}
+
+// 数据适配器列表视_项取文本. 项操作, 返回项文本内容.
+//
+// iGroup: 组索引.
+//
+// iItem: 项索引.
+//
+// iColumn: 列索引.
+func (a *AdapterListView) Item_GetText(iGroup int, iItem int, iColumn int) string {
+	return xc.XAdListView_Item_GetText(a.Handle, iGroup, iItem, iColumn)
+}
+
+// 数据适配器列表视_项取图片. 项操作, 返回项图片句柄.
+//
+// iGroup: 组索引.
+//
+// iItem: 项索引.
+//
+// iColumn: 列索引.
+func (a *AdapterListView) Item_GetImage(iGroup int, iItem int, iColumn int) int {
+	return xc.XAdListView_Item_GetImage(a.Handle, iGroup, iItem, iColumn)
+}

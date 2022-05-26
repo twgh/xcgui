@@ -24,7 +24,7 @@ func XAnima_Run(hAnimation int, hRedrawObjectUI int) int {
 // bEnd: 是否立即执行到终点.
 func XAnima_Release(hAnimation int, bEnd bool) bool {
 	r, _, _ := xAnima_Release.Call(uintptr(hAnimation), common.BoolPtr(bEnd))
-	return int(r) != 0
+	return r != 0
 }
 
 // 动画_释放扩展, 释放与指定UI对象关联的所有动画, 返回释放动画数量.
@@ -362,7 +362,7 @@ func XAnimaGroup_AddItem(hGroup int, hSequence int) int {
 // bOffset: TRUE: 相对于自身中心点偏移, FALSE: 绝对坐标.
 func XAnimaRotate_SetCenter(hAnimationRotate int, x float32, y float32, bOffset bool) bool {
 	r, _, _ := xAnimaRotate_SetCenter.Call(uintptr(hAnimationRotate), common.Float32Ptr(x), common.Float32Ptr(y), common.BoolPtr(bOffset))
-	return int(r) != 0
+	return r != 0
 }
 
 // 动画缩放_置延伸位置, 设置缩放起点, 确定延伸方向.
@@ -372,7 +372,7 @@ func XAnimaRotate_SetCenter(hAnimationRotate int, x float32, y float32, bOffset 
 // position: 位置, Position_Flag_.
 func XAnimaScale_SetPosition(hAnimationScale int, position xcc.Position_Flag_) bool {
 	r, _, _ := xAnimaScale_SetPosition.Call(uintptr(hAnimationScale), uintptr(position))
-	return int(r) != 0
+	return r != 0
 }
 
 // 动画_取UI对象, 获取动画关联的UI对象, 返回UI对象句柄.
@@ -448,7 +448,7 @@ func XAnima_GetUserData(hAnimationEx int) int {
 // hAnimationEx: 动画序列或动画组句柄.
 func XAnima_Stop(hAnimationEx int) bool {
 	r, _, _ := xAnima_Stop.Call(uintptr(hAnimationEx))
-	return int(r) != 0
+	return r != 0
 }
 
 // 动画_启动.
@@ -456,7 +456,7 @@ func XAnima_Stop(hAnimationEx int) bool {
 // hAnimationEx: 动画序列或动画组句柄.
 func XAnima_Start(hAnimationEx int) bool {
 	r, _, _ := xAnima_Start.Call(uintptr(hAnimationEx))
-	return int(r) != 0
+	return r != 0
 }
 
 // 动画_暂停.
@@ -464,7 +464,7 @@ func XAnima_Start(hAnimationEx int) bool {
 // hAnimationEx: 动画序列或动画组句柄.
 func XAnima_Pause(hAnimationEx int) bool {
 	r, _, _ := xAnima_Pause.Call(uintptr(hAnimationEx))
-	return int(r) != 0
+	return r != 0
 }
 
 // 动画项_置回调.

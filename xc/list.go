@@ -214,7 +214,7 @@ func XList_GetColumnCount(hEle int) int {
 // data: 用户数据.
 func XList_SetItemData(hEle int, iItem int, iSubItem int, data int) bool {
 	r, _, _ := xList_SetItemData.Call(uintptr(hEle), uintptr(iItem), uintptr(iSubItem), uintptr(data))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表_取项数据, 获取项用户数据.
@@ -236,7 +236,7 @@ func XList_GetItemData(hEle int, iItem int, iSubItem int) int {
 // iItem: 项索引.
 func XList_SetSelectItem(hEle int, iItem int) bool {
 	r, _, _ := xList_SetSelectItem.Call(uintptr(hEle), uintptr(iItem))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表_取选择项, 返回项索引.
@@ -262,7 +262,7 @@ func XList_GetSelectItemCount(hEle int) int {
 // iItem: 项索引.
 func XList_AddSelectItem(hEle int, iItem int) bool {
 	r, _, _ := xList_AddSelectItem.Call(uintptr(hEle), uintptr(iItem))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表_置选择全部, 选择全部行.
@@ -303,7 +303,7 @@ func XList_VisibleItem(hEle int, iItem int) int {
 // iItem: 项索引.
 func XList_CancelSelectItem(hEle int, iItem int) bool {
 	r, _, _ := xList_CancelSelectItem.Call(uintptr(hEle), uintptr(iItem))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表_取消全部选择项, 取消选择所有项(这里的项可以理解为行).
@@ -329,7 +329,7 @@ func XList_GetHeaderHELE(hEle int) int {
 // iItem: 项索引.
 func XList_DeleteColumn(hEle int, iItem int) bool {
 	r, _, _ := xList_DeleteColumn.Call(uintptr(hEle), uintptr(iItem))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表_删除全部列, 删除所有的列, 仅删除List的, 数据适配器的列不变.
@@ -399,7 +399,7 @@ func XList_GetAdapterHeader(hEle int) int {
 // pXmlFile: 文件名.
 func XList_SetItemTemplateXML(hEle int, pXmlFile string) bool {
 	r, _, _ := xList_SetItemTemplateXML.Call(uintptr(hEle), common.StrPtr(pXmlFile))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表_置项模板从字符串, 设置项布局模板文件.
@@ -409,7 +409,7 @@ func XList_SetItemTemplateXML(hEle int, pXmlFile string) bool {
 // pStringXML: 字符串.
 func XList_SetItemTemplateXMLFromString(hEle int, pStringXML string) bool {
 	r, _, _ := xList_SetItemTemplateXMLFromString.Call(uintptr(hEle), XC_wtoa(pStringXML))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表_置项模板, 设置列表项模板.
@@ -419,7 +419,7 @@ func XList_SetItemTemplateXMLFromString(hEle int, pStringXML string) bool {
 // hTemp: 模板句柄.
 func XList_SetItemTemplate(hEle int, hTemp int) bool {
 	r, _, _ := xList_SetItemTemplate.Call(uintptr(hEle), uintptr(hTemp))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表_取项模板对象, 通过模板项ID, 获取实例化模板项ID对应的对象句柄.
@@ -591,7 +591,7 @@ func XList_SetLockRowBottomOverlap(hEle int, bOverlap bool) int {
 // piSubItem: 子项索引.
 func XList_HitTest(hEle int, pPt *POINT, piItem *int, piSubItem *int) bool {
 	r, _, _ := xList_HitTest.Call(uintptr(hEle), uintptr(unsafe.Pointer(pPt)), uintptr(unsafe.Pointer(piItem)), uintptr(unsafe.Pointer(piSubItem)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表_测试点击项扩展, 检查坐标点所在项, 自动添加滚动视图偏移量.
@@ -605,7 +605,7 @@ func XList_HitTest(hEle int, pPt *POINT, piItem *int, piSubItem *int) bool {
 // piSubItem: 子项索引.
 func XList_HitTestOffset(hEle int, pPt *POINT, piItem *int, piSubItem *int) bool {
 	r, _, _ := xList_HitTestOffset.Call(uintptr(hEle), uintptr(unsafe.Pointer(pPt)), uintptr(unsafe.Pointer(piItem)), uintptr(unsafe.Pointer(piSubItem)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表_刷新项数据.
@@ -761,7 +761,7 @@ func XList_InsertItemImageEx(hEle int, iItem int, pName string, hImage int) int 
 // pText:.
 func XList_SetItemText(hEle int, iItem int, iColumn int, pText string) bool {
 	r, _, _ := xList_SetItemText.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), common.StrPtr(pText))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表_置项文本扩展.
@@ -775,7 +775,7 @@ func XList_SetItemText(hEle int, iItem int, iColumn int, pText string) bool {
 // pText:.
 func XList_SetItemTextEx(hEle int, iItem int, pName string, pText string) bool {
 	r, _, _ := xList_SetItemTextEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), common.StrPtr(pText))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表_置项图片.
@@ -789,7 +789,7 @@ func XList_SetItemTextEx(hEle int, iItem int, pName string, pText string) bool {
 // hImage:.
 func XList_SetItemImage(hEle int, iItem int, iColumn int, hImage int) bool {
 	r, _, _ := xList_SetItemImage.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), uintptr(hImage))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表_置项图片扩展.
@@ -803,7 +803,7 @@ func XList_SetItemImage(hEle int, iItem int, iColumn int, hImage int) bool {
 // hImage:.
 func XList_SetItemImageEx(hEle int, iItem int, pName string, hImage int) bool {
 	r, _, _ := xList_SetItemImageEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(hImage))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表_置项指数值.
@@ -817,7 +817,7 @@ func XList_SetItemImageEx(hEle int, iItem int, pName string, hImage int) bool {
 // nValue:.
 func XList_SetItemInt(hEle int, iItem int, iColumn int, nValue int) bool {
 	r, _, _ := xList_SetItemInt.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), uintptr(nValue))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表_置项整数值扩展.
@@ -831,7 +831,7 @@ func XList_SetItemInt(hEle int, iItem int, iColumn int, nValue int) bool {
 // nValue:.
 func XList_SetItemIntEx(hEle int, iItem int, pName string, nValue int) bool {
 	r, _, _ := xList_SetItemIntEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(nValue))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表_置项浮点值.
@@ -845,7 +845,7 @@ func XList_SetItemIntEx(hEle int, iItem int, pName string, nValue int) bool {
 // fFloat:.
 func XList_SetItemFloat(hEle int, iItem int, iColumn int, fFloat float32) bool {
 	r, _, _ := xList_SetItemFloat.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), common.Float32Ptr(fFloat))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表_置项浮点值扩展.
@@ -859,7 +859,7 @@ func XList_SetItemFloat(hEle int, iItem int, iColumn int, fFloat float32) bool {
 // fFloat:.
 func XList_SetItemFloatEx(hEle int, iItem int, pName string, fFloat float32) bool {
 	r, _, _ := xList_SetItemFloatEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), common.Float32Ptr(fFloat))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表_取项文本.
@@ -921,7 +921,7 @@ func XList_GetItemImageEx(hEle int, iItem int, pName string) int {
 // pOutValue:.
 func XList_GetItemInt(hEle int, iItem int, iColumn int, pOutValue *int) bool {
 	r, _, _ := xList_GetItemInt.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), uintptr(unsafe.Pointer(pOutValue)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表_取项整数值扩展.
@@ -935,7 +935,7 @@ func XList_GetItemInt(hEle int, iItem int, iColumn int, pOutValue *int) bool {
 // pOutValue:.
 func XList_GetItemIntEx(hEle int, iItem int, pName string, pOutValue *int) bool {
 	r, _, _ := xList_GetItemIntEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表_取项浮点值.
@@ -949,7 +949,7 @@ func XList_GetItemIntEx(hEle int, iItem int, pName string, pOutValue *int) bool 
 // pOutValue:.
 func XList_GetItemFloat(hEle int, iItem int, iColumn int, pOutValue *float32) bool {
 	r, _, _ := xList_GetItemFloat.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), uintptr(unsafe.Pointer(pOutValue)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表_取项浮点值扩展.
@@ -963,7 +963,7 @@ func XList_GetItemFloat(hEle int, iItem int, iColumn int, pOutValue *float32) bo
 // pOutValue:.
 func XList_GetItemFloatEx(hEle int, iItem int, pName string, pOutValue *float32) bool {
 	r, _, _ := xList_GetItemFloatEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表_删除项.
@@ -973,7 +973,7 @@ func XList_GetItemFloatEx(hEle int, iItem int, pName string, pOutValue *float32)
 // iItem:.
 func XList_DeleteItem(hEle int, iItem int) bool {
 	r, _, _ := xList_DeleteItem.Call(uintptr(hEle), uintptr(iItem))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表_删除项扩展.
@@ -985,7 +985,7 @@ func XList_DeleteItem(hEle int, iItem int) bool {
 // nCount:.
 func XList_DeleteItemEx(hEle int, iItem int, nCount int) bool {
 	r, _, _ := xList_DeleteItemEx.Call(uintptr(hEle), uintptr(iItem), uintptr(nCount))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表_删除项全部.
@@ -1027,5 +1027,33 @@ func XList_GetCountColumn_AD(hEle int) int {
 // color: ABGR颜色值.
 func XList_SetSplitLineColor(hEle int, color int) int {
 	r, _, _ := xList_SetSplitLineColor.Call(uintptr(hEle), uintptr(color))
+	return int(r)
+}
+
+// 列表_置项高度.
+//
+// hEle: 元素句柄.
+//
+// iRow: 行索引.
+//
+// nHeight: 高度.
+//
+// nSelHeight: 选中时高度.
+func XList_SetItemHeight(hEle int, iRow int, nHeight int, nSelHeight int) int {
+	r, _, _ := xList_SetItemHeight.Call(uintptr(hEle), uintptr(iRow), uintptr(nHeight), uintptr(nSelHeight))
+	return int(r)
+}
+
+// 列表_取项高度.
+//
+// hEle: 元素句柄.
+//
+// iRow: 行索引.
+//
+// pHeight: 高度.
+//
+// pSelHeight: 选中时高度.
+func XList_GetItemHeight(hEle int, iRow int, pHeight *int, pSelHeight *int) int {
+	r, _, _ := xList_GetItemHeight.Call(uintptr(hEle), uintptr(iRow), uintptr(unsafe.Pointer(pHeight)), uintptr(unsafe.Pointer(pSelHeight)))
 	return int(r)
 }

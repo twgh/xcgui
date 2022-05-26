@@ -126,7 +126,7 @@ func XFont_GetFontInfo(hFontX int, pInfo *Font_Info_) int {
 //
 func XFont_GetLOGFONTW(hFontX int, hdc int, pOut *LOGFONTW) bool {
 	r, _, _ := xFont_GetLOGFONTW.Call(uintptr(hFontX), uintptr(hdc), uintptr(unsafe.Pointer(pOut)))
-	return int(r) != 0
+	return r != 0
 }
 
 // XFont_Destroy 字体_销毁. 强制销毁炫彩字体, 谨慎使用, 建议使用 XFont_Release() 释放.

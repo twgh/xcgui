@@ -59,9 +59,9 @@ const (
 // type Button_State_Flag_ CombinedState
 
 const (
-	Button_State_Flag_Leave = CombinedState(Element_State_Flag_Leave) // 鼠标离开
-	Button_State_Flag_Stay  = CombinedState(Element_State_Flag_Stay)  // 鼠标停留
-	Button_State_Flag_Down  = CombinedState(Element_State_Flag_Down)  // 鼠标按下
+	Button_State_Flag_Leave = Element_State_Flag_Leave // 鼠标离开
+	Button_State_Flag_Stay  = Element_State_Flag_Stay  // 鼠标停留
+	Button_State_Flag_Down  = Element_State_Flag_Down  // 鼠标按下
 
 	Button_State_Flag_Check    CombinedState = 0x0080 // 选中
 	Button_State_Flag_Check_No CombinedState = 0x0100 // 未选中
@@ -75,9 +75,9 @@ const (
 // type ComboBox_State_Flag_ CombinedState
 
 const (
-	ComboBox_State_Flag_Leave = CombinedState(Element_State_Flag_Leave) // 鼠标离开
-	ComboBox_State_Flag_Stay  = CombinedState(Element_State_Flag_Stay)  // 鼠标停留
-	ComboBox_State_Flag_Down  = CombinedState(Element_State_Flag_Down)  // 鼠标按下
+	ComboBox_State_Flag_Leave = Element_State_Flag_Leave // 鼠标离开
+	ComboBox_State_Flag_Stay  = Element_State_Flag_Stay  // 鼠标停留
+	ComboBox_State_Flag_Down  = Element_State_Flag_Down  // 鼠标按下
 )
 
 // 组合状态
@@ -137,7 +137,7 @@ const (
 // type MonthCal_State_Flag_ CombinedState
 
 const (
-	MonthCal_State_Flag_Leave = CombinedState(Element_State_Flag_Leave) // 离开状态
+	MonthCal_State_Flag_Leave = Element_State_Flag_Leave // 离开状态
 
 	MonthCal_State_Flag_Item_Leave CombinedState = 0x0080 // 项-离开
 	MonthCal_State_Flag_Item_Stay  CombinedState = 0x0100 // 项-停留
@@ -184,8 +184,8 @@ const (
 // type Pane_State_Flag_ CombinedState
 
 const (
-	Pane_State_Flag_Leave = CombinedState(Element_State_Flag_Leave) // 离开
-	Pane_State_Flag_Stay  = CombinedState(Element_State_Flag_Stay)  // 停留
+	Pane_State_Flag_Leave = Element_State_Flag_Leave // 离开
+	Pane_State_Flag_Stay  = Element_State_Flag_Stay  // 停留
 
 	Pane_State_Flag_Caption CombinedState = 0x0080 // 标题
 	Pane_State_Flag_Body    CombinedState = 0x0100 // 内容区

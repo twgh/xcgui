@@ -69,3 +69,15 @@ func XMonthCal_GetSelDate(hEle int, pnYear *int, pnMonth *int, pnDay *int) int {
 	r, _, _ := xMonthCal_GetSelDate.Call(uintptr(hEle), uintptr(unsafe.Pointer(pnYear)), uintptr(unsafe.Pointer(pnMonth)), uintptr(unsafe.Pointer(pnDay)))
 	return int(r)
 }
+
+// 月历_置文本颜色.
+//
+// hEle: 元素句柄.
+//
+// nFlag: 1:周六.
+//
+// color: ABGR颜色值.
+func XMonthCal_SetTextColor(hEle int, nFlag int, color int) int {
+	r, _, _ := xMonthCal_SetTextColor.Call(uintptr(hEle), uintptr(nFlag), uintptr(color))
+	return int(r)
+}

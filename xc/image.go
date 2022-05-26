@@ -228,7 +228,7 @@ func XImage_LoadFromHBITMAP(hBitmap int) int {
 // hImage: 图片句柄.
 func XImage_IsStretch(hImage int) bool {
 	r, _, _ := xImage_IsStretch.Call(uintptr(hImage))
-	return int(r) != 0
+	return r != 0
 }
 
 // 图片_判断自适应, 是否为自适应图片句柄.
@@ -236,7 +236,7 @@ func XImage_IsStretch(hImage int) bool {
 // hImage: 图片句柄.
 func XImage_IsAdaptive(hImage int) bool {
 	r, _, _ := xImage_IsAdaptive.Call(uintptr(hImage))
-	return int(r) != 0
+	return r != 0
 }
 
 // 图片_判断平铺, 是否为平铺图片.
@@ -244,7 +244,7 @@ func XImage_IsAdaptive(hImage int) bool {
 // hImage: 图片句柄.
 func XImage_IsTile(hImage int) bool {
 	r, _, _ := xImage_IsTile.Call(uintptr(hImage))
-	return int(r) != 0
+	return r != 0
 }
 
 // 图片_置绘制类型, 设置图片绘制类型.
@@ -254,7 +254,7 @@ func XImage_IsTile(hImage int) bool {
 // nType: 图片绘制类型, Image_Draw_Type_.
 func XImage_SetDrawType(hImage int, nType xcc.Image_Draw_Type_) bool {
 	r, _, _ := xImage_SetDrawType.Call(uintptr(hImage), uintptr(nType))
-	return int(r) != 0
+	return r != 0
 }
 
 // 图片_置绘制类型自适应, 设置图片自适应(九宫格).
@@ -270,7 +270,7 @@ func XImage_SetDrawType(hImage int, nType xcc.Image_Draw_Type_) bool {
 // bottomSize: 坐标.
 func XImage_SetDrawTypeAdaptive(hImage int, leftSize int, topSize int, rightSize int, bottomSize int) bool {
 	r, _, _ := xImage_SetDrawTypeAdaptive.Call(uintptr(hImage), uintptr(leftSize), uintptr(topSize), uintptr(rightSize), uintptr(bottomSize))
-	return int(r) != 0
+	return r != 0
 }
 
 // 图片_置透明色, 指定图片透明颜色.
@@ -352,7 +352,7 @@ func XImage_EnableCenter(hImage int, bCenter bool) int {
 // hImage: 图片句柄.
 func XImage_IsCenter(hImage int) bool {
 	r, _, _ := xImage_IsCenter.Call(uintptr(hImage))
-	return int(r) != 0
+	return r != 0
 }
 
 // 图片_取绘制类型, 获取图片绘制类型, 返回: Image_Draw_Type_.

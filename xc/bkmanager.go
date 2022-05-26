@@ -114,7 +114,7 @@ func XBkM_Clear(hBkInfoM int) int {
 // pRect: 区域坐标.
 func XBkM_Draw(hBkInfoM int, nState xcc.CombinedState, hDraw int, pRect *RECT) bool {
 	r, _, _ := xBkM_Draw.Call(uintptr(hBkInfoM), uintptr(nState), uintptr(hDraw), uintptr(unsafe.Pointer(pRect)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 背景_绘制扩展, 绘制背景内容, 设置条件.
@@ -132,7 +132,7 @@ func XBkM_Draw(hBkInfoM int, nState xcc.CombinedState, hDraw int, pRect *RECT) b
 // 注解: 例如用来绘制列表项时, nState中包含项的状态(nStateEx)才会绘制, 避免列表项与元素背景叠加.
 func XBkM_DrawEx(hBkInfoM int, nState xcc.CombinedState, hDraw int, pRect *RECT, nStateEx xcc.CombinedState) bool {
 	r, _, _ := xBkM_DrawEx.Call(uintptr(hBkInfoM), uintptr(nState), uintptr(hDraw), uintptr(unsafe.Pointer(pRect)), uintptr(nStateEx))
-	return int(r) != 0
+	return r != 0
 }
 
 // 背景_启用自动销毁, 是否自动销毁.
@@ -188,7 +188,7 @@ func XBkM_SetInfo(hBkInfoM int, pText string) int {
 // color: 接收返回的ABGR颜色.
 func XBkM_GetStateTextColor(hBkInfoM int, nState xcc.CombinedState, color *int) bool {
 	r, _, _ := xBkM_GetStateTextColor.Call(uintptr(hBkInfoM), uintptr(nState), uintptr(unsafe.Pointer(color)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 背景_取背景对象, 返回BkObj对象句柄.

@@ -71,7 +71,7 @@ const (
 //
 func SetWindowPos(hWnd int, hWndInsertAfter HWND_, x, y, cx, cy int32, wFlags SWP_) bool {
 	r, _, _ := setWindowPos.Call(uintptr(hWnd), uintptr(hWndInsertAfter), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), uintptr(wFlags))
-	return int(r) != 0
+	return r != 0
 }
 
 // GetDesktopWindow 获取桌面窗口的句柄.
@@ -183,7 +183,7 @@ func MessageBoxW(hWnd int, lpText, lpCaption string, uType MB_) ID_ {
 //
 func OpenClipboard(hWnd int) bool {
 	r, _, _ := openClipboard.Call(uintptr(hWnd))
-	return int(r) != 0
+	return r != 0
 }
 
 // CloseClipboard 关闭剪贴板.
@@ -193,7 +193,7 @@ func OpenClipboard(hWnd int) bool {
 //
 func CloseClipboard() bool {
 	r, _, _ := closeClipboard.Call()
-	return int(r) != 0
+	return r != 0
 }
 
 // EmptyClipboard 清空剪贴板并释放剪贴板中数据的句柄。然后该函数将剪贴板的所有权分配给当前打开剪贴板的窗口。
@@ -204,7 +204,7 @@ func CloseClipboard() bool {
 //
 func EmptyClipboard() bool {
 	r, _, _ := emptyClipboard.Call()
-	return int(r) != 0
+	return r != 0
 }
 
 // CF_ 标准剪贴板格式.
@@ -235,7 +235,7 @@ const (
 //
 func IsClipboardFormatAvailable(uFormat CF_) bool {
 	r, _, _ := isClipboardFormatAvailable.Call(uintptr(uFormat))
-	return int(r) != 0
+	return r != 0
 }
 
 // GetClipboardData 从剪贴板中检索指定格式的数据。剪贴板必须先前已打开.
@@ -266,7 +266,7 @@ func SetClipboardData(uFormat CF_, hMem uintptr) uintptr {
 //
 func SetForegroundWindow(hWnd int) bool {
 	r, _, _ := setForegroundWindow.Call(uintptr(hWnd))
-	return int(r) != 0
+	return r != 0
 }
 
 // FindWindowExW 检索类名称和窗口名称与指定字符串匹配的窗口的句柄. 该函数搜索子窗口，从指定子窗口后面的那个开始. 此函数不执行区分大小写的搜索.
@@ -314,5 +314,5 @@ func GetWindowTextW(hWnd int, lpString *string, nMaxCount int) int {
 //
 func ClientToScreen(hWnd int, lpPoint *xc.POINT) bool {
 	r, _, _ := clientToScreen.Call(uintptr(hWnd), uintptr(unsafe.Pointer(lpPoint)))
-	return int(r) != 0
+	return r != 0
 }

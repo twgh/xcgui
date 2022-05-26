@@ -222,7 +222,7 @@ func XBkObj_GetRectRoundAngle(hObj int, pRect *RECT) int {
 // hObj: 背景对象句柄.
 func XBkObj_IsFill(hObj int) bool {
 	r, _, _ := xBkObj_IsFill.Call(uintptr(hObj))
-	return int(r) != 0
+	return r != 0
 }
 
 // 背景对象_是否边框.
@@ -230,7 +230,7 @@ func XBkObj_IsFill(hObj int) bool {
 // hObj: 背景对象句柄.
 func XBkObj_IsBorder(hObj int) bool {
 	r, _, _ := xBkObj_IsBorder.Call(uintptr(hObj))
-	return int(r) != 0
+	return r != 0
 }
 
 // 背景对象_取文本.

@@ -86,7 +86,7 @@ func XShape_SetRect(hShape int, pRect *RECT) int {
 // bRedraw: 是否重绘.
 func XShape_SetRectLogic(hShape int, pRect *RECT, bRedraw bool) bool {
 	r, _, _ := xShape_SetRectLogic.Call(uintptr(hShape), uintptr(unsafe.Pointer(pRect)), common.BoolPtr(bRedraw))
-	return int(r) != 0
+	return r != 0
 }
 
 // 形状_取逻辑坐标, 获取元素坐标, 逻辑坐标, 包含滚动视图偏移.

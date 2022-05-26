@@ -30,7 +30,7 @@ func XSView_Create(x int, y int, cx int, cy int, hParent int) int {
 // cy: 高度.
 func XSView_SetTotalSize(hEle int, cx int, cy int) bool {
 	r, _, _ := xSView_SetTotalSize.Call(uintptr(hEle), uintptr(cx), uintptr(cy))
-	return int(r) != 0
+	return r != 0
 }
 
 // 滚动视_取视图大小, 获取内容总大小.
@@ -52,7 +52,7 @@ func XSView_GetTotalSize(hEle int, pSize *SIZE) int {
 // nHeight: 高度.
 func XSView_SetLineSize(hEle int, nWidth int, nHeight int) bool {
 	r, _, _ := xSView_SetLineSize.Call(uintptr(hEle), uintptr(nWidth), uintptr(nHeight))
-	return int(r) != 0
+	return r != 0
 }
 
 // 滚动视_取滚动单位大小, 获取滚动单位大小.
@@ -140,7 +140,7 @@ func XSView_GetScrollBarV(hEle int) int {
 // pos: 位置点.
 func XSView_ScrollPosH(hEle int, pos int) bool {
 	r, _, _ := xSView_ScrollPosH.Call(uintptr(hEle), uintptr(pos))
-	return int(r) != 0
+	return r != 0
 }
 
 // 滚动视_垂直滚动, 垂直滚动条, 滚动到指定位置点.
@@ -150,7 +150,7 @@ func XSView_ScrollPosH(hEle int, pos int) bool {
 // pos: 位置点.
 func XSView_ScrollPosV(hEle int, pos int) bool {
 	r, _, _ := xSView_ScrollPosV.Call(uintptr(hEle), uintptr(pos))
-	return int(r) != 0
+	return r != 0
 }
 
 // 滚动视_水平滚动到X, 水平滚动条, 滚动到指定坐标.
@@ -160,7 +160,7 @@ func XSView_ScrollPosV(hEle int, pos int) bool {
 // posX: X坐标.
 func XSView_ScrollPosXH(hEle int, posX int) bool {
 	r, _, _ := xSView_ScrollPosXH.Call(uintptr(hEle), uintptr(posX))
-	return int(r) != 0
+	return r != 0
 }
 
 // 滚动视_垂直滚动到Y, 垂直滚动条, 滚动到指定坐标.
@@ -170,7 +170,7 @@ func XSView_ScrollPosXH(hEle int, posX int) bool {
 // posY: Y坐标.
 func XSView_ScrollPosYV(hEle int, posY int) bool {
 	r, _, _ := xSView_ScrollPosYV.Call(uintptr(hEle), uintptr(posY))
-	return int(r) != 0
+	return r != 0
 }
 
 // 滚动视_显示水平滚动条.
@@ -208,7 +208,7 @@ func XSView_EnableAutoShowScrollBar(hEle int, bEnable bool) int {
 // hEle: 元素句柄.
 func XSView_ScrollLeftLine(hEle int) bool {
 	r, _, _ := xSView_ScrollLeftLine.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 滚动视_向右滚动.
@@ -216,7 +216,7 @@ func XSView_ScrollLeftLine(hEle int) bool {
 // hEle: 元素句柄.
 func XSView_ScrollRightLine(hEle int) bool {
 	r, _, _ := xSView_ScrollRightLine.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 滚动视_向上滚动.
@@ -224,7 +224,7 @@ func XSView_ScrollRightLine(hEle int) bool {
 // hEle: 元素句柄.
 func XSView_ScrollTopLine(hEle int) bool {
 	r, _, _ := xSView_ScrollTopLine.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 滚动视_向下滚动.
@@ -232,7 +232,7 @@ func XSView_ScrollTopLine(hEle int) bool {
 // hEle: 元素句柄.
 func XSView_ScrollBottomLine(hEle int) bool {
 	r, _, _ := xSView_ScrollBottomLine.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 滚动视_滚动到左侧, 水平滚动到左侧.
@@ -240,7 +240,7 @@ func XSView_ScrollBottomLine(hEle int) bool {
 // hEle: 元素句柄.
 func XSView_ScrollLeft(hEle int) bool {
 	r, _, _ := xSView_ScrollLeft.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 滚动视_滚动到右侧, 水平滚动到右侧.
@@ -248,7 +248,7 @@ func XSView_ScrollLeft(hEle int) bool {
 // hEle: 元素句柄.
 func XSView_ScrollRight(hEle int) bool {
 	r, _, _ := xSView_ScrollRight.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 滚动视_滚动到顶部, 垂直滚动到顶部.
@@ -256,7 +256,7 @@ func XSView_ScrollRight(hEle int) bool {
 // hEle: 元素句柄.
 func XSView_ScrollTop(hEle int) bool {
 	r, _, _ := xSView_ScrollTop.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 滚动视_滚动到底部, 垂直滚动到底部.
@@ -264,5 +264,5 @@ func XSView_ScrollTop(hEle int) bool {
 // hEle: 元素句柄.
 func XSView_ScrollBottom(hEle int) bool {
 	r, _, _ := xSView_ScrollBottom.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }

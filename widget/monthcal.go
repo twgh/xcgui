@@ -107,6 +107,15 @@ func (m *MonthCal) GetSelDate(pnYear *int, pnMonth *int, pnDay *int) int {
 	return xc.XMonthCal_GetSelDate(m.Handle, pnYear, pnMonth, pnDay)
 }
 
+// 月历_置文本颜色.
+//
+// nFlag: 1:周六.
+//
+// color: ABGR颜色值.
+func (m *MonthCal) SetTextColor(nFlag int, color int) int {
+	return xc.XMonthCal_SetTextColor(m.Handle, nFlag, color)
+}
+
 /*
 以下都是事件
 */

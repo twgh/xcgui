@@ -15,7 +15,7 @@ import (
 //
 func XInitXCGUI(bD2D bool) bool {
 	r, _, _ := xInitXCGUI.Call(common.BoolPtr(bD2D))
-	return int(r) != 0
+	return r != 0
 }
 
 // XRunXCGUI 炫彩_运行, 运行消息循环, 当炫彩窗口数量为0时退出.
@@ -48,7 +48,7 @@ func XC_DebugToFileInfo(pInfo string) int {
 //
 func XC_SetActivateTopWindow() bool {
 	r, _, _ := xC_SetActivateTopWindow.Call()
-	return int(r) != 0
+	return r != 0
 }
 
 // XC_GetDefaultFont 炫彩_取默认字体.
@@ -125,7 +125,7 @@ func XC_SendMessage(hWindow int, msg int, wParam int, lParam int) int {
 // lParam:.
 func XC_PostMessage(hWindow int, msg int, wParam int, lParam int) bool {
 	r, _, _ := xC_PostMessage.Call(uintptr(hWindow), uintptr(msg), uintptr(wParam), uintptr(lParam))
-	return int(r) != 0
+	return r != 0
 }
 
 // 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
@@ -143,7 +143,7 @@ func XC_CallUiThread(pCall func(data int) int, data int) int {
 // hEle: 元素句柄.
 func XC_IsHELE(hEle int) bool {
 	r, _, _ := xC_IsHELE.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 炫彩_判断窗口, 判断是否为窗口句柄.
@@ -151,7 +151,7 @@ func XC_IsHELE(hEle int) bool {
 // hWindow: 窗口句柄.
 func XC_IsHWINDOW(hWindow int) bool {
 	r, _, _ := xC_IsHWINDOW.Call(uintptr(hWindow))
-	return int(r) != 0
+	return r != 0
 }
 
 // 炫彩_判断形状对象, 判断是否为形状对象.
@@ -159,7 +159,7 @@ func XC_IsHWINDOW(hWindow int) bool {
 // hShape: 形状对象句柄.
 func XC_IsShape(hShape int) bool {
 	r, _, _ := xC_IsShape.Call(uintptr(hShape))
-	return int(r) != 0
+	return r != 0
 }
 
 // 炫彩_判断句柄包含类型, 判断句柄是否拥有该类型.
@@ -169,7 +169,7 @@ func XC_IsShape(hShape int) bool {
 // nType: 句柄类型, XC_OBJECT_TYPE, 以XC_开头的常量.
 func XC_IsHXCGUI(hXCGUI int, nType xcc.XC_OBJECT_TYPE) bool {
 	r, _, _ := xC_IsHXCGUI.Call(uintptr(hXCGUI), uintptr(nType))
-	return int(r) != 0
+	return r != 0
 }
 
 // 炫彩_转换HWND到HWINDOW, 通过窗口HWND句柄获取HWINDOW句柄.
@@ -189,7 +189,7 @@ func XC_hWindowFromHWnd(hWnd int) int {
 // pValue: 属性值.
 func XC_SetProperty(hXCGUI int, pName string, pValue string) bool {
 	r, _, _ := xC_SetProperty.Call(uintptr(hXCGUI), common.StrPtr(pName), common.StrPtr(pValue))
-	return int(r) != 0
+	return r != 0
 }
 
 // 炫彩_取属性, 获取对象属性, 返回属性值.
@@ -207,7 +207,7 @@ func XC_GetProperty(hXCGUI int, pName string) string {
 // pClassName: 类名.
 func XC_RegisterWindowClassName(pClassName string) bool {
 	r, _, _ := xC_RegisterWindowClassName.Call(common.StrPtr(pClassName))
-	return int(r) != 0
+	return r != 0
 }
 
 // 炫彩_判断滚动视图扩展元素, 判断元素是否从滚动视图元素扩展的新元素, 包含滚动视图元素.
@@ -215,7 +215,7 @@ func XC_RegisterWindowClassName(pClassName string) bool {
 // hEle: 元素句柄.
 func XC_IsSViewExtend(hEle int) bool {
 	r, _, _ := xC_IsSViewExtend.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 炫彩_取对象类型, 获取句柄类型, 返回: XC_OBJECT_TYPE.
@@ -301,7 +301,7 @@ func XC_EnableGdiDrawText(bEnable bool) int {
 // pRect2: 矩形2.
 func XC_RectInRect(pRect1 *RECT, pRect2 *RECT) bool {
 	r, _, _ := xC_RectInRect.Call(uintptr(unsafe.Pointer(pRect1)), uintptr(unsafe.Pointer(pRect2)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 炫彩_组合矩形, 组合两个矩形区域.
@@ -408,19 +408,17 @@ func XC_GetTextShowSizeEx(pString string, length int, hFontX int, nTextAlign xcc
 	return int(r)
 }
 
-// 炫彩_取文本显示矩形.
+// XC_GetTextShowRect 炫彩_取文本显示矩形.
+//	@param pString 字符串.
+//	@param length 字符串长度.
+//	@param hFontX 字体.
+//	@param nTextAlign 文本对齐: xcc.TextFormatFlag_.
+//	@param width 最大宽度.
+//	@param pOutSize 接收返回大小.
+//	@return int
 //
-// pString: 字符串.
-//
-// length: 字符串长度.
-//
-// hFontX: 字体.
-//
-// width: 最大宽度.
-//
-// pOutSize: 接收返回大小.
-func XC_GetTextShowRect(pString string, length int, hFontX int, width int, pOutSize *SIZE) int {
-	r, _, _ := xC_GetTextShowRect.Call(common.StrPtr(pString), uintptr(length), uintptr(hFontX), uintptr(width), uintptr(unsafe.Pointer(pOutSize)))
+func XC_GetTextShowRect(pString string, length int, hFontX int, nTextAlign xcc.TextFormatFlag_, width int, pOutSize *SIZE) int {
+	r, _, _ := xC_GetTextShowRect.Call(common.StrPtr(pString), uintptr(length), uintptr(hFontX), uintptr(nTextAlign), uintptr(width), uintptr(unsafe.Pointer(pOutSize)))
 	return int(r)
 }
 
@@ -527,7 +525,7 @@ func XC_GetProcAddress(hModule int, lpProcName string) int {
 // hModule: 动态库模块句柄.
 func XC_FreeLibrary(hModule int) bool {
 	r, _, _ := xC_FreeLibrary.Call(uintptr(hModule))
-	return int(r) != 0
+	return r != 0
 }
 
 // 炫彩_加载DLL, 返回DLL模块句柄. 加载指定DLL, 并且调用DLL中函数LoadDll(), DLL中导出函数格式: int WINAPI LoadDll().
@@ -557,7 +555,7 @@ func XC_SetD2dTextRenderingMode(mode xcc.XC_DWRITE_RENDERING_MODE_) int {
 // 炫彩_是否启用了D2D.
 func XC_IsEnableD2D() bool {
 	r, _, _ := xC_IsEnableD2D.Call()
-	return int(r) != 0
+	return r != 0
 }
 
 // 炫彩_W2A.

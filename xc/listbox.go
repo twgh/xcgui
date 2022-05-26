@@ -82,7 +82,7 @@ func XListBox_SetDrawItemBkFlags(hEle int, nFlags xcc.List_DrawItemBk_Flag_) int
 // nUserData: 用户数据.
 func XListBox_SetItemData(hEle int, iItem int, nUserData int) bool {
 	r, _, _ := xListBox_SetItemData.Call(uintptr(hEle), uintptr(iItem), uintptr(nUserData))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_取项数据, 获取项用户数据.
@@ -104,7 +104,7 @@ func XListBox_GetItemData(hEle int, iItem int) int {
 // pItem: 项信息.
 func XListBox_SetItemInfo(hEle int, iItem int, pItem *ListBox_Item_Info_) bool {
 	r, _, _ := xListBox_SetItemInfo.Call(uintptr(hEle), uintptr(iItem), uintptr(unsafe.Pointer(pItem)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_取项背景信息, 获取项信息.
@@ -116,7 +116,7 @@ func XListBox_SetItemInfo(hEle int, iItem int, pItem *ListBox_Item_Info_) bool {
 // pItem: 项信息.
 func XListBox_GetItemInfo(hEle int, iItem int, pItem *ListBox_Item_Info_) bool {
 	r, _, _ := xListBox_GetItemInfo.Call(uintptr(hEle), uintptr(iItem), uintptr(unsafe.Pointer(pItem)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_置选择项, 设置选择选.
@@ -126,7 +126,7 @@ func XListBox_GetItemInfo(hEle int, iItem int, pItem *ListBox_Item_Info_) bool {
 // iItem: 项索引.
 func XListBox_SetSelectItem(hEle int, iItem int) bool {
 	r, _, _ := xListBox_SetSelectItem.Call(uintptr(hEle), uintptr(iItem))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_取选择项, 返回项索引.
@@ -144,7 +144,7 @@ func XListBox_GetSelectItem(hEle int) int {
 // iItem: 项索引.
 func XListBox_AddSelectItem(hEle int, iItem int) bool {
 	r, _, _ := xListBox_AddSelectItem.Call(uintptr(hEle), uintptr(iItem))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_取消选择项.
@@ -154,7 +154,7 @@ func XListBox_AddSelectItem(hEle int, iItem int) bool {
 // iItem: 项索引.
 func XListBox_CancelSelectItem(hEle int, iItem int) bool {
 	r, _, _ := xListBox_CancelSelectItem.Call(uintptr(hEle), uintptr(iItem))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_取消选择全部, 如果之前有选择状态的项返回TRUE, 此时可以更新UI, 否则返回FALSE.
@@ -162,7 +162,7 @@ func XListBox_CancelSelectItem(hEle int, iItem int) bool {
 // hEle: 元素句柄.
 func XListBox_CancelSelectAll(hEle int) bool {
 	r, _, _ := xListBox_CancelSelectAll.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_取全部选择, 获取所有选择项, 返回接收数量.
@@ -199,7 +199,7 @@ func XListBox_GetItemMouseStay(hEle int) int {
 // hEle: 元素句柄.
 func XListBox_SelectAll(hEle int) bool {
 	r, _, _ := xListBox_SelectAll.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_显示指定项, 滚动视图让指定项可见.
@@ -303,7 +303,7 @@ func XListBox_HitTestOffset(hEle int, pPt *POINT) int {
 // pXmlFile: 文件名.
 func XListBox_SetItemTemplateXML(hEle int, pXmlFile string) bool {
 	r, _, _ := xListBox_SetItemTemplateXML.Call(uintptr(hEle), common.StrPtr(pXmlFile))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_置项模板, 设置列表项模板.
@@ -313,7 +313,7 @@ func XListBox_SetItemTemplateXML(hEle int, pXmlFile string) bool {
 // hTemp: 模板句柄.
 func XListBox_SetItemTemplate(hEle int, hTemp int) bool {
 	r, _, _ := xListBox_SetItemTemplate.Call(uintptr(hEle), uintptr(hTemp))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_置项模板从字符串, 设置项布局模板文件.
@@ -323,7 +323,7 @@ func XListBox_SetItemTemplate(hEle int, hTemp int) bool {
 // pStringXML: 字符串.
 func XListBox_SetItemTemplateXMLFromString(hEle int, pStringXML string) bool {
 	r, _, _ := xListBox_SetItemTemplateXMLFromString.Call(uintptr(hEle), XC_wtoa(pStringXML))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_取模板对象, 通过模板项ID, 获取实例化模板项ID对应的对象句柄, 成功返回对象句柄, 否则返回NULL.
@@ -511,7 +511,7 @@ func XListBox_InsertItemImageEx(hEle int, iItem int, pName string, hImage int) i
 // pText:.
 func XListBox_SetItemText(hEle int, iItem int, iColumn int, pText string) bool {
 	r, _, _ := xListBox_SetItemText.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), common.StrPtr(pText))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_置项文本扩展.
@@ -525,7 +525,7 @@ func XListBox_SetItemText(hEle int, iItem int, iColumn int, pText string) bool {
 // pText:.
 func XListBox_SetItemTextEx(hEle int, iItem int, pName string, pText string) bool {
 	r, _, _ := xListBox_SetItemTextEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), common.StrPtr(pText))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_置项图片.
@@ -539,7 +539,7 @@ func XListBox_SetItemTextEx(hEle int, iItem int, pName string, pText string) boo
 // hImage:.
 func XListBox_SetItemImage(hEle int, iItem int, iColumn int, hImage int) bool {
 	r, _, _ := xListBox_SetItemImage.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), uintptr(hImage))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_置项图片扩展.
@@ -553,7 +553,7 @@ func XListBox_SetItemImage(hEle int, iItem int, iColumn int, hImage int) bool {
 // hImage:.
 func XListBox_SetItemImageEx(hEle int, iItem int, pName string, hImage int) bool {
 	r, _, _ := xListBox_SetItemImageEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(hImage))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_置项整数值.
@@ -567,7 +567,7 @@ func XListBox_SetItemImageEx(hEle int, iItem int, pName string, hImage int) bool
 // nValue:.
 func XListBox_SetItemInt(hEle int, iItem int, iColumn int, nValue int) bool {
 	r, _, _ := xListBox_SetItemInt.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), uintptr(nValue))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_置项整数值扩展.
@@ -581,7 +581,7 @@ func XListBox_SetItemInt(hEle int, iItem int, iColumn int, nValue int) bool {
 // nValue:.
 func XListBox_SetItemIntEx(hEle int, iItem int, pName string, nValue int) bool {
 	r, _, _ := xListBox_SetItemIntEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(nValue))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_置项浮点值.
@@ -595,7 +595,7 @@ func XListBox_SetItemIntEx(hEle int, iItem int, pName string, nValue int) bool {
 // fFloat:.
 func XListBox_SetItemFloat(hEle int, iItem int, iColumn int, fFloat float32) bool {
 	r, _, _ := xListBox_SetItemFloat.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), common.Float32Ptr(fFloat))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_置项浮点值扩展.
@@ -609,7 +609,7 @@ func XListBox_SetItemFloat(hEle int, iItem int, iColumn int, fFloat float32) boo
 // fFloat:.
 func XListBox_SetItemFloatEx(hEle int, iItem int, pName string, fFloat float32) bool {
 	r, _, _ := xListBox_SetItemFloatEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), common.Float32Ptr(fFloat))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_取项文本.
@@ -671,7 +671,7 @@ func XListBox_GetItemImageEx(hEle int, iItem int, pName string) int {
 // pOutValue:.
 func XListBox_GetItemInt(hEle int, iItem int, iColumn int, pOutValue *int) bool {
 	r, _, _ := xListBox_GetItemInt.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), uintptr(unsafe.Pointer(pOutValue)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_取项整数值扩展.
@@ -685,7 +685,7 @@ func XListBox_GetItemInt(hEle int, iItem int, iColumn int, pOutValue *int) bool 
 // pOutValue:.
 func XListBox_GetItemIntEx(hEle int, iItem int, pName string, pOutValue *int) bool {
 	r, _, _ := xListBox_GetItemIntEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_取项浮点值.
@@ -699,7 +699,7 @@ func XListBox_GetItemIntEx(hEle int, iItem int, pName string, pOutValue *int) bo
 // pOutValue:.
 func XListBox_GetItemFloat(hEle int, iItem int, iColumn int, pOutValue *float32) bool {
 	r, _, _ := xListBox_GetItemFloat.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), uintptr(unsafe.Pointer(pOutValue)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_取项浮点值扩展.
@@ -713,7 +713,7 @@ func XListBox_GetItemFloat(hEle int, iItem int, iColumn int, pOutValue *float32)
 // pOutValue:.
 func XListBox_GetItemFloatEx(hEle int, iItem int, pName string, pOutValue *float32) bool {
 	r, _, _ := xListBox_GetItemFloatEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_删除项.
@@ -723,7 +723,7 @@ func XListBox_GetItemFloatEx(hEle int, iItem int, pName string, pOutValue *float
 // iItem:.
 func XListBox_DeleteItem(hEle int, iItem int) bool {
 	r, _, _ := xListBox_DeleteItem.Call(uintptr(hEle), uintptr(iItem))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_删除项扩展.
@@ -735,7 +735,7 @@ func XListBox_DeleteItem(hEle int, iItem int) bool {
 // nCount:.
 func XListBox_DeleteItemEx(hEle int, iItem int, nCount int) bool {
 	r, _, _ := xListBox_DeleteItemEx.Call(uintptr(hEle), uintptr(iItem), uintptr(nCount))
-	return int(r) != 0
+	return r != 0
 }
 
 // 列表框_删除项全部.

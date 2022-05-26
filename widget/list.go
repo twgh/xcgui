@@ -797,6 +797,28 @@ func (l *List) SetSplitLineColor(color int) int {
 	return xc.XList_SetSplitLineColor(l.Handle, color)
 }
 
+// 列表_置项高度.
+//
+// iRow: 行索引.
+//
+// nHeight: 高度.
+//
+// nSelHeight: 选中时高度.
+func (l *List) SetItemHeight(iRow int, nHeight int, nSelHeight int) int {
+	return xc.XList_SetItemHeight(l.Handle, iRow, nHeight, nSelHeight)
+}
+
+// 列表_取项高度.
+//
+// iRow: 行索引.
+//
+// pHeight: 高度.
+//
+// pSelHeight: 选中时高度.
+func (l *List) GetItemHeight(iRow int, pHeight *int, pSelHeight *int) int {
+	return xc.XList_GetItemHeight(l.Handle, iRow, pHeight, pSelHeight)
+}
+
 /*
 以下都是事件
 */

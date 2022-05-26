@@ -81,7 +81,7 @@ func XWnd_SetTop(hWindow int) int {
 // pFun: 事件函数.
 func XWnd_RegEventC(hWindow int, nEvent xcc.WM_, pFun interface{}) bool {
 	r, _, _ := xWnd_RegEventC.Call(uintptr(hWindow), uintptr(nEvent), syscall.NewCallback(pFun))
-	return int(r) != 0
+	return r != 0
 }
 
 // 窗口_注册事件C1.
@@ -93,7 +93,7 @@ func XWnd_RegEventC(hWindow int, nEvent xcc.WM_, pFun interface{}) bool {
 // pFun: 事件函数.
 func XWnd_RegEventC1(hWindow int, nEvent xcc.WM_, pFun interface{}) bool {
 	r, _, _ := xWnd_RegEventC1.Call(uintptr(hWindow), uintptr(nEvent), syscall.NewCallback(pFun))
-	return int(r) != 0
+	return r != 0
 }
 
 // 窗口_移除事件C.
@@ -105,7 +105,7 @@ func XWnd_RegEventC1(hWindow int, nEvent xcc.WM_, pFun interface{}) bool {
 // pFun: 事件函数.
 func XWnd_RemoveEventC(hWindow int, nEvent xcc.WM_, pFun interface{}) bool {
 	r, _, _ := xWnd_RemoveEventC.Call(uintptr(hWindow), uintptr(nEvent), syscall.NewCallback(pFun))
-	return int(r) != 0
+	return r != 0
 }
 
 // 窗口_添加子对象.
@@ -115,7 +115,7 @@ func XWnd_RemoveEventC(hWindow int, nEvent xcc.WM_, pFun interface{}) bool {
 // hChild: 要添加的对象句柄.
 func XWnd_AddChild(hWindow int, hChild int) bool {
 	r, _, _ := xWnd_AddChild.Call(uintptr(hWindow), uintptr(hChild))
-	return int(r) != 0
+	return r != 0
 }
 
 // 窗口_插入子对象.
@@ -127,7 +127,7 @@ func XWnd_AddChild(hWindow int, hChild int) bool {
 // index: 插入位置索引.
 func XWnd_InsertChild(hWindow int, hChild int, index int) bool {
 	r, _, _ := xWnd_InsertChild.Call(uintptr(hWindow), uintptr(hChild), uintptr(index))
-	return int(r) != 0
+	return r != 0
 }
 
 // 窗口_取HWND.
@@ -167,7 +167,7 @@ func XWnd_RedrawRect(hWindow int, pRect *RECT, bImmediate bool) int {
 // pRect: 坐标.
 func XWnd_SetRect(hWindow int, pRect *RECT) bool {
 	r, _, _ := xWnd_SetRect.Call(uintptr(hWindow), uintptr(unsafe.Pointer(pRect)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 窗口_置焦点.
@@ -177,7 +177,7 @@ func XWnd_SetRect(hWindow int, pRect *RECT) bool {
 // hFocusEle: 将获得焦点的元素.
 func XWnd_SetFocusEle(hWindow int, hFocusEle int) bool {
 	r, _, _ := xWnd_SetFocusEle.Call(uintptr(hWindow), uintptr(hFocusEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 窗口_取焦点.
@@ -349,7 +349,7 @@ func XWnd_ShowLayoutFrame(hWindow int, bEnable bool) int {
 // hWindow: 窗口句柄.
 func XWnd_IsEnableLayout(hWindow int) bool {
 	r, _, _ := xWnd_IsEnableLayout.Call(uintptr(hWindow))
-	return int(r) != 0
+	return r != 0
 }
 
 // 窗口_是否最大化.
@@ -357,7 +357,7 @@ func XWnd_IsEnableLayout(hWindow int) bool {
 // hWindow: 窗口句柄.
 func XWnd_IsMaxWindow(hWindow int) bool {
 	r, _, _ := xWnd_IsMaxWindow.Call(uintptr(hWindow))
-	return int(r) != 0
+	return r != 0
 }
 
 // 窗口_置鼠标捕获元素.
@@ -917,7 +917,7 @@ func XWnd_Attach(hWnd int, XCStyle xcc.Window_Style_) int {
 // bEnable: 是否启用.
 func XWnd_EnableDragFiles(hWindow int, bEnable bool) bool {
 	r, _, _ := xWnd_EnableDragFiles.Call(uintptr(hWindow), common.BoolPtr(bEnable))
-	return int(r) != 0
+	return r != 0
 }
 
 // 窗口_显示 显示隐藏窗口.
@@ -1079,7 +1079,7 @@ func XWnd_SetBkInfo(hWindow int, pText string) int {
 // hWindow: 窗口句柄.
 func XWnd_IsDragCaption(hWindow int) bool {
 	r, _, _ := xWnd_IsDragCaption.Call(uintptr(hWindow))
-	return int(r) != 0
+	return r != 0
 }
 
 // 窗口_是否可拖动窗口.
@@ -1087,7 +1087,7 @@ func XWnd_IsDragCaption(hWindow int) bool {
 // hWindow: 窗口句柄.
 func XWnd_IsDragWindow(hWindow int) bool {
 	r, _, _ := xWnd_IsDragWindow.Call(uintptr(hWindow))
-	return int(r) != 0
+	return r != 0
 }
 
 // 窗口_是否可拖动边框.
@@ -1095,7 +1095,7 @@ func XWnd_IsDragWindow(hWindow int) bool {
 // hWindow: 窗口句柄.
 func XWnd_IsDragBorder(hWindow int) bool {
 	r, _, _ := xWnd_IsDragBorder.Call(uintptr(hWindow))
-	return int(r) != 0
+	return r != 0
 }
 
 // 窗口_置标题外间距, 设置标题内容(图标, 标题, 控制按钮)外间距.

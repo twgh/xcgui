@@ -163,6 +163,11 @@ func (fw *FrameWindow) MergePane(hPaneDest int, hPaneNew int) bool {
 	return xc.XFrameWnd_MergePane(fw.Handle, hPaneDest, hPaneNew)
 }
 
+// 框架窗口_取拖动浮动窗格停留位置标识, 返回框架窗口单元格类型: xcc.FrameWnd_Cell_Type_.
+func (fw *FrameWindow) GetDragFloatWndTopFlag() xcc.FrameWnd_Cell_Type_ {
+	return xc.XFrameWnd_GetDragFloatWndTopFlag(fw.Handle)
+}
+
 // 框架窗口_附加窗口, 返回窗口对象.
 //
 // hWnd: 要附加的外部窗口句柄.

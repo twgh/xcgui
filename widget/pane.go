@@ -122,14 +122,20 @@ func (p *Pane) GetViewRect(pRect *xc.RECT) int {
 	return xc.XPane_GetViewRect(p.Handle, pRect)
 }
 
-// 窗格_隐藏.
-func (p *Pane) HidePane() int {
-	return xc.XPane_HidePane(p.Handle)
+// HidePane 窗格_隐藏.
+//	@param bGroupActivate 当为窗格组成员时, 延迟处理窗格组成员激活的切换.
+//	@return int
+//
+func (p *Pane) HidePane(bGroupActivate bool) int {
+	return xc.XPane_HidePane(p.Handle, bGroupActivate)
 }
 
-// 窗格_显示.
-func (p *Pane) ShowPane() int {
-	return xc.XPane_ShowPane(p.Handle)
+// ShowPane 窗格_显示.
+//	@param bGroupActivate 如果是窗格组成员, 那么窗格组切换当前窗格为显示状态.
+//	@return int
+//
+func (p *Pane) ShowPane(bGroupActivate bool) int {
+	return xc.XPane_ShowPane(p.Handle, bGroupActivate)
 }
 
 // 窗格_停靠, 窗格停靠到码头.
@@ -157,4 +163,9 @@ func (p *Pane) DrawPane(hDraw int) int {
 // 窗口_置选中, 如果窗格是组成员, 设置选中当前窗格可见.
 func (p *Pane) SetSelect() bool {
 	return xc.XPane_SetSelect(p.Handle)
+}
+
+// 窗格_是否激活. 判断窗格是否激活, 当为组成员时有效.
+func (p *Pane) IsGroupActivate() bool {
+	return xc.XPane_IsGroupActivate(p.Handle)
 }

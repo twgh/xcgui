@@ -30,7 +30,7 @@ func XComboBox_Create(x int, y int, cx int, cy int, hParent int) int {
 // iIndex: 项索引.
 func XComboBox_SetSelItem(hEle int, iIndex int) bool {
 	r, _, _ := xComboBox_SetSelItem.Call(uintptr(hEle), uintptr(iIndex))
-	return int(r) != 0
+	return r != 0
 }
 
 // 组合框_创建数据适配器, 返回数据适配器句柄.
@@ -280,7 +280,7 @@ func XComboBox_InsertItemImageEx(hEle int, iItem int, pName string, hImage int) 
 // pText: 文本.
 func XComboBox_SetItemText(hEle int, iItem int, iColumn int, pText string) bool {
 	r, _, _ := xComboBox_SetItemText.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), common.StrPtr(pText))
-	return int(r) != 0
+	return r != 0
 }
 
 // 组合框_置项文本扩展.
@@ -294,7 +294,7 @@ func XComboBox_SetItemText(hEle int, iItem int, iColumn int, pText string) bool 
 // pText: 文本.
 func XComboBox_SetItemTextEx(hEle int, iItem int, pName string, pText string) bool {
 	r, _, _ := xComboBox_SetItemTextEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), common.StrPtr(pText))
-	return int(r) != 0
+	return r != 0
 }
 
 // 组合框_置项图片.
@@ -308,7 +308,7 @@ func XComboBox_SetItemTextEx(hEle int, iItem int, pName string, pText string) bo
 // hImage: 图片句柄.
 func XComboBox_SetItemImage(hEle int, iItem int, iColumn int, hImage int) bool {
 	r, _, _ := xComboBox_SetItemImage.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), uintptr(hImage))
-	return int(r) != 0
+	return r != 0
 }
 
 // 组合框_置项图片扩展.
@@ -322,7 +322,7 @@ func XComboBox_SetItemImage(hEle int, iItem int, iColumn int, hImage int) bool {
 // hImage: 图片句柄.
 func XComboBox_SetItemImageEx(hEle int, iItem int, pName string, hImage int) bool {
 	r, _, _ := xComboBox_SetItemImageEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(hImage))
-	return int(r) != 0
+	return r != 0
 }
 
 // 组合框_置项整数值.
@@ -336,7 +336,7 @@ func XComboBox_SetItemImageEx(hEle int, iItem int, pName string, hImage int) boo
 // nValue: 整数值.
 func XComboBox_SetItemInt(hEle int, iItem int, iColumn int, nValue int) bool {
 	r, _, _ := xComboBox_SetItemInt.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), uintptr(nValue))
-	return int(r) != 0
+	return r != 0
 }
 
 // 组合框_置项指数值扩展.
@@ -350,7 +350,7 @@ func XComboBox_SetItemInt(hEle int, iItem int, iColumn int, nValue int) bool {
 // nValue: 整数值.
 func XComboBox_SetItemIntEx(hEle int, iItem int, pName string, nValue int) bool {
 	r, _, _ := xComboBox_SetItemIntEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(nValue))
-	return int(r) != 0
+	return r != 0
 }
 
 // 组合框_置项浮点值.
@@ -364,7 +364,7 @@ func XComboBox_SetItemIntEx(hEle int, iItem int, pName string, nValue int) bool 
 // fFloat: 浮点数.
 func XComboBox_SetItemFloat(hEle int, iItem int, iColumn int, fFloat float32) bool {
 	r, _, _ := xComboBox_SetItemFloat.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), common.Float32Ptr(fFloat))
-	return int(r) != 0
+	return r != 0
 }
 
 // 组合框_置项浮点值扩展.
@@ -378,7 +378,7 @@ func XComboBox_SetItemFloat(hEle int, iItem int, iColumn int, fFloat float32) bo
 // fFloat: 浮点数.
 func XComboBox_SetItemFloatEx(hEle int, iItem int, pName string, fFloat float32) bool {
 	r, _, _ := xComboBox_SetItemFloatEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), common.Float32Ptr(fFloat))
-	return int(r) != 0
+	return r != 0
 }
 
 // 组合框_取项文本.
@@ -440,7 +440,7 @@ func XComboBox_GetItemImageEx(hEle int, iItem int, pName string) int {
 // pOutValue: 接收返回整数值.
 func XComboBox_GetItemInt(hEle int, iItem int, iColumn int, pOutValue *int) bool {
 	r, _, _ := xComboBox_GetItemInt.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), uintptr(unsafe.Pointer(pOutValue)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 组合框_取项整数值扩展.
@@ -454,7 +454,7 @@ func XComboBox_GetItemInt(hEle int, iItem int, iColumn int, pOutValue *int) bool
 // pOutValue: 接收返回整数值.
 func XComboBox_GetItemIntEx(hEle int, iItem int, pName string, pOutValue *int) bool {
 	r, _, _ := xComboBox_GetItemIntEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 组合框_取项浮点值.
@@ -468,7 +468,7 @@ func XComboBox_GetItemIntEx(hEle int, iItem int, pName string, pOutValue *int) b
 // pOutValue: 接收返回浮点值.
 func XComboBox_GetItemFloat(hEle int, iItem int, iColumn int, pOutValue *float32) bool {
 	r, _, _ := xComboBox_GetItemFloat.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), uintptr(unsafe.Pointer(pOutValue)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 组合框_取项浮点值扩展.
@@ -482,7 +482,7 @@ func XComboBox_GetItemFloat(hEle int, iItem int, iColumn int, pOutValue *float32
 // pOutValue: 接收返回浮点值.
 func XComboBox_GetItemFloatEx(hEle int, iItem int, pName string, pOutValue *float32) bool {
 	r, _, _ := xComboBox_GetItemFloatEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 组合框_删除项.
@@ -492,7 +492,7 @@ func XComboBox_GetItemFloatEx(hEle int, iItem int, pName string, pOutValue *floa
 // iItem: 项索引.
 func XComboBox_DeleteItem(hEle int, iItem int) bool {
 	r, _, _ := xComboBox_DeleteItem.Call(uintptr(hEle), uintptr(iItem))
-	return int(r) != 0
+	return r != 0
 }
 
 // 组合框_删除项扩展.
@@ -504,7 +504,7 @@ func XComboBox_DeleteItem(hEle int, iItem int) bool {
 // nCount: 删除数量.
 func XComboBox_DeleteItemEx(hEle int, iItem int, nCount int) bool {
 	r, _, _ := xComboBox_DeleteItemEx.Call(uintptr(hEle), uintptr(iItem), uintptr(nCount))
-	return int(r) != 0
+	return r != 0
 }
 
 // 组合框_删除项全部.

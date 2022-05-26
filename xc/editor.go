@@ -38,7 +38,7 @@ func XEidtor_EnableAutoMatchSpaseSelect(hEle int, bEnable bool) int {
 // iRow: 行索引.
 func XEditor_IsBreakpoint(hEle int, iRow int) bool {
 	r, _, _ := xEditor_IsBreakpoint.Call(uintptr(hEle), uintptr(iRow))
-	return int(r) != 0
+	return r != 0
 }
 
 // 代码编辑框_置断点.
@@ -50,7 +50,7 @@ func XEditor_IsBreakpoint(hEle int, iRow int) bool {
 // bActivate: 是否激活.
 func XEditor_SetBreakpoint(hEle int, iRow int, bActivate bool) bool {
 	r, _, _ := xEditor_SetBreakpoint.Call(uintptr(hEle), uintptr(iRow), common.BoolPtr(bActivate))
-	return int(r) != 0
+	return r != 0
 }
 
 // 代码编辑框_移除断点.
@@ -60,7 +60,7 @@ func XEditor_SetBreakpoint(hEle int, iRow int, bActivate bool) bool {
 // iRow: 行索引.
 func XEditor_RemoveBreakpoint(hEle int, iRow int) bool {
 	r, _, _ := xEditor_RemoveBreakpoint.Call(uintptr(hEle), uintptr(iRow))
-	return int(r) != 0
+	return r != 0
 }
 
 // 代码编辑框_清空断点.
@@ -78,7 +78,7 @@ func XEditor_ClearBreakpoint(hEle int) int {
 // iRow: 行索引.
 func XEditor_SetRunRow(hEle int, iRow int) bool {
 	r, _, _ := xEditor_SetRunRow.Call(uintptr(hEle), uintptr(iRow))
-	return int(r) != 0
+	return r != 0
 }
 
 // 代码编辑框_取颜色信息.
@@ -313,5 +313,43 @@ func XEditor_AddFunction(hEle int, pKey string) int {
 // pKeyword: 字符串.
 func XEditor_AddExcludeDefVarKeyword(hEle int, pKeyword string) int {
 	r, _, _ := xEditor_AddExcludeDefVarKeyword.Call(uintptr(hEle), common.StrPtr(pKeyword))
+	return int(r)
+}
+
+// 代码编辑框_获取折叠状态.
+//
+// hEle: 元素句柄.
+func XEditor_GetExpandState(hEle int) string {
+	r, _, _ := xEditor_GetExpandState.Call(uintptr(hEle))
+	return XC_atow(r)
+}
+
+// 代码编辑框_设置折叠状态.
+//
+// hEle: 元素句柄.
+//
+// pString: .
+func XEditor_SetExpandState(hEle int, pString string) int {
+	r, _, _ := xEditor_SetExpandState.Call(uintptr(hEle), XC_wtoa(pString))
+	return int(r)
+}
+
+// 代码编辑框_获取缩进.
+//
+// hEle: 元素句柄.
+//
+// iRow: 行.
+func XEditor_GetIndentation(hEle int, iRow int) int {
+	r, _, _ := xEditor_GetIndentation.Call(uintptr(hEle), uintptr(iRow))
+	return int(r)
+}
+
+// 代码编辑框_是否为空行.
+//
+// hEle: 元素句柄.
+//
+// iRow: 行.
+func XEidtor_IsEmptyRow(hEle int, iRow int) int {
+	r, _, _ := xEidtor_IsEmptyRow.Call(uintptr(hEle), uintptr(iRow))
 	return int(r)
 }

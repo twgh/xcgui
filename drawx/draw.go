@@ -1136,3 +1136,27 @@ func (d *Draw) DrawSvgSize(hSvg int, nWidth int, nHeight int) int {
 func (d *Draw) D2D_Clear(color int) int {
 	return xc.XDraw_D2D_Clear(d.Handle, color)
 }
+
+// 绘制_图片遮盖矩形, 绘制带矩形遮盖的图片, D2D留空.
+//
+// hImageFrame: 图片句柄.
+//
+// pRect: .
+//
+// pRcMask: .
+//
+// pRcRoundAngle: .
+func (d *Draw) ImageMaskRect(hImageFrame int, pRect *xc.RECT, pRcMask *xc.RECT, pRcRoundAngle *xc.RECT) int {
+	return xc.XDraw_ImageMaskRect(d.Handle, hImageFrame, pRect, pRcMask, pRcRoundAngle)
+}
+
+// 绘制_图片遮盖椭圆, 绘制带椭圆遮盖的图片, D2D留空.
+//
+// hImageFrame: 图片句柄.
+//
+// pRect: .
+//
+// pRcMask: .
+func (d *Draw) ImageMaskEllipse(hImageFrame int, pRect *xc.RECT, pRcMask *xc.RECT) int {
+	return xc.XDraw_ImageMaskEllipse(d.Handle, hImageFrame, pRect, pRcMask)
+}

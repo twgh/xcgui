@@ -107,7 +107,7 @@ func XEdit_EnableAutoCancelSel(hEle int, bEnable bool) int {
 // hEle: 元素句柄.
 func XEdit_IsReadOnly(hEle int) bool {
 	r, _, _ := xEdit_IsReadOnly.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 编辑框_是否多行.
@@ -115,7 +115,7 @@ func XEdit_IsReadOnly(hEle int) bool {
 // hEle: 元素句柄.
 func XEdit_IsMultiLine(hEle int) bool {
 	r, _, _ := xEdit_IsMultiLine.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 编辑框_是否密码.
@@ -123,7 +123,7 @@ func XEdit_IsMultiLine(hEle int) bool {
 // hEle: 元素句柄.
 func XEdit_IsPassword(hEle int) bool {
 	r, _, _ := xEdit_IsPassword.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 编辑框_是否自动换行.
@@ -131,7 +131,7 @@ func XEdit_IsPassword(hEle int) bool {
 // hEle: 元素句柄.
 func XEdit_IsAutoWrap(hEle int) bool {
 	r, _, _ := xEdit_IsAutoWrap.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 编辑框_判断为空.
@@ -139,7 +139,7 @@ func XEdit_IsAutoWrap(hEle int) bool {
 // hEle: 元素句柄.
 func XEdit_IsEmpty(hEle int) bool {
 	r, _, _ := xEdit_IsEmpty.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 编辑框_是否在选择区域.
@@ -151,7 +151,7 @@ func XEdit_IsEmpty(hEle int) bool {
 // iCol: 列索引.
 func XEdit_IsInSelect(hEle int, iRow int, iCol int) bool {
 	r, _, _ := xEdit_IsInSelect.Call(uintptr(hEle), uintptr(iRow), uintptr(iCol))
-	return int(r) != 0
+	return r != 0
 }
 
 // 编辑框_取总行数.
@@ -336,13 +336,13 @@ func XEdit_InsertText(hEle int, iRow int, iCol int, pString string) int {
 	return int(r)
 }
 
-// 编辑框_插入文本模拟用户操作, 自动刷新UI, 支持撤销/恢复.
+// XEdit_AddTextUser 编辑框_插入文本模拟用户操作, 自动刷新UI, 支持撤销/恢复.
+//	@param hEle 元素句柄.
+//	@param pString 字符串.
+//	@return int
 //
-// hEle: 元素句柄.
-//
-// pString: 字符串.
-func XEdit_InsertTextUser(hEle int, pString string) int {
-	r, _, _ := xEdit_InsertTextUser.Call(uintptr(hEle), common.StrPtr(pString))
+func XEdit_AddTextUser(hEle int, pString string) int {
+	r, _, _ := xEdit_AddTextUser.Call(uintptr(hEle), common.StrPtr(pString))
 	return int(r)
 }
 
@@ -429,7 +429,7 @@ func XEdit_AddStyleEx(hEle int, fontName string, fontSize int, fontStyle xcc.Fon
 // info: 返回样式信息.
 func XEdit_GetStyleInfo(hEle int, iStyle int, info *Edit_Style_Info_) bool {
 	r, _, _ := xEdit_GetStyleInfo.Call(uintptr(hEle), uintptr(iStyle), uintptr(unsafe.Pointer(info)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 编辑框_置当前样式.
@@ -494,15 +494,13 @@ func XEdit_SetRowHeightEx(hEle int, iRow int, nHeight int) int {
 	return int(r)
 }
 
-// 编辑框_置当前位置.
+// XEdit_SetCurPos 编辑框_置当前位置.
+//	@param hEle hEle: 元素句柄.
+//	@param iRow iRow: 行索引.
+//	@return int
 //
-// hEle: 元素句柄.
-//
-// iRow: 行索引.
-//
-// iCol: 列索引.
-func XEdit_SetCurPos(hEle int, iRow int, iCol int) int {
-	r, _, _ := xEdit_SetCurPos.Call(uintptr(hEle), uintptr(iRow), uintptr(iCol))
+func XEdit_SetCurPos(hEle int, iRow int) int {
+	r, _, _ := xEdit_SetCurPos.Call(uintptr(hEle), uintptr(iRow))
 	return int(r)
 }
 
@@ -549,7 +547,7 @@ func XEdit_GetPoint(hEle int, iRow int, iCol int, pOut *POINT) int {
 // hEle: 元素句柄.
 func XEdit_AutoScroll(hEle int) bool {
 	r, _, _ := xEdit_AutoScroll.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 编辑框_自动滚动扩展, 视图自动滚动到指定位置.
@@ -561,18 +559,17 @@ func XEdit_AutoScroll(hEle int) bool {
 // iCol: 列索引.
 func XEdit_AutoScrollEx(hEle int, iRow int, iCol int) bool {
 	r, _, _ := xEdit_AutoScrollEx.Call(uintptr(hEle), uintptr(iRow), uintptr(iCol))
-	return int(r) != 0
+	return r != 0
 }
 
-// 编辑框_转换位置, 转换位置点到行列.
+// XEdit_PosToRowCol 编辑框_转换位置, 转换位置点到行列.
+//	@param hEle 元素句柄.
+//	@param iPos 位置点.
+//	@param pInfo 行列.
+//	@return int
 //
-// hEle: 元素句柄.
-//
-// iPos: 位置点.
-//
-// pInfo: 行列.
-func XEdit_PositionToInfo(hEle int, iPos int, pInfo *Position_) int {
-	r, _, _ := xEdit_PositionToInfo.Call(uintptr(hEle), uintptr(iPos), uintptr(unsafe.Pointer(pInfo)))
+func XEdit_PosToRowCol(hEle int, iPos int, pInfo *Position_) int {
+	r, _, _ := xEdit_PosToRowCol.Call(uintptr(hEle), uintptr(iPos), uintptr(unsafe.Pointer(pInfo)))
 	return int(r)
 }
 
@@ -581,7 +578,7 @@ func XEdit_PositionToInfo(hEle int, iPos int, pInfo *Position_) int {
 // hEle: 元素句柄.
 func XEdit_SelectAll(hEle int) bool {
 	r, _, _ := xEdit_SelectAll.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 编辑框_取消选择.
@@ -589,7 +586,7 @@ func XEdit_SelectAll(hEle int) bool {
 // hEle: 元素句柄.
 func XEdit_CancelSelect(hEle int) bool {
 	r, _, _ := xEdit_CancelSelect.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 编辑框_删除选择内容.
@@ -597,7 +594,7 @@ func XEdit_CancelSelect(hEle int) bool {
 // hEle: 元素句柄.
 func XEdit_DeleteSelect(hEle int) bool {
 	r, _, _ := xEdit_DeleteSelect.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 编辑框_置选择.
@@ -613,7 +610,7 @@ func XEdit_DeleteSelect(hEle int) bool {
 // iEndCol: 结束行列索引.
 func XEdit_SetSelect(hEle int, iStartRow int, iStartCol int, iEndRow int, iEndCol int) bool {
 	r, _, _ := xEdit_SetSelect.Call(uintptr(hEle), uintptr(iStartRow), uintptr(iStartCol), uintptr(iEndRow), uintptr(iEndCol))
-	return int(r) != 0
+	return r != 0
 }
 
 // 编辑框_取选择文本, 不包括非文本内容, 返回接收文本内容实际长度.
@@ -639,7 +636,7 @@ func XEdit_GetSelectText(hEle int, pOut *string, nOutLen int) int {
 // pEnd: 结束位置.
 func XEdit_GetSelectRange(hEle int, pBegin *Position_, pEnd *Position_) bool {
 	r, _, _ := xEdit_GetSelectRange.Call(uintptr(hEle), uintptr(unsafe.Pointer(pBegin)), uintptr(unsafe.Pointer(pEnd)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 编辑框_取可视行范围.
@@ -667,7 +664,7 @@ func XEdit_GetVisibleRowRange(hEle int, piStart *int, piEnd *int) int {
 // iEndCol: 结束行列索引.
 func XEdit_Delete(hEle int, iStartRow int, iStartCol int, iEndRow int, iEndCol int) bool {
 	r, _, _ := xEdit_Delete.Call(uintptr(hEle), uintptr(iStartRow), uintptr(iStartCol), uintptr(iEndRow), uintptr(iEndCol))
-	return int(r) != 0
+	return r != 0
 }
 
 // 编辑框_删除行.
@@ -677,7 +674,7 @@ func XEdit_Delete(hEle int, iStartRow int, iStartCol int, iEndRow int, iEndCol i
 // iRow: 行索引.
 func XEdit_DeleteRow(hEle int, iRow int) bool {
 	r, _, _ := xEdit_DeleteRow.Call(uintptr(hEle), uintptr(iRow))
-	return int(r) != 0
+	return r != 0
 }
 
 // 编辑框_剪贴板剪切.
@@ -685,7 +682,7 @@ func XEdit_DeleteRow(hEle int, iRow int) bool {
 // hEle: 元素句柄.
 func XEdit_ClipboardCut(hEle int) bool {
 	r, _, _ := xEdit_ClipboardCut.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 编辑框_剪贴板复制.
@@ -693,7 +690,7 @@ func XEdit_ClipboardCut(hEle int) bool {
 // hEle: 元素句柄.
 func XEdit_ClipboardCopy(hEle int) bool {
 	r, _, _ := xEdit_ClipboardCopy.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 编辑框_剪贴板粘贴.
@@ -701,7 +698,7 @@ func XEdit_ClipboardCopy(hEle int) bool {
 // hEle: 元素句柄.
 func XEdit_ClipboardPaste(hEle int) bool {
 	r, _, _ := xEdit_ClipboardPaste.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 编辑框_撤销.
@@ -709,7 +706,7 @@ func XEdit_ClipboardPaste(hEle int) bool {
 // hEle: 元素句柄.
 func XEdit_Undo(hEle int) bool {
 	r, _, _ := xEdit_Undo.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 编辑框_恢复.
@@ -717,7 +714,7 @@ func XEdit_Undo(hEle int) bool {
 // hEle: 元素句柄.
 func XEdit_Redo(hEle int) bool {
 	r, _, _ := xEdit_Redo.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 编辑框_添加气泡开始, 当前行开始.
@@ -749,5 +746,135 @@ func XEdit_AddChatEnd(hEle int) int {
 // nIndentation: 缩进值.
 func XEdit_SetChatIndentation(hEle int, nIndentation int) int {
 	r, _, _ := xEdit_SetChatIndentation.Call(uintptr(hEle), uintptr(nIndentation))
+	return int(r)
+}
+
+// 编辑框_置行间隔, 设置行间隔大小, 多行模式有效.
+//
+// hEle: 元素句柄.
+//
+// nSpace: 行间隔大小.
+func XEdit_SetRowSpace(hEle int, nSpace int) int {
+	r, _, _ := xEdit_SetRowSpace.Call(uintptr(hEle), uintptr(nSpace))
+	return int(r)
+}
+
+// 编辑框_置当前位置扩展.
+//
+// hEle: 元素句柄.
+//
+// iRow: 行索引.
+//
+// iCol: 列索引.
+func XEdit_SetCurPosEx(hEle int, iRow int, iCol int) int {
+	r, _, _ := xEdit_SetCurPosEx.Call(uintptr(hEle), uintptr(iRow), uintptr(iCol))
+	return int(r)
+}
+
+// 编辑框_取当前位置扩展.
+//
+// hEle: 元素句柄.
+//
+// iRow: 返回行索引.
+//
+// iCol: 返回列索引.
+func XEdit_GetCurPosEx(hEle int, iRow *int, iCol *int) int {
+	r, _, _ := xEdit_GetCurPosEx.Call(uintptr(hEle), uintptr(unsafe.Pointer(iRow)), uintptr(unsafe.Pointer(iCol)))
+	return int(r)
+}
+
+// 编辑框_移动到末尾.
+//
+// hEle: 元素句柄.
+func XEdit_MoveEnd(hEle int) int {
+	r, _, _ := xEdit_MoveEnd.Call(uintptr(hEle))
+	return int(r)
+}
+
+// 编辑框_行列到位置, 返回位置点.
+//
+// hEle: 元素句柄.
+//
+// iRow: 行索引.
+//
+// iCol: 列索引.
+func XEdit_RowColToPos(hEle int, iRow int, iCol int) int {
+	r, _, _ := xEdit_RowColToPos.Call(uintptr(hEle), uintptr(iRow), uintptr(iCol))
+	return int(r)
+}
+
+// 编辑框_置后备字体, 置中文字体. 如果已设置, 当遇到中文字符时使用后备字体, 解决不支持中文的字体的问题
+//
+// hEle: 元素句柄.
+//
+// hFont: 字体.
+func XEdit_SetBackFont(hEle int, hFont int) int {
+	r, _, _ := xEdit_SetBackFont.Call(uintptr(hEle), uintptr(hFont))
+	return int(r)
+}
+
+// 编辑框_释放样式.
+//
+// hEle: 元素句柄.
+//
+// iStyle: 样式.
+func XEdit_ReleaseStyle(hEle int, iStyle int) bool {
+	r, _, _ := xEdit_ReleaseStyle.Call(uintptr(hEle), uintptr(iStyle))
+	return r != 0
+}
+
+// 编辑框_修改样式.
+//
+// hEle: 元素句柄.
+//
+// iStyle: 样式索引.
+//
+// hFont: 字体句柄.
+//
+// color: ABGR颜色.
+//
+// bColor: 是否使用颜色.
+func XEdit_ModifyStyle(hEle int, iStyle int, hFont int, color int, bColor bool) bool {
+	r, _, _ := xEdit_ModifyStyle.Call(uintptr(hEle), uintptr(iStyle), uintptr(hFont), uintptr(color), common.BoolPtr(bColor))
+	return r != 0
+}
+
+// 编辑框_置空格大小.
+//
+// hEle: 元素句柄.
+//
+// size: 空格大小.
+func XEdit_SetSpaceSize(hEle int, size int) int {
+	r, _, _ := xEdit_SetSpaceSize.Call(uintptr(hEle), uintptr(size))
+	return int(r)
+}
+
+// 编辑框_置字符间距.
+//
+// hEle: 元素句柄.
+//
+// size: 英文字符间距大小.
+//
+// sizeZh: 中文字符间距大小.
+func XEdit_SetCharSpaceSize(hEle int, size int, sizeZh int) int {
+	r, _, _ := xEdit_SetCharSpaceSize.Call(uintptr(hEle), uintptr(size), uintptr(sizeZh))
+	return int(r)
+}
+
+// 编辑框_取选择文本长度, 不包括非文本内容, 返回文本内容长度.
+//
+// hEle: 元素句柄.
+func XEdit_GetSelectTextLength(hEle int) int {
+	r, _, _ := xEdit_GetSelectTextLength.Call(uintptr(hEle))
+	return int(r)
+}
+
+// 编辑框_置选择文本样式.
+//
+// hEle: 元素句柄.
+//
+// iStyle: 样式索引.
+func XEdit_SetSelectTextStyle(hEle int, iStyle int) int {
+	r, _, _ := xEdit_SetSelectTextStyle.Call(uintptr(hEle), uintptr(iStyle))
 	return int(r)
 }

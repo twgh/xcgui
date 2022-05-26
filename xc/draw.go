@@ -518,7 +518,7 @@ func XDraw_FillRectColorF(hDraw int, pRect *RECTF, color int) int {
 // hbr: 画刷句柄.
 func XDraw_GDI_FillRgn(hDraw int, hrgn int, hbr int) bool {
 	r, _, _ := xDraw_GDI_FillRgn.Call(uintptr(hDraw), uintptr(hrgn), uintptr(hbr))
-	return int(r) != 0
+	return r != 0
 }
 
 // 绘制_填充圆形.
@@ -692,7 +692,7 @@ func XDraw_DrawRoundRectExF(hDraw int, pRect *RECT, nLeftTop, nRightTop, nRightB
 // nBottomRect: 右下角Y坐标.
 func XDraw_GDI_Rectangle(hDraw int, nLeftRect int, nTopRect int, nRightRect int, nBottomRect int) bool {
 	r, _, _ := xDraw_GDI_Rectangle.Call(uintptr(hDraw), uintptr(nLeftRect), uintptr(nTopRect), uintptr(nRightRect), uintptr(nBottomRect))
-	return int(r) != 0
+	return r != 0
 }
 
 // 绘制_渐变填充2, 渐变填充, 从一种颜色过渡到另一种颜色.
@@ -744,7 +744,7 @@ func XDraw_GradientFill2F(hDraw int, pRect *RECTF, color1 int, color2 int, mode 
 // mode: 模式, GRADIENT_FILL_.
 func XDraw_GradientFill4(hDraw int, pRect *RECT, color1 int, color2 int, color3 int, color4 int, mode xcc.GRADIENT_FILL_) bool {
 	r, _, _ := xDraw_GradientFill4.Call(uintptr(hDraw), uintptr(unsafe.Pointer(pRect)), uintptr(color1), uintptr(color2), uintptr(color3), uintptr(color4), uintptr(mode))
-	return int(r) != 0
+	return r != 0
 }
 
 // 绘制_渐变填充4F, 渐变填充,从一种颜色过渡到另一种颜色.
@@ -764,7 +764,7 @@ func XDraw_GradientFill4(hDraw int, pRect *RECT, color1 int, color2 int, color3 
 // mode: 模式, GRADIENT_FILL_.
 func XDraw_GradientFill4F(hDraw int, pRect *RECTF, color1 int, color2 int, color3 int, color4 int, mode xcc.GRADIENT_FILL_) bool {
 	r, _, _ := xDraw_GradientFill4F.Call(uintptr(hDraw), uintptr(unsafe.Pointer(pRect)), uintptr(color1), uintptr(color2), uintptr(color3), uintptr(color4), uintptr(mode))
-	return int(r) != 0
+	return r != 0
 }
 
 // 绘制_边框区域, 绘制边框, 使用指定的画刷绘制指定的区域的边框. 如果函数成功, 返回非零值, 如果函数失败, 返回值是零.
@@ -780,7 +780,7 @@ func XDraw_GradientFill4F(hDraw int, pRect *RECTF, color1 int, color2 int, color
 // nHeight: 边框高度, 水平边.
 func XDraw_GDI_FrameRgn(hDraw int, hrgn int, hbr int, nWidth int, nHeight int) bool {
 	r, _, _ := xDraw_GDI_FrameRgn.Call(uintptr(hDraw), uintptr(hrgn), uintptr(hbr), uintptr(nWidth), uintptr(nHeight))
-	return int(r) != 0
+	return r != 0
 }
 
 // 绘制_焦点矩形.
@@ -814,7 +814,7 @@ func XDraw_FocusRectF(hDraw int, pRect *RECTF) int {
 // pPoint: 接收以前的当前位置到一个POINT结构的指针, 如果这个参数是NULL指针, 没有返回原来的位置.
 func XDraw_GDI_MoveToEx(hDraw int, X int, Y int, pPoint *POINT) bool {
 	r, _, _ := xDraw_GDI_MoveToEx.Call(uintptr(hDraw), uintptr(X), uintptr(Y), uintptr(unsafe.Pointer(pPoint)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 绘制_线终点, 函数绘制一条线从当前位置到, 但不包括指定点. 如果函数成功, 返回非零值.
@@ -826,7 +826,7 @@ func XDraw_GDI_MoveToEx(hDraw int, X int, Y int, pPoint *POINT) bool {
 // nYEnd: Y坐标, 线结束点.
 func XDraw_GDI_LineTo(hDraw int, nXEnd int, nYEnd int) bool {
 	r, _, _ := xDraw_GDI_LineTo.Call(uintptr(hDraw), uintptr(nXEnd), uintptr(nYEnd))
-	return int(r) != 0
+	return r != 0
 }
 
 // 绘制_折线, Polyline() 参见MSDN.
@@ -838,7 +838,7 @@ func XDraw_GDI_LineTo(hDraw int, nXEnd int, nYEnd int) bool {
 // arrayPtSize: 参见MSDN.
 func XDraw_GDI_Polyline(hDraw int, pArrayPt []POINT, arrayPtSize int) bool {
 	r, _, _ := xDraw_GDI_Polyline.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&pArrayPt[0])), uintptr(arrayPtSize))
-	return int(r) != 0
+	return r != 0
 }
 
 // 绘制_置像素颜色, 函数设置在指定的坐标到指定的颜色的像素. 如果函数成功返回RGB值, 如果失败返回-1.
@@ -884,7 +884,7 @@ func XDraw_GetD2dRenderTarget(hDraw int) int {
 // diFlags: .
 func XDraw_GDI_DrawIconEx(hDraw int, xLeft int, yTop int, hIcon int, cxWidth int, cyWidth int, istepIfAniCur int, hbrFlickerFreeDraw int, diFlags int) bool {
 	r, _, _ := xDraw_GDI_DrawIconEx.Call(uintptr(hDraw), uintptr(xLeft), uintptr(yTop), uintptr(hIcon), uintptr(cxWidth), uintptr(cyWidth), uintptr(istepIfAniCur), uintptr(hbrFlickerFreeDraw), uintptr(diFlags))
-	return int(r) != 0
+	return r != 0
 }
 
 // 绘制_复制, BitBlt() 参见MSDN.
@@ -908,7 +908,7 @@ func XDraw_GDI_DrawIconEx(hDraw int, xLeft int, yTop int, hIcon int, cxWidth int
 // dwRop: XX.
 func XDraw_GDI_BitBlt(hDrawDest int, nXDest int, nYDest int, nWidth int, nHeight int, hdcSrc int, nXSrc int, nYSrc int, dwRop int) bool {
 	r, _, _ := xDraw_GDI_BitBlt.Call(uintptr(hDrawDest), uintptr(nXDest), uintptr(nYDest), uintptr(nWidth), uintptr(nHeight), uintptr(hdcSrc), uintptr(nXSrc), uintptr(nYSrc), uintptr(dwRop))
-	return int(r) != 0
+	return r != 0
 }
 
 // 绘制_复制2, BitBlt() 参见MSDN.
@@ -932,7 +932,7 @@ func XDraw_GDI_BitBlt(hDrawDest int, nXDest int, nYDest int, nWidth int, nHeight
 // dwRop: XX.
 func XDraw_GDI_BitBlt2(hDrawDest int, nXDest int, nYDest int, nWidth int, nHeight int, hDrawSrc int, nXSrc int, nYSrc int, dwRop int) bool {
 	r, _, _ := xDraw_GDI_BitBlt2.Call(uintptr(hDrawDest), uintptr(nXDest), uintptr(nYDest), uintptr(nWidth), uintptr(nHeight), uintptr(hDrawSrc), uintptr(nXSrc), uintptr(nYSrc), uintptr(dwRop))
-	return int(r) != 0
+	return r != 0
 }
 
 // 绘制_带透明复制, AlphaBlend() 参见MSDN.
@@ -960,7 +960,7 @@ func XDraw_GDI_BitBlt2(hDrawDest int, nXDest int, nYDest int, nWidth int, nHeigh
 // alpha: XX.
 func XDraw_GDI_AlphaBlend(hDraw int, nXOriginDest int, nYOriginDest int, nWidthDest int, nHeightDest int, hdcSrc int, nXOriginSrc int, nYOriginSrc int, nWidthSrc int, nHeightSrc int, alpha int) bool {
 	r, _, _ := xDraw_GDI_AlphaBlend.Call(uintptr(hDraw), uintptr(nXOriginDest), uintptr(nYOriginDest), uintptr(nWidthDest), uintptr(nHeightDest), uintptr(hdcSrc), uintptr(nXOriginSrc), uintptr(nYOriginSrc), uintptr(nWidthSrc), uintptr(nHeightSrc), uintptr(alpha))
-	return int(r) != 0
+	return r != 0
 }
 
 // 绘制_GDI_椭圆.
@@ -970,7 +970,7 @@ func XDraw_GDI_AlphaBlend(hDraw int, nXOriginDest int, nYOriginDest int, nWidthD
 // pRect: 矩形区域.
 func XDraw_GDI_Ellipse(hDraw int, pRect *RECT) bool {
 	r, _, _ := xDraw_GDI_Ellipse.Call(uintptr(hDraw), uintptr(unsafe.Pointer(pRect)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 绘制_填充多边形, 填充多边形.
@@ -1208,6 +1208,36 @@ func XDraw_ImageTileF(hDraw int, hImageFrame int, hImageFrameMask int, pRect *RE
 // y2: hImageFrameMask Y坐标.
 func XDraw_ImageMask(hDraw int, hImageFrame int, hImageFrameMask int, x int, y int, x2 int, y2 int) int {
 	r, _, _ := xDraw_ImageMask.Call(uintptr(hDraw), uintptr(hImageFrame), uintptr(hImageFrameMask), uintptr(x), uintptr(y), uintptr(x2), uintptr(y2))
+	return int(r)
+}
+
+// 绘制_图片遮盖矩形, 绘制带矩形遮盖的图片, D2D留空.
+//
+// hDraw: 图形绘制句柄.
+//
+// hImageFrame: 图片句柄.
+//
+// pRect: .
+//
+// pRcMask: .
+//
+// pRcRoundAngle: .
+func XDraw_ImageMaskRect(hDraw int, hImageFrame int, pRect *RECT, pRcMask *RECT, pRcRoundAngle *RECT) int {
+	r, _, _ := xDraw_ImageMaskRect.Call(uintptr(hDraw), uintptr(hImageFrame), uintptr(unsafe.Pointer(pRect)), uintptr(unsafe.Pointer(pRcMask)), uintptr(unsafe.Pointer(pRcRoundAngle)))
+	return int(r)
+}
+
+// 绘制_图片遮盖椭圆, 绘制带椭圆遮盖的图片, D2D留空.
+//
+// hDraw: 图形绘制句柄.
+//
+// hImageFrame: 图片句柄.
+//
+// pRect: .
+//
+// pRcMask: .
+func XDraw_ImageMaskEllipse(hDraw int, hImageFrame int, pRect *RECT, pRcMask *RECT) int {
+	r, _, _ := xDraw_ImageMaskEllipse.Call(uintptr(hDraw), uintptr(hImageFrame), uintptr(unsafe.Pointer(pRect)), uintptr(unsafe.Pointer(pRcMask)))
 	return int(r)
 }
 

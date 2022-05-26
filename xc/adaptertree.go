@@ -115,7 +115,7 @@ func XAdTree_GetCountColumn(hAdapter int) int {
 // pValue: 值.
 func XAdTree_SetItemText(hAdapter int, nID int, iColumn int, pValue string) bool {
 	r, _, _ := xAdTree_SetItemText.Call(uintptr(hAdapter), uintptr(nID), uintptr(iColumn), common.StrPtr(pValue))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器树_置项文本扩展, 设置项文件内容.
@@ -129,7 +129,7 @@ func XAdTree_SetItemText(hAdapter int, nID int, iColumn int, pValue string) bool
 // pValue: 值.
 func XAdTree_SetItemTextEx(hAdapter int, nID int, pName string, pValue string) bool {
 	r, _, _ := xAdTree_SetItemTextEx.Call(uintptr(hAdapter), uintptr(nID), common.StrPtr(pName), common.StrPtr(pValue))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器树_置项图片, 设置项数据.
@@ -143,7 +143,7 @@ func XAdTree_SetItemTextEx(hAdapter int, nID int, pName string, pValue string) b
 // hImage: 图片句柄.
 func XAdTree_SetItemImage(hAdapter int, nID int, iColumn int, hImage int) bool {
 	r, _, _ := xAdTree_SetItemImage.Call(uintptr(hAdapter), uintptr(nID), uintptr(iColumn), uintptr(hImage))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器树_置项图片扩展, 设置项内容.
@@ -157,7 +157,7 @@ func XAdTree_SetItemImage(hAdapter int, nID int, iColumn int, hImage int) bool {
 // hImage: 图片句柄.
 func XAdTree_SetItemImageEx(hAdapter int, nID int, pName string, hImage int) bool {
 	r, _, _ := xAdTree_SetItemImageEx.Call(uintptr(hAdapter), uintptr(nID), common.StrPtr(pName), uintptr(hImage))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器树_取项文本, 获取项文本内容.
@@ -215,7 +215,7 @@ func XAdTree_GetItemImageEx(hAdapter int, nID int, pName string) int {
 // nID: 项ID.
 func XAdTree_DeleteItem(hAdapter int, nID int) bool {
 	r, _, _ := xAdTree_DeleteItem.Call(uintptr(hAdapter), uintptr(nID))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器树_删除项全部, 删除所有项.

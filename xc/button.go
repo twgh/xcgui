@@ -28,7 +28,7 @@ func XBtn_Create(x int, y int, cx int, cy int, pName string, hParent int) int {
 // hEle: 元素句柄.
 func XBtn_IsCheck(hEle int) bool {
 	r, _, _ := xBtn_IsCheck.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 按钮_置选中, 设置选中状态.
@@ -38,7 +38,7 @@ func XBtn_IsCheck(hEle int) bool {
 // bCheck: 是否选中.
 func XBtn_SetCheck(hEle int, bCheck bool) bool {
 	r, _, _ := xBtn_SetCheck.Call(uintptr(hEle), common.BoolPtr(bCheck))
-	return int(r) != 0
+	return r != 0
 }
 
 // XBtn_SetState 按钮_置状态.

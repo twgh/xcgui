@@ -52,7 +52,7 @@ func XTabBar_InsertLabel(hEle int, index int, pName string) int {
 // iDest: 目标位置索引.
 func XTabBar_MoveLabel(hEle int, iSrc int, iDest int) bool {
 	r, _, _ := xTabBar_MoveLabel.Call(uintptr(hEle), uintptr(iSrc), uintptr(iDest))
-	return int(r) != 0
+	return r != 0
 }
 
 // TAB条_删除标签, 删除一个标签.
@@ -62,7 +62,7 @@ func XTabBar_MoveLabel(hEle int, iSrc int, iDest int) bool {
 // index: 位置索引.
 func XTabBar_DeleteLabel(hEle int, index int) bool {
 	r, _, _ := xTabBar_DeleteLabel.Call(uintptr(hEle), uintptr(index))
-	return int(r) != 0
+	return r != 0
 }
 
 // TAB条_删除全部, 删除所有标签.
@@ -274,5 +274,5 @@ func XTabBar_SetLabelWidth(hEle int, index int, nWidth int) int {
 // bShow: 是否显示.
 func XTabBar_ShowLabel(hEle int, index int, bShow bool) bool {
 	r, _, _ := xTabBar_ShowLabel.Call(uintptr(hEle), uintptr(index), common.BoolPtr(bShow))
-	return int(r) != 0
+	return r != 0
 }

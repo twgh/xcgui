@@ -149,6 +149,11 @@ func (d *DateTime) SetTime(nHour int, nMinute int, nSecond int) int {
 	return xc.XDateTime_SetTime(d.Handle, nHour, nMinute, nSecond)
 }
 
+// 日期_弹出.
+func (d *DateTime) Popup() int {
+	return xc.XDateTime_Popup(d.Handle)
+}
+
 /*
 以下都是事件
 */

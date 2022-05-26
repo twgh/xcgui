@@ -55,7 +55,7 @@ func XMenuBar_GetMenu(hEle int, nIndex int) int {
 // nIndex: 菜单条按钮索引.
 func XMenuBar_DeleteButton(hEle int, nIndex int) bool {
 	r, _, _ := xMenuBar_DeleteButton.Call(uintptr(hEle), uintptr(nIndex))
-	return int(r) != 0
+	return r != 0
 }
 
 // 菜单条_启用自动宽度, 根据内容自动调整宽度.
@@ -75,5 +75,5 @@ func XMenuBar_EnableAutoWidth(hEle int, bEnable bool) int {
 // nIndex: 菜单条按钮索引.
 func XMenuBar_GetButton(hEle int, nIndex int) bool {
 	r, _, _ := xMenuBar_GetButton.Call(uintptr(hEle), uintptr(nIndex))
-	return int(r) != 0
+	return r != 0
 }

@@ -33,7 +33,7 @@ func XEle_Create(x int, y int, cx int, cy int, hParent int) int {
 // pFun: 事件函数指针.
 func XEle_RegEventC(hEle int, nEvent xcc.XE_, pFun interface{}) bool {
 	r, _, _ := xEle_RegEventC.Call(uintptr(hEle), uintptr(nEvent), syscall.NewCallback(pFun))
-	return int(r) != 0
+	return r != 0
 }
 
 // 元素_注册事件C1, 注册事件C1方式, 省略1参数.
@@ -45,7 +45,7 @@ func XEle_RegEventC(hEle int, nEvent xcc.XE_, pFun interface{}) bool {
 // pFun: 事件函数指针.
 func XEle_RegEventC1(hEle int, nEvent xcc.XE_, pFun interface{}) bool {
 	r, _, _ := xEle_RegEventC1.Call(uintptr(hEle), uintptr(nEvent), syscall.NewCallback(pFun))
-	return int(r) != 0
+	return r != 0
 }
 
 // 元素_移除事件C.
@@ -57,7 +57,7 @@ func XEle_RegEventC1(hEle int, nEvent xcc.XE_, pFun interface{}) bool {
 // pFun: 事件函数指针.
 func XEle_RemoveEventC(hEle int, nEvent xcc.XE_, pFun interface{}) bool {
 	r, _, _ := xEle_RemoveEventC.Call(uintptr(hEle), uintptr(nEvent), syscall.NewCallback(pFun))
-	return int(r) != 0
+	return r != 0
 }
 
 // 元素_发送事件.
@@ -229,7 +229,7 @@ func XEle_SetCursor(hEle int, hCursor int) int {
 // hChild: 要添加的子元素句柄或形状对象句柄.
 func XEle_AddChild(hEle int, hChild int) bool {
 	r, _, _ := xEle_AddChild.Call(uintptr(hEle), uintptr(hChild))
-	return int(r) != 0
+	return r != 0
 }
 
 // 元素_插入子对象, 插入子对象到指定位置.
@@ -241,7 +241,7 @@ func XEle_AddChild(hEle int, hChild int) bool {
 // index: 插入位置索引.
 func XEle_InsertChild(hEle int, hChild int, index int) bool {
 	r, _, _ := xEle_InsertChild.Call(uintptr(hEle), uintptr(hChild), uintptr(index))
-	return int(r) != 0
+	return r != 0
 }
 
 // 元素_置坐标, 如果返回0坐标没有改变, 如果大小改变返回2(触发XE_SIZE), 否则返回1(仅改变left,top,没有改变大小).
@@ -339,7 +339,7 @@ func XEle_SetPositionLogic(hEle int, x int, y int, bRedraw bool, nFlags xcc.Adju
 // hEle: 元素句柄.
 func XEle_IsDrawFocus(hEle int) bool {
 	r, _, _ := xEle_IsDrawFocus.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 元素_判断启用, 元素是否为启用状态.
@@ -347,7 +347,7 @@ func XEle_IsDrawFocus(hEle int) bool {
 // hEle: 元素句柄.
 func XEle_IsEnable(hEle int) bool {
 	r, _, _ := xEle_IsEnable.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 元素_判断启用焦点, 元素是否启用焦点.
@@ -355,7 +355,7 @@ func XEle_IsEnable(hEle int) bool {
 // hEle: 元素句柄.
 func XEle_IsEnableFocus(hEle int) bool {
 	r, _, _ := xEle_IsEnableFocus.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 元素_判断鼠标穿透, 元素是否启用鼠标穿透.
@@ -363,7 +363,7 @@ func XEle_IsEnableFocus(hEle int) bool {
 // hEle: 元素句柄.
 func XEle_IsMouseThrough(hEle int) bool {
 	r, _, _ := xEle_IsMouseThrough.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 元素_测试点击元素, 检测坐标点所在元素, 包含子元素的子元素.
@@ -381,7 +381,7 @@ func XEle_HitChildEle(hEle int, pPt *POINT) int {
 // hEle: 元素句柄.
 func XEle_IsBkTransparent(hEle int) bool {
 	r, _, _ := xEle_IsBkTransparent.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 元素_判断启用事件_XE_PAINT_END, 是否启XE_PAINT_END用事件.
@@ -389,7 +389,7 @@ func XEle_IsBkTransparent(hEle int) bool {
 // hEle: 元素句柄.
 func XEle_IsEnableEvent_XE_PAINT_END(hEle int) bool {
 	r, _, _ := xEle_IsEnableEvent_XE_PAINT_END.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 元素_判断接受TAB, 是否接受Tab键输入; 例如: XRichEdit, XEdit.
@@ -397,7 +397,7 @@ func XEle_IsEnableEvent_XE_PAINT_END(hEle int) bool {
 // hEle: 元素句柄.
 func XEle_IsKeyTab(hEle int) bool {
 	r, _, _ := xEle_IsKeyTab.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 元素_判断接受切换焦点, 是否接受通过键盘切换焦点(方向键,TAB键).
@@ -405,7 +405,7 @@ func XEle_IsKeyTab(hEle int) bool {
 // hEle: 元素句柄.
 func XEle_IsSwitchFocus(hEle int) bool {
 	r, _, _ := xEle_IsSwitchFocus.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 元素_判断启用_XE_MOUSEWHEEL, 判断是否启用鼠标滚动事件, 如果禁用那么事件会发送给他的父元素.
@@ -413,7 +413,7 @@ func XEle_IsSwitchFocus(hEle int) bool {
 // hEle: 元素句柄.
 func XEle_IsEnable_XE_MOUSEWHEEL(hEle int) bool {
 	r, _, _ := xEle_IsEnable_XE_MOUSEWHEEL.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 元素_判断为子元素, 判断hChildEle是否为hEle的子元素.
@@ -423,7 +423,7 @@ func XEle_IsEnable_XE_MOUSEWHEEL(hEle int) bool {
 // hChildEle: 子元素句柄.
 func XEle_IsChildEle(hEle int, hChildEle int) bool {
 	r, _, _ := xEle_IsChildEle.Call(uintptr(hEle), uintptr(hChildEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 元素_判断启用画布, 判断是否启用画布.
@@ -431,7 +431,7 @@ func XEle_IsChildEle(hEle int, hChildEle int) bool {
 // hEle: 元素句柄.
 func XEle_IsEnableCanvas(hEle int) bool {
 	r, _, _ := xEle_IsEnableCanvas.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 元素_判断焦点, 判断是否拥有焦点.
@@ -439,7 +439,7 @@ func XEle_IsEnableCanvas(hEle int) bool {
 // hEle: 元素句柄.
 func XEle_IsFocus(hEle int) bool {
 	r, _, _ := xEle_IsFocus.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 元素_判断焦点扩展, 判断该元素或该元素的子元素是否拥有焦点.
@@ -447,7 +447,7 @@ func XEle_IsFocus(hEle int) bool {
 // hEle: 元素句柄.
 func XEle_IsFocusEx(hEle int) bool {
 	r, _, _ := xEle_IsFocusEx.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 元素_启用, 启用或禁用元素.
@@ -575,7 +575,7 @@ func XEle_Remove(hEle int) int {
 // index: 位置索引.
 func XEle_SetZOrder(hEle int, index int) bool {
 	r, _, _ := xEle_SetZOrder.Call(uintptr(hEle), uintptr(index))
-	return int(r) != 0
+	return r != 0
 }
 
 // 元素_置Z序扩展, 设置元素Z序.
@@ -587,7 +587,7 @@ func XEle_SetZOrder(hEle int, index int) bool {
 // nType: 类型, Zorder_.
 func XEle_SetZOrderEx(hEle int, hDestEle int, nType xcc.Zorder_) bool {
 	r, _, _ := xEle_SetZOrderEx.Call(uintptr(hEle), uintptr(hDestEle), uintptr(nType))
-	return int(r) != 0
+	return r != 0
 }
 
 // 元素_取Z序, 获取元素Z序索引, 位置索引.
@@ -605,7 +605,7 @@ func XEle_GetZOrder(hEle int) int {
 // bTopmost: 是否置顶显示.
 func XEle_EnableTopmost(hEle int, bTopmost bool) bool {
 	r, _, _ := xEle_EnableTopmost.Call(uintptr(hEle), common.BoolPtr(bTopmost))
-	return int(r) != 0
+	return r != 0
 }
 
 // 元素_重绘.
@@ -953,7 +953,7 @@ func XEle_GetStateFlags(hEle int) xcc.CombinedState {
 // pRect: 区域坐标.
 func XEle_DrawFocus(hEle int, hDraw int, pRect *RECT) bool {
 	r, _, _ := xEle_DrawFocus.Call(uintptr(hEle), uintptr(hDraw), uintptr(unsafe.Pointer(pRect)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 元素_绘制, 在自绘事件函数中, 用户手动调用绘制元素, 以便控制绘制顺序.
@@ -1029,7 +1029,7 @@ func XEle_EnableTransparentChannel(hEle int, bEnable bool) int {
 // uElapse: 延时毫秒.
 func XEle_SetXCTimer(hEle int, nIDEvent int, uElapse int) bool {
 	r, _, _ := xEle_SetXCTimer.Call(uintptr(hEle), uintptr(nIDEvent), uintptr(uElapse))
-	return int(r) != 0
+	return r != 0
 }
 
 // 元素_关闭炫彩定时器, 关闭元素定时器.
@@ -1039,7 +1039,7 @@ func XEle_SetXCTimer(hEle int, nIDEvent int, uElapse int) bool {
 // nIDEvent: 事件ID.
 func XEle_KillXCTimer(hEle int, nIDEvent int) bool {
 	r, _, _ := xEle_KillXCTimer.Call(uintptr(hEle), uintptr(nIDEvent))
-	return int(r) != 0
+	return r != 0
 }
 
 // 元素_置工具提示, 设置工具提示内容.

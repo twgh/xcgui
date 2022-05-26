@@ -382,19 +382,17 @@ func (a *App) GetTextShowSizeEx(pString string, length int, hFontX int, nTextAli
 	return xc.XC_GetTextShowSizeEx(pString, length, hFontX, nTextAlign, pOutSize)
 }
 
-// 炫彩_取文本显示矩形.
+// GetTextShowRect 炫彩_取文本显示矩形.
+//	@param pString 字符串.
+//	@param length 字符串长度.
+//	@param hFontX 字体.
+//	@param nTextAlign 文本对齐: xcc.TextFormatFlag_.
+//	@param width 最大宽度.
+//	@param pOutSize 接收返回大小.
+//	@return int
 //
-// pString: 字符串.
-//
-// length: 字符串长度.
-//
-// hFontX: 字体.
-//
-// width: 最大宽度.
-//
-// pOutSize: 接收返回大小.
-func (a *App) GetTextShowRect(pString string, length int, hFontX int, width int, pOutSize *xc.SIZE) int {
-	return xc.XC_GetTextShowRect(pString, length, hFontX, width, pOutSize)
+func (a *App) GetTextShowRect(pString string, length int, hFontX int, nTextAlign xcc.TextFormatFlag_, width int, pOutSize *xc.SIZE) int {
+	return xc.XC_GetTextShowRect(pString, length, hFontX, nTextAlign, width, pOutSize)
 }
 
 // 炫彩_置默认字体.

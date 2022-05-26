@@ -31,7 +31,7 @@ func XLayout_CreateEx(hParent int) int {
 // hEle: 元素句柄.
 func XLayout_IsEnableLayout(hEle int) bool {
 	r, _, _ := xLayout_IsEnableLayout.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 布局_启用, 启用布局功能.

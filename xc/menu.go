@@ -174,7 +174,7 @@ func XMenu_EnableDrawItem(hMenu int, bEnable bool) int {
 // nPosition: 弹出位置, Menu_Popup_Position_.
 func XMenu_Popup(hMenu int, hParentWnd int, x int, y int, hParentEle int, nPosition xcc.Menu_Popup_Position_) bool {
 	r, _, _ := xMenu_Popup.Call(uintptr(hMenu), uintptr(hParentWnd), uintptr(x), uintptr(y), uintptr(hParentEle), uintptr(nPosition))
-	return int(r) != 0
+	return r != 0
 }
 
 // 菜单_销毁.
@@ -212,7 +212,7 @@ func XMenu_SetBkImage(hMenu int, hImage int) int {
 // pText: 文本内容.
 func XMenu_SetItemText(hMenu int, nID int, pText string) bool {
 	r, _, _ := xMenu_SetItemText.Call(uintptr(hMenu), uintptr(nID), common.StrPtr(pText))
-	return int(r) != 0
+	return r != 0
 }
 
 // 菜单_取项文本.
@@ -244,7 +244,7 @@ func XMenu_GetItemTextLength(hMenu int, nID int) int {
 // hIcon: 菜单项图标句柄.
 func XMenu_SetItemIcon(hMenu int, nID int, hIcon int) bool {
 	r, _, _ := xMenu_SetItemIcon.Call(uintptr(hMenu), uintptr(nID), uintptr(hIcon))
-	return int(r) != 0
+	return r != 0
 }
 
 // 菜单_置项标志.
@@ -256,7 +256,7 @@ func XMenu_SetItemIcon(hMenu int, nID int, hIcon int) bool {
 // uFlags: 标识, Menu_Item_Flag_.
 func XMenu_SetItemFlags(hMenu int, nID int, uFlags int) bool {
 	r, _, _ := xMenu_SetItemFlags.Call(uintptr(hMenu), uintptr(nID), uintptr(uFlags))
-	return int(r) != 0
+	return r != 0
 }
 
 // 菜单_置项高度.
@@ -336,7 +336,7 @@ func XMenu_GetItemCount(hMenu int) int {
 // bCheck: 勾选TRUE.
 func XMenu_SetItemCheck(hMenu int, nID int, bCheck bool) bool {
 	r, _, _ := xMenu_SetItemCheck.Call(uintptr(hMenu), uintptr(nID), common.BoolPtr(bCheck))
-	return int(r) != 0
+	return r != 0
 }
 
 // 菜单_判断项勾选, 判断菜单项是否勾选.
@@ -346,7 +346,7 @@ func XMenu_SetItemCheck(hMenu int, nID int, bCheck bool) bool {
 // nID: 菜单项ID.
 func XMenu_IsItemCheck(hMenu int, nID int) bool {
 	r, _, _ := xMenu_IsItemCheck.Call(uintptr(hMenu), uintptr(nID))
-	return int(r) != 0
+	return r != 0
 }
 
 // 菜单_置项宽度, 此宽度为文本显示区域宽度, 不包含侧边条和与文本间隔.
@@ -358,5 +358,5 @@ func XMenu_IsItemCheck(hMenu int, nID int) bool {
 // nWidth: 指定文本区域宽度.
 func XMenu_SetItemWidth(hMenu int, nID int, nWidth int) bool {
 	r, _, _ := xMenu_SetItemWidth.Call(uintptr(hMenu), uintptr(nID), uintptr(nWidth))
-	return int(r) != 0
+	return r != 0
 }

@@ -289,11 +289,12 @@ func (e *Edit) InsertText(iRow int, iCol int, pString string) int {
 	return xc.XEdit_InsertText(e.Handle, iRow, iCol, pString)
 }
 
-// 编辑框_插入文本模拟用户操作, 自动刷新UI, 支持撤销/恢复.
+// AddTextUser 编辑框_插入文本模拟用户操作, 自动刷新UI, 支持撤销/恢复.
+//	@param pString 字符串.
+//	@return int
 //
-// pString: 字符串.
-func (e *Edit) InsertTextUser(pString string) int {
-	return xc.XEdit_InsertTextUser(e.Handle, pString)
+func (e *Edit) AddTextUser(pString string) int {
+	return xc.XEdit_AddTextUser(e.Handle, pString)
 }
 
 // 编辑框_添加文本.
@@ -405,13 +406,12 @@ func (e *Edit) SetRowHeightEx(iRow int, nHeight int) int {
 	return xc.XEdit_SetRowHeightEx(e.Handle, iRow, nHeight)
 }
 
-// 编辑框_置当前位置.
+// SetCurPos 编辑框_置当前位置.
+//	@param iRow 行索引.
+//	@return int
 //
-// iRow: 行索引.
-//
-// iCol: 列索引.
-func (e *Edit) SetCurPos(iRow int, iCol int) int {
-	return xc.XEdit_SetCurPos(e.Handle, iRow, iCol)
+func (e *Edit) SetCurPos(iRow int) int {
+	return xc.XEdit_SetCurPos(e.Handle, iRow)
 }
 
 // 编辑框_取当前位置点, 返回范围位置点.
@@ -454,13 +454,13 @@ func (e *Edit) AutoScrollEx(iRow int, iCol int) bool {
 	return xc.XEdit_AutoScrollEx(e.Handle, iRow, iCol)
 }
 
-// 编辑框_转换位置, 转换位置点到行列.
+// PosToRowCol 编辑框_转换位置, 转换位置点到行列.
+//	@param iPos 位置点.
+//	@param pInfo 行列.
+//	@return int
 //
-// iPos: 位置点.
-//
-// pInfo: 行列.
-func (e *Edit) PositionToInfo(iPos int, pInfo *xc.Position_) int {
-	return xc.XEdit_PositionToInfo(e.Handle, iPos, pInfo)
+func (e *Edit) PosToRowCol(iPos int, pInfo *xc.Position_) int {
+	return xc.XEdit_PosToRowCol(e.Handle, iPos, pInfo)
 }
 
 // 编辑框_选择全部.
@@ -584,6 +584,100 @@ func (e *Edit) AddChatEnd() int {
 // nIndentation: 缩进值.
 func (e *Edit) SetChatIndentation(nIndentation int) int {
 	return xc.XEdit_SetChatIndentation(e.Handle, nIndentation)
+}
+
+// 编辑框_置行间隔, 设置行间隔大小, 多行模式有效.
+//
+// nSpace: 行间隔大小.
+func (e *Edit) SetRowSpace(nSpace int) int {
+	return xc.XEdit_SetRowSpace(e.Handle, nSpace)
+}
+
+// 编辑框_置当前位置扩展.
+//
+// iRow: 行索引.
+//
+// iCol: 列索引.
+func (e *Edit) SetCurPosEx(iRow int, iCol int) int {
+	return xc.XEdit_SetCurPosEx(e.Handle, iRow, iCol)
+}
+
+// 编辑框_取当前位置扩展.
+//
+// iRow: 返回行索引.
+//
+// iCol: 返回列索引.
+func (e *Edit) GetCurPosEx(iRow *int, iCol *int) int {
+	return xc.XEdit_GetCurPosEx(e.Handle, iRow, iCol)
+}
+
+// 编辑框_移动到末尾.
+func (e *Edit) MoveEnd() int {
+	return xc.XEdit_MoveEnd(e.Handle)
+}
+
+// 编辑框_行列到位置, 返回位置点.
+//
+// iRow: 行索引.
+//
+// iCol: 列索引.
+func (e *Edit) RowColToPos(iRow int, iCol int) int {
+	return xc.XEdit_RowColToPos(e.Handle, iRow, iCol)
+}
+
+// 编辑框_置后备字体, 置中文字体. 如果已设置, 当遇到中文字符时使用后备字体, 解决不支持中文的字体的问题
+//
+// hFont: 字体.
+func (e *Edit) SetBackFont(hFont int) int {
+	return xc.XEdit_SetBackFont(e.Handle, hFont)
+}
+
+// 编辑框_释放样式.
+//
+// iStyle: 样式.
+func (e *Edit) ReleaseStyle(iStyle int) bool {
+	return xc.XEdit_ReleaseStyle(e.Handle, iStyle)
+}
+
+// 编辑框_修改样式.
+//
+// iStyle: 样式索引.
+//
+// hFont: 字体句柄.
+//
+// color: ABGR颜色.
+//
+// bColor: 是否使用颜色.
+func (e *Edit) ModifyStyle(iStyle int, hFont int, color int, bColor bool) bool {
+	return xc.XEdit_ModifyStyle(e.Handle, iStyle, hFont, color, bColor)
+}
+
+// 编辑框_置空格大小.
+//
+// size: 空格大小.
+func (e *Edit) SetSpaceSize(size int) int {
+	return xc.XEdit_SetSpaceSize(e.Handle, size)
+}
+
+// 编辑框_置字符间距.
+//
+// size: 英文字符间距大小.
+//
+// sizeZh: 中文字符间距大小.
+func (e *Edit) SetCharSpaceSize(size int, sizeZh int) int {
+	return xc.XEdit_SetCharSpaceSize(e.Handle, size, sizeZh)
+}
+
+// 编辑框_取选择文本长度, 不包括非文本内容, 返回文本内容长度.
+func (e *Edit) GetSelectTextLength() int {
+	return xc.XEdit_GetSelectTextLength(e.Handle)
+}
+
+// 编辑框_置选择文本样式.
+//
+// iStyle: 样式索引.
+func (e *Edit) SetSelectTextStyle(iStyle int) int {
+	return xc.XEdit_SetSelectTextStyle(e.Handle, iStyle)
 }
 
 /*

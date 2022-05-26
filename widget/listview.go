@@ -657,6 +657,64 @@ func (l *ListView) Item_GetImageEx(iGroup int, iItem int, pName string) int {
 	return xc.XListView_Item_GetImageEx(l.Handle, iGroup, iItem, pName)
 }
 
+// 列表视_组取文本, 返回文本内容.
+//
+// iGroup: 组索引.
+//
+// iColumn: 列索引.
+func (l *ListView) Group_GetText(iGroup int, iColumn int) string {
+	return xc.XListView_Group_GetText(l.Handle, iGroup, iColumn)
+}
+
+// 列表视_组取文本扩展, 返回文本内容.
+//
+// iGroup: 组索引.
+//
+// pName: 字段名称.
+func (l *ListView) Group_GetTextEx(iGroup int, pName string) string {
+	return xc.XListView_Group_GetTextEx(l.Handle, iGroup, pName)
+}
+
+// 列表视_组取图片, 返回图片句柄.
+//
+// iGroup: 组索引.
+//
+// iColumn: 列索引.
+func (l *ListView) Group_GetImage(iGroup int, iColumn int) int {
+	return xc.XListView_Group_GetImage(l.Handle, iGroup, iColumn)
+}
+
+// 列表视_组取图片扩展, 返回图片句柄.
+//
+// iGroup: 组索引.
+//
+// pName: 字段名称.
+func (l *ListView) Group_GetImageEx(iGroup int, pName string) int {
+	return xc.XListView_Group_GetImageEx(l.Handle, iGroup, pName)
+}
+
+// 列表视_项取文本, 返回文本内容.
+//
+// iGroup: 组索引.
+//
+// iItem: 项索引.
+//
+// iColumn: 列索引.
+func (l *ListView) Item_GetText(iGroup int, iItem int, iColumn int) string {
+	return xc.XListView_Item_GetText(l.Handle, iGroup, iItem, iColumn)
+}
+
+// 列表视_项取图片, 返回图片句柄.
+//
+// iGroup: 组索引.
+//
+// iItem: 项索引.
+//
+// iColumn: 列索引.
+func (l *ListView) Item_GetImage(iGroup int, iItem int, iColumn int) int {
+	return xc.XListView_Item_GetImage(l.Handle, iGroup, iItem, iColumn)
+}
+
 /*
 以下都是事件
 */

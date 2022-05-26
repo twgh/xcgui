@@ -72,7 +72,7 @@ func XPane_GetCaptionHeight(hEle int) int {
 // hEle: 元素句柄.
 func XPane_IsShowPane(hEle int) bool {
 	r, _, _ := xPane_IsShowPane.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
 }
 
 // 窗格_置大小, 设置窗格大小.
@@ -105,19 +105,23 @@ func XPane_GetViewRect(hEle int, pRect *RECT) int {
 	return int(r)
 }
 
-// 窗格_隐藏.
+// XPane_HidePane 窗格_隐藏.
+//	@param hEle 元素句柄.
+//	@param bGroupActivate 当为窗格组成员时, 延迟处理窗格组成员激活的切换.
+//	@return int
 //
-// hEle: 元素句柄.
-func XPane_HidePane(hEle int) int {
-	r, _, _ := xPane_HidePane.Call(uintptr(hEle))
+func XPane_HidePane(hEle int, bGroupActivate bool) int {
+	r, _, _ := xPane_HidePane.Call(uintptr(hEle), common.BoolPtr(bGroupActivate))
 	return int(r)
 }
 
-// 窗格_显示.
+// XPane_ShowPane 窗格_显示.
+//	@param hEle 元素句柄.
+//	@param bGroupActivate 如果是窗格组成员, 那么窗格组切换当前窗格为显示状态.
+//	@return int
 //
-// hEle: 元素句柄.
-func XPane_ShowPane(hEle int) int {
-	r, _, _ := xPane_ShowPane.Call(uintptr(hEle))
+func XPane_ShowPane(hEle int, bGroupActivate bool) int {
+	r, _, _ := xPane_ShowPane.Call(uintptr(hEle), common.BoolPtr(bGroupActivate))
 	return int(r)
 }
 
@@ -160,5 +164,13 @@ func XPane_DrawPane(hEle int, hDraw int) int {
 // hEle: 元素句柄.
 func XPane_SetSelect(hEle int) bool {
 	r, _, _ := xPane_SetSelect.Call(uintptr(hEle))
-	return int(r) != 0
+	return r != 0
+}
+
+// 窗格_是否激活. 判断窗格是否激活, 当为组成员时有效.
+//
+// hEle: 元素句柄.
+func XPane_IsGroupActivate(hEle int) bool {
+	r, _, _ := xPane_IsGroupActivate.Call(uintptr(hEle))
+	return r != 0
 }

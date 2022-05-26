@@ -81,7 +81,7 @@ func XAdListView_Group_AddItemImageEx(hAdapter int, pName string, hImage int, iP
 // pValue: 值.
 func XAdListView_Group_SetText(hAdapter int, iGroup int, iColumn int, pValue string) bool {
 	r, _, _ := xAdListView_Group_SetText.Call(uintptr(hAdapter), uintptr(iGroup), uintptr(iColumn), common.StrPtr(pValue))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器列表视_组设置文本扩展, 组操作, 设置指定项数据.
@@ -95,7 +95,7 @@ func XAdListView_Group_SetText(hAdapter int, iGroup int, iColumn int, pValue str
 // pValue: 值.
 func XAdListView_Group_SetTextEx(hAdapter int, iGroup int, pName string, pValue string) bool {
 	r, _, _ := xAdListView_Group_SetTextEx.Call(uintptr(hAdapter), uintptr(iGroup), common.StrPtr(pName), common.StrPtr(pValue))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器列表视_组设置图片, 组操作, 设置指定项数据.
@@ -109,7 +109,7 @@ func XAdListView_Group_SetTextEx(hAdapter int, iGroup int, pName string, pValue 
 // hImage: 图片句柄.
 func XAdListView_Group_SetImage(hAdapter int, iGroup int, iColumn int, hImage int) bool {
 	r, _, _ := xAdListView_Group_SetImage.Call(uintptr(hAdapter), uintptr(iGroup), uintptr(iColumn), uintptr(hImage))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器列表视_组设置图片扩展, 组操作, 设置指定项数据.
@@ -123,7 +123,7 @@ func XAdListView_Group_SetImage(hAdapter int, iGroup int, iColumn int, hImage in
 // hImage: 图片句柄.
 func XAdListView_Group_SetImageEx(hAdapter int, iGroup int, pName string, hImage int) bool {
 	r, _, _ := xAdListView_Group_SetImageEx.Call(uintptr(hAdapter), uintptr(iGroup), common.StrPtr(pName), uintptr(hImage))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器列表视_项添加列, 项操作, 添加列.
@@ -221,7 +221,7 @@ func XAdListView_Item_AddItemImageEx(hAdapter int, iGroup int, pName string, hIm
 // iGroup: 组索引.
 func XAdListView_Group_DeleteItem(hAdapter int, iGroup int) bool {
 	r, _, _ := xAdListView_Group_DeleteItem.Call(uintptr(hAdapter), uintptr(iGroup))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器列表视_删除全部子项, 删除指定组的所有子项.
@@ -243,7 +243,7 @@ func XAdListView_Group_DeleteAllChildItem(hAdapter int, iGroup int) int {
 // iItem: 项索引.
 func XAdListView_Item_DeleteItem(hAdapter int, iGroup int, iItem int) bool {
 	r, _, _ := xAdListView_Item_DeleteItem.Call(uintptr(hAdapter), uintptr(iGroup), uintptr(iItem))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器列表视_删除全部, 删除所有(组,项,列).
@@ -331,7 +331,7 @@ func XAdListView_Item_GetImageEx(hAdapter int, iGroup int, iItem int, pName stri
 // pValue: 值.
 func XAdListView_Item_SetText(hAdapter int, iGroup int, iItem int, iColumn int, pValue string) bool {
 	r, _, _ := xAdListView_Item_SetText.Call(uintptr(hAdapter), uintptr(iGroup), uintptr(iItem), uintptr(iColumn), common.StrPtr(pValue))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器列表视_项置文本扩展, 项操作, 数据填充指定列.
@@ -347,7 +347,7 @@ func XAdListView_Item_SetText(hAdapter int, iGroup int, iItem int, iColumn int, 
 // pValue: 值.
 func XAdListView_Item_SetTextEx(hAdapter int, iGroup int, iItem int, pName string, pValue string) bool {
 	r, _, _ := xAdListView_Item_SetTextEx.Call(uintptr(hAdapter), uintptr(iGroup), uintptr(iItem), common.StrPtr(pName), common.StrPtr(pValue))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器列表视_项置图片, 项操作, 数据填充指定列.
@@ -363,7 +363,7 @@ func XAdListView_Item_SetTextEx(hAdapter int, iGroup int, iItem int, pName strin
 // hImage: 图片句柄.
 func XAdListView_Item_SetImage(hAdapter int, iGroup int, iItem int, iColumn int, hImage int) bool {
 	r, _, _ := xAdListView_Item_SetImage.Call(uintptr(hAdapter), uintptr(iGroup), uintptr(iItem), uintptr(iColumn), uintptr(hImage))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器列表视_项置图片扩展, 项操作, 数据填充指定列.
@@ -379,5 +379,81 @@ func XAdListView_Item_SetImage(hAdapter int, iGroup int, iItem int, iColumn int,
 // hImage: 图片句柄.
 func XAdListView_Item_SetImageEx(hAdapter int, iGroup int, iItem int, pName string, hImage int) bool {
 	r, _, _ := xAdListView_Item_SetImageEx.Call(uintptr(hAdapter), uintptr(iGroup), uintptr(iItem), common.StrPtr(pName), uintptr(hImage))
-	return int(r) != 0
+	return r != 0
+}
+
+// 数据适配器列表视_组取文本, 返回文本内容.
+//
+// hAdapter: 数据适配器句柄.
+//
+// iGroup: 组索引.
+//
+// iColumn: 列索引.
+func XAdListView_Group_GetText(hAdapter int, iGroup int, iColumn int) string {
+	r, _, _ := xAdListView_Group_GetText.Call(uintptr(hAdapter), uintptr(iGroup), uintptr(iColumn))
+	return common.UintPtrToString(r)
+}
+
+// 数据适配器列表视_组取文本扩展, 返回文本内容.
+//
+// hAdapter: 数据适配器句柄.
+//
+// iGroup: 组索引.
+//
+// pName: 字段名称.
+func XAdListView_Group_GetTextEx(hAdapter int, iGroup int, pName string) string {
+	r, _, _ := xAdListView_Group_GetTextEx.Call(uintptr(hAdapter), uintptr(iGroup), common.StrPtr(pName))
+	return common.UintPtrToString(r)
+}
+
+// 数据适配器列表视_组取图片, 返回图片句柄.
+//
+// hAdapter: 数据适配器句柄.
+//
+// iGroup: 组索引.
+//
+// iColumn: 列索引.
+func XAdListView_Group_GetImage(hAdapter int, iGroup int, iColumn int) int {
+	r, _, _ := xAdListView_Group_GetImage.Call(uintptr(hAdapter), uintptr(iGroup), uintptr(iColumn))
+	return int(r)
+}
+
+// 数据适配器列表视_组取图片扩展, 返回图片句柄.
+//
+// hAdapter: 数据适配器句柄.
+//
+// iGroup: 组索引.
+//
+// pName: 字段名称.
+func XAdListView_Group_GetImageEx(hAdapter int, iGroup int, pName string) int {
+	r, _, _ := xAdListView_Group_GetImageEx.Call(uintptr(hAdapter), uintptr(iGroup), common.StrPtr(pName))
+	return int(r)
+}
+
+// 数据适配器列表视_项取文本. 项操作, 返回项文本内容.
+//
+// hAdapter: 数据适配器句柄.
+//
+// iGroup: 组索引.
+//
+// iItem: 项索引.
+//
+// iColumn: 列索引.
+func XAdListView_Item_GetText(hAdapter int, iGroup int, iItem int, iColumn int) string {
+	r, _, _ := xAdListView_Item_GetText.Call(uintptr(hAdapter), uintptr(iGroup), uintptr(iItem), uintptr(iColumn))
+	return common.UintPtrToString(r)
+}
+
+// 数据适配器列表视_项取图片. 项操作, 返回项图片句柄.
+//
+// hAdapter: 数据适配器句柄.
+//
+// iGroup: 组索引.
+//
+// iItem: 项索引.
+//
+// iColumn: 列索引.
+func XAdListView_Item_GetImage(hAdapter int, iGroup int, iItem int, iColumn int) int {
+	r, _, _ := xAdListView_Item_GetImage.Call(uintptr(hAdapter), uintptr(iGroup), uintptr(iItem), uintptr(iColumn))
+	return int(r)
 }

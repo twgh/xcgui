@@ -748,3 +748,15 @@ const (
 	BkObject_Align_Flag_Center_v                                  // 垂直居中, 当设置此标识时, 外间距(margin.top)代表高度;
 	BkObject_Align_Flag_No       BkObject_Align_Flag_ = 0         // 无
 )
+
+// FrameWnd_Cell_Type_ 框架窗口单元格类型
+type FrameWnd_Cell_Type_ int
+
+const (
+	FrameWnd_Cell_Type_No         FrameWnd_Cell_Type_ = 0 // 无
+	FrameWnd_Cell_Type_Pane       FrameWnd_Cell_Type_ = 1 // 窗格
+	FrameWnd_Cell_Type_Group      FrameWnd_Cell_Type_ = 2 // 窗格组
+	FrameWnd_Cell_Type_BodyView   FrameWnd_Cell_Type_ = 3 // 主视图区
+	FrameWnd_Cell_Type_Top_Bottom FrameWnd_Cell_Type_ = 4 // 上下布局
+	FrameWnd_Cell_Type_Left_Right FrameWnd_Cell_Type_ = 5 // 左右布局
+)

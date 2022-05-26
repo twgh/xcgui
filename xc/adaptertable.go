@@ -176,7 +176,7 @@ func XAdTable_InsertItemImageEx(hAdapter int, iItem int, pName string, hImage in
 // pValue: 值.
 func XAdTable_SetItemText(hAdapter int, iItem int, iColumn int, pValue string) bool {
 	r, _, _ := xAdTable_SetItemText.Call(uintptr(hAdapter), uintptr(iItem), uintptr(iColumn), common.StrPtr(pValue))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器表_置项文本扩展, 设置项数据.
@@ -190,7 +190,7 @@ func XAdTable_SetItemText(hAdapter int, iItem int, iColumn int, pValue string) b
 // pValue: 值.
 func XAdTable_SetItemTextEx(hAdapter int, iItem int, pName string, pValue string) bool {
 	r, _, _ := xAdTable_SetItemTextEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(pName), common.StrPtr(pValue))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器表_置项整数值, 设置项数据.
@@ -204,7 +204,7 @@ func XAdTable_SetItemTextEx(hAdapter int, iItem int, pName string, pValue string
 // nValue: 值.
 func XAdTable_SetItemInt(hAdapter int, iItem int, iColumn int, nValue int) bool {
 	r, _, _ := xAdTable_SetItemInt.Call(uintptr(hAdapter), uintptr(iItem), uintptr(iColumn), uintptr(nValue))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器表_置项整数值扩展, 设置项数据.
@@ -218,7 +218,7 @@ func XAdTable_SetItemInt(hAdapter int, iItem int, iColumn int, nValue int) bool 
 // nValue: 值.
 func XAdTable_SetItemIntEx(hAdapter int, iItem int, pName string, nValue int) bool {
 	r, _, _ := xAdTable_SetItemIntEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(pName), uintptr(nValue))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器表_置项浮点值, 设置项数据.
@@ -232,7 +232,7 @@ func XAdTable_SetItemIntEx(hAdapter int, iItem int, pName string, nValue int) bo
 // fValue: 值.
 func XAdTable_SetItemFloat(hAdapter int, iItem int, iColumn int, fValue float32) bool {
 	r, _, _ := xAdTable_SetItemFloat.Call(uintptr(hAdapter), uintptr(iItem), uintptr(iColumn), common.Float32Ptr(fValue))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器表_置项浮点值扩展, 设置项数据.
@@ -246,7 +246,7 @@ func XAdTable_SetItemFloat(hAdapter int, iItem int, iColumn int, fValue float32)
 // fValue: 值.
 func XAdTable_SetItemFloatEx(hAdapter int, iItem int, pName string, fValue float32) bool {
 	r, _, _ := xAdTable_SetItemFloatEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(pName), common.Float32Ptr(fValue))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器表_置项图片, 设置项数据.
@@ -260,7 +260,7 @@ func XAdTable_SetItemFloatEx(hAdapter int, iItem int, pName string, fValue float
 // hImage: 图片句柄.
 func XAdTable_SetItemImage(hAdapter int, iItem int, iColumn int, hImage int) bool {
 	r, _, _ := xAdTable_SetItemImage.Call(uintptr(hAdapter), uintptr(iItem), uintptr(iColumn), uintptr(hImage))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器表_置项图片扩展, 设置项数据.
@@ -274,7 +274,7 @@ func XAdTable_SetItemImage(hAdapter int, iItem int, iColumn int, hImage int) boo
 // hImage: 图片句柄.
 func XAdTable_SetItemImageEx(hAdapter int, iItem int, pName string, hImage int) bool {
 	r, _, _ := xAdTable_SetItemImageEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(pName), uintptr(hImage))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器表_删除项, 删除项.
@@ -284,7 +284,7 @@ func XAdTable_SetItemImageEx(hAdapter int, iItem int, pName string, hImage int) 
 // iItem: 项索引.
 func XAdTable_DeleteItem(hAdapter int, iItem int) bool {
 	r, _, _ := xAdTable_DeleteItem.Call(uintptr(hAdapter), uintptr(iItem))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器表_删除项扩展, 删除多个项.
@@ -296,7 +296,7 @@ func XAdTable_DeleteItem(hAdapter int, iItem int) bool {
 // nCount: 删除项数量.
 func XAdTable_DeleteItemEx(hAdapter int, iItem int, nCount int) bool {
 	r, _, _ := xAdTable_DeleteItemEx.Call(uintptr(hAdapter), uintptr(iItem), uintptr(nCount))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器表_删除项全部, 删除所有项.
@@ -390,7 +390,7 @@ func XAdTable_GetItemImageEx(hAdapter int, iItem int, pName string) int {
 // pOutValue: 接收返还值.
 func XAdTable_GetItemInt(hAdapter int, iItem int, iColumn int, pOutValue *int) bool {
 	r, _, _ := xAdTable_GetItemInt.Call(uintptr(hAdapter), uintptr(iItem), uintptr(iColumn), uintptr(unsafe.Pointer(pOutValue)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器表_取项整数值扩展, 获取项值.
@@ -404,7 +404,7 @@ func XAdTable_GetItemInt(hAdapter int, iItem int, iColumn int, pOutValue *int) b
 // pOutValue: 接收返还值.
 func XAdTable_GetItemIntEx(hAdapter int, iItem int, pName string, pOutValue *int) bool {
 	r, _, _ := xAdTable_GetItemIntEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器表_取项浮点值, 获取项值.
@@ -418,7 +418,7 @@ func XAdTable_GetItemIntEx(hAdapter int, iItem int, pName string, pOutValue *int
 // pOutValue: 接收返还值.
 func XAdTable_GetItemFloat(hAdapter int, iItem int, iColumn int, pOutValue *float32) bool {
 	r, _, _ := xAdTable_GetItemFloat.Call(uintptr(hAdapter), uintptr(iItem), uintptr(iColumn), uintptr(unsafe.Pointer(pOutValue)))
-	return int(r) != 0
+	return r != 0
 }
 
 // 数据适配器表_取项浮点值扩展, 获取项值.
@@ -432,5 +432,5 @@ func XAdTable_GetItemFloat(hAdapter int, iItem int, iColumn int, pOutValue *floa
 // pOutValue: 接收返还值.
 func XAdTable_GetItemFloatEx(hAdapter int, iItem int, pName string, pOutValue *float32) bool {
 	r, _, _ := xAdTable_GetItemFloatEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
-	return int(r) != 0
+	return r != 0
 }
