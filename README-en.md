@@ -24,7 +24,7 @@ DirectUI design idea: there is no sub-window in the window, the interface elemen
 ## Get
 
 ```
-go get  github.com/twgh/xcgui
+go get github.com/twgh/xcgui
 ```
 
 ## Visualization UI Designer
