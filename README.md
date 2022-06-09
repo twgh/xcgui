@@ -73,10 +73,8 @@ func main() {
 
 | 网盘         | 下载地址                                                     |
 | ------------ | ------------------------------------------------------------ |
-| 百度网盘     | [下载](https://pan.baidu.com/s/1rC3unQGaxnRUCMm8z8qzvA?pwd=1111)，提取码：1111 |
-| OneDrive     | [下载](https://1drv.ms/u/s!ApZP3niad5hpdGuodyU_GvugJ_g?e=yBEKmm) |
-| Google Drive | [下载](https://drive.google.com/drive/folders/1MuisSsDIr1rjqTkdFIewOgb89SYdf5s6?usp=sharing) |
-| Github       | [下载](https://github.com/twgh/FileStorage/tree/main/xcgui)  |
+| 百度网盘     | [下载](https://pan.baidu.com/s/1rC3unQGaxnRUCMm8z8qzvA?pwd=1111) |
+| 蓝奏云     | [下载](https://wwi.lanzoup.com/b0cqd6nkb) |
 
 程序运行时需要把`XCGUI.dll`放到程序运行目录。
 
