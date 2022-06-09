@@ -26,7 +26,6 @@
 - 支持Direct2D，硬件加速，能更大程度的发挥硬件特性，创建高性能，高质量的2D图形。
 - 编译后，只需携带一个大小为2.5MB的xcgui.dll，没有其他依赖。
 - 有完善的中文官方文档：[中文官方文档](http://www.xcgui.com/doc-ui/)
-- 炫彩界面库官网：[www.xcgui.com](http://www.xcgui.com/)
 
 ## 获取
 
