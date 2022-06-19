@@ -774,7 +774,7 @@ func XEle_SetLockScroll(hEle int, bHorizon bool, bVertical bool) int {
 //
 // hEle: 元素句柄.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func XEle_SetTextColor(hEle int, color int) int {
 	r, _, _ := xEle_SetTextColor.Call(uintptr(hEle), uintptr(color))
 	return int(r)
@@ -800,7 +800,7 @@ func XEle_GetTextColorEx(hEle int) int {
 //
 // hEle: 元素句柄.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func XEle_SetFocusBorderColor(hEle int, color int) int {
 	r, _, _ := xEle_SetFocusBorderColor.Call(uintptr(hEle), uintptr(color))
 	return int(r)
@@ -862,7 +862,7 @@ func XEle_Destroy(hEle int) int {
 //
 // nState: 组合状态.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 //
 // width: 线宽.
 func XEle_AddBkBorder(hEle int, nState xcc.CombinedState, color int, width int) int {
@@ -876,7 +876,7 @@ func XEle_AddBkBorder(hEle int, nState xcc.CombinedState, color int, width int) 
 //
 // nState: 组合状态.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 func XEle_AddBkFill(hEle int, nState xcc.CombinedState, color int) int {
 	r, _, _ := xEle_AddBkFill.Call(uintptr(hEle), uintptr(nState), uintptr(color))
 	return int(r)

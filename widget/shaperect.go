@@ -68,14 +68,14 @@ func NewShapeRectByUIDName(name string) *ShapeRect {
 
 // 形状矩形_置边框色, 设置边框颜色.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func (s *ShapeRect) SetBorderColor(color int) int {
 	return xc.XShapeRect_SetBorderColor(s.Handle, color)
 }
 
 // 形状矩形_置填充色, 设置填充颜色.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func (s *ShapeRect) SetFillColor(color int) int {
 	return xc.XShapeRect_SetFillColor(s.Handle, color)
 }

@@ -305,8 +305,10 @@ func (l *List) BindAdapterHeader(hAdapter int) int {
 }
 
 // 列表_创建数据适配器, 创建数据适配器，根据绑定的项模板初始化数据适配器的列, 返回适配器句柄.
-func (l *List) CreateAdapter() int {
-	return xc.XList_CreateAdapter(l.Handle)
+//
+// colExtend_count:	列延伸-预计列表总列数, 默认值0; 限制最大延伸范围, 避免超出范围, 增加不必要的字段.
+func (l *List) CreateAdapter(colExtend_count int) int {
+	return xc.XList_CreateAdapter(l.Handle, colExtend_count)
 }
 
 // 列表_列表头创建数据适配器, 创建数据适配器，根据绑定的项模板初始化数据适配器的列, 返回适配器句柄.
@@ -792,7 +794,7 @@ func (l *List) GetCountColumn_AD() int {
 
 // 列表_置分割线颜色.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func (l *List) SetSplitLineColor(color int) int {
 	return xc.XList_SetSplitLineColor(l.Handle, color)
 }
@@ -817,6 +819,15 @@ func (l *List) SetItemHeight(iRow int, nHeight int, nSelHeight int) int {
 // pSelHeight: 选中时高度.
 func (l *List) GetItemHeight(iRow int, pHeight *int, pSelHeight *int) int {
 	return xc.XList_GetItemHeight(l.Handle, iRow, pHeight, pSelHeight)
+}
+
+// 列表_置拖动矩形颜色.
+//
+// color: ABGR 颜色值.
+//
+// width: 线宽度.
+func (l *List) SetDragRectColor(color, width int) int {
+	return xc.XList_SetDragRectColor(l.Handle, color, width)
 }
 
 /*

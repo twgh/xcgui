@@ -363,8 +363,10 @@ func XList_BindAdapterHeader(hEle int, hAdapter int) int {
 // 列表_创建数据适配器, 创建数据适配器，根据绑定的项模板初始化数据适配器的列, 返回适配器句柄.
 //
 // hEle: 元素句柄.
-func XList_CreateAdapter(hEle int) int {
-	r, _, _ := xList_CreateAdapter.Call(uintptr(hEle))
+//
+// colExtend_count:	列延伸-预计列表总列数, 默认值0; 限制最大延伸范围, 避免超出范围, 增加不必要的字段.
+func XList_CreateAdapter(hEle int, colExtend_count int) int {
+	r, _, _ := xList_CreateAdapter.Call(uintptr(hEle), uintptr(colExtend_count))
 	return int(r)
 }
 
@@ -1024,7 +1026,7 @@ func XList_GetCountColumn_AD(hEle int) int {
 //
 // hEle: 元素句柄.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func XList_SetSplitLineColor(hEle int, color int) int {
 	r, _, _ := xList_SetSplitLineColor.Call(uintptr(hEle), uintptr(color))
 	return int(r)
@@ -1055,5 +1057,17 @@ func XList_SetItemHeight(hEle int, iRow int, nHeight int, nSelHeight int) int {
 // pSelHeight: 选中时高度.
 func XList_GetItemHeight(hEle int, iRow int, pHeight *int, pSelHeight *int) int {
 	r, _, _ := xList_GetItemHeight.Call(uintptr(hEle), uintptr(iRow), uintptr(unsafe.Pointer(pHeight)), uintptr(unsafe.Pointer(pSelHeight)))
+	return int(r)
+}
+
+// 列表_置拖动矩形颜色.
+//
+// hEle: 元素句柄.
+//
+// color: ABGR 颜色值.
+//
+// width: 线宽度.
+func XList_SetDragRectColor(hEle int, color, width int) int {
+	r, _, _ := xList_SetDragRectColor.Call(uintptr(hEle), uintptr(color), uintptr(width))
 	return int(r)
 }

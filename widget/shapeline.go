@@ -81,7 +81,7 @@ func (s *ShapeLine) SetPosition(x1 int, y1 int, x2 int, y2 int) int {
 
 // 形状线_置颜色, 设置直线颜色.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func (s *ShapeLine) SetColor(color int) int {
 	return xc.XShapeLine_SetColor(s.Handle, color)
 }

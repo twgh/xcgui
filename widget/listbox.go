@@ -611,9 +611,18 @@ func (l *ListBox) GetCountColumn_AD() int {
 
 // 列表框_置分割线颜色.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func (l *ListBox) SetSplitLineColor(color int) int {
 	return xc.XListBox_SetSplitLineColor(l.Handle, color)
+}
+
+// 列表框_置拖动矩形颜色.
+//
+// color: ABGR 颜色值.
+//
+// width: 线宽度.
+func (l *ListBox) SetDragRectColor(color, width int) int {
+	return xc.XListBox_SetDragRectColor(l.Handle, color, width)
 }
 
 /*

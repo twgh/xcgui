@@ -371,14 +371,14 @@ func (i *Image) SetDrawTypeAdaptive(leftSize int, topSize int, rightSize int, bo
 
 // 图片_置透明色, 指定图片透明颜色.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 func (i *Image) SetTranColor(color int) int {
 	return xc.XImage_SetTranColor(i.Handle, color)
 }
 
 // 图片_置透明色扩展, 指定图片透明颜色及透明度.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 //
 // tranColor: 透明色的透明度.
 func (i *Image) SetTranColorEx(color int, tranColor uint8) int {
@@ -465,4 +465,13 @@ func (i *Image) GetRefCount() int {
 // 图片_销毁, 强制销毁图片, 谨慎使用, 建议使用 XImage_Release() 释放.
 func (i *Image) Destroy() int {
 	return xc.XImage_Destroy(i.Handle)
+}
+
+// 图片_置缩放大小, 启用缩放属性后有效, 值大于0有效.
+//
+// width: 宽度.
+//
+// height: 高度.
+func (i *Image) SetScaleSize(width, height int) int {
+	return xc.XImage_SetScaleSize(i.Handle, width, height)
 }

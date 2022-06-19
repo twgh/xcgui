@@ -49,7 +49,7 @@ func XBkM_AddInfo(hBkInfoM int, pText string) int {
 //
 // nState: 组合状态.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 //
 // width: 线宽.
 //
@@ -65,7 +65,7 @@ func XBkM_AddBorder(hBkInfoM int, nState xcc.CombinedState, color, width, id int
 //
 // nState: 组合状态.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 //
 // id: 背景对象ID, 可忽略(填0).
 func XBkM_AddFill(hBkInfoM int, nState xcc.CombinedState, color, id int) int {
@@ -185,7 +185,7 @@ func XBkM_SetInfo(hBkInfoM int, pText string) int {
 //
 // nState: 组合状态.
 //
-// color: 接收返回的ABGR颜色.
+// color: 接收返回的ABGR 颜色.
 func XBkM_GetStateTextColor(hBkInfoM int, nState xcc.CombinedState, color *int) bool {
 	r, _, _ := xBkM_GetStateTextColor.Call(uintptr(hBkInfoM), uintptr(nState), uintptr(unsafe.Pointer(color)))
 	return r != 0

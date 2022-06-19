@@ -341,17 +341,17 @@ func (w *windowBase) SetFont(hFontx int) int {
 
 // 窗口_置文本颜色.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func (w *windowBase) SetTextColor(color int) int {
 	return xc.XWnd_SetTextColor(w.Handle, color)
 }
 
-// 窗口_取文本颜色, 返回ABGR颜色.
+// 窗口_取文本颜色, 返回ABGR 颜色.
 func (w *windowBase) GetTextColor() int {
 	return xc.XWnd_GetTextColor(w.Handle)
 }
 
-// 窗口_取文本颜色扩展, 返回ABGR颜色.
+// 窗口_取文本颜色扩展, 返回ABGR 颜色.
 func (w *windowBase) GetTextColorEx() int {
 	return xc.XWnd_GetTextColorEx(w.Handle)
 }
@@ -522,7 +522,7 @@ func (w *windowBase) SetCaretPos(x, y, width, height int, bUpdate bool) int {
 
 // 窗口_置插入符颜色.
 //
-// color: 颜色值, ABGR颜色.
+// color: 颜色值, ABGR 颜色.
 func (w *windowBase) SetCaretColor(color int) int {
 	return xc.XWnd_SetCaretColor(w.Handle, color)
 }
@@ -653,7 +653,7 @@ func (w *windowBase) SetTransparentAlpha(alpha byte) int {
 
 // 窗口_置透明色.
 //
-// color: 窗口透明色, ABGR颜色.
+// color: 窗口透明色, ABGR 颜色.
 func (w *windowBase) SetTransparentColor(color int) int {
 	return xc.XWnd_SetTransparentColor(w.Handle, color)
 }
@@ -668,7 +668,7 @@ func (w *windowBase) SetTransparentColor(color int) int {
 //
 // bRightAngle: 是否强制直角.
 //
-// color: 阴影颜色, ABGR颜色.
+// color: 阴影颜色, ABGR 颜色.
 func (w *windowBase) SetShadowInfo(nSize int, nDepth byte, nAngeleSize int, bRightAngle bool, color int) int {
 	return xc.XWnd_SetShadowInfo(w.Handle, nSize, nDepth, nAngeleSize, bRightAngle, color)
 }
@@ -683,7 +683,7 @@ func (w *windowBase) SetShadowInfo(nSize int, nDepth byte, nAngeleSize int, bRig
 //
 // pbRightAngle: 是否强制直角.
 //
-// pColor: 阴影颜色, ABGR颜色.
+// pColor: 阴影颜色, ABGR 颜色.
 func (w *windowBase) GetShadowInfo(nSize *int, nDepth *byte, nAngeleSize *int, bRightAngle *bool, color *int) int {
 	return xc.XWnd_GetShadowInfo(w.Handle, nSize, nDepth, nAngeleSize, bRightAngle, color)
 }
@@ -738,7 +738,7 @@ func (w *windowBase) SetTitle(pTitle string) int {
 
 // 窗口_置标题颜色.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 func (w *windowBase) SetTitleColor(color int) int {
 	return xc.XWnd_SetTitleColor(w.Handle, color)
 }
@@ -760,7 +760,7 @@ func (w *windowBase) GetTitle() string {
 	return xc.XWnd_GetTitle(w.Handle)
 }
 
-// 窗口_取标题颜色, 返回ABGR颜色.
+// 窗口_取标题颜色, 返回ABGR 颜色.
 func (w *windowBase) GetTitleColor() int {
 	return xc.XWnd_GetTitleColor(w.Handle)
 }
@@ -769,7 +769,7 @@ func (w *windowBase) GetTitleColor() int {
 //
 // nState: 组合状态.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 //
 // width: 线宽.
 func (w *windowBase) AddBkBorder(nState xcc.Window_State_Flag_, color int, width int) int {
@@ -780,7 +780,7 @@ func (w *windowBase) AddBkBorder(nState xcc.Window_State_Flag_, color int, width
 //
 // nState: 组合状态.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 func (w *windowBase) AddBkFill(nState xcc.Window_State_Flag_, color int) int {
 	return xc.XWnd_AddBkFill(w.Handle, nState, color)
 }

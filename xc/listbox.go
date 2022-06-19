@@ -774,8 +774,20 @@ func XListBox_GetCountColumn_AD(hEle int) int {
 //
 // hEle: 元素句柄.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func XListBox_SetSplitLineColor(hEle int, color int) int {
 	r, _, _ := xListBox_SetSplitLineColor.Call(uintptr(hEle), uintptr(color))
+	return int(r)
+}
+
+// 列表框_置拖动矩形颜色.
+//
+// hEle: 元素句柄.
+//
+// color: ABGR 颜色值.
+//
+// width: 线宽度.
+func XListBox_SetDragRectColor(hEle int, color, width int) int {
+	r, _, _ := xListBox_SetDragRectColor.Call(uintptr(hEle), uintptr(color), uintptr(width))
 	return int(r)
 }

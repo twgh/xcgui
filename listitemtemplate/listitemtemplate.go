@@ -79,7 +79,7 @@ func NewListItemTemplateByHandle(handle int) *ListItemTemplate {
 	return p
 }
 
-// 模板_克隆, 返回模板对象.
+// 模板_克隆, 复制一份新的项模板, 返回模板对象.
 func (l *ListItemTemplate) Clone() *ListItemTemplate {
 	p := &ListItemTemplate{}
 	p.SetHandle(xc.XTemp_Clone(l.Handle))

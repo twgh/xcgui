@@ -113,7 +113,7 @@ func (fw *FrameWindow) SetView(hEle int) int {
 
 // 框架窗口_置窗格分隔条颜色.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func (fw *FrameWindow) SetPaneSplitBarColor(color int) int {
 	return xc.XFrameWnd_SetPaneSplitBarColor(fw.Handle, color)
 }
@@ -163,7 +163,7 @@ func (fw *FrameWindow) MergePane(hPaneDest int, hPaneNew int) bool {
 	return xc.XFrameWnd_MergePane(fw.Handle, hPaneDest, hPaneNew)
 }
 
-// 框架窗口_取拖动浮动窗格停留位置标识, 返回框架窗口单元格类型: xcc.FrameWnd_Cell_Type_.
+// 框架窗口_取拖动浮动窗格停留位置标识, 返回 拖动窗格 所处框架窗口单元格标识: xcc.FrameWnd_Cell_Type_.
 func (fw *FrameWindow) GetDragFloatWndTopFlag() xcc.FrameWnd_Cell_Type_ {
 	return xc.XFrameWnd_GetDragFloatWndTopFlag(fw.Handle)
 }

@@ -300,6 +300,13 @@ func (Editor *Edit) IsEmptyRow(iRow int) int {
 	return xc.XEidtor_IsEmptyRow(Editor.Handle, iRow)
 }
 
+// 代码编辑框_置自动匹配结果显示模式.
+//
+// mode: 0:中英文, 1:英文, 3:中文.
+func (Editor *Edit) SetAutoMatchMode(mode int) int {
+	return xc.XEditor_SetAutoMatchMode(Editor.Handle, mode)
+}
+
 /*
 以下都是事件
 */

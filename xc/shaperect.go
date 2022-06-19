@@ -25,7 +25,7 @@ func XShapeRect_Create(x int, y int, cx int, cy int, hParent int) int {
 //
 // hShape: 形状对象句柄.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func XShapeRect_SetBorderColor(hShape int, color int) int {
 	r, _, _ := xShapeRect_SetBorderColor.Call(uintptr(hShape), uintptr(color))
 	return int(r)
@@ -35,7 +35,7 @@ func XShapeRect_SetBorderColor(hShape int, color int) int {
 //
 // hShape: 形状对象句柄.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func XShapeRect_SetFillColor(hShape int, color int) int {
 	r, _, _ := xShapeRect_SetFillColor.Call(uintptr(hShape), uintptr(color))
 	return int(r)

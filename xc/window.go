@@ -412,7 +412,7 @@ func XWnd_SetFont(hWindow, hFontx int) int {
 //
 // hWindow: 窗口句柄.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func XWnd_SetTextColor(hWindow, color int) int {
 	r, _, _ := xWnd_SetTextColor.Call(uintptr(hWindow), uintptr(color))
 	return int(r)
@@ -970,7 +970,7 @@ func XWnd_SetTitle(hWindow int, pTitle string) int {
 //
 // hWindow: 窗口句柄.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 func XWnd_SetTitleColor(hWindow, color int) int {
 	r, _, _ := xWnd_SetTitleColor.Call(uintptr(hWindow), uintptr(color))
 	return int(r)
@@ -1002,7 +1002,7 @@ func XWnd_GetTitle(hWindow int) string {
 	return common.UintPtrToString(r)
 }
 
-// 窗口_取标题颜色, 返回ABGR颜色.
+// 窗口_取标题颜色, 返回ABGR 颜色.
 //
 // hWindow: 窗口句柄.
 func XWnd_GetTitleColor(hWindow int) int {
@@ -1016,7 +1016,7 @@ func XWnd_GetTitleColor(hWindow int) int {
 //
 // nState: 组合状态.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 //
 // width: 线宽.
 func XWnd_AddBkBorder(hWindow int, nState xcc.Window_State_Flag_, color int, width int) int {
@@ -1030,7 +1030,7 @@ func XWnd_AddBkBorder(hWindow int, nState xcc.Window_State_Flag_, color int, wid
 //
 // nState: 组合状态.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 func XWnd_AddBkFill(hWindow int, nState xcc.Window_State_Flag_, color int) int {
 	r, _, _ := xWnd_AddBkFill.Call(uintptr(hWindow), uintptr(nState), uintptr(color))
 	return int(r)

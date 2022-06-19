@@ -353,3 +353,13 @@ func XEidtor_IsEmptyRow(hEle int, iRow int) int {
 	r, _, _ := xEidtor_IsEmptyRow.Call(uintptr(hEle), uintptr(iRow))
 	return int(r)
 }
+
+// 代码编辑框_置自动匹配结果显示模式.
+//
+// hEle: 元素句柄.
+//
+// mode: 0:中英文, 1:英文, 3:中文.
+func XEditor_SetAutoMatchMode(hEle int, mode int) int {
+	r, _, _ := xEditor_SetAutoMatchMode.Call(uintptr(hEle), uintptr(mode))
+	return int(r)
+}

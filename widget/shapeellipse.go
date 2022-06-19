@@ -68,14 +68,14 @@ func NewShapeEllipseByUIDName(name string) *ShapeEllipse {
 
 // 形状圆_置边框色.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func (s *ShapeEllipse) SetBorderColor(color int) int {
 	return xc.XShapeEllipse_SetBorderColor(s.Handle, color)
 }
 
 // 形状圆_置填充色.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func (s *ShapeEllipse) SetFillColor(color int) int {
 	return xc.XShapeEllipse_SetFillColor(s.Handle, color)
 }

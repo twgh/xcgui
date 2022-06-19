@@ -62,7 +62,7 @@ func (b *BkManager) AddInfo(pText string) int {
 //
 // nState: 组合状态.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 //
 // width: 线宽.
 //
@@ -75,7 +75,7 @@ func (b *BkManager) AddBorder(nState xcc.CombinedState, color, width, id int) in
 //
 // nState: 组合状态.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 //
 // id: 背景对象ID, 可忽略(填0).
 func (b *BkManager) AddFill(nState xcc.CombinedState, color, id int) int {
@@ -162,7 +162,7 @@ func (b *BkManager) SetInfo(pText string) int {
 //
 // nState: 组合状态.
 //
-// color: 接收返回的ABGR颜色.
+// color: 接收返回的ABGR 颜色.
 func (b *BkManager) GetStateTextColor(nState xcc.CombinedState, color *int) bool {
 	return xc.XBkM_GetStateTextColor(b.Handle, nState, color)
 }

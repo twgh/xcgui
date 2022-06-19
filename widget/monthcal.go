@@ -109,9 +109,9 @@ func (m *MonthCal) GetSelDate(pnYear *int, pnMonth *int, pnDay *int) int {
 
 // 月历_置文本颜色.
 //
-// nFlag: 1:周六.
+// nFlag: 1:周六, 周日文字颜色, 2:日期文字的颜色; 其它周文字颜色, 使用元素自身颜色.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func (m *MonthCal) SetTextColor(nFlag int, color int) int {
 	return xc.XMonthCal_SetTextColor(m.Handle, nFlag, color)
 }

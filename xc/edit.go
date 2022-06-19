@@ -206,7 +206,7 @@ func XEdit_SetDefaultText(hEle int, pString string) int {
 //
 // hEle: 元素句柄.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func XEdit_SetDefaultTextColor(hEle int, color int) int {
 	r, _, _ := xEdit_SetDefaultTextColor.Call(uintptr(hEle), uintptr(color))
 	return int(r)
@@ -466,7 +466,7 @@ func XEdit_SetCaretWidth(hEle int, nWidth int) int {
 //
 // hEle: 元素句柄.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 func XEdit_SetSelectBkColor(hEle int, color int) int {
 	r, _, _ := xEdit_SetSelectBkColor.Call(uintptr(hEle), uintptr(color))
 	return int(r)
@@ -831,7 +831,7 @@ func XEdit_ReleaseStyle(hEle int, iStyle int) bool {
 //
 // hFont: 字体句柄.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 //
 // bColor: 是否使用颜色.
 func XEdit_ModifyStyle(hEle int, iStyle int, hFont int, color int, bColor bool) bool {

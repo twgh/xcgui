@@ -892,3 +892,15 @@ func XListView_Item_GetImage(hEle int, iGroup int, iItem int, iColumn int) int {
 	r, _, _ := xListView_Item_GetImage.Call(uintptr(hEle), uintptr(iGroup), uintptr(iItem), uintptr(iColumn))
 	return int(r)
 }
+
+// 列表视_置拖动矩形颜色.
+//
+// hEle: 元素句柄.
+//
+// color: ABGR 颜色.
+//
+// width: 线宽度.
+func XListView_SetDragRectColor(hEle int, color int, width int) int {
+	r, _, _ := xListView_SetDragRectColor.Call(uintptr(hEle), uintptr(color), uintptr(width))
+	return int(r)
+}

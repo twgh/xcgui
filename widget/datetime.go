@@ -100,7 +100,7 @@ func (d *DateTime) GetSelBkColor() int {
 
 // 日期_置选择日期背景颜色, 设置被选择文字的背景颜色.
 //
-// crSelectBk: 文字被选中背景色, ABGR颜色.
+// crSelectBk: 文字被选中背景色, ABGR 颜色.
 func (d *DateTime) SetSelBkColor(crSelectBk int) int {
 	return xc.XDateTime_SetSelBkColor(d.Handle, crSelectBk)
 }
@@ -149,7 +149,7 @@ func (d *DateTime) SetTime(nHour int, nMinute int, nSecond int) int {
 	return xc.XDateTime_SetTime(d.Handle, nHour, nMinute, nSecond)
 }
 
-// 日期_弹出.
+// 日期_弹出, 弹出月历卡片.
 func (d *DateTime) Popup() int {
 	return xc.XDateTime_Popup(d.Handle)
 }

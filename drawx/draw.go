@@ -213,7 +213,7 @@ func (d *Draw) GetHDC() int {
 
 // 绘制_置画刷颜色, 设置画刷颜色.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func (d *Draw) SetBrushColor(color int) int {
 	return xc.XDraw_SetBrushColor(d.Handle, color)
 }
@@ -306,7 +306,7 @@ func (d *Draw) GDI_CreateSolidBrush(crColor int) int {
 //
 // nWidth: 画笔宽度.
 //
-// crColor: ABGR颜色.
+// crColor: ABGR 颜色.
 func (d *Draw) GDI_CreatePen(fnPenStyle int, nWidth int, crColor int) int {
 	return xc.XDraw_GDI_CreatePen(d.Handle, fnPenStyle, nWidth, crColor)
 }
@@ -398,7 +398,7 @@ func (d *Draw) FillRectF(pRect *xc.RECTF) int {
 //
 // pRect: 矩形区域.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 func (d *Draw) FillRectColor(pRect *xc.RECT, color int) int {
 	return xc.XDraw_FillRectColor(d.Handle, pRect, color)
 }
@@ -407,7 +407,7 @@ func (d *Draw) FillRectColor(pRect *xc.RECT, color int) int {
 //
 // pRect: 矩形区域.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 func (d *Draw) FillRectColorF(pRect *xc.RECTF, color int) int {
 	return xc.XDraw_FillRectColorF(d.Handle, pRect, color)
 }
@@ -563,9 +563,9 @@ func (d *Draw) GDI_Rectangle(nLeftRect int, nTopRect int, nRightRect int, nBotto
 //
 // pRect: 矩形坐标.
 //
-// color1: 开始颜色, ABGR颜色.
+// color1: 开始颜色, ABGR 颜色.
 //
-// color2: 结束颜色, ABGR颜色.
+// color2: 结束颜色, ABGR 颜色.
 //
 // mode: 模式, GRADIENT_FILL_.
 func (d *Draw) GradientFill2(pRect *xc.RECT, color1 int, color2 int, mode xcc.GRADIENT_FILL_) int {
@@ -576,9 +576,9 @@ func (d *Draw) GradientFill2(pRect *xc.RECT, color1 int, color2 int, mode xcc.GR
 //
 // pRect: 矩形坐标.
 //
-// color1: 开始颜色, ABGR颜色.
+// color1: 开始颜色, ABGR 颜色.
 //
-// color2: 结束颜色, ABGR颜色.
+// color2: 结束颜色, ABGR 颜色.
 //
 // mode: 模式, GRADIENT_FILL_.
 func (d *Draw) GradientFill2F(pRect *xc.RECTF, color1 int, color2 int, mode xcc.GRADIENT_FILL_) int {
@@ -589,13 +589,13 @@ func (d *Draw) GradientFill2F(pRect *xc.RECTF, color1 int, color2 int, mode xcc.
 //
 // pRect: 矩形坐标.
 //
-// color1: 开始颜色, ABGR颜色.
+// color1: 开始颜色, ABGR 颜色.
 //
-// color2: 结束颜色, ABGR颜色.
+// color2: 结束颜色, ABGR 颜色.
 //
-// color3: 开始颜色, ABGR颜色.
+// color3: 开始颜色, ABGR 颜色.
 //
-// color4: 结束颜色, ABGR颜色.
+// color4: 结束颜色, ABGR 颜色.
 //
 // mode: 模式, GRADIENT_FILL_.
 func (d *Draw) GradientFill4(pRect *xc.RECT, color1 int, color2 int, color3 int, color4 int, mode xcc.GRADIENT_FILL_) bool {
@@ -606,13 +606,13 @@ func (d *Draw) GradientFill4(pRect *xc.RECT, color1 int, color2 int, color3 int,
 //
 // pRect: 矩形坐标.
 //
-// color1: 开始颜色, ABGR颜色.
+// color1: 开始颜色, ABGR 颜色.
 //
-// color2: 结束颜色, ABGR颜色.
+// color2: 结束颜色, ABGR 颜色.
 //
-// color3: 开始颜色, ABGR颜色.
+// color3: 开始颜色, ABGR 颜色.
 //
-// color4: 结束颜色, ABGR颜色.
+// color4: 结束颜色, ABGR 颜色.
 //
 // mode: 模式, GRADIENT_FILL_.
 func (d *Draw) GradientFill4F(pRect *xc.RECTF, color1 int, color2 int, color3 int, color4 int, mode xcc.GRADIENT_FILL_) bool {
@@ -993,7 +993,7 @@ func (d *Draw) DrawTextF(lpString string, lpRect *xc.RECTF) int {
 //
 // lpRect: 坐标.
 //
-// colorLine: 下划线颜色, ABGR颜色.
+// colorLine: 下划线颜色, ABGR 颜色.
 func (d *Draw) DrawTextUnderline(lpString string, lpRect *xc.RECT, colorLine int) int {
 	return xc.XDraw_DrawTextUnderline(d.Handle, lpString, lpRect, colorLine)
 }
@@ -1004,7 +1004,7 @@ func (d *Draw) DrawTextUnderline(lpString string, lpRect *xc.RECT, colorLine int
 //
 // lpRect: 坐标.
 //
-// colorLine: 下划线颜色, ABGR颜色.
+// colorLine: 下划线颜色, ABGR 颜色.
 func (d *Draw) DrawTextUnderlineF(lpString string, lpRect *xc.RECTF, colorLine int) int {
 	return xc.XDraw_DrawTextUnderlineF(d.Handle, lpString, lpRect, colorLine)
 }
@@ -1132,31 +1132,31 @@ func (d *Draw) DrawSvgSize(hSvg int, nWidth int, nHeight int) int {
 
 // 绘制_D2D_清理, 使用指定颜色清理画布.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func (d *Draw) D2D_Clear(color int) int {
 	return xc.XDraw_D2D_Clear(d.Handle, color)
 }
 
-// 绘制_图片遮盖矩形, 绘制带矩形遮盖的图片, D2D留空.
+// 绘制_图片遮盖矩形, 使用矩形作为遮罩.
 //
 // hImageFrame: 图片句柄.
 //
-// pRect: .
+// pRect: 矩形坐标.
 //
-// pRcMask: .
+// pRcMask: 遮罩坐标.
 //
-// pRcRoundAngle: .
+// pRcRoundAngle: 遮罩圆角.
 func (d *Draw) ImageMaskRect(hImageFrame int, pRect *xc.RECT, pRcMask *xc.RECT, pRcRoundAngle *xc.RECT) int {
 	return xc.XDraw_ImageMaskRect(d.Handle, hImageFrame, pRect, pRcMask, pRcRoundAngle)
 }
 
-// 绘制_图片遮盖椭圆, 绘制带椭圆遮盖的图片, D2D留空.
+// 绘制_图片遮盖圆型, 使用圆形作为遮罩.
 //
 // hImageFrame: 图片句柄.
 //
-// pRect: .
+// pRect: 矩形坐标.
 //
-// pRcMask: .
+// pRcMask: 遮罩坐标.
 func (d *Draw) ImageMaskEllipse(hImageFrame int, pRect *xc.RECT, pRcMask *xc.RECT) int {
 	return xc.XDraw_ImageMaskEllipse(d.Handle, hImageFrame, pRect, pRcMask)
 }

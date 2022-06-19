@@ -326,3 +326,15 @@ func XSvg_LoadStringUtf8(pString string) int {
 	r, _, _ := xSvg_LoadStringUtf8.Call(XC_wtoutf8(pString))
 	return int(r)
 }
+
+// SVG_加载从内存ZIP.
+//
+// data: zip数据.
+//
+// pFileName: svg文件名.
+//
+// pPassword: zip密码.
+func XSvg_LoadZipMem(data []byte, pFileName, pPassword string) int {
+	r, _, _ := xSvg_LoadZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(pFileName), common.StrPtr(pPassword))
+	return int(r)
+}

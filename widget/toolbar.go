@@ -77,7 +77,7 @@ func (t *ToolBar) InsertEle(hNewEle int, index int) int {
 //
 // index: 插入位置索引, (-1)插入末尾.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 func (t *ToolBar) InsertSeparator(index int, color int) int {
 	return xc.XToolBar_InsertSeparator(t.Handle, index, color)
 }

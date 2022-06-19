@@ -71,7 +71,7 @@ func XDateTime_GetSelBkColor(hEle int) int {
 //
 // hEle: 元素句柄.
 //
-// crSelectBk: 文字被选中背景色, ABGR颜色.
+// crSelectBk: 文字被选中背景色, ABGR 颜色.
 func XDateTime_SetSelBkColor(hEle int, crSelectBk int) int {
 	r, _, _ := xDateTime_SetSelBkColor.Call(uintptr(hEle), uintptr(crSelectBk))
 	return int(r)
@@ -133,7 +133,7 @@ func XDateTime_SetTime(hEle int, nHour int, nMinute int, nSecond int) int {
 	return int(r)
 }
 
-// 日期_弹出.
+// 日期_弹出, 弹出月历卡片.
 //
 // hEle: 元素句柄.
 func XDateTime_Popup(hEle int) int {
