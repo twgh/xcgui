@@ -6,6 +6,15 @@ import (
 	"unsafe"
 )
 
+const (
+	surr1 = 0xd800
+	surr2 = 0xdc00
+	surr3 = 0xe000
+	surrSelf = 0x10000
+	replacementChar = '\uFFFD'
+)
+
+
 // StrPtr 将string转换到uintptr.
 //	@param s
 //	@return uintptr
@@ -18,12 +27,48 @@ func StrPtr(s string) uintptr {
 	return uintptr(unsafe.Pointer(p))
 }
 
+func decodeRune(r1, r2 rune) rune {
+	if surr1 <= r1 && r1 < surr2 && surr2 <= r2 && r2 < surr3 {
+		return (r1-surr1)<<10 | (r2 - surr2) + surrSelf
+	}
+	return replacementChar
+}
+
+func SafeUTF16ToString(s []uint16)string  {
+	var sLen int
+	for i, ch := range s {
+		if ch == 0 {
+			sLen = i
+			break
+		}
+	}
+	a := make([]rune, sLen)
+	n := 0
+	for i := 0; i < sLen; i++ {
+		switch r := s[i]; {
+		case r < surr1, surr3 <= r:
+			// normal rune
+			a[n] = rune(r)
+		case surr1 <= r && r < surr2 && i+1 < sLen &&
+			surr2 <= s[i+1] && s[i+1] < surr3:
+			// valid surrogate sequence
+			a[n] = decodeRune(rune(r), rune(s[i+1]))
+			i++
+		default:
+			// invalid surrogate sequence
+			a[n] = replacementChar
+		}
+		n++
+	}
+	return string(a[:n])
+}
+
 // UintPtrToString 将uintptr转换到string.
 //	@param ptr
 //	@return string
 //
 func UintPtrToString(ptr uintptr) string {
-	return syscall.UTF16ToString(*(*[]uint16)(unsafe.Pointer(&ptr)))
+	return SafeUTF16ToString(*(*[]uint16)(unsafe.Pointer(&ptr)))
 }
 
 // Uint16SliceDataPtr 将uint16[0]指针转换到uintptr.
