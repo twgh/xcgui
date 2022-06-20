@@ -84,21 +84,21 @@ func (t *TextLink) EnableUnderlineStay(bEnable bool) int {
 
 // 文本链接_置停留状态文本颜色, 设置文本颜色, 鼠标停留状态.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func (t *TextLink) SetTextColorStay(color int) int {
 	return xc.XTextLink_SetTextColorStay(t.Handle, color)
 }
 
 // 文本链接_置离开状态下划线颜色, 设置下划线颜色, 鼠标离开状态.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func (t *TextLink) SetUnderlineColorLeave(color int) int {
 	return xc.XTextLink_SetUnderlineColorLeave(t.Handle, color)
 }
 
 // 文本链接_置停留状态下划线颜色, 置下划线颜色, 鼠标停留状态.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func (t *TextLink) SetUnderlineColorStay(color int) int {
 	return xc.XTextLink_SetUnderlineColorStay(t.Handle, color)
 }

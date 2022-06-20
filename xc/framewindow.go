@@ -77,7 +77,7 @@ func XFrameWnd_SetView(hWindow int, hEle int) int {
 //
 // hWindow: 窗口句柄.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func XFrameWnd_SetPaneSplitBarColor(hWindow int, color int) int {
 	r, _, _ := xFrameWnd_SetPaneSplitBarColor.Call(uintptr(hWindow), uintptr(color))
 	return int(r)
@@ -153,7 +153,7 @@ func XFrameWnd_Attach(hWnd, XCStyle int) int {
 	return int(r)
 }
 
-// 框架窗口_取拖动浮动窗格停留位置标识, 返回框架窗口单元格类型: xcc.FrameWnd_Cell_Type_.
+// 框架窗口_取拖动浮动窗格停留位置标识, 返回 拖动窗格 所处框架窗口单元格标识: xcc.FrameWnd_Cell_Type_.
 //
 // hWindow: 窗口句柄.
 func XFrameWnd_GetDragFloatWndTopFlag(hWindow int) xcc.FrameWnd_Cell_Type_ {

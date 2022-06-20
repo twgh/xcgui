@@ -663,6 +663,7 @@ var (
 	xEditor_SetExpandState             *syscall.LazyProc
 	xEditor_GetIndentation             *syscall.LazyProc
 	xEidtor_IsEmptyRow                 *syscall.LazyProc
+	xEditor_SetAutoMatchMode           *syscall.LazyProc
 
 	// Edit.
 	xEdit_Create               *syscall.LazyProc
@@ -1036,6 +1037,8 @@ var (
 	xFont_Release           *syscall.LazyProc
 	xFont_CreateFromMem     *syscall.LazyProc
 	xFont_CreateFromRes     *syscall.LazyProc
+	xFont_CreateFromZip     *syscall.LazyProc
+	xFont_CreateFromZipMem  *syscall.LazyProc
 
 	// Image.
 	xImage_LoadSrc             *syscall.LazyProc
@@ -1082,6 +1085,7 @@ var (
 	xImage_GetSvg              *syscall.LazyProc
 	xImage_LoadSvgStringW      *syscall.LazyProc
 	xImage_LoadSvgStringUtf8   *syscall.LazyProc
+	xImage_SetScaleSize        *syscall.LazyProc
 
 	// Svg.
 	xSvg_LoadFile           *syscall.LazyProc
@@ -1115,6 +1119,7 @@ var (
 	xSvg_Show               *syscall.LazyProc
 	xSvg_LoadStringW        *syscall.LazyProc
 	xSvg_LoadStringUtf8     *syscall.LazyProc
+	xSvg_LoadZipMem         *syscall.LazyProc
 
 	// ListItemTemplate.
 	xTemp_Load               *syscall.LazyProc
@@ -1219,6 +1224,7 @@ var (
 	xListBox_GetCount_AD                  *syscall.LazyProc
 	xListBox_GetCountColumn_AD            *syscall.LazyProc
 	xListBox_SetSplitLineColor            *syscall.LazyProc
+	xListBox_SetDragRectColor             *syscall.LazyProc
 
 	// List.
 	xList_Create                       *syscall.LazyProc
@@ -1316,6 +1322,7 @@ var (
 	xList_SetSplitLineColor            *syscall.LazyProc
 	xList_SetItemHeight                *syscall.LazyProc
 	xList_GetItemHeight                *syscall.LazyProc
+	xList_SetDragRectColor             *syscall.LazyProc
 
 	// ListView.
 	xListView_Create                       *syscall.LazyProc
@@ -1393,6 +1400,7 @@ var (
 	xListView_Group_GetImageEx             *syscall.LazyProc
 	xListView_Item_GetText                 *syscall.LazyProc
 	xListView_Item_GetImage                *syscall.LazyProc
+	xListView_SetDragRectColor             *syscall.LazyProc
 
 	// MenuBar.
 	xMenuBar_Create          *syscall.LazyProc
@@ -2398,7 +2406,9 @@ func LoadXCGUI() {
 	xEditor_SetExpandState = xcgui.NewProc("XEditor_SetExpandState")
 	xEditor_GetIndentation = xcgui.NewProc("XEditor_GetIndentation")
 	xEidtor_IsEmptyRow = xcgui.NewProc("XEidtor_IsEmptyRow")
+	xEditor_SetAutoMatchMode = xcgui.NewProc("XEditor_SetAutoMatchMode")
 
+	// XEdit.
 	xEdit_Create = xcgui.NewProc("XEdit_Create")
 	xEdit_CreateEx = xcgui.NewProc("XEdit_CreateEx")
 	xEdit_EnableAutoWrap = xcgui.NewProc("XEdit_EnableAutoWrap")
@@ -2768,6 +2778,8 @@ func LoadXCGUI() {
 	xFont_Release = xcgui.NewProc("XFont_Release")
 	xFont_CreateFromMem = xcgui.NewProc("XFont_CreateFromMem")
 	xFont_CreateFromRes = xcgui.NewProc("XFont_CreateFromRes")
+	xFont_CreateFromZip = xcgui.NewProc("XFont_CreateFromZip")
+	xFont_CreateFromZipMem = xcgui.NewProc("XFont_CreateFromZipMem")
 
 	// Image.
 	xImage_LoadSrc = xcgui.NewProc("XImage_LoadSrc")
@@ -2814,6 +2826,7 @@ func LoadXCGUI() {
 	xImage_GetSvg = xcgui.NewProc("XImage_GetSvg")
 	xImage_LoadSvgStringW = xcgui.NewProc("XImage_LoadSvgStringW")
 	xImage_LoadSvgStringUtf8 = xcgui.NewProc("XImage_LoadSvgStringUtf8")
+	xImage_SetScaleSize = xcgui.NewProc("XImage_SetScaleSize")
 
 	// Svg.
 	xSvg_LoadFile = xcgui.NewProc("XSvg_LoadFile")
@@ -2847,6 +2860,7 @@ func LoadXCGUI() {
 	xSvg_Show = xcgui.NewProc("XSvg_Show")
 	xSvg_LoadStringW = xcgui.NewProc("XSvg_LoadStringW")
 	xSvg_LoadStringUtf8 = xcgui.NewProc("XSvg_LoadStringUtf8")
+	xSvg_LoadZipMem = xcgui.NewProc("XSvg_LoadZipMem")
 
 	// ListItemTemplate.
 	xTemp_Load = xcgui.NewProc("XTemp_Load")
@@ -2951,6 +2965,7 @@ func LoadXCGUI() {
 	xListBox_GetCount_AD = xcgui.NewProc("XListBox_GetCount_AD")
 	xListBox_GetCountColumn_AD = xcgui.NewProc("XListBox_GetCountColumn_AD")
 	xListBox_SetSplitLineColor = xcgui.NewProc("XListBox_SetSplitLineColor")
+	xListBox_SetDragRectColor = xcgui.NewProc("XListBox_SetDragRectColor")
 
 	// List.
 	xList_Create = xcgui.NewProc("XList_Create")
@@ -3048,6 +3063,7 @@ func LoadXCGUI() {
 	xList_SetSplitLineColor = xcgui.NewProc("XList_SetSplitLineColor")
 	xList_SetItemHeight = xcgui.NewProc("XList_SetItemHeight")
 	xList_GetItemHeight = xcgui.NewProc("XList_GetItemHeight")
+	xList_SetDragRectColor = xcgui.NewProc("XList_SetDragRectColor")
 
 	// ListView.
 	xListView_Create = xcgui.NewProc("XListView_Create")
@@ -3125,6 +3141,7 @@ func LoadXCGUI() {
 	xListView_Group_GetImageEx = xcgui.NewProc("XListView_Group_GetImageEx")
 	xListView_Item_GetText = xcgui.NewProc("XListView_Item_GetText")
 	xListView_Item_GetImage = xcgui.NewProc("XListView_Item_GetImage")
+	xListView_SetDragRectColor = xcgui.NewProc("XListView_SetDragRectColor")
 
 	// MenuBar.
 	xMenuBar_Create = xcgui.NewProc("XMenuBar_Create")
@@ -3444,21 +3461,21 @@ func Font_Info_Name(arr [32]uint16) string {
 	return syscall.UTF16ToString(arr[0:])
 }
 
-// ABGR 根据r, g, b, a组合成十进制ABGR颜色.
+// ABGR 根据r, g, b, a组合成十进制ABGR 颜色.
 //	@param r 红色分量.
 //	@param g 绿色分量.
 //	@param b 蓝色分量.
 //	@param a 透明度.
-//	@return int ABGR颜色.
+//	@return int ABGR 颜色.
 //
 func ABGR(r, g, b, a byte) int {
 	return int((uint32(r) & 255) | (uint32(g)&255)<<8 | (uint32(b)&255)<<16 | (uint32(a)&255)<<24)
 }
 
-// ABGR2 根据rgb, a组合成十进制ABGR颜色.
+// ABGR2 根据rgb, a组合成十进制ABGR 颜色.
 //	@param rgb RGB颜色.
 //	@param a 透明度.
-//	@return int ABGR颜色.
+//	@return int ABGR 颜色.
 //
 func ABGR2(rgb int, a byte) int {
 	return int((uint32(rgb) & 16777215) | (uint32(a)&255)<<24)
@@ -3474,21 +3491,21 @@ func RGB(r, g, b byte) int {
 	return int(uint32(r) | uint32(g)<<8 | uint32(b)<<16)
 }
 
-// RGBA 根据r, g, b, a组合成十进制ABGR颜色. 和 ABGR 函数一模一样, 只是为了符合部分人使用习惯.
+// RGBA 根据r, g, b, a组合成十进制ABGR 颜色. 和 ABGR 函数一模一样, 只是为了符合部分人使用习惯.
 //	@param r 红色分量.
 //	@param g 绿色分量.
 //	@param b 蓝色分量.
 //	@param a 透明度.
-//	@return int ABGR颜色.
+//	@return int ABGR 颜色.
 //
 func RGBA(r, g, b, a byte) int {
 	return int((uint32(r) & 255) | (uint32(g)&255)<<8 | (uint32(b)&255)<<16 | (uint32(a)&255)<<24)
 }
 
-// RGBA2 根据rgb, a组合成十进制ABGR颜色. 和 ABGR2 函数一模一样, 只是为了符合部分人使用习惯.
+// RGBA2 根据rgb, a组合成十进制ABGR 颜色. 和 ABGR2 函数一模一样, 只是为了符合部分人使用习惯.
 //	@param rgb RGB颜色.
 //	@param a 透明度.
-//	@return int ABGR颜色.
+//	@return int ABGR 颜色.
 //
 func RGBA2(rgb int, a byte) int {
 	return int((uint32(rgb) & 16777215) | (uint32(a)&255)<<24)

@@ -213,7 +213,7 @@ func XAnima_AlphaEx(hSequence int, duration int, from_alpha uint8, to_alpha uint
 //
 // duration: 持续时间.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 //
 // nLoopCount: 动画循环次数, 0: 无限循环.
 //
@@ -231,9 +231,9 @@ func XAnima_Color(hSequence int, duration int, color int, nLoopCount int, ease_f
 //
 // duration: 持续时间.
 //
-// from: 起点颜色, ABGR颜色.
+// from: 起点颜色, ABGR 颜色.
 //
-// to: 终点颜色, ABGR颜色.
+// to: 终点颜色, ABGR 颜色.
 //
 // nLoopCount: 动画循环次数, 0: 无限循环.
 //

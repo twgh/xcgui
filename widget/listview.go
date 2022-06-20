@@ -715,6 +715,15 @@ func (l *ListView) Item_GetImage(iGroup int, iItem int, iColumn int) int {
 	return xc.XListView_Item_GetImage(l.Handle, iGroup, iItem, iColumn)
 }
 
+// 列表视_置拖动矩形颜色.
+//
+// color: ABGR 颜色.
+//
+// width: 线宽度.
+func (l *ListView) SetDragRectColor(color int, width int) int {
+	return xc.XListView_SetDragRectColor(l.Handle, color, width)
+}
+
 /*
 以下都是事件
 */

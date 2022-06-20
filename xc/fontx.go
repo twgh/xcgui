@@ -58,10 +58,36 @@ func XFont_CreateFromFont(pFont int) int {
 //	@param pFontFile 字体文件名.
 //	@param size 字体大小, 单位(pt,磅).
 //	@param style 字体样式, xcc.FontStyle_.
-//	@return int 返回字体句柄.
+//	@return int 返回炫彩字体句柄.
 //
 func XFont_CreateFromFile(pFontFile string, size int, style xcc.FontStyle_) int {
 	r, _, _ := xFont_CreateFromFile.Call(common.StrPtr(pFontFile), uintptr(size), uintptr(style))
+	return int(r)
+}
+
+// XFont_CreateFromZip 字体_创建从ZIP.
+//	@param pZipFileName zip文件名.
+//	@param pFileName 字体文件名.
+//	@param pPassword zip密码.
+//	@param fontSize 字体大小, 单位(pt,磅).
+//	@param style 字体样式: xcc.FontStyle_.
+//	@return int 返回炫彩字体句柄.
+//
+func XFont_CreateFromZip(pZipFileName, pFileName, pPassword string, fontSize int, style xcc.FontStyle_) int {
+	r, _, _ := xFont_CreateFromZip.Call(common.StrPtr(pZipFileName), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(fontSize), uintptr(style))
+	return int(r)
+}
+
+// XFont_CreateFromZipMem 字体_创建从内存ZIP.
+//	@param data zip数据.
+//	@param pFileName 字体文件名.
+//	@param pPassword zip密码.
+//	@param fontSize 字体大小, 单位(pt,磅).
+//	@param style 字体样式: xcc.FontStyle_.
+//	@return int 返回炫彩字体句柄.
+//
+func XFont_CreateFromZipMem(data []byte, pFileName, pPassword string, fontSize int, style xcc.FontStyle_) int {
+	r, _, _ := xFont_CreateFromZipMem.Call(common.ByteSliceDataPtr(&data), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(fontSize), uintptr(style))
 	return int(r)
 }
 

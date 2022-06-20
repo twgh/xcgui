@@ -322,7 +322,7 @@ func (a *App) EnableResMonitor(bEnable bool) int {
 
 // 炫彩_置布局边界颜色.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func (a *App) SetLayoutFrameColor(color int) int {
 	return xc.XC_SetLayoutFrameColor(color)
 }

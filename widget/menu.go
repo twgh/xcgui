@@ -257,7 +257,7 @@ func (m *Menu) GetItemHeight() int {
 
 // 菜单_置边框颜色, 设置菜单边框颜色.
 //
-// crColor: ABGR颜色.
+// crColor: ABGR 颜色.
 func (m *Menu) SetBorderColor(crColor int) int {
 	return xc.XMenu_SetBorderColor(m.Handle, crColor)
 }

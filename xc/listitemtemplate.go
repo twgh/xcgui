@@ -225,7 +225,7 @@ func XTemp_CloneNode(pNode int) int {
 	return int(r)
 }
 
-// 项模板_克隆, 返回模板句柄.
+// 项模板_克隆, 复制一份新的项模板, 返回模板句柄.
 //
 // hTemp: 列表项模板句柄.
 func XTemp_Clone(hTemp int) int {

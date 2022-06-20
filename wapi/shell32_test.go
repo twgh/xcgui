@@ -29,7 +29,8 @@ func TestSHBrowseForFolderW(t *testing.T) {
 		IImage:         0,
 	}
 	var pszPath string
-	wapi.SHGetPathFromIDListW(wapi.SHBrowseForFolderW(&bi), &pszPath)
+	ret := wapi.SHGetPathFromIDListW(wapi.SHBrowseForFolderW(&bi), &pszPath)
+	fmt.Println(ret)
 	fmt.Println("pszPath:", pszPath)                           // 用户选择的文件夹完整路径
 	fmt.Println("PszDisplayName:", syscall.UTF16ToString(buf)) // 用户选择的文件夹的名称
 }

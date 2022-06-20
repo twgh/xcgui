@@ -604,7 +604,7 @@ func (e *Element) SetLockScroll(bHorizon bool, bVertical bool) int {
 
 // 元素_置文本颜色.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func (e *Element) SetTextColor(color int) int {
 	return xc.XEle_SetTextColor(e.Handle, color)
 }
@@ -621,7 +621,7 @@ func (e *Element) GetTextColorEx() int {
 
 // 元素_置焦点边框颜色.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func (e *Element) SetFocusBorderColor(color int) int {
 	return xc.XEle_SetFocusBorderColor(e.Handle, color)
 }
@@ -662,7 +662,7 @@ func (e *Element) Destroy() int {
 //
 // nState: 组合状态.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 //
 // width: 线宽.
 func (e *Element) AddBkBorder(nState xcc.CombinedState, color int, width int) int {
@@ -673,7 +673,7 @@ func (e *Element) AddBkBorder(nState xcc.CombinedState, color int, width int) in
 //
 // nState: 组合状态.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 func (e *Element) AddBkFill(nState xcc.CombinedState, color int) int {
 	return xc.XEle_AddBkFill(e.Handle, nState, color)
 }

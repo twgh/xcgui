@@ -277,7 +277,7 @@ func XImage_SetDrawTypeAdaptive(hImage int, leftSize int, topSize int, rightSize
 //
 // hImage: 图片句柄.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 func XImage_SetTranColor(hImage int, color int) int {
 	r, _, _ := xImage_SetTranColor.Call(uintptr(hImage), uintptr(color))
 	return int(r)
@@ -287,7 +287,7 @@ func XImage_SetTranColor(hImage int, color int) int {
 //
 // hImage: 图片句柄.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 //
 // tranColor: 透明色的透明度.
 func XImage_SetTranColorEx(hImage int, color int, tranColor uint8) int {
@@ -464,5 +464,17 @@ func XImage_LoadSvgStringW(pString string) int {
 // pString: 字符串.
 func XImage_LoadSvgStringUtf8(pString string) int {
 	r, _, _ := xImage_LoadSvgStringUtf8.Call(XC_wtoutf8(pString))
+	return int(r)
+}
+
+// 图片_置缩放大小, 启用缩放属性后有效, 值大于0有效.
+//
+// hImage: 图片句柄.
+//
+// width: 宽度.
+//
+// height: 高度.
+func XImage_SetScaleSize(hImage int, width, height int) int {
+	r, _, _ := xImage_SetScaleSize.Call(uintptr(hImage), uintptr(width), uintptr(height))
 	return int(r)
 }

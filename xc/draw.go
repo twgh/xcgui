@@ -253,7 +253,7 @@ func XDraw_GetHDC(hDraw int) int {
 //
 // hDraw: 图形绘制句柄.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func XDraw_SetBrushColor(hDraw int, color int) int {
 	r, _, _ := xDraw_SetBrushColor.Call(uintptr(hDraw), uintptr(color))
 	return int(r)
@@ -491,7 +491,7 @@ func XDraw_FillRectF(hDraw int, pRect *RECTF) int {
 //
 // pRect: 矩形区域.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 func XDraw_FillRectColor(hDraw int, pRect *RECT, color int) int {
 	r, _, _ := xDraw_FillRectColor.Call(uintptr(hDraw), uintptr(unsafe.Pointer(pRect)), uintptr(color))
 	return int(r)
@@ -503,7 +503,7 @@ func XDraw_FillRectColor(hDraw int, pRect *RECT, color int) int {
 //
 // pRect: 矩形区域.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 func XDraw_FillRectColorF(hDraw int, pRect *RECTF, color int) int {
 	r, _, _ := xDraw_FillRectColorF.Call(uintptr(hDraw), uintptr(unsafe.Pointer(pRect)), uintptr(color))
 	return int(r)
@@ -701,9 +701,9 @@ func XDraw_GDI_Rectangle(hDraw int, nLeftRect int, nTopRect int, nRightRect int,
 //
 // pRect: 矩形坐标.
 //
-// color1: 开始颜色, ABGR颜色.
+// color1: 开始颜色, ABGR 颜色.
 //
-// color2: 结束颜色, ABGR颜色.
+// color2: 结束颜色, ABGR 颜色.
 //
 // mode: 模式, GRADIENT_FILL_.
 func XDraw_GradientFill2(hDraw int, pRect *RECT, color1 int, color2 int, mode xcc.GRADIENT_FILL_) int {
@@ -717,9 +717,9 @@ func XDraw_GradientFill2(hDraw int, pRect *RECT, color1 int, color2 int, mode xc
 //
 // pRect: 矩形坐标.
 //
-// color1: 开始颜色, ABGR颜色.
+// color1: 开始颜色, ABGR 颜色.
 //
-// color2: 结束颜色, ABGR颜色.
+// color2: 结束颜色, ABGR 颜色.
 //
 // mode: 模式, GRADIENT_FILL_.
 func XDraw_GradientFill2F(hDraw int, pRect *RECTF, color1 int, color2 int, mode xcc.GRADIENT_FILL_) int {
@@ -733,13 +733,13 @@ func XDraw_GradientFill2F(hDraw int, pRect *RECTF, color1 int, color2 int, mode 
 //
 // pRect: 矩形坐标.
 //
-// color1: 开始颜色, ABGR颜色.
+// color1: 开始颜色, ABGR 颜色.
 //
-// color2: 结束颜色, ABGR颜色.
+// color2: 结束颜色, ABGR 颜色.
 //
-// color3: 开始颜色, ABGR颜色.
+// color3: 开始颜色, ABGR 颜色.
 //
-// color4: 结束颜色, ABGR颜色.
+// color4: 结束颜色, ABGR 颜色.
 //
 // mode: 模式, GRADIENT_FILL_.
 func XDraw_GradientFill4(hDraw int, pRect *RECT, color1 int, color2 int, color3 int, color4 int, mode xcc.GRADIENT_FILL_) bool {
@@ -753,13 +753,13 @@ func XDraw_GradientFill4(hDraw int, pRect *RECT, color1 int, color2 int, color3 
 //
 // pRect: 矩形坐标.
 //
-// color1: 开始颜色, ABGR颜色.
+// color1: 开始颜色, ABGR 颜色.
 //
-// color2: 结束颜色, ABGR颜色.
+// color2: 结束颜色, ABGR 颜色.
 //
-// color3: 开始颜色, ABGR颜色.
+// color3: 开始颜色, ABGR 颜色.
 //
-// color4: 结束颜色, ABGR颜色.
+// color4: 结束颜色, ABGR 颜色.
 //
 // mode: 模式, GRADIENT_FILL_.
 func XDraw_GradientFill4F(hDraw int, pRect *RECTF, color1 int, color2 int, color3 int, color4 int, mode xcc.GRADIENT_FILL_) bool {
@@ -1211,31 +1211,31 @@ func XDraw_ImageMask(hDraw int, hImageFrame int, hImageFrameMask int, x int, y i
 	return int(r)
 }
 
-// 绘制_图片遮盖矩形, 绘制带矩形遮盖的图片, D2D留空.
+// 绘制_图片遮盖矩形, 使用矩形作为遮罩.
 //
 // hDraw: 图形绘制句柄.
 //
 // hImageFrame: 图片句柄.
 //
-// pRect: .
+// pRect: 矩形坐标.
 //
-// pRcMask: .
+// pRcMask: 遮罩坐标.
 //
-// pRcRoundAngle: .
+// pRcRoundAngle: 遮罩圆角.
 func XDraw_ImageMaskRect(hDraw int, hImageFrame int, pRect *RECT, pRcMask *RECT, pRcRoundAngle *RECT) int {
 	r, _, _ := xDraw_ImageMaskRect.Call(uintptr(hDraw), uintptr(hImageFrame), uintptr(unsafe.Pointer(pRect)), uintptr(unsafe.Pointer(pRcMask)), uintptr(unsafe.Pointer(pRcRoundAngle)))
 	return int(r)
 }
 
-// 绘制_图片遮盖椭圆, 绘制带椭圆遮盖的图片, D2D留空.
+// 绘制_图片遮盖圆型, 使用圆形作为遮罩.
 //
 // hDraw: 图形绘制句柄.
 //
 // hImageFrame: 图片句柄.
 //
-// pRect: .
+// pRect: 矩形坐标.
 //
-// pRcMask: .
+// pRcMask: 遮罩坐标.
 func XDraw_ImageMaskEllipse(hDraw int, hImageFrame int, pRect *RECT, pRcMask *RECT) int {
 	r, _, _ := xDraw_ImageMaskEllipse.Call(uintptr(hDraw), uintptr(hImageFrame), uintptr(unsafe.Pointer(pRect)), uintptr(unsafe.Pointer(pRcMask)))
 	return int(r)
@@ -1273,7 +1273,7 @@ func XDraw_DrawTextF(hDraw int, lpString string, lpRect *RECTF) int {
 //
 // lpRect: 坐标.
 //
-// colorLine: 下划线颜色, ABGR颜色.
+// colorLine: 下划线颜色, ABGR 颜色.
 func XDraw_DrawTextUnderline(hDraw int, lpString string, lpRect *RECT, colorLine int) int {
 	r, _, _ := xDraw_DrawTextUnderline.Call(uintptr(hDraw), common.StrPtr(lpString), uintptr(len([]rune(lpString))), uintptr(unsafe.Pointer(lpRect)), uintptr(colorLine))
 	return int(r)
@@ -1287,7 +1287,7 @@ func XDraw_DrawTextUnderline(hDraw int, lpString string, lpRect *RECT, colorLine
 //
 // lpRect: 坐标.
 //
-// colorLine: 下划线颜色, ABGR颜色.
+// colorLine: 下划线颜色, ABGR 颜色.
 func XDraw_DrawTextUnderlineF(hDraw int, lpString string, lpRect *RECTF, colorLine int) int {
 	r, _, _ := xDraw_DrawTextUnderlineF.Call(uintptr(hDraw), common.StrPtr(lpString), uintptr(len([]rune(lpString))), uintptr(unsafe.Pointer(lpRect)), uintptr(colorLine))
 	return int(r)
@@ -1451,7 +1451,7 @@ func XDraw_DrawSvgSize(hDraw int, hSvg int, nWidth int, nHeight int) int {
 //
 // hDraw: 图形绘制句柄.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func XDraw_D2D_Clear(hDraw int, color int) int {
 	r, _, _ := xDraw_D2D_Clear.Call(uintptr(hDraw), uintptr(color))
 	return int(r)

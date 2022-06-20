@@ -99,7 +99,7 @@ func (t *Tree) EnablemTemplateReuse(bEnable bool) int {
 
 // 列表树_置连接线颜色.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 func (t *Tree) SetConnectLineColor(color int) int {
 	return xc.XTree_SetConnectLineColor(t.Handle, color)
 }
@@ -122,7 +122,7 @@ func (t *Tree) SetConnectLineLength(nLength int) int {
 
 // 列表树_置拖动项插入位置颜色, 设置拖动项插入位置颜色提示.
 //
-// color: ABGR颜色.
+// color: ABGR 颜色.
 func (t *Tree) SetDragInsertPositionColor(color int) int {
 	return xc.XTree_SetDragInsertPositionColor(t.Handle, color)
 }
@@ -562,7 +562,7 @@ func (t *Tree) DeleteColumnAll() int {
 
 // 列表树_置分割线颜色.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func (t *Tree) SetSplitLineColor(color int) int {
 	return xc.XTree_SetSplitLineColor(t.Handle, color)
 }

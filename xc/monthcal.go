@@ -74,9 +74,9 @@ func XMonthCal_GetSelDate(hEle int, pnYear *int, pnMonth *int, pnDay *int) int {
 //
 // hEle: 元素句柄.
 //
-// nFlag: 1:周六.
+// nFlag: 1:周六, 周日文字颜色, 2:日期文字的颜色; 其它周文字颜色, 使用元素自身颜色.
 //
-// color: ABGR颜色值.
+// color: ABGR 颜色值.
 func XMonthCal_SetTextColor(hEle int, nFlag int, color int) int {
 	r, _, _ := xMonthCal_SetTextColor.Call(uintptr(hEle), uintptr(nFlag), uintptr(color))
 	return int(r)
