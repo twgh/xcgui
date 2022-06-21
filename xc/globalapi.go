@@ -1,9 +1,10 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/common"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 
 	"github.com/twgh/xcgui/xcc"
 )
@@ -96,7 +97,7 @@ func XMsg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent i
 //	@return int 消息框窗口句柄.
 //
 func XMsg_CreateEx(dwExStyle int, dwStyle int, lpClassName, pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xMsg_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), common.StrPtr(pText), common.StrPtr(pTitle), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
+	r, _, _ := xMsg_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), common.StrPtr(pTitle), common.StrPtr(pText), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
 	return int(r)
 }
 
