@@ -11,11 +11,17 @@ import (
 //	@return uintptr
 //
 func StrPtr(s string) uintptr {
-	if s == "" {
+	if len(s) == 0 {
 		return uintptr(0)
 	}
 	p, _ := syscall.UTF16PtrFromString(s)
 	return uintptr(unsafe.Pointer(p))
+}
+
+type sliceHeader struct {
+	Data uintptr
+	Len  int
+	Cap  int
 }
 
 // UintPtrToString 将uintptr转换到string.
@@ -23,7 +29,15 @@ func StrPtr(s string) uintptr {
 //	@return string
 //
 func UintPtrToString(ptr uintptr) string {
-	return syscall.UTF16ToString(*(*[]uint16)(unsafe.Pointer(&ptr)))
+	s := *(*[]uint16)(unsafe.Pointer(&ptr)) // uintptr转换到[]uint16
+	for i := 0; i < len(s); i++ {
+		if s[i] == 0 {
+			(*sliceHeader)(unsafe.Pointer(&s)).Cap = i // 修改切片的cap
+			s = s[0:i]
+			break
+		}
+	}
+	return string(utf16.Decode(s))
 }
 
 // Uint16SliceDataPtr 将uint16[0]指针转换到uintptr.
