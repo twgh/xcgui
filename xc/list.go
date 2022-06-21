@@ -1,8 +1,9 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/common"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 
 	"github.com/twgh/xcgui/xcc"
 )
@@ -630,13 +631,13 @@ func XList_RefreshItem(hEle int, iItem int) int {
 
 // 列表_添加列文本.
 //
-// hEle:.
+// hEle: 元素句柄.
 //
-// nWidth:.
+// nWidth: 列宽.
 //
-// pName:.
+// pName: 模板里绑定的name名. 在List内部存在有默认模板, name名是从name1到namen. 你可以理解为创建数据适配器后, 内部有一个表, 这个name是每一列的字段名, 这个函数就相当于给这一行的这个字段赋值, 然后List会根据这个name名读取数据来显示到界面.
 //
-// pText:.
+// pText: 文本.
 func XList_AddColumnText(hEle int, nWidth int, pName string, pText string) int {
 	r, _, _ := xList_AddColumnText.Call(uintptr(hEle), uintptr(nWidth), common.StrPtr(pName), common.StrPtr(pText))
 	return int(r)
@@ -644,13 +645,13 @@ func XList_AddColumnText(hEle int, nWidth int, pName string, pText string) int {
 
 // 列表_添加列图片.
 //
-// hEle:.
+// hEle: 元素句柄.
 //
-// nWidth:.
+// nWidth: 列宽.
 //
-// pName:.
+// pName: 模板里绑定的name名. 在List内部存在有默认模板, name名是从name1到namen. 你可以理解为创建数据适配器后, 内部有一个表, 这个name是每一列的字段名, 这个函数就相当于给这一行的这个字段赋值, 然后List会根据这个name名读取数据来显示到界面.
 //
-// hImage:.
+// hImage: 图片句柄.
 func XList_AddColumnImage(hEle int, nWidth int, pName string, hImage int) int {
 	r, _, _ := xList_AddColumnImage.Call(uintptr(hEle), uintptr(nWidth), common.StrPtr(pName), uintptr(hImage))
 	return int(r)
