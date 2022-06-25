@@ -2,15 +2,16 @@ package wapi_test
 
 import (
 	"fmt"
+	"strings"
+	"syscall"
+	"unsafe"
+
 	"github.com/twgh/xcgui/app"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"github.com/twgh/xcgui/window"
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
-	"strings"
-	"syscall"
-	"unsafe"
 )
 
 func ExampleMessageBoxW() {
@@ -219,4 +220,10 @@ func ExampleChooseColorW() {
 	fmt.Println(ret)
 	fmt.Println(cc.RgbResult) // rgb颜色
 	fmt.Println(lpCustColors) // 如果你添加了自定义颜色, 会保存在这个数组里面, 然后只要这个数组还在, 再次打开选择颜色界面时, 之前添加的自定义颜色还会存在
+}
+
+func ExampleGetCursorPos() {
+	var pt xc.POINT
+	wapi.GetCursorPos(&pt)
+	fmt.Println(pt)
 }
