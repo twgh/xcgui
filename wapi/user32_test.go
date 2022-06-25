@@ -2,12 +2,14 @@ package wapi_test
 
 import (
 	"fmt"
+	"testing"
+
 	"github.com/twgh/xcgui/app"
 	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/widget"
 	"github.com/twgh/xcgui/window"
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
-	"testing"
 )
 
 func TestGetDesktopWindow(t *testing.T) {
@@ -46,6 +48,21 @@ func TestClientToScreen(t *testing.T) {
 	pt := xc.POINT{X: 0, Y: 0}
 	wapi.ClientToScreen(w.GetHWND(), &pt)
 	fmt.Println(pt)
+
+	a.ShowAndRun(w.Handle)
+	a.Exit()
+}
+
+func TestGetCursorPos(t *testing.T) {
+	a := app.New(true)
+	w := window.NewWindow(0, 0, 300, 300, "", 0, xcc.Window_Style_Default)
+
+	widget.NewButton(20, 50, 100, 30, "GetCursorPos", w.Handle).Event_BnClick(func(pbHandled *bool) int {
+		var pt xc.POINT
+		wapi.GetCursorPos(&pt)
+		a.MessageBox("GetCursorPos", fmt.Sprintf("x: %d  y: %d", pt.X, pt.Y), xcc.MessageBox_Flag_Ok, w.GetHWND(), xcc.Window_Style_Default)
+		return 0
+	})
 
 	a.ShowAndRun(w.Handle)
 	a.Exit()
