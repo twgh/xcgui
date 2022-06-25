@@ -1,10 +1,11 @@
 package wapi
 
 import (
-	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/xc"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/xc"
 )
 
 var (
@@ -26,6 +27,7 @@ var (
 	getWindowTextLengthW       = user32.NewProc("GetWindowTextLengthW")
 	getWindowTextW             = user32.NewProc("GetWindowTextW")
 	clientToScreen             = user32.NewProc("ClientToScreen")
+	getCursorPos               = user32.NewProc("GetCursorPos")
 )
 
 type HWND_ int
@@ -314,5 +316,15 @@ func GetWindowTextW(hWnd int, lpString *string, nMaxCount int) int {
 //
 func ClientToScreen(hWnd int, lpPoint *xc.POINT) bool {
 	r, _, _ := clientToScreen.Call(uintptr(hWnd), uintptr(unsafe.Pointer(lpPoint)))
+	return r != 0
+}
+
+// GetCursorPos 检索鼠标光标的位置，以屏幕坐标表示
+//	@Description 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-getcursorpos.
+//	@param lpPoint 指向接收光标屏幕坐标的 xc.POINT 结构的指针.
+//	@return bool
+//
+func GetCursorPos(lpPoint *xc.POINT) bool {
+	r, _, _ := getCursorPos.Call(uintptr(unsafe.Pointer(lpPoint)))
 	return r != 0
 }
