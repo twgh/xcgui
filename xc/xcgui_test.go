@@ -1,9 +1,10 @@
 package xc_test
 
 import (
+	"testing"
+
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
-	"testing"
 )
 
 func TestXInitXCGUI(t *testing.T) {
@@ -18,4 +19,12 @@ func TestXInitXCGUI(t *testing.T) {
 	xc.XWnd_ShowWindow(hWindow, xcc.SW_SHOW)
 	xc.XRunXCGUI()
 	xc.XExitXCGUI()
+}
+
+func TestWriteDll(t *testing.T) {
+	err := xc.WriteDll([]byte("0"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(xc.GetXcguiPath())
 }
