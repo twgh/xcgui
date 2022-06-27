@@ -3,6 +3,7 @@ package xc
 import (
 	"errors"
 	"os"
+	"path/filepath"
 	"strconv"
 	"syscall"
 )
@@ -10,6 +11,11 @@ import (
 // xcguiPath 是xcgui.dll的路径(不是目录, 是文件名), 默认值为'xcgui.dll'.
 //	如果你想要更改它的位置, 可以在 xc.LoadXCGUI() 之前调用 xc.SetXcguiPath() 更改为其他路径.
 var xcguiPath = "xcgui.dll"
+
+// 获取 xcgui.dll 的版本号.
+func GetVer() string {
+	return "3.3.5"
+}
 
 var (
 	// Library.
@@ -1722,9 +1728,14 @@ func SetXcguiPath(XcguiPath string) error {
 	}
 
 	// 判断文件是否存在
-	if err := pathExists(XcguiPath); err != nil {
-		return errors.New("XcguiPath 指向的文件不存在")
+	b, err := PathExists(XcguiPath)
+	if err != nil {
+		return err
 	}
+	if !b {
+		return errors.New("XcguiPath 指向的文件不存在: " + xcguiPath)
+	}
+
 	xcguiPath = XcguiPath
 	return nil
 }
@@ -1736,19 +1747,20 @@ func GetXcguiPath() string {
 	return xcguiPath
 }
 
-// pathExists 判断文件或文件夹是否存在.
+// PathExists 判断文件或文件夹是否存在.
 //	@param path 文件或文件夹.
-//	@return error
+//	@return error 如果出错, 则不确定是否存在.
 //
-func pathExists(path string) error {
+func PathExists(path string) (bool, error) {
 	_, err := os.Stat(path)
-	if err != nil {
-		if os.IsNotExist(err) {
-			return err
-		}
-		return err
+	if err == nil { // 如果返回的错误为nil,说明文件或文件夹存在
+		return true, nil
 	}
-	return nil
+
+	if os.IsNotExist(err) { // 如果返回的错误类型使用 os.IsNotExist() 判断为true, 说明文件或文件夹不存在
+		return false, nil
+	}
+	return false, err // 如果返回的错误为其它类型, 则不确定是否在存在
 }
 
 // LoadXCGUI 将从 xcguiPath 加载xcgui.dll. xcguiPath 的默认值是'xcgui.dll'.
@@ -3531,4 +3543,38 @@ func ClientToScreen(hWindow int, pPoint *POINT) {
 	XWnd_GetRect(hWindow, &r)
 	pPoint.X += r.Left
 	pPoint.Y += r.Top
+}
+
+// 把 xcgui.dll 写出到windows临时目录里, 如果检测到dll已存在于临时目录则不会进行写出.
+//
+// 使用完本函数后无需再调用 xc.SetXcguiPath(), 内部已自动操作.
+func WriteDll(dll []byte) error {
+	tmpDir := os.TempDir()
+	tmpPath := filepath.Join(tmpDir, "xcgui"+GetVer())
+	dllPath := filepath.Join(tmpPath, "xcgui.dll")
+
+	b, err := PathExists(tmpPath)
+	if err != nil {
+		return err
+	}
+	if !b { // 目录不存在则创建
+		err = os.Mkdir(tmpPath, 0666)
+		if err != nil {
+			return err
+		}
+	}
+
+	b, err = PathExists(dllPath)
+	if err != nil {
+		return err
+	}
+	if !b { // dll不存在则创建
+		err = os.WriteFile(dllPath, dll, 0666)
+		if err != nil {
+			return err
+		}
+	}
+
+	xcguiPath = dllPath
+	return nil
 }
