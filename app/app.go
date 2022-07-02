@@ -132,13 +132,35 @@ func (a *App) PostMessage(hWindow int, msg int, wParam int, lParam int) bool {
 	return xc.XC_PostMessage(hWindow, msg, wParam, lParam)
 }
 
-// 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
+// CallUiThread 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
+//	@Description: 回调函数尽量不要使用匿名函数, 使用匿名函数意味着你每次都在创建1个新的回调, 超过2000个时, 程序必将panic.
+//	如果使用 CallUiThreadEx 和 CallUiThreader 则没有此限制.
+//  @param pCall 回调函数.
+//  @param data 传进回调函数的用户自定义数据.
+//  @return int
 //
-// pCall: 回调函数.
-//
-// data: 用户自定义数据.
 func (a *App) CallUiThread(pCall func(data int) int, data int) int {
 	return xc.XC_CallUiThread(pCall, data)
+}
+
+// CallUiThreadEx 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
+//  @Description: 与 CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数.
+//  @param f 回调函数.
+//  @param data 传进回调函数的用户自定义数据.
+//  @return int
+//
+func (a *App) CallUiThreadEx(pCall func(data int) int, data int) int {
+	return xc.XC_CallUiThreadEx(pCall, data)
+}
+
+// CallUiThreader 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
+//  @Description: 与 CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数.
+//  @param u xc.UiThreader.
+//  @param data 传进回调函数的用户自定义数据.
+//  @return int
+//
+func (a *App) CallUiThreader(u xc.UiThreader, data int) int {
+	return xc.XC_CallUiThreader(u, data)
 }
 
 // 炫彩_判断元素, 判断是否为元素句柄.
