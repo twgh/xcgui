@@ -275,36 +275,36 @@ func (e *Editor) AddExcludeDefVarKeyword(pKeyword string) int {
 }
 
 // 代码编辑框_获取折叠状态.
-func (Editor *Edit) GetExpandState() string {
-	return xc.XEditor_GetExpandState(Editor.Handle)
+func (e *Editor) GetExpandState() string {
+	return xc.XEditor_GetExpandState(e.Handle)
 }
 
 // 代码编辑框_设置折叠状态.
 //
 // pString: .
-func (Editor *Edit) SetExpandState(pString string) int {
-	return xc.XEditor_SetExpandState(Editor.Handle, pString)
+func (e *Editor) SetExpandState(pString string) int {
+	return xc.XEditor_SetExpandState(e.Handle, pString)
 }
 
 // 代码编辑框_获取缩进.
 //
 // iRow: 行.
-func (Editor *Edit) GetIndentation(iRow int) int {
-	return xc.XEditor_GetIndentation(Editor.Handle, iRow)
+func (e *Editor) GetIndentation(iRow int) int {
+	return xc.XEditor_GetIndentation(e.Handle, iRow)
 }
 
 // 代码编辑框_是否为空行.
 //
 // iRow: 行.
-func (Editor *Edit) IsEmptyRow(iRow int) int {
-	return xc.XEidtor_IsEmptyRow(Editor.Handle, iRow)
+func (e *Editor) IsEmptyRow(iRow int) int {
+	return xc.XEidtor_IsEmptyRow(e.Handle, iRow)
 }
 
 // 代码编辑框_置自动匹配结果显示模式.
 //
 // mode: 0:中英文, 1:英文, 3:中文.
-func (Editor *Edit) SetAutoMatchMode(mode int) int {
-	return xc.XEditor_SetAutoMatchMode(Editor.Handle, mode)
+func (e *Editor) SetAutoMatchMode(mode int) int {
+	return xc.XEditor_SetAutoMatchMode(e.Handle, mode)
 }
 
 /*
