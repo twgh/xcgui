@@ -14,7 +14,7 @@ func TestNew(t *testing.T) {
 			panic(err)
 		}*/
 	a := app.New(true)
-	w := window.NewWindow(0, 0, 500, 500, "", 0, xcc.Window_Style_Default)
+	w := window.New(0, 0, 500, 500, "", 0, xcc.Window_Style_Default)
 	w.ShowWindow(xcc.SW_SHOW)
 	a.Run()
 	a.Exit()
