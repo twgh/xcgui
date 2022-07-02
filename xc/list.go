@@ -635,7 +635,7 @@ func XList_RefreshItem(hEle int, iItem int) int {
 //
 // nWidth: 列宽.
 //
-// pName: 模板里绑定的name名. 在List内部存在有默认模板, name名是从name1到namen. 你可以理解为创建数据适配器后, 内部有一个表, 这个name是每一列的字段名, 这个函数就相当于给这一行的这个字段赋值, 然后List会根据这个name名读取数据来显示到界面.
+// pName: 模板里绑定的name名. 在List内部存在有默认模板, name名是从name1到namen. 你可以理解为创建表头数据适配器后, 内部有一个Map来存储每一列的表头名(列名), 这个name名就是Map的Key, 这个函数就相当于给每一列的Key赋值, 然后List会根据这个name名从Map读取Value来显示表头到界面.
 //
 // pText: 文本.
 func XList_AddColumnText(hEle int, nWidth int, pName string, pText string) int {
@@ -649,7 +649,7 @@ func XList_AddColumnText(hEle int, nWidth int, pName string, pText string) int {
 //
 // nWidth: 列宽.
 //
-// pName: 模板里绑定的name名. 在List内部存在有默认模板, name名是从name1到namen. 你可以理解为创建数据适配器后, 内部有一个表, 这个name是每一列的字段名, 这个函数就相当于给这一行的这个字段赋值, 然后List会根据这个name名读取数据来显示到界面.
+// pName: 模板里绑定的name名. 在List内部存在有默认模板, name名是从name1到namen. 你可以理解为创建表头数据适配器后, 内部有一个Map来存储每一列的表头名(列名), 这个name名就是Map的Key, 这个函数就相当于给每一列的Key赋值, 然后List会根据这个name名从Map读取Value来显示表头到界面.
 //
 // hImage: 图片句柄.
 func XList_AddColumnImage(hEle int, nWidth int, pName string, hImage int) int {
