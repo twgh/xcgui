@@ -5,6 +5,7 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
+// FrameWindow 框架窗口.
 type FrameWindow struct {
 	windowBase
 }
