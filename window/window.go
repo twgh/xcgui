@@ -10,7 +10,7 @@ type Window struct {
 	windowBase
 }
 
-// NewWindow 窗口_创建.
+// New 窗口_创建.
 //	@param x 窗口左上角x坐标.
 //	@param y 窗口左上角y坐标.
 //	@param cx 窗口宽度.
@@ -20,13 +20,13 @@ type Window struct {
 //	@param XCStyle 窗口样式: xcc.Window_Style_.
 //	@return *Window
 //
-func NewWindow(x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle xcc.Window_Style_) *Window {
+func New(x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle xcc.Window_Style_) *Window {
 	p := &Window{}
 	p.SetHandle(xc.XWnd_Create(x, y, cx, cy, pTitle, hWndParent, XCStyle))
 	return p
 }
 
-// NewWindowEx 窗口_创建扩展.
+// NewEx 窗口_创建扩展.
 //	@param dwExStyle 窗口扩展样式.
 //	@param dwStyle 窗口样式.
 //	@param lpClassName 窗口类名.
@@ -39,7 +39,7 @@ func NewWindow(x int, y int, cx int, cy int, pTitle string, hWndParent int, XCSt
 //	@param XCStyle 窗口样式, xcc.Window_Style_.
 //	@return *Window
 //
-func NewWindowEx(dwExStyle int, dwStyle int, lpClassName string, x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle xcc.Window_Style_) *Window {
+func NewEx(dwExStyle int, dwStyle int, lpClassName string, x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle xcc.Window_Style_) *Window {
 	p := &Window{}
 	p.SetHandle(xc.XWnd_CreateEx(dwExStyle, dwStyle, lpClassName, x, y, cx, cy, pTitle, hWndParent, XCStyle))
 	return p
@@ -56,23 +56,23 @@ func Attach(hWnd int, XCStyle xcc.Window_Style_) *Window {
 	return p
 }
 
-// NewWindowByHandle 从句柄创建对象.
+// NewByHandle 从句柄创建窗口对象.
 //	@param hWindow 窗口资源句柄.
 //	@return *Window
 //
-func NewWindowByHandle(hWindow int) *Window {
+func NewByHandle(hWindow int) *Window {
 	p := &Window{}
 	p.SetHandle(hWindow)
 	return p
 }
 
-// NewWindowByLayout 从布局文件创建对象, 失败返回nil.
+// NewByLayout 从布局文件创建窗口对象, 失败返回nil.
 //	@param pFileName 布局文件名.
 //	@param hParent 父对象句柄.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *Window
 //
-func NewWindowByLayout(pFileName string, hParent, hAttachWnd int) *Window {
+func NewByLayout(pFileName string, hParent, hAttachWnd int) *Window {
 	handle := xc.XC_LoadLayout(pFileName, hParent, hAttachWnd)
 	if handle > 0 {
 		p := &Window{}
@@ -82,7 +82,7 @@ func NewWindowByLayout(pFileName string, hParent, hAttachWnd int) *Window {
 	return nil
 }
 
-// NewWindowByLayoutZip 从压缩包中的布局文件创建对象, 失败返回nil.
+// NewByLayoutZip 从压缩包中的布局文件创建窗口对象, 失败返回nil.
 //	@param pZipFileName zip文件名.
 //	@param pFileName 布局文件名.
 //	@param pPassword zip密码.
@@ -90,7 +90,7 @@ func NewWindowByLayout(pFileName string, hParent, hAttachWnd int) *Window {
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *Window
 //
-func NewWindowByLayoutZip(pZipFileName string, pFileName string, pPassword string, hParent, hAttachWnd int) *Window {
+func NewByLayoutZip(pZipFileName string, pFileName string, pPassword string, hParent, hAttachWnd int) *Window {
 	handle := xc.XC_LoadLayoutZip(pZipFileName, pFileName, pPassword, hParent, hAttachWnd)
 	if handle > 0 {
 		p := &Window{}
@@ -100,7 +100,7 @@ func NewWindowByLayoutZip(pZipFileName string, pFileName string, pPassword strin
 	return nil
 }
 
-// NewWindowByLayoutZipMem 从内存压缩包中的布局文件创建对象, 失败返回nil.
+// NewByLayoutZipMem 从内存压缩包中的布局文件创建窗口对象, 失败返回nil.
 //	@param data 布局文件数据.
 //	@param pFileName 布局文件名.
 //	@param pPassword zip密码.
@@ -108,7 +108,7 @@ func NewWindowByLayoutZip(pZipFileName string, pFileName string, pPassword strin
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *Window
 //
-func NewWindowByLayoutZipMem(data []byte, pFileName string, pPassword string, hParent int, hAttachWnd int) *Window {
+func NewByLayoutZipMem(data []byte, pFileName string, pPassword string, hParent int, hAttachWnd int) *Window {
 	handle := xc.XC_LoadLayoutZipMem(data, pFileName, pPassword, hParent, hAttachWnd)
 	if handle > 0 {
 		p := &Window{}
@@ -118,13 +118,13 @@ func NewWindowByLayoutZipMem(data []byte, pFileName string, pPassword string, hP
 	return nil
 }
 
-// NewWindowByLayoutStringW 从布局文件字符串W创建对象, 失败返回nil.
+// NewByLayoutStringW 从布局文件字符串W创建窗口对象, 失败返回nil.
 //	@param pStringXML 字符串.
 //	@param hParent 父对象.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *Window
 //
-func NewWindowByLayoutStringW(pStringXML string, hParent int, hAttachWnd int) *Window {
+func NewByLayoutStringW(pStringXML string, hParent int, hAttachWnd int) *Window {
 	handle := xc.XC_LoadLayoutFromStringW(pStringXML, hParent, hAttachWnd)
 	if handle > 0 {
 		p := &Window{}
@@ -134,11 +134,11 @@ func NewWindowByLayoutStringW(pStringXML string, hParent int, hAttachWnd int) *W
 	return nil
 }
 
-// NewWindowByName 从name创建对象, 失败返回nil.
+// NewByName 从name创建对象, 失败返回nil.
 //	@param name
 //	@return *Window
 //
-func NewWindowByName(name string) *Window {
+func NewByName(name string) *Window {
 	handle := xc.XC_GetObjectByName(name)
 	if handle > 0 {
 		p := &Window{}
@@ -148,11 +148,11 @@ func NewWindowByName(name string) *Window {
 	return nil
 }
 
-// NewWindowByUID 从UID创建对象, 失败返回nil.
+// NewByUID 从UID创建窗口对象, 失败返回nil.
 //	@param nUID
 //	@return *Window
 //
-func NewWindowByUID(nUID int) *Window {
+func NewByUID(nUID int) *Window {
 	handle := xc.XC_GetObjectByUID(nUID)
 	if handle > 0 {
 		p := &Window{}
@@ -162,11 +162,11 @@ func NewWindowByUID(nUID int) *Window {
 	return nil
 }
 
-// NewWindowByUIDName 从UID名称创建对象, 失败返回nil.
+// NewByUIDName 从UID名称创建对象, 失败返回nil.
 //	@param name
 //	@return *Window
 //
-func NewWindowByUIDName(name string) *Window {
+func NewByUIDName(name string) *Window {
 	handle := xc.XC_GetObjectByUIDName(name)
 	if handle > 0 {
 		p := &Window{}
