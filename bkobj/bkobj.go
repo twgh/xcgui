@@ -7,24 +7,24 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// 背景对象.
+// BkObj 背景对象.
 type BkObj struct {
 	objectbase.ObjectBase
 }
 
-// 从BkObj句柄创建BkObj对象.
-func NewBkObjByHandle(handle int) *BkObj {
+// NewByHandle 从BkObj句柄创建BkObj对象.
+func NewByHandle(handle int) *BkObj {
 	p := &BkObj{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从BkManager对象创建BkObj对象, 失败返回nil.
+// NewByBkm 从BkManager对象创建BkObj对象, 失败返回nil.
 //
 // bkm: 背景管理器对象.
 //
 // id: 背景对象ID.
-func NewBkObjByBkManager(bkm *bkmanager.BkManager, id int) *BkObj {
+func NewByBkm(bkm *bkmanager.BkManager, id int) *BkObj {
 	handle := bkm.GetObject(id)
 	if handle == 0 {
 		return nil
@@ -34,12 +34,12 @@ func NewBkObjByBkManager(bkm *bkmanager.BkManager, id int) *BkObj {
 	return p
 }
 
-// 从BkManager句柄创建BkObj对象, 失败返回nil.
+// NewByBkmHandle 从BkManager句柄创建BkObj对象, 失败返回nil.
 //
 // hBkm: 背景管理器句柄.
 //
 // id: 背景对象ID.
-func NewBkObjByBkManagerHandle(hBkm, id int) *BkObj {
+func NewByBkmHandle(hBkm, id int) *BkObj {
 	handle := xc.XBkM_GetObject(hBkm, id)
 	if handle == 0 {
 		return nil
@@ -64,7 +64,7 @@ func (b *BkObj) SetMargin(left int, top int, right int, bottom int) int {
 
 // 背景对象_置对齐.
 //
-// nFlags: 对齐方式, BkObject_Align_Flag_.
+// nFlags: 对齐方式: xcc.BkObject_Align_Flag_.
 func (b *BkObj) SetAlign(nFlags xcc.BkObject_Align_Flag_) int {
 	return xc.XBkObj_SetAlign(b.Handle, nFlags)
 }
@@ -147,7 +147,7 @@ func (b *BkObj) SetFont(hFont int) int {
 
 // 背景对象_置文本对齐.
 //
-// nAlign: 文本对齐方式, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
+// nAlign: 文本对齐方式: xcc.TextFormatFlag_, xcc.TextAlignFlag_, xcc.TextTrimming_.
 func (b *BkObj) SetTextAlign(nAlign xcc.TextFormatFlag_) int {
 	return xc.XBkObj_SetTextAlign(b.Handle, nAlign)
 }
@@ -159,8 +159,8 @@ func (b *BkObj) GetMargin(pMargin *xc.RECT) int {
 	return xc.XBkObj_GetMargin(b.Handle, pMargin)
 }
 
-// 背景对象_取对齐, 返回对齐标识, BkObject_Align_Flag_.
-func (b *BkObj) GetAlign() int {
+// 背景对象_取对齐, 返回对齐标识: xcc.BkObject_Align_Flag_.
+func (b *BkObj) GetAlign() xcc.BkObject_Align_Flag_ {
 	return xc.XBkObj_GetAlign(b.Handle)
 }
 
@@ -216,7 +216,7 @@ func (b *BkObj) GetFont() int {
 	return xc.XBkObj_GetFont(b.Handle)
 }
 
-// 背景对象_取文本对齐, 返回文本对齐方式, TextFormatFlag_.
-func (b *BkObj) GetTextAlign() int {
+// 背景对象_取文本对齐, 返回文本对齐方式: xcc.TextFormatFlag_.
+func (b *BkObj) GetTextAlign() xcc.TextFormatFlag_ {
 	return xc.XBkObj_GetTextAlign(b.Handle)
 }
