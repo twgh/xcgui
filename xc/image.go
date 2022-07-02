@@ -459,7 +459,7 @@ func XImage_LoadSvgStringW(pString string) int {
 	return int(r)
 }
 
-// 图片_加载从SVG字符串UTF8.
+// 图片_加载从SVG字符串UTF8, 更推荐使用 xc.XImage_LoadSvgStringW.
 //
 // pString: 字符串.
 func XImage_LoadSvgStringUtf8(pString string) int {
