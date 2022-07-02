@@ -43,7 +43,7 @@ func TestGetWindowTextLengthW(t *testing.T) {
 
 func TestClientToScreen(t *testing.T) {
 	a := app.New(true)
-	w := window.NewWindow(0, 0, 300, 300, "", 0, xcc.Window_Style_Default)
+	w := window.New(0, 0, 300, 300, "", 0, xcc.Window_Style_Default)
 
 	pt := xc.POINT{X: 0, Y: 0}
 	wapi.ClientToScreen(w.GetHWND(), &pt)
@@ -55,7 +55,7 @@ func TestClientToScreen(t *testing.T) {
 
 func TestGetCursorPos(t *testing.T) {
 	a := app.New(true)
-	w := window.NewWindow(0, 0, 300, 300, "", 0, xcc.Window_Style_Default)
+	w := window.New(0, 0, 300, 300, "", 0, xcc.Window_Style_Default)
 
 	widget.NewButton(20, 50, 100, 30, "GetCursorPos", w.Handle).Event_BnClick(func(pbHandled *bool) int {
 		var pt xc.POINT
