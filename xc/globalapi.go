@@ -129,11 +129,13 @@ func XC_PostMessage(hWindow int, msg int, wParam int, lParam int) bool {
 	return r != 0
 }
 
-// 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
+// XC_CallUiThread 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
+//	@Description: 回调函数尽量不要使用匿名函数, 使用匿名函数意味着你每次都在创建1个新的回调, 超过2000个时, 程序必将panic.
+//	如果使用 xc.XC_CallUiThreadEx 和 xc.XC_CallUiThreader 则没有此限制.
+//  @param pCall 回调函数.
+//  @param data 传进回调函数的用户自定义数据.
+//  @return int
 //
-// pCall: 回调函数.
-//
-// data: 用户自定义数据.
 func XC_CallUiThread(pCall func(data int) int, data int) int {
 	r, _, _ := xC_CallUiThread.Call(syscall.NewCallback(pCall), uintptr(data))
 	return int(r)
