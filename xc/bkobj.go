@@ -27,7 +27,7 @@ func XBkObj_SetMargin(hObj int, left int, top int, right int, bottom int) int {
 //
 // hObj: 背景对象句柄.
 //
-// nFlags: 对齐方式, BkObject_Align_Flag_.
+// nFlags: 对齐方式: xcc.BkObject_Align_Flag_.
 func XBkObj_SetAlign(hObj int, nFlags xcc.BkObject_Align_Flag_) int {
 	r, _, _ := xBkObj_SetAlign.Call(uintptr(hObj), uintptr(nFlags))
 	return int(r)
@@ -143,7 +143,7 @@ func XBkObj_SetFont(hObj int, hFont int) int {
 //
 // hObj: 背景对象句柄.
 //
-// nAlign: 文本对齐方式, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
+// nAlign: 文本对齐方式: xcc.TextFormatFlag_, xcc.TextAlignFlag_, xcc.TextTrimming_.
 func XBkObj_SetTextAlign(hObj int, nAlign xcc.TextFormatFlag_) int {
 	r, _, _ := xBkObj_SetTextAlign.Call(uintptr(hObj), uintptr(nAlign))
 	return int(r)
@@ -159,12 +159,12 @@ func XBkObj_GetMargin(hObj int, pMargin *RECT) int {
 	return int(r)
 }
 
-// 背景对象_取对齐, 返回对齐标识, BkObject_Align_Flag_.
+// 背景对象_取对齐, 返回对齐标识: xcc.BkObject_Align_Flag_.
 //
 // hObj: 背景对象句柄.
-func XBkObj_GetAlign(hObj int) int {
+func XBkObj_GetAlign(hObj int) xcc.BkObject_Align_Flag_ {
 	r, _, _ := xBkObj_GetAlign.Call(uintptr(hObj))
-	return int(r)
+	return xcc.BkObject_Align_Flag_(r)
 }
 
 // 背景对象_取图片, 返回图片句柄.
@@ -249,10 +249,10 @@ func XBkObj_GetFont(hObj int) int {
 	return int(r)
 }
 
-// 背景对象_取文本对齐, 返回文本对齐方式, TextFormatFlag_.
+// 背景对象_取文本对齐, 返回文本对齐方式: xcc.TextFormatFlag_.
 //
 // hObj: 背景对象句柄.
-func XBkObj_GetTextAlign(hObj int) int {
+func XBkObj_GetTextAlign(hObj int) xcc.TextFormatFlag_ {
 	r, _, _ := xBkObj_GetTextAlign.Call(uintptr(hObj))
-	return int(r)
+	return xcc.TextFormatFlag_(r)
 }
