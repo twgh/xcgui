@@ -13,7 +13,7 @@ type Svg struct {
 // SVG_加载从文件, 返回Svg对象.
 //
 // pFileName: 文件名.
-func NewSvg_LoadFile(pFileName string) *Svg {
+func NewByFile(pFileName string) *Svg {
 	p := &Svg{}
 	p.SetHandle(xc.XSvg_LoadFile(pFileName))
 	return p
@@ -22,7 +22,7 @@ func NewSvg_LoadFile(pFileName string) *Svg {
 // SVG_加载从字符串, 返回Svg对象.
 //
 // pString: 字符串.
-func NewSvg_LoadString(pString string) *Svg {
+func NewByString(pString string) *Svg {
 	p := &Svg{}
 	p.SetHandle(xc.XSvg_LoadString(pString))
 	return p
@@ -31,7 +31,7 @@ func NewSvg_LoadString(pString string) *Svg {
 // SVG_加载从字符串W.
 //
 // pString: 字符串.
-func NewSvg_LoadStringW(pString string) *Svg {
+func NewByStringW(pString string) *Svg {
 	p := &Svg{}
 	p.SetHandle(xc.XSvg_LoadStringW(pString))
 	return p
@@ -40,7 +40,7 @@ func NewSvg_LoadStringW(pString string) *Svg {
 // SVG_加载从字符串UTF8.
 //
 // pString: 字符串.
-func NewSvg_LoadStringUtf8(pString string) *Svg {
+func NewByStringUtf8(pString string) *Svg {
 	p := &Svg{}
 	p.SetHandle(xc.XSvg_LoadStringUtf8(pString))
 	return p
@@ -53,7 +53,7 @@ func NewSvg_LoadStringUtf8(pString string) *Svg {
 // pFileName: svg文件名.
 //
 // pPassword: zip密码.
-func NewSvg_LoadZip(pZipFileName, pFileName, pPassword string) *Svg {
+func NewByZip(pZipFileName, pFileName, pPassword string) *Svg {
 	p := &Svg{}
 	p.SetHandle(xc.XSvg_LoadZip(pZipFileName, pFileName, pPassword))
 	return p
@@ -66,7 +66,7 @@ func NewSvg_LoadZip(pZipFileName, pFileName, pPassword string) *Svg {
 // pFileName: svg文件名.
 //
 // pPassword: zip密码.
-func NewSvg_LoadZipMem(data []byte, pFileName, pPassword string) *Svg {
+func NewByZipMem(data []byte, pFileName, pPassword string) *Svg {
 	p := &Svg{}
 	p.SetHandle(xc.XSvg_LoadZipMem(data, pFileName, pPassword))
 	return p
@@ -79,7 +79,7 @@ func NewSvg_LoadZipMem(data []byte, pFileName, pPassword string) *Svg {
 // pType: 资源类型.在rc资源文件中.
 //
 // hModule: 从指定模块加载.
-func NewSvg_LoadRes(id int, pType string, hModule int) *Svg {
+func NewByRes(id int, pType string, hModule int) *Svg {
 	p := &Svg{}
 	p.SetHandle(xc.XSvg_LoadRes(id, pType, hModule))
 	return p
