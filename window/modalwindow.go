@@ -5,7 +5,7 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// 模态窗口.
+// ModalWindow 模态窗口.
 type ModalWindow struct {
 	windowBase
 }
@@ -126,7 +126,7 @@ func NewModalWindowByLayoutStringW(pStringXML string, hParent int, hAttachWnd in
 //
 // hWnd: 要附加的外部窗口句柄.
 //
-// XCStyle: 炫彩窗口样式: Window_Style_.
+// XCStyle: 炫彩窗口样式: xcc.Window_Style_.
 func ModalWnd_Attach(hWnd int, XCStyle xcc.Window_Style_) *Window {
 	p := &Window{}
 	p.SetHandle(xc.XModalWnd_Attach(hWnd, XCStyle))
