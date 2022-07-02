@@ -7,27 +7,27 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// 背景管理器.
+// BkManager 背景管理器.
 type BkManager struct {
 	objectbase.ObjectBase
 }
 
-// 背景_创建, 创建背景管理器.
-func NewBkManager() *BkManager {
+// New 背景_创建, 创建背景管理器.
+func New() *BkManager {
 	p := &BkManager{}
 	p.SetHandle(xc.XBkM_Create())
 	return p
 }
 
-// 从句柄创建对象.
-func NewBkManagerByHandle(handle int) *BkManager {
+// NewByHandle 从句柄创建背景管理器对象.
+func NewByHandle(handle int) *BkManager {
 	p := &BkManager{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
-func NewBkManagerByName(name string) *BkManager {
+// NewByName 从name创建背景管理器对象, 失败返回nil.
+func NewByName(name string) *BkManager {
 	handle := res.GetBkM(name)
 	if handle > 0 {
 		p := &BkManager{}
@@ -37,18 +37,20 @@ func NewBkManagerByName(name string) *BkManager {
 	return nil
 }
 
-// 背景_销毁.
-func (b *BkManager) Destroy() int {
-	return xc.XBkM_Destroy(b.Handle)
-}
-
-// !废弃函数, 保留为了兼容旧版; 请使用SetInfo().
+// Deprecated
+//
+// !废弃函数, 保留为了兼容旧版; 请使用 SetInfo().
 //
 // 背景_置内容, 设置背景内容, 返回设置的背景对象数量.
 //
 // pText: 背景内容字符串.
 func (b *BkManager) SetBkInfo(pText string) int {
 	return xc.XBkM_SetBkInfo(b.Handle, pText)
+}
+
+// 背景_销毁.
+func (b *BkManager) Destroy() int {
+	return xc.XBkM_Destroy(b.Handle)
 }
 
 // 背景_添加内容, 添加背景内容, 返回添加的背景对象数量.
