@@ -13,7 +13,7 @@ func ExampleNew() {
 			panic(err)
 		}*/
 	a := app.New(true)
-	w := window.NewWindow(0, 0, 500, 500, "", 0, xcc.Window_Style_Default)
+	w := window.New(0, 0, 500, 500, "", 0, xcc.Window_Style_Default)
 	w.ShowWindow(xcc.SW_SHOW)
 	a.Run()
 	a.Exit()
@@ -21,7 +21,7 @@ func ExampleNew() {
 
 func ExampleApp_ShowAndRun() {
 	a := app.New(true)
-	w := window.NewWindow(0, 0, 500, 500, "", 0, xcc.Window_Style_Default)
+	w := window.New(0, 0, 500, 500, "", 0, xcc.Window_Style_Default)
 	a.ShowAndRun(w.Handle)
 	a.Exit()
 }
