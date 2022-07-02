@@ -765,9 +765,9 @@ const (
 // type Key_ uint32
 
 const (
-	Key_Lbutton = 1 //鼠标左键
-	Key_RButton = 2 //鼠标右键
-	Key_MButton = 4 //鼠标中键
+	Key_Lbutton = 1 // 鼠标左键
+	Key_RButton = 2 // 鼠标右键
+	Key_MButton = 4 // 鼠标中键
 
 	Key_A = 65
 	Key_B = 66
