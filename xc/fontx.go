@@ -45,8 +45,8 @@ func XFont_CreateFromHFONT(hFont int) int {
 	return int(r)
 }
 
-// XFont_CreateFromFont 字体_创建从Font. 创建炫彩字体从GDI+字体(Font).
-//	@param pFont GDI+字体指针(Font*).
+// XFont_CreateFromFont 字体_创建从Font. 创建炫彩字体从GDI+字体.
+//	@param pFont GDI+字体指针.
 //	@return int 返回字体句柄.
 //
 func XFont_CreateFromFont(pFont int) int {
