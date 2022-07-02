@@ -6,33 +6,33 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// 图形绘制.
+// Draw 图形绘制.
 type Draw struct {
 	objectbase.ObjectBase
 }
 
-// 绘制_创建, 创建图形绘制模块实例, 返回句柄.
+// New 绘制_创建, 创建图形绘制模块实例, 返回句柄.
 //
 // hWindow: 窗口句柄.
-func NewDraw(hWindow int) *Draw {
+func New(hWindow int) *Draw {
 	p := &Draw{}
 	p.SetHandle(xc.XDraw_Create(hWindow))
 	return p
 }
 
-// 绘制_创建GDI, 创建图形绘制模块实例, 返回图形绘制模块实例句柄.
+// NewGDI 绘制_创建GDI, 创建图形绘制模块实例, 返回图形绘制模块实例句柄.
 //
 // hWindow: 窗口句柄.
 //
 // hdc: hdc句柄.
-func NewDrawGDI(hWindow, hdc int) *Draw {
+func NewGDI(hWindow, hdc int) *Draw {
 	p := &Draw{}
 	p.SetHandle(xc.XDraw_CreateGDI(hWindow, hdc))
 	return p
 }
 
-// 从图形绘制模块实例句柄创建对象.
-func NewDrawByHandle(handle int) *Draw {
+// NewByHandle 从图形绘制模块实例句柄创建对象.
+func NewByHandle(handle int) *Draw {
 	p := &Draw{}
 	p.SetHandle(handle)
 	return p
