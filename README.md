@@ -74,14 +74,41 @@ func main() {
 
 ## 动态链接库下载
 
+程序运行时需要把`XCGUI.dll`放到程序运行目录。
+
+在开发时最好是放到C:\Windows\System32目录，这样就不需要频繁把dll放到不同程序的运行目录了。
+
+##### （1）下载命令
+
+64位
+
+```bash
+curl -fL "https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui.dll?version=3.3.5.0" -o xcgui.dll
+```
+
+32位
+
+```bash
+curl -fL "https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui-32.dll?version=3.3.5.0" -o xcgui.dll
+```
+
+##### （2）使用getxcgui工具下载
+
+```bash
+go install github.com/twgh/getxcgui@latest
+getxcgui
+```
+
+此工具的源码在[这里](https://github.com/twgh/getxcgui)，更多flags可以点[进去](https://github.com/twgh/getxcgui#flags)查看
+
+##### （3）网盘下载
+
+网盘内还包含`界面设计器`和`chm帮助文档`
+
 | 网盘         | 下载地址                                                     |
 | ------------ | ------------------------------------------------------------ |
 | 百度网盘     | [下载](https://pan.baidu.com/s/1rC3unQGaxnRUCMm8z8qzvA?pwd=1111) |
 | 蓝奏云     | [下载](https://wwi.lanzoup.com/b0cqd6nkb) |
-
-程序运行时需要把`XCGUI.dll`放到程序运行目录。
-
-在开发时最好是放到C:\Windows\System32目录，这样就不需要频繁把dll放到不同程序的运行目录了。
 
 ## 简单窗口（纯代码）
 
@@ -208,8 +235,8 @@ xc包里包含xcgui.dll里所有的API，有一千多个函数，可以直接使
 | 字体                                  | font      | Font             | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.352/font#Font) |
 | 图片操作                              | imagex    | Image            | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.352/imagex#Image) |
 | SVG矢量图形                           | svg       | Svg              | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.352/svg#Svg) |
-| 列表项模板                            | tmpl      | ListItemTemplate | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.352/listitemtemplate#ListItemTemplate) |
-| 节点                                  | tmpl      | Node             | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.352/listitemtemplate#Node) |
+| 列表项模板                            | tmpl      | ListItemTemplate | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.352/tmpl#ListItemTemplate) |
+| 节点                                  | tmpl      | Node             | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.352/tmpl#Node) |
 | 图形绘制                              | drawx     | Draw             | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.352/drawx#Draw) |
 | 动画序列                              | ani       | Anima            | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.352/ani#Anima) |
 | 动画组                                | ani       | AnimaGroup       | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.352/ani#AnimaGroup) |
