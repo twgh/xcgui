@@ -193,8 +193,8 @@ These classes are encapsulated based on more than a thousand functions in the xc
 | font         | Font             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.352/font#Font) |
 | imagex       | Imagex           | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.352/imagex#Image) |
 | svg          | Svg              | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.352/svg#Svg) |
-| tmpl         | ListItemTemplate | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.352/listitemtemplate#ListItemTemplate) |
-| tmpl         | Node             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.352/listitemtemplate#Node) |
+| tmpl         | ListItemTemplate | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.352/tmpl#ListItemTemplate) |
+| tmpl         | Node             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.352/tmpl#Node) |
 | drawx        | Draw             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.352/drawx#Draw) |
 | ani          | Anima            | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.352/ani#Anima) |
 | ani          | AnimaGroup       | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.352/ani#AnimaGroup) |
