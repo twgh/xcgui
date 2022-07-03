@@ -78,7 +78,7 @@ func main() {
 
 在开发时最好是放到C:\Windows\System32目录，这样就不需要频繁把dll放到不同程序的运行目录了。
 
-##### （1）下载命令
+#### （1）命令行下载
 
 64位
 
@@ -92,7 +92,7 @@ curl -fL "https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui.dll?version=3.3.
 curl -fL "https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui-32.dll?version=3.3.5.0" -o xcgui.dll
 ```
 
-##### （2）使用getxcgui工具下载
+#### （2）使用getxcgui工具下载
 
 ```bash
 go install github.com/twgh/getxcgui@latest
@@ -101,7 +101,7 @@ getxcgui
 
 此工具的源码在[这里](https://github.com/twgh/getxcgui)，更多flags可以点[进去](https://github.com/twgh/getxcgui#flags)查看
 
-##### （3）网盘下载
+#### （3）网盘下载
 
 网盘内还包含`界面设计器`和`chm帮助文档`
 
