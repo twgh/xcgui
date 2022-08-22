@@ -99,6 +99,12 @@ go install github.com/twgh/getxcgui@latest
 getxcgui
 ```
 
+如果要把dll直接下载到C:\Windows\System32目录里，请使用如下命令：
+
+```bash
+getxcgui -o %windir%\system32\xcgui.dll
+```
+
 此工具的源码在[这里](https://github.com/twgh/getxcgui)，更多flags可以点[进去](https://github.com/twgh/getxcgui#flags)查看
 
 #### （3）网盘下载
