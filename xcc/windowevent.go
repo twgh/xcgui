@@ -29,28 +29,29 @@ const (
 type WM_ uint32
 
 const (
-	WM_PAINT          WM_ = 15  // 窗口绘制消息
-	WM_CLOSE          WM_ = 16  // 窗口关闭消息.
-	WM_DESTROY        WM_ = 2   // 窗口销毁消息.
-	WM_NCDESTROY      WM_ = 130 // 窗口非客户区销毁消息.
-	WM_MOUSEMOVE      WM_ = 512 // 窗口鼠标移动消息.
-	WM_LBUTTONDOWN    WM_ = 513 // 窗口鼠标左键按下消息
-	WM_LBUTTONUP      WM_ = 514 // 窗口鼠标左键弹起消息.
-	WM_RBUTTONDOWN    WM_ = 516 // 窗口鼠标右键按下消息.
-	WM_RBUTTONUP      WM_ = 517 // 窗口鼠标右键弹起消息.
-	WM_LBUTTONDBLCLK  WM_ = 515 // 窗口鼠标左键双击消息.
-	WM_RBUTTONDBLCLK  WM_ = 518 // 窗口鼠标右键双击消息.
-	WM_MOUSEWHEEL     WM_ = 522 // 窗口鼠标滚轮滚动消息.
-	WM_EXITSIZEMOVE   WM_ = 562 // 窗口退出移动或调整大小模式循环改，详情参见MSDN.
-	WM_MOUSEHOVER     WM_ = 673 // 窗口鼠标进入消息
-	WM_MOUSELEAVE     WM_ = 675 // 窗口鼠标离开消息.
-	WM_SIZE           WM_ = 5   // 窗口大小改变消息.
-	WM_TIMER          WM_ = 275 // 窗口定时器消息.
-	WM_SETFOCUS       WM_ = 7   // 窗口获得焦点.
-	WM_KILLFOCUS      WM_ = 8   // 窗口失去焦点.
-	WM_KEYDOWN        WM_ = 256 // 窗口键盘按键消息.
-	WM_CAPTURECHANGED WM_ = 533 // 窗口鼠标捕获改变消息.
-	WM_SETCURSOR      WM_ = 32  // 窗口设置鼠标光标.
-	WM_CHAR           WM_ = 258 // 窗口字符消息.
-	WM_DROPFILES      WM_ = 563 // 拖动文件到窗口.
+	WM_PAINT          WM_ = 15     // 窗口绘制消息
+	WM_CLOSE          WM_ = 16     // 窗口关闭消息.
+	WM_DESTROY        WM_ = 2      // 窗口销毁消息.
+	WM_NCDESTROY      WM_ = 130    // 窗口非客户区销毁消息.
+	WM_MOUSEMOVE      WM_ = 512    // 窗口鼠标移动消息.
+	WM_LBUTTONDOWN    WM_ = 513    // 窗口鼠标左键按下消息
+	WM_LBUTTONUP      WM_ = 514    // 窗口鼠标左键弹起消息.
+	WM_RBUTTONDOWN    WM_ = 516    // 窗口鼠标右键按下消息.
+	WM_RBUTTONUP      WM_ = 517    // 窗口鼠标右键弹起消息.
+	WM_LBUTTONDBLCLK  WM_ = 515    // 窗口鼠标左键双击消息.
+	WM_RBUTTONDBLCLK  WM_ = 518    // 窗口鼠标右键双击消息.
+	WM_MOUSEWHEEL     WM_ = 522    // 窗口鼠标滚轮滚动消息.
+	WM_EXITSIZEMOVE   WM_ = 562    // 窗口退出移动或调整大小模式循环改，详情参见MSDN.
+	WM_MOUSEHOVER     WM_ = 673    // 窗口鼠标进入消息
+	WM_MOUSELEAVE     WM_ = 675    // 窗口鼠标离开消息.
+	WM_SIZE           WM_ = 5      // 窗口大小改变消息.
+	WM_TIMER          WM_ = 275    // 窗口定时器消息.
+	WM_SETFOCUS       WM_ = 7      // 窗口获得焦点.
+	WM_KILLFOCUS      WM_ = 8      // 窗口失去焦点.
+	WM_KEYDOWN        WM_ = 256    // 窗口键盘按键消息.
+	WM_CAPTURECHANGED WM_ = 533    // 窗口鼠标捕获改变消息.
+	WM_SETCURSOR      WM_ = 32     // 窗口设置鼠标光标.
+	WM_CHAR           WM_ = 258    // 窗口字符消息.
+	WM_DROPFILES      WM_ = 563    // 拖动文件到窗口.
+	WM_HOTKEY         WM_ = 0x0312 // 当用户按下 wapi.RegisterHotKey 函数注册的热键时发布。消息放置在与注册热键的线程关联的消息队列的顶部.
 )
