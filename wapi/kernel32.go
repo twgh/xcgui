@@ -17,6 +17,7 @@ var (
 	globalAlloc  = kernel32.NewProc("GlobalAlloc")
 	lstrcpyW     = kernel32.NewProc("lstrcpyW")
 	globalFree   = kernel32.NewProc("GlobalFree")
+	getLastError = kernel32.NewProc("GetLastError")
 )
 
 // Sleep 延时.
@@ -110,4 +111,13 @@ func LstrcpyW(lpString1, lpString2 uintptr) uintptr {
 func GlobalFree(hMem uintptr) uintptr {
 	r, _, _ := globalFree.Call(hMem)
 	return r
+}
+
+// GetLastError 检索调用线程的最后一个错误代码值。最后一个错误代码是在每个线程的基础上维护的。多个线程不会覆盖彼此的最后一个错误代码。
+//	@Description 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winbase/nf-winbase-GetLastError.
+//	@return int32 返回值是调用线程的最后一个错误代码。
+//
+func GetLastError() int32 {
+	r, _, _ := getLastError.Call()
+	return int32(r)
 }
