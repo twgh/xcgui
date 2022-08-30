@@ -110,7 +110,7 @@ func XMsg_CreateEx(dwExStyle int, dwStyle int, lpClassName, pTitle, pText string
 // wParam:.
 //
 // lParam:.
-func XC_SendMessage(hWindow int, msg int, wParam int, lParam int) int {
+func XC_SendMessage(hWindow int, msg uint32, wParam int32, lParam int32) int {
 	r, _, _ := xC_SendMessage.Call(uintptr(hWindow), uintptr(msg), uintptr(wParam), uintptr(lParam))
 	return int(r)
 }
@@ -124,7 +124,7 @@ func XC_SendMessage(hWindow int, msg int, wParam int, lParam int) int {
 // wParam:.
 //
 // lParam:.
-func XC_PostMessage(hWindow int, msg int, wParam int, lParam int) bool {
+func XC_PostMessage(hWindow int, msg uint32, wParam int32, lParam int32) bool {
 	r, _, _ := xC_PostMessage.Call(uintptr(hWindow), uintptr(msg), uintptr(wParam), uintptr(lParam))
 	return r != 0
 }
