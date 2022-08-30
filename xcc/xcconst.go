@@ -703,7 +703,10 @@ const (
 	IDM_FLOAT = 1000000008 // 浮动
 	IDM_HIDE  = 1000000009 // 隐藏
 
-	Edit_Style_No = 0xFFFF // 无效样式
+	Edit_Style_No      = 0xFFFF // 无效样式
+	Edit_Style_Default = 1      //edit 默认样式
+
+	Text_Buffer_Size = 10240 //共享文本缓冲区大小
 )
 
 // 菜单ID, 当前未使用
@@ -761,123 +764,123 @@ const (
 	FrameWnd_Cell_Type_Left_Right FrameWnd_Cell_Type_ = 5 // 左右布局
 )
 
-// Key_ 键盘按键常量
-// type Key_ uint32
+// VK_ 键盘按键常量
+// type VK_ uint32
 
 const (
-	Key_Lbutton = 1 // 鼠标左键
-	Key_RButton = 2 // 鼠标右键
-	Key_MButton = 4 // 鼠标中键
+	VK_Lbutton = 1 // 鼠标左键
+	VK_RButton = 2 // 鼠标右键
+	VK_MButton = 4 // 鼠标中键
 
-	Key_A = 65
-	Key_B = 66
-	Key_C = 67
-	Key_D = 68
-	Key_E = 69
-	Key_F = 70
-	Key_G = 71
-	Key_H = 72
-	Key_I = 73
-	Key_J = 74
-	Key_K = 75
-	Key_L = 76
-	Key_M = 77
-	Key_N = 78
-	Key_O = 79
-	Key_P = 80
-	Key_Q = 81
-	Key_R = 82
-	Key_S = 83
-	Key_T = 84
-	Key_U = 85
-	Key_V = 86
-	Key_W = 87
-	Key_X = 88
-	Key_Y = 89
-	Key_Z = 90
+	VK_A = 65
+	VK_B = 66
+	VK_C = 67
+	VK_D = 68
+	VK_E = 69
+	VK_F = 70
+	VK_G = 71
+	VK_H = 72
+	VK_I = 73
+	VK_J = 74
+	VK_K = 75
+	VK_L = 76
+	VK_M = 77
+	VK_N = 78
+	VK_O = 79
+	VK_P = 80
+	VK_Q = 81
+	VK_R = 82
+	VK_S = 83
+	VK_T = 84
+	VK_U = 85
+	VK_V = 86
+	VK_W = 87
+	VK_X = 88
+	VK_Y = 89
+	VK_Z = 90
 
-	Key_F1  = 112
-	Key_F2  = 113
-	Key_F3  = 114
-	Key_F4  = 115
-	Key_F5  = 116
-	Key_F6  = 117
-	Key_F7  = 118
-	Key_F8  = 119
-	Key_F9  = 120
-	Key_F10 = 121
-	Key_F11 = 122
-	Key_F12 = 123
-	Key_F13 = 124
-	Key_F14 = 125
-	Key_F15 = 126
-	Key_F16 = 127
+	VK_F1  = 112
+	VK_F2  = 113
+	VK_F3  = 114
+	VK_F4  = 115
+	VK_F5  = 116
+	VK_F6  = 117
+	VK_F7  = 118
+	VK_F8  = 119
+	VK_F9  = 120
+	VK_F10 = 121
+	VK_F11 = 122
+	VK_F12 = 123
+	VK_F13 = 124
+	VK_F14 = 125
+	VK_F15 = 126
+	VK_F16 = 127
 
-	Key_0 = 48
-	Key_1 = 49
-	Key_2 = 50
-	Key_3 = 51
-	Key_4 = 52
-	Key_5 = 53
-	Key_6 = 54
-	Key_7 = 55
-	Key_8 = 56
-	Key_9 = 57
+	VK_0 = 48
+	VK_1 = 49
+	VK_2 = 50
+	VK_3 = 51
+	VK_4 = 52
+	VK_5 = 53
+	VK_6 = 54
+	VK_7 = 55
+	VK_8 = 56
+	VK_9 = 57
 
-	Key_Numpad0   = 96
-	Key_Numpad1   = 97
-	Key_Numpad2   = 98
-	Key_Numpad3   = 99
-	Key_Numpad4   = 100
-	Key_Numpad5   = 101
-	Key_Numpad6   = 102
-	Key_Numpad7   = 103
-	Key_Numpad8   = 104
-	Key_Numpad9   = 105
-	Key_Multiply  = 106 // 数字键盘上的*键
-	Key_Add       = 107 // 数字键盘上的+键
-	Key_Separator = 108
-	Key_Subtract  = 109 // 数字键盘上的-键
-	Key_Decimal   = 110 // 数字键盘上的.键
-	Key_Divide    = 111 // 数字键盘上的/键
+	VK_Numpad0   = 96
+	VK_Numpad1   = 97
+	VK_Numpad2   = 98
+	VK_Numpad3   = 99
+	VK_Numpad4   = 100
+	VK_Numpad5   = 101
+	VK_Numpad6   = 102
+	VK_Numpad7   = 103
+	VK_Numpad8   = 104
+	VK_Numpad9   = 105
+	VK_Multiply  = 106 // 数字键盘上的*键
+	VK_Add       = 107 // 数字键盘上的+键
+	VK_Separator = 108
+	VK_Subtract  = 109 // 数字键盘上的-键
+	VK_Decimal   = 110 // 数字键盘上的.键
+	VK_Divide    = 111 // 数字键盘上的/键
 
-	Key_Break       = 3
-	Key_Backspace   = 8
-	Key_Tab         = 9
-	Key_Enter       = 13
-	Key_Shift       = 16
-	Key_Ctrl        = 17
-	Key_Alt         = 18
-	Key_Pause       = 19
-	Key_CapsLock    = 20
-	Key_NumLock     = 144
-	Key_ScrollLock  = 145
-	Key_Esc         = 27
-	Key_Space       = 32
-	Key_PageUp      = 33
-	Key_PageDown    = 34
-	Key_Home        = 36
-	Key_End         = 35
-	Key_Left        = 37
-	Key_Up          = 38
-	Key_Right       = 39
-	Key_Down        = 40
-	Key_Insert      = 45
-	Key_Delete      = 46
-	Key_LWin        = 91 // 左win键
-	Key_Rwin        = 92 // 右win键
-	Key_ContextMenu = 93 // 右Ctrl左边键，点击相当于点击鼠标右键，会弹出快捷菜单
-	Key_PrintScreen = 44
+	VK_Break       = 3
+	VK_Backspace   = 8
+	VK_Tab         = 9
+	VK_Enter       = 13
+	VK_Shift       = 16
+	VK_Ctrl        = 17
+	VK_Alt         = 18
+	VK_Pause       = 19
+	VK_CapsLock    = 20
+	VK_NumLock     = 144
+	VK_ScrollLock  = 145
+	VK_Esc         = 27
+	VK_Space       = 32
+	VK_PageUp      = 33
+	VK_PageDown    = 34
+	VK_Home        = 36
+	VK_End         = 35
+	VK_Left        = 37
+	VK_Up          = 38
+	VK_Right       = 39
+	VK_Down        = 40
+	VK_Insert      = 45
+	VK_Delete      = 46
+	VK_LWin        = 91 // 左win键
+	VK_Rwin        = 92 // 右win键
+	VK_ContextMenu = 93 // 右Ctrl左边键，点击相当于点击鼠标右键，会弹出快捷菜单
+	VK_PrintScreen = 44
 
-	Key_Semicolon     = 186 // ;(分号)
-	Key_Equals        = 187 //  = 键
-	Key_Comma         = 188 // ,键(逗号)
-	Key_Minus         = 189 // -键(减号)
-	Key_FullStop      = 190 // .键(句号)
-	Key_ForwardSlash  = 191 // /键
-	Key_Backquote     = 192 // `键(Esc下面)反撇号,反引号
-	Key_BracketLeft   = 219 // [键
-	Key_Backslash     = 220 // \键
-	Key_BracketRight  = 221 // ]键
-	Key_QuotationMark = 222 // ‘键(引号)
+	VK_Semicolon     = 186 // ;(分号)
+	VK_Equals        = 187 //  = 键
+	VK_Comma         = 188 // ,键(逗号)
+	VK_Minus         = 189 // -键(减号)
+	VK_FullStop      = 190 // .键(句号)
+	VK_ForwardSlash  = 191 // /键
+	VK_Backquote     = 192 // `键(Esc下面)反撇号,反引号
+	VK_BracketLeft   = 219 // [键
+	VK_Backslash     = 220 // \键
+	VK_BracketRight  = 221 // ]键
+	VK_QuotationMark = 222 // ‘键(引号)
 )
