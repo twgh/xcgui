@@ -59,7 +59,7 @@ func (w *windowBase) Msg_CreateEx(dwExStyle, dwStyle int, lpClassName, pTitle, p
 // wParam:.
 //
 // lParam:.
-func (w *windowBase) SendMessage(msg int, wParam int, lParam int) int {
+func (w *windowBase) SendMessage(msg uint32, wParam int32, lParam int32) int {
 	return xc.XC_SendMessage(w.Handle, msg, wParam, lParam)
 }
 
@@ -70,7 +70,7 @@ func (w *windowBase) SendMessage(msg int, wParam int, lParam int) int {
 // wParam:.
 //
 // lParam:.
-func (w *windowBase) PostMessage(msg int, wParam int, lParam int) bool {
+func (w *windowBase) PostMessage(msg uint32, wParam int32, lParam int32) bool {
 	return xc.XC_PostMessage(w.Handle, msg, wParam, lParam)
 }
 
