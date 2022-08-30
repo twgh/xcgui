@@ -28,6 +28,14 @@ var (
 	getWindowTextW             = user32.NewProc("GetWindowTextW")
 	clientToScreen             = user32.NewProc("ClientToScreen")
 	getCursorPos               = user32.NewProc("GetCursorPos")
+	registerHotKey             = user32.NewProc("RegisterHotKey")
+	unregisterHotKey           = user32.NewProc("UnregisterHotKey")
+	getMessageW                = user32.NewProc("GetMessageW")
+	translateMessage           = user32.NewProc("TranslateMessage")
+	dispatchMessageW           = user32.NewProc("DispatchMessageW")
+	postQuitMessage            = user32.NewProc("PostQuitMessage")
+	sendMessageW               = user32.NewProc("SendMessageW")
+	postMessageW               = user32.NewProc("PostMessageW")
 )
 
 type HWND_ int
@@ -319,12 +327,126 @@ func ClientToScreen(hWnd int, lpPoint *xc.POINT) bool {
 	return r != 0
 }
 
-// GetCursorPos 检索鼠标光标的位置，以屏幕坐标表示
+// GetCursorPos 检索鼠标光标的位置，以屏幕坐标表示.
 //	@Description 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-getcursorpos.
 //	@param lpPoint 指向接收光标屏幕坐标的 xc.POINT 结构的指针.
 //	@return bool
 //
 func GetCursorPos(lpPoint *xc.POINT) bool {
 	r, _, _ := getCursorPos.Call(uintptr(unsafe.Pointer(lpPoint)))
+	return r != 0
+}
+
+type Mod_ uint32
+
+const (
+	Mod_Alt      Mod_ = 0x0001 // 必须按住任一 ALT 键。
+	Mod_Control  Mod_ = 0x0002 // 必须按住任一 CTRL 键。
+	Mod_Norepeat Mod_ = 0x4000 // 更改热键行为，以便键盘自动重复不会产生多个热键通知。Windows Vista：  不支持此标志。
+	Mod_Shift    Mod_ = 0x0004 // 必须按住任一 SHIFT 键。
+	Mod_Win      Mod_ = 0x0008 // 任一 WINDOWS 键被按住。这些键标有 Windows 徽标。涉及 WINDOWS 键的键盘快捷键保留供操作系统使用。
+)
+
+// RegisterHotKey 注册系统范围的热键.
+//	@Description 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-registerhotkey.
+//	@param hWnd 真实窗口句柄。将接收由热键生成的 WM_HOTKEY 消息的窗口句柄。如果此参数为0，则 WM_HOTKEY 消息将发布到调用线程的消息队列中，并且必须在消息循环中进行处理。
+//	@param id 热键的标识符。如果hWnd参数为0，则热键与当前线程相关联，而不是与特定窗口相关联。如果已存在具有相同hWnd和id参数的热键，请参阅备注了解所采取的操作。
+//	@param fsModifiers 为了生成 WM_HOTKEY 消息，必须与vk参数指定的键组合按下的键 。fsModifiers参数可以是以下值的组合: xcc.Mod_ .
+//	@param vk 热键的虚拟键代码: xcc.VK_ . 请参阅虚拟键码: https://docs.microsoft.com/zh-cn/windows/win32/inputdev/virtual-key-codes.
+//	@return bool
+//
+func RegisterHotKey(hWnd int, id int32, fsModifiers, vk uint32) bool {
+	r, _, _ := registerHotKey.Call(uintptr(hWnd), uintptr(id), uintptr(fsModifiers), uintptr(vk))
+	return r != 0
+}
+
+// UnregisterHotKey 释放先前注册的热键.
+//	@Description 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-unregisterHotKey.
+//	@param hWnd 真实窗口句柄。与要释放的热键关联的窗口句柄。如果热键与窗口无关，则此参数应为0.
+//	@param id 要释放的热键的标识符.
+//	@return bool
+//
+func UnregisterHotKey(hWnd int, id int32) bool {
+	r, _, _ := unregisterHotKey.Call(uintptr(hWnd), uintptr(id))
+	return r != 0
+}
+
+// GetMessage 从调用线程的消息队列中检索消息。应用程序通常使用返回值来确定是否结束主消息循环并退出程序。该函数分派传入的已发送消息，直到发布的消息可用于检索。 与 GetMessage 不同， PeekMessage 函数在返回之前不会等待消息发布。
+//	@Description: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetMessageW.
+//	@param pMsg 指向从线程的消息队列接收消息信息的 MSG 结构的指针。
+//	@param hWnd 要检索其消息的窗口的句柄。窗口必须属于当前线程。如果hWnd为0， GetMessage 检索属于当前线程的任何窗口的消息，以及当前线程的消息队列中hwnd值为0的任何消息（参见 MSG 结构）。因此，如果hWnd为0，则同时处理窗口消息和线程消息。如果hWnd为-1， GetMessage 仅检索当前线程的消息队列中hwnd值为0的消息，即 PostMessage （当hWnd参数为0时）或 PostThreadMessage 发布的线程消息。
+//	@param wMsgFilterMin 要检索的最低消息值的整数值。使用WM_KEYFIRST (0x0100) 指定第一条键盘消息或WM_MOUSEFIRST (0x0200) 指定第一条鼠标消息。
+//	@param wMsgFilterMax 要检索的最高消息值的整数值。使用WM_KEYLAST指定最后一个键盘消息或WM_MOUSELAST指定最后一个鼠标消息。
+//	@return int32 如果函数检索到 WM_QUIT 以外的消息，则返回值非零。如果函数检索到 WM_QUIT 消息，则返回值为零。如果有错误，返回值为-1。
+//
+func GetMessage(pMsg *MSG, hWnd int, wMsgFilterMin uint32, wMsgFilterMax uint32) int32 {
+	r, _, _ := getMessageW.Call(uintptr(unsafe.Pointer(pMsg)), uintptr(hWnd), uintptr(wMsgFilterMin), uintptr(wMsgFilterMax))
+	return int32(r)
+}
+
+// TranslateMessage 将虚拟键消息转换为字符消息。字符消息被发布到调用线程的消息队列中，以便在线程下次调用 GetMessage 或 PeekMessage 函数时读取。
+//	@Description: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-TranslateMessage.
+//	@param pMsg 一个指向 MSG 结构的指针，该结构包含使用 GetMessage 或 PeekMessage 函数从调用线程的消息队列中检索到的消息信息。
+//	@return bool
+//
+func TranslateMessage(pMsg *MSG) bool {
+	r, _, _ := translateMessage.Call(uintptr(unsafe.Pointer(pMsg)))
+	return r != 0
+}
+
+// DispatchMessage 向窗口过程发送消息。它通常用于发送由 GetMessage 函数检索到的消息。
+//	@Description: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-DispatchMessageW.
+//	@param pMsg 指向包含消息的结构的指针。
+//	@return int 返回值指定窗口过程返回的值。尽管它的含义取决于所发送的消息，但返回值通常会被忽略。
+//
+func DispatchMessage(pMsg *MSG) int {
+	r, _, _ := dispatchMessageW.Call(uintptr(unsafe.Pointer(pMsg)))
+	return int(r)
+}
+
+// PostQuitMessage 向系统指示线程已请求终止（退出）。它通常用于响应 WM_DESTROY 消息。
+//	@Description: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-PostQuitMessage.
+//	@param nExitCode 应用程序退出代码。该值用作 WM_QUIT 消息的wParam参数。
+//
+func PostQuitMessage(nExitCode int32) error {
+	_, _, err := postQuitMessage.Call(uintptr(nExitCode))
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type MSG struct {
+	Hwnd    int
+	Message uint32
+	WParam  int32
+	LParam  int32
+	Time    uint32
+	Pt      xc.POINT
+}
+
+// SendMessageW 将指定的消息发送到一个或多个窗口。SendMessage函数调用指定窗口的窗口过程，直到窗口过程处理完消息才返回。
+//	@Description 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-SendMessageW.
+//	@param hWnd 窗口句柄，其窗口过程将接收消息。如果该参数为 HWND_BROADCAST ((HWND)0xffff)，则将消息发送到系统中的所有顶层窗口，包括禁用或不可见的无主窗口、重叠窗口和弹出窗口；但消息不会发送到子窗口。
+//	@param Msg 要发送的消息。有关系统提供的消息的列表，请参阅: https://docs.microsoft.com/en-us/windows/win32/winmsg/about-messages-and-message-queues.
+//	@param wParam 其他特定于消息的信息。
+//	@param lParam 其他特定于消息的信息。
+//	@return int 返回值指定消息处理的结果；这取决于发送的消息。
+//
+func SendMessageW(hWnd int, Msg int32, wParam, lParam uint32) int {
+	r, _, _ := sendMessageW.Call(uintptr(hWnd), uintptr(Msg), uintptr(wParam), uintptr(lParam))
+	return int(r)
+}
+
+// PostMessageW 在与创建指定窗口的线程关联的消息队列中放置（发布）一条消息，并在不等待线程处理消息的情况下返回。
+//	@Description 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-postmessagew.
+//	@param hWnd 窗口句柄，其窗口过程将接收消息。如果该参数为 HWND_BROADCAST ((HWND)0xffff)，则将消息发送到系统中的所有顶层窗口，包括禁用或不可见的无主窗口、重叠窗口和弹出窗口；但消息不会发送到子窗口。
+//	@param Msg 要发送的消息。有关系统提供的消息的列表，请参阅: https://docs.microsoft.com/en-us/windows/win32/winmsg/about-messages-and-message-queues.
+//	@param wParam 其他特定于消息的信息。
+//	@param lParam 其他特定于消息的信息。
+//	@return bool
+//
+func PostMessageW(hWnd int, Msg int32, wParam, lParam uint32) bool {
+	r, _, _ := postMessageW.Call(uintptr(hWnd), uintptr(Msg), uintptr(wParam), uintptr(lParam))
 	return r != 0
 }
