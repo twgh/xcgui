@@ -8,13 +8,13 @@ import (
 	"syscall"
 )
 
-// xcguiPath 是xcgui.dll的路径(不是目录, 是文件名), 默认值为'xcgui.dll'.
+// xcguiPath 是xcgui.dll的完整路径（目录+文件名）, 默认值为'xcgui.dll'.
 //	如果你想要更改它的位置, 可以在 xc.LoadXCGUI() 之前调用 xc.SetXcguiPath() 更改为其他路径.
 var xcguiPath = "xcgui.dll"
 
 // 获取 xcgui.dll 的版本号.
 func GetVer() string {
-	return "3.3.5"
+	return "3.3.6.0"
 }
 
 var (
@@ -22,22 +22,22 @@ var (
 	xcgui *syscall.LazyDLL
 
 	// Global Functions.
-	xC_wtoa      *syscall.LazyProc
-	xC_atow      *syscall.LazyProc
-	xC_utf8tow   *syscall.LazyProc
-	xC_utf8towEx *syscall.LazyProc
-	xC_utf8toa   *syscall.LazyProc
-	xC_atoutf8   *syscall.LazyProc
-	xC_wtoutf8   *syscall.LazyProc
-	xC_wtoutf8Ex *syscall.LazyProc
+	xC_wtoa          *syscall.LazyProc
+	xC_atow          *syscall.LazyProc
+	xC_utf8tow       *syscall.LazyProc
+	xC_utf8towEx     *syscall.LazyProc
+	xC_utf8toa       *syscall.LazyProc
+	xC_atoutf8       *syscall.LazyProc
+	xC_wtoutf8       *syscall.LazyProc
+	xC_wtoutf8Ex     *syscall.LazyProc
+	xC_UnicodeToAnsi *syscall.LazyProc
+	xC_AnsiToUnicode *syscall.LazyProc
 	/*
-			xC_itoa                       *syscall.LazyProc
-			xC_itow                       *syscall.LazyProc
-			xC_ftoa                       *syscall.LazyProc
-			xC_ftow                       *syscall.LazyProc
-		 	xC_UnicodeToAnsi *syscall.LazyProc
-		   	xC_AnsiToUnicode *syscall.LazyProc
-			xDebug_OutputDebugStringA					*syscall.LazyProc
+		xC_itoa                       *syscall.LazyProc
+		xC_itow                       *syscall.LazyProc
+		xC_ftoa                       *syscall.LazyProc
+		xC_ftow                       *syscall.LazyProc
+		xDebug_OutputDebugStringA					*syscall.LazyProc
 	*/
 	xC_MessageBox                     *syscall.LazyProc
 	xC_SendMessage                    *syscall.LazyProc
@@ -754,6 +754,9 @@ var (
 	xEdit_SetCharSpaceSize     *syscall.LazyProc
 	xEdit_GetSelectTextLength  *syscall.LazyProc
 	xEdit_SetSelectTextStyle   *syscall.LazyProc
+	xEdit_GetText_Temp         *syscall.LazyProc
+	xEdit_GetTextRow_Temp      *syscall.LazyProc
+	xEdit_GetSelectText_Temp   *syscall.LazyProc
 
 	// LayoutEle.
 	xLayout_Create          *syscall.LazyProc
@@ -1148,6 +1151,10 @@ var (
 	xTemp_GetNode            *syscall.LazyProc
 	xTemp_CloneNode          *syscall.LazyProc
 	xTemp_Clone              *syscall.LazyProc
+	xTemp_List_InsertNode    *syscall.LazyProc
+	xTemp_List_DeleteNode    *syscall.LazyProc
+	xTemp_List_GetCount      *syscall.LazyProc
+	xTemp_List_MoveColumn    *syscall.LazyProc
 
 	// Resource.
 	xRes_EnableDelayLoad     *syscall.LazyProc
@@ -1329,6 +1336,9 @@ var (
 	xList_SetItemHeight                *syscall.LazyProc
 	xList_GetItemHeight                *syscall.LazyProc
 	xList_SetDragRectColor             *syscall.LazyProc
+	xList_GetItemTemplate              *syscall.LazyProc
+	xList_GetItemTemplateHeader        *syscall.LazyProc
+	xList_RefreshDataHeader            *syscall.LazyProc
 
 	// ListView.
 	xListView_Create                       *syscall.LazyProc
@@ -1718,7 +1728,7 @@ var (
 )
 
 // SetXcguiPath 手动设置xcgui.dll的路径. 未设置时, 默认值为'xcgui.dll'.
-//	@param XcguiPath dll文件名, 不是目录.
+//	@param XcguiPath dll完整路径（目录+文件名）.
 //	@return error 如果出错, 要么你输入的文件不存在, 要么你输入的不是dll文件.
 //
 func SetXcguiPath(XcguiPath string) error {
@@ -1786,13 +1796,13 @@ func LoadXCGUI() {
 	xC_atoutf8 = xcgui.NewProc("XC_atoutf8")
 	xC_wtoutf8 = xcgui.NewProc("XC_wtoutf8")
 	xC_wtoutf8Ex = xcgui.NewProc("XC_wtoutf8Ex")
+	xC_UnicodeToAnsi = xcgui.NewProc("XC_UnicodeToAnsi")
+	xC_AnsiToUnicode = xcgui.NewProc("XC_AnsiToUnicode")
 	/*
-			xC_itoa = xcgui.NewProc("XC_itoa")
-			xC_itow = xcgui.NewProc("XC_itow")
-			xC_ftoa = xcgui.NewProc("XC_ftoa")
-			xC_ftow = xcgui.NewProc("XC_ftow")
-			xC_UnicodeToAnsi = xcgui.NewProc("XC_UnicodeToAnsi")
-		   	xC_AnsiToUnicode = xcgui.NewProc("XC_AnsiToUnicode")
+		xC_itoa = xcgui.NewProc("XC_itoa")
+		xC_itow = xcgui.NewProc("XC_itow")
+		xC_ftoa = xcgui.NewProc("XC_ftoa")
+		xC_ftow = xcgui.NewProc("XC_ftow")
 	*/
 	xC_DebugToFileInfo = xcgui.NewProc("XC_DebugToFileInfo")
 	xDebug_OutputDebugStringW = xcgui.NewProc("XDebug_OutputDebugStringW")
@@ -2503,6 +2513,9 @@ func LoadXCGUI() {
 	xEdit_SetCharSpaceSize = xcgui.NewProc("XEdit_SetCharSpaceSize")
 	xEdit_GetSelectTextLength = xcgui.NewProc("XEdit_GetSelectTextLength")
 	xEdit_SetSelectTextStyle = xcgui.NewProc("XEdit_SetSelectTextStyle")
+	xEdit_GetText_Temp = xcgui.NewProc("XEdit_GetText_Temp")
+	xEdit_GetTextRow_Temp = xcgui.NewProc("XEdit_GetTextRow_Temp")
+	xEdit_GetSelectText_Temp = xcgui.NewProc("XEdit_GetSelectText_Temp")
 
 	// LayoutEle.
 	xLayout_Create = xcgui.NewProc("XLayout_Create")
@@ -2895,6 +2908,10 @@ func LoadXCGUI() {
 	xTemp_GetNode = xcgui.NewProc("XTemp_GetNode")
 	xTemp_CloneNode = xcgui.NewProc("XTemp_CloneNode")
 	xTemp_Clone = xcgui.NewProc("XTemp_Clone")
+	xTemp_List_InsertNode = xcgui.NewProc("XTemp_List_InsertNode")
+	xTemp_List_DeleteNode = xcgui.NewProc("XTemp_List_DeleteNode")
+	xTemp_List_GetCount = xcgui.NewProc("XTemp_List_GetCount")
+	xTemp_List_MoveColumn = xcgui.NewProc("XTemp_List_MoveColumn")
 
 	// Resource.
 	xRes_EnableDelayLoad = xcgui.NewProc("XRes_EnableDelayLoad")
@@ -3076,6 +3093,9 @@ func LoadXCGUI() {
 	xList_SetItemHeight = xcgui.NewProc("XList_SetItemHeight")
 	xList_GetItemHeight = xcgui.NewProc("XList_GetItemHeight")
 	xList_SetDragRectColor = xcgui.NewProc("XList_SetDragRectColor")
+	xList_GetItemTemplate = xcgui.NewProc("XList_GetItemTemplate")
+	xList_GetItemTemplateHeader = xcgui.NewProc("XList_GetItemTemplateHeader")
+	xList_RefreshDataHeader = xcgui.NewProc("XList_RefreshDataHeader")
 
 	// ListView.
 	xListView_Create = xcgui.NewProc("XListView_Create")
