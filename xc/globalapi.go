@@ -629,6 +629,36 @@ func XC_wtoutf8Ex(pValue string, length int) uintptr {
 	return r
 }
 
+// 炫彩_U2A, 返回写入接收缓冲区字节数量.
+//
+// pIn: 待转换的Unicode字符串.
+//
+// inLen: pIn字符数量.
+//
+// pOut: 指向接收转换后的Ansi字符串缓冲区指针.
+//
+// outLen: pOut缓冲区大小, 字节单位.
+func XC_UnicodeToAnsi(pIn string, inLen int, pOut uintptr, outLen int) int {
+	r, _, _ := xC_UnicodeToAnsi.Call(common.StrPtr(pIn), uintptr(inLen), pOut, uintptr(outLen))
+	return int(r)
+}
+
+// 炫彩_A2U, 返回写入接收缓冲区字符数量.
+//
+// pIn: 指向待转换的Ansi字符串指针.
+//
+// inLen: pIn字符数量.
+//
+// pOut: 指向接收转换后的Unicode字符串缓冲区指针.
+//
+// outLen: pOut缓冲区大小,字符wchar_t单位.
+func XC_AnsiToUnicode(pIn uintptr, inLen int, pOut *string, outLen int) int {
+	buf := make([]uint16, outLen)
+	r, _, _ := xC_AnsiToUnicode.Call(pIn, uintptr(inLen), common.Uint16SliceDataPtr(&buf), uintptr(outLen))
+	*pOut = syscall.UTF16ToString(buf[0:])
+	return int(r)
+}
+
 // 炫彩_打印调试信息, 打印调试信息到文件xcgui_debug.txt.
 //
 // level: 级别.
@@ -696,33 +726,3 @@ func XC_ftow(fValue int) int {
 	return int(r)
 }
 */
-
-/* // 炫彩_U2A, 返回写入接收缓冲区字节数量.
-//
-// pIn: 待转换的Unicode字符串.
-//
-// inLen: pIn字符数量.
-//
-// pOut: 指向接收转换后的Ansi字符串缓冲区指针.
-//
-// outLen: pOut缓冲区大小, 字节单位.
-func XC_UnicodeToAnsi(pIn string, inLen int, pOut *uintptr, outLen int) int {
-	r, _, _ := xC_UnicodeToAnsi.Call(strPtr(pIn), uintptr(inLen), *pOut, uintptr(outLen))
-	return int(r)
-}
-
-// 炫彩_A2U, 返回写入接收缓冲区字符数量.
-//
-// pIn: 指向待转换的Ansi字符串指针.
-//
-// inLen: pIn字符数量.
-//
-// pOut: 指向接收转换后的Unicode字符串缓冲区指针.
-//
-// outLen: pOut缓冲区大小,字符wchar_t单位.
-func XC_AnsiToUnicode(pIn uintptr, inLen int, pOut *string, outLen int) int {
-	buf := make([]uint16, outLen)
-	r, _, _ := xC_AnsiToUnicode.Call(pIn, uintptr(inLen), Uint16SliceDataPtr(&buf), uintptr(outLen))
-	*pOut = syscall.UTF16ToString(buf[0:])
-	return int(r)
-} */

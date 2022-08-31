@@ -1,8 +1,9 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/common"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 
 	"github.com/twgh/xcgui/xcc"
 )
@@ -231,4 +232,46 @@ func XTemp_CloneNode(pNode int) int {
 func XTemp_Clone(hTemp int) int {
 	r, _, _ := xTemp_Clone.Call(uintptr(hTemp))
 	return int(r)
+}
+
+// 项模板_列表_插入节点.
+//
+// hTemp: 列表项模板句柄.
+//
+// index: 插入位置索引.
+//
+// pNode: 节点指针.
+func XTemp_List_InsertNode(hTemp int, index int, pNode int) bool {
+	r, _, _ := xTemp_List_InsertNode.Call(uintptr(hTemp), uintptr(index), uintptr(pNode))
+	return r != 0
+}
+
+// 项模板_列表_删除节点.
+//
+// hTemp: 列表项模板句柄.
+//
+// index: 位置索引.
+func XTemp_List_DeleteNode(hTemp int, index int) bool {
+	r, _, _ := xTemp_List_DeleteNode.Call(uintptr(hTemp), uintptr(index))
+	return r != 0
+}
+
+// 项模板_列表_取数量, 取子节点数量, 只当前层子节点.
+//
+// hTemp: 列表项模板句柄.
+func XTemp_List_GetCount(hTemp int) int {
+	r, _, _ := xTemp_List_GetCount.Call(uintptr(hTemp))
+	return int(r)
+}
+
+// 项模板_列表_移动列, 将指定列移动到目标位置.
+//
+// hTemp: 列表项模板句柄.
+//
+// iColSrc: 源列索引.
+//
+// iColDest: 目标列索引.
+func XTemp_List_MoveColumn(hTemp int, iColSrc int, iColDest int) bool {
+	r, _, _ := xTemp_List_MoveColumn.Call(uintptr(hTemp), uintptr(iColSrc), uintptr(iColDest))
+	return r != 0
 }

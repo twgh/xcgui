@@ -1072,3 +1072,27 @@ func XList_SetDragRectColor(hEle int, color, width int) int {
 	r, _, _ := xList_SetDragRectColor.Call(uintptr(hEle), uintptr(color), uintptr(width))
 	return int(r)
 }
+
+// 列表_取项模板. 返回列表项模板句柄.
+//
+// hEle: 元素句柄.
+func XList_GetItemTemplate(hEle int) int {
+	r, _, _ := xList_GetItemTemplate.Call(uintptr(hEle))
+	return int(r)
+}
+
+// 列表_取项模板列表头. 返回列表头项模板句柄.
+//
+// hEle: 元素句柄.
+func XList_GetItemTemplateHeader(hEle int) int {
+	r, _, _ := xList_GetItemTemplateHeader.Call(uintptr(hEle))
+	return int(r)
+}
+
+// 列表_刷新项数据列表头.
+//
+// hEle: 元素句柄.
+func XList_RefreshDataHeader(hEle int) int {
+	r, _, _ := xList_RefreshDataHeader.Call(uintptr(hEle))
+	return int(r)
+}

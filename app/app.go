@@ -727,6 +727,32 @@ func (a *App) WtoUtf8Ex(pValue string, length int) uintptr {
 	return xc.XC_wtoutf8Ex(pValue, length)
 }
 
+// 炫彩_U2A, 返回写入接收缓冲区字节数量.
+//
+// pIn: 待转换的Unicode字符串.
+//
+// inLen: pIn字符数量.
+//
+// pOut: 指向接收转换后的Ansi字符串缓冲区指针.
+//
+// outLen: pOut缓冲区大小, 字节单位.
+func (a *App) UnicodeToAnsi(pIn string, inLen int, pOut uintptr, outLen int) int {
+	return xc.XC_UnicodeToAnsi(pIn, inLen, pOut, outLen)
+}
+
+// 炫彩_A2U, 返回写入接收缓冲区字符数量.
+//
+// pIn: 指向待转换的Ansi字符串指针.
+//
+// inLen: pIn字符数量.
+//
+// pOut: 指向接收转换后的Unicode字符串缓冲区指针.
+//
+// outLen: pOut缓冲区大小,字符wchar_t单位.
+func (a *App) AnsiToUnicode(pIn uintptr, inLen int, pOut *string, outLen int) int {
+	return xc.XC_AnsiToUnicode(pIn, inLen, pOut, outLen)
+}
+
 // 炫彩_打印调试信息, 打印调试信息到文件xcgui_debug.txt.
 //
 // level: 级别.

@@ -110,6 +110,36 @@ func (l *ListItemTemplate) List_GetNode(index int) int {
 	return xc.XTemp_List_GetNode(l.Handle, index)
 }
 
+// 项模板_列表_插入节点.
+//
+// index: 插入位置索引.
+//
+// pNode: 节点指针.
+func (l *ListItemTemplate) List_InsertNode(index int, pNode int) bool {
+	return xc.XTemp_List_InsertNode(l.Handle, index, pNode)
+}
+
+// 项模板_列表_删除节点.
+//
+// index: 位置索引.
+func (l *ListItemTemplate) List_DeleteNode(index int) bool {
+	return xc.XTemp_List_DeleteNode(l.Handle, index)
+}
+
+// 项模板_列表_取数量, 取子节点数量, 只当前层子节点.
+func (l *ListItemTemplate) List_GetCount() int {
+	return xc.XTemp_List_GetCount(l.Handle)
+}
+
+// 项模板_列表_移动列, 将指定列移动到目标位置.
+//
+// iColSrc: 源列索引.
+//
+// iColDest: 目标列索引.
+func (l *ListItemTemplate) List_MoveColumn(iColSrc int, iColDest int) bool {
+	return xc.XTemp_List_MoveColumn(l.Handle, iColSrc, iColDest)
+}
+
 // 模板_加载从文件扩展, 加载列表项模板从文件.
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.

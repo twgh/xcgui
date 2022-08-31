@@ -830,6 +830,21 @@ func (l *List) SetDragRectColor(color, width int) int {
 	return xc.XList_SetDragRectColor(l.Handle, color, width)
 }
 
+// 列表_取项模板. 返回列表项模板句柄.
+func (l *List) GetItemTemplate() int {
+	return xc.XList_GetItemTemplate(l.Handle)
+}
+
+// 列表_取项模板列表头. 返回列表头项模板句柄.
+func (l *List) GetItemTemplateHeader() int {
+	return xc.XList_GetItemTemplateHeader(l.Handle)
+}
+
+// 列表_刷新项数据列表头.
+func (l *List) RefreshDataHeader() int {
+	return xc.XList_RefreshDataHeader(l.Handle)
+}
+
 /*
 以下都是事件
 */

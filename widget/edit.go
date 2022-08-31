@@ -241,7 +241,7 @@ func (e *Edit) SetTextInt(nValue int) int {
 //
 // pOut: 接收文本内存指针.
 //
-// nOutlen: 内存大小.
+// nOutlen: 内存大小. 例: GetLength()+1 .
 func (e *Edit) GetText(pOut *string, nOutlen int) int {
 	return xc.XEdit_GetText(e.Handle, pOut, nOutlen)
 }
@@ -252,7 +252,7 @@ func (e *Edit) GetText(pOut *string, nOutlen int) int {
 //
 // pOut: 接收文本内存指针.
 //
-// nOutlen: 接收文本内存块长度.
+// nOutlen: 接收文本内存块长度. 例: GetLengthRow()+1 .
 func (e *Edit) GetTextRow(iRow int, pOut *string, nOutlen int) int {
 	return xc.XEdit_GetTextRow(e.Handle, iRow, pOut, nOutlen)
 }
@@ -678,6 +678,23 @@ func (e *Edit) GetSelectTextLength() int {
 // iStyle: 样式索引.
 func (e *Edit) SetSelectTextStyle(iStyle int) int {
 	return xc.XEdit_SetSelectTextStyle(e.Handle, iStyle)
+}
+
+// 编辑框_取文本_临时, 不包含非文本内容. 返回临时文本, 临时缓存区大小: xcc.Text_Buffer_Size .
+func (e *Edit) GetText_Temp() string {
+	return xc.XEdit_GetText_Temp(e.Handle)
+}
+
+// 编辑框_取文本行_临时, 获取指定行文本内容. 返回临时文本, 临时缓存区大小: xcc.Text_Buffer_Size .
+//
+// iRow: 行号.
+func (e *Edit) GetTextRow_Temp(iRow int) string {
+	return xc.XEdit_GetTextRow_Temp(e.Handle, iRow)
+}
+
+// 编辑框_取选择文本, 不包含非文本内容. 返回临时文本, 临时缓存区大小: xcc.Text_Buffer_Size .
+func (e *Edit) GetSelectText_Temp() string {
+	return xc.XEdit_GetSelectText_Temp(e.Handle)
 }
 
 /*

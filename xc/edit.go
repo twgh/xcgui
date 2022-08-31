@@ -1,9 +1,10 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/common"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 
 	"github.com/twgh/xcgui/xcc"
 )
@@ -268,7 +269,7 @@ func XEdit_SetTextInt(hEle int, nValue int) int {
 //
 // pOut: 接收文本内存指针.
 //
-// nOutlen: 内存大小.
+// nOutlen: 内存大小. 例: xc.XEdit_GetLength()+1 .
 func XEdit_GetText(hEle int, pOut *string, nOutlen int) int {
 	buf := make([]uint16, nOutlen)
 	r, _, _ := xEdit_GetText.Call(uintptr(hEle), common.Uint16SliceDataPtr(&buf), uintptr(nOutlen))
@@ -284,7 +285,7 @@ func XEdit_GetText(hEle int, pOut *string, nOutlen int) int {
 //
 // pOut: 接收文本内存指针.
 //
-// nOutlen: 接收文本内存块长度.
+// nOutlen: 接收文本内存块长度. 例: xc.XEdit_GetLengthRow()+1 .
 func XEdit_GetTextRow(hEle int, iRow int, pOut *string, nOutlen int) int {
 	buf := make([]uint16, nOutlen)
 	r, _, _ := xEdit_GetTextRow.Call(uintptr(hEle), uintptr(iRow), common.Uint16SliceDataPtr(&buf), uintptr(nOutlen))
@@ -877,4 +878,30 @@ func XEdit_GetSelectTextLength(hEle int) int {
 func XEdit_SetSelectTextStyle(hEle int, iStyle int) int {
 	r, _, _ := xEdit_SetSelectTextStyle.Call(uintptr(hEle), uintptr(iStyle))
 	return int(r)
+}
+
+// 编辑框_取文本_临时, 不包含非文本内容. 返回临时文本, 临时缓存区大小: xcc.Text_Buffer_Size .
+//
+// hEle: 元素句柄.
+func XEdit_GetText_Temp(hEle int) string {
+	r, _, _ := xEdit_GetText_Temp.Call(uintptr(hEle))
+	return common.UintPtrToString(r)
+}
+
+// 编辑框_取文本行_临时, 获取指定行文本内容. 返回临时文本, 临时缓存区大小: xcc.Text_Buffer_Size .
+//
+// hEle: 元素句柄.
+//
+// iRow: 行号.
+func XEdit_GetTextRow_Temp(hEle int, iRow int) string {
+	r, _, _ := xEdit_GetTextRow_Temp.Call(uintptr(hEle), uintptr(iRow))
+	return common.UintPtrToString(r)
+}
+
+// 编辑框_取选择文本, 不包含非文本内容. 返回临时文本, 临时缓存区大小: xcc.Text_Buffer_Size .
+//
+// hEle: 元素句柄.
+func XEdit_GetSelectText_Temp(hEle int) string {
+	r, _, _ := xEdit_GetSelectText_Temp.Call(uintptr(hEle))
+	return common.UintPtrToString(r)
 }
