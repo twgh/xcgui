@@ -21,7 +21,7 @@
 
 [English](./README-en.md) | 简体中文
 
-- 本库封装自炫彩界面库，功能丰富(1000多个API接口)，简单易用，轻量级，高度DIY自定义，支持一键换肤。
+- 本库封装自炫彩界面库，功能丰富(近2000个API接口)，简单易用，轻量级，高度DIY自定义，支持一键换肤。
 - 炫彩界面库是由C/C++语言开发：软件运行效率高，不需要第三方库的支持，不依赖MFC，ATL，WINDOWS标准控件等。
 - DirectUI设计思想：在窗口内没有子窗口，界面元素都是逻辑上的区域(无HWND句柄，安全，灵活)，所有UI元素都是自主开发(不受系统限制)，更加灵活的实现各种程序界面，满足不同用户的需求。
 - 拥有免费的UI设计器：快速开发工具，所见即所得，高度自定义系统(DIY)，让UI开发变的更加简单。
@@ -76,21 +76,23 @@ func main() {
 
 程序运行时需要把`xcgui.dll`放到程序运行目录。
 
-在开发时最好是放到C:\Windows\System32目录，这样就不需要频繁把dll放到不同程序的运行目录了。
+在开发时最好是放到`C:\Windows\System32`目录，这样就不需要频繁把dll放到不同程序的运行目录了。
 
 #### （1）命令行下载
 
 64位
 
 ```bash
-curl -fL "https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui.dll?version=3.3.6.0" -o xcgui.dll
+curl -fL "https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui.dll?version=latest" -o xcgui.dll
 ```
 
 32位
 
 ```bash
-curl -fL "https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui-32.dll?version=3.3.6.0" -o xcgui.dll
+curl -fL "https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui-32.dll?version=latest" -o xcgui.dll
 ```
+
+如果你没有curl的话可以到[这里](https://wwi.lanzoup.com/iH4kL0auob4f)下载，解压后把`amd64`或`i386`文件夹添加到环境变量`path`里即可。或者你直接使用下面两种方法.
 
 #### （2）使用getxcgui工具下载
 
@@ -99,7 +101,7 @@ go install github.com/twgh/getxcgui@latest
 getxcgui
 ```
 
-如果要把dll直接下载到C:\Windows\System32目录里，请使用如下命令：
+如果要把dll直接下载到`C:\Windows\System32`目录里，请使用如下命令：
 
 ```bash
 getxcgui -o %windir%\system32\xcgui.dll
@@ -190,7 +192,7 @@ xc包里包含xcgui.dll里所有的API，有一千多个函数，可以直接使
 
 ## 模块继承关系
 
-[![xcgui模块关系图.png](https://z3.ax1x.com/2021/11/18/ITAXJf.png)](https://z3.ax1x.com/2021/11/18/ITAXJf.png)
+[xcgui模块关系图](http://www.xcgui.com/doc-ui/page_diagram.html)
 
 ## 封装进度
 
