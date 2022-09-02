@@ -89,7 +89,7 @@ curl -fL "https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui.dll?version=late
 curl -fL "https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui-32.dll?version=latest" -o xcgui.dll
 ```
 
-If you don't have curl, you can download it from [here](https://wwi.lanzoup.com/iH4kL0auob4f). After decompressing, add the `amd64` or `i386` folder to the environment variable `path`.
+If you don't have curl, you can directly copy the link in the command to download it in the browser, or use the following method.
 
 #### （2）Download using the getxcgui tool
 
@@ -188,63 +188,63 @@ These classes are encapsulated based on more than a thousand functions in the xc
 
 | Package Name | Class Name       | Finish              | Doc                                                          |
 | ------------ | ---------------- | ------------------- | ------------------------------------------------------------ |
-| app          | App              | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/app#App) |
-| window       | Window           | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/window#Window) |
-| window       | FrameWindow      | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/window#FrameWindow) |
-| window       | ModalWindow      | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/window#ModalWindow) |
-| widget       | Shape            | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#Shape) |
-| widget       | ShapeEllipse     | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#ShapeEllipse) |
-| widget       | ShapeGif         | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#ShapeGif) |
-| widget       | ShapeGroupBox    | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#ShapeGroupBox) |
-| widget       | ShapeLine        | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#ShapeLine) |
-| widget       | ShapePicture     | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#ShapePicture) |
-| widget       | ShapeRect        | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#ShapeRect) |
-| widget       | ShapeText        | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#ShapeText) |
-| widget       | Table            | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#Table) |
-| widget       | Button           | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#Button) |
-| widget       | ComboBox         | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#ComboBox) |
-| widget       | Edit             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#Edit) |
-| widget       | Editor           | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#Editor) |
-| widget       | Element          | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#Element) |
-| widget       | List             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#List) |
-| widget       | ListBox          | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#ListBox) |
-| widget       | Menu             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#Menu) |
-| widget       | ProgressBar      | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#ProgressBar) |
-| widget       | TextLink         | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#TextLink) |
-| widget       | LayoutEle        | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#LayoutEle) |
-| widget       | LayoutFrame      | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#LayoutFrame) |
-| widget       | ListView         | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#ListView) |
-| widget       | MenuBar          | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#MenuBar) |
-| widget       | Pane             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#Pane) |
-| widget       | ScrollBar        | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#ScrollBar) |
-| widget       | ScrollView       | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#ScrollView) |
-| widget       | SliderBar        | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#SliderBar) |
-| widget       | TabBar           | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#TabBar) |
-| widget       | ToolBar          | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#ToolBar) |
-| widget       | Tree             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#Tree) |
-| widget       | DateTime         | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#DateTime) |
-| widget       | MonthCal         | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/widget#MonthCal) |
-| adapter      | AdapterListView  | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/adapter#AdapterListView) |
-| adapter      | AdapterMap       | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/adapter#AdapterMap) |
-| adapter      | AdapterTable     | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/adapter#AdapterTable) |
-| adapter      | AdapterTree      | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/adapter#AdapterTree) |
-| bkmanager    | BkManager        | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/bkmanager#BkManager) |
-| bkobj        | BkObj            | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/bkobj#BkObj) |
-| font         | Font             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/font#Font) |
-| imagex       | Imagex           | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/imagex#Image) |
-| svg          | Svg              | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/svg#Svg) |
-| tmpl         | ListItemTemplate | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/tmpl#ListItemTemplate) |
-| tmpl         | Node             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/tmpl#Node) |
-| drawx        | Draw             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/drawx#Draw) |
-| ani          | Anima            | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/ani#Anima) |
-| ani          | AnimaGroup       | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/ani#AnimaGroup) |
-| ani          | AnimaItem        | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/ani#AnimaItem) |
-| ani          | AnimaRotate      | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/ani#AnimaRotate) |
-| ani          | AnimaScale       | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/ani#AnimaScale) |
-| xc           |                  | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/xc#section-documentation) |
-| xcc          |                  | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/xcc) |
-| ease         |                  | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/ease) |
-| res          |                  | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/res) |
-| wapi         |                  | Continually updated | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/wapi) |
-| wnd          |                  | Continually updated | [Doc](https://pkg.go.dev/github.com/twgh/xcgui@v1.3.360/wnd) |
+| app          | App              | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/app#App) |
+| window       | Window           | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/window#Window) |
+| window       | FrameWindow      | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/window#FrameWindow) |
+| window       | ModalWindow      | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/window#ModalWindow) |
+| widget       | Shape            | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#Shape) |
+| widget       | ShapeEllipse     | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapeEllipse) |
+| widget       | ShapeGif         | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapeGif) |
+| widget       | ShapeGroupBox    | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapeGroupBox) |
+| widget       | ShapeLine        | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapeLine) |
+| widget       | ShapePicture     | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapePicture) |
+| widget       | ShapeRect        | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapeRect) |
+| widget       | ShapeText        | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapeText) |
+| widget       | Table            | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#Table) |
+| widget       | Button           | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#Button) |
+| widget       | ComboBox         | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#ComboBox) |
+| widget       | Edit             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#Edit) |
+| widget       | Editor           | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#Editor) |
+| widget       | Element          | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#Element) |
+| widget       | List             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#List) |
+| widget       | ListBox          | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#ListBox) |
+| widget       | Menu             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#Menu) |
+| widget       | ProgressBar      | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#ProgressBar) |
+| widget       | TextLink         | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#TextLink) |
+| widget       | LayoutEle        | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#LayoutEle) |
+| widget       | LayoutFrame      | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#LayoutFrame) |
+| widget       | ListView         | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#ListView) |
+| widget       | MenuBar          | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#MenuBar) |
+| widget       | Pane             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#Pane) |
+| widget       | ScrollBar        | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#ScrollBar) |
+| widget       | ScrollView       | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#ScrollView) |
+| widget       | SliderBar        | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#SliderBar) |
+| widget       | TabBar           | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#TabBar) |
+| widget       | ToolBar          | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#ToolBar) |
+| widget       | Tree             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#Tree) |
+| widget       | DateTime         | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#DateTime) |
+| widget       | MonthCal         | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#MonthCal) |
+| adapter      | AdapterListView  | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/adapter#AdapterListView) |
+| adapter      | AdapterMap       | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/adapter#AdapterMap) |
+| adapter      | AdapterTable     | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/adapter#AdapterTable) |
+| adapter      | AdapterTree      | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/adapter#AdapterTree) |
+| bkmanager    | BkManager        | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/bkmanager#BkManager) |
+| bkobj        | BkObj            | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/bkobj#BkObj) |
+| font         | Font             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/font#Font) |
+| imagex       | Imagex           | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/imagex#Image) |
+| svg          | Svg              | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/svg#Svg) |
+| tmpl         | ListItemTemplate | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/tmpl#ListItemTemplate) |
+| tmpl         | Node             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/tmpl#Node) |
+| drawx        | Draw             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/drawx#Draw) |
+| ani          | Anima            | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/ani#Anima) |
+| ani          | AnimaGroup       | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/ani#AnimaGroup) |
+| ani          | AnimaItem        | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/ani#AnimaItem) |
+| ani          | AnimaRotate      | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/ani#AnimaRotate) |
+| ani          | AnimaScale       | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/ani#AnimaScale) |
+| xc           |                  | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/xc#section-documentation) |
+| xcc          |                  | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/xcc) |
+| ease         |                  | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/ease) |
+| res          |                  | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/res) |
+| wapi         |                  | Continually updated | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/wapi) |
+| wnd          |                  | Continually updated | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/wnd) |
 
