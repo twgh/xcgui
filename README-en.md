@@ -20,7 +20,12 @@
 
 English | [简体中文](./README.md)
 
-DirectUI design idea: there is no sub-window in the window, the interface elements are logical areas (no HWND handle, security, flexibility), all UI elements are developed independently (not limited by the system), more flexible implementation of a variety of program interfaces to meet the needs of different users.
+- This library is encapsulated from the colorful interface library, with rich functions (nearly 2000 API interfaces), easy to use, lightweight, highly DIY customization, and supports one-click skinning.
+- The colorful interface library is developed by C/C++ language: the software runs efficiently, does not need the support of third-party libraries, and does not depend on MFC, ATL, WINDOWS standard controls, etc.
+- DirectUI design idea: there is no sub-window in the window, the interface elements are all logical areas (no HWND handle, safe, flexible), all UI elements are developed independently (not restricted by the system), more flexible to achieve various Program interface to meet the needs of different users.
+- Has a free UI designer tool: rapid development tools, what you see is what you get, a highly customizable system (DIY), making UI development easier.
+- Support Direct2D, hardware acceleration, can make full use of hardware features to create high-performance, high-quality 2D graphics.
+- [wiki](https://github.com/twgh/xcgui/wiki) There is a simple introductory tutorial, you can take a look when you have time.
 
 ## Get
 
@@ -66,14 +71,49 @@ func main() {
 
 ## Dynamic link library download
 
+When the program is running, you need to put `xcgui.dll` in the program running directory.
+
+It is best to put it in the `C:\Windows\System32` directory during development, so that there is no need to frequently put the dll in the running directory of different programs.
+
+#### （1）Command line download
+
+64bit
+
+```bash
+curl -fL "https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui.dll?version=latest" -o xcgui.dll
+```
+
+32bit
+
+```bash
+curl -fL "https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui-32.dll?version=latest" -o xcgui.dll
+```
+
+If you don't have curl, you can download it from [here](https://wwi.lanzoup.com/iH4kL0auob4f). After decompressing, add the `amd64` or `i386` folder to the environment variable `path`.
+
+#### （2）Download using the getxcgui tool
+
+```bash
+go install github.com/twgh/getxcgui@latest
+getxcgui
+```
+
+If you want to download the dll directly to the `C:\Windows\System32` directory, please use the following command:
+
+```bash
+getxcgui -o %windir%\system32\xcgui.dll
+```
+
+The source code of this tool is [here](https://github.com/twgh/getxcgui). For more flags, you can click [go in](https://github.com/twgh/getxcgui#flags) to view
+
+#### （3）Network disk download
+
+The network disk also contains `Interface Designer` and `chm help documentation`
+
 | NetDisc      | Link                                                         |
 | ------------ | ------------------------------------------------------------ |
 | LanzouYun | [download](https://wwi.lanzoup.com/b0cqd6nkb) |
 | BaiduPan     | [download](https://pan.baidu.com/s/1rC3unQGaxnRUCMm8z8qzvA?pwd=1111) |
-
-When the program is running, you need to put `xcgui.dll` in the program running directory.
-
-It is best to put it in the C:\Windows\System32 directory during development, so that there is no need to frequently put the dll in the running directory of different programs.
 
 ## Simple window(Pure code)
 
