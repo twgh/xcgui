@@ -178,7 +178,7 @@ Take `1.3.330` as an example, 1 only means that the library is the official vers
 
 ## JetBrains Open Source Certificate Support
 
-The `xcgui` project has always been under the [GoLand](https://www.jetbrains.com/go/?from= xcgui) integrated development environment, based on **free JetBrains Open Source license(s)** genuine free license, I would like to express my gratitude here.
+The `xcgui` project has always been under the [GoLand](https://www.jetbrains.com/go/?from=xcgui) integrated development environment, based on **free JetBrains Open Source license(s)** genuine free license, I would like to express my gratitude here.
 
 [<img src="https://s1.ax1x.com/2022/05/24/XiFI6x.png" alt="jetbrains.png" />](https://www.jetbrains.com/?from=xcgui)
 
