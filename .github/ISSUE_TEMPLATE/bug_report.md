@@ -2,7 +2,7 @@
 name: Bug report
 about: 创建报告以帮助我们改进
 title: "[BUG]"
-labels: ''
+labels: bug
 assignees: ''
 
 ---
@@ -20,4 +20,4 @@ assignees: ''
 系统和版本。
 
 **其他**
-有关此问题的其他想说的。
+其他想说的。
