@@ -1,7 +1,7 @@
 ---
 name: Bug 报告
 about: 创建报告以帮助我们改进
-title: "[BUG]"
+title: "[BUG] "
 labels: ''
 assignees: ''
 
