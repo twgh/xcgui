@@ -1,8 +1,9 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/common"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 
 	"github.com/twgh/xcgui/xcc"
 )
@@ -162,7 +163,7 @@ func XListView_EnableMultiSel(hEle int, bEnable bool) int {
 // hEle: 元素句柄.
 //
 // bEnable: 是否启用.
-func XListView_EnablemTemplateReuse(hEle int, bEnable bool) int {
+func XListView_EnableTemplateReuse(hEle int, bEnable bool) int {
 	r, _, _ := xListView_EnablemTemplateReuse.Call(uintptr(hEle), common.BoolPtr(bEnable))
 	return int(r)
 }
