@@ -1294,6 +1294,18 @@ type XE_MENU_EXIT func(pbHandled *bool) int                                     
 type XE_MENU_POPUP_WND func(hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int             // 菜单弹出窗口.
 type XE_MENU_DRAW_BACKGROUND func(hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int // 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
 type XE_MENU_DRAWITEM func(hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int              // 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
+type XE_TOOLTIP_POPUP func(hWindow int, pText uintptr, pbHandled *bool) int                       // 元素工具提示弹出事件.
+type XE_TOOLTIP_POPUP1 func(hEle int, hWindow int, pText uintptr, pbHandled *bool) int            // 元素工具提示弹出事件1.
+
+// 事件_元素工具提示弹出, 可使用 common.UintPtrToString 把uintptr转换到文本.
+func (e *Element) Event_TOOLTIP_POPUP(pFun XE_TOOLTIP_POPUP) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_TOOLTIP_POPUP, pFun)
+}
+
+// 事件_元素工具提示弹出1, 可使用 common.UintPtrToString 把uintptr转换到文本.
+func (e *Element) Event_TOOLTIP_POPUP1(pFun XE_TOOLTIP_POPUP1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_TOOLTIP_POPUP, pFun)
+}
 
 // 事件_弹出菜单项被选择.
 func (e *Element) Event_MENU_SELECT(pFun XE_MENU_SELECT) bool {
