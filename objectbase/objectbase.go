@@ -5,7 +5,7 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// 炫彩对象基类.
+// ObjectBase 炫彩对象基类.
 type ObjectBase struct {
 	Handle int // 句柄.
 }
