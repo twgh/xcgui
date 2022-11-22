@@ -290,9 +290,9 @@ func (e *Edit) InsertText(iRow int, iCol int, pString string) int {
 }
 
 // AddTextUser 编辑框_插入文本模拟用户操作, 自动刷新UI, 支持撤销/恢复.
+//
 //	@param pString 字符串.
 //	@return int
-//
 func (e *Edit) AddTextUser(pString string) int {
 	return xc.XEdit_AddTextUser(e.Handle, pString)
 }
@@ -407,9 +407,9 @@ func (e *Edit) SetRowHeightEx(iRow int, nHeight int) int {
 }
 
 // SetCurPos 编辑框_置当前位置.
+//
 //	@param iRow 行索引.
 //	@return int
-//
 func (e *Edit) SetCurPos(iRow int) int {
 	return xc.XEdit_SetCurPos(e.Handle, iRow)
 }
@@ -455,10 +455,10 @@ func (e *Edit) AutoScrollEx(iRow int, iCol int) bool {
 }
 
 // PosToRowCol 编辑框_转换位置, 转换位置点到行列.
+//
 //	@param iPos 位置点.
 //	@param pInfo 行列.
 //	@return int
-//
 func (e *Edit) PosToRowCol(iPos int, pInfo *xc.Position_) int {
 	return xc.XEdit_PosToRowCol(e.Handle, iPos, pInfo)
 }
@@ -784,4 +784,15 @@ func (e *Edit) Event_EDIT_ROW_CHANGED(pFun XE_EDIT_ROW_CHANGED) bool {
 // 编辑框_行_被改变.
 func (e *Edit) Event_EDIT_ROW_CHANGED1(pFun XE_EDIT_ROW_CHANGED1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_ROW_CHANGED, pFun)
+}
+
+// 编辑框_插入气泡开始, 当前行开始.
+//
+// hImageAvatar: 头像图片句柄.
+//
+// hImageBubble: 气泡背景图片句柄.
+//
+// nFlag: 聊天气泡对齐方式: xcc.Chat_Flag_ .
+func (e *Edit) InsertChatBegin(hImageAvatar int, hImageBubble int, nFlag xcc.Chat_Flag_) int {
+	return xc.XEdit_InsertChatBegin(e.Handle, hImageAvatar, hImageBubble, nFlag)
 }
