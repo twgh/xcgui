@@ -1,8 +1,9 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/common"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 
 	"github.com/twgh/xcgui/xcc"
 )
@@ -1454,5 +1455,13 @@ func XDraw_DrawSvgSize(hDraw int, hSvg int, nWidth int, nHeight int) int {
 // color: ABGR 颜色值.
 func XDraw_D2D_Clear(hDraw int, color int) int {
 	r, _, _ := xDraw_D2D_Clear.Call(uintptr(hDraw), uintptr(color))
+	return int(r)
+}
+
+// 绘制_取字体, 返回字体句柄.
+//
+// hDraw: 图形绘制句柄.
+func XDraw_GetFont(hDraw int) int {
+	r, _, _ := xDraw_GetFont.Call(uintptr(hDraw))
 	return int(r)
 }
