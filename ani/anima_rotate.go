@@ -5,7 +5,7 @@ import (
 	"github.com/twgh/xcgui/xc"
 )
 
-// 动画旋转项.
+// AnimaRotate 动画旋转项.
 type AnimaRotate struct {
 	objectbase.ObjectBase
 }
