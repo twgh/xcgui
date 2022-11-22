@@ -1,6 +1,6 @@
 package xc
 
-// 形状GIF_创建, 创建形状对象GIF, 成功返回形状对象GIF句柄, 否则返回NULL.
+// XShapeGif_Create 形状GIF_创建, 创建形状对象GIF, 成功返回形状对象GIF句柄, 否则返回NULL.
 //
 // x: X坐标.
 //
@@ -16,7 +16,7 @@ func XShapeGif_Create(x int, y int, cx int, cy int, hParent int) int {
 	return int(r)
 }
 
-// 形状GIF_置图片, 设置GIF图片.
+// XShapeGif_SetImage 形状GIF_置图片, 设置GIF图片.
 //
 // hShape: 形状对象句柄.
 //
@@ -26,7 +26,7 @@ func XShapeGif_SetImage(hShape int, hImage int) int {
 	return int(r)
 }
 
-// 形状GIF_取图片, 获取图片句柄.
+// XShapeGif_GetImage 形状GIF_取图片, 获取图片句柄.
 //
 // hShape: 形状对象句柄.
 func XShapeGif_GetImage(hShape int) int {
