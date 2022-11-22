@@ -5,7 +5,7 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// 动画序列.
+// Anima 动画序列.
 type Anima struct {
 	animaBase
 }
