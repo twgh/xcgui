@@ -6,11 +6,25 @@ import "github.com/twgh/xcgui/common"
 //
 // pFileName: 布局文件名.
 //
-// hParent: 父对象句柄.
+// hParent: 父对象句柄, 窗口句柄或UI元素句柄.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func XC_LoadLayout(pFileName string, hParent, hAttachWnd int) int {
 	r, _, _ := xC_LoadLayout.Call(common.StrPtr(pFileName), uintptr(hParent), uintptr(hAttachWnd))
+	return int(r)
+}
+
+// 炫彩_加载布局文件Ex, 返回窗口句柄或布局句柄或元素句柄.
+//
+// pFileName: 布局文件名.
+//
+// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+//
+// hParent: 父对象句柄, 窗口句柄或UI元素句柄.
+//
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
+func XC_LoadLayoutEx(pFileName, pPrefixName string, hParent, hAttachWnd int) int {
+	r, _, _ := xC_LoadLayoutEx.Call(common.StrPtr(pFileName), common.StrPtr(pPrefixName), uintptr(hParent), uintptr(hAttachWnd))
 	return int(r)
 }
 
@@ -22,11 +36,29 @@ func XC_LoadLayout(pFileName string, hParent, hAttachWnd int) int {
 //
 // pPassword: zip密码.
 //
-// hParent: 父对象句柄.
+// hParent: 父对象句柄, 窗口句柄或UI元素句柄.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func XC_LoadLayoutZip(pZipFileName string, pFileName string, pPassword string, hParent, hAttachWnd int) int {
 	r, _, _ := xC_LoadLayoutZip.Call(common.StrPtr(pZipFileName), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(hParent), uintptr(hAttachWnd))
+	return int(r)
+}
+
+// 炫彩_加载布局文件ZIPEx, 加载布局文件从zip压缩包中, 返回窗口句柄或布局句柄或元素句柄.
+//
+// pZipFileName: zip文件名.
+//
+// pFileName: 布局文件名.
+//
+// pPassword: zip密码.
+//
+// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+//
+// hParent: 父对象句柄, 窗口句柄或UI元素句柄.
+//
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
+func XC_LoadLayoutZipEx(pZipFileName string, pFileName string, pPassword, pPrefixName string, hParent, hAttachWnd int) int {
+	r, _, _ := xC_LoadLayoutZipEx.Call(common.StrPtr(pZipFileName), common.StrPtr(pFileName), common.StrPtr(pPassword), common.StrPtr(pPrefixName), uintptr(hParent), uintptr(hAttachWnd))
 	return int(r)
 }
 
@@ -38,11 +70,29 @@ func XC_LoadLayoutZip(pZipFileName string, pFileName string, pPassword string, h
 //
 // pPassword: zip密码.
 //
-// hParent: 父对象句柄.
+// hParent: 父对象句柄, 窗口句柄或UI元素句柄.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func XC_LoadLayoutZipMem(data []byte, pFileName string, pPassword string, hParent, hAttachWnd int) int {
 	r, _, _ := xC_LoadLayoutZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(hParent), uintptr(hAttachWnd))
+	return int(r)
+}
+
+// 炫彩_加载布局文件内存ZIPEx, 加载布局文件从zip压缩包中, 返回窗口句柄或布局句柄或元素句柄.
+//
+// data: 布局文件数据.
+//
+// pFileName: 布局文件名.
+//
+// pPassword: zip密码.
+//
+// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+//
+// hParent: 父对象句柄, 窗口句柄或UI元素句柄.
+//
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
+func XC_LoadLayoutZipMemEx(data []byte, pFileName string, pPassword, pPrefixName string, hParent, hAttachWnd int) int {
+	r, _, _ := xC_LoadLayoutZipMemEx.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(pFileName), common.StrPtr(pPassword), common.StrPtr(pPrefixName), uintptr(hParent), uintptr(hAttachWnd))
 	return int(r)
 }
 
@@ -62,11 +112,25 @@ func XC_LoadLayoutFromString(pStringXML string, hParent, hAttachWnd int) int {
 //
 // pStringXML: 字符串.
 //
-// hParent: 父对象.
+// hParent: 父对象句柄, 窗口句柄或UI元素句柄.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func XC_LoadLayoutFromStringW(pStringXML string, hParent, hAttachWnd int) int {
 	r, _, _ := xC_LoadLayoutFromStringUtf8.Call(XC_wtoutf8(pStringXML), uintptr(hParent), uintptr(hAttachWnd))
+	return int(r)
+}
+
+// 炫彩_加载布局文件从字符串WEx, 加载布局文件从内存字符串, 返回窗口句柄或布局句柄或元素句柄.
+//
+// pStringXML: 字符串.
+//
+// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+//
+// hParent: 父对象句柄, 窗口句柄或UI元素句柄.
+//
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
+func XC_LoadLayoutFromStringWEx(pStringXML, pPrefixName string, hParent, hAttachWnd int) int {
+	r, _, _ := xC_LoadLayoutFromStringUtf8Ex.Call(XC_wtoutf8(pStringXML), common.StrPtr(pPrefixName), uintptr(hParent), uintptr(hAttachWnd))
 	return int(r)
 }
 
