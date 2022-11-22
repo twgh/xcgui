@@ -10,92 +10,93 @@ import (
 )
 
 // XInitXCGUI 炫彩_初始化.
+//
 //	@Description 在调用本函数之前请先调用 xc.LoadXCGUI().
 //	@param bD2D 是否启用D2D.
 //	@return bool
-//
 func XInitXCGUI(bD2D bool) bool {
 	r, _, _ := xInitXCGUI.Call(common.BoolPtr(bD2D))
 	return r != 0
 }
 
 // XRunXCGUI 炫彩_运行, 运行消息循环, 当炫彩窗口数量为0时退出.
-//	@return int
 //
+//	@return int
 func XRunXCGUI() int {
 	r, _, _ := xRunXCGUI.Call()
 	return int(r)
 }
 
 // XExitXCGUI 炫彩_退出, 退出界面库释放资源.
-//	@return int
 //
+//	@return int
 func XExitXCGUI() int {
 	r, _, _ := xExitXCGUI.Call()
 	return int(r)
 }
 
 // XC_DebugToFileInfo 炫彩_输出调试信息到文件, 打印调试信息到文件xcgui_debug.txt.
+//
 //	@param pInfo 文本.
 //	@return int
-//
 func XC_DebugToFileInfo(pInfo string) int {
 	r, _, _ := xC_DebugToFileInfo.Call(XC_wtoa(pInfo))
 	return int(r)
 }
 
 // XC_SetActivateTopWindow 炫彩_激活窗口, 激活当前进程最上层窗口.
-//	@return bool
 //
+//	@return bool
 func XC_SetActivateTopWindow() bool {
 	r, _, _ := xC_SetActivateTopWindow.Call()
 	return r != 0
 }
 
 // XC_GetDefaultFont 炫彩_取默认字体.
-//	@return int 字体句柄.
 //
+//	@return int 字体句柄.
 func XC_GetDefaultFont() int {
 	r, _, _ := xC_GetDefaultFont.Call()
 	return int(r)
 }
 
 // XC_MessageBox 炫彩_消息框.
+//
 //	@param pTitle 标题.
 //	@param pText 内容文本.
 //	@param nFlags 标识: xcc.MessageBox_Flag_.
+//	@param hWndParent 父窗口句柄(真实的窗口句柄).
 //	@param XCStyle xcc.Window_Style_.
 //	@return xcc.MessageBox_Flag_ , 返回: xcc.MessageBox_Flag_Ok: 点击确定按钮退出. xcc.MessageBox_Flag_Cancel: 点击取消按钮退出. xcc.MessageBox_Flag_Other: 其他方式退出.
-//
 func XC_MessageBox(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) xcc.MessageBox_Flag_ {
 	r, _, _ := xC_MessageBox.Call(common.StrPtr(pTitle), common.StrPtr(pText), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
 	return xcc.MessageBox_Flag_(r)
 }
 
-// XMsg_Create 消息框_创建, 此窗口是一个模态窗口, 弹出窗口请调用 XModalWnd_DoModal().
+// XMsg_Create 消息框_创建, 此窗口是一个模态窗口, 弹出窗口请调用 xc.XModalWnd_DoModal().
+//
 //	@param pTitle 标题.
 //	@param pText 内容文本.
 //	@param nFlags 标识: xcc.MessageBox_Flag_.
 //	@param hWndParent 父窗口句柄(真实的窗口句柄).
 //	@param XCStyle xcc.Window_Style_.
 //	@return int 返回消息框窗口句柄.
-//
 func XMsg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) int {
 	r, _, _ := xMsg_Create.Call(common.StrPtr(pTitle), common.StrPtr(pText), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
 	return int(r)
 }
 
-// XMsg_CreateEx 消息框_创建扩展, 此窗口是一个模态窗口, 弹出窗口请调用 XModalWnd_DoModal().
+// XMsg_CreateEx 消息框_创建扩展, 此窗口是一个模态窗口, 弹出窗口请调用 xc.XModalWnd_DoModal().
+//
 //	@param dwExStyle 窗口扩展样式.
 //	@param dwStyle 窗口样式.
 //	@param lpClassName 窗口类名.
 //	@param pTitle 标题.
 //	@param pText 内容文本.
-//	@param nFlags 标识: xcc.MessageBox_Flag_.
+//	@param nFlags 标识: xcc.MessageBox_Flag_ .
 //	@param hWndParent 父窗口句柄(真实的窗口句柄).
-//	@param XCStyle xcc.Window_Style_.
+//	@param XCStyle xcc.Window_Style_ .
 //	@return int 消息框窗口句柄.
-//
 func XMsg_CreateEx(dwExStyle int, dwStyle int, lpClassName, pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) int {
 	r, _, _ := xMsg_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), common.StrPtr(pTitle), common.StrPtr(pText), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
 	return int(r)
@@ -130,12 +131,12 @@ func XC_PostMessage(hWindow int, msg uint32, wParam int32, lParam int32) bool {
 }
 
 // XC_CallUiThread 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
+//
 //	@Description: 回调函数尽量不要使用匿名函数, 使用匿名函数意味着你每次都在创建1个新的回调, 超过2000个时, 程序必将panic.
 //	如果使用 xc.XC_CallUiThreadEx 和 xc.XC_CallUiThreader 则没有此限制.
-//  @param pCall 回调函数.
-//  @param data 传进回调函数的用户自定义数据.
-//  @return int
-//
+//	@param pCall 回调函数.
+//	@param data 传进回调函数的用户自定义数据.
+//	@return int
 func XC_CallUiThread(pCall func(data int) int, data int) int {
 	r, _, _ := xC_CallUiThread.Call(syscall.NewCallback(pCall), uintptr(data))
 	return int(r)
@@ -412,6 +413,7 @@ func XC_GetTextShowSizeEx(pString string, length int, hFontX int, nTextAlign xcc
 }
 
 // XC_GetTextShowRect 炫彩_取文本显示矩形.
+//
 //	@param pString 字符串.
 //	@param length 字符串长度.
 //	@param hFontX 字体.
@@ -419,7 +421,6 @@ func XC_GetTextShowSizeEx(pString string, length int, hFontX int, nTextAlign xcc
 //	@param width 最大宽度.
 //	@param pOutSize 接收返回大小.
 //	@return int
-//
 func XC_GetTextShowRect(pString string, length int, hFontX int, nTextAlign xcc.TextFormatFlag_, width int, pOutSize *SIZE) int {
 	r, _, _ := xC_GetTextShowRect.Call(common.StrPtr(pString), uintptr(length), uintptr(hFontX), uintptr(nTextAlign), uintptr(width), uintptr(unsafe.Pointer(pOutSize)))
 	return int(r)
@@ -669,7 +670,7 @@ func XDebug_Print(level int, pInfo string) int {
 	return int(r)
 }
 
-// 炫彩_打印调试信息, 打印调试信息到文件xcgui_debug.txt.[无效]
+/* // 炫彩_打印调试信息, 打印调试信息到文件xcgui_debug.txt.[无效]
 //
 // pString: 字符串.
 func XDebug_OutputDebugStringW(pString string) int {
@@ -683,7 +684,7 @@ func XDebug_OutputDebugStringW(pString string) int {
 func XDebug_Set_OutputDebugString_UTF8(bUTF8 bool) int {
 	r, _, _ := xDebug_Set_OutputDebugString_UTF8.Call(common.BoolPtr(bUTF8))
 	return int(r)
-}
+} */
 
 // 炫彩_显示边界.
 //
