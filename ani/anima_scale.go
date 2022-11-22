@@ -6,7 +6,7 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// 动画缩放项.
+// AnimaScale 动画缩放项.
 type AnimaScale struct {
 	objectbase.ObjectBase
 }
