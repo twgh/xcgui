@@ -105,8 +105,10 @@ curl -fL "https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui-32.dll?version=l
 
 ```bash
 go install github.com/twgh/getxcgui@latest
-getxcgui
+getxcgui  
 ```
+
+> 请确保 `%GOPATH%\bin` 在环境变量中, 否则要像这样调用: `%GOPATH%\bin\getxcgui`
 
 如果要把dll直接下载到`C:\Windows\System32`目录里，请使用如下命令：
 
