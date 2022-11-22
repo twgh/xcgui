@@ -6,7 +6,7 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// 弹出菜单.
+// Menu 弹出菜单.
 type Menu struct {
 	objectbase.ObjectBase
 }
