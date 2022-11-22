@@ -36,20 +36,20 @@ func XLayoutBox_EnableOverflowHide(hLayoutBox int, bEnable bool) int {
 }
 
 // XLayoutBox_SetAlignH 布局盒子_置水平对齐.
+//
 //	@param hLayoutBox 窗口或布局元素或布局框架句柄.
 //	@param nAlign 对齐方式: xcc.Layout_Align_.
 //	@return int
-//
 func XLayoutBox_SetAlignH(hLayoutBox int, nAlign xcc.Layout_Align_) int {
 	r, _, _ := xLayoutBox_SetAlignH.Call(uintptr(hLayoutBox), uintptr(nAlign))
 	return int(r)
 }
 
 // XLayoutBox_SetAlignV 布局盒子_置垂直对齐.
+//
 //	@param hLayoutBox 窗口或布局元素或布局框架句柄.
 //	@param nAlign 对齐方式: xcc.Layout_Align_.
 //	@return int
-//
 func XLayoutBox_SetAlignV(hLayoutBox int, nAlign xcc.Layout_Align_) int {
 	r, _, _ := xLayoutBox_SetAlignV.Call(uintptr(hLayoutBox), uintptr(nAlign))
 	return int(r)
