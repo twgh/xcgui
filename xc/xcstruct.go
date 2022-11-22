@@ -2,31 +2,32 @@ package xc
 
 import "github.com/twgh/xcgui/xcc"
 
-// 菜单-弹出窗口信息
+// Menu_PopupWnd_ 菜单-弹出窗口信息
 type Menu_PopupWnd_ struct {
 	HWindow   int   // 窗口句柄
 	NParentID int32 // 父项ID
 }
 
-// 菜单背景自绘结构
+// Menu_DrawBackground_ 菜单背景自绘结构
 type Menu_DrawBackground_ struct {
 	HMenu     int   // 菜单句柄
 	HWindow   int   // 当前弹出菜单项的窗口句柄
 	NParentID int32 // 父项ID
 }
 
-// 菜单项自绘结构
+// Menu_DrawItem_ 菜单项自绘结构
 type Menu_DrawItem_ struct {
-	HMenu   int                 // 菜单句柄
-	HWindow int                 // 当前弹出菜单项的窗口句柄
-	NID     int32               // ID
-	NState  xcc.Menu_Item_Flag_ // 状态: Menu_Item_Flag_
-	RcItem  RECT                // 坐标
-	HIcon   int                 // 菜单项图标句柄
-	PText   uintptr             // 文本, 使用xc.UintPtrToString()函数转换到string
+	HMenu             int                 // 菜单句柄
+	HWindow           int                 // 当前弹出菜单项的窗口句柄
+	NID               int32               // ID
+	NState            xcc.Menu_Item_Flag_ // 状态: Menu_Item_Flag_
+	NShortcutKeyWidth int32               // 右侧快捷键占位宽度
+	RcItem            RECT                // 坐标
+	HIcon             int                 // 菜单项图标句柄
+	PText             uintptr             // 文本, 使用xc.UintPtrToString()函数转换到string
 }
 
-// 列表框项信息
+// ListBox_Item_ 列表框项信息
 type ListBox_Item_ struct {
 	Index      int32                // 项索引
 	NUserData  int                  // 用户绑定数据
@@ -76,7 +77,7 @@ type Tree_Item_ struct {
 	HTemp      int                  // 列表项模板句柄
 }
 
-// 树UI元素拖动项
+// Tree_Drag_Item_ 树UI元素拖动项
 type Tree_Drag_Item_ struct {
 	NDragItem int32 // 拖动项ID
 	NDestItem int32 // 目标项ID
@@ -123,7 +124,7 @@ type SIZE struct {
 	CY int32
 }
 
-// 字体属性
+// LOGFONTW 字体属性
 type LOGFONTW struct {
 	LfHeight         int32      // 高度
 	LfWidth          int32      // 宽度
@@ -177,13 +178,13 @@ type Edit_Data_Copy_Style_ struct {
 	BColor          bool  // 是否使用颜色
 }
 
-// 位置点
+// Position_ 位置点
 type Position_ struct {
 	IRow    int32 // 行索引
 	IColumn int32 // 列索引
 }
 
-// 字体信息
+// Font_Info_ 字体信息
 type Font_Info_ struct {
 	NSize  int32          // 字体大小, 单位(pt,磅).
 	NStyle xcc.FontStyle_ // 字体样式: FontStyle_
@@ -197,7 +198,7 @@ type ListBox_Item_Info_ struct {
 	NSelHeight int32 // 项选中时高度, -1使用默认高度
 }
 
-// 月历元素项数据
+// MonthCal_item_ 月历元素项数据
 type MonthCal_item_ struct {
 	NDay   int32             // 日期
 	NType  int32             // 1上月, 2当月, 3下月
