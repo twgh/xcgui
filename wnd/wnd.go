@@ -6,10 +6,10 @@ import (
 )
 
 // SetTop 窗口_置顶.
+//
 //	@param hWnd 窗口真实句柄.
 //	@param b 是否置顶.
 //	@return bool
-//
 func SetTop(hWnd int, b bool) bool {
 	hWndInsertAfter := wapi.HWND_TOPMOST
 	if !b {
@@ -19,9 +19,9 @@ func SetTop(hWnd int, b bool) bool {
 }
 
 // GetTitle 取窗口标题.
+//
 //	@param hWnd 窗口真实句柄.
 //	@return string
-//
 func GetTitle(hWnd int) string {
 	dwSize := wapi.GetWindowTextLengthW(hWnd)
 	if dwSize == 0 {
@@ -35,10 +35,10 @@ func GetTitle(hWnd int) string {
 }
 
 // GetHWND 取窗口句柄, 标题支持模糊.
+//
 //	@param className 窗口类名, 不支持模糊, 可空.
 //	@param title 窗口标题, 可输入关键字, 支持模糊, 可空.
 //	@return int 窗口真实句柄.
-//
 func GetHWND(className, title string) int {
 	var hWnd int
 	for {
