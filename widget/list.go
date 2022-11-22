@@ -121,8 +121,8 @@ func (l *List) EnableFixedRowHeight(bEnable bool) int {
 // 列表_启用模板复用.
 //
 // bEnable: 是否启用.
-func (l *List) EnablemTemplateReuse(bEnable bool) int {
-	return xc.XList_EnablemTemplateReuse(l.Handle, bEnable)
+func (l *List) EnableTemplateReuse(bEnable bool) int {
+	return xc.XList_EnableTemplateReuse(l.Handle, bEnable)
 }
 
 // 列表_启用虚表.
