@@ -8,13 +8,14 @@ import (
 	"syscall"
 )
 
-// xcguiPath 是xcgui.dll的完整路径（目录+文件名）, 默认值为'xcgui.dll'.
+// xcguiPath 是xcgui.dll的完整路径（目录+文件名）, 也可以是相对路径, 默认值为'xcgui.dll'.
+//
 //	如果你想要更改它的位置, 可以在 xc.LoadXCGUI() 之前调用 xc.SetXcguiPath() 更改为其他路径.
 var xcguiPath = "xcgui.dll"
 
-// 获取 xcgui.dll 的版本号.
+// 获取当前库版本所需的 xcgui.dll 的版本号.
 func GetVer() string {
-	return "3.3.6.0"
+	return "3.3.7.0"
 }
 
 var (
@@ -39,69 +40,69 @@ var (
 		xC_ftow                       *syscall.LazyProc
 		xDebug_OutputDebugStringA					*syscall.LazyProc
 	*/
-	xC_MessageBox                     *syscall.LazyProc
-	xC_SendMessage                    *syscall.LazyProc
-	xC_PostMessage                    *syscall.LazyProc
-	xC_CallUiThread                   *syscall.LazyProc
-	xDebug_OutputDebugStringW         *syscall.LazyProc
-	xC_DebugToFileInfo                *syscall.LazyProc
-	xDebug_Set_OutputDebugString_UTF8 *syscall.LazyProc
-	xDebug_Print                      *syscall.LazyProc
-	xC_IsHELE                         *syscall.LazyProc
-	xC_IsHWINDOW                      *syscall.LazyProc
-	xC_IsShape                        *syscall.LazyProc
-	xC_IsHXCGUI                       *syscall.LazyProc
-	xC_hWindowFromHWnd                *syscall.LazyProc
-	xC_SetActivateTopWindow           *syscall.LazyProc
-	xC_SetProperty                    *syscall.LazyProc
-	xC_GetProperty                    *syscall.LazyProc
-	xC_RegisterWindowClassName        *syscall.LazyProc
-	xC_IsSViewExtend                  *syscall.LazyProc
-	xC_GetObjectType                  *syscall.LazyProc
-	xC_GetObjectByID                  *syscall.LazyProc
-	xC_GetObjectByIDName              *syscall.LazyProc
-	xC_GetObjectByUID                 *syscall.LazyProc
-	xC_GetObjectByUIDName             *syscall.LazyProc
-	xC_GetObjectByName                *syscall.LazyProc
-	xC_SetPaintFrequency              *syscall.LazyProc
-	xC_SetTextRenderingHint           *syscall.LazyProc
-	xC_EnableGdiDrawText              *syscall.LazyProc
-	xC_RectInRect                     *syscall.LazyProc
-	xC_CombineRect                    *syscall.LazyProc
-	xC_ShowLayoutFrame                *syscall.LazyProc
-	xC_EnableDebugFile                *syscall.LazyProc
-	xC_EnableResMonitor               *syscall.LazyProc
-	xC_SetLayoutFrameColor            *syscall.LazyProc
-	xC_EnableErrorMessageBox          *syscall.LazyProc
-	xC_EnableAutoExitApp              *syscall.LazyProc
-	xC_GetTextSize                    *syscall.LazyProc
-	xC_GetTextShowSize                *syscall.LazyProc
-	xC_GetTextShowSizeEx              *syscall.LazyProc
-	xC_GetTextShowRect                *syscall.LazyProc
-	xC_GetDefaultFont                 *syscall.LazyProc
-	xC_SetDefaultFont                 *syscall.LazyProc
-	xC_AddFileSearchPath              *syscall.LazyProc
-	xC_InitFont                       *syscall.LazyProc
-	xC_Malloc                         *syscall.LazyProc
-	xC_Free                           *syscall.LazyProc
-	xC_Alert                          *syscall.LazyProc
-	xC_Sys_ShellExecute               *syscall.LazyProc
-	xC_LoadLibrary                    *syscall.LazyProc
-	xC_GetProcAddress                 *syscall.LazyProc
-	xC_FreeLibrary                    *syscall.LazyProc
-	xC_LoadDll                        *syscall.LazyProc
-	xInitXCGUI                        *syscall.LazyProc
-	xRunXCGUI                         *syscall.LazyProc
-	xExitXCGUI                        *syscall.LazyProc
-	xC_PostQuitMessage                *syscall.LazyProc
-	xC_GetD2dFactory                  *syscall.LazyProc
-	xC_GetWicFactory                  *syscall.LazyProc
-	xC_GetDWriteFactory               *syscall.LazyProc
-	xC_SetD2dTextRenderingMode        *syscall.LazyProc
-	xC_IsEnableD2D                    *syscall.LazyProc
-	xMsg_Create                       *syscall.LazyProc
-	xMsg_CreateEx                     *syscall.LazyProc
-	xC_ShowSvgFrame                   *syscall.LazyProc
+	xC_MessageBox   *syscall.LazyProc
+	xC_SendMessage  *syscall.LazyProc
+	xC_PostMessage  *syscall.LazyProc
+	xC_CallUiThread *syscall.LazyProc
+	//xDebug_OutputDebugStringW         *syscall.LazyProc
+	xC_DebugToFileInfo *syscall.LazyProc
+	//xDebug_Set_OutputDebugString_UTF8 *syscall.LazyProc
+	xDebug_Print               *syscall.LazyProc
+	xC_IsHELE                  *syscall.LazyProc
+	xC_IsHWINDOW               *syscall.LazyProc
+	xC_IsShape                 *syscall.LazyProc
+	xC_IsHXCGUI                *syscall.LazyProc
+	xC_hWindowFromHWnd         *syscall.LazyProc
+	xC_SetActivateTopWindow    *syscall.LazyProc
+	xC_SetProperty             *syscall.LazyProc
+	xC_GetProperty             *syscall.LazyProc
+	xC_RegisterWindowClassName *syscall.LazyProc
+	xC_IsSViewExtend           *syscall.LazyProc
+	xC_GetObjectType           *syscall.LazyProc
+	xC_GetObjectByID           *syscall.LazyProc
+	xC_GetObjectByIDName       *syscall.LazyProc
+	xC_GetObjectByUID          *syscall.LazyProc
+	xC_GetObjectByUIDName      *syscall.LazyProc
+	xC_GetObjectByName         *syscall.LazyProc
+	xC_SetPaintFrequency       *syscall.LazyProc
+	xC_SetTextRenderingHint    *syscall.LazyProc
+	xC_EnableGdiDrawText       *syscall.LazyProc
+	xC_RectInRect              *syscall.LazyProc
+	xC_CombineRect             *syscall.LazyProc
+	xC_ShowLayoutFrame         *syscall.LazyProc
+	xC_EnableDebugFile         *syscall.LazyProc
+	xC_EnableResMonitor        *syscall.LazyProc
+	xC_SetLayoutFrameColor     *syscall.LazyProc
+	xC_EnableErrorMessageBox   *syscall.LazyProc
+	xC_EnableAutoExitApp       *syscall.LazyProc
+	xC_GetTextSize             *syscall.LazyProc
+	xC_GetTextShowSize         *syscall.LazyProc
+	xC_GetTextShowSizeEx       *syscall.LazyProc
+	xC_GetTextShowRect         *syscall.LazyProc
+	xC_GetDefaultFont          *syscall.LazyProc
+	xC_SetDefaultFont          *syscall.LazyProc
+	xC_AddFileSearchPath       *syscall.LazyProc
+	xC_InitFont                *syscall.LazyProc
+	xC_Malloc                  *syscall.LazyProc
+	xC_Free                    *syscall.LazyProc
+	xC_Alert                   *syscall.LazyProc
+	xC_Sys_ShellExecute        *syscall.LazyProc
+	xC_LoadLibrary             *syscall.LazyProc
+	xC_GetProcAddress          *syscall.LazyProc
+	xC_FreeLibrary             *syscall.LazyProc
+	xC_LoadDll                 *syscall.LazyProc
+	xInitXCGUI                 *syscall.LazyProc
+	xRunXCGUI                  *syscall.LazyProc
+	xExitXCGUI                 *syscall.LazyProc
+	xC_PostQuitMessage         *syscall.LazyProc
+	xC_GetD2dFactory           *syscall.LazyProc
+	xC_GetWicFactory           *syscall.LazyProc
+	xC_GetDWriteFactory        *syscall.LazyProc
+	xC_SetD2dTextRenderingMode *syscall.LazyProc
+	xC_IsEnableD2D             *syscall.LazyProc
+	xMsg_Create                *syscall.LazyProc
+	xMsg_CreateEx              *syscall.LazyProc
+	xC_ShowSvgFrame            *syscall.LazyProc
 
 	// UI Designer.
 	xC_LoadLayout       *syscall.LazyProc
@@ -109,6 +110,10 @@ var (
 	xC_LoadLayoutZipMem *syscall.LazyProc
 	// xC_LoadLayoutFromString     *syscall.LazyProc
 	xC_LoadLayoutFromStringUtf8   *syscall.LazyProc
+	xC_LoadLayoutEx               *syscall.LazyProc
+	xC_LoadLayoutZipEx            *syscall.LazyProc
+	xC_LoadLayoutZipMemEx         *syscall.LazyProc
+	xC_LoadLayoutFromStringUtf8Ex *syscall.LazyProc
 	xC_LoadStyle                  *syscall.LazyProc
 	xC_LoadStyleZip               *syscall.LazyProc
 	xC_LoadStyleZipMem            *syscall.LazyProc
@@ -757,6 +762,7 @@ var (
 	xEdit_GetText_Temp         *syscall.LazyProc
 	xEdit_GetTextRow_Temp      *syscall.LazyProc
 	xEdit_GetSelectText_Temp   *syscall.LazyProc
+	xEdit_InsertChatBegin      *syscall.LazyProc
 
 	// LayoutEle.
 	xLayout_Create          *syscall.LazyProc
@@ -1014,6 +1020,7 @@ var (
 	xDraw_D2D_Clear               *syscall.LazyProc
 	xDraw_ImageMaskRect           *syscall.LazyProc
 	xDraw_ImageMaskEllipse        *syscall.LazyProc
+	xDraw_GetFont                 *syscall.LazyProc
 
 	// Ease.
 	xEase_Linear  *syscall.LazyProc
@@ -1248,7 +1255,7 @@ var (
 	xList_EnableVScrollBarTop          *syscall.LazyProc
 	xList_EnableItemBkFullRow          *syscall.LazyProc
 	xList_EnableFixedRowHeight         *syscall.LazyProc
-	xList_EnablemTemplateReuse         *syscall.LazyProc
+	xList_EnableTemplateReuse          *syscall.LazyProc
 	xList_EnableVirtualTable           *syscall.LazyProc
 	xList_SetVirtualRowCount           *syscall.LazyProc
 	xList_SetSort                      *syscall.LazyProc
@@ -1728,9 +1735,9 @@ var (
 )
 
 // SetXcguiPath 手动设置xcgui.dll的路径. 未设置时, 默认值为'xcgui.dll'.
-//	@param XcguiPath dll完整路径（目录+文件名）.
-//	@return error 如果出错, 要么你输入的文件不存在, 要么你输入的不是dll文件.
 //
+//	@param XcguiPath dll完整路径（目录+文件名）, 也可以是相对路径.
+//	@return error 如果出错, 要么你输入的文件不存在, 要么你输入的不是dll文件.
 func SetXcguiPath(XcguiPath string) error {
 	// 判断是否为dll文件
 	if len(XcguiPath) < 5 {
@@ -1751,16 +1758,16 @@ func SetXcguiPath(XcguiPath string) error {
 }
 
 // GetXcguiPath 获取设置的xcgui.dll的路径.
-//	@return string
 //
+//	@return string
 func GetXcguiPath() string {
 	return xcguiPath
 }
 
 // PathExists 判断文件或文件夹是否存在.
+//
 //	@param path 文件或文件夹.
 //	@return error 如果出错, 则不确定是否存在.
-//
 func PathExists(path string) (bool, error) {
 	_, err := os.Stat(path)
 	if err == nil { // 如果返回的错误为nil,说明文件或文件夹存在
@@ -1774,11 +1781,11 @@ func PathExists(path string) (bool, error) {
 }
 
 // LoadXCGUI 将从 xcguiPath 加载xcgui.dll. xcguiPath 的默认值是'xcgui.dll'.
+//
 //	如果你想要更改xcgui.dll的路径, 那么请在调用本函数之前调用 xc.SetXcguiPath().
 //
 //	注意: app.New() 函数内部会自动调用 xc.LoadXCGUI().
 //	所以一般是不需要手动调用的, 除非你没有使用 app.New() 函数, 而是使用了 xc.XInitXCGUI(), 那么你需要在 xc.XInitXCGUI() 之前调用 xc.LoadXCGUI().
-//
 func LoadXCGUI() {
 	// Library.
 	xcgui = syscall.NewLazyDLL(xcguiPath)
@@ -1805,8 +1812,8 @@ func LoadXCGUI() {
 		xC_ftow = xcgui.NewProc("XC_ftow")
 	*/
 	xC_DebugToFileInfo = xcgui.NewProc("XC_DebugToFileInfo")
-	xDebug_OutputDebugStringW = xcgui.NewProc("XDebug_OutputDebugStringW")
-	xDebug_Set_OutputDebugString_UTF8 = xcgui.NewProc("XDebug_Set_OutputDebugString_UTF8")
+	//xDebug_OutputDebugStringW = xcgui.NewProc("XDebug_OutputDebugStringW")
+	//xDebug_Set_OutputDebugString_UTF8 = xcgui.NewProc("XDebug_Set_OutputDebugString_UTF8")
 	xDebug_Print = xcgui.NewProc("XDebug_Print")
 	xC_IsHELE = xcgui.NewProc("XC_IsHELE")
 	xC_IsHWINDOW = xcgui.NewProc("XC_IsHWINDOW")
@@ -1870,6 +1877,10 @@ func LoadXCGUI() {
 	xC_LoadLayoutZipMem = xcgui.NewProc("XC_LoadLayoutZipMem")
 	// xC_LoadLayoutFromString = xcgui.NewProc("XC_LoadLayoutFromString")
 	xC_LoadLayoutFromStringUtf8 = xcgui.NewProc("XC_LoadLayoutFromStringUtf8")
+	xC_LoadLayoutEx = xcgui.NewProc("XC_LoadLayoutEx")
+	xC_LoadLayoutZipEx = xcgui.NewProc("XC_LoadLayoutZipEx")
+	xC_LoadLayoutZipMemEx = xcgui.NewProc("XC_LoadLayoutZipMemEx")
+	xC_LoadLayoutFromStringUtf8Ex = xcgui.NewProc("XC_LoadLayoutFromStringUtf8Ex")
 	xC_LoadStyle = xcgui.NewProc("XC_LoadStyle")
 	xC_LoadStyleZip = xcgui.NewProc("XC_LoadStyleZip")
 	xC_LoadStyleZipMem = xcgui.NewProc("XC_LoadStyleZipMem")
@@ -2516,6 +2527,7 @@ func LoadXCGUI() {
 	xEdit_GetText_Temp = xcgui.NewProc("XEdit_GetText_Temp")
 	xEdit_GetTextRow_Temp = xcgui.NewProc("XEdit_GetTextRow_Temp")
 	xEdit_GetSelectText_Temp = xcgui.NewProc("XEdit_GetSelectText_Temp")
+	xEdit_InsertChatBegin = xcgui.NewProc("XEdit_InsertChatBegin")
 
 	// LayoutEle.
 	xLayout_Create = xcgui.NewProc("XLayout_Create")
@@ -2771,6 +2783,7 @@ func LoadXCGUI() {
 	xDraw_D2D_Clear = xcgui.NewProc("XDraw_D2D_Clear")
 	xDraw_ImageMaskRect = xcgui.NewProc("XDraw_ImageMaskRect")
 	xDraw_ImageMaskEllipse = xcgui.NewProc("XDraw_ImageMaskEllipse")
+	xDraw_GetFont = xcgui.NewProc("XDraw_GetFont")
 
 	// Ease.
 	xEase_Linear = xcgui.NewProc("XEase_Linear")
@@ -3005,7 +3018,7 @@ func LoadXCGUI() {
 	xList_EnableVScrollBarTop = xcgui.NewProc("XList_EnableVScrollBarTop")
 	xList_EnableItemBkFullRow = xcgui.NewProc("XList_EnableItemBkFullRow")
 	xList_EnableFixedRowHeight = xcgui.NewProc("XList_EnableFixedRowHeight")
-	xList_EnablemTemplateReuse = xcgui.NewProc("XList_EnablemTemplateReuse")
+	xList_EnableTemplateReuse = xcgui.NewProc("XList_EnableTemplateReuse")
 	xList_EnableVirtualTable = xcgui.NewProc("XList_EnableVirtualTable")
 	xList_SetVirtualRowCount = xcgui.NewProc("XList_SetVirtualRowCount")
 	xList_SetSort = xcgui.NewProc("XList_SetSort")
@@ -3486,67 +3499,67 @@ func LoadXCGUI() {
 }
 
 // Font_Info_Name 将[32]uint16转换到string.
+//
 //	@param arr [32]uint16.
 //	@return string
-//
 func Font_Info_Name(arr [32]uint16) string {
 	return syscall.UTF16ToString(arr[0:])
 }
 
 // ABGR 根据r, g, b, a组合成十进制ABGR 颜色.
+//
 //	@param r 红色分量.
 //	@param g 绿色分量.
 //	@param b 蓝色分量.
 //	@param a 透明度.
 //	@return int ABGR 颜色.
-//
 func ABGR(r, g, b, a byte) int {
 	return int((uint32(r) & 255) | (uint32(g)&255)<<8 | (uint32(b)&255)<<16 | (uint32(a)&255)<<24)
 }
 
 // ABGR2 根据rgb, a组合成十进制ABGR 颜色.
+//
 //	@param rgb RGB颜色.
 //	@param a 透明度.
 //	@return int ABGR 颜色.
-//
 func ABGR2(rgb int, a byte) int {
 	return int((uint32(rgb) & 16777215) | (uint32(a)&255)<<24)
 }
 
 // RGB 根据r, g, b组合成十进制RGB颜色.
+//
 //	@param r 红色分量.
 //	@param g 绿色分量.
 //	@param b 蓝色分量.
 //	@return int RGB颜色.
-//
 func RGB(r, g, b byte) int {
 	return int(uint32(r) | uint32(g)<<8 | uint32(b)<<16)
 }
 
 // RGBA 根据r, g, b, a组合成十进制ABGR 颜色. 和 ABGR 函数一模一样, 只是为了符合部分人使用习惯.
+//
 //	@param r 红色分量.
 //	@param g 绿色分量.
 //	@param b 蓝色分量.
 //	@param a 透明度.
 //	@return int ABGR 颜色.
-//
 func RGBA(r, g, b, a byte) int {
 	return int((uint32(r) & 255) | (uint32(g)&255)<<8 | (uint32(b)&255)<<16 | (uint32(a)&255)<<24)
 }
 
 // RGBA2 根据rgb, a组合成十进制ABGR 颜色. 和 ABGR2 函数一模一样, 只是为了符合部分人使用习惯.
+//
 //	@param rgb RGB颜色.
 //	@param a 透明度.
 //	@return int ABGR 颜色.
-//
 func RGBA2(rgb int, a byte) int {
 	return int((uint32(rgb) & 16777215) | (uint32(a)&255)<<24)
 }
 
 // HEXToRGB 将十六进制颜色转换到RGB颜色.
+//
 //	@param str 十六进制颜色.
 //	@return int RGB颜色.
-//
 func HEXToRGB(str string) int {
 	r, _ := strconv.ParseInt(str[:2], 16, 10)
 	g, _ := strconv.ParseInt(str[2:4], 16, 18)
@@ -3555,9 +3568,9 @@ func HEXToRGB(str string) int {
 }
 
 // ClientToScreen 将窗口客户区坐标转换到屏幕坐标.
+//
 //	@param hWindow GUI库窗口资源句柄.
 //	@param pPoint 坐标.
-//
 func ClientToScreen(hWindow int, pPoint *POINT) {
 	var r RECT
 	XWnd_GetRect(hWindow, &r)
