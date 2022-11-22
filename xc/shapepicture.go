@@ -1,6 +1,6 @@
 package xc
 
-// 形状图片_创建, 创建形状对象-图片, 成功返回图片对象句柄, 否则返回NULL.
+// XShapePic_Create 形状图片_创建, 创建形状对象-图片, 成功返回图片对象句柄, 否则返回NULL.
 //
 // x: x坐标.
 //
@@ -16,7 +16,7 @@ func XShapePic_Create(x int, y int, cx int, cy int, hParent int) int {
 	return int(r)
 }
 
-// 形状图片_置图片, 设置图片.
+// XShapePic_SetImage 形状图片_置图片, 设置图片.
 //
 // hShape: 形状对象句柄.
 //
@@ -26,7 +26,7 @@ func XShapePic_SetImage(hShape int, hImage int) int {
 	return int(r)
 }
 
-// 形状图片_取图片, 获取图片句柄.
+// XShapePic_GetImage 形状图片_取图片, 获取图片句柄.
 //
 // hShape: 形状对象句柄.
 func XShapePic_GetImage(hShape int) int {
