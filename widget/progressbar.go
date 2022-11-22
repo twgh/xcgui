@@ -5,7 +5,7 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// 进度条.
+// ProgressBar 进度条.
 type ProgressBar struct {
 	Element
 }
