@@ -46,6 +46,7 @@ const (
 	XE_XC_TIMER         XE_ = 16 // 炫彩定时器,非系统定时器,定时器消息 XM_TIMER.
 	XE_ADJUSTLAYOUT     XE_ = 17 // 调整布局事件. 暂停使用
 	XE_ADJUSTLAYOUT_END XE_ = 18 // 调整布局完成事件.
+	XE_TOOLTIP_POPUP    XE_ = 19 // 元素工具提示弹出事件.
 	XE_SETFOCUS         XE_ = 31 // 元素获得焦点事件.
 	XE_KILLFOCUS        XE_ = 32 // 元素失去焦点事件.
 	XE_DESTROY          XE_ = 33 // 元素即将销毁事件. 在销毁子对象之前触发
