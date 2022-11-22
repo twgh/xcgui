@@ -106,20 +106,20 @@ func XPane_GetViewRect(hEle int, pRect *RECT) int {
 }
 
 // XPane_HidePane 窗格_隐藏.
+//
 //	@param hEle 元素句柄.
 //	@param bGroupActivate 当为窗格组成员时, 延迟处理窗格组成员激活的切换.
 //	@return int
-//
 func XPane_HidePane(hEle int, bGroupActivate bool) int {
 	r, _, _ := xPane_HidePane.Call(uintptr(hEle), common.BoolPtr(bGroupActivate))
 	return int(r)
 }
 
 // XPane_ShowPane 窗格_显示.
+//
 //	@param hEle 元素句柄.
 //	@param bGroupActivate 如果是窗格组成员, 那么窗格组切换当前窗格为显示状态.
 //	@return int
-//
 func XPane_ShowPane(hEle int, bGroupActivate bool) int {
 	r, _, _ := xPane_ShowPane.Call(uintptr(hEle), common.BoolPtr(bGroupActivate))
 	return int(r)
