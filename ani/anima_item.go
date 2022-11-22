@@ -5,7 +5,7 @@ import (
 	"github.com/twgh/xcgui/xc"
 )
 
-// 动画项.
+// AnimaItem 动画项.
 type AnimaItem struct {
 	objectbase.ObjectBase
 }
