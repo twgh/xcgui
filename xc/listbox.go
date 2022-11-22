@@ -1,8 +1,9 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/common"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 
 	"github.com/twgh/xcgui/xcc"
 )
@@ -38,7 +39,7 @@ func XListBox_EnableFixedRowHeight(hEle int, bEnable bool) int {
 // hEle: 元素句柄.
 //
 // bEnable: 是否启用.
-func XListBox_EnablemTemplateReuse(hEle int, bEnable bool) int {
+func XListBox_EnableTemplateReuse(hEle int, bEnable bool) int {
 	r, _, _ := xListBox_EnablemTemplateReuse.Call(uintptr(hEle), common.BoolPtr(bEnable))
 	return int(r)
 }
