@@ -4,7 +4,7 @@ import (
 	"github.com/twgh/xcgui/xc"
 )
 
-// 动画组.
+// AnimaGroup 动画组.
 type AnimaGroup struct {
 	animaBase
 }
