@@ -10,11 +10,11 @@ type App struct {
 }
 
 // New 炫彩_初始化, 失败返回nil.
+//
 //	@Description 默认会在程序运行目录和系统目录寻找并加载xcgui.dll.
 //	如果你想要更改xcgui.dll的路径, 那么请在调用本函数之前调用 xc.SetXcguiPath().
 //	@param bD2D 是否启用D2D.
 //	@return *App
-//
 func New(bD2D bool) *App {
 	xc.LoadXCGUI()
 	p := &App{}
@@ -25,73 +25,75 @@ func New(bD2D bool) *App {
 }
 
 // Run 炫彩_运行. 运行消息循环, 当炫彩窗口数量为0时退出.
-//	@return int
 //
+//	@return int
 func (a *App) Run() int {
 	return xc.XRunXCGUI()
 }
 
 // Exit 炫彩_退出, 退出界面库释放资源.
-//	@return int
 //
+//	@return int
 func (a *App) Exit() int {
 	return xc.XExitXCGUI()
 }
 
 // ShowAndRun 显示窗口并调用炫彩_运行.
-//	@param hWindow 炫彩窗口句柄.
 //
+//	@param hWindow 炫彩窗口句柄.
 func (a *App) ShowAndRun(hWindow int) {
 	xc.XWnd_ShowWindow(hWindow, xcc.SW_SHOW)
 	xc.XRunXCGUI()
 }
 
 // DebugToFileInfo 炫彩_输出调试信息到文件, 打印调试信息到文件xcgui_debug.txt.
+//
 //	@param pInfo 文本.
 //	@return int
-//
 func (a *App) DebugToFileInfo(pInfo string) int {
 	return xc.XC_DebugToFileInfo(pInfo)
 }
 
 // SetActivateTopWindow 炫彩_激活窗口, 激活当前进程最上层窗口.
-//	@return bool
 //
+//	@return bool
 func (a *App) SetActivateTopWindow() bool {
 	return xc.XC_SetActivateTopWindow()
 }
 
 // GetDefaultFont 炫彩_取默认字体.
-//	@return int 字体句柄.
 //
+//	@return int 字体句柄.
 func (a *App) GetDefaultFont() int {
 	return xc.XC_GetDefaultFont()
 }
 
 // MessageBox 炫彩_消息框.
+//
 //	@param pTitle 标题.
 //	@param pText 内容文本.
 //	@param nFlags 标识: xcc.MessageBox_Flag_.
+//	@param hWndParent 父窗口句柄(真实的窗口句柄).
 //	@param XCStyle xcc.Window_Style_.
 //	@return xcc.MessageBox_Flag_. 返回: xcc.MessageBox_Flag_Ok: 点击确定按钮退出. xcc.MessageBox_Flag_Cancel: 点击取消按钮退出. xcc.MessageBox_Flag_Other: 其他方式退出.
-//
 func (a *App) MessageBox(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) xcc.MessageBox_Flag_ {
 	return xc.XC_MessageBox(pTitle, pText, nFlags, hWndParent, XCStyle)
 }
 
-// Msg_Create 消息框_创建, 此窗口是一个模态窗口, 弹出窗口请调用 XModalWnd_DoModal().
+// Msg_Create 消息框_创建, 此窗口是一个模态窗口, 弹出窗口请调用 xc.XModalWnd_DoModal().
+//
 //	@param pTitle 标题.
 //	@param pText 内容文本.
 //	@param nFlags 标识: xcc.MessageBox_Flag_.
 //	@param hWndParent 父窗口句柄(真实的窗口句柄).
 //	@param XCStyle xcc.Window_Style_.
 //	@return int 返回消息框窗口句柄.
-//
 func (a *App) Msg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) int {
 	return xc.XMsg_Create(pTitle, pText, nFlags, hWndParent, XCStyle)
 }
 
-// Msg_CreateEx 消息框_创建扩展, 此窗口是一个模态窗口, 弹出窗口请调用 XModalWnd_DoModal().
+// Msg_CreateEx 消息框_创建扩展, 此窗口是一个模态窗口, 弹出窗口请调用 xc.XModalWnd_DoModal().
+//
 //	@param dwExStyle 窗口扩展样式.
 //	@param dwStyle 窗口样式.
 //	@param lpClassName 窗口类名.
@@ -101,7 +103,6 @@ func (a *App) Msg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWnd
 //	@param hWndParent 父窗口句柄(真实的窗口句柄).
 //	@param XCStyle xcc.Window_Style_.
 //	@return int 消息框窗口句柄.
-//
 func (a *App) Msg_CreateEx(dwExStyle int, dwStyle int, lpClassName string, pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) int {
 	return xc.XMsg_CreateEx(dwExStyle, dwStyle, lpClassName, pTitle, pText, nFlags, hWndParent, XCStyle)
 }
@@ -133,40 +134,40 @@ func (a *App) PostMessage(hWindow int, msg uint32, wParam int32, lParam int32) b
 }
 
 // CallUiThread 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
+//
 //	@Description: 回调函数尽量不要使用匿名函数, 使用匿名函数意味着你每次都在创建1个新的回调, 超过2000个时, 程序必将panic.
 //	如果使用 CallUiThreadEx 和 CallUiThreader 则没有此限制.
-//  @param pCall 回调函数.
-//  @param data 传进回调函数的用户自定义数据.
-//  @return int
-//
+//	@param pCall 回调函数.
+//	@param data 传进回调函数的用户自定义数据.
+//	@return int
 func (a *App) CallUiThread(pCall func(data int) int, data int) int {
 	return xc.XC_CallUiThread(pCall, data)
 }
 
 // CallUiThreadEx 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
-//  @Description: 与 CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数.
-//  @param f 回调函数.
-//  @param data 传进回调函数的用户自定义数据.
-//  @return int
 //
+//	@Description: 与 CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数.
+//	@param f 回调函数.
+//	@param data 传进回调函数的用户自定义数据.
+//	@return int
 func (a *App) CallUiThreadEx(pCall func(data int) int, data int) int {
 	return xc.XC_CallUiThreadEx(pCall, data)
 }
 
 // CallUT 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
-//  @Description: 与 CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数. 回调函数没有参数也没有返回值.
-//  @param f 回调函数, 没有参数也没有返回值, 可以直接使用匿名函数.
 //
+//	@Description: 与 CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数. 回调函数没有参数也没有返回值.
+//	@param f 回调函数, 没有参数也没有返回值, 可以直接使用匿名函数.
 func (a *App) CallUT(f func()) {
 	xc.XC_CallUT(f)
 }
 
 // CallUiThreader 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
-//  @Description: 与 CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数.
-//  @param u xc.UiThreader.
-//  @param data 传进回调函数的用户自定义数据.
-//  @return int
 //
+//	@Description: 与 CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数.
+//	@param u xc.UiThreader.
+//	@param data 传进回调函数的用户自定义数据.
+//	@return int
 func (a *App) CallUiThreader(u xc.UiThreader, data int) int {
 	return xc.XC_CallUiThreader(u, data)
 }
@@ -196,7 +197,7 @@ func (a *App) IsShape(hShape int) bool {
 //
 // hXCGUI: 炫彩句柄.
 //
-// nType: 句柄类型, XC_OBJECT_TYPE, 以XC_开头的常量.
+// nType: 句柄类型, XC_OBJECT_TYPE , 以XC_开头的常量.
 func (a *App) IsHXCGUI(hXCGUI int, nType xcc.XC_OBJECT_TYPE) bool {
 	return xc.XC_IsHXCGUI(hXCGUI, nType)
 }
@@ -242,7 +243,7 @@ func (a *App) IsSViewExtend(hEle int) bool {
 	return xc.XC_IsSViewExtend(hEle)
 }
 
-// 炫彩_取对象类型, 获取句柄类型, 返回: XC_OBJECT_TYPE.
+// 炫彩_取对象类型, 获取句柄类型, 返回: xcc.XC_OBJECT_TYPE, 以XC_开头的常量.
 //
 // hXCGUI: 炫彩对象句柄.
 func (a *App) GetObjectType(hXCGUI int) xcc.XC_OBJECT_TYPE {
@@ -413,6 +414,7 @@ func (a *App) GetTextShowSizeEx(pString string, length int, hFontX int, nTextAli
 }
 
 // GetTextShowRect 炫彩_取文本显示矩形.
+//
 //	@param pString 字符串.
 //	@param length 字符串长度.
 //	@param hFontX 字体.
@@ -420,7 +422,6 @@ func (a *App) GetTextShowSizeEx(pString string, length int, hFontX int, nTextAli
 //	@param width 最大宽度.
 //	@param pOutSize 接收返回大小.
 //	@return int
-//
 func (a *App) GetTextShowRect(pString string, length int, hFontX int, nTextAlign xcc.TextFormatFlag_, width int, pOutSize *xc.SIZE) int {
 	return xc.XC_GetTextShowRect(pString, length, hFontX, nTextAlign, width, pOutSize)
 }
@@ -585,6 +586,66 @@ func (a *App) LoadLayoutZipMem(data []byte, pFileName string, pPassword string, 
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func (a *App) LoadLayoutFromStringW(pStringXML string, hParent, hAttachWnd int) int {
 	return xc.XC_LoadLayoutFromStringW(pStringXML, hParent, hAttachWnd)
+}
+
+// 炫彩_加载布局文件Ex, 返回窗口句柄或布局句柄或元素句柄.
+//
+// pFileName: 布局文件名.
+//
+// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+//
+// hParent: 父对象句柄, 窗口句柄或UI元素句柄.
+//
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
+func (a *App) LoadLayoutEx(pFileName, pPrefixName string, hParent, hAttachWnd int) int {
+	return xc.XC_LoadLayoutEx(pFileName, pPrefixName, hParent, hAttachWnd)
+}
+
+// 炫彩_加载布局文件ZIPEx, 加载布局文件从zip压缩包中, 返回窗口句柄或布局句柄或元素句柄.
+//
+// pZipFileName: zip文件名.
+//
+// pFileName: 布局文件名.
+//
+// pPassword: zip密码.
+//
+// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+//
+// hParent: 父对象句柄, 窗口句柄或UI元素句柄.
+//
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
+func (a *App) LoadLayoutZipEx(pZipFileName string, pFileName string, pPassword, pPrefixName string, hParent, hAttachWnd int) int {
+	return xc.XC_LoadLayoutZipEx(pZipFileName, pFileName, pPassword, pPrefixName, hParent, hAttachWnd)
+}
+
+// 炫彩_加载布局文件内存ZIPEx, 加载布局文件从zip压缩包中, 返回窗口句柄或布局句柄或元素句柄.
+//
+// data: 布局文件数据.
+//
+// pFileName: 布局文件名.
+//
+// pPassword: zip密码.
+//
+// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+//
+// hParent: 父对象句柄, 窗口句柄或UI元素句柄.
+//
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
+func (a *App) LoadLayoutZipMemEx(data []byte, pFileName string, pPassword, pPrefixName string, hParent, hAttachWnd int) int {
+	return xc.XC_LoadLayoutZipMemEx(data, pFileName, pPassword, pPrefixName, hParent, hAttachWnd)
+}
+
+// 炫彩_加载布局文件从字符串WEx, 加载布局文件从内存字符串, 返回窗口句柄或布局句柄或元素句柄.
+//
+// pStringXML: 字符串.
+//
+// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+//
+// hParent: 父对象句柄, 窗口句柄或UI元素句柄.
+//
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
+func (a *App) LoadLayoutFromStringWEx(pStringXML, pPrefixName string, hParent, hAttachWnd int) int {
+	return xc.XC_LoadLayoutFromStringWEx(pStringXML, pPrefixName, hParent, hAttachWnd)
 }
 
 /*
