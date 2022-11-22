@@ -5,7 +5,7 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// 滚动视图.
+// ScrollView 滚动视图.
 type ScrollView struct {
 	Element
 }
