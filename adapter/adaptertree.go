@@ -4,7 +4,7 @@ import (
 	"github.com/twgh/xcgui/xc"
 )
 
-// 数据适配器-树元素.
+// AdapterTree 数据适配器-树元素.
 type AdapterTree struct {
 	adapter
 }
