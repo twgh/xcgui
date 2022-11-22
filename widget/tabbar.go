@@ -5,6 +5,7 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
+// TabBar Tab条.
 type TabBar struct {
 	Element
 }
