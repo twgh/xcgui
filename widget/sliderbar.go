@@ -5,7 +5,7 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// 滑动条元素.
+// SliderBar 滑动条元素.
 type SliderBar struct {
 	Element
 }
