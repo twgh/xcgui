@@ -10,8 +10,8 @@ import (
 )
 
 // waitOpenClipboard 循环打开剪贴板，最多等待一秒钟.
-//	@return bool
 //
+//	@return bool
 func waitOpenClipboard() bool {
 	started := time.Now()
 	limit := started.Add(time.Second)
@@ -25,9 +25,9 @@ func waitOpenClipboard() bool {
 }
 
 // GetClipboardText 获取剪贴板中的文本.
+//
 //	@return string
 //	@return error
-//
 func GetClipboardText() (string, error) {
 	runtime.LockOSThread()
 	defer runtime.UnlockOSThread()
@@ -68,9 +68,9 @@ func GetClipboardText() (string, error) {
 }
 
 // SetClipboardText 将文本置入剪贴板.
+//
 //	@param text 要置入的文本.
 //	@return error
-//
 func SetClipboardText(text string) error {
 	runtime.LockOSThread()
 	defer runtime.UnlockOSThread()
