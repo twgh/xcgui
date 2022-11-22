@@ -93,8 +93,8 @@ func (t *Tree) EnableExpand(bEnable bool) int {
 // 列表树_启用模板复用.
 //
 // bEnable: 是否启用.
-func (t *Tree) EnablemTemplateReuse(bEnable bool) int {
-	return xc.XTree_EnablemTemplateReuse(t.Handle, bEnable)
+func (t *Tree) EnableTemplateReuse(bEnable bool) int {
+	return xc.XTree_EnableTemplateReuse(t.Handle, bEnable)
 }
 
 // 列表树_置连接线颜色.
