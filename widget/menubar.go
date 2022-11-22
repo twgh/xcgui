@@ -2,7 +2,7 @@ package widget
 
 import "github.com/twgh/xcgui/xc"
 
-// 菜单条.
+// MenuBar 菜单条.
 type MenuBar struct {
 	Element
 }
