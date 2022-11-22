@@ -82,23 +82,23 @@ func (b *Button) SetCheck(bCheck bool) bool {
 }
 
 // SetState 按钮_置状态.
+//
 //	@param nState 按钮状态: xcc.Common_State3_.
 //	@return int
-//
 func (b *Button) SetState(nState xcc.Common_State3_) int {
 	return xc.XBtn_SetState(b.Handle, nState)
 }
 
 // GetState 按钮_取状态.
-//	@return xcc.Common_State3_
 //
+//	@return xcc.Common_State3_
 func (b *Button) GetState() xcc.Common_State3_ {
 	return xc.XBtn_GetState(b.Handle)
 }
 
 // GetStateEx 按钮_取状态扩展.
-//	@return xcc.Button_State_
 //
+//	@return xcc.Button_State_
 func (b *Button) GetStateEx() xcc.Button_State_ {
 	return xc.XBtn_GetStateEx(b.Handle)
 }
