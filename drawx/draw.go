@@ -1160,3 +1160,8 @@ func (d *Draw) ImageMaskRect(hImageFrame int, pRect *xc.RECT, pRcMask *xc.RECT, 
 func (d *Draw) ImageMaskEllipse(hImageFrame int, pRect *xc.RECT, pRcMask *xc.RECT) int {
 	return xc.XDraw_ImageMaskEllipse(d.Handle, hImageFrame, pRect, pRcMask)
 }
+
+// 绘制_取字体, 返回字体句柄.
+func (d *Draw) GetFont() int {
+	return xc.XDraw_GetFont(d.Handle)
+}
