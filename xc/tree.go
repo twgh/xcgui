@@ -1,13 +1,14 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/common"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 
 	"github.com/twgh/xcgui/xcc"
 )
 
-// 列表树_创建, 创建树元素, 返回元素句柄.
+// XTree_Create 列表树_创建, 创建树元素, 返回元素句柄.
 //
 // x: 元素x坐标.
 //
@@ -60,7 +61,7 @@ func XTree_EnableExpand(hEle int, bEnable bool) int {
 // hEle: 元素句柄.
 //
 // bEnable: 是否启用.
-func XTree_EnablemTemplateReuse(hEle int, bEnable bool) int {
+func XTree_EnableTemplateReuse(hEle int, bEnable bool) int {
 	r, _, _ := xTree_EnablemTemplateReuse.Call(uintptr(hEle), common.BoolPtr(bEnable))
 	return int(r)
 }
