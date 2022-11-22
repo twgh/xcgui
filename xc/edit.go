@@ -338,10 +338,10 @@ func XEdit_InsertText(hEle int, iRow int, iCol int, pString string) int {
 }
 
 // XEdit_AddTextUser 编辑框_插入文本模拟用户操作, 自动刷新UI, 支持撤销/恢复.
+//
 //	@param hEle 元素句柄.
 //	@param pString 字符串.
 //	@return int
-//
 func XEdit_AddTextUser(hEle int, pString string) int {
 	r, _, _ := xEdit_AddTextUser.Call(uintptr(hEle), common.StrPtr(pString))
 	return int(r)
@@ -496,10 +496,10 @@ func XEdit_SetRowHeightEx(hEle int, iRow int, nHeight int) int {
 }
 
 // XEdit_SetCurPos 编辑框_置当前位置.
+//
 //	@param hEle hEle: 元素句柄.
 //	@param iRow iRow: 行索引.
 //	@return int
-//
 func XEdit_SetCurPos(hEle int, iRow int) int {
 	r, _, _ := xEdit_SetCurPos.Call(uintptr(hEle), uintptr(iRow))
 	return int(r)
@@ -564,11 +564,11 @@ func XEdit_AutoScrollEx(hEle int, iRow int, iCol int) bool {
 }
 
 // XEdit_PosToRowCol 编辑框_转换位置, 转换位置点到行列.
+//
 //	@param hEle 元素句柄.
 //	@param iPos 位置点.
 //	@param pInfo 行列.
 //	@return int
-//
 func XEdit_PosToRowCol(hEle int, iPos int, pInfo *Position_) int {
 	r, _, _ := xEdit_PosToRowCol.Call(uintptr(hEle), uintptr(iPos), uintptr(unsafe.Pointer(pInfo)))
 	return int(r)
@@ -904,4 +904,18 @@ func XEdit_GetTextRow_Temp(hEle int, iRow int) string {
 func XEdit_GetSelectText_Temp(hEle int) string {
 	r, _, _ := xEdit_GetSelectText_Temp.Call(uintptr(hEle))
 	return common.UintPtrToString(r)
+}
+
+// 编辑框_插入气泡开始, 当前行开始.
+//
+// hEle: 元素句柄.
+//
+// hImageAvatar: 头像图片句柄.
+//
+// hImageBubble: 气泡背景图片句柄.
+//
+// nFlag: 聊天气泡对齐方式: xcc.Chat_Flag_ .
+func XEdit_InsertChatBegin(hEle int, hImageAvatar int, hImageBubble int, nFlag xcc.Chat_Flag_) int {
+	r, _, _ := xEdit_InsertChatBegin.Call(uintptr(hEle), uintptr(hImageAvatar), uintptr(hImageBubble), uintptr(nFlag))
+	return int(r)
 }
