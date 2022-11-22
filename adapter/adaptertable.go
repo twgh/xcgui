@@ -5,7 +5,7 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// 数据适配器-XList-XListBox.
+// AdapterTable 数据适配器-XList-XListBox.
 type AdapterTable struct {
 	adapter
 }
