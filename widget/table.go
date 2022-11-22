@@ -5,6 +5,7 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
+// Table 表格.
 type Table struct {
 	Shape
 }
