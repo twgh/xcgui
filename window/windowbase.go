@@ -13,23 +13,23 @@ type windowBase struct {
 }
 
 // MessageBox 炫彩_消息框.
+//
 //	@param pTitle 标题.
 //	@param pText 内容文本.
 //	@param nFlags 标识: xcc.MessageBox_Flag_.
 //	@param XCStyle xcc.Window_Style_.
 //	@return xcc.MessageBox_Flag_. 返回: xcc.MessageBox_Flag_Ok: 点击确定按钮退出. xcc.MessageBox_Flag_Cancel: 点击取消按钮退出. xcc.MessageBox_Flag_Other: 其他方式退出.
-//
 func (w *windowBase) MessageBox(pTitle, pText string, nFlags xcc.MessageBox_Flag_, XCStyle xcc.Window_Style_) xcc.MessageBox_Flag_ {
 	return xc.XC_MessageBox(pTitle, pText, nFlags, w.GetHWND(), XCStyle)
 }
 
 // Msg_Create 消息框_创建, 然后请调用 DoModal() 方法显示模态窗口.
+//
 //	@param pTitle 标题.
 //	@param pText 内容文本.
 //	@param nFlags 标识: xcc.MessageBox_Flag_.
 //	@param XCStyle xcc.Window_Style_.
 //	@return *ModalWindow 模态窗口对象.
-//
 func (w *windowBase) Msg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, XCStyle xcc.Window_Style_) *ModalWindow {
 	p := &ModalWindow{}
 	p.SetHandle(xc.XMsg_Create(pTitle, pText, nFlags, w.GetHWND(), XCStyle))
@@ -37,6 +37,7 @@ func (w *windowBase) Msg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag
 }
 
 // Msg_CreateEx 消息框_创建扩展, 然后请调用 DoModal() 方法显示模态窗口.
+//
 //	@param dwExStyle 窗口扩展样式.
 //	@param dwStyle 窗口样式.
 //	@param lpClassName 窗口类名.
@@ -45,7 +46,6 @@ func (w *windowBase) Msg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag
 //	@param nFlags 标识: xcc.MessageBox_Flag_.
 //	@param XCStyle xcc.Window_Style_.
 //	@return *ModalWindow 模态窗口对象.
-//
 func (w *windowBase) Msg_CreateEx(dwExStyle, dwStyle int, lpClassName, pTitle, pText string, nFlags xcc.MessageBox_Flag_, XCStyle xcc.Window_Style_) *ModalWindow {
 	p := &ModalWindow{}
 	p.SetHandle(xc.XMsg_CreateEx(dwExStyle, dwStyle, lpClassName, pTitle, pText, nFlags, w.GetHWND(), XCStyle))
@@ -932,9 +932,9 @@ func (w *windowBase) SetCaptionMargin(left int, top int, right int, bottom int) 
 }
 
 // SetTopEx 窗口_置顶Ex.
+//
 //	@param b 是否置顶.
 //	@return bool
-//
 func (w *windowBase) SetTopEx(b bool) bool {
 	return wnd.SetTop(w.GetHWND(), b)
 }
