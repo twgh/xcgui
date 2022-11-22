@@ -168,8 +168,8 @@ func (l *ListView) EnableMultiSel(bEnable bool) int {
 // 列表视_启用模板复用.
 //
 // bEnable: 是否启用.
-func (l *ListView) EnablemTemplateReuse(bEnable bool) int {
-	return xc.XListView_EnablemTemplateReuse(l.Handle, bEnable)
+func (l *ListView) EnableTemplateReuse(bEnable bool) int {
+	return xc.XListView_EnableTemplateReuse(l.Handle, bEnable)
 }
 
 // 列表视_启用虚表.
