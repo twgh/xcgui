@@ -42,28 +42,28 @@ func XBtn_SetCheck(hEle int, bCheck bool) bool {
 }
 
 // XBtn_SetState 按钮_置状态.
+//
 //	@param hEle 元素句柄.
 //	@param nState 按钮状态: xcc.Common_State3_
 //	@return int
-//
 func XBtn_SetState(hEle int, nState xcc.Common_State3_) int {
 	r, _, _ := xBtn_SetState.Call(uintptr(hEle), uintptr(nState))
 	return int(r)
 }
 
 // XBtn_GetState 按钮_取状态.
+//
 //	@param hEle 元素句柄.
 //	@return xcc.Common_State3_
-//
 func XBtn_GetState(hEle int) xcc.Common_State3_ {
 	r, _, _ := xBtn_GetState.Call(uintptr(hEle))
 	return xcc.Common_State3_(r)
 }
 
 // XBtn_GetStateEx 按钮_取状态扩展.
+//
 //	@param hEle 元素句柄.
 //	@return xcc.Button_State_
-//
 func XBtn_GetStateEx(hEle int) xcc.Button_State_ {
 	r, _, _ := xBtn_GetStateEx.Call(uintptr(hEle))
 	return xcc.Button_State_(r)
