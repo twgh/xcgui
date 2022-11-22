@@ -1,7 +1,7 @@
 <h1 align="center">XCGUI</h1>
 <p align="center">
-    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.360-blue" alt="release"></a>
-    <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-3.3.6-blue" alt="XCGUI"></a>
+    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.370-blue" alt="release"></a>
+    <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-3.3.7-blue" alt="XCGUI"></a>
    <a href="https://golang.org"> <img src="https://img.shields.io/badge/golang-1.16-blue" alt="golang"></a>
     <a href="https://pkg.go.dev/github.com/twgh/xcgui"><img src="https://img.shields.io/badge/go.dev-reference-brightgreen" alt="GoDoc"></a>
     <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-brightgreen" alt="License"></a>
@@ -50,8 +50,8 @@ package main
 import (
 	_ "embed"
 	"github.com/twgh/xcgui/app"
+	"github.com/twgh/xcgui/widget"
 	"github.com/twgh/xcgui/window"
-	"github.com/twgh/xcgui/xcc"
 )
 
 //go:embed res/qqmusic.zip
@@ -63,10 +63,17 @@ func main() {
 	a.LoadResourceZipMem(qqmusic, "resource.res", "")
 	// 从内存zip中加载布局文件, 创建窗口对象
 	w := window.NewByLayoutZipMem(qqmusic, "main.xml", "", 0, 0)
+    
+	// songTitle是在main.xml中给歌曲名(shapeText组件)设置的name属性的值.
+	// 通过 GetObjectByName 可以获取布局文件中设置了name属性的组件的句柄.
+	// 可简化为: widget.NewShapeTextByName("songTitle").
+	songTitle := widget.NewShapeTextByHandle(a.GetObjectByName("songTitle"))
+	println(songTitle.GetText()) // 输出: 两只老虎爱跳舞
+    
 	// 调整布局
 	w.AdjustLayout()
 	// 显示窗口
-	w.ShowWindow(xcc.SW_SHOW)
+	w.Show(true)
 	a.Run()
 	a.Exit()
 }
@@ -120,7 +127,7 @@ getxcgui -o %windir%\system32\xcgui.dll
 
 ## 简单窗口（纯代码）
 
-[![SimpleWindow](https://s1.ax1x.com/2022/05/24/XiEWtg.png)](https://github.com/twgh/xcgui-example/blob/main/SimpleWindow)
+[![SimpleWindow](https://s1.ax1x.com/2022/11/22/z14kAs.jpg)](https://github.com/twgh/xcgui-example/blob/main/SimpleWindow)
 
 
 ```go
@@ -128,7 +135,9 @@ package main
 
 import (
 	"github.com/twgh/xcgui/app"
+	"github.com/twgh/xcgui/widget"
 	"github.com/twgh/xcgui/window"
+	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
 )
 
@@ -136,20 +145,34 @@ func main() {
 	// 1.初始化UI库
 	a := app.New(true)
 	// 2.创建窗口
-	w := window.New(0, 0, 430, 300, "", 0, xcc.Window_Style_Simple|xcc.Window_Style_Btn_Close)
+	w := window.New(0, 0, 430, 300, "xcgui window", 0, xcc.Window_Style_Default|xcc.Window_Style_Drag_Window)
+
 	// 设置窗口边框大小
 	w.SetBorderSize(0, 30, 0, 0)
+	// 设置窗口图标
+	w.SetIcon(xc.XImage_LoadSvgStringW(svgIcon))
 	// 设置窗口透明类型
 	w.SetTransparentType(xcc.Window_Transparent_Shadow)
 	// 设置窗口阴影
 	w.SetShadowInfo(8, 254, 10, false, 0)
+
+	// 创建按钮
+	btn := widget.NewButton(165, 135, 100, 30, "Button", w.Handle)
+	// 注册按钮被单击事件
+	btn.Event_BnClick(func(pbHandled *bool) int {
+		a.MessageBox("提示", btn.GetText(), xcc.MessageBox_Flag_Ok|xcc.MessageBox_Flag_Icon_Info, w.GetHWND(), xcc.Window_Style_Modal)
+		return 0
+	})
+
 	// 3.显示窗口
-	w.ShowWindow(xcc.SW_SHOW)
+	w.Show(true)
 	// 4.运行程序
 	a.Run()
 	// 5.释放UI库
 	a.Exit()
 }
+
+var svgIcon = `<svg t="1669088647057" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5490" width="22" height="22"><path d="M517.12 512.8704m-432.3328 0a432.3328 432.3328 0 1 0 864.6656 0 432.3328 432.3328 0 1 0-864.6656 0Z" fill="#51C5FF" p-id="5491"></path><path d="M292.1472 418.7136c-85.0432 0-160.4096 41.3696-207.104 105.0624 4.5568 182.7328 122.368 337.3056 285.952 396.032 103.2192-33.28 177.92-130.048 177.92-244.3776 0-141.7216-114.944-256.7168-256.768-256.7168z" fill="#7BE0FF" p-id="5492"></path><path d="M800.2048 571.6992l-101.888-58.8288 101.888-58.8288c16.896-9.728 22.6816-31.3344 12.9536-48.2304l-55.296-95.744c-9.728-16.896-31.3344-22.6816-48.2304-12.9536l-101.888 58.8288V238.336c0-19.5072-15.8208-35.328-35.328-35.328H461.824c-19.5072 0-35.328 15.8208-35.328 35.328v117.6064L324.608 297.1136c-16.896-9.728-38.5024-3.9424-48.2304 12.9536l-55.296 95.744c-9.728 16.896-3.9424 38.5024 12.9536 48.2304l101.888 58.8288-101.888 58.8288c-16.896 9.728-22.6816 31.3344-12.9536 48.2304l55.296 95.744c9.728 16.896 31.3344 22.6816 48.2304 12.9536l101.888-58.8288v117.6064c0 19.5072 15.8208 35.328 35.328 35.328h110.592c19.5072 0 35.328-15.8208 35.328-35.328v-117.6064l101.888 58.8288c16.896 9.728 38.5024 3.9424 48.2304-12.9536l55.296-95.744c9.728-16.896 3.9424-38.5024-12.9536-48.2304z" fill="#CAF8FF" p-id="5493"></path><path d="M517.12 512.8704m-234.24 0a234.24 234.24 0 1 0 468.48 0 234.24 234.24 0 1 0-468.48 0Z" fill="#FFFFFF" p-id="5494"></path><path d="M517.12 512.8704m-103.5776 0a103.5776 103.5776 0 1 0 207.1552 0 103.5776 103.5776 0 1 0-207.1552 0Z" fill="#51C5FF" p-id="5495"></path></svg>`
 ```
 
 ## 常量
@@ -174,7 +197,7 @@ xc包里包含xcgui.dll里所有的API，有一千多个函数，可以直接使
 
 炫彩的全部事件都已经定义好了，都是以Event开头的， 以1结尾的事件是会传进去元素的句柄。
 
-事件回调函数尽量不要使用匿名函数，使用匿名函数意味着您每次都在创建1个新的回调，最终您将会遇到因创建过多回调导致程序崩溃的报错（大概在2000个回调时会遇到），事件回调函数不使用匿名函数即可避免此问题。
+在循环中注册事件时，回调函数尽量不要使用匿名函数，使用匿名函数意味着您每次都在创建1个新的回调，最终您将会遇到因创建过多回调导致程序崩溃的报错（大概在2000个回调时会遇到），事件回调函数不使用匿名函数即可避免此问题，一般程序应该不会用到2000个事件，只要注意在循环中注册事件时不使用匿名函数就行。
 
 [![xc-event.png](https://z3.ax1x.com/2021/11/23/opdyh6.png)](https://z3.ax1x.com/2021/11/23/opdyh6.png)
 
