@@ -4,7 +4,7 @@ import (
 	"github.com/twgh/xcgui/xc"
 )
 
-// 数据适配器-单列Map-列表头(listHeader).
+// AdapterMap 数据适配器-单列Map-列表头(listHeader).
 type AdapterMap struct {
 	adapter
 }
