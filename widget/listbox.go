@@ -77,8 +77,8 @@ func (l *ListBox) EnableFixedRowHeight(bEnable bool) int {
 // 列表框_启用模板复用.
 //
 // bEnable: 是否启用.
-func (l *ListBox) EnablemTemplateReuse(bEnable bool) int {
-	return xc.XListBox_EnablemTemplateReuse(l.Handle, bEnable)
+func (l *ListBox) EnableTemplateReuse(bEnable bool) int {
+	return xc.XListBox_EnableTemplateReuse(l.Handle, bEnable)
 }
 
 // 列表框_启用虚表.
