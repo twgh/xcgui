@@ -5,7 +5,7 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// 滚动条.
+// ScrollBar 滚动条.
 type ScrollBar struct {
 	Element
 }
