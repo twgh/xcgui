@@ -101,8 +101,8 @@ func XList_EnableFixedRowHeight(hEle int, bEnable bool) int {
 // hEle: 元素句柄.
 //
 // bEnable: 是否启用.
-func XList_EnablemTemplateReuse(hEle int, bEnable bool) int {
-	r, _, _ := xList_EnablemTemplateReuse.Call(uintptr(hEle), common.BoolPtr(bEnable))
+func XList_EnableTemplateReuse(hEle int, bEnable bool) int {
+	r, _, _ := xList_EnableTemplateReuse.Call(uintptr(hEle), common.BoolPtr(bEnable))
 	return int(r)
 }
 
