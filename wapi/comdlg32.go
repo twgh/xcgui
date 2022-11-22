@@ -16,6 +16,7 @@ var (
 )
 
 // OpenFileNameW 包含 GetOpenFileNameW 和 GetSaveFileNameW 函数用于初始化“打开”或“另存为”对话框的信息。用户关闭对话框后，系统在此结构中返回有关用户选择的信息。
+//
 //	详见: https://docs.microsoft.com/zh-cn/windows/win32/api/commdlg/ns-commdlg-openfilenamea.
 type OpenFileNameW struct {
 	// 结构体大小.
@@ -173,27 +174,26 @@ const (
 )
 
 // GetOpenFileNameW 创建一个打开对话框，让用户指定要打开的文件或文件集的驱动器、目录和名称。
+//
 //	@Description 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/commdlg/nf-commdlg-getopenfilenamew.
 //	@param unnamedParam1 指向包含用于初始化对话框的信息的 wapi.OpenFileNameW 结构的指针。当函数返回时，此结构包含有关用户文件选择的信息。
 //	@return bool
-//
 func GetOpenFileNameW(unnamedParam1 *OpenFileNameW) bool {
 	r, _, _ := getOpenFileNameW.Call(uintptr(unsafe.Pointer(unnamedParam1)))
 	return r != 0
 }
 
 // GetSaveFileNameW 创建一个保存对话框，让用户指定要保存的文件的驱动器、目录和名称。
+//
 //	@Description 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/commdlg/nf-commdlg-GetSaveFileNameW.
 //	@param unnamedParam1 指向包含用于初始化对话框的信息的 wapi.OpenFileNameW 结构的指针。当函数返回时，此结构包含有关用户文件选择的信息。
 //	@return bool
-//
 func GetSaveFileNameW(unnamedParam1 *OpenFileNameW) bool {
 	r, _, _ := getSaveFileNameW.Call(uintptr(unsafe.Pointer(unnamedParam1)))
 	return r != 0
 }
 
-//  ChooseColor 包含 ChooseColorW 函数用于初始化Color对话框的信息。用户关闭对话框后，系统在此结构中返回有关用户选择的信息。
-//
+// ChooseColor 包含 ChooseColorW 函数用于初始化Color对话框的信息。用户关闭对话框后，系统在此结构中返回有关用户选择的信息。
 type ChooseColor struct {
 	// 结构的长度（以字节为单位）。
 	//	cc := wapi.ChooseColor{...}
@@ -252,10 +252,10 @@ const (
 )
 
 // ChooseColorW 创建一个颜色对话框，使用户能够选择一种颜色。
+//
 //	@Description 详情: https://docs.microsoft.com/zh-cn/previous-versions/windows/desktop/legacy/ms646912(v=vs.85).
 //	@param lpcc 指向 wapi.ChooseColor 结构的指针，该结构包含用于初始化对话框的信息。当函数返回时，此结构包含有关用户颜色选择的信息。
 //	@return bool
-//
 func ChooseColorW(lpcc *ChooseColor) bool {
 	r, _, _ := chooseColorW.Call(uintptr(unsafe.Pointer(lpcc)))
 	return r != 0
