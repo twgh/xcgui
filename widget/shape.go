@@ -5,7 +5,7 @@ import (
 	"github.com/twgh/xcgui/xc"
 )
 
-// 形状对象基类.
+// Shape 形状对象基类.
 type Shape struct {
 	objectbase.Widget
 }
