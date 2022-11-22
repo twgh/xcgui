@@ -9,7 +9,7 @@ type ShapePicture struct {
 	Shape
 }
 
-// 形状图片_创建, 创建形状对象-图片.
+// NewShapePicture 形状图片_创建, 创建形状对象-图片.
 //
 // x: x坐标.
 //
