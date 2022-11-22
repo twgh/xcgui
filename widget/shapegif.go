@@ -4,7 +4,7 @@ import (
 	"github.com/twgh/xcgui/xc"
 )
 
-// 形状对象GIF.
+// ShapeGif 形状对象GIF.
 type ShapeGif struct {
 	Shape
 }
