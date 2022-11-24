@@ -117,10 +117,11 @@ func NewLayoutEleByStringW(pStringXML string, hParent int, hAttachWnd int) *Layo
 //	@param pFileName 布局文件名.
 //	@param pPrefixName 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
 //	@param hParent 父对象句柄.
+//	@param hParentWnd 父窗口句柄HWND, 提供给第三方窗口使用.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *LayoutEle
-func NewLayoutEleByLayoutEx(pFileName, pPrefixName string, hParent int, hAttachWnd int) *LayoutEle {
-	handle := xc.XC_LoadLayoutEx(pFileName, pPrefixName, hParent, hAttachWnd)
+func NewLayoutEleByLayoutEx(pFileName, pPrefixName string, hParent int, hParentWnd, hAttachWnd int) *LayoutEle {
+	handle := xc.XC_LoadLayoutEx(pFileName, pPrefixName, hParent, hParentWnd, hAttachWnd)
 	if handle > 0 {
 		p := &LayoutEle{}
 		p.SetHandle(handle)
@@ -136,10 +137,11 @@ func NewLayoutEleByLayoutEx(pFileName, pPrefixName string, hParent int, hAttachW
 //	@param pPassword zip密码.
 //	@param pPrefixName 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
 //	@param hParent 父对象句柄.
+//	@param hParentWnd 父窗口句柄HWND, 提供给第三方窗口使用.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *LayoutEle
-func NewLayoutEleByLayoutZipEx(pZipFileName string, pFileName string, pPassword, pPrefixName string, hParent int, hAttachWnd int) *LayoutEle {
-	handle := xc.XC_LoadLayoutZipEx(pZipFileName, pFileName, pPassword, pPrefixName, hParent, hAttachWnd)
+func NewLayoutEleByLayoutZipEx(pZipFileName string, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd int) *LayoutEle {
+	handle := xc.XC_LoadLayoutZipEx(pZipFileName, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd)
 	if handle > 0 {
 		p := &LayoutEle{}
 		p.SetHandle(handle)
@@ -155,10 +157,11 @@ func NewLayoutEleByLayoutZipEx(pZipFileName string, pFileName string, pPassword,
 //	@param pPassword zip密码.
 //	@param pPrefixName 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
 //	@param hParent 父对象句柄.
+//	@param hParentWnd 父窗口句柄HWND, 提供给第三方窗口使用.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *LayoutEle
-func NewLayoutEleByLayoutZipMemEx(data []byte, pFileName string, pPassword, pPrefixName string, hParent int, hAttachWnd int) *LayoutEle {
-	handle := xc.XC_LoadLayoutZipMemEx(data, pFileName, pPassword, pPrefixName, hParent, hAttachWnd)
+func NewLayoutEleByLayoutZipMemEx(data []byte, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd int) *LayoutEle {
+	handle := xc.XC_LoadLayoutZipMemEx(data, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd)
 	if handle > 0 {
 		p := &LayoutEle{}
 		p.SetHandle(handle)
@@ -172,10 +175,11 @@ func NewLayoutEleByLayoutZipMemEx(data []byte, pFileName string, pPassword, pPre
 //	@param pStringXML 字符串.
 //	@param pPrefixName 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
 //	@param hParent 父对象.
+//	@param hParentWnd 父窗口句柄HWND, 提供给第三方窗口使用.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *LayoutEle
-func NewLayoutEleByStringWEx(pStringXML, pPrefixName string, hParent int, hAttachWnd int) *LayoutEle {
-	handle := xc.XC_LoadLayoutFromStringWEx(pStringXML, pPrefixName, hParent, hAttachWnd)
+func NewLayoutEleByStringWEx(pStringXML, pPrefixName string, hParent int, hParentWnd, hAttachWnd int) *LayoutEle {
+	handle := xc.XC_LoadLayoutFromStringWEx(pStringXML, pPrefixName, hParent, hParentWnd, hAttachWnd)
 	if handle > 0 {
 		p := &LayoutEle{}
 		p.SetHandle(handle)

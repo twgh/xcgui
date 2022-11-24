@@ -127,10 +127,11 @@ func NewModalWindowByLayoutStringW(pStringXML string, hParent int, hAttachWnd in
 //	@param pFileName 布局文件名.
 //	@param pPrefixName 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
 //	@param hParent 父对象句柄.
+//	@param hParentWnd 父窗口句柄HWND, 提供给第三方窗口使用.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *ModalWindow
-func NewModalWindowByLayoutEx(pFileName, pPrefixName string, hParent, hAttachWnd int) *ModalWindow {
-	handle := xc.XC_LoadLayoutEx(pFileName, pPrefixName, hParent, hAttachWnd)
+func NewModalWindowByLayoutEx(pFileName, pPrefixName string, hParent, hParentWnd, hAttachWnd int) *ModalWindow {
+	handle := xc.XC_LoadLayoutEx(pFileName, pPrefixName, hParent, hParentWnd, hAttachWnd)
 	if handle > 0 {
 		p := &ModalWindow{}
 		p.SetHandle(handle)
@@ -146,10 +147,11 @@ func NewModalWindowByLayoutEx(pFileName, pPrefixName string, hParent, hAttachWnd
 //	@param pPassword zip密码.
 //	@param pPrefixName 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
 //	@param hParent 父对象句柄.
+//	@param hParentWnd 父窗口句柄HWND, 提供给第三方窗口使用.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *ModalWindow
-func NewModalWindowByLayoutZipEx(pZipFileName string, pFileName string, pPassword, pPrefixName string, hParent, hAttachWnd int) *ModalWindow {
-	handle := xc.XC_LoadLayoutZipEx(pZipFileName, pFileName, pPassword, pPrefixName, hParent, hAttachWnd)
+func NewModalWindowByLayoutZipEx(pZipFileName string, pFileName string, pPassword, pPrefixName string, hParent, hParentWnd, hAttachWnd int) *ModalWindow {
+	handle := xc.XC_LoadLayoutZipEx(pZipFileName, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd)
 	if handle > 0 {
 		p := &ModalWindow{}
 		p.SetHandle(handle)
@@ -165,10 +167,11 @@ func NewModalWindowByLayoutZipEx(pZipFileName string, pFileName string, pPasswor
 //	@param pPassword zip密码.
 //	@param pPrefixName 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
 //	@param hParent 父对象句柄.
+//	@param hParentWnd 父窗口句柄HWND, 提供给第三方窗口使用.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *ModalWindow
-func NewModalWindowByLayoutZipMemEx(data []byte, pFileName string, pPassword, pPrefixName string, hParent int, hAttachWnd int) *ModalWindow {
-	handle := xc.XC_LoadLayoutZipMemEx(data, pFileName, pPassword, pPrefixName, hParent, hAttachWnd)
+func NewModalWindowByLayoutZipMemEx(data []byte, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd int) *ModalWindow {
+	handle := xc.XC_LoadLayoutZipMemEx(data, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd)
 	if handle > 0 {
 		p := &ModalWindow{}
 		p.SetHandle(handle)
@@ -182,10 +185,11 @@ func NewModalWindowByLayoutZipMemEx(data []byte, pFileName string, pPassword, pP
 //	@param pStringXML 字符串.
 //	@param pPrefixName 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
 //	@param hParent 父对象.
+//	@param hParentWnd 父窗口句柄HWND, 提供给第三方窗口使用.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *Window
-func NewModalWindowByLayoutStringWEx(pStringXML, pPrefixName string, hParent int, hAttachWnd int) *ModalWindow {
-	handle := xc.XC_LoadLayoutFromStringWEx(pStringXML, pPrefixName, hParent, hAttachWnd)
+func NewModalWindowByLayoutStringWEx(pStringXML, pPrefixName string, hParent int, hParentWnd, hAttachWnd int) *ModalWindow {
+	handle := xc.XC_LoadLayoutFromStringWEx(pStringXML, pPrefixName, hParent, hParentWnd, hAttachWnd)
 	if handle > 0 {
 		p := &ModalWindow{}
 		p.SetHandle(handle)
