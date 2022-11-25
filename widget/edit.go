@@ -246,6 +246,13 @@ func (e *Edit) GetText(pOut *string, nOutlen int) int {
 	return xc.XEdit_GetText(e.Handle, pOut, nOutlen)
 }
 
+// 编辑框_取文本, 不包含非文本内容, 返回文本.
+func (e *Edit) GetTextEx() string {
+	var s string
+	xc.XEdit_GetText(e.Handle, &s, xc.XEdit_GetLength(e.Handle)+1)
+	return s
+}
+
 // 编辑框_取文本行.
 //
 // iRow: 行索引.
