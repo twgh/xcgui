@@ -1,6 +1,6 @@
 <h1 align="center">XCGUI</h1>
 <p align="center">
-    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.370-blue" alt="release"></a>
+    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.371-blue" alt="release"></a>
     <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-3.3.7-blue" alt="XCGUI"></a>
    <a href="https://golang.org"> <img src="https://img.shields.io/badge/golang-1.16-blue" alt="golang"></a>
     <a href="https://pkg.go.dev/github.com/twgh/xcgui"><img src="https://img.shields.io/badge/go.dev-reference-brightgreen" alt="GoDoc"></a>
@@ -82,7 +82,13 @@ When the program is running, you need to put `xcgui.dll` in the program running 
 
 It is best to put it in the `C:\Windows\System32` directory during development, so that there is no need to frequently put the dll in the running directory of different programs.
 
-#### （1）Command line download
+#### （1）Link to download
+
+| 64 bit | [download](https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui.dll?version=latest) |
+| ------ | ------------------------------------------------------------ |
+| 32 bit | [download](https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui-32.dll?version=latest) |
+
+#### （2）Command line download
 
 64bit
 
@@ -96,9 +102,7 @@ curl -fL "https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui.dll?version=late
 curl -fL "https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui-32.dll?version=latest" -o xcgui.dll
 ```
 
-If you don't have curl, you can directly copy the link in the command to download it in the browser, or use the following method.
-
-#### （2）Download using the getxcgui tool
+#### （3）Download using the getxcgui tool
 
 ```bash
 go install github.com/twgh/getxcgui@latest
@@ -113,7 +117,7 @@ getxcgui -o %windir%\system32\xcgui.dll
 
 The source code of this tool is [here](https://github.com/twgh/getxcgui). For more flags, you can click [go in](https://github.com/twgh/getxcgui#flags) to view
 
-#### （3）Network disk download
+#### （4）Network disk download
 
 The network disk also contains `Interface Designer` and `chm help documentation`
 
