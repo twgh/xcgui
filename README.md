@@ -1,6 +1,6 @@
 <h1 align="center">XCGUI</h1>
 <p align="center">
-    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.370-blue" alt="release"></a>
+    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.371-blue" alt="release"></a>
     <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-3.3.7-blue" alt="XCGUI"></a>
    <a href="https://golang.org"> <img src="https://img.shields.io/badge/golang-1.16-blue" alt="golang"></a>
     <a href="https://pkg.go.dev/github.com/twgh/xcgui"><img src="https://img.shields.io/badge/go.dev-reference-brightgreen" alt="GoDoc"></a>
@@ -26,7 +26,7 @@
 - DirectUI设计思想：在窗口内没有子窗口，界面元素都是逻辑上的区域(无HWND句柄，安全，灵活)，所有UI元素都是自主开发(不受系统限制)，更加灵活的实现各种程序界面，满足不同用户的需求。
 - 拥有免费的UI设计器：快速开发工具，所见即所得，高度自定义系统(DIY)，让UI开发变的更加简单。
 - 支持Direct2D，硬件加速，能更大程度的发挥硬件特性，创建高性能，高质量的2D图形。
-- [wiki](https://github.com/twgh/xcgui/wiki)里有简单的入门教程，有空可以看一下。
+- [wiki](https://github.com/twgh/xcgui/wiki)里有简单的入门教程，有空可以看一下，少走弯路。
 - 有完善的[中文官方文档](http://www.xcgui.com/doc-ui/)，[官方资源社区](http://mall.xcgui.com)。
 - 官方QQ群(人多用各种语言的都有)：[2283812](https://jq.qq.com/?_wv=1027&k=AiXY4uMc)，只谈Go语言版的QQ群：[793788011](https://jq.qq.com/?_wv=1027&k=bkKgsYYk)
 
@@ -85,7 +85,13 @@ func main() {
 
 在开发时最好是放到`C:\Windows\System32`目录，这样就不需要频繁把dll放到不同程序的运行目录了。
 
-#### （1）命令行下载
+#### （1）文件直链
+
+| 64位 | [点击下载](https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui.dll?version=latest) |
+| ---- | ------------------------------------------------------------ |
+| 32位 | [点击下载](https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui-32.dll?version=latest) |
+
+#### （2）命令行下载
 
 64位
 
@@ -99,16 +105,14 @@ curl -fL "https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui.dll?version=late
 curl -fL "https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui-32.dll?version=latest" -o xcgui.dll
 ```
 
-如果你没有curl的话，直接复制命令里的链接在浏览器下载也可以，或者使用下面的方法。
-
-#### （2）使用getxcgui工具下载
+#### （3）使用getxcgui工具下载
 
 ```bash
 go install github.com/twgh/getxcgui@latest
 getxcgui  
 ```
 
-> 请确保 `%GOPATH%\bin` 在环境变量中, 否则要像这样调用: `%GOPATH%\bin\getxcgui`
+> 请确保 `%GOPATH%\bin` 在环境变量path中, 否则要加上路径, 像这样调用: `%GOPATH%\bin\getxcgui`
 
 如果要把dll直接下载到`C:\Windows\System32`目录里，请使用如下命令：
 
@@ -118,7 +122,7 @@ getxcgui -o %windir%\system32\xcgui.dll
 
 此工具的源码在[这里](https://github.com/twgh/getxcgui)，更多flags可以点[进去](https://github.com/twgh/getxcgui#flags)查看
 
-#### （3）网盘下载
+#### （4）网盘下载
 
 网盘内还包含`界面设计器`和`chm帮助文档`
 
