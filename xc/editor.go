@@ -207,6 +207,9 @@ func XEditor_GetBreakpointCount(hEle int) int {
 //
 // nCount: 数组大小.
 func XEditor_GetBreakpoints(hEle int, aPoints *[]int32, nCount int) int {
+	if nCount < 1 {
+		return 0
+	}
 	*aPoints = make([]int32, nCount)
 	r, _, _ := xEditor_GetBreakpoints.Call(uintptr(hEle), uintptr(unsafe.Pointer(&(*aPoints)[0])), uintptr(nCount))
 	return int(r)
