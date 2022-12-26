@@ -282,6 +282,9 @@ func XList_SetSelectAll(hEle int) int {
 //
 // nArraySize: 数组大小.
 func XList_GetSelectAll(hEle int, pArray *[]int32, nArraySize int) int {
+	if nArraySize < 1 {
+		return 0
+	}
 	*pArray = make([]int32, nArraySize)
 	r, _, _ := xList_GetSelectAll.Call(uintptr(hEle), uintptr(unsafe.Pointer(&(*pArray)[0])), uintptr(nArraySize))
 	return int(r)
