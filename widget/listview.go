@@ -258,7 +258,7 @@ func (l *ListView) GetSelectItemCount() int {
 // pArray: 数组.
 //
 // nArraySize: 数组大小.
-func (l *ListView) GetSelectAll(pArray int, nArraySize int) int {
+func (l *ListView) GetSelectAll(pArray *[]xc.ListView_Item_Id_, nArraySize int) int {
 	return xc.XListView_GetSelectAll(l.Handle, pArray, nArraySize)
 }
 
