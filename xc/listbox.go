@@ -174,6 +174,9 @@ func XListBox_CancelSelectAll(hEle int) bool {
 //
 // nArraySize: 数组大小.
 func XListBox_GetSelectAll(hEle int, pArray *[]int32, nArraySize int) int {
+	if nArraySize < 1 {
+		return 0
+	}
 	*pArray = make([]int32, nArraySize)
 	r, _, _ := xListBox_GetSelectAll.Call(uintptr(hEle), uintptr(unsafe.Pointer(&(*pArray)[0])), uintptr(nArraySize))
 	return int(r)
