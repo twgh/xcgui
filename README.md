@@ -1,7 +1,7 @@
-<h1 align="center">XCGUI</h1>
-<p align="center">
-    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.372-blue" alt="release"></a>
-    <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-3.3.7-blue" alt="XCGUI"></a>
+<h1 style="text-align:center">XCGUI</h1>
+<p style="text-align:center">
+    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.380-blue" alt="release"></a>
+    <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-3.3.8-blue" alt="XCGUI"></a>
    <a href="https://golang.org"> <img src="https://img.shields.io/badge/golang-1.16-blue" alt="golang"></a>
     <a href="https://pkg.go.dev/github.com/twgh/xcgui"><img src="https://img.shields.io/badge/go.dev-reference-brightgreen" alt="GoDoc"></a>
     <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-brightgreen" alt="License"></a>
@@ -67,8 +67,8 @@ func main() {
 	// songTitle是在main.xml中给歌曲名(shapeText组件)设置的name属性的值.
 	// 通过 GetObjectByName 可以获取布局文件中设置了name属性的组件的句柄.
 	// 可简化为: widget.NewShapeTextByName("songTitle").
-	songTitle := widget.NewShapeTextByHandle(a.GetObjectByName("songTitle"))
-	println(songTitle.GetText()) // 输出: 两只老虎爱跳舞
+	song := widget.NewShapeTextByHandle(a.GetObjectByName("songTitle"))
+	println(song.GetText()) // 输出: 两只老虎爱跳舞
     
 	// 调整布局
 	w.AdjustLayout()
@@ -107,12 +107,12 @@ curl -fL "https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui-32.dll?version=l
 
 #### （3）使用getxcgui工具下载
 
+> 请确保 `%GOPATH%\bin` 在环境变量path中
+
 ```bash
 go install github.com/twgh/getxcgui@latest
 getxcgui  
 ```
-
-> 请确保 `%GOPATH%\bin` 在环境变量path中, 否则要加上路径, 像这样调用: `%GOPATH%\bin\getxcgui`
 
 如果要把dll直接下载到`C:\Windows\System32`目录里，请使用如下命令：
 
@@ -135,15 +135,14 @@ getxcgui -o %windir%\system32\xcgui.dll
 
 [![SimpleWindow](https://s1.ax1x.com/2022/11/22/z14kAs.jpg)](https://github.com/twgh/xcgui-example/blob/main/SimpleWindow)
 
-
 ```go
 package main
 
 import (
 	"github.com/twgh/xcgui/app"
+	"github.com/twgh/xcgui/imagex"
 	"github.com/twgh/xcgui/widget"
 	"github.com/twgh/xcgui/window"
-	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
 )
 
@@ -156,11 +155,11 @@ func main() {
 	// 设置窗口边框大小
 	w.SetBorderSize(0, 30, 0, 0)
 	// 设置窗口图标
-	w.SetIcon(xc.XImage_LoadSvgStringW(svgIcon))
+	a.SetWindowIcon(imagex.NewBySvgStringW(svgIcon).Handle)
 	// 设置窗口透明类型
 	w.SetTransparentType(xcc.Window_Transparent_Shadow)
 	// 设置窗口阴影
-	w.SetShadowInfo(8, 254, 10, false, 0)
+	w.SetShadowInfo(8, 255, 10, false, 0)
 
 	// 创建按钮
 	btn := widget.NewButton(165, 135, 100, 30, "Button", w.Handle)
@@ -203,7 +202,7 @@ xc包里包含xcgui.dll里所有的API，有一千多个函数，可以直接使
 
 炫彩的全部事件都已经定义好了，都是以Event开头的， 以1结尾的事件是会传进去元素的句柄。
 
-在循环中注册事件时，回调函数尽量不要使用匿名函数，使用匿名函数意味着您每次都在创建1个新的回调，最终您将会遇到因创建过多回调导致程序崩溃的报错（大概在2000个回调时会遇到），事件回调函数不使用匿名函数即可避免此问题，一般程序应该不会用到2000个事件，只要注意在循环中注册事件时不使用匿名函数就行。这个是golang的限制，不是xcgui添加的限制。
+在循环中注册事件时，回调函数尽量不要使用匿名函数，使用匿名函数意味着您每次都在创建1个新的回调，最终您将会遇到因创建过多回调导致程序崩溃的报错（大概在2000个回调时会遇到），事件回调函数不使用匿名函数即可避免此问题，一般程序应该不会用到2000个事件，只要注意在循环中注册事件时不使用匿名函数就行。这个是Go语言添加的限制，不是xcgui添加的限制。
 
 [![xc-event.png](https://z3.ax1x.com/2021/11/23/opdyh6.png)](https://z3.ax1x.com/2021/11/23/opdyh6.png)
 
