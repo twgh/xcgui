@@ -164,7 +164,7 @@ func XListView_EnableMultiSel(hEle int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XListView_EnableTemplateReuse(hEle int, bEnable bool) int {
-	r, _, _ := xListView_EnablemTemplateReuse.Call(uintptr(hEle), common.BoolPtr(bEnable))
+	r, _, _ := xListView_EnableTemplateReuse.Call(uintptr(hEle), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -907,5 +907,47 @@ func XListView_Item_GetImage(hEle int, iGroup int, iItem int, iColumn int) int {
 // width: 线宽度.
 func XListView_SetDragRectColor(hEle int, color int, width int) int {
 	r, _, _ := xListView_SetDragRectColor.Call(uintptr(hEle), uintptr(color), uintptr(width))
+	return int(r)
+}
+
+// 列表视_置项模板从内存.
+//
+// hEle: 元素句柄.
+//
+// data: 模板数据.
+func XListView_SetItemTemplateXMLFromMem(hEle int, data []byte) bool {
+	r, _, _ := xListView_SetItemTemplateXMLFromMem.Call(uintptr(hEle), common.ByteSliceDataPtr(&data), uintptr(len(data)))
+	return r != 0
+}
+
+// 列表视_置项模板从资源ZIP.
+//
+// hEle: 元素句柄.
+//
+// id: RC资源ID.
+//
+// pFileName: 文件名.
+//
+// pPassword: zip密码.
+//
+// hModule: 模块句柄, 可填0.
+func XListView_SetItemTemplateXMLFromZipRes(hEle, id int, pFileName string, pPassword string, hModule int) bool {
+	r, _, _ := xListView_SetItemTemplateXMLFromZipRes.Call(uintptr(hEle), uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(hModule))
+	return r != 0
+}
+
+// 列表视_取项模板, 返回项模板句柄.
+//
+// hEle: 元素句柄.
+func XListView_GetItemTemplate(hEle int) int {
+	r, _, _ := xListView_GetItemTemplate.Call(uintptr(hEle))
+	return int(r)
+}
+
+// 列表视_取项模板组, 返回项模板组句柄.
+//
+// hEle: 元素句柄.
+func XListView_GetItemTemplateGroup(hEle int) int {
+	r, _, _ := xListView_GetItemTemplateGroup.Call(uintptr(hEle))
 	return int(r)
 }

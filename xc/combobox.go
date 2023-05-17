@@ -556,3 +556,37 @@ func XComboBox_SetItemTemplate(hEle, hTemp int) int {
 	r, _, _ := xComboBox_SetItemTemplate.Call(uintptr(hEle), uintptr(hTemp))
 	return int(r)
 }
+
+// 组合框_置项模板从内存.
+//
+// hEle: 元素句柄.
+//
+// data: 模板数据.
+func XComboBox_SetItemTemplateXMLFromMem(hEle int, data []byte) bool {
+	r, _, _ := xComboBox_SetItemTemplateXMLFromMem.Call(uintptr(hEle), common.ByteSliceDataPtr(&data), uintptr(len(data)))
+	return r != 0
+}
+
+// 组合框_置项模板从资源ZIP.
+//
+// hEle: 元素句柄.
+//
+// id: RC资源ID.
+//
+// pFileName: 文件名.
+//
+// pPassword: zip密码.
+//
+// hModule: 模块句柄, 可填0.
+func XComboBox_SetItemTemplateXMLFromZipRes(hEle, id int, pFileName string, pPassword string, hModule int) bool {
+	r, _, _ := xComboBox_SetItemTemplateXMLFromZipRes.Call(uintptr(hEle), uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(hModule))
+	return r != 0
+}
+
+// 组合框_取项模板, 返回项模板句柄.
+//
+// hEle: 元素句柄.
+func XComboBox_GetItemTemplate(hEle int) int {
+	r, _, _ := xComboBox_GetItemTemplate.Call(uintptr(hEle))
+	return int(r)
+}

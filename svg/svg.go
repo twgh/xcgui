@@ -59,6 +59,21 @@ func NewByZip(pZipFileName, pFileName, pPassword string) *Svg {
 	return p
 }
 
+// SVG_加载从资源ZIP, 返回SVG对象.
+//
+// id: 资源ID.
+//
+// pFileName: svg文件名.
+//
+// pPassword: zip密码.
+//
+// hModule: 模块句柄, 可填0.
+func NewByZipRes(id int, pFileName, pPassword string, hModule int) *Svg {
+	p := &Svg{}
+	p.SetHandle(xc.XSvg_LoadZipRes(id, pFileName, pPassword, hModule))
+	return p
+}
+
 // SVG_加载从内存ZIP, 返回Svg对象.
 //
 // data: zip数据.

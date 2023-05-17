@@ -670,6 +670,30 @@ func XDebug_Print(level int, pInfo string) int {
 	return int(r)
 }
 
+// 炫彩_显示边界.
+//
+// bShow: 是否显示.
+func XC_ShowSvgFrame(bShow bool) int {
+	r, _, _ := xC_ShowSvgFrame.Call(common.BoolPtr(bShow))
+	return int(r)
+}
+
+// 炫彩_启用自动DPI. 当启用后, 创建窗口时自动检测DPI调整UI缩放, 处理DPI改变消息; 禁用后,当DPI改变,需要手动设置窗口DPI.
+//
+// bEnabel: 是否启用.
+func XC_EnableAutoDPI(bEnabel bool) int {
+	r, _, _ := xC_EnableAutoDPI.Call(common.BoolPtr(bEnabel))
+	return int(r)
+}
+
+// 炫彩_置窗口图标. 全局窗口图标, 所有未设置图标的窗口, 都将使用此默认图标.
+//
+// hImage: 图标句柄.
+func XC_SetWindowIcon(hImage int) int {
+	r, _, _ := xC_SetWindowIcon.Call(uintptr(hImage))
+	return int(r)
+}
+
 /* // 炫彩_打印调试信息, 打印调试信息到文件xcgui_debug.txt.[无效]
 //
 // pString: 字符串.
@@ -684,17 +708,8 @@ func XDebug_OutputDebugStringW(pString string) int {
 func XDebug_Set_OutputDebugString_UTF8(bUTF8 bool) int {
 	r, _, _ := xDebug_Set_OutputDebugString_UTF8.Call(common.BoolPtr(bUTF8))
 	return int(r)
-} */
-
-// 炫彩_显示边界.
-//
-// bShow: 是否显示.
-func XC_ShowSvgFrame(bShow bool) int {
-	r, _, _ := xC_ShowSvgFrame.Call(common.BoolPtr(bShow))
-	return int(r)
 }
 
-/*
 // 炫彩_整数到文本A.
 //
 // nValue: 参数.

@@ -93,3 +93,13 @@ func XProgBar_EnableShowText(hEle int, bShow bool) bool {
 	r, _, _ := xProgBar_EnableShowText.Call(uintptr(hEle), common.BoolPtr(bShow))
 	return r != 0
 }
+
+// 进度条_置进度颜色. 设置进度颜色.
+//
+// hEle: 元素句柄.
+//
+// color: ABGR 颜色.
+func XProgBar_SetColorLoad(hEle int, color int) bool {
+	r, _, _ := xProgBar_SetColorLoad.Call(uintptr(hEle), uintptr(color))
+	return r != 0
+}

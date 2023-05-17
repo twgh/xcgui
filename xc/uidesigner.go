@@ -226,6 +226,56 @@ func XC_LoadStyleFromStringW(pFileName string, pString string) bool {
 	return r != 0
 }
 
+// 炫彩_加载布局文件资源ZIP扩展. 加载布局文件从RC资源zip压缩包中, 返回窗口句柄或元素句柄.
+//
+// id: RC资源ID.
+//
+// pFileName: 布局文件名.
+//
+// pPassword: zip密码.
+//
+// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+//
+// hParent: 父对象句柄, 窗口句柄或UI元素句柄, 可填0.
+//
+// hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用, 可填0.
+//
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
+//
+// hModule: 模块句柄, 可填0.
+func XC_LoadLayoutZipResEx(id int, pFileName string, pPassword, pPrefixName string, hParent, hParentWnd, hAttachWnd, hModule int) int {
+	r, _, _ := xC_LoadLayoutZipResEx.Call(uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), common.StrPtr(pPrefixName), uintptr(hParent), uintptr(hParentWnd), uintptr(hAttachWnd), uintptr(hModule))
+	return int(r)
+}
+
+// 炫彩_加载资源文件资源ZIP. 加载资源文件从RC资源zip压缩包中.
+//
+// id: RC资源ID.
+//
+// pFileName: 资源文件名.
+//
+// pPassword: zip压缩包密码.
+//
+// hModule: 模块句柄, 可填0.
+func XC_LoadResourceZipRes(id int, pFileName string, pPassword string, hModule int) bool {
+	r, _, _ := xC_LoadResourceZipRes.Call(uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(hModule))
+	return r != 0
+}
+
+// 炫彩_加载样式文件从资源ZIP. 从RC资源中的ZIP包中, 加载样式文件.
+//
+// id: RC资源ID.
+//
+// pFileName: 文件名.
+//
+// pPassword: 密码.
+//
+// hModule: 模块句柄, 可填0.
+func XC_LoadStyleZipRes(id int, pFileName string, pPassword string, hModule int) bool {
+	r, _, _ := xC_LoadStyleZipRes.Call(uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(hModule))
+	return r != 0
+}
+
 /*
 // 炫彩_加载资源文件从字符串.
 //

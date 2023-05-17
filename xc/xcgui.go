@@ -5,6 +5,8 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
+	"sync"
 	"syscall"
 )
 
@@ -13,9 +15,9 @@ import (
 //	如果你想要更改它的位置, 可以在 xc.LoadXCGUI() 之前调用 xc.SetXcguiPath() 更改为其他路径.
 var xcguiPath = "xcgui.dll"
 
-// 获取当前库版本所需的 xcgui.dll 的版本号.
+// GetVer 获取当前库版本所需的 xcgui.dll 的版本号.
 func GetVer() string {
-	return "3.3.7.0"
+	return "3.3.8.0"
 }
 
 var (
@@ -44,9 +46,9 @@ var (
 	xC_SendMessage  *syscall.LazyProc
 	xC_PostMessage  *syscall.LazyProc
 	xC_CallUiThread *syscall.LazyProc
-	//xDebug_OutputDebugStringW         *syscall.LazyProc
+	// xDebug_OutputDebugStringW         *syscall.LazyProc
 	xC_DebugToFileInfo *syscall.LazyProc
-	//xDebug_Set_OutputDebugString_UTF8 *syscall.LazyProc
+	// xDebug_Set_OutputDebugString_UTF8 *syscall.LazyProc
 	xDebug_Print               *syscall.LazyProc
 	xC_IsHELE                  *syscall.LazyProc
 	xC_IsHWINDOW               *syscall.LazyProc
@@ -122,6 +124,11 @@ var (
 	xC_LoadResourceZipMem         *syscall.LazyProc
 	xC_LoadResourceFromStringUtf8 *syscall.LazyProc
 	xC_LoadStyleFromStringW       *syscall.LazyProc
+	xC_EnableAutoDPI              *syscall.LazyProc
+	xC_LoadLayoutZipResEx         *syscall.LazyProc
+	xC_LoadResourceZipRes         *syscall.LazyProc
+	xC_LoadStyleZipRes            *syscall.LazyProc
+	xC_SetWindowIcon              *syscall.LazyProc
 
 	/* 	xC_LoadResourceFromString     *syscall.LazyProc
 	   	xC_LoadStyleFromString        *syscall.LazyProc */
@@ -153,7 +160,7 @@ var (
 	xWnd_EnableDrawBk              *syscall.LazyProc
 	xWnd_EnableAutoFocus           *syscall.LazyProc
 	xWnd_EnableMaxWindow           *syscall.LazyProc
-	xWnd_EnablemLimitWindowSize    *syscall.LazyProc
+	xWnd_EnableLimitWindowSize     *syscall.LazyProc
 	xWnd_EnableLayout              *syscall.LazyProc
 	xWnd_EnableLayoutOverlayBorder *syscall.LazyProc
 	xWnd_ShowLayoutFrame           *syscall.LazyProc
@@ -232,6 +239,14 @@ var (
 	xWnd_IsDragWindow              *syscall.LazyProc
 	xWnd_IsDragBorder              *syscall.LazyProc
 	xWnd_SetCaptionMargin          *syscall.LazyProc
+	xWnd_SetWindowPos              *syscall.LazyProc
+	xWnd_GetDPI                    *syscall.LazyProc
+	xWnd_RectToDPI                 *syscall.LazyProc
+	xWnd_PointToDPI                *syscall.LazyProc
+	xWnd_GetCursorPos              *syscall.LazyProc
+	xWnd_ClientToScreen            *syscall.LazyProc
+	xWnd_ScreenToClient            *syscall.LazyProc
+	xWnd_SetDPI                    *syscall.LazyProc
 
 	// Widget.
 	xWidget_IsShow                 *syscall.LazyProc
@@ -403,6 +418,9 @@ var (
 	xEle_SetSize                    *syscall.LazyProc
 	xEle_GetSize                    *syscall.LazyProc
 	xEle_SetBkInfo                  *syscall.LazyProc
+	xEle_GetWndClientRectDPI        *syscall.LazyProc
+	xEle_PointClientToWndClientDPI  *syscall.LazyProc
+	xEle_RectClientToWndClientDPI   *syscall.LazyProc
 
 	// FreameWindow.
 	xFrameWnd_Create                 *syscall.LazyProc
@@ -521,6 +539,9 @@ var (
 	xComboBox_GetCountColumn               *syscall.LazyProc
 	xComboBox_PopupDropList                *syscall.LazyProc
 	xComboBox_SetItemTemplate              *syscall.LazyProc
+	xComboBox_SetItemTemplateXMLFromMem    *syscall.LazyProc
+	xComboBox_SetItemTemplateXMLFromZipRes *syscall.LazyProc
+	xComboBox_GetItemTemplate              *syscall.LazyProc
 
 	// Adapter.
 	xAd_AddRef            *syscall.LazyProc
@@ -763,6 +784,9 @@ var (
 	xEdit_GetTextRow_Temp      *syscall.LazyProc
 	xEdit_GetSelectText_Temp   *syscall.LazyProc
 	xEdit_InsertChatBegin      *syscall.LazyProc
+	xEdit_GetChatFlags         *syscall.LazyProc
+	xEdit_InsertTextEx         *syscall.LazyProc
+	xEdit_InsertObject         *syscall.LazyProc
 
 	// LayoutEle.
 	xLayout_Create          *syscall.LazyProc
@@ -787,6 +811,7 @@ var (
 	xProgBar_EnableHorizon  *syscall.LazyProc
 	xProgBar_EnableShowText *syscall.LazyProc
 	xProgBar_EnableStretch  *syscall.LazyProc
+	xProgBar_SetColorLoad   *syscall.LazyProc
 
 	// TextLink.
 	xTextLink_Create                 *syscall.LazyProc
@@ -1102,6 +1127,7 @@ var (
 	xImage_LoadSvgStringW      *syscall.LazyProc
 	xImage_LoadSvgStringUtf8   *syscall.LazyProc
 	xImage_SetScaleSize        *syscall.LazyProc
+	xImage_LoadZipRes          *syscall.LazyProc
 
 	// Svg.
 	xSvg_LoadFile           *syscall.LazyProc
@@ -1136,6 +1162,7 @@ var (
 	xSvg_LoadStringW        *syscall.LazyProc
 	xSvg_LoadStringUtf8     *syscall.LazyProc
 	xSvg_LoadZipMem         *syscall.LazyProc
+	xSvg_LoadZipRes         *syscall.LazyProc
 
 	// ListItemTemplate.
 	xTemp_Load               *syscall.LazyProc
@@ -1162,6 +1189,10 @@ var (
 	xTemp_List_DeleteNode    *syscall.LazyProc
 	xTemp_List_GetCount      *syscall.LazyProc
 	xTemp_List_MoveColumn    *syscall.LazyProc
+	xTemp_LoadFromMem        *syscall.LazyProc
+	xTemp_LoadFromMemEx      *syscall.LazyProc
+	xTemp_LoadZipRes         *syscall.LazyProc
+	xTemp_LoadZipResEx       *syscall.LazyProc
 
 	// Resource.
 	xRes_EnableDelayLoad     *syscall.LazyProc
@@ -1176,7 +1207,7 @@ var (
 	// ListBox.
 	xListBox_Create                       *syscall.LazyProc
 	xListBox_EnableFixedRowHeight         *syscall.LazyProc
-	xListBox_EnablemTemplateReuse         *syscall.LazyProc
+	xListBox_EnableTemplateReuse          *syscall.LazyProc
 	xListBox_EnableVirtualTable           *syscall.LazyProc
 	xListBox_SetVirtualRowCount           *syscall.LazyProc
 	xListBox_SetDrawItemBkFlags           *syscall.LazyProc
@@ -1245,6 +1276,9 @@ var (
 	xListBox_GetCountColumn_AD            *syscall.LazyProc
 	xListBox_SetSplitLineColor            *syscall.LazyProc
 	xListBox_SetDragRectColor             *syscall.LazyProc
+	xListBox_SetItemTemplateXMLFromMem    *syscall.LazyProc
+	xListBox_SetItemTemplateXMLFromZipRes *syscall.LazyProc
+	xListBox_GetItemTemplate              *syscall.LazyProc
 
 	// List.
 	xList_Create                       *syscall.LazyProc
@@ -1346,6 +1380,8 @@ var (
 	xList_GetItemTemplate              *syscall.LazyProc
 	xList_GetItemTemplateHeader        *syscall.LazyProc
 	xList_RefreshDataHeader            *syscall.LazyProc
+	xList_SetItemTemplateXMLFromMem    *syscall.LazyProc
+	xList_SetItemTemplateXMLFromZipRes *syscall.LazyProc
 
 	// ListView.
 	xListView_Create                       *syscall.LazyProc
@@ -1361,7 +1397,7 @@ var (
 	xListView_HitTest                      *syscall.LazyProc
 	xListView_HitTestOffset                *syscall.LazyProc
 	xListView_EnableMultiSel               *syscall.LazyProc
-	xListView_EnablemTemplateReuse         *syscall.LazyProc
+	xListView_EnableTemplateReuse          *syscall.LazyProc
 	xListView_EnableVirtualTable           *syscall.LazyProc
 	xListView_SetVirtualItemCount          *syscall.LazyProc
 	xListView_SetDrawItemBkFlags           *syscall.LazyProc
@@ -1424,6 +1460,10 @@ var (
 	xListView_Item_GetText                 *syscall.LazyProc
 	xListView_Item_GetImage                *syscall.LazyProc
 	xListView_SetDragRectColor             *syscall.LazyProc
+	xListView_SetItemTemplateXMLFromMem    *syscall.LazyProc
+	xListView_SetItemTemplateXMLFromZipRes *syscall.LazyProc
+	xListView_GetItemTemplate              *syscall.LazyProc
+	xListView_GetItemTemplateGroup         *syscall.LazyProc
 
 	// MenuBar.
 	xMenuBar_Create          *syscall.LazyProc
@@ -1562,7 +1602,7 @@ var (
 	xTree_EnableDragItem                  *syscall.LazyProc
 	xTree_EnableConnectLine               *syscall.LazyProc
 	xTree_EnableExpand                    *syscall.LazyProc
-	xTree_EnablemTemplateReuse            *syscall.LazyProc
+	xTree_EnableTemplateReuse             *syscall.LazyProc
 	xTree_SetConnectLineColor             *syscall.LazyProc
 	xTree_SetExpandButtonSize             *syscall.LazyProc
 	xTree_SetConnectLineLength            *syscall.LazyProc
@@ -1623,6 +1663,9 @@ var (
 	xTree_DeleteItemAll                   *syscall.LazyProc
 	xTree_DeleteColumnAll                 *syscall.LazyProc
 	xTree_SetSplitLineColor               *syscall.LazyProc
+	xTree_SetItemTemplateXMLFromMem       *syscall.LazyProc
+	xTree_SetItemTemplateXMLFromZipRes    *syscall.LazyProc
+	xTree_GetItemTemplate                 *syscall.LazyProc
 
 	// DateTime.
 	xDateTime_Create           *syscall.LazyProc
@@ -1750,7 +1793,7 @@ func SetXcguiPath(XcguiPath string) error {
 		return err
 	}
 	if !b {
-		return errors.New("XcguiPath 指向的文件不存在: " + xcguiPath)
+		return errors.New("XcguiPath 指向的文件不存在: " + XcguiPath)
 	}
 
 	xcguiPath = XcguiPath
@@ -1780,13 +1823,30 @@ func PathExists(path string) (bool, error) {
 	return false, err // 如果返回的错误为其它类型, 则不确定是否在存在
 }
 
+// GetXcgui 获取加载的炫彩dll, 用途是你可以利用这个来封装dll中的函数, 因为我有时候可能更新不及时, 如果你恰巧需要最新版本dll中的函数, 那么你可以自己封装最新版本dll中的函数.
+//
+//	@return *syscall.LazyDLL
+func GetXcgui() *syscall.LazyDLL {
+	return xcgui
+}
+
+// 保证 LoadXCGUI 只运行一次.
+var once = sync.Once{}
+
 // LoadXCGUI 将从 xcguiPath 加载xcgui.dll. xcguiPath 的默认值是'xcgui.dll'.
+//
+//	本函数在进程运行期间只需调用一次, 而且也只会被调用一次.
 //
 //	如果你想要更改xcgui.dll的路径, 那么请在调用本函数之前调用 xc.SetXcguiPath().
 //
 //	注意: app.New() 函数内部会自动调用 xc.LoadXCGUI().
 //	所以一般是不需要手动调用的, 除非你没有使用 app.New() 函数, 而是使用了 xc.XInitXCGUI(), 那么你需要在 xc.XInitXCGUI() 之前调用 xc.LoadXCGUI().
-func LoadXCGUI() {
+func LoadXCGUI() *syscall.LazyDLL {
+	once.Do(_loadXCGUI)
+	return xcgui
+}
+
+func _loadXCGUI() {
 	// Library.
 	xcgui = syscall.NewLazyDLL(xcguiPath)
 
@@ -1812,8 +1872,8 @@ func LoadXCGUI() {
 		xC_ftow = xcgui.NewProc("XC_ftow")
 	*/
 	xC_DebugToFileInfo = xcgui.NewProc("XC_DebugToFileInfo")
-	//xDebug_OutputDebugStringW = xcgui.NewProc("XDebug_OutputDebugStringW")
-	//xDebug_Set_OutputDebugString_UTF8 = xcgui.NewProc("XDebug_Set_OutputDebugString_UTF8")
+	// xDebug_OutputDebugStringW = xcgui.NewProc("XDebug_OutputDebugStringW")
+	// xDebug_Set_OutputDebugString_UTF8 = xcgui.NewProc("XDebug_Set_OutputDebugString_UTF8")
 	xDebug_Print = xcgui.NewProc("XDebug_Print")
 	xC_IsHELE = xcgui.NewProc("XC_IsHELE")
 	xC_IsHWINDOW = xcgui.NewProc("XC_IsHWINDOW")
@@ -1870,6 +1930,8 @@ func LoadXCGUI() {
 	xMsg_Create = xcgui.NewProc("XMsg_Create")
 	xMsg_CreateEx = xcgui.NewProc("XMsg_CreateEx")
 	xC_ShowSvgFrame = xcgui.NewProc("XC_ShowSvgFrame")
+	xC_EnableAutoDPI = xcgui.NewProc("XC_EnableAutoDPI")
+	xC_SetWindowIcon = xcgui.NewProc("XC_SetWindowIcon")
 
 	// UI Designer.
 	xC_LoadLayout = xcgui.NewProc("XC_LoadLayout")
@@ -1889,6 +1951,9 @@ func LoadXCGUI() {
 	xC_LoadResourceZipMem = xcgui.NewProc("XC_LoadResourceZipMem")
 	xC_LoadResourceFromStringUtf8 = xcgui.NewProc("XC_LoadResourceFromStringUtf8")
 	xC_LoadStyleFromStringW = xcgui.NewProc("XC_LoadStyleFromStringW")
+	xC_LoadLayoutZipResEx = xcgui.NewProc("XC_LoadLayoutZipResEx")
+	xC_LoadResourceZipRes = xcgui.NewProc("XC_LoadResourceZipRes")
+	xC_LoadStyleZipRes = xcgui.NewProc("XC_LoadStyleZipRes")
 	/* 	xC_LoadResourceFromString = xcgui.NewProc("XC_LoadResourceFromString")
 	   	xC_LoadStyleFromString = xcgui.NewProc("XC_LoadStyleFromString") */
 
@@ -1918,7 +1983,7 @@ func LoadXCGUI() {
 	xWnd_EnableDrawBk = xcgui.NewProc("XWnd_EnableDrawBk")
 	xWnd_EnableAutoFocus = xcgui.NewProc("XWnd_EnableAutoFocus")
 	xWnd_EnableMaxWindow = xcgui.NewProc("XWnd_EnableMaxWindow")
-	xWnd_EnablemLimitWindowSize = xcgui.NewProc("XWnd_EnablemLimitWindowSize")
+	xWnd_EnableLimitWindowSize = xcgui.NewProc("XWnd_EnableLimitWindowSize")
 	xWnd_EnableLayout = xcgui.NewProc("XWnd_EnableLayout")
 	xWnd_EnableLayoutOverlayBorder = xcgui.NewProc("XWnd_EnableLayoutOverlayBorder")
 	xWnd_ShowLayoutFrame = xcgui.NewProc("XWnd_ShowLayoutFrame")
@@ -1997,6 +2062,14 @@ func LoadXCGUI() {
 	xWnd_IsDragWindow = xcgui.NewProc("XWnd_IsDragWindow")
 	xWnd_IsDragBorder = xcgui.NewProc("XWnd_IsDragBorder")
 	xWnd_SetCaptionMargin = xcgui.NewProc("XWnd_SetCaptionMargin")
+	xWnd_SetWindowPos = xcgui.NewProc("XWnd_SetWindowPos")
+	xWnd_GetDPI = xcgui.NewProc("XWnd_GetDPI")
+	xWnd_RectToDPI = xcgui.NewProc("XWnd_RectToDPI")
+	xWnd_PointToDPI = xcgui.NewProc("XWnd_PointToDPI")
+	xWnd_GetCursorPos = xcgui.NewProc("XWnd_GetCursorPos")
+	xWnd_ClientToScreen = xcgui.NewProc("XWnd_ClientToScreen")
+	xWnd_ScreenToClient = xcgui.NewProc("XWnd_ScreenToClient")
+	xWnd_SetDPI = xcgui.NewProc("XWnd_SetDPI")
 
 	// Widget.
 	xWidget_IsShow = xcgui.NewProc("XWidget_IsShow")
@@ -2170,6 +2243,9 @@ func LoadXCGUI() {
 	xEle_SetSize = xcgui.NewProc("XEle_SetSize")
 	xEle_GetSize = xcgui.NewProc("XEle_GetSize")
 	xEle_SetBkInfo = xcgui.NewProc("XEle_SetBkInfo")
+	xEle_GetWndClientRectDPI = xcgui.NewProc("XEle_GetWndClientRectDPI")
+	xEle_PointClientToWndClientDPI = xcgui.NewProc("XEle_PointClientToWndClientDPI")
+	xEle_RectClientToWndClientDPI = xcgui.NewProc("XEle_RectClientToWndClientDPI")
 
 	// FreameWindow.
 	xFrameWnd_Create = xcgui.NewProc("XFrameWnd_Create")
@@ -2288,6 +2364,9 @@ func LoadXCGUI() {
 	xComboBox_GetCountColumn = xcgui.NewProc("XComboBox_GetCountColumn")
 	xComboBox_PopupDropList = xcgui.NewProc("XComboBox_PopupDropList")
 	xComboBox_SetItemTemplate = xcgui.NewProc("XComboBox_SetItemTemplate")
+	xComboBox_SetItemTemplateXMLFromMem = xcgui.NewProc("XComboBox_SetItemTemplateXMLFromMem")
+	xComboBox_SetItemTemplateXMLFromZipRes = xcgui.NewProc("XComboBox_SetItemTemplateXMLFromZipRes")
+	xComboBox_GetItemTemplate = xcgui.NewProc("XComboBox_GetItemTemplate")
 
 	// Adapter.
 	xAd_AddRef = xcgui.NewProc("XAd_AddRef")
@@ -2528,6 +2607,9 @@ func LoadXCGUI() {
 	xEdit_GetTextRow_Temp = xcgui.NewProc("XEdit_GetTextRow_Temp")
 	xEdit_GetSelectText_Temp = xcgui.NewProc("XEdit_GetSelectText_Temp")
 	xEdit_InsertChatBegin = xcgui.NewProc("XEdit_InsertChatBegin")
+	xEdit_GetChatFlags = xcgui.NewProc("XEdit_GetChatFlags")
+	xEdit_InsertTextEx = xcgui.NewProc("XEdit_InsertTextEx")
+	xEdit_InsertObject = xcgui.NewProc("XEdit_InsertObject")
 
 	// LayoutEle.
 	xLayout_Create = xcgui.NewProc("XLayout_Create")
@@ -2537,9 +2619,11 @@ func LoadXCGUI() {
 	xLayout_ShowLayoutFrame = xcgui.NewProc("XLayout_ShowLayoutFrame")
 	xLayout_GetWidthIn = xcgui.NewProc("XLayout_GetWidthIn")
 	xLayout_GetHeightIn = xcgui.NewProc("XLayout_GetHeightIn")
+
 	// LayoutFrame.
 	xLayoutFrame_Create = xcgui.NewProc("XLayoutFrame_Create")
 	xLayoutFrame_ShowLayoutFrame = xcgui.NewProc("XLayoutFrame_ShowLayoutFrame")
+
 	// ProgressBar.
 	xProgBar_Create = xcgui.NewProc("XProgBar_Create")
 	xProgBar_SetRange = xcgui.NewProc("XProgBar_SetRange")
@@ -2550,6 +2634,7 @@ func LoadXCGUI() {
 	xProgBar_EnableHorizon = xcgui.NewProc("XProgBar_EnableHorizon")
 	xProgBar_EnableShowText = xcgui.NewProc("XProgBar_EnableShowText")
 	xProgBar_EnableStretch = xcgui.NewProc("XProgBar_EnableStretch")
+	xProgBar_SetColorLoad = xcgui.NewProc("XProgBar_SetColorLoad")
 
 	// TextLink.
 	xTextLink_Create = xcgui.NewProc("XTextLink_Create")
@@ -2865,6 +2950,7 @@ func LoadXCGUI() {
 	xImage_LoadSvgStringW = xcgui.NewProc("XImage_LoadSvgStringW")
 	xImage_LoadSvgStringUtf8 = xcgui.NewProc("XImage_LoadSvgStringUtf8")
 	xImage_SetScaleSize = xcgui.NewProc("XImage_SetScaleSize")
+	xImage_LoadZipRes = xcgui.NewProc("XImage_LoadZipRes")
 
 	// Svg.
 	xSvg_LoadFile = xcgui.NewProc("XSvg_LoadFile")
@@ -2899,6 +2985,7 @@ func LoadXCGUI() {
 	xSvg_LoadStringW = xcgui.NewProc("XSvg_LoadStringW")
 	xSvg_LoadStringUtf8 = xcgui.NewProc("XSvg_LoadStringUtf8")
 	xSvg_LoadZipMem = xcgui.NewProc("XSvg_LoadZipMem")
+	xSvg_LoadZipRes = xcgui.NewProc("XSvg_LoadZipRes")
 
 	// ListItemTemplate.
 	xTemp_Load = xcgui.NewProc("XTemp_Load")
@@ -2925,6 +3012,10 @@ func LoadXCGUI() {
 	xTemp_List_DeleteNode = xcgui.NewProc("XTemp_List_DeleteNode")
 	xTemp_List_GetCount = xcgui.NewProc("XTemp_List_GetCount")
 	xTemp_List_MoveColumn = xcgui.NewProc("XTemp_List_MoveColumn")
+	xTemp_LoadFromMem = xcgui.NewProc("XTemp_LoadFromMem")
+	xTemp_LoadFromMemEx = xcgui.NewProc("XTemp_LoadFromMemEx")
+	xTemp_LoadZipRes = xcgui.NewProc("XTemp_LoadZipRes")
+	xTemp_LoadZipResEx = xcgui.NewProc("XTemp_LoadZipResEx")
 
 	// Resource.
 	xRes_EnableDelayLoad = xcgui.NewProc("XRes_EnableDelayLoad")
@@ -2939,7 +3030,7 @@ func LoadXCGUI() {
 	// ListBox.
 	xListBox_Create = xcgui.NewProc("XListBox_Create")
 	xListBox_EnableFixedRowHeight = xcgui.NewProc("XListBox_EnableFixedRowHeight")
-	xListBox_EnablemTemplateReuse = xcgui.NewProc("XListBox_EnablemTemplateReuse")
+	xListBox_EnableTemplateReuse = xcgui.NewProc("XListBox_EnableTemplateReuse")
 	xListBox_EnableVirtualTable = xcgui.NewProc("XListBox_EnableVirtualTable")
 	xListBox_SetVirtualRowCount = xcgui.NewProc("XListBox_SetVirtualRowCount")
 	xListBox_SetDrawItemBkFlags = xcgui.NewProc("XListBox_SetDrawItemBkFlags")
@@ -3008,6 +3099,9 @@ func LoadXCGUI() {
 	xListBox_GetCountColumn_AD = xcgui.NewProc("XListBox_GetCountColumn_AD")
 	xListBox_SetSplitLineColor = xcgui.NewProc("XListBox_SetSplitLineColor")
 	xListBox_SetDragRectColor = xcgui.NewProc("XListBox_SetDragRectColor")
+	xListBox_SetItemTemplateXMLFromMem = xcgui.NewProc("XListBox_SetItemTemplateXMLFromMem")
+	xListBox_SetItemTemplateXMLFromZipRes = xcgui.NewProc("XListBox_SetItemTemplateXMLFromZipRes")
+	xListBox_GetItemTemplate = xcgui.NewProc("XListBox_GetItemTemplate")
 
 	// List.
 	xList_Create = xcgui.NewProc("XList_Create")
@@ -3109,6 +3203,8 @@ func LoadXCGUI() {
 	xList_GetItemTemplate = xcgui.NewProc("XList_GetItemTemplate")
 	xList_GetItemTemplateHeader = xcgui.NewProc("XList_GetItemTemplateHeader")
 	xList_RefreshDataHeader = xcgui.NewProc("XList_RefreshDataHeader")
+	xList_SetItemTemplateXMLFromMem = xcgui.NewProc("XList_SetItemTemplateXMLFromMem")
+	xList_SetItemTemplateXMLFromZipRes = xcgui.NewProc("XList_SetItemTemplateXMLFromZipRes")
 
 	// ListView.
 	xListView_Create = xcgui.NewProc("XListView_Create")
@@ -3124,7 +3220,7 @@ func LoadXCGUI() {
 	xListView_HitTest = xcgui.NewProc("XListView_HitTest")
 	xListView_HitTestOffset = xcgui.NewProc("XListView_HitTestOffset")
 	xListView_EnableMultiSel = xcgui.NewProc("XListView_EnableMultiSel")
-	xListView_EnablemTemplateReuse = xcgui.NewProc("XListView_EnablemTemplateReuse")
+	xListView_EnableTemplateReuse = xcgui.NewProc("XListView_EnableTemplateReuse")
 	xListView_EnableVirtualTable = xcgui.NewProc("XListView_EnableVirtualTable")
 	xListView_SetVirtualItemCount = xcgui.NewProc("XListView_SetVirtualItemCount")
 	xListView_SetDrawItemBkFlags = xcgui.NewProc("XListView_SetDrawItemBkFlags")
@@ -3187,6 +3283,10 @@ func LoadXCGUI() {
 	xListView_Item_GetText = xcgui.NewProc("XListView_Item_GetText")
 	xListView_Item_GetImage = xcgui.NewProc("XListView_Item_GetImage")
 	xListView_SetDragRectColor = xcgui.NewProc("XListView_SetDragRectColor")
+	xListView_SetItemTemplateXMLFromMem = xcgui.NewProc("XListView_SetItemTemplateXMLFromMem")
+	xListView_SetItemTemplateXMLFromZipRes = xcgui.NewProc("XListView_SetItemTemplateXMLFromZipRes")
+	xListView_GetItemTemplate = xcgui.NewProc("XListView_GetItemTemplate")
+	xListView_GetItemTemplateGroup = xcgui.NewProc("XListView_GetItemTemplateGroup")
 
 	// MenuBar.
 	xMenuBar_Create = xcgui.NewProc("XMenuBar_Create")
@@ -3325,7 +3425,7 @@ func LoadXCGUI() {
 	xTree_EnableDragItem = xcgui.NewProc("XTree_EnableDragItem")
 	xTree_EnableConnectLine = xcgui.NewProc("XTree_EnableConnectLine")
 	xTree_EnableExpand = xcgui.NewProc("XTree_EnableExpand")
-	xTree_EnablemTemplateReuse = xcgui.NewProc("XTree_EnablemTemplateReuse")
+	xTree_EnableTemplateReuse = xcgui.NewProc("XTree_EnableTemplateReuse")
 	xTree_SetConnectLineColor = xcgui.NewProc("XTree_SetConnectLineColor")
 	xTree_SetExpandButtonSize = xcgui.NewProc("XTree_SetExpandButtonSize")
 	xTree_SetConnectLineLength = xcgui.NewProc("XTree_SetConnectLineLength")
@@ -3386,6 +3486,9 @@ func LoadXCGUI() {
 	xTree_DeleteItemAll = xcgui.NewProc("XTree_DeleteItemAll")
 	xTree_DeleteColumnAll = xcgui.NewProc("XTree_DeleteColumnAll")
 	xTree_SetSplitLineColor = xcgui.NewProc("XTree_SetSplitLineColor")
+	xTree_SetItemTemplateXMLFromMem = xcgui.NewProc("XTree_SetItemTemplateXMLFromMem")
+	xTree_SetItemTemplateXMLFromZipRes = xcgui.NewProc("XTree_SetItemTemplateXMLFromZipRes")
+	xTree_GetItemTemplate = xcgui.NewProc("XTree_GetItemTemplate")
 
 	// DateTime.
 	xDateTime_Create = xcgui.NewProc("XDateTime_Create")
@@ -3495,7 +3598,6 @@ func LoadXCGUI() {
 	xBkObj_GetText = xcgui.NewProc("XBkObj_GetText")
 	xBkObj_GetFont = xcgui.NewProc("XBkObj_GetFont")
 	xBkObj_GetTextAlign = xcgui.NewProc("XBkObj_GetTextAlign")
-
 }
 
 // Font_Info_Name 将[32]uint16转换到string.
@@ -3506,64 +3608,123 @@ func Font_Info_Name(arr [32]uint16) string {
 	return syscall.UTF16ToString(arr[0:])
 }
 
-// ABGR 根据r, g, b, a组合成十进制ABGR 颜色.
+// ABGR 根据r, g, b, a组合成ABGR颜色.
 //
 //	@param r 红色分量.
 //	@param g 绿色分量.
 //	@param b 蓝色分量.
 //	@param a 透明度.
-//	@return int ABGR 颜色.
+//	@return int ABGR颜色.
 func ABGR(r, g, b, a byte) int {
-	return int((uint32(r) & 255) | (uint32(g)&255)<<8 | (uint32(b)&255)<<16 | (uint32(a)&255)<<24)
+	return int(uint32(r) | uint32(g)<<8 | uint32(b)<<16 | uint32(a)<<24)
 }
 
-// ABGR2 根据rgb, a组合成十进制ABGR 颜色.
+// ABGR2 根据bgr, a组合成ABGR颜色.
 //
-//	@param rgb RGB颜色.
+//	@param bgr BGR颜色.
 //	@param a 透明度.
-//	@return int ABGR 颜色.
-func ABGR2(rgb int, a byte) int {
-	return int((uint32(rgb) & 16777215) | (uint32(a)&255)<<24)
+//	@return int ABGR颜色.
+func ABGR2(bgr int, a byte) int {
+	return int((uint32(bgr) & 16777215) | (uint32(a)&255)<<24)
 }
 
-// RGB 根据r, g, b组合成十进制RGB颜色.
+// RGBA 根据r, g, b, a组合成ABGR颜色. 和 ABGR 函数一模一样, 只是为了符合部分人使用习惯.
+//
+//	@param r 红色分量.
+//	@param g 绿色分量.
+//	@param b 蓝色分量.
+//	@param a 透明度.
+//	@return int ABGR颜色.
+func RGBA(r, g, b, a byte) int {
+	return int(uint32(r) | uint32(g)<<8 | uint32(b)<<16 | uint32(a)<<24)
+}
+
+// RGBA2 根据bgr, a组合成十进制ABGR颜色. 和 ABGR2 函数一模一样, 只是为了符合部分人使用习惯.
+//
+//	@param bgr BGR颜色.
+//	@param a 透明度.
+//	@return int ABGR颜色.
+func RGBA2(bgr int, a byte) int {
+	return int((uint32(bgr) & 16777215) | uint32(a)<<24)
+}
+
+// BGR 根据r, g, b组合成BGR颜色.
+//
+//	@param r 红色分量.
+//	@param g 绿色分量.
+//	@param b 蓝色分量.
+//	@return int BGR颜色.
+func BGR(r, g, b byte) int {
+	return int(uint32(r) | uint32(g)<<8 | uint32(b)<<16)
+}
+
+// RGB 根据r, g, b组合成RGB颜色.
 //
 //	@param r 红色分量.
 //	@param g 绿色分量.
 //	@param b 蓝色分量.
 //	@return int RGB颜色.
 func RGB(r, g, b byte) int {
-	return int(uint32(r) | uint32(g)<<8 | uint32(b)<<16)
+	return int(uint32(b) | uint32(g)<<8 | uint32(r)<<16)
 }
 
-// RGBA 根据r, g, b, a组合成十进制ABGR 颜色. 和 ABGR 函数一模一样, 只是为了符合部分人使用习惯.
-//
-//	@param r 红色分量.
-//	@param g 绿色分量.
-//	@param b 蓝色分量.
-//	@param a 透明度.
-//	@return int ABGR 颜色.
-func RGBA(r, g, b, a byte) int {
-	return int((uint32(r) & 255) | (uint32(g)&255)<<8 | (uint32(b)&255)<<16 | (uint32(a)&255)<<24)
-}
-
-// RGBA2 根据rgb, a组合成十进制ABGR 颜色. 和 ABGR2 函数一模一样, 只是为了符合部分人使用习惯.
+// RGB2ABGR 将RGB颜色转换到ABGR颜色.
 //
 //	@param rgb RGB颜色.
 //	@param a 透明度.
-//	@return int ABGR 颜色.
-func RGBA2(rgb int, a byte) int {
-	return int((uint32(rgb) & 16777215) | (uint32(a)&255)<<24)
+//	@return int ABGR颜色.
+func RGB2ABGR(rgb int, a byte) int {
+	r := byte(rgb >> 16)
+	g := byte(rgb >> 8)
+	b := byte(rgb)
+	return ABGR(r, g, b, a)
 }
 
-// HEXToRGB 将十六进制颜色转换到RGB颜色.
+// RGB2BGR 将RGB颜色转换到BGR颜色.
 //
-//	@param str 十六进制颜色.
+//	@param rgb RGB颜色.
+//	@return int BGR颜色.
+func RGB2BGR(rgb int) int {
+	r := byte(rgb >> 16)
+	g := byte(rgb >> 8)
+	b := byte(rgb)
+	return BGR(r, g, b)
+}
+
+// HexRGB2BGR 将十六进制RGB颜色转换到十进制BGR颜色.
+//
+//	@param str 十六进制RGB颜色, 开头有没有#都可以.
+//	@return int BGR颜色.
+func HexRGB2BGR(str string) int {
+	s := strings.TrimLeft(str, "#")
+	r, _ := strconv.ParseInt(s[:2], 16, 10)
+	g, _ := strconv.ParseInt(s[2:4], 16, 18)
+	b, _ := strconv.ParseInt(s[4:], 16, 10)
+	return BGR(byte(r), byte(g), byte(b))
+}
+
+// HexRGB2ABGR 将十六进制RGB颜色转换到十进制ABGR颜色.
+//
+//	@param str 十六进制RGB颜色, 开头有没有#都可以.
+//	@param a 透明度.
+//	@return int ABGR颜色.
+func HexRGB2ABGR(str string, a byte) int {
+	s := strings.TrimLeft(str, "#")
+	r, _ := strconv.ParseInt(s[:2], 16, 10)
+	g, _ := strconv.ParseInt(s[2:4], 16, 18)
+	b, _ := strconv.ParseInt(s[4:], 16, 10)
+	return ABGR(byte(r), byte(g), byte(b), a)
+}
+
+// HexRGB2RGB 将十六进制RGB颜色转换到十进制RGB颜色.
+//
+//	@param str 十六进制RGB颜色, 开头有没有#都可以.
 //	@return int RGB颜色.
-func HEXToRGB(str string) int {
-	r, _ := strconv.ParseInt(str[:2], 16, 10)
-	g, _ := strconv.ParseInt(str[2:4], 16, 18)
-	b, _ := strconv.ParseInt(str[4:], 16, 10)
+func HexRGB2RGB(str string) int {
+	s := strings.TrimLeft(str, "#")
+	r, _ := strconv.ParseInt(s[:2], 16, 10)
+	g, _ := strconv.ParseInt(s[2:4], 16, 18)
+	b, _ := strconv.ParseInt(s[4:], 16, 10)
 	return RGB(byte(r), byte(g), byte(b))
 }
 
@@ -3578,7 +3739,7 @@ func ClientToScreen(hWindow int, pPoint *POINT) {
 	pPoint.Y += r.Top
 }
 
-// 把 xcgui.dll 写出到windows临时目录里, 如果检测到dll已存在于临时目录则不会进行写出.
+// WriteDll 把 xcgui.dll 写出到windows临时目录中版本号文件夹里, 如果检测到dll已存在则不会写出.
 //
 // 使用完本函数后无需再调用 xc.SetXcguiPath(), 内部已自动操作.
 func WriteDll(dll []byte) error {

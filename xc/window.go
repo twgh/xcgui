@@ -108,6 +108,42 @@ func XWnd_RemoveEventC(hWindow int, nEvent xcc.WM_, pFun interface{}) bool {
 	return r != 0
 }
 
+// 窗口_注册事件CEx, 和非Ex版相比只是最后一个参数不同.
+//
+// hWindow: 窗口句柄.
+//
+// nEvent: 事件类型: xcc.WM_, xcc.XWM_ .
+//
+// pFun: 事件函数指针, 使用 syscall.NewCallback() 生成..
+func XWnd_RegEventCEx(hWindow int, nEvent xcc.WM_, pFun uintptr) bool {
+	r, _, _ := xWnd_RegEventC.Call(uintptr(hWindow), uintptr(nEvent), pFun)
+	return r != 0
+}
+
+// 窗口_注册事件C1Ex, 和非Ex版相比只是最后一个参数不同.
+//
+// hWindow: 窗口句柄.
+//
+// nEvent: 事件类型: xcc.WM_, xcc.XWM_.
+//
+// pFun: 事件函数指针, 使用 syscall.NewCallback() 生成..
+func XWnd_RegEventC1Ex(hWindow int, nEvent xcc.WM_, pFun uintptr) bool {
+	r, _, _ := xWnd_RegEventC1.Call(uintptr(hWindow), uintptr(nEvent), pFun)
+	return r != 0
+}
+
+// 窗口_移除事件CEx, 和非Ex版相比只是最后一个参数不同.
+//
+// hWindow: 窗口句柄.
+//
+// nEvent: 事件类型: xcc.WM_, xcc.XWM_.
+//
+// pFun: 事件函数指针, 使用 syscall.NewCallback() 生成..
+func XWnd_RemoveEventCEx(hWindow int, nEvent xcc.WM_, pFun uintptr) bool {
+	r, _, _ := xWnd_RemoveEventC.Call(uintptr(hWindow), uintptr(nEvent), pFun)
+	return r != 0
+}
+
 // 窗口_添加子对象.
 //
 // hWindow: 窗口句柄.
@@ -309,8 +345,8 @@ func XWnd_EnableMaxWindow(hWindow int, bEnable bool) int {
 // hWindow: 窗口句柄.
 //
 // bEnable: 是否启用.
-func XWnd_EnablemLimitWindowSize(hWindow int, bEnable bool) int {
-	r, _, _ := xWnd_EnablemLimitWindowSize.Call(uintptr(hWindow), common.BoolPtr(bEnable))
+func XWnd_EnableLimitWindowSize(hWindow int, bEnable bool) int {
+	r, _, _ := xWnd_EnableLimitWindowSize.Call(uintptr(hWindow), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -1111,5 +1147,93 @@ func XWnd_IsDragBorder(hWindow int) bool {
 // bottom: 下边间距.
 func XWnd_SetCaptionMargin(hWindow int, left int, top int, right int, bottom int) int {
 	r, _, _ := xWnd_SetCaptionMargin.Call(uintptr(hWindow), uintptr(left), uintptr(top), uintptr(right), uintptr(bottom))
+	return int(r)
+}
+
+// 窗口_置窗口位置. 封装系统API SetWindowPos(), 内部做了DPI适配.
+//
+// hWindow: 窗口句柄.
+//
+// hWndInsertAfter: 在Z序中位于定位窗口之前的窗口句柄. 此参数必须是窗口HWND或以下值之一: xcc.HWND_.
+//
+// x: X坐标.
+//
+// y: Y坐标.
+//
+// cx: 宽度.
+//
+// cy: 高度.
+//
+// uFlags: 窗口大小调整和定位标志. 可以是以下值的组合: xcc.SWP_.
+func XWnd_SetWindowPos(hWindow int, hWndInsertAfter xcc.HWND_, x, y, cx, cy int, uFlags xcc.SWP_) int {
+	r, _, _ := xWnd_SetWindowPos.Call(uintptr(hWindow), uintptr(hWndInsertAfter), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), uintptr(uFlags))
+	return int(r)
+}
+
+// 窗口_取DPI. 获取当前窗口所在显示器DPI, 返回窗口DPI.
+//
+// hWindow: 窗口句柄.
+func XWnd_GetDPI(hWindow int) int {
+	r, _, _ := xWnd_GetDPI.Call(uintptr(hWindow))
+	return int(r)
+}
+
+// 窗口_坐标转换DPI. 窗口客户区坐标转换到缩放后DPI坐标.
+//
+// hWindow: 窗口句柄.
+//
+// pRect: 接收返回坐标.
+func XWnd_RectToDPI(hWindow int, pRect *RECT) int {
+	r, _, _ := xWnd_RectToDPI.Call(uintptr(hWindow), uintptr(unsafe.Pointer(pRect)))
+	return int(r)
+}
+
+// 窗口_坐标点转换DPI. 窗口客户区坐标点转换到缩放后.
+//
+// hWindow: 窗口句柄.
+//
+// pPt: 接收返回坐标点.
+func XWnd_PointToDPI(hWindow int, pPt *POINT) int {
+	r, _, _ := xWnd_PointToDPI.Call(uintptr(hWindow), uintptr(unsafe.Pointer(pPt)))
+	return int(r)
+}
+
+// 窗口_取光标位置. 封装的系统API: GetCursorPos(), 内部做了DPI适配.
+//
+// hWindow: 窗口句柄.
+//
+// pPt: 接收返回坐标点.
+func XWnd_GetCursorPos(hWindow int, pPt *POINT) bool {
+	r, _, _ := xWnd_GetCursorPos.Call(uintptr(hWindow), uintptr(unsafe.Pointer(pPt)))
+	return r != 0
+}
+
+// 窗口_客户区坐标点到屏幕坐标点. 封装的系统API:ClientToScreen, 内部做了DPI适配.
+//
+// hWindow: 窗口句柄.
+//
+// pPt: 接收返回坐标点.
+func XWnd_ClientToScreen(hWindow int, pPt *POINT) bool {
+	r, _, _ := xWnd_ClientToScreen.Call(uintptr(hWindow), uintptr(unsafe.Pointer(pPt)))
+	return r != 0
+}
+
+// 窗口_屏幕坐标点到客户区坐标点. 封装的系统API: ScreenToClient(), 内部做了DPI适配.
+//
+// hWindow: 窗口句柄.
+//
+// pPt: 接收返回坐标点.
+func XWnd_ScreenToClient(hWindow int, pPt *POINT) bool {
+	r, _, _ := xWnd_ScreenToClient.Call(uintptr(hWindow), uintptr(unsafe.Pointer(pPt)))
+	return r != 0
+}
+
+// 窗口_置DPI. 设置当前窗口DPI, 默认DPI为96.
+//
+// hWindow: 窗口句柄.
+//
+// nDPI: DPI值.
+func XWnd_SetDPI(hWindow int, nDPI int) int {
+	r, _, _ := xWnd_SetDPI.Call(uintptr(hWindow), uintptr(nDPI))
 	return int(r)
 }

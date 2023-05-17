@@ -33,6 +33,20 @@ func XSvg_LoadZip(pZipFileName, pFileName, pPassword string) int {
 	return int(r)
 }
 
+// SVG_加载从资源ZIP, 返回SVG句柄.
+//
+// id: 资源ID.
+//
+// pFileName: svg文件名.
+//
+// pPassword: zip密码.
+//
+// hModule: 模块句柄, 可填0.
+func XSvg_LoadZipRes(id int, pFileName, pPassword string, hModule int) int {
+	r, _, _ := xSvg_LoadZipRes.Call(uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(hModule))
+	return int(r)
+}
+
 // SVG_加载从资源, 返回SVG句柄.
 //
 // id: 资源ID.

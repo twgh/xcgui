@@ -694,7 +694,7 @@ func (e *Edit) GetText_Temp() string {
 
 // 编辑框_取文本行_临时, 获取指定行文本内容. 返回临时文本, 临时缓存区大小: xcc.Text_Buffer_Size .
 //
-// iRow: 行号.
+// iRow: 行索引.
 func (e *Edit) GetTextRow_Temp(iRow int) string {
 	return xc.XEdit_GetTextRow_Temp(e.Handle, iRow)
 }
@@ -702,6 +702,48 @@ func (e *Edit) GetTextRow_Temp(iRow int) string {
 // 编辑框_取选择文本, 不包含非文本内容. 返回临时文本, 临时缓存区大小: xcc.Text_Buffer_Size .
 func (e *Edit) GetSelectText_Temp() string {
 	return xc.XEdit_GetSelectText_Temp(e.Handle)
+}
+
+// 编辑框_插入气泡开始, 当前行开始.
+//
+// hImageAvatar: 头像图片句柄.
+//
+// hImageBubble: 气泡背景图片句柄.
+//
+// nFlag: 聊天气泡对齐方式: xcc.Chat_Flag_ .
+func (e *Edit) InsertChatBegin(hImageAvatar int, hImageBubble int, nFlag xcc.Chat_Flag_) int {
+	return xc.XEdit_InsertChatBegin(e.Handle, hImageAvatar, hImageBubble, nFlag)
+}
+
+// 编辑框_取指定行气泡标识. 返回行标识: xcc.Chat_Flag_
+//
+// iRow: 行索引.
+func (e *Edit) GetChatFlags(iRow int) xcc.Chat_Flag_ {
+	return xc.XEdit_GetChatFlags(e.Handle, iRow)
+}
+
+// 编辑框_插入文本扩展.
+//
+// iRow: 行索引.
+//
+// iCol: 列索引.
+//
+// pString: 字符串.
+//
+// iStyle: 样式.
+func (e *Edit) InsertTextEx(iRow int, iCol int, pString string, iStyle int) int {
+	return xc.XEdit_InsertTextEx(e.Handle, iRow, iCol, pString, iStyle)
+}
+
+// 编辑框_插入对象.
+//
+// iRow: 行索引.
+//
+// iCol: 列索引.
+//
+// hObj: 对象句柄.
+func (e *Edit) InsertObject(iRow int, iCol int, hObj int) int {
+	return xc.XEdit_InsertObject(e.Handle, iRow, iCol, hObj)
 }
 
 /*
@@ -791,15 +833,4 @@ func (e *Edit) Event_EDIT_ROW_CHANGED(pFun XE_EDIT_ROW_CHANGED) bool {
 // 编辑框_行_被改变.
 func (e *Edit) Event_EDIT_ROW_CHANGED1(pFun XE_EDIT_ROW_CHANGED1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_ROW_CHANGED, pFun)
-}
-
-// 编辑框_插入气泡开始, 当前行开始.
-//
-// hImageAvatar: 头像图片句柄.
-//
-// hImageBubble: 气泡背景图片句柄.
-//
-// nFlag: 聊天气泡对齐方式: xcc.Chat_Flag_ .
-func (e *Edit) InsertChatBegin(hImageAvatar int, hImageBubble int, nFlag xcc.Chat_Flag_) int {
-	return xc.XEdit_InsertChatBegin(e.Handle, hImageAvatar, hImageBubble, nFlag)
 }

@@ -704,9 +704,9 @@ const (
 	IDM_HIDE  = 1000000009 // 隐藏
 
 	Edit_Style_No      = 0xFFFF // 无效样式
-	Edit_Style_Default = 1      //edit 默认样式
+	Edit_Style_Default = 1      // edit 默认样式
 
-	Text_Buffer_Size = 10240 //共享文本缓冲区大小
+	Text_Buffer_Size = 10240 // 共享文本缓冲区大小
 )
 
 // 菜单ID, 当前未使用
@@ -883,4 +883,34 @@ const (
 	VK_Backslash     = 220 // \键
 	VK_BracketRight  = 221 // ]键
 	VK_QuotationMark = 222 // ‘键(引号)
+)
+
+// SWP_ 是窗口大小和定位的标志.
+type SWP_ uint32
+
+const (
+	SWP_ASYNCWINDOWPOS SWP_ = 0x4000 // 如果调用线程和拥有窗口的线程连接到不同的输入队列，系统会将请求发布到拥有窗口的线程。这可以防止调用线程在其他线程处理请求时阻塞其执行。
+	SWP_DEFERERASE     SWP_ = 0x2000 // 防止生成WM_SYNCPAINT消息。
+	SWP_DRAWFRAME      SWP_ = 0x0020 // 在窗口周围绘制一个框架（在窗口的类描述中定义）。
+	SWP_FRAMECHANGED   SWP_ = 0x0020 // 应用使用 SetWindowLong 函数 设置的新框架样式。向窗口发送WM_NCCALCSIZE消息，即使窗口大小没有改变。如果未指定此标志，则仅在更改窗口大小时发送 WM_NCCALCSIZE 。
+	SWP_HIDEWINDOW     SWP_ = 0x0080 // 隐藏窗口。
+	SWP_NOACTIVATE     SWP_ = 0x0010 // 不激活窗口。如果未设置此标志，则窗口被激活并移动到最顶层或非最顶层组的顶部（取决于hWndInsertAfter参数的设置）。
+	SWP_NOCOPYBITS     SWP_ = 0x0100 // 丢弃客户区的全部内容。如果未指定此标志，则在调整窗口大小或重新定位后，将保存客户区的有效内容并将其复制回客户区。
+	SWP_NOMOVE         SWP_ = 0x0002 // 保留当前位置（忽略X和Y参数）。
+	SWP_NOOWNERZORDER  SWP_ = 0x0200 // 不改变所有者窗口在 Z 顺序中的位置。
+	SWP_NOREDRAW       SWP_ = 0x0008 // 不重绘更改。如果设置了此标志，则不会发生任何类型的重新绘制。这适用于客户区、非客户区（包括标题栏和滚动条）以及由于窗口移动而未覆盖的父窗口的任何部分。设置此标志时，应用程序必须显式地使需要重绘的窗口和父窗口的任何部分无效或重绘。
+	SWP_NOREPOSITION   SWP_ = 0x0200 // 与SWP_NOOWNERZORDER标志相同。
+	SWP_NOSENDCHANGING SWP_ = 0x0400 // 阻止窗口接收WM_WINDOWPOSCHANGING消息。
+	SWP_NOSIZE         SWP_ = 0x0001 // 保留当前大小（忽略cx和cy参数）。
+	SWP_NOZORDER       SWP_ = 0x0004 // 保留当前 Z 顺序（忽略hWndInsertAfter参数）。
+	SWP_SHOWWINDOW     SWP_ = 0x0040 // 显示窗口。
+)
+
+type HWND_ int
+
+const (
+	HWND_NOTOPMOST HWND_ = -2 // 将窗口置于所有非顶层窗口之上（即在所有顶层窗口之后）。如果窗口已经是非顶层窗口则该标志不起作用。
+	HWND_TOPMOST   HWND_ = -1 // 将窗口置于所有非顶层窗口之上。即使窗口未被激活, 窗口也将保持顶级位置。
+	HWND_TOP       HWND_ = 0  // 将窗口置于Z序的顶部。
+	HWND_BOTTOM    HWND_ = 1  // 将窗口置于Z序的底部。如果参数hWnd标识了一个顶层窗口，则窗口失去顶级位置，并且被置在所有其他窗口的底部。
 )

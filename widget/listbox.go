@@ -625,6 +625,31 @@ func (l *ListBox) SetDragRectColor(color, width int) int {
 	return xc.XListBox_SetDragRectColor(l.Handle, color, width)
 }
 
+// 列表框_置项模板从内存. 设置项模板文件.
+//
+// data: 模板数据.
+func (l *ListBox) SetItemTemplateXMLFromMem(data []byte) bool {
+	return xc.XListBox_SetItemTemplateXMLFromMem(l.Handle, data)
+}
+
+// 列表框_置项模板从资源ZIP. 设置项模板文件.
+//
+// id: RC资源ID.
+//
+// pFileName: 项模板文件名.
+//
+// pPassword: zip密码.
+//
+// hModule: 模块句柄, 可填0.
+func (l *ListBox) SetItemTemplateXMLFromZipRes(id int, pFileName string, pPassword string, hModule int) bool {
+	return xc.XListBox_SetItemTemplateXMLFromZipRes(l.Handle, id, pFileName, pPassword, hModule)
+}
+
+// 列表框_取项模板. 获取列表项模板, 返回项模板句柄.
+func (l *ListBox) GetItemTemplate() int {
+	return xc.XListBox_GetItemTemplate(l.Handle)
+}
+
 /*
 以下都是事件
 */

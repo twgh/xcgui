@@ -892,7 +892,7 @@ func XEdit_GetText_Temp(hEle int) string {
 //
 // hEle: 元素句柄.
 //
-// iRow: 行号.
+// iRow: 行索引.
 func XEdit_GetTextRow_Temp(hEle int, iRow int) string {
 	r, _, _ := xEdit_GetTextRow_Temp.Call(uintptr(hEle), uintptr(iRow))
 	return common.UintPtrToString(r)
@@ -917,5 +917,45 @@ func XEdit_GetSelectText_Temp(hEle int) string {
 // nFlag: 聊天气泡对齐方式: xcc.Chat_Flag_ .
 func XEdit_InsertChatBegin(hEle int, hImageAvatar int, hImageBubble int, nFlag xcc.Chat_Flag_) int {
 	r, _, _ := xEdit_InsertChatBegin.Call(uintptr(hEle), uintptr(hImageAvatar), uintptr(hImageBubble), uintptr(nFlag))
+	return int(r)
+}
+
+// 编辑框_取指定行气泡标识. 返回行标识: xcc.Chat_Flag_
+//
+// hEle: 元素句柄.
+//
+// iRow: 行索引.
+func XEdit_GetChatFlags(hEle int, iRow int) xcc.Chat_Flag_ {
+	r, _, _ := xEdit_GetChatFlags.Call(uintptr(hEle), uintptr(iRow))
+	return xcc.Chat_Flag_(r)
+}
+
+// 编辑框_插入文本扩展.
+//
+// hEle: 元素句柄.
+//
+// iRow: 行索引.
+//
+// iCol: 列索引.
+//
+// pString: 字符串.
+//
+// iStyle: 样式.
+func XEdit_InsertTextEx(hEle int, iRow int, iCol int, pString string, iStyle int) int {
+	r, _, _ := xEdit_InsertTextEx.Call(uintptr(hEle), uintptr(iRow), uintptr(iCol), common.StrPtr(pString), uintptr(iStyle))
+	return int(r)
+}
+
+// 编辑框_插入对象.
+//
+// hEle: 元素句柄.
+//
+// iRow: 行索引.
+//
+// iCol: 列索引.
+//
+// hObj: 对象句柄.
+func XEdit_InsertObject(hEle int, iRow int, iCol int, hObj int) int {
+	r, _, _ := xEdit_InsertObject.Call(uintptr(hEle), uintptr(iRow), uintptr(iCol), uintptr(hObj))
 	return int(r)
 }

@@ -1099,3 +1099,29 @@ func XList_RefreshDataHeader(hEle int) int {
 	r, _, _ := xList_RefreshDataHeader.Call(uintptr(hEle))
 	return int(r)
 }
+
+// 列表_置项模板从内存.
+//
+// hEle: 元素句柄.
+//
+// data: 模板数据.
+func XList_SetItemTemplateXMLFromMem(hEle int, data []byte) bool {
+	r, _, _ := xList_SetItemTemplateXMLFromMem.Call(uintptr(hEle), common.ByteSliceDataPtr(&data), uintptr(len(data)))
+	return r != 0
+}
+
+// 列表_置项模板从资源ZIP. 从RC资源ZIP加载.
+//
+// hEle: 元素句柄.
+//
+// id: RC资源ID.
+//
+// pFileName: 项模板文件名.
+//
+// pPassword: zip密码.
+//
+// hModule: 模块句柄, 可填0.
+func XList_SetItemTemplateXMLFromZipRes(hEle, id int, pFileName string, pPassword string, hModule int) bool {
+	r, _, _ := xList_SetItemTemplateXMLFromZipRes.Call(uintptr(hEle), uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(hModule))
+	return r != 0
+}

@@ -119,6 +119,13 @@ func (p *ProgressBar) EnableShowText(bShow bool) bool {
 	return xc.XProgBar_EnableShowText(p.Handle, bShow)
 }
 
+// 进度条_置进度颜色. 设置进度颜色.
+//
+// color: ABGR 颜色.
+func (p *ProgressBar) SetColorLoad(color int) bool {
+	return xc.XProgBar_SetColorLoad(p.Handle, color)
+}
+
 /*
 以下都是事件
 */

@@ -577,6 +577,53 @@ func (a *App) LoadLayoutZipMem(data []byte, pFileName string, pPassword string, 
 	return xc.XC_LoadLayoutZipMem(data, pFileName, pPassword, hParent, hAttachWnd)
 }
 
+// 炫彩_加载布局文件资源ZIP扩展. 加载布局文件从RC资源zip压缩包中, 返回窗口句柄或元素句柄.
+//
+// id: RC资源ID.
+//
+// pFileName: 布局文件名.
+//
+// pPassword: zip密码.
+//
+// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+//
+// hParent: 父对象句柄, 窗口句柄或UI元素句柄, 可填0.
+//
+// hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用, 可填0.
+//
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
+//
+// hModule: 模块句柄, 可填0.
+func (a *App) LoadLayoutZipResEx(id int, pFileName string, pPassword, pPrefixName string, hParent, hParentWnd, hAttachWnd, hModule int) int {
+	return xc.XC_LoadLayoutZipResEx(id, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd, hModule)
+}
+
+// 炫彩_加载资源文件资源ZIP. 加载资源文件从RC资源zip压缩包中.
+//
+// id: RC资源ID.
+//
+// pFileName: 资源文件名.
+//
+// pPassword: zip压缩包密码.
+//
+// hModule: 模块句柄, 可填0.
+func (a *App) LoadResourceZipRes(id int, pFileName string, pPassword string, hModule int) bool {
+	return xc.XC_LoadResourceZipRes(id, pFileName, pPassword, hModule)
+}
+
+// 炫彩_加载样式文件从资源ZIP. 从RC资源中的ZIP包中, 加载样式文件.
+//
+// id: RC资源ID.
+//
+// pFileName: 文件名.
+//
+// pPassword: 密码.
+//
+// hModule: 模块句柄, 可填0.
+func (a *App) LoadStyleZipRes(id int, pFileName string, pPassword string, hModule int) bool {
+	return xc.XC_LoadStyleZipRes(id, pFileName, pPassword, hModule)
+}
+
 // 炫彩_加载布局文件从字符串W, 加载布局文件从内存字符串, 返回窗口句柄或布局句柄或元素句柄.
 //
 // pStringXML: 字符串.
@@ -995,4 +1042,18 @@ func (a *App) NotifyMsg_SetSpace(hWindow, nSpace int) int {
 // bottom: 底边.
 func (a *App) NotifyMsg_SetBorderSize(hWindow, left, top, right, bottom int) int {
 	return xc.XNotifyMsg_SetBorderSize(hWindow, left, top, right, bottom)
+}
+
+// 炫彩_启用自动DPI. 当启用后, 创建窗口时自动检测DPI调整UI缩放, 处理DPI改变消息; 禁用后,当DPI改变,需要手动设置窗口DPI.
+//
+// bEnabel: 是否启用.
+func (a *App) EnableAutoDPI(bEnabel bool) int {
+	return xc.XC_EnableAutoDPI(bEnabel)
+}
+
+// 炫彩_置窗口图标. 全局窗口图标, 所有未设置图标的窗口, 都将使用此默认图标.
+//
+// hImage: 图标句柄.
+func (a *App) SetWindowIcon(hImage int) int {
+	return xc.XC_SetWindowIcon(hImage)
 }

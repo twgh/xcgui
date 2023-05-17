@@ -845,6 +845,26 @@ func (l *List) RefreshDataHeader() int {
 	return xc.XList_RefreshDataHeader(l.Handle)
 }
 
+// 列表_置项模板从内存.
+//
+// data: 模板数据.
+func (l *List) SetItemTemplateXMLFromMem(data []byte) bool {
+	return xc.XList_SetItemTemplateXMLFromMem(l.Handle, data)
+}
+
+// 列表_置项模板从资源ZIP. 从RC资源ZIP加载.
+//
+// id: RC资源ID.
+//
+// pFileName: 项模板文件名.
+//
+// pPassword: zip密码.
+//
+// hModule: 模块句柄, 可填0.
+func (l *List) SetItemTemplateXMLFromZipRes(id int, pFileName string, pPassword string, hModule int) bool {
+	return xc.XList_SetItemTemplateXMLFromZipRes(l.Handle, id, pFileName, pPassword, hModule)
+}
+
 /*
 以下都是事件
 */

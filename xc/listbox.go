@@ -40,7 +40,7 @@ func XListBox_EnableFixedRowHeight(hEle int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XListBox_EnableTemplateReuse(hEle int, bEnable bool) int {
-	r, _, _ := xListBox_EnablemTemplateReuse.Call(uintptr(hEle), common.BoolPtr(bEnable))
+	r, _, _ := xListBox_EnableTemplateReuse.Call(uintptr(hEle), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -793,5 +793,39 @@ func XListBox_SetSplitLineColor(hEle int, color int) int {
 // width: 线宽度.
 func XListBox_SetDragRectColor(hEle int, color, width int) int {
 	r, _, _ := xListBox_SetDragRectColor.Call(uintptr(hEle), uintptr(color), uintptr(width))
+	return int(r)
+}
+
+// 列表框_置项模板从内存. 设置项模板文件.
+//
+// hEle: 元素句柄.
+//
+// data: 模板数据.
+func XListBox_SetItemTemplateXMLFromMem(hEle int, data []byte) bool {
+	r, _, _ := xListBox_SetItemTemplateXMLFromMem.Call(uintptr(hEle), common.ByteSliceDataPtr(&data), uintptr(len(data)))
+	return r != 0
+}
+
+// 列表框_置项模板从资源ZIP. 设置项模板文件.
+//
+// hEle: 元素句柄.
+//
+// id: RC资源ID.
+//
+// pFileName: 项模板文件名.
+//
+// pPassword: zip密码.
+//
+// hModule: 模块句柄, 可填0.
+func XListBox_SetItemTemplateXMLFromZipRes(hEle, id int, pFileName string, pPassword string, hModule int) bool {
+	r, _, _ := xListBox_SetItemTemplateXMLFromZipRes.Call(uintptr(hEle), uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(hModule))
+	return r != 0
+}
+
+// 列表框_取项模板. 获取列表项模板, 返回项模板句柄.
+//
+// hEle: 元素句柄.
+func XListBox_GetItemTemplate(hEle int) int {
+	r, _, _ := xListBox_GetItemTemplate.Call(uintptr(hEle))
 	return int(r)
 }

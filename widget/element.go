@@ -70,7 +70,7 @@ func NewElementByUIDName(name string) *Element {
 //
 // nEvent: 事件类型: xcc.XE_.
 //
-// pFun: 事件函数指针.
+// pFun: 事件函数.
 func (e *Element) RegEventC(nEvent xcc.XE_, pFun interface{}) bool {
 	return xc.XEle_RegEventC(e.Handle, nEvent, pFun)
 }
@@ -79,7 +79,7 @@ func (e *Element) RegEventC(nEvent xcc.XE_, pFun interface{}) bool {
 //
 // nEvent: 事件类型: xcc.XE_.
 //
-// pFun: 事件函数指针.
+// pFun: 事件函数.
 func (e *Element) RegEventC1(nEvent xcc.XE_, pFun interface{}) bool {
 	return xc.XEle_RegEventC1(e.Handle, nEvent, pFun)
 }
@@ -88,9 +88,36 @@ func (e *Element) RegEventC1(nEvent xcc.XE_, pFun interface{}) bool {
 //
 // nEvent: 事件类型: xcc.XE_.
 //
-// pFun: 事件函数指针.
+// pFun: 事件函数.
 func (e *Element) RemoveEventC(nEvent xcc.XE_, pFun interface{}) bool {
 	return xc.XEle_RemoveEventC(e.Handle, nEvent, pFun)
+}
+
+// 元素_注册事件CEx, 注册事件C方式, 省略2参数, 和非Ex版相比只是最后一个参数不同.
+//
+// nEvent: 事件类型: xcc.XE_.
+//
+// pFun: 事件函数指针, 使用 syscall.NewCallback() 生成.
+func (e *Element) RegEventCEx(nEvent xcc.XE_, pFun uintptr) bool {
+	return xc.XEle_RegEventCEx(e.Handle, nEvent, pFun)
+}
+
+// 元素_注册事件C1Ex, 注册事件C1方式, 省略1参数, 和非Ex版相比只是最后一个参数不同.
+//
+// nEvent: 事件类型: xcc.XE_.
+//
+// pFun: 事件函数指针, 使用 syscall.NewCallback() 生成.
+func (e *Element) RegEventC1Ex(nEvent xcc.XE_, pFun uintptr) bool {
+	return xc.XEle_RegEventC1Ex(e.Handle, nEvent, pFun)
+}
+
+// 元素_移除事件CEx, 和非Ex版相比只是最后一个参数不同.
+//
+// nEvent: 事件类型: xcc.XE_.
+//
+// pFun: 事件函数指针, 使用 syscall.NewCallback() 生成.
+func (e *Element) RemoveEventCEx(nEvent xcc.XE_, pFun uintptr) bool {
+	return xc.XEle_RemoveEventCEx(e.Handle, nEvent, pFun)
 }
 
 // 元素_发送事件.
@@ -879,6 +906,27 @@ func (e *Element) GetSize(pOutWidth *int, pOutHeight *int) int {
 // pText: 背景内容字符串.
 func (e *Element) SetBkInfo(pText string) int {
 	return xc.XEle_SetBkInfo(e.Handle, pText)
+}
+
+// 元素_取窗口客户区坐标DPI. 基于DPI缩放后的坐标.
+//
+// pRect: 接收返回坐标.
+func (e *Element) GetWndClientRectDPI(pRect *xc.RECT) int {
+	return xc.XEle_GetWndClientRectDPI(e.Handle, pRect)
+}
+
+// 元素_取窗口客户区坐标DPI. 基于DPI缩放后的坐标.
+//
+// pPt: 接收返回坐标点.
+func (e *Element) PointClientToWndClientDPI(pPt *xc.POINT) int {
+	return xc.XEle_PointClientToWndClientDPI(e.Handle, pPt)
+}
+
+// 元素_客户区坐标到窗口客户区DPI. 基于DPI缩放后的坐标.
+//
+// pRect: 接收返回坐标.
+func (e *Element) RectClientToWndClientDPI(pRect *xc.RECT) int {
+	return xc.XEle_RectClientToWndClientDPI(e.Handle, pRect)
 }
 
 /*

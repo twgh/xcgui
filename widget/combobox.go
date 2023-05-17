@@ -457,6 +457,31 @@ func (c *ComboBox) SetItemTemplate(hTemp int) int {
 	return xc.XComboBox_SetItemTemplate(c.Handle, hTemp)
 }
 
+// 组合框_置项模板从内存.
+//
+// data: 模板数据.
+func (c *ComboBox) SetItemTemplateXMLFromMem(data []byte) bool {
+	return xc.XComboBox_SetItemTemplateXMLFromMem(c.Handle, data)
+}
+
+// 组合框_置项模板从资源ZIP.
+//
+// id: RC资源ID.
+//
+// pFileName: 文件名.
+//
+// pPassword: zip密码.
+//
+// hModule: 模块句柄, 可填0.
+func (c *ComboBox) SetItemTemplateXMLFromZipRes(id int, pFileName string, pPassword string, hModule int) bool {
+	return xc.XComboBox_SetItemTemplateXMLFromZipRes(c.Handle, id, pFileName, pPassword, hModule)
+}
+
+// 组合框_取项模板, 返回项模板句柄.
+func (c *ComboBox) GetItemTemplate() int {
+	return xc.XComboBox_GetItemTemplate(c.Handle)
+}
+
 /*
 下面都是事件
 */

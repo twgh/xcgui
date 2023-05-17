@@ -30,7 +30,7 @@ func XEle_Create(x int, y int, cx int, cy int, hParent int) int {
 //
 // nEvent: 事件类型: xcc.XE_.
 //
-// pFun: 事件函数指针.
+// pFun: 事件函数.
 func XEle_RegEventC(hEle int, nEvent xcc.XE_, pFun interface{}) bool {
 	r, _, _ := xEle_RegEventC.Call(uintptr(hEle), uintptr(nEvent), syscall.NewCallback(pFun))
 	return r != 0
@@ -42,7 +42,7 @@ func XEle_RegEventC(hEle int, nEvent xcc.XE_, pFun interface{}) bool {
 //
 // nEvent: 事件类型: xcc.XE_.
 //
-// pFun: 事件函数指针.
+// pFun: 事件函数.
 func XEle_RegEventC1(hEle int, nEvent xcc.XE_, pFun interface{}) bool {
 	r, _, _ := xEle_RegEventC1.Call(uintptr(hEle), uintptr(nEvent), syscall.NewCallback(pFun))
 	return r != 0
@@ -54,9 +54,45 @@ func XEle_RegEventC1(hEle int, nEvent xcc.XE_, pFun interface{}) bool {
 //
 // nEvent: 事件类型: xcc.XE_.
 //
-// pFun: 事件函数指针.
+// pFun: 事件函数.
 func XEle_RemoveEventC(hEle int, nEvent xcc.XE_, pFun interface{}) bool {
 	r, _, _ := xEle_RemoveEventC.Call(uintptr(hEle), uintptr(nEvent), syscall.NewCallback(pFun))
+	return r != 0
+}
+
+// 元素_注册事件CEx, 注册事件C方式, 省略2参数, 和非Ex版相比只是最后一个参数不同.
+//
+// hEle: 元素句柄.
+//
+// nEvent: 事件类型: xcc.XE_.
+//
+// pFun: 事件函数指针, 使用 syscall.NewCallback() 生成.
+func XEle_RegEventCEx(hEle int, nEvent xcc.XE_, pFun uintptr) bool {
+	r, _, _ := xEle_RegEventC.Call(uintptr(hEle), uintptr(nEvent), pFun)
+	return r != 0
+}
+
+// 元素_注册事件C1Ex, 注册事件C1方式, 省略1参数, 和非Ex版相比只是最后一个参数不同.
+//
+// hEle: 元素句柄.
+//
+// nEvent: 事件类型: xcc.XE_.
+//
+// pFun: 事件函数指针, 使用 syscall.NewCallback() 生成.
+func XEle_RegEventC1Ex(hEle int, nEvent xcc.XE_, pFun uintptr) bool {
+	r, _, _ := xEle_RegEventC1.Call(uintptr(hEle), uintptr(nEvent), pFun)
+	return r != 0
+}
+
+// 元素_移除事件CEx, 和非Ex版相比只是最后一个参数不同.
+//
+// hEle: 元素句柄.
+//
+// nEvent: 事件类型: xcc.XE_.
+//
+// pFun: 事件函数指针, 使用 syscall.NewCallback() 生成.
+func XEle_RemoveEventCEx(hEle int, nEvent xcc.XE_, pFun uintptr) bool {
+	r, _, _ := xEle_RemoveEventC.Call(uintptr(hEle), uintptr(nEvent), pFun)
 	return r != 0
 }
 
@@ -866,7 +902,7 @@ func XEle_Destroy(hEle int) int {
 //
 // width: 线宽.
 func XEle_AddBkBorder(hEle int, nState xcc.CombinedState, color int, width int) int {
-	r, _, _ := xEle_AddBkBorder.Call(uintptr(hEle), uintptr(color), uintptr(color), uintptr(width))
+	r, _, _ := xEle_AddBkBorder.Call(uintptr(hEle), uintptr(nState), uintptr(color), uintptr(width))
 	return int(r)
 }
 
@@ -1163,5 +1199,35 @@ func XEle_GetSize(hEle int, pOutWidth *int, pOutHeight *int) int {
 // pText: 背景内容字符串.
 func XEle_SetBkInfo(hEle int, pText string) int {
 	r, _, _ := xEle_SetBkInfo.Call(uintptr(hEle), common.StrPtr(pText))
+	return int(r)
+}
+
+// 元素_取窗口客户区坐标DPI. 基于DPI缩放后的坐标.
+//
+// hEle: 元素句柄.
+//
+// pRect: 接收返回坐标.
+func XEle_GetWndClientRectDPI(hEle int, pRect *RECT) int {
+	r, _, _ := xEle_GetWndClientRectDPI.Call(uintptr(hEle), uintptr(unsafe.Pointer(pRect)))
+	return int(r)
+}
+
+// 元素_取窗口客户区坐标DPI. 基于DPI缩放后的坐标.
+//
+// hEle: 元素句柄.
+//
+// pPt: 接收返回坐标点.
+func XEle_PointClientToWndClientDPI(hEle int, pPt *POINT) int {
+	r, _, _ := xEle_PointClientToWndClientDPI.Call(uintptr(hEle), uintptr(unsafe.Pointer(pPt)))
+	return int(r)
+}
+
+// 元素_客户区坐标到窗口客户区DPI. 基于DPI缩放后的坐标.
+//
+// hEle: 元素句柄.
+//
+// pRect: 接收返回坐标.
+func XEle_RectClientToWndClientDPI(hEle int, pRect *RECT) int {
+	r, _, _ := xEle_RectClientToWndClientDPI.Call(uintptr(hEle), uintptr(unsafe.Pointer(pRect)))
 	return int(r)
 }

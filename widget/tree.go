@@ -567,6 +567,31 @@ func (t *Tree) SetSplitLineColor(color int) int {
 	return xc.XTree_SetSplitLineColor(t.Handle, color)
 }
 
+// 列表树_置项模板从内存.
+//
+// data: 模板数据.
+func (t *Tree) SetItemTemplateXMLFromMem(data []byte) bool {
+	return xc.XTree_SetItemTemplateXMLFromMem(t.Handle, data)
+}
+
+// 列表树_置项模板从资源ZIP.
+//
+// id: RC资源ID.
+//
+// pFileName: 文件名.
+//
+// pPassword: zip密码.
+//
+// hModule: 模块句柄, 可填0.
+func (t *Tree) SetItemTemplateXMLFromZipRes(id int, pFileName string, pPassword string, hModule int) bool {
+	return xc.XTree_SetItemTemplateXMLFromZipRes(t.Handle, id, pFileName, pPassword, hModule)
+}
+
+// 列表树_取项模板, 返回项模板句柄.
+func (t *Tree) GetItemTemplate() int {
+	return xc.XTree_GetItemTemplate(t.Handle)
+}
+
 /*
 以下都是事件
 */

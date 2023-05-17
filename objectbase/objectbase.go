@@ -36,3 +36,19 @@ func (o *ObjectBase) GetTypeEx() xcc.XC_OBJECT_TYPE_EX {
 func (o *ObjectBase) SetTypeEx(nType xcc.XC_OBJECT_TYPE_EX) int {
 	return xc.XObj_SetTypeEx(o.Handle, nType)
 }
+
+// 炫彩_置属性, 设置对象属性.
+//
+// pName: 属性名.
+//
+// pValue: 属性值.
+func (o *ObjectBase) SetProperty(pName string, pValue string) bool {
+	return xc.XC_SetProperty(o.Handle, pName, pValue)
+}
+
+// 炫彩_取属性, 获取对象属性, 返回属性值.
+//
+// pName: 属性名.
+func (o *ObjectBase) GetProperty(pName string) string {
+	return xc.XC_GetProperty(o.Handle, pName)
+}

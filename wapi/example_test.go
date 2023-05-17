@@ -10,7 +10,6 @@ import (
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"github.com/twgh/xcgui/window"
-	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
 )
 
@@ -38,7 +37,7 @@ func ExampleClientToScreen() {
 	a := app.New(true)
 	w := window.New(0, 0, 300, 300, "", 0, xcc.Window_Style_Default)
 
-	pt := xc.POINT{X: 0, Y: 0}
+	pt := wapi.POINT{X: 0, Y: 0}
 	wapi.ClientToScreen(w.GetHWND(), &pt)
 	fmt.Println(pt)
 
@@ -223,7 +222,7 @@ func ExampleChooseColorW() {
 }
 
 func ExampleGetCursorPos() {
-	var pt xc.POINT
+	var pt wapi.POINT
 	wapi.GetCursorPos(&pt)
 	fmt.Println(pt)
 }

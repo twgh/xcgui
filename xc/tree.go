@@ -62,7 +62,7 @@ func XTree_EnableExpand(hEle int, bEnable bool) int {
 //
 // bEnable: 是否启用.
 func XTree_EnableTemplateReuse(hEle int, bEnable bool) int {
-	r, _, _ := xTree_EnablemTemplateReuse.Call(uintptr(hEle), common.BoolPtr(bEnable))
+	r, _, _ := xTree_EnableTemplateReuse.Call(uintptr(hEle), common.BoolPtr(bEnable))
 	return int(r)
 }
 
@@ -713,5 +713,39 @@ func XTree_DeleteColumnAll(hEle int) int {
 // color: ABGR 颜色值.
 func XTree_SetSplitLineColor(hEle int, color int) int {
 	r, _, _ := xTree_SetSplitLineColor.Call(uintptr(hEle), uintptr(color))
+	return int(r)
+}
+
+// 列表树_置项模板从内存.
+//
+// hEle: 元素句柄.
+//
+// data: 模板数据.
+func XTree_SetItemTemplateXMLFromMem(hEle int, data []byte) bool {
+	r, _, _ := xTree_SetItemTemplateXMLFromMem.Call(uintptr(hEle), common.ByteSliceDataPtr(&data), uintptr(len(data)))
+	return r != 0
+}
+
+// 列表树_置项模板从资源ZIP.
+//
+// hEle: 元素句柄.
+//
+// id: RC资源ID.
+//
+// pFileName: 文件名.
+//
+// pPassword: zip密码.
+//
+// hModule: 模块句柄, 可填0.
+func XTree_SetItemTemplateXMLFromZipRes(hEle, id int, pFileName string, pPassword string, hModule int) bool {
+	r, _, _ := xTree_SetItemTemplateXMLFromZipRes.Call(uintptr(hEle), uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(hModule))
+	return r != 0
+}
+
+// 列表树_取项模板, 返回项模板句柄.
+//
+// hEle: 元素句柄.
+func XTree_GetItemTemplate(hEle int) int {
+	r, _, _ := xTree_GetItemTemplate.Call(uintptr(hEle))
 	return int(r)
 }

@@ -113,6 +113,21 @@ func NewByZip(pZipFileName string, pFileName string, pPassword string) *Image {
 	return p
 }
 
+// 图片_加载从资源ZIP.
+//
+// id: RC资源ID.
+//
+// pFileName: 图片文件名.
+//
+// pPassword: ZIP压缩包密码.
+//
+// hModule: 模块句柄, 可填0.
+func NewByZipRes(id int, pFileName string, pPassword string, hModule int) *Image {
+	p := &Image{}
+	p.SetHandle(xc.XImage_LoadZipRes(id, pFileName, pPassword, hModule))
+	return p
+}
+
 // 图片_加载从ZIP自适应, 加载图片从ZIP压缩包, 自适应图片.
 //
 // pZipFileName: ZIP压缩包文件名.

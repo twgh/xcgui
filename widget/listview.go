@@ -724,6 +724,36 @@ func (l *ListView) SetDragRectColor(color int, width int) int {
 	return xc.XListView_SetDragRectColor(l.Handle, color, width)
 }
 
+// 列表视_置项模板从内存.
+//
+// data: 模板数据.
+func (l *ListView) SetItemTemplateXMLFromMem(data []byte) bool {
+	return xc.XListView_SetItemTemplateXMLFromMem(l.Handle, data)
+}
+
+// 列表视_置项模板从资源ZIP.
+//
+// id: RC资源ID.
+//
+// pFileName: 文件名.
+//
+// pPassword: zip密码.
+//
+// hModule: 模块句柄, 可填0.
+func (l *ListView) SetItemTemplateXMLFromZipRes(id int, pFileName string, pPassword string, hModule int) bool {
+	return xc.XListView_SetItemTemplateXMLFromZipRes(l.Handle, id, pFileName, pPassword, hModule)
+}
+
+// 列表视_取项模板, 返回项模板句柄.
+func (l *ListView) GetItemTemplate() int {
+	return xc.XListView_GetItemTemplate(l.Handle)
+}
+
+// 列表视_取项模板组, 返回项模板组句柄.
+func (l *ListView) GetItemTemplateGroup() int {
+	return xc.XListView_GetItemTemplateGroup(l.Handle)
+}
+
 /*
 以下都是事件
 */

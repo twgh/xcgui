@@ -5,7 +5,6 @@ import (
 	"unsafe"
 
 	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/xc"
 )
 
 var (
@@ -320,9 +319,9 @@ func GetWindowTextW(hWnd int, lpString *string, nMaxCount int) int {
 //
 //	@Description 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-ClientToScreen.
 //	@param hWnd 窗口真实句柄
-//	@param lpPoint xc.POINT 指针. 如果函数成功，则将新的屏幕坐标复制到此结构中.
+//	@param lpPoint wapi.POINT 指针. 如果函数成功，则将新的屏幕坐标复制到此结构中.
 //	@return bool
-func ClientToScreen(hWnd int, lpPoint *xc.POINT) bool {
+func ClientToScreen(hWnd int, lpPoint *POINT) bool {
 	r, _, _ := clientToScreen.Call(uintptr(hWnd), uintptr(unsafe.Pointer(lpPoint)))
 	return r != 0
 }
@@ -330,9 +329,9 @@ func ClientToScreen(hWnd int, lpPoint *xc.POINT) bool {
 // GetCursorPos 检索鼠标光标的位置，以屏幕坐标表示.
 //
 //	@Description 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-getcursorpos.
-//	@param lpPoint 指向接收光标屏幕坐标的 xc.POINT 结构的指针.
+//	@param lpPoint 指向接收光标屏幕坐标的 wapi.POINT 结构的指针.
 //	@return bool
-func GetCursorPos(lpPoint *xc.POINT) bool {
+func GetCursorPos(lpPoint *POINT) bool {
 	r, _, _ := getCursorPos.Call(uintptr(unsafe.Pointer(lpPoint)))
 	return r != 0
 }
@@ -422,7 +421,12 @@ type MSG struct {
 	WParam  int32
 	LParam  int32
 	Time    uint32
-	Pt      xc.POINT
+	Pt      POINT
+}
+
+type POINT struct {
+	X int32
+	Y int32
 }
 
 // SendMessageW 将指定的消息发送到一个或多个窗口。SendMessage函数调用指定窗口的窗口过程，直到窗口过程处理完消息才返回。
