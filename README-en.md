@@ -1,7 +1,7 @@
-<h1 align="center">XCGUI</h1>
-<p align="center">
-    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.372-blue" alt="release"></a>
-    <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-3.3.7-blue" alt="XCGUI"></a>
+<h1 style="text-align:center">XCGUI</h1>
+<p style="text-align:center">
+    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.380-blue" alt="release"></a>
+    <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-3.3.8-blue" alt="XCGUI"></a>
    <a href="https://golang.org"> <img src="https://img.shields.io/badge/golang-1.16-blue" alt="golang"></a>
     <a href="https://pkg.go.dev/github.com/twgh/xcgui"><img src="https://img.shields.io/badge/go.dev-reference-brightgreen" alt="GoDoc"></a>
     <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-brightgreen" alt="License"></a>
@@ -47,8 +47,8 @@ package main
 import (
 	_ "embed"
 	"github.com/twgh/xcgui/app"
+	"github.com/twgh/xcgui/widget"
 	"github.com/twgh/xcgui/window"
-	"github.com/twgh/xcgui/xcc"
 )
 
 //go:embed res/qqmusic.zip
@@ -61,11 +61,11 @@ func main() {
 	// Load layout file from memory zip, Create window object
 	w := window.NewByLayoutZipMem(qqmusic, "main.xml", "", 0, 0)
     
-    // SongTitle is the value of the name property set for the song name (shapeText component) in main.xml.
+	// SongTitle is the value of the name property set for the song name (shapeText component) in main.xml.
 	// Through GetObjectByName, you can get the handle to the component with the name property set in the layout file..
 	// Can be simplified to: widget.NewShapeTextByName("songTitle").
-	songTitle := widget.NewShapeTextByHandle(a.GetObjectByName("songTitle"))
-	println(songTitle.GetText()) // output: 两只老虎爱跳舞
+	song := widget.NewShapeTextByHandle(a.GetObjectByName("songTitle"))
+	println(song.GetText()) // output: 两只老虎爱跳舞
     
 	// Adjust the layout
 	w.AdjustLayout()
@@ -104,6 +104,8 @@ curl -fL "https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui-32.dll?version=l
 
 #### （3）Download using the getxcgui tool
 
+> Please ensure that `%GOPATH%\bin` is in the environment variable `path`
+
 ```bash
 go install github.com/twgh/getxcgui@latest
 getxcgui
@@ -135,6 +137,8 @@ package main
 
 import (
 	"github.com/twgh/xcgui/app"
+	"github.com/twgh/xcgui/imagex"
+	"github.com/twgh/xcgui/widget"
 	"github.com/twgh/xcgui/window"
 	"github.com/twgh/xcgui/xcc"
 )
@@ -148,11 +152,11 @@ func main() {
 	// Set the window border size
 	w.SetBorderSize(0, 30, 0, 0)
     // Set window icon
-	w.SetIcon(xc.XImage_LoadSvgStringW(svgIcon))
+	a.SetWindowIcon(imagex.NewBySvgStringW(svgIcon).Handle)
 	// Set window transparency type
 	w.SetTransparentType(xcc.Window_Transparent_Shadow)
 	// Set window shadow
-	w.SetShadowInfo(8, 254, 10, false, 0)
+	w.SetShadowInfo(8, 255, 10, false, 0)
     
     // Create a button
 	btn := widget.NewButton(165, 135, 100, 30, "Button", w.Handle)
