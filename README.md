@@ -1,5 +1,5 @@
-<h1 style="text-align:center">XCGUI</h1>
-<p style="text-align:center">
+<h1 align="center">XCGUI</h1>
+<p align="center">
     <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.380-blue" alt="release"></a>
     <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-3.3.8-blue" alt="XCGUI"></a>
    <a href="https://golang.org"> <img src="https://img.shields.io/badge/golang-1.16-blue" alt="golang"></a>
@@ -11,6 +11,7 @@
 	<a href="https://pkg.go.dev/github.com/twgh/xcgui">项目文档</a>&nbsp;&nbsp;
 	<a href="http://mall.xcgui.com">官方资源</a>
 </p>
+
 
 
 
