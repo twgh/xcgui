@@ -1849,6 +1849,9 @@ func LoadXCGUI() *syscall.LazyDLL {
 func _loadXCGUI() {
 	// Library.
 	xcgui = syscall.NewLazyDLL(xcguiPath)
+	if xcgui.Handle() == 0 {
+		return
+	}
 
 	// Global Functions.
 	xC_MessageBox = xcgui.NewProc("XC_MessageBox")
