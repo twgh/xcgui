@@ -16,7 +16,11 @@ type App struct {
 //	@param bD2D 是否启用D2D.
 //	@return *App
 func New(bD2D bool) *App {
-	xc.LoadXCGUI()
+	moudle := xc.LoadXCGUI()
+	if moudle.Handle() == 0 {
+		return nil
+	}
+
 	p := &App{}
 	if !xc.XInitXCGUI(bD2D) {
 		return nil
