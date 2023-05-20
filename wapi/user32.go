@@ -35,7 +35,43 @@ var (
 	postQuitMessage            = user32.NewProc("PostQuitMessage")
 	sendMessageW               = user32.NewProc("SendMessageW")
 	postMessageW               = user32.NewProc("PostMessageW")
+	isWindow                   = user32.NewProc("IsWindow")
+	registerWindowMessageW     = user32.NewProc("RegisterWindowMessageW")
+	findWindowW                = user32.NewProc("FindWindowW")
 )
+
+// FindWindowW 检索顶级窗口的句柄，该窗口的类名称和窗口名称与指定的字符串匹配。 此函数不搜索子窗口。 此函数不执行区分大小写的搜索.
+//
+//	@Description 如果 lpWindowName 参数不 为 NULL， FindWindowW 将调用 GetWindowTextW 函数以检索窗口名称进行比较。 有关可能出现的潜在问题的说明，请参阅 GetWindowTextW 的备注。
+//	详见: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-FindWindowW.
+//	@param lpClassName 窗口类名, 可为空.
+//	@param lpWindowName 窗口名称（窗口的标题）, 可为空.
+//	@return int 返回窗口句柄。
+func FindWindowW(lpClassName, lpWindowName string) int {
+	r, _, _ := findWindowW.Call(common.StrPtr(lpClassName), common.StrPtr(lpWindowName))
+	return int(r)
+}
+
+// RegisterWindowMessageW 定义保证在整个系统中唯一的新窗口消息。 发送或发布消息时可以使用消息值.
+//
+//	详见: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-RegisterWindowMessageW.
+//	@param lpString 要注册的消息。
+//	@return int 如果成功注册消息，则返回值是范围0xC000到0xFFFF的消息标识符. 如果函数失败，则返回值为零.
+func RegisterWindowMessageW(lpString string) int {
+	r, _, _ := registerWindowMessageW.Call(common.StrPtr(lpString))
+	return int(r)
+}
+
+// IsWindow 判断一个窗口句柄是否有效.
+//
+//	@Description 线程不应将 IsWindow 用于未创建的窗口，因为调用此函数后可能会销毁该窗口。 此外，由于窗口句柄被回收，句柄甚至可以指向其他窗口.
+//	详见: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-iswindow.
+//	@param hWnd 要测试的窗口的句柄。
+//	@return bool
+func IsWindow(hWnd int) bool {
+	r, _, _ := isWindow.Call(uintptr(hWnd))
+	return r != 0
+}
 
 type HWND_ int
 
