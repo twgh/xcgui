@@ -929,6 +929,27 @@ func (e *Element) RectClientToWndClientDPI(pRect *xc.RECT) int {
 	return xc.XEle_RectClientToWndClientDPI(e.Handle, pRect)
 }
 
+// SetFocus 元素_置焦点.
+func (e *Element) SetFocus() bool {
+	hParent := 0
+	hEle := e.Handle
+	for {
+		hParent = xc.XWidget_GetParent(hEle)
+		if xc.XC_IsHWINDOW(hParent) {
+			break
+		}
+
+		if hParent == 0 {
+			return false
+		}
+
+		hEle = hParent
+	}
+
+	xc.XWnd_SetFocusEle(hParent, e.Handle)
+	return true
+}
+
 /*
 下面都是事件
 */
