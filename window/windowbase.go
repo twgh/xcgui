@@ -1012,6 +1012,39 @@ func (w *windowBase) SetDPI(nDPI int) int {
 	return xc.XWnd_SetDPI(w.Handle, nDPI)
 }
 
+// 窗口_置大小. 设置窗口宽高.
+//
+// 宽: width.
+//
+// 高: height.
+func (w *windowBase) SetSize(width, height int) bool {
+	var rc xc.RECT
+	xc.XWnd_GetRect(w.Handle, &rc)
+	rc.Right = rc.Left + int32(width)
+	rc.Bottom = rc.Top + int32(height)
+	return xc.XWnd_SetRect(w.Handle, &rc)
+}
+
+// 窗口_置宽度.
+//
+// 宽: width.
+func (w *windowBase) SetWidth(width int) bool {
+	var rc xc.RECT
+	xc.XWnd_GetRect(w.Handle, &rc)
+	rc.Right = rc.Left + int32(width)
+	return xc.XWnd_SetRect(w.Handle, &rc)
+}
+
+// 窗口_置高度.
+//
+// 高: height.
+func (w *windowBase) SetHeight(height int) bool {
+	var rc xc.RECT
+	xc.XWnd_GetRect(w.Handle, &rc)
+	rc.Bottom = rc.Top + int32(height)
+	return xc.XWnd_SetRect(w.Handle, &rc)
+}
+
 /*
 下面都是事件
 */
