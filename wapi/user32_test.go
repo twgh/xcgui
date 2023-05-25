@@ -11,6 +11,19 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
+// TFunc 内部测试用程序.
+//
+//	@Description: 内部测试时使用的函数.
+//	@param f
+func TFunc(f func(a *app.App, w *window.Window)) {
+	a := app.New(true)
+	w := window.New(0, 0, 600, 400, "Test", 0, xcc.Window_Style_Default)
+	f(a, w)
+	w.Show(true)
+	a.Run()
+	a.Exit()
+}
+
 func TestGetDesktopWindow(t *testing.T) {
 	fmt.Println(wapi.GetDesktopWindow())
 }
@@ -35,34 +48,52 @@ func TestFindWindowExW(t *testing.T) {
 	fmt.Println(wapi.FindWindowExW(0, 0, "TaskManagerWindow", "任务管理器"))
 }
 
+func TestFindWindowW(t *testing.T) {
+	fmt.Println(wapi.FindWindowW("", "任务管理器"))
+	fmt.Println(wapi.FindWindowW("TaskManagerWindow", ""))
+	fmt.Println(wapi.FindWindowW("TaskManagerWindow", "任务管理器"))
+}
+
 func TestGetWindowTextLengthW(t *testing.T) {
 	// 取任务管理器的窗口标题长度
 	fmt.Println(wapi.GetWindowTextLengthW(wapi.FindWindowExW(0, 0, "TaskManagerWindow", "")))
 }
 
 func TestClientToScreen(t *testing.T) {
-	a := app.New(true)
-	w := window.New(0, 0, 300, 300, "", 0, xcc.Window_Style_Default)
-
-	pt := wapi.POINT{X: 0, Y: 0}
-	wapi.ClientToScreen(w.GetHWND(), &pt)
-	fmt.Println(pt)
-
-	a.ShowAndRun(w.Handle)
-	a.Exit()
+	TFunc(func(a *app.App, w *window.Window) {
+		pt := wapi.POINT{X: 0, Y: 0}
+		wapi.ClientToScreen(w.GetHWND(), &pt)
+		fmt.Println(pt)
+	})
 }
 
 func TestGetCursorPos(t *testing.T) {
-	a := app.New(true)
-	w := window.New(0, 0, 300, 300, "", 0, xcc.Window_Style_Default)
-
-	widget.NewButton(20, 50, 100, 30, "GetCursorPos", w.Handle).Event_BnClick(func(pbHandled *bool) int {
-		var pt wapi.POINT
-		wapi.GetCursorPos(&pt)
-		a.MessageBox("GetCursorPos", fmt.Sprintf("x: %d  y: %d", pt.X, pt.Y), xcc.MessageBox_Flag_Ok, w.GetHWND(), xcc.Window_Style_Default)
-		return 0
+	TFunc(func(a *app.App, w *window.Window) {
+		widget.NewButton(20, 50, 450, 300, "GetCursorPos", w.Handle).Event_BnClick(func(pbHandled *bool) int {
+			var pt wapi.POINT
+			wapi.GetCursorPos(&pt)
+			a.MessageBox("GetCursorPos", fmt.Sprintf("x: %d  y: %d", pt.X, pt.Y), xcc.MessageBox_Flag_Ok, w.GetHWND(), xcc.Window_Style_Default)
+			return 0
+		})
 	})
+}
 
-	a.ShowAndRun(w.Handle)
-	a.Exit()
+func TestIsWindow(t *testing.T) {
+	TFunc(func(a *app.App, w *window.Window) {
+		widget.NewButton(20, 50, 100, 30, "IsWindow", w.Handle).Event_BnClick(func(pbHandled *bool) int {
+			w.MessageBox("IsWindow", fmt.Sprintf("IsWindow: %v", wapi.IsWindow(w.GetHWND())), xcc.MessageBox_Flag_Ok, xcc.Window_Style_Default)
+			return 0
+		})
+	})
+}
+
+func TestPostQuitMessage(t *testing.T) {
+	TFunc(func(a *app.App, w *window.Window) {
+		widget.NewButton(20, 50, 200, 30, "PostQuitMessage", w.Handle).Event_BnClick(func(pbHandled *bool) int {
+			a.EnableAutoExitApp(false)
+			w.CloseWindow()
+			wapi.PostQuitMessage(0)
+			return 0
+		})
+	})
 }
