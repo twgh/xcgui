@@ -443,12 +443,8 @@ func DispatchMessage(pMsg *MSG) int {
 //
 //	@Description: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-PostQuitMessage.
 //	@param nExitCode 应用程序退出代码。该值用作 WM_QUIT 消息的wParam参数。
-func PostQuitMessage(nExitCode int32) error {
-	_, _, err := postQuitMessage.Call(uintptr(nExitCode))
-	if err != nil {
-		return err
-	}
-	return nil
+func PostQuitMessage(nExitCode int32) {
+	postQuitMessage.Call(uintptr(nExitCode))
 }
 
 type MSG struct {
