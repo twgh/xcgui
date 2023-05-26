@@ -97,3 +97,17 @@ func TestPostQuitMessage(t *testing.T) {
 		})
 	})
 }
+
+func TestSetForegroundWindow(t *testing.T) {
+	TFunc(func(a *app.App, w *window.Window) {
+		widget.NewButton(20, 50, 200, 30, "SetForegroundWindow", w.Handle).Event_BnClick(func(pbHandled *bool) int {
+			hwnd := wapi.FindWindowW("TaskManagerWindow", "")
+			if !wapi.IsWindow(hwnd) {
+				a.Alert("提示", "请先打开任务管理器, 本按钮功能是把任务管理器窗口激活")
+				return 0
+			}
+			wapi.SetForegroundWindow(hwnd)
+			return 0
+		})
+	})
+}
