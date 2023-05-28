@@ -2,6 +2,7 @@ package wapi_test
 
 import (
 	"fmt"
+	"github.com/twgh/xcgui/tf"
 	"testing"
 
 	"github.com/twgh/xcgui/app"
@@ -10,19 +11,6 @@ import (
 	"github.com/twgh/xcgui/window"
 	"github.com/twgh/xcgui/xcc"
 )
-
-// TFunc 内部测试用程序.
-//
-//	@Description: 内部测试时使用的函数.
-//	@param f
-func TFunc(f func(a *app.App, w *window.Window)) {
-	a := app.New(true)
-	w := window.New(0, 0, 600, 400, "Test", 0, xcc.Window_Style_Default)
-	f(a, w)
-	w.Show(true)
-	a.Run()
-	a.Exit()
-}
 
 func TestGetDesktopWindow(t *testing.T) {
 	fmt.Println(wapi.GetDesktopWindow())
@@ -60,7 +48,7 @@ func TestGetWindowTextLengthW(t *testing.T) {
 }
 
 func TestClientToScreen(t *testing.T) {
-	TFunc(func(a *app.App, w *window.Window) {
+	tf.TFunc(func(a *app.App, w *window.Window) {
 		pt := wapi.POINT{X: 0, Y: 0}
 		wapi.ClientToScreen(w.GetHWND(), &pt)
 		fmt.Println(pt)
@@ -68,7 +56,7 @@ func TestClientToScreen(t *testing.T) {
 }
 
 func TestGetCursorPos(t *testing.T) {
-	TFunc(func(a *app.App, w *window.Window) {
+	tf.TFunc(func(a *app.App, w *window.Window) {
 		widget.NewButton(20, 50, 450, 300, "GetCursorPos", w.Handle).Event_BnClick(func(pbHandled *bool) int {
 			var pt wapi.POINT
 			wapi.GetCursorPos(&pt)
@@ -79,7 +67,7 @@ func TestGetCursorPos(t *testing.T) {
 }
 
 func TestIsWindow(t *testing.T) {
-	TFunc(func(a *app.App, w *window.Window) {
+	tf.TFunc(func(a *app.App, w *window.Window) {
 		widget.NewButton(20, 50, 100, 30, "IsWindow", w.Handle).Event_BnClick(func(pbHandled *bool) int {
 			w.MessageBox("IsWindow", fmt.Sprintf("IsWindow: %v", wapi.IsWindow(w.GetHWND())), xcc.MessageBox_Flag_Ok, xcc.Window_Style_Default)
 			return 0
@@ -88,7 +76,7 @@ func TestIsWindow(t *testing.T) {
 }
 
 func TestPostQuitMessage(t *testing.T) {
-	TFunc(func(a *app.App, w *window.Window) {
+	tf.TFunc(func(a *app.App, w *window.Window) {
 		widget.NewButton(20, 50, 200, 30, "PostQuitMessage", w.Handle).Event_BnClick(func(pbHandled *bool) int {
 			a.EnableAutoExitApp(false)
 			w.CloseWindow()
@@ -99,7 +87,7 @@ func TestPostQuitMessage(t *testing.T) {
 }
 
 func TestSetForegroundWindow(t *testing.T) {
-	TFunc(func(a *app.App, w *window.Window) {
+	tf.TFunc(func(a *app.App, w *window.Window) {
 		widget.NewButton(20, 50, 200, 30, "SetForegroundWindow", w.Handle).Event_BnClick(func(pbHandled *bool) int {
 			hwnd := wapi.FindWindowW("TaskManagerWindow", "")
 			if !wapi.IsWindow(hwnd) {
