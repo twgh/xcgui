@@ -1046,15 +1046,20 @@ func (w *windowBase) SetHeight(height int) bool {
 }
 
 // 窗口_取左边.
-//
-// 高: height.
 func (w *windowBase) GetLeft() int {
 	var rc xc.RECT
 	xc.XWnd_GetRect(w.Handle, &rc)
 	return int(rc.Left)
 }
 
-// TODO: 取顶边, 取右边, 取底边, 取高度, 取宽度
+// 窗口_取顶边.
+func (w *windowBase) GetTop() int {
+	var rc xc.RECT
+	xc.XWnd_GetRect(w.Handle, &rc)
+	return int(rc.Top)
+}
+
+// TODO: 取右边, 取底边, 取高度, 取宽度
 
 /*
 下面都是事件
