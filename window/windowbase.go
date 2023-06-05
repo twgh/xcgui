@@ -1059,6 +1059,13 @@ func (w *windowBase) GetTop() int {
 	return int(rc.Top)
 }
 
+// 窗口_取宽度.
+func (w *windowBase) GetWidth() int {
+	var rc xc.RECT
+	xc.XWnd_GetRect(w.Handle, &rc)
+	return int(rc.Right - rc.Left)
+}
+
 // TODO: 取右边, 取底边, 取高度, 取宽度
 
 /*
