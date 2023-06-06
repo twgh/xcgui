@@ -1045,6 +1045,15 @@ func (w *windowBase) SetHeight(height int) bool {
 	return xc.XWnd_SetRect(w.Handle, &rc)
 }
 
+// 窗口_取宽度.
+func (w *windowBase) GetWidth() int {
+	var rc xc.RECT
+	xc.XWnd_GetRect(w.Handle, &rc)
+	return int(rc.Right - rc.Left)
+}
+
+// TODO: 取高度
+
 // 窗口_取左边.
 func (w *windowBase) GetLeft() int {
 	var rc xc.RECT
@@ -1059,14 +1068,19 @@ func (w *windowBase) GetTop() int {
 	return int(rc.Top)
 }
 
-// 窗口_取宽度.
-func (w *windowBase) GetWidth() int {
+// 窗口_取右边.
+func (w *windowBase) GetRight() int {
 	var rc xc.RECT
 	xc.XWnd_GetRect(w.Handle, &rc)
-	return int(rc.Right - rc.Left)
+	return int(rc.Right)
 }
 
-// TODO: 取右边, 取底边, 取高度, 取宽度
+// 窗口_取底边.
+func (w *windowBase) GetBottom() int {
+	var rc xc.RECT
+	xc.XWnd_GetRect(w.Handle, &rc)
+	return int(rc.Bottom)
+}
 
 /*
 下面都是事件
