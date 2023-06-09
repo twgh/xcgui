@@ -950,6 +950,13 @@ func (e *Element) SetFocus() bool {
 	return true
 }
 
+// GetLeft 元素_取左边.
+func (e *Element) GetLeft() int {
+	var rc xc.RECT
+	xc.XEle_GetRect(e.Handle, &rc)
+	return int(rc.Left)
+}
+
 /*
 下面都是事件
 */
