@@ -957,6 +957,13 @@ func (e *Element) GetLeft() int {
 	return int(rc.Left)
 }
 
+// GetTop 元素_取顶边.
+func (e *Element) GetTop() int {
+	var rc xc.RECT
+	xc.XEle_GetRect(e.Handle, &rc)
+	return int(rc.Top)
+}
+
 /*
 下面都是事件
 */
