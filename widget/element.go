@@ -964,11 +964,18 @@ func (e *Element) GetTop() int {
 	return int(rc.Top)
 }
 
-// GetTop 元素_取右边.
+// GetRight 元素_取右边.
 func (e *Element) GetRight() int {
 	var rc xc.RECT
 	xc.XEle_GetRect(e.Handle, &rc)
 	return int(rc.Right)
+}
+
+// GetBottom 元素_取底边.
+func (e *Element) GetBottom() int {
+	var rc xc.RECT
+	xc.XEle_GetRect(e.Handle, &rc)
+	return int(rc.Bottom)
 }
 
 /*
