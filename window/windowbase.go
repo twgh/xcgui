@@ -2,7 +2,7 @@ package window
 
 import (
 	"github.com/twgh/xcgui/objectbase"
-	"github.com/twgh/xcgui/wnd"
+	"github.com/twgh/xcgui/wapi/wnd"
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
 )

@@ -1,17 +1,17 @@
-package wapi_test
+package wutil_test
 
 import (
 	"fmt"
-	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/wapi/wutil"
 	"testing"
 )
 
 func TestSetClipboardText(t *testing.T) {
-	err := wapi.SetClipboardText("SetClipboardText")
+	err := wutil.SetClipboardText("SetClipboardText")
 	if err != nil {
 		fmt.Println(err)
 	}
-	text, err := wapi.GetClipboardText()
+	text, err := wutil.GetClipboardText()
 	if err != nil {
 		fmt.Println(err)
 	}

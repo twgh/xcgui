@@ -1,8 +1,9 @@
-package wapi
+package wutil
 
 import (
 	"errors"
 	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
 	"runtime"
 	"syscall"
 	"time"
@@ -16,7 +17,7 @@ func waitOpenClipboard() bool {
 	started := time.Now()
 	limit := started.Add(time.Second)
 	for time.Now().Before(limit) {
-		if OpenClipboard(0) {
+		if wapi.OpenClipboard(0) {
 			return true
 		}
 		time.Sleep(time.Millisecond)
@@ -33,7 +34,7 @@ func GetClipboardText() (string, error) {
 	defer runtime.UnlockOSThread()
 
 	// 确定剪贴板是否包含指定格式的数据
-	if !IsClipboardFormatAvailable(CF_UNICODETEXT) {
+	if !wapi.IsClipboardFormatAvailable(wapi.CF_UNICODETEXT) {
 		return "", nil // 剪贴板中不包含Unicode文本数据
 	}
 
@@ -41,29 +42,29 @@ func GetClipboardText() (string, error) {
 	if !waitOpenClipboard() {
 		return "", errors.New("打开剪贴板失败")
 	}
-	defer CloseClipboard() // 关闭剪贴板
+	defer wapi.CloseClipboard() // 关闭剪贴板
 
 	// 取剪贴板数据句柄
-	hMem := GetClipboardData(CF_UNICODETEXT)
+	hMem := wapi.GetClipboardData(wapi.CF_UNICODETEXT)
 	if hMem == 0 {
 		return "", errors.New("未获取到剪贴板数据句柄")
 	}
 
 	// 锁定
-	lpData := GlobalLock(hMem)
+	lpData := wapi.GlobalLock(hMem)
 	if lpData == 0 {
 		return "", errors.New("锁定剪贴板数据内存失败")
 	}
-	defer GlobalUnlock(hMem) // 解锁
+	defer wapi.GlobalUnlock(hMem) // 解锁
 
 	// 获取数据大小
-	nSize := GlobalSize(hMem)
+	nSize := wapi.GlobalSize(hMem)
 	if nSize == 0 {
 		return "", errors.New("获取到剪贴板文本数据尺寸为0")
 	}
 
 	buf := make([]uint16, nSize)
-	RtlMoveMemory(common.Uint16SliceDataPtr(&buf), lpData, nSize)
+	wapi.RtlMoveMemory(common.Uint16SliceDataPtr(&buf), lpData, nSize)
 	return syscall.UTF16ToString(buf), nil
 }
 
@@ -79,10 +80,10 @@ func SetClipboardText(text string) error {
 	if !waitOpenClipboard() {
 		return errors.New("打开剪贴板失败")
 	}
-	defer CloseClipboard() // 关闭剪贴板
+	defer wapi.CloseClipboard() // 关闭剪贴板
 
 	// 清空剪贴板
-	if !EmptyClipboard() {
+	if !wapi.EmptyClipboard() {
 		return errors.New("清空剪贴板失败")
 	}
 
@@ -91,27 +92,27 @@ func SetClipboardText(text string) error {
 	dwLength := len(bytes) * int(unsafe.Sizeof(bytes[0]))
 
 	// 分配全局内存
-	hGlobalMemory := GlobalAlloc(GMEM_Moveable, uint64(dwLength))
+	hGlobalMemory := wapi.GlobalAlloc(wapi.GMEM_Moveable, uint64(dwLength))
 	if hGlobalMemory == 0 {
 		return errors.New("分配全局内存失败")
 	}
-	defer GlobalFree(hGlobalMemory) // 释放全局内存
+	defer wapi.GlobalFree(hGlobalMemory) // 释放全局内存
 
 	// 锁住内存区
-	lpGlobalMemory := GlobalLock(hGlobalMemory)
+	lpGlobalMemory := wapi.GlobalLock(hGlobalMemory)
 	if lpGlobalMemory == 0 {
 		return errors.New("锁住内存区失败")
 	}
-	defer GlobalUnlock(hGlobalMemory) // 解锁内存区
+	defer wapi.GlobalUnlock(hGlobalMemory) // 解锁内存区
 
 	// 内存复制
-	h := LstrcpyW(lpGlobalMemory, uintptr(unsafe.Pointer(&bytes[0])))
+	h := wapi.LstrcpyW(lpGlobalMemory, uintptr(unsafe.Pointer(&bytes[0])))
 	if h == 0 {
 		return errors.New("内存复制失败")
 	}
 
 	// 设置剪贴板数据
-	if SetClipboardData(CF_UNICODETEXT, hGlobalMemory) == 0 {
+	if wapi.SetClipboardData(wapi.CF_UNICODETEXT, hGlobalMemory) == 0 {
 		return errors.New("设置剪贴板数据失败")
 	}
 
