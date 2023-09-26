@@ -160,3 +160,29 @@ func XFrameWnd_GetDragFloatWndTopFlag(hWindow int) xcc.FrameWnd_Cell_Type_ {
 	r, _, _ := xFrameWnd_GetDragFloatWndTopFlag.Call(uintptr(hWindow))
 	return xcc.FrameWnd_Cell_Type_(r)
 }
+
+// 框架窗口_取主视图坐标. 获取框架窗口主视图区域坐标.
+//
+// hWindow: 窗口句柄.
+//
+// pRect: 返回坐标.
+func XFrameWnd_GetViewRect(hWindow int, pRect *RECT) {
+	xFrameWnd_GetViewRect.Call(uintptr(hWindow), uintptr(unsafe.Pointer(pRect)))
+}
+
+// 框架窗口_置窗格分隔条宽度.
+//
+// hWindow: 窗口句柄.
+//
+// nWidth: 宽度.
+func XFrameWnd_SetPaneSplitBarWidth(hWindow, nWidth int) {
+	xFrameWnd_SetPaneSplitBarWidth.Call(uintptr(hWindow), uintptr(nWidth))
+}
+
+// 框架窗口_取窗格分隔条宽度.
+//
+// hWindow: 窗口句柄.
+func XFrameWnd_GetPaneSplitBarWidth(hWindow int) int {
+	r, _, _ := xFrameWnd_GetPaneSplitBarWidth.Call(uintptr(hWindow))
+	return int(r)
+}

@@ -179,3 +179,22 @@ func FrameWnd_Attach(hWnd, XCStyle int) *Window {
 	p.SetHandle(xc.XFrameWnd_Attach(hWnd, XCStyle))
 	return p
 }
+
+// 框架窗口_取主视图坐标. 获取框架窗口主视图区域坐标.
+//
+// pRect: 返回坐标.
+func (fw *FrameWindow) GetViewRect(pRect *xc.RECT) {
+	xc.XFrameWnd_GetViewRect(fw.Handle, pRect)
+}
+
+// 框架窗口_置窗格分隔条宽度.
+//
+// nWidth: 宽度.
+func (fw *FrameWindow) SetPaneSplitBarWidth(nWidth int) {
+	xc.XFrameWnd_SetPaneSplitBarWidth(fw.Handle, nWidth)
+}
+
+// 框架窗口_取窗格分隔条宽度.
+func (fw *FrameWindow) GetPaneSplitBarWidth() int {
+	return xc.XFrameWnd_GetPaneSplitBarWidth(fw.Handle)
+}
