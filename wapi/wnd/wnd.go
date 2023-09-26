@@ -40,6 +40,9 @@ func GetTitle(hWnd int) string {
 //	@param title 窗口标题, 可输入关键字, 支持模糊, 可空.
 //	@return int 窗口真实句柄.
 func GetHWND(className, title string) int {
+	if className == "" && title == "" {
+		return 0
+	}
 	var hWnd int
 	for {
 		hWnd = wapi.FindWindowExW(0, hWnd, className, "")
