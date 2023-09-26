@@ -27,6 +27,25 @@ func NewTree(x int, y int, cx int, cy int, hParent int) *Tree {
 	return p
 }
 
+// 列表树_创建Ex, 创建树元素, 使用内置项模板, 自动创建数据适配器.
+//
+// x: 元素x坐标.
+//
+// y: 元素y坐标.
+//
+// cx: 宽度.
+//
+// cy: 高度.
+//
+// hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
+//
+// col_extend_count: 列数量. 例如: 内置模板是1列, 如果数据有5列, 那么此参数填5.
+func NewTreeEx(x int, y int, cx int, cy int, hParent, col_extend_count int) *Tree {
+	p := &Tree{}
+	p.SetHandle(xc.XTree_CreateEx(x, y, cx, cy, hParent, col_extend_count))
+	return p
+}
+
 // 从句柄创建对象.
 func NewTreeByHandle(handle int) *Tree {
 	p := &Tree{}
