@@ -11,7 +11,7 @@ type App struct {
 
 // New 炫彩_初始化, 失败返回nil.
 //
-//	@Description 默认会在程序运行目录和系统目录寻找并加载xcgui.dll.
+//	@Description 默认会在程序运行目录和系统system32目录寻找并加载xcgui.dll.
 //	如果你想要更改xcgui.dll的路径, 那么请在调用本函数之前调用 xc.SetXcguiPath().
 //	@param bD2D 是否启用D2D.
 //	@return *App
@@ -1060,4 +1060,18 @@ func (a *App) EnableAutoDPI(bEnabel bool) int {
 // hImage: 图标句柄.
 func (a *App) SetWindowIcon(hImage int) int {
 	return xc.XC_SetWindowIcon(hImage)
+}
+
+// 炫彩_启用DPI.
+//
+// 为go程序启用DPI的几种方式:
+//  1. 使用程序清单文件.
+//  2. 调用此函数.
+//  3. 自己调用DPI函数.
+//
+// 参考[MSDN](https://learn.microsoft.com/zh-cn/windows/win32/hidpi/setting-the-default-dpi-awareness-for-a-process)
+//
+// bEnabel: 是否启用.
+func (a *App) EnableDPI(bEnabel bool) bool {
+	return xc.XC_EnableDPI(bEnabel)
 }
