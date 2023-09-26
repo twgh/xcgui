@@ -246,10 +246,17 @@ func (e *Edit) GetText(pOut *string, nOutlen int) int {
 	return xc.XEdit_GetText(e.Handle, pOut, nOutlen)
 }
 
-// 编辑框_取文本, 不包含非文本内容, 返回文本.
+// 编辑框_取文本Ex, 不包含非文本内容, 返回文本.
 func (e *Edit) GetTextEx() string {
 	var s string
 	xc.XEdit_GetText(e.Handle, &s, xc.XEdit_GetLength(e.Handle)+1)
+	return s
+}
+
+// 编辑框_取选择文本Ex, 不包括非文本内容, 返回文本.
+func (e *Edit) GetSelectTextEx() string {
+	var s string
+	xc.XEdit_GetSelectText(e.Handle, &s, xc.XEdit_GetSelectTextLength(e.Handle)+1)
 	return s
 }
 
@@ -262,6 +269,15 @@ func (e *Edit) GetTextEx() string {
 // nOutlen: 接收文本内存块长度. 例: GetLengthRow()+1 .
 func (e *Edit) GetTextRow(iRow int, pOut *string, nOutlen int) int {
 	return xc.XEdit_GetTextRow(e.Handle, iRow, pOut, nOutlen)
+}
+
+// 编辑框_取文本行Ex, 返回文本.
+//
+// iRow: 行索引.
+func (e *Edit) GetTextRowEx(iRow int) string {
+	var s string
+	xc.XEdit_GetTextRow(e.Handle, iRow, &s, xc.XEdit_GetLengthRow(e.Handle, iRow)+1)
+	return s
 }
 
 // 编辑框_取内容长度, 包含非文本内容.
@@ -502,7 +518,7 @@ func (e *Edit) SetSelect(iStartRow int, iStartCol int, iEndRow int, iEndCol int)
 //
 // pOut: 接收返回文本内容.
 //
-// nOutLen: 接收内存大小.
+// nOutLen: 接收内存大小. GetSelectTextLength()+1 .
 func (e *Edit) GetSelectText(pOut *string, nOutLen int) int {
 	return xc.XEdit_GetSelectText(e.Handle, pOut, nOutLen)
 }
@@ -744,6 +760,13 @@ func (e *Edit) InsertTextEx(iRow int, iCol int, pString string, iStyle int) int 
 // hObj: 对象句柄.
 func (e *Edit) InsertObject(iRow int, iCol int, hObj int) int {
 	return xc.XEdit_InsertObject(e.Handle, iRow, iCol, hObj)
+}
+
+// 编辑框_置气泡最大宽度. 当值为0时代表不限制宽度.
+//
+// nWidth: 最大宽度.
+func (e *Edit) SetChatMaxWidth(nWidth int) {
+	xc.XEdit_SetChatMaxWidth(e.Handle, nWidth)
 }
 
 /*
