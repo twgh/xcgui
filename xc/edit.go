@@ -497,8 +497,8 @@ func XEdit_SetRowHeightEx(hEle int, iRow int, nHeight int) int {
 
 // XEdit_SetCurPos 编辑框_置当前位置.
 //
-//	@param hEle hEle: 元素句柄.
-//	@param iRow iRow: 行索引.
+//	@param hEle: 元素句柄.
+//	@param iRow: 行索引.
 //	@return int
 func XEdit_SetCurPos(hEle int, iRow int) int {
 	r, _, _ := xEdit_SetCurPos.Call(uintptr(hEle), uintptr(iRow))
@@ -620,7 +620,7 @@ func XEdit_SetSelect(hEle int, iStartRow int, iStartCol int, iEndRow int, iEndCo
 //
 // pOut: 接收返回文本内容.
 //
-// nOutLen: 接收内存大小.
+// nOutLen: 接收内存大小. xc.XEdit_GetSelectTextLength()+1 .
 func XEdit_GetSelectText(hEle int, pOut *string, nOutLen int) int {
 	buf := make([]uint16, nOutLen)
 	r, _, _ := xEdit_GetSelectText.Call(uintptr(hEle), common.Uint16SliceDataPtr(&buf), uintptr(nOutLen))
@@ -958,4 +958,13 @@ func XEdit_InsertTextEx(hEle int, iRow int, iCol int, pString string, iStyle int
 func XEdit_InsertObject(hEle int, iRow int, iCol int, hObj int) int {
 	r, _, _ := xEdit_InsertObject.Call(uintptr(hEle), uintptr(iRow), uintptr(iCol), uintptr(hObj))
 	return int(r)
+}
+
+// 编辑框_置气泡最大宽度. 当值为0时代表不限制宽度.
+//
+// hEle: 元素句柄.
+//
+// nWidth: 最大宽度.
+func XEdit_SetChatMaxWidth(hEle int, nWidth int) {
+	xEdit_SetChatMaxWidth.Call(uintptr(hEle), uintptr(nWidth))
 }
