@@ -686,6 +686,21 @@ func XC_EnableAutoDPI(bEnabel bool) int {
 	return int(r)
 }
 
+// 炫彩_启用DPI.
+//
+// 为go程序启用DPI的几种方式:
+//  1. 使用程序清单文件.
+//  2. 调用此函数.
+//  3. 自己调用DPI函数.
+//
+// 参考[MSDN](https://learn.microsoft.com/zh-cn/windows/win32/hidpi/setting-the-default-dpi-awareness-for-a-process)
+//
+// bEnabel: 是否启用.
+func XC_EnableDPI(bEnabel bool) bool {
+	r, _, _ := xC_EnableDPI.Call(common.BoolPtr(bEnabel))
+	return r != 0
+}
+
 // 炫彩_置窗口图标. 全局窗口图标, 所有未设置图标的窗口, 都将使用此默认图标.
 //
 // hImage: 图标句柄.
