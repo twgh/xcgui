@@ -579,8 +579,8 @@ func (w *windowBase) GetLayoutRect(pRect *xc.RECT) int {
 // x: X坐标.
 //
 // y: Y坐标.
-func (w *windowBase) SetPosition(x, y int) int {
-	return xc.XWnd_SetPosition(w.Handle, x, y)
+func (w *windowBase) SetPosition(x, y int) {
+	xc.XWnd_SetPosition(w.Handle, x, y)
 }
 
 // 窗口_取坐标.
@@ -754,8 +754,8 @@ func (w *windowBase) SetTitleColor(color int) int {
 
 // 窗口_取控制按钮, 返回按钮句柄.
 //
-// nFlag: 可用值: Window_Style_Btn_Min , Window_Style_Btn_Max , Window_Style_Btn_Close .
-func (w *windowBase) GetButton(nFlag int) int {
+// nFlag: xcc.Window_Style_ . 可用值: xcc.Window_Style_Btn_Min , xcc.Window_Style_Btn_Max , xcc.Window_Style_Btn_Close .
+func (w *windowBase) GetButton(nFlag xcc.Window_Style_) int {
 	return xc.XWnd_GetButton(w.Handle, nFlag)
 }
 
@@ -1087,6 +1087,20 @@ func (w *windowBase) GetBottom() int {
 	return int(rc.Bottom)
 }
 
+// 窗口_置左边.
+//
+// x: 左边x坐标.
+func (w *windowBase) SetLeft(x int) {
+	xc.XWnd_SetPosition(w.Handle, x, w.GetTop())
+}
+
+// 窗口_置顶边.
+//
+// y: 顶边y坐标.
+func (w *windowBase) SetTopEdge(y int) {
+	xc.XWnd_SetPosition(w.Handle, w.GetLeft(), y)
+}
+
 /*
 下面都是事件
 */
@@ -1095,6 +1109,8 @@ type XWM_WINDPROC func(message uint, wParam int, lParam int, pbHandled *bool) in
 type XWM_WINDPROC1 func(hWindow int, message uint, wParam int, lParam int, pbHandled *bool) int // 窗口消息过程.
 type XWM_XC_TIMER func(nTimerID uint, pbHandled *bool) int                                      // 炫彩定时器, 非系统定时器, 注册消息XWM_TIMER接收.
 type XWM_XC_TIMER1 func(hWindow int, nTimerID uint, pbHandled *bool) int                        // 炫彩定时器, 非系统定时器, 注册消息XWM_TIMER接收.
+type XWM_SETFOCUS_ELE func(hEle int, pbHandled *bool) int                                       // 窗口事件_置焦点元素. 指定元素获得焦点
+type XWM_SETFOCUS_ELE1 func(hWindow int, hEle int, pbHandled *bool) int                         // 窗口事件_置焦点元素. 指定元素获得焦点
 type XWM_FLOAT_PANE func(hFloatWnd int, hPane int, pbHandled *bool) int                         // 浮动窗格.
 type XWM_FLOAT_PANE1 func(hWindow int, hFloatWnd int, hPane int, pbHandled *bool) int           // 浮动窗格.
 type XWM_PAINT_END func(hDraw int, pbHandled *bool) int                                         // 窗口绘制完成消息.
@@ -1103,6 +1119,8 @@ type XWM_PAINT_DISPLAY func(pbHandled *bool) int                                
 type XWM_PAINT_DISPLAY1 func(hWindow int, pbHandled *bool) int                                  // 窗口绘制完成并且已经显示到屏幕.
 type XWM_DOCK_POPUP func(hWindowDock, hPane int, pbHandled *bool) int                           // 框架窗口码头弹出窗格, 当用户点击码头上的按钮时, 显示对应的窗格, 当失去焦点时自动隐藏窗格.
 type XWM_DOCK_POPUP1 func(hWindow int, hWindowDock, hPane int, pbHandled *bool) int             // 框架窗口码头弹出窗格, 当用户点击码头上的按钮时, 显示对应的窗格, 当失去焦点时自动隐藏窗格.
+type XWM_BODYVIEW_RECT func(width, height int32, pbHandled *bool) int                           // 框架窗口主视图坐标改变, 如果主视图没有绑定元素, 那么当坐标改变时触发此事件
+type XWM_BODYVIEW_RECT1 func(hWindow int, width, height int32, pbHandled *bool) int             // 框架窗口主视图坐标改变, 如果主视图没有绑定元素, 那么当坐标改变时触发此事件
 // 浮动窗口拖动, 用户拖动浮动窗口移动, 显示停靠提示.
 //
 // hFloatWnd: 拖动的浮动窗口句柄.
@@ -1188,6 +1206,16 @@ func (w *windowBase) Event_XC_TIMER1(pFun XWM_XC_TIMER1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_XC_TIMER, pFun)
 }
 
+// 窗口事件_置焦点元素. 指定元素获得焦点.
+func (w *windowBase) Event_SETFOCUS_ELE(pFun XWM_SETFOCUS_ELE) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_SETFOCUS_ELE, pFun)
+}
+
+// 窗口事件_置焦点元素. 指定元素获得焦点.
+func (w *windowBase) Event_SETFOCUS_ELE1(pFun XWM_SETFOCUS_ELE1) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_SETFOCUS_ELE, pFun)
+}
+
 // 浮动窗格.
 func (w *windowBase) Event_FLOAT_PANE(pFun XWM_FLOAT_PANE) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_FLOAT_PANE, pFun)
@@ -1226,6 +1254,16 @@ func (w *windowBase) Event_DOCK_POPUP(pFun XWM_DOCK_POPUP) bool {
 // 框架窗口码头弹出窗格, 当用户点击码头上的按钮时, 显示对应的窗格, 当失去焦点时自动隐藏窗格.
 func (w *windowBase) Event_DOCK_POPUP1(pFun XWM_DOCK_POPUP1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_DOCK_POPUP, pFun)
+}
+
+// 框架窗口主视图坐标改变, 如果主视图没有绑定元素, 那么当坐标改变时触发此事件.
+func (w *windowBase) Event_BODYVIEW_RECT(pFun XWM_BODYVIEW_RECT) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_BODYVIEW_RECT, pFun)
+}
+
+// 框架窗口主视图坐标改变, 如果主视图没有绑定元素, 那么当坐标改变时触发此事件.
+func (w *windowBase) Event_BODYVIEW_RECT1(pFun XWM_BODYVIEW_RECT) bool {
+	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_BODYVIEW_RECT, pFun)
 }
 
 // 浮动窗口拖动, 用户拖动浮动窗口移动, 显示停靠提示.
