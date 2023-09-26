@@ -978,6 +978,24 @@ func (e *Element) GetBottom() int {
 	return int(rc.Bottom)
 }
 
+// SetLeft 元素_置左边.
+//
+// x: 左边x坐标.
+//
+// bRedraw: 是否重绘.
+func (e *Element) SetLeft(x int, bRedraw bool) bool {
+	return xc.XEle_SetPosition(e.Handle, x, e.GetTop(), bRedraw, xcc.AdjustLayout_All, 0) != 0
+}
+
+// SetLeft 元素_置顶边.
+//
+// y: 顶边y坐标.
+//
+// bRedraw: 是否重绘.
+func (e *Element) SetTop(y int, bRedraw bool) bool {
+	return xc.XEle_SetPosition(e.Handle, e.GetLeft(), y, bRedraw, xcc.AdjustLayout_All, 0) != 0
+}
+
 /*
 下面都是事件
 */
