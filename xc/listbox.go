@@ -24,6 +24,24 @@ func XListBox_Create(x int, y int, cx int, cy int, hParent int) int {
 	return int(r)
 }
 
+// 列表框_创建Ex. 创建列表框元素, 使用内置项模板, 自动创建数据适配器, 返回元素句柄.
+//
+// x: 元素x坐标.
+//
+// y: 元素y坐标.
+//
+// cx: 宽度.
+//
+// cy: 高度.
+//
+// hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
+//
+// col_extend_count: 列数量. 例如: 内置模板是1列, 如果数据有5列, 那么此参数填5.
+func XListBox_CreateEx(x int, y int, cx int, cy int, hParent, col_extend_count int) int {
+	r, _, _ := xListBox_CreateEx.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), uintptr(hParent), uintptr(col_extend_count))
+	return int(r)
+}
+
 // 列表框_启用固定行高.
 //
 // hEle: 元素句柄.
