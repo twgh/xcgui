@@ -114,7 +114,7 @@ func XWnd_RemoveEventC(hWindow int, nEvent xcc.WM_, pFun interface{}) bool {
 //
 // nEvent: 事件类型: xcc.WM_, xcc.XWM_ .
 //
-// pFun: 事件函数指针, 使用 syscall.NewCallback() 生成..
+// pFun: 事件函数指针, 使用 syscall.NewCallback() 生成.
 func XWnd_RegEventCEx(hWindow int, nEvent xcc.WM_, pFun uintptr) bool {
 	r, _, _ := xWnd_RegEventC.Call(uintptr(hWindow), uintptr(nEvent), pFun)
 	return r != 0
@@ -126,7 +126,7 @@ func XWnd_RegEventCEx(hWindow int, nEvent xcc.WM_, pFun uintptr) bool {
 //
 // nEvent: 事件类型: xcc.WM_, xcc.XWM_.
 //
-// pFun: 事件函数指针, 使用 syscall.NewCallback() 生成..
+// pFun: 事件函数指针, 使用 syscall.NewCallback() 生成.
 func XWnd_RegEventC1Ex(hWindow int, nEvent xcc.WM_, pFun uintptr) bool {
 	r, _, _ := xWnd_RegEventC1.Call(uintptr(hWindow), uintptr(nEvent), pFun)
 	return r != 0
@@ -138,7 +138,7 @@ func XWnd_RegEventC1Ex(hWindow int, nEvent xcc.WM_, pFun uintptr) bool {
 //
 // nEvent: 事件类型: xcc.WM_, xcc.XWM_.
 //
-// pFun: 事件函数指针, 使用 syscall.NewCallback() 生成..
+// pFun: 事件函数指针, 使用 syscall.NewCallback() 生成.
 func XWnd_RemoveEventCEx(hWindow int, nEvent xcc.WM_, pFun uintptr) bool {
 	r, _, _ := xWnd_RemoveEventC.Call(uintptr(hWindow), uintptr(nEvent), pFun)
 	return r != 0
@@ -767,9 +767,8 @@ func XWnd_GetLayoutRect(hWindow int, pRect *RECT) int {
 // x: X坐标.
 //
 // y: Y坐标.
-func XWnd_SetPosition(hWindow, x, y int) int {
-	r, _, _ := xWnd_SetPosition.Call(uintptr(hWindow), uintptr(x), uintptr(y))
-	return int(r)
+func XWnd_SetPosition(hWindow, x, y int) {
+	xWnd_SetPosition.Call(uintptr(hWindow), uintptr(x), uintptr(y))
 }
 
 // 窗口_取坐标.
@@ -1016,8 +1015,8 @@ func XWnd_SetTitleColor(hWindow, color int) int {
 //
 // hWindow: 窗口句柄.
 //
-// nFlag: 可用值: Window_Style_Btn_Min , Window_Style_Btn_Max , Window_Style_Btn_Close .
-func XWnd_GetButton(hWindow, nFlag int) int {
+// nFlag: xcc.Window_Style_ . 可用值: xcc.Window_Style_Btn_Min , xcc.Window_Style_Btn_Max , xcc.Window_Style_Btn_Close .
+func XWnd_GetButton(hWindow int, nFlag xcc.Window_Style_) int {
 	r, _, _ := xWnd_GetButton.Call(uintptr(hWindow), uintptr(nFlag))
 	return int(r)
 }
