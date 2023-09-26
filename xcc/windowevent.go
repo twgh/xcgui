@@ -6,6 +6,7 @@ package xcc
 const (
 	XWM_WINDPROC             WM_ = 0x7000 + 2  // 窗口消息过程
 	XWM_XC_TIMER             WM_ = 0x7000 + 5  // 炫彩定时器, 非系统定时器, 注册消息 XWM_TIMER 接收
+	XWM_SETFOCUS_ELE         WM_ = 0x7000 + 9  // 窗口事件_置焦点元素. 指定元素获得焦点
 	XWM_MENU_POPUP           WM_ = 0x7000 + 11 // 菜单弹出
 	XWM_MENU_POPUP_WND       WM_ = 0x7000 + 12 // 菜单弹出窗口
 	XWM_MENU_SELECT          WM_ = 0x7000 + 13 // 菜单选择
@@ -23,6 +24,7 @@ const (
 	//
 	// hArray: HWINDOW array[6], 窗格停靠提示窗口句柄数组, 有6个成员, 分别为:[0]中间十字, [1]左侧, [2]顶部, [3]右侧, [4]底部, [5]停靠位置预览.
 	XWM_FLOATWND_DRAG WM_ = 0x7000 + 22
+	XWM_BODYVIEW_RECT WM_ = 0x7000 + 24 // 框架窗口主视图坐标改变, 如果主视图没有绑定元素, 那么当坐标改变时触发此事件
 )
 
 // 窗口事件
