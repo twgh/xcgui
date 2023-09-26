@@ -27,6 +27,25 @@ func NewList(x int, y int, cx int, cy int, hParent int) *List {
 	return p
 }
 
+// 列表_创建Ex, 创建列表元素, 使用内置项模板, 自动创建数据适配器.
+//
+// x: 元素x坐标.
+//
+// y: 元素y坐标.
+//
+// cx: 宽度.
+//
+// cy: 高度.
+//
+// hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
+//
+// col_extend_count: 列数量. 例如: 内置模板是1列, 如果数据有5列, 那么此参数填5.
+func NewListEx(x int, y int, cx int, cy int, hParent, col_extend_count int) *List {
+	p := &List{}
+	p.SetHandle(xc.XList_CreateEx(x, y, cx, cy, hParent, col_extend_count))
+	return p
+}
+
 // 从句柄创建对象.
 func NewListByHandle(handle int) *List {
 	p := &List{}
