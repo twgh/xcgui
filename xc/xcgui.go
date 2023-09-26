@@ -17,7 +17,7 @@ var xcguiPath = "xcgui.dll"
 
 // GetVer 获取当前库版本所需的 xcgui.dll 的版本号.
 func GetVer() string {
-	return "3.3.8.0"
+	return "3.3.8.1"
 }
 
 var (
@@ -129,6 +129,7 @@ var (
 	xC_LoadResourceZipRes         *syscall.LazyProc
 	xC_LoadStyleZipRes            *syscall.LazyProc
 	xC_SetWindowIcon              *syscall.LazyProc
+	xC_EnableDPI                  *syscall.LazyProc
 
 	/* 	xC_LoadResourceFromString     *syscall.LazyProc
 	   	xC_LoadStyleFromString        *syscall.LazyProc */
@@ -435,6 +436,9 @@ var (
 	xFrameWnd_MergePane              *syscall.LazyProc
 	xFrameWnd_Attach                 *syscall.LazyProc
 	xFrameWnd_GetDragFloatWndTopFlag *syscall.LazyProc
+	xFrameWnd_GetViewRect            *syscall.LazyProc
+	xFrameWnd_SetPaneSplitBarWidth   *syscall.LazyProc
+	xFrameWnd_GetPaneSplitBarWidth   *syscall.LazyProc
 
 	// Menu.
 	xMenu_Create               *syscall.LazyProc
@@ -787,6 +791,7 @@ var (
 	xEdit_GetChatFlags         *syscall.LazyProc
 	xEdit_InsertTextEx         *syscall.LazyProc
 	xEdit_InsertObject         *syscall.LazyProc
+	xEdit_SetChatMaxWidth      *syscall.LazyProc
 
 	// LayoutEle.
 	xLayout_Create          *syscall.LazyProc
@@ -1279,6 +1284,7 @@ var (
 	xListBox_SetItemTemplateXMLFromMem    *syscall.LazyProc
 	xListBox_SetItemTemplateXMLFromZipRes *syscall.LazyProc
 	xListBox_GetItemTemplate              *syscall.LazyProc
+	xListBox_CreateEx                     *syscall.LazyProc
 
 	// List.
 	xList_Create                       *syscall.LazyProc
@@ -1382,6 +1388,7 @@ var (
 	xList_RefreshDataHeader            *syscall.LazyProc
 	xList_SetItemTemplateXMLFromMem    *syscall.LazyProc
 	xList_SetItemTemplateXMLFromZipRes *syscall.LazyProc
+	xList_CreateEx                     *syscall.LazyProc
 
 	// ListView.
 	xListView_Create                       *syscall.LazyProc
@@ -1464,6 +1471,7 @@ var (
 	xListView_SetItemTemplateXMLFromZipRes *syscall.LazyProc
 	xListView_GetItemTemplate              *syscall.LazyProc
 	xListView_GetItemTemplateGroup         *syscall.LazyProc
+	xListView_CreateEx                     *syscall.LazyProc
 
 	// MenuBar.
 	xMenuBar_Create          *syscall.LazyProc
@@ -1666,6 +1674,7 @@ var (
 	xTree_SetItemTemplateXMLFromMem       *syscall.LazyProc
 	xTree_SetItemTemplateXMLFromZipRes    *syscall.LazyProc
 	xTree_GetItemTemplate                 *syscall.LazyProc
+	xTree_CreateEx                        *syscall.LazyProc
 
 	// DateTime.
 	xDateTime_Create           *syscall.LazyProc
@@ -1935,6 +1944,7 @@ func _loadXCGUI() {
 	xC_ShowSvgFrame = xcgui.NewProc("XC_ShowSvgFrame")
 	xC_EnableAutoDPI = xcgui.NewProc("XC_EnableAutoDPI")
 	xC_SetWindowIcon = xcgui.NewProc("XC_SetWindowIcon")
+	xC_EnableDPI = xcgui.NewProc("XC_EnableDPI")
 
 	// UI Designer.
 	xC_LoadLayout = xcgui.NewProc("XC_LoadLayout")
@@ -2263,6 +2273,9 @@ func _loadXCGUI() {
 	xFrameWnd_MergePane = xcgui.NewProc("XFrameWnd_MergePane")
 	xFrameWnd_Attach = xcgui.NewProc("XFrameWnd_Attach")
 	xFrameWnd_GetDragFloatWndTopFlag = xcgui.NewProc("XFrameWnd_GetDragFloatWndTopFlag")
+	xFrameWnd_GetViewRect = xcgui.NewProc("XFrameWnd_GetViewRect")
+	xFrameWnd_SetPaneSplitBarWidth = xcgui.NewProc("XFrameWnd_SetPaneSplitBarWidth")
+	xFrameWnd_GetPaneSplitBarWidth = xcgui.NewProc("XFrameWnd_GetPaneSplitBarWidth")
 
 	// Menu.
 	xMenu_Create = xcgui.NewProc("XMenu_Create")
@@ -2613,6 +2626,7 @@ func _loadXCGUI() {
 	xEdit_GetChatFlags = xcgui.NewProc("XEdit_GetChatFlags")
 	xEdit_InsertTextEx = xcgui.NewProc("XEdit_InsertTextEx")
 	xEdit_InsertObject = xcgui.NewProc("XEdit_InsertObject")
+	xEdit_SetChatMaxWidth = xcgui.NewProc("XEdit_SetChatMaxWidth")
 
 	// LayoutEle.
 	xLayout_Create = xcgui.NewProc("XLayout_Create")
@@ -3105,9 +3119,11 @@ func _loadXCGUI() {
 	xListBox_SetItemTemplateXMLFromMem = xcgui.NewProc("XListBox_SetItemTemplateXMLFromMem")
 	xListBox_SetItemTemplateXMLFromZipRes = xcgui.NewProc("XListBox_SetItemTemplateXMLFromZipRes")
 	xListBox_GetItemTemplate = xcgui.NewProc("XListBox_GetItemTemplate")
+	xListBox_CreateEx = xcgui.NewProc("XListBox_CreateEx")
 
 	// List.
 	xList_Create = xcgui.NewProc("XList_Create")
+	xList_CreateEx = xcgui.NewProc("XList_CreateEx")
 	xList_AddColumn = xcgui.NewProc("XList_AddColumn")
 	xList_InsertColumn = xcgui.NewProc("XList_InsertColumn")
 	xList_EnableMultiSel = xcgui.NewProc("XList_EnableMultiSel")
@@ -3290,6 +3306,7 @@ func _loadXCGUI() {
 	xListView_SetItemTemplateXMLFromZipRes = xcgui.NewProc("XListView_SetItemTemplateXMLFromZipRes")
 	xListView_GetItemTemplate = xcgui.NewProc("XListView_GetItemTemplate")
 	xListView_GetItemTemplateGroup = xcgui.NewProc("XListView_GetItemTemplateGroup")
+	xListView_CreateEx = xcgui.NewProc("XListView_CreateEx")
 
 	// MenuBar.
 	xMenuBar_Create = xcgui.NewProc("XMenuBar_Create")
@@ -3492,6 +3509,7 @@ func _loadXCGUI() {
 	xTree_SetItemTemplateXMLFromMem = xcgui.NewProc("XTree_SetItemTemplateXMLFromMem")
 	xTree_SetItemTemplateXMLFromZipRes = xcgui.NewProc("XTree_SetItemTemplateXMLFromZipRes")
 	xTree_GetItemTemplate = xcgui.NewProc("XTree_GetItemTemplate")
+	xTree_CreateEx = xcgui.NewProc("XTree_CreateEx")
 
 	// DateTime.
 	xDateTime_Create = xcgui.NewProc("XDateTime_Create")
