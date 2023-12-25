@@ -165,8 +165,8 @@ func (s *ScrollBar) GetButtonSlider() int {
 以下都是事件
 */
 
-type XE_SBAR_SCROLL func(pos int, pbHandled *bool) int            // 滚动条元素滚动事件,滚动条触发.
-type XE_SBAR_SCROLL1 func(hEle int, pos int, pbHandled *bool) int // 滚动条元素滚动事件,滚动条触发.
+type XE_SBAR_SCROLL func(pos int32, pbHandled *bool) int            // 滚动条元素滚动事件,滚动条触发.
+type XE_SBAR_SCROLL1 func(hEle int, pos int32, pbHandled *bool) int // 滚动条元素滚动事件,滚动条触发.
 
 // 滚动条元素滚动事件,滚动条触发.
 func (s *ScrollBar) Event_SBAR_SCROLL(pFun XE_SBAR_SCROLL) bool {

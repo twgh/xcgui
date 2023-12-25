@@ -40,7 +40,7 @@ func NewList(x int, y int, cx int, cy int, hParent int) *List {
 // hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
 //
 // col_extend_count: 列数量. 例如: 内置模板是1列, 如果数据有5列, 那么此参数填5.
-func NewListEx(x int, y int, cx int, cy int, hParent, col_extend_count int) *List {
+func NewListEx(x, y, cx, cy int32, hParent, col_extend_count int32) *List {
 	p := &List{}
 	p.SetHandle(xc.XList_CreateEx(x, y, cx, cy, hParent, col_extend_count))
 	return p
@@ -417,7 +417,7 @@ func (l *List) GetHeaderHeight() int {
 // piStart: 开始行索引.
 //
 // piEnd: 结束行索引.
-func (l *List) GetVisibleRowRange(piStart *int, piEnd *int) int {
+func (l *List) GetVisibleRowRange(piStart *int32, piEnd *int32) int {
 	return xc.XList_GetVisibleRowRange(l.Handle, piStart, piEnd)
 }
 
@@ -426,7 +426,7 @@ func (l *List) GetVisibleRowRange(piStart *int, piEnd *int) int {
 // nHeight: 高度.
 //
 // nSelHeight: 选中时高度.
-func (l *List) SetItemHeightDefault(nHeight int, nSelHeight int) int {
+func (l *List) SetItemHeightDefault(nHeight int32, nSelHeight int32) int {
 	return xc.XList_SetItemHeightDefault(l.Handle, nHeight, nSelHeight)
 }
 
@@ -435,7 +435,7 @@ func (l *List) SetItemHeightDefault(nHeight int, nSelHeight int) int {
 // pHeight: 高度.
 //
 // pSelHeight: 选中时高度.
-func (l *List) GetItemHeightDefault(pHeight *int, pSelHeight *int) int {
+func (l *List) GetItemHeightDefault(pHeight *int32, pSelHeight *int32) int {
 	return xc.XList_GetItemHeightDefault(l.Handle, pHeight, pSelHeight)
 }
 
@@ -486,7 +486,7 @@ func (l *List) SetLockRowBottomOverlap(bOverlap bool) int {
 // piItem: 项索引.
 //
 // piSubItem: 子项索引.
-func (l *List) HitTest(pPt *xc.POINT, piItem *int, piSubItem *int) bool {
+func (l *List) HitTest(pPt *xc.POINT, piItem *int32, piSubItem *int32) bool {
 	return xc.XList_HitTest(l.Handle, pPt, piItem, piSubItem)
 }
 
@@ -497,7 +497,7 @@ func (l *List) HitTest(pPt *xc.POINT, piItem *int, piSubItem *int) bool {
 // piItem: 项索引.
 //
 // piSubItem: 子项索引.
-func (l *List) HitTestOffset(pPt *xc.POINT, piItem *int, piSubItem *int) bool {
+func (l *List) HitTestOffset(pPt *xc.POINT, piItem *int32, piSubItem *int32) bool {
 	return xc.XList_HitTestOffset(l.Handle, pPt, piItem, piSubItem)
 }
 
@@ -738,7 +738,7 @@ func (l *List) GetItemImageEx(iItem int, pName string) int {
 // iColumn:.
 //
 // pOutValue:.
-func (l *List) GetItemInt(iItem int, iColumn int, pOutValue *int) bool {
+func (l *List) GetItemInt(iItem int, iColumn int, pOutValue *int32) bool {
 	return xc.XList_GetItemInt(l.Handle, iItem, iColumn, pOutValue)
 }
 
@@ -749,7 +749,7 @@ func (l *List) GetItemInt(iItem int, iColumn int, pOutValue *int) bool {
 // pName:.
 //
 // pOutValue:.
-func (l *List) GetItemIntEx(iItem int, pName string, pOutValue *int) bool {
+func (l *List) GetItemIntEx(iItem int, pName string, pOutValue *int32) bool {
 	return xc.XList_GetItemIntEx(l.Handle, iItem, pName, pOutValue)
 }
 
@@ -825,7 +825,7 @@ func (l *List) SetSplitLineColor(color int) int {
 // nHeight: 高度.
 //
 // nSelHeight: 选中时高度.
-func (l *List) SetItemHeight(iRow int, nHeight int, nSelHeight int) int {
+func (l *List) SetItemHeight(iRow int, nHeight, nSelHeight int32) int {
 	return xc.XList_SetItemHeight(l.Handle, iRow, nHeight, nSelHeight)
 }
 
@@ -836,7 +836,7 @@ func (l *List) SetItemHeight(iRow int, nHeight int, nSelHeight int) int {
 // pHeight: 高度.
 //
 // pSelHeight: 选中时高度.
-func (l *List) GetItemHeight(iRow int, pHeight *int, pSelHeight *int) int {
+func (l *List) GetItemHeight(iRow int, pHeight, pSelHeight *int32) int {
 	return xc.XList_GetItemHeight(l.Handle, iRow, pHeight, pSelHeight)
 }
 
@@ -880,7 +880,7 @@ func (l *List) SetItemTemplateXMLFromMem(data []byte) bool {
 // pPassword: zip密码.
 //
 // hModule: 模块句柄, 可填0.
-func (l *List) SetItemTemplateXMLFromZipRes(id int, pFileName string, pPassword string, hModule int) bool {
+func (l *List) SetItemTemplateXMLFromZipRes(id int32, pFileName string, pPassword string, hModule uintptr) bool {
 	return xc.XList_SetItemTemplateXMLFromZipRes(l.Handle, id, pFileName, pPassword, hModule)
 }
 
@@ -888,24 +888,47 @@ func (l *List) SetItemTemplateXMLFromZipRes(id int, pFileName string, pPassword 
 以下都是事件
 */
 
-type XE_LIST_TEMP_CREATE func(pItem *xc.List_Item_, nFlag int, pbHandled *bool) int                          // 列表元素-项模板创建事件,模板复用机制需先启用;替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复.
-type XE_LIST_TEMP_CREATE1 func(hEle int, pItem *xc.List_Item_, nFlag int, pbHandled *bool) int               // 列表元素-项模板创建事件,模板复用机制需先启用;替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复.
-type XE_LIST_TEMP_CREATE_END func(pItem *xc.List_Item_, nFlag int, pbHandled *bool) int                      // 列表元素-项模板创建完成事件,模板复用机制需先启用;不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册.
-type XE_LIST_TEMP_CREATE_END1 func(hEle int, pItem *xc.List_Item_, nFlag int, pbHandled *bool) int           // 列表元素-项模板创建完成事件,模板复用机制需先启用;不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册.
-type XE_LIST_TEMP_DESTROY func(pItem *xc.List_Item_, nFlag int, pbHandled *bool) int                         // 列表元素,项模板销毁.
-type XE_LIST_TEMP_DESTROY1 func(hEle int, pItem *xc.List_Item_, nFlag int, pbHandled *bool) int              // 列表元素,项模板销毁.
+// 列表元素-项模板创建事件,模板复用机制需先启用;替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复.
+//
+// nFlag  0:状态改变; 1:新模板实例; 2:旧模板复用
+type XE_LIST_TEMP_CREATE func(pItem *xc.List_Item_, nFlag int32, pbHandled *bool) int
+
+// 列表元素-项模板创建事件,模板复用机制需先启用;替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复.
+//
+// nFlag  0:状态改变; 1:新模板实例; 2:旧模板复用
+type XE_LIST_TEMP_CREATE1 func(hEle int, pItem *xc.List_Item_, nFlag int32, pbHandled *bool) int
+
+// 列表元素-项模板创建完成事件,模板复用机制需先启用;不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册.
+//
+// nFlag  0:状态改变(复用); 1:新模板实例; 2:旧模板复用
+type XE_LIST_TEMP_CREATE_END func(pItem *xc.List_Item_, nFlag int32, pbHandled *bool) int
+
+// 列表元素-项模板创建完成事件,模板复用机制需先启用;不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册.
+//
+// nFlag  0:状态改变(复用); 1:新模板实例; 2:旧模板复用
+type XE_LIST_TEMP_CREATE_END1 func(hEle int, pItem *xc.List_Item_, nFlag int32, pbHandled *bool) int
+
+// 列表元素,项模板销毁.
+//
+// nFlag   0:正常销毁;  1:移动到缓存(不会被销毁,临时缓存备用,当需要时被复用)
+type XE_LIST_TEMP_DESTROY func(pItem *xc.List_Item_, nFlag int32, pbHandled *bool) int
+
+// 列表元素,项模板销毁.
+//
+// nFlag   0:正常销毁;  1:移动到缓存(不会被销毁,临时缓存备用,当需要时被复用)
+type XE_LIST_TEMP_DESTROY1 func(hEle int, pItem *xc.List_Item_, nFlag int32, pbHandled *bool) int
 type XE_LIST_TEMP_ADJUST_COORDINATE func(pItem *xc.List_Item_, pbHandled *bool) int                          // 列表元素,项模板调整坐标. 已停用.
 type XE_LIST_TEMP_ADJUST_COORDINATE1 func(hEle int, pItem *xc.List_Item_, pbHandled *bool) int               // 列表元素,项模板调整坐标. 已停用.
 type XE_LIST_DRAWITEM func(hDraw int, pItem *xc.List_Item_, pbHandled *bool) int                             // 列表元素,绘制项.
 type XE_LIST_DRAWITEM1 func(hEle int, hDraw int, pItem *xc.List_Item_, pbHandled *bool) int                  // 列表元素,绘制项.
-type XE_LIST_SELECT func(iItem int, pbHandled *bool) int                                                     // 列表元素,项选择事件.
-type XE_LIST_SELECT1 func(hEle int, iItem int, pbHandled *bool) int                                          // 列表元素,项选择事件.
+type XE_LIST_SELECT func(iItem int32, pbHandled *bool) int                                                   // 列表元素,项选择事件.
+type XE_LIST_SELECT1 func(hEle int, iItem int32, pbHandled *bool) int                                        // 列表元素,项选择事件.
 type XE_LIST_HEADER_DRAWITEM func(hDraw int, pItem *xc.List_Header_Item_, pbHandled *bool) int               // 列表元素绘制列表头项.
 type XE_LIST_HEADER_DRAWITEM1 func(hEle int, hDraw int, pItem *xc.List_Header_Item_, pbHandled *bool) int    // 列表元素绘制列表头项.
-type XE_LIST_HEADER_CLICK func(iItem int, pbHandled *bool) int                                               // 列表元素,列表头项点击事件.
-type XE_LIST_HEADER_CLICK1 func(hEle int, iItem int, pbHandled *bool) int                                    // 列表元素,列表头项点击事件.
-type XE_LIST_HEADER_WIDTH_CHANGE func(iItem int, nWidth int, pbHandled *bool) int                            // 列表元素,列表头项宽度改变事件.
-type XE_LIST_HEADER_WIDTH_CHANGE1 func(hEle int, iItem int, nWidth int, pbHandled *bool) int                 // 列表元素,列表头项宽度改变事件.
+type XE_LIST_HEADER_CLICK func(iItem int32, pbHandled *bool) int                                             // 列表元素,列表头项点击事件.
+type XE_LIST_HEADER_CLICK1 func(hEle int, iItem int32, pbHandled *bool) int                                  // 列表元素,列表头项点击事件.
+type XE_LIST_HEADER_WIDTH_CHANGE func(iItem int32, nWidth int32, pbHandled *bool) int                        // 列表元素,列表头项宽度改变事件.
+type XE_LIST_HEADER_WIDTH_CHANGE1 func(hEle int, iItem int32, nWidth int32, pbHandled *bool) int             // 列表元素,列表头项宽度改变事件.
 type XE_LIST_HEADER_TEMP_CREATE func(pItem *xc.List_Header_Item_, pbHandled *bool) int                       // 列表元素,列表头项模板创建.
 type XE_LIST_HEADER_TEMP_CREATE1 func(hEle int, pItem *xc.List_Header_Item_, pbHandled *bool) int            // 列表元素,列表头项模板创建.
 type XE_LIST_HEADER_TEMP_CREATE_END func(pItem *xc.List_Header_Item_, pbHandled *bool) int                   // 列表元素,列表头项模板创建完成事件.
@@ -916,31 +939,43 @@ type XE_LIST_HEADER_TEMP_ADJUST_COORDINATE func(pItem *xc.List_Header_Item_, pbH
 type XE_LIST_HEADER_TEMP_ADJUST_COORDINATE1 func(hEle int, pItem *xc.List_Header_Item_, pbHandled *bool) int // 列表元素,列表头项模板调整坐标. 已停用.
 
 // 列表元素-项模板创建事件,模板复用机制需先启用;替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复.
+//
+// nFlag  0:状态改变; 1:新模板实例; 2:旧模板复用
 func (l *List) Event_LIST_TEMP_CREATE(pFun XE_LIST_TEMP_CREATE) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LIST_TEMP_CREATE, pFun)
 }
 
 // 列表元素-项模板创建事件,模板复用机制需先启用;替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复.
+//
+// nFlag  0:状态改变; 1:新模板实例; 2:旧模板复用
 func (l *List) Event_LIST_TEMP_CREATE1(pFun XE_LIST_TEMP_CREATE1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LIST_TEMP_CREATE, pFun)
 }
 
 // 列表元素-项模板创建完成事件,模板复用机制需先启用;不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册.
+//
+// nFlag  0:状态改变(复用); 1:新模板实例; 2:旧模板复用
 func (l *List) Event_LIST_TEMP_CREATE_END(pFun XE_LIST_TEMP_CREATE_END) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LIST_TEMP_CREATE_END, pFun)
 }
 
 // 列表元素-项模板创建完成事件,模板复用机制需先启用;不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册.
+//
+// nFlag  0:状态改变(复用); 1:新模板实例; 2:旧模板复用
 func (l *List) Event_LIST_TEMP_CREATE_END1(pFun XE_LIST_TEMP_CREATE_END1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LIST_TEMP_CREATE_END, pFun)
 }
 
 // 列表元素,项模板销毁.
+//
+// nFlag   0:正常销毁;  1:移动到缓存(不会被销毁,临时缓存备用,当需要时被复用)
 func (l *List) Event_LIST_TEMP_DESTROY(pFun XE_LIST_TEMP_DESTROY) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LIST_TEMP_DESTROY, pFun)
 }
 
 // 列表元素,项模板销毁.
+//
+// nFlag   0:正常销毁;  1:移动到缓存(不会被销毁,临时缓存备用,当需要时被复用)
 func (l *List) Event_LIST_TEMP_DESTROY1(pFun XE_LIST_TEMP_DESTROY1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LIST_TEMP_DESTROY, pFun)
 }

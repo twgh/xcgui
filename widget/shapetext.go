@@ -23,7 +23,7 @@ type ShapeText struct {
 // pName: 文本内容.
 //
 // hParent: 父对象句柄.
-func NewShapeText(x int, y int, cx int, cy int, pName string, hParent int) *ShapeText {
+func NewShapeText(x, y, cx, cy int32, pName string, hParent int) *ShapeText {
 	p := &ShapeText{}
 	p.SetHandle(xc.XShapeText_Create(x, y, cx, cy, pName, hParent))
 	return p

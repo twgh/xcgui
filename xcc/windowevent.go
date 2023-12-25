@@ -7,6 +7,7 @@ const (
 	XWM_WINDPROC             WM_ = 0x7000 + 2  // 窗口消息过程
 	XWM_XC_TIMER             WM_ = 0x7000 + 5  // 炫彩定时器, 非系统定时器, 注册消息 XWM_TIMER 接收
 	XWM_SETFOCUS_ELE         WM_ = 0x7000 + 9  // 窗口事件_置焦点元素. 指定元素获得焦点
+	XWM_TRAYICON             WM_ = 0x7000 + 10 // 托盘图标事件
 	XWM_MENU_POPUP           WM_ = 0x7000 + 11 // 菜单弹出
 	XWM_MENU_POPUP_WND       WM_ = 0x7000 + 12 // 菜单弹出窗口
 	XWM_MENU_SELECT          WM_ = 0x7000 + 13 // 菜单选择
@@ -42,6 +43,8 @@ const (
 	WM_RBUTTONUP      WM_ = 517    // 窗口鼠标右键弹起消息.
 	WM_LBUTTONDBLCLK  WM_ = 515    // 窗口鼠标左键双击消息.
 	WM_RBUTTONDBLCLK  WM_ = 518    // 窗口鼠标右键双击消息.
+	WM_MBUTTONDOWN    WM_ = 519    // 窗口鼠标中键按下消息.
+	WM_MBUTTONUP      WM_ = 520    // 窗口鼠标中键弹起消息.
 	WM_MOUSEWHEEL     WM_ = 522    // 窗口鼠标滚轮滚动消息.
 	WM_EXITSIZEMOVE   WM_ = 562    // 窗口退出移动或调整大小模式循环改，详情参见MSDN.
 	WM_MOUSEHOVER     WM_ = 673    // 窗口鼠标进入消息

@@ -19,11 +19,11 @@ import (
 //
 // pTitle: 窗口标题.
 //
-// hWndParent: 父窗口.
+// hWndParent: 父窗口真实句柄.
 //
 // XCStyle: GUI库窗口样式: Window_Style_.
-func XFrameWnd_Create(x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xFrameWnd_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pTitle), uintptr(hWndParent), uintptr(XCStyle))
+func XFrameWnd_Create(x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
+	r, _, _ := xFrameWnd_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pTitle), hWndParent, uintptr(XCStyle))
 	return int(r)
 }
 
@@ -48,8 +48,8 @@ func XFrameWnd_Create(x int, y int, cx int, cy int, pTitle string, hWndParent in
 // hWndParent: 父窗口.
 //
 // XCStyle: GUI库窗口样式: Window_Style_.
-func XFrameWnd_CreateEx(dwExStyle int, dwStyle int, lpClassName string, x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xFrameWnd_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pTitle), uintptr(hWndParent), uintptr(XCStyle))
+func XFrameWnd_CreateEx(dwExStyle int, dwStyle int, lpClassName string, x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
+	r, _, _ := xFrameWnd_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pTitle), hWndParent, uintptr(XCStyle))
 	return int(r)
 }
 
@@ -88,7 +88,7 @@ func XFrameWnd_SetPaneSplitBarColor(hWindow int, color int) int {
 // hWindow: 窗口句柄.
 //
 // nHeight: 高度.
-func XFrameWnd_SetTabBarHeight(hWindow int, nHeight int) int {
+func XFrameWnd_SetTabBarHeight(hWindow int, nHeight int32) int {
 	r, _, _ := xFrameWnd_SetTabBarHeight.Call(uintptr(hWindow), uintptr(nHeight))
 	return int(r)
 }
@@ -112,7 +112,7 @@ func XFrameWnd_SaveLayoutToFile(hWindow int, pFileName string) bool {
 // nPaneCount: 窗格数量.
 //
 // pFileName: 文件名，如果文件名为空，将使用默认文件名frameWnd_layout.xml.
-func XFrameWnd_LoadLayoutFile(hWindow int, aPaneList []int, nPaneCount int, pFileName string) bool {
+func XFrameWnd_LoadLayoutFile(hWindow int, aPaneList []int, nPaneCount int32, pFileName string) bool {
 	r, _, _ := xFrameWnd_LoadLayoutFile.Call(uintptr(hWindow), uintptr(unsafe.Pointer(&aPaneList[0])), uintptr(nPaneCount), common.StrPtr(pFileName))
 	return r != 0
 }
@@ -148,8 +148,8 @@ func XFrameWnd_MergePane(hWindow int, hPaneDest int, hPaneNew int) bool {
 // hWnd: 要附加的外部窗口句柄.
 //
 // XCStyle: 炫彩窗口样式: Window_Style_.
-func XFrameWnd_Attach(hWnd, XCStyle int) int {
-	r, _, _ := xFrameWnd_Attach.Call(uintptr(hWnd), uintptr(XCStyle))
+func XFrameWnd_Attach(hWnd uintptr, XCStyle int) int {
+	r, _, _ := xFrameWnd_Attach.Call(hWnd, uintptr(XCStyle))
 	return int(r)
 }
 
@@ -175,14 +175,14 @@ func XFrameWnd_GetViewRect(hWindow int, pRect *RECT) {
 // hWindow: 窗口句柄.
 //
 // nWidth: 宽度.
-func XFrameWnd_SetPaneSplitBarWidth(hWindow, nWidth int) {
+func XFrameWnd_SetPaneSplitBarWidth(hWindow int, nWidth int32) {
 	xFrameWnd_SetPaneSplitBarWidth.Call(uintptr(hWindow), uintptr(nWidth))
 }
 
 // 框架窗口_取窗格分隔条宽度.
 //
 // hWindow: 窗口句柄.
-func XFrameWnd_GetPaneSplitBarWidth(hWindow int) int {
+func XFrameWnd_GetPaneSplitBarWidth(hWindow int) int32 {
 	r, _, _ := xFrameWnd_GetPaneSplitBarWidth.Call(uintptr(hWindow))
-	return int(r)
+	return int32(r)
 }

@@ -236,10 +236,10 @@ func (s *ScrollView) ScrollBottom() bool {
 以下都是事件
 */
 
-type XE_SCROLLVIEW_SCROLL_H func(pos int, pbHandled *bool) int            // 滚动视图元素水平滚动事件,滚动视图触发.
-type XE_SCROLLVIEW_SCROLL_H1 func(hEle int, pos int, pbHandled *bool) int // 滚动视图元素水平滚动事件,滚动视图触发.
-type XE_SCROLLVIEW_SCROLL_V func(pos int, pbHandled *bool) int            // 滚动视图元素垂直滚动事件,滚动视图触发.
-type XE_SCROLLVIEW_SCROLL_V1 func(hEle int, pos int, pbHandled *bool) int // 滚动视图元素垂直滚动事件,滚动视图触发.
+type XE_SCROLLVIEW_SCROLL_H func(pos int32, pbHandled *bool) int            // 滚动视图元素水平滚动事件,滚动视图触发.
+type XE_SCROLLVIEW_SCROLL_H1 func(hEle int, pos int32, pbHandled *bool) int // 滚动视图元素水平滚动事件,滚动视图触发.
+type XE_SCROLLVIEW_SCROLL_V func(pos int32, pbHandled *bool) int            // 滚动视图元素垂直滚动事件,滚动视图触发.
+type XE_SCROLLVIEW_SCROLL_V1 func(hEle int, pos int32, pbHandled *bool) int // 滚动视图元素垂直滚动事件,滚动视图触发.
 
 // 滚动视图元素水平滚动事件,滚动视图触发.
 func (s *ScrollView) Event_SCROLLVIEW_SCROLL_H(pFun XE_SCROLLVIEW_SCROLL_H) bool {

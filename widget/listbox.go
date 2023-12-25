@@ -40,7 +40,7 @@ func NewListBox(x int, y int, cx int, cy int, hParent int) *ListBox {
 // hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
 //
 // col_extend_count: 列数量. 例如: 内置模板是1列, 如果数据有5列, 那么此参数填5.
-func NewListBoxEx(x int, y int, cx int, cy int, hParent, col_extend_count int) *ListBox {
+func NewListBoxEx(x, y, cx, cy int32, hParent, col_extend_count int32) *ListBox {
 	p := &ListBox{}
 	p.SetHandle(xc.XListBox_CreateEx(x, y, cx, cy, hParent, col_extend_count))
 	return p
@@ -222,7 +222,7 @@ func (l *ListBox) VisibleItem(iItem int) int {
 // piStart: 开始行索引.
 //
 // piEnd: 结束行索引.
-func (l *ListBox) GetVisibleRowRange(piStart *int, piEnd *int) int {
+func (l *ListBox) GetVisibleRowRange(piStart *int32, piEnd *int32) int {
 	return xc.XListBox_GetVisibleRowRange(l.Handle, piStart, piEnd)
 }
 
@@ -231,7 +231,7 @@ func (l *ListBox) GetVisibleRowRange(piStart *int, piEnd *int) int {
 // nHeight: 项高度.
 //
 // nSelHeight: 选中项高度.
-func (l *ListBox) SetItemHeightDefault(nHeight int, nSelHeight int) int {
+func (l *ListBox) SetItemHeightDefault(nHeight int32, nSelHeight int32) int {
 	return xc.XListBox_SetItemHeightDefault(l.Handle, nHeight, nSelHeight)
 }
 
@@ -240,7 +240,7 @@ func (l *ListBox) SetItemHeightDefault(nHeight int, nSelHeight int) int {
 // pHeight: 高度.
 //
 // pSelHeight: 选中时高度.
-func (l *ListBox) GetItemHeightDefault(pHeight *int, pSelHeight *int) int {
+func (l *ListBox) GetItemHeightDefault(pHeight *int32, pSelHeight *int32) int {
 	return xc.XListBox_GetItemHeightDefault(l.Handle, pHeight, pSelHeight)
 }
 
@@ -555,7 +555,7 @@ func (l *ListBox) GetItemImageEx(iItem int, pName string) int {
 // iColumn:.
 //
 // pOutValue:.
-func (l *ListBox) GetItemInt(iItem int, iColumn int, pOutValue *int) bool {
+func (l *ListBox) GetItemInt(iItem int, iColumn int, pOutValue *int32) bool {
 	return xc.XListBox_GetItemInt(l.Handle, iItem, iColumn, pOutValue)
 }
 
@@ -566,7 +566,7 @@ func (l *ListBox) GetItemInt(iItem int, iColumn int, pOutValue *int) bool {
 // pName:.
 //
 // pOutValue:.
-func (l *ListBox) GetItemIntEx(iItem int, pName string, pOutValue *int) bool {
+func (l *ListBox) GetItemIntEx(iItem int, pName string, pOutValue *int32) bool {
 	return xc.XListBox_GetItemIntEx(l.Handle, iItem, pName, pOutValue)
 }
 
@@ -660,7 +660,7 @@ func (l *ListBox) SetItemTemplateXMLFromMem(data []byte) bool {
 // pPassword: zip密码.
 //
 // hModule: 模块句柄, 可填0.
-func (l *ListBox) SetItemTemplateXMLFromZipRes(id int, pFileName string, pPassword string, hModule int) bool {
+func (l *ListBox) SetItemTemplateXMLFromZipRes(id int, pFileName string, pPassword string, hModule uintptr) bool {
 	return xc.XListBox_SetItemTemplateXMLFromZipRes(l.Handle, id, pFileName, pPassword, hModule)
 }
 
@@ -673,45 +673,80 @@ func (l *ListBox) GetItemTemplate() int {
 以下都是事件
 */
 
-type XE_LISTBOX_TEMP_CREATE func(pItem *xc.ListBox_Item_, nFlag int, pbHandled *bool) int                // 列表框元素-项模板创建事件, 模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复.
-type XE_LISTBOX_TEMP_CREATE1 func(hEle int, pItem *xc.ListBox_Item_, nFlag int, pbHandled *bool) int     // 列表框元素-项模板创建事件, 模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复.
-type XE_LISTBOX_TEMP_CREATE_END func(pItem *xc.ListBox_Item_, nFlag int, pbHandled *bool) int            // 列表框元素-项模板创建完成事件,模板复用机制需先启用;不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册.
-type XE_LISTBOX_TEMP_CREATE_END1 func(hEle int, pItem *xc.ListBox_Item_, nFlag int, pbHandled *bool) int // 列表框元素-项模板创建完成事件,模板复用机制需先启用;不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册.
-type XE_LISTBOX_TEMP_DESTROY func(pItem *xc.ListBox_Item_, nFlag int, pbHandled *bool) int               // 列表框元素,项模板销毁.
-type XE_LISTBOX_TEMP_DESTROY1 func(hEle int, pItem *xc.ListBox_Item_, nFlag int, pbHandled *bool) int    // 列表框元素,项模板销毁.
-type XE_LISTBOX_TEMP_ADJUST_COORDINATE func(pItem *xc.ListBox_Item_, pbHandled *bool) int                // 列表框元素,项模板调整坐标. 已停用.
-type XE_LISTBOX_TEMP_ADJUST_COORDINATE1 func(hEle int, pItem *xc.ListBox_Item_, pbHandled *bool) int     // 列表框元素,项模板调整坐标. 已停用.
-type XE_LISTBOX_DRAWITEM func(hDraw int, pItem *xc.ListBox_Item_, pbHandled *bool) int                   // 列表框元素,项绘制事件.
-type XE_LISTBOX_DRAWITEM1 func(hEle int, hDraw int, pItem *xc.ListBox_Item_, pbHandled *bool) int        // 列表框元素,项绘制事件.
-type XE_LISTBOX_SELECT func(iItem int, pbHandled *bool) int                                              // 列表框元素,项选择事件.
-type XE_LISTBOX_SELECT1 func(hEle int, iItem int, pbHandled *bool) int                                   // 列表框元素,项选择事件.
+// 列表框元素-项模板创建事件, 模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复
+//
+// nFlag  0:状态改变; 1:新模板实例; 2:旧模板复用
+type XE_LISTBOX_TEMP_CREATE func(pItem *xc.ListBox_Item_, nFlag int32, pbHandled *bool) int
 
-// 列表框元素-项模板创建事件, 模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复.
+// 列表框元素-项模板创建事件, 模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复
+//
+// nFlag  0:状态改变; 1:新模板实例; 2:旧模板复用
+type XE_LISTBOX_TEMP_CREATE1 func(hEle int, pItem *xc.ListBox_Item_, nFlag int32, pbHandled *bool) int
+
+// 列表框元素-项模板创建完成事件,模板复用机制需先启用;不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册.
+//
+// nFlag  0:状态改变(复用); 1:新模板实例; 2:旧模板复用
+type XE_LISTBOX_TEMP_CREATE_END func(pItem *xc.ListBox_Item_, nFlag int32, pbHandled *bool) int
+
+// 列表框元素-项模板创建完成事件,模板复用机制需先启用;不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册.
+//
+// nFlag  0:状态改变(复用); 1:新模板实例; 2:旧模板复用
+type XE_LISTBOX_TEMP_CREATE_END1 func(hEle int, pItem *xc.ListBox_Item_, nFlag int32, pbHandled *bool) int
+
+// 列表框元素,项模板销毁.
+//
+// nFlag   0:正常销毁;  1:移动到缓存(不会被销毁,临时缓存备用,当需要时被复用)
+type XE_LISTBOX_TEMP_DESTROY func(pItem *xc.ListBox_Item_, nFlag int, pbHandled *bool) int
+
+// 列表框元素,项模板销毁.
+//
+// nFlag   0:正常销毁;  1:移动到缓存(不会被销毁,临时缓存备用,当需要时被复用)
+type XE_LISTBOX_TEMP_DESTROY1 func(hEle int, pItem *xc.ListBox_Item_, nFlag int, pbHandled *bool) int
+type XE_LISTBOX_TEMP_ADJUST_COORDINATE func(pItem *xc.ListBox_Item_, pbHandled *bool) int            // 列表框元素,项模板调整坐标. 已停用.
+type XE_LISTBOX_TEMP_ADJUST_COORDINATE1 func(hEle int, pItem *xc.ListBox_Item_, pbHandled *bool) int // 列表框元素,项模板调整坐标. 已停用.
+type XE_LISTBOX_DRAWITEM func(hDraw int, pItem *xc.ListBox_Item_, pbHandled *bool) int               // 列表框元素,项绘制事件.
+type XE_LISTBOX_DRAWITEM1 func(hEle int, hDraw int, pItem *xc.ListBox_Item_, pbHandled *bool) int    // 列表框元素,项绘制事件.
+type XE_LISTBOX_SELECT func(iItem int32, pbHandled *bool) int                                        // 列表框元素,项选择事件.
+type XE_LISTBOX_SELECT1 func(hEle int, iItem int32, pbHandled *bool) int                             // 列表框元素,项选择事件.
+
+// 列表框元素-项模板创建事件, 模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复
+//
+// nFlag  0:状态改变; 1:新模板实例; 2:旧模板复用
 func (l *ListBox) Event_LISTBOX_TEMP_CREATE(pFun XE_LISTBOX_TEMP_CREATE) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LISTBOX_TEMP_CREATE, pFun)
 }
 
-// 列表框元素-项模板创建事件, 模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复.
+// 列表框元素-项模板创建事件, 模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复
+//
+// nFlag  0:状态改变; 1:新模板实例; 2:旧模板复用
 func (l *ListBox) Event_LISTBOX_TEMP_CREATE1(pFun XE_LISTBOX_TEMP_CREATE1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LISTBOX_TEMP_CREATE, pFun)
 }
 
 // 列表框元素-项模板创建完成事件,模板复用机制需先启用;不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册.
+//
+// nFlag  0:状态改变(复用); 1:新模板实例; 2:旧模板复用
 func (l *ListBox) Event_LISTBOX_TEMP_CREATE_END(pFun XE_LISTBOX_TEMP_CREATE_END) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LISTBOX_TEMP_CREATE_END, pFun)
 }
 
 // 列表框元素-项模板创建完成事件,模板复用机制需先启用;不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册.
+//
+// nFlag  0:状态改变(复用); 1:新模板实例; 2:旧模板复用
 func (l *ListBox) Event_LISTBOX_TEMP_CREATE_END1(pFun XE_LISTBOX_TEMP_CREATE_END1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LISTBOX_TEMP_CREATE_END, pFun)
 }
 
 // 列表框元素,项模板销毁.
+//
+// nFlag   0:正常销毁;  1:移动到缓存(不会被销毁,临时缓存备用,当需要时被复用)
 func (l *ListBox) Event_LISTBOX_TEMP_DESTROY(pFun XE_LISTBOX_TEMP_DESTROY) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LISTBOX_TEMP_DESTROY, pFun)
 }
 
 // 列表框元素,项模板销毁.
+//
+// nFlag   0:正常销毁;  1:移动到缓存(不会被销毁,临时缓存备用,当需要时被复用)
 func (l *ListBox) Event_LISTBOX_TEMP_DESTROY1(pFun XE_LISTBOX_TEMP_DESTROY1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LISTBOX_TEMP_DESTROY, pFun)
 }

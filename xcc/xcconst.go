@@ -39,7 +39,7 @@ const (
 )
 
 // AdjustLayout_ 是调整布局标识位.
-type AdjustLayout_ int
+type AdjustLayout_ int32
 
 const (
 	AdjustLayout_No   AdjustLayout_ = iota // 不调整布局
@@ -625,8 +625,8 @@ type List_DrawItemBk_Flag_ int
 
 const (
 	List_DrawItemBk_Flag_Leave       List_DrawItemBk_Flag_ = 1 << iota // 绘制鼠标离开状态项背景
-	List_DrawItemBk_Flag_Stay                                          // 绘制鼠标选择状态项背景
-	List_DrawItemBk_Flag_Select                                        // 绘制鼠标停留状态项项背景
+	List_DrawItemBk_Flag_Stay                                          // 绘制鼠标停留状态项项背景
+	List_DrawItemBk_Flag_Select                                        // 绘制鼠标选择状态项背景
 	List_DrawItemBk_Flag_Group_Leave                                   // 绘制鼠标离开状态组背景, 当项为组时
 	List_DrawItemBk_Flag_Group_Stay                                    // 绘制鼠标停留状态组背景, 当项为组时
 
@@ -913,4 +913,16 @@ const (
 	HWND_TOPMOST   HWND_ = -1 // 将窗口置于所有非顶层窗口之上。即使窗口未被激活, 窗口也将保持顶级位置。
 	HWND_TOP       HWND_ = 0  // 将窗口置于Z序的顶部。
 	HWND_BOTTOM    HWND_ = 1  // 将窗口置于Z序的底部。如果参数hWnd标识了一个顶层窗口，则窗口失去顶级位置，并且被置在所有其他窗口的底部。
+)
+
+// TrayIcon_Flag_ 托盘图标标识.
+type TrayIcon_Flag_ int32
+
+const (
+	TrayIcon_Flag_Icon_None    TrayIcon_Flag_ = 0x0  // 无图标 NIIF_NONE
+	TrayIcon_Flag_Icon_Info    TrayIcon_Flag_ = 0x1  // 信息图标 NIIF_INFO
+	TrayIcon_Flag_Icon_Warning TrayIcon_Flag_ = 0x2  // 警告图标 NIIF_WARNING
+	TrayIcon_Flag_Icon_Error   TrayIcon_Flag_ = 0x3  // 错误图标 NIIF_ERROR
+	TrayIcon_Flag_Icon_User    TrayIcon_Flag_ = 0x4  // 用户指定的图标 NIIF_USER
+	TrayIcon_Flag_Nosound      TrayIcon_Flag_ = 0x10 // 禁止播放气泡声音 NIIF_NOSOUND
 )

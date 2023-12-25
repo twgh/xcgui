@@ -95,8 +95,8 @@ func XTemp_LoadFromMemEx(nType xcc.ListItemTemp_Type_, data []byte, pOutTemp1 *i
 // pPassword: zip密码.
 //
 // hModule: 模块句柄, 可填0.
-func XTemp_LoadZipRes(nType xcc.ListItemTemp_Type_, id int, pFileName string, pPassword string, hModule int) int {
-	r, _, _ := xTemp_LoadZipRes.Call(uintptr(nType), uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(hModule))
+func XTemp_LoadZipRes(nType xcc.ListItemTemp_Type_, id int32, pFileName string, pPassword string, hModule uintptr) int {
+	r, _, _ := xTemp_LoadZipRes.Call(uintptr(nType), uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), hModule)
 	return int(r)
 }
 
@@ -115,8 +115,8 @@ func XTemp_LoadZipRes(nType xcc.ListItemTemp_Type_, id int, pFileName string, pP
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
 //
 // hModule: 模块句柄, 可填0.
-func XTemp_LoadZipResEx(nType xcc.ListItemTemp_Type_, id int, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int, hModule int) int {
-	r, _, _ := xTemp_LoadZipResEx.Call(uintptr(nType), uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(unsafe.Pointer(&pOutTemp1)), uintptr(unsafe.Pointer(&pOutTemp2)), uintptr(hModule))
+func XTemp_LoadZipResEx(nType xcc.ListItemTemp_Type_, id int32, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int, hModule uintptr) int {
+	r, _, _ := xTemp_LoadZipResEx.Call(uintptr(nType), uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(unsafe.Pointer(&pOutTemp1)), uintptr(unsafe.Pointer(&pOutTemp2)), hModule)
 	return int(r)
 }
 
@@ -253,7 +253,7 @@ func XTemp_SetNodeAttribute(pNode int, pName string, pAttr string) bool {
 // pName: 属性名.
 //
 // pAttr: 属性值.
-func XTemp_SetNodeAttributeEx(pNode int, itemID int, pName string, pAttr string) bool {
+func XTemp_SetNodeAttributeEx(pNode int, itemID int32, pName string, pAttr string) bool {
 	r, _, _ := xTemp_SetNodeAttributeEx.Call(uintptr(pNode), uintptr(itemID), common.StrPtr(pName), common.StrPtr(pAttr))
 	return r != 0
 }
@@ -263,7 +263,7 @@ func XTemp_SetNodeAttributeEx(pNode int, itemID int, pName string, pAttr string)
 // hTemp: 模板句柄.
 //
 // index: 节点位置索引.
-func XTemp_List_GetNode(hTemp int, index int) int {
+func XTemp_List_GetNode(hTemp int, index int32) int {
 	r, _, _ := xTemp_List_GetNode.Call(uintptr(hTemp), uintptr(index))
 	return int(r)
 }
@@ -273,7 +273,7 @@ func XTemp_List_GetNode(hTemp int, index int) int {
 // pNode: 节点指针.
 //
 // itemID: ID.
-func XTemp_GetNode(pNode int, itemID int) int {
+func XTemp_GetNode(pNode int, itemID int32) int {
 	r, _, _ := xTemp_GetNode.Call(uintptr(pNode), uintptr(itemID))
 	return int(r)
 }
@@ -301,7 +301,7 @@ func XTemp_Clone(hTemp int) int {
 // index: 插入位置索引.
 //
 // pNode: 节点指针.
-func XTemp_List_InsertNode(hTemp int, index int, pNode int) bool {
+func XTemp_List_InsertNode(hTemp int, index int32, pNode int) bool {
 	r, _, _ := xTemp_List_InsertNode.Call(uintptr(hTemp), uintptr(index), uintptr(pNode))
 	return r != 0
 }
@@ -311,7 +311,7 @@ func XTemp_List_InsertNode(hTemp int, index int, pNode int) bool {
 // hTemp: 列表项模板句柄.
 //
 // index: 位置索引.
-func XTemp_List_DeleteNode(hTemp int, index int) bool {
+func XTemp_List_DeleteNode(hTemp int, index int32) bool {
 	r, _, _ := xTemp_List_DeleteNode.Call(uintptr(hTemp), uintptr(index))
 	return r != 0
 }
@@ -319,9 +319,9 @@ func XTemp_List_DeleteNode(hTemp int, index int) bool {
 // 项模板_列表_取数量, 取子节点数量, 只当前层子节点.
 //
 // hTemp: 列表项模板句柄.
-func XTemp_List_GetCount(hTemp int) int {
+func XTemp_List_GetCount(hTemp int) int32 {
 	r, _, _ := xTemp_List_GetCount.Call(uintptr(hTemp))
-	return int(r)
+	return int32(r)
 }
 
 // 项模板_列表_移动列, 将指定列移动到目标位置.
@@ -331,7 +331,7 @@ func XTemp_List_GetCount(hTemp int) int {
 // iColSrc: 源列索引.
 //
 // iColDest: 目标列索引.
-func XTemp_List_MoveColumn(hTemp int, iColSrc int, iColDest int) bool {
+func XTemp_List_MoveColumn(hTemp int, iColSrc, iColDest int32) bool {
 	r, _, _ := xTemp_List_MoveColumn.Call(uintptr(hTemp), uintptr(iColSrc), uintptr(iColDest))
 	return r != 0
 }

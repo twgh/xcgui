@@ -53,9 +53,8 @@ func (a *App) ShowAndRun(hWindow int) {
 // DebugToFileInfo 炫彩_输出调试信息到文件, 打印调试信息到文件xcgui_debug.txt.
 //
 //	@param pInfo 文本.
-//	@return int
-func (a *App) DebugToFileInfo(pInfo string) int {
-	return xc.XC_DebugToFileInfo(pInfo)
+func (a *App) DebugToFileInfo(pInfo string) {
+	xc.XC_DebugToFileInfo(pInfo)
 }
 
 // SetActivateTopWindow 炫彩_激活窗口, 激活当前进程最上层窗口.
@@ -80,7 +79,7 @@ func (a *App) GetDefaultFont() int {
 //	@param hWndParent 父窗口句柄(真实的窗口句柄).
 //	@param XCStyle xcc.Window_Style_.
 //	@return xcc.MessageBox_Flag_. 返回: xcc.MessageBox_Flag_Ok: 点击确定按钮退出. xcc.MessageBox_Flag_Cancel: 点击取消按钮退出. xcc.MessageBox_Flag_Other: 其他方式退出.
-func (a *App) MessageBox(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) xcc.MessageBox_Flag_ {
+func (a *App) MessageBox(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent uintptr, XCStyle xcc.Window_Style_) xcc.MessageBox_Flag_ {
 	return xc.XC_MessageBox(pTitle, pText, nFlags, hWndParent, XCStyle)
 }
 
@@ -92,7 +91,7 @@ func (a *App) MessageBox(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWnd
 //	@param hWndParent 父窗口句柄(真实的窗口句柄).
 //	@param XCStyle xcc.Window_Style_.
 //	@return int 返回消息框窗口句柄.
-func (a *App) Msg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) int {
+func (a *App) Msg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
 	return xc.XMsg_Create(pTitle, pText, nFlags, hWndParent, XCStyle)
 }
 
@@ -107,7 +106,7 @@ func (a *App) Msg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWnd
 //	@param hWndParent 父窗口句柄(真实的窗口句柄).
 //	@param XCStyle xcc.Window_Style_.
 //	@return int 消息框窗口句柄.
-func (a *App) Msg_CreateEx(dwExStyle int, dwStyle int, lpClassName string, pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) int {
+func (a *App) Msg_CreateEx(dwExStyle int, dwStyle int, lpClassName string, pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
 	return xc.XMsg_CreateEx(dwExStyle, dwStyle, lpClassName, pTitle, pText, nFlags, hWndParent, XCStyle)
 }
 
@@ -120,7 +119,7 @@ func (a *App) Msg_CreateEx(dwExStyle int, dwStyle int, lpClassName string, pTitl
 // wParam:.
 //
 // lParam:.
-func (a *App) SendMessage(hWindow int, msg uint32, wParam int32, lParam int32) int {
+func (a *App) SendMessage(hWindow int, msg uint32, wParam, lParam uint) uint {
 	return xc.XC_SendMessage(hWindow, msg, wParam, lParam)
 }
 
@@ -208,8 +207,8 @@ func (a *App) IsHXCGUI(hXCGUI int, nType xcc.XC_OBJECT_TYPE) bool {
 
 // 炫彩_转换HWND到HWINDOW, 通过窗口HWND句柄获取HWINDOW句柄.
 //
-// hWnd: 窗口HWND句柄.
-func (a *App) HWindowFromHWnd(hWnd int) int {
+// hWnd: 窗口真实句柄HWND.
+func (a *App) HWindowFromHWnd(hWnd uintptr) int {
 	return xc.XC_hWindowFromHWnd(hWnd)
 }
 
@@ -296,22 +295,22 @@ func (a *App) GetObjectByName(pName string) int {
 // 炫彩_置绘制频率, 设置UI的最小重绘频率.
 //
 // nMilliseconds: 重绘最小时间间隔, 单位毫秒.
-func (a *App) SetPaintFrequency(nMilliseconds int) int {
-	return xc.XC_SetPaintFrequency(nMilliseconds)
+func (a *App) SetPaintFrequency(nMilliseconds int) {
+	xc.XC_SetPaintFrequency(nMilliseconds)
 }
 
 // 炫彩_置文本渲染质量, 设置文本渲染质量.
 //
 // nType: 参见GDI+ TextRenderingHint 定义.
-func (a *App) SetTextRenderingHint(nType int) int {
-	return xc.XC_SetTextRenderingHint(nType)
+func (a *App) SetTextRenderingHint(nType int) {
+	xc.XC_SetTextRenderingHint(nType)
 }
 
 // 炫彩_启用GDI绘制文本, 将影响到以下函数: XDraw_TextOut, XDraw_TextOutEx, XDraw_TextOutA.
 //
 // bEnable: 是否启用.
-func (a *App) EnableGdiDrawText(bEnable bool) int {
-	return xc.XC_EnableGdiDrawText(bEnable)
+func (a *App) EnableGdiDrawText(bEnable bool) {
+	xc.XC_EnableGdiDrawText(bEnable)
 }
 
 // 炫彩_判断矩形相交, 判断两个矩形是否相交及重叠.
@@ -330,29 +329,29 @@ func (a *App) RectInRect(pRect1 *xc.RECT, pRect2 *xc.RECT) bool {
 // pSrc1: 源矩形1.
 //
 // pSrc2: 源矩形2.
-func (a *App) CombineRect(pDest *xc.RECT, pSrc1 *xc.RECT, pSrc2 *xc.RECT) int {
-	return xc.XC_CombineRect(pDest, pSrc1, pSrc2)
+func (a *App) CombineRect(pDest *xc.RECT, pSrc1 *xc.RECT, pSrc2 *xc.RECT) {
+	xc.XC_CombineRect(pDest, pSrc1, pSrc2)
 }
 
 // 炫彩_显示布局边界, 显示布局对象边界.
 //
 // bShow: 是否显示.
-func (a *App) ShowLayoutFrame(bShow bool) int {
-	return xc.XC_ShowLayoutFrame(bShow)
+func (a *App) ShowLayoutFrame(bShow bool) {
+	xc.XC_ShowLayoutFrame(bShow)
 }
 
 // 炫彩_启用debug文件.
 //
 // bEnable: 是否启用.
-func (a *App) EnableDebugFile(bEnable bool) int {
-	return xc.XC_EnableDebugFile(bEnable)
+func (a *App) EnableDebugFile(bEnable bool) {
+	xc.XC_EnableDebugFile(bEnable)
 }
 
 // 炫彩_启用资源监视器.
 //
 // bEnable: 是否启用.
-func (a *App) EnableResMonitor(bEnable bool) int {
-	return xc.XC_EnableResMonitor(bEnable)
+func (a *App) EnableResMonitor(bEnable bool) {
+	xc.XC_EnableResMonitor(bEnable)
 }
 
 // 炫彩_置布局边界颜色.
@@ -499,14 +498,14 @@ func (a *App) Alert(pTitle string, pText string) int {
 // lpDirectory: 想使用的默认路径完整路径.
 //
 // nShowCmd: 定义了如何显示启动程序的常数值: xcc.SW_.
-func (a *App) Sys_ShellExecute(hwnd int, lpOperation string, lpFile string, lpParameters string, lpDirectory string, nShowCmd xcc.SW_) int {
+func (a *App) Sys_ShellExecute(hwnd uintptr, lpOperation string, lpFile string, lpParameters string, lpDirectory string, nShowCmd xcc.SW_) uintptr {
 	return xc.XC_Sys_ShellExecute(hwnd, lpOperation, lpFile, lpParameters, lpDirectory, nShowCmd)
 }
 
 // 炫彩_载入动态库, 系统API LoadLibrary, 返回动态库模块句柄.
 //
 // lpFileName: 文件名.
-func (a *App) LoadLibrary(lpFileName string) int {
+func (a *App) LoadLibrary(lpFileName string) uintptr {
 	return xc.XC_LoadLibrary(lpFileName)
 }
 
@@ -515,21 +514,21 @@ func (a *App) LoadLibrary(lpFileName string) int {
 // hModule: 动态库模块句柄.
 //
 // lpProcName: 函数名.
-func (a *App) GetProcAddress(hModule int, lpProcName string) int {
+func (a *App) GetProcAddress(hModule uintptr, lpProcName string) uintptr {
 	return xc.XC_GetProcAddress(hModule, lpProcName)
 }
 
 // 炫彩_释放动态库, 系统API FreeLibrary.
 //
 // hModule: 动态库模块句柄.
-func (a *App) FreeLibrary(hModule int) bool {
+func (a *App) FreeLibrary(hModule uintptr) bool {
 	return xc.XC_FreeLibrary(hModule)
 }
 
 // 炫彩_加载DLL, 返回DLL模块句柄. 加载指定DLL, 并且调用DLL中函数LoadDll(), DLL中导出函数格式: int WINAPI LoadDll().
 //
 // pDllFileName: DLL文件名.
-func (a *App) LoadDll(pDllFileName string) int {
+func (a *App) LoadDll(pDllFileName string) uintptr {
 	return xc.XC_LoadDll(pDllFileName)
 }
 
@@ -547,7 +546,7 @@ func (a *App) PostQuitMessage(nExitCode int) int {
 // hParent: 父对象句柄.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func (a *App) LoadLayout(pFileName string, hParent, hAttachWnd int) int {
+func (a *App) LoadLayout(pFileName string, hParent int, hAttachWnd uintptr) int {
 	return xc.XC_LoadLayout(pFileName, hParent, hAttachWnd)
 }
 
@@ -562,7 +561,7 @@ func (a *App) LoadLayout(pFileName string, hParent, hAttachWnd int) int {
 // hParent: 父对象句柄.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func (a *App) LoadLayoutZip(pZipFileName string, pFileName string, pPassword string, hParent, hAttachWnd int) int {
+func (a *App) LoadLayoutZip(pZipFileName string, pFileName string, pPassword string, hParent int, hAttachWnd uintptr) int {
 	return xc.XC_LoadLayoutZip(pZipFileName, pFileName, pPassword, hParent, hAttachWnd)
 }
 
@@ -577,7 +576,7 @@ func (a *App) LoadLayoutZip(pZipFileName string, pFileName string, pPassword str
 // hParent: 父对象句柄.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func (a *App) LoadLayoutZipMem(data []byte, pFileName string, pPassword string, hParent, hAttachWnd int) int {
+func (a *App) LoadLayoutZipMem(data []byte, pFileName string, pPassword string, hParent int, hAttachWnd uintptr) int {
 	return xc.XC_LoadLayoutZipMem(data, pFileName, pPassword, hParent, hAttachWnd)
 }
 
@@ -598,7 +597,7 @@ func (a *App) LoadLayoutZipMem(data []byte, pFileName string, pPassword string, 
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 //
 // hModule: 模块句柄, 可填0.
-func (a *App) LoadLayoutZipResEx(id int, pFileName string, pPassword, pPrefixName string, hParent, hParentWnd, hAttachWnd, hModule int) int {
+func (a *App) LoadLayoutZipResEx(id int32, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd, hModule uintptr) int {
 	return xc.XC_LoadLayoutZipResEx(id, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd, hModule)
 }
 
@@ -611,7 +610,7 @@ func (a *App) LoadLayoutZipResEx(id int, pFileName string, pPassword, pPrefixNam
 // pPassword: zip压缩包密码.
 //
 // hModule: 模块句柄, 可填0.
-func (a *App) LoadResourceZipRes(id int, pFileName string, pPassword string, hModule int) bool {
+func (a *App) LoadResourceZipRes(id int, pFileName string, pPassword string, hModule uintptr) bool {
 	return xc.XC_LoadResourceZipRes(id, pFileName, pPassword, hModule)
 }
 
@@ -624,7 +623,7 @@ func (a *App) LoadResourceZipRes(id int, pFileName string, pPassword string, hMo
 // pPassword: 密码.
 //
 // hModule: 模块句柄, 可填0.
-func (a *App) LoadStyleZipRes(id int, pFileName string, pPassword string, hModule int) bool {
+func (a *App) LoadStyleZipRes(id int, pFileName string, pPassword string, hModule uintptr) bool {
 	return xc.XC_LoadStyleZipRes(id, pFileName, pPassword, hModule)
 }
 
@@ -635,7 +634,7 @@ func (a *App) LoadStyleZipRes(id int, pFileName string, pPassword string, hModul
 // hParent: 父对象.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func (a *App) LoadLayoutFromStringW(pStringXML string, hParent, hAttachWnd int) int {
+func (a *App) LoadLayoutFromStringW(pStringXML string, hParent int, hAttachWnd uintptr) int {
 	return xc.XC_LoadLayoutFromStringW(pStringXML, hParent, hAttachWnd)
 }
 
@@ -650,7 +649,7 @@ func (a *App) LoadLayoutFromStringW(pStringXML string, hParent, hAttachWnd int) 
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func (a *App) LoadLayoutEx(pFileName, pPrefixName string, hParent, hParentWnd, hAttachWnd int) int {
+func (a *App) LoadLayoutEx(pFileName, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
 	return xc.XC_LoadLayoutEx(pFileName, pPrefixName, hParent, hParentWnd, hAttachWnd)
 }
 
@@ -669,7 +668,7 @@ func (a *App) LoadLayoutEx(pFileName, pPrefixName string, hParent, hParentWnd, h
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func (a *App) LoadLayoutZipEx(pZipFileName string, pFileName string, pPassword, pPrefixName string, hParent, hParentWnd, hAttachWnd int) int {
+func (a *App) LoadLayoutZipEx(pZipFileName string, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
 	return xc.XC_LoadLayoutZipEx(pZipFileName, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd)
 }
 
@@ -688,7 +687,7 @@ func (a *App) LoadLayoutZipEx(pZipFileName string, pFileName string, pPassword, 
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func (a *App) LoadLayoutZipMemEx(data []byte, pFileName string, pPassword, pPrefixName string, hParent, hParentWnd, hAttachWnd int) int {
+func (a *App) LoadLayoutZipMemEx(data []byte, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
 	return xc.XC_LoadLayoutZipMemEx(data, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd)
 }
 
@@ -703,7 +702,7 @@ func (a *App) LoadLayoutZipMemEx(data []byte, pFileName string, pPassword, pPref
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func (a *App) LoadLayoutFromStringWEx(pStringXML, pPrefixName string, hParent, hParentWnd, hAttachWnd int) int {
+func (a *App) LoadLayoutFromStringWEx(pStringXML, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
 	return xc.XC_LoadLayoutFromStringWEx(pStringXML, pPrefixName, hParent, hParentWnd, hAttachWnd)
 }
 

@@ -38,10 +38,8 @@ func XExitXCGUI() int {
 // XC_DebugToFileInfo 炫彩_输出调试信息到文件, 打印调试信息到文件xcgui_debug.txt.
 //
 //	@param pInfo 文本.
-//	@return int
-func XC_DebugToFileInfo(pInfo string) int {
-	r, _, _ := xC_DebugToFileInfo.Call(XC_wtoa(pInfo))
-	return int(r)
+func XC_DebugToFileInfo(pInfo string) {
+	xC_DebugToFileInfo.Call(XC_wtoa(pInfo))
 }
 
 // XC_SetActivateTopWindow 炫彩_激活窗口, 激活当前进程最上层窗口.
@@ -68,8 +66,8 @@ func XC_GetDefaultFont() int {
 //	@param hWndParent 父窗口句柄(真实的窗口句柄).
 //	@param XCStyle xcc.Window_Style_.
 //	@return xcc.MessageBox_Flag_ , 返回: xcc.MessageBox_Flag_Ok: 点击确定按钮退出. xcc.MessageBox_Flag_Cancel: 点击取消按钮退出. xcc.MessageBox_Flag_Other: 其他方式退出.
-func XC_MessageBox(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) xcc.MessageBox_Flag_ {
-	r, _, _ := xC_MessageBox.Call(common.StrPtr(pTitle), common.StrPtr(pText), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
+func XC_MessageBox(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent uintptr, XCStyle xcc.Window_Style_) xcc.MessageBox_Flag_ {
+	r, _, _ := xC_MessageBox.Call(common.StrPtr(pTitle), common.StrPtr(pText), uintptr(nFlags), hWndParent, uintptr(XCStyle))
 	return xcc.MessageBox_Flag_(r)
 }
 
@@ -81,8 +79,8 @@ func XC_MessageBox(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent
 //	@param hWndParent 父窗口句柄(真实的窗口句柄).
 //	@param XCStyle xcc.Window_Style_.
 //	@return int 返回消息框窗口句柄.
-func XMsg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xMsg_Create.Call(common.StrPtr(pTitle), common.StrPtr(pText), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
+func XMsg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
+	r, _, _ := xMsg_Create.Call(common.StrPtr(pTitle), common.StrPtr(pText), uintptr(nFlags), hWndParent, uintptr(XCStyle))
 	return int(r)
 }
 
@@ -97,8 +95,8 @@ func XMsg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent i
 //	@param hWndParent 父窗口句柄(真实的窗口句柄).
 //	@param XCStyle xcc.Window_Style_ .
 //	@return int 消息框窗口句柄.
-func XMsg_CreateEx(dwExStyle int, dwStyle int, lpClassName, pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent int, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xMsg_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), common.StrPtr(pTitle), common.StrPtr(pText), uintptr(nFlags), uintptr(hWndParent), uintptr(XCStyle))
+func XMsg_CreateEx(dwExStyle int, dwStyle int, lpClassName, pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
+	r, _, _ := xMsg_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), common.StrPtr(pTitle), common.StrPtr(pText), uintptr(nFlags), hWndParent, uintptr(XCStyle))
 	return int(r)
 }
 
@@ -111,9 +109,9 @@ func XMsg_CreateEx(dwExStyle int, dwStyle int, lpClassName, pTitle, pText string
 // wParam:.
 //
 // lParam:.
-func XC_SendMessage(hWindow int, msg uint32, wParam int32, lParam int32) int {
+func XC_SendMessage(hWindow int, msg uint32, wParam, lParam uint) uint {
 	r, _, _ := xC_SendMessage.Call(uintptr(hWindow), uintptr(msg), uintptr(wParam), uintptr(lParam))
-	return int(r)
+	return uint(r)
 }
 
 // 炫彩_投递窗口消息.
@@ -178,9 +176,9 @@ func XC_IsHXCGUI(hXCGUI int, nType xcc.XC_OBJECT_TYPE) bool {
 
 // 炫彩_转换HWND到HWINDOW, 通过窗口HWND句柄获取HWINDOW句柄.
 //
-// hWnd: 窗口HWND句柄.
-func XC_hWindowFromHWnd(hWnd int) int {
-	r, _, _ := xC_hWindowFromHWnd.Call(uintptr(hWnd))
+// hWnd: 窗口真实句柄HWND.
+func XC_hWindowFromHWnd(hWnd uintptr) int {
+	r, _, _ := xC_hWindowFromHWnd.Call(hWnd)
 	return int(r)
 }
 
@@ -277,25 +275,22 @@ func XC_GetObjectByName(pName string) int {
 // 炫彩_置绘制频率, 设置UI的最小重绘频率.
 //
 // nMilliseconds: 重绘最小时间间隔, 单位毫秒.
-func XC_SetPaintFrequency(nMilliseconds int) int {
-	r, _, _ := xC_SetPaintFrequency.Call(uintptr(nMilliseconds))
-	return int(r)
+func XC_SetPaintFrequency(nMilliseconds int) {
+	xC_SetPaintFrequency.Call(uintptr(nMilliseconds))
 }
 
 // 炫彩_置文本渲染质量, 设置文本渲染质量.
 //
 // nType: 参见GDI+ TextRenderingHint 定义.
-func XC_SetTextRenderingHint(nType int) int {
-	r, _, _ := xC_SetTextRenderingHint.Call(uintptr(nType))
-	return int(r)
+func XC_SetTextRenderingHint(nType int) {
+	xC_SetTextRenderingHint.Call(uintptr(nType))
 }
 
 // 炫彩_启用GDI绘制文本, 将影响到以下函数: XDraw_TextOut, XDraw_TextOutEx, XDraw_TextOutA.
 //
 // bEnable: 是否启用.
-func XC_EnableGdiDrawText(bEnable bool) int {
-	r, _, _ := xC_EnableGdiDrawText.Call(common.BoolPtr(bEnable))
-	return int(r)
+func XC_EnableGdiDrawText(bEnable bool) {
+	xC_EnableGdiDrawText.Call(common.BoolPtr(bEnable))
 }
 
 // 炫彩_判断矩形相交, 判断两个矩形是否相交及重叠.
@@ -315,33 +310,29 @@ func XC_RectInRect(pRect1 *RECT, pRect2 *RECT) bool {
 // pSrc1: 源矩形1.
 //
 // pSrc2: 源矩形2.
-func XC_CombineRect(pDest *RECT, pSrc1 *RECT, pSrc2 *RECT) int {
-	r, _, _ := xC_CombineRect.Call(uintptr(unsafe.Pointer(pDest)), uintptr(unsafe.Pointer(pSrc1)), uintptr(unsafe.Pointer(pSrc2)))
-	return int(r)
+func XC_CombineRect(pDest *RECT, pSrc1 *RECT, pSrc2 *RECT) {
+	xC_CombineRect.Call(uintptr(unsafe.Pointer(pDest)), uintptr(unsafe.Pointer(pSrc1)), uintptr(unsafe.Pointer(pSrc2)))
 }
 
 // 炫彩_显示布局边界, 显示布局对象边界.
 //
 // bShow: 是否显示.
-func XC_ShowLayoutFrame(bShow bool) int {
-	r, _, _ := xC_ShowLayoutFrame.Call(common.BoolPtr(bShow))
-	return int(r)
+func XC_ShowLayoutFrame(bShow bool) {
+	xC_ShowLayoutFrame.Call(common.BoolPtr(bShow))
 }
 
 // 炫彩_启用debug文件.
 //
 // bEnable: 是否启用.
-func XC_EnableDebugFile(bEnable bool) int {
-	r, _, _ := xC_EnableDebugFile.Call(common.BoolPtr(bEnable))
-	return int(r)
+func XC_EnableDebugFile(bEnable bool) {
+	xC_EnableDebugFile.Call(common.BoolPtr(bEnable))
 }
 
 // 炫彩_启用资源监视器.
 //
 // bEnable: 是否启用.
-func XC_EnableResMonitor(bEnable bool) int {
-	r, _, _ := xC_EnableResMonitor.Call(common.BoolPtr(bEnable))
-	return int(r)
+func XC_EnableResMonitor(bEnable bool) {
+	xC_EnableResMonitor.Call(common.BoolPtr(bEnable))
 }
 
 // 炫彩_置布局边界颜色.
@@ -501,17 +492,17 @@ func XC_Alert(pTitle, pText string) int {
 // lpDirectory: 想使用的默认路径完整路径.
 //
 // nShowCmd: 定义了如何显示启动程序的常数值: xcc.SW_.
-func XC_Sys_ShellExecute(hwnd int, lpOperation string, lpFile string, lpParameters string, lpDirectory string, nShowCmd xcc.SW_) int {
-	r, _, _ := xC_Sys_ShellExecute.Call(uintptr(hwnd), common.StrPtr(lpOperation), common.StrPtr(lpFile), common.StrPtr(lpParameters), common.StrPtr(lpDirectory), uintptr(nShowCmd))
-	return int(r)
+func XC_Sys_ShellExecute(hwnd uintptr, lpOperation string, lpFile string, lpParameters string, lpDirectory string, nShowCmd xcc.SW_) uintptr {
+	r, _, _ := xC_Sys_ShellExecute.Call(hwnd, common.StrPtr(lpOperation), common.StrPtr(lpFile), common.StrPtr(lpParameters), common.StrPtr(lpDirectory), uintptr(nShowCmd))
+	return r
 }
 
 // 炫彩_载入动态库, 系统API LoadLibrary, 返回动态库模块句柄.
 //
 // lpFileName: 文件名.
-func XC_LoadLibrary(lpFileName string) int {
+func XC_LoadLibrary(lpFileName string) uintptr {
 	r, _, _ := xC_LoadLibrary.Call(common.StrPtr(lpFileName))
-	return int(r)
+	return r
 }
 
 // 炫彩_取动态库中函数地址, 系统API GetProcAddress, 返回函数地址.
@@ -519,25 +510,25 @@ func XC_LoadLibrary(lpFileName string) int {
 // hModule: 动态库模块句柄.
 //
 // lpProcName: 函数名.
-func XC_GetProcAddress(hModule int, lpProcName string) int {
-	r, _, _ := xC_GetProcAddress.Call(uintptr(hModule), XC_wtoa(lpProcName))
-	return int(r)
+func XC_GetProcAddress(hModule uintptr, lpProcName string) uintptr {
+	r, _, _ := xC_GetProcAddress.Call(hModule, XC_wtoa(lpProcName))
+	return r
 }
 
 // 炫彩_释放动态库, 系统API FreeLibrary.
 //
 // hModule: 动态库模块句柄.
-func XC_FreeLibrary(hModule int) bool {
-	r, _, _ := xC_FreeLibrary.Call(uintptr(hModule))
+func XC_FreeLibrary(hModule uintptr) bool {
+	r, _, _ := xC_FreeLibrary.Call(hModule)
 	return r != 0
 }
 
 // 炫彩_加载DLL, 返回DLL模块句柄. 加载指定DLL, 并且调用DLL中函数LoadDll(), DLL中导出函数格式: int WINAPI LoadDll().
 //
 // pDllFileName: DLL文件名.
-func XC_LoadDll(pDllFileName string) int {
+func XC_LoadDll(pDllFileName string) uintptr {
 	r, _, _ := xC_LoadDll.Call(common.StrPtr(pDllFileName))
-	return int(r)
+	return r
 }
 
 // 炫彩_PostQuitMessage, 发送WM_QUIT消息退出消息循环.

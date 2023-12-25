@@ -23,8 +23,8 @@ import (
 // hWndParent: 父窗口.
 //
 // XCStyle: GUI库窗口样式, Window_Style_.
-func XWnd_Create(x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xWnd_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pTitle), uintptr(hWndParent), uintptr(XCStyle))
+func XWnd_Create(x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
+	r, _, _ := xWnd_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pTitle), hWndParent, uintptr(XCStyle))
 	return int(r)
 }
 
@@ -49,8 +49,8 @@ func XWnd_Create(x int, y int, cx int, cy int, pTitle string, hWndParent int, XC
 // hWndParent: 父窗口.
 //
 // XCStyle: GUI库窗口样式, Window_Style_.
-func XWnd_CreateEx(dwExStyle int, dwStyle int, lpClassName string, x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xWnd_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pTitle), uintptr(hWndParent), uintptr(XCStyle))
+func XWnd_CreateEx(dwExStyle int, dwStyle int, lpClassName string, x int, y int, cx int, cy int, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
+	r, _, _ := xWnd_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pTitle), hWndParent, uintptr(XCStyle))
 	return int(r)
 }
 
@@ -169,9 +169,9 @@ func XWnd_InsertChild(hWindow int, hChild int, index int) bool {
 // 窗口_取HWND.
 //
 // hWindow: 窗口句柄.
-func XWnd_GetHWND(hWindow int) int {
+func XWnd_GetHWND(hWindow int) uintptr {
 	r, _, _ := xWnd_GetHWND.Call(uintptr(hWindow))
-	return int(r)
+	return r
 }
 
 // 窗口_重绘.
@@ -767,7 +767,7 @@ func XWnd_GetLayoutRect(hWindow int, pRect *RECT) int {
 // x: X坐标.
 //
 // y: Y坐标.
-func XWnd_SetPosition(hWindow, x, y int) {
+func XWnd_SetPosition(hWindow int, x, y int32) {
 	xWnd_SetPosition.Call(uintptr(hWindow), uintptr(x), uintptr(y))
 }
 
@@ -922,8 +922,8 @@ func XWnd_SetShadowInfo(hWindow, nSize int, nDepth byte, nAngeleSize int, bRight
 // pbRightAngle: 是否强制直角.
 //
 // pColor: 阴影颜色.
-func XWnd_GetShadowInfo(hWindow int, nSize *int, nDepth *byte, nAngeleSize *int, bRightAngle *bool, color *int) int {
-	r, _, _ := xWnd_GetShadowInfo.Call(uintptr(hWindow), uintptr(unsafe.Pointer(nSize)), uintptr(unsafe.Pointer(nDepth)), uintptr(unsafe.Pointer(nAngeleSize)), uintptr(unsafe.Pointer(bRightAngle)), uintptr(unsafe.Pointer(color)))
+func XWnd_GetShadowInfo(hWindow int, pnSize, pnDepth, pnAngeleSize *int32, pbRightAngle *bool, pColor *int) int {
+	r, _, _ := xWnd_GetShadowInfo.Call(uintptr(hWindow), uintptr(unsafe.Pointer(pnSize)), uintptr(unsafe.Pointer(pnDepth)), uintptr(unsafe.Pointer(pnAngeleSize)), uintptr(unsafe.Pointer(pbRightAngle)), uintptr(unsafe.Pointer(pColor)))
 	return int(r)
 }
 
@@ -940,8 +940,8 @@ func XWnd_GetTransparentType(hWindow int) xcc.Window_Transparent_ {
 // hWnd: 要附加的外部窗口句柄.
 //
 // XCStyle: 炫彩窗口样式: Window_Style_.
-func XWnd_Attach(hWnd int, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xWnd_Attach.Call(uintptr(hWnd), uintptr(XCStyle))
+func XWnd_Attach(hWnd uintptr, XCStyle xcc.Window_Style_) int {
+	r, _, _ := xWnd_Attach.Call(hWnd, uintptr(XCStyle))
 	return int(r)
 }
 
@@ -976,7 +976,7 @@ func XWnd_Show(hWindow int, bShow bool) int {
 // pWidth: 接收返回宽度.
 //
 // pHeight: 接收返回高度.
-func XWnd_GetCaretInfo(hWindow int, pX, pY, pWidth, pHeight *int) int {
+func XWnd_GetCaretInfo(hWindow int, pX, pY, pWidth, pHeight *int32) int {
 	r, _, _ := xWnd_GetCaretInfo.Call(uintptr(hWindow), uintptr(unsafe.Pointer(pX)), uintptr(unsafe.Pointer(pY)), uintptr(unsafe.Pointer(pWidth)), uintptr(unsafe.Pointer(pHeight)))
 	return int(r)
 }
@@ -1164,7 +1164,7 @@ func XWnd_SetCaptionMargin(hWindow int, left int, top int, right int, bottom int
 // cy: 高度.
 //
 // uFlags: 窗口大小调整和定位标志. 可以是以下值的组合: xcc.SWP_.
-func XWnd_SetWindowPos(hWindow int, hWndInsertAfter xcc.HWND_, x, y, cx, cy int, uFlags xcc.SWP_) int {
+func XWnd_SetWindowPos(hWindow int, hWndInsertAfter xcc.HWND_, x, y, cx, cy int32, uFlags xcc.SWP_) int {
 	r, _, _ := xWnd_SetWindowPos.Call(uintptr(hWindow), uintptr(hWndInsertAfter), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), uintptr(uFlags))
 	return int(r)
 }
@@ -1197,7 +1197,7 @@ func XWnd_PointToDPI(hWindow int, pPt *POINT) int {
 	return int(r)
 }
 
-// 窗口_取光标位置. 封装的系统API: GetCursorPos(), 内部做了DPI适配.
+// 窗口_取光标位置. 封装的系统API: GetCursorPos, 内部做了DPI适配.
 //
 // hWindow: 窗口句柄.
 //
@@ -1207,7 +1207,7 @@ func XWnd_GetCursorPos(hWindow int, pPt *POINT) bool {
 	return r != 0
 }
 
-// 窗口_客户区坐标点到屏幕坐标点. 封装的系统API:ClientToScreen, 内部做了DPI适配.
+// 窗口_客户区坐标点到屏幕坐标点. 封装的系统API: ClientToScreen, 内部做了DPI适配.
 //
 // hWindow: 窗口句柄.
 //

@@ -1,6 +1,6 @@
 <h1 align="center">XCGUI</h1>
 <p align="center">
-    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.380-blue" alt="release"></a>
+    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.381-blue" alt="release"></a>
     <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-3.3.8-blue" alt="XCGUI"></a>
    <a href="https://golang.org"> <img src="https://img.shields.io/badge/golang-1.16-blue" alt="golang"></a>
     <a href="https://pkg.go.dev/github.com/twgh/xcgui"><img src="https://img.shields.io/badge/go.dev-reference-brightgreen" alt="GoDoc"></a>
@@ -18,6 +18,7 @@
 
 
 
+
 ## 介绍
 
 [English](./README-en.md) | 简体中文
@@ -27,9 +28,9 @@
 - DirectUI设计思想：在窗口内没有子窗口，界面元素都是逻辑上的区域(无HWND句柄，安全，灵活)，所有UI元素都是自主开发(不受系统限制)，更加灵活的实现各种程序界面，满足不同用户的需求。
 - 拥有免费的UI设计器：快速开发工具，所见即所得，高度自定义系统(DIY)，让UI开发变的更加简单。
 - 支持Direct2D，硬件加速，能更大程度的发挥硬件特性，创建高性能，高质量的2D图形。
-- [wiki](https://github.com/twgh/xcgui/wiki)里有简单的入门教程，有空可以看一下，少走弯路。
-- 有完善的[中文官方文档](http://www.xcgui.com/doc-ui/)，[官方资源社区](http://mall.xcgui.com)。
-- 官方QQ群(人多用各种语言的都有)：[2283812](https://jq.qq.com/?_wv=1027&k=AiXY4uMc)，只谈Go语言版的QQ群：[793788011](https://jq.qq.com/?_wv=1027&k=bkKgsYYk)
+- [wiki](https://github.com/twgh/xcgui/wiki) 里有简单的入门教程，有空可以看一下，少走弯路。
+- 有完善的 [中文官方文档](http://www.xcgui.com/doc-ui/)，[官方资源社区](http://mall.xcgui.com)。
+- 官方QQ群(人多用各种语言的都有)：[2283812](https://jq.qq.com/?_wv=1027&k=AiXY4uMc)，只聊Go语言版的QQ群：[793788011](https://jq.qq.com/?_wv=1027&k=bkKgsYYk)
 
 ## 获取
 
@@ -60,6 +61,8 @@ var qqmusic []byte
 
 func main() {
 	a := app.New(true)
+    a.EnableDPI(true)
+    a.EnableAutoDPI(true)
 	// 从内存zip中加载资源文件
 	a.LoadResourceZipMem(qqmusic, "resource.res", "")
 	// 从内存zip中加载布局文件, 创建窗口对象
@@ -150,6 +153,8 @@ import (
 func main() {
 	// 1.初始化UI库
 	a := app.New(true)
+    a.EnableDPI(true)
+    a.EnableAutoDPI(true)
 	// 2.创建窗口
 	w := window.New(0, 0, 430, 300, "xcgui window", 0, xcc.Window_Style_Default|xcc.Window_Style_Drag_Window)
 
@@ -203,7 +208,7 @@ xc包里包含xcgui.dll里所有的API，有一千多个函数，可以直接使
 
 炫彩的全部事件都已经定义好了，都是以Event开头的， 以1结尾的事件是会传进去元素的句柄。
 
-在循环中注册事件时，回调函数尽量不要使用匿名函数，使用匿名函数意味着您每次都在创建1个新的回调，最终您将会遇到因创建过多回调导致程序崩溃的报错（大概在2000个回调时会遇到），事件回调函数不使用匿名函数即可避免此问题，一般程序应该不会用到2000个事件，只要注意在循环中注册事件时不使用匿名函数就行。这个是Go语言添加的限制，不是xcgui添加的限制。
+在循环中注册事件时，回调函数尽量不要使用匿名函数，使用匿名函数意味着您每次都在创建1个新的回调，最终您将会遇到因创建过多回调导致程序崩溃的报错（大概在2000个回调时会遇到），事件回调函数不使用匿名函数即可避免此问题，一般程序应该不会用到2000个事件，只要注意在多次循环中注册事件时不使用匿名函数就行。这个是Go语言添加的限制，不是xcgui添加的限制。
 
 [![xc-event.png](https://z3.ax1x.com/2021/11/23/opdyh6.png)](https://z3.ax1x.com/2021/11/23/opdyh6.png)
 
@@ -227,64 +232,65 @@ xc包里包含xcgui.dll里所有的API，有一千多个函数，可以直接使
 
 这些类都是基于xc包里的一千多个函数封装的。
 
-| 中文名称                              | 包名      | 类名             | 是否封装完毕 | 文档                                                         |
-| ------------------------------------- | --------- | ---------------- | ------------ | ------------------------------------------------------------ |
-| 程序（炫彩全局API）                   | app       | App              | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/app#App) |
-| 窗口                                  | window    | Window           | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/window#Window) |
-| 框架窗口                              | window    | FrameWindow      | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/window#FrameWindow) |
-| 模态窗口                              | window    | ModalWindow      | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/window#ModalWindow) |
-| 形状对象                              | widget    | Shape            | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#Shape) |
-| 圆形形状对象                          | widget    | ShapeEllipse     | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapeEllipse) |
-| 形状对象GIF                           | widget    | ShapeGif         | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapeGif) |
-| 组框形状对象                          | widget    | ShapeGroupBox    | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapeGroupBox) |
-| 直线形状对象                          | widget    | ShapeLine        | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapeLine) |
-| 形状对象图片                          | widget    | ShapePicture     | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapePicture) |
-| 矩形形状对象                          | widget    | ShapeRect        | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapeRect) |
-| 形状对象文本                          | widget    | ShapeText        | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapeText) |
-| 表格                                  | widget    | Table            | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#Table) |
-| 按钮                                  | widget    | Button           | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#Button) |
-| 下拉组合框                            | widget    | ComboBox         | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ComboBox) |
-| 编辑框(常规, 富文本, 聊天气泡)        | widget    | Edit             | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#Edit) |
-| 代码编辑框                            | widget    | Editor           | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#Editor) |
-| 基础元素                              | widget    | Element          | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#Element) |
-| 列表                                  | widget    | List             | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#List) |
-| 列表框                                | widget    | ListBox          | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ListBox) |
-| 弹出菜单                              | widget    | Menu             | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#Menu) |
-| 进度条                                | widget    | ProgressBar      | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ProgressBar) |
-| 静态文本连接按钮                      | widget    | TextLink         | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#TextLink) |
-| 布局元素                              | widget    | LayoutEle        | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#LayoutEle) |
-| 布局框架                              | widget    | LayoutFrame      | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#LayoutFrame) |
-| 列表视图                              | widget    | ListView         | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ListView) |
-| 菜单条                                | widget    | MenuBar          | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#MenuBar) |
-| Pane元素                              | widget    | Pane             | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#Pane) |
-| 滚动条                                | widget    | ScrollBar        | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ScrollBar) |
-| 滚动视图                              | widget    | ScrollView       | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ScrollView) |
-| 滑动条元素                            | widget    | SliderBar        | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#SliderBar) |
-| 标签栏元素                            | widget    | TabBar           | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#TabBar) |
-| 工具条                                | widget    | ToolBar          | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ToolBar) |
-| 列表树元素                            | widget    | Tree             | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#Tree) |
-| 日期时间                              | widget    | DateTime         | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#DateTime) |
-| 月历卡片                              | widget    | MonthCal         | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#MonthCal) |
-| 数据适配器-列表视元素                 | adapter   | AdapterListView  | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/adapter#AdapterListView) |
-| 数据适配器-单列Map-列表头(listHeader) | adapter   | AdapterMap       | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/adapter#AdapterMap) |
-| 数据适配器-XList-XListBox             | adapter   | AdapterTable     | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/adapter#AdapterTable) |
-| 数据适配器-树元素                     | adapter   | AdapterTree      | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/adapter#AdapterTree) |
-| 背景管理器                            | bkmanager | BkManager        | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/bkmanager#BkManager) |
-| 背景对象                              | bkobj     | BkObj            | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/bkobj#BkObj) |
-| 字体                                  | font      | Font             | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/font#Font) |
-| 图片操作                              | imagex    | Image            | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/imagex#Image) |
-| SVG矢量图形                           | svg       | Svg              | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/svg#Svg) |
-| 列表项模板                            | tmpl      | ListItemTemplate | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/tmpl#ListItemTemplate) |
-| 节点                                  | tmpl      | Node             | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/tmpl#Node) |
-| 图形绘制                              | drawx     | Draw             | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/drawx#Draw) |
-| 动画序列                              | ani       | Anima            | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/ani#Anima) |
-| 动画组                                | ani       | AnimaGroup       | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/ani#AnimaGroup) |
-| 动画项                                | ani       | AnimaItem        | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/ani#AnimaItem) |
-| 动画旋转项                            | ani       | AnimaRotate      | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/ani#AnimaRotate) |
-| 动画缩放项                            | ani       | AnimaScale       | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/ani#AnimaScale) |
-| 含有XCGUI所有API和结构体              | xc        |                  | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/xc#section-documentation) |
-| XCGUI常量                             | xcc       |                  | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/xcc) |
-| 缓动                                  | ease      |                  | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/ease) |
-| 资源操作                              | res       |                  | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/res) |
-| Windows系统api                        | wapi      |                  | 持续更新     | [文档](https://pkg.go.dev/github.com/twgh/xcgui/wapi) |
-| 调用wapi封装了对窗口的操作            | wnd       |                  | 持续更新     | [文档](https://pkg.go.dev/github.com/twgh/xcgui/wnd) |
+| 中文名称                              | 包名       | 类名             | 是否封装完毕 | 文档                                                         |
+| ------------------------------------- | ---------- | ---------------- | ------------ | ------------------------------------------------------------ |
+| 程序（炫彩全局API）                   | app        | App              | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/app#App)     |
+| 窗口                                  | window     | Window           | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/window#Window) |
+| 框架窗口                              | window     | FrameWindow      | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/window#FrameWindow) |
+| 模态窗口                              | window     | ModalWindow      | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/window#ModalWindow) |
+| 形状对象                              | widget     | Shape            | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#Shape) |
+| 圆形形状对象                          | widget     | ShapeEllipse     | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapeEllipse) |
+| 形状对象GIF                           | widget     | ShapeGif         | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapeGif) |
+| 组框形状对象                          | widget     | ShapeGroupBox    | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapeGroupBox) |
+| 直线形状对象                          | widget     | ShapeLine        | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapeLine) |
+| 形状对象图片                          | widget     | ShapePicture     | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapePicture) |
+| 矩形形状对象                          | widget     | ShapeRect        | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapeRect) |
+| 形状对象文本                          | widget     | ShapeText        | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapeText) |
+| 表格                                  | widget     | Table            | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#Table) |
+| 按钮                                  | widget     | Button           | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#Button) |
+| 下拉组合框                            | widget     | ComboBox         | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ComboBox) |
+| 编辑框(常规, 富文本, 聊天气泡)        | widget     | Edit             | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#Edit) |
+| 代码编辑框                            | widget     | Editor           | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#Editor) |
+| 基础元素                              | widget     | Element          | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#Element) |
+| 列表                                  | widget     | List             | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#List) |
+| 列表框                                | widget     | ListBox          | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ListBox) |
+| 弹出菜单                              | widget     | Menu             | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#Menu) |
+| 进度条                                | widget     | ProgressBar      | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ProgressBar) |
+| 静态文本连接按钮                      | widget     | TextLink         | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#TextLink) |
+| 布局元素                              | widget     | LayoutEle        | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#LayoutEle) |
+| 布局框架                              | widget     | LayoutFrame      | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#LayoutFrame) |
+| 列表视图                              | widget     | ListView         | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ListView) |
+| 菜单条                                | widget     | MenuBar          | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#MenuBar) |
+| Pane元素                              | widget     | Pane             | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#Pane) |
+| 滚动条                                | widget     | ScrollBar        | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ScrollBar) |
+| 滚动视图                              | widget     | ScrollView       | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ScrollView) |
+| 滑动条元素                            | widget     | SliderBar        | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#SliderBar) |
+| 标签栏元素                            | widget     | TabBar           | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#TabBar) |
+| 工具条                                | widget     | ToolBar          | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ToolBar) |
+| 列表树元素                            | widget     | Tree             | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#Tree) |
+| 日期时间                              | widget     | DateTime         | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#DateTime) |
+| 月历卡片                              | widget     | MonthCal         | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#MonthCal) |
+| 数据适配器-列表视元素                 | adapter    | AdapterListView  | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/adapter#AdapterListView) |
+| 数据适配器-单列Map-列表头(listHeader) | adapter    | AdapterMap       | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/adapter#AdapterMap) |
+| 数据适配器-XList-XListBox             | adapter    | AdapterTable     | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/adapter#AdapterTable) |
+| 数据适配器-树元素                     | adapter    | AdapterTree      | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/adapter#AdapterTree) |
+| 背景管理器                            | bkmanager  | BkManager        | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/bkmanager#BkManager) |
+| 背景对象                              | bkobj      | BkObj            | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/bkobj#BkObj) |
+| 字体                                  | font       | Font             | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/font#Font)   |
+| 图片操作                              | imagex     | Image            | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/imagex#Image) |
+| SVG矢量图形                           | svg        | Svg              | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/svg#Svg)     |
+| 列表项模板                            | tmpl       | ListItemTemplate | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/tmpl#ListItemTemplate) |
+| 节点                                  | tmpl       | Node             | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/tmpl#Node)   |
+| 图形绘制                              | drawx      | Draw             | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/drawx#Draw)  |
+| 动画序列                              | ani        | Anima            | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/ani#Anima)   |
+| 动画组                                | ani        | AnimaGroup       | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/ani#AnimaGroup) |
+| 动画项                                | ani        | AnimaItem        | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/ani#AnimaItem) |
+| 动画旋转项                            | ani        | AnimaRotate      | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/ani#AnimaRotate) |
+| 动画缩放项                            | ani        | AnimaScale       | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/ani#AnimaScale) |
+| 含有XCGUI所有API和结构体              | xc         |                  | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/xc#section-documentation) |
+| XCGUI常量                             | xcc        |                  | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/xcc)         |
+| 缓动                                  | ease       |                  | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/ease)        |
+| 资源操作                              | res        |                  | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/res)         |
+| Windows系统api                        | wapi       |                  | 持续更新     | [文档](https://pkg.go.dev/github.com/twgh/xcgui/wapi)        |
+| 调用wapi封装了对窗口的操作            | wapi/wnd   |                  | 持续更新     | [文档](https://pkg.go.dev/github.com/twgh/xcgui/wapi/wnd)    |
+| 调用wapi封装了一些常用函数            | wapi/wutil |                  | 持续更新     | [文档](https://pkg.go.dev/github.com/twgh/xcgui/wapi/wutil)  |

@@ -48,7 +48,7 @@ func XShapeRect_SetFillColor(hShape int, color int) int {
 // nWidth: 圆角宽度.
 //
 // nHeight: 圆角高度.
-func XShapeRect_SetRoundAngle(hShape int, nWidth int, nHeight int) int {
+func XShapeRect_SetRoundAngle(hShape int, nWidth int, nHeight int32) int {
 	r, _, _ := xShapeRect_SetRoundAngle.Call(uintptr(hShape), uintptr(nWidth), uintptr(nHeight))
 	return int(r)
 }
@@ -60,7 +60,7 @@ func XShapeRect_SetRoundAngle(hShape int, nWidth int, nHeight int) int {
 // pWidth: 圆角宽度.
 //
 // pHeight: 圆角高度.
-func XShapeRect_GetRoundAngle(hShape int, pWidth *int, pHeight *int) int {
+func XShapeRect_GetRoundAngle(hShape int, pWidth *int, pHeight *int32) int {
 	r, _, _ := xShapeRect_GetRoundAngle.Call(uintptr(hShape), uintptr(unsafe.Pointer(pWidth)), uintptr(unsafe.Pointer(pHeight)))
 	return int(r)
 }

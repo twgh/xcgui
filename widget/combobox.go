@@ -292,7 +292,7 @@ func (c *ComboBox) SetItemImageEx(iItem int, pName string, hImage int) bool {
 // iColumn: 列索引.
 //
 // nValue: 整数值.
-func (c *ComboBox) SetItemInt(iItem int, iColumn int, nValue int) bool {
+func (c *ComboBox) SetItemInt(iItem int, iColumn int, nValue int32) bool {
 	return xc.XComboBox_SetItemInt(c.Handle, iItem, iColumn, nValue)
 }
 
@@ -303,7 +303,7 @@ func (c *ComboBox) SetItemInt(iItem int, iColumn int, nValue int) bool {
 // pName: 字段名.
 //
 // nValue: 整数值.
-func (c *ComboBox) SetItemIntEx(iItem int, pName string, nValue int) bool {
+func (c *ComboBox) SetItemIntEx(iItem int, pName string, nValue int32) bool {
 	return xc.XComboBox_SetItemIntEx(c.Handle, iItem, pName, nValue)
 }
 
@@ -334,7 +334,7 @@ func (c *ComboBox) SetItemFloatEx(iItem int, pName string, fFloat float32) bool 
 // iItem: 项索引.
 //
 // iColumn: 列索引.
-func (c *ComboBox) GetItemText(iItem int, iColumn int) string {
+func (c *ComboBox) GetItemText(iItem int32, iColumn int32) string {
 	return xc.XComboBox_GetItemText(c.Handle, iItem, iColumn)
 }
 
@@ -372,7 +372,7 @@ func (c *ComboBox) GetItemImageEx(iItem int, pName string) int {
 // iColumn: 列索引.
 //
 // pOutValue: 接收返回整数值.
-func (c *ComboBox) GetItemInt(iItem int, iColumn int, pOutValue *int) bool {
+func (c *ComboBox) GetItemInt(iItem int, iColumn int, pOutValue *int32) bool {
 	return xc.XComboBox_GetItemInt(c.Handle, iItem, iColumn, pOutValue)
 }
 
@@ -383,7 +383,7 @@ func (c *ComboBox) GetItemInt(iItem int, iColumn int, pOutValue *int) bool {
 // pName: 字段名.
 //
 // pOutValue: 接收返回整数值.
-func (c *ComboBox) GetItemIntEx(iItem int, pName string, pOutValue *int) bool {
+func (c *ComboBox) GetItemIntEx(iItem int, pName string, pOutValue *int32) bool {
 	return xc.XComboBox_GetItemIntEx(c.Handle, iItem, pName, pOutValue)
 }
 
@@ -473,7 +473,7 @@ func (c *ComboBox) SetItemTemplateXMLFromMem(data []byte) bool {
 // pPassword: zip密码.
 //
 // hModule: 模块句柄, 可填0.
-func (c *ComboBox) SetItemTemplateXMLFromZipRes(id int, pFileName string, pPassword string, hModule int) bool {
+func (c *ComboBox) SetItemTemplateXMLFromZipRes(id int32, pFileName string, pPassword string, hModule uintptr) bool {
 	return xc.XComboBox_SetItemTemplateXMLFromZipRes(c.Handle, id, pFileName, pPassword, hModule)
 }
 
@@ -486,10 +486,10 @@ func (c *ComboBox) GetItemTemplate() int {
 下面都是事件
 */
 
-type XE_COMBOBOX_SELECT_END func(iItem int, pbHandled *bool) int                            // 组合框下拉列表项选择完成事件,编辑框内容已经改变.
-type XE_COMBOBOX_SELECT_END1 func(hEle int, iItem int, pbHandled *bool) int                 // 组合框下拉列表项选择完成事件,编辑框内容已经改变.
-type XE_COMBOBOX_SELECT func(iItem int, pbHandled *bool) int                                // 组合框下拉列表项选择事件.
-type XE_COMBOBOX_SELECT1 func(hEle int, iItem int, pbHandled *bool) int                     // 组合框下拉列表项选择事件.
+type XE_COMBOBOX_SELECT_END func(iItem int32, pbHandled *bool) int                          // 组合框下拉列表项选择完成事件,编辑框内容已经改变.
+type XE_COMBOBOX_SELECT_END1 func(hEle int, iItem int32, pbHandled *bool) int               // 组合框下拉列表项选择完成事件,编辑框内容已经改变.
+type XE_COMBOBOX_SELECT func(iItem int32, pbHandled *bool) int                              // 组合框下拉列表项选择事件.
+type XE_COMBOBOX_SELECT1 func(hEle int, iItem int32, pbHandled *bool) int                   // 组合框下拉列表项选择事件.
 type XE_COMBOBOX_POPUP_LIST func(hWindow int, hListBox int, pbHandled *bool) int            // 组合框下拉列表弹出事件.
 type XE_COMBOBOX_POPUP_LIST1 func(hEle int, hWindow int, hListBox int, pbHandled *bool) int // 组合框下拉列表弹出事件.
 type XE_COMBOBOX_EXIT_LIST func(pbHandled *bool) int                                        // 组合框下拉列表退出事件.

@@ -92,7 +92,7 @@ func SetClipboardText(text string) error {
 	dwLength := len(bytes) * int(unsafe.Sizeof(bytes[0]))
 
 	// 分配全局内存
-	hGlobalMemory := wapi.GlobalAlloc(wapi.GMEM_Moveable, uint64(dwLength))
+	hGlobalMemory := wapi.GlobalAlloc(wapi.GMEM_Moveable, uint(dwLength))
 	if hGlobalMemory == 0 {
 		return errors.New("分配全局内存失败")
 	}

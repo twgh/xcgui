@@ -66,12 +66,12 @@ func (s *Shape) Redraw() int {
 }
 
 // 形状_取宽度, 获取内容宽度.
-func (s *Shape) GetWidth() int {
+func (s *Shape) GetWidth() int32 {
 	return xc.XShape_GetWidth(s.Handle)
 }
 
 // 形状_取高度, 获取内容高度.
-func (s *Shape) GetHeight() int {
+func (s *Shape) GetHeight() int32 {
 	return xc.XShape_GetHeight(s.Handle)
 }
 
@@ -80,7 +80,7 @@ func (s *Shape) GetHeight() int {
 // x: x坐标.
 //
 // y: y坐标.
-func (s *Shape) SetPosition(x int, y int) int {
+func (s *Shape) SetPosition(x, y int32) int {
 	return xc.XShape_SetPosition(s.Handle, x, y)
 }
 
@@ -150,7 +150,7 @@ func (s *Shape) Destroy() int {
 // pOutX: 返回X坐标.
 //
 // pOutY: 返回Y坐标.
-func (s *Shape) GetPosition(pOutX *int, pOutY *int) int {
+func (s *Shape) GetPosition(pOutX, pOutY *int32) int {
 	return xc.XShape_GetPosition(s.Handle, pOutX, pOutY)
 }
 
@@ -159,7 +159,7 @@ func (s *Shape) GetPosition(pOutX *int, pOutY *int) int {
 // nWidth: 宽度.
 //
 // nHeight: 高度.
-func (s *Shape) SetSize(nWidth int, nHeight int) int {
+func (s *Shape) SetSize(nWidth, nHeight int32) int {
 	return xc.XShape_SetSize(s.Handle, nWidth, nHeight)
 }
 
@@ -168,7 +168,7 @@ func (s *Shape) SetSize(nWidth int, nHeight int) int {
 // pOutWidth: 返回宽度.
 //
 // pOutHeight: 返回高度.
-func (s *Shape) GetSize(pOutWidth *int, pOutHeight *int) int {
+func (s *Shape) GetSize(pOutWidth, pOutHeight *int32) int {
 	return xc.XShape_GetSize(s.Handle, pOutWidth, pOutHeight)
 }
 

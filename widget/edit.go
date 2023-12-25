@@ -537,7 +537,7 @@ func (e *Edit) GetSelectRange(pBegin *xc.Position_, pEnd *xc.Position_) bool {
 // piStart: 起始行索引.
 //
 // piEnd: 结束行索引.
-func (e *Edit) GetVisibleRowRange(piStart *int, piEnd *int) int {
+func (e *Edit) GetVisibleRowRange(piStart *int32, piEnd *int32) int {
 	return xc.XEdit_GetVisibleRowRange(e.Handle, piStart, piEnd)
 }
 
@@ -621,7 +621,7 @@ func (e *Edit) SetRowSpace(nSpace int) int {
 // iRow: 行索引.
 //
 // iCol: 列索引.
-func (e *Edit) SetCurPosEx(iRow int, iCol int) int {
+func (e *Edit) SetCurPosEx(iRow, iCol int32) int {
 	return xc.XEdit_SetCurPosEx(e.Handle, iRow, iCol)
 }
 
@@ -630,7 +630,7 @@ func (e *Edit) SetCurPosEx(iRow int, iCol int) int {
 // iRow: 返回行索引.
 //
 // iCol: 返回列索引.
-func (e *Edit) GetCurPosEx(iRow *int, iCol *int) int {
+func (e *Edit) GetCurPosEx(iRow, iCol *int32) int {
 	return xc.XEdit_GetCurPosEx(e.Handle, iRow, iCol)
 }
 
@@ -765,7 +765,7 @@ func (e *Edit) InsertObject(iRow int, iCol int, hObj int) int {
 // 编辑框_置气泡最大宽度. 当值为0时代表不限制宽度.
 //
 // nWidth: 最大宽度.
-func (e *Edit) SetChatMaxWidth(nWidth int) {
+func (e *Edit) SetChatMaxWidth(nWidth int32) {
 	xc.XEdit_SetChatMaxWidth(e.Handle, nWidth)
 }
 
@@ -773,37 +773,72 @@ func (e *Edit) SetChatMaxWidth(nWidth int) {
 以下都是事件
 */
 
-type XE_EDIT_SET func(pbHandled *bool) int                                               // 编辑框_置文本.
-type XE_EDIT_SET1 func(hEle int, pbHandled *bool) int                                    // 编辑框_置文本.
-type XE_EDIT_DRAWROW func(hDraw int, iRow int, pbHandled *bool) int                      // 和XE_EDIT_CHANGED的对换.
-type XE_EDIT_DRAWROW1 func(hEle int, hDraw int, iRow int, pbHandled *bool) int           // 和XE_EDIT_CHANGED的对换.
-type XE_EDIT_CHANGED func(pbHandled *bool) int                                           // 编辑框_内容被改变.
-type XE_EDIT_CHANGED1 func(hEle int, pbHandled *bool) int                                // 编辑框_内容被改变.
-type XE_EDIT_POS_CHANGED func(iPos int, pbHandled *bool) int                             // 编辑框_光标位置_被改变.
-type XE_EDIT_POS_CHANGED1 func(hEle int, iPos int, pbHandled *bool) int                  // 编辑框_光标位置_被改变.
-type XE_EDIT_STYLE_CHANGED func(iStyle int, pbHandled *bool) int                         // 编辑框_样式_被改变.
-type XE_EDIT_STYLE_CHANGED1 func(hEle int, iStyle int, pbHandled *bool) int              // 编辑框_样式_被改变.
-type XE_EDIT_ENTER_GET_TABALIGN func(pbHandled *bool) int                                // 编辑框_回车_获取标签?.
-type XE_EDIT_ENTER_GET_TABALIGN1 func(hEle int, pbHandled *bool) int                     // 编辑框_回车_获取标签?.
-type XE_EDIT_ROW_CHANGED func(iRow int, nChangeRows int, pbHandled *bool) int            // 编辑框_行_被改变.
-type XE_EDIT_ROW_CHANGED1 func(hEle int, iRow int, nChangeRows int, pbHandled *bool) int // 编辑框_行_被改变.
+type XE_EDIT_SET func(pbHandled *bool) int                                       // 元素事件_编辑框设置.
+type XE_EDIT_SET1 func(hEle int, pbHandled *bool) int                            // 元素事件_编辑框设置.
+type XE_EDIT_DRAWROW func(hDraw int, iRow int32, pbHandled *bool) int            // 暂未使用.
+type XE_EDIT_DRAWROW1 func(hEle int, hDraw int, iRow int32, pbHandled *bool) int // 暂未使用.
+type XE_EDIT_CHANGED func(pbHandled *bool) int                                   // 编辑框_内容被改变.
+type XE_EDIT_CHANGED1 func(hEle int, pbHandled *bool) int                        // 编辑框_内容被改变.
+type XE_EDIT_POS_CHANGED func(iPos int32, pbHandled *bool) int                   // 编辑框_光标位置_被改变.
+type XE_EDIT_POS_CHANGED1 func(hEle int, iPos int32, pbHandled *bool) int        // 编辑框_光标位置_被改变.
+type XE_EDIT_STYLE_CHANGED func(iStyle int32, pbHandled *bool) int               // 编辑框_样式_被改变.
+type XE_EDIT_STYLE_CHANGED1 func(hEle int, iStyle int32, pbHandled *bool) int    // 编辑框_样式_被改变.
+type XE_EDIT_ENTER_GET_TABALIGN func(pbHandled *bool) int                        // 回车TAB对齐,返回需要TAB数量.
+type XE_EDIT_ENTER_GET_TABALIGN1 func(hEle int, pbHandled *bool) int             // 回车TAB对齐,返回需要TAB数量.
+// 编辑框_行_被改变.
+//
+// iRow: 更改行开始位置索引,  if(nChangeRows>0) iEnd= iRow + nChangeRows
+//
+// nChangeRows: 改变行数, 正数添加行, 负数删除行
+type XE_EDIT_ROW_CHANGED func(iRow int32, nChangeRows int32, pbHandled *bool) int
 
-// 编辑框_置文本.
+// 编辑框_行_被改变.
+//
+// iRow: 更改行开始位置索引,  if(nChangeRows>0) iEnd= iRow + nChangeRows
+//
+// nChangeRows: 改变行数, 正数添加行, 负数删除行
+type XE_EDIT_ROW_CHANGED1 func(hEle int, iRow int32, nChangeRows int32, pbHandled *bool) int
+type XE_EDIT_SWAPROW func(iRow, bArrowUp int32, pbHandled *bool) int            // 元素事件_交换行
+type XE_EDIT_SWAPROW1 func(hEle int, iRow, bArrowUp int32, pbHandled *bool) int // 元素事件_交换行
+type XE_EDIT_COLOR_CHANGE func(color int, pbHandled *bool) int                  // 编辑框_颜色被改变
+type XE_EDIT_COLOR_CHANGE1 func(hEle int, color int, pbHandled *bool) int       // 编辑框_颜色被改变
+
+// 编辑框_颜色被改变.
+func (e *Edit) Event_EDIT_COLOR_CHANGE(pFun XE_EDIT_COLOR_CHANGE) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDIT_COLOR_CHANGE, pFun)
+}
+
+// 编辑框_颜色被改变.
+func (e *Edit) Event_EDIT_COLOR_CHANGE1(pFun XE_EDIT_COLOR_CHANGE1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_COLOR_CHANGE, pFun)
+}
+
+// 元素事件_交换行.
+func (e *Edit) Event_EDIT_SWAPROW(pFun XE_EDIT_SWAPROW) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDIT_SWAPROW, pFun)
+}
+
+// 元素事件_交换行.
+func (e *Edit) Event_EDIT_SWAPROW1(pFun XE_EDIT_SWAPROW1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_SWAPROW, pFun)
+}
+
+// 元素事件_编辑框设置.
 func (e *Edit) Event_EDIT_SET(pFun XE_EDIT_SET) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDIT_SET, pFun)
 }
 
-// 编辑框_置文本.
+// 元素事件_编辑框设置.
 func (e *Edit) Event_EDIT_SET1(pFun XE_EDIT_SET1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_SET, pFun)
 }
 
-// 和XE_EDIT_CHANGED的对换.
+// 暂未使用.
 func (e *Edit) Event_EDIT_DRAWROW(pFun XE_EDIT_DRAWROW) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDIT_DRAWROW, pFun)
 }
 
-// 和XE_EDIT_CHANGED的对换.
+// 暂未使用.
 func (e *Edit) Event_EDIT_DRAWROW1(pFun XE_EDIT_DRAWROW1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_DRAWROW, pFun)
 }
@@ -838,22 +873,30 @@ func (e *Edit) Event_EDIT_STYLE_CHANGED1(pFun XE_EDIT_STYLE_CHANGED1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_STYLE_CHANGED, pFun)
 }
 
-// 编辑框_回车_获取标签?.
+// 回车TAB对齐,返回需要TAB数量.
 func (e *Edit) Event_EDIT_ENTER_GET_TABALIGN(pFun XE_EDIT_ENTER_GET_TABALIGN) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDIT_ENTER_GET_TABALIGN, pFun)
 }
 
-// 编辑框_回车_获取标签?.
+// 回车TAB对齐,返回需要TAB数量.
 func (e *Edit) Event_EDIT_ENTER_GET_TABALIGN1(pFun XE_EDIT_ENTER_GET_TABALIGN1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_ENTER_GET_TABALIGN, pFun)
 }
 
 // 编辑框_行_被改变.
+//
+// iRow: 更改行开始位置索引,  if(nChangeRows>0) iEnd= iRow + nChangeRows
+//
+// nChangeRows: 改变行数, 正数添加行, 负数删除行
 func (e *Edit) Event_EDIT_ROW_CHANGED(pFun XE_EDIT_ROW_CHANGED) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDIT_ROW_CHANGED, pFun)
 }
 
 // 编辑框_行_被改变.
+//
+// iRow: 更改行开始位置索引,  if(nChangeRows>0) iEnd= iRow + nChangeRows
+//
+// nChangeRows: 改变行数, 正数添加行, 负数删除行
 func (e *Edit) Event_EDIT_ROW_CHANGED1(pFun XE_EDIT_ROW_CHANGED1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_ROW_CHANGED, pFun)
 }

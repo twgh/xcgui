@@ -647,7 +647,7 @@ func XEdit_GetSelectRange(hEle int, pBegin *Position_, pEnd *Position_) bool {
 // piStart: 起始行索引.
 //
 // piEnd: 结束行索引.
-func XEdit_GetVisibleRowRange(hEle int, piStart *int, piEnd *int) int {
+func XEdit_GetVisibleRowRange(hEle int, piStart *int32, piEnd *int32) int {
 	r, _, _ := xEdit_GetVisibleRowRange.Call(uintptr(hEle), uintptr(unsafe.Pointer(piStart)), uintptr(unsafe.Pointer(piEnd)))
 	return int(r)
 }
@@ -767,7 +767,7 @@ func XEdit_SetRowSpace(hEle int, nSpace int) int {
 // iRow: 行索引.
 //
 // iCol: 列索引.
-func XEdit_SetCurPosEx(hEle int, iRow int, iCol int) int {
+func XEdit_SetCurPosEx(hEle int, iRow, iCol int32) int {
 	r, _, _ := xEdit_SetCurPosEx.Call(uintptr(hEle), uintptr(iRow), uintptr(iCol))
 	return int(r)
 }
@@ -779,7 +779,7 @@ func XEdit_SetCurPosEx(hEle int, iRow int, iCol int) int {
 // iRow: 返回行索引.
 //
 // iCol: 返回列索引.
-func XEdit_GetCurPosEx(hEle int, iRow *int, iCol *int) int {
+func XEdit_GetCurPosEx(hEle int, iRow, iCol *int32) int {
 	r, _, _ := xEdit_GetCurPosEx.Call(uintptr(hEle), uintptr(unsafe.Pointer(iRow)), uintptr(unsafe.Pointer(iCol)))
 	return int(r)
 }
@@ -965,6 +965,6 @@ func XEdit_InsertObject(hEle int, iRow int, iCol int, hObj int) int {
 // hEle: 元素句柄.
 //
 // nWidth: 最大宽度.
-func XEdit_SetChatMaxWidth(hEle int, nWidth int) {
+func XEdit_SetChatMaxWidth(hEle int, nWidth int32) {
 	xEdit_SetChatMaxWidth.Call(uintptr(hEle), uintptr(nWidth))
 }

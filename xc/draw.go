@@ -21,8 +21,8 @@ func XDraw_Create(hWindow int) int {
 // hWindow: 窗口句柄.
 //
 // hdc: hdc句柄.
-func XDraw_CreateGDI(hWindow, hdc int) int {
-	r, _, _ := xDraw_CreateGDI.Call(uintptr(hWindow), uintptr(hdc))
+func XDraw_CreateGDI(hWindow int, hdc uintptr) int {
+	r, _, _ := xDraw_CreateGDI.Call(uintptr(hWindow), hdc)
 	return int(r)
 }
 
@@ -217,7 +217,7 @@ func XDraw_DrawRectF(hDraw int, pRect *RECTF) int {
 // x: X轴偏移量.
 //
 // y: Y轴偏移量.
-func XDraw_SetOffset(hDraw int, x int, y int) int {
+func XDraw_SetOffset(hDraw int, x, y int32) int {
 	r, _, _ := xDraw_SetOffset.Call(uintptr(hDraw), uintptr(x), uintptr(y))
 	return int(r)
 }
@@ -229,7 +229,7 @@ func XDraw_SetOffset(hDraw int, x int, y int) int {
 // pX: 接收X轴偏移量.
 //
 // pY: 接收Y轴偏移量.
-func XDraw_GetOffset(hDraw int, pX *int, pY *int) int {
+func XDraw_GetOffset(hDraw int, pX, pY *int32) int {
 	r, _, _ := xDraw_GetOffset.Call(uintptr(hDraw), uintptr(unsafe.Pointer(pX)), uintptr(unsafe.Pointer(pY)))
 	return int(r)
 }
@@ -245,9 +245,9 @@ func XDraw_GDI_RestoreGDIOBJ(hDraw int) int {
 // 绘制_取HDC, 获取绑定的设备上下文HDC, 返回HDC句柄.
 //
 // hDraw: 图形绘制句柄.
-func XDraw_GetHDC(hDraw int) int {
+func XDraw_GetHDC(hDraw int) uintptr {
 	r, _, _ := xDraw_GetHDC.Call(uintptr(hDraw))
-	return int(r)
+	return r
 }
 
 // 绘制_置画刷颜色, 设置画刷颜色.
@@ -883,8 +883,8 @@ func XDraw_GetD2dRenderTarget(hDraw int) int {
 // hbrFlickerFreeDraw: .
 //
 // diFlags: .
-func XDraw_GDI_DrawIconEx(hDraw int, xLeft int, yTop int, hIcon int, cxWidth int, cyWidth int, istepIfAniCur int, hbrFlickerFreeDraw int, diFlags int) bool {
-	r, _, _ := xDraw_GDI_DrawIconEx.Call(uintptr(hDraw), uintptr(xLeft), uintptr(yTop), uintptr(hIcon), uintptr(cxWidth), uintptr(cyWidth), uintptr(istepIfAniCur), uintptr(hbrFlickerFreeDraw), uintptr(diFlags))
+func XDraw_GDI_DrawIconEx(hDraw int, xLeft int, yTop int, hIcon uintptr, cxWidth int, cyWidth int, istepIfAniCur int, hbrFlickerFreeDraw int, diFlags int) bool {
+	r, _, _ := xDraw_GDI_DrawIconEx.Call(uintptr(hDraw), uintptr(xLeft), uintptr(yTop), hIcon, uintptr(cxWidth), uintptr(cyWidth), uintptr(istepIfAniCur), uintptr(hbrFlickerFreeDraw), uintptr(diFlags))
 	return r != 0
 }
 
@@ -907,8 +907,8 @@ func XDraw_GDI_DrawIconEx(hDraw int, xLeft int, yTop int, hIcon int, cxWidth int
 // nYSrc: XX.
 //
 // dwRop: XX.
-func XDraw_GDI_BitBlt(hDrawDest int, nXDest int, nYDest int, nWidth int, nHeight int, hdcSrc int, nXSrc int, nYSrc int, dwRop int) bool {
-	r, _, _ := xDraw_GDI_BitBlt.Call(uintptr(hDrawDest), uintptr(nXDest), uintptr(nYDest), uintptr(nWidth), uintptr(nHeight), uintptr(hdcSrc), uintptr(nXSrc), uintptr(nYSrc), uintptr(dwRop))
+func XDraw_GDI_BitBlt(hDrawDest int, nXDest, nYDest, nWidth, nHeight int32, hdcSrc uintptr, nXSrc, nYSrc int32, dwRop uint32) bool {
+	r, _, _ := xDraw_GDI_BitBlt.Call(uintptr(hDrawDest), uintptr(nXDest), uintptr(nYDest), uintptr(nWidth), uintptr(nHeight), hdcSrc, uintptr(nXSrc), uintptr(nYSrc), uintptr(dwRop))
 	return r != 0
 }
 
@@ -931,8 +931,8 @@ func XDraw_GDI_BitBlt(hDrawDest int, nXDest int, nYDest int, nWidth int, nHeight
 // nYSrc: XX.
 //
 // dwRop: XX.
-func XDraw_GDI_BitBlt2(hDrawDest int, nXDest int, nYDest int, nWidth int, nHeight int, hDrawSrc int, nXSrc int, nYSrc int, dwRop int) bool {
-	r, _, _ := xDraw_GDI_BitBlt2.Call(uintptr(hDrawDest), uintptr(nXDest), uintptr(nYDest), uintptr(nWidth), uintptr(nHeight), uintptr(hDrawSrc), uintptr(nXSrc), uintptr(nYSrc), uintptr(dwRop))
+func XDraw_GDI_BitBlt2(hDrawDest int, nXDest, nYDest, nWidth, nHeight int32, hDrawSrc uintptr, nXSrc, nYSrc int32, dwRop uint32) bool {
+	r, _, _ := xDraw_GDI_BitBlt2.Call(uintptr(hDrawDest), uintptr(nXDest), uintptr(nYDest), uintptr(nWidth), uintptr(nHeight), hDrawSrc, uintptr(nXSrc), uintptr(nYSrc), uintptr(dwRop))
 	return r != 0
 }
 
@@ -959,8 +959,8 @@ func XDraw_GDI_BitBlt2(hDrawDest int, nXDest int, nYDest int, nWidth int, nHeigh
 // nHeightSrc: XX.
 //
 // alpha: XX.
-func XDraw_GDI_AlphaBlend(hDraw int, nXOriginDest int, nYOriginDest int, nWidthDest int, nHeightDest int, hdcSrc int, nXOriginSrc int, nYOriginSrc int, nWidthSrc int, nHeightSrc int, alpha int) bool {
-	r, _, _ := xDraw_GDI_AlphaBlend.Call(uintptr(hDraw), uintptr(nXOriginDest), uintptr(nYOriginDest), uintptr(nWidthDest), uintptr(nHeightDest), uintptr(hdcSrc), uintptr(nXOriginSrc), uintptr(nYOriginSrc), uintptr(nWidthSrc), uintptr(nHeightSrc), uintptr(alpha))
+func XDraw_GDI_AlphaBlend(hDraw int, nXOriginDest, nYOriginDest, nWidthDest, nHeightDest int32, hdcSrc uintptr, nXOriginSrc, nYOriginSrc, nWidthSrc, nHeightSrc, alpha int32) bool {
+	r, _, _ := xDraw_GDI_AlphaBlend.Call(uintptr(hDraw), uintptr(nXOriginDest), uintptr(nYOriginDest), uintptr(nWidthDest), uintptr(nHeightDest), hdcSrc, uintptr(nXOriginSrc), uintptr(nYOriginSrc), uintptr(nWidthSrc), uintptr(nHeightSrc), uintptr(alpha))
 	return r != 0
 }
 
@@ -1007,9 +1007,8 @@ func XDraw_FillPolygonF(hDraw int, points []POINTF, nCount int) int {
 // x: x坐标.
 //
 // y: y坐标.
-func XDraw_Image(hDraw int, hImageFrame int, x, y int) int {
-	r, _, _ := xDraw_Image.Call(uintptr(hDraw), uintptr(hImageFrame), uintptr(x), uintptr(y))
-	return int(r)
+func XDraw_Image(hDraw int, hImageFrame int, x, y int32) {
+	xDraw_Image.Call(uintptr(hDraw), uintptr(hImageFrame), uintptr(x), uintptr(y))
 }
 
 // 绘制_图片F.

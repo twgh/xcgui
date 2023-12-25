@@ -7,7 +7,7 @@ import (
 
 // 节点.
 type Node struct {
-	Handle int // 节点指针.
+	Handle int
 }
 
 // 模板_创建节点.
@@ -30,7 +30,7 @@ func (n *Node) SetHandle(handle int) {
 // pNode: 节点指针.
 //
 // itemID: ID.
-func (n *Node) GetNode(itemID int) *Node {
+func (n *Node) GetNode(itemID int32) *Node {
 	p := &Node{
 		Handle: xc.XTemp_GetNode(n.Handle, itemID),
 	}
@@ -68,6 +68,6 @@ func (n *Node) SetNodeAttribute(pName string, pAttr string) bool {
 // pName: 属性名.
 //
 // pAttr: 属性值.
-func (n *Node) SetNodeAttributeEx(itemID int, pName string, pAttr string) bool {
+func (n *Node) SetNodeAttributeEx(itemID int32, pName string, pAttr string) bool {
 	return xc.XTemp_SetNodeAttributeEx(n.Handle, itemID, pName, pAttr)
 }

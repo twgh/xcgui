@@ -4,20 +4,89 @@ import (
 	"errors"
 	"os"
 	"path/filepath"
-	"strconv"
-	"strings"
 	"sync"
 	"syscall"
 )
+
+// GetVer 获取当前库版本所需的 xcgui.dll 的版本号.
+func GetVer() string {
+	return "3.3.8.1"
+}
 
 // xcguiPath 是xcgui.dll的完整路径（目录+文件名）, 也可以是相对路径, 默认值为'xcgui.dll'.
 //
 //	如果你想要更改它的位置, 可以在 xc.LoadXCGUI() 之前调用 xc.SetXcguiPath() 更改为其他路径.
 var xcguiPath = "xcgui.dll"
 
-// GetVer 获取当前库版本所需的 xcgui.dll 的版本号.
-func GetVer() string {
-	return "3.3.8.1"
+// SetXcguiPath 手动设置xcgui.dll的路径. 未设置时, 默认值为'xcgui.dll'.
+//
+//	@param XcguiPath dll完整路径（目录+文件名）, 也可以是相对路径.
+//	@return error 如果出错, 要么你输入的文件不存在, 要么你输入的不是dll文件.
+func SetXcguiPath(XcguiPath string) error {
+	// 判断是否为dll文件
+	if len(XcguiPath) < 5 {
+		return errors.New("XcguiPath 必须是一个dll文件")
+	}
+
+	// 判断文件是否存在
+	b, err := PathExists(XcguiPath)
+	if err != nil {
+		return err
+	}
+	if !b {
+		return errors.New("XcguiPath 指向的文件不存在: " + XcguiPath)
+	}
+
+	xcguiPath = XcguiPath
+	return nil
+}
+
+// GetXcguiPath 获取设置的xcgui.dll的路径.
+//
+//	@return string
+func GetXcguiPath() string {
+	return xcguiPath
+}
+
+// GetXcgui 获取加载的炫彩dll, 用途是你可以利用这个来封装dll中的函数, 因为我有时候可能更新不及时, 如果你恰巧需要最新版本dll中的函数, 那么你可以自己封装最新版本dll中的函数.
+//
+//	@return *syscall.LazyDLL
+func GetXcgui() *syscall.LazyDLL {
+	return xcgui
+}
+
+// WriteDll 把 xcgui.dll 写出到windows临时目录中版本号文件夹里, 如果检测到dll已存在则不会写出.
+//
+// 使用完本函数后无需再调用 xc.SetXcguiPath(), 内部已自动操作.
+func WriteDll(dll []byte) error {
+	tmpDir := os.TempDir()
+	tmpPath := filepath.Join(tmpDir, "xcgui"+GetVer())
+	dllPath := filepath.Join(tmpPath, "xcgui.dll")
+
+	b, err := PathExists(tmpPath)
+	if err != nil {
+		return err
+	}
+	if !b { // 目录不存在则创建
+		err = os.Mkdir(tmpPath, 0666)
+		if err != nil {
+			return err
+		}
+	}
+
+	b, err = PathExists(dllPath)
+	if err != nil {
+		return err
+	}
+	if !b { // dll不存在则创建
+		err = os.WriteFile(dllPath, dll, 0666)
+		if err != nil {
+			return err
+		}
+	}
+
+	xcguiPath = dllPath
+	return nil
 }
 
 var (
@@ -473,6 +542,7 @@ var (
 	xMenu_SetItemCheck         *syscall.LazyProc
 	xMenu_IsItemCheck          *syscall.LazyProc
 	xMenu_SetItemWidth         *syscall.LazyProc
+	xMenu_GetMenuBar           *syscall.LazyProc
 
 	// ModalWindow.
 	xModalWnd_Create          *syscall.LazyProc
@@ -1481,6 +1551,7 @@ var (
 	xMenuBar_DeleteButton    *syscall.LazyProc
 	xMenuBar_EnableAutoWidth *syscall.LazyProc
 	xMenuBar_GetButton       *syscall.LazyProc
+	xMenuBar_GetSelect       *syscall.LazyProc
 
 	// Pane.
 	xPane_Create           *syscall.LazyProc
@@ -1784,60 +1855,18 @@ var (
 	xBkObj_GetText           *syscall.LazyProc
 	xBkObj_GetFont           *syscall.LazyProc
 	xBkObj_GetTextAlign      *syscall.LazyProc
+
+	// 托盘.
+	xTrayIcon_Reset              *syscall.LazyProc
+	xTrayIcon_Add                *syscall.LazyProc
+	xTrayIcon_Del                *syscall.LazyProc
+	xTrayIcon_Modify             *syscall.LazyProc
+	xTrayIcon_SetIcon            *syscall.LazyProc
+	xTrayIcon_SetFocus           *syscall.LazyProc
+	xTrayIcon_SetTips            *syscall.LazyProc
+	xTrayIcon_SetPopupBalloon    *syscall.LazyProc
+	xTrayIcon_SetCallbackMessage *syscall.LazyProc
 )
-
-// SetXcguiPath 手动设置xcgui.dll的路径. 未设置时, 默认值为'xcgui.dll'.
-//
-//	@param XcguiPath dll完整路径（目录+文件名）, 也可以是相对路径.
-//	@return error 如果出错, 要么你输入的文件不存在, 要么你输入的不是dll文件.
-func SetXcguiPath(XcguiPath string) error {
-	// 判断是否为dll文件
-	if len(XcguiPath) < 5 {
-		return errors.New("XcguiPath 必须是一个dll文件")
-	}
-
-	// 判断文件是否存在
-	b, err := PathExists(XcguiPath)
-	if err != nil {
-		return err
-	}
-	if !b {
-		return errors.New("XcguiPath 指向的文件不存在: " + XcguiPath)
-	}
-
-	xcguiPath = XcguiPath
-	return nil
-}
-
-// GetXcguiPath 获取设置的xcgui.dll的路径.
-//
-//	@return string
-func GetXcguiPath() string {
-	return xcguiPath
-}
-
-// PathExists 判断文件或文件夹是否存在.
-//
-//	@param path 文件或文件夹.
-//	@return error 如果出错, 则不确定是否存在.
-func PathExists(path string) (bool, error) {
-	_, err := os.Stat(path)
-	if err == nil { // 如果返回的错误为nil,说明文件或文件夹存在
-		return true, nil
-	}
-
-	if os.IsNotExist(err) { // 如果返回的错误类型使用 os.IsNotExist() 判断为true, 说明文件或文件夹不存在
-		return false, nil
-	}
-	return false, err // 如果返回的错误为其它类型, 则不确定是否在存在
-}
-
-// GetXcgui 获取加载的炫彩dll, 用途是你可以利用这个来封装dll中的函数, 因为我有时候可能更新不及时, 如果你恰巧需要最新版本dll中的函数, 那么你可以自己封装最新版本dll中的函数.
-//
-//	@return *syscall.LazyDLL
-func GetXcgui() *syscall.LazyDLL {
-	return xcgui
-}
 
 // 保证 LoadXCGUI 只运行一次.
 var once = sync.Once{}
@@ -2310,6 +2339,7 @@ func _loadXCGUI() {
 	xMenu_SetItemCheck = xcgui.NewProc("XMenu_SetItemCheck")
 	xMenu_IsItemCheck = xcgui.NewProc("XMenu_IsItemCheck")
 	xMenu_SetItemWidth = xcgui.NewProc("XMenu_SetItemWidth")
+	xMenu_GetMenuBar = xcgui.NewProc("XMenu_GetMenuBar")
 
 	// ModalWindow.
 	xModalWnd_Create = xcgui.NewProc("XModalWnd_Create")
@@ -3316,6 +3346,7 @@ func _loadXCGUI() {
 	xMenuBar_DeleteButton = xcgui.NewProc("XMenuBar_DeleteButton")
 	xMenuBar_EnableAutoWidth = xcgui.NewProc("XMenuBar_EnableAutoWidth")
 	xMenuBar_GetButton = xcgui.NewProc("XMenuBar_GetButton")
+	xMenuBar_GetSelect = xcgui.NewProc("XMenuBar_GetSelect")
 
 	// Pane.
 	xPane_Create = xcgui.NewProc("XPane_Create")
@@ -3619,177 +3650,15 @@ func _loadXCGUI() {
 	xBkObj_GetText = xcgui.NewProc("XBkObj_GetText")
 	xBkObj_GetFont = xcgui.NewProc("XBkObj_GetFont")
 	xBkObj_GetTextAlign = xcgui.NewProc("XBkObj_GetTextAlign")
-}
 
-// Font_Info_Name 将[32]uint16转换到string.
-//
-//	@param arr [32]uint16.
-//	@return string
-func Font_Info_Name(arr [32]uint16) string {
-	return syscall.UTF16ToString(arr[0:])
-}
-
-// ABGR 根据r, g, b, a组合成ABGR颜色.
-//
-//	@param r 红色分量.
-//	@param g 绿色分量.
-//	@param b 蓝色分量.
-//	@param a 透明度.
-//	@return int ABGR颜色.
-func ABGR(r, g, b, a byte) int {
-	return int(uint32(r) | uint32(g)<<8 | uint32(b)<<16 | uint32(a)<<24)
-}
-
-// ABGR2 根据bgr, a组合成ABGR颜色.
-//
-//	@param bgr BGR颜色.
-//	@param a 透明度.
-//	@return int ABGR颜色.
-func ABGR2(bgr int, a byte) int {
-	return int((uint32(bgr) & 16777215) | (uint32(a)&255)<<24)
-}
-
-// RGBA 根据r, g, b, a组合成ABGR颜色. 和 ABGR 函数一模一样, 只是为了符合部分人使用习惯.
-//
-//	@param r 红色分量.
-//	@param g 绿色分量.
-//	@param b 蓝色分量.
-//	@param a 透明度.
-//	@return int ABGR颜色.
-func RGBA(r, g, b, a byte) int {
-	return int(uint32(r) | uint32(g)<<8 | uint32(b)<<16 | uint32(a)<<24)
-}
-
-// RGBA2 根据bgr, a组合成十进制ABGR颜色. 和 ABGR2 函数一模一样, 只是为了符合部分人使用习惯.
-//
-//	@param bgr BGR颜色.
-//	@param a 透明度.
-//	@return int ABGR颜色.
-func RGBA2(bgr int, a byte) int {
-	return int((uint32(bgr) & 16777215) | uint32(a)<<24)
-}
-
-// BGR 根据r, g, b组合成BGR颜色.
-//
-//	@param r 红色分量.
-//	@param g 绿色分量.
-//	@param b 蓝色分量.
-//	@return int BGR颜色.
-func BGR(r, g, b byte) int {
-	return int(uint32(r) | uint32(g)<<8 | uint32(b)<<16)
-}
-
-// RGB 根据r, g, b组合成RGB颜色.
-//
-//	@param r 红色分量.
-//	@param g 绿色分量.
-//	@param b 蓝色分量.
-//	@return int RGB颜色.
-func RGB(r, g, b byte) int {
-	return int(uint32(b) | uint32(g)<<8 | uint32(r)<<16)
-}
-
-// RGB2ABGR 将RGB颜色转换到ABGR颜色.
-//
-//	@param rgb RGB颜色.
-//	@param a 透明度.
-//	@return int ABGR颜色.
-func RGB2ABGR(rgb int, a byte) int {
-	r := byte(rgb >> 16)
-	g := byte(rgb >> 8)
-	b := byte(rgb)
-	return ABGR(r, g, b, a)
-}
-
-// RGB2BGR 将RGB颜色转换到BGR颜色.
-//
-//	@param rgb RGB颜色.
-//	@return int BGR颜色.
-func RGB2BGR(rgb int) int {
-	r := byte(rgb >> 16)
-	g := byte(rgb >> 8)
-	b := byte(rgb)
-	return BGR(r, g, b)
-}
-
-// HexRGB2BGR 将十六进制RGB颜色转换到十进制BGR颜色.
-//
-//	@param str 十六进制RGB颜色, 开头有没有#都可以.
-//	@return int BGR颜色.
-func HexRGB2BGR(str string) int {
-	s := strings.TrimLeft(str, "#")
-	r, _ := strconv.ParseInt(s[:2], 16, 10)
-	g, _ := strconv.ParseInt(s[2:4], 16, 18)
-	b, _ := strconv.ParseInt(s[4:], 16, 10)
-	return BGR(byte(r), byte(g), byte(b))
-}
-
-// HexRGB2ABGR 将十六进制RGB颜色转换到十进制ABGR颜色.
-//
-//	@param str 十六进制RGB颜色, 开头有没有#都可以.
-//	@param a 透明度.
-//	@return int ABGR颜色.
-func HexRGB2ABGR(str string, a byte) int {
-	s := strings.TrimLeft(str, "#")
-	r, _ := strconv.ParseInt(s[:2], 16, 10)
-	g, _ := strconv.ParseInt(s[2:4], 16, 18)
-	b, _ := strconv.ParseInt(s[4:], 16, 10)
-	return ABGR(byte(r), byte(g), byte(b), a)
-}
-
-// HexRGB2RGB 将十六进制RGB颜色转换到十进制RGB颜色.
-//
-//	@param str 十六进制RGB颜色, 开头有没有#都可以.
-//	@return int RGB颜色.
-func HexRGB2RGB(str string) int {
-	s := strings.TrimLeft(str, "#")
-	r, _ := strconv.ParseInt(s[:2], 16, 10)
-	g, _ := strconv.ParseInt(s[2:4], 16, 18)
-	b, _ := strconv.ParseInt(s[4:], 16, 10)
-	return RGB(byte(r), byte(g), byte(b))
-}
-
-// ClientToScreen 将窗口客户区坐标转换到屏幕坐标.
-//
-//	@param hWindow GUI库窗口资源句柄.
-//	@param pPoint 坐标.
-func ClientToScreen(hWindow int, pPoint *POINT) {
-	var r RECT
-	XWnd_GetRect(hWindow, &r)
-	pPoint.X += r.Left
-	pPoint.Y += r.Top
-}
-
-// WriteDll 把 xcgui.dll 写出到windows临时目录中版本号文件夹里, 如果检测到dll已存在则不会写出.
-//
-// 使用完本函数后无需再调用 xc.SetXcguiPath(), 内部已自动操作.
-func WriteDll(dll []byte) error {
-	tmpDir := os.TempDir()
-	tmpPath := filepath.Join(tmpDir, "xcgui"+GetVer())
-	dllPath := filepath.Join(tmpPath, "xcgui.dll")
-
-	b, err := PathExists(tmpPath)
-	if err != nil {
-		return err
-	}
-	if !b { // 目录不存在则创建
-		err = os.Mkdir(tmpPath, 0666)
-		if err != nil {
-			return err
-		}
-	}
-
-	b, err = PathExists(dllPath)
-	if err != nil {
-		return err
-	}
-	if !b { // dll不存在则创建
-		err = os.WriteFile(dllPath, dll, 0666)
-		if err != nil {
-			return err
-		}
-	}
-
-	xcguiPath = dllPath
-	return nil
+	// 托盘.
+	xTrayIcon_Reset = xcgui.NewProc("XTrayIcon_Reset")
+	xTrayIcon_Add = xcgui.NewProc("XTrayIcon_Add")
+	xTrayIcon_Del = xcgui.NewProc("XTrayIcon_Del")
+	xTrayIcon_Modify = xcgui.NewProc("XTrayIcon_Modify")
+	xTrayIcon_SetIcon = xcgui.NewProc("XTrayIcon_SetIcon")
+	xTrayIcon_SetFocus = xcgui.NewProc("XTrayIcon_SetFocus")
+	xTrayIcon_SetTips = xcgui.NewProc("XTrayIcon_SetTips")
+	xTrayIcon_SetPopupBalloon = xcgui.NewProc("XTrayIcon_SetPopupBalloon")
+	xTrayIcon_SetCallbackMessage = xcgui.NewProc("XTrayIcon_SetCallbackMessage")
 }

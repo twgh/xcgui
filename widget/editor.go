@@ -311,14 +311,14 @@ func (e *Editor) SetAutoMatchMode(mode int) int {
 以下都是事件
 */
 
-type XE_EDITOR_MODIFY_ROWS func(iRow int, nRows int, pbHandled *bool) int                 // 多行内容改变事件 例如:区块注释操作, 区块缩进操作, 代码格式化. iRow: 开始行. nRows: 改变行数量.
-type XE_EDITOR_MODIFY_ROWS1 func(hEle int, iRow int, nRows int, pbHandled *bool) int      // 多行内容改变事件 例如:区块注释操作, 区块缩进操作, 代码格式化. iRow: 开始行. nRows: 改变行数量.
-type XE_EDITOR_SETBREAKPOINT func(iRow int, bCheck bool, pbHandled *bool) int             // 代码编辑框_设置断点.
-type XE_EDITOR_SETBREAKPOINT1 func(hEle int, iRow int, bCheck bool, pbHandled *bool) int  // 代码编辑框_设置断点.
-type XE_EDITOR_REMOVEBREAKPOINT func(iRow int, pbHandled *bool) int                       // 代码编辑框_移除断点.
-type XE_EDITOR_REMOVEBREAKPOINT1 func(hEle int, iRow int, pbHandled *bool) int            // 代码编辑框_移除断点.
-type XE_EDITOR_AUTOMATCH_SELECT func(iRow int, nRows int, pbHandled *bool) int            // 代码编辑框_自动匹配选择.
-type XE_EDITOR_AUTOMATCH_SELECT1 func(hEle int, iRow int, nRows int, pbHandled *bool) int // 代码编辑框_自动匹配选择.
+type XE_EDITOR_MODIFY_ROWS func(iRow int32, nRows int32, pbHandled *bool) int                 // 多行内容改变事件 例如:区块注释操作, 区块缩进操作, 代码格式化. iRow: 开始行. nRows: 改变行数量.
+type XE_EDITOR_MODIFY_ROWS1 func(hEle int, iRow int32, nRows int32, pbHandled *bool) int      // 多行内容改变事件 例如:区块注释操作, 区块缩进操作, 代码格式化. iRow: 开始行. nRows: 改变行数量.
+type XE_EDITOR_SETBREAKPOINT func(iRow int32, bCheck bool, pbHandled *bool) int               // 代码编辑框_设置断点.
+type XE_EDITOR_SETBREAKPOINT1 func(hEle int, iRow int32, bCheck bool, pbHandled *bool) int    // 代码编辑框_设置断点.
+type XE_EDITOR_REMOVEBREAKPOINT func(iRow int32, pbHandled *bool) int                         // 代码编辑框_移除断点.
+type XE_EDITOR_REMOVEBREAKPOINT1 func(hEle int, iRow int32, pbHandled *bool) int              // 代码编辑框_移除断点.
+type XE_EDITOR_AUTOMATCH_SELECT func(iRow int32, nRows int32, pbHandled *bool) int            // 代码编辑框_自动匹配选择.
+type XE_EDITOR_AUTOMATCH_SELECT1 func(hEle int, iRow int32, nRows int32, pbHandled *bool) int // 代码编辑框_自动匹配选择.
 
 // 多行内容改变事件 例如:区块注释操作, 区块缩进操作, 代码格式化.
 func (e *Editor) Event_EDITOR_MODIFY_ROWS(pFun XE_EDITOR_MODIFY_ROWS) bool {

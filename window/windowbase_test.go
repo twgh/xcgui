@@ -16,7 +16,7 @@ func Test_windowBase_SetSize(t *testing.T) {
 		widget.NewButton(50, 100, 100, 30, "SetSize", w.Handle).Event_BnClick(func(pbHandled *bool) int {
 			width := rand.Int31n(400) + 200
 			height := rand.Int31n(400) + 200
-			w.SetSize(int(width), int(height))
+			w.SetSize(width, height)
 			return 0
 		})
 	})
@@ -27,7 +27,7 @@ func Test_windowBase_SetWidth(t *testing.T) {
 		rand.Seed(time.Now().Unix())
 		widget.NewButton(50, 100, 100, 30, "SetWidth", w.Handle).Event_BnClick(func(pbHandled *bool) int {
 			width := rand.Int31n(400) + 200
-			w.SetWidth(int(width))
+			w.SetWidth(width)
 			return 0
 		})
 	})
@@ -38,7 +38,7 @@ func Test_windowBase_SetHeight(t *testing.T) {
 		rand.Seed(time.Now().Unix())
 		widget.NewButton(50, 100, 100, 30, "SetHeight", w.Handle).Event_BnClick(func(pbHandled *bool) int {
 			height := rand.Int31n(400) + 200
-			w.SetHeight(int(height))
+			w.SetHeight(height)
 			return 0
 		})
 	})

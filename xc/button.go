@@ -18,7 +18,7 @@ import (
 // pName: 标题.
 //
 // hParent: 父为窗口句柄或元素句柄.
-func XBtn_Create(x int, y int, cx int, cy int, pName string, hParent int) int {
+func XBtn_Create(x, y, cx, cy int32, pName string, hParent int) int {
 	r, _, _ := xBtn_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pName), uintptr(hParent))
 	return int(r)
 }
@@ -84,7 +84,7 @@ func XBtn_SetTypeEx(hEle int, nType xcc.XC_OBJECT_TYPE_EX) int {
 // hEle: 元素句柄.
 //
 // nID: 组ID.
-func XBtn_SetGroupID(hEle int, nID int) int {
+func XBtn_SetGroupID(hEle int, nID int32) int {
 	r, _, _ := xBtn_SetGroupID.Call(uintptr(hEle), uintptr(nID))
 	return int(r)
 }
@@ -92,9 +92,9 @@ func XBtn_SetGroupID(hEle int, nID int) int {
 // 按钮_取组ID.
 //
 // hEle: 元素句柄.
-func XBtn_GetGroupID(hEle int) int {
+func XBtn_GetGroupID(hEle int) int32 {
 	r, _, _ := xBtn_GetGroupID.Call(uintptr(hEle))
-	return int(r)
+	return int32(r)
 }
 
 // 按钮_置绑定元素.

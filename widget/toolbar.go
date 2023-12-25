@@ -18,7 +18,7 @@ type ToolBar struct {
 // cy: 高度.
 //
 // hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
-func NewToolBar(x int, y int, cx int, cy int, hParent int) *ToolBar {
+func NewToolBar(x, y, cx, cy int32, hParent int) *ToolBar {
 	p := &ToolBar{}
 	p.SetHandle(xc.XToolBar_Create(x, y, cx, cy, hParent))
 	return p

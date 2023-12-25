@@ -30,9 +30,9 @@ var (
 //	@param lpszFile 返回的文件路径.
 //	@param cch 接收的文件路径的字符数, 通常为260.
 //	@return int 返回文件路径的字符数.
-func DragQueryFileW(hDrop int, iFile int, lpszFile *string, cch uint32) int {
+func DragQueryFileW(hDrop uintptr, iFile uint32, lpszFile *string, cch uint32) int {
 	buf := make([]uint16, cch)
-	r, _, _ := dragQueryFileW.Call(uintptr(hDrop), uintptr(iFile), common.Uint16SliceDataPtr(&buf), uintptr(cch))
+	r, _, _ := dragQueryFileW.Call(hDrop, uintptr(iFile), common.Uint16SliceDataPtr(&buf), uintptr(cch))
 	*lpszFile = syscall.UTF16ToString(buf[0:])
 	return int(r)
 }
@@ -41,8 +41,8 @@ func DragQueryFileW(hDrop int, iFile int, lpszFile *string, cch uint32) int {
 //
 //	@Description 详见: https://docs.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-DragFinish.
 //	@param hDrop 句柄.
-func DragFinish(hDrop int) {
-	dragFinish.Call(uintptr(hDrop))
+func DragFinish(hDrop uintptr) {
+	dragFinish.Call(hDrop)
 }
 
 // DragQueryPoint 检索在拖放文件时鼠标指针的位置.
@@ -51,8 +51,8 @@ func DragFinish(hDrop int) {
 //	@param hDrop 句柄.
 //	@param ppt 接收鼠标指针的坐标.
 //	@return bool 如果拖放发生在窗口的客户区, 返回true；否则返回false.
-func DragQueryPoint(hDrop int, ppt *xc.POINT) bool {
-	r, _, _ := dragQueryPoint.Call(uintptr(hDrop), uintptr(unsafe.Pointer(ppt)))
+func DragQueryPoint(hDrop uintptr, ppt *xc.POINT) bool {
+	r, _, _ := dragQueryPoint.Call(hDrop, uintptr(unsafe.Pointer(ppt)))
 	return r != 0
 }
 
@@ -66,8 +66,8 @@ func DragQueryPoint(hDrop int, ppt *xc.POINT) bool {
 //	@param lpDirectory 想使用的默认路径完整路径.
 //	@param nShowCmd 定义了如何显示启动程序的常数值, xcc.SW_.
 //	@return int 如果函数成功，则返回大于32的值。如果函数失败，则返回指示失败原因的错误值.
-func ShellExecuteW(hwnd int, lpOperation, lpFile, lpParameters, lpDirectory string, nShowCmd xcc.SW_) int {
-	r, _, _ := shellExecuteW.Call(uintptr(hwnd), common.StrPtr(lpOperation), common.StrPtr(lpFile), common.StrPtr(lpParameters), common.StrPtr(lpDirectory), uintptr(nShowCmd))
+func ShellExecuteW(hwnd uintptr, lpOperation, lpFile, lpParameters, lpDirectory string, nShowCmd xcc.SW_) int {
+	r, _, _ := shellExecuteW.Call(hwnd, common.StrPtr(lpOperation), common.StrPtr(lpFile), common.StrPtr(lpParameters), common.StrPtr(lpDirectory), uintptr(nShowCmd))
 	return int(r)
 }
 
@@ -75,7 +75,7 @@ func ShellExecuteW(hwnd int, lpOperation, lpFile, lpParameters, lpDirectory stri
 //
 //	@Description 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/shlobj_core/ns-shlobj_core-browseinfow.
 type BrowseInfoW struct {
-	HwndOwner      int     // 父窗口句柄
+	HwndOwner      uintptr // 父窗口句柄
 	PidlRoot       uintptr // 指定开始浏览的根文件夹的位置。只有命名空间层次结构中的指定文件夹及其子文件夹出现在对话框中。该成员可以为NULL；在这种情况下，将使用默认位置.
 	PszDisplayName uintptr // 指向缓冲区的指针，用于接收用户选择的文件夹的显示名称。此缓冲区的大小假定为 260 个字符.
 	LpszTitle      uintptr // 指向显示在对话框中树视图控件上方的以空字符结尾的字符串的指针。使用 common.StrPtr()函数生成.

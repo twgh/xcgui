@@ -249,10 +249,10 @@ func (t *TabBar) ShowLabel(index int, bShow bool) bool {
 以下都是事件
 */
 
-type XE_TABBAR_SELECT func(iItem int, pbHandled *bool) int            // TabBar标签按钮选择改变事件. iItem: 标签位置索引.
-type XE_TABBAR_SELECT1 func(hEle int, iItem int, pbHandled *bool) int // TabBar标签按钮选择改变事件. iItem: 标签位置索引.
-type XE_TABBAR_DELETE func(iItem int, pbHandled *bool) int            // TabBar标签按钮删除事件. iItem: 标签位置索引.
-type XE_TABBAR_DELETE1 func(hEle int, iItem int, pbHandled *bool) int // TabBar标签按钮删除事件. iItem: 标签位置索引.
+type XE_TABBAR_SELECT func(iItem int32, pbHandled *bool) int            // TabBar标签按钮选择改变事件. iItem: 标签位置索引.
+type XE_TABBAR_SELECT1 func(hEle int, iItem int32, pbHandled *bool) int // TabBar标签按钮选择改变事件. iItem: 标签位置索引.
+type XE_TABBAR_DELETE func(iItem int32, pbHandled *bool) int            // TabBar标签按钮删除事件. iItem: 标签位置索引.
+type XE_TABBAR_DELETE1 func(hEle int, iItem int32, pbHandled *bool) int // TabBar标签按钮删除事件. iItem: 标签位置索引.
 
 // TabBar标签按钮选择改变事件.
 func (t *TabBar) Event_TABBAR_SELECT(pFun XE_TABBAR_SELECT) bool {

@@ -86,7 +86,7 @@ func XDateTime_SetSelBkColor(hEle int, crSelectBk int) int {
 // pnMonth: 月.[OUT].
 //
 // pnDay: 日.[OUT].
-func XDateTime_GetDate(hEle int, pnYear *int, pnMonth *int, pnDay *int) int {
+func XDateTime_GetDate(hEle int, pnYear *int32, pnMonth *int32, pnDay *int32) int {
 	r, _, _ := xDateTime_GetDate.Call(uintptr(hEle), uintptr(unsafe.Pointer(pnYear)), uintptr(unsafe.Pointer(pnMonth)), uintptr(unsafe.Pointer(pnDay)))
 	return int(r)
 }
@@ -100,7 +100,7 @@ func XDateTime_GetDate(hEle int, pnYear *int, pnMonth *int, pnDay *int) int {
 // nMonth: 月.
 //
 // nDay: 日.
-func XDateTime_SetDate(hEle int, nYear int, nMonth int, nDay int) int {
+func XDateTime_SetDate(hEle int, nYear int32, nMonth int32, nDay int32) int {
 	r, _, _ := xDateTime_SetDate.Call(uintptr(hEle), uintptr(nYear), uintptr(nMonth), uintptr(nDay))
 	return int(r)
 }
@@ -114,7 +114,7 @@ func XDateTime_SetDate(hEle int, nYear int, nMonth int, nDay int) int {
 // pnMinute: 分.[OUT].
 //
 // pnSecond: 秒.[OUT].
-func XDateTime_GetTime(hEle int, pnHour *int, pnMinute *int, pnSecond *int) int {
+func XDateTime_GetTime(hEle int, pnHour *int32, pnMinute *int32, pnSecond *int32) int {
 	r, _, _ := xDateTime_GetTime.Call(uintptr(hEle), uintptr(unsafe.Pointer(pnHour)), uintptr(unsafe.Pointer(pnMinute)), uintptr(unsafe.Pointer(pnSecond)))
 	return int(r)
 }
@@ -128,7 +128,7 @@ func XDateTime_GetTime(hEle int, pnHour *int, pnMinute *int, pnSecond *int) int 
 // nMinute: 分.
 //
 // nSecond: 秒.
-func XDateTime_SetTime(hEle int, nHour int, nMinute int, nSecond int) int {
+func XDateTime_SetTime(hEle int, nHour int32, nMinute int32, nSecond int32) int {
 	r, _, _ := xDateTime_SetTime.Call(uintptr(hEle), uintptr(nHour), uintptr(nMinute), uintptr(nSecond))
 	return int(r)
 }

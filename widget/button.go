@@ -23,7 +23,7 @@ type Button struct {
 // pName: 标题.
 //
 // hParent: 父为窗口句柄或元素句柄.
-func NewButton(x int, y int, cx int, cy int, pName string, hParent int) *Button {
+func NewButton(x, y, cx, cy int32, pName string, hParent int) *Button {
 	p := &Button{}
 	p.SetHandle(xc.XBtn_Create(x, y, cx, cy, pName, hParent))
 	return p
@@ -113,12 +113,12 @@ func (b *Button) SetTypeEx(nType xcc.XC_OBJECT_TYPE_EX) int {
 // 按钮_置组ID.
 //
 // nID: 组ID.
-func (b *Button) SetGroupID(nID int) int {
+func (b *Button) SetGroupID(nID int32) int {
 	return xc.XBtn_SetGroupID(b.Handle, nID)
 }
 
 // 按钮_取组ID.
-func (b *Button) GetGroupID() int {
+func (b *Button) GetGroupID() int32 {
 	return xc.XBtn_GetGroupID(b.Handle)
 }
 

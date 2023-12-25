@@ -81,7 +81,7 @@ func (m *MonthCal) GetButton(nType int) int {
 // nMonth: 月.
 //
 // nDay: 日.
-func (m *MonthCal) SetToday(nYear int, nMonth int, nDay int) int {
+func (m *MonthCal) SetToday(nYear int32, nMonth int32, nDay int32) int {
 	return xc.XMonthCal_SetToday(m.Handle, nYear, nMonth, nDay)
 }
 
@@ -92,7 +92,7 @@ func (m *MonthCal) SetToday(nYear int, nMonth int, nDay int) int {
 // pnMonth: 月.[INT.
 //
 // pnDay: 日.[INT.
-func (m *MonthCal) GetToday(pnYear *int, pnMonth *int, pnDay *int) int {
+func (m *MonthCal) GetToday(pnYear *int32, pnMonth *int32, pnDay *int32) int {
 	return xc.XMonthCal_GetToday(m.Handle, pnYear, pnMonth, pnDay)
 }
 
@@ -103,7 +103,7 @@ func (m *MonthCal) GetToday(pnYear *int, pnMonth *int, pnDay *int) int {
 // pnMonth: 月.[INT.
 //
 // pnDay: 日.[INT.
-func (m *MonthCal) GetSelDate(pnYear *int, pnMonth *int, pnDay *int) int {
+func (m *MonthCal) GetSelDate(pnYear *int32, pnMonth *int32, pnDay *int32) int {
 	return xc.XMonthCal_GetSelDate(m.Handle, pnYear, pnMonth, pnDay)
 }
 
@@ -112,7 +112,7 @@ func (m *MonthCal) GetSelDate(pnYear *int, pnMonth *int, pnDay *int) int {
 // nFlag: 1:周六, 周日文字颜色, 2:日期文字的颜色; 其它周文字颜色, 使用元素自身颜色.
 //
 // color: ABGR 颜色值.
-func (m *MonthCal) SetTextColor(nFlag int, color int) int {
+func (m *MonthCal) SetTextColor(nFlag int32, color int) int {
 	return xc.XMonthCal_SetTextColor(m.Handle, nFlag, color)
 }
 

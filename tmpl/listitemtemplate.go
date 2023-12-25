@@ -64,7 +64,7 @@ func NewByZip(nType xcc.ListItemTemp_Type_, pZipFile string, pFileName string, p
 // pPassword: zip密码.
 //
 // hModule: 模块句柄, 可填0.
-func NewByZipRes(nType xcc.ListItemTemp_Type_, id int, pFileName string, pPassword string, hModule int) *ListItemTemplate {
+func NewByZipRes(nType xcc.ListItemTemp_Type_, id int32, pFileName string, pPassword string, hModule uintptr) *ListItemTemplate {
 	p := &ListItemTemplate{}
 	p.SetHandle(xc.XTemp_LoadZipRes(nType, id, pFileName, pPassword, hModule))
 	return p
@@ -134,7 +134,7 @@ func (l *ListItemTemplate) AddNodeRoot(pNode int) bool {
 // 模板_取列表中的节点.
 //
 // index: 节点位置索引.
-func (l *ListItemTemplate) List_GetNode(index int) int {
+func (l *ListItemTemplate) List_GetNode(index int32) int {
 	return xc.XTemp_List_GetNode(l.Handle, index)
 }
 
@@ -143,19 +143,19 @@ func (l *ListItemTemplate) List_GetNode(index int) int {
 // index: 插入位置索引.
 //
 // pNode: 节点指针.
-func (l *ListItemTemplate) List_InsertNode(index int, pNode int) bool {
+func (l *ListItemTemplate) List_InsertNode(index int32, pNode int) bool {
 	return xc.XTemp_List_InsertNode(l.Handle, index, pNode)
 }
 
 // 项模板_列表_删除节点.
 //
 // index: 位置索引.
-func (l *ListItemTemplate) List_DeleteNode(index int) bool {
+func (l *ListItemTemplate) List_DeleteNode(index int32) bool {
 	return xc.XTemp_List_DeleteNode(l.Handle, index)
 }
 
 // 项模板_列表_取数量, 取子节点数量, 只当前层子节点.
-func (l *ListItemTemplate) List_GetCount() int {
+func (l *ListItemTemplate) List_GetCount() int32 {
 	return xc.XTemp_List_GetCount(l.Handle)
 }
 
@@ -164,7 +164,7 @@ func (l *ListItemTemplate) List_GetCount() int {
 // iColSrc: 源列索引.
 //
 // iColDest: 目标列索引.
-func (l *ListItemTemplate) List_MoveColumn(iColSrc int, iColDest int) bool {
+func (l *ListItemTemplate) List_MoveColumn(iColSrc, iColDest int32) bool {
 	return xc.XTemp_List_MoveColumn(l.Handle, iColSrc, iColDest)
 }
 
@@ -256,6 +256,6 @@ func LoadFromMemEx(nType xcc.ListItemTemp_Type_, data []byte, pOutTemp1 *int, pO
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
 //
 // hModule: 模块句柄, 可填0.
-func LoadZipResEx(nType xcc.ListItemTemp_Type_, id int, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int, hModule int) int {
+func LoadZipResEx(nType xcc.ListItemTemp_Type_, id int32, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int, hModule uintptr) int {
 	return xc.XTemp_LoadZipResEx(nType, id, pFileName, pPassword, pOutTemp1, pOutTemp2, hModule)
 }

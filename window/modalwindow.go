@@ -21,7 +21,7 @@ type ModalWindow struct {
 // hWndParent: 父窗口句柄.
 //
 // XCStyle: 炫彩窗口样式: Window_Style_.
-func NewModalWindow(nWidth int, nHeight int, pTitle string, hWndParent int, XCStyle xcc.Window_Style_) *ModalWindow {
+func NewModalWindow(nWidth, nHeight int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) *ModalWindow {
 	p := &ModalWindow{}
 	p.SetHandle(xc.XModalWnd_Create(nWidth, nHeight, pTitle, hWndParent, XCStyle))
 	return p
@@ -48,7 +48,7 @@ func NewModalWindow(nWidth int, nHeight int, pTitle string, hWndParent int, XCSt
 // hWndParent: 父窗口.
 //
 // XCStyle: GUI库窗口样式: Window_Style_.
-func NewModalWindowEx(dwExStyle int, dwStyle int, lpClassName string, x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle xcc.Window_Style_) *ModalWindow {
+func NewModalWindowEx(dwExStyle int, dwStyle int, lpClassName string, x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) *ModalWindow {
 	p := &ModalWindow{}
 	p.SetHandle(xc.XModalWnd_CreateEx(dwExStyle, dwStyle, pTitle, x, y, cx, cy, lpClassName, hWndParent, XCStyle))
 	return p
@@ -60,7 +60,7 @@ func NewModalWindowEx(dwExStyle int, dwStyle int, lpClassName string, x int, y i
 //	@param hParent 父对象句柄.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *ModalWindow
-func NewModalWindowByLayout(pFileName string, hParent, hAttachWnd int) *ModalWindow {
+func NewModalWindowByLayout(pFileName string, hParent int, hAttachWnd uintptr) *ModalWindow {
 	handle := xc.XC_LoadLayout(pFileName, hParent, hAttachWnd)
 	if handle > 0 {
 		p := &ModalWindow{}
@@ -78,7 +78,7 @@ func NewModalWindowByLayout(pFileName string, hParent, hAttachWnd int) *ModalWin
 //	@param hParent 父对象句柄.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *ModalWindow
-func NewModalWindowByLayoutZip(pZipFileName string, pFileName string, pPassword string, hParent, hAttachWnd int) *ModalWindow {
+func NewModalWindowByLayoutZip(pZipFileName string, pFileName string, pPassword string, hParent int, hAttachWnd uintptr) *ModalWindow {
 	handle := xc.XC_LoadLayoutZip(pZipFileName, pFileName, pPassword, hParent, hAttachWnd)
 	if handle > 0 {
 		p := &ModalWindow{}
@@ -96,7 +96,7 @@ func NewModalWindowByLayoutZip(pZipFileName string, pFileName string, pPassword 
 //	@param hParent 父对象句柄.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *ModalWindow
-func NewModalWindowByLayoutZipMem(data []byte, pFileName string, pPassword string, hParent int, hAttachWnd int) *ModalWindow {
+func NewModalWindowByLayoutZipMem(data []byte, pFileName string, pPassword string, hParent int, hAttachWnd uintptr) *ModalWindow {
 	handle := xc.XC_LoadLayoutZipMem(data, pFileName, pPassword, hParent, hAttachWnd)
 	if handle > 0 {
 		p := &ModalWindow{}
@@ -112,7 +112,7 @@ func NewModalWindowByLayoutZipMem(data []byte, pFileName string, pPassword strin
 //	@param hParent 父对象.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *Window
-func NewModalWindowByLayoutStringW(pStringXML string, hParent int, hAttachWnd int) *ModalWindow {
+func NewModalWindowByLayoutStringW(pStringXML string, hParent int, hAttachWnd uintptr) *ModalWindow {
 	handle := xc.XC_LoadLayoutFromStringW(pStringXML, hParent, hAttachWnd)
 	if handle > 0 {
 		p := &ModalWindow{}
@@ -130,7 +130,7 @@ func NewModalWindowByLayoutStringW(pStringXML string, hParent int, hAttachWnd in
 //	@param hParentWnd 父窗口句柄HWND, 提供给第三方窗口使用.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *ModalWindow
-func NewModalWindowByLayoutEx(pFileName, pPrefixName string, hParent, hParentWnd, hAttachWnd int) *ModalWindow {
+func NewModalWindowByLayoutEx(pFileName, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) *ModalWindow {
 	handle := xc.XC_LoadLayoutEx(pFileName, pPrefixName, hParent, hParentWnd, hAttachWnd)
 	if handle > 0 {
 		p := &ModalWindow{}
@@ -151,7 +151,7 @@ func NewModalWindowByLayoutEx(pFileName, pPrefixName string, hParent, hParentWnd
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@param hModule 模块句柄, 可填0.
 //	@return *ModalWindow
-func NewModalWindowByLayoutZipResEx(id int, pFileName, pPassword, pPrefixName string, hParent, hParentWnd, hAttachWnd, hModule int) *ModalWindow {
+func NewModalWindowByLayoutZipResEx(id int32, pFileName, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd, hModule uintptr) *ModalWindow {
 	handle := xc.XC_LoadLayoutZipResEx(id, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd, hModule)
 	if handle > 0 {
 		p := &ModalWindow{}
@@ -171,7 +171,7 @@ func NewModalWindowByLayoutZipResEx(id int, pFileName, pPassword, pPrefixName st
 //	@param hParentWnd 父窗口句柄HWND, 提供给第三方窗口使用.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *ModalWindow
-func NewModalWindowByLayoutZipEx(pZipFileName string, pFileName string, pPassword, pPrefixName string, hParent, hParentWnd, hAttachWnd int) *ModalWindow {
+func NewModalWindowByLayoutZipEx(pZipFileName string, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) *ModalWindow {
 	handle := xc.XC_LoadLayoutZipEx(pZipFileName, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd)
 	if handle > 0 {
 		p := &ModalWindow{}
@@ -191,7 +191,7 @@ func NewModalWindowByLayoutZipEx(pZipFileName string, pFileName string, pPasswor
 //	@param hParentWnd 父窗口句柄HWND, 提供给第三方窗口使用.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *ModalWindow
-func NewModalWindowByLayoutZipMemEx(data []byte, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd int) *ModalWindow {
+func NewModalWindowByLayoutZipMemEx(data []byte, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) *ModalWindow {
 	handle := xc.XC_LoadLayoutZipMemEx(data, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd)
 	if handle > 0 {
 		p := &ModalWindow{}
@@ -209,7 +209,7 @@ func NewModalWindowByLayoutZipMemEx(data []byte, pFileName string, pPassword, pP
 //	@param hParentWnd 父窗口句柄HWND, 提供给第三方窗口使用.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *Window
-func NewModalWindowByLayoutStringWEx(pStringXML, pPrefixName string, hParent int, hParentWnd, hAttachWnd int) *ModalWindow {
+func NewModalWindowByLayoutStringWEx(pStringXML, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) *ModalWindow {
 	handle := xc.XC_LoadLayoutFromStringWEx(pStringXML, pPrefixName, hParent, hParentWnd, hAttachWnd)
 	if handle > 0 {
 		p := &ModalWindow{}
@@ -224,7 +224,7 @@ func NewModalWindowByLayoutStringWEx(pStringXML, pPrefixName string, hParent int
 // hWnd: 要附加的外部窗口句柄.
 //
 // XCStyle: 炫彩窗口样式: xcc.Window_Style_.
-func ModalWnd_Attach(hWnd int, XCStyle xcc.Window_Style_) *Window {
+func ModalWnd_Attach(hWnd uintptr, XCStyle xcc.Window_Style_) *Window {
 	p := &Window{}
 	p.SetHandle(xc.XModalWnd_Attach(hWnd, XCStyle))
 	return p

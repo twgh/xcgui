@@ -37,7 +37,7 @@ func XList_Create(x int, y int, cx int, cy int, hParent int) int {
 // hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
 //
 // col_extend_count: 列数量. 例如: 内置模板是1列, 如果数据有5列, 那么此参数填5.
-func XList_CreateEx(x int, y int, cx int, cy int, hParent, col_extend_count int) int {
+func XList_CreateEx(x, y, cx, cy int32, hParent, col_extend_count int32) int {
 	r, _, _ := xList_CreateEx.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), uintptr(hParent), uintptr(col_extend_count))
 	return int(r)
 }
@@ -517,7 +517,7 @@ func XList_GetHeaderHeight(hEle int) int {
 // piStart: 开始行索引.
 //
 // piEnd: 结束行索引.
-func XList_GetVisibleRowRange(hEle int, piStart *int, piEnd *int) int {
+func XList_GetVisibleRowRange(hEle int, piStart *int32, piEnd *int32) int {
 	r, _, _ := xList_GetVisibleRowRange.Call(uintptr(hEle), uintptr(unsafe.Pointer(piStart)), uintptr(unsafe.Pointer(piEnd)))
 	return int(r)
 }
@@ -529,7 +529,7 @@ func XList_GetVisibleRowRange(hEle int, piStart *int, piEnd *int) int {
 // nHeight: 高度.
 //
 // nSelHeight: 选中时高度.
-func XList_SetItemHeightDefault(hEle int, nHeight int, nSelHeight int) int {
+func XList_SetItemHeightDefault(hEle int, nHeight int32, nSelHeight int32) int {
 	r, _, _ := xList_SetItemHeightDefault.Call(uintptr(hEle), uintptr(nHeight), uintptr(nSelHeight))
 	return int(r)
 }
@@ -541,7 +541,7 @@ func XList_SetItemHeightDefault(hEle int, nHeight int, nSelHeight int) int {
 // pHeight: 高度.
 //
 // pSelHeight: 选中时高度.
-func XList_GetItemHeightDefault(hEle int, pHeight *int, pSelHeight *int) int {
+func XList_GetItemHeightDefault(hEle int, pHeight *int32, pSelHeight *int32) int {
 	r, _, _ := xList_GetItemHeightDefault.Call(uintptr(hEle), uintptr(unsafe.Pointer(pHeight)), uintptr(unsafe.Pointer(pSelHeight)))
 	return int(r)
 }
@@ -613,7 +613,7 @@ func XList_SetLockRowBottomOverlap(hEle int, bOverlap bool) int {
 // piItem: 项索引.
 //
 // piSubItem: 子项索引.
-func XList_HitTest(hEle int, pPt *POINT, piItem *int, piSubItem *int) bool {
+func XList_HitTest(hEle int, pPt *POINT, piItem *int32, piSubItem *int32) bool {
 	r, _, _ := xList_HitTest.Call(uintptr(hEle), uintptr(unsafe.Pointer(pPt)), uintptr(unsafe.Pointer(piItem)), uintptr(unsafe.Pointer(piSubItem)))
 	return r != 0
 }
@@ -627,7 +627,7 @@ func XList_HitTest(hEle int, pPt *POINT, piItem *int, piSubItem *int) bool {
 // piItem: 项索引.
 //
 // piSubItem: 子项索引.
-func XList_HitTestOffset(hEle int, pPt *POINT, piItem *int, piSubItem *int) bool {
+func XList_HitTestOffset(hEle int, pPt *POINT, piItem *int32, piSubItem *int32) bool {
 	r, _, _ := xList_HitTestOffset.Call(uintptr(hEle), uintptr(unsafe.Pointer(pPt)), uintptr(unsafe.Pointer(piItem)), uintptr(unsafe.Pointer(piSubItem)))
 	return r != 0
 }
@@ -943,7 +943,7 @@ func XList_GetItemImageEx(hEle int, iItem int, pName string) int {
 // iColumn:.
 //
 // pOutValue:.
-func XList_GetItemInt(hEle int, iItem int, iColumn int, pOutValue *int) bool {
+func XList_GetItemInt(hEle int, iItem int, iColumn int, pOutValue *int32) bool {
 	r, _, _ := xList_GetItemInt.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), uintptr(unsafe.Pointer(pOutValue)))
 	return r != 0
 }
@@ -957,7 +957,7 @@ func XList_GetItemInt(hEle int, iItem int, iColumn int, pOutValue *int) bool {
 // pName:.
 //
 // pOutValue:.
-func XList_GetItemIntEx(hEle int, iItem int, pName string, pOutValue *int) bool {
+func XList_GetItemIntEx(hEle int, iItem int, pName string, pOutValue *int32) bool {
 	r, _, _ := xList_GetItemIntEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
 	return r != 0
 }
@@ -1063,7 +1063,7 @@ func XList_SetSplitLineColor(hEle int, color int) int {
 // nHeight: 高度.
 //
 // nSelHeight: 选中时高度.
-func XList_SetItemHeight(hEle int, iRow int, nHeight int, nSelHeight int) int {
+func XList_SetItemHeight(hEle int, iRow int, nHeight, nSelHeight int32) int {
 	r, _, _ := xList_SetItemHeight.Call(uintptr(hEle), uintptr(iRow), uintptr(nHeight), uintptr(nSelHeight))
 	return int(r)
 }
@@ -1077,7 +1077,7 @@ func XList_SetItemHeight(hEle int, iRow int, nHeight int, nSelHeight int) int {
 // pHeight: 高度.
 //
 // pSelHeight: 选中时高度.
-func XList_GetItemHeight(hEle int, iRow int, pHeight *int, pSelHeight *int) int {
+func XList_GetItemHeight(hEle int, iRow int, pHeight, pSelHeight *int32) int {
 	r, _, _ := xList_GetItemHeight.Call(uintptr(hEle), uintptr(iRow), uintptr(unsafe.Pointer(pHeight)), uintptr(unsafe.Pointer(pSelHeight)))
 	return int(r)
 }
@@ -1139,7 +1139,7 @@ func XList_SetItemTemplateXMLFromMem(hEle int, data []byte) bool {
 // pPassword: zip密码.
 //
 // hModule: 模块句柄, 可填0.
-func XList_SetItemTemplateXMLFromZipRes(hEle, id int, pFileName string, pPassword string, hModule int) bool {
-	r, _, _ := xList_SetItemTemplateXMLFromZipRes.Call(uintptr(hEle), uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(hModule))
+func XList_SetItemTemplateXMLFromZipRes(hEle int, id int32, pFileName string, pPassword string, hModule uintptr) bool {
+	r, _, _ := xList_SetItemTemplateXMLFromZipRes.Call(uintptr(hEle), uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), hModule)
 	return r != 0
 }

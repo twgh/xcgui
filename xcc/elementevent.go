@@ -5,7 +5,7 @@ type XE_ uint32
 
 const (
 	// XE_ELEPROCE 元素处理过程事件.
-	//	func onEleProce(nEvent int, wParam int, lParam int, pbHandled *bool) int {
+	//	func onEleProce(nEvent int, wParam, lParam uint, pbHandled *bool) int {
 	//		return 0
 	//	}
 	XE_ELEPROCE XE_ = 1
@@ -125,22 +125,25 @@ const (
 	XE_PGRID_ITEM_DESTROY                 XE_ = 155 //
 	XE_PGRID_ITEM_EXPAND                  XE_ = 156 //
 	XE_RICHEDIT_CHANGE                    XE_ = 161 // 富文本元素 用户修改内容事件,只有当用户操作时才会触发,需要开启后有效, XRichEdit_EnableEvent_XE_RICHEDIT_CHANGE()； XRichEdit_SetText()、 XRichEdit_InsertString()不会触发此事件
-	XE_EDIT_SET                           XE_ = 162 // 编辑框_置文本
-	XE_EDIT_DRAWROW                       XE_ = 181 // 和XE_EDIT_CHANGED的对换?
+	XE_EDIT_SET                           XE_ = 162 // 元素事件_编辑框设置
+	XE_EDIT_DRAWROW                       XE_ = 181 // 暂未使用
 	XE_EDIT_CHANGED                       XE_ = 182 // 编辑框_内容被改变
 	XE_EDIT_POS_CHANGED                   XE_ = 183 // 编辑框_光标位置_被改变
 	XE_EDIT_STYLE_CHANGED                 XE_ = 184 // 编辑框_样式_被改变
-	XE_EDIT_ENTER_GET_TABALIGN            XE_ = 185 // 编辑框_回车_获取标签?
-	XE_EDITOR_MODIFY_ROWS                 XE_ = 186 // 多行内容改变事件 例如:区块注释操作, 区块缩进操作, 代码格式化
-	XE_EDITOR_SETBREAKPOINT               XE_ = 191 // 代码编辑框_设置断点
-	XE_EDITOR_REMOVEBREAKPOINT            XE_ = 192 // 代码编辑框_移除断点
-	XE_EDIT_ROW_CHANGED                   XE_ = 193 // 编辑框_行_被改变
-	XE_EDITOR_AUTOMATCH_SELECT            XE_ = 194 // 编辑框_自动匹配选择
-	XE_TABBAR_SELECT                      XE_ = 221 // TabBar标签按钮选择改变事件
-	XE_TABBAR_DELETE                      XE_ = 222 // TabBar标签按钮删除事件
-	XE_MONTHCAL_CHANGE                    XE_ = 231 // 月历元素日期改变事件
-	XE_DATETIME_CHANGE                    XE_ = 241 // 日期时间元素,内容改变事件
-	XE_DATETIME_POPUP_MONTHCAL            XE_ = 242 // 日期时间元素,弹出月历卡片事件
-	XE_DATETIME_EXIT_MONTHCAL             XE_ = 243 // 日期时间元素,弹出的月历卡片退出事件
-	XE_DROPFILES                          XE_ = 250 // 文件拖放事件.
+	XE_EDIT_ENTER_GET_TABALIGN            XE_ = 185 // 回车TAB对齐,返回需要TAB数量
+	XE_EDIT_SWAPROW                       XE_ = 186 // 元素事件_交换行
+	XE_EDIT_COLOR_CHANGE                  XE_ = 260 // 编辑框_颜色被改变
+
+	XE_EDITOR_MODIFY_ROWS      XE_ = 190 // 多行内容改变事件 例如:区块注释操作, 区块缩进操作, 代码格式化
+	XE_EDITOR_SETBREAKPOINT    XE_ = 191 // 代码编辑框_设置断点
+	XE_EDITOR_REMOVEBREAKPOINT XE_ = 192 // 代码编辑框_移除断点
+	XE_EDIT_ROW_CHANGED        XE_ = 193 // 编辑框_行_被改变
+	XE_EDITOR_AUTOMATCH_SELECT XE_ = 194 // 编辑框_自动匹配选择
+	XE_TABBAR_SELECT           XE_ = 221 // TabBar标签按钮选择改变事件
+	XE_TABBAR_DELETE           XE_ = 222 // TabBar标签按钮删除事件
+	XE_MONTHCAL_CHANGE         XE_ = 231 // 月历元素日期改变事件
+	XE_DATETIME_CHANGE         XE_ = 241 // 日期时间元素,内容改变事件
+	XE_DATETIME_POPUP_MONTHCAL XE_ = 242 // 日期时间元素,弹出月历卡片事件
+	XE_DATETIME_EXIT_MONTHCAL  XE_ = 243 // 日期时间元素,弹出的月历卡片退出事件
+	XE_DROPFILES               XE_ = 250 // 文件拖放事件.
 )

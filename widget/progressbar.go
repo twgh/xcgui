@@ -130,8 +130,8 @@ func (p *ProgressBar) SetColorLoad(color int) bool {
 以下都是事件
 */
 
-type XE_PROGRESSBAR_CHANGE func(pos int, pbHandled *bool) int            // 进度条元素,进度改变事件.
-type XE_PROGRESSBAR_CHANGE1 func(hEle int, pos int, pbHandled *bool) int // 进度条元素,进度改变事件.
+type XE_PROGRESSBAR_CHANGE func(pos int32, pbHandled *bool) int            // 进度条元素,进度改变事件.
+type XE_PROGRESSBAR_CHANGE1 func(hEle int, pos int32, pbHandled *bool) int // 进度条元素,进度改变事件.
 
 // 进度条元素,进度改变事件.
 func (p *ProgressBar) Event_PROGRESSBAR_CHANGE(pFun XE_PROGRESSBAR_CHANGE) bool {

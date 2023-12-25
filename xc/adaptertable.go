@@ -202,7 +202,7 @@ func XAdTable_SetItemTextEx(hAdapter int, iItem int, pName string, pValue string
 // iColumn: 列索引.
 //
 // nValue: 值.
-func XAdTable_SetItemInt(hAdapter int, iItem int, iColumn int, nValue int) bool {
+func XAdTable_SetItemInt(hAdapter int, iItem int, iColumn int, nValue int32) bool {
 	r, _, _ := xAdTable_SetItemInt.Call(uintptr(hAdapter), uintptr(iItem), uintptr(iColumn), uintptr(nValue))
 	return r != 0
 }
@@ -216,7 +216,7 @@ func XAdTable_SetItemInt(hAdapter int, iItem int, iColumn int, nValue int) bool 
 // pName: 字段称.
 //
 // nValue: 值.
-func XAdTable_SetItemIntEx(hAdapter int, iItem int, pName string, nValue int) bool {
+func XAdTable_SetItemIntEx(hAdapter int, iItem int, pName string, nValue int32) bool {
 	r, _, _ := xAdTable_SetItemIntEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(pName), uintptr(nValue))
 	return r != 0
 }
@@ -388,7 +388,7 @@ func XAdTable_GetItemImageEx(hAdapter int, iItem int, pName string) int {
 // iColumn: 列索引.
 //
 // pOutValue: 接收返还值.
-func XAdTable_GetItemInt(hAdapter int, iItem int, iColumn int, pOutValue *int) bool {
+func XAdTable_GetItemInt(hAdapter int, iItem int, iColumn int, pOutValue *int32) bool {
 	r, _, _ := xAdTable_GetItemInt.Call(uintptr(hAdapter), uintptr(iItem), uintptr(iColumn), uintptr(unsafe.Pointer(pOutValue)))
 	return r != 0
 }
@@ -402,7 +402,7 @@ func XAdTable_GetItemInt(hAdapter int, iItem int, iColumn int, pOutValue *int) b
 // pName: 字段称.
 //
 // pOutValue: 接收返还值.
-func XAdTable_GetItemIntEx(hAdapter int, iItem int, pName string, pOutValue *int) bool {
+func XAdTable_GetItemIntEx(hAdapter int, iItem int, pName string, pOutValue *int32) bool {
 	r, _, _ := xAdTable_GetItemIntEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
 	return r != 0
 }

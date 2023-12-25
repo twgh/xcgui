@@ -25,7 +25,7 @@ func New(hWindow int) *Draw {
 // hWindow: 窗口句柄.
 //
 // hdc: hdc句柄.
-func NewGDI(hWindow, hdc int) *Draw {
+func NewGDI(hWindow int, hdc uintptr) *Draw {
 	p := &Draw{}
 	p.SetHandle(xc.XDraw_CreateGDI(hWindow, hdc))
 	return p
@@ -188,7 +188,7 @@ func (d *Draw) DrawRectF(pRect *xc.RECTF) int {
 // x: X轴偏移量.
 //
 // y: Y轴偏移量.
-func (d *Draw) SetOffset(x int, y int) int {
+func (d *Draw) SetOffset(x, y int32) int {
 	return xc.XDraw_SetOffset(d.Handle, x, y)
 }
 
@@ -197,7 +197,7 @@ func (d *Draw) SetOffset(x int, y int) int {
 // pX: 接收X轴偏移量.
 //
 // pY: 接收Y轴偏移量.
-func (d *Draw) GetOffset(pX *int, pY *int) int {
+func (d *Draw) GetOffset(pX, pY *int32) int {
 	return xc.XDraw_GetOffset(d.Handle, pX, pY)
 }
 
@@ -207,7 +207,7 @@ func (d *Draw) GDI_RestoreGDIOBJ() int {
 }
 
 // 绘制_取HDC, 获取绑定的设备上下文HDC, 返回HDC句柄.
-func (d *Draw) GetHDC() int {
+func (d *Draw) GetHDC() uintptr {
 	return xc.XDraw_GetHDC(d.Handle)
 }
 
@@ -708,7 +708,7 @@ func (d *Draw) XDraw_GetD2dRenderTarget() int {
 // hbrFlickerFreeDraw: .
 //
 // diFlags: .
-func (d *Draw) GDI_DrawIconEx(xLeft int, yTop int, hIcon int, cxWidth int, cyWidth int, istepIfAniCur int, hbrFlickerFreeDraw int, diFlags int) bool {
+func (d *Draw) GDI_DrawIconEx(xLeft int, yTop int, hIcon uintptr, cxWidth int, cyWidth int, istepIfAniCur int, hbrFlickerFreeDraw int, diFlags int) bool {
 	return xc.XDraw_GDI_DrawIconEx(d.Handle, xLeft, yTop, hIcon, cxWidth, cyWidth, istepIfAniCur, hbrFlickerFreeDraw, diFlags)
 }
 
@@ -729,7 +729,7 @@ func (d *Draw) GDI_DrawIconEx(xLeft int, yTop int, hIcon int, cxWidth int, cyWid
 // nYSrc: XX.
 //
 // dwRop: XX.
-func (d *Draw) GDI_BitBlt(nXDest int, nYDest int, nWidth int, nHeight int, hdcSrc int, nXSrc int, nYSrc int, dwRop int) bool {
+func (d *Draw) GDI_BitBlt(nXDest, nYDest, nWidth, nHeight int32, hdcSrc uintptr, nXSrc, nYSrc int32, dwRop uint32) bool {
 	return xc.XDraw_GDI_BitBlt(d.Handle, nXDest, nYDest, nWidth, nHeight, hdcSrc, nXSrc, nYSrc, dwRop)
 }
 
@@ -750,7 +750,7 @@ func (d *Draw) GDI_BitBlt(nXDest int, nYDest int, nWidth int, nHeight int, hdcSr
 // nYSrc: XX.
 //
 // dwRop: XX.
-func (d *Draw) GDI_BitBlt2(nXDest int, nYDest int, nWidth int, nHeight int, hDrawSrc int, nXSrc int, nYSrc int, dwRop int) bool {
+func (d *Draw) GDI_BitBlt2(nXDest, nYDest, nWidth, nHeight int32, hDrawSrc uintptr, nXSrc, nYSrc int32, dwRop uint32) bool {
 	return xc.XDraw_GDI_BitBlt2(d.Handle, nXDest, nYDest, nWidth, nHeight, hDrawSrc, nXSrc, nYSrc, dwRop)
 }
 
@@ -775,7 +775,7 @@ func (d *Draw) GDI_BitBlt2(nXDest int, nYDest int, nWidth int, nHeight int, hDra
 // nHeightSrc: XX.
 //
 // alpha: XX.
-func (d *Draw) GDI_AlphaBlend(nXOriginDest int, nYOriginDest int, nWidthDest int, nHeightDest int, hdcSrc int, nXOriginSrc int, nYOriginSrc int, nWidthSrc int, nHeightSrc int, alpha int) bool {
+func (d *Draw) GDI_AlphaBlend(nXOriginDest, nYOriginDest, nWidthDest, nHeightDest int32, hdcSrc uintptr, nXOriginSrc, nYOriginSrc, nWidthSrc, nHeightSrc, alpha int32) bool {
 	return xc.XDraw_GDI_AlphaBlend(d.Handle, nXOriginDest, nYOriginDest, nWidthDest, nHeightDest, hdcSrc, nXOriginSrc, nYOriginSrc, nWidthSrc, nHeightSrc, alpha)
 }
 
@@ -804,8 +804,8 @@ func (d *Draw) FillPolygonF(points []xc.POINTF, nCount int) int {
 // x: x坐标.
 //
 // y: y坐标.
-func (d *Draw) Image(hImageFrame int, x, y int) int {
-	return xc.XDraw_Image(d.Handle, hImageFrame, x, y)
+func (d *Draw) Image(hImageFrame int, x, y int32) {
+	xc.XDraw_Image(d.Handle, hImageFrame, x, y)
 }
 
 // 绘制_图片F.

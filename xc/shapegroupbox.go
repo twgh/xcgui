@@ -60,7 +60,7 @@ func XShapeGroupBox_SetFontX(hShape int, hFontX int) int {
 // offsetX: 水平偏移.
 //
 // offsetY: 垂直偏移.
-func XShapeGroupBox_SetTextOffset(hShape int, offsetX int, offsetY int) int {
+func XShapeGroupBox_SetTextOffset(hShape int, offsetX int32, offsetY int32) int {
 	r, _, _ := xShapeGroupBox_SetTextOffset.Call(uintptr(hShape), uintptr(offsetX), uintptr(offsetY))
 	return int(r)
 }
@@ -72,7 +72,7 @@ func XShapeGroupBox_SetTextOffset(hShape int, offsetX int, offsetY int) int {
 // nWidth: 圆角宽度.
 //
 // nHeight: 圆角高度.
-func XShapeGroupBox_SetRoundAngle(hShape int, nWidth int, nHeight int) int {
+func XShapeGroupBox_SetRoundAngle(hShape int, nWidth int32, nHeight int32) int {
 	r, _, _ := xShapeGroupBox_SetRoundAngle.Call(uintptr(hShape), uintptr(nWidth), uintptr(nHeight))
 	return int(r)
 }
@@ -94,7 +94,7 @@ func XShapeGroupBox_SetText(hShape int, pText string) int {
 // pOffsetX: X坐标偏移量.
 //
 // pOffsetY: Y坐标偏移量.
-func XShapeGroupBox_GetTextOffset(hShape int, pOffsetX *int, pOffsetY *int) int {
+func XShapeGroupBox_GetTextOffset(hShape int, pOffsetX *int32, pOffsetY *int32) int {
 	r, _, _ := xShapeGroupBox_GetTextOffset.Call(uintptr(hShape), uintptr(unsafe.Pointer(pOffsetX)), uintptr(unsafe.Pointer(pOffsetY)))
 	return int(r)
 }
@@ -106,7 +106,7 @@ func XShapeGroupBox_GetTextOffset(hShape int, pOffsetX *int, pOffsetY *int) int 
 // pWidth: 返回圆角宽度.
 //
 // pHeight: 返回圆角高度.
-func XShapeGroupBox_GetRoundAngle(hShape int, pWidth *int, pHeight *int) int {
+func XShapeGroupBox_GetRoundAngle(hShape int, pWidth *int32, pHeight *int32) int {
 	r, _, _ := xShapeGroupBox_GetRoundAngle.Call(uintptr(hShape), uintptr(unsafe.Pointer(pWidth)), uintptr(unsafe.Pointer(pHeight)))
 	return int(r)
 }

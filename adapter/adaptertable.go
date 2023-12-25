@@ -166,7 +166,7 @@ func (a *AdapterTable) SetItemTextEx(iItem int, pName string, pValue string) boo
 // iColumn: 列索引.
 //
 // nValue: 值.
-func (a *AdapterTable) SetItemInt(iItem int, iColumn int, nValue int) bool {
+func (a *AdapterTable) SetItemInt(iItem int, iColumn int, nValue int32) bool {
 	return xc.XAdTable_SetItemInt(a.Handle, iItem, iColumn, nValue)
 }
 
@@ -177,7 +177,7 @@ func (a *AdapterTable) SetItemInt(iItem int, iColumn int, nValue int) bool {
 // pName: 字段称.
 //
 // nValue: 值.
-func (a *AdapterTable) SetItemIntEx(iItem int, pName string, nValue int) bool {
+func (a *AdapterTable) SetItemIntEx(iItem int, pName string, nValue int32) bool {
 	return xc.XAdTable_SetItemIntEx(a.Handle, iItem, pName, nValue)
 }
 
@@ -304,7 +304,7 @@ func (a *AdapterTable) GetItemImageEx(iItem int, pName string) int {
 // iColumn: 列索引.
 //
 // pOutValue: 接收返还值.
-func (a *AdapterTable) GetItemInt(iItem int, iColumn int, pOutValue *int) bool {
+func (a *AdapterTable) GetItemInt(iItem int, iColumn int, pOutValue *int32) bool {
 	return xc.XAdTable_GetItemInt(a.Handle, iItem, iColumn, pOutValue)
 }
 
@@ -315,7 +315,7 @@ func (a *AdapterTable) GetItemInt(iItem int, iColumn int, pOutValue *int) bool {
 // pName: 字段称.
 //
 // pOutValue: 接收返还值.
-func (a *AdapterTable) GetItemIntEx(iItem int, pName string, pOutValue *int) bool {
+func (a *AdapterTable) GetItemIntEx(iItem int, pName string, pOutValue *int32) bool {
 	return xc.XAdTable_GetItemIntEx(a.Handle, iItem, pName, pOutValue)
 }
 

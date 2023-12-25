@@ -16,8 +16,8 @@ import (
 // hWndParent: 父窗口句柄.
 //
 // XCStyle: 炫彩窗口样式: Window_Style_.
-func XModalWnd_Create(nWidth int, nHeight int, pTitle string, hWndParent int, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xModalWnd_Create.Call(uintptr(nWidth), uintptr(nHeight), common.StrPtr(pTitle), uintptr(hWndParent), uintptr(XCStyle))
+func XModalWnd_Create(nWidth, nHeight int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
+	r, _, _ := xModalWnd_Create.Call(uintptr(nWidth), uintptr(nHeight), common.StrPtr(pTitle), hWndParent, uintptr(XCStyle))
 	return int(r)
 }
 
@@ -42,8 +42,8 @@ func XModalWnd_Create(nWidth int, nHeight int, pTitle string, hWndParent int, XC
 // hWndParent: 父窗口.
 //
 // XCStyle: GUI库窗口样式: Window_Style_.
-func XModalWnd_CreateEx(dwExStyle int, dwStyle int, lpClassName string, x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xModalWnd_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pTitle), uintptr(hWndParent), uintptr(XCStyle))
+func XModalWnd_CreateEx(dwExStyle int, dwStyle int, lpClassName string, x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
+	r, _, _ := xModalWnd_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pTitle), hWndParent, uintptr(XCStyle))
 	return int(r)
 }
 
@@ -90,7 +90,7 @@ func XModalWnd_EndModal(hWindow int, nResult xcc.MessageBox_Flag_) int {
 // hWnd: 要附加的外部窗口句柄.
 //
 // XCStyle: 炫彩窗口样式: Window_Style_.
-func XModalWnd_Attach(hWnd int, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xModalWnd_Attach.Call(uintptr(hWnd), uintptr(XCStyle))
+func XModalWnd_Attach(hWnd uintptr, XCStyle xcc.Window_Style_) int {
+	r, _, _ := xModalWnd_Attach.Call(hWnd, uintptr(XCStyle))
 	return int(r)
 }

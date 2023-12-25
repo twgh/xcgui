@@ -38,6 +38,87 @@ var (
 	isWindow                   = user32.NewProc("IsWindow")
 	registerWindowMessageW     = user32.NewProc("RegisterWindowMessageW")
 	findWindowW                = user32.NewProc("FindWindowW")
+	loadImageW                 = user32.NewProc("LoadImageW")
+	createIconFromResource     = user32.NewProc("CreateIconFromResource")
+)
+
+// CreateIconFromResource 从描述图标的资源位创建图标或光标。若要指定所需的高度或宽度，请使用 CreateIconFromResourceEx 函数。
+//
+//	@Description 使用完图标后，请使用 DestroyIcon 函数销毁它。
+//
+// 详见: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-createiconfromresource.
+//
+//	@param presbits 包含图标或游标资源位的 DWORD 对齐缓冲区指针。通常通过调用 LookupIconIdFromDirectory、 LookupIconIdFromDirectoryEx 和 LoadResource 函数来加载这些位。
+//	@param dwResSize 参数指向的位集的大小（以字节为单位）。
+//	@param fIcon 指示是要创建图标还是游标。 如果此参数为 TRUE，则创建图标。 如果为 FALSE，则创建游标。LOCALHEADER 结构定义游标热点，是从游标资源位读取的第一个数据。
+//	@param dwVer presbits 参数指向的资源位的图标或光标格式的版本号。 该值必须大于或等于 0x00020000 且小于或等于 0x00030000。 此参数通常设置为 0x00030000。
+//	@return HICON
+func CreateIconFromResource(presbits uintptr, dwResSize uint32, fIcon bool, dwVer uint32) (uintptr, error) {
+	r, _, err := createIconFromResource.Call(presbits, uintptr(dwResSize), common.BoolPtr(fIcon), uintptr(dwVer))
+	return r, err
+}
+
+type IMAGE_ uint32
+
+const (
+	IMAGE_BITMAP = 0 // 加载位图
+	IMAGE_CURSOR = 1 // 加载游标
+	IMAGE_ICON   = 2 // 加载图标
+)
+
+type LR_ uint32
+
+const (
+	LR_CREATEDIBSECTION = 0x00002000 // 当 uType 参数指定 IMAGE_BITMAP 时，会导致函数返回 DIB 节位图而不是兼容的位图。 此标志可用于加载位图而不将其映射到显示设备的颜色。
+	LR_DEFAULTCOLOR     = 0          // 默认标志;它不执行任何工作。 它的意思是“不 LR_MONOCHROME ”。
+	LR_DEFAULTSIZE      = 0x00000040 // 如果 cxDesired 或 cyDesired 值设置为零，则使用游标或图标的系统指标值指定的宽度或高度。 如果未指定此标志，并且 cxDesired 和 cyDesired 设置为零，则函数将使用实际资源大小。 如果资源包含多个图像，则 函数使用第一个图像的大小。
+	LR_LOADFROMFILE     = 0x00000010 // 从 名称 (图标、光标或位图文件指定的文件) 加载独立图像。
+
+	// 在颜色表中搜索图像，并将以下灰色底纹替换为相应的三维颜色
+	//	- Dk 灰色，RGB (128，128，128) 与 COLOR_3DSHADOW
+	//	- 灰色，RGB (192，192，192) ，带 COLOR_3DFACE
+	//	- Lt Gray，RGB (223，223，223) 与 COLOR_3DLIGHT
+	LR_LOADMAP3DCOLORS = 0x00001000
+
+	// 检索图像中第一个像素的颜色值，并将颜色表中的相应条目替换为默认窗口颜色 (COLOR_WINDOW) 。 图像中使用该条目的所有像素都将成为默认的窗口颜色。 此值仅适用于具有相应颜色表的图像。
+	//
+	// 如果要加载颜色深度大于 8bpp 的位图，请不要使用此选项。
+	//
+	// 如果 fuLoad 同时包含 LR_LOADTRANSPARENT 值和 LR_LOADMAP3DCOLORS 值， LR_LOADTRANSPARENT 优先。 但是，颜色表条目将替换为 COLOR_3DFACE 而不是 COLOR_WINDOW。
+	LR_LOADTRANSPARENT = 0x00000020
+	LR_MONOCHROME      = 0x00000001 // 加载黑白图像。
+
+	// 如果多次加载映像，则共享映像句柄。 如果未设置 LR_SHARED ，则对同一资源的第二次 LoadImageW 调用将再次加载映像并返回不同的句柄。
+	//
+	// 使用此标志时，系统将在不再需要资源时销毁资源。
+	//
+	// 对于非标准大小、加载后可能会更改或从文件加载的图像，请勿使用 LR_SHARED 。
+	//
+	// 加载系统图标或光标时，必须使用 LR_SHARED 否则函数将无法加载资源。
+	//
+	// 无论请求的大小如何，此函数都会查找缓存中具有请求的资源名称的第一个映像。
+	LR_SHARED   = 0x00008000
+	LR_VGACOLOR = 0x00000080 // 使用真正的 VGA 颜色。
+)
+
+// LoadImageW 加载图标、光标、动画光标或位图.
+//
+//	详见: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-loadimagew.
+//	@param hInst 包含要加载的图像的 DLL 或可执行文件 (.exe) 模块的句柄。 有关详细信息，请参阅 GetModuleHandle。若要 (图标、光标或位图文件) 加载预定义图像或独立资源，请将此参数设置为0.
+//	@param name 要加载的图像。如果 hInst 参数为非0且 fuLoad 参数省略 LR_LOADFROMFILE， 则 name 指定 hInst 模块中的图像资源。如果要按名称从模块加载图像资源， 则 name 参数是指向包含映像资源名称的字符串。
+//	@param Type 要加载的图像的类型。 wapi.IMAGE_ .
+//	@param cx 图标或光标的宽度（以像素为单位）。 如果此参数为零且 fuLoad 参数 为LR_DEFAULTSIZE，则函数使用 SM_CXICON 或 SM_CXCURSOR 系统指标值来设置宽度。 如果此参数为零且未使用 LR_DEFAULTSIZE ，则函数使用实际资源宽度。
+//	@param cy 图标或光标的高度（以像素为单位）。 如果此参数为零且 fuLoad 参数 为LR_DEFAULTSIZE，则函数使用 SM_CYICON 或 SM_CYCURSOR 系统指标值来设置高度。 如果此参数为零且未使用 LR_DEFAULTSIZE ，则函数使用实际资源高度。
+//	@param fuLoad 此参数可使用以下一个或多个值: wapi.LR_ .
+//	@return 返回HICON。
+func LoadImageW(hInst uintptr, name string, Type IMAGE_, cx, cy int32, fuLoad LR_) uintptr {
+	r, _, _ := loadImageW.Call(hInst, common.StrPtr(name), uintptr(Type), uintptr(cx), uintptr(cy), uintptr(fuLoad))
+	return r
+}
+
+const (
+	NULL  = "\x00"
+	NULL2 = NULL + NULL // 2个 NULL
 )
 
 // FindWindowW 检索顶级窗口的句柄，该窗口的类名称和窗口名称与指定的字符串匹配。 此函数不搜索子窗口。 此函数不执行区分大小写的搜索.
@@ -46,10 +127,10 @@ var (
 //	详见: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-FindWindowW.
 //	@param lpClassName 窗口类名, 可为空.
 //	@param lpWindowName 窗口名称（窗口的标题）, 可为空.
-//	@return int 返回窗口句柄。
-func FindWindowW(lpClassName, lpWindowName string) int {
+//	@return 返回窗口句柄。
+func FindWindowW(lpClassName, lpWindowName string) uintptr {
 	r, _, _ := findWindowW.Call(common.StrPtr(lpClassName), common.StrPtr(lpWindowName))
-	return int(r)
+	return r
 }
 
 // RegisterWindowMessageW 定义保证在整个系统中唯一的新窗口消息。 发送或发布消息时可以使用消息值.
@@ -68,8 +149,8 @@ func RegisterWindowMessageW(lpString string) int {
 //	详见: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-iswindow.
 //	@param hWnd 要测试的窗口的句柄。
 //	@return bool
-func IsWindow(hWnd int) bool {
-	r, _, _ := isWindow.Call(uintptr(hWnd))
+func IsWindow(hWnd uintptr) bool {
+	r, _, _ := isWindow.Call(hWnd)
 	return r != 0
 }
 
@@ -114,8 +195,8 @@ const (
 //	@param cy 指定新的窗口高度.
 //	@param wFlags 窗口大小和定位的标志. 该参数可以是以下值的组合: wapi.SWP_.
 //	@return bool
-func SetWindowPos(hWnd int, hWndInsertAfter HWND_, x, y, cx, cy int32, wFlags SWP_) bool {
-	r, _, _ := setWindowPos.Call(uintptr(hWnd), uintptr(hWndInsertAfter), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), uintptr(wFlags))
+func SetWindowPos(hWnd uintptr, hWndInsertAfter HWND_, x, y, cx, cy int32, wFlags SWP_) bool {
+	r, _, _ := setWindowPos.Call(hWnd, uintptr(hWndInsertAfter), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), uintptr(wFlags))
 	return r != 0
 }
 
@@ -123,9 +204,9 @@ func SetWindowPos(hWnd int, hWndInsertAfter HWND_, x, y, cx, cy int32, wFlags SW
 //
 //	@Description 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetDesktopWindow.
 //	@return int
-func GetDesktopWindow() int {
+func GetDesktopWindow() uintptr {
 	r, _, _ := getDesktopWindow.Call()
-	return int(r)
+	return r
 }
 
 // MB_ 指示消息框的内容和行为.
@@ -212,8 +293,8 @@ const (
 //	@param lpCaption 对话框标题。如果此参数为空，则默认标题为Error.
 //	@param uType 对话框的内容和行为, 是以下值的组合: wapi.MB_.
 //	@return wapi.ID_ 如果函数失败，则返回值为0; 成功则返回一个整数，指示用户单击了哪个按钮.
-func MessageBoxW(hWnd int, lpText, lpCaption string, uType MB_) ID_ {
-	r, _, _ := messageBoxW.Call(uintptr(hWnd), common.StrPtr(lpText), common.StrPtr(lpCaption), uintptr(uType))
+func MessageBoxW(hWnd uintptr, lpText, lpCaption string, uType MB_) ID_ {
+	r, _, _ := messageBoxW.Call(hWnd, common.StrPtr(lpText), common.StrPtr(lpCaption), uintptr(uType))
 	return ID_(r)
 }
 
@@ -226,8 +307,8 @@ func MessageBoxW(hWnd int, lpText, lpCaption string, uType MB_) ID_ {
 //	详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-OpenClipboard.
 //	@param hWnd 要与打开的剪贴板关联的窗口句柄。如果此参数为0，则打开的剪贴板与当前任务相关联.
 //	@return bool
-func OpenClipboard(hWnd int) bool {
-	r, _, _ := openClipboard.Call(uintptr(hWnd))
+func OpenClipboard(hWnd uintptr) bool {
+	r, _, _ := openClipboard.Call(hWnd)
 	return r != 0
 }
 
@@ -309,8 +390,8 @@ func SetClipboardData(uFormat CF_, hMem uintptr) uintptr {
 //	@Description 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-SetForegroundWindow.
 //	@param hWnd 应激活并置于前台的窗口句柄.
 //	@return bool
-func SetForegroundWindow(hWnd int) bool {
-	r, _, _ := setForegroundWindow.Call(uintptr(hWnd))
+func SetForegroundWindow(hWnd uintptr) bool {
+	r, _, _ := setForegroundWindow.Call(hWnd)
 	return r != 0
 }
 
@@ -321,10 +402,10 @@ func SetForegroundWindow(hWnd int) bool {
 //	@param hWndChildAfter 子窗口的句柄。搜索从 Z 顺序中的下一个子窗口开始。子窗口必须是hwndParent的直接子窗口，而不仅仅是后代窗口。 如果hwndChildAfter为0，则搜索从hwndParent的第一个子窗口开始。 请注意，如果hwndParent和hwndChildAfter都是0，则该函数将搜索所有顶级和仅消息窗口。
 //	@param lpszClass 窗口类名, 可空.
 //	@param lpszWindow 窗口名称（窗口的标题）, 可空.
-//	@return int
-func FindWindowExW(hWndParent, hWndChildAfter int, lpszClass, lpszWindow string) int {
-	r, _, _ := findWindowExW.Call(uintptr(hWndParent), uintptr(hWndChildAfter), common.StrPtr(lpszClass), common.StrPtr(lpszWindow))
-	return int(r)
+//	@return uintptr
+func FindWindowExW(hWndParent, hWndChildAfter uintptr, lpszClass, lpszWindow string) uintptr {
+	r, _, _ := findWindowExW.Call(hWndParent, hWndChildAfter, common.StrPtr(lpszClass), common.StrPtr(lpszWindow))
+	return r
 }
 
 // GetWindowTextLengthW 检索指定窗口标题栏文本的长度（以字符为单位）（如果窗口有标题栏）。如果指定的窗口是控件，则该函数检索控件内文本的长度。但是无法检索另一个应用程序中编辑控件的文本长度。
@@ -332,8 +413,8 @@ func FindWindowExW(hWndParent, hWndChildAfter int, lpszClass, lpszWindow string)
 //	@Description 详见: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetWindowTextLengthW.
 //	@param hWnd 窗口或控件的句柄。
 //	@return int 如果成功，则返回值是文本的长度（以字符为单位）。在某些情况下，此值可能大于文本的长度。如果窗口没有文本，则返回值为零。
-func GetWindowTextLengthW(hWnd int) int {
-	r, _, _ := getWindowTextLengthW.Call(uintptr(hWnd))
+func GetWindowTextLengthW(hWnd uintptr) int {
+	r, _, _ := getWindowTextLengthW.Call(hWnd)
 	return int(r)
 }
 
@@ -344,9 +425,9 @@ func GetWindowTextLengthW(hWnd int) int {
 //	@param lpString 接收文本.
 //	@param nMaxCount 复制到缓冲区的最大字符数，包括空字符。如果文本超出此限制，则将其截断.
 //	@return int 如果函数成功，则返回值是复制字符串的长度（以字符为单位），不包括终止空字符。如果窗口没有标题栏或文本，如果标题栏为空，或者窗口或控制句柄无效，则返回值为零。
-func GetWindowTextW(hWnd int, lpString *string, nMaxCount int) int {
+func GetWindowTextW(hWnd uintptr, lpString *string, nMaxCount int) int {
 	buf := make([]uint16, nMaxCount)
-	r, _, _ := getWindowTextW.Call(uintptr(hWnd), common.Uint16SliceDataPtr(&buf), uintptr(nMaxCount))
+	r, _, _ := getWindowTextW.Call(hWnd, common.Uint16SliceDataPtr(&buf), uintptr(nMaxCount))
 	*lpString = syscall.UTF16ToString(buf[0:])
 	return int(r)
 }
@@ -357,8 +438,8 @@ func GetWindowTextW(hWnd int, lpString *string, nMaxCount int) int {
 //	@param hWnd 窗口真实句柄
 //	@param lpPoint wapi.POINT 指针. 如果函数成功，则将新的屏幕坐标复制到此结构中.
 //	@return bool
-func ClientToScreen(hWnd int, lpPoint *POINT) bool {
-	r, _, _ := clientToScreen.Call(uintptr(hWnd), uintptr(unsafe.Pointer(lpPoint)))
+func ClientToScreen(hWnd uintptr, lpPoint *POINT) bool {
+	r, _, _ := clientToScreen.Call(hWnd, uintptr(unsafe.Pointer(lpPoint)))
 	return r != 0
 }
 
@@ -390,8 +471,8 @@ const (
 //	@param fsModifiers 为了生成 WM_HOTKEY 消息，必须与vk参数指定的键组合按下的键 。fsModifiers参数可以是以下值的组合: xcc.Mod_ .
 //	@param vk 热键的虚拟键代码: xcc.VK_ . 请参阅虚拟键码: https://docs.microsoft.com/zh-cn/windows/win32/inputdev/virtual-key-codes.
 //	@return bool
-func RegisterHotKey(hWnd int, id int32, fsModifiers, vk uint32) bool {
-	r, _, _ := registerHotKey.Call(uintptr(hWnd), uintptr(id), uintptr(fsModifiers), uintptr(vk))
+func RegisterHotKey(hWnd uintptr, id int32, fsModifiers, vk uint32) bool {
+	r, _, _ := registerHotKey.Call(hWnd, uintptr(id), uintptr(fsModifiers), uintptr(vk))
 	return r != 0
 }
 
@@ -401,8 +482,8 @@ func RegisterHotKey(hWnd int, id int32, fsModifiers, vk uint32) bool {
 //	@param hWnd 真实窗口句柄。与要释放的热键关联的窗口句柄。如果热键与窗口无关，则此参数应为0.
 //	@param id 要释放的热键的标识符.
 //	@return bool
-func UnregisterHotKey(hWnd int, id int32) bool {
-	r, _, _ := unregisterHotKey.Call(uintptr(hWnd), uintptr(id))
+func UnregisterHotKey(hWnd uintptr, id int32) bool {
+	r, _, _ := unregisterHotKey.Call(hWnd, uintptr(id))
 	return r != 0
 }
 
@@ -414,8 +495,8 @@ func UnregisterHotKey(hWnd int, id int32) bool {
 //	@param wMsgFilterMin 要检索的最低消息值的整数值。使用WM_KEYFIRST (0x0100) 指定第一条键盘消息或WM_MOUSEFIRST (0x0200) 指定第一条鼠标消息。
 //	@param wMsgFilterMax 要检索的最高消息值的整数值。使用WM_KEYLAST指定最后一个键盘消息或WM_MOUSELAST指定最后一个鼠标消息。
 //	@return int32 如果函数检索到 WM_QUIT 以外的消息，则返回值非零。如果函数检索到 WM_QUIT 消息，则返回值为零。如果有错误，返回值为-1。
-func GetMessage(pMsg *MSG, hWnd int, wMsgFilterMin uint32, wMsgFilterMax uint32) int32 {
-	r, _, _ := getMessageW.Call(uintptr(unsafe.Pointer(pMsg)), uintptr(hWnd), uintptr(wMsgFilterMin), uintptr(wMsgFilterMax))
+func GetMessage(pMsg *MSG, hWnd uintptr, wMsgFilterMin uint32, wMsgFilterMax uint32) int32 {
+	r, _, _ := getMessageW.Call(uintptr(unsafe.Pointer(pMsg)), hWnd, uintptr(wMsgFilterMin), uintptr(wMsgFilterMax))
 	return int32(r)
 }
 
@@ -448,10 +529,10 @@ func PostQuitMessage(nExitCode int32) {
 }
 
 type MSG struct {
-	Hwnd    int
+	Hwnd    uintptr
 	Message uint32
-	WParam  int32
-	LParam  int32
+	WParam  uint
+	LParam  uint
 	Time    uint32
 	Pt      POINT
 }
@@ -469,8 +550,8 @@ type POINT struct {
 //	@param wParam 其他特定于消息的信息。
 //	@param lParam 其他特定于消息的信息。
 //	@return int 返回值指定消息处理的结果；这取决于发送的消息。
-func SendMessageW(hWnd int, Msg int32, wParam, lParam uint32) int {
-	r, _, _ := sendMessageW.Call(uintptr(hWnd), uintptr(Msg), uintptr(wParam), uintptr(lParam))
+func SendMessageW(hWnd uintptr, Msg int32, wParam, lParam uint) int {
+	r, _, _ := sendMessageW.Call(hWnd, uintptr(Msg), uintptr(wParam), uintptr(lParam))
 	return int(r)
 }
 
@@ -482,7 +563,7 @@ func SendMessageW(hWnd int, Msg int32, wParam, lParam uint32) int {
 //	@param wParam 其他特定于消息的信息。
 //	@param lParam 其他特定于消息的信息。
 //	@return bool
-func PostMessageW(hWnd int, Msg int32, wParam, lParam uint32) bool {
-	r, _, _ := postMessageW.Call(uintptr(hWnd), uintptr(Msg), uintptr(wParam), uintptr(lParam))
+func PostMessageW(hWnd uintptr, Msg int32, wParam, lParam uint) bool {
+	r, _, _ := postMessageW.Call(hWnd, uintptr(Msg), uintptr(wParam), uintptr(lParam))
 	return r != 0
 }

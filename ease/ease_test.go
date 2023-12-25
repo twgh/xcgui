@@ -20,8 +20,8 @@ func TestEx(t *testing.T) {
 
 			for i := 0; i < 30; i++ {
 				v := ease.Ex(float32(i)/30.0, xcc.Ease_Flag_Back|xcc.Ease_Flag_Out)
-				y := int(v * float32(rect.Top))
-				w.SetPosition(int(rect.Left), y)
+				y := int32(v * float32(rect.Top))
+				w.SetPosition(rect.Left, y)
 				time.Sleep(time.Millisecond * 10)
 			}
 		})

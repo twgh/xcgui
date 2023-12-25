@@ -112,7 +112,7 @@ func (d *DateTime) SetSelBkColor(crSelectBk int) int {
 // pnMonth: 月.[OUT].
 //
 // pnDay: 日.[OUT].
-func (d *DateTime) GetDate(pnYear *int, pnMonth *int, pnDay *int) int {
+func (d *DateTime) GetDate(pnYear *int32, pnMonth *int32, pnDay *int32) int {
 	return xc.XDateTime_GetDate(d.Handle, pnYear, pnMonth, pnDay)
 }
 
@@ -123,7 +123,7 @@ func (d *DateTime) GetDate(pnYear *int, pnMonth *int, pnDay *int) int {
 // nMonth: 月.
 //
 // nDay: 日.
-func (d *DateTime) SetDate(nYear int, nMonth int, nDay int) int {
+func (d *DateTime) SetDate(nYear int32, nMonth int32, nDay int32) int {
 	return xc.XDateTime_SetDate(d.Handle, nYear, nMonth, nDay)
 }
 
@@ -134,7 +134,7 @@ func (d *DateTime) SetDate(nYear int, nMonth int, nDay int) int {
 // pnMinute: 分.[OUT].
 //
 // pnSecond: 秒.[OUT].
-func (d *DateTime) GetTime(pnHour *int, pnMinute *int, pnSecond *int) int {
+func (d *DateTime) GetTime(pnHour *int32, pnMinute *int32, pnSecond *int32) int {
 	return xc.XDateTime_GetTime(d.Handle, pnHour, pnMinute, pnSecond)
 }
 
@@ -145,7 +145,7 @@ func (d *DateTime) GetTime(pnHour *int, pnMinute *int, pnSecond *int) int {
 // nMinute: 分.
 //
 // nSecond: 秒.
-func (d *DateTime) SetTime(nHour int, nMinute int, nSecond int) int {
+func (d *DateTime) SetTime(nHour int32, nMinute int32, nSecond int32) int {
 	return xc.XDateTime_SetTime(d.Handle, nHour, nMinute, nSecond)
 }
 

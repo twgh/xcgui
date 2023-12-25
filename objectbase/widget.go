@@ -45,7 +45,7 @@ func (w *Widget) GetParent() int {
 }
 
 // 窗口组件_取HWND.
-func (w *Widget) GetHWND() int {
+func (w *Widget) GetHWND() uintptr {
 	return xc.XWidget_GetHWND(w.Handle)
 }
 
@@ -80,7 +80,7 @@ func (w *Widget) LayoutItem_EnableFloat(bFloat bool) int {
 // nType: 类型: xcc.Layout_Size_.
 //
 // nWidth: 宽度.
-func (w *Widget) LayoutItem_SetWidth(nType xcc.Layout_Size_, nWidth int) int {
+func (w *Widget) LayoutItem_SetWidth(nType xcc.Layout_Size_, nWidth int32) int {
 	return xc.XWidget_LayoutItem_SetWidth(w.Handle, nType, nWidth)
 }
 
@@ -89,7 +89,7 @@ func (w *Widget) LayoutItem_SetWidth(nType xcc.Layout_Size_, nWidth int) int {
 // nType: 类型: xcc.Layout_Size_.
 //
 // nHeight: 高度.
-func (w *Widget) LayoutItem_SetHeight(nType xcc.Layout_Size_, nHeight int) int {
+func (w *Widget) LayoutItem_SetHeight(nType xcc.Layout_Size_, nHeight int32) int {
 	return xc.XWidget_LayoutItem_SetHeight(w.Handle, nType, nHeight)
 }
 
@@ -98,7 +98,7 @@ func (w *Widget) LayoutItem_SetHeight(nType xcc.Layout_Size_, nHeight int) int {
 // pType: 返回类型.
 //
 // pWidth: 返回宽度.
-func (w *Widget) LayoutItem_GetWidth(pType, pWidth *int) int {
+func (w *Widget) LayoutItem_GetWidth(pType *xcc.Layout_Size_, pWidth *int32) int {
 	return xc.XWidget_LayoutItem_GetWidth(w.Handle, pType, pWidth)
 }
 
@@ -107,7 +107,7 @@ func (w *Widget) LayoutItem_GetWidth(pType, pWidth *int) int {
 // pType: 返回类型.
 //
 // pHeight: 返回高度.
-func (w *Widget) LayoutItem_GetHeight(pType, pHeight *int) int {
+func (w *Widget) LayoutItem_GetHeight(pType *xcc.Layout_Size_, pHeight *int32) int {
 	return xc.XWidget_LayoutItem_GetHeight(w.Handle, pType, pHeight)
 }
 
@@ -155,14 +155,14 @@ func (w *Widget) LayoutItem_SetPosition(left, top, right, bottom int) int {
 // 窗口组件_置ID, 设置元素ID.
 //
 // nID: ID值.
-func (w *Widget) SetID(nID int) int {
+func (w *Widget) SetID(nID int32) int {
 	return xc.XWidget_SetID(w.Handle, nID)
 }
 
 // 窗口组件_置UID, 设置元素UID, 全局唯一标识符.
 //
 // nUID: UID值.
-func (w *Widget) SetUID(nUID int) int {
+func (w *Widget) SetUID(nUID int32) int {
 	return xc.XWidget_SetUID(w.Handle, nUID)
 }
 
@@ -174,12 +174,12 @@ func (w *Widget) SetName(pName string) int {
 }
 
 // 窗口组件_取ID, 获取元素ID.
-func (w *Widget) GetID() int {
+func (w *Widget) GetID() int32 {
 	return xc.XWidget_GetID(w.Handle)
 }
 
 // 窗口组件_取UID, 获取元素UID, 全局唯一标识符.
-func (w *Widget) GetUID() int {
+func (w *Widget) GetUID() int32 {
 	return xc.XWidget_GetUID(w.Handle)
 }
 

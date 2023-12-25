@@ -13,7 +13,7 @@ import "github.com/twgh/xcgui/common"
 // cy: 高度.
 //
 // hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
-func XToolBar_Create(x int, y int, cx int, cy int, hParent int) int {
+func XToolBar_Create(x, y, cx, cy int32, hParent int) int {
 	r, _, _ := xToolBar_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), uintptr(hParent))
 	return int(r)
 }

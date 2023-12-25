@@ -85,7 +85,7 @@ func (s *ShapeRect) SetFillColor(color int) int {
 // nWidth: 圆角宽度.
 //
 // nHeight: 圆角高度.
-func (s *ShapeRect) SetRoundAngle(nWidth int, nHeight int) int {
+func (s *ShapeRect) SetRoundAngle(nWidth int, nHeight int32) int {
 	return xc.XShapeRect_SetRoundAngle(s.Handle, nWidth, nHeight)
 }
 
@@ -94,7 +94,7 @@ func (s *ShapeRect) SetRoundAngle(nWidth int, nHeight int) int {
 // pWidth: 圆角宽度.
 //
 // pHeight: 圆角高度.
-func (s *ShapeRect) GetRoundAngle(pWidth *int, pHeight *int) int {
+func (s *ShapeRect) GetRoundAngle(pWidth *int, pHeight *int32) int {
 	return xc.XShapeRect_GetRoundAngle(s.Handle, pWidth, pHeight)
 }
 

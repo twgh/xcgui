@@ -18,7 +18,7 @@ import (
 // pName: 文本内容.
 //
 // hParent: 父对象句柄.
-func XShapeText_Create(x int, y int, cx int, cy int, pName string, hParent int) int {
+func XShapeText_Create(x, y, cx, cy int32, pName string, hParent int) int {
 	r, _, _ := xShapeText_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pName), uintptr(hParent))
 	return int(r)
 }

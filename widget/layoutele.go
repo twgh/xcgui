@@ -50,7 +50,7 @@ func NewLayoutEleByHandle(handle int) *LayoutEle {
 //	@param hParent 父对象句柄.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *LayoutEle
-func NewLayoutEleByLayout(pFileName string, hParent int, hAttachWnd int) *LayoutEle {
+func NewLayoutEleByLayout(pFileName string, hParent int, hAttachWnd uintptr) *LayoutEle {
 	handle := xc.XC_LoadLayout(pFileName, hParent, hAttachWnd)
 	if handle > 0 {
 		p := &LayoutEle{}
@@ -68,7 +68,7 @@ func NewLayoutEleByLayout(pFileName string, hParent int, hAttachWnd int) *Layout
 //	@param hParent 父对象句柄.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *LayoutEle
-func NewLayoutEleByLayoutZip(pZipFileName string, pFileName string, pPassword string, hParent int, hAttachWnd int) *LayoutEle {
+func NewLayoutEleByLayoutZip(pZipFileName string, pFileName string, pPassword string, hParent int, hAttachWnd uintptr) *LayoutEle {
 	handle := xc.XC_LoadLayoutZip(pZipFileName, pFileName, pPassword, hParent, hAttachWnd)
 	if handle > 0 {
 		p := &LayoutEle{}
@@ -89,7 +89,7 @@ func NewLayoutEleByLayoutZip(pZipFileName string, pFileName string, pPassword st
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@param hModule 模块句柄, 可填0.
 //	@return *LayoutEle
-func NewLayoutEleByLayoutZipResEx(id int, pFileName, pPassword, pPrefixName string, hParent, hParentWnd, hAttachWnd, hModule int) *LayoutEle {
+func NewLayoutEleByLayoutZipResEx(id int32, pFileName, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd, hModule uintptr) *LayoutEle {
 	handle := xc.XC_LoadLayoutZipResEx(id, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd, hModule)
 	if handle > 0 {
 		p := &LayoutEle{}
@@ -107,7 +107,7 @@ func NewLayoutEleByLayoutZipResEx(id int, pFileName, pPassword, pPrefixName stri
 //	@param hParent 父对象句柄.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *LayoutEle
-func NewLayoutEleByLayoutZipMem(data []byte, pFileName string, pPassword string, hParent int, hAttachWnd int) *LayoutEle {
+func NewLayoutEleByLayoutZipMem(data []byte, pFileName string, pPassword string, hParent int, hAttachWnd uintptr) *LayoutEle {
 	handle := xc.XC_LoadLayoutZipMem(data, pFileName, pPassword, hParent, hAttachWnd)
 	if handle > 0 {
 		p := &LayoutEle{}
@@ -123,7 +123,7 @@ func NewLayoutEleByLayoutZipMem(data []byte, pFileName string, pPassword string,
 //	@param hParent 父对象.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *LayoutEle
-func NewLayoutEleByStringW(pStringXML string, hParent int, hAttachWnd int) *LayoutEle {
+func NewLayoutEleByStringW(pStringXML string, hParent int, hAttachWnd uintptr) *LayoutEle {
 	handle := xc.XC_LoadLayoutFromStringW(pStringXML, hParent, hAttachWnd)
 	if handle > 0 {
 		p := &LayoutEle{}
@@ -141,7 +141,7 @@ func NewLayoutEleByStringW(pStringXML string, hParent int, hAttachWnd int) *Layo
 //	@param hParentWnd 父窗口句柄HWND, 提供给第三方窗口使用.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *LayoutEle
-func NewLayoutEleByLayoutEx(pFileName, pPrefixName string, hParent int, hParentWnd, hAttachWnd int) *LayoutEle {
+func NewLayoutEleByLayoutEx(pFileName, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) *LayoutEle {
 	handle := xc.XC_LoadLayoutEx(pFileName, pPrefixName, hParent, hParentWnd, hAttachWnd)
 	if handle > 0 {
 		p := &LayoutEle{}
@@ -161,7 +161,7 @@ func NewLayoutEleByLayoutEx(pFileName, pPrefixName string, hParent int, hParentW
 //	@param hParentWnd 父窗口句柄HWND, 提供给第三方窗口使用.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *LayoutEle
-func NewLayoutEleByLayoutZipEx(pZipFileName string, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd int) *LayoutEle {
+func NewLayoutEleByLayoutZipEx(pZipFileName string, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) *LayoutEle {
 	handle := xc.XC_LoadLayoutZipEx(pZipFileName, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd)
 	if handle > 0 {
 		p := &LayoutEle{}
@@ -181,7 +181,7 @@ func NewLayoutEleByLayoutZipEx(pZipFileName string, pFileName string, pPassword,
 //	@param hParentWnd 父窗口句柄HWND, 提供给第三方窗口使用.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *LayoutEle
-func NewLayoutEleByLayoutZipMemEx(data []byte, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd int) *LayoutEle {
+func NewLayoutEleByLayoutZipMemEx(data []byte, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) *LayoutEle {
 	handle := xc.XC_LoadLayoutZipMemEx(data, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd)
 	if handle > 0 {
 		p := &LayoutEle{}
@@ -199,7 +199,7 @@ func NewLayoutEleByLayoutZipMemEx(data []byte, pFileName string, pPassword, pPre
 //	@param hParentWnd 父窗口句柄HWND, 提供给第三方窗口使用.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *LayoutEle
-func NewLayoutEleByStringWEx(pStringXML, pPrefixName string, hParent int, hParentWnd, hAttachWnd int) *LayoutEle {
+func NewLayoutEleByStringWEx(pStringXML, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) *LayoutEle {
 	handle := xc.XC_LoadLayoutFromStringWEx(pStringXML, pPrefixName, hParent, hParentWnd, hAttachWnd)
 	if handle > 0 {
 		p := &LayoutEle{}
@@ -215,6 +215,36 @@ func NewLayoutEleByStringWEx(pStringXML, pPrefixName string, hParent int, hParen
 //	@return *LayoutEle
 func NewLayoutEleByName(name string) *LayoutEle {
 	handle := xc.XC_GetObjectByName(name)
+	if handle > 0 {
+		p := &LayoutEle{}
+		p.SetHandle(handle)
+		return p
+	}
+	return nil
+}
+
+// NewLayoutEleByID 从ID创建对象, 失败返回nil.
+//
+//	@param hWindow 父窗口句柄
+//	@param nID
+//	@return *LayoutEle
+func NewLayoutEleByID(hWindow, nID int) *LayoutEle {
+	handle := xc.XC_GetObjectByID(hWindow, nID)
+	if handle > 0 {
+		p := &LayoutEle{}
+		p.SetHandle(handle)
+		return p
+	}
+	return nil
+}
+
+// NewLayoutEleByIDName 从ID名称创建对象, 失败返回nil.
+//
+//	@param hWindow 父窗口句柄
+//	@param name
+//	@return *LayoutEle
+func NewLayoutEleByIDName(hWindow int, name string) *LayoutEle {
+	handle := xc.XC_GetObjectByIDName(hWindow, name)
 	if handle > 0 {
 		p := &LayoutEle{}
 		p.SetHandle(handle)

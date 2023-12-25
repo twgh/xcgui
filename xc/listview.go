@@ -37,7 +37,7 @@ func XListView_Create(x int, y int, cx int, cy int, hParent int) int {
 // hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
 //
 // col_extend_count: 列数量. 例如: 内置模板是1列, 如果数据有5列, 那么此参数填5.
-func XListView_CreateEx(x int, y int, cx int, cy int, hParent, col_extend_count int) int {
+func XListView_CreateEx(x, y, cx, cy int32, hParent, col_extend_count int32) int {
 	r, _, _ := xListView_CreateEx.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), uintptr(hParent), uintptr(col_extend_count))
 	return int(r)
 }
@@ -133,7 +133,7 @@ func XListView_GetTemplateObjectGroup(hEle int, iGroup int, nTempItemID int) int
 // piGroup: 接收组索引.
 //
 // piItem: 接收项索引.
-func XListView_GetItemIDFromHXCGUI(hEle int, hXCGUI int, piGroup *int, piItem *int) bool {
+func XListView_GetItemIDFromHXCGUI(hEle int, hXCGUI int, piGroup *int32, piItem *int32) bool {
 	r, _, _ := xListView_GetItemIDFromHXCGUI.Call(uintptr(hEle), uintptr(hXCGUI), uintptr(unsafe.Pointer(piGroup)), uintptr(unsafe.Pointer(piItem)))
 	return r != 0
 }
@@ -147,7 +147,7 @@ func XListView_GetItemIDFromHXCGUI(hEle int, hXCGUI int, piGroup *int, piItem *i
 // pOutGroup: 接收组索引.
 //
 // pOutItem: 接收项索引.
-func XListView_HitTest(hEle int, pPt *POINT, pOutGroup *int, pOutItem *int) bool {
+func XListView_HitTest(hEle int, pPt *POINT, pOutGroup *int32, pOutItem *int32) bool {
 	r, _, _ := xListView_HitTest.Call(uintptr(hEle), uintptr(unsafe.Pointer(pPt)), uintptr(unsafe.Pointer(pOutGroup)), uintptr(unsafe.Pointer(pOutItem)))
 	return r != 0
 }
@@ -161,7 +161,7 @@ func XListView_HitTest(hEle int, pPt *POINT, pOutGroup *int, pOutItem *int) bool
 // pOutGroup: 接收做索引.
 //
 // pOutItem: 接收项索引.
-func XListView_HitTestOffset(hEle int, pPt *POINT, pOutGroup *int, pOutItem *int) bool {
+func XListView_HitTestOffset(hEle int, pPt *POINT, pOutGroup *int32, pOutItem *int32) bool {
 	r, _, _ := xListView_HitTestOffset.Call(uintptr(hEle), uintptr(unsafe.Pointer(pPt)), uintptr(unsafe.Pointer(pOutGroup)), uintptr(unsafe.Pointer(pOutItem)))
 	return r != 0
 }
@@ -237,7 +237,7 @@ func XListView_SetSelectItem(hEle int, iGroup int, iItem int) bool {
 // piGroup: 接收组索引.
 //
 // piItem: 接收项索引.
-func XListView_GetSelectItem(hEle int, piGroup *int, piItem *int) bool {
+func XListView_GetSelectItem(hEle int, piGroup *int32, piItem *int32) bool {
 	r, _, _ := xListView_GetSelectItem.Call(uintptr(hEle), uintptr(unsafe.Pointer(piGroup)), uintptr(unsafe.Pointer(piItem)))
 	return r != 0
 }
@@ -281,7 +281,7 @@ func XListView_VisibleItem(hEle int, iGroup int, iItem int) int {
 // piEndGroup: 可视结束组.
 //
 // piEndItem: 可视结束项.
-func XListView_GetVisibleItemRange(hEle int, piGroup1 *int, piGroup2 *int, piStartGroup *int, piStartItem *int, piEndGroup *int, piEndItem *int) int {
+func XListView_GetVisibleItemRange(hEle int, piGroup1 *int32, piGroup2 *int32, piStartGroup *int32, piStartItem *int32, piEndGroup *int32, piEndItem *int32) int {
 	r, _, _ := xListView_GetVisibleItemRange.Call(uintptr(hEle), uintptr(unsafe.Pointer(piGroup1)), uintptr(unsafe.Pointer(piGroup2)), uintptr(unsafe.Pointer(piStartGroup)), uintptr(unsafe.Pointer(piStartItem)), uintptr(unsafe.Pointer(piEndGroup)), uintptr(unsafe.Pointer(piEndItem)))
 	return int(r)
 }
@@ -949,8 +949,8 @@ func XListView_SetItemTemplateXMLFromMem(hEle int, data []byte) bool {
 // pPassword: zip密码.
 //
 // hModule: 模块句柄, 可填0.
-func XListView_SetItemTemplateXMLFromZipRes(hEle, id int, pFileName string, pPassword string, hModule int) bool {
-	r, _, _ := xListView_SetItemTemplateXMLFromZipRes.Call(uintptr(hEle), uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(hModule))
+func XListView_SetItemTemplateXMLFromZipRes(hEle int, id int32, pFileName string, pPassword string, hModule uintptr) bool {
+	r, _, _ := xListView_SetItemTemplateXMLFromZipRes.Call(uintptr(hEle), uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), hModule)
 	return r != 0
 }
 

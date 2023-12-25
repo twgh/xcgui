@@ -94,7 +94,7 @@ func (s *ShapeGroupBox) SetFontX(hFontX int) int {
 // offsetX: 水平偏移.
 //
 // offsetY: 垂直偏移.
-func (s *ShapeGroupBox) SetTextOffset(offsetX int, offsetY int) int {
+func (s *ShapeGroupBox) SetTextOffset(offsetX int32, offsetY int32) int {
 	return xc.XShapeGroupBox_SetTextOffset(s.Handle, offsetX, offsetY)
 }
 
@@ -103,7 +103,7 @@ func (s *ShapeGroupBox) SetTextOffset(offsetX int, offsetY int) int {
 // nWidth: 圆角宽度.
 //
 // nHeight: 圆角高度.
-func (s *ShapeGroupBox) SetRoundAngle(nWidth int, nHeight int) int {
+func (s *ShapeGroupBox) SetRoundAngle(nWidth int32, nHeight int32) int {
 	return xc.XShapeGroupBox_SetRoundAngle(s.Handle, nWidth, nHeight)
 }
 
@@ -119,7 +119,7 @@ func (s *ShapeGroupBox) SetText(pText string) int {
 // pOffsetX: X坐标偏移量.
 //
 // pOffsetY: Y坐标偏移量.
-func (s *ShapeGroupBox) GetTextOffset(pOffsetX *int, pOffsetY *int) int {
+func (s *ShapeGroupBox) GetTextOffset(pOffsetX *int32, pOffsetY *int32) int {
 	return xc.XShapeGroupBox_GetTextOffset(s.Handle, pOffsetX, pOffsetY)
 }
 
@@ -128,7 +128,7 @@ func (s *ShapeGroupBox) GetTextOffset(pOffsetX *int, pOffsetY *int) int {
 // pWidth: 返回圆角宽度.
 //
 // pHeight: 返回圆角高度.
-func (s *ShapeGroupBox) GetRoundAngle(pWidth *int, pHeight *int) int {
+func (s *ShapeGroupBox) GetRoundAngle(pWidth *int32, pHeight *int32) int {
 	return xc.XShapeGroupBox_GetRoundAngle(s.Handle, pWidth, pHeight)
 }
 

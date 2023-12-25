@@ -20,7 +20,7 @@ type Window struct {
 //	@param hWndParent 父窗口.
 //	@param XCStyle 窗口样式: xcc.Window_Style_.
 //	@return *Window
-func New(x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle xcc.Window_Style_) *Window {
+func New(x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) *Window {
 	p := &Window{}
 	p.SetHandle(xc.XWnd_Create(x, y, cx, cy, pTitle, hWndParent, XCStyle))
 	return p
@@ -39,7 +39,7 @@ func New(x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle xc
 //	@param hWndParent 父窗口.
 //	@param XCStyle 窗口样式, xcc.Window_Style_.
 //	@return *Window
-func NewEx(dwExStyle int, dwStyle int, lpClassName string, x int, y int, cx int, cy int, pTitle string, hWndParent int, XCStyle xcc.Window_Style_) *Window {
+func NewEx(dwExStyle int, dwStyle int, lpClassName string, x int, y int, cx int, cy int, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) *Window {
 	p := &Window{}
 	p.SetHandle(xc.XWnd_CreateEx(dwExStyle, dwStyle, lpClassName, x, y, cx, cy, pTitle, hWndParent, XCStyle))
 	return p
@@ -50,7 +50,7 @@ func NewEx(dwExStyle int, dwStyle int, lpClassName string, x int, y int, cx int,
 //	@param hWnd 要附加的外部窗口句柄.
 //	@param XCStyle 窗口样式: xcc.Window_Style_.
 //	@return *Window
-func Attach(hWnd int, XCStyle xcc.Window_Style_) *Window {
+func Attach(hWnd uintptr, XCStyle xcc.Window_Style_) *Window {
 	p := &Window{}
 	p.SetHandle(xc.XWnd_Attach(hWnd, XCStyle))
 	return p
@@ -72,7 +72,7 @@ func NewByHandle(hWindow int) *Window {
 //	@param hParent 父对象句柄.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *Window
-func NewByLayout(pFileName string, hParent, hAttachWnd int) *Window {
+func NewByLayout(pFileName string, hParent int, hAttachWnd uintptr) *Window {
 	handle := xc.XC_LoadLayout(pFileName, hParent, hAttachWnd)
 	if handle > 0 {
 		p := &Window{}
@@ -90,7 +90,7 @@ func NewByLayout(pFileName string, hParent, hAttachWnd int) *Window {
 //	@param hParent 父对象句柄.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *Window
-func NewByLayoutZip(pZipFileName string, pFileName string, pPassword string, hParent, hAttachWnd int) *Window {
+func NewByLayoutZip(pZipFileName string, pFileName string, pPassword string, hParent int, hAttachWnd uintptr) *Window {
 	handle := xc.XC_LoadLayoutZip(pZipFileName, pFileName, pPassword, hParent, hAttachWnd)
 	if handle > 0 {
 		p := &Window{}
@@ -108,7 +108,7 @@ func NewByLayoutZip(pZipFileName string, pFileName string, pPassword string, hPa
 //	@param hParent 父对象句柄.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *Window
-func NewByLayoutZipMem(data []byte, pFileName string, pPassword string, hParent int, hAttachWnd int) *Window {
+func NewByLayoutZipMem(data []byte, pFileName string, pPassword string, hParent int, hAttachWnd uintptr) *Window {
 	handle := xc.XC_LoadLayoutZipMem(data, pFileName, pPassword, hParent, hAttachWnd)
 	if handle > 0 {
 		p := &Window{}
@@ -124,7 +124,7 @@ func NewByLayoutZipMem(data []byte, pFileName string, pPassword string, hParent 
 //	@param hParent 父对象.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *Window
-func NewByLayoutStringW(pStringXML string, hParent int, hAttachWnd int) *Window {
+func NewByLayoutStringW(pStringXML string, hParent int, hAttachWnd uintptr) *Window {
 	handle := xc.XC_LoadLayoutFromStringW(pStringXML, hParent, hAttachWnd)
 	if handle > 0 {
 		p := &Window{}
@@ -142,7 +142,7 @@ func NewByLayoutStringW(pStringXML string, hParent int, hAttachWnd int) *Window 
 //	@param hParentWnd 父窗口句柄HWND, 提供给第三方窗口使用.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *Window
-func NewByLayoutEx(pFileName, pPrefixName string, hParent, hParentWnd, hAttachWnd int) *Window {
+func NewByLayoutEx(pFileName, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) *Window {
 	handle := xc.XC_LoadLayoutEx(pFileName, pPrefixName, hParent, hParentWnd, hAttachWnd)
 	if handle > 0 {
 		p := &Window{}
@@ -162,7 +162,7 @@ func NewByLayoutEx(pFileName, pPrefixName string, hParent, hParentWnd, hAttachWn
 //	@param hParentWnd 父窗口句柄HWND, 提供给第三方窗口使用.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *Window
-func NewByLayoutZipEx(pZipFileName string, pFileName string, pPassword, pPrefixName string, hParent, hParentWnd, hAttachWnd int) *Window {
+func NewByLayoutZipEx(pZipFileName string, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) *Window {
 	handle := xc.XC_LoadLayoutZipEx(pZipFileName, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd)
 	if handle > 0 {
 		p := &Window{}
@@ -183,7 +183,7 @@ func NewByLayoutZipEx(pZipFileName string, pFileName string, pPassword, pPrefixN
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@param hModule 模块句柄, 可填0.
 //	@return *Window
-func NewByLayoutZipResEx(id int, pFileName, pPassword, pPrefixName string, hParent, hParentWnd, hAttachWnd, hModule int) *Window {
+func NewByLayoutZipResEx(id int32, pFileName, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd, hModule uintptr) *Window {
 	handle := xc.XC_LoadLayoutZipResEx(id, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd, hModule)
 	if handle > 0 {
 		p := &Window{}
@@ -203,7 +203,7 @@ func NewByLayoutZipResEx(id int, pFileName, pPassword, pPrefixName string, hPare
 //	@param hParentWnd 父窗口句柄HWND, 提供给第三方窗口使用.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *Window
-func NewByLayoutZipMemEx(data []byte, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd int) *Window {
+func NewByLayoutZipMemEx(data []byte, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) *Window {
 	handle := xc.XC_LoadLayoutZipMemEx(data, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd)
 	if handle > 0 {
 		p := &Window{}
@@ -221,7 +221,7 @@ func NewByLayoutZipMemEx(data []byte, pFileName string, pPassword, pPrefixName s
 //	@param hParentWnd 父窗口句柄HWND, 提供给第三方窗口使用.
 //	@param hAttachWnd 附加窗口句柄, 附加到指定的窗口, 可填0.
 //	@return *Window
-func NewByLayoutStringWEx(pStringXML, pPrefixName string, hParent int, hParentWnd, hAttachWnd int) *Window {
+func NewByLayoutStringWEx(pStringXML, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) *Window {
 	handle := xc.XC_LoadLayoutFromStringWEx(pStringXML, pPrefixName, hParent, hParentWnd, hAttachWnd)
 	if handle > 0 {
 		p := &Window{}
@@ -271,72 +271,4 @@ func NewByUIDName(name string) *Window {
 		return p
 	}
 	return nil
-}
-
-/*
-LayoutBox-布局盒子
-*/
-
-// EnableHorizon 布局盒子_启用水平.
-//
-//	@param bEnable 是否启用.
-//	@return int
-func (w *Window) EnableHorizon(bEnable bool) int {
-	return xc.XLayoutBox_EnableHorizon(w.Handle, bEnable)
-}
-
-// EnableAutoWrap 布局盒子_启用自动换行.
-//
-//	@param bEnable 是否启用.
-//	@return int
-func (w *Window) EnableAutoWrap(bEnable bool) int {
-	return xc.XLayoutBox_EnableAutoWrap(w.Handle, bEnable)
-}
-
-// EnableOverflowHide 布局盒子_启用溢出隐藏.
-//
-//	@param bEnable 是否启用.
-//	@return int
-func (w *Window) EnableOverflowHide(bEnable bool) int {
-	return xc.XLayoutBox_EnableOverflowHide(w.Handle, bEnable)
-}
-
-// SetAlignH 布局盒子_置水平对齐.
-//
-//	@param nAlign 对齐方式: xcc.Layout_Align_.
-//	@return int
-func (w *Window) SetAlignH(nAlign xcc.Layout_Align_) int {
-	return xc.XLayoutBox_SetAlignH(w.Handle, nAlign)
-}
-
-// SetAlignV 布局盒子_置垂直对齐.
-//
-//	@param nAlign 对齐方式: xcc.Layout_Align_.
-//	@return int
-func (w *Window) SetAlignV(nAlign xcc.Layout_Align_) int {
-	return xc.XLayoutBox_SetAlignV(w.Handle, nAlign)
-}
-
-// SetAlignBaseline 布局盒子_置对齐基线.
-//
-//	@param nAlign 对齐方式: xcc.Layout_Align_Axis_.
-//	@return int
-func (w *Window) SetAlignBaseline(nAlign xcc.Layout_Align_Axis_) int {
-	return xc.XLayoutBox_SetAlignBaseline(w.Handle, nAlign)
-}
-
-// SetSpace 布局盒子_置间距.
-//
-//	@param nSpace 项间距大小.
-//	@return int
-func (w *Window) SetSpace(nSpace int) int {
-	return xc.XLayoutBox_SetSpace(w.Handle, nSpace)
-}
-
-// SetSpaceRow 布局盒子_置行距.
-//
-//	@param nSpace 行间距大小.
-//	@return int
-func (w *Window) SetSpaceRow(nSpace int) int {
-	return xc.XLayoutBox_SetSpaceRow(w.Handle, nSpace)
 }

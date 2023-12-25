@@ -59,7 +59,7 @@ func (w *windowBase) Msg_CreateEx(dwExStyle, dwStyle int, lpClassName, pTitle, p
 // wParam:.
 //
 // lParam:.
-func (w *windowBase) SendMessage(msg uint32, wParam int32, lParam int32) int {
+func (w *windowBase) SendMessage(msg uint32, wParam, lParam uint) uint {
 	return xc.XC_SendMessage(w.Handle, msg, wParam, lParam)
 }
 
@@ -158,7 +158,7 @@ func (w *windowBase) InsertChild(hChild int, index int) bool {
 }
 
 // 窗口_取HWND.
-func (w *windowBase) GetHWND() int {
+func (w *windowBase) GetHWND() uintptr {
 	return xc.XWnd_GetHWND(w.Handle)
 }
 
@@ -579,7 +579,7 @@ func (w *windowBase) GetLayoutRect(pRect *xc.RECT) int {
 // x: X坐标.
 //
 // y: Y坐标.
-func (w *windowBase) SetPosition(x, y int) {
+func (w *windowBase) SetPosition(x, y int32) {
 	xc.XWnd_SetPosition(w.Handle, x, y)
 }
 
@@ -693,8 +693,8 @@ func (w *windowBase) SetShadowInfo(nSize int, nDepth byte, nAngeleSize int, bRig
 // pbRightAngle: 是否强制直角.
 //
 // pColor: 阴影颜色, ABGR 颜色.
-func (w *windowBase) GetShadowInfo(nSize *int, nDepth *byte, nAngeleSize *int, bRightAngle *bool, color *int) int {
-	return xc.XWnd_GetShadowInfo(w.Handle, nSize, nDepth, nAngeleSize, bRightAngle, color)
+func (w *windowBase) GetShadowInfo(pnSize, pnDepth, pnAngeleSize *int32, pbRightAngle *bool, pColor *int) int {
+	return xc.XWnd_GetShadowInfo(w.Handle, pnSize, pnDepth, pnAngeleSize, pbRightAngle, pColor)
 }
 
 // 窗口_取透明类型, 返回: xcc.Window_Transparent_.
@@ -727,7 +727,7 @@ func (w *windowBase) Show(bShow bool) int {
 // pWidth: 接收返回宽度.
 //
 // pHeight: 接收返回高度.
-func (w *windowBase) GetCaretInfo(pX, pY, pWidth, pHeight *int) int {
+func (w *windowBase) GetCaretInfo(pX, pY, pWidth, pHeight *int32) int {
 	return xc.XWnd_GetCaretInfo(w.Handle, pX, pY, pWidth, pHeight)
 }
 
@@ -961,7 +961,7 @@ func (w *windowBase) SetTopEx(b bool) bool {
 // cy: 高度.
 //
 // uFlags: 窗口大小调整和定位标志. 可以是以下值的组合: xcc.SWP_.
-func (w *windowBase) SetWindowPos(hWndInsertAfter xcc.HWND_, x, y, cx, cy int, uFlags xcc.SWP_) int {
+func (w *windowBase) SetWindowPos(hWndInsertAfter xcc.HWND_, x, y, cx, cy int32, uFlags xcc.SWP_) int {
 	return xc.XWnd_SetWindowPos(w.Handle, hWndInsertAfter, x, y, cx, cy, uFlags)
 }
 
@@ -991,7 +991,7 @@ func (w *windowBase) GetCursorPos(pPt *xc.POINT) bool {
 	return xc.XWnd_GetCursorPos(w.Handle, pPt)
 }
 
-// 窗口_客户区坐标点到屏幕坐标点. 封装的系统API:ClientToScreen, 内部做了DPI适配.
+// 窗口_客户区坐标点到屏幕坐标点. 封装的系统API: ClientToScreen, 内部做了DPI适配.
 //
 // pPt: 接收返回坐标点.
 func (w *windowBase) ClientToScreen(pPt *xc.POINT) bool {
@@ -1017,110 +1017,180 @@ func (w *windowBase) SetDPI(nDPI int) int {
 // 宽: width.
 //
 // 高: height.
-func (w *windowBase) SetSize(width, height int) bool {
+func (w *windowBase) SetSize(width, height int32) bool {
 	var rc xc.RECT
 	xc.XWnd_GetRect(w.Handle, &rc)
-	rc.Right = rc.Left + int32(width)
-	rc.Bottom = rc.Top + int32(height)
+	rc.Right = rc.Left + width
+	rc.Bottom = rc.Top + height
 	return xc.XWnd_SetRect(w.Handle, &rc)
 }
 
 // 窗口_置宽度.
 //
 // 宽: width.
-func (w *windowBase) SetWidth(width int) bool {
+func (w *windowBase) SetWidth(width int32) bool {
 	var rc xc.RECT
 	xc.XWnd_GetRect(w.Handle, &rc)
-	rc.Right = rc.Left + int32(width)
+	rc.Right = rc.Left + width
 	return xc.XWnd_SetRect(w.Handle, &rc)
 }
 
 // 窗口_置高度.
 //
 // 高: height.
-func (w *windowBase) SetHeight(height int) bool {
+func (w *windowBase) SetHeight(height int32) bool {
 	var rc xc.RECT
 	xc.XWnd_GetRect(w.Handle, &rc)
-	rc.Bottom = rc.Top + int32(height)
+	rc.Bottom = rc.Top + height
 	return xc.XWnd_SetRect(w.Handle, &rc)
 }
 
 // 窗口_取宽度.
-func (w *windowBase) GetWidth() int {
+func (w *windowBase) GetWidth() int32 {
 	var rc xc.RECT
 	xc.XWnd_GetRect(w.Handle, &rc)
-	return int(rc.Right - rc.Left)
+	return rc.Right - rc.Left
 }
 
 // 窗口_取高度.
-func (w *windowBase) GetHeight() int {
+func (w *windowBase) GetHeight() int32 {
 	var rc xc.RECT
 	xc.XWnd_GetRect(w.Handle, &rc)
-	return int(rc.Bottom - rc.Top)
+	return rc.Bottom - rc.Top
 }
 
 // 窗口_取左边.
-func (w *windowBase) GetLeft() int {
+func (w *windowBase) GetLeft() int32 {
 	var rc xc.RECT
 	xc.XWnd_GetRect(w.Handle, &rc)
-	return int(rc.Left)
+	return rc.Left
 }
 
 // 窗口_取顶边.
-func (w *windowBase) GetTop() int {
+func (w *windowBase) GetTop() int32 {
 	var rc xc.RECT
 	xc.XWnd_GetRect(w.Handle, &rc)
-	return int(rc.Top)
+	return rc.Top
 }
 
 // 窗口_取右边.
-func (w *windowBase) GetRight() int {
+func (w *windowBase) GetRight() int32 {
 	var rc xc.RECT
 	xc.XWnd_GetRect(w.Handle, &rc)
-	return int(rc.Right)
+	return rc.Right
 }
 
 // 窗口_取底边.
-func (w *windowBase) GetBottom() int {
+func (w *windowBase) GetBottom() int32 {
 	var rc xc.RECT
 	xc.XWnd_GetRect(w.Handle, &rc)
-	return int(rc.Bottom)
+	return rc.Bottom
 }
 
 // 窗口_置左边.
 //
 // x: 左边x坐标.
-func (w *windowBase) SetLeft(x int) {
+func (w *windowBase) SetLeft(x int32) {
 	xc.XWnd_SetPosition(w.Handle, x, w.GetTop())
 }
 
 // 窗口_置顶边.
 //
 // y: 顶边y坐标.
-func (w *windowBase) SetTopEdge(y int) {
+func (w *windowBase) SetTopEdge(y int32) {
 	xc.XWnd_SetPosition(w.Handle, w.GetLeft(), y)
+}
+
+/*
+LayoutBox-布局盒子
+*/
+
+// EnableHorizon 布局盒子_启用水平.
+//
+//	@param bEnable 是否启用.
+//	@return int
+func (w *windowBase) EnableHorizon(bEnable bool) int {
+	return xc.XLayoutBox_EnableHorizon(w.Handle, bEnable)
+}
+
+// EnableAutoWrap 布局盒子_启用自动换行.
+//
+//	@param bEnable 是否启用.
+//	@return int
+func (w *windowBase) EnableAutoWrap(bEnable bool) int {
+	return xc.XLayoutBox_EnableAutoWrap(w.Handle, bEnable)
+}
+
+// EnableOverflowHide 布局盒子_启用溢出隐藏.
+//
+//	@param bEnable 是否启用.
+//	@return int
+func (w *windowBase) EnableOverflowHide(bEnable bool) int {
+	return xc.XLayoutBox_EnableOverflowHide(w.Handle, bEnable)
+}
+
+// SetAlignH 布局盒子_置水平对齐.
+//
+//	@param nAlign 对齐方式: xcc.Layout_Align_.
+//	@return int
+func (w *windowBase) SetAlignH(nAlign xcc.Layout_Align_) int {
+	return xc.XLayoutBox_SetAlignH(w.Handle, nAlign)
+}
+
+// SetAlignV 布局盒子_置垂直对齐.
+//
+//	@param nAlign 对齐方式: xcc.Layout_Align_.
+//	@return int
+func (w *windowBase) SetAlignV(nAlign xcc.Layout_Align_) int {
+	return xc.XLayoutBox_SetAlignV(w.Handle, nAlign)
+}
+
+// SetAlignBaseline 布局盒子_置对齐基线.
+//
+//	@param nAlign 对齐方式: xcc.Layout_Align_Axis_.
+//	@return int
+func (w *windowBase) SetAlignBaseline(nAlign xcc.Layout_Align_Axis_) int {
+	return xc.XLayoutBox_SetAlignBaseline(w.Handle, nAlign)
+}
+
+// SetSpace 布局盒子_置间距.
+//
+//	@param nSpace 项间距大小.
+//	@return int
+func (w *windowBase) SetSpace(nSpace int) int {
+	return xc.XLayoutBox_SetSpace(w.Handle, nSpace)
+}
+
+// SetSpaceRow 布局盒子_置行距.
+//
+//	@param nSpace 行间距大小.
+//	@return int
+func (w *windowBase) SetSpaceRow(nSpace int) int {
+	return xc.XLayoutBox_SetSpaceRow(w.Handle, nSpace)
 }
 
 /*
 下面都是事件
 */
 
-type XWM_WINDPROC func(message uint, wParam int, lParam int, pbHandled *bool) int               // 窗口消息过程.
-type XWM_WINDPROC1 func(hWindow int, message uint, wParam int, lParam int, pbHandled *bool) int // 窗口消息过程.
-type XWM_XC_TIMER func(nTimerID uint, pbHandled *bool) int                                      // 炫彩定时器, 非系统定时器, 注册消息XWM_TIMER接收.
-type XWM_XC_TIMER1 func(hWindow int, nTimerID uint, pbHandled *bool) int                        // 炫彩定时器, 非系统定时器, 注册消息XWM_TIMER接收.
-type XWM_SETFOCUS_ELE func(hEle int, pbHandled *bool) int                                       // 窗口事件_置焦点元素. 指定元素获得焦点
-type XWM_SETFOCUS_ELE1 func(hWindow int, hEle int, pbHandled *bool) int                         // 窗口事件_置焦点元素. 指定元素获得焦点
-type XWM_FLOAT_PANE func(hFloatWnd int, hPane int, pbHandled *bool) int                         // 浮动窗格.
-type XWM_FLOAT_PANE1 func(hWindow int, hFloatWnd int, hPane int, pbHandled *bool) int           // 浮动窗格.
-type XWM_PAINT_END func(hDraw int, pbHandled *bool) int                                         // 窗口绘制完成消息.
-type XWM_PAINT_END1 func(hWindow int, hDraw int, pbHandled *bool) int                           // 窗口绘制完成消息.
-type XWM_PAINT_DISPLAY func(pbHandled *bool) int                                                // 窗口绘制完成并且已经显示到屏幕.
-type XWM_PAINT_DISPLAY1 func(hWindow int, pbHandled *bool) int                                  // 窗口绘制完成并且已经显示到屏幕.
-type XWM_DOCK_POPUP func(hWindowDock, hPane int, pbHandled *bool) int                           // 框架窗口码头弹出窗格, 当用户点击码头上的按钮时, 显示对应的窗格, 当失去焦点时自动隐藏窗格.
-type XWM_DOCK_POPUP1 func(hWindow int, hWindowDock, hPane int, pbHandled *bool) int             // 框架窗口码头弹出窗格, 当用户点击码头上的按钮时, 显示对应的窗格, 当失去焦点时自动隐藏窗格.
-type XWM_BODYVIEW_RECT func(width, height int32, pbHandled *bool) int                           // 框架窗口主视图坐标改变, 如果主视图没有绑定元素, 那么当坐标改变时触发此事件
-type XWM_BODYVIEW_RECT1 func(hWindow int, width, height int32, pbHandled *bool) int             // 框架窗口主视图坐标改变, 如果主视图没有绑定元素, 那么当坐标改变时触发此事件
+type XWM_TRAYICON func(wParam, lParam uint, pbHandled *bool) int // 托盘图标事件.
+
+type XWM_WINDPROC func(message uint32, wParam, lParam uint, pbHandled *bool) int               // 窗口消息过程.
+type XWM_WINDPROC1 func(hWindow int, message uint32, wParam, lParam uint, pbHandled *bool) int // 窗口消息过程.
+type XWM_XC_TIMER func(nTimerID uint, pbHandled *bool) int                                     // 炫彩定时器, 非系统定时器, 注册消息XWM_TIMER接收.
+type XWM_XC_TIMER1 func(hWindow int, nTimerID uint, pbHandled *bool) int                       // 炫彩定时器, 非系统定时器, 注册消息XWM_TIMER接收.
+type XWM_SETFOCUS_ELE func(hEle int, pbHandled *bool) int                                      // 窗口事件_置焦点元素. 指定元素获得焦点
+type XWM_SETFOCUS_ELE1 func(hWindow int, hEle int, pbHandled *bool) int                        // 窗口事件_置焦点元素. 指定元素获得焦点
+type XWM_FLOAT_PANE func(hFloatWnd int, hPane int, pbHandled *bool) int                        // 浮动窗格.
+type XWM_FLOAT_PANE1 func(hWindow int, hFloatWnd int, hPane int, pbHandled *bool) int          // 浮动窗格.
+type XWM_PAINT_END func(hDraw int, pbHandled *bool) int                                        // 窗口绘制完成消息.
+type XWM_PAINT_END1 func(hWindow int, hDraw int, pbHandled *bool) int                          // 窗口绘制完成消息.
+type XWM_PAINT_DISPLAY func(pbHandled *bool) int                                               // 窗口绘制完成并且已经显示到屏幕.
+type XWM_PAINT_DISPLAY1 func(hWindow int, pbHandled *bool) int                                 // 窗口绘制完成并且已经显示到屏幕.
+type XWM_DOCK_POPUP func(hWindowDock, hPane int, pbHandled *bool) int                          // 框架窗口码头弹出窗格, 当用户点击码头上的按钮时, 显示对应的窗格, 当失去焦点时自动隐藏窗格.
+type XWM_DOCK_POPUP1 func(hWindow int, hWindowDock, hPane int, pbHandled *bool) int            // 框架窗口码头弹出窗格, 当用户点击码头上的按钮时, 显示对应的窗格, 当失去焦点时自动隐藏窗格.
+type XWM_BODYVIEW_RECT func(width, height int32, pbHandled *bool) int                          // 框架窗口主视图坐标改变, 如果主视图没有绑定元素, 那么当坐标改变时触发此事件
+type XWM_BODYVIEW_RECT1 func(hWindow int, width, height int32, pbHandled *bool) int            // 框架窗口主视图坐标改变, 如果主视图没有绑定元素, 那么当坐标改变时触发此事件
 // 浮动窗口拖动, 用户拖动浮动窗口移动, 显示停靠提示.
 //
 // hFloatWnd: 拖动的浮动窗口句柄.
@@ -1175,16 +1245,21 @@ type WM_SETFOCUS func(pbHandled *bool) int                                      
 type WM_SETFOCUS1 func(hWindow int, pbHandled *bool) int                                  // 窗口获得焦点.
 type WM_KILLFOCUS func(pbHandled *bool) int                                               // 窗口失去焦点.
 type WM_KILLFOCUS1 func(hWindow int, pbHandled *bool) int                                 // 窗口失去焦点.
-type WM_KEYDOWN func(wParam int, lParam int, pbHandled *bool) int                         // 窗口键盘按键消息.
-type WM_KEYDOWN1 func(hWindow int, wParam int, lParam int, pbHandled *bool) int           // 窗口键盘按键消息.
-type WM_CAPTURECHANGED func(hWnd int, pbHandled *bool) int                                // 窗口鼠标捕获改变消息.
-type WM_CAPTURECHANGED1 func(hWindow int, hWnd int, pbHandled *bool) int                  // 窗口鼠标捕获改变消息.
-type WM_SETCURSOR func(wParam int, lParam int, pbHandled *bool) int                       // 窗口设置鼠标光标.
-type WM_SETCURSOR1 func(hWindow int, wParam int, lParam int, pbHandled *bool) int         // 窗口设置鼠标光标.
-type WM_CHAR func(wParam int, lParam int, pbHandled *bool) int                            // 窗口字符消息.
-type WM_CHAR1 func(hWindow int, wParam int, lParam int, pbHandled *bool) int              // 窗口字符消息.
-type WM_DROPFILES func(hDropInfo int, pbHandled *bool) int                                // 拖动文件到窗口.
-type WM_DROPFILES1 func(hWindow int, hDropInfo int, pbHandled *bool) int                  // 拖动文件到窗口.
+type WM_KEYDOWN func(wParam, lParam uint, pbHandled *bool) int                            // 窗口键盘按键消息.
+type WM_KEYDOWN1 func(hWindow int, wParam, lParam uint, pbHandled *bool) int              // 窗口键盘按键消息.
+type WM_CAPTURECHANGED func(hWnd uintptr, pbHandled *bool) int                            // 窗口鼠标捕获改变消息.
+type WM_CAPTURECHANGED1 func(hWindow int, hWnd uintptr, pbHandled *bool) int              // 窗口鼠标捕获改变消息.
+type WM_SETCURSOR func(wParam, lParam uint, pbHandled *bool) int                          // 窗口设置鼠标光标.
+type WM_SETCURSOR1 func(hWindow int, wParam, lParam uint, pbHandled *bool) int            // 窗口设置鼠标光标.
+type WM_CHAR func(wParam, lParam uint, pbHandled *bool) int                               // 窗口字符消息.
+type WM_CHAR1 func(hWindow int, wParam, lParam uint, pbHandled *bool) int                 // 窗口字符消息.
+type WM_DROPFILES func(hDropInfo uintptr, pbHandled *bool) int                            // 拖动文件到窗口.
+type WM_DROPFILES1 func(hWindow int, hDropInfo uintptr, pbHandled *bool) int              // 拖动文件到窗口.
+
+// 托盘图标事件.
+func (w *windowBase) Event_TRAYICON(pFun XWM_TRAYICON) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_TRAYICON, pFun)
+}
 
 // 窗口消息过程.
 func (w *windowBase) Event_WINDPROC(pFun XWM_WINDPROC) bool {
@@ -1526,53 +1601,32 @@ func (w *windowBase) Event_DROPFILES1(pFun WM_DROPFILES1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_DROPFILES, pFun)
 }
 
-type XWM_MENU_POPUP func(hMenu int, pbHandled *bool) int                                           // 菜单弹出.
-type XWM_MENU_POPUP_WND func(hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int             // 菜单弹出窗口.
-type XWM_MENU_SELECT func(nID int, pbHandled *bool) int                                            // 菜单选择.
-type XWM_MENU_EXIT func(pbHandled *bool) int                                                       // 菜单退出.
-type XWM_MENU_DRAW_BACKGROUND func(hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int // 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
-type XWM_MENU_DRAWITEM func(hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int              // 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
+type XWM_MENU_POPUP func(hMenu int, pbHandled *bool) int                                                         // 菜单弹出.
+type XWM_MENU_POPUP1 func(hWindow int, hMenu int, pbHandled *bool) int                                           // 菜单弹出.
+type XWM_MENU_POPUP_WND func(hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int                           // 菜单弹出窗口.
+type XWM_MENU_POPUP_WND1 func(hWindow int, hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int             // 菜单弹出窗口.
+type XWM_MENU_SELECT func(nID int32, pbHandled *bool) int                                                        // 菜单选择.
+type XWM_MENU_SELECT1 func(hWindow int, nID int32, pbHandled *bool) int                                          // 菜单选择.
+type XWM_MENU_EXIT func(pbHandled *bool) int                                                                     // 菜单退出.
+type XWM_MENU_EXIT1 func(hWindow int, pbHandled *bool) int                                                       // 菜单退出.
+type XWM_MENU_DRAW_BACKGROUND func(hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int               // 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
+type XWM_MENU_DRAW_BACKGROUND1 func(hWindow int, hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int // 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
+type XWM_MENU_DRAWITEM func(hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int                            // 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
+type XWM_MENU_DRAWITEM1 func(hWindow int, hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int              // 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
 
 // 菜单弹出.
 func (w *windowBase) Event_MENU_POPUP(pFun XWM_MENU_POPUP) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_POPUP, pFun)
 }
 
-// 菜单弹出窗口.
-func (w *windowBase) Event_MENU_POPUP_WND(pFun XWM_MENU_POPUP_WND) bool {
-	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_POPUP_WND, pFun)
-}
-
-// 菜单选择.
-func (w *windowBase) Event_MENU_SELECT(pFun XWM_MENU_SELECT) bool {
-	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_SELECT, pFun)
-}
-
-// 菜单退出.
-func (w *windowBase) Event_MENU_EXIT(pFun XWM_MENU_EXIT) bool {
-	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_EXIT, pFun)
-}
-
-// 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
-func (w *windowBase) Event_MENU_DRAW_BACKGROUND(pFun XWM_MENU_DRAW_BACKGROUND) bool {
-	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_DRAW_BACKGROUND, pFun)
-}
-
-// 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
-func (w *windowBase) Event_MENU_DRAWITEM(pFun XWM_MENU_DRAWITEM) bool {
-	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_DRAWITEM, pFun)
-}
-
-/* type XWM_MENU_POPUP1 func(hWindow int, hMenu int, pbHandled *bool) int                                           // 菜单弹出.
-type XWM_MENU_POPUP_WND1 func(hWindow int, hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int             // 菜单弹出窗口.
-type XWM_MENU_SELECT1 func(hWindow int, nID int, pbHandled *bool) int                                            // 菜单选择.
-type XWM_MENU_EXIT1 func(hWindow int, pbHandled *bool) int                                                       // 菜单退出.
-type XWM_MENU_DRAW_BACKGROUND1 func(hWindow int, hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int // 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
-type XWM_MENU_DRAWITEM1 func(hWindow int, hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int              // 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
-
 // 菜单弹出.
 func (w *windowBase) Event_MENU_POPUP1(pFun XWM_MENU_POPUP1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_POPUP, pFun)
+}
+
+// 菜单弹出窗口.
+func (w *windowBase) Event_MENU_POPUP_WND(pFun XWM_MENU_POPUP_WND) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_POPUP_WND, pFun)
 }
 
 // 菜单弹出窗口.
@@ -1581,8 +1635,18 @@ func (w *windowBase) Event_MENU_POPUP_WND1(pFun XWM_MENU_POPUP_WND1) bool {
 }
 
 // 菜单选择.
+func (w *windowBase) Event_MENU_SELECT(pFun XWM_MENU_SELECT) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_SELECT, pFun)
+}
+
+// 菜单选择.
 func (w *windowBase) Event_MENU_SELECT1(pFun XWM_MENU_SELECT1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_SELECT, pFun)
+}
+
+// 菜单退出.
+func (w *windowBase) Event_MENU_EXIT(pFun XWM_MENU_EXIT) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_EXIT, pFun)
 }
 
 // 菜单退出.
@@ -1591,11 +1655,21 @@ func (w *windowBase) Event_MENU_EXIT1(pFun XWM_MENU_EXIT1) bool {
 }
 
 // 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
+func (w *windowBase) Event_MENU_DRAW_BACKGROUND(pFun XWM_MENU_DRAW_BACKGROUND) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_DRAW_BACKGROUND, pFun)
+}
+
+// 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
 func (w *windowBase) Event_MENU_DRAW_BACKGROUND1(pFun XWM_MENU_DRAW_BACKGROUND1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_DRAW_BACKGROUND, pFun)
 }
 
 // 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
+func (w *windowBase) Event_MENU_DRAWITEM(pFun XWM_MENU_DRAWITEM) bool {
+	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_DRAWITEM, pFun)
+}
+
+// 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
 func (w *windowBase) Event_MENU_DRAWITEM1(pFun XWM_MENU_DRAWITEM1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_DRAWITEM, pFun)
-} */
+}

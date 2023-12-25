@@ -128,8 +128,8 @@ func (s *SliderBar) EnableHorizon(bHorizon bool) int {
 以下都是事件
 */
 
-type XE_SLIDERBAR_CHANGE func(pos int, pbHandled *bool) int            // 滑动条元素,滑块位置改变事件.
-type XE_SLIDERBAR_CHANGE1 func(hEle int, pos int, pbHandled *bool) int // 滑动条元素,滑块位置改变事件.
+type XE_SLIDERBAR_CHANGE func(pos int32, pbHandled *bool) int            // 滑动条元素,滑块位置改变事件.
+type XE_SLIDERBAR_CHANGE1 func(hEle int, pos int32, pbHandled *bool) int // 滑动条元素,滑块位置改变事件.
 
 // 滑动条元素,滑块位置改变事件.
 func (s *SliderBar) Event_SLIDERBAR_CHANGE(pFun XE_SLIDERBAR_CHANGE) bool {

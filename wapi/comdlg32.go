@@ -25,10 +25,10 @@ type OpenFileNameW struct {
 	LStructSize uint32
 
 	// 拥有对话框的窗口句柄。此成员可以是任何有效的窗口句柄，或者如果对话框没有所有者，它可以为NULL 。
-	HwndOwner int
+	HwndOwner uintptr
 
 	// 如果在Flags成员中设置了OFN_ENABLETEMPLATEHANDLE标志，则hInstance是包含对话框模板的内存对象的句柄。如果设置了OFN_ENABLETEMPLATE标志，则hInstance是一个模块句柄，该模块包含一个由lpTemplateName成员命名的对话框模板。如果两个标志都没有设置，则忽略此成员。如果设置了OFN_EXPLORER标志，系统将使用指定的模板创建一个对话框，该对话框是默认资源管理器样式对话框的子对话框。如果未设置OFN_EXPLORER标志，则系统使用模板创建旧式对话框，替换默认对话框。
-	HInstance int
+	HInstance uintptr
 
 	// 过滤器. 包含成对的以 null 结尾的过滤器字符串的缓冲区。缓冲区中的最后一个字符串必须以两个NULL字符终止。
 	//
@@ -39,8 +39,7 @@ type OpenFileNameW struct {
 	//	如果lpstrFilter为NULL，则对话框不显示任何过滤器。
 	//
 	//	例子:
-	//	c := "\x00"
-	//	lpstrFilter := strings.Join([]string{"Text Files(*txt)", "*.txt", "All Files(*.*)", "*.*"}, c) + c + c
+	//	lpstrFilter := strings.Join([]string{"Text Files(*txt)", "*.txt", "All Files(*.*)", "*.*"}, wapi.NULL) + wapi.NULL2
 	//	common.StringToUint16Ptr(lpstrFilter)
 	LpstrFilter *uint16
 
@@ -201,10 +200,10 @@ type ChooseColor struct {
 	LStructSize uint32
 
 	// 拥有对话框的窗口句柄。此成员可以是任何有效的窗口句柄，或者如果对话框没有所有者，它可以为NULL 。
-	HwndOwner int
+	HwndOwner uintptr
 
 	// 如果在Flags成员中设置了 CC_ENABLETEMPLATEHANDLE 标志，则hInstance是包含对话框模板的内存对象的句柄。如果设置了 CC_ENABLETEMPLATE 标志，则hInstance是一个模块句柄，该模块包含一个由lpTemplateName成员命名的对话框模板。如果既未设置 CC_ENABLETEMPLATEHANDLE 也未设置 CC_ENABLETEMPLATE，则忽略此成员。
-	HInstance int
+	HInstance uintptr
 
 	// 如果设置了 CC_RGBINIT 标志，则rgbResult指定创建对话框时最初选择的颜色。如果指定的颜色值不在可用颜色中，则系统选择最接近的可用纯色。如果rgbResult为零或未设置 CC_RGBINIT，则最初选择的颜色为黑色。如果用户单击OK按钮，则 rgbResult指定用户的颜色选择。要创建RGB颜色值，请使用: xc.RGB().
 	RgbResult uint32

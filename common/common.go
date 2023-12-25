@@ -6,6 +6,47 @@ import (
 	"unsafe"
 )
 
+// Bytes2String byte切片到string.
+//
+//	@param b
+//	@return string
+func Bytes2String(b []byte) string {
+	return *(*string)(unsafe.Pointer(&b))
+}
+
+func String2Bytes(s string) []byte {
+	sh := (*stringHeader)(unsafe.Pointer(&s))
+	bh := sliceHeader{
+		Data: sh.Data,
+		Len:  sh.Len,
+		Cap:  sh.Len,
+	}
+	return *(*[]byte)(unsafe.Pointer(&bh))
+}
+
+// stringHeader is the runtime representation of a string.
+// It cannot be used safely or portably and its representation may
+// change in a later release.
+// Moreover, the Data field is not sufficient to guarantee the data
+// it references will not be garbage collected, so programs must keep
+// a separate, correctly typed pointer to the underlying data.
+type stringHeader struct {
+	Data uintptr
+	Len  int
+}
+
+// sliceHeader is the runtime representation of a slice.
+// It cannot be used safely or portably and its representation may
+// change in a later release.
+// Moreover, the Data field is not sufficient to guarantee the data
+// it references will not be garbage collected, so programs must keep
+// a separate, correctly typed pointer to the underlying data.
+type sliceHeader struct {
+	Data uintptr
+	Len  int
+	Cap  int
+}
+
 // StrPtr 将string转换到uintptr.
 //
 //	@param s
@@ -16,12 +57,6 @@ func StrPtr(s string) uintptr {
 	}
 	p, _ := syscall.UTF16PtrFromString(s)
 	return uintptr(unsafe.Pointer(p))
-}
-
-type sliceHeader struct {
-	Data uintptr
-	Len  int
-	Cap  int
 }
 
 // UintPtrToString 将uintptr转换到string.
