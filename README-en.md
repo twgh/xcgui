@@ -58,8 +58,8 @@ var qqmusic []byte
 
 func main() {
 	a := app.New(true)
-    a.EnableDPI(true)
-    a.EnableAutoDPI(true)
+	a.EnableDPI(true)
+	a.EnableAutoDPI(true)
 	// Load resource files from memory zip
 	a.LoadResourceZipMem(qqmusic, "resource.res", "")
 	// Load layout file from memory zip, Create window object
@@ -150,8 +150,8 @@ import (
 func main() {
 	// 1.Initialize XCGUI
 	a := app.New(true)
-    a.EnableDPI(true)
-    a.EnableAutoDPI(true)
+	a.EnableDPI(true)
+	a.EnableAutoDPI(true)
 	// 2.Create window
 	w := window.New(0, 0, 430, 300, "xcgui window", 0, xcc.Window_Style_Default|xcc.Window_Style_Drag_Window)
     

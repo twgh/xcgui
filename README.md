@@ -61,8 +61,8 @@ var qqmusic []byte
 
 func main() {
 	a := app.New(true)
-    a.EnableDPI(true)
-    a.EnableAutoDPI(true)
+	a.EnableDPI(true)
+	a.EnableAutoDPI(true)
 	// 从内存zip中加载资源文件
 	a.LoadResourceZipMem(qqmusic, "resource.res", "")
 	// 从内存zip中加载布局文件, 创建窗口对象
@@ -153,8 +153,8 @@ import (
 func main() {
 	// 1.初始化UI库
 	a := app.New(true)
-    a.EnableDPI(true)
-    a.EnableAutoDPI(true)
+	a.EnableDPI(true)
+	a.EnableAutoDPI(true)
 	// 2.创建窗口
 	w := window.New(0, 0, 430, 300, "xcgui window", 0, xcc.Window_Style_Default|xcc.Window_Style_Drag_Window)
 
