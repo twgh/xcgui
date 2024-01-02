@@ -64,6 +64,9 @@ func StrPtr(s string) uintptr {
 //	@param ptr
 //	@return string
 func UintPtrToString(ptr uintptr) string {
+	if ptr == 0 {
+		return ""
+	}
 	s := *(*[]uint16)(unsafe.Pointer(&ptr)) // uintptr转换到[]uint16
 	for i := 0; i < len(s); i++ {
 		if s[i] == 0 {
@@ -110,6 +113,9 @@ func Float32Ptr(f float32) uintptr {
 //	@param ptr
 //	@return float32
 func UintPtrToFloat32(ptr uintptr) float32 {
+	if ptr == 0 {
+		return 0
+	}
 	u := uint32(ptr)
 	return *(*float32)(unsafe.Pointer(&u))
 }
