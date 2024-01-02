@@ -13,6 +13,12 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
+func ExampleLoadImageW() {
+	hIcon := wapi.LoadImageW(0, "C:\\Windows\\System32\\OneDrive.ico", wapi.IMAGE_ICON, 0, 0, wapi.LR_LOADFROMFILE|wapi.LR_DEFAULTSIZE|wapi.LR_SHARED)
+	fmt.Println("hIcon:", hIcon)
+	fmt.Println("LastErr:", syscall.GetLastError())
+}
+
 func ExampleMessageBoxW() {
 	id := wapi.MessageBoxW(0, "context", "title", wapi.MB_CanaelTryContinue|wapi.MB_IconInformation)
 	switch id {
