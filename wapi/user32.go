@@ -40,7 +40,18 @@ var (
 	findWindowW                = user32.NewProc("FindWindowW")
 	loadImageW                 = user32.NewProc("LoadImageW")
 	createIconFromResource     = user32.NewProc("CreateIconFromResource")
+	destroyIcon                = user32.NewProc("DestroyIcon")
 )
+
+// DestroyIcon 销毁图标并释放图标占用的任何内存。
+//
+//	@Description 只需为使用以下函数创建的图标和游标调用 DestroyIcon ： CreateIconFromResourceEx (如果调用时没有 LR_SHARED 标志) 、 CreateIconIndirect 和 CopyIcon。 请勿使用此函数销毁共享图标。 只要从中加载共享图标的模块保留在内存中，共享图标就有效。
+//	详见: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-destroyicon.
+//	@param hIcon 要销毁的图标的句柄。 图标不得处于使用中。
+func DestroyIcon(hIcon uintptr) bool {
+	r, _, _ := destroyIcon.Call(hIcon)
+	return r != 0
+}
 
 // CreateIconFromResource 从描述图标的资源位创建图标或光标。若要指定所需的高度或宽度，请使用 CreateIconFromResourceEx 函数。
 //
@@ -62,8 +73,8 @@ type IMAGE_ uint32
 
 const (
 	IMAGE_BITMAP = 0 // 加载位图
-	IMAGE_CURSOR = 1 // 加载游标
-	IMAGE_ICON   = 2 // 加载图标
+	IMAGE_ICON   = 1 // 加载图标
+	IMAGE_CURSOR = 2 // 加载游标
 )
 
 type LR_ uint32
