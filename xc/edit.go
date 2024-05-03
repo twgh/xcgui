@@ -207,7 +207,7 @@ func XEdit_SetDefaultText(hEle int, pString string) int {
 //
 // hEle: 元素句柄.
 //
-// color: ABGR 颜色值.
+// color: ARGB 颜色值.
 func XEdit_SetDefaultTextColor(hEle int, color int) int {
 	r, _, _ := xEdit_SetDefaultTextColor.Call(uintptr(hEle), uintptr(color))
 	return int(r)
@@ -270,11 +270,11 @@ func XEdit_SetTextInt(hEle int, nValue int) int {
 // pOut: 接收文本内存指针.
 //
 // nOutlen: 内存大小. 例: xc.XEdit_GetLength()+1 .
-func XEdit_GetText(hEle int, pOut *string, nOutlen int) int {
+func XEdit_GetText(hEle int, pOut *string, nOutlen int) int32 {
 	buf := make([]uint16, nOutlen)
 	r, _, _ := xEdit_GetText.Call(uintptr(hEle), common.Uint16SliceDataPtr(&buf), uintptr(nOutlen))
 	*pOut = syscall.UTF16ToString(buf[0:])
-	return int(r)
+	return int32(r)
 }
 
 // 编辑框_取文本行.
@@ -467,7 +467,7 @@ func XEdit_SetCaretWidth(hEle int, nWidth int) int {
 //
 // hEle: 元素句柄.
 //
-// color: ABGR 颜色.
+// color: ARGB 颜色.
 func XEdit_SetSelectBkColor(hEle int, color int) int {
 	r, _, _ := xEdit_SetSelectBkColor.Call(uintptr(hEle), uintptr(color))
 	return int(r)
@@ -500,9 +500,9 @@ func XEdit_SetRowHeightEx(hEle int, iRow int, nHeight int) int {
 //	@param hEle: 元素句柄.
 //	@param iRow: 行索引.
 //	@return int
-func XEdit_SetCurPos(hEle int, iRow int) int {
+func XEdit_SetCurPos(hEle int, iRow int) bool {
 	r, _, _ := xEdit_SetCurPos.Call(uintptr(hEle), uintptr(iRow))
-	return int(r)
+	return r != 0
 }
 
 // 编辑框_取当前位置点, 返回范围位置点.
@@ -832,7 +832,7 @@ func XEdit_ReleaseStyle(hEle int, iStyle int) bool {
 //
 // hFont: 字体句柄.
 //
-// color: ABGR 颜色.
+// color: ARGB 颜色.
 //
 // bColor: 是否使用颜色.
 func XEdit_ModifyStyle(hEle int, iStyle int, hFont int, color int, bColor bool) bool {
@@ -967,4 +967,20 @@ func XEdit_InsertObject(hEle int, iRow int, iCol int, hObj int) int {
 // nWidth: 最大宽度.
 func XEdit_SetChatMaxWidth(hEle int, nWidth int32) {
 	xEdit_SetChatMaxWidth.Call(uintptr(hEle), uintptr(nWidth))
+}
+
+// 编辑框_取总行数扩展. 包含自动换行数量, 返回总行数.
+//
+// hEle: 元素句柄.
+func XEdit_GetRowCountEx(hEle int) int32 {
+	r, _, _ := xEdit_GetRowCountEx.Call(uintptr(hEle))
+	return int32(r)
+}
+
+// 编辑框_剪贴板复制. 复制全部内容.
+//
+// hEle: 元素句柄.
+func XEdit_ClipboardCopyAll(hEle int) bool {
+	r, _, _ := xEdit_ClipboardCopyAll.Call(uintptr(hEle))
+	return r != 0
 }

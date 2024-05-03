@@ -45,9 +45,9 @@ func XAdMap_DeleteItem(hAdapter int, pName string) bool {
 // 数据适配器MAP_取项数量, 返回项数量.
 //
 // hAdapter: 数据适配器句柄.
-func XAdMap_GetCount(hAdapter int) int {
+func XAdMap_GetCount(hAdapter int) int32 {
 	r, _, _ := xAdMap_GetCount.Call(uintptr(hAdapter))
-	return int(r)
+	return int32(r)
 }
 
 // 数据适配器MAP_取项文本, 获取项内容, 如果内容为文本.

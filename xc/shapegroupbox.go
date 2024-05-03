@@ -27,7 +27,7 @@ func XShapeGroupBox_Create(x int, y int, cx int, cy int, pName string, hParent i
 //
 // hShape: 形状对象句柄.
 //
-// color: ABGR 颜色值.
+// color: ARGB 颜色值.
 func XShapeGroupBox_SetBorderColor(hShape int, color int) int {
 	r, _, _ := xShapeGroupBox_SetBorderColor.Call(uintptr(hShape), uintptr(color))
 	return int(r)
@@ -37,7 +37,7 @@ func XShapeGroupBox_SetBorderColor(hShape int, color int) int {
 //
 // hShape: 形状对象句柄.
 //
-// color: ABGR 颜色值.
+// color: ARGB 颜色值.
 func XShapeGroupBox_SetTextColor(hShape int, color int) int {
 	r, _, _ := xShapeGroupBox_SetTextColor.Call(uintptr(hShape), uintptr(color))
 	return int(r)

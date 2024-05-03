@@ -68,15 +68,17 @@ func NewPaneByUIDName(name string) *Pane {
 // 窗格_置视图, 设置窗格视图元素.
 //
 // hView: 绑定视图元素.
-func (p *Pane) SetView(hView int) int {
-	return xc.XPane_SetView(p.Handle, hView)
+func (p *Pane) SetView(hView int) *Pane {
+	xc.XPane_SetView(p.Handle, hView)
+	return p
 }
 
 // 窗格_置标题, 设置标题文本.
 //
 // pTitle: 文本内容.
-func (p *Pane) SetTitle(pTitle string) int {
-	return xc.XPane_SetTitle(p.Handle, pTitle)
+func (p *Pane) SetTitle(pTitle string) *Pane {
+	xc.XPane_SetTitle(p.Handle, pTitle)
+	return p
 }
 
 // 窗格_取标题, 获取标题文本.
@@ -87,8 +89,9 @@ func (p *Pane) GetTitle() string {
 // 窗格_置标题栏高度, 设置标题栏高度.
 //
 // nHeight: 高度.
-func (p *Pane) SetCaptionHeight(nHeight int) int {
-	return xc.XPane_SetCaptionHeight(p.Handle, nHeight)
+func (p *Pane) SetCaptionHeight(nHeight int) *Pane {
+	xc.XPane_SetCaptionHeight(p.Handle, nHeight)
+	return p
 }
 
 // 窗格_取标题栏高度, 获取标题栏高度.
@@ -106,8 +109,9 @@ func (p *Pane) IsShowPane() bool {
 // nWidth: 宽度.
 //
 // nHeight: 高度.
-func (p *Pane) SetSize(nWidth int, nHeight int) int {
-	return xc.XPane_SetSize(p.Handle, nWidth, nHeight)
+func (p *Pane) SetSize(nWidth int, nHeight int) *Pane {
+	xc.XPane_SetSize(p.Handle, nWidth, nHeight)
+	return p
 }
 
 // 窗格_取状态, 获取窗格停靠状态, 返回: Pane_State_.
@@ -118,46 +122,51 @@ func (p *Pane) GetState() xcc.Pane_State_ {
 // 窗格_取视图坐标, 获取窗格视图坐标.
 //
 // pRect: 接收返回的坐标值.
-func (p *Pane) GetViewRect(pRect *xc.RECT) int {
-	return xc.XPane_GetViewRect(p.Handle, pRect)
+func (p *Pane) GetViewRect(pRect *xc.RECT) *Pane {
+	xc.XPane_GetViewRect(p.Handle, pRect)
+	return p
 }
 
 // HidePane 窗格_隐藏.
 //
 //	@param bGroupActivate 当为窗格组成员时, 延迟处理窗格组成员激活的切换.
-//	@return int
-func (p *Pane) HidePane(bGroupActivate bool) int {
-	return xc.XPane_HidePane(p.Handle, bGroupActivate)
+func (p *Pane) HidePane(bGroupActivate bool) *Pane {
+	xc.XPane_HidePane(p.Handle, bGroupActivate)
+	return p
 }
 
 // ShowPane 窗格_显示.
 //
 //	@param bGroupActivate 如果是窗格组成员, 那么窗格组切换当前窗格为显示状态.
-//	@return int
-func (p *Pane) ShowPane(bGroupActivate bool) int {
-	return xc.XPane_ShowPane(p.Handle, bGroupActivate)
+func (p *Pane) ShowPane(bGroupActivate bool) *Pane {
+	xc.XPane_ShowPane(p.Handle, bGroupActivate)
+	return p
 }
 
 // 窗格_停靠, 窗格停靠到码头.
-func (p *Pane) DockPane() int {
-	return xc.XPane_DockPane(p.Handle)
+func (p *Pane) DockPane() *Pane {
+	xc.XPane_DockPane(p.Handle)
+	return p
 }
 
 // 窗格_锁定, 锁定窗格.
-func (p *Pane) LockPane() int {
-	return xc.XPane_LockPane(p.Handle)
+func (p *Pane) LockPane() *Pane {
+	xc.XPane_LockPane(p.Handle)
+	return p
 }
 
 // 窗格_浮动.
-func (p *Pane) FloatPane() int {
-	return xc.XPane_FloatPane(p.Handle)
+func (p *Pane) FloatPane() *Pane {
+	xc.XPane_FloatPane(p.Handle)
+	return p
 }
 
 // 窗格_绘制, 手动调用该函数绘制窗格, 以便控制绘制顺序.
 //
 // hDraw: 图形绘制句柄.
-func (p *Pane) DrawPane(hDraw int) int {
-	return xc.XPane_DrawPane(p.Handle, hDraw)
+func (p *Pane) DrawPane(hDraw int) *Pane {
+	xc.XPane_DrawPane(p.Handle, hDraw)
+	return p
 }
 
 // 窗口_置选中, 如果窗格是组成员, 设置选中当前窗格可见.

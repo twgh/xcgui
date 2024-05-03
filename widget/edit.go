@@ -89,43 +89,49 @@ func NewEditByUIDName(name string) *Edit {
 // 编辑框_启用自动换行.
 //
 // bEnable: 是否启用.
-func (e *Edit) EnableAutoWrap(bEnable bool) int {
-	return xc.XEdit_EnableAutoWrap(e.Handle, bEnable)
+func (e *Edit) EnableAutoWrap(bEnable bool) *Edit {
+	xc.XEdit_EnableAutoWrap(e.Handle, bEnable)
+	return e
 }
 
 // 编辑框_启用只读.
 //
 // bEnable: 是否启用.
-func (e *Edit) EnableReadOnly(bEnable bool) int {
-	return xc.XEdit_EnableReadOnly(e.Handle, bEnable)
+func (e *Edit) EnableReadOnly(bEnable bool) *Edit {
+	xc.XEdit_EnableReadOnly(e.Handle, bEnable)
+	return e
 }
 
 // 编辑框_启用多行.
 //
 // bEnable:.
-func (e *Edit) EnableMultiLine(bEnable bool) int {
-	return xc.XEdit_EnableMultiLine(e.Handle, bEnable)
+func (e *Edit) EnableMultiLine(bEnable bool) *Edit {
+	xc.XEdit_EnableMultiLine(e.Handle, bEnable)
+	return e
 }
 
 // 编辑框_启用密码, 启用密码模式(只支持默认类型编辑框).
 //
 // bEnable: 是否启用.
-func (e *Edit) EnablePassword(bEnable bool) int {
-	return xc.XEdit_EnablePassword(e.Handle, bEnable)
+func (e *Edit) EnablePassword(bEnable bool) *Edit {
+	xc.XEdit_EnablePassword(e.Handle, bEnable)
+	return e
 }
 
 // 编辑框_启用自动选择, 当获得焦点时,自动选择所有内容.
 //
 // bEnable: 是否启用.
-func (e *Edit) EnableAutoSelAll(bEnable bool) int {
-	return xc.XEdit_EnableAutoSelAll(e.Handle, bEnable)
+func (e *Edit) EnableAutoSelAll(bEnable bool) *Edit {
+	xc.XEdit_EnableAutoSelAll(e.Handle, bEnable)
+	return e
 }
 
 // 编辑框_启用自动取消选择, 当失去焦点时自动取消选择.
 //
 // bEnable: 是否启用.
-func (e *Edit) EnableAutoCancelSel(bEnable bool) int {
-	return xc.XEdit_EnableAutoCancelSel(e.Handle, bEnable)
+func (e *Edit) EnableAutoCancelSel(bEnable bool) *Edit {
+	xc.XEdit_EnableAutoCancelSel(e.Handle, bEnable)
+	return e
 }
 
 // 编辑框_是否只读.
@@ -179,62 +185,71 @@ func (e *Edit) GetData() xc.Edit_Data_Copy_ {
 // styleTable: 样式表.
 //
 // nStyleCount: 样式数量.
-func (e *Edit) AddData(pData *xc.Edit_Data_Copy_, styleTable []uint16, nStyleCount int) int {
-	return xc.XEdit_AddData(e.Handle, pData, styleTable, nStyleCount)
+func (e *Edit) AddData(pData *xc.Edit_Data_Copy_, styleTable []uint16, nStyleCount int) *Edit {
+	xc.XEdit_AddData(e.Handle, pData, styleTable, nStyleCount)
+	return e
 }
 
 // 编辑框_释放数据.
-func (e *Edit) FreeData(pData *xc.Edit_Data_Copy_) int {
-	return xc.XEdit_FreeData(pData)
+func (e *Edit) FreeData(pData *xc.Edit_Data_Copy_) *Edit {
+	xc.XEdit_FreeData(pData)
+	return e
 }
 
 // 编辑框_置默认文本, 当内容为空时, 显示默认文本.
 //
 // pString: 文本内容.
-func (e *Edit) SetDefaultText(pString string) int {
-	return xc.XEdit_SetDefaultText(e.Handle, pString)
+func (e *Edit) SetDefaultText(pString string) *Edit {
+	xc.XEdit_SetDefaultText(e.Handle, pString)
+	return e
 }
 
 // 编辑框_置默认文本颜色.
 //
-// color: ABGR 颜色值.
-func (e *Edit) SetDefaultTextColor(color int) int {
-	return xc.XEdit_SetDefaultTextColor(e.Handle, color)
+// color: ARGB 颜色值.
+func (e *Edit) SetDefaultTextColor(color int) *Edit {
+	xc.XEdit_SetDefaultTextColor(e.Handle, color)
+	return e
 }
 
 // 编辑框_置密码字符.
 //
 // ch: 字符.
-func (e *Edit) SetPasswordCharacter(ch int) int {
-	return xc.XEdit_SetPasswordCharacter(e.Handle, ch)
+func (e *Edit) SetPasswordCharacter(ch int) *Edit {
+	xc.XEdit_SetPasswordCharacter(e.Handle, ch)
+	return e
 }
 
 // 编辑框_置文本对齐, 单行模式下有效.
 //
 // align: 对齐方式, Edit_TextAlign_Flag_.
-func (e *Edit) SetTextAlign(align xcc.Edit_TextAlign_Flag_) int {
-	return xc.XEdit_SetTextAlign(e.Handle, align)
+func (e *Edit) SetTextAlign(align xcc.Edit_TextAlign_Flag_) *Edit {
+	xc.XEdit_SetTextAlign(e.Handle, align)
+	return e
 }
 
 // 编辑框_置TAB空格.
 //
 // nSpace: 空格数量.
-func (e *Edit) SetTabSpace(nSpace int) int {
-	return xc.XEdit_SetTabSpace(e.Handle, nSpace)
+func (e *Edit) SetTabSpace(nSpace int) *Edit {
+	xc.XEdit_SetTabSpace(e.Handle, nSpace)
+	return e
 }
 
 // 编辑框_置文本.
 //
 // pString: 字符串.
-func (e *Edit) SetText(pString string) int {
-	return xc.XEdit_SetText(e.Handle, pString)
+func (e *Edit) SetText(pString string) *Edit {
+	xc.XEdit_SetText(e.Handle, pString)
+	return e
 }
 
 // 编辑框_置文本整数.
 //
 // nValue: 整数值.
-func (e *Edit) SetTextInt(nValue int) int {
-	return xc.XEdit_SetTextInt(e.Handle, nValue)
+func (e *Edit) SetTextInt(nValue int) *Edit {
+	xc.XEdit_SetTextInt(e.Handle, nValue)
+	return e
 }
 
 // 编辑框_取文本, 不包含非文本内容, 返回实际接收文本长度.
@@ -242,7 +257,7 @@ func (e *Edit) SetTextInt(nValue int) int {
 // pOut: 接收文本内存指针.
 //
 // nOutlen: 内存大小. 例: GetLength()+1 .
-func (e *Edit) GetText(pOut *string, nOutlen int) int {
+func (e *Edit) GetText(pOut *string, nOutlen int) int32 {
 	return xc.XEdit_GetText(e.Handle, pOut, nOutlen)
 }
 
@@ -308,23 +323,26 @@ func (e *Edit) GetAt(iRow int, iCol int) int {
 // iCol: 列索引.
 //
 // pString: 字符串.
-func (e *Edit) InsertText(iRow int, iCol int, pString string) int {
-	return xc.XEdit_InsertText(e.Handle, iRow, iCol, pString)
+func (e *Edit) InsertText(iRow int, iCol int, pString string) *Edit {
+	xc.XEdit_InsertText(e.Handle, iRow, iCol, pString)
+	return e
 }
 
 // AddTextUser 编辑框_插入文本模拟用户操作, 自动刷新UI, 支持撤销/恢复.
 //
 //	@param pString 字符串.
 //	@return int
-func (e *Edit) AddTextUser(pString string) int {
-	return xc.XEdit_AddTextUser(e.Handle, pString)
+func (e *Edit) AddTextUser(pString string) *Edit {
+	xc.XEdit_AddTextUser(e.Handle, pString)
+	return e
 }
 
 // 编辑框_添加文本.
 //
 // pString: 字符串.
-func (e *Edit) AddText(pString string) int {
-	return xc.XEdit_AddText(e.Handle, pString)
+func (e *Edit) AddText(pString string) *Edit {
+	xc.XEdit_AddText(e.Handle, pString)
+	return e
 }
 
 // 编辑框_添加文本扩展.
@@ -332,8 +350,9 @@ func (e *Edit) AddText(pString string) int {
 // pString: 字符串.
 //
 // iStyle: 样式索引.
-func (e *Edit) AddTextEx(pString string, iStyle int) int {
-	return xc.XEdit_AddTextEx(e.Handle, pString, iStyle)
+func (e *Edit) AddTextEx(pString string, iStyle int) *Edit {
+	xc.XEdit_AddTextEx(e.Handle, pString, iStyle)
+	return e
 }
 
 // 编辑框_添加对象, 例如: 字体, 图片, UI对象, 返回样式索引.
@@ -346,8 +365,9 @@ func (e *Edit) AddObject(hObj int) int {
 // 编辑框_添加对象从样式, 当样式为图片时有效.
 //
 // iStyle: 样式索引.
-func (e *Edit) AddByStyle(iStyle int) int {
-	return xc.XEdit_AddByStyle(e.Handle, iStyle)
+func (e *Edit) AddByStyle(iStyle int) *Edit {
+	xc.XEdit_AddByStyle(e.Handle, iStyle)
+	return e
 }
 
 // 编辑框_添加样式, 返回样式索引.
@@ -388,36 +408,41 @@ func (e *Edit) GetStyleInfo(iStyle int, info *xc.Edit_Style_Info_) bool {
 // 编辑框_置当前样式.
 //
 // iStyle: 样式索引.
-func (e *Edit) SetCurStyle(iStyle int) int {
-	return xc.XEdit_SetCurStyle(e.Handle, iStyle)
+func (e *Edit) SetCurStyle(iStyle int) *Edit {
+	xc.XEdit_SetCurStyle(e.Handle, iStyle)
+	return e
 }
 
 // 编辑框_置插入符颜色.
 //
 // color: 颜色.
-func (e *Edit) SetCaretColor(color int) int {
-	return xc.XEdit_SetCaretColor(e.Handle, color)
+func (e *Edit) SetCaretColor(color int) *Edit {
+	xc.XEdit_SetCaretColor(e.Handle, color)
+	return e
 }
 
 // 编辑框_置插入符宽度.
 //
 // nWidth: 宽度.
-func (e *Edit) SetCaretWidth(nWidth int) int {
-	return xc.XEdit_SetCaretWidth(e.Handle, nWidth)
+func (e *Edit) SetCaretWidth(nWidth int) *Edit {
+	xc.XEdit_SetCaretWidth(e.Handle, nWidth)
+	return e
 }
 
 // 编辑框_置选择背景颜色.
 //
-// color: ABGR 颜色.
-func (e *Edit) SetSelectBkColor(color int) int {
-	return xc.XEdit_SetSelectBkColor(e.Handle, color)
+// color: ARGB 颜色.
+func (e *Edit) SetSelectBkColor(color int) *Edit {
+	xc.XEdit_SetSelectBkColor(e.Handle, color)
+	return e
 }
 
 // 编辑框_置默认行高.
 //
 // nHeight: 行高.
-func (e *Edit) SetRowHeight(nHeight int) int {
-	return xc.XEdit_SetRowHeight(e.Handle, nHeight)
+func (e *Edit) SetRowHeight(nHeight int) *Edit {
+	xc.XEdit_SetRowHeight(e.Handle, nHeight)
+	return e
 }
 
 // 编辑框_置指定行高度, 类型为 Edit_Type_Richedit 支持指定不同行高.
@@ -425,15 +450,16 @@ func (e *Edit) SetRowHeight(nHeight int) int {
 // iRow: 行索引.
 //
 // nHeight: 高度.
-func (e *Edit) SetRowHeightEx(iRow int, nHeight int) int {
-	return xc.XEdit_SetRowHeightEx(e.Handle, iRow, nHeight)
+func (e *Edit) SetRowHeightEx(iRow int, nHeight int) *Edit {
+	xc.XEdit_SetRowHeightEx(e.Handle, iRow, nHeight)
+	return e
 }
 
 // SetCurPos 编辑框_置当前位置.
 //
 //	@param iRow 行索引.
-//	@return int
-func (e *Edit) SetCurPos(iRow int) int {
+//	@return bool
+func (e *Edit) SetCurPos(iRow int) bool {
 	return xc.XEdit_SetCurPos(e.Handle, iRow)
 }
 
@@ -459,8 +485,20 @@ func (e *Edit) GetCurCol() int {
 // iCol: 列索引.
 //
 // pOut: 接收返回坐标点.
-func (e *Edit) GetPoint(iRow int, iCol int, pOut *xc.POINT) int {
-	return xc.XEdit_GetPoint(e.Handle, iRow, iCol, pOut)
+func (e *Edit) GetPoint(iRow int, iCol int, pOut *xc.POINT) *Edit {
+	xc.XEdit_GetPoint(e.Handle, iRow, iCol, pOut)
+	return e
+}
+
+// 编辑框_取坐标点Ex.
+//
+// iRow: 行索引.
+//
+// iCol: 列索引.
+func (e *Edit) GetPointEx(iRow int, iCol int) xc.POINT {
+	var pt xc.POINT
+	xc.XEdit_GetPoint(e.Handle, iRow, iCol, &pt)
+	return pt
 }
 
 // 编辑框_自动滚动, 视图自动滚动到当前插入符位置.
@@ -481,9 +519,9 @@ func (e *Edit) AutoScrollEx(iRow int, iCol int) bool {
 //
 //	@param iPos 位置点.
 //	@param pInfo 行列.
-//	@return int
-func (e *Edit) PosToRowCol(iPos int, pInfo *xc.Position_) int {
-	return xc.XEdit_PosToRowCol(e.Handle, iPos, pInfo)
+func (e *Edit) PosToRowCol(iPos int, pInfo *xc.Position_) *Edit {
+	xc.XEdit_PosToRowCol(e.Handle, iPos, pInfo)
+	return e
 }
 
 // 编辑框_选择全部.
@@ -537,8 +575,9 @@ func (e *Edit) GetSelectRange(pBegin *xc.Position_, pEnd *xc.Position_) bool {
 // piStart: 起始行索引.
 //
 // piEnd: 结束行索引.
-func (e *Edit) GetVisibleRowRange(piStart *int32, piEnd *int32) int {
-	return xc.XEdit_GetVisibleRowRange(e.Handle, piStart, piEnd)
+func (e *Edit) GetVisibleRowRange(piStart *int32, piEnd *int32) *Edit {
+	xc.XEdit_GetVisibleRowRange(e.Handle, piStart, piEnd)
+	return e
 }
 
 // 编辑框_删除, 删除指定范围内容.
@@ -593,27 +632,31 @@ func (e *Edit) Redo() bool {
 // hImageBubble: 气泡背景.
 //
 // nFlag: 标志, Chat_Flag_.
-func (e *Edit) AddChatBegin(hImageAvatar int, hImageBubble int, nFlag xcc.Chat_Flag_) int {
-	return xc.XEdit_AddChatBegin(e.Handle, hImageAvatar, hImageBubble, nFlag)
+func (e *Edit) AddChatBegin(hImageAvatar int, hImageBubble int, nFlag xcc.Chat_Flag_) *Edit {
+	xc.XEdit_AddChatBegin(e.Handle, hImageAvatar, hImageBubble, nFlag)
+	return e
 }
 
 // 编辑框_添加气泡结束, 当前行结束.
-func (e *Edit) AddChatEnd() int {
-	return xc.XEdit_AddChatEnd(e.Handle)
+func (e *Edit) AddChatEnd() *Edit {
+	xc.XEdit_AddChatEnd(e.Handle)
+	return e
 }
 
 // 编辑框_置气泡缩进, 设置聊天气泡内容缩进.
 //
 // nIndentation: 缩进值.
-func (e *Edit) SetChatIndentation(nIndentation int) int {
-	return xc.XEdit_SetChatIndentation(e.Handle, nIndentation)
+func (e *Edit) SetChatIndentation(nIndentation int) *Edit {
+	xc.XEdit_SetChatIndentation(e.Handle, nIndentation)
+	return e
 }
 
 // 编辑框_置行间隔, 设置行间隔大小, 多行模式有效.
 //
 // nSpace: 行间隔大小.
-func (e *Edit) SetRowSpace(nSpace int) int {
-	return xc.XEdit_SetRowSpace(e.Handle, nSpace)
+func (e *Edit) SetRowSpace(nSpace int) *Edit {
+	xc.XEdit_SetRowSpace(e.Handle, nSpace)
+	return e
 }
 
 // 编辑框_置当前位置扩展.
@@ -621,8 +664,9 @@ func (e *Edit) SetRowSpace(nSpace int) int {
 // iRow: 行索引.
 //
 // iCol: 列索引.
-func (e *Edit) SetCurPosEx(iRow, iCol int32) int {
-	return xc.XEdit_SetCurPosEx(e.Handle, iRow, iCol)
+func (e *Edit) SetCurPosEx(iRow, iCol int32) *Edit {
+	xc.XEdit_SetCurPosEx(e.Handle, iRow, iCol)
+	return e
 }
 
 // 编辑框_取当前位置扩展.
@@ -630,13 +674,15 @@ func (e *Edit) SetCurPosEx(iRow, iCol int32) int {
 // iRow: 返回行索引.
 //
 // iCol: 返回列索引.
-func (e *Edit) GetCurPosEx(iRow, iCol *int32) int {
-	return xc.XEdit_GetCurPosEx(e.Handle, iRow, iCol)
+func (e *Edit) GetCurPosEx(iRow, iCol *int32) *Edit {
+	xc.XEdit_GetCurPosEx(e.Handle, iRow, iCol)
+	return e
 }
 
 // 编辑框_移动到末尾.
-func (e *Edit) MoveEnd() int {
-	return xc.XEdit_MoveEnd(e.Handle)
+func (e *Edit) MoveEnd() *Edit {
+	xc.XEdit_MoveEnd(e.Handle)
+	return e
 }
 
 // 编辑框_行列到位置, 返回位置点.
@@ -651,8 +697,9 @@ func (e *Edit) RowColToPos(iRow int, iCol int) int {
 // 编辑框_置后备字体, 置中文字体. 如果已设置, 当遇到中文字符时使用后备字体, 解决不支持中文的字体的问题
 //
 // hFont: 字体.
-func (e *Edit) SetBackFont(hFont int) int {
-	return xc.XEdit_SetBackFont(e.Handle, hFont)
+func (e *Edit) SetBackFont(hFont int) *Edit {
+	xc.XEdit_SetBackFont(e.Handle, hFont)
+	return e
 }
 
 // 编辑框_释放样式.
@@ -668,7 +715,7 @@ func (e *Edit) ReleaseStyle(iStyle int) bool {
 //
 // hFont: 字体句柄.
 //
-// color: ABGR 颜色.
+// color: ARGB 颜色.
 //
 // bColor: 是否使用颜色.
 func (e *Edit) ModifyStyle(iStyle int, hFont int, color int, bColor bool) bool {
@@ -678,8 +725,9 @@ func (e *Edit) ModifyStyle(iStyle int, hFont int, color int, bColor bool) bool {
 // 编辑框_置空格大小.
 //
 // size: 空格大小.
-func (e *Edit) SetSpaceSize(size int) int {
-	return xc.XEdit_SetSpaceSize(e.Handle, size)
+func (e *Edit) SetSpaceSize(size int) *Edit {
+	xc.XEdit_SetSpaceSize(e.Handle, size)
+	return e
 }
 
 // 编辑框_置字符间距.
@@ -687,8 +735,9 @@ func (e *Edit) SetSpaceSize(size int) int {
 // size: 英文字符间距大小.
 //
 // sizeZh: 中文字符间距大小.
-func (e *Edit) SetCharSpaceSize(size int, sizeZh int) int {
-	return xc.XEdit_SetCharSpaceSize(e.Handle, size, sizeZh)
+func (e *Edit) SetCharSpaceSize(size, sizeZh int) *Edit {
+	xc.XEdit_SetCharSpaceSize(e.Handle, size, sizeZh)
+	return e
 }
 
 // 编辑框_取选择文本长度, 不包括非文本内容, 返回文本内容长度.
@@ -699,8 +748,9 @@ func (e *Edit) GetSelectTextLength() int {
 // 编辑框_置选择文本样式.
 //
 // iStyle: 样式索引.
-func (e *Edit) SetSelectTextStyle(iStyle int) int {
-	return xc.XEdit_SetSelectTextStyle(e.Handle, iStyle)
+func (e *Edit) SetSelectTextStyle(iStyle int) *Edit {
+	xc.XEdit_SetSelectTextStyle(e.Handle, iStyle)
+	return e
 }
 
 // 编辑框_取文本_临时, 不包含非文本内容. 返回临时文本, 临时缓存区大小: xcc.Text_Buffer_Size .
@@ -727,8 +777,9 @@ func (e *Edit) GetSelectText_Temp() string {
 // hImageBubble: 气泡背景图片句柄.
 //
 // nFlag: 聊天气泡对齐方式: xcc.Chat_Flag_ .
-func (e *Edit) InsertChatBegin(hImageAvatar int, hImageBubble int, nFlag xcc.Chat_Flag_) int {
-	return xc.XEdit_InsertChatBegin(e.Handle, hImageAvatar, hImageBubble, nFlag)
+func (e *Edit) InsertChatBegin(hImageAvatar int, hImageBubble int, nFlag xcc.Chat_Flag_) *Edit {
+	xc.XEdit_InsertChatBegin(e.Handle, hImageAvatar, hImageBubble, nFlag)
+	return e
 }
 
 // 编辑框_取指定行气泡标识. 返回行标识: xcc.Chat_Flag_
@@ -747,8 +798,9 @@ func (e *Edit) GetChatFlags(iRow int) xcc.Chat_Flag_ {
 // pString: 字符串.
 //
 // iStyle: 样式.
-func (e *Edit) InsertTextEx(iRow int, iCol int, pString string, iStyle int) int {
-	return xc.XEdit_InsertTextEx(e.Handle, iRow, iCol, pString, iStyle)
+func (e *Edit) InsertTextEx(iRow int, iCol int, pString string, iStyle int) *Edit {
+	xc.XEdit_InsertTextEx(e.Handle, iRow, iCol, pString, iStyle)
+	return e
 }
 
 // 编辑框_插入对象.
@@ -758,15 +810,27 @@ func (e *Edit) InsertTextEx(iRow int, iCol int, pString string, iStyle int) int 
 // iCol: 列索引.
 //
 // hObj: 对象句柄.
-func (e *Edit) InsertObject(iRow int, iCol int, hObj int) int {
-	return xc.XEdit_InsertObject(e.Handle, iRow, iCol, hObj)
+func (e *Edit) InsertObject(iRow int, iCol int, hObj int) *Edit {
+	xc.XEdit_InsertObject(e.Handle, iRow, iCol, hObj)
+	return e
 }
 
 // 编辑框_置气泡最大宽度. 当值为0时代表不限制宽度.
 //
 // nWidth: 最大宽度.
-func (e *Edit) SetChatMaxWidth(nWidth int32) {
+func (e *Edit) SetChatMaxWidth(nWidth int32) *Edit {
 	xc.XEdit_SetChatMaxWidth(e.Handle, nWidth)
+	return e
+}
+
+// 编辑框_取总行数扩展. 包含自动换行数量, 返回总行数.
+func (e *Edit) GetRowCountEx() int32 {
+	return xc.XEdit_GetRowCountEx(e.Handle)
+}
+
+// 编辑框_剪贴板复制. 复制全部内容.
+func (e *Edit) ClipboardCopyAll() bool {
+	return xc.XEdit_ClipboardCopyAll(e.Handle)
 }
 
 /*

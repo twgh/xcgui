@@ -69,8 +69,9 @@ func NewShapeGifByUIDName(name string) *ShapeGif {
 // 形状GIF_置图片, 设置GIF图片.
 //
 // hImage: 图片句柄.
-func (s *ShapeGif) SetImage(hImage int) int {
-	return xc.XShapeGif_SetImage(s.Handle, hImage)
+func (s *ShapeGif) SetImage(hImage int) *ShapeGif {
+	xc.XShapeGif_SetImage(s.Handle, hImage)
+	return s
 }
 
 // 形状GIF_取图片, 获取图片句柄.

@@ -29,32 +29,32 @@ func New(bD2D bool) *App {
 }
 
 // Run 炫彩_运行. 运行消息循环, 当炫彩窗口数量为0时退出.
-//
-//	@return int
-func (a *App) Run() int {
-	return xc.XRunXCGUI()
+func (a *App) Run() *App {
+	xc.XRunXCGUI()
+	return a
 }
 
 // Exit 炫彩_退出, 退出界面库释放资源.
-//
-//	@return int
-func (a *App) Exit() int {
-	return xc.XExitXCGUI()
+func (a *App) Exit() *App {
+	xc.XExitXCGUI()
+	return a
 }
 
 // ShowAndRun 显示窗口并调用炫彩_运行.
 //
 //	@param hWindow 炫彩窗口句柄.
-func (a *App) ShowAndRun(hWindow int) {
+func (a *App) ShowAndRun(hWindow int) *App {
 	xc.XWnd_ShowWindow(hWindow, xcc.SW_SHOW)
 	xc.XRunXCGUI()
+	return a
 }
 
 // DebugToFileInfo 炫彩_输出调试信息到文件, 打印调试信息到文件xcgui_debug.txt.
 //
 //	@param pInfo 文本.
-func (a *App) DebugToFileInfo(pInfo string) {
+func (a *App) DebugToFileInfo(pInfo string) *App {
 	xc.XC_DebugToFileInfo(pInfo)
+	return a
 }
 
 // SetActivateTopWindow 炫彩_激活窗口, 激活当前进程最上层窗口.
@@ -295,22 +295,25 @@ func (a *App) GetObjectByName(pName string) int {
 // 炫彩_置绘制频率, 设置UI的最小重绘频率.
 //
 // nMilliseconds: 重绘最小时间间隔, 单位毫秒.
-func (a *App) SetPaintFrequency(nMilliseconds int) {
+func (a *App) SetPaintFrequency(nMilliseconds int) *App {
 	xc.XC_SetPaintFrequency(nMilliseconds)
+	return a
 }
 
 // 炫彩_置文本渲染质量, 设置文本渲染质量.
 //
 // nType: 参见GDI+ TextRenderingHint 定义.
-func (a *App) SetTextRenderingHint(nType int) {
+func (a *App) SetTextRenderingHint(nType int) *App {
 	xc.XC_SetTextRenderingHint(nType)
+	return a
 }
 
 // 炫彩_启用GDI绘制文本, 将影响到以下函数: XDraw_TextOut, XDraw_TextOutEx, XDraw_TextOutA.
 //
 // bEnable: 是否启用.
-func (a *App) EnableGdiDrawText(bEnable bool) {
+func (a *App) EnableGdiDrawText(bEnable bool) *App {
 	xc.XC_EnableGdiDrawText(bEnable)
+	return a
 }
 
 // 炫彩_判断矩形相交, 判断两个矩形是否相交及重叠.
@@ -329,50 +332,57 @@ func (a *App) RectInRect(pRect1 *xc.RECT, pRect2 *xc.RECT) bool {
 // pSrc1: 源矩形1.
 //
 // pSrc2: 源矩形2.
-func (a *App) CombineRect(pDest *xc.RECT, pSrc1 *xc.RECT, pSrc2 *xc.RECT) {
+func (a *App) CombineRect(pDest *xc.RECT, pSrc1 *xc.RECT, pSrc2 *xc.RECT) *App {
 	xc.XC_CombineRect(pDest, pSrc1, pSrc2)
+	return a
 }
 
 // 炫彩_显示布局边界, 显示布局对象边界.
 //
 // bShow: 是否显示.
-func (a *App) ShowLayoutFrame(bShow bool) {
+func (a *App) ShowLayoutFrame(bShow bool) *App {
 	xc.XC_ShowLayoutFrame(bShow)
+	return a
 }
 
 // 炫彩_启用debug文件.
 //
 // bEnable: 是否启用.
-func (a *App) EnableDebugFile(bEnable bool) {
+func (a *App) EnableDebugFile(bEnable bool) *App {
 	xc.XC_EnableDebugFile(bEnable)
+	return a
 }
 
 // 炫彩_启用资源监视器.
 //
 // bEnable: 是否启用.
-func (a *App) EnableResMonitor(bEnable bool) {
+func (a *App) EnableResMonitor(bEnable bool) *App {
 	xc.XC_EnableResMonitor(bEnable)
+	return a
 }
 
 // 炫彩_置布局边界颜色.
 //
-// color: ABGR 颜色值.
-func (a *App) SetLayoutFrameColor(color int) int {
-	return xc.XC_SetLayoutFrameColor(color)
+// color: ARGB 颜色值.
+func (a *App) SetLayoutFrameColor(color int) *App {
+	xc.XC_SetLayoutFrameColor(color)
+	return a
 }
 
 // 炫彩_启用错误弹窗, 启用错误弹出, 通过该接口可以设置遇到严重错误时不弹出消息提示框.
 //
 // bEnabel: 是否启用.
-func (a *App) EnableErrorMessageBox(bEnabel bool) int {
-	return xc.XC_EnableErrorMessageBox(bEnabel)
+func (a *App) EnableErrorMessageBox(bEnabel bool) *App {
+	xc.XC_EnableErrorMessageBox(bEnabel)
+	return a
 }
 
 // 炫彩_启用自动退出程序, 启动或禁用自动退出程序, 当检测到所有用户创建的窗口都关闭时, 自动退出程序; 可调用 XC_PostQuitMessage() 手动退出程序.
 //
 // bEnabel: 是否启用.
-func (a *App) EnableAutoExitApp(bEnabel bool) int {
-	return xc.XC_EnableAutoExitApp(bEnabel)
+func (a *App) EnableAutoExitApp(bEnabel bool) *App {
+	xc.XC_EnableAutoExitApp(bEnabel)
+	return a
 }
 
 // 炫彩_取文本绘制大小.
@@ -384,8 +394,9 @@ func (a *App) EnableAutoExitApp(bEnabel bool) int {
 // hFontX: 字体.
 //
 // pOutSize: 接收返回大小.
-func (a *App) GetTextSize(pString string, length int, hFontX int, pOutSize *xc.SIZE) int {
-	return xc.XC_GetTextSize(pString, length, hFontX, pOutSize)
+func (a *App) GetTextSize(pString string, length int, hFontX int, pOutSize *xc.SIZE) *App {
+	xc.XC_GetTextSize(pString, length, hFontX, pOutSize)
+	return a
 }
 
 // 炫彩_取文本显示大小.
@@ -397,8 +408,9 @@ func (a *App) GetTextSize(pString string, length int, hFontX int, pOutSize *xc.S
 // hFontX: 字体.
 //
 // pOutSize: 接收返回大小.
-func (a *App) GetTextShowSize(pString string, length int, hFontX int, pOutSize *xc.SIZE) int {
-	return xc.XC_GetTextShowSize(pString, length, hFontX, pOutSize)
+func (a *App) GetTextShowSize(pString string, length int, hFontX int, pOutSize *xc.SIZE) *App {
+	xc.XC_GetTextShowSize(pString, length, hFontX, pOutSize)
+	return a
 }
 
 // 炫彩_取文本显示大小扩展.
@@ -412,8 +424,9 @@ func (a *App) GetTextShowSize(pString string, length int, hFontX int, pOutSize *
 // nTextAlign: 文本对齐方式, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
 //
 // pOutSize: 接收返回大小.
-func (a *App) GetTextShowSizeEx(pString string, length int, hFontX int, nTextAlign xcc.TextFormatFlag_, pOutSize *xc.SIZE) int {
-	return xc.XC_GetTextShowSizeEx(pString, length, hFontX, nTextAlign, pOutSize)
+func (a *App) GetTextShowSizeEx(pString string, length int, hFontX int, nTextAlign xcc.TextFormatFlag_, pOutSize *xc.SIZE) *App {
+	xc.XC_GetTextShowSizeEx(pString, length, hFontX, nTextAlign, pOutSize)
+	return a
 }
 
 // GetTextShowRect 炫彩_取文本显示矩形.
@@ -425,22 +438,25 @@ func (a *App) GetTextShowSizeEx(pString string, length int, hFontX int, nTextAli
 //	@param width 最大宽度.
 //	@param pOutSize 接收返回大小.
 //	@return int
-func (a *App) GetTextShowRect(pString string, length int, hFontX int, nTextAlign xcc.TextFormatFlag_, width int, pOutSize *xc.SIZE) int {
-	return xc.XC_GetTextShowRect(pString, length, hFontX, nTextAlign, width, pOutSize)
+func (a *App) GetTextShowRect(pString string, length int, hFontX int, nTextAlign xcc.TextFormatFlag_, width int, pOutSize *xc.SIZE) *App {
+	xc.XC_GetTextShowRect(pString, length, hFontX, nTextAlign, width, pOutSize)
+	return a
 }
 
 // 炫彩_置默认字体.
 //
 // hFontX: 炫彩字体句柄.
-func (a *App) SetDefaultFont(hFontX int) int {
-	return xc.XC_SetDefaultFont(hFontX)
+func (a *App) SetDefaultFont(hFontX int) *App {
+	xc.XC_SetDefaultFont(hFontX)
+	return a
 }
 
 // 炫彩_添加搜索路径, 添加文件搜索路径, 默认路径为exe目录和程序当前运行目录.
 //
 // pPath: 文件夹.
-func (a *App) AddFileSearchPath(pPath string) int {
-	return xc.XC_AddFileSearchPath(pPath)
+func (a *App) AddFileSearchPath(pPath string) *App {
+	xc.XC_AddFileSearchPath(pPath)
+	return a
 }
 
 // 炫彩_初始化字体, 初始化LOGFONTW结构体.
@@ -458,22 +474,25 @@ func (a *App) AddFileSearchPath(pPath string) int {
 // bUnderline: 是否有下划线.
 //
 // bStrikeOut: 是否有删除线.
-func (a *App) InitFont(pFont *xc.LOGFONTW, pName string, size int, bBold bool, bItalic bool, bUnderline bool, bStrikeOut bool) int {
-	return xc.XC_InitFont(pFont, pName, size, bBold, bItalic, bUnderline, bStrikeOut)
+func (a *App) InitFont(pFont *xc.LOGFONTW, pName string, size int, bBold bool, bItalic bool, bUnderline bool, bStrikeOut bool) *App {
+	xc.XC_InitFont(pFont, pName, size, bBold, bItalic, bUnderline, bStrikeOut)
+	return a
 }
 
 // 炫彩_分配内存, 在UI库中申请内存, 返回: 内存首地址.
 //
 // size: 大小, 字节为单位.
-func (a *App) Malloc(size int) int {
-	return xc.XC_Malloc(size)
+func (a *App) Malloc(size int32) *App {
+	xc.XC_Malloc(size)
+	return a
 }
 
 // 炫彩_释放内存, 在UI库中释放内存.
 //
 // p: 内存首地址.
-func (a *App) Free(p int) int {
-	return xc.XC_Free(p)
+func (a *App) Free(p uintptr) *App {
+	xc.XC_Free(p)
+	return a
 }
 
 // 炫彩_弹框, 弹出提示框.
@@ -481,8 +500,9 @@ func (a *App) Free(p int) int {
 // pTitle: 提示框标题.
 //
 // pText: 提示内容.
-func (a *App) Alert(pTitle string, pText string) int {
-	return xc.XC_Alert(pTitle, pText)
+func (a *App) Alert(pTitle string, pText string) *App {
+	xc.XC_Alert(pTitle, pText)
+	return a
 }
 
 // 对指定文件执行操作. 如果函数成功，则返回大于 32 的值。如果函数失败，则返回指示失败原因的错误值.
@@ -535,8 +555,9 @@ func (a *App) LoadDll(pDllFileName string) uintptr {
 // 炫彩_PostQuitMessage, 发送WM_QUIT消息退出消息循环.
 //
 // nExitCode: 退出码.
-func (a *App) PostQuitMessage(nExitCode int) int {
-	return xc.XC_PostQuitMessage(nExitCode)
+func (a *App) PostQuitMessage(nExitCode int) *App {
+	xc.XC_PostQuitMessage(nExitCode)
+	return a
 }
 
 // 炫彩_加载布局文件, 返回窗口句柄或布局句柄或元素句柄.
@@ -877,8 +898,9 @@ func (a *App) AnsiToUnicode(pIn uintptr, inLen int, pOut *string, outLen int) in
 // level: 级别.
 //
 // pInfo: 信息.
-func (a *App) Print(level int, pInfo string) int {
-	return xc.XDebug_Print(level, pInfo)
+func (a *App) Print(level int, pInfo string) *App {
+	xc.XDebug_Print(level, pInfo)
+	return a
 }
 
 /*
@@ -918,8 +940,9 @@ func (a *App) GetWicFactory() int {
 // 炫彩_置D2D文本渲染模式.
 //
 // mode: 渲染模式, XC_DWRITE_RENDERING_MODE_ .
-func (a *App) SetD2dTextRenderingMode(mode xcc.XC_DWRITE_RENDERING_MODE_) int {
-	return xc.XC_SetD2dTextRenderingMode(mode)
+func (a *App) SetD2dTextRenderingMode(mode xcc.XC_DWRITE_RENDERING_MODE_) *App {
+	xc.XC_SetD2dTextRenderingMode(mode)
+	return a
 }
 
 // 炫彩_是否启用了D2D.
@@ -939,8 +962,9 @@ func (a *App) LoadStyleFromStringW(pFileName string, pString string) bool {
 // 炫彩_显示边界.
 //
 // bShow: 是否显示.
-func (a *App) ShowSvgFrame(bShow bool) int {
-	return xc.XC_ShowSvgFrame(bShow)
+func (a *App) ShowSvgFrame(bShow bool) *App {
+	xc.XC_ShowSvgFrame(bShow)
+	return a
 }
 
 // 通知消息_弹出, 未实现, 预留接口.
@@ -1050,27 +1074,44 @@ func (a *App) NotifyMsg_SetBorderSize(hWindow, left, top, right, bottom int) int
 // 炫彩_启用自动DPI. 当启用后, 创建窗口时自动检测DPI调整UI缩放, 处理DPI改变消息; 禁用后,当DPI改变,需要手动设置窗口DPI.
 //
 // bEnabel: 是否启用.
-func (a *App) EnableAutoDPI(bEnabel bool) int {
-	return xc.XC_EnableAutoDPI(bEnabel)
+func (a *App) EnableAutoDPI(bEnabel bool) *App {
+	xc.XC_EnableAutoDPI(bEnabel)
+	return a
 }
 
 // 炫彩_置窗口图标. 全局窗口图标, 所有未设置图标的窗口, 都将使用此默认图标.
 //
 // hImage: 图标句柄.
-func (a *App) SetWindowIcon(hImage int) int {
-	return xc.XC_SetWindowIcon(hImage)
+func (a *App) SetWindowIcon(hImage int) *App {
+	xc.XC_SetWindowIcon(hImage)
+	return a
 }
 
 // 炫彩_启用DPI.
 //
 // 为go程序启用DPI的几种方式:
-//  1. 使用程序清单文件.
-//  2. 调用此函数.
-//  3. 自己调用DPI函数.
+//  1. 调用此函数.
+//  2. 使用程序清单文件.
+//  3. 自行调用Windows DPI命令.
 //
 // 参考[MSDN](https://learn.microsoft.com/zh-cn/windows/win32/hidpi/setting-the-default-dpi-awareness-for-a-process)
 //
 // bEnabel: 是否启用.
 func (a *App) EnableDPI(bEnabel bool) bool {
 	return xc.XC_EnableDPI(bEnabel)
+}
+
+// 炫彩_启用自动重绘UI. 当修改UI后将自动调用重绘函数更新UI.
+//
+// 例如改变了按钮标题后, 将自动调用 xc.XEle_Redraw 更新UI, 默认不启用, 手动和自动各有优势.
+//
+// bEnabel: 是否启用.
+func (a *App) EnableAutoRedrawUI(bEnabel bool) *App {
+	xc.XC_EnableAutoRedrawUI(bEnabel)
+	return a
+}
+
+// 炫彩_取句柄总数. 获取当前所使用的句柄总数量, 返回当前所使用的句柄总数量.
+func (a *App) GetHandleCount() int32 {
+	return xc.XC_GetHandleCount()
 }

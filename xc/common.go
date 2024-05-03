@@ -3,8 +3,6 @@ package xc
 import (
 	"github.com/twgh/xcgui/xcc"
 	"os"
-	"strconv"
-	"strings"
 	"syscall"
 )
 
@@ -46,54 +44,44 @@ func PointInRect(pt POINT, rc RECT) bool {
 	return pt.X <= rc.Right && pt.X >= rc.Left && pt.Y <= rc.Bottom && pt.Y >= rc.Top
 }
 
-// ABGR 根据r, g, b, a组合成ABGR颜色.
+// ARGB 根据r, g, b, a组合成ARGB颜色.
 //
 //	@param r 红色分量.
 //	@param g 绿色分量.
 //	@param b 蓝色分量.
 //	@param a 透明度.
-//	@return int ABGR颜色.
-func ABGR(r, g, b, a byte) int {
-	return int(uint32(r) | uint32(g)<<8 | uint32(b)<<16 | uint32(a)<<24)
+//	@return int ARGB颜色.
+func ARGB(r, g, b, a byte) int {
+	return int(uint32(a)<<24 | uint32(r) | uint32(g)<<8 | uint32(b)<<16)
 }
 
-// ABGR2 根据bgr, a组合成ABGR颜色.
+// ARGB2 根据rgb, a组合成十进制ARGB颜色.
 //
-//	@param bgr BGR颜色.
+//	@param rgb RGB颜色.
 //	@param a 透明度.
-//	@return int ABGR颜色.
-func ABGR2(bgr int, a byte) int {
-	return int((uint32(bgr) & 16777215) | (uint32(a)&255)<<24)
+//	@return int ARGB颜色.
+func ARGB2(rgb int, a byte) int {
+	return int((uint32(rgb) & 16777215) | uint32(a)<<24)
 }
 
-// RGBA 根据r, g, b, a组合成ABGR颜色. 和 ABGR 函数一模一样, 只是为了符合部分人使用习惯.
+// RGBA 根据r, g, b, a组合成ARGB颜色. 和 ARGB 函数一模一样, 只是为了符合部分人使用习惯.
 //
 //	@param r 红色分量.
 //	@param g 绿色分量.
 //	@param b 蓝色分量.
 //	@param a 透明度.
-//	@return int ABGR颜色.
+//	@return int ARGB颜色.
 func RGBA(r, g, b, a byte) int {
-	return int(uint32(r) | uint32(g)<<8 | uint32(b)<<16 | uint32(a)<<24)
+	return int(uint32(a)<<24 | uint32(r) | uint32(g)<<8 | uint32(b)<<16)
 }
 
-// RGBA2 根据bgr, a组合成十进制ABGR颜色. 和 ABGR2 函数一模一样, 只是为了符合部分人使用习惯.
+// RGBA2 根据rgb, a组合成十进制ARGB颜色. 和 ARGB2 函数一模一样, 只是为了符合部分人使用习惯.
 //
-//	@param bgr BGR颜色.
+//	@param rgb RGB颜色.
 //	@param a 透明度.
-//	@return int ABGR颜色.
-func RGBA2(bgr int, a byte) int {
-	return int((uint32(bgr) & 16777215) | uint32(a)<<24)
-}
-
-// BGR 根据r, g, b组合成BGR颜色.
-//
-//	@param r 红色分量.
-//	@param g 绿色分量.
-//	@param b 蓝色分量.
-//	@return int BGR颜色.
-func BGR(r, g, b byte) int {
-	return int(uint32(r) | uint32(g)<<8 | uint32(b)<<16)
+//	@return int ARGB颜色.
+func RGBA2(rgb int, a byte) int {
+	return int((uint32(rgb) & 16777215) | uint32(a)<<24)
 }
 
 // RGB 根据r, g, b组合成RGB颜色.
@@ -103,55 +91,19 @@ func BGR(r, g, b byte) int {
 //	@param b 蓝色分量.
 //	@return int RGB颜色.
 func RGB(r, g, b byte) int {
-	return int(uint32(b) | uint32(g)<<8 | uint32(r)<<16)
+	return int(uint32(r) | uint32(g)<<8 | uint32(b)<<16)
 }
 
-// RGB2ABGR 将RGB颜色转换到ABGR颜色.
+// RGB2ARGB 将RGB颜色转换到ARGB颜色.
 //
 //	@param rgb RGB颜色.
 //	@param a 透明度.
-//	@return int ABGR颜色.
-func RGB2ABGR(rgb int, a byte) int {
-	r := rgb % 256
-	g := (rgb / 256) % 256
-	b := rgb / 65536
-	return ABGR(byte(r), byte(g), byte(b), a)
-}
-
-// RGB2BGR 将RGB颜色转换到BGR颜色.
-//
-//	@param rgb RGB颜色.
-//	@return int BGR颜色.
-func RGB2BGR(rgb int) int {
-	r := byte(rgb % 256)
-	g := byte((rgb / 256) % 256)
-	b := byte(rgb / 65536)
-	return BGR(r, g, b)
-}
-
-// HexRGB2BGR 将十六进制RGB颜色转换到十进制BGR颜色.
-//
-//	@param str 十六进制RGB颜色, 开头有没有#都可以.
-//	@return int BGR颜色.
-func HexRGB2BGR(str string) int {
-	s := strings.TrimLeft(str, "#")
-	r, _ := strconv.ParseInt(s[:2], 16, 10)
-	g, _ := strconv.ParseInt(s[2:4], 16, 18)
-	b, _ := strconv.ParseInt(s[4:], 16, 10)
-	return BGR(byte(r), byte(g), byte(b))
-}
-
-// HexRGB2ABGR 将十六进制RGB颜色转换到十进制ABGR颜色.
-//
-//	@param str 十六进制RGB颜色, 开头有没有#都可以.
-//	@param a 透明度.
-//	@return int ABGR颜色.
-func HexRGB2ABGR(str string, a byte) int {
-	s := strings.TrimLeft(str, "#")
-	r, _ := strconv.ParseInt(s[:2], 16, 10)
-	g, _ := strconv.ParseInt(s[2:4], 16, 18)
-	b, _ := strconv.ParseInt(s[4:], 16, 10)
-	return ABGR(byte(r), byte(g), byte(b), a)
+//	@return int ARGB颜色.
+func RGB2ARGB(rgb int, a byte) int {
+	r := byte(rgb & 255)
+	g := byte((rgb >> 8) & 255)
+	b := byte((rgb >> 16) & 255)
+	return ARGB(r, g, b, a)
 }
 
 // HexRGB2RGB 将十六进制RGB颜色转换到十进制RGB颜色.
@@ -159,11 +111,46 @@ func HexRGB2ABGR(str string, a byte) int {
 //	@param str 十六进制RGB颜色, 开头有没有#都可以.
 //	@return int RGB颜色.
 func HexRGB2RGB(str string) int {
-	s := strings.TrimLeft(str, "#")
-	r, _ := strconv.ParseInt(s[:2], 16, 10)
-	g, _ := strconv.ParseInt(s[2:4], 16, 18)
-	b, _ := strconv.ParseInt(s[4:], 16, 10)
-	return RGB(byte(r), byte(g), byte(b))
+	if len(str) > 0 && str[0] == '#' {
+		str = str[1:]
+	}
+	if len(str) != 6 {
+		return 0 // 返回一个默认值或错误
+	}
+	r := hexToByte(str[0:2])
+	g := hexToByte(str[2:4])
+	b := hexToByte(str[4:6])
+	return RGB(r, g, b)
+}
+
+// HexRGB2ARGB 将十六进制RGB颜色转换到十进制ARGB颜色.
+//
+//	@param str 十六进制RGB颜色, 开头有没有#都可以.
+//	@param a 透明度.
+//	@return int ARGB颜色.
+func HexRGB2ARGB(str string, a byte) int {
+	return ARGB2(HexRGB2RGB(str), a)
+}
+
+func hexToByte(s string) byte {
+	if len(s) != 2 {
+		return 0 // 返回一个默认值或错误
+	}
+	nib1 := hexToNibble(s[0])
+	nib2 := hexToNibble(s[1])
+	return (nib1 << 4) | nib2
+}
+
+func hexToNibble(c byte) byte {
+	if c >= '0' && c <= '9' {
+		return c - '0'
+	} else if c >= 'A' && c <= 'F' {
+		return c - 'A' + 10
+	} else if c >= 'a' && c <= 'f' {
+		return c - 'a' + 10
+	} else {
+		return 0 // 返回一个默认值或错误
+	}
 }
 
 // SetBnClicks 给一个窗口或布局元素中所有的按钮注册按钮单击事件.
@@ -194,11 +181,4 @@ func SetBnClicks(HXCGUI int, onBnClick func(hEle int, pbHandled *bool) int) {
 			}
 		}
 	}
-}
-
-// Deprecated
-//
-// !已废弃, 请使用 xc.XWnd_ClientToScreen 或 wapi.ClientToScreen
-func ClientToScreen(hWindow int, pPoint *POINT) {
-	XWnd_ClientToScreen(hWindow, pPoint)
 }

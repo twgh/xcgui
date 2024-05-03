@@ -24,7 +24,7 @@ func NewByHandle(handle int) *BkObj {
 // bkm: 背景管理器对象.
 //
 // id: 背景对象ID.
-func NewByBkm(bkm *bkmanager.BkManager, id int) *BkObj {
+func NewByBkm(bkm *bkmanager.BkManager, id int32) *BkObj {
 	handle := bkm.GetObject(id)
 	if handle == 0 {
 		return nil
@@ -39,7 +39,7 @@ func NewByBkm(bkm *bkmanager.BkManager, id int) *BkObj {
 // hBkm: 背景管理器句柄.
 //
 // id: 背景对象ID.
-func NewByBkmHandle(hBkm, id int) *BkObj {
+func NewByBkmHandle(hBkm int, id int32) *BkObj {
 	handle := xc.XBkM_GetObject(hBkm, id)
 	if handle == 0 {
 		return nil
@@ -58,50 +58,57 @@ func NewByBkmHandle(hBkm, id int) *BkObj {
 // right: 右边间距.
 //
 // bottom: 底部间距.
-func (b *BkObj) SetMargin(left int, top int, right int, bottom int) int {
-	return xc.XBkObj_SetMargin(b.Handle, left, top, right, bottom)
+func (b *BkObj) SetMargin(left, top, right, bottom int32) *BkObj {
+	xc.XBkObj_SetMargin(b.Handle, left, top, right, bottom)
+	return b
 }
 
 // 背景对象_置对齐.
 //
 // nFlags: 对齐方式: xcc.BkObject_Align_Flag_.
-func (b *BkObj) SetAlign(nFlags xcc.BkObject_Align_Flag_) int {
-	return xc.XBkObj_SetAlign(b.Handle, nFlags)
+func (b *BkObj) SetAlign(nFlags xcc.BkObject_Align_Flag_) *BkObj {
+	xc.XBkObj_SetAlign(b.Handle, nFlags)
+	return b
 }
 
 // 背景对象_置图片.
 //
 // hImage: 图片句柄.
-func (b *BkObj) SetImage(hImage int) int {
-	return xc.XBkObj_SetImage(b.Handle, hImage)
+func (b *BkObj) SetImage(hImage int) *BkObj {
+	xc.XBkObj_SetImage(b.Handle, hImage)
+	return b
 }
 
 // 背景对象_置旋转.
 //
 // angle: 旋转角度.
-func (b *BkObj) SetRotate(angle float32) int {
-	return xc.XBkObj_SetRotate(b.Handle, angle)
+func (b *BkObj) SetRotate(angle float32) *BkObj {
+	xc.XBkObj_SetRotate(b.Handle, angle)
+	return b
 }
 
 // 背景对象_置填充颜色.
 //
-// color: ABGR 颜色值.
-func (b *BkObj) SetFillColor(color int) int {
-	return xc.XBkObj_SetFillColor(b.Handle, color)
+// color: ARGB 颜色值.
+func (b *BkObj) SetFillColor(color int) *BkObj {
+	xc.XBkObj_SetFillColor(b.Handle, color)
+	return b
 }
 
 // 背景对象_置边框宽度.
 //
 // width: 宽度.
-func (b *BkObj) SetBorderWidth(width int) int {
-	return xc.XBkObj_SetBorderWidth(b.Handle, width)
+func (b *BkObj) SetBorderWidth(width int32) *BkObj {
+	xc.XBkObj_SetBorderWidth(b.Handle, width)
+	return b
 }
 
 // 背景对象_置边框颜色.
 //
-// color: ABGR 颜色值.
-func (b *BkObj) SetBorderColor(color int) int {
-	return xc.XBkObj_SetBorderColor(b.Handle, color)
+// color: xc.ARGB 颜色值.
+func (b *BkObj) SetBorderColor(color int) *BkObj {
+	xc.XBkObj_SetBorderColor(b.Handle, color)
+	return b
 }
 
 // 背景对象_置矩形圆角.
@@ -113,50 +120,57 @@ func (b *BkObj) SetBorderColor(color int) int {
 // rightTop: 右上角.
 //
 // rightBottom: 右下角.
-func (b *BkObj) SetRectRoundAngle(leftTop int, leftBottom int, rightTop int, rightBottom int) int {
-	return xc.XBkObj_SetRectRoundAngle(b.Handle, leftTop, leftBottom, rightTop, rightBottom)
+func (b *BkObj) SetRectRoundAngle(leftTop, leftBottom, rightTop, rightBottom int32) *BkObj {
+	xc.XBkObj_SetRectRoundAngle(b.Handle, leftTop, leftBottom, rightTop, rightBottom)
+	return b
 }
 
 // 背景对象_启用填充, 启用绘制填充.
 //
 // bEnable: 是否启用.
-func (b *BkObj) EnableFill(bEnable bool) int {
-	return xc.XBkObj_EnableFill(b.Handle, bEnable)
+func (b *BkObj) EnableFill(bEnable bool) *BkObj {
+	xc.XBkObj_EnableFill(b.Handle, bEnable)
+	return b
 }
 
 // 背景对象_启用边框, 启用绘制边框.
 //
 // bEnable: 是否启用.
-func (b *BkObj) EnableBorder(bEnable bool) int {
-	return xc.XBkObj_EnableBorder(b.Handle, bEnable)
+func (b *BkObj) EnableBorder(bEnable bool) *BkObj {
+	xc.XBkObj_EnableBorder(b.Handle, bEnable)
+	return b
 }
 
 // 背景对象_置文本.
 //
 // pText: 文本字符串.
-func (b *BkObj) SetText(pText string) int {
-	return xc.XBkObj_SetText(b.Handle, pText)
+func (b *BkObj) SetText(pText string) *BkObj {
+	xc.XBkObj_SetText(b.Handle, pText)
+	return b
 }
 
 // 背景对象_置字体.
 //
 // hFont: 字体句柄.
-func (b *BkObj) SetFont(hFont int) int {
-	return xc.XBkObj_SetFont(b.Handle, hFont)
+func (b *BkObj) SetFont(hFont int) *BkObj {
+	xc.XBkObj_SetFont(b.Handle, hFont)
+	return b
 }
 
 // 背景对象_置文本对齐.
 //
 // nAlign: 文本对齐方式: xcc.TextFormatFlag_, xcc.TextAlignFlag_, xcc.TextTrimming_.
-func (b *BkObj) SetTextAlign(nAlign xcc.TextFormatFlag_) int {
-	return xc.XBkObj_SetTextAlign(b.Handle, nAlign)
+func (b *BkObj) SetTextAlign(nAlign xcc.TextFormatFlag_) *BkObj {
+	xc.XBkObj_SetTextAlign(b.Handle, nAlign)
+	return b
 }
 
 // 背景对象_取外间距.
 //
 // pMargin: 接收返回外间距.
-func (b *BkObj) GetMargin(pMargin *xc.RECT) int {
-	return xc.XBkObj_GetMargin(b.Handle, pMargin)
+func (b *BkObj) GetMargin(pMargin *xc.RECT) *BkObj {
+	xc.XBkObj_GetMargin(b.Handle, pMargin)
+	return b
 }
 
 // 背景对象_取对齐, 返回对齐标识: xcc.BkObject_Align_Flag_.
@@ -170,30 +184,33 @@ func (b *BkObj) GetImage() int {
 }
 
 // 背景对象_取旋转角度, 返回旋转角度.
-func (b *BkObj) GetRotate() int {
-	return xc.XBkObj_GetRotate(b.Handle)
+func (b *BkObj) GetRotate() *BkObj {
+	xc.XBkObj_GetRotate(b.Handle)
+	return b
 }
 
-// 背景对象_取填充色, 返回ABGR填充色.
+// 背景对象_取填充色, 返回ARGB填充色.
 func (b *BkObj) GetFillColor() int {
 	return xc.XBkObj_GetFillColor(b.Handle)
 }
 
-// 背景对象_取边框色, 返回ABGR边框色.
+// 背景对象_取边框色, 返回ARGB边框色.
 func (b *BkObj) GetBorderColor() int {
 	return xc.XBkObj_GetBorderColor(b.Handle)
 }
 
 // 背景对象_取边框宽度, 返回边框宽度.
-func (b *BkObj) GetBorderWidth() int {
-	return xc.XBkObj_GetBorderWidth(b.Handle)
+func (b *BkObj) GetBorderWidth() *BkObj {
+	xc.XBkObj_GetBorderWidth(b.Handle)
+	return b
 }
 
 // 背景对象_取矩形圆角.
 //
 // pRect: 接收返回圆角大小.
-func (b *BkObj) GetRectRoundAngle(pRect *xc.RECT) int {
-	return xc.XBkObj_GetRectRoundAngle(b.Handle, pRect)
+func (b *BkObj) GetRectRoundAngle(pRect *xc.RECT) *BkObj {
+	xc.XBkObj_GetRectRoundAngle(b.Handle, pRect)
+	return b
 }
 
 // 背景对象_是否填充.

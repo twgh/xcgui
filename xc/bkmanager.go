@@ -16,21 +16,8 @@ func XBkM_Create() int {
 // 背景_销毁.
 //
 // hBkInfoM: 背景管理器句柄.
-func XBkM_Destroy(hBkInfoM int) int {
-	r, _, _ := xBkM_Destroy.Call(uintptr(hBkInfoM))
-	return int(r)
-}
-
-// !废弃函数, 保留为了兼容旧版; 请使用 XBkM_SetInfo().
-//
-// 背景_置内容, 设置背景内容, 返回设置的背景对象数量.
-//
-// hBkInfoM: 背景管理器句柄.
-//
-// pText: 背景内容字符串.
-func XBkM_SetBkInfo(hBkInfoM int, pText string) int {
-	r, _, _ := xBkM_SetBkInfo.Call(uintptr(hBkInfoM), common.StrPtr(pText))
-	return int(r)
+func XBkM_Destroy(hBkInfoM int) {
+	xBkM_Destroy.Call(uintptr(hBkInfoM))
 }
 
 // 背景_添加内容, 添加背景内容, 返回添加的背景对象数量.
@@ -38,9 +25,9 @@ func XBkM_SetBkInfo(hBkInfoM int, pText string) int {
 // hBkInfoM: 背景管理器句柄.
 //
 // pText: 背景内容字符串.
-func XBkM_AddInfo(hBkInfoM int, pText string) int {
+func XBkM_AddInfo(hBkInfoM int, pText string) int32 {
 	r, _, _ := xBkM_AddInfo.Call(uintptr(hBkInfoM), common.StrPtr(pText))
-	return int(r)
+	return int32(r)
 }
 
 // 背景_添加边框, 添加背景内容边框.
@@ -49,14 +36,13 @@ func XBkM_AddInfo(hBkInfoM int, pText string) int {
 //
 // nState: 组合状态.
 //
-// color: ABGR 颜色.
+// color: ARGB 颜色.
 //
 // width: 线宽.
 //
 // id: 背景对象ID, 可忽略(填0).
-func XBkM_AddBorder(hBkInfoM int, nState xcc.CombinedState, color, width, id int) int {
-	r, _, _ := xBkM_AddBorder.Call(uintptr(hBkInfoM), uintptr(nState), uintptr(color), uintptr(width), uintptr(id))
-	return int(r)
+func XBkM_AddBorder(hBkInfoM int, nState xcc.CombinedState, color int, width, id int32) {
+	xBkM_AddBorder.Call(uintptr(hBkInfoM), uintptr(nState), uintptr(color), uintptr(width), uintptr(id))
 }
 
 // 背景_添加填充, 添加背景内容填充.
@@ -65,12 +51,11 @@ func XBkM_AddBorder(hBkInfoM int, nState xcc.CombinedState, color, width, id int
 //
 // nState: 组合状态.
 //
-// color: ABGR 颜色.
+// color: ARGB 颜色.
 //
 // id: 背景对象ID, 可忽略(填0).
-func XBkM_AddFill(hBkInfoM int, nState xcc.CombinedState, color, id int) int {
-	r, _, _ := xBkM_AddFill.Call(uintptr(hBkInfoM), uintptr(nState), uintptr(color), uintptr(id))
-	return int(r)
+func XBkM_AddFill(hBkInfoM int, nState xcc.CombinedState, color int, id int32) {
+	xBkM_AddFill.Call(uintptr(hBkInfoM), uintptr(nState), uintptr(color), uintptr(id))
 }
 
 // 背景_添加图片, 添加背景内容图片.
@@ -82,25 +67,23 @@ func XBkM_AddFill(hBkInfoM int, nState xcc.CombinedState, color, id int) int {
 // hImage: 图片句柄.
 //
 // id: 背景对象ID, 可忽略(填0).
-func XBkM_AddImage(hBkInfoM int, nState xcc.CombinedState, hImage, id int) int {
-	r, _, _ := xBkM_AddImage.Call(uintptr(hBkInfoM), uintptr(nState), uintptr(hImage), uintptr(id))
-	return int(r)
+func XBkM_AddImage(hBkInfoM int, nState xcc.CombinedState, hImage int, id int32) {
+	xBkM_AddImage.Call(uintptr(hBkInfoM), uintptr(nState), uintptr(hImage), uintptr(id))
 }
 
 // 背景_取数量, 获取背景内容数量.
 //
 // hBkInfoM: 背景管理器句柄.
-func XBkM_GetCount(hBkInfoM int) int {
+func XBkM_GetCount(hBkInfoM int) int32 {
 	r, _, _ := xBkM_GetCount.Call(uintptr(hBkInfoM))
-	return int(r)
+	return int32(r)
 }
 
 // 背景_清空, 清空背景内容.
 //
 // hBkInfoM: 背景管理器句柄.
-func XBkM_Clear(hBkInfoM int) int {
-	r, _, _ := xBkM_Clear.Call(uintptr(hBkInfoM))
-	return int(r)
+func XBkM_Clear(hBkInfoM int) {
+	xBkM_Clear.Call(uintptr(hBkInfoM))
 }
 
 // 背景_绘制, 绘制背景内容.
@@ -140,33 +123,30 @@ func XBkM_DrawEx(hBkInfoM int, nState xcc.CombinedState, hDraw int, pRect *RECT,
 // hBkInfoM: 背景管理器句柄.
 //
 // bEnable: 是否启用.
-func XBkM_EnableAutoDestroy(hBkInfoM int, bEnable bool) int {
-	r, _, _ := xBkM_EnableAutoDestroy.Call(uintptr(hBkInfoM), common.BoolPtr(bEnable))
-	return int(r)
+func XBkM_EnableAutoDestroy(hBkInfoM int, bEnable bool) {
+	xBkM_EnableAutoDestroy.Call(uintptr(hBkInfoM), common.BoolPtr(bEnable))
 }
 
 // 背景_增加引用计数.
 //
 // hBkInfoM: 背景管理器句柄.
-func XBkM_AddRef(hBkInfoM int) int {
-	r, _, _ := xBkM_AddRef.Call(uintptr(hBkInfoM))
-	return int(r)
+func XBkM_AddRef(hBkInfoM int) {
+	xBkM_AddRef.Call(uintptr(hBkInfoM))
 }
 
 // 背景_释放引用计数.
 //
 // hBkInfoM: 背景管理器句柄.
-func XBkM_Release(hBkInfoM int) int {
-	r, _, _ := xBkM_Release.Call(uintptr(hBkInfoM))
-	return int(r)
+func XBkM_Release(hBkInfoM int) {
+	xBkM_Release.Call(uintptr(hBkInfoM))
 }
 
 // 背景_取引用计数.
 //
 // hBkInfoM: 背景管理器句柄.
-func XBkM_GetRefCount(hBkInfoM int) int {
+func XBkM_GetRefCount(hBkInfoM int) int32 {
 	r, _, _ := xBkM_GetRefCount.Call(uintptr(hBkInfoM))
-	return int(r)
+	return int32(r)
 }
 
 // 背景_取引用计数, 设置背景内容, 返回设置的背景对象数量.
@@ -174,9 +154,9 @@ func XBkM_GetRefCount(hBkInfoM int) int {
 // hBkInfoM: 背景管理器句柄.
 //
 // pText: 背景内容字符串.
-func XBkM_SetInfo(hBkInfoM int, pText string) int {
+func XBkM_SetInfo(hBkInfoM int, pText string) int32 {
 	r, _, _ := xBkM_SetInfo.Call(uintptr(hBkInfoM), common.StrPtr(pText))
-	return int(r)
+	return int32(r)
 }
 
 // 背景_取指定状态文本颜色.
@@ -185,7 +165,7 @@ func XBkM_SetInfo(hBkInfoM int, pText string) int {
 //
 // nState: 组合状态.
 //
-// color: 接收返回的ABGR 颜色.
+// color: 接收返回的ARGB 颜色.
 func XBkM_GetStateTextColor(hBkInfoM int, nState xcc.CombinedState, color *int) bool {
 	r, _, _ := xBkM_GetStateTextColor.Call(uintptr(hBkInfoM), uintptr(nState), uintptr(unsafe.Pointer(color)))
 	return r != 0
@@ -196,7 +176,7 @@ func XBkM_GetStateTextColor(hBkInfoM int, nState xcc.CombinedState, color *int) 
 // hBkInfoM: 背景管理器句柄.
 //
 // id: 背景对象ID.
-func XBkM_GetObject(hBkInfoM int, id int) int {
+func XBkM_GetObject(hBkInfoM int, id int32) int {
 	r, _, _ := xBkM_GetObject.Call(uintptr(hBkInfoM), uintptr(id))
 	return int(r)
 }

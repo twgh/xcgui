@@ -80,8 +80,9 @@ func NewLayoutFrameByUIDName(name string) *LayoutFrame {
 //
 //	@param bEnable 是否启用.
 //	@return int
-func (l *LayoutFrame) ShowLayoutFrame(bEnable bool) int {
-	return xc.XLayoutFrame_ShowLayoutFrame(l.Handle, bEnable)
+func (l *LayoutFrame) ShowLayoutFrame(bEnable bool) *LayoutFrame {
+	xc.XLayoutFrame_ShowLayoutFrame(l.Handle, bEnable)
+	return l
 }
 
 /*
@@ -92,62 +93,70 @@ LayoutBox-布局盒子
 //
 //	@param bEnable 是否启用.
 //	@return int
-func (l *LayoutFrame) EnableHorizon(bEnable bool) int {
-	return xc.XLayoutBox_EnableHorizon(l.Handle, bEnable)
+func (l *LayoutFrame) EnableHorizon(bEnable bool) *LayoutFrame {
+	xc.XLayoutBox_EnableHorizon(l.Handle, bEnable)
+	return l
 }
 
 // EnableAutoWrap 布局盒子_启用自动换行.
 //
 //	@param bEnable 是否启用.
 //	@return int
-func (l *LayoutFrame) EnableAutoWrap(bEnable bool) int {
-	return xc.XLayoutBox_EnableAutoWrap(l.Handle, bEnable)
+func (l *LayoutFrame) EnableAutoWrap(bEnable bool) *LayoutFrame {
+	xc.XLayoutBox_EnableAutoWrap(l.Handle, bEnable)
+	return l
 }
 
 // EnableOverflowHide 布局盒子_启用溢出隐藏.
 //
 //	@param bEnable 是否启用.
 //	@return int
-func (l *LayoutFrame) EnableOverflowHide(bEnable bool) int {
-	return xc.XLayoutBox_EnableOverflowHide(l.Handle, bEnable)
+func (l *LayoutFrame) EnableOverflowHide(bEnable bool) *LayoutFrame {
+	xc.XLayoutBox_EnableOverflowHide(l.Handle, bEnable)
+	return l
 }
 
 // SetAlignH 布局盒子_置水平对齐.
 //
 //	@param nAlign 对齐方式: xcc.Layout_Align_.
 //	@return int
-func (l *LayoutFrame) SetAlignH(nAlign xcc.Layout_Align_) int {
-	return xc.XLayoutBox_SetAlignH(l.Handle, nAlign)
+func (l *LayoutFrame) SetAlignH(nAlign xcc.Layout_Align_) *LayoutFrame {
+	xc.XLayoutBox_SetAlignH(l.Handle, nAlign)
+	return l
 }
 
 // SetAlignV 布局盒子_置垂直对齐.
 //
 //	@param nAlign 对齐方式: xcc.Layout_Align_.
 //	@return int
-func (l *LayoutFrame) SetAlignV(nAlign xcc.Layout_Align_) int {
-	return xc.XLayoutBox_SetAlignV(l.Handle, nAlign)
+func (l *LayoutFrame) SetAlignV(nAlign xcc.Layout_Align_) *LayoutFrame {
+	xc.XLayoutBox_SetAlignV(l.Handle, nAlign)
+	return l
 }
 
 // SetAlignBaseline 布局盒子_置对齐基线.
 //
 //	@param nAlign 对齐方式: xcc.Layout_Align_Axis_.
 //	@return int
-func (l *LayoutFrame) SetAlignBaseline(nAlign xcc.Layout_Align_Axis_) int {
-	return xc.XLayoutBox_SetAlignBaseline(l.Handle, nAlign)
+func (l *LayoutFrame) SetAlignBaseline(nAlign xcc.Layout_Align_Axis_) *LayoutFrame {
+	xc.XLayoutBox_SetAlignBaseline(l.Handle, nAlign)
+	return l
 }
 
 // SetSpace 布局盒子_置间距.
 //
 //	@param nSpace 项间距大小.
 //	@return int
-func (l *LayoutFrame) SetSpace(nSpace int) int {
-	return xc.XLayoutBox_SetSpace(l.Handle, nSpace)
+func (l *LayoutFrame) SetSpace(nSpace int) *LayoutFrame {
+	xc.XLayoutBox_SetSpace(l.Handle, nSpace)
+	return l
 }
 
 // SetSpaceRow 布局盒子_置行距.
 //
 //	@param nSpace 行间距大小.
 //	@return int
-func (l *LayoutFrame) SetSpaceRow(nSpace int) int {
-	return xc.XLayoutBox_SetSpaceRow(l.Handle, nSpace)
+func (l *LayoutFrame) SetSpaceRow(nSpace int) *LayoutFrame {
+	xc.XLayoutBox_SetSpaceRow(l.Handle, nSpace)
+	return l
 }

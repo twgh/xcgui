@@ -13,8 +13,9 @@ type animaBase struct {
 // 动画_运行, 并且增加引用计数.
 //
 // hRedrawObjectUI: 当更新UI时重绘的UI层. UI对象句柄: 窗口句柄, 元素句柄, 形状句柄, SVG句柄.
-func (a *animaBase) Run(hRedrawObjectUI int) int {
-	return xc.XAnima_Run(a.Handle, hRedrawObjectUI)
+func (a *animaBase) Run(hRedrawObjectUI int) *animaBase {
+	xc.XAnima_Run(a.Handle, hRedrawObjectUI)
+	return a
 }
 
 // 动画_释放, 停止动画, 并释放引用, 当引用计数为0时自动销毁.
@@ -27,7 +28,7 @@ func (a *animaBase) Release(bEnd bool) bool {
 // 动画_释放扩展, 释放与指定UI对象关联的所有动画, 返回释放动画数量.
 //
 // bEnd: 是否立即执行到终点.
-func (a *animaBase) ReleaseEx(bEnd bool) int {
+func (a *animaBase) ReleaseEx(bEnd bool) int32 {
 	return xc.XAnima_ReleaseEx(a.Handle, bEnd)
 }
 
@@ -39,22 +40,25 @@ func (a *animaBase) GetObjectUI() int {
 // 动画_启用自动销毁, TRUE: 当引用计数为0时自动销毁, FALSE: 手动销毁.
 //
 // bEnable: 是否启用.
-func (a *animaBase) EnableAutoDestroy(bEnable bool) int {
-	return xc.XAnima_EnableAutoDestroy(a.Handle, bEnable)
+func (a *animaBase) EnableAutoDestroy(bEnable bool) *animaBase {
+	xc.XAnima_EnableAutoDestroy(a.Handle, bEnable)
+	return a
 }
 
 // 动画_置回调.
 //
 // callback: 回调函数.
-func (a *animaBase) SetCallBack(callback interface{}) int {
-	return xc.XAnima_SetCallBack(a.Handle, callback)
+func (a *animaBase) SetCallBack(callback xc.FunAnimation) *animaBase {
+	xc.XAnima_SetCallBack(a.Handle, callback)
+	return a
 }
 
 // 动画_置用户数据.
 //
 // nUserData: 用户数据.
-func (a *animaBase) SetUserData(nUserData int) int {
-	return xc.XAnima_SetUserData(a.Handle, nUserData)
+func (a *animaBase) SetUserData(nUserData int) *animaBase {
+	xc.XAnima_SetUserData(a.Handle, nUserData)
+	return a
 }
 
 // 动画_取用户数据, 返回用户数据.

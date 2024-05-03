@@ -5,7 +5,7 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// 月历卡片.
+// MonthCal 月历卡片.
 type MonthCal struct {
 	Element
 }
@@ -81,39 +81,43 @@ func (m *MonthCal) GetButton(nType int) int {
 // nMonth: 月.
 //
 // nDay: 日.
-func (m *MonthCal) SetToday(nYear int32, nMonth int32, nDay int32) int {
-	return xc.XMonthCal_SetToday(m.Handle, nYear, nMonth, nDay)
+func (m *MonthCal) SetToday(nYear int32, nMonth int32, nDay int32) *MonthCal {
+	xc.XMonthCal_SetToday(m.Handle, nYear, nMonth, nDay)
+	return m
 }
 
 // 月历_取当前日期, 获取月历当前年月日.
 //
-// pnYear: 年.[INT.
+// pnYear: 年.
 //
-// pnMonth: 月.[INT.
+// pnMonth: 月.
 //
-// pnDay: 日.[INT.
-func (m *MonthCal) GetToday(pnYear *int32, pnMonth *int32, pnDay *int32) int {
-	return xc.XMonthCal_GetToday(m.Handle, pnYear, pnMonth, pnDay)
+// pnDay: 日.
+func (m *MonthCal) GetToday(pnYear *int32, pnMonth *int32, pnDay *int32) *MonthCal {
+	xc.XMonthCal_GetToday(m.Handle, pnYear, pnMonth, pnDay)
+	return m
 }
 
 // 月历_取选择日期, 获取月历选中的年月日.
 //
-// pnYear: 年.[INT.
+// pnYear: 年.
 //
-// pnMonth: 月.[INT.
+// pnMonth: 月.
 //
-// pnDay: 日.[INT.
-func (m *MonthCal) GetSelDate(pnYear *int32, pnMonth *int32, pnDay *int32) int {
-	return xc.XMonthCal_GetSelDate(m.Handle, pnYear, pnMonth, pnDay)
+// pnDay: 日.
+func (m *MonthCal) GetSelDate(pnYear *int32, pnMonth *int32, pnDay *int32) *MonthCal {
+	xc.XMonthCal_GetSelDate(m.Handle, pnYear, pnMonth, pnDay)
+	return m
 }
 
 // 月历_置文本颜色.
 //
 // nFlag: 1:周六, 周日文字颜色, 2:日期文字的颜色; 其它周文字颜色, 使用元素自身颜色.
 //
-// color: ABGR 颜色值.
-func (m *MonthCal) SetTextColor(nFlag int32, color int) int {
-	return xc.XMonthCal_SetTextColor(m.Handle, nFlag, color)
+// color: ARGB 颜色值.
+func (m *MonthCal) SetTextColor(nFlag int32, color int) *MonthCal {
+	xc.XMonthCal_SetTextColor(m.Handle, nFlag, color)
+	return m
 }
 
 /*

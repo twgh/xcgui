@@ -7,7 +7,7 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// Image 图片操作.
+// Image 炫彩图片操作.
 type Image struct {
 	objectbase.ObjectBase
 }
@@ -386,18 +386,20 @@ func (i *Image) SetDrawTypeAdaptive(leftSize, topSize, rightSize, bottomSize int
 
 // 图片_置透明色, 指定图片透明颜色.
 //
-// color: ABGR 颜色.
-func (i *Image) SetTranColor(color int) {
+// color: ARGB 颜色.
+func (i *Image) SetTranColor(color int) *Image {
 	xc.XImage_SetTranColor(i.Handle, color)
+	return i
 }
 
 // 图片_置透明色扩展, 指定图片透明颜色及透明度.
 //
-// color: ABGR 颜色.
+// color: ARGB 颜色.
 //
 // tranColor: 透明色的透明度.
-func (i *Image) SetTranColorEx(color int, tranColor byte) {
+func (i *Image) SetTranColorEx(color int, tranColor byte) *Image {
 	xc.XImage_SetTranColorEx(i.Handle, color, tranColor)
+	return i
 }
 
 // 图片_置旋转角度, 设置旋转角度, 返回先前角度.
@@ -412,29 +414,33 @@ func (i *Image) SetRotateAngle(fAngle float32) float32 {
 // nCount: 等分数量.
 //
 // iIndex: 索引.
-func (i *Image) SetSplitEqual(nCount, iIndex int32) {
+func (i *Image) SetSplitEqual(nCount, iIndex int32) *Image {
 	xc.XImage_SetSplitEqual(i.Handle, nCount, iIndex)
+	return i
 }
 
 // 图片_启用透明色, 启用或关闭图片透明色.
 //
 // bEnable: 启用TRUE.
-func (i *Image) EnableTranColor(bEnable bool) {
+func (i *Image) EnableTranColor(bEnable bool) *Image {
 	xc.XImage_EnableTranColor(i.Handle, bEnable)
+	return i
 }
 
 // 图片_启用自动销毁, 启用或关闭自动销毁, 当与UI元素关联时有效.
 //
 // bEnable: 启用自动销毁TRUE.
-func (i *Image) EnableAutoDestroy(bEnable bool) {
+func (i *Image) EnableAutoDestroy(bEnable bool) *Image {
 	xc.XImage_EnableAutoDestroy(i.Handle, bEnable)
+	return i
 }
 
 // 图片_启用居中, 启用或关闭图片居中显示，默认属性图片有效.
 //
 // bCenter: 是否居中显示.
-func (i *Image) EnableCenter(bCenter bool) {
+func (i *Image) EnableCenter(bCenter bool) *Image {
 	xc.XImage_EnableCenter(i.Handle, bCenter)
+	return i
 }
 
 // 图片_判断居中, 判断图片是否居中显示.
@@ -463,13 +469,15 @@ func (i *Image) GetImageSrc() int {
 }
 
 // 图片_增加引用计数.
-func (i *Image) AddRef() {
+func (i *Image) AddRef() *Image {
 	xc.XImage_AddRef(i.Handle)
+	return i
 }
 
 // 图片_释放引用计数, 释放引用计数, 当引用计数为0时, 自动销毁.
-func (i *Image) Release() {
+func (i *Image) Release() *Image {
 	xc.XImage_Release(i.Handle)
+	return i
 }
 
 // 图片_取引用计数.
@@ -478,8 +486,9 @@ func (i *Image) GetRefCount() int32 {
 }
 
 // 图片_销毁, 强制销毁图片, 谨慎使用, 建议使用 XImage_Release() 释放.
-func (i *Image) Destroy() {
+func (i *Image) Destroy() *Image {
 	xc.XImage_Destroy(i.Handle)
+	return i
 }
 
 // 图片_置缩放大小, 启用缩放属性后有效, 值大于0有效.
@@ -487,6 +496,7 @@ func (i *Image) Destroy() {
 // width: 宽度.
 //
 // height: 高度.
-func (i *Image) SetScaleSize(width, height int32) {
+func (i *Image) SetScaleSize(width, height int32) *Image {
 	xc.XImage_SetScaleSize(i.Handle, width, height)
+	return i
 }

@@ -5,7 +5,7 @@ import (
 	"github.com/twgh/xcgui/xc"
 )
 
-// SVG矢量图形.
+// Svg SVG矢量图形.
 type Svg struct {
 	objectbase.ObjectBase
 }
@@ -105,8 +105,9 @@ func NewByRes(id int32, pType string, hModule uintptr) *Svg {
 // nWidth: 宽度.
 //
 // nHeight: 高度.
-func (s *Svg) SetSize(nWidth, nHeight int32) {
+func (s *Svg) SetSize(nWidth, nHeight int32) *Svg {
 	xc.XSvg_SetSize(s.Handle, nWidth, nHeight)
+	return s
 }
 
 // SVG_取大小.
@@ -114,8 +115,9 @@ func (s *Svg) SetSize(nWidth, nHeight int32) {
 // pWidth: 接收返回宽度.
 //
 // pHeight: 接收返回高度.
-func (s *Svg) GetSize(pWidth, pHeight *int32) {
+func (s *Svg) GetSize(pWidth, pHeight *int32) *Svg {
 	xc.XSvg_GetSize(s.Handle, pWidth, pHeight)
+	return s
 }
 
 // SVG_取宽度.
@@ -133,8 +135,9 @@ func (s *Svg) GetHeight() int32 {
 // x: x轴偏移.
 //
 // y: y轴偏移.
-func (s *Svg) SetPosition(x, y int32) {
+func (s *Svg) SetPosition(x, y int32) *Svg {
 	xc.XSvg_SetPosition(s.Handle, x, y)
+	return s
 }
 
 // SVG_取偏移.
@@ -142,8 +145,9 @@ func (s *Svg) SetPosition(x, y int32) {
 // pX: x轴偏移.
 //
 // pY: y轴偏移.
-func (s *Svg) GetPosition(pX, pY *int32) {
+func (s *Svg) GetPosition(pX, pY *int32) *Svg {
 	xc.XSvg_GetPosition(s.Handle, pX, pY)
+	return s
 }
 
 // SVG_置偏移F.
@@ -151,8 +155,9 @@ func (s *Svg) GetPosition(pX, pY *int32) {
 // x: x轴偏移.
 //
 // y: y轴偏移.
-func (s *Svg) SetPositionF(x, y float32) {
+func (s *Svg) SetPositionF(x, y float32) *Svg {
 	xc.XSvg_SetPositionF(s.Handle, x, y)
+	return s
 }
 
 // SVG_取偏移F.
@@ -160,32 +165,37 @@ func (s *Svg) SetPositionF(x, y float32) {
 // pX: x轴偏移.
 //
 // pY: y轴偏移.
-func (s *Svg) GetPositionF(pX, pY *float32) {
+func (s *Svg) GetPositionF(pX, pY *float32) *Svg {
 	xc.XSvg_GetPositionF(s.Handle, pX, pY)
+	return s
 }
 
 // SVG_取视图框.
 //
 // pViewBox: 接收返回视图框.
-func (s *Svg) GetViewBox(pViewBox *xc.RECT) {
+func (s *Svg) GetViewBox(pViewBox *xc.RECT) *Svg {
 	xc.XSvg_GetViewBox(s.Handle, pViewBox)
+	return s
 }
 
 // SVG_启用自动销毁.
 //
 // bEnable: 是否自动销毁.
-func (s *Svg) EnableAutoDestroy(bEnable bool) {
+func (s *Svg) EnableAutoDestroy(bEnable bool) *Svg {
 	xc.XSvg_EnableAutoDestroy(s.Handle, bEnable)
+	return s
 }
 
 // SVG_增加引用计数.
-func (s *Svg) AddRef() {
+func (s *Svg) AddRef() *Svg {
 	xc.XSvg_AddRef(s.Handle)
+	return s
 }
 
 // SVG_释放引用计数.
-func (s *Svg) Release() {
+func (s *Svg) Release() *Svg {
 	xc.XSvg_Release(s.Handle)
+	return s
 }
 
 // SVG_取引用计数.
@@ -194,15 +204,17 @@ func (s *Svg) GetRefCount() int32 {
 }
 
 // SVG_销毁.
-func (s *Svg) Destroy() {
+func (s *Svg) Destroy() *Svg {
 	xc.XSvg_Destroy(s.Handle)
+	return s
 }
 
 // SVG_置透明度.
 //
 // alpha: 透明度.
-func (s *Svg) SetAlpha(alpha byte) {
+func (s *Svg) SetAlpha(alpha byte) *Svg {
 	xc.XSvg_SetAlpha(s.Handle, alpha)
+	return s
 }
 
 // SVG_取透明度, 返回透明度.
@@ -215,8 +227,9 @@ func (s *Svg) GetAlpha() byte {
 // color: 颜色, AGBR颜色.
 //
 // bEnable: 是否有效.
-func (s *Svg) SetUserFillColor(color int, bEnable bool) {
+func (s *Svg) SetUserFillColor(color int, bEnable bool) *Svg {
 	xc.XSvg_SetUserFillColor(s.Handle, color, bEnable)
+	return s
 }
 
 // SVG_置用户笔触颜色, 用户颜色将覆盖默认样式.
@@ -226,8 +239,9 @@ func (s *Svg) SetUserFillColor(color int, bEnable bool) {
 // strokeWidth: 笔触宽度.
 //
 // bEnable: 是否有效.
-func (s *Svg) SetUserStrokeColor(color int, strokeWidth float32, bEnable bool) {
+func (s *Svg) SetUserStrokeColor(color int, strokeWidth float32, bEnable bool) *Svg {
 	xc.XSvg_SetUserStrokeColor(s.Handle, color, strokeWidth, bEnable)
+	return s
 }
 
 // SVG_取用户填充颜色.
@@ -249,8 +263,9 @@ func (s *Svg) GetUserStrokeColor(pColor *int, pStrokeWidth *float32) bool {
 // SVG_置旋转角度, 默认以自身中心点旋转.
 //
 // angle: 转角度.
-func (s *Svg) SetRotateAngle(angle float32) {
+func (s *Svg) SetRotateAngle(angle float32) *Svg {
 	xc.XSvg_SetRotateAngle(s.Handle, angle)
+	return s
 }
 
 // SVG_取旋转角度, 返回旋转角度.
@@ -267,8 +282,9 @@ func (s *Svg) GetRotateAngle() float32 {
 // y: 旋转中心点Y.
 //
 // bOffset: TRUE: 旋转中心点相对于自身中心偏移, FALSE:使用绝对坐标.
-func (s *Svg) SetRotate(angle float32, x float32, y float32, bOffset bool) {
+func (s *Svg) SetRotate(angle float32, x float32, y float32, bOffset bool) *Svg {
 	xc.XSvg_SetRotate(s.Handle, angle, x, y, bOffset)
+	return s
 }
 
 // SVG_取旋转.
@@ -280,13 +296,15 @@ func (s *Svg) SetRotate(angle float32, x float32, y float32, bOffset bool) {
 // pY: 返回 旋转中心点Y.
 //
 // pbOffset: 返回TRUE: 旋转中心点相对于自身中心偏移, FALSE:使用绝对坐标.
-func (s *Svg) GetRotate(pAngle *float32, pX *float32, pY *float32, pbOffset *bool) {
+func (s *Svg) GetRotate(pAngle *float32, pX *float32, pY *float32, pbOffset *bool) *Svg {
 	xc.XSvg_GetRotate(s.Handle, pAngle, pX, pY, pbOffset)
+	return s
 }
 
 // SVG_显示, 显示或隐藏.
 //
 // bShow: 是否显示.
-func (s *Svg) Show(bShow bool) {
+func (s *Svg) Show(bShow bool) *Svg {
 	xc.XSvg_Show(s.Handle, bShow)
+	return s
 }

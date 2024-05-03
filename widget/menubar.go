@@ -74,8 +74,9 @@ func (m *MenuBar) AddButton(pText string) int32 {
 // 菜单条_置按钮高度, 根据内容自动调整宽度.
 //
 // height: 高度.
-func (m *MenuBar) SetButtonHeight(height int32) {
+func (m *MenuBar) SetButtonHeight(height int32) *MenuBar {
 	xc.XMenuBar_SetButtonHeight(m.Handle, height)
+	return m
 }
 
 // 菜单条_取菜单, 返回菜单句柄.

@@ -38,9 +38,9 @@ func NewEX(pName string, size int32, style xcc.FontStyle_) *Font {
 //
 //	@param pFontInfo 字体信息.
 //	@return *Font 返回字体对象.
-func NewLOGFONTW(pFontInfo *xc.LOGFONTW) *Font {
+func NewByLOGFONTW(pFontInfo *xc.LOGFONTW) *Font {
 	p := &Font{}
-	p.SetHandle(xc.XFont_CreateLOGFONTW(pFontInfo))
+	p.SetHandle(xc.XFont_CreateFromLOGFONTW(pFontInfo))
 	return p
 }
 
@@ -157,24 +157,24 @@ func NewByName(name string) *Font {
 // EnableAutoDestroy 字体_启用自动销毁. 是否自动销毁.
 //
 //	@param bEnable 是否启用.
-//	@return int
-func (f *Font) EnableAutoDestroy(bEnable bool) int {
-	return xc.XFont_EnableAutoDestroy(f.Handle, bEnable)
+func (f *Font) EnableAutoDestroy(bEnable bool) *Font {
+	xc.XFont_EnableAutoDestroy(f.Handle, bEnable)
+	return f
 }
 
 // GetFont 字体_取Font. 获取字体.
 //
-//	@return int 返回GDI+ Font指针
-func (f *Font) GetFont() int {
+//	@return GDI+ Font指针
+func (f *Font) GetFont() uintptr {
 	return xc.XFont_GetFont(f.Handle)
 }
 
 // GetFontInfo 字体_取信息. 获取字体信息.
 //
 //	@param pInfo 接收返回的字体信息.
-//	@return int
-func (f *Font) GetFontInfo(pInfo *xc.Font_Info_) int {
-	return xc.XFont_GetFontInfo(f.Handle, pInfo)
+func (f *Font) GetFontInfo(pInfo *xc.Font_Info_) *Font {
+	xc.XFont_GetFontInfo(f.Handle, pInfo)
+	return f
 }
 
 // GetLOGFONTW 字体_取LOGFONTW. 获取字体LOGFONTW.
@@ -187,29 +187,41 @@ func (f *Font) GetLOGFONTW(hdc uintptr, pOut *xc.LOGFONTW) bool {
 }
 
 // Destroy 字体_销毁. 强制销毁炫彩字体, 谨慎使用, 建议使用 Release() 释放.
-//
-//	@return int
-func (f *Font) Destroy() {
+func (f *Font) Destroy() *Font {
 	xc.XFont_Destroy(f.Handle)
+	return f
 }
 
 // AddRef 字体_增加引用计数.
-//
-//	@return int
-func (f *Font) AddRef() {
+func (f *Font) AddRef() *Font {
 	xc.XFont_AddRef(f.Handle)
+	return f
 }
 
 // GetRefCount 字体_取引用计数.
-//
-//	@return int
 func (f *Font) GetRefCount() int32 {
 	return xc.XFont_GetRefCount(f.Handle)
 }
 
 // Release 字体_释放引用计数. 释放引用计数, 当引用计数为0时自动销毁.
-//
-//	@return int
-func (f *Font) Release() {
+func (f *Font) Release() *Font {
 	xc.XFont_Release(f.Handle)
+	return f
+}
+
+// GetUnderlineEdit 字体_取下划线. 仅供edit字体使用, 因为edit不支持下划线字体, 所以需要单独设置.
+//
+//	@return bUnderline 是否启用下划线.
+//	@return bStrikeout 是否启用删除线.
+func (f *Font) GetUnderlineEdit() (bUnderline, bStrikeout bool) {
+	return xc.XFont_GetUnderlineEdit(f.Handle)
+}
+
+// SetUnderlineEdit 字体_置下划线. 仅供edit字体使用, 因为edit不支持下划线字体, 所以需要单独设置.
+//
+//	@param bUnderline 是否启用下划线.
+//	@param bStrikeout 是否启用删除线.
+func (f *Font) SetUnderlineEdit(bUnderline, bStrikeout bool) *Font {
+	xc.XFont_SetUnderlineEdit(f.Handle, bUnderline, bStrikeout)
+	return f
 }

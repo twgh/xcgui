@@ -1,7 +1,7 @@
 <h1 align="center">XCGUI</h1>
 <p align="center">
-    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.382-blue" alt="release"></a>
-    <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-3.3.8-blue" alt="XCGUI"></a>
+    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.390-blue" alt="release"></a>
+    <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-3.3.9-blue" alt="XCGUI"></a>
    <a href="https://golang.org"> <img src="https://img.shields.io/badge/golang-1.16-blue" alt="golang"></a>
     <a href="https://pkg.go.dev/github.com/twgh/xcgui"><img src="https://img.shields.io/badge/go.dev-reference-brightgreen" alt="GoDoc"></a>
     <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-brightgreen" alt="License"></a>
@@ -20,6 +20,7 @@
 
 
 
+
 ## 介绍
 
 [English](./README-en.md) | 简体中文
@@ -29,7 +30,7 @@
 - DirectUI设计思想：在窗口内没有子窗口，界面元素都是逻辑上的区域(无HWND句柄，安全，灵活)，所有UI元素都是自主开发(不受系统限制)，更加灵活的实现各种程序界面，满足不同用户的需求。
 - 拥有免费的UI设计器：快速开发工具，所见即所得，高度自定义系统(DIY)，让UI开发变的更加简单。
 - 支持Direct2D，硬件加速，能更大程度的发挥硬件特性，创建高性能，高质量的2D图形。
-- [wiki](https://github.com/twgh/xcgui/wiki) 里有简单的入门教程，有空可以看一下，少走弯路。
+- [WIKI](https://github.com/twgh/xcgui/wiki) 里有简单的入门教程，有空可以看一下，少走弯路。
 - 有完善的 [中文官方文档](http://www.xcgui.com/doc-ui/)，[官方资源社区](http://mall.xcgui.com)。
 - 官方QQ群(人多用各种语言的都有)：[2283812](https://jq.qq.com/?_wv=1027&k=AiXY4uMc)，只聊Go语言版的QQ群：[793788011](https://jq.qq.com/?_wv=1027&k=bkKgsYYk)
 
@@ -101,13 +102,13 @@ func main() {
 64位
 
 ```bash
-curl -fL "https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui.dll?version=latest" -o xcgui.dll
+iwr https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui.dll?version=latest -OutFile xcgui.dll
 ```
 
 32位
 
 ```bash
-curl -fL "https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui-32.dll?version=latest" -o xcgui.dll
+iwr https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui-32.dll?version=latest -OutFile xcgui.dll
 ```
 
 #### （3）使用getxcgui工具下载
@@ -191,19 +192,19 @@ var svgIcon = `<svg t="1669088647057" class="icon" viewBox="0 0 1024 1024" versi
 
 xcc包里都是常量，像这样使用：`xcc.Window_Transparent_Shadow`
 
-需要用到xcc包常量的参数注释都是类似这样的，复制`Window_Transparent_`到[xcc包](https://pkg.go.dev/github.com/twgh/xcgui/xcc#pkg-constants)里搜索即可看到相关常量注释：
+需要用到xcc包常量的参数注释都是类似这样的，复制`Window_Transparent_`到 [xcc包](https://pkg.go.dev/github.com/twgh/xcgui/xcc#pkg-constants) 里搜索即可看到相关常量注释：
 
 [![注释](https://s4.ax1x.com/2021/12/22/TQvQzt.png)](https://github.com/twgh/xcgui/blob/main/window/windowbase.go#L630)
 
 ## 命令介绍
 
-xc包里包含xcgui.dll里所有的API，有一千多个函数，可以直接使用，封装好的类都在其他包里。
+xc包里包含xcgui.dll里所有的API，有近2000个函数，不习惯使用类的可以直接使用，封装好的类都在其他包里。
 
 在某些情况下，把xc包里的原生函数与封装好的类混合起来使用会更加方便。
 
 炫彩所有的结构体也都在xc包里。
 
-建议使用 [Goland](https://www.jetbrains.com/go/?from=xcgui) 进行开发，以获得最好的开发体验。本项目所使用的注释格式在Goland里看起来是最好的。
+建议使用 [Goland](https://www.jetbrains.com/go/?from=xcgui) 进行开发，以获得最好的开发体验。
 
 ## 事件
 

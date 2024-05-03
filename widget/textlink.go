@@ -4,7 +4,7 @@ import (
 	"github.com/twgh/xcgui/xc"
 )
 
-// 静态文本链接按钮.
+// TextLink 静态文本链接按钮.
 type TextLink struct {
 	Button
 }
@@ -71,34 +71,39 @@ func NewTextLinkByUIDName(name string) *TextLink {
 // 文本链接_启用离开状态下划线, 启用下划线, 鼠标离开状态.
 //
 // bEnable: 是否启用.
-func (t *TextLink) EnableUnderlineLeave(bEnable bool) int {
-	return xc.XTextLink_EnableUnderlineLeave(t.Handle, bEnable)
+func (t *TextLink) EnableUnderlineLeave(bEnable bool) *TextLink {
+	xc.XTextLink_EnableUnderlineLeave(t.Handle, bEnable)
+	return t
 }
 
 // 文本链接_停留状态下划线, 启用下划线, 鼠标停留状态.
 //
 // bEnable: 是否启用.
-func (t *TextLink) EnableUnderlineStay(bEnable bool) int {
-	return xc.XTextLink_EnableUnderlineStay(t.Handle, bEnable)
+func (t *TextLink) EnableUnderlineStay(bEnable bool) *TextLink {
+	xc.XTextLink_EnableUnderlineStay(t.Handle, bEnable)
+	return t
 }
 
 // 文本链接_置停留状态文本颜色, 设置文本颜色, 鼠标停留状态.
 //
-// color: ABGR 颜色值.
-func (t *TextLink) SetTextColorStay(color int) int {
-	return xc.XTextLink_SetTextColorStay(t.Handle, color)
+// color: ARGB 颜色值.
+func (t *TextLink) SetTextColorStay(color int) *TextLink {
+	xc.XTextLink_SetTextColorStay(t.Handle, color)
+	return t
 }
 
 // 文本链接_置离开状态下划线颜色, 设置下划线颜色, 鼠标离开状态.
 //
-// color: ABGR 颜色值.
-func (t *TextLink) SetUnderlineColorLeave(color int) int {
-	return xc.XTextLink_SetUnderlineColorLeave(t.Handle, color)
+// color: ARGB 颜色值.
+func (t *TextLink) SetUnderlineColorLeave(color int) *TextLink {
+	xc.XTextLink_SetUnderlineColorLeave(t.Handle, color)
+	return t
 }
 
 // 文本链接_置停留状态下划线颜色, 置下划线颜色, 鼠标停留状态.
 //
-// color: ABGR 颜色值.
-func (t *TextLink) SetUnderlineColorStay(color int) int {
-	return xc.XTextLink_SetUnderlineColorStay(t.Handle, color)
+// color: ARGB 颜色值.
+func (t *TextLink) SetUnderlineColorStay(color int) *TextLink {
+	xc.XTextLink_SetUnderlineColorStay(t.Handle, color)
+	return t
 }

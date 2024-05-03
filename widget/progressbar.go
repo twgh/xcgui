@@ -70,8 +70,9 @@ func NewProgressBarByUIDName(name string) *ProgressBar {
 // 进度条_置范围, 设置范围.
 //
 // range_: 范围.
-func (p *ProgressBar) SetRange(range_ int) int {
-	return xc.XProgBar_SetRange(p.Handle, range_)
+func (p *ProgressBar) SetRange(range_ int) *ProgressBar {
+	xc.XProgBar_SetRange(p.Handle, range_)
+	return p
 }
 
 // 进度条_取范围.
@@ -82,15 +83,17 @@ func (p *ProgressBar) GetRange() int {
 // 进度条_置进度图片.
 //
 // hImage: 图片句柄.
-func (p *ProgressBar) SetImageLoad(hImage int) int {
-	return xc.XProgBar_SetImageLoad(p.Handle, hImage)
+func (p *ProgressBar) SetImageLoad(hImage int) *ProgressBar {
+	xc.XProgBar_SetImageLoad(p.Handle, hImage)
+	return p
 }
 
 // 进度条_置进度, 设置位置点.
 //
 // pos: 位置点.
-func (p *ProgressBar) SetPos(pos int) int {
-	return xc.XProgBar_SetPos(p.Handle, pos)
+func (p *ProgressBar) SetPos(pos int) *ProgressBar {
+	xc.XProgBar_SetPos(p.Handle, pos)
+	return p
 }
 
 // 进度条_取进度, 获取当前位置点.
@@ -101,8 +104,9 @@ func (p *ProgressBar) GetPos() int {
 // 进度条_置水平, 设置水平或垂直.
 //
 // bHorizon: 水平或垂直.
-func (p *ProgressBar) EnableHorizon(bHorizon bool) int {
-	return xc.XProgBar_EnableHorizon(p.Handle, bHorizon)
+func (p *ProgressBar) EnableHorizon(bHorizon bool) *ProgressBar {
+	xc.XProgBar_EnableHorizon(p.Handle, bHorizon)
+	return p
 }
 
 // 进度条_启用缩放, 缩放进度贴图为当前进度区域(当前进度所显示区域), 否则为整体100进度区域.
@@ -121,7 +125,7 @@ func (p *ProgressBar) EnableShowText(bShow bool) bool {
 
 // 进度条_置进度颜色. 设置进度颜色.
 //
-// color: ABGR 颜色.
+// color: ARGB 颜色.
 func (p *ProgressBar) SetColorLoad(color int) bool {
 	return xc.XProgBar_SetColorLoad(p.Handle, color)
 }

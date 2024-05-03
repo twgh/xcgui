@@ -49,7 +49,7 @@ func (a *AdapterMap) DeleteItem(pName string) bool {
 }
 
 // 数据适配器MAP_取项数量, 返回项数量.
-func (a *AdapterMap) GetCount() int {
+func (a *AdapterMap) GetCount() int32 {
 	return xc.XAdMap_GetCount(a.Handle)
 }
 

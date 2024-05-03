@@ -5,21 +5,21 @@ import "github.com/twgh/xcgui/xc"
 // 资源_启用延迟加载, 启用延迟加载; 图片文件, 列表项模板文件.
 //
 // bEnable: 是否启用.
-func EnableDelayLoad(bEnable bool) int {
-	return xc.XRes_EnableDelayLoad(bEnable)
+func EnableDelayLoad(bEnable bool) {
+	xc.XRes_EnableDelayLoad(bEnable)
 }
 
 // 资源_置文件加载回调, 设置文件加载回调函数.
 //
 // pFun: 回调函数.
-func SetLoadFileCallback(pFun interface{}) int {
-	return xc.XRes_SetLoadFileCallback(pFun)
+func SetLoadFileCallback(pFun xc.FunLoadFile) {
+	xc.XRes_SetLoadFileCallback(pFun)
 }
 
 // 资源_取ID值, 获取资源ID整型值.
 //
 // pName: 资源ID名称.
-func GetIDValue(pName string) int {
+func GetIDValue(pName string) int32 {
 	return xc.XRes_GetIDValue(pName)
 }
 

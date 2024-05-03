@@ -72,8 +72,9 @@ func NewTableByUIDName(name string) *Table {
 // nRow: 行数量.
 //
 // nCol: 列数量.
-func (t *Table) Reset(nRow int, nCol int) int {
-	return xc.XTable_Reset(t.Handle, nRow, nCol)
+func (t *Table) Reset(nRow int, nCol int) *Table {
+	xc.XTable_Reset(t.Handle, nRow, nCol)
+	return t
 }
 
 // 表格_组合行.
@@ -83,8 +84,9 @@ func (t *Table) Reset(nRow int, nCol int) int {
 // iCol: 列索引.
 //
 // count: 数量.
-func (t *Table) ComboRow(iRow int, iCol int, count int) int {
-	return xc.XTable_ComboRow(t.Handle, iRow, iCol, count)
+func (t *Table) ComboRow(iRow int, iCol int, count int) *Table {
+	xc.XTable_ComboRow(t.Handle, iRow, iCol, count)
+	return t
 }
 
 // 表格_组合列.
@@ -94,8 +96,9 @@ func (t *Table) ComboRow(iRow int, iCol int, count int) int {
 // iCol: 列索引.
 //
 // count: 数量.
-func (t *Table) ComboCol(iRow int, iCol int, count int) int {
-	return xc.XTable_ComboCol(t.Handle, iRow, iCol, count)
+func (t *Table) ComboCol(iRow int, iCol int, count int) *Table {
+	xc.XTable_ComboCol(t.Handle, iRow, iCol, count)
+	return t
 }
 
 // 表格_置列宽.
@@ -103,8 +106,9 @@ func (t *Table) ComboCol(iRow int, iCol int, count int) int {
 // iCol: 列索引.
 //
 // width: 宽度.
-func (t *Table) SetColWidth(iCol int, width int) int {
-	return xc.XTable_SetColWidth(t.Handle, iCol, width)
+func (t *Table) SetColWidth(iCol int, width int) *Table {
+	xc.XTable_SetColWidth(t.Handle, iCol, width)
+	return t
 }
 
 // 表格_置行高.
@@ -112,29 +116,33 @@ func (t *Table) SetColWidth(iCol int, width int) int {
 // iRow: 行索引.
 //
 // height: 高度.
-func (t *Table) SetRowHeight(iRow int, height int) int {
-	return xc.XTable_SetRowHeight(t.Handle, iRow, height)
+func (t *Table) SetRowHeight(iRow int, height int) *Table {
+	xc.XTable_SetRowHeight(t.Handle, iRow, height)
+	return t
 }
 
 // 表格_置边颜色.
 //
 // color: 颜色.
-func (t *Table) SetBorderColor(color int) int {
-	return xc.XTable_SetBorderColor(t.Handle, color)
+func (t *Table) SetBorderColor(color int) *Table {
+	xc.XTable_SetBorderColor(t.Handle, color)
+	return t
 }
 
 // 表格_置文本颜色.
 //
 // color: 颜色.
-func (t *Table) SetTextColor(color int) int {
-	return xc.XTable_SetTextColor(t.Handle, color)
+func (t *Table) SetTextColor(color int) *Table {
+	xc.XTable_SetTextColor(t.Handle, color)
+	return t
 }
 
 // 表格_置字体.
 //
 // hFont: 字体句柄.
-func (t *Table) SetFont(hFont int) int {
-	return xc.XTable_SetFont(t.Handle, hFont)
+func (t *Table) SetFont(hFont int) *Table {
+	xc.XTable_SetFont(t.Handle, hFont)
+	return t
 }
 
 // 表格_置项内填充.
@@ -146,8 +154,9 @@ func (t *Table) SetFont(hFont int) int {
 // rightSize: 内填充大小.
 //
 // bottomSize: 内填充大小.
-func (t *Table) SetItemPadding(leftSize int, topSize int, rightSize int, bottomSize int) int {
-	return xc.XTable_SetItemPadding(t.Handle, leftSize, topSize, rightSize, bottomSize)
+func (t *Table) SetItemPadding(leftSize int, topSize int, rightSize int, bottomSize int) *Table {
+	xc.XTable_SetItemPadding(t.Handle, leftSize, topSize, rightSize, bottomSize)
+	return t
 }
 
 // 表格_置项文本.
@@ -157,8 +166,9 @@ func (t *Table) SetItemPadding(leftSize int, topSize int, rightSize int, bottomS
 // iCol: 列索引.
 //
 // pText: 文本.
-func (t *Table) SetItemText(iRow int, iCol int, pText string) int {
-	return xc.XTable_SetItemText(t.Handle, iRow, iCol, pText)
+func (t *Table) SetItemText(iRow int, iCol int, pText string) *Table {
+	xc.XTable_SetItemText(t.Handle, iRow, iCol, pText)
+	return t
 }
 
 // 表格_置项字体.
@@ -168,8 +178,9 @@ func (t *Table) SetItemText(iRow int, iCol int, pText string) int {
 // iCol: 列索引.
 //
 // hFont: 字体句柄.
-func (t *Table) SetItemFont(iRow int, iCol int, hFont int) int {
-	return xc.XTable_SetItemFont(t.Handle, iRow, iCol, hFont)
+func (t *Table) SetItemFont(iRow int, iCol int, hFont int) *Table {
+	xc.XTable_SetItemFont(t.Handle, iRow, iCol, hFont)
+	return t
 }
 
 // 表格_置项文本对齐.
@@ -179,8 +190,9 @@ func (t *Table) SetItemFont(iRow int, iCol int, hFont int) int {
 // iCol: 列索引.
 //
 // nAlign: 对齐方式, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
-func (t *Table) SetItemTextAlign(iRow int, iCol int, nAlign xcc.TextFormatFlag_) int {
-	return xc.XTable_SetItemTextAlign(t.Handle, iRow, iCol, nAlign)
+func (t *Table) SetItemTextAlign(iRow int, iCol int, nAlign xcc.TextFormatFlag_) *Table {
+	xc.XTable_SetItemTextAlign(t.Handle, iRow, iCol, nAlign)
+	return t
 }
 
 // 表格_置项文本色.
@@ -192,8 +204,9 @@ func (t *Table) SetItemTextAlign(iRow int, iCol int, nAlign xcc.TextFormatFlag_)
 // color: 颜色.
 //
 // bColor: 是否使用.
-func (t *Table) SetItemTextColor(iRow int, iCol int, color int, bColor bool) int {
-	return xc.XTable_SetItemTextColor(t.Handle, iRow, iCol, color, bColor)
+func (t *Table) SetItemTextColor(iRow int, iCol int, color int, bColor bool) *Table {
+	xc.XTable_SetItemTextColor(t.Handle, iRow, iCol, color, bColor)
+	return t
 }
 
 // 表格_置项背景色.
@@ -205,8 +218,9 @@ func (t *Table) SetItemTextColor(iRow int, iCol int, color int, bColor bool) int
 // color: 颜色.
 //
 // bColor: 是否使用.
-func (t *Table) SetItemBkColor(iRow int, iCol int, color int, bColor bool) int {
-	return xc.XTable_SetItemBkColor(t.Handle, iRow, iCol, color, bColor)
+func (t *Table) SetItemBkColor(iRow int, iCol int, color int, bColor bool) *Table {
+	xc.XTable_SetItemBkColor(t.Handle, iRow, iCol, color, bColor)
+	return t
 }
 
 // 表格_置项线.
@@ -222,8 +236,9 @@ func (t *Table) SetItemBkColor(iRow int, iCol int, color int, bColor bool) int {
 // nFlag: 标识, Table_Line_Flag_, 暂时没有, 填0.
 //
 // color: 颜色.
-func (t *Table) SetItemLine(iRow1 int, iCol1 int, iRow2 int, iCol2 int, nFlag int, color int) int {
-	return xc.XTable_SetItemLine(t.Handle, iRow1, iCol1, iRow2, iCol2, nFlag, color)
+func (t *Table) SetItemLine(iRow1 int, iCol1 int, iRow2 int, iCol2 int, nFlag int, color int) *Table {
+	xc.XTable_SetItemLine(t.Handle, iRow1, iCol1, iRow2, iCol2, nFlag, color)
+	return t
 }
 
 // 表格_置项标识.
@@ -233,8 +248,9 @@ func (t *Table) SetItemLine(iRow1 int, iCol1 int, iRow2 int, iCol2 int, nFlag in
 // iCol: 列索引.
 //
 // flag: 标识, Table_Flag_.
-func (t *Table) SetItemFlag(iRow int, iCol int, flag xcc.Table_Flag_) int {
-	return xc.XTable_SetItemFlag(t.Handle, iRow, iCol, flag)
+func (t *Table) SetItemFlag(iRow int, iCol int, flag xcc.Table_Flag_) *Table {
+	xc.XTable_SetItemFlag(t.Handle, iRow, iCol, flag)
+	return t
 }
 
 // 表格_取项坐标.

@@ -552,9 +552,9 @@ func XComboBox_PopupDropList(hEle int) int {
 // hEle: 元素句柄.
 //
 // hTemp: 模板句柄.
-func XComboBox_SetItemTemplate(hEle, hTemp int) int {
+func XComboBox_SetItemTemplate(hEle, hTemp int) bool {
 	r, _, _ := xComboBox_SetItemTemplate.Call(uintptr(hEle), uintptr(hTemp))
-	return int(r)
+	return r != 0
 }
 
 // 组合框_置项模板从内存.

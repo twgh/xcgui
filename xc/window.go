@@ -201,9 +201,8 @@ func XWnd_RedrawRect(hWindow int, pRect *RECT, bImmediate bool) int {
 // hWindow: 窗口句柄.
 //
 // pRect: 坐标.
-func XWnd_SetRect(hWindow int, pRect *RECT) bool {
-	r, _, _ := xWnd_SetRect.Call(uintptr(hWindow), uintptr(unsafe.Pointer(pRect)))
-	return r != 0
+func XWnd_SetRect(hWindow int, pRect *RECT) {
+	xWnd_SetRect.Call(uintptr(hWindow), uintptr(unsafe.Pointer(pRect)))
 }
 
 // 窗口_置焦点.
@@ -448,7 +447,7 @@ func XWnd_SetFont(hWindow, hFontx int) int {
 //
 // hWindow: 窗口句柄.
 //
-// color: ABGR 颜色值.
+// color: ARGB 颜色值.
 func XWnd_SetTextColor(hWindow, color int) int {
 	r, _, _ := xWnd_SetTextColor.Call(uintptr(hWindow), uintptr(color))
 	return int(r)
@@ -525,6 +524,8 @@ func XWnd_SetBorderSize(hWindow, left, top, right, bottom int) int {
 // 窗口_取边大小.
 //
 // hWindow: 窗口句柄.
+//
+// pBorder: 返回边大小.
 func XWnd_GetBorderSize(hWindow int, pBorder *RECT) int {
 	r, _, _ := xWnd_GetBorderSize.Call(uintptr(hWindow), uintptr(unsafe.Pointer(pBorder)))
 	return int(r)
@@ -544,6 +545,15 @@ func XWnd_GetBorderSize(hWindow int, pBorder *RECT) int {
 func XWnd_SetPadding(hWindow, left, top, right, bottom int) int {
 	r, _, _ := xWnd_SetPadding.Call(uintptr(hWindow), uintptr(left), uintptr(top), uintptr(right), uintptr(bottom))
 	return int(r)
+}
+
+// 窗口_取布局内填充大小.
+//
+// hWindow: 窗口句柄.
+//
+// pPadding: 返回布局内填充大小.
+func XWnd_GetPadding(hWindow int, pPadding *RECT) {
+	xWnd_GetPadding.Call(uintptr(hWindow), uintptr(unsafe.Pointer(pPadding)))
 }
 
 // 窗口_置拖动边框大小.
@@ -584,7 +594,7 @@ func XWnd_SetMinimumSize(hWindow, width, height int) int {
 	return int(r)
 }
 
-// 窗口_测试点击子元素.
+// 窗口_测试点击子元素. 成功则返回元素句柄.
 //
 // hWindow: 窗口句柄.
 //
@@ -1005,7 +1015,7 @@ func XWnd_SetTitle(hWindow int, pTitle string) int {
 //
 // hWindow: 窗口句柄.
 //
-// color: ABGR 颜色.
+// color: ARGB 颜色.
 func XWnd_SetTitleColor(hWindow, color int) int {
 	r, _, _ := xWnd_SetTitleColor.Call(uintptr(hWindow), uintptr(color))
 	return int(r)
@@ -1037,7 +1047,7 @@ func XWnd_GetTitle(hWindow int) string {
 	return common.UintPtrToString(r)
 }
 
-// 窗口_取标题颜色, 返回ABGR 颜色.
+// 窗口_取标题颜色, 返回ARGB 颜色.
 //
 // hWindow: 窗口句柄.
 func XWnd_GetTitleColor(hWindow int) int {
@@ -1051,7 +1061,7 @@ func XWnd_GetTitleColor(hWindow int) int {
 //
 // nState: 组合状态.
 //
-// color: ABGR 颜色.
+// color: ARGB 颜色.
 //
 // width: 线宽.
 func XWnd_AddBkBorder(hWindow int, nState xcc.Window_State_Flag_, color int, width int) int {
@@ -1065,7 +1075,7 @@ func XWnd_AddBkBorder(hWindow int, nState xcc.Window_State_Flag_, color int, wid
 //
 // nState: 组合状态.
 //
-// color: ABGR 颜色.
+// color: ARGB 颜色.
 func XWnd_AddBkFill(hWindow int, nState xcc.Window_State_Flag_, color int) int {
 	r, _, _ := xWnd_AddBkFill.Call(uintptr(hWindow), uintptr(nState), uintptr(color))
 	return int(r)
@@ -1232,7 +1242,6 @@ func XWnd_ScreenToClient(hWindow int, pPt *POINT) bool {
 // hWindow: 窗口句柄.
 //
 // nDPI: DPI值.
-func XWnd_SetDPI(hWindow int, nDPI int) int {
-	r, _, _ := xWnd_SetDPI.Call(uintptr(hWindow), uintptr(nDPI))
-	return int(r)
+func XWnd_SetDPI(hWindow int, nDPI int) {
+	xWnd_SetDPI.Call(uintptr(hWindow), uintptr(nDPI))
 }

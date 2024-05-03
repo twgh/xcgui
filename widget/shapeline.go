@@ -75,13 +75,15 @@ func NewShapeLineByUIDName(name string) *ShapeLine {
 // x2: 坐标.
 //
 // y2: 坐标.
-func (s *ShapeLine) SetPosition(x1 int, y1 int, x2 int, y2 int) int {
-	return xc.XShapeLine_SetPosition(s.Handle, x1, y1, x2, y2)
+func (s *ShapeLine) SetPosition(x1 int, y1 int, x2 int, y2 int) *ShapeLine {
+	xc.XShapeLine_SetPosition(s.Handle, x1, y1, x2, y2)
+	return s
 }
 
 // 形状线_置颜色, 设置直线颜色.
 //
-// color: ABGR 颜色值.
-func (s *ShapeLine) SetColor(color int) int {
-	return xc.XShapeLine_SetColor(s.Handle, color)
+// color: ARGB 颜色值.
+func (s *ShapeLine) SetColor(color int) *ShapeLine {
+	xc.XShapeLine_SetColor(s.Handle, color)
+	return s
 }

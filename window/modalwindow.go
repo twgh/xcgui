@@ -273,15 +273,17 @@ func NewModalWindowByUIDName(name string) *ModalWindow {
 // 模态窗口_启用自动关闭, 是否自动关闭窗口, 当窗口失去焦点时.
 //
 // bEnable: 开启开关.
-func (m *ModalWindow) EnableAutoClose(bEnable bool) int {
-	return xc.XModalWnd_EnableAutoClose(m.Handle, bEnable)
+func (m *ModalWindow) EnableAutoClose(bEnable bool) *ModalWindow {
+	xc.XModalWnd_EnableAutoClose(m.Handle, bEnable)
+	return m
 }
 
 // 模态窗口_启用ESC关闭, 当用户按ESC键时自动关闭模态窗口.
 //
 // bEnable: 是否启用.
-func (m *ModalWindow) EnableEscClose(bEnable bool) int {
-	return xc.XModalWnd_EnableEscClose(m.Handle, bEnable)
+func (m *ModalWindow) EnableEscClose(bEnable bool) *ModalWindow {
+	xc.XModalWnd_EnableEscClose(m.Handle, bEnable)
+	return m
 }
 
 // 模态窗口_启动, 启动显示模态窗口, 当窗口关闭时返回: MessageBox_Flag_Ok: 点击确定按钮退出, MessageBox_Flag_Cancel: 点击取消按钮退出, MessageBox_Flag_Other: 其他方式退出.
@@ -292,6 +294,7 @@ func (m *ModalWindow) DoModal() xcc.MessageBox_Flag_ {
 // 模态窗口_结束, 结束模态窗口.
 //
 // nResult: 用作XModalWnd_DoModal()的返回值. MessageBox_Flag_Ok: 点击确定按钮退出, MessageBox_Flag_Cancel: 点击取消按钮退出, MessageBox_Flag_Other: 其他方式退出.
-func (m *ModalWindow) EndModal(nResult xcc.MessageBox_Flag_) int {
-	return xc.XModalWnd_EndModal(m.Handle, nResult)
+func (m *ModalWindow) EndModal(nResult xcc.MessageBox_Flag_) *ModalWindow {
+	xc.XModalWnd_EndModal(m.Handle, nResult)
+	return m
 }

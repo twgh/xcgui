@@ -291,7 +291,7 @@ func XImage_SetDrawTypeAdaptive(hImage int, leftSize, topSize, rightSize, bottom
 //
 // hImage: 图片句柄.
 //
-// color: ABGR 颜色.
+// color: ARGB 颜色.
 func XImage_SetTranColor(hImage int, color int) {
 	xImage_SetTranColor.Call(uintptr(hImage), uintptr(color))
 }
@@ -300,7 +300,7 @@ func XImage_SetTranColor(hImage int, color int) {
 //
 // hImage: 图片句柄.
 //
-// color: ABGR 颜色.
+// color: ARGB 颜色.
 //
 // tranColor: 透明色的透明度.
 func XImage_SetTranColorEx(hImage int, color int, tranColor byte) {

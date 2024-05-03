@@ -5,7 +5,7 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// 列表视图.
+// ListView 列表视图.
 type ListView struct {
 	ScrollView
 }
@@ -94,8 +94,9 @@ func (l *ListView) CreateAdapter() int {
 // 列表视_绑定数据适配器.
 //
 // hAdapter: 数据适配器XAdListView.
-func (l *ListView) BindAdapter(hAdapter int) int {
-	return xc.XListView_BindAdapter(l.Handle, hAdapter)
+func (l *ListView) BindAdapter(hAdapter int) *ListView {
+	xc.XListView_BindAdapter(l.Handle, hAdapter)
+	return l
 }
 
 // 列表视_取数据适配器, 返回数据适配器句柄.
@@ -180,22 +181,25 @@ func (l *ListView) HitTestOffset(pPt *xc.POINT, pOutGroup *int32, pOutItem *int3
 // 列表视_启用多选.
 //
 // bEnable: 是否启用.
-func (l *ListView) EnableMultiSel(bEnable bool) int {
-	return xc.XListView_EnableMultiSel(l.Handle, bEnable)
+func (l *ListView) EnableMultiSel(bEnable bool) *ListView {
+	xc.XListView_EnableMultiSel(l.Handle, bEnable)
+	return l
 }
 
 // 列表视_启用模板复用.
 //
 // bEnable: 是否启用.
-func (l *ListView) EnableTemplateReuse(bEnable bool) int {
-	return xc.XListView_EnableTemplateReuse(l.Handle, bEnable)
+func (l *ListView) EnableTemplateReuse(bEnable bool) *ListView {
+	xc.XListView_EnableTemplateReuse(l.Handle, bEnable)
+	return l
 }
 
 // 列表视_启用虚表.
 //
 // bEnable: 是否启用.
-func (l *ListView) EnableVirtualTable(bEnable bool) int {
-	return xc.XListView_EnableVirtualTable(l.Handle, bEnable)
+func (l *ListView) EnableVirtualTable(bEnable bool) *ListView {
+	xc.XListView_EnableVirtualTable(l.Handle, bEnable)
+	return l
 }
 
 // 列表视_置虚表项数量.
@@ -210,8 +214,9 @@ func (l *ListView) SetVirtualItemCount(iGroup int, nCount int) bool {
 // 列表视_置项背景绘制标志, 置是否绘制指定状态下项的背景.
 //
 // nFlags: 标志位: List_DrawItemBk_Flag_.
-func (l *ListView) SetDrawItemBkFlags(nFlags xcc.List_DrawItemBk_Flag_) int {
-	return xc.XListView_SetDrawItemBkFlags(l.Handle, nFlags)
+func (l *ListView) SetDrawItemBkFlags(nFlags xcc.List_DrawItemBk_Flag_) *ListView {
+	xc.XListView_SetDrawItemBkFlags(l.Handle, nFlags)
+	return l
 }
 
 // 列表视_置选择项.
@@ -246,8 +251,9 @@ func (l *ListView) AddSelectItem(iGroup int, iItem int) bool {
 // iGroup: 组索引.
 //
 // iItem: 项索引.
-func (l *ListView) VisibleItem(iGroup int, iItem int) int {
-	return xc.XListView_VisibleItem(l.Handle, iGroup, iItem)
+func (l *ListView) VisibleItem(iGroup int, iItem int) *ListView {
+	xc.XListView_VisibleItem(l.Handle, iGroup, iItem)
+	return l
 }
 
 // 列表视_取可视项范围, 获取当前可见项范围.
@@ -263,8 +269,9 @@ func (l *ListView) VisibleItem(iGroup int, iItem int) int {
 // piEndGroup: 可视结束组.
 //
 // piEndItem: 可视结束项.
-func (l *ListView) GetVisibleItemRange(piGroup1 *int32, piGroup2 *int32, piStartGroup *int32, piStartItem *int32, piEndGroup *int32, piEndItem *int32) int {
-	return xc.XListView_GetVisibleItemRange(l.Handle, piGroup1, piGroup2, piStartGroup, piStartItem, piEndGroup, piEndItem)
+func (l *ListView) GetVisibleItemRange(piGroup1 *int32, piGroup2 *int32, piStartGroup *int32, piStartItem *int32, piEndGroup *int32, piEndItem *int32) *ListView {
+	xc.XListView_GetVisibleItemRange(l.Handle, piGroup1, piGroup2, piStartGroup, piStartItem, piEndGroup, piEndItem)
+	return l
 }
 
 // 列表视_取选择项数量.
@@ -282,27 +289,31 @@ func (l *ListView) GetSelectAll(pArray *[]xc.ListView_Item_Id_, nArraySize int) 
 }
 
 // 列表视_置选择项全部, 选择所有的项.
-func (l *ListView) SetSelectAll() int {
-	return xc.XListView_SetSelectAll(l.Handle)
+func (l *ListView) SetSelectAll() *ListView {
+	xc.XListView_SetSelectAll(l.Handle)
+	return l
 }
 
 // 列表视_取消选择项全部, 取消选择所有项.
-func (l *ListView) CancelSelectAll() int {
-	return xc.XListView_CancelSelectAll(l.Handle)
+func (l *ListView) CancelSelectAll() *ListView {
+	xc.XListView_CancelSelectAll(l.Handle)
+	return l
 }
 
 // 列表视_置列间隔, 置列间隔大小.
 //
 // space: 间隔大小.
-func (l *ListView) SetColumnSpace(space int) int {
-	return xc.XListView_SetColumnSpace(l.Handle, space)
+func (l *ListView) SetColumnSpace(space int) *ListView {
+	xc.XListView_SetColumnSpace(l.Handle, space)
+	return l
 }
 
 // 列表视_置行间隔, 置行间隔大小.
 //
 // space: 间隔大小.
-func (l *ListView) SetRowSpace(space int) int {
-	return xc.XListView_SetRowSpace(l.Handle, space)
+func (l *ListView) SetRowSpace(space int) *ListView {
+	xc.XListView_SetRowSpace(l.Handle, space)
+	return l
 }
 
 // 列表视_置项大小.
@@ -310,22 +321,25 @@ func (l *ListView) SetRowSpace(space int) int {
 // width: 宽度.
 //
 // height: 高度.
-func (l *ListView) SetItemSize(width int, height int) int {
-	return xc.XListView_SetItemSize(l.Handle, width, height)
+func (l *ListView) SetItemSize(width int, height int) *ListView {
+	xc.XListView_SetItemSize(l.Handle, width, height)
+	return l
 }
 
 // 列表视_取项大小.
 //
 // pSize: 接收返回大小.
-func (l *ListView) GetItemSize(pSize *xc.SIZE) int {
-	return xc.XListView_GetItemSize(l.Handle, pSize)
+func (l *ListView) GetItemSize(pSize *xc.SIZE) *ListView {
+	xc.XListView_GetItemSize(l.Handle, pSize)
+	return l
 }
 
 // 列表视_置组高度.
 //
 // height: 高度.
-func (l *ListView) SetGroupHeight(height int) int {
-	return xc.XListView_SetGroupHeight(l.Handle, height)
+func (l *ListView) SetGroupHeight(height int) *ListView {
+	xc.XListView_SetGroupHeight(l.Handle, height)
+	return l
 }
 
 // 列表视_取组高度.
@@ -338,8 +352,9 @@ func (l *ListView) GetGroupHeight() int {
 // iGroup: 组索引.
 //
 // nData: 数据.
-func (l *ListView) SetGroupUserData(iGroup int, nData int) int {
-	return xc.XListView_SetGroupUserData(l.Handle, iGroup, nData)
+func (l *ListView) SetGroupUserData(iGroup int, nData int) *ListView {
+	xc.XListView_SetGroupUserData(l.Handle, iGroup, nData)
+	return l
 }
 
 // 列表视_置项用户数据.
@@ -349,8 +364,9 @@ func (l *ListView) SetGroupUserData(iGroup int, nData int) int {
 // iItem: 项索引.
 //
 // nData: 数据.
-func (l *ListView) SetItemUserData(iGroup int, iItem int, nData int) int {
-	return xc.XListView_SetItemUserData(l.Handle, iGroup, iItem, nData)
+func (l *ListView) SetItemUserData(iGroup int, iItem int, nData int) *ListView {
+	xc.XListView_SetItemUserData(l.Handle, iGroup, iItem, nData)
+	return l
 }
 
 // 列表视_取组用户数据.
@@ -370,8 +386,9 @@ func (l *ListView) GetItemUserData(iGroup int, iItem int) int {
 }
 
 // 列表视_刷新项数据.
-func (l *ListView) RefreshData() int {
-	return xc.XListView_RefreshData(l.Handle)
+func (l *ListView) RefreshData() *ListView {
+	xc.XListView_RefreshData(l.Handle)
+	return l
 }
 
 // 列表视_刷新指定项, 刷新指定项模板, 以便更新UI.
@@ -379,8 +396,9 @@ func (l *ListView) RefreshData() int {
 // iGroup: 组索引.
 //
 // iItem: 项索引, 如果为-1, 代表为组.
-func (l *ListView) RefreshItem(iGroup int, iItem int) int {
-	return xc.XListView_RefreshItem(l.Handle, iGroup, iItem)
+func (l *ListView) RefreshItem(iGroup int, iItem int) *ListView {
+	xc.XListView_RefreshItem(l.Handle, iGroup, iItem)
+	return l
 }
 
 // 列表视_展开组, 成功返回TRUE否则返回FALSE, 如果状态没有改变返回FALSE.
@@ -612,8 +630,9 @@ func (l *ListView) Group_DeleteItem(iGroup int) bool {
 // 列表视_组删除全部子项.
 //
 // iGroup: 组索引.
-func (l *ListView) Group_DeleteAllChildItem(iGroup int) int {
-	return xc.XListView_Group_DeleteAllChildItem(l.Handle, iGroup)
+func (l *ListView) Group_DeleteAllChildItem(iGroup int) *ListView {
+	xc.XListView_Group_DeleteAllChildItem(l.Handle, iGroup)
+	return l
 }
 
 // 列表视_项删除.
@@ -626,32 +645,37 @@ func (l *ListView) Item_DeleteItem(iGroup int, iItem int) bool {
 }
 
 // 列表视_删除全部.
-func (l *ListView) DeleteAll() int {
-	return xc.XListView_DeleteAll(l.Handle)
+func (l *ListView) DeleteAll() *ListView {
+	xc.XListView_DeleteAll(l.Handle)
+	return l
 }
 
 // 列表视_删除全部组.
-func (l *ListView) DeleteAllGroup() int {
-	return xc.XListView_DeleteAllGroup(l.Handle)
+func (l *ListView) DeleteAllGroup() *ListView {
+	xc.XListView_DeleteAllGroup(l.Handle)
+	return l
 }
 
 // 列表视_删除全部项.
-func (l *ListView) DeleteAllItem() int {
-	return xc.XListView_DeleteAllItem(l.Handle)
+func (l *ListView) DeleteAllItem() *ListView {
+	xc.XListView_DeleteAllItem(l.Handle)
+	return l
 }
 
 // 列表视_组删除列.
 //
 // iColumn: 列索引.
-func (l *ListView) DeleteColumnGroup(iColumn int) int {
-	return xc.XListView_DeleteColumnGroup(l.Handle, iColumn)
+func (l *ListView) DeleteColumnGroup(iColumn int) *ListView {
+	xc.XListView_DeleteColumnGroup(l.Handle, iColumn)
+	return l
 }
 
 // 列表视_项删除列.
 //
 // iColumn: 列索引.
-func (l *ListView) DeleteColumnItem(iColumn int) int {
-	return xc.XListView_DeleteColumnItem(l.Handle, iColumn)
+func (l *ListView) DeleteColumnItem(iColumn int) *ListView {
+	xc.XListView_DeleteColumnItem(l.Handle, iColumn)
+	return l
 }
 
 // 列表视_项获取文本.
@@ -736,11 +760,12 @@ func (l *ListView) Item_GetImage(iGroup int, iItem int, iColumn int) int {
 
 // 列表视_置拖动矩形颜色.
 //
-// color: ABGR 颜色.
+// color: ARGB 颜色.
 //
 // width: 线宽度.
-func (l *ListView) SetDragRectColor(color int, width int) int {
-	return xc.XListView_SetDragRectColor(l.Handle, color, width)
+func (l *ListView) SetDragRectColor(color int, width int) *ListView {
+	xc.XListView_SetDragRectColor(l.Handle, color, width)
+	return l
 }
 
 // 列表视_置项模板从内存.

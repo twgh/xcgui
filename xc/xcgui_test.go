@@ -29,22 +29,6 @@ func TestWriteDll(t *testing.T) {
 	t.Log(xc.GetXcguiPath())
 }
 
-func TestABGR(t *testing.T) {
-	t.Log(xc.ABGR(255, 201, 100, 255))
-}
-
-func TestRGBA(t *testing.T) {
-	t.Log(xc.RGBA(255, 201, 100, 255))
-}
-
-func TestABGR2(t *testing.T) {
-	t.Log(xc.ABGR2(xc.BGR(255, 201, 100), 255))
-}
-
-func TestRGB(t *testing.T) {
-	t.Log(xc.RGB(255, 201, 100))
-}
-
 func TestGetXcgui(t *testing.T) {
 	xc.LoadXCGUI()
 	dll := xc.GetXcgui()
@@ -62,31 +46,4 @@ func TestSetXcguiPath(t *testing.T) {
 		return
 	}
 	t.Log(xc.GetXcguiPath())
-}
-
-func TestHexRGB2RGB(t *testing.T) {
-	t.Log(xc.HexRGB2RGB("#ffc964"))
-	t.Log(xc.HexRGB2RGB("ffc964"))
-}
-
-func TestHexRGB2ABGR(t *testing.T) {
-	t.Log(xc.HexRGB2ABGR("#ffc964", 255))
-	t.Log(xc.HexRGB2ABGR("ffc964", 255))
-}
-
-func TestHexRGB2BGR(t *testing.T) {
-	t.Log(xc.HexRGB2BGR("#ffc964"))
-	t.Log(xc.HexRGB2BGR("ffc964"))
-}
-
-func TestRGB2ABGR(t *testing.T) {
-	t.Log(xc.RGB2ABGR(xc.HexRGB2RGB("ffc964"), 255))
-}
-
-func TestRGB2BGR(t *testing.T) {
-	t.Log(xc.RGB2BGR(xc.HexRGB2RGB("ffc964")))
-}
-
-func TestBGR(t *testing.T) {
-	t.Log(xc.BGR(255, 201, 100))
 }

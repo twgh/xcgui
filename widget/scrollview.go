@@ -79,8 +79,9 @@ func (s *ScrollView) SetTotalSize(cx int, cy int) bool {
 // 滚动视_取视图大小, 获取内容总大小.
 //
 // pSize: 大小.
-func (s *ScrollView) GetTotalSize(pSize *xc.SIZE) int {
-	return xc.XSView_GetTotalSize(s.Handle, pSize)
+func (s *ScrollView) GetTotalSize(pSize *xc.SIZE) *ScrollView {
+	xc.XSView_GetTotalSize(s.Handle, pSize)
+	return s
 }
 
 // 滚动视_置滚动单位大小, 设置滚动单位大小, 如果内容改变返回TRUE否则返回FALSE.
@@ -95,15 +96,17 @@ func (s *ScrollView) SetLineSize(nWidth int, nHeight int) bool {
 // 滚动视_取滚动单位大小, 获取滚动单位大小.
 //
 // pSize: 返回大小.
-func (s *ScrollView) GetLineSize(pSize *xc.SIZE) int {
-	return xc.XSView_GetLineSize(s.Handle, pSize)
+func (s *ScrollView) GetLineSize(pSize *xc.SIZE) *ScrollView {
+	xc.XSView_GetLineSize(s.Handle, pSize)
+	return s
 }
 
 // 滚动视_置滚动条大小.
 //
 // size: 滚动条大小.
-func (s *ScrollView) SetScrollBarSize(size int) int {
-	return xc.XSView_SetScrollBarSize(s.Handle, size)
+func (s *ScrollView) SetScrollBarSize(size int) *ScrollView {
+	xc.XSView_SetScrollBarSize(s.Handle, size)
+	return s
 }
 
 // 滚动视_取视口原点X, 获取视口原点X坐标.
@@ -129,8 +132,9 @@ func (s *ScrollView) GetViewHeight() int {
 // 滚动视_取视口坐标.
 //
 // pRect: 坐标.
-func (s *ScrollView) GetViewRect(pRect *xc.RECT) int {
-	return xc.XSView_GetViewRect(s.Handle, pRect)
+func (s *ScrollView) GetViewRect(pRect *xc.RECT) *ScrollView {
+	xc.XSView_GetViewRect(s.Handle, pRect)
+	return s
 }
 
 // 滚动视_取水平滚动条, 返回滚动条句柄.
@@ -174,22 +178,25 @@ func (s *ScrollView) ScrollPosYV(posY int) bool {
 // 滚动视_显示水平滚动条.
 //
 // bShow: 是否显示.
-func (s *ScrollView) ShowSBarH(bShow bool) int {
-	return xc.XSView_ShowSBarH(s.Handle, bShow)
+func (s *ScrollView) ShowSBarH(bShow bool) *ScrollView {
+	xc.XSView_ShowSBarH(s.Handle, bShow)
+	return s
 }
 
 // 滚动视_显示垂直滚动条.
 //
 // bShow: 是否显示.
-func (s *ScrollView) ShowSBarV(bShow bool) int {
-	return xc.XSView_ShowSBarV(s.Handle, bShow)
+func (s *ScrollView) ShowSBarV(bShow bool) *ScrollView {
+	xc.XSView_ShowSBarV(s.Handle, bShow)
+	return s
 }
 
 // 滚动视_启用自动显示滚动条.
 //
 // bEnable: 是否启用.
-func (s *ScrollView) EnableAutoShowScrollBar(bEnable bool) int {
-	return xc.XSView_EnableAutoShowScrollBar(s.Handle, bEnable)
+func (s *ScrollView) EnableAutoShowScrollBar(bEnable bool) *ScrollView {
+	xc.XSView_EnableAutoShowScrollBar(s.Handle, bEnable)
+	return s
 }
 
 // 滚动视_向左滚动.

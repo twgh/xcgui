@@ -94,14 +94,13 @@ func XList_EnableVScrollBarTop(hEle int, bTop bool) int {
 	return int(r)
 }
 
-// 列表_启用项背景全行模式, 启用项背景全行填充模式.
+// 列表_启用行背景铺满.
 //
 // hEle: 元素句柄.
 //
 // bFull: 是否启用.
-func XList_EnableItemBkFullRow(hEle int, bFull bool) int {
-	r, _, _ := xList_EnableItemBkFullRow.Call(uintptr(hEle), common.BoolPtr(bFull))
-	return int(r)
+func XList_EnableRowBkFull(hEle int, bFull bool) {
+	xList_EnableRowBkFull.Call(uintptr(hEle), common.BoolPtr(bFull))
 }
 
 // 列表_启用固定行高.
@@ -158,14 +157,13 @@ func XList_SetSort(hEle int, iColumn int, iColumnAdapter int, bEnable bool) int 
 	return int(r)
 }
 
-// 列表_置绘制项背景标志, 设置是否绘制指定状态下项的背景.
+// 列表_置行背景绘制标志. 设置是否绘制指定状态下行的背景.
 //
 // hEle: 元素句柄.
 //
-// nFlags: 标志位, List_DrawItemBk_Flag_.
-func XList_SetDrawItemBkFlags(hEle int, nFlags xcc.List_DrawItemBk_Flag_) int {
-	r, _, _ := xList_SetDrawItemBkFlags.Call(uintptr(hEle), uintptr(nFlags))
-	return int(r)
+// nFlags: 标志位, xcc.List_DrawItemBk_Flag_.
+func XList_SetDrawRowBkFlags(hEle int, nFlags xcc.List_DrawItemBk_Flag_) {
+	xList_SetDrawRowBkFlags.Call(uintptr(hEle), uintptr(nFlags))
 }
 
 // 列表_置列宽.
@@ -248,39 +246,39 @@ func XList_GetItemData(hEle int, iItem int, iSubItem int) int {
 	return int(r)
 }
 
-// 列表_置选择项.
+// 列表_置选择行.
 //
 // hEle: 元素句柄.
 //
-// iItem: 项索引.
-func XList_SetSelectItem(hEle int, iItem int) bool {
-	r, _, _ := xList_SetSelectItem.Call(uintptr(hEle), uintptr(iItem))
+// iRow: 行索引.
+func XList_SetSelectRow(hEle int, iRow int) bool {
+	r, _, _ := xList_SetSelectRow.Call(uintptr(hEle), uintptr(iRow))
 	return r != 0
 }
 
-// 列表_取选择项, 返回项索引.
+// 列表_取选择行, 返回行索引.
 //
 // hEle: 元素句柄.
-func XList_GetSelectItem(hEle int) int {
-	r, _, _ := xList_GetSelectItem.Call(uintptr(hEle))
+func XList_GetSelectRow(hEle int) int {
+	r, _, _ := xList_GetSelectRow.Call(uintptr(hEle))
 	return int(r)
 }
 
-// 列表_取选择项数量, 获取选择项数量.
+// 列表_取选择行数量, 获取选择行数量.
 //
 // hEle: 元素句柄.
-func XList_GetSelectItemCount(hEle int) int {
-	r, _, _ := xList_GetSelectItemCount.Call(uintptr(hEle))
+func XList_GetSelectRowCount(hEle int) int {
+	r, _, _ := xList_GetSelectItemRow.Call(uintptr(hEle))
 	return int(r)
 }
 
-// 列表_添加选择项.
+// 列表_添加选择行.
 //
 // hEle: 元素句柄.
 //
-// iItem: 项索引.
-func XList_AddSelectItem(hEle int, iItem int) bool {
-	r, _, _ := xList_AddSelectItem.Call(uintptr(hEle), uintptr(iItem))
+// iRow: 行索引.
+func XList_AddSelectRow(hEle int, iRow int) bool {
+	r, _, _ := xList_AddSelectRow.Call(uintptr(hEle), uintptr(iRow))
 	return r != 0
 }
 
@@ -308,23 +306,23 @@ func XList_GetSelectAll(hEle int, pArray *[]int32, nArraySize int) int {
 	return int(r)
 }
 
-// 列表_显示指定项, 滚动视图让指定项可见.
+// 列表_显示指定行, 滚动视图让指定行可见.
 //
 // hEle: 元素句柄.
 //
-// iItem: 项索引.
-func XList_VisibleItem(hEle int, iItem int) int {
-	r, _, _ := xList_VisibleItem.Call(uintptr(hEle), uintptr(iItem))
+// iRow: 行索引.
+func XList_VisibleRow(hEle int, iRow int) int {
+	r, _, _ := xList_VisibleRow.Call(uintptr(hEle), uintptr(iRow))
 	return int(r)
 }
 
-// 列表_取消选择项, 取消选择指定项(这里的项可以理解为行).
+// 列表_取消选择行, 取消选择指定行.
 //
 // hEle: 元素句柄.
 //
-// iItem: 项索引.
-func XList_CancelSelectItem(hEle int, iItem int) bool {
-	r, _, _ := xList_CancelSelectItem.Call(uintptr(hEle), uintptr(iItem))
+// iRow: 行索引.
+func XList_CancelSelectRow(hEle int, iRow int) bool {
+	r, _, _ := xList_CancelSelectRow.Call(uintptr(hEle), uintptr(iRow))
 	return r != 0
 }
 
@@ -460,13 +458,13 @@ func XList_GetTemplateObject(hEle int, iItem int, iSubItem int, nTempItemID int)
 	return int(r)
 }
 
-// 列表_取对象所在行, 获取当前对象所在模板实例, 属于列表中哪一个项. 成功返回项索引, 否则返回XC_ID_ERROR.
+// 列表_取对象所在行. 获取当前对象所在模板实例, 属于列表中哪一行. 成功返回行索引, 否则返回 xcc.XC_ID_ERROR.
 //
 // hEle: 元素句柄.
 //
 // hXCGUI: 对象句柄, UI元素句柄或形状对象句柄.
-func XList_GetItemIndexFromHXCGUI(hEle int, hXCGUI int) int {
-	r, _, _ := xList_GetItemIndexFromHXCGUI.Call(uintptr(hEle), uintptr(hXCGUI))
+func XList_GetRowIndexFromHXCGUI(hEle int, hXCGUI int) int {
+	r, _, _ := xList_GetRowIndexFromHXCGUI.Call(uintptr(hEle), uintptr(hXCGUI))
 	return int(r)
 }
 
@@ -482,13 +480,13 @@ func XList_GetHeaderTemplateObject(hEle int, iItem int, nTempItemID int) int {
 	return int(r)
 }
 
-// 列表_取列表头对象所在行, 列表头, 获取当前对象所在模板实例, 属于列表头中哪一个项. 成功返回项索引, 否则返回XC_ID_ERROR.
+// 列表_取列表头对象所在列. 列表头, 获取当前对象所在模板实例, 属于列表头中哪一个列. 成功返回列索引, 否则返回 xcc.XC_ID_ERROR.
 //
 // hEle: 元素句柄.
 //
 // hXCGUI: 对象句柄.
-func XList_GetHeaderItemIndexFromHXCGUI(hEle int, hXCGUI int) int {
-	r, _, _ := xList_GetHeaderItemIndexFromHXCGUI.Call(uintptr(hEle), uintptr(hXCGUI))
+func XList_GetHeaderColumnIndexFromHXCGUI(hEle int, hXCGUI int) int {
+	r, _, _ := xList_GetHeaderColumnIndexFromHXCGUI.Call(uintptr(hEle), uintptr(hXCGUI))
 	return int(r)
 }
 
@@ -522,27 +520,27 @@ func XList_GetVisibleRowRange(hEle int, piStart *int32, piEnd *int32) int {
 	return int(r)
 }
 
-// 列表_置项默认高度.
+// 列表_置行默认高度.
 //
 // hEle: 元素句柄.
 //
 // nHeight: 高度.
 //
 // nSelHeight: 选中时高度.
-func XList_SetItemHeightDefault(hEle int, nHeight int32, nSelHeight int32) int {
-	r, _, _ := xList_SetItemHeightDefault.Call(uintptr(hEle), uintptr(nHeight), uintptr(nSelHeight))
+func XList_SetRowHeightDefault(hEle int, nHeight int32, nSelHeight int32) int {
+	r, _, _ := xList_SetRowHeightDefault.Call(uintptr(hEle), uintptr(nHeight), uintptr(nSelHeight))
 	return int(r)
 }
 
-// 列表_取项默认高度.
+// 列表_取行默认高度.
 //
 // hEle: 元素句柄.
 //
 // pHeight: 高度.
 //
 // pSelHeight: 选中时高度.
-func XList_GetItemHeightDefault(hEle int, pHeight *int32, pSelHeight *int32) int {
-	r, _, _ := xList_GetItemHeightDefault.Call(uintptr(hEle), uintptr(unsafe.Pointer(pHeight)), uintptr(unsafe.Pointer(pSelHeight)))
+func XList_GetRowHeightDefault(hEle int, pHeight *int32, pSelHeight *int32) int {
+	r, _, _ := xList_GetRowHeightDefault.Call(uintptr(hEle), uintptr(unsafe.Pointer(pHeight)), uintptr(unsafe.Pointer(pSelHeight)))
 	return int(r)
 }
 
@@ -640,14 +638,13 @@ func XList_RefreshData(hEle int) int {
 	return int(r)
 }
 
-// 列表_刷新指定项, 刷新指定项模板, 以便更新UI.
+// 列表_刷新指定行. 修改数据后, 刷新指定行模板, 以便更新数据到模板(如果当前行可见).
 //
 // hEle: 元素句柄.
 //
-// iItem: 项索引.
-func XList_RefreshItem(hEle int, iItem int) int {
-	r, _, _ := xList_RefreshItem.Call(uintptr(hEle), uintptr(iItem))
-	return int(r)
+// iRow: 行索引.
+func XList_RefreshRow(hEle int, iRow int) {
+	xList_RefreshRow.Call(uintptr(hEle), uintptr(iRow))
 }
 
 // 列表_添加列文本.
@@ -678,99 +675,99 @@ func XList_AddColumnImage(hEle int, nWidth int, pName string, hImage int) int {
 	return int(r)
 }
 
-// 列表_添加项文本.
+// 列表_添加行文本.
 //
 // hEle:.
 //
 // pText:.
-func XList_AddItemText(hEle int, pText string) int {
-	r, _, _ := xList_AddItemText.Call(uintptr(hEle), common.StrPtr(pText))
+func XList_AddRowText(hEle int, pText string) int {
+	r, _, _ := xList_AddRowText.Call(uintptr(hEle), common.StrPtr(pText))
 	return int(r)
 }
 
-// 列表_添加项文本扩展.
+// 列表_添加行文本扩展.
 //
 // hEle:.
 //
 // pName:.
 //
 // pText:.
-func XList_AddItemTextEx(hEle int, pName string, pText string) int {
-	r, _, _ := xList_AddItemTextEx.Call(uintptr(hEle), common.StrPtr(pName), common.StrPtr(pText))
+func XList_AddRowTextEx(hEle int, pName string, pText string) int {
+	r, _, _ := xList_AddRowTextEx.Call(uintptr(hEle), common.StrPtr(pName), common.StrPtr(pText))
 	return int(r)
 }
 
-// 列表_添加项图片.
+// 列表_添加行图片.
 //
 // hEle:.
 //
 // hImage:.
-func XList_AddItemImage(hEle int, hImage int) int {
-	r, _, _ := xList_AddItemImage.Call(uintptr(hEle), uintptr(hImage))
+func XList_AddRowImage(hEle int, hImage int) int {
+	r, _, _ := xList_AddRowImage.Call(uintptr(hEle), uintptr(hImage))
 	return int(r)
 }
 
-// 列表_添加项图片扩展.
+// 列表_添加行图片扩展.
 //
 // hEle:.
 //
 // pName:.
 //
 // hImage:.
-func XList_AddItemImageEx(hEle int, pName string, hImage int) int {
-	r, _, _ := xList_AddItemImageEx.Call(uintptr(hEle), common.StrPtr(pName), uintptr(hImage))
+func XList_AddRowImageEx(hEle int, pName string, hImage int) int {
+	r, _, _ := xList_AddRowImageEx.Call(uintptr(hEle), common.StrPtr(pName), uintptr(hImage))
 	return int(r)
 }
 
-// 列表_插入项文本.
+// 列表_插入行文本.
 //
 // hEle:.
 //
-// iItem:.
+// iRow:.
 //
 // pValue:.
-func XList_InsertItemText(hEle int, iItem int, pValue string) int {
-	r, _, _ := xList_InsertItemText.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pValue))
+func XList_InsertRowText(hEle int, iRow int, pValue string) int {
+	r, _, _ := xList_InsertRowText.Call(uintptr(hEle), uintptr(iRow), common.StrPtr(pValue))
 	return int(r)
 }
 
-// 列表_插入项文本扩展.
+// 列表_插入行文本扩展.
 //
 // hEle:.
 //
-// iItem:.
+// iRow:.
 //
 // pName:.
 //
 // pValue:.
-func XList_InsertItemTextEx(hEle int, iItem int, pName string, pValue string) int {
-	r, _, _ := xList_InsertItemTextEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), common.StrPtr(pValue))
+func XList_InsertRowTextEx(hEle int, iRow int, pName string, pValue string) int {
+	r, _, _ := xList_InsertRowTextEx.Call(uintptr(hEle), uintptr(iRow), common.StrPtr(pName), common.StrPtr(pValue))
 	return int(r)
 }
 
-// 列表_插入项图片.
+// 列表_插入行图片.
 //
 // hEle:.
 //
-// iItem:.
+// iRow:.
 //
 // hImage:.
-func XList_InsertItemImage(hEle int, iItem int, hImage int) int {
-	r, _, _ := xList_InsertItemImage.Call(uintptr(hEle), uintptr(iItem), uintptr(hImage))
+func XList_InsertRowImage(hEle int, iRow int, hImage int) int {
+	r, _, _ := xList_InsertRowImage.Call(uintptr(hEle), uintptr(iRow), uintptr(hImage))
 	return int(r)
 }
 
-// 列表_插入项图片扩展.
+// 列表_插入行图片扩展.
 //
 // hEle:.
 //
-// iItem:.
+// iRow:.
 //
 // pName:.
 //
 // hImage:.
-func XList_InsertItemImageEx(hEle int, iItem int, pName string, hImage int) int {
-	r, _, _ := xList_InsertItemImageEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(hImage))
+func XList_InsertRowImageEx(hEle int, iRow int, pName string, hImage int) int {
+	r, _, _ := xList_InsertRowImageEx.Call(uintptr(hEle), uintptr(iRow), common.StrPtr(pName), uintptr(hImage))
 	return int(r)
 }
 
@@ -990,33 +987,33 @@ func XList_GetItemFloatEx(hEle int, iItem int, pName string, pOutValue *float32)
 	return r != 0
 }
 
-// 列表_删除项.
+// 列表_删除行.
 //
 // hEle:.
 //
-// iItem:.
-func XList_DeleteItem(hEle int, iItem int) bool {
-	r, _, _ := xList_DeleteItem.Call(uintptr(hEle), uintptr(iItem))
+// iRow:.
+func XList_DeleteRow(hEle int, iRow int) bool {
+	r, _, _ := xList_DeleteRow.Call(uintptr(hEle), uintptr(iRow))
 	return r != 0
 }
 
-// 列表_删除项扩展.
+// 列表_删除行扩展.
 //
 // hEle:.
 //
-// iItem:.
+// iRow:.
 //
 // nCount:.
-func XList_DeleteItemEx(hEle int, iItem int, nCount int) bool {
-	r, _, _ := xList_DeleteItemEx.Call(uintptr(hEle), uintptr(iItem), uintptr(nCount))
+func XList_DeleteRowEx(hEle int, iRow int, nCount int) bool {
+	r, _, _ := xList_DeleteRowEx.Call(uintptr(hEle), uintptr(iRow), uintptr(nCount))
 	return r != 0
 }
 
-// 列表_删除项全部.
+// 列表_删除行全部.
 //
 // hEle:.
-func XList_DeleteItemAll(hEle int) int {
-	r, _, _ := xList_DeleteItemAll.Call(uintptr(hEle))
+func XList_DeleteRowAll(hEle int) int {
+	r, _, _ := xList_DeleteRowAll.Call(uintptr(hEle))
 	return int(r)
 }
 
@@ -1048,13 +1045,13 @@ func XList_GetCountColumn_AD(hEle int) int {
 //
 // hEle: 元素句柄.
 //
-// color: ABGR 颜色值.
+// color: ARGB 颜色值.
 func XList_SetSplitLineColor(hEle int, color int) int {
 	r, _, _ := xList_SetSplitLineColor.Call(uintptr(hEle), uintptr(color))
 	return int(r)
 }
 
-// 列表_置项高度.
+// 列表_置行高度.
 //
 // hEle: 元素句柄.
 //
@@ -1063,12 +1060,12 @@ func XList_SetSplitLineColor(hEle int, color int) int {
 // nHeight: 高度.
 //
 // nSelHeight: 选中时高度.
-func XList_SetItemHeight(hEle int, iRow int, nHeight, nSelHeight int32) int {
-	r, _, _ := xList_SetItemHeight.Call(uintptr(hEle), uintptr(iRow), uintptr(nHeight), uintptr(nSelHeight))
+func XList_SetRowHeight(hEle int, iRow int, nHeight, nSelHeight int32) int {
+	r, _, _ := xList_SetRowHeight.Call(uintptr(hEle), uintptr(iRow), uintptr(nHeight), uintptr(nSelHeight))
 	return int(r)
 }
 
-// 列表_取项高度.
+// 列表_取行高度.
 //
 // hEle: 元素句柄.
 //
@@ -1077,8 +1074,8 @@ func XList_SetItemHeight(hEle int, iRow int, nHeight, nSelHeight int32) int {
 // pHeight: 高度.
 //
 // pSelHeight: 选中时高度.
-func XList_GetItemHeight(hEle int, iRow int, pHeight, pSelHeight *int32) int {
-	r, _, _ := xList_GetItemHeight.Call(uintptr(hEle), uintptr(iRow), uintptr(unsafe.Pointer(pHeight)), uintptr(unsafe.Pointer(pSelHeight)))
+func XList_GetRowHeight(hEle int, iRow int, pHeight, pSelHeight *int32) int {
+	r, _, _ := xList_GetRowHeight.Call(uintptr(hEle), uintptr(iRow), uintptr(unsafe.Pointer(pHeight)), uintptr(unsafe.Pointer(pSelHeight)))
 	return int(r)
 }
 
@@ -1086,7 +1083,7 @@ func XList_GetItemHeight(hEle int, iRow int, pHeight, pSelHeight *int32) int {
 //
 // hEle: 元素句柄.
 //
-// color: ABGR 颜色值.
+// color: ARGB 颜色值.
 //
 // width: 线宽度.
 func XList_SetDragRectColor(hEle int, color, width int) int {
@@ -1141,5 +1138,39 @@ func XList_SetItemTemplateXMLFromMem(hEle int, data []byte) bool {
 // hModule: 模块句柄, 可填0.
 func XList_SetItemTemplateXMLFromZipRes(hEle int, id int32, pFileName string, pPassword string, hModule uintptr) bool {
 	r, _, _ := xList_SetItemTemplateXMLFromZipRes.Call(uintptr(hEle), uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), hModule)
+	return r != 0
+}
+
+// 列表_添加列文本2, 返回列索引. 简化版本.
+//
+// hEle: 元素句柄.
+//
+// nWidth: 列宽度.
+//
+// pText: 标题文本.
+func XList_AddColumnText2(hEle int, nWidth int32, pText string) int32 {
+	r, _, _ := xList_AddColumnText2.Call(uintptr(hEle), uintptr(nWidth), common.StrPtr(pText))
+	return int32(r)
+}
+
+// 列表_添加列图片2, 返回列索引. 简化版本.
+//
+// hEle: 元素句柄.
+//
+// nWidth: 列宽度.
+//
+// hImage: 图片句柄.
+func XList_AddColumnImage2(hEle int, nWidth int32, hImage int) int32 {
+	r, _, _ := xList_AddColumnImage2.Call(uintptr(hEle), uintptr(nWidth), uintptr(hImage))
+	return int32(r)
+}
+
+// 列表_创建数据适配器2. 创建数据适配器，根据绑定的项模板初始化数据适配器的列(字段名); 数据适配器存储数据, UI对象根据绑定的字段名显示数据适配器中对应的数据; 此接口是简化接口, 合并了 xc.XList_CreateAdapter() 和 xc.XList_CreateAdapterHeader() 接口;
+//
+// hEle: 元素句柄.
+//
+// col_extend_count: 列延伸-预计列表总列数, 默认值0; 限制最大延伸范围, 避免超出范围, 增加不必要的字段. 例如默认模板是1列, 但是数据有5列,那么列延伸填5.
+func XList_CreateAdapters(hEle int, col_extend_count int32) bool {
+	r, _, _ := xList_CreateAdapters.Call(uintptr(hEle), uintptr(col_extend_count))
 	return r != 0
 }

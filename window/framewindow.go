@@ -101,29 +101,33 @@ func NewFrameWindowByUIDName(name string) *FrameWindow {
 // 框架窗口_取布局区域坐标, 用来布局窗格的区域坐标, 不包含码头.
 //
 // pRect: 返回坐标.
-func (fw *FrameWindow) GetLayoutAreaRect(pRect *xc.RECT) int {
-	return xc.XFrameWnd_GetLayoutAreaRect(fw.Handle, pRect)
+func (fw *FrameWindow) GetLayoutAreaRect(pRect *xc.RECT) *FrameWindow {
+	xc.XFrameWnd_GetLayoutAreaRect(fw.Handle, pRect)
+	return fw
 }
 
 // 框架窗口_置视图, 设置窗格组TabBar高度.
 //
 // hEle: 元素句柄.
-func (fw *FrameWindow) SetView(hEle int) int {
-	return xc.XFrameWnd_SetView(fw.Handle, hEle)
+func (fw *FrameWindow) SetView(hEle int) *FrameWindow {
+	xc.XFrameWnd_SetView(fw.Handle, hEle)
+	return fw
 }
 
 // 框架窗口_置窗格分隔条颜色.
 //
-// color: ABGR 颜色值.
-func (fw *FrameWindow) SetPaneSplitBarColor(color int) int {
-	return xc.XFrameWnd_SetPaneSplitBarColor(fw.Handle, color)
+// color: ARGB 颜色值.
+func (fw *FrameWindow) SetPaneSplitBarColor(color int) *FrameWindow {
+	xc.XFrameWnd_SetPaneSplitBarColor(fw.Handle, color)
+	return fw
 }
 
 // 框架窗口_置TabBar条高度, 设置窗格组TabBar高度.
 //
 // nHeight: 高度.
-func (fw *FrameWindow) SetTabBarHeight(nHeight int32) int {
-	return xc.XFrameWnd_SetTabBarHeight(fw.Handle, nHeight)
+func (fw *FrameWindow) SetTabBarHeight(nHeight int32) *FrameWindow {
+	xc.XFrameWnd_SetTabBarHeight(fw.Handle, nHeight)
+	return fw
 }
 
 // 框架窗口_保存布局到文件, 保存布局信息到文件.
@@ -183,18 +187,34 @@ func FrameWnd_Attach(hWnd uintptr, XCStyle int) *Window {
 // 框架窗口_取主视图坐标. 获取框架窗口主视图区域坐标.
 //
 // pRect: 返回坐标.
-func (fw *FrameWindow) GetViewRect(pRect *xc.RECT) {
+func (fw *FrameWindow) GetViewRect(pRect *xc.RECT) *FrameWindow {
 	xc.XFrameWnd_GetViewRect(fw.Handle, pRect)
+	return fw
 }
 
 // 框架窗口_置窗格分隔条宽度.
 //
 // nWidth: 宽度.
-func (fw *FrameWindow) SetPaneSplitBarWidth(nWidth int32) {
+func (fw *FrameWindow) SetPaneSplitBarWidth(nWidth int32) *FrameWindow {
 	xc.XFrameWnd_SetPaneSplitBarWidth(fw.Handle, nWidth)
+	return fw
 }
 
 // 框架窗口_取窗格分隔条宽度.
 func (fw *FrameWindow) GetPaneSplitBarWidth() int32 {
 	return xc.XFrameWnd_GetPaneSplitBarWidth(fw.Handle)
+}
+
+// 框架窗口_置布局外间距. 设置框架窗口, 窗格区域布局的外间距.
+//
+// left: 左边间隔.
+//
+// top: 顶边间隔.
+//
+// right: 右边间隔.
+//
+// bottom: 底边间隔.
+func (fw *FrameWindow) SetLayoutMargin(left, top, right, bottom int32) *FrameWindow {
+	xc.XFrameWnd_SetLayoutMargin(fw.Handle, left, top, right, bottom)
+	return fw
 }

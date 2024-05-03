@@ -175,7 +175,7 @@ const (
 )
 
 // TextFormatFlag_ 文本对齐.
-type TextFormatFlag_ int
+type TextFormatFlag_ int32
 
 const (
 	TextAlignFlag_Left     TextFormatFlag_ = 0      // 左对齐
@@ -496,7 +496,7 @@ const (
 )
 
 // GRADIENT_FILL_ 渐变填充模式.
-type GRADIENT_FILL_ int
+type GRADIENT_FILL_ int32
 
 const (
 	GRADIENT_FILL_RECT_H   GRADIENT_FILL_ = iota // 水平填充
@@ -514,7 +514,7 @@ const (
 )
 
 // Ease_Flag_ 缓动标识.
-type Ease_Flag_ int
+type Ease_Flag_ int32
 
 const (
 	Ease_Flag_Linear Ease_Flag_ = iota // 线性, 直线
@@ -740,7 +740,7 @@ const (
 )
 
 // BkObject_Align_Flag_ 背景对象对齐方式.
-type BkObject_Align_Flag_ int
+type BkObject_Align_Flag_ int32
 
 const (
 	BkObject_Align_Flag_Left     BkObject_Align_Flag_ = 1 << iota // 左对齐, 当设置此标识时, 外间距(margin.left)代表左侧间距; 当right未设置时,那么外间距(margin.right)代表宽度;
@@ -927,7 +927,7 @@ const (
 	TrayIcon_Flag_Nosound      TrayIcon_Flag_ = 0x10 // 禁止播放气泡声音 NIIF_NOSOUND
 )
 
-// ABGR颜色
+// ARGB颜色
 
 const (
 	COLOR_BLUE    = 0xFFFF0000 // 蓝色

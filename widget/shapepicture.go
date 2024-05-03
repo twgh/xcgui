@@ -69,8 +69,9 @@ func NewShapePictureByUIDName(name string) *ShapePicture {
 // 形状图片_置图片, 设置图片.
 //
 // hImage: 图片句柄.
-func (s *ShapePicture) SetImage(hImage int) int {
-	return xc.XShapePic_SetImage(s.Handle, hImage)
+func (s *ShapePicture) SetImage(hImage int) *ShapePicture {
+	xc.XShapePic_SetImage(s.Handle, hImage)
+	return s
 }
 
 // 形状图片_取图片, 获取图片句柄.

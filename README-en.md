@@ -1,7 +1,7 @@
 <h1 align="center">XCGUI</h1>
 <p align="center">
-    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.382-blue" alt="release"></a>
-    <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-3.3.8-blue" alt="XCGUI"></a>
+    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.390-blue" alt="release"></a>
+    <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-3.3.9-blue" alt="XCGUI"></a>
    <a href="https://golang.org"> <img src="https://img.shields.io/badge/golang-1.16-blue" alt="golang"></a>
     <a href="https://pkg.go.dev/github.com/twgh/xcgui"><img src="https://img.shields.io/badge/go.dev-reference-brightgreen" alt="GoDoc"></a>
     <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-brightgreen" alt="License"></a>
@@ -19,6 +19,7 @@
 
 
 
+
 ## Introduction
 
 English | [简体中文](./README.md)
@@ -28,7 +29,7 @@ English | [简体中文](./README.md)
 - DirectUI design idea: there is no sub-window in the window, the interface elements are all logical areas (no HWND handle, safe, flexible), all UI elements are developed independently (not restricted by the system), more flexible to achieve various Program interface to meet the needs of different users.
 - Has a free UI designer tool: rapid development tools, what you see is what you get, a highly customizable system (DIY), making UI development easier.
 - Support Direct2D, hardware acceleration, can make full use of hardware features to create high-performance, high-quality 2D graphics.
-- [wiki](https://github.com/twgh/xcgui/wiki) There is a simple introductory tutorial, you can take a look when you have time.
+- [WIKI](https://github.com/twgh/xcgui/wiki) There is a simple introductory tutorial, you can take a look when you have time.
 
 ## Get
 
@@ -98,13 +99,13 @@ It is best to put it in the `C:\Windows\System32` directory during development, 
 64bit
 
 ```bash
-curl -fL "https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui.dll?version=latest" -o xcgui.dll
+iwr https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui.dll?version=latest -OutFile xcgui.dll
 ```
 
 32bit
 
 ```bash
-curl -fL "https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui-32.dll?version=latest" -o xcgui.dll
+iwr https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui-32.dll?version=latest -OutFile xcgui.dll
 ```
 
 #### （3）Download using the getxcgui tool
@@ -196,7 +197,7 @@ In some cases, it is more convenient to mix the native functions in the xc packa
 
 All the structures of xcgui are also in the xc package.
 
- [Goland](https://www.jetbrains.com/go/?from=xcgui) is recommended for development for the best development experience. The comment format I'm using looks the best in Goland.
+ [Goland](https://www.jetbrains.com/go/?from=xcgui) is recommended for development for the best development experience. 
 
 ## Event
 

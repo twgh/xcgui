@@ -26,14 +26,14 @@ func NewAdapterTreeByHandle(handle int) *AdapterTree {
 // 数据适配器树_添加列, 添加列, 返回索引值.
 //
 // pName: 字段称.
-func (a *AdapterTree) AddColumn(pName string) int {
+func (a *AdapterTree) AddColumn(pName string) int32 {
 	return xc.XAdTree_AddColumn(a.Handle, pName)
 }
 
 // 数据适配器树_置列, 设置列, 返回列数量.
 //
 // pColName: 列名, 列名, 多个列名用逗号分开.
-func (a *AdapterTree) SetColumn(pColName string) int {
+func (a *AdapterTree) SetColumn(pColName string) int32 {
 	return xc.XAdTree_SetColumn(a.Handle, pColName)
 }
 
@@ -44,7 +44,7 @@ func (a *AdapterTree) SetColumn(pColName string) int {
 // nParentID: 父ID.
 //
 // insertID: 插入位置ID.
-func (a *AdapterTree) InsertItemText(pValue string, nParentID int, insertID int) int {
+func (a *AdapterTree) InsertItemText(pValue string, nParentID, insertID int32) int32 {
 	return xc.XAdTree_InsertItemText(a.Handle, pValue, nParentID, insertID)
 }
 
@@ -57,7 +57,7 @@ func (a *AdapterTree) InsertItemText(pValue string, nParentID int, insertID int)
 // nParentID: 父ID.
 //
 // insertID: 插入位置ID.
-func (a *AdapterTree) InsertItemTextEx(pName string, pValue string, nParentID int, insertID int) int {
+func (a *AdapterTree) InsertItemTextEx(pName string, pValue string, nParentID, insertID int32) int32 {
 	return xc.XAdTree_InsertItemTextEx(a.Handle, pName, pValue, nParentID, insertID)
 }
 
@@ -68,7 +68,7 @@ func (a *AdapterTree) InsertItemTextEx(pName string, pValue string, nParentID in
 // nParentID: 父ID.
 //
 // insertID: 插入位置ID.
-func (a *AdapterTree) InsertItemImage(hImage int, nParentID int, insertID int) int {
+func (a *AdapterTree) InsertItemImage(hImage int, nParentID, insertID int32) int32 {
 	return xc.XAdTree_InsertItemImage(a.Handle, hImage, nParentID, insertID)
 }
 
@@ -81,17 +81,17 @@ func (a *AdapterTree) InsertItemImage(hImage int, nParentID int, insertID int) i
 // nParentID: 父ID.
 //
 // insertID: 插入位置ID.
-func (a *AdapterTree) InsertItemImageEx(pName string, hImage int, nParentID int, insertID int) int {
+func (a *AdapterTree) InsertItemImageEx(pName string, hImage int, nParentID, insertID int32) int32 {
 	return xc.XAdTree_InsertItemImageEx(a.Handle, pName, hImage, nParentID, insertID)
 }
 
 // 数据适配器树_取项数量, 获取项数量.
-func (a *AdapterTree) GetCount() int {
+func (a *AdapterTree) GetCount() int32 {
 	return xc.XAdTree_GetCount(a.Handle)
 }
 
 // 数据适配器树_取列数量, 获取列数量.
-func (a *AdapterTree) GetCountColumn() int {
+func (a *AdapterTree) GetCountColumn() int32 {
 	return xc.XAdTree_GetCountColumn(a.Handle)
 }
 
@@ -102,7 +102,7 @@ func (a *AdapterTree) GetCountColumn() int {
 // iColumn: 列索引.
 //
 // pValue: 值.
-func (a *AdapterTree) SetItemText(nID int, iColumn int, pValue string) bool {
+func (a *AdapterTree) SetItemText(nID, iColumn int32, pValue string) bool {
 	return xc.XAdTree_SetItemText(a.Handle, nID, iColumn, pValue)
 }
 
@@ -113,7 +113,7 @@ func (a *AdapterTree) SetItemText(nID int, iColumn int, pValue string) bool {
 // pName: 字段称.
 //
 // pValue: 值.
-func (a *AdapterTree) SetItemTextEx(nID int, pName string, pValue string) bool {
+func (a *AdapterTree) SetItemTextEx(nID int32, pName string, pValue string) bool {
 	return xc.XAdTree_SetItemTextEx(a.Handle, nID, pName, pValue)
 }
 
@@ -124,7 +124,7 @@ func (a *AdapterTree) SetItemTextEx(nID int, pName string, pValue string) bool {
 // iColumn: 列索引.
 //
 // hImage: 图片句柄.
-func (a *AdapterTree) SetItemImage(nID int, iColumn int, hImage int) bool {
+func (a *AdapterTree) SetItemImage(nID, iColumn int32, hImage int) bool {
 	return xc.XAdTree_SetItemImage(a.Handle, nID, iColumn, hImage)
 }
 
@@ -135,7 +135,7 @@ func (a *AdapterTree) SetItemImage(nID int, iColumn int, hImage int) bool {
 // pName: 字段称.
 //
 // hImage: 图片句柄.
-func (a *AdapterTree) SetItemImageEx(nID int, pName string, hImage int) bool {
+func (a *AdapterTree) SetItemImageEx(nID int32, pName string, hImage int) bool {
 	return xc.XAdTree_SetItemImageEx(a.Handle, nID, pName, hImage)
 }
 
@@ -144,7 +144,7 @@ func (a *AdapterTree) SetItemImageEx(nID int, pName string, hImage int) bool {
 // nID: 项ID.
 //
 // iColumn: 列索引.
-func (a *AdapterTree) GetItemText(nID int, iColumn int) string {
+func (a *AdapterTree) GetItemText(nID, iColumn int32) string {
 	return xc.XAdTree_GetItemText(a.Handle, nID, iColumn)
 }
 
@@ -153,7 +153,7 @@ func (a *AdapterTree) GetItemText(nID int, iColumn int) string {
 // nID: 项ID.
 //
 // pName: 字段称.
-func (a *AdapterTree) GetItemTextEx(nID int, pName string) string {
+func (a *AdapterTree) GetItemTextEx(nID int32, pName string) string {
 	return xc.XAdTree_GetItemTextEx(a.Handle, nID, pName)
 }
 
@@ -162,7 +162,7 @@ func (a *AdapterTree) GetItemTextEx(nID int, pName string) string {
 // nID: 项ID.
 //
 // iColumn: 列索引.
-func (a *AdapterTree) GetItemImage(nID int, iColumn int) int {
+func (a *AdapterTree) GetItemImage(nID, iColumn int32) int {
 	return xc.XAdTree_GetItemImage(a.Handle, nID, iColumn)
 }
 
@@ -171,23 +171,25 @@ func (a *AdapterTree) GetItemImage(nID int, iColumn int) int {
 // nID: 项ID.
 //
 // pName: 字段称.
-func (a *AdapterTree) GetItemImageEx(nID int, pName string) int {
+func (a *AdapterTree) GetItemImageEx(nID int32, pName string) int {
 	return xc.XAdTree_GetItemImageEx(a.Handle, nID, pName)
 }
 
 // 数据适配器树_删除项, 删除项.
 //
 // nID: 项ID.
-func (a *AdapterTree) DeleteItem(nID int) bool {
+func (a *AdapterTree) DeleteItem(nID int32) bool {
 	return xc.XAdTree_DeleteItem(a.Handle, nID)
 }
 
 // 数据适配器树_删除项全部, 删除所有项.
-func (a *AdapterTree) DeleteItemAll() int {
-	return xc.XAdTree_DeleteItemAll(a.Handle)
+func (a *AdapterTree) DeleteItemAll() *AdapterTree {
+	xc.XAdTree_DeleteItemAll(a.Handle)
+	return a
 }
 
 // 数据适配器树_删除列全部, 删除所有列, 并且清空数据.
-func (a *AdapterTree) DeleteColumnAll() int {
-	return xc.XAdTree_DeleteColumnAll(a.Handle)
+func (a *AdapterTree) DeleteColumnAll() *AdapterTree {
+	xc.XAdTree_DeleteColumnAll(a.Handle)
+	return a
 }

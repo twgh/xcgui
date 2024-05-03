@@ -70,8 +70,9 @@ func NewDateTimeByUIDName(name string) *DateTime {
 // 日期_置样式, 设置样式.
 //
 // nStyle: 样式: 0为日期元素, 1为时间元素.
-func (d *DateTime) SetStyle(nStyle int) int {
-	return xc.XDateTime_SetStyle(d.Handle, nStyle)
+func (d *DateTime) SetStyle(nStyle int) *DateTime {
+	xc.XDateTime_SetStyle(d.Handle, nStyle)
+	return d
 }
 
 // 日期_取样式, 返回元素样式.
@@ -82,8 +83,9 @@ func (d *DateTime) GetStyle() int {
 // 日期_启用分割栏为斜线, 切换分割栏为: 斜线或横线.
 //
 // bSlash: TRUE: 斜线, FALSE: 横线.
-func (d *DateTime) EnableSplitSlash(bSlash bool) int {
-	return xc.XDateTime_EnableSplitSlash(d.Handle, bSlash)
+func (d *DateTime) EnableSplitSlash(bSlash bool) *DateTime {
+	xc.XDateTime_EnableSplitSlash(d.Handle, bSlash)
+	return d
 }
 
 // 日期_取内部按钮, 获取内部按钮元素.
@@ -100,9 +102,10 @@ func (d *DateTime) GetSelBkColor() int {
 
 // 日期_置选择日期背景颜色, 设置被选择文字的背景颜色.
 //
-// crSelectBk: 文字被选中背景色, ABGR 颜色.
-func (d *DateTime) SetSelBkColor(crSelectBk int) int {
-	return xc.XDateTime_SetSelBkColor(d.Handle, crSelectBk)
+// crSelectBk: 文字被选中背景色, ARGB 颜色.
+func (d *DateTime) SetSelBkColor(crSelectBk int) *DateTime {
+	xc.XDateTime_SetSelBkColor(d.Handle, crSelectBk)
+	return d
 }
 
 // 日期_取当前日期.
@@ -112,8 +115,9 @@ func (d *DateTime) SetSelBkColor(crSelectBk int) int {
 // pnMonth: 月.[OUT].
 //
 // pnDay: 日.[OUT].
-func (d *DateTime) GetDate(pnYear *int32, pnMonth *int32, pnDay *int32) int {
-	return xc.XDateTime_GetDate(d.Handle, pnYear, pnMonth, pnDay)
+func (d *DateTime) GetDate(pnYear *int32, pnMonth *int32, pnDay *int32) *DateTime {
+	xc.XDateTime_GetDate(d.Handle, pnYear, pnMonth, pnDay)
+	return d
 }
 
 // 日期_置当前日期.
@@ -123,8 +127,9 @@ func (d *DateTime) GetDate(pnYear *int32, pnMonth *int32, pnDay *int32) int {
 // nMonth: 月.
 //
 // nDay: 日.
-func (d *DateTime) SetDate(nYear int32, nMonth int32, nDay int32) int {
-	return xc.XDateTime_SetDate(d.Handle, nYear, nMonth, nDay)
+func (d *DateTime) SetDate(nYear int32, nMonth int32, nDay int32) *DateTime {
+	xc.XDateTime_SetDate(d.Handle, nYear, nMonth, nDay)
+	return d
 }
 
 // 日期_取当前时间.
@@ -134,8 +139,9 @@ func (d *DateTime) SetDate(nYear int32, nMonth int32, nDay int32) int {
 // pnMinute: 分.[OUT].
 //
 // pnSecond: 秒.[OUT].
-func (d *DateTime) GetTime(pnHour *int32, pnMinute *int32, pnSecond *int32) int {
-	return xc.XDateTime_GetTime(d.Handle, pnHour, pnMinute, pnSecond)
+func (d *DateTime) GetTime(pnHour *int32, pnMinute *int32, pnSecond *int32) *DateTime {
+	xc.XDateTime_GetTime(d.Handle, pnHour, pnMinute, pnSecond)
+	return d
 }
 
 // 日期_社区当前时间, 设置当前时分秒.
@@ -145,13 +151,15 @@ func (d *DateTime) GetTime(pnHour *int32, pnMinute *int32, pnSecond *int32) int 
 // nMinute: 分.
 //
 // nSecond: 秒.
-func (d *DateTime) SetTime(nHour int32, nMinute int32, nSecond int32) int {
-	return xc.XDateTime_SetTime(d.Handle, nHour, nMinute, nSecond)
+func (d *DateTime) SetTime(nHour int32, nMinute int32, nSecond int32) *DateTime {
+	xc.XDateTime_SetTime(d.Handle, nHour, nMinute, nSecond)
+	return d
 }
 
 // 日期_弹出, 弹出月历卡片.
-func (d *DateTime) Popup() int {
-	return xc.XDateTime_Popup(d.Handle)
+func (d *DateTime) Popup() *DateTime {
+	xc.XDateTime_Popup(d.Handle)
+	return d
 }
 
 /*

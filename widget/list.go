@@ -105,57 +105,65 @@ func (l *List) InsertColumn(width int, iItem int) int {
 // 列表_启用多选, 启用或关闭多选功能.
 //
 // bEnable: 是否启用.
-func (l *List) EnableMultiSel(bEnable bool) int {
-	return xc.XList_EnableMultiSel(l.Handle, bEnable)
+func (l *List) EnableMultiSel(bEnable bool) *List {
+	xc.XList_EnableMultiSel(l.Handle, bEnable)
+	return l
 }
 
 // 列表_启用拖动更改列宽, 启用拖动改变列宽度.
 //
 // bEnable: 是否启用.
-func (l *List) EnableDragChangeColumnWidth(bEnable bool) int {
-	return xc.XList_EnableDragChangeColumnWidth(l.Handle, bEnable)
+func (l *List) EnableDragChangeColumnWidth(bEnable bool) *List {
+	xc.XList_EnableDragChangeColumnWidth(l.Handle, bEnable)
+	return l
 }
 
 // 列表_启用垂直滚动条顶部对齐.
 //
 // bTop: 是否启用.
-func (l *List) EnableVScrollBarTop(bTop bool) int {
-	return xc.XList_EnableVScrollBarTop(l.Handle, bTop)
+func (l *List) EnableVScrollBarTop(bTop bool) *List {
+	xc.XList_EnableVScrollBarTop(l.Handle, bTop)
+	return l
 }
 
-// 列表_启用项背景全行模式, 启用项背景全行填充模式.
+// 列表_启用行背景铺满.
 //
 // bFull: 是否启用.
-func (l *List) EnableItemBkFullRow(bFull bool) int {
-	return xc.XList_EnableItemBkFullRow(l.Handle, bFull)
+func (l *List) EnableRowBkFull(bFull bool) *List {
+	xc.XList_EnableRowBkFull(l.Handle, bFull)
+	return l
 }
 
 // 列表_启用固定行高.
 //
 // bEnable: 是否启用.
-func (l *List) EnableFixedRowHeight(bEnable bool) int {
-	return xc.XList_EnableFixedRowHeight(l.Handle, bEnable)
+func (l *List) EnableFixedRowHeight(bEnable bool) *List {
+	xc.XList_EnableFixedRowHeight(l.Handle, bEnable)
+	return l
 }
 
 // 列表_启用模板复用.
 //
 // bEnable: 是否启用.
-func (l *List) EnableTemplateReuse(bEnable bool) int {
-	return xc.XList_EnableTemplateReuse(l.Handle, bEnable)
+func (l *List) EnableTemplateReuse(bEnable bool) *List {
+	xc.XList_EnableTemplateReuse(l.Handle, bEnable)
+	return l
 }
 
 // 列表_启用虚表.
 //
 // bEnable: 是否启用.
-func (l *List) EnableVirtualTable(bEnable bool) int {
-	return xc.XList_EnableVirtualTable(l.Handle, bEnable)
+func (l *List) EnableVirtualTable(bEnable bool) *List {
+	xc.XList_EnableVirtualTable(l.Handle, bEnable)
+	return l
 }
 
 // 列表_置虚表行数.
 //
 // nRowCount: 行数.
-func (l *List) SetVirtualRowCount(nRowCount int) int {
-	return xc.XList_SetVirtualRowCount(l.Handle, nRowCount)
+func (l *List) SetVirtualRowCount(nRowCount int) *List {
+	xc.XList_SetVirtualRowCount(l.Handle, nRowCount)
+	return l
 }
 
 // 列表_置排序, 设置排序属性.
@@ -165,15 +173,17 @@ func (l *List) SetVirtualRowCount(nRowCount int) int {
 // iColumnAdapter: 需要排序的数据在数据适配器中的列索引.
 //
 // bEnable: 是否启用排序功能.
-func (l *List) SetSort(iColumn int, iColumnAdapter int, bEnable bool) int {
-	return xc.XList_SetSort(l.Handle, iColumn, iColumnAdapter, bEnable)
+func (l *List) SetSort(iColumn int, iColumnAdapter int, bEnable bool) *List {
+	xc.XList_SetSort(l.Handle, iColumn, iColumnAdapter, bEnable)
+	return l
 }
 
-// 列表_置绘制项背景标志, 设置是否绘制指定状态下项的背景.
+// 列表_置行背景绘制标志. 设置是否绘制指定状态下行的背景.
 //
-// nFlags: 标志位, List_DrawItemBk_Flag_.
-func (l *List) SetDrawItemBkFlags(nFlags xcc.List_DrawItemBk_Flag_) int {
-	return xc.XList_SetDrawItemBkFlags(l.Handle, nFlags)
+// nFlags: 标志位, xcc.List_DrawItemBk_Flag_.
+func (l *List) SetDrawRowBkFlags(nFlags xcc.List_DrawItemBk_Flag_) *List {
+	xc.XList_SetDrawRowBkFlags(l.Handle, nFlags)
+	return l
 }
 
 // 列表_置列宽.
@@ -181,8 +191,9 @@ func (l *List) SetDrawItemBkFlags(nFlags xcc.List_DrawItemBk_Flag_) int {
 // iItem: 列索引.
 //
 // width: 宽度.
-func (l *List) SetColumnWidth(iItem int, width int) int {
-	return xc.XList_SetColumnWidth(l.Handle, iItem, width)
+func (l *List) SetColumnWidth(iItem int, width int) *List {
+	xc.XList_SetColumnWidth(l.Handle, iItem, width)
+	return l
 }
 
 // 列表_置列最小宽度.
@@ -190,8 +201,9 @@ func (l *List) SetColumnWidth(iItem int, width int) int {
 // iItem: 列索引.
 //
 // width: 宽度.
-func (l *List) SetColumnMinWidth(iItem int, width int) int {
-	return xc.XList_SetColumnMinWidth(l.Handle, iItem, width)
+func (l *List) SetColumnMinWidth(iItem int, width int) *List {
+	xc.XList_SetColumnMinWidth(l.Handle, iItem, width)
+	return l
 }
 
 // 列表_置列宽度固定.
@@ -199,8 +211,9 @@ func (l *List) SetColumnMinWidth(iItem int, width int) int {
 // iColumn: 列索引.
 //
 // bFixed: 是否固定宽度.
-func (l *List) SetColumnWidthFixed(iColumn int, bFixed bool) int {
-	return xc.XList_SetColumnWidthFixed(l.Handle, iColumn, bFixed)
+func (l *List) SetColumnWidthFixed(iColumn int, bFixed bool) *List {
+	xc.XList_SetColumnWidthFixed(l.Handle, iColumn, bFixed)
+	return l
 }
 
 // 列表_取列宽度.
@@ -235,33 +248,34 @@ func (l *List) GetItemData(iItem int, iSubItem int) int {
 	return xc.XList_GetItemData(l.Handle, iItem, iSubItem)
 }
 
-// 列表_置选择项.
+// 列表_置选择行.
 //
-// iItem: 项索引.
-func (l *List) SetSelectItem(iItem int) bool {
-	return xc.XList_SetSelectItem(l.Handle, iItem)
+// iRow: 行索引.
+func (l *List) SetSelectRow(iRow int) bool {
+	return xc.XList_SetSelectRow(l.Handle, iRow)
 }
 
-// 列表_取选择项, 返回项索引.
-func (l *List) GetSelectItem() int {
-	return xc.XList_GetSelectItem(l.Handle)
+// 列表_取选择行, 返回行索引.
+func (l *List) GetSelectRow() int {
+	return xc.XList_GetSelectRow(l.Handle)
 }
 
-// 列表_取选择项数量, 获取选择项数量.
-func (l *List) GetSelectItemCount() int {
-	return xc.XList_GetSelectItemCount(l.Handle)
+// 列表_取选择行数量, 获取选择行数量.
+func (l *List) GetSelectRowCount() int {
+	return xc.XList_GetSelectRowCount(l.Handle)
 }
 
-// 列表_添加选择项.
+// 列表_添加选择行.
 //
-// iItem: 项索引.
-func (l *List) AddSelectItem(iItem int) bool {
-	return xc.XList_AddSelectItem(l.Handle, iItem)
+// iRow: 行索引.
+func (l *List) AddSelectRow(iRow int) bool {
+	return xc.XList_AddSelectRow(l.Handle, iRow)
 }
 
 // 列表_置选择全部, 选择全部行.
-func (l *List) SetSelectAll() int {
-	return xc.XList_SetSelectAll(l.Handle)
+func (l *List) SetSelectAll() *List {
+	xc.XList_SetSelectAll(l.Handle)
+	return l
 }
 
 // 列表_取全部选择, 获取全部选择的行, 返回行数量.
@@ -273,23 +287,25 @@ func (l *List) GetSelectAll(pArray *[]int32, nArraySize int) int {
 	return xc.XList_GetSelectAll(l.Handle, pArray, nArraySize)
 }
 
-// 列表_显示指定项, 滚动视图让指定项可见.
+// 列表_显示指定行, 滚动视图让指定行可见.
 //
-// iItem: 项索引.
-func (l *List) VisibleItem(iItem int) int {
-	return xc.XList_VisibleItem(l.Handle, iItem)
+// iRow: 行索引.
+func (l *List) VisibleRow(iRow int) *List {
+	xc.XList_VisibleRow(l.Handle, iRow)
+	return l
 }
 
-// 列表_取消选择项, 取消选择指定项(这里的项可以理解为行).
+// 列表_取消选择行, 取消选择指定行.
 //
-// iItem: 项索引.
-func (l *List) CancelSelectItem(iItem int) bool {
-	return xc.XList_CancelSelectItem(l.Handle, iItem)
+// iRow: 行索引.
+func (l *List) CancelSelectRow(iRow int) bool {
+	return xc.XList_CancelSelectRow(l.Handle, iRow)
 }
 
 // 列表_取消全部选择项, 取消选择所有项(这里的项可以理解为行).
-func (l *List) CancelSelectAll() int {
-	return xc.XList_CancelSelectAll(l.Handle)
+func (l *List) CancelSelectAll() *List {
+	xc.XList_CancelSelectAll(l.Handle)
+	return l
 }
 
 // 列表_取列表头, 获取列表头元素, 返回列表头元素句柄.
@@ -305,22 +321,25 @@ func (l *List) DeleteColumn(iItem int) bool {
 }
 
 // 列表_删除全部列, 删除所有的列, 仅删除List的, 数据适配器的列不变.
-func (l *List) DeleteColumnAll() int {
-	return xc.XList_DeleteColumnAll(l.Handle)
+func (l *List) DeleteColumnAll() *List {
+	xc.XList_DeleteColumnAll(l.Handle)
+	return l
 }
 
 // 列表_绑定数据适配器.
 //
 // hAdapter: 数据适配器句柄 XAdTable.
-func (l *List) BindAdapter(hAdapter int) int {
-	return xc.XList_BindAdapter(l.Handle, hAdapter)
+func (l *List) BindAdapter(hAdapter int) *List {
+	xc.XList_BindAdapter(l.Handle, hAdapter)
+	return l
 }
 
 // 列表_列表头绑定数据适配器.
 //
 // hAdapter: 数据适配器句柄 XAdMap.
-func (l *List) BindAdapterHeader(hAdapter int) int {
-	return xc.XList_BindAdapterHeader(l.Handle, hAdapter)
+func (l *List) BindAdapterHeader(hAdapter int) *List {
+	xc.XList_BindAdapterHeader(l.Handle, hAdapter)
+	return l
 }
 
 // 列表_创建数据适配器, 创建数据适配器，根据绑定的项模板初始化数据适配器的列, 返回适配器句柄.
@@ -377,11 +396,11 @@ func (l *List) GetTemplateObject(iItem int, iSubItem int, nTempItemID int) int {
 	return xc.XList_GetTemplateObject(l.Handle, iItem, iSubItem, nTempItemID)
 }
 
-// 列表_取对象所在行, 获取当前对象所在模板实例, 属于列表中哪一个项. 成功返回项索引, 否则返回XC_ID_ERROR.
+// 列表_取对象所在行. 获取当前对象所在模板实例, 属于列表中哪一行. 成功返回行索引, 否则返回 xcc.XC_ID_ERROR.
 //
 // hXCGUI: 对象句柄, UI元素句柄或形状对象句柄.
-func (l *List) GetItemIndexFromHXCGUI(hXCGUI int) int {
-	return xc.XList_GetItemIndexFromHXCGUI(l.Handle, hXCGUI)
+func (l *List) GetRowIndexFromHXCGUI(hXCGUI int) int {
+	return xc.XList_GetRowIndexFromHXCGUI(l.Handle, hXCGUI)
 }
 
 // 列表_取列表头模板对象, 列表头, 通过模板项ID, 获取实例化模板项ID对应的对象句柄.
@@ -393,18 +412,19 @@ func (l *List) GetHeaderTemplateObject(iItem int, nTempItemID int) int {
 	return xc.XList_GetHeaderTemplateObject(l.Handle, iItem, nTempItemID)
 }
 
-// 列表_取列表头对象所在行, 列表头, 获取当前对象所在模板实例, 属于列表头中哪一个项. 成功返回项索引, 否则返回XC_ID_ERROR.
+// 列表_取列表头对象所在列. 列表头, 获取当前对象所在模板实例, 属于列表头中哪一个列. 成功返回列索引, 否则返回 xcc.XC_ID_ERROR.
 //
 // hXCGUI: 对象句柄.
-func (l *List) GetHeaderItemIndexFromHXCGUI(hXCGUI int) int {
-	return xc.XList_GetHeaderItemIndexFromHXCGUI(l.Handle, hXCGUI)
+func (l *List) GetHeaderColumnIndexFromHXCGUI(hXCGUI int) int {
+	return xc.XList_GetHeaderColumnIndexFromHXCGUI(l.Handle, hXCGUI)
 }
 
 // 列表_置列表头高度.
 //
 // height: 高度.
-func (l *List) SetHeaderHeight(height int) int {
-	return xc.XList_SetHeaderHeight(l.Handle, height)
+func (l *List) SetHeaderHeight(height int) *List {
+	xc.XList_SetHeaderHeight(l.Handle, height)
+	return l
 }
 
 // 列表_取列表头高度.
@@ -417,33 +437,37 @@ func (l *List) GetHeaderHeight() int {
 // piStart: 开始行索引.
 //
 // piEnd: 结束行索引.
-func (l *List) GetVisibleRowRange(piStart *int32, piEnd *int32) int {
-	return xc.XList_GetVisibleRowRange(l.Handle, piStart, piEnd)
+func (l *List) GetVisibleRowRange(piStart *int32, piEnd *int32) *List {
+	xc.XList_GetVisibleRowRange(l.Handle, piStart, piEnd)
+	return l
 }
 
-// 列表_置项默认高度.
+// 列表_置行默认高度.
 //
 // nHeight: 高度.
 //
 // nSelHeight: 选中时高度.
-func (l *List) SetItemHeightDefault(nHeight int32, nSelHeight int32) int {
-	return xc.XList_SetItemHeightDefault(l.Handle, nHeight, nSelHeight)
+func (l *List) SetRowHeightDefault(nHeight int32, nSelHeight int32) *List {
+	xc.XList_SetRowHeightDefault(l.Handle, nHeight, nSelHeight)
+	return l
 }
 
-// 列表_取项默认高度.
+// 列表_取行默认高度.
 //
 // pHeight: 高度.
 //
 // pSelHeight: 选中时高度.
-func (l *List) GetItemHeightDefault(pHeight *int32, pSelHeight *int32) int {
-	return xc.XList_GetItemHeightDefault(l.Handle, pHeight, pSelHeight)
+func (l *List) GetRowHeightDefault(pHeight *int32, pSelHeight *int32) *List {
+	xc.XList_GetRowHeightDefault(l.Handle, pHeight, pSelHeight)
+	return l
 }
 
 // 列表_置行间距.
 //
 // nSpace: 行间距大小.
-func (l *List) SetRowSpace(nSpace int) int {
-	return xc.XList_SetRowSpace(l.Handle, nSpace)
+func (l *List) SetRowSpace(nSpace int) *List {
+	xc.XList_SetRowSpace(l.Handle, nSpace)
+	return l
 }
 
 // 列表_取行间距.
@@ -454,29 +478,33 @@ func (l *List) GetRowSpace() int {
 // 列表_置锁定列左侧, 锁定列, 设置左侧锁定列分界列索引.
 //
 // iColumn: 列索引, -1代表不锁定.
-func (l *List) SetLockColumnLeft(iColumn int) int {
-	return xc.XList_SetLockColumnLeft(l.Handle, iColumn)
+func (l *List) SetLockColumnLeft(iColumn int) *List {
+	xc.XList_SetLockColumnLeft(l.Handle, iColumn)
+	return l
 }
 
 // 列表_置锁定列右侧.
 //
 // iColumn: 列索引, -1代表不锁定. 暂时只支持锁定末尾列.
-func (l *List) SetLockColumnRight(iColumn int) int {
-	return xc.XList_SetLockColumnRight(l.Handle, iColumn)
+func (l *List) SetLockColumnRight(iColumn int) *List {
+	xc.XList_SetLockColumnRight(l.Handle, iColumn)
+	return l
 }
 
 // 列表_置锁定行底部, 设置是否锁定末尾行.
 //
 // bLock: 是否锁定.
-func (l *List) SetLockRowBottom(bLock bool) int {
-	return xc.XList_SetLockRowBottom(l.Handle, bLock)
+func (l *List) SetLockRowBottom(bLock bool) *List {
+	xc.XList_SetLockRowBottom(l.Handle, bLock)
+	return l
 }
 
 // 列表_置锁定行底部重叠.
 //
 // bOverlap: 是否重叠.
-func (l *List) SetLockRowBottomOverlap(bOverlap bool) int {
-	return xc.XList_SetLockRowBottomOverlap(l.Handle, bOverlap)
+func (l *List) SetLockRowBottomOverlap(bOverlap bool) *List {
+	xc.XList_SetLockRowBottomOverlap(l.Handle, bOverlap)
+	return l
 }
 
 // 列表_测试点击项, 检测坐标点所在项.
@@ -506,11 +534,12 @@ func (l *List) RefreshData() int {
 	return xc.XList_RefreshData(l.Handle)
 }
 
-// 列表_刷新指定项, 刷新指定项模板, 以便更新UI.
+// 列表_刷新指定行. 修改数据后, 刷新指定行模板, 以便更新数据到模板(如果当前行可见).
 //
-// iItem: 项索引.
-func (l *List) RefreshItem(iItem int) int {
-	return xc.XList_RefreshItem(l.Handle, iItem)
+// iRow: 行索引.
+func (l *List) RefreshRow(iRow int) *List {
+	xc.XList_RefreshRow(l.Handle, iRow)
+	return l
 }
 
 // 列表_添加列文本.
@@ -535,76 +564,76 @@ func (l *List) AddColumnImage(nWidth int, pName string, hImage int) int {
 	return xc.XList_AddColumnImage(l.Handle, nWidth, pName, hImage)
 }
 
-// 列表_添加项文本.
+// 列表_添加行文本.
 //
 // pText:.
-func (l *List) AddItemText(pText string) int {
-	return xc.XList_AddItemText(l.Handle, pText)
+func (l *List) AddRowText(pText string) int {
+	return xc.XList_AddRowText(l.Handle, pText)
 }
 
-// 列表_添加项文本扩展.
+// 列表_添加行文本扩展.
 //
 // pName:.
 //
 // pText:.
-func (l *List) AddItemTextEx(pName string, pText string) int {
-	return xc.XList_AddItemTextEx(l.Handle, pName, pText)
+func (l *List) AddRowTextEx(pName string, pText string) int {
+	return xc.XList_AddRowTextEx(l.Handle, pName, pText)
 }
 
-// 列表_添加项图片.
+// 列表_添加行图片.
 //
 // hImage:.
-func (l *List) AddItemImage(hImage int) int {
-	return xc.XList_AddItemImage(l.Handle, hImage)
+func (l *List) AddRowImage(hImage int) int {
+	return xc.XList_AddRowImage(l.Handle, hImage)
 }
 
-// 列表_添加项图片扩展.
+// 列表_添加行图片扩展.
 //
 // pName:.
 //
 // hImage:.
-func (l *List) AddItemImageEx(pName string, hImage int) int {
-	return xc.XList_AddItemImageEx(l.Handle, pName, hImage)
+func (l *List) AddRowImageEx(pName string, hImage int) int {
+	return xc.XList_AddRowImageEx(l.Handle, pName, hImage)
 }
 
-// 列表_插入项文本.
+// 列表_插入行文本.
 //
-// iItem:.
+// iRow:.
 //
 // pValue:.
-func (l *List) InsertItemText(iItem int, pValue string) int {
-	return xc.XList_InsertItemText(l.Handle, iItem, pValue)
+func (l *List) InsertRowText(iRow int, pValue string) int {
+	return xc.XList_InsertRowText(l.Handle, iRow, pValue)
 }
 
-// 列表_插入项文本扩展.
+// 列表_插入行文本扩展.
 //
-// iItem:.
+// iRow:.
 //
 // pName:.
 //
 // pValue:.
-func (l *List) InsertItemTextEx(iItem int, pName string, pValue string) int {
-	return xc.XList_InsertItemTextEx(l.Handle, iItem, pName, pValue)
+func (l *List) InsertRowTextEx(iRow int, pName string, pValue string) int {
+	return xc.XList_InsertRowTextEx(l.Handle, iRow, pName, pValue)
 }
 
-// 列表_插入项图片.
+// 列表_插入行图片.
 //
-// iItem:.
+// iRow:.
 //
 // hImage:.
-func (l *List) InsertItemImage(iItem int, hImage int) int {
-	return xc.XList_InsertItemImage(l.Handle, iItem, hImage)
+func (l *List) InsertRowImage(iRow int, hImage int) int {
+	return xc.XList_InsertRowImage(l.Handle, iRow, hImage)
 }
 
-// 列表_插入项图片扩展.
+// 列表_插入行图片扩展.
 //
-// iItem:.
+// iRow:.
 //
 // pName:.
 //
 // hImage:.
-func (l *List) InsertItemImageEx(iItem int, pName string, hImage int) int {
-	return xc.XList_InsertItemImageEx(l.Handle, iItem, pName, hImage)
+func (l *List) InsertRowImageEx(iRow int, pName string, hImage int) int {
+	return xc.XList_InsertRowImageEx(l.Handle, iRow, pName, hImage)
 }
 
 // 列表_置项文本.
@@ -775,30 +804,32 @@ func (l *List) GetItemFloatEx(iItem int, pName string, pOutValue *float32) bool 
 	return xc.XList_GetItemFloatEx(l.Handle, iItem, pName, pOutValue)
 }
 
-// 列表_删除项.
+// 列表_删除行.
 //
-// iItem:.
-func (l *List) DeleteItem(iItem int) bool {
-	return xc.XList_DeleteItem(l.Handle, iItem)
+// iRow:.
+func (l *List) DeleteRow(iRow int) bool {
+	return xc.XList_DeleteRow(l.Handle, iRow)
 }
 
-// 列表_删除项扩展.
+// 列表_删除行扩展.
 //
-// iItem:.
+// iRow:.
 //
 // nCount:.
-func (l *List) DeleteItemEx(iItem int, nCount int) bool {
-	return xc.XList_DeleteItemEx(l.Handle, iItem, nCount)
+func (l *List) DeleteRowEx(iRow int, nCount int) bool {
+	return xc.XList_DeleteRowEx(l.Handle, iRow, nCount)
 }
 
-// 列表_删除项全部.
-func (l *List) DeleteItemAll() int {
-	return xc.XList_DeleteItemAll(l.Handle)
+// 列表_删除行全部.
+func (l *List) DeleteRowAll() *List {
+	xc.XList_DeleteRowAll(l.Handle)
+	return l
 }
 
 // 列表_删除列全部AD.
-func (l *List) DeleteColumnAll_AD() int {
-	return xc.XList_DeleteColumnAll_AD(l.Handle)
+func (l *List) DeleteColumnAll_AD() *List {
+	xc.XList_DeleteColumnAll_AD(l.Handle)
+	return l
 }
 
 // 列表_取项数量AD.
@@ -813,40 +844,44 @@ func (l *List) GetCountColumn_AD() int {
 
 // 列表_置分割线颜色.
 //
-// color: ABGR 颜色值.
-func (l *List) SetSplitLineColor(color int) int {
-	return xc.XList_SetSplitLineColor(l.Handle, color)
+// color: ARGB 颜色值.
+func (l *List) SetSplitLineColor(color int) *List {
+	xc.XList_SetSplitLineColor(l.Handle, color)
+	return l
 }
 
-// 列表_置项高度.
+// 列表_置行高度.
 //
 // iRow: 行索引.
 //
 // nHeight: 高度.
 //
 // nSelHeight: 选中时高度.
-func (l *List) SetItemHeight(iRow int, nHeight, nSelHeight int32) int {
-	return xc.XList_SetItemHeight(l.Handle, iRow, nHeight, nSelHeight)
+func (l *List) SetRowHeight(iRow int, nHeight, nSelHeight int32) *List {
+	xc.XList_SetRowHeight(l.Handle, iRow, nHeight, nSelHeight)
+	return l
 }
 
-// 列表_取项高度.
+// 列表_取行高度.
 //
 // iRow: 行索引.
 //
 // pHeight: 高度.
 //
 // pSelHeight: 选中时高度.
-func (l *List) GetItemHeight(iRow int, pHeight, pSelHeight *int32) int {
-	return xc.XList_GetItemHeight(l.Handle, iRow, pHeight, pSelHeight)
+func (l *List) GetRowHeight(iRow int, pHeight, pSelHeight *int32) *List {
+	xc.XList_GetRowHeight(l.Handle, iRow, pHeight, pSelHeight)
+	return l
 }
 
 // 列表_置拖动矩形颜色.
 //
-// color: ABGR 颜色值.
+// color: ARGB 颜色值.
 //
 // width: 线宽度.
-func (l *List) SetDragRectColor(color, width int) int {
-	return xc.XList_SetDragRectColor(l.Handle, color, width)
+func (l *List) SetDragRectColor(color, width int) *List {
+	xc.XList_SetDragRectColor(l.Handle, color, width)
+	return l
 }
 
 // 列表_取项模板. 返回列表项模板句柄.
@@ -860,8 +895,9 @@ func (l *List) GetItemTemplateHeader() int {
 }
 
 // 列表_刷新项数据列表头.
-func (l *List) RefreshDataHeader() int {
-	return xc.XList_RefreshDataHeader(l.Handle)
+func (l *List) RefreshDataHeader() *List {
+	xc.XList_RefreshDataHeader(l.Handle)
+	return l
 }
 
 // 列表_置项模板从内存.
@@ -884,8 +920,33 @@ func (l *List) SetItemTemplateXMLFromZipRes(id int32, pFileName string, pPasswor
 	return xc.XList_SetItemTemplateXMLFromZipRes(l.Handle, id, pFileName, pPassword, hModule)
 }
 
+// 列表_添加列文本2, 返回列索引. 简化版本.
+//
+// nWidth: 列宽度.
+//
+// pText: 标题文本.
+func (l *List) AddColumnText2(nWidth int32, pText string) int32 {
+	return xc.XList_AddColumnText2(l.Handle, nWidth, pText)
+}
+
+// 列表_添加列图片2, 返回列索引. 简化版本.
+//
+// nWidth: 列宽度.
+//
+// hImage: 图片句柄.
+func (l *List) AddColumnImage2(nWidth int32, hImage int) int32 {
+	return xc.XList_AddColumnImage2(l.Handle, nWidth, hImage)
+}
+
+// 列表_创建数据适配器2. 创建数据适配器，根据绑定的项模板初始化数据适配器的列(字段名); 数据适配器存储数据, UI对象根据绑定的字段名显示数据适配器中对应的数据; 此接口是简化接口, 合并了 xc.XList_CreateAdapter() 和 xc.XList_CreateAdapterHeader() 接口;
+//
+// col_extend_count: 列延伸-预计列表总列数, 默认值0; 限制最大延伸范围, 避免超出范围, 增加不必要的字段. 例如默认模板是1列, 但是数据有5列,那么列延伸填5.
+func (l *List) CreateAdapters(col_extend_count int32) bool {
+	return xc.XList_CreateAdapters(l.Handle, col_extend_count)
+}
+
 /*
-以下都是事件
+// //////////////////////////////////// 以下是事件 //////////////////////////////////////
 */
 
 // 列表元素-项模板创建事件,模板复用机制需先启用;替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复.

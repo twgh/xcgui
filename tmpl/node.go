@@ -21,8 +21,9 @@ func NewNode(nType xcc.XC_OBJECT_TYPE) *Node {
 }
 
 // 给本类的Handle赋值.
-func (n *Node) SetHandle(handle int) {
+func (n *Node) SetHandle(handle int) *Node {
 	n.Handle = handle
+	return n
 }
 
 // 模板_取节点, 获取节点, 根据itemID. 返回节点对象.

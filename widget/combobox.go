@@ -82,8 +82,9 @@ func (c *ComboBox) CreateAdapter() int {
 // 组合框_绑定数据适配器.
 //
 // hAdapter: 适配器句柄.
-func (c *ComboBox) BindAdapter(hAdapter int) int {
-	return xc.XComboBox_BindAdapter(c.Handle, hAdapter)
+func (c *ComboBox) BindAdapter(hAdapter int) *ComboBox {
+	xc.XComboBox_BindAdapter(c.Handle, hAdapter)
+	return c
 }
 
 // 组合框_取数据适配器, 获取绑定的数据适配器.
@@ -94,29 +95,33 @@ func (c *ComboBox) GetAdapter() int {
 // 组合框_置绑定名称.
 //
 // pName: 字段名.
-func (c *ComboBox) SetBindName(pName string) int {
-	return xc.XComboBox_SetBindName(c.Handle, pName)
+func (c *ComboBox) SetBindName(pName string) *ComboBox {
+	xc.XComboBox_SetBindName(c.Handle, pName)
+	return c
 }
 
 // 组合框_取下拉按钮坐标.
 //
 // pRect: 坐标.
-func (c *ComboBox) GetButtonRect(pRect *xc.RECT) int {
-	return xc.XComboBox_GetButtonRect(c.Handle, pRect)
+func (c *ComboBox) GetButtonRect(pRect *xc.RECT) *ComboBox {
+	xc.XComboBox_GetButtonRect(c.Handle, pRect)
+	return c
 }
 
 // 组合框_置下拉按钮大小.
 //
 // size: 大小.
-func (c *ComboBox) SetButtonSize(size int) int {
-	return xc.XComboBox_SetButtonSize(c.Handle, size)
+func (c *ComboBox) SetButtonSize(size int) *ComboBox {
+	xc.XComboBox_SetButtonSize(c.Handle, size)
+	return c
 }
 
 // 组合框_置下拉列表高度.
 //
 // height: 高度, -1自动计算高度.
-func (c *ComboBox) SetDropHeight(height int) int {
-	return xc.XComboBox_SetDropHeight(c.Handle, height)
+func (c *ComboBox) SetDropHeight(height int) *ComboBox {
+	xc.XComboBox_SetDropHeight(c.Handle, height)
+	return c
 }
 
 // 组合框_取下拉列表高度.
@@ -127,36 +132,41 @@ func (c *ComboBox) GetDropHeight() int {
 // 组合框_置项模板, 设置下拉列表项模板文件.
 //
 // pXmlFile: 项模板文件.
-func (c *ComboBox) SetItemTemplateXML(pXmlFile string) int {
-	return xc.XComboBox_SetItemTemplateXML(c.Handle, pXmlFile)
+func (c *ComboBox) SetItemTemplateXML(pXmlFile string) *ComboBox {
+	xc.XComboBox_SetItemTemplateXML(c.Handle, pXmlFile)
+	return c
 }
 
 // 组合框_置项模板从字符串, 设置下拉列表项模板.
 //
 // pStringXML: 字符串.
-func (c *ComboBox) SetItemTemplateXMLFromString(pStringXML string) int {
-	return xc.XComboBox_SetItemTemplateXMLFromString(c.Handle, pStringXML)
+func (c *ComboBox) SetItemTemplateXMLFromString(pStringXML string) *ComboBox {
+	xc.XComboBox_SetItemTemplateXMLFromString(c.Handle, pStringXML)
+	return c
 }
 
 // 组合框_启用绘制下拉按钮, 是否绘制下拉按钮.
 //
 // bEnable: 是否绘制.
-func (c *ComboBox) EnableDrawButton(bEnable bool) int {
-	return xc.XComboBox_EnableDrawButton(c.Handle, bEnable)
+func (c *ComboBox) EnableDrawButton(bEnable bool) *ComboBox {
+	xc.XComboBox_EnableDrawButton(c.Handle, bEnable)
+	return c
 }
 
 // 组合框_启用编辑, 启用可编辑显示的文本内容.
 //
 // bEdit: TRUE可编辑.
-func (c *ComboBox) EnableEdit(bEdit bool) int {
-	return xc.XComboBox_EnableEdit(c.Handle, bEdit)
+func (c *ComboBox) EnableEdit(bEdit bool) *ComboBox {
+	xc.XComboBox_EnableEdit(c.Handle, bEdit)
+	return c
 }
 
 // 组合框_启用下拉列表高度固定大小, 启用/关闭下拉列表高度固定大小.
 //
 // bEnable: 是否启用.
-func (c *ComboBox) EnableDropHeightFixed(bEnable bool) int {
-	return xc.XComboBox_EnableDropHeightFixed(c.Handle, bEnable)
+func (c *ComboBox) EnableDropHeightFixed(bEnable bool) *ComboBox {
+	xc.XComboBox_EnableDropHeightFixed(c.Handle, bEnable)
+	return c
 }
 
 // 组合框_取选择项, 获取组合框下拉列表中选择项索引.
@@ -426,13 +436,15 @@ func (c *ComboBox) DeleteItemEx(iItem int, nCount int) bool {
 }
 
 // 组合框_删除项全部.
-func (c *ComboBox) DeleteItemAll() int {
-	return xc.XComboBox_DeleteItemAll(c.Handle)
+func (c *ComboBox) DeleteItemAll() *ComboBox {
+	xc.XComboBox_DeleteItemAll(c.Handle)
+	return c
 }
 
 // 组合框_删除列全部.
-func (c *ComboBox) DeleteColumnAll() int {
-	return xc.XComboBox_DeleteColumnAll(c.Handle)
+func (c *ComboBox) DeleteColumnAll() *ComboBox {
+	xc.XComboBox_DeleteColumnAll(c.Handle)
+	return c
 }
 
 // 组合框_取项数量.
@@ -446,14 +458,15 @@ func (c *ComboBox) GetCountColumn() int {
 }
 
 // 组合框_弹出下拉列表.
-func (c *ComboBox) PopupDropList() int {
-	return xc.XComboBox_PopupDropList(c.Handle)
+func (c *ComboBox) PopupDropList() *ComboBox {
+	xc.XComboBox_PopupDropList(c.Handle)
+	return c
 }
 
 // 组合框_设置项模板.
 //
 // hTemp: 模板句柄.
-func (c *ComboBox) SetItemTemplate(hTemp int) int {
+func (c *ComboBox) SetItemTemplate(hTemp int) bool {
 	return xc.XComboBox_SetItemTemplate(c.Handle, hTemp)
 }
 

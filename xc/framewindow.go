@@ -77,7 +77,7 @@ func XFrameWnd_SetView(hWindow int, hEle int) int {
 //
 // hWindow: 窗口句柄.
 //
-// color: ABGR 颜色值.
+// color: ARGB 颜色值.
 func XFrameWnd_SetPaneSplitBarColor(hWindow int, color int) int {
 	r, _, _ := xFrameWnd_SetPaneSplitBarColor.Call(uintptr(hWindow), uintptr(color))
 	return int(r)
@@ -185,4 +185,19 @@ func XFrameWnd_SetPaneSplitBarWidth(hWindow int, nWidth int32) {
 func XFrameWnd_GetPaneSplitBarWidth(hWindow int) int32 {
 	r, _, _ := xFrameWnd_GetPaneSplitBarWidth.Call(uintptr(hWindow))
 	return int32(r)
+}
+
+// 框架窗口_置布局外间距. 设置框架窗口, 窗格区域布局的外间距.
+//
+// hWindow: 窗口句柄.
+//
+// left: 左边间隔.
+//
+// top: 顶边间隔.
+//
+// right: 右边间隔.
+//
+// bottom: 底边间隔.
+func XFrameWnd_SetLayoutMargin(hWindow int, left, top, right, bottom int32) {
+	xFrameWnd_SetLayoutMargin.Call(uintptr(hWindow), uintptr(left), uintptr(top), uintptr(right), uintptr(bottom))
 }

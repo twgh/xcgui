@@ -68,28 +68,32 @@ func NewShapeEllipseByUIDName(name string) *ShapeEllipse {
 
 // 形状圆_置边框色.
 //
-// color: ABGR 颜色值.
-func (s *ShapeEllipse) SetBorderColor(color int) int {
-	return xc.XShapeEllipse_SetBorderColor(s.Handle, color)
+// color: ARGB 颜色值.
+func (s *ShapeEllipse) SetBorderColor(color int) *ShapeEllipse {
+	xc.XShapeEllipse_SetBorderColor(s.Handle, color)
+	return s
 }
 
 // 形状圆_置填充色.
 //
-// color: ABGR 颜色值.
-func (s *ShapeEllipse) SetFillColor(color int) int {
-	return xc.XShapeEllipse_SetFillColor(s.Handle, color)
+// color: ARGB 颜色值.
+func (s *ShapeEllipse) SetFillColor(color int) *ShapeEllipse {
+	xc.XShapeEllipse_SetFillColor(s.Handle, color)
+	return s
 }
 
 // 形状圆_启用边框, 启用绘制圆边框.
 //
 // bEnable: 是否启用.
-func (s *ShapeEllipse) EnableBorder(bEnable bool) int {
-	return xc.XShapeEllipse_EnableBorder(s.Handle, bEnable)
+func (s *ShapeEllipse) EnableBorder(bEnable bool) *ShapeEllipse {
+	xc.XShapeEllipse_EnableBorder(s.Handle, bEnable)
+	return s
 }
 
 // 形状圆_启用填充, 启用填充圆.
 //
 // bEnable: 是否启用.
-func (s *ShapeEllipse) EnableFill(bEnable bool) int {
-	return xc.XShapeEllipse_EnableFill(s.Handle, bEnable)
+func (s *ShapeEllipse) EnableFill(bEnable bool) *ShapeEllipse {
+	xc.XShapeEllipse_EnableFill(s.Handle, bEnable)
+	return s
 }

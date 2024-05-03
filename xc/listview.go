@@ -920,7 +920,7 @@ func XListView_Item_GetImage(hEle int, iGroup int, iItem int, iColumn int) int {
 //
 // hEle: 元素句柄.
 //
-// color: ABGR 颜色.
+// color: ARGB 颜色.
 //
 // width: 线宽度.
 func XListView_SetDragRectColor(hEle int, color int, width int) int {

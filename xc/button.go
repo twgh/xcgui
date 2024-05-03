@@ -248,3 +248,12 @@ func XBtn_EnableAnimation(hEle int, bEnable bool, bLoopPlay bool) int {
 	r, _, _ := xBtn_EnableAnimation.Call(uintptr(hEle), common.BoolPtr(bEnable), common.BoolPtr(bLoopPlay))
 	return int(r)
 }
+
+// 按钮_启用热键前缀. 对当前文本内容处理, 将&符号后面的一个字符加上下划线.
+//
+// hEle: 元素句柄.
+//
+// bEnable: 是否启用.
+func XBtn_EnableHotkeyPrefix(hEle int, bEnable bool) {
+	xBtn_EnableHotkeyPrefix.Call(uintptr(hEle), common.BoolPtr(bEnable))
+}

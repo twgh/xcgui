@@ -31,8 +31,8 @@ func XFont_CreateEx(pName string, size int32, style xcc.FontStyle_) int {
 //
 //	@param pFontInfo 字体信息.
 //	@return int 返回字体句柄.
-func XFont_CreateLOGFONTW(pFontInfo *LOGFONTW) int {
-	r, _, _ := xFont_CreateLOGFONTW.Call(uintptr(unsafe.Pointer(pFontInfo)))
+func XFont_CreateFromLOGFONTW(pFontInfo *LOGFONTW) int {
+	r, _, _ := xFont_CreateFromLOGFONTW.Call(uintptr(unsafe.Pointer(pFontInfo)))
 	return int(r)
 }
 
@@ -119,29 +119,25 @@ func XFont_CreateFromRes(id int32, pType string, fontSize int32, style xcc.FontS
 //
 //	@param hFontX 字体句柄.
 //	@param bEnable 是否启用.
-//	@return int
-func XFont_EnableAutoDestroy(hFontX int, bEnable bool) int {
-	r, _, _ := xFont_EnableAutoDestroy.Call(uintptr(hFontX), common.BoolPtr(bEnable))
-	return int(r)
+func XFont_EnableAutoDestroy(hFontX int, bEnable bool) {
+	xFont_EnableAutoDestroy.Call(uintptr(hFontX), common.BoolPtr(bEnable))
 }
 
 // XFont_GetFont 字体_取Font. 获取字体.
 //
 //	@param hFontX 字体句柄.
-//	@return int 返回GDI+ Font指针.
-func XFont_GetFont(hFontX int) int {
+//	@return GDI+ Font指针.
+func XFont_GetFont(hFontX int) uintptr {
 	r, _, _ := xFont_GetFont.Call(uintptr(hFontX))
-	return int(r)
+	return r
 }
 
 // XFont_GetFontInfo 字体_取信息. 获取字体信息.
 //
 //	@param hFontX 字体句柄.
 //	@param pInfo 接收返回的字体信息.
-//	@return int
-func XFont_GetFontInfo(hFontX int, pInfo *Font_Info_) int {
-	r, _, _ := xFont_GetFontInfo.Call(uintptr(hFontX), uintptr(unsafe.Pointer(pInfo)))
-	return int(r)
+func XFont_GetFontInfo(hFontX int, pInfo *Font_Info_) {
+	xFont_GetFontInfo.Call(uintptr(hFontX), uintptr(unsafe.Pointer(pInfo)))
 }
 
 // XFont_GetLOGFONTW 字体_取LOGFONTW. 获取字体LOGFONTW.
@@ -158,7 +154,6 @@ func XFont_GetLOGFONTW(hFontX int, hdc uintptr, pOut *LOGFONTW) bool {
 // XFont_Destroy 字体_销毁. 强制销毁炫彩字体, 谨慎使用, 建议使用 XFont_Release() 释放.
 //
 //	@param hFontX 字体句柄.
-//	@return int
 func XFont_Destroy(hFontX int) {
 	xFont_Destroy.Call(uintptr(hFontX))
 }
@@ -166,7 +161,6 @@ func XFont_Destroy(hFontX int) {
 // XFont_AddRef 字体_增加引用计数.
 //
 //	@param hFontX 字体句柄.
-//	@return int
 func XFont_AddRef(hFontX int) {
 	xFont_AddRef.Call(uintptr(hFontX))
 }
@@ -174,7 +168,6 @@ func XFont_AddRef(hFontX int) {
 // XFont_GetRefCount 字体_取引用计数.
 //
 //	@param hFontX 字体句柄.
-//	@return int
 func XFont_GetRefCount(hFontX int) int32 {
 	r, _, _ := xFont_GetRefCount.Call(uintptr(hFontX))
 	return int32(r)
@@ -183,7 +176,25 @@ func XFont_GetRefCount(hFontX int) int32 {
 // XFont_Release 字体_释放引用计数. 释放引用计数, 当引用计数为0时自动销毁.
 //
 //	@param hFontX 字体句柄.
-//	@return int
 func XFont_Release(hFontX int) {
 	xFont_Release.Call(uintptr(hFontX))
+}
+
+// XFont_SetUnderlineEdit 字体_置下划线. 仅供edit字体使用, 因为edit不支持下划线字体, 所以需要单独设置.
+//
+//	@param hFontX 字体句柄.
+//	@param bUnderline 是否启用下划线.
+//	@param bStrikeout 是否启用删除线.
+func XFont_SetUnderlineEdit(hFontX int, bUnderline, bStrikeout bool) {
+	xFont_SetUnderlineEdit.Call(uintptr(hFontX), common.BoolPtr(bUnderline), common.BoolPtr(bStrikeout))
+}
+
+// XFont_GetUnderlineEdit 字体_取下划线. 仅供edit字体使用, 因为edit不支持下划线字体, 所以需要单独设置.
+//
+//	@param hFontX 字体句柄.
+//	@return bUnderline 是否启用下划线.
+//	@return bStrikeout 是否启用删除线.
+func XFont_GetUnderlineEdit(hFontX int) (bUnderline, bStrikeout bool) {
+	xFont_GetUnderlineEdit.Call(uintptr(hFontX), uintptr(unsafe.Pointer(&bUnderline)), uintptr(unsafe.Pointer(&bStrikeout)))
+	return
 }

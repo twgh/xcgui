@@ -5,7 +5,7 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// 列表树元素.
+// Tree 列表树元素.
 type Tree struct {
 	ScrollView
 }
@@ -89,8 +89,9 @@ func NewTreeByUIDName(name string) *Tree {
 // 列表树_启用拖动项, 启用拖动项功能.
 //
 // bEnable: 是否启用.
-func (t *Tree) EnableDragItem(bEnable bool) {
+func (t *Tree) EnableDragItem(bEnable bool) *Tree {
 	xc.XTree_EnableDragItem(t.Handle, bEnable)
+	return t
 }
 
 // 列表树_启用连接线, 启用或禁用显示项的连接线.
@@ -98,29 +99,33 @@ func (t *Tree) EnableDragItem(bEnable bool) {
 // bEnable: 是否启用.
 //
 // bSolid: 实线或虚线; TRUE: 实线, FALSE: 虚线.
-func (t *Tree) EnableConnectLine(bEnable bool, bSolid bool) {
+func (t *Tree) EnableConnectLine(bEnable bool, bSolid bool) *Tree {
 	xc.XTree_EnableConnectLine(t.Handle, bEnable, bSolid)
+	return t
 }
 
 // 列表树_启用展开, 启动或关闭默认展开功能, 如果开启新插入的项将自动展开.
 //
 // bEnable: 是否启用.
-func (t *Tree) EnableExpand(bEnable bool) {
+func (t *Tree) EnableExpand(bEnable bool) *Tree {
 	xc.XTree_EnableExpand(t.Handle, bEnable)
+	return t
 }
 
 // 列表树_启用模板复用.
 //
 // bEnable: 是否启用.
-func (t *Tree) EnableTemplateReuse(bEnable bool) {
+func (t *Tree) EnableTemplateReuse(bEnable bool) *Tree {
 	xc.XTree_EnableTemplateReuse(t.Handle, bEnable)
+	return t
 }
 
 // 列表树_置连接线颜色.
 //
-// color: ABGR 颜色.
-func (t *Tree) SetConnectLineColor(color int) {
+// color: ARGB 颜色.
+func (t *Tree) SetConnectLineColor(color int) *Tree {
 	xc.XTree_SetConnectLineColor(t.Handle, color)
+	return t
 }
 
 // 列表树_置展开按钮大小, 设置展开按钮占用空间大小.
@@ -128,22 +133,25 @@ func (t *Tree) SetConnectLineColor(color int) {
 // nWidth: 宽度.
 //
 // nHeight: 高度.
-func (t *Tree) SetExpandButtonSize(nWidth, nHeight int32) {
+func (t *Tree) SetExpandButtonSize(nWidth, nHeight int32) *Tree {
 	xc.XTree_SetExpandButtonSize(t.Handle, nWidth, nHeight)
+	return t
 }
 
 // 列表树_置连接线长度, 设置连线绘制长度, 展开按钮与项内容之间的连线.
 //
 // nLength: 连线绘制长度.
-func (t *Tree) SetConnectLineLength(nLength int32) {
+func (t *Tree) SetConnectLineLength(nLength int32) *Tree {
 	xc.XTree_SetConnectLineLength(t.Handle, nLength)
+	return t
 }
 
 // 列表树_置拖动项插入位置颜色, 设置拖动项插入位置颜色提示.
 //
-// color: ABGR 颜色.
-func (t *Tree) SetDragInsertPositionColor(color int) {
+// color: ARGB 颜色.
+func (t *Tree) SetDragInsertPositionColor(color int) *Tree {
 	xc.XTree_SetDragInsertPositionColor(t.Handle, color)
+	return t
 }
 
 // 列表树_置项模板文件.
@@ -191,8 +199,9 @@ func (t *Tree) SetItemTemplateXMLSelFromString(pStringXML string) bool {
 // 列表树_置项背景绘制标志, 设置是否绘制指定状态下项的背景.
 //
 // nFlags: 标志位: xcc.List_DrawItemBk_Flag_.
-func (t *Tree) SetDrawItemBkFlags(nFlags xcc.List_DrawItemBk_Flag_) {
+func (t *Tree) SetDrawItemBkFlags(nFlags xcc.List_DrawItemBk_Flag_) *Tree {
 	xc.XTree_SetDrawItemBkFlags(t.Handle, nFlags)
+	return t
 }
 
 // 列表树_置项数据, 设置项用户数据.
@@ -226,8 +235,9 @@ func (t *Tree) GetSelectItem() int32 {
 // 列表树_可视指定项, 滚动视图让指定项可见.
 //
 // nID: 项索引.
-func (t *Tree) VisibleItem(nID int32) {
+func (t *Tree) VisibleItem(nID int32) *Tree {
 	xc.XTree_VisibleItem(t.Handle, nID)
+	return t
 }
 
 // 列表树_判断展开.
@@ -312,8 +322,9 @@ func (t *Tree) CreateAdapter() int {
 // 列表树_绑定数据适配器.
 //
 // hAdapter: 数据适配器句柄, XAdTree.
-func (t *Tree) BindAdapter(hAdapter int) {
+func (t *Tree) BindAdapter(hAdapter int) *Tree {
 	xc.XTree_BindAdapter(t.Handle, hAdapter)
+	return t
 }
 
 // 列表树_取数据适配器, 返回数据适配器句柄.
@@ -322,22 +333,25 @@ func (t *Tree) GetAdapter() int {
 }
 
 // 列表树_刷新数据, 刷新所有项模板, 以便更新UI.
-func (t *Tree) RefreshData() {
+func (t *Tree) RefreshData() *Tree {
 	xc.XTree_RefreshData(t.Handle)
+	return t
 }
 
 // 列表树_刷新指定项, 刷新指定项模板, 以便更新UI.
 //
 // nID: 项ID.
-func (t *Tree) RefreshItem(nID int32) {
+func (t *Tree) RefreshItem(nID int32) *Tree {
 	xc.XTree_RefreshItem(t.Handle, nID)
+	return t
 }
 
 // 列表树_置缩进, 设置缩进大小.
 //
 // nWidth: 缩进宽度.
-func (t *Tree) SetIndentation(nWidth int32) {
+func (t *Tree) SetIndentation(nWidth int32) *Tree {
 	xc.XTree_SetIndentation(t.Handle, nWidth)
+	return t
 }
 
 // 列表树_取缩进, 返回缩进值大小.
@@ -350,8 +364,9 @@ func (t *Tree) GetIndentation() int32 {
 // nHeight: 高度.
 //
 // nSelHeight: 选中时高度.
-func (t *Tree) SetItemHeightDefault(nHeight, nSelHeight int32) {
+func (t *Tree) SetItemHeightDefault(nHeight, nSelHeight int32) *Tree {
 	xc.XTree_SetItemHeightDefault(t.Handle, nHeight, nSelHeight)
+	return t
 }
 
 // 列表树_取项默认高度.
@@ -359,8 +374,9 @@ func (t *Tree) SetItemHeightDefault(nHeight, nSelHeight int32) {
 // pHeight: 接收返回高度.
 //
 // pSelHeight: 接收返回值, 当项选中时的高度.
-func (t *Tree) GetItemHeightDefault(pHeight, pSelHeight *int32) {
+func (t *Tree) GetItemHeightDefault(pHeight, pSelHeight *int32) *Tree {
 	xc.XTree_GetItemHeightDefault(t.Handle, pHeight, pSelHeight)
+	return t
 }
 
 // 列表树_置项高度.
@@ -370,8 +386,9 @@ func (t *Tree) GetItemHeightDefault(pHeight, pSelHeight *int32) {
 // nHeight: 高度.
 //
 // nSelHeight: 选中时高度.
-func (t *Tree) SetItemHeight(nID, nHeight, nSelHeight int32) {
+func (t *Tree) SetItemHeight(nID, nHeight, nSelHeight int32) *Tree {
 	xc.XTree_SetItemHeight(t.Handle, nID, nHeight, nSelHeight)
+	return t
 }
 
 // 列表树_取项高度.
@@ -381,15 +398,17 @@ func (t *Tree) SetItemHeight(nID, nHeight, nSelHeight int32) {
 // pHeight: 接收返回高度.
 //
 // pSelHeight: 接收返回值, 当项选中时的高度.
-func (t *Tree) GetItemHeight(nID int32, pHeight, pSelHeight *int32) {
+func (t *Tree) GetItemHeight(nID int32, pHeight, pSelHeight *int32) *Tree {
 	xc.XTree_GetItemHeight(t.Handle, nID, pHeight, pSelHeight)
+	return t
 }
 
 // 列表树_置行间距.
 //
 // nSpace: 行间隔大小.
-func (t *Tree) SetRowSpace(nSpace int32) {
+func (t *Tree) SetRowSpace(nSpace int32) *Tree {
 	xc.XTree_SetRowSpace(t.Handle, nSpace)
+	return t
 }
 
 // 列表树_取行间距.
@@ -570,20 +589,23 @@ func (t *Tree) DeleteItem(nID int32) bool {
 }
 
 // 列表树_删除全部项.
-func (t *Tree) DeleteItemAll() {
+func (t *Tree) DeleteItemAll() *Tree {
 	xc.XTree_DeleteItemAll(t.Handle)
+	return t
 }
 
 // 列表树_删除列全部.
-func (t *Tree) DeleteColumnAll() {
+func (t *Tree) DeleteColumnAll() *Tree {
 	xc.XTree_DeleteColumnAll(t.Handle)
+	return t
 }
 
 // 列表树_置分割线颜色.
 //
-// color: ABGR 颜色值.
-func (t *Tree) SetSplitLineColor(color int) {
+// color: ARGB 颜色值.
+func (t *Tree) SetSplitLineColor(color int) *Tree {
 	xc.XTree_SetSplitLineColor(t.Handle, color)
+	return t
 }
 
 // 列表树_置项模板从内存.

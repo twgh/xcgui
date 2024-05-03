@@ -2,7 +2,7 @@ package widget
 
 import "github.com/twgh/xcgui/xc"
 
-// 工具条.
+// ToolBar 工具条.
 type ToolBar struct {
 	Element
 }
@@ -77,7 +77,7 @@ func (t *ToolBar) InsertEle(hNewEle int, index int) int {
 //
 // index: 插入位置索引, (-1)插入末尾.
 //
-// color: ABGR 颜色.
+// color: ARGB 颜色.
 func (t *ToolBar) InsertSeparator(index int, color int) int {
 	return xc.XToolBar_InsertSeparator(t.Handle, index, color)
 }
@@ -85,8 +85,9 @@ func (t *ToolBar) InsertSeparator(index int, color int) int {
 // 工具条_启用下拉菜单, 启用下拉菜单, 显示隐藏的项.
 //
 // bEnable: 是否启用.
-func (t *ToolBar) EnableButtonMenu(bEnable bool) int {
-	return xc.XToolBar_EnableButtonMenu(t.Handle, bEnable)
+func (t *ToolBar) EnableButtonMenu(bEnable bool) *ToolBar {
+	xc.XToolBar_EnableButtonMenu(t.Handle, bEnable)
+	return t
 }
 
 // 工具条_取元素, 获取工具条上指定元素, 返回元素句柄.
@@ -114,18 +115,21 @@ func (t *ToolBar) GetButtonMenu() int {
 // 工具条_置间距, 设置对象之间的间距.
 //
 // nSize: 间距大小.
-func (t *ToolBar) SetSpace(nSize int) int {
-	return xc.XToolBar_SetSpace(t.Handle, nSize)
+func (t *ToolBar) SetSpace(nSize int) *ToolBar {
+	xc.XToolBar_SetSpace(t.Handle, nSize)
+	return t
 }
 
 // 工具条_删除元素, 删除元素, 并且销毁.
 //
 // index: 索引值.
-func (t *ToolBar) DeleteEle(index int) int {
-	return xc.XToolBar_DeleteEle(t.Handle, index)
+func (t *ToolBar) DeleteEle(index int) *ToolBar {
+	xc.XToolBar_DeleteEle(t.Handle, index)
+	return t
 }
 
 // 工具条_删除全部, 删除所有元素, 并且销毁.
-func (t *ToolBar) DeleteAllEle() int {
-	return xc.XToolBar_DeleteAllEle(t.Handle)
+func (t *ToolBar) DeleteAllEle() *ToolBar {
+	xc.XToolBar_DeleteAllEle(t.Handle)
+	return t
 }

@@ -101,8 +101,9 @@ func (w *windowBase) ShowWindow(nCmdShow xcc.SW_) int {
 }
 
 // 窗口_置顶.
-func (w *windowBase) SetTop() int {
-	return xc.XWnd_SetTop(w.Handle)
+func (w *windowBase) SetTop() *windowBase {
+	xc.XWnd_SetTop(w.Handle)
+	return w
 }
 
 // 窗口_注册事件C.
@@ -165,8 +166,9 @@ func (w *windowBase) GetHWND() uintptr {
 // 窗口_重绘.
 //
 // bImmediate: 是否立即重绘, 默认为否.
-func (w *windowBase) Redraw(bImmediate bool) int {
-	return xc.XWnd_Redraw(w.Handle, bImmediate)
+func (w *windowBase) Redraw(bImmediate bool) *windowBase {
+	xc.XWnd_Redraw(w.Handle, bImmediate)
+	return w
 }
 
 // 窗口_重绘指定区域.
@@ -174,22 +176,25 @@ func (w *windowBase) Redraw(bImmediate bool) int {
 // pRect: 需要重绘的区域坐标.
 //
 // bImmediate: TRUE立即重绘, FALSE放入消息队列延迟重绘.
-func (w *windowBase) RedrawRect(pRect *xc.RECT, bImmediate bool) int {
-	return xc.XWnd_RedrawRect(w.Handle, pRect, bImmediate)
+func (w *windowBase) RedrawRect(pRect *xc.RECT, bImmediate bool) *windowBase {
+	xc.XWnd_RedrawRect(w.Handle, pRect, bImmediate)
+	return w
 }
 
 // 窗口_置坐标.
 //
 // pRect: 坐标.
-func (w *windowBase) SetRect(pRect *xc.RECT) bool {
-	return xc.XWnd_SetRect(w.Handle, pRect)
+func (w *windowBase) SetRect(pRect *xc.RECT) *windowBase {
+	xc.XWnd_SetRect(w.Handle, pRect)
+	return w
 }
 
 // 窗口_置焦点.
 //
 // hFocusEle: 将获得焦点的元素.
-func (w *windowBase) SetFocusEle(hFocusEle int) bool {
-	return xc.XWnd_SetFocusEle(w.Handle, hFocusEle)
+func (w *windowBase) SetFocusEle(hFocusEle int) *windowBase {
+	xc.XWnd_SetFocusEle(w.Handle, hFocusEle)
+	return w
 }
 
 // 窗口_取焦点.
@@ -205,13 +210,15 @@ func (w *windowBase) GetStayEle() int {
 // 窗口_绘制, 在自绘事件函数中,用户手动调用绘制窗口, 以便控制绘制顺序.
 //
 // hDraw: 图形绘制句柄.
-func (w *windowBase) DrawWindow(hDraw int) int {
-	return xc.XWnd_DrawWindow(w.Handle, hDraw)
+func (w *windowBase) DrawWindow(hDraw int) *windowBase {
+	xc.XWnd_DrawWindow(w.Handle, hDraw)
+	return w
 }
 
 // 窗口_居中.
-func (w *windowBase) Center() int {
-	return xc.XWnd_Center(w.Handle)
+func (w *windowBase) Center() *windowBase {
+	xc.XWnd_Center(w.Handle)
+	return w
 }
 
 // 窗口_居中扩展.
@@ -219,15 +226,17 @@ func (w *windowBase) Center() int {
 // width: 窗口宽度.
 //
 // height: 窗口高度.
-func (w *windowBase) CenterEx(width, height int) int {
-	return xc.XWnd_CenterEx(w.Handle, width, height)
+func (w *windowBase) CenterEx(width, height int) *windowBase {
+	xc.XWnd_CenterEx(w.Handle, width, height)
+	return w
 }
 
 // 窗口_置光标.
 //
 // hCursor: 鼠标光标句柄.
-func (w *windowBase) SetCursor(hCursor int) int {
-	return xc.XWnd_SetCursor(w.Handle, hCursor)
+func (w *windowBase) SetCursor(hCursor int) *windowBase {
+	xc.XWnd_SetCursor(w.Handle, hCursor)
+	return w
 }
 
 // 窗口_取光标.
@@ -238,71 +247,81 @@ func (w *windowBase) GetCursor() int {
 // 窗口_启用拖动边框.
 //
 // bEnable: 是否启用.
-func (w *windowBase) EnableDragBorder(bEnable bool) int {
-	return xc.XWnd_EnableDragBorder(w.Handle, bEnable)
+func (w *windowBase) EnableDragBorder(bEnable bool) *windowBase {
+	xc.XWnd_EnableDragBorder(w.Handle, bEnable)
+	return w
 }
 
 // 窗口_启用拖动窗口.
 //
 // bEnable: 是否启用.
-func (w *windowBase) EnableDragWindow(bEnable bool) int {
-	return xc.XWnd_EnableDragWindow(w.Handle, bEnable)
+func (w *windowBase) EnableDragWindow(bEnable bool) *windowBase {
+	xc.XWnd_EnableDragWindow(w.Handle, bEnable)
+	return w
 }
 
 // 窗口_启用拖动标题栏.
 //
 // bEnable: 是否启用.
-func (w *windowBase) EnableDragCaption(bEnable bool) int {
-	return xc.XWnd_EnableDragCaption(w.Handle, bEnable)
+func (w *windowBase) EnableDragCaption(bEnable bool) *windowBase {
+	xc.XWnd_EnableDragCaption(w.Handle, bEnable)
+	return w
 }
 
 // 窗口_启用绘制背景.
 //
 // bEnable: 是否启用.
-func (w *windowBase) EnableDrawBk(bEnable bool) int {
-	return xc.XWnd_EnableDrawBk(w.Handle, bEnable)
+func (w *windowBase) EnableDrawBk(bEnable bool) *windowBase {
+	xc.XWnd_EnableDrawBk(w.Handle, bEnable)
+	return w
 }
 
 // 窗口_启用自动焦点.
 //
 // bEnable: 是否启用.
-func (w *windowBase) EnableAutoFocus(bEnable bool) int {
-	return xc.XWnd_EnableAutoFocus(w.Handle, bEnable)
+func (w *windowBase) EnableAutoFocus(bEnable bool) *windowBase {
+	xc.XWnd_EnableAutoFocus(w.Handle, bEnable)
+	return w
 }
 
 // 窗口_启用允许最大化.
 //
 // bEnable: 是否启用.
-func (w *windowBase) EnableMaxWindow(bEnable bool) int {
-	return xc.XWnd_EnableMaxWindow(w.Handle, bEnable)
+func (w *windowBase) EnableMaxWindow(bEnable bool) *windowBase {
+	xc.XWnd_EnableMaxWindow(w.Handle, bEnable)
+	return w
 }
 
 // 窗口_启用限制窗口大小.
 //
 // bEnable: 是否启用.
-func (w *windowBase) EnableLimitWindowSize(bEnable bool) int {
-	return xc.XWnd_EnableLimitWindowSize(w.Handle, bEnable)
+func (w *windowBase) EnableLimitWindowSize(bEnable bool) *windowBase {
+	xc.XWnd_EnableLimitWindowSize(w.Handle, bEnable)
+	return w
 }
 
 // 窗口_启用布局.
 //
 // bEnable: 是否启用.
-func (w *windowBase) EnableLayout(bEnable bool) int {
-	return xc.XWnd_EnableLayout(w.Handle, bEnable)
+func (w *windowBase) EnableLayout(bEnable bool) *windowBase {
+	xc.XWnd_EnableLayout(w.Handle, bEnable)
+	return w
 }
 
 // 窗口_启用布局覆盖边框.
 //
 // bEnable: 是否启用.
-func (w *windowBase) EnableLayoutOverlayBorder(bEnable bool) int {
-	return xc.XWnd_EnableLayoutOverlayBorder(w.Handle, bEnable)
+func (w *windowBase) EnableLayoutOverlayBorder(bEnable bool) *windowBase {
+	xc.XWnd_EnableLayoutOverlayBorder(w.Handle, bEnable)
+	return w
 }
 
 // 窗口_显示布局边界.
 //
 // bEnable: 是否启用.
-func (w *windowBase) ShowLayoutFrame(bEnable bool) int {
-	return xc.XWnd_ShowLayoutFrame(w.Handle, bEnable)
+func (w *windowBase) ShowLayoutFrame(bEnable bool) *windowBase {
+	xc.XWnd_ShowLayoutFrame(w.Handle, bEnable)
+	return w
 }
 
 // 窗口_判断启用布局.
@@ -318,8 +337,9 @@ func (w *windowBase) IsMaxWindow() bool {
 // 窗口_置鼠标捕获元素.
 //
 // hEle: 元素句柄.
-func (w *windowBase) SetCaptureEle(hEle int) int {
-	return xc.XWnd_SetCaptureEle(w.Handle, hEle)
+func (w *windowBase) SetCaptureEle(hEle int) *windowBase {
+	xc.XWnd_SetCaptureEle(w.Handle, hEle)
+	return w
 }
 
 // 窗口_取鼠标捕获元素.
@@ -330,8 +350,16 @@ func (w *windowBase) GetCaptureEle() int {
 // 窗口_取绘制矩形.
 //
 // pRcPaint: 重绘区域坐标.
-func (w *windowBase) GetDrawRect(pRcPaint *xc.RECT) int {
-	return xc.XWnd_GetDrawRect(w.Handle, pRcPaint)
+func (w *windowBase) GetDrawRect(pRcPaint *xc.RECT) *windowBase {
+	xc.XWnd_GetDrawRect(w.Handle, pRcPaint)
+	return w
+}
+
+// 窗口_取绘制矩形ex.
+func (w *windowBase) GetDrawRectEx() xc.RECT {
+	var pRcPaint *xc.RECT
+	xc.XWnd_GetDrawRect(w.Handle, pRcPaint)
+	return *pRcPaint
 }
 
 // 窗口_置系统光标.
@@ -344,23 +372,25 @@ func (w *windowBase) SetCursorSys(hCursor int) int {
 // 窗口_置字体.
 //
 // hFontx: 炫彩字体句柄.
-func (w *windowBase) SetFont(hFontx int) int {
-	return xc.XWnd_SetFont(w.Handle, hFontx)
+func (w *windowBase) SetFont(hFontx int) *windowBase {
+	xc.XWnd_SetFont(w.Handle, hFontx)
+	return w
 }
 
 // 窗口_置文本颜色.
 //
-// color: ABGR 颜色值.
-func (w *windowBase) SetTextColor(color int) int {
-	return xc.XWnd_SetTextColor(w.Handle, color)
+// color: ARGB 颜色值.
+func (w *windowBase) SetTextColor(color int) *windowBase {
+	xc.XWnd_SetTextColor(w.Handle, color)
+	return w
 }
 
-// 窗口_取文本颜色, 返回ABGR 颜色.
+// 窗口_取文本颜色, 返回ARGB 颜色.
 func (w *windowBase) GetTextColor() int {
 	return xc.XWnd_GetTextColor(w.Handle)
 }
 
-// 窗口_取文本颜色扩展, 返回ABGR 颜色.
+// 窗口_取文本颜色扩展, 返回ARGB 颜色.
 func (w *windowBase) GetTextColorEx() int {
 	return xc.XWnd_GetTextColorEx(w.Handle)
 }
@@ -368,8 +398,9 @@ func (w *windowBase) GetTextColorEx() int {
 // 窗口_置ID.
 //
 // nID: ID值.
-func (w *windowBase) SetID(nID int) int {
-	return xc.XWnd_SetID(w.Handle, nID)
+func (w *windowBase) SetID(nID int) *windowBase {
+	xc.XWnd_SetID(w.Handle, nID)
+	return w
 }
 
 // 窗口_取ID.
@@ -380,8 +411,9 @@ func (w *windowBase) GetID() int {
 // 窗口_置名称.
 //
 // pName: name值, 字符串.
-func (w *windowBase) SetName(pName string) int {
-	return xc.XWnd_SetName(w.Handle, pName)
+func (w *windowBase) SetName(pName string) *windowBase {
+	xc.XWnd_SetName(w.Handle, pName)
+	return w
 }
 
 // 窗口_取名称.
@@ -398,13 +430,24 @@ func (w *windowBase) GetName() string {
 // right: 窗口右边大小.
 //
 // bottom: 窗口底部大小.
-func (w *windowBase) SetBorderSize(left, top, right, bottom int) int {
-	return xc.XWnd_SetBorderSize(w.Handle, left, top, right, bottom)
+func (w *windowBase) SetBorderSize(left, top, right, bottom int) *windowBase {
+	xc.XWnd_SetBorderSize(w.Handle, left, top, right, bottom)
+	return w
 }
 
 // 窗口_取边大小.
-func (w *windowBase) GetBorderSize(pBorder *xc.RECT) int {
-	return xc.XWnd_GetBorderSize(w.Handle, pBorder)
+//
+// pBorder: 返回边大小.
+func (w *windowBase) GetBorderSize(pBorder *xc.RECT) *windowBase {
+	xc.XWnd_GetBorderSize(w.Handle, pBorder)
+	return w
+}
+
+// 窗口_取边大小ex.
+func (w *windowBase) GetBorderSizeEx() xc.RECT {
+	var pBorder *xc.RECT
+	xc.XWnd_GetBorderSize(w.Handle, pBorder)
+	return *pBorder
 }
 
 // 窗口_置布局内填充大小.
@@ -416,8 +459,24 @@ func (w *windowBase) GetBorderSize(pBorder *xc.RECT) int {
 // right: 右边大小.
 //
 // bottom: 下边大小.
-func (w *windowBase) SetPadding(left, top, right, bottom int) int {
-	return xc.XWnd_SetPadding(w.Handle, left, top, right, bottom)
+func (w *windowBase) SetPadding(left, top, right, bottom int) *windowBase {
+	xc.XWnd_SetPadding(w.Handle, left, top, right, bottom)
+	return w
+}
+
+// 窗口_取布局内填充大小.
+//
+// pPadding: 返回布局内填充大小.
+func (w *windowBase) GetPadding(pPadding *xc.RECT) *windowBase {
+	xc.XWnd_GetPadding(w.Handle, pPadding)
+	return w
+}
+
+// 窗口_取布局内填充大小ex.
+func (w *windowBase) GetPaddingEx() xc.RECT {
+	var pPadding *xc.RECT
+	xc.XWnd_GetPadding(w.Handle, pPadding)
+	return *pPadding
 }
 
 // 窗口_置拖动边框大小.
@@ -429,15 +488,24 @@ func (w *windowBase) SetPadding(left, top, right, bottom int) int {
 // right: 窗口右边大小.
 //
 // bottom: 窗口底边大小.
-func (w *windowBase) SetDragBorderSize(left, top, right, bottom int) int {
-	return xc.XWnd_SetDragBorderSize(w.Handle, left, top, right, bottom)
+func (w *windowBase) SetDragBorderSize(left, top, right, bottom int) *windowBase {
+	xc.XWnd_SetDragBorderSize(w.Handle, left, top, right, bottom)
+	return w
 }
 
 // 窗口_取拖动边框大小.
 //
 // pSize: 拖动边框大小.
-func (w *windowBase) GetDragBorderSize(pBorder *xc.RECT) int {
-	return xc.XWnd_GetDragBorderSize(w.Handle, pBorder)
+func (w *windowBase) GetDragBorderSize(pBorder *xc.RECT) *windowBase {
+	xc.XWnd_GetDragBorderSize(w.Handle, pBorder)
+	return w
+}
+
+// 窗口_取拖动边框大小ex.
+func (w *windowBase) GetDragBorderSizeEx() xc.RECT {
+	var pBorder *xc.RECT
+	xc.XWnd_GetDragBorderSize(w.Handle, pBorder)
+	return *pBorder
 }
 
 // 窗口_置最小大小.
@@ -445,11 +513,12 @@ func (w *windowBase) GetDragBorderSize(pBorder *xc.RECT) int {
 // width: 最小宽度.
 //
 // height: 最小高度.
-func (w *windowBase) SetMinimumSize(width, height int) int {
-	return xc.XWnd_SetMinimumSize(w.Handle, width, height)
+func (w *windowBase) SetMinimumSize(width, height int) *windowBase {
+	xc.XWnd_SetMinimumSize(w.Handle, width, height)
+	return w
 }
 
-// 窗口_测试点击子元素.
+// 窗口_测试点击子元素. 成功则返回元素句柄.
 //
 // pPt: 左边点.
 func (w *windowBase) HitChildEle(pPt *xc.POINT) int {
@@ -483,20 +552,23 @@ func (w *windowBase) GetChild(nID int) int {
 }
 
 // 窗口_关闭.
-func (w *windowBase) CloseWindow() int {
-	return xc.XWnd_CloseWindow(w.Handle)
+func (w *windowBase) CloseWindow() *windowBase {
+	xc.XWnd_CloseWindow(w.Handle)
+	return w
 }
 
 // 窗口_调整布局.
-func (w *windowBase) AdjustLayout() int {
-	return xc.XWnd_AdjustLayout(w.Handle)
+func (w *windowBase) AdjustLayout() *windowBase {
+	xc.XWnd_AdjustLayout(w.Handle)
+	return w
 }
 
 // 窗口_调整布局扩展.
 //
 // nFlags: 调整布局标识位: xcc.AdjustLayout_.
-func (w *windowBase) AdjustLayoutEx(nFlags xcc.AdjustLayout_) int {
-	return xc.XWnd_AdjustLayoutEx(w.Handle, nFlags)
+func (w *windowBase) AdjustLayoutEx(nFlags xcc.AdjustLayout_) *windowBase {
+	xc.XWnd_AdjustLayoutEx(w.Handle, nFlags)
+	return w
 }
 
 // 窗口_创建插入符.
@@ -510,8 +582,9 @@ func (w *windowBase) AdjustLayoutEx(nFlags xcc.AdjustLayout_) int {
 // width: 宽度.
 //
 // height: 高度.
-func (w *windowBase) CreateCaret(hEle, x, y, width, height int) int {
-	return xc.XWnd_CreateCaret(w.Handle, hEle, x, y, width, height)
+func (w *windowBase) CreateCaret(hEle, x, y, width, height int) *windowBase {
+	xc.XWnd_CreateCaret(w.Handle, hEle, x, y, width, height)
+	return w
 }
 
 // 窗口_置插入符位置, 设置插入符位置.
@@ -525,27 +598,31 @@ func (w *windowBase) CreateCaret(hEle, x, y, width, height int) int {
 // height: 高度.
 //
 // bUpdate: 是否立即更新UI.
-func (w *windowBase) SetCaretPos(x, y, width, height int, bUpdate bool) int {
-	return xc.XWnd_SetCaretPos(w.Handle, x, y, width, height, bUpdate)
+func (w *windowBase) SetCaretPos(x, y, width, height int, bUpdate bool) *windowBase {
+	xc.XWnd_SetCaretPos(w.Handle, x, y, width, height, bUpdate)
+	return w
 }
 
 // 窗口_置插入符颜色.
 //
-// color: 颜色值, ABGR 颜色.
-func (w *windowBase) SetCaretColor(color int) int {
-	return xc.XWnd_SetCaretColor(w.Handle, color)
+// color: 颜色值, ARGB 颜色.
+func (w *windowBase) SetCaretColor(color int) *windowBase {
+	xc.XWnd_SetCaretColor(w.Handle, color)
+	return w
 }
 
 // 窗口_显示插入符.
 //
 // bShow: 是否显示.
-func (w *windowBase) ShowCaret(bShow bool) int {
-	return xc.XWnd_ShowCaret(w.Handle, bShow)
+func (w *windowBase) ShowCaret(bShow bool) *windowBase {
+	xc.XWnd_ShowCaret(w.Handle, bShow)
+	return w
 }
 
 // 窗口_销毁插入符.
-func (w *windowBase) DestroyCaret() int {
-	return xc.XWnd_DestroyCaret(w.Handle)
+func (w *windowBase) DestroyCaret() *windowBase {
+	xc.XWnd_DestroyCaret(w.Handle)
+	return w
 }
 
 // 窗口_取插入符元素.
@@ -560,18 +637,41 @@ func (w *windowBase) GetClientRect(pRect *xc.RECT) int {
 	return xc.XWnd_GetClientRect(w.Handle, pRect)
 }
 
+// 窗口_取客户区坐标ex.
+func (w *windowBase) GetClientRectEx() xc.RECT {
+	var pRect *xc.RECT
+	xc.XWnd_GetClientRect(w.Handle, pRect)
+	return *pRect
+}
+
 // 窗口_取Body坐标.
 //
 // pRect: 坐标.
-func (w *windowBase) GetBodyRect(pRect *xc.RECT) int {
-	return xc.XWnd_GetBodyRect(w.Handle, pRect)
+func (w *windowBase) GetBodyRect(pRect *xc.RECT) *windowBase {
+	xc.XWnd_GetBodyRect(w.Handle, pRect)
+	return w
+}
+
+// 窗口_取Body坐标ex.
+func (w *windowBase) GetBodyRectEx() xc.RECT {
+	var pRect *xc.RECT
+	xc.XWnd_GetBodyRect(w.Handle, pRect)
+	return *pRect
 }
 
 // 窗口_取布局坐标.
 //
 // pRect: 接收返回坐标.
-func (w *windowBase) GetLayoutRect(pRect *xc.RECT) int {
-	return xc.XWnd_GetLayoutRect(w.Handle, pRect)
+func (w *windowBase) GetLayoutRect(pRect *xc.RECT) *windowBase {
+	xc.XWnd_GetLayoutRect(w.Handle, pRect)
+	return w
+}
+
+// 窗口_取布局坐标ex.
+func (w *windowBase) GetLayoutRectEx() xc.RECT {
+	var pRect *xc.RECT
+	xc.XWnd_GetLayoutRect(w.Handle, pRect)
+	return *pRect
 }
 
 // 窗口_移动窗口.
@@ -579,22 +679,32 @@ func (w *windowBase) GetLayoutRect(pRect *xc.RECT) int {
 // x: X坐标.
 //
 // y: Y坐标.
-func (w *windowBase) SetPosition(x, y int32) {
+func (w *windowBase) SetPosition(x, y int32) *windowBase {
 	xc.XWnd_SetPosition(w.Handle, x, y)
+	return w
 }
 
 // 窗口_取坐标.
 //
 // pRect: 坐标.
-func (w *windowBase) GetRect(pRect *xc.RECT) int {
-	return xc.XWnd_GetRect(w.Handle, pRect)
+func (w *windowBase) GetRect(pRect *xc.RECT) *windowBase {
+	xc.XWnd_GetRect(w.Handle, pRect)
+	return w
+}
+
+// 窗口_取坐标ex.
+func (w *windowBase) GetRectEx() xc.RECT {
+	var pRect *xc.RECT
+	xc.XWnd_GetRect(w.Handle, pRect)
+	return *pRect
 }
 
 // 窗口_最大化.
 //
 // bMaximize: 是否最大化.
-func (w *windowBase) MaxWindow(bMaximize bool) int {
-	return xc.XWnd_MaxWindow(w.Handle, bMaximize)
+func (w *windowBase) MaxWindow(bMaximize bool) *windowBase {
+	xc.XWnd_MaxWindow(w.Handle, bMaximize)
+	return w
 }
 
 // 窗口_置定时器.
@@ -642,29 +752,33 @@ func (w *windowBase) GetBkManagerEx() int {
 // 窗口_置背景管理器.
 //
 // hBkInfoM: 背景管理器.
-func (w *windowBase) SetBkMagager(hBkInfoM int) int {
-	return xc.XWnd_SetBkMagager(w.Handle, hBkInfoM)
+func (w *windowBase) SetBkMagager(hBkInfoM int) *windowBase {
+	xc.XWnd_SetBkMagager(w.Handle, hBkInfoM)
+	return w
 }
 
 // 窗口_置透明类型.
 //
 // nType: 窗口透明类型: xcc.Window_Transparent_.
-func (w *windowBase) SetTransparentType(nType xcc.Window_Transparent_) int {
-	return xc.XWnd_SetTransparentType(w.Handle, nType)
+func (w *windowBase) SetTransparentType(nType xcc.Window_Transparent_) *windowBase {
+	xc.XWnd_SetTransparentType(w.Handle, nType)
+	return w
 }
 
 // 窗口_置透明度.
 //
 // alpha: 窗口透明度, 范围0-255之间, 0透明, 255不透明.
-func (w *windowBase) SetTransparentAlpha(alpha byte) int {
-	return xc.XWnd_SetTransparentAlpha(w.Handle, alpha)
+func (w *windowBase) SetTransparentAlpha(alpha byte) *windowBase {
+	xc.XWnd_SetTransparentAlpha(w.Handle, alpha)
+	return w
 }
 
 // 窗口_置透明色.
 //
-// color: 窗口透明色, ABGR 颜色.
-func (w *windowBase) SetTransparentColor(color int) int {
-	return xc.XWnd_SetTransparentColor(w.Handle, color)
+// color: 窗口透明色, ARGB 颜色.
+func (w *windowBase) SetTransparentColor(color int) *windowBase {
+	xc.XWnd_SetTransparentColor(w.Handle, color)
+	return w
 }
 
 // 窗口_置阴影信息.
@@ -677,9 +791,10 @@ func (w *windowBase) SetTransparentColor(color int) int {
 //
 // bRightAngle: 是否强制直角.
 //
-// color: 阴影颜色, ABGR 颜色.
-func (w *windowBase) SetShadowInfo(nSize int, nDepth byte, nAngeleSize int, bRightAngle bool, color int) int {
-	return xc.XWnd_SetShadowInfo(w.Handle, nSize, nDepth, nAngeleSize, bRightAngle, color)
+// color: 阴影颜色, ARGB 颜色.
+func (w *windowBase) SetShadowInfo(nSize int, nDepth byte, nAngeleSize int, bRightAngle bool, color int) *windowBase {
+	xc.XWnd_SetShadowInfo(w.Handle, nSize, nDepth, nAngeleSize, bRightAngle, color)
+	return w
 }
 
 // 窗口_取阴影信息.
@@ -692,9 +807,10 @@ func (w *windowBase) SetShadowInfo(nSize int, nDepth byte, nAngeleSize int, bRig
 //
 // pbRightAngle: 是否强制直角.
 //
-// pColor: 阴影颜色, ABGR 颜色.
-func (w *windowBase) GetShadowInfo(pnSize, pnDepth, pnAngeleSize *int32, pbRightAngle *bool, pColor *int) int {
-	return xc.XWnd_GetShadowInfo(w.Handle, pnSize, pnDepth, pnAngeleSize, pbRightAngle, pColor)
+// pColor: 阴影颜色, ARGB 颜色.
+func (w *windowBase) GetShadowInfo(pnSize, pnDepth, pnAngeleSize *int32, pbRightAngle *bool, pColor *int) *windowBase {
+	xc.XWnd_GetShadowInfo(w.Handle, pnSize, pnDepth, pnAngeleSize, pbRightAngle, pColor)
+	return w
 }
 
 // 窗口_取透明类型, 返回: xcc.Window_Transparent_.
@@ -705,15 +821,17 @@ func (w *windowBase) GetTransparentType() xcc.Window_Transparent_ {
 // 窗口_启用拖放文件.
 //
 // bEnable: 是否启用.
-func (w *windowBase) EnableDragFiles(bEnable bool) bool {
-	return xc.XWnd_EnableDragFiles(w.Handle, bEnable)
+func (w *windowBase) EnableDragFiles(bEnable bool) *windowBase {
+	xc.XWnd_EnableDragFiles(w.Handle, bEnable)
+	return w
 }
 
 // 窗口_显示 显示隐藏窗口.
 //
 // bShow: 是否显示.
-func (w *windowBase) Show(bShow bool) int {
-	return xc.XWnd_Show(w.Handle, bShow)
+func (w *windowBase) Show(bShow bool) *windowBase {
+	xc.XWnd_Show(w.Handle, bShow)
+	return w
 }
 
 // 窗口_取插入符信息, 获取插入符信息, 返回: 插入符元素句柄.
@@ -734,22 +852,25 @@ func (w *windowBase) GetCaretInfo(pX, pY, pWidth, pHeight *int32) int {
 // 窗口_置图标.
 //
 // hImage: 图标句柄.
-func (w *windowBase) SetIcon(hImage int) int {
-	return xc.XWnd_SetIcon(w.Handle, hImage)
+func (w *windowBase) SetIcon(hImage int) *windowBase {
+	xc.XWnd_SetIcon(w.Handle, hImage)
+	return w
 }
 
 // 窗口_置标题.
 //
 // pTitle: 标题文本.
-func (w *windowBase) SetTitle(pTitle string) int {
-	return xc.XWnd_SetTitle(w.Handle, pTitle)
+func (w *windowBase) SetTitle(pTitle string) *windowBase {
+	xc.XWnd_SetTitle(w.Handle, pTitle)
+	return w
 }
 
 // 窗口_置标题颜色.
 //
-// color: ABGR 颜色.
-func (w *windowBase) SetTitleColor(color int) int {
-	return xc.XWnd_SetTitleColor(w.Handle, color)
+// color: ARGB 颜色.
+func (w *windowBase) SetTitleColor(color int) *windowBase {
+	xc.XWnd_SetTitleColor(w.Handle, color)
+	return w
 }
 
 // 窗口_取控制按钮, 返回按钮句柄.
@@ -769,7 +890,7 @@ func (w *windowBase) GetTitle() string {
 	return xc.XWnd_GetTitle(w.Handle)
 }
 
-// 窗口_取标题颜色, 返回ABGR 颜色.
+// 窗口_取标题颜色, 返回ARGB 颜色.
 func (w *windowBase) GetTitleColor() int {
 	return xc.XWnd_GetTitleColor(w.Handle)
 }
@@ -778,20 +899,22 @@ func (w *windowBase) GetTitleColor() int {
 //
 // nState: 组合状态.
 //
-// color: ABGR 颜色.
+// color: ARGB 颜色.
 //
 // width: 线宽.
-func (w *windowBase) AddBkBorder(nState xcc.Window_State_Flag_, color int, width int) int {
-	return xc.XWnd_AddBkBorder(w.Handle, nState, color, width)
+func (w *windowBase) AddBkBorder(nState xcc.Window_State_Flag_, color int, width int) *windowBase {
+	xc.XWnd_AddBkBorder(w.Handle, nState, color, width)
+	return w
 }
 
 // 窗口_添加背景填充.
 //
 // nState: 组合状态.
 //
-// color: ABGR 颜色.
-func (w *windowBase) AddBkFill(nState xcc.Window_State_Flag_, color int) int {
-	return xc.XWnd_AddBkFill(w.Handle, nState, color)
+// color: ARGB 颜色.
+func (w *windowBase) AddBkFill(nState xcc.Window_State_Flag_, color int) *windowBase {
+	xc.XWnd_AddBkFill(w.Handle, nState, color)
+	return w
 }
 
 // 窗口_添加背景图片.
@@ -799,8 +922,9 @@ func (w *windowBase) AddBkFill(nState xcc.Window_State_Flag_, color int) int {
 // nState: 组合状态.
 //
 // hImage: 图片句柄.
-func (w *windowBase) AddBkImage(nState xcc.Window_State_Flag_, hImage int) int {
-	return xc.XWnd_AddBkImage(w.Handle, nState, hImage)
+func (w *windowBase) AddBkImage(nState xcc.Window_State_Flag_, hImage int) *windowBase {
+	xc.XWnd_AddBkImage(w.Handle, nState, hImage)
+	return w
 }
 
 // 窗口_取背景对象数量.
@@ -809,8 +933,9 @@ func (w *windowBase) GetBkInfoCount() int {
 }
 
 // 窗口_清空背景对象.
-func (w *windowBase) ClearBkInfo() int {
-	return xc.XWnd_ClearBkInfo(w.Handle)
+func (w *windowBase) ClearBkInfo() *windowBase {
+	xc.XWnd_ClearBkInfo(w.Handle)
+	return w
 }
 
 // 通知消息_窗口中弹出, 使用基础元素作为面板, 弹出一个通知消息, 返回元素句柄, 通过此句柄可对其操作.
@@ -936,8 +1061,9 @@ func (w *windowBase) IsDragBorder() bool {
 // right: 右边间距.
 //
 // bottom: 下边间距.
-func (w *windowBase) SetCaptionMargin(left int, top int, right int, bottom int) int {
-	return xc.XWnd_SetCaptionMargin(w.Handle, left, top, right, bottom)
+func (w *windowBase) SetCaptionMargin(left int, top int, right int, bottom int) *windowBase {
+	xc.XWnd_SetCaptionMargin(w.Handle, left, top, right, bottom)
+	return w
 }
 
 // SetTopEx 窗口_置顶Ex.
@@ -973,15 +1099,17 @@ func (w *windowBase) GetDPI() int {
 // 窗口_坐标转换DPI. 窗口客户区坐标转换到缩放后DPI坐标.
 //
 // pRect: 接收返回坐标.
-func (w *windowBase) RectToDPI(pRect *xc.RECT) int {
-	return xc.XWnd_RectToDPI(w.Handle, pRect)
+func (w *windowBase) RectToDPI(pRect *xc.RECT) *windowBase {
+	xc.XWnd_RectToDPI(w.Handle, pRect)
+	return w
 }
 
 // 窗口_坐标点转换DPI. 窗口客户区坐标点转换到缩放后.
 //
 // pPt: 接收返回坐标点.
-func (w *windowBase) PointToDPI(pPt *xc.POINT) int {
-	return xc.XWnd_PointToDPI(w.Handle, pPt)
+func (w *windowBase) PointToDPI(pPt *xc.POINT) *windowBase {
+	xc.XWnd_PointToDPI(w.Handle, pPt)
+	return w
 }
 
 // 窗口_取光标位置. 封装的系统API: GetCursorPos(), 内部做了DPI适配.
@@ -1008,8 +1136,9 @@ func (w *windowBase) ScreenToClient(pPt *xc.POINT) bool {
 // 窗口_置DPI. 设置当前窗口DPI, 默认DPI为96.
 //
 // nDPI: DPI值.
-func (w *windowBase) SetDPI(nDPI int) int {
-	return xc.XWnd_SetDPI(w.Handle, nDPI)
+func (w *windowBase) SetDPI(nDPI int) *windowBase {
+	xc.XWnd_SetDPI(w.Handle, nDPI)
+	return w
 }
 
 // 窗口_置大小. 设置窗口宽高.
@@ -1017,32 +1146,32 @@ func (w *windowBase) SetDPI(nDPI int) int {
 // 宽: width.
 //
 // 高: height.
-func (w *windowBase) SetSize(width, height int32) bool {
+func (w *windowBase) SetSize(width, height int32) {
 	var rc xc.RECT
 	xc.XWnd_GetRect(w.Handle, &rc)
 	rc.Right = rc.Left + width
 	rc.Bottom = rc.Top + height
-	return xc.XWnd_SetRect(w.Handle, &rc)
+	xc.XWnd_SetRect(w.Handle, &rc)
 }
 
 // 窗口_置宽度.
 //
 // 宽: width.
-func (w *windowBase) SetWidth(width int32) bool {
+func (w *windowBase) SetWidth(width int32) {
 	var rc xc.RECT
 	xc.XWnd_GetRect(w.Handle, &rc)
 	rc.Right = rc.Left + width
-	return xc.XWnd_SetRect(w.Handle, &rc)
+	xc.XWnd_SetRect(w.Handle, &rc)
 }
 
 // 窗口_置高度.
 //
 // 高: height.
-func (w *windowBase) SetHeight(height int32) bool {
+func (w *windowBase) SetHeight(height int32) {
 	var rc xc.RECT
 	xc.XWnd_GetRect(w.Handle, &rc)
 	rc.Bottom = rc.Top + height
-	return xc.XWnd_SetRect(w.Handle, &rc)
+	xc.XWnd_SetRect(w.Handle, &rc)
 }
 
 // 窗口_取宽度.
@@ -1090,15 +1219,17 @@ func (w *windowBase) GetBottom() int32 {
 // 窗口_置左边.
 //
 // x: 左边x坐标.
-func (w *windowBase) SetLeft(x int32) {
+func (w *windowBase) SetLeft(x int32) *windowBase {
 	xc.XWnd_SetPosition(w.Handle, x, w.GetTop())
+	return w
 }
 
 // 窗口_置顶边.
 //
 // y: 顶边y坐标.
-func (w *windowBase) SetTopEdge(y int32) {
+func (w *windowBase) SetTopEdge(y int32) *windowBase {
 	xc.XWnd_SetPosition(w.Handle, w.GetLeft(), y)
+	return w
 }
 
 /*

@@ -67,8 +67,9 @@ func NewMenuByUIDName(name string) *Menu {
 // nParentID: 父项ID.
 //
 // nFlags: 标识, Menu_Item_Flag_.
-func (m *Menu) AddItem(nID int32, pText string, nParentID int32, nFlags xcc.Menu_Item_Flag_) {
+func (m *Menu) AddItem(nID int32, pText string, nParentID int32, nFlags xcc.Menu_Item_Flag_) *Menu {
 	xc.XMenu_AddItem(m.Handle, nID, pText, nParentID, nFlags)
+	return m
 }
 
 // 菜单_添加项图标.
@@ -82,8 +83,9 @@ func (m *Menu) AddItem(nID int32, pText string, nParentID int32, nFlags xcc.Menu
 // hIcon: 菜单项图标句柄.
 //
 // nFlags: 标识, Menu_Item_Flag_.
-func (m *Menu) AddItemIcon(nID int32, pText string, nParentID int32, hIcon int, nFlags xcc.Menu_Item_Flag_) {
+func (m *Menu) AddItemIcon(nID int32, pText string, nParentID int32, hIcon int, nFlags xcc.Menu_Item_Flag_) *Menu {
 	xc.XMenu_AddItemIcon(m.Handle, nID, pText, nParentID, hIcon, nFlags)
+	return m
 }
 
 // 菜单_插入项.
@@ -95,8 +97,9 @@ func (m *Menu) AddItemIcon(nID int32, pText string, nParentID int32, hIcon int, 
 // nFlags: 标识, Menu_Item_Flag_.
 //
 // insertID: 插入位置ID.
-func (m *Menu) InsertItem(nID int32, pText string, nFlags xcc.Menu_Item_Flag_, insertID int32) {
+func (m *Menu) InsertItem(nID int32, pText string, nFlags xcc.Menu_Item_Flag_, insertID int32) *Menu {
 	xc.XMenu_InsertItem(m.Handle, nID, pText, nFlags, insertID)
+	return m
 }
 
 // 菜单_插入项图标.
@@ -110,8 +113,9 @@ func (m *Menu) InsertItem(nID int32, pText string, nFlags xcc.Menu_Item_Flag_, i
 // nFlags: 标识, Menu_Item_Flag_.
 //
 // insertID: 插入位置ID.
-func (m *Menu) InsertItemIcon(nID int32, pText string, hIcon int, nFlags xcc.Menu_Item_Flag_, insertID int32) {
+func (m *Menu) InsertItemIcon(nID int32, pText string, hIcon int, nFlags xcc.Menu_Item_Flag_, insertID int32) *Menu {
 	xc.XMenu_InsertItemIcon(m.Handle, nID, pText, hIcon, nFlags, insertID)
+	return m
 }
 
 // 菜单_取第一个子项, 返回项ID.
@@ -152,22 +156,25 @@ func (m *Menu) GetParentItem(nID int32) int32 {
 // 菜单_置自动销毁, 设置是否自动销毁菜单.
 //
 // bAuto: 是否自动销毁.
-func (m *Menu) SetAutoDestroy(bAuto bool) {
+func (m *Menu) SetAutoDestroy(bAuto bool) *Menu {
 	xc.XMenu_SetAutoDestroy(m.Handle, bAuto)
+	return m
 }
 
 // 菜单_启用用户绘制背景, 是否有用户绘制菜单背景, 如果启用XWM_MENU_DRAW_BACKGROUND和XE_MENU_DRAW_BACKGROUND事件有效.
 //
 // bEnable: 是否启用.
-func (m *Menu) EnableDrawBackground(bEnable bool) {
+func (m *Menu) EnableDrawBackground(bEnable bool) *Menu {
 	xc.XMenu_EnableDrawBackground(m.Handle, bEnable)
+	return m
 }
 
 // 菜单_启用用户绘制项, 是否有用户绘制菜单项, 如果启用XWM_MENU_DRAWITEM和XE_MENU_DRAWITEM事件有效.
 //
 // bEnable: 是否启用.
-func (m *Menu) EnableDrawItem(bEnable bool) {
+func (m *Menu) EnableDrawItem(bEnable bool) *Menu {
 	xc.XMenu_EnableDrawItem(m.Handle, bEnable)
+	return m
 }
 
 // 菜单_弹出.
@@ -186,20 +193,23 @@ func (m *Menu) Popup(hParentWnd uintptr, x, y int32, hParentEle int, nPosition x
 }
 
 // 菜单_销毁.
-func (m *Menu) DestroyMenu() {
+func (m *Menu) DestroyMenu() *Menu {
 	xc.XMenu_DestroyMenu(m.Handle)
+	return m
 }
 
 // 菜单_关闭.
-func (m *Menu) CloseMenu() {
+func (m *Menu) CloseMenu() *Menu {
 	xc.XMenu_CloseMenu(m.Handle)
+	return m
 }
 
 // 菜单_置背景图片.
 //
 // hImage: 图片句柄.
-func (m *Menu) SetBkImage(hImage int) {
+func (m *Menu) SetBkImage(hImage int) *Menu {
 	xc.XMenu_SetBkImage(m.Handle, hImage)
+	return m
 }
 
 // 菜单_置项文本.
@@ -246,8 +256,9 @@ func (m *Menu) SetItemFlags(nID int32, uFlags xcc.Menu_Item_Flag_) bool {
 // 菜单_置项高度.
 //
 // height: 高度.
-func (m *Menu) SetItemHeight(height int32) {
+func (m *Menu) SetItemHeight(height int32) *Menu {
 	xc.XMenu_SetItemHeight(m.Handle, height)
+	return m
 }
 
 // 菜单_取项高度.
@@ -257,9 +268,10 @@ func (m *Menu) GetItemHeight() int32 {
 
 // 菜单_置边框颜色, 设置菜单边框颜色.
 //
-// crColor: ABGR 颜色.
-func (m *Menu) SetBorderColor(crColor int) {
+// crColor: ARGB 颜色.
+func (m *Menu) SetBorderColor(crColor int) *Menu {
 	xc.XMenu_SetBorderColor(m.Handle, crColor)
+	return m
 }
 
 // 菜单_置边框大小, 设置弹出菜单窗口边框大小.
@@ -271,8 +283,9 @@ func (m *Menu) SetBorderColor(crColor int) {
 // nRight: 边大小.
 //
 // nBottom: 边大小.
-func (m *Menu) SetBorderSize(nLeft, nTop, nRight, nBottom int32) {
+func (m *Menu) SetBorderSize(nLeft, nTop, nRight, nBottom int32) *Menu {
 	xc.XMenu_SetBorderSize(m.Handle, nLeft, nTop, nRight, nBottom)
+	return m
 }
 
 // 菜单_取左侧宽度, 获取左侧区域宽度.

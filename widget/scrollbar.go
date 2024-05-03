@@ -70,8 +70,9 @@ func NewScrollBarByUIDName(name string) *ScrollBar {
 // 滚动条_置范围, 设置滚动范围.
 //
 // range_: 范围.
-func (s *ScrollBar) SetRange(range_ int) int {
-	return xc.XSBar_SetRange(s.Handle, range_)
+func (s *ScrollBar) SetRange(range_ int) *ScrollBar {
+	xc.XSBar_SetRange(s.Handle, range_)
+	return s
 }
 
 // 滚动条_取范围, 获取滚动范围.
@@ -82,29 +83,33 @@ func (s *ScrollBar) GetRange() int {
 // 滚动条_显示上下按钮, 显示隐藏滚动条上下按钮.
 //
 // bShow: 是否显示.
-func (s *ScrollBar) ShowButton(bShow bool) int {
-	return xc.XSBar_ShowButton(s.Handle, bShow)
+func (s *ScrollBar) ShowButton(bShow bool) *ScrollBar {
+	xc.XSBar_ShowButton(s.Handle, bShow)
+	return s
 }
 
 // 滚动条_置滑块长度.
 //
 // length: 长度.
-func (s *ScrollBar) SetSliderLength(length int) int {
-	return xc.XSBar_SetSliderLength(s.Handle, length)
+func (s *ScrollBar) SetSliderLength(length int) *ScrollBar {
+	xc.XSBar_SetSliderLength(s.Handle, length)
+	return s
 }
 
 // 滚动条_置滑块最小长度.
 //
 // minLength: 长度.
-func (s *ScrollBar) SetSliderMinLength(minLength int) int {
-	return xc.XSBar_SetSliderMinLength(s.Handle, minLength)
+func (s *ScrollBar) SetSliderMinLength(minLength int) *ScrollBar {
+	xc.XSBar_SetSliderMinLength(s.Handle, minLength)
+	return s
 }
 
 // 滚动条_置滑块两边间隔, 设置滑块两边的间隔大小.
 //
 // nPadding: 间隔大小.
-func (s *ScrollBar) SetSliderPadding(nPadding int) int {
-	return xc.XSBar_SetSliderPadding(s.Handle, nPadding)
+func (s *ScrollBar) SetSliderPadding(nPadding int) *ScrollBar {
+	xc.XSBar_SetSliderPadding(s.Handle, nPadding)
+	return s
 }
 
 // 滚动条_置水平, 设置水平或者垂直.

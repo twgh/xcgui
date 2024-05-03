@@ -145,36 +145,62 @@ func (e *Element) PostEvent(nEvent xcc.XE_, wParam, lParam uint) int {
 // 元素_取坐标.
 //
 // pRect: 坐标.
-func (e *Element) GetRect(pRect *xc.RECT) int {
-	return xc.XEle_GetRect(e.Handle, pRect)
+func (e *Element) GetRect(pRect *xc.RECT) *Element {
+	xc.XEle_GetRect(e.Handle, pRect)
+	return e
+}
+
+// 元素_取坐标ex.
+func (e *Element) GetRectEx() xc.RECT {
+	var pRect *xc.RECT
+	xc.XEle_GetRect(e.Handle, pRect)
+	return *pRect
 }
 
 // 元素_取逻辑坐标, 获取元素坐标, 逻辑坐标, 包含滚动视图偏移.
 //
 // pRect: 坐标.
-func (e *Element) GetRectLogic(pRect *xc.RECT) int {
-	return xc.XEle_GetRectLogic(e.Handle, pRect)
+func (e *Element) GetRectLogic(pRect *xc.RECT) *Element {
+	xc.XEle_GetRectLogic(e.Handle, pRect)
+	return e
+}
+
+// 元素_取逻辑坐标ex, 获取元素坐标, 逻辑坐标, 包含滚动视图偏移.
+func (e *Element) GetRectLogicEx() xc.RECT {
+	var pRect *xc.RECT
+	xc.XEle_GetRectLogic(e.Handle, pRect)
+	return *pRect
 }
 
 // 元素_取客户区坐标.
 //
 // pRect: 坐标.
-func (e *Element) GetClientRect(pRect *xc.RECT) int {
-	return xc.XEle_GetClientRect(e.Handle, pRect)
+func (e *Element) GetClientRect(pRect *xc.RECT) *Element {
+	xc.XEle_GetClientRect(e.Handle, pRect)
+	return e
+}
+
+// 元素_取客户区坐标ex.
+func (e *Element) GetClientRectEx() xc.RECT {
+	var pRect *xc.RECT
+	xc.XEle_GetClientRect(e.Handle, pRect)
+	return *pRect
 }
 
 // 元素_置宽度.
 //
 // nWidth: 宽度.
-func (e *Element) SetWidth(nWidth int) int {
-	return xc.XEle_SetWidth(e.Handle, nWidth)
+func (e *Element) SetWidth(nWidth int) *Element {
+	xc.XEle_SetWidth(e.Handle, nWidth)
+	return e
 }
 
 // 元素_置高度.
 //
 // nHeight: 高度.
-func (e *Element) SetHeight(nHeight int) int {
-	return xc.XEle_SetHeight(e.Handle, nHeight)
+func (e *Element) SetHeight(nHeight int) *Element {
+	xc.XEle_SetHeight(e.Handle, nHeight)
+	return e
 }
 
 // 元素_取宽度.
@@ -190,36 +216,48 @@ func (e *Element) GetHeight() int {
 // 元素_窗口客户区坐标到元素客户区坐标, 窗口客户区坐标转换到元素客户区坐标.
 //
 // pRect: 坐标.
-func (e *Element) RectWndClientToEleClient(pRect *xc.RECT) int {
-	return xc.XEle_RectWndClientToEleClient(e.Handle, pRect)
+func (e *Element) RectWndClientToEleClient(pRect *xc.RECT) *Element {
+	xc.XEle_RectWndClientToEleClient(e.Handle, pRect)
+	return e
 }
 
 // 元素_窗口客户区点到元素客户区, 窗口客户区坐标转换到元素客户区坐标.
 //
 // pPt: 坐标.
-func (e *Element) PointWndClientToEleClient(pPt *xc.POINT) int {
-	return xc.XEle_PointWndClientToEleClient(e.Handle, pPt)
+func (e *Element) PointWndClientToEleClient(pPt *xc.POINT) *Element {
+	xc.XEle_PointWndClientToEleClient(e.Handle, pPt)
+	return e
 }
 
 // 元素_客户区坐标到窗口客户区, 元素客户区坐标转换到窗口客户区坐标.
 //
 // pRect: 坐标.
-func (e *Element) RectClientToWndClient(pRect *xc.RECT) int {
-	return xc.XEle_RectClientToWndClient(e.Handle, pRect)
+func (e *Element) RectClientToWndClient(pRect *xc.RECT) *Element {
+	xc.XEle_RectClientToWndClient(e.Handle, pRect)
+	return e
 }
 
 // 元素_客户区点到窗口客户区, 元素客户区坐标转换到窗口客户区坐标.
 //
 // pPt: 坐标.
-func (e *Element) PointClientToWndClient(pPt *xc.POINT) int {
-	return xc.XEle_PointClientToWndClient(e.Handle, pPt)
+func (e *Element) PointClientToWndClient(pPt *xc.POINT) *Element {
+	xc.XEle_PointClientToWndClient(e.Handle, pPt)
+	return e
 }
 
 // 元素_基于窗口客户区坐标.
 //
 // pRect: 坐标.
-func (e *Element) GetWndClientRect(pRect *xc.RECT) int {
-	return xc.XEle_GetWndClientRect(e.Handle, pRect)
+func (e *Element) GetWndClientRect(pRect *xc.RECT) *Element {
+	xc.XEle_GetWndClientRect(e.Handle, pRect)
+	return e
+}
+
+// 元素_基于窗口客户区坐标ex.
+func (e *Element) GetWndClientRectEx() xc.RECT {
+	var pRect *xc.RECT
+	xc.XEle_GetWndClientRect(e.Handle, pRect)
+	return *pRect
 }
 
 // 元素_取光标, 获取元素鼠标光标, 返回光标句柄.
@@ -230,8 +268,9 @@ func (e *Element) GetCursor() int {
 // 元素_置光标, 设置元素鼠标光标.
 //
 // hCursor: 光标句柄.
-func (e *Element) SetCursor(hCursor int) int {
-	return xc.XEle_SetCursor(e.Handle, hCursor)
+func (e *Element) SetCursor(hCursor int) *Element {
+	xc.XEle_SetCursor(e.Handle, hCursor)
+	return e
 }
 
 // 元素_添加子对象.
@@ -345,7 +384,7 @@ func (e *Element) IsMouseThrough() bool {
 	return xc.XEle_IsMouseThrough(e.Handle)
 }
 
-// 元素_测试点击元素, 检测坐标点所在元素, 包含子元素的子元素.
+// 元素_测试点击元素, 检测坐标点所在元素, 包含子元素的子元素. 成功时返回元素句柄.
 //
 // pPt: 坐标点.
 func (e *Element) HitChildEle(pPt *xc.POINT) int {
@@ -402,83 +441,95 @@ func (e *Element) IsFocusEx() bool {
 // 元素_启用, 启用或禁用元素.
 //
 // bEnable: 启用或禁用.
-func (e *Element) Enable(bEnable bool) int {
-	return xc.XEle_Enable(e.Handle, bEnable)
+func (e *Element) Enable(bEnable bool) *Element {
+	xc.XEle_Enable(e.Handle, bEnable)
+	return e
 }
 
 // 元素_启用焦点, 启用焦点.
 //
 // bEnable: 是否启用.
-func (e *Element) EnableFocus(bEnable bool) int {
-	return xc.XEle_EnableFocus(e.Handle, bEnable)
+func (e *Element) EnableFocus(bEnable bool) *Element {
+	xc.XEle_EnableFocus(e.Handle, bEnable)
+	return e
 }
 
 // 元素_启用绘制焦点.
 //
 // bEnable: 是否启用.
-func (e *Element) EnableDrawFocus(bEnable bool) int {
-	return xc.XEle_EnableDrawFocus(e.Handle, bEnable)
+func (e *Element) EnableDrawFocus(bEnable bool) *Element {
+	xc.XEle_EnableDrawFocus(e.Handle, bEnable)
+	return e
 }
 
 // 元素_启用绘制边框, 启用或禁用绘制默认边框.
 //
 // bEnable: 是否启用.
-func (e *Element) EnableDrawBorder(bEnable bool) int {
-	return xc.XEle_EnableDrawBorder(e.Handle, bEnable)
+func (e *Element) EnableDrawBorder(bEnable bool) *Element {
+	xc.XEle_EnableDrawBorder(e.Handle, bEnable)
+	return e
 }
 
 // 元素_启用画布, 启用或禁用背景画布; 如果禁用那么将绘制在父的画布之上, 也就是说他没有自己的画布.
 //
 // bEnable: 是否启用.
-func (e *Element) EnableCanvas(bEnable bool) int {
-	return xc.XEle_EnableCanvas(e.Handle, bEnable)
+func (e *Element) EnableCanvas(bEnable bool) *Element {
+	xc.XEle_EnableCanvas(e.Handle, bEnable)
+	return e
 }
 
 // 元素_启用事件_XE_PAINT_END.
 //
 // bEnable: 是否启用.
-func (e *Element) EnableEvent_XE_PAINT_END(bEnable bool) int {
-	return xc.XEle_EnableEvent_XE_PAINT_END(e.Handle, bEnable)
+func (e *Element) EnableEvent_XE_PAINT_END(bEnable bool) *Element {
+	xc.XEle_EnableEvent_XE_PAINT_END(e.Handle, bEnable)
+	return e
 }
 
 // 元素_启用背景透明.
 //
 // bEnable: 是否启用.
-func (e *Element) EnableBkTransparent(bEnable bool) int {
-	return xc.XEle_EnableBkTransparent(e.Handle, bEnable)
+func (e *Element) EnableBkTransparent(bEnable bool) *Element {
+	xc.XEle_EnableBkTransparent(e.Handle, bEnable)
+	return e
 }
 
 // 元素_启用鼠标穿透. 启用鼠标穿透, 如果启用, 那么该元素不能接收到鼠标事件, 但是他的子元素不受影响, 任然可以接收鼠标事件.
 //
 // bEnable: 是否启用.
-func (e *Element) EnableMouseThrough(bEnable bool) int {
-	return xc.XEle_EnableMouseThrough(e.Handle, bEnable)
+func (e *Element) EnableMouseThrough(bEnable bool) *Element {
+	xc.XEle_EnableMouseThrough(e.Handle, bEnable)
+	return e
 }
 
 // 元素_启用接收TAB, 启用接收Tab输入.
 //
 // bEnable: 是否启用.
-func (e *Element) EnableKeyTab(bEnable bool) int {
-	return xc.XEle_EnableKeyTab(e.Handle, bEnable)
+func (e *Element) EnableKeyTab(bEnable bool) *Element {
+	xc.XEle_EnableKeyTab(e.Handle, bEnable)
+	return e
 }
 
 // 元素_启用切换焦点, 启用接受通过键盘切换焦点.
 //
 // bEnable: 是否启用.
-func (e *Element) EnableSwitchFocus(bEnable bool) int {
-	return xc.XEle_EnableSwitchFocus(e.Handle, bEnable)
+func (e *Element) EnableSwitchFocus(bEnable bool) *Element {
+	xc.XEle_EnableSwitchFocus(e.Handle, bEnable)
+	return e
 }
 
 // 元素_启用事件_XE_MOUSEWHEEL, 启用接收鼠标滚动事件, 如果禁用那么事件会传递给父元素.
 //
 // bEnable: 是否启用.
-func (e *Element) EnableEvent_XE_MOUSEWHEEL(bEnable bool) int {
-	return xc.XEle_EnableEvent_XE_MOUSEWHEEL(e.Handle, bEnable)
+func (e *Element) EnableEvent_XE_MOUSEWHEEL(bEnable bool) *Element {
+	xc.XEle_EnableEvent_XE_MOUSEWHEEL(e.Handle, bEnable)
+	return e
 }
 
 // 元素_移除, 移除元素, 但不销毁.
-func (e *Element) Remove() int {
-	return xc.XEle_Remove(e.Handle)
+func (e *Element) Remove() *Element {
+	xc.XEle_Remove(e.Handle)
+	return e
 }
 
 // 元素_置Z序, 设置元素Z序.
@@ -512,8 +563,9 @@ func (e *Element) EnableTopmost(bTopmost bool) bool {
 // 元素_重绘.
 //
 // bImmediate: 是否立即重绘.
-func (e *Element) Redraw(bImmediate bool) int {
-	return xc.XEle_Redraw(e.Handle, bImmediate)
+func (e *Element) Redraw(bImmediate bool) *Element {
+	xc.XEle_Redraw(e.Handle, bImmediate)
+	return e
 }
 
 // 元素_重绘指定区域.
@@ -521,8 +573,9 @@ func (e *Element) Redraw(bImmediate bool) int {
 // pRect: 相对于元素客户区坐标.
 //
 // bImmediate: 是否立即重绘.
-func (e *Element) RedrawRect(pRect *xc.RECT, bImmediate bool) int {
-	return xc.XEle_RedrawRect(e.Handle, pRect, bImmediate)
+func (e *Element) RedrawRect(pRect *xc.RECT, bImmediate bool) *Element {
+	xc.XEle_RedrawRect(e.Handle, pRect, bImmediate)
+	return e
 }
 
 // 元素_取子对象数量, 获取子对象(UI元素和形状对象)数量, 只检测当前层子对象.
@@ -553,15 +606,24 @@ func (e *Element) GetChildByID(nID int) int {
 // right: 右边大小.
 //
 // bottom: 下边大小.
-func (e *Element) SetBorderSize(left int, top int, right int, bottom int) int {
-	return xc.XEle_SetBorderSize(e.Handle, left, top, right, bottom)
+func (e *Element) SetBorderSize(left int, top int, right int, bottom int) *Element {
+	xc.XEle_SetBorderSize(e.Handle, left, top, right, bottom)
+	return e
 }
 
 // 元素_取边框大小.
 //
 // pBorder: 大小.
-func (e *Element) GetBorderSize(pBorder *xc.RECT) int {
-	return xc.XEle_GetBorderSize(e.Handle, pBorder)
+func (e *Element) GetBorderSize(pBorder *xc.RECT) *Element {
+	xc.XEle_GetBorderSize(e.Handle, pBorder)
+	return e
+}
+
+// 元素_取边框大小ex.
+func (e *Element) GetBorderSizeEx() xc.RECT {
+	var pBorder *xc.RECT
+	xc.XEle_GetBorderSize(e.Handle, pBorder)
+	return *pBorder
 }
 
 // 元素_置内填充大小.
@@ -573,33 +635,44 @@ func (e *Element) GetBorderSize(pBorder *xc.RECT) int {
 // right: 右边大小.
 //
 // bottom: 下边大小.
-func (e *Element) SetPadding(left int, top int, right int, bottom int) int {
-	return xc.XEle_SetPadding(e.Handle, left, top, right, bottom)
+func (e *Element) SetPadding(left int, top int, right int, bottom int) *Element {
+	xc.XEle_SetPadding(e.Handle, left, top, right, bottom)
+	return e
 }
 
 // 元素_取内填充大小.
 //
 // pPadding: 大小.
-func (e *Element) GetPadding(pPadding *xc.RECT) int {
-	return xc.XEle_GetPadding(e.Handle, pPadding)
+func (e *Element) GetPadding(pPadding *xc.RECT) *Element {
+	xc.XEle_GetPadding(e.Handle, pPadding)
+	return e
+}
+
+// 元素_取内填充大小ex.
+func (e *Element) GetPaddingEx() xc.RECT {
+	var pPadding *xc.RECT
+	xc.XEle_GetPadding(e.Handle, pPadding)
+	return *pPadding
 }
 
 // 元素_置拖动边框.
 //
-// nFlags: 边框位置组合, Element_Position_.
-func (e *Element) SetDragBorder(nFlags xcc.Element_Position_) int {
-	return xc.XEle_SetDragBorder(e.Handle, nFlags)
+// nFlags: 边框位置组合, xcc.Element_Position_.
+func (e *Element) SetDragBorder(nFlags xcc.Element_Position_) *Element {
+	xc.XEle_SetDragBorder(e.Handle, nFlags)
+	return e
 }
 
 // 元素_置拖动边框绑定元素, 设置拖动边框绑定元素, 当拖动边框时, 自动调整绑定元素的大小.
 //
-// nFlags: 边框位置标识, Element_Position_.
+// nFlags: 边框位置标识, xcc.Element_Position_.
 //
 // hBindEle: 绑定元素.
 //
 // nSpace: 元素间隔大小.
-func (e *Element) SetDragBorderBindEle(nFlags xcc.Element_Position_, hBindEle int, nSpace int) int {
-	return xc.XEle_SetDragBorderBindEle(e.Handle, nFlags, hBindEle, nSpace)
+func (e *Element) SetDragBorderBindEle(nFlags xcc.Element_Position_, hBindEle int, nSpace int) *Element {
+	xc.XEle_SetDragBorderBindEle(e.Handle, nFlags, hBindEle, nSpace)
+	return e
 }
 
 // 元素_置最小大小.
@@ -607,8 +680,9 @@ func (e *Element) SetDragBorderBindEle(nFlags xcc.Element_Position_, hBindEle in
 // nWidth: 最小宽度.
 //
 // nHeight: 最小高度.
-func (e *Element) SetMinSize(nWidth int, nHeight int) int {
-	return xc.XEle_SetMinSize(e.Handle, nWidth, nHeight)
+func (e *Element) SetMinSize(nWidth int, nHeight int) *Element {
+	xc.XEle_SetMinSize(e.Handle, nWidth, nHeight)
+	return e
 }
 
 // 元素_置最大大小.
@@ -616,8 +690,9 @@ func (e *Element) SetMinSize(nWidth int, nHeight int) int {
 // nWidth: 最大宽度.
 //
 // nHeight: 最大高度.
-func (e *Element) SetMaxSize(nWidth int, nHeight int) int {
-	return xc.XEle_SetMaxSize(e.Handle, nWidth, nHeight)
+func (e *Element) SetMaxSize(nWidth int, nHeight int) *Element {
+	xc.XEle_SetMaxSize(e.Handle, nWidth, nHeight)
+	return e
 }
 
 // 元素_置锁定滚动, 设置锁定元素在滚动视图中跟随滚动, 如果设置TRUE将不跟随滚动.
@@ -625,15 +700,17 @@ func (e *Element) SetMaxSize(nWidth int, nHeight int) int {
 // bHorizon: 是否锁定水平滚动.
 //
 // bVertical: 是否锁定垂直滚动.
-func (e *Element) SetLockScroll(bHorizon bool, bVertical bool) int {
-	return xc.XEle_SetLockScroll(e.Handle, bHorizon, bVertical)
+func (e *Element) SetLockScroll(bHorizon bool, bVertical bool) *Element {
+	xc.XEle_SetLockScroll(e.Handle, bHorizon, bVertical)
+	return e
 }
 
 // 元素_置文本颜色.
 //
-// color: ABGR 颜色值.
-func (e *Element) SetTextColor(color int) int {
-	return xc.XEle_SetTextColor(e.Handle, color)
+// color: ARGB 颜色值.
+func (e *Element) SetTextColor(color int) *Element {
+	xc.XEle_SetTextColor(e.Handle, color)
+	return e
 }
 
 // 元素_取文本颜色.
@@ -648,9 +725,10 @@ func (e *Element) GetTextColorEx() int {
 
 // 元素_置焦点边框颜色.
 //
-// color: ABGR 颜色值.
-func (e *Element) SetFocusBorderColor(color int) int {
-	return xc.XEle_SetFocusBorderColor(e.Handle, color)
+// color: ARGB 颜色值.
+func (e *Element) SetFocusBorderColor(color int) *Element {
+	xc.XEle_SetFocusBorderColor(e.Handle, color)
+	return e
 }
 
 // 元素_取焦点边框颜色.
@@ -661,8 +739,9 @@ func (e *Element) GetFocusBorderColor() int {
 // 元素_置字体.
 //
 // hFontx: 炫彩字体.
-func (e *Element) SetFont(hFontx int) int {
-	return xc.XEle_SetFont(e.Handle, hFontx)
+func (e *Element) SetFont(hFontx int) *Element {
+	xc.XEle_SetFont(e.Handle, hFontx)
+	return e
 }
 
 // 元素_取字体.
@@ -676,33 +755,37 @@ func (e *Element) GetFontEx() int {
 }
 
 // 元素_置透明度.
-func (e *Element) SetAlpha(alpha uint8) int {
-	return xc.XEle_SetAlpha(e.Handle, alpha)
+func (e *Element) SetAlpha(alpha byte) *Element {
+	xc.XEle_SetAlpha(e.Handle, alpha)
+	return e
 }
 
 // 元素_销毁.
-func (e *Element) Destroy() int {
-	return xc.XEle_Destroy(e.Handle)
+func (e *Element) Destroy() *Element {
+	xc.XEle_Destroy(e.Handle)
+	return e
 }
 
 // 元素_添加背景边框, 添加背景内容边框.
 //
 // nState: 组合状态.
 //
-// color: ABGR 颜色.
+// color: ARGB 颜色.
 //
 // width: 线宽.
-func (e *Element) AddBkBorder(nState xcc.CombinedState, color int, width int) int {
-	return xc.XEle_AddBkBorder(e.Handle, nState, color, width)
+func (e *Element) AddBkBorder(nState xcc.CombinedState, color int, width int) *Element {
+	xc.XEle_AddBkBorder(e.Handle, nState, color, width)
+	return e
 }
 
 // 元素_添加背景填充, 添加背景内容填充.
 //
 // nState: 组合状态.
 //
-// color: ABGR 颜色.
-func (e *Element) AddBkFill(nState xcc.CombinedState, color int) int {
-	return xc.XEle_AddBkFill(e.Handle, nState, color)
+// color: ARGB 颜色.
+func (e *Element) AddBkFill(nState xcc.CombinedState, color int) *Element {
+	xc.XEle_AddBkFill(e.Handle, nState, color)
+	return e
 }
 
 // 元素_添加背景图片, 添加背景内容图片.
@@ -710,8 +793,9 @@ func (e *Element) AddBkFill(nState xcc.CombinedState, color int) int {
 // nState: 组合状态.
 //
 // hImage: 图片句柄.
-func (e *Element) AddBkImage(nState xcc.CombinedState, hImage int) int {
-	return xc.XEle_AddBkImage(e.Handle, nState, hImage)
+func (e *Element) AddBkImage(nState xcc.CombinedState, hImage int) *Element {
+	xc.XEle_AddBkImage(e.Handle, nState, hImage)
+	return e
 }
 
 // 元素_取背景对象数量, 获取背景内容数量.
@@ -720,8 +804,9 @@ func (e *Element) GetBkInfoCount() int {
 }
 
 // 元素_清空背景对象, 清空背景内容; 如果背景没有内容, 将使用系统默认内容, 以便保证背景正确.
-func (e *Element) ClearBkInfo() int {
-	return xc.XEle_ClearBkInfo(e.Handle)
+func (e *Element) ClearBkInfo() *Element {
+	xc.XEle_ClearBkInfo(e.Handle)
+	return e
 }
 
 // 元素_取背景管理器, 获取元素背景管理器.
@@ -737,8 +822,9 @@ func (e *Element) GetBkManagerEx() int {
 // 元素_置背景管理器.
 //
 // hBkInfoM: 背景管理器.
-func (e *Element) SetBkManager(hBkInfoM int) int {
-	return xc.XEle_SetBkManager(e.Handle, hBkInfoM)
+func (e *Element) SetBkManager(hBkInfoM int) *Element {
+	xc.XEle_SetBkManager(e.Handle, hBkInfoM)
+	return e
 }
 
 // 元素_取状态, 获取组合状态.
@@ -758,15 +844,17 @@ func (e *Element) DrawFocus(hDraw int, pRect *xc.RECT) bool {
 // 元素_绘制, 在自绘事件函数中, 用户手动调用绘制元素, 以便控制绘制顺序.
 //
 // hDraw: 图形绘制句柄.
-func (e *Element) DrawEle(hDraw int) int {
-	return xc.XEle_DrawEle(e.Handle, hDraw)
+func (e *Element) DrawEle(hDraw int) *Element {
+	xc.XEle_DrawEle(e.Handle, hDraw)
+	return e
 }
 
 // 元素_置用户数据.
 //
 // nData: 用户数据.
-func (e *Element) SetUserData(nData int) int {
-	return xc.XEle_SetUserData(e.Handle, nData)
+func (e *Element) SetUserData(nData int) *Element {
+	xc.XEle_SetUserData(e.Handle, nData)
+	return e
 }
 
 // 元素_取用户数据.
@@ -783,22 +871,25 @@ func (e *Element) GetUserData() int {
 // cy: 高度.
 //
 // pSize: 返回大小.
-func (e *Element) GetContentSize(bHorizon bool, cx int, cy int, pSize *xc.SIZE) int {
-	return xc.XEle_GetContentSize(e.Handle, bHorizon, cx, cy, pSize)
+func (e *Element) GetContentSize(bHorizon bool, cx int, cy int, pSize *xc.SIZE) *Element {
+	xc.XEle_GetContentSize(e.Handle, bHorizon, cx, cy, pSize)
+	return e
 }
 
 // 元素_置鼠标捕获.
 //
 // b: TRUE设置.
-func (e *Element) SetCapture(b bool) int {
-	return xc.XEle_SetCapture(e.Handle, b)
+func (e *Element) SetCapture(b bool) *Element {
+	xc.XEle_SetCapture(e.Handle, b)
+	return e
 }
 
 // 元素_启用透明通道, 启用或关闭元素透明通道, 如果启用, 将强制设置元素背景不透明, 默认为启用, 此功能是为了兼容GDI不支持透明通道问题.
 //
 // bEnable: 启用或关闭.
-func (e *Element) EnableTransparentChannel(bEnable bool) int {
-	return xc.XEle_EnableTransparentChannel(e.Handle, bEnable)
+func (e *Element) EnableTransparentChannel(bEnable bool) *Element {
+	xc.XEle_EnableTransparentChannel(e.Handle, bEnable)
+	return e
 }
 
 // 元素_置炫彩定时器, 设置元素定时器.
@@ -820,8 +911,9 @@ func (e *Element) KillXCTimer(nIDEvent int) bool {
 // 元素_置工具提示, 设置工具提示内容.
 //
 // pText: 工具提示内容.
-func (e *Element) SetToolTip(pText string) int {
-	return xc.XEle_SetToolTip(e.Handle, pText)
+func (e *Element) SetToolTip(pText string) *Element {
+	xc.XEle_SetToolTip(e.Handle, pText)
+	return e
 }
 
 // 元素_置工具提示扩展, 设置工具提示内容.
@@ -829,8 +921,9 @@ func (e *Element) SetToolTip(pText string) int {
 // pText: 工具提示内容.
 //
 // nTextAlign: 文本对齐方式, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
-func (e *Element) SetToolTipEx(pText string, nTextAlign xcc.TextFormatFlag_) int {
-	return xc.XEle_SetToolTipEx(e.Handle, pText, nTextAlign)
+func (e *Element) SetToolTipEx(pText string, nTextAlign xcc.TextFormatFlag_) *Element {
+	xc.XEle_SetToolTipEx(e.Handle, pText, nTextAlign)
+	return e
 }
 
 // 元素_取工具提示, 获取工具提示内容.
@@ -843,15 +936,17 @@ func (e *Element) GetToolTip() int {
 // x: X坐标.
 //
 // y: Y坐标.
-func (e *Element) PopupToolTip(x int, y int) int {
-	return xc.XEle_PopupToolTip(e.Handle, x, y)
+func (e *Element) PopupToolTip(x int, y int) *Element {
+	xc.XEle_PopupToolTip(e.Handle, x, y)
+	return e
 }
 
 // 元素_调整布局.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
-func (e *Element) AdjustLayout(nAdjustNo uint32) int {
-	return xc.XEle_AdjustLayout(e.Handle, nAdjustNo)
+func (e *Element) AdjustLayout(nAdjustNo uint32) *Element {
+	xc.XEle_AdjustLayout(e.Handle, nAdjustNo)
+	return e
 }
 
 // 元素_调整布局扩展.
@@ -859,8 +954,9 @@ func (e *Element) AdjustLayout(nAdjustNo uint32) int {
 // nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
 // nAdjustNo: 调整布局流水号, 可填0.
-func (e *Element) AdjustLayoutEx(nFlags xcc.AdjustLayout_, nAdjustNo uint32) int {
-	return xc.XEle_AdjustLayoutEx(e.Handle, nFlags, nAdjustNo)
+func (e *Element) AdjustLayoutEx(nFlags xcc.AdjustLayout_, nAdjustNo uint32) *Element {
+	xc.XEle_AdjustLayoutEx(e.Handle, nFlags, nAdjustNo)
+	return e
 }
 
 // 元素_取透明度, 返回透明度.
@@ -873,8 +969,16 @@ func (e *Element) GetAlpha() byte {
 // pOutX: 返回X坐标.
 //
 // pOutY: 返回Y坐标.
-func (e *Element) GetPosition(pOutX, pOutY *int32) int {
-	return xc.XEle_GetPosition(e.Handle, pOutX, pOutY)
+func (e *Element) GetPosition(pOutX, pOutY *int32) *Element {
+	xc.XEle_GetPosition(e.Handle, pOutX, pOutY)
+	return e
+}
+
+// 元素_取位置ex.
+func (e *Element) GetPositionEx() xc.POINT {
+	var pOutX, pOutY *int32
+	xc.XEle_GetPosition(e.Handle, pOutX, pOutY)
+	return xc.POINT{X: *pOutX, Y: *pOutY}
 }
 
 // 元素_置大小.
@@ -897,8 +1001,16 @@ func (e *Element) SetSize(nWidth, nHeight int32, bRedraw bool, nFlags xcc.Adjust
 // pOutWidth: 返回宽度.
 //
 // pOutHeight: 返回高度.
-func (e *Element) GetSize(pOutWidth, pOutHeight *int32) int {
-	return xc.XEle_GetSize(e.Handle, pOutWidth, pOutHeight)
+func (e *Element) GetSize(pOutWidth, pOutHeight *int32) *Element {
+	xc.XEle_GetSize(e.Handle, pOutWidth, pOutHeight)
+	return e
+}
+
+// 元素_取大小ex.
+func (e *Element) GetSizeEx() xc.POINT {
+	var pOutWidth, pOutHeight *int32
+	xc.XEle_GetSize(e.Handle, pOutWidth, pOutHeight)
+	return xc.POINT{X: *pOutWidth, Y: *pOutHeight}
 }
 
 // 元素_置背景, 设置背景内容, 返回设置的背景对象数量.
@@ -911,22 +1023,41 @@ func (e *Element) SetBkInfo(pText string) int {
 // 元素_取窗口客户区坐标DPI. 基于DPI缩放后的坐标.
 //
 // pRect: 接收返回坐标.
-func (e *Element) GetWndClientRectDPI(pRect *xc.RECT) int {
-	return xc.XEle_GetWndClientRectDPI(e.Handle, pRect)
+func (e *Element) GetWndClientRectDPI(pRect *xc.RECT) *Element {
+	xc.XEle_GetWndClientRectDPI(e.Handle, pRect)
+	return e
+}
+
+// 元素_取窗口客户区坐标DPIex. 基于DPI缩放后的坐标.
+func (e *Element) GetWndClientRectDPIEx() xc.RECT {
+	var pRect *xc.RECT
+	xc.XEle_GetWndClientRectDPI(e.Handle, pRect)
+	return *pRect
 }
 
 // 元素_取窗口客户区坐标DPI. 基于DPI缩放后的坐标.
 //
 // pPt: 接收返回坐标点.
-func (e *Element) PointClientToWndClientDPI(pPt *xc.POINT) int {
-	return xc.XEle_PointClientToWndClientDPI(e.Handle, pPt)
+func (e *Element) PointClientToWndClientDPI(pPt *xc.POINT) *Element {
+	xc.XEle_PointClientToWndClientDPI(e.Handle, pPt)
+	return e
+}
+
+// 元素_取窗口客户区坐标DPIex. 基于DPI缩放后的坐标.
+//
+// pPt: 接收返回坐标点.
+func (e *Element) PointClientToWndClientDPIEx() xc.POINT {
+	var pPt *xc.POINT
+	xc.XEle_PointClientToWndClientDPI(e.Handle, pPt)
+	return *pPt
 }
 
 // 元素_客户区坐标到窗口客户区DPI. 基于DPI缩放后的坐标.
 //
 // pRect: 接收返回坐标.
-func (e *Element) RectClientToWndClientDPI(pRect *xc.RECT) int {
-	return xc.XEle_RectClientToWndClientDPI(e.Handle, pRect)
+func (e *Element) RectClientToWndClientDPI(pRect *xc.RECT) *Element {
+	xc.XEle_RectClientToWndClientDPI(e.Handle, pRect)
+	return e
 }
 
 // SetFocus 元素_置焦点.
