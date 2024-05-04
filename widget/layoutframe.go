@@ -92,7 +92,6 @@ LayoutBox-布局盒子
 // EnableHorizon 布局盒子_启用水平.
 //
 //	@param bEnable 是否启用.
-//	@return int
 func (l *LayoutFrame) EnableHorizon(bEnable bool) *LayoutFrame {
 	xc.XLayoutBox_EnableHorizon(l.Handle, bEnable)
 	return l
@@ -101,7 +100,6 @@ func (l *LayoutFrame) EnableHorizon(bEnable bool) *LayoutFrame {
 // EnableAutoWrap 布局盒子_启用自动换行.
 //
 //	@param bEnable 是否启用.
-//	@return int
 func (l *LayoutFrame) EnableAutoWrap(bEnable bool) *LayoutFrame {
 	xc.XLayoutBox_EnableAutoWrap(l.Handle, bEnable)
 	return l
@@ -110,7 +108,6 @@ func (l *LayoutFrame) EnableAutoWrap(bEnable bool) *LayoutFrame {
 // EnableOverflowHide 布局盒子_启用溢出隐藏.
 //
 //	@param bEnable 是否启用.
-//	@return int
 func (l *LayoutFrame) EnableOverflowHide(bEnable bool) *LayoutFrame {
 	xc.XLayoutBox_EnableOverflowHide(l.Handle, bEnable)
 	return l
@@ -119,7 +116,6 @@ func (l *LayoutFrame) EnableOverflowHide(bEnable bool) *LayoutFrame {
 // SetAlignH 布局盒子_置水平对齐.
 //
 //	@param nAlign 对齐方式: xcc.Layout_Align_.
-//	@return int
 func (l *LayoutFrame) SetAlignH(nAlign xcc.Layout_Align_) *LayoutFrame {
 	xc.XLayoutBox_SetAlignH(l.Handle, nAlign)
 	return l
@@ -128,7 +124,6 @@ func (l *LayoutFrame) SetAlignH(nAlign xcc.Layout_Align_) *LayoutFrame {
 // SetAlignV 布局盒子_置垂直对齐.
 //
 //	@param nAlign 对齐方式: xcc.Layout_Align_.
-//	@return int
 func (l *LayoutFrame) SetAlignV(nAlign xcc.Layout_Align_) *LayoutFrame {
 	xc.XLayoutBox_SetAlignV(l.Handle, nAlign)
 	return l
@@ -137,7 +132,6 @@ func (l *LayoutFrame) SetAlignV(nAlign xcc.Layout_Align_) *LayoutFrame {
 // SetAlignBaseline 布局盒子_置对齐基线.
 //
 //	@param nAlign 对齐方式: xcc.Layout_Align_Axis_.
-//	@return int
 func (l *LayoutFrame) SetAlignBaseline(nAlign xcc.Layout_Align_Axis_) *LayoutFrame {
 	xc.XLayoutBox_SetAlignBaseline(l.Handle, nAlign)
 	return l
@@ -146,7 +140,6 @@ func (l *LayoutFrame) SetAlignBaseline(nAlign xcc.Layout_Align_Axis_) *LayoutFra
 // SetSpace 布局盒子_置间距.
 //
 //	@param nSpace 项间距大小.
-//	@return int
 func (l *LayoutFrame) SetSpace(nSpace int) *LayoutFrame {
 	xc.XLayoutBox_SetSpace(l.Handle, nSpace)
 	return l
@@ -155,7 +148,6 @@ func (l *LayoutFrame) SetSpace(nSpace int) *LayoutFrame {
 // SetSpaceRow 布局盒子_置行距.
 //
 //	@param nSpace 行间距大小.
-//	@return int
 func (l *LayoutFrame) SetSpaceRow(nSpace int) *LayoutFrame {
 	xc.XLayoutBox_SetSpaceRow(l.Handle, nSpace)
 	return l

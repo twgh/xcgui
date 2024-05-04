@@ -12,6 +12,8 @@ import (
 //	@param f
 func TFunc(f func(a *app.App, w *window.Window)) {
 	a := app.New(true)
+	a.EnableDPI(true)
+	a.EnableAutoDPI(true)
 	w := window.New(0, 0, 600, 400, "Test", 0, xcc.Window_Style_Default)
 	f(a, w)
 	w.Show(true)

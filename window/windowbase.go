@@ -1239,65 +1239,65 @@ LayoutBox-布局盒子
 // EnableHorizon 布局盒子_启用水平.
 //
 //	@param bEnable 是否启用.
-//	@return int
-func (w *windowBase) EnableHorizon(bEnable bool) int {
-	return xc.XLayoutBox_EnableHorizon(w.Handle, bEnable)
+func (w *windowBase) EnableHorizon(bEnable bool) *windowBase {
+	xc.XLayoutBox_EnableHorizon(w.Handle, bEnable)
+	return w
 }
 
 // EnableAutoWrap 布局盒子_启用自动换行.
 //
 //	@param bEnable 是否启用.
-//	@return int
-func (w *windowBase) EnableAutoWrap(bEnable bool) int {
-	return xc.XLayoutBox_EnableAutoWrap(w.Handle, bEnable)
+func (w *windowBase) EnableAutoWrap(bEnable bool) *windowBase {
+	xc.XLayoutBox_EnableAutoWrap(w.Handle, bEnable)
+	return w
 }
 
 // EnableOverflowHide 布局盒子_启用溢出隐藏.
 //
 //	@param bEnable 是否启用.
-//	@return int
-func (w *windowBase) EnableOverflowHide(bEnable bool) int {
-	return xc.XLayoutBox_EnableOverflowHide(w.Handle, bEnable)
+func (w *windowBase) EnableOverflowHide(bEnable bool) *windowBase {
+	xc.XLayoutBox_EnableOverflowHide(w.Handle, bEnable)
+	return w
 }
 
 // SetAlignH 布局盒子_置水平对齐.
 //
 //	@param nAlign 对齐方式: xcc.Layout_Align_.
-//	@return int
-func (w *windowBase) SetAlignH(nAlign xcc.Layout_Align_) int {
-	return xc.XLayoutBox_SetAlignH(w.Handle, nAlign)
+func (w *windowBase) SetAlignH(nAlign xcc.Layout_Align_) *windowBase {
+	xc.XLayoutBox_SetAlignH(w.Handle, nAlign)
+	return w
 }
 
 // SetAlignV 布局盒子_置垂直对齐.
 //
 //	@param nAlign 对齐方式: xcc.Layout_Align_.
-//	@return int
-func (w *windowBase) SetAlignV(nAlign xcc.Layout_Align_) int {
-	return xc.XLayoutBox_SetAlignV(w.Handle, nAlign)
+func (w *windowBase) SetAlignV(nAlign xcc.Layout_Align_) *windowBase {
+	xc.XLayoutBox_SetAlignV(w.Handle, nAlign)
+	return w
 }
 
 // SetAlignBaseline 布局盒子_置对齐基线.
 //
 //	@param nAlign 对齐方式: xcc.Layout_Align_Axis_.
-//	@return int
-func (w *windowBase) SetAlignBaseline(nAlign xcc.Layout_Align_Axis_) int {
-	return xc.XLayoutBox_SetAlignBaseline(w.Handle, nAlign)
+func (w *windowBase) SetAlignBaseline(nAlign xcc.Layout_Align_Axis_) *windowBase {
+	xc.XLayoutBox_SetAlignBaseline(w.Handle, nAlign)
+	return w
 }
 
 // SetSpace 布局盒子_置间距.
 //
 //	@param nSpace 项间距大小.
-//	@return int
-func (w *windowBase) SetSpace(nSpace int) int {
-	return xc.XLayoutBox_SetSpace(w.Handle, nSpace)
+func (w *windowBase) SetSpace(nSpace int) *windowBase {
+	xc.XLayoutBox_SetSpace(w.Handle, nSpace)
+	return w
 }
 
 // SetSpaceRow 布局盒子_置行距.
 //
 //	@param nSpace 行间距大小.
-//	@return int
-func (w *windowBase) SetSpaceRow(nSpace int) int {
-	return xc.XLayoutBox_SetSpaceRow(w.Handle, nSpace)
+func (w *windowBase) SetSpaceRow(nSpace int) *windowBase {
+	xc.XLayoutBox_SetSpaceRow(w.Handle, nSpace)
+	return w
 }
 
 /*
