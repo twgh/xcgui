@@ -1,8 +1,8 @@
 <h1 align="center">XCGUI</h1>
 <p align="center">
-    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.390-blue" alt="release"></a>
+    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.391-blue" alt="release"></a>
     <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-3.3.9-blue" alt="XCGUI"></a>
-   <a href="https://golang.org"> <img src="https://img.shields.io/badge/golang-1.16-blue" alt="golang"></a>
+   <a href="https://golang.org"> <img src="https://img.shields.io/badge/golang-≥1.16-blue" alt="golang"></a>
     <a href="https://pkg.go.dev/github.com/twgh/xcgui"><img src="https://img.shields.io/badge/go.dev-reference-brightgreen" alt="GoDoc"></a>
     <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-brightgreen" alt="License"></a>
     <br><br>
@@ -11,6 +11,7 @@
 	<a href="https://pkg.go.dev/github.com/twgh/xcgui">项目文档</a>&nbsp;&nbsp;
 	<a href="http://mall.xcgui.com">官方资源</a>
 </p>
+
 
 
 
@@ -198,7 +199,7 @@ xcc包里都是常量，像这样使用：`xcc.Window_Transparent_Shadow`
 
 ## 命令介绍
 
-xc包里包含xcgui.dll里所有的API，有近2000个函数，不习惯使用类的可以直接使用，封装好的类都在其他包里。
+xc包里包含xcgui.dll里所有的API，有近2000个函数，不习惯使用类的可以直接使用原版函数，封装好的类都在其他包里。
 
 在某些情况下，把xc包里的原生函数与封装好的类混合起来使用会更加方便。
 
