@@ -6,10 +6,9 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// TFunc 测试用程序.
+// TFunc 测试用程序. 测试时使用的函数.
 //
-//	@Description: 测试时使用的函数.
-//	@param f
+//	f: 回调函数.
 func TFunc(f func(a *app.App, w *window.Window)) {
 	a := app.New(true)
 	a.EnableDPI(true)

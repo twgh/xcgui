@@ -14,10 +14,10 @@ const (
 // 特殊ID
 
 const (
-	XC_ID_ROOT  = 0  // 根节点
-	XC_ID_ERROR = -1 // ID错误
-	XC_ID_FIRST = -2 // 插入开始位置
-	XC_ID_LAST  = -3 // 插入末尾位置
+	XC_ID_ROOT  int32 = 0  // 根节点
+	XC_ID_ERROR int32 = -1 // ID错误
+	XC_ID_FIRST int32 = -2 // 插入开始位置
+	XC_ID_LAST  int32 = -3 // 插入末尾位置
 )
 
 // SW_ 是显示窗口的形式.
@@ -190,7 +190,7 @@ const (
 	TextFormatFlag_NoWrap                TextFormatFlag_ = 0x20   // 禁止换行
 	TextFormatFlag_DirectionVertical     TextFormatFlag_ = 0x40   // 垂直显示文本
 	TextFormatFlag_NoFitBlackBox         TextFormatFlag_ = 0x80   // 允许部分字符延伸该字符串的布局矩形。默认情况下，将重新定位字符以避免任何延伸
-	TextFormatFlag_DisplayFormatControl  TextFormatFlag_ = 0x100  // 控制字符（如从左到右标记）随具有代表性的标志符号一起显示在输出中。
+	TextFormatFlag_DisplayFormatControl  TextFormatFlag_ = 0x100  // 控制字符（如从左到右标记）随具有代表性的标志符号一起显示在输出中.
 	TextFormatFlag_NoFontFallback        TextFormatFlag_ = 0x200  // 对于请求的字体中不支持的字符，禁用回退到可选字体。缺失的任何字符都用缺失标志符号的字体显示，通常是一个空的方块
 	TextFormatFlag_MeasureTrailingSpaces TextFormatFlag_ = 0x400  // 包括每一行结尾处的尾随空格。在默认情况下，MeasureString 方法返回的边框都将排除每一行结尾处的空格。设置此标记以便在测定时将空格包括进去
 	TextFormatFlag_LineLimit             TextFormatFlag_ = 0x800  // 如果内容显示高度不够一行,那么不显示
@@ -215,7 +215,7 @@ const (
 )
 
 // Window_Style_ 窗口样式.
-type Window_Style_ int
+type Window_Style_ int32
 
 const (
 	Window_Style_Nothing         Window_Style_ = 0x0000 // 什么也没有
@@ -360,7 +360,7 @@ const (
 )
 
 // Element_Position_ UI元素位置.
-type Element_Position_ int
+type Element_Position_ int32
 
 const (
 	Element_Position_No     Element_Position_ = 0x00 // 无效
@@ -445,7 +445,7 @@ const (
 )
 
 // Chat_Flag_ Edit 聊天气泡对齐方式.
-type Chat_Flag_ int
+type Chat_Flag_ int32
 
 const (
 	Chat_Flag_Left            Chat_Flag_ = 0x1 // 左侧
@@ -475,7 +475,7 @@ const (
 )
 
 // Edit_TextAlign_Flag_ 编辑框文本对齐标志.
-type Edit_TextAlign_Flag_ int
+type Edit_TextAlign_Flag_ int32
 
 const (
 	Edit_TextAlign_Flag_Left   Edit_TextAlign_Flag_ = 0x0 // 左侧
@@ -488,7 +488,7 @@ const (
 )
 
 // Table_Flag_ Table 标识.
-type Table_Flag_ int
+type Table_Flag_ int32
 
 const (
 	Table_Flag_Full Table_Flag_ = iota // 铺满组合单元格
@@ -621,7 +621,7 @@ const (
 )
 
 // List_DrawItemBk_Flag_ 项背景绘制标志位(List, ListBox, ListView, Tree).
-type List_DrawItemBk_Flag_ int
+type List_DrawItemBk_Flag_ int32
 
 const (
 	List_DrawItemBk_Flag_Leave       List_DrawItemBk_Flag_ = 1 << iota // 绘制鼠标离开状态项背景
@@ -651,7 +651,7 @@ const (
 )
 
 // Zorder_ Z序位置.
-type Zorder_ int
+type Zorder_ int32
 
 const (
 	Zorder_Top    Zorder_ = iota // 最上面
@@ -675,17 +675,17 @@ const (
 type XC_DWRITE_RENDERING_MODE_ int
 
 const (
-	XC_DWRITE_RENDERING_MODE_DEFAULT                     XC_DWRITE_RENDERING_MODE_ = iota // 指定根据字体和大小自动确定呈现模式。
-	XC_DWRITE_RENDERING_MODE_ALIASED                                                      // 指定不执行抗锯齿。 每个像素要么设置为文本的前景色，要么保留背景的颜色。
-	XC_DWRITE_RENDERING_MODE_CLEARTYPE_GDI_CLASSIC                                        // 使用与别名文本相同的度量指定 ClearType 呈现。 字形只能定位在整个像素的边界上。
-	XC_DWRITE_RENDERING_MODE_CLEARTYPE_GDI_NATURAL                                        // 使用使用 CLEARTYPE_NATURAL_QUALITY 创建的字体，使用与使用 GDI 的文本呈现相同的指标指定 ClearType 呈现。 与使用别名文本相比，字形度量更接近其理想值，但字形仍然位于整个像素的边界上。
-	XC_DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL                                            // 仅在水平维度中指定具有抗锯齿功能的 ClearType 渲染。 这通常用于中小字体大小（最多 16 ppem）。
-	XC_DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL_SYMMETRIC                                  // 指定在水平和垂直维度上具有抗锯齿的 ClearType 渲染。这通常用于较大的尺寸，以使曲线和对角线看起来更平滑，但会牺牲一些柔和度。
-	XC_DWRITE_RENDERING_MODE_OUTLINE                                                      // 指定渲染应绕过光栅化器并直接使用轮廓。 这通常用于非常大的尺寸。
+	XC_DWRITE_RENDERING_MODE_DEFAULT                     XC_DWRITE_RENDERING_MODE_ = iota // 指定根据字体和大小自动确定呈现模式.
+	XC_DWRITE_RENDERING_MODE_ALIASED                                                      // 指定不执行抗锯齿。 每个像素要么设置为文本的前景色，要么保留背景的颜色.
+	XC_DWRITE_RENDERING_MODE_CLEARTYPE_GDI_CLASSIC                                        // 使用与别名文本相同的度量指定 ClearType 呈现。 字形只能定位在整个像素的边界上.
+	XC_DWRITE_RENDERING_MODE_CLEARTYPE_GDI_NATURAL                                        // 使用使用 CLEARTYPE_NATURAL_QUALITY 创建的字体，使用与使用 GDI 的文本呈现相同的指标指定 ClearType 呈现。 与使用别名文本相比，字形度量更接近其理想值，但字形仍然位于整个像素的边界上.
+	XC_DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL                                            // 仅在水平维度中指定具有抗锯齿功能的 ClearType 渲染。 这通常用于中小字体大小（最多 16 ppem）.
+	XC_DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL_SYMMETRIC                                  // 指定在水平和垂直维度上具有抗锯齿的 ClearType 渲染。这通常用于较大的尺寸，以使曲线和对角线看起来更平滑，但会牺牲一些柔和度.
+	XC_DWRITE_RENDERING_MODE_OUTLINE                                                      // 指定渲染应绕过光栅化器并直接使用轮廓。 这通常用于非常大的尺寸.
 )
 
 // MonthCal_Button_Type_ 月历元素上的按钮类型.
-type MonthCal_Button_Type_ int
+type MonthCal_Button_Type_ int32
 
 const (
 	MonthCal_Button_Type_Today      MonthCal_Button_Type_ = iota // 今天按钮
@@ -889,30 +889,30 @@ const (
 type SWP_ uint32
 
 const (
-	SWP_ASYNCWINDOWPOS SWP_ = 0x4000 // 如果调用线程和拥有窗口的线程连接到不同的输入队列，系统会将请求发布到拥有窗口的线程。这可以防止调用线程在其他线程处理请求时阻塞其执行。
-	SWP_DEFERERASE     SWP_ = 0x2000 // 防止生成WM_SYNCPAINT消息。
-	SWP_DRAWFRAME      SWP_ = 0x0020 // 在窗口周围绘制一个框架（在窗口的类描述中定义）。
-	SWP_FRAMECHANGED   SWP_ = 0x0020 // 应用使用 SetWindowLong 函数 设置的新框架样式。向窗口发送WM_NCCALCSIZE消息，即使窗口大小没有改变。如果未指定此标志，则仅在更改窗口大小时发送 WM_NCCALCSIZE 。
-	SWP_HIDEWINDOW     SWP_ = 0x0080 // 隐藏窗口。
-	SWP_NOACTIVATE     SWP_ = 0x0010 // 不激活窗口。如果未设置此标志，则窗口被激活并移动到最顶层或非最顶层组的顶部（取决于hWndInsertAfter参数的设置）。
-	SWP_NOCOPYBITS     SWP_ = 0x0100 // 丢弃客户区的全部内容。如果未指定此标志，则在调整窗口大小或重新定位后，将保存客户区的有效内容并将其复制回客户区。
-	SWP_NOMOVE         SWP_ = 0x0002 // 保留当前位置（忽略X和Y参数）。
-	SWP_NOOWNERZORDER  SWP_ = 0x0200 // 不改变所有者窗口在 Z 顺序中的位置。
-	SWP_NOREDRAW       SWP_ = 0x0008 // 不重绘更改。如果设置了此标志，则不会发生任何类型的重新绘制。这适用于客户区、非客户区（包括标题栏和滚动条）以及由于窗口移动而未覆盖的父窗口的任何部分。设置此标志时，应用程序必须显式地使需要重绘的窗口和父窗口的任何部分无效或重绘。
-	SWP_NOREPOSITION   SWP_ = 0x0200 // 与SWP_NOOWNERZORDER标志相同。
-	SWP_NOSENDCHANGING SWP_ = 0x0400 // 阻止窗口接收WM_WINDOWPOSCHANGING消息。
-	SWP_NOSIZE         SWP_ = 0x0001 // 保留当前大小（忽略cx和cy参数）。
-	SWP_NOZORDER       SWP_ = 0x0004 // 保留当前 Z 顺序（忽略hWndInsertAfter参数）。
-	SWP_SHOWWINDOW     SWP_ = 0x0040 // 显示窗口。
+	SWP_ASYNCWINDOWPOS SWP_ = 0x4000 // 如果调用线程和拥有窗口的线程连接到不同的输入队列，系统会将请求发布到拥有窗口的线程。这可以防止调用线程在其他线程处理请求时阻塞其执行.
+	SWP_DEFERERASE     SWP_ = 0x2000 // 防止生成WM_SYNCPAINT消息.
+	SWP_DRAWFRAME      SWP_ = 0x0020 // 在窗口周围绘制一个框架（在窗口的类描述中定义）.
+	SWP_FRAMECHANGED   SWP_ = 0x0020 // 应用使用 SetWindowLong 函数 设置的新框架样式。向窗口发送WM_NCCALCSIZE消息，即使窗口大小没有改变。如果未指定此标志，则仅在更改窗口大小时发送 WM_NCCALCSIZE .
+	SWP_HIDEWINDOW     SWP_ = 0x0080 // 隐藏窗口.
+	SWP_NOACTIVATE     SWP_ = 0x0010 // 不激活窗口。如果未设置此标志，则窗口被激活并移动到最顶层或非最顶层组的顶部（取决于hWndInsertAfter参数的设置）.
+	SWP_NOCOPYBITS     SWP_ = 0x0100 // 丢弃客户区的全部内容。如果未指定此标志，则在调整窗口大小或重新定位后，将保存客户区的有效内容并将其复制回客户区.
+	SWP_NOMOVE         SWP_ = 0x0002 // 保留当前位置（忽略X和Y参数）.
+	SWP_NOOWNERZORDER  SWP_ = 0x0200 // 不改变所有者窗口在 Z 顺序中的位置.
+	SWP_NOREDRAW       SWP_ = 0x0008 // 不重绘更改。如果设置了此标志，则不会发生任何类型的重新绘制。这适用于客户区、非客户区（包括标题栏和滚动条）以及由于窗口移动而未覆盖的父窗口的任何部分。设置此标志时，应用程序必须显式地使需要重绘的窗口和父窗口的任何部分无效或重绘.
+	SWP_NOREPOSITION   SWP_ = 0x0200 // 与SWP_NOOWNERZORDER标志相同.
+	SWP_NOSENDCHANGING SWP_ = 0x0400 // 阻止窗口接收WM_WINDOWPOSCHANGING消息.
+	SWP_NOSIZE         SWP_ = 0x0001 // 保留当前大小（忽略cx和cy参数）.
+	SWP_NOZORDER       SWP_ = 0x0004 // 保留当前 Z 顺序（忽略hWndInsertAfter参数）.
+	SWP_SHOWWINDOW     SWP_ = 0x0040 // 显示窗口.
 )
 
 type HWND_ int
 
 const (
-	HWND_NOTOPMOST HWND_ = -2 // 将窗口置于所有非顶层窗口之上（即在所有顶层窗口之后）。如果窗口已经是非顶层窗口则该标志不起作用。
-	HWND_TOPMOST   HWND_ = -1 // 将窗口置于所有非顶层窗口之上。即使窗口未被激活, 窗口也将保持顶级位置。
-	HWND_TOP       HWND_ = 0  // 将窗口置于Z序的顶部。
-	HWND_BOTTOM    HWND_ = 1  // 将窗口置于Z序的底部。如果参数hWnd标识了一个顶层窗口，则窗口失去顶级位置，并且被置在所有其他窗口的底部。
+	HWND_NOTOPMOST HWND_ = -2 // 将窗口置于所有非顶层窗口之上（即在所有顶层窗口之后）。如果窗口已经是非顶层窗口则该标志不起作用.
+	HWND_TOPMOST   HWND_ = -1 // 将窗口置于所有非顶层窗口之上。即使窗口未被激活, 窗口也将保持顶级位置.
+	HWND_TOP       HWND_ = 0  // 将窗口置于Z序的顶部.
+	HWND_BOTTOM    HWND_ = 1  // 将窗口置于Z序的底部。如果参数hWnd标识了一个顶层窗口，则窗口失去顶级位置，并且被置在所有其他窗口的底部.
 )
 
 // TrayIcon_Flag_ 托盘图标标识.

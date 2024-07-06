@@ -11,16 +11,16 @@ type ShapePicture struct {
 
 // NewShapePicture 形状图片_创建, 创建形状对象-图片.
 //
-// x: x坐标.
+//	x: x坐标.
 //
-// y: y坐标.
+//	y: y坐标.
 //
-// cx: 宽度.
+//	cx: 宽度.
 //
-// cy: 高度.
+//	cy: 高度.
 //
-// hParent: 父对象句柄.
-func NewShapePicture(x int, y int, cx int, cy int, hParent int) *ShapePicture {
+//	hParent: 父对象句柄.
+func NewShapePicture(x, y, cx, cy int32, hParent int) *ShapePicture {
 	p := &ShapePicture{}
 	p.SetHandle(xc.XShapePic_Create(x, y, cx, cy, hParent))
 	return p
@@ -45,7 +45,7 @@ func NewShapePictureByName(name string) *ShapePicture {
 }
 
 // 从UID创建对象, 失败返回nil.
-func NewShapePictureByUID(nUID int) *ShapePicture {
+func NewShapePictureByUID(nUID int32) *ShapePicture {
 	handle := xc.XC_GetObjectByUID(nUID)
 	if handle > 0 {
 		p := &ShapePicture{}
@@ -68,7 +68,7 @@ func NewShapePictureByUIDName(name string) *ShapePicture {
 
 // 形状图片_置图片, 设置图片.
 //
-// hImage: 图片句柄.
+//	hImage: 图片句柄.
 func (s *ShapePicture) SetImage(hImage int) *ShapePicture {
 	xc.XShapePic_SetImage(s.Handle, hImage)
 	return s

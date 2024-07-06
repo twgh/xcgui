@@ -192,7 +192,7 @@ func ExampleGetSaveFileNameW() {
 		NMaxFileTitle:     260,
 		LpstrInitialDir:   common.StrPtr("D:"),
 		LpstrTitle:        common.StrPtr("保存文件"),
-		Flags:             wapi.OFN_OVERWRITEPROMPT, // 如果所选文件已存在，则使“另存为”对话框生成一个消息框。用户必须确认是否覆盖文件。
+		Flags:             wapi.OFN_OVERWRITEPROMPT, // 如果所选文件已存在，则使“另存为”对话框生成一个消息框。用户必须确认是否覆盖文件.
 		NFileOffset:       0,
 		NFileExtension:    0,
 		LpstrDefExt:       common.StrPtr("txt"), // 如果用户没有输入文件扩展名, 则默认使用这个

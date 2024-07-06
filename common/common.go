@@ -6,14 +6,16 @@ import (
 	"unsafe"
 )
 
-// Bytes2String byte切片到string.
+// Bytes2String 转换[]byte到string.
 //
-//	@param b
-//	@return string
+//	b: []byte.
 func Bytes2String(b []byte) string {
 	return *(*string)(unsafe.Pointer(&b))
 }
 
+// String2Bytes 转换string到[]byte.
+//
+//	s: 文本.
 func String2Bytes(s string) []byte {
 	sh := (*stringHeader)(unsafe.Pointer(&s))
 	bh := sliceHeader{
@@ -49,8 +51,7 @@ type sliceHeader struct {
 
 // StrPtr 将string转换到uintptr.
 //
-//	@param s
-//	@return uintptr
+//	s: 文本.
 func StrPtr(s string) uintptr {
 	if len(s) == 0 {
 		return uintptr(0)
@@ -61,8 +62,7 @@ func StrPtr(s string) uintptr {
 
 // UintPtrToString 将uintptr转换到string.
 //
-//	@param ptr
-//	@return string
+//	ptr: uintptr.
 func UintPtrToString(ptr uintptr) string {
 	if ptr == 0 {
 		return ""
@@ -80,8 +80,7 @@ func UintPtrToString(ptr uintptr) string {
 
 // Uint16SliceDataPtr 将uint16[0]指针转换到uintptr.
 //
-//	@param p
-//	@return uintptr
+//	p: uint16[0]的指针.
 func Uint16SliceDataPtr(p *[]uint16) uintptr {
 	if len(*p) == 0 {
 		return uintptr(0)
@@ -91,8 +90,7 @@ func Uint16SliceDataPtr(p *[]uint16) uintptr {
 
 // BoolPtr 将bool转换到uintptr.
 //
-//	@param b
-//	@return uintptr
+//	b: bool.
 func BoolPtr(b bool) uintptr {
 	if b {
 		return uintptr(1)
@@ -102,16 +100,14 @@ func BoolPtr(b bool) uintptr {
 
 // Float32Ptr 将float32转换到uintptr.
 //
-//	@param f
-//	@return uintptr
+//	f: float32.
 func Float32Ptr(f float32) uintptr {
 	return uintptr(*(*uint32)(unsafe.Pointer(&f)))
 }
 
 // UintPtrToFloat32 将uintptr转换到float32.
 //
-//	@param ptr
-//	@return float32
+//	ptr: uintptr.
 func UintPtrToFloat32(ptr uintptr) float32 {
 	if ptr == 0 {
 		return 0
@@ -120,10 +116,9 @@ func UintPtrToFloat32(ptr uintptr) float32 {
 	return *(*float32)(unsafe.Pointer(&u))
 }
 
-// ByteSliceDataPtr 将byte[0]指针转换到uintptr.
+// ByteSliceDataPtr 将byte[0]的指针转换到uintptr.
 //
-//	@param b
-//	@return uintptr
+//	b: byte[0]的指针.
 func ByteSliceDataPtr(b *[]byte) uintptr {
 	if len(*b) == 0 {
 		return uintptr(0)
@@ -155,12 +150,16 @@ func RuneToUint16Ptr(r []rune) *uint16 {
 	return &utf16.Encode(r)[0]
 }*/
 
-// StringToUint16Ptr 返回指向 UTF-8 字符串 s 的 UTF-16 编码的指针，与 syscall.UTF16PtrFromString 不同的是末尾没有添加终止 NUL。
+// StringToUint16Ptr 返回指向 UTF-8 字符串 s 的 UTF-16 编码的指针，与 syscall.UTF16PtrFromString 不同的是末尾没有添加终止 NUL.
+//
+//	s: 文本.
 func StringToUint16Ptr(s string) *uint16 {
 	return &utf16.Encode([]rune(s))[0]
 }
 
 // Uint16SliceToStringSlice 按null字符分割, 把 []uint16 转换到 []string.
+//
+//	s: []uint16.
 func Uint16SliceToStringSlice(s []uint16) []string {
 	strSlice := make([]string, 0)
 	start := 0

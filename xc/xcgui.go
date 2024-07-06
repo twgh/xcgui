@@ -18,10 +18,9 @@ func GetVer() string {
 //	如果你想要更改它的位置, 可以在 xc.LoadXCGUI() 之前调用 xc.SetXcguiPath() 更改为其他路径.
 var xcguiPath = "xcgui.dll"
 
-// SetXcguiPath 手动设置xcgui.dll的路径. 未设置时, 默认值为'xcgui.dll'.
+// SetXcguiPath 手动设置xcgui.dll的路径. 未设置时, 默认值为'xcgui.dll'. 如果出错, 要么你输入的文件不存在, 要么你输入的不是dll文件.
 //
-//	@param XcguiPath dll完整路径（目录+文件名）, 也可以是相对路径.
-//	@return error 如果出错, 要么你输入的文件不存在, 要么你输入的不是dll文件.
+//	XcguiPath: dll完整路径（目录+文件名）, 也可以是相对路径.
 func SetXcguiPath(XcguiPath string) error {
 	// 判断是否为dll文件
 	if len(XcguiPath) < 5 {
@@ -42,15 +41,11 @@ func SetXcguiPath(XcguiPath string) error {
 }
 
 // GetXcguiPath 获取设置的xcgui.dll的路径.
-//
-//	@return string
 func GetXcguiPath() string {
 	return xcguiPath
 }
 
 // GetXcgui 获取加载的炫彩dll, 用途是你可以利用这个来封装dll中的函数, 因为我有时候可能更新不及时, 如果你恰巧需要最新版本dll中的函数, 那么你可以自己封装最新版本dll中的函数.
-//
-//	@return *syscall.LazyDLL
 func GetXcgui() *syscall.LazyDLL {
 	return xcgui
 }
@@ -743,41 +738,41 @@ var (
 	xAdTree_DeleteColumnAll   *syscall.LazyProc
 
 	// Editor.
-	xEditor_Create                     *syscall.LazyProc
-	xEidtor_EnableAutoMatchSpaseSelect *syscall.LazyProc
-	xEditor_IsBreakpoint               *syscall.LazyProc
-	xEditor_SetBreakpoint              *syscall.LazyProc
-	xEditor_RemoveBreakpoint           *syscall.LazyProc
-	xEditor_ClearBreakpoint            *syscall.LazyProc
-	xEditor_SetRunRow                  *syscall.LazyProc
-	xEditor_GetColor                   *syscall.LazyProc
-	xEditor_SetColor                   *syscall.LazyProc
-	xEditor_SetStyleKeyword            *syscall.LazyProc
-	xEditor_SetStyleFunction           *syscall.LazyProc
-	xEditor_SetStyleVar                *syscall.LazyProc
-	xEditor_SetStyleDataType           *syscall.LazyProc
-	xEditor_SetStyleClass              *syscall.LazyProc
-	xEditor_SetStyleMacro              *syscall.LazyProc
-	xEditor_SetStyleString             *syscall.LazyProc
-	xEditor_SetStyleComment            *syscall.LazyProc
-	xEditor_SetStyleNumber             *syscall.LazyProc
-	xEditor_GetBreakpointCount         *syscall.LazyProc
-	xEditor_GetBreakpoints             *syscall.LazyProc
-	xEditor_SetCurRow                  *syscall.LazyProc
-	xEditor_GetDepth                   *syscall.LazyProc
-	xEditor_ToExpandRow                *syscall.LazyProc
-	xEditor_ExpandEx                   *syscall.LazyProc
-	xEditor_ExpandAll                  *syscall.LazyProc
-	xEditor_Expand                     *syscall.LazyProc
-	xEditor_AddKeyword                 *syscall.LazyProc
-	xEditor_AddConst                   *syscall.LazyProc
-	xEditor_AddFunction                *syscall.LazyProc
-	xEditor_AddExcludeDefVarKeyword    *syscall.LazyProc
-	xEditor_GetExpandState             *syscall.LazyProc
-	xEditor_SetExpandState             *syscall.LazyProc
-	xEditor_GetIndentation             *syscall.LazyProc
-	xEidtor_IsEmptyRow                 *syscall.LazyProc
-	xEditor_SetAutoMatchMode           *syscall.LazyProc
+	xEditor_Create *syscall.LazyProc
+	// xEditor_EnableAutoMatchSpaseSelect *syscall.LazyProc
+	xEditor_IsBreakpoint     *syscall.LazyProc
+	xEditor_SetBreakpoint    *syscall.LazyProc
+	xEditor_RemoveBreakpoint *syscall.LazyProc
+	xEditor_ClearBreakpoint  *syscall.LazyProc
+	xEditor_SetRunRow        *syscall.LazyProc
+	xEditor_GetColor         *syscall.LazyProc
+	xEditor_SetColor         *syscall.LazyProc
+	// xEditor_SetStyleKeyword         *syscall.LazyProc
+	// xEditor_SetStyleFunction        *syscall.LazyProc
+	// xEditor_SetStyleVar             *syscall.LazyProc
+	// xEditor_SetStyleDataType        *syscall.LazyProc
+	// xEditor_SetStyleClass           *syscall.LazyProc
+	// xEditor_SetStyleMacro           *syscall.LazyProc
+	// xEditor_SetStyleString          *syscall.LazyProc
+	// xEditor_SetStyleComment         *syscall.LazyProc
+	// xEditor_SetStyleNumber          *syscall.LazyProc
+	xEditor_GetBreakpointCount      *syscall.LazyProc
+	xEditor_GetBreakpoints          *syscall.LazyProc
+	xEditor_SetCurRow               *syscall.LazyProc
+	xEditor_GetDepth                *syscall.LazyProc
+	xEditor_ToExpandRow             *syscall.LazyProc
+	xEditor_ExpandEx                *syscall.LazyProc
+	xEditor_ExpandAll               *syscall.LazyProc
+	xEditor_Expand                  *syscall.LazyProc
+	xEditor_AddKeyword              *syscall.LazyProc
+	xEditor_AddConst                *syscall.LazyProc
+	xEditor_AddFunction             *syscall.LazyProc
+	xEditor_AddExcludeDefVarKeyword *syscall.LazyProc
+	xEditor_GetExpandState          *syscall.LazyProc
+	xEditor_SetExpandState          *syscall.LazyProc
+	xEditor_GetIndentation          *syscall.LazyProc
+	xEditor_IsEmptyRow              *syscall.LazyProc
+	xEditor_SetAutoMatchMode        *syscall.LazyProc
 
 	// Edit.
 	xEdit_Create               *syscall.LazyProc
@@ -2556,7 +2551,7 @@ func _loadXCGUI() {
 
 	// Editor.
 	xEditor_Create = xcgui.NewProc("XEditor_Create")
-	xEidtor_EnableAutoMatchSpaseSelect = xcgui.NewProc("XEidtor_EnableAutoMatchSpaseSelect")
+	// xEditor_EnableAutoMatchSpaseSelect = xcgui.NewProc("XEidtor_EnableAutoMatchSpaseSelect")
 	xEditor_IsBreakpoint = xcgui.NewProc("XEditor_IsBreakpoint")
 	xEditor_SetBreakpoint = xcgui.NewProc("XEditor_SetBreakpoint")
 	xEditor_RemoveBreakpoint = xcgui.NewProc("XEditor_RemoveBreakpoint")
@@ -2564,15 +2559,15 @@ func _loadXCGUI() {
 	xEditor_SetRunRow = xcgui.NewProc("XEditor_SetRunRow")
 	xEditor_GetColor = xcgui.NewProc("XEditor_GetColor")
 	xEditor_SetColor = xcgui.NewProc("XEditor_SetColor")
-	xEditor_SetStyleKeyword = xcgui.NewProc("XEditor_SetStyleKeyword")
-	xEditor_SetStyleFunction = xcgui.NewProc("XEditor_SetStyleFunction")
-	xEditor_SetStyleVar = xcgui.NewProc("XEditor_SetStyleVar")
-	xEditor_SetStyleDataType = xcgui.NewProc("XEditor_SetStyleDataType")
-	xEditor_SetStyleClass = xcgui.NewProc("XEditor_SetStyleClass")
-	xEditor_SetStyleMacro = xcgui.NewProc("XEditor_SetStyleMacro")
-	xEditor_SetStyleString = xcgui.NewProc("XEditor_SetStyleString")
-	xEditor_SetStyleComment = xcgui.NewProc("XEditor_SetStyleComment")
-	xEditor_SetStyleNumber = xcgui.NewProc("XEditor_SetStyleNumber")
+	// xEditor_SetStyleKeyword = xcgui.NewProc("XEditor_SetStyleKeyword")
+	// xEditor_SetStyleFunction = xcgui.NewProc("XEditor_SetStyleFunction")
+	// xEditor_SetStyleVar = xcgui.NewProc("XEditor_SetStyleVar")
+	// xEditor_SetStyleDataType = xcgui.NewProc("XEditor_SetStyleDataType")
+	// xEditor_SetStyleClass = xcgui.NewProc("XEditor_SetStyleClass")
+	// xEditor_SetStyleMacro = xcgui.NewProc("XEditor_SetStyleMacro")
+	// xEditor_SetStyleString = xcgui.NewProc("XEditor_SetStyleString")
+	// xEditor_SetStyleComment = xcgui.NewProc("XEditor_SetStyleComment")
+	// xEditor_SetStyleNumber = xcgui.NewProc("XEditor_SetStyleNumber")
 	xEditor_GetBreakpointCount = xcgui.NewProc("XEditor_GetBreakpointCount")
 	xEditor_GetBreakpoints = xcgui.NewProc("XEditor_GetBreakpoints")
 	xEditor_SetCurRow = xcgui.NewProc("XEditor_SetCurRow")
@@ -2588,7 +2583,7 @@ func _loadXCGUI() {
 	xEditor_GetExpandState = xcgui.NewProc("XEditor_GetExpandState")
 	xEditor_SetExpandState = xcgui.NewProc("XEditor_SetExpandState")
 	xEditor_GetIndentation = xcgui.NewProc("XEditor_GetIndentation")
-	xEidtor_IsEmptyRow = xcgui.NewProc("XEidtor_IsEmptyRow")
+	xEditor_IsEmptyRow = xcgui.NewProc("XEidtor_IsEmptyRow")
 	xEditor_SetAutoMatchMode = xcgui.NewProc("XEditor_SetAutoMatchMode")
 
 	// XEdit.
