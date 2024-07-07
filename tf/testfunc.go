@@ -8,7 +8,7 @@ import (
 
 // TFunc 测试用程序. 测试时使用的函数.
 //
-//	f: 回调函数.
+// f: 回调函数.
 func TFunc(f func(a *app.App, w *window.Window)) {
 	a := app.New(true)
 	a.EnableDPI(true)

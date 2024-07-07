@@ -20,7 +20,7 @@ var xcguiPath = "xcgui.dll"
 
 // SetXcguiPath 手动设置xcgui.dll的路径. 未设置时, 默认值为'xcgui.dll'. 如果出错, 要么你输入的文件不存在, 要么你输入的不是dll文件.
 //
-//	XcguiPath: dll完整路径（目录+文件名）, 也可以是相对路径.
+// XcguiPath: dll完整路径（目录+文件名）, 也可以是相对路径.
 func SetXcguiPath(XcguiPath string) error {
 	// 判断是否为dll文件
 	if len(XcguiPath) < 5 {

@@ -65,7 +65,7 @@ func GetClipboardText() (string, error) {
 
 // SetClipboardText 将文本置入剪贴板.
 //
-//	text: 要置入的文本.
+// text: 要置入的文本.
 func SetClipboardText(text string) error {
 	runtime.LockOSThread()
 	defer runtime.UnlockOSThread()

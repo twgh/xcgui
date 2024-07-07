@@ -33,7 +33,7 @@ func (a *adapter) Destroy() *adapter {
 
 // 数据适配器_启用自动销毁.
 //
-//	bEnable: 是否启用.
+// bEnable: 是否启用.
 func (a *adapter) EnableAutoDestroy(bEnable bool) *adapter {
 	xc.XAd_EnableAutoDestroy(a.Handle, bEnable)
 	return a

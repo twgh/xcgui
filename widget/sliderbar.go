@@ -12,15 +12,15 @@ type SliderBar struct {
 
 // 滑动条_创建, 创建滑动条元素.
 //
-//	x: 元素x坐标.
+// x: 元素x坐标.
 //
-//	y: 元素y坐标.
+// y: 元素y坐标.
 //
-//	cx: 宽度.
+// cx: 宽度.
 //
-//	cy: 高度.
+// cy: 高度.
 //
-//	hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
+// hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
 func NewSliderBar(x, y, cx, cy int32, hParent int) *SliderBar {
 	p := &SliderBar{}
 	p.SetHandle(xc.XSliderBar_Create(x, y, cx, cy, hParent))
@@ -69,7 +69,7 @@ func NewSliderBarByUIDName(name string) *SliderBar {
 
 // 滑动条_置范围, 设置滑动范围.
 //
-//	range_: 范围.
+// range_: 范围.
 func (s *SliderBar) SetRange(range_ int32) *SliderBar {
 	xc.XSliderBar_SetRange(s.Handle, range_)
 	return s
@@ -82,7 +82,7 @@ func (s *SliderBar) GetRange() int32 {
 
 // 滑动条_置进度图片, 设置进度贴图.
 //
-//	hImage: 图片句柄.
+// hImage: 图片句柄.
 func (s *SliderBar) SetImageLoad(hImage int) *SliderBar {
 	xc.XSliderBar_SetImageLoad(s.Handle, hImage)
 	return s
@@ -90,7 +90,7 @@ func (s *SliderBar) SetImageLoad(hImage int) *SliderBar {
 
 // 滑动条_置滑块宽度, 设置滑块按钮宽度.
 //
-//	width: 宽度.
+// width: 宽度.
 func (s *SliderBar) SetButtonWidth(width int32) *SliderBar {
 	xc.XSliderBar_SetButtonWidth(s.Handle, width)
 	return s
@@ -98,7 +98,7 @@ func (s *SliderBar) SetButtonWidth(width int32) *SliderBar {
 
 // 滑动条_置滑块高度, 设置滑块按钮高度.
 //
-//	height: 高度.
+// height: 高度.
 func (s *SliderBar) SetButtonHeight(height int32) *SliderBar {
 	xc.XSliderBar_SetButtonHeight(s.Handle, height)
 	return s
@@ -106,7 +106,7 @@ func (s *SliderBar) SetButtonHeight(height int32) *SliderBar {
 
 // 滑动条_置当前位置, 设置当前进度点.
 //
-//	pos: 进度点.
+// pos: 进度点.
 func (s *SliderBar) SetPos(pos int32) *SliderBar {
 	xc.XSliderBar_SetPos(s.Handle, pos)
 	return s
@@ -124,7 +124,7 @@ func (s *SliderBar) GetButton() int {
 
 // 滑动条_置水平, 设置水平或垂直.
 //
-//	bHorizon: 水平或垂直.
+// bHorizon: 水平或垂直.
 func (s *SliderBar) EnableHorizon(bHorizon bool) *SliderBar {
 	xc.XSliderBar_EnableHorizon(s.Handle, bHorizon)
 	return s

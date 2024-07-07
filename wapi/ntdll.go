@@ -14,11 +14,11 @@ var (
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/devnotes/rtlmovememory.
 //
-//	Destination: 指向要复制字节的目标内存块的指针.
+// Destination: 指向要复制字节的目标内存块的指针.
 //
-//	Source: 指向要复制字节的源内存块的指针.
+// Source: 指向要复制字节的源内存块的指针.
 //
-//	Length: 从源复制到目标中的字节数.
+// Length: 从源复制到目标中的字节数.
 func RtlMoveMemory(Destination uintptr, Source uintptr, Length uint) {
 	rtlMoveMemory.Call(Destination, Source, uintptr(Length))
 }

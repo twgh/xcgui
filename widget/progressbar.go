@@ -12,15 +12,15 @@ type ProgressBar struct {
 
 // 进度条_创建, 创建进度条元素.
 //
-//	x: 元素x坐标.
+// x: 元素x坐标.
 //
-//	y: 元素y坐标.
+// y: 元素y坐标.
 //
-//	cx: 宽度.
+// cx: 宽度.
 //
-//	cy: 高度.
+// cy: 高度.
 //
-//	hParent: 父是窗口资源句柄或UI元素资源句柄.如果是窗口资源句柄将被添加到窗口.
+// hParent: 父是窗口资源句柄或UI元素资源句柄.如果是窗口资源句柄将被添加到窗口.
 func NewProgressBar(x, y, cx, cy int32, hParent int) *ProgressBar {
 	p := &ProgressBar{}
 	p.SetHandle(xc.XProgBar_Create(x, y, cx, cy, hParent))
@@ -69,7 +69,7 @@ func NewProgressBarByUIDName(name string) *ProgressBar {
 
 // 进度条_置范围, 设置范围.
 //
-//	range_: 范围.
+// range_: 范围.
 func (p *ProgressBar) SetRange(range_ int32) *ProgressBar {
 	xc.XProgBar_SetRange(p.Handle, range_)
 	return p
@@ -82,7 +82,7 @@ func (p *ProgressBar) GetRange() int32 {
 
 // 进度条_置进度图片.
 //
-//	hImage: 图片句柄.
+// hImage: 图片句柄.
 func (p *ProgressBar) SetImageLoad(hImage int) *ProgressBar {
 	xc.XProgBar_SetImageLoad(p.Handle, hImage)
 	return p
@@ -90,7 +90,7 @@ func (p *ProgressBar) SetImageLoad(hImage int) *ProgressBar {
 
 // 进度条_置进度, 设置位置点.
 //
-//	pos: 位置点.
+// pos: 位置点.
 func (p *ProgressBar) SetPos(pos int32) *ProgressBar {
 	xc.XProgBar_SetPos(p.Handle, pos)
 	return p
@@ -103,7 +103,7 @@ func (p *ProgressBar) GetPos() int32 {
 
 // 进度条_置水平, 设置水平或垂直.
 //
-//	bHorizon: 水平或垂直.
+// bHorizon: 水平或垂直.
 func (p *ProgressBar) EnableHorizon(bHorizon bool) *ProgressBar {
 	xc.XProgBar_EnableHorizon(p.Handle, bHorizon)
 	return p
@@ -111,7 +111,7 @@ func (p *ProgressBar) EnableHorizon(bHorizon bool) *ProgressBar {
 
 // 进度条_启用缩放, 缩放进度贴图为当前进度区域(当前进度所显示区域), 否则为整体100进度区域.
 //
-//	bStretch: 缩放.
+// bStretch: 缩放.
 func (p *ProgressBar) EnableStretch(bStretch bool) *ProgressBar {
 	xc.XProgBar_EnableStretch(p.Handle, bStretch)
 	return p
@@ -119,7 +119,7 @@ func (p *ProgressBar) EnableStretch(bStretch bool) *ProgressBar {
 
 // 进度条_启用进度文本 显示进度值文本.
 //
-//	bShow: 是否启用.
+// bShow: 是否启用.
 func (p *ProgressBar) EnableShowText(bShow bool) *ProgressBar {
 	xc.XProgBar_EnableShowText(p.Handle, bShow)
 	return p
@@ -127,7 +127,7 @@ func (p *ProgressBar) EnableShowText(bShow bool) *ProgressBar {
 
 // 进度条_置进度颜色. 设置进度颜色.
 //
-//	color: ARGB 颜色.
+// color: ARGB 颜色.
 func (p *ProgressBar) SetColorLoad(color int) *ProgressBar {
 	xc.XProgBar_SetColorLoad(p.Handle, color)
 	return p

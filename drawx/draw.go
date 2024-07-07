@@ -13,7 +13,7 @@ type Draw struct {
 
 // New 绘制_创建, 创建图形绘制模块实例, 返回句柄.
 //
-//	hWindow: 窗口句柄.
+// hWindow: 窗口句柄.
 func New(hWindow int) *Draw {
 	p := &Draw{}
 	p.SetHandle(xc.XDraw_Create(hWindow))
@@ -22,9 +22,9 @@ func New(hWindow int) *Draw {
 
 // NewGDI 绘制_创建GDI, 创建图形绘制模块实例, 返回图形绘制模块实例句柄.
 //
-//	hWindow: 窗口句柄.
+// hWindow: 窗口句柄.
 //
-//	hdc: hdc句柄.
+// hdc: hdc句柄.
 func NewGDI(hWindow int, hdc uintptr) *Draw {
 	p := &Draw{}
 	p.SetHandle(xc.XDraw_CreateGDI(hWindow, hdc))
@@ -46,13 +46,13 @@ func (d *Draw) Destroy() *Draw {
 
 // 绘制_虚线, 绘制水平或垂直虚线.
 //
-//	x1: 起点x坐标.
+// x1: 起点x坐标.
 //
-//	y1: 起点y坐标.
+// y1: 起点y坐标.
 //
-//	x2: 结束点x坐标.
+// x2: 结束点x坐标.
 //
-//	y2: 结束点y坐标.
+// y2: 结束点y坐标.
 func (d *Draw) Dottedline(x1, y1, x2, y2 int32) *Draw {
 	xc.XDraw_Dottedline(d.Handle, x1, y1, x2, y2)
 	return d
@@ -60,13 +60,13 @@ func (d *Draw) Dottedline(x1, y1, x2, y2 int32) *Draw {
 
 // 绘制_虚线F, 绘制水平或垂直虚线.
 //
-//	x1: 起点x坐标.
+// x1: 起点x坐标.
 //
-//	y1: 起点y坐标.
+// y1: 起点y坐标.
 //
-//	x2: 结束点x坐标.
+// x2: 结束点x坐标.
 //
-//	y2: 结束点y坐标.
+// y2: 结束点y坐标.
 func (d *Draw) DottedlineF(x1, y1, x2, y2 float32) *Draw {
 	xc.XDraw_DottedlineF(d.Handle, x1, y1, x2, y2)
 	return d
@@ -74,17 +74,17 @@ func (d *Draw) DottedlineF(x1, y1, x2, y2 float32) *Draw {
 
 // 绘制_圆弧.
 //
-//	x: 坐标.
+// x: 坐标.
 //
-//	y: 坐标.
+// y: 坐标.
 //
-//	nWidth: 宽度.
+// nWidth: 宽度.
 //
-//	nHeight: 高度.
+// nHeight: 高度.
 //
-//	startAngle: 起始角度.
+// startAngle: 起始角度.
 //
-//	sweepAngle: 绘制角度, 从起始角度开始计算.
+// sweepAngle: 绘制角度, 从起始角度开始计算.
 func (d *Draw) DrawArc(x, y, nWidth, nHeight int32, startAngle float32, sweepAngle float32) *Draw {
 	xc.XDraw_DrawArc(d.Handle, x, y, nWidth, nHeight, startAngle, sweepAngle)
 	return d
@@ -92,17 +92,17 @@ func (d *Draw) DrawArc(x, y, nWidth, nHeight int32, startAngle float32, sweepAng
 
 // 绘制_圆弧F.
 //
-//	x: 坐标.
+// x: 坐标.
 //
-//	y: 坐标.
+// y: 坐标.
 //
-//	nWidth: 宽度.
+// nWidth: 宽度.
 //
-//	nHeight: 高度.
+// nHeight: 高度.
 //
-//	startAngle: 起始角度.
+// startAngle: 起始角度.
 //
-//	sweepAngle: 绘制角度, 从起始角度开始计算.
+// sweepAngle: 绘制角度, 从起始角度开始计算.
 func (d *Draw) DrawArcF(x, y, nWidth, nHeight, startAngle, sweepAngle float32) *Draw {
 	xc.XDraw_DrawArcF(d.Handle, x, y, nWidth, nHeight, startAngle, sweepAngle)
 	return d
@@ -110,11 +110,11 @@ func (d *Draw) DrawArcF(x, y, nWidth, nHeight, startAngle, sweepAngle float32) *
 
 // 绘制_曲线, D2D暂时留空.
 //
-//	points: 坐标点数组.
+// points: 坐标点数组.
 //
-//	count: 数组大小.
+// count: 数组大小.
 //
-//	tension: 大于或等于0.0F的值，指定曲线的张力, D2D 忽略此参数。.
+// tension: 大于或等于0.0F的值，指定曲线的张力, D2D 忽略此参数。.
 func (d *Draw) DrawCurve(points []xc.POINT, count int32, tension float32) *Draw {
 	xc.XDraw_DrawCurve(d.Handle, points, count, tension)
 	return d
@@ -122,11 +122,11 @@ func (d *Draw) DrawCurve(points []xc.POINT, count int32, tension float32) *Draw 
 
 // 绘制_曲线F, D2D暂时留空.
 //
-//	points: 坐标点数组.
+// points: 坐标点数组.
 //
-//	count: 数组大小.
+// count: 数组大小.
 //
-//	tension: 大于或等于0.0F的值，指定曲线的张力, D2D 忽略此参数。.
+// tension: 大于或等于0.0F的值，指定曲线的张力, D2D 忽略此参数。.
 func (d *Draw) DrawCurveF(points []xc.POINTF, count int32, tension float32) *Draw {
 	xc.XDraw_DrawCurveF(d.Handle, points, count, tension)
 	return d
@@ -134,13 +134,13 @@ func (d *Draw) DrawCurveF(points []xc.POINTF, count int32, tension float32) *Dra
 
 // 绘制_线条.
 //
-//	x1: 坐标.
+// x1: 坐标.
 //
-//	y1: 坐标.
+// y1: 坐标.
 //
-//	x2: 坐标.
+// x2: 坐标.
 //
-//	y2: 坐标.
+// y2: 坐标.
 func (d *Draw) DrawLine(x1, y1, x2, y2 int32) *Draw {
 	xc.XDraw_DrawLine(d.Handle, x1, y1, x2, y2)
 	return d
@@ -148,13 +148,13 @@ func (d *Draw) DrawLine(x1, y1, x2, y2 int32) *Draw {
 
 // 绘制_线条F.
 //
-//	x1: 坐标.
+// x1: 坐标.
 //
-//	y1: 坐标.
+// y1: 坐标.
 //
-//	x2: 坐标.
+// x2: 坐标.
 //
-//	y2: 坐标.
+// y2: 坐标.
 func (d *Draw) DrawLineF(x1, y1, x2, y2 float32) *Draw {
 	xc.XDraw_DrawLineF(d.Handle, x1, y1, x2, y2)
 	return d
@@ -162,9 +162,9 @@ func (d *Draw) DrawLineF(x1, y1, x2, y2 float32) *Draw {
 
 // 绘制_多边形, 绘制多边形.
 //
-//	points: 顶点坐标数组.
+// points: 顶点坐标数组.
 //
-//	nCount: 顶点数量.
+// nCount: 顶点数量.
 func (d *Draw) DrawPolygon(points []xc.POINT, nCount int32) *Draw {
 	xc.XDraw_DrawPolygon(d.Handle, points, nCount)
 	return d
@@ -172,9 +172,9 @@ func (d *Draw) DrawPolygon(points []xc.POINT, nCount int32) *Draw {
 
 // 绘制_多边形F, 绘制多边形.
 //
-//	points: 顶点坐标数组.
+// points: 顶点坐标数组.
 //
-//	nCount: 顶点数量.
+// nCount: 顶点数量.
 func (d *Draw) DrawPolygonF(points []xc.POINTF, nCount int32) *Draw {
 	xc.XDraw_DrawPolygonF(d.Handle, points, nCount)
 	return d
@@ -182,7 +182,7 @@ func (d *Draw) DrawPolygonF(points []xc.POINTF, nCount int32) *Draw {
 
 // 绘制_矩形, 绘制矩形边框.
 //
-//	pRect: 矩形坐标 .
+// pRect: 矩形坐标 .
 func (d *Draw) DrawRect(pRect *xc.RECT) *Draw {
 	xc.XDraw_DrawRect(d.Handle, pRect)
 	return d
@@ -190,7 +190,7 @@ func (d *Draw) DrawRect(pRect *xc.RECT) *Draw {
 
 // 绘制_矩形F, 绘制矩形边框.
 //
-//	pRect: 矩形坐标 .
+// pRect: 矩形坐标 .
 func (d *Draw) DrawRectF(pRect *xc.RECTF) *Draw {
 	xc.XDraw_DrawRectF(d.Handle, pRect)
 	return d
@@ -198,9 +198,9 @@ func (d *Draw) DrawRectF(pRect *xc.RECTF) *Draw {
 
 // 绘制_置偏移, 设置坐标偏移量, X向左偏移为负数, 向右偏移为正数.
 //
-//	x: X轴偏移量.
+// x: X轴偏移量.
 //
-//	y: Y轴偏移量.
+// y: Y轴偏移量.
 func (d *Draw) SetOffset(x, y int32) *Draw {
 	xc.XDraw_SetOffset(d.Handle, x, y)
 	return d
@@ -208,9 +208,9 @@ func (d *Draw) SetOffset(x, y int32) *Draw {
 
 // 绘制_取偏移, 获取坐标偏移量, X向左偏移为负数, 向右偏移为正数.
 //
-//	pX: 接收X轴偏移量.
+// pX: 接收X轴偏移量.
 //
-//	pY: 接收Y轴偏移量.
+// pY: 接收Y轴偏移量.
 func (d *Draw) GetOffset(pX, pY *int32) *Draw {
 	xc.XDraw_GetOffset(d.Handle, pX, pY)
 	return d
@@ -229,7 +229,7 @@ func (d *Draw) GetHDC() uintptr {
 
 // 绘制_置画刷颜色, 设置画刷颜色.
 //
-//	color: ARGB 颜色值.
+// color: ARGB 颜色值.
 func (d *Draw) SetBrushColor(color int) *Draw {
 	xc.XDraw_SetBrushColor(d.Handle, color)
 	return d
@@ -237,7 +237,7 @@ func (d *Draw) SetBrushColor(color int) *Draw {
 
 // 绘制_置文本垂直, 设置文本垂直显示.
 //
-//	bVertical: 是否垂直显示文本.
+// bVertical: 是否垂直显示文本.
 func (d *Draw) SetTextVertical(bVertical bool) *Draw {
 	xc.XDraw_SetTextVertical(d.Handle, bVertical)
 	return d
@@ -245,7 +245,7 @@ func (d *Draw) SetTextVertical(bVertical bool) *Draw {
 
 // 绘制_置文本对齐, 设置文本对齐.
 //
-//	nFlags: 对齐标识, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
+// nFlags: 对齐标识, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
 func (d *Draw) SetTextAlign(nFlags xcc.TextFormatFlag_) *Draw {
 	xc.XDraw_SetTextAlign(d.Handle, nFlags)
 	return d
@@ -253,7 +253,7 @@ func (d *Draw) SetTextAlign(nFlags xcc.TextFormatFlag_) *Draw {
 
 // 绘制_置字体.
 //
-//	hFontx: 炫彩字体.
+// hFontx: 炫彩字体.
 func (d *Draw) SetFont(hFontx int) *Draw {
 	xc.XDraw_SetFont(d.Handle, hFontx)
 	return d
@@ -261,7 +261,7 @@ func (d *Draw) SetFont(hFontx int) *Draw {
 
 // 绘制_置线宽.
 //
-//	nWidth: 宽度.
+// nWidth: 宽度.
 func (d *Draw) SetLineWidth(nWidth int32) *Draw {
 	xc.XDraw_SetLineWidth(d.Handle, nWidth)
 	return d
@@ -269,7 +269,7 @@ func (d *Draw) SetLineWidth(nWidth int32) *Draw {
 
 // 绘制_置线宽F.
 //
-//	nWidth: 宽度.
+// nWidth: 宽度.
 func (d *Draw) SetLineWidthF(nWidth float32) *Draw {
 	xc.XDraw_SetLineWidthF(d.Handle, nWidth)
 	return d
@@ -277,7 +277,7 @@ func (d *Draw) SetLineWidthF(nWidth float32) *Draw {
 
 // 绘制_置背景模式, SetBkMode() 参见MSDN.
 //
-//	bTransparent: 参见MSDN.
+// bTransparent: 参见MSDN.
 func (d *Draw) GDI_SetBkMode(bTransparent bool) *Draw {
 	xc.XDraw_GDI_SetBkMode(d.Handle, bTransparent)
 	return d
@@ -285,7 +285,7 @@ func (d *Draw) GDI_SetBkMode(bTransparent bool) *Draw {
 
 // 绘制_置裁剪区域, 设置裁剪区域.
 //
-//	pRect: 区域坐标.
+// pRect: 区域坐标.
 func (d *Draw) SetClipRect(pRect *xc.RECT) *Draw {
 	xc.XDraw_SetClipRect(d.Handle, pRect)
 	return d
@@ -307,7 +307,7 @@ func (d *Draw) ClearClip() *Draw {
 
 // 绘制_启用平滑模式.
 //
-//	bEnable: 是否启用.
+// bEnable: 是否启用.
 func (d *Draw) EnableSmoothingMode(bEnable bool) *Draw {
 	xc.XDraw_EnableSmoothingMode(d.Handle, bEnable)
 	return d
@@ -315,7 +315,7 @@ func (d *Draw) EnableSmoothingMode(bEnable bool) *Draw {
 
 // 绘制_启用窗口透明判断, 当启用之后, 调用GDI+函数时, 如果参数alpha=255, 将自动修改为254, 应对GDI+的bug, 否则透明通道异常.
 //
-//	bTransparent: 是否启用.
+// bTransparent: 是否启用.
 func (d *Draw) EnableWndTransparent(bTransparent bool) *Draw {
 	xc.XDraw_EnableWndTransparent(d.Handle, bTransparent)
 	return d
@@ -323,59 +323,59 @@ func (d *Draw) EnableWndTransparent(bTransparent bool) *Draw {
 
 // 绘制_创建实心画刷, GDI创建具有指定的纯色逻辑刷.
 //
-//	crColor: 画刷颜色.
+// crColor: 画刷颜色.
 func (d *Draw) GDI_CreateSolidBrush(crColor int) uintptr {
 	return xc.XDraw_GDI_CreateSolidBrush(d.Handle, crColor)
 }
 
 // 绘制_创建画笔, GDI创建一个逻辑笔, 指定的样式, 宽度和颜色, 随后的笔可以选择到设备上下文, 用于绘制线条和曲线.
 //
-//	fnPenStyle: 画笔样式, PS_SOLID:实线, PS_DASH:段线, PS_DOT:点线, PS_DASHDOT:段线_点线, PS_DASHDOTDOT:段线_点_点, PS_NULL:空, PS_INSIDEFRAME:实线_笔宽是向里扩展.
+// fnPenStyle: 画笔样式, PS_SOLID:实线, PS_DASH:段线, PS_DOT:点线, PS_DASHDOT:段线_点线, PS_DASHDOTDOT:段线_点_点, PS_NULL:空, PS_INSIDEFRAME:实线_笔宽是向里扩展.
 //
-//	nWidth: 画笔宽度.
+// nWidth: 画笔宽度.
 //
-//	crColor: ARGB 颜色.
+// crColor: ARGB 颜色.
 func (d *Draw) GDI_CreatePen(fnPenStyle, nWidth int32, crColor int) uintptr {
 	return xc.XDraw_GDI_CreatePen(d.Handle, fnPenStyle, nWidth, crColor)
 }
 
 // 绘制_创建矩形区域, GDI创建矩形区域, 成功返回区域句柄, 失败返回NULL.
 //
-//	nLeftRect: 左上角X坐标.
+// nLeftRect: 左上角X坐标.
 //
-//	nTopRect: 左上角Y坐标.
+// nTopRect: 左上角Y坐标.
 //
-//	nRightRect: 右下角X坐标.
+// nRightRect: 右下角X坐标.
 //
-//	nBottomRect: 右下角Y坐标.
+// nBottomRect: 右下角Y坐标.
 func (d *Draw) GDI_CreateRectRgn(nLeftRect, nTopRect, nRightRect, nBottomRect int32) uintptr {
 	return xc.XDraw_GDI_CreateRectRgn(d.Handle, nLeftRect, nTopRect, nRightRect, nBottomRect)
 }
 
 // 绘制_创建圆角矩形区域, GDI创建一个圆角的矩形区域, 成功返回区域句柄, 失败返回NULL.
 //
-//	nLeftRect: X-坐标的左上角.
+// nLeftRect: X-坐标的左上角.
 //
-//	nTopRect: Y-坐标左上角坐标.
+// nTopRect: Y-坐标左上角坐标.
 //
-//	nRightRect: X-坐标右下角.
+// nRightRect: X-坐标右下角.
 //
-//	nBottomRect: Y-坐标右下角.
+// nBottomRect: Y-坐标右下角.
 //
-//	nWidthEllipse: 椭圆的宽度.
+// nWidthEllipse: 椭圆的宽度.
 //
-//	nHeightEllipse: 椭圆的高度.
+// nHeightEllipse: 椭圆的高度.
 func (d *Draw) GDI_CreateRoundRectRgn(nLeftRect, nTopRect, nRightRect, nBottomRect, nWidthEllipse, nHeightEllipse int32) uintptr {
 	return xc.XDraw_GDI_CreateRoundRectRgn(d.Handle, nLeftRect, nTopRect, nRightRect, nBottomRect, nWidthEllipse, nHeightEllipse)
 }
 
 // 绘制_创建多边形区域, GDI创建一个多边形区域, 成功返回区域句柄, 失败返回NULL.
 //
-//	pPt: POINT数组.
+// pPt: POINT数组.
 //
-//	cPoints: 数组大小.
+// cPoints: 数组大小.
 //
-//	fnPolyFillMode: 多边形填充模式, 指定用于确定在该地区的像素填充模式,这个参数可以是下列值之一.
+// fnPolyFillMode: 多边形填充模式, 指定用于确定在该地区的像素填充模式,这个参数可以是下列值之一.
 //
 // ALTERNATE Selects alternate mode (fills area between odd-numbered and even-numbered polygon sides on each scan line).
 //
@@ -386,14 +386,14 @@ func (d *Draw) GDI_CreatePolygonRgn(pPt []xc.POINT, cPoints, fnPolyFillMode int3
 
 // 绘制_GDI_椭圆.
 //
-//	pRect: 矩形区域.
+// pRect: 矩形区域.
 func (d *Draw) GDI_Ellipse(pRect *xc.RECT) bool {
 	return xc.XDraw_GDI_Ellipse(d.Handle, pRect)
 }
 
 // 绘制_选择裁剪区域, 选择一个区域作为当前裁剪区域, 注意: 该函数只对GDI有效.
 //
-//	hRgn: 区域句柄.
+// hRgn: 区域句柄.
 //
 // 返回: 返回值指定地区的复杂性，可以是下列值之一.
 //
@@ -411,7 +411,7 @@ func (d *Draw) GDI_SelectClipRgn(hRgn uintptr) *Draw {
 
 // 绘制_填充矩形, 通过使用指定的刷子填充一个矩形, 此功能包括左侧和顶部的边界, 但不包括矩形的右边和底部边界.
 //
-//	pRect: 矩形区域.
+// pRect: 矩形区域.
 func (d *Draw) FillRect(pRect *xc.RECT) *Draw {
 	xc.XDraw_FillRect(d.Handle, pRect)
 	return d
@@ -419,7 +419,7 @@ func (d *Draw) FillRect(pRect *xc.RECT) *Draw {
 
 // 绘制_填充矩形F, 通过使用指定的刷子填充一个矩形, 此功能包括左侧和顶部的边界, 但不包括矩形的右边和底部边界.
 //
-//	pRect: 矩形区域.
+// pRect: 矩形区域.
 func (d *Draw) FillRectF(pRect *xc.RECTF) *Draw {
 	xc.XDraw_FillRectF(d.Handle, pRect)
 	return d
@@ -427,9 +427,9 @@ func (d *Draw) FillRectF(pRect *xc.RECTF) *Draw {
 
 // 绘制_填充矩形指定颜色.
 //
-//	pRect: 矩形区域.
+// pRect: 矩形区域.
 //
-//	color: ARGB 颜色.
+// color: ARGB 颜色.
 func (d *Draw) FillRectColor(pRect *xc.RECT, color int) *Draw {
 	xc.XDraw_FillRectColor(d.Handle, pRect, color)
 	return d
@@ -437,9 +437,9 @@ func (d *Draw) FillRectColor(pRect *xc.RECT, color int) *Draw {
 
 // 绘制_填充矩形指定颜色F.
 //
-//	pRect: 矩形区域.
+// pRect: 矩形区域.
 //
-//	color: ARGB 颜色.
+// color: ARGB 颜色.
 func (d *Draw) FillRectColorF(pRect *xc.RECTF, color int) *Draw {
 	xc.XDraw_FillRectColorF(d.Handle, pRect, color)
 	return d
@@ -447,16 +447,16 @@ func (d *Draw) FillRectColorF(pRect *xc.RECTF, color int) *Draw {
 
 // 绘制_填充区域, 通过使用指定的画刷填充一个区域.
 //
-//	hrgn: 区域句柄.
+// hrgn: 区域句柄.
 //
-//	hbr: 画刷句柄.
+// hbr: 画刷句柄.
 func (d *Draw) GDI_FillRgn(hrgn, hbr uintptr) bool {
 	return xc.XDraw_GDI_FillRgn(d.Handle, hrgn, hbr)
 }
 
 // 绘制_填充圆形.
 //
-//	pRect: 矩形区域.
+// pRect: 矩形区域.
 func (d *Draw) FillEllipse(pRect *xc.RECT) *Draw {
 	xc.XDraw_FillEllipse(d.Handle, pRect)
 	return d
@@ -464,7 +464,7 @@ func (d *Draw) FillEllipse(pRect *xc.RECT) *Draw {
 
 // 绘制_填充圆形F.
 //
-//	pRect: 矩形区域.
+// pRect: 矩形区域.
 func (d *Draw) FillEllipseF(pRect *xc.RECTF) *Draw {
 	xc.XDraw_FillEllipseF(d.Handle, pRect)
 	return d
@@ -472,7 +472,7 @@ func (d *Draw) FillEllipseF(pRect *xc.RECTF) *Draw {
 
 // 绘制_圆形, 绘制圆边框.
 //
-//	pRect: 矩形区域.
+// pRect: 矩形区域.
 func (d *Draw) DrawEllipse(pRect *xc.RECT) *Draw {
 	xc.XDraw_DrawEllipse(d.Handle, pRect)
 	return d
@@ -480,11 +480,11 @@ func (d *Draw) DrawEllipse(pRect *xc.RECT) *Draw {
 
 // 绘制_填充圆角矩形.
 //
-//	pRect: 矩形坐标.
+// pRect: 矩形坐标.
 //
-//	nWidth: 圆角宽度.
+// nWidth: 圆角宽度.
 //
-//	nHeight: 圆角高度.
+// nHeight: 圆角高度.
 func (d *Draw) FillRoundRect(pRect *xc.RECT, nWidth, nHeight int32) *Draw {
 	xc.XDraw_FillRoundRect(d.Handle, pRect, nWidth, nHeight)
 	return d
@@ -492,11 +492,11 @@ func (d *Draw) FillRoundRect(pRect *xc.RECT, nWidth, nHeight int32) *Draw {
 
 // 绘制_填充圆角矩形F.
 //
-//	pRect: 矩形坐标.
+// pRect: 矩形坐标.
 //
-//	nWidth: 圆角宽度.
+// nWidth: 圆角宽度.
 //
-//	nHeight: 圆角高度.
+// nHeight: 圆角高度.
 func (d *Draw) FillRoundRectF(pRect *xc.RECTF, nWidth, nHeight float32) *Draw {
 	xc.XDraw_FillRoundRectF(d.Handle, pRect, nWidth, nHeight)
 	return d
@@ -504,11 +504,11 @@ func (d *Draw) FillRoundRectF(pRect *xc.RECTF, nWidth, nHeight float32) *Draw {
 
 // 绘制_圆角矩形, 绘制圆角矩形边框.
 //
-//	pRect: 矩形坐标.
+// pRect: 矩形坐标.
 //
-//	nWidth: 圆角宽度.
+// nWidth: 圆角宽度.
 //
-//	nHeight: 圆角高度.
+// nHeight: 圆角高度.
 func (d *Draw) DrawRoundRect(pRect *xc.RECT, nWidth, nHeight int32) *Draw {
 	xc.XDraw_DrawRoundRect(d.Handle, pRect, nWidth, nHeight)
 	return d
@@ -516,11 +516,11 @@ func (d *Draw) DrawRoundRect(pRect *xc.RECT, nWidth, nHeight int32) *Draw {
 
 // 绘制_圆角矩形F, 绘制圆角矩形边框.
 //
-//	pRect: 矩形坐标.
+// pRect: 矩形坐标.
 //
-//	nWidth: 圆角宽度.
+// nWidth: 圆角宽度.
 //
-//	nHeight: 圆角高度.
+// nHeight: 圆角高度.
 func (d *Draw) DrawRoundRectF(pRect *xc.RECT, nWidth, nHeight float32) *Draw {
 	xc.XDraw_DrawRoundRectF(d.Handle, pRect, nWidth, nHeight)
 	return d
@@ -528,15 +528,15 @@ func (d *Draw) DrawRoundRectF(pRect *xc.RECT, nWidth, nHeight float32) *Draw {
 
 // 绘制_填充圆角矩形扩展.
 //
-//	pRect: 坐标.
+// pRect: 坐标.
 //
-//	nLeftTop: 圆角大小.
+// nLeftTop: 圆角大小.
 //
-//	nRightTop: 圆角大小.
+// nRightTop: 圆角大小.
 //
-//	nRightBottom: 圆角大小.
+// nRightBottom: 圆角大小.
 //
-//	nLeftBottom: 圆角大小.
+// nLeftBottom: 圆角大小.
 func (d *Draw) FillRoundRectEx(pRect *xc.RECT, nLeftTop, nRightTop, nRightBottom, nLeftBottom int32) *Draw {
 	xc.XDraw_FillRoundRectEx(d.Handle, pRect, nLeftTop, nRightTop, nRightBottom, nLeftBottom)
 	return d
@@ -544,15 +544,15 @@ func (d *Draw) FillRoundRectEx(pRect *xc.RECT, nLeftTop, nRightTop, nRightBottom
 
 // 绘制_填充圆角矩形扩展F.
 //
-//	pRect: 坐标.
+// pRect: 坐标.
 //
-//	nLeftTop: 圆角大小.
+// nLeftTop: 圆角大小.
 //
-//	nRightTop: 圆角大小.
+// nRightTop: 圆角大小.
 //
-//	nRightBottom: 圆角大小.
+// nRightBottom: 圆角大小.
 //
-//	nLeftBottom: 圆角大小.
+// nLeftBottom: 圆角大小.
 func (d *Draw) FillRoundRectExF(pRect *xc.RECTF, nLeftTop, nRightTop, nRightBottom, nLeftBottom float32) *Draw {
 	xc.XDraw_FillRoundRectExF(d.Handle, pRect, nLeftTop, nRightTop, nRightBottom, nLeftBottom)
 	return d
@@ -560,15 +560,15 @@ func (d *Draw) FillRoundRectExF(pRect *xc.RECTF, nLeftTop, nRightTop, nRightBott
 
 // 绘制_圆角矩形扩展, 绘制圆角矩形边框.
 //
-//	pRect: 坐标.
+// pRect: 坐标.
 //
-//	nLeftTop: 圆角大小.
+// nLeftTop: 圆角大小.
 //
-//	nRightTop: 圆角大小.
+// nRightTop: 圆角大小.
 //
-//	nRightBottom: 圆角大小.
+// nRightBottom: 圆角大小.
 //
-//	nLeftBottom: 圆角大小.
+// nLeftBottom: 圆角大小.
 func (d *Draw) DrawRoundRectEx(pRect *xc.RECT, nLeftTop, nRightTop, nRightBottom, nLeftBottom int32) *Draw {
 	xc.XDraw_DrawRoundRectEx(d.Handle, pRect, nLeftTop, nRightTop, nRightBottom, nLeftBottom)
 	return d
@@ -576,15 +576,15 @@ func (d *Draw) DrawRoundRectEx(pRect *xc.RECT, nLeftTop, nRightTop, nRightBottom
 
 // 绘制_圆角矩形扩展F, 绘制圆角矩形边框.
 //
-//	pRect: 坐标.
+// pRect: 坐标.
 //
-//	nLeftTop: 圆角大小.
+// nLeftTop: 圆角大小.
 //
-//	nRightTop: 圆角大小.
+// nRightTop: 圆角大小.
 //
-//	nRightBottom: 圆角大小.
+// nRightBottom: 圆角大小.
 //
-//	nLeftBottom: 圆角大小.
+// nLeftBottom: 圆角大小.
 func (d *Draw) DrawRoundRectExF(pRect *xc.RECT, nLeftTop, nRightTop, nRightBottom, nLeftBottom float32) *Draw {
 	xc.XDraw_DrawRoundRectExF(d.Handle, pRect, nLeftTop, nRightTop, nRightBottom, nLeftBottom)
 	return d
@@ -592,26 +592,26 @@ func (d *Draw) DrawRoundRectExF(pRect *xc.RECT, nLeftTop, nRightTop, nRightBotto
 
 // 绘制_矩形, 绘制矩形, 使用当前的画刷和画笔. 如果函数成功, 返回非零值, 如果函数失败, 返回值是零.
 //
-//	nLeftRect: 左上角X坐标.
+// nLeftRect: 左上角X坐标.
 //
-//	nTopRect: 左上角Y坐标.
+// nTopRect: 左上角Y坐标.
 //
-//	nRightRect: 右下角X坐标.
+// nRightRect: 右下角X坐标.
 //
-//	nBottomRect: 右下角Y坐标.
+// nBottomRect: 右下角Y坐标.
 func (d *Draw) GDI_Rectangle(nLeftRect, nTopRect, nRightRect, nBottomRect int32) bool {
 	return xc.XDraw_GDI_Rectangle(d.Handle, nLeftRect, nTopRect, nRightRect, nBottomRect)
 }
 
 // 绘制_渐变填充2, 渐变填充, 从一种颜色过渡到另一种颜色.
 //
-//	pRect: 矩形坐标.
+// pRect: 矩形坐标.
 //
-//	color1: 开始颜色, ARGB 颜色.
+// color1: 开始颜色, ARGB 颜色.
 //
-//	color2: 结束颜色, ARGB 颜色.
+// color2: 结束颜色, ARGB 颜色.
 //
-//	mode: 模式, GRADIENT_FILL_.
+// mode: 模式, GRADIENT_FILL_.
 func (d *Draw) GradientFill2(pRect *xc.RECT, color1 int, color2 int, mode xcc.GRADIENT_FILL_) *Draw {
 	xc.XDraw_GradientFill2(d.Handle, pRect, color1, color2, mode)
 	return d
@@ -619,13 +619,13 @@ func (d *Draw) GradientFill2(pRect *xc.RECT, color1 int, color2 int, mode xcc.GR
 
 // 绘制_渐变填充2F, 渐变填充, 从一种颜色过渡到另一种颜色.
 //
-//	pRect: 矩形坐标.
+// pRect: 矩形坐标.
 //
-//	color1: 开始颜色, ARGB 颜色.
+// color1: 开始颜色, ARGB 颜色.
 //
-//	color2: 结束颜色, ARGB 颜色.
+// color2: 结束颜色, ARGB 颜色.
 //
-//	mode: 模式, GRADIENT_FILL_.
+// mode: 模式, GRADIENT_FILL_.
 func (d *Draw) GradientFill2F(pRect *xc.RECTF, color1 int, color2 int, mode xcc.GRADIENT_FILL_) *Draw {
 	xc.XDraw_GradientFill2F(d.Handle, pRect, color1, color2, mode)
 	return d
@@ -633,17 +633,17 @@ func (d *Draw) GradientFill2F(pRect *xc.RECTF, color1 int, color2 int, mode xcc.
 
 // 绘制_渐变填充4, 渐变填充,从一种颜色过渡到另一种颜色.
 //
-//	pRect: 矩形坐标.
+// pRect: 矩形坐标.
 //
-//	color1: 开始颜色, ARGB 颜色.
+// color1: 开始颜色, ARGB 颜色.
 //
-//	color2: 结束颜色, ARGB 颜色.
+// color2: 结束颜色, ARGB 颜色.
 //
-//	color3: 开始颜色, ARGB 颜色.
+// color3: 开始颜色, ARGB 颜色.
 //
-//	color4: 结束颜色, ARGB 颜色.
+// color4: 结束颜色, ARGB 颜色.
 //
-//	mode: 模式, GRADIENT_FILL_.
+// mode: 模式, GRADIENT_FILL_.
 func (d *Draw) GradientFill4(pRect *xc.RECT, color1 int, color2 int, color3 int, color4 int, mode xcc.GRADIENT_FILL_) *Draw {
 	xc.XDraw_GradientFill4(d.Handle, pRect, color1, color2, color3, color4, mode)
 	return d
@@ -651,17 +651,17 @@ func (d *Draw) GradientFill4(pRect *xc.RECT, color1 int, color2 int, color3 int,
 
 // 绘制_渐变填充4F, 渐变填充,从一种颜色过渡到另一种颜色.
 //
-//	pRect: 矩形坐标.
+// pRect: 矩形坐标.
 //
-//	color1: 开始颜色, ARGB 颜色.
+// color1: 开始颜色, ARGB 颜色.
 //
-//	color2: 结束颜色, ARGB 颜色.
+// color2: 结束颜色, ARGB 颜色.
 //
-//	color3: 开始颜色, ARGB 颜色.
+// color3: 开始颜色, ARGB 颜色.
 //
-//	color4: 结束颜色, ARGB 颜色.
+// color4: 结束颜色, ARGB 颜色.
 //
-//	mode: 模式, GRADIENT_FILL_.
+// mode: 模式, GRADIENT_FILL_.
 func (d *Draw) GradientFill4F(pRect *xc.RECTF, color1 int, color2 int, color3 int, color4 int, mode xcc.GRADIENT_FILL_) *Draw {
 	xc.XDraw_GradientFill4F(d.Handle, pRect, color1, color2, color3, color4, mode)
 	return d
@@ -669,20 +669,20 @@ func (d *Draw) GradientFill4F(pRect *xc.RECTF, color1 int, color2 int, color3 in
 
 // 绘制_边框区域, 绘制边框, 使用指定的画刷绘制指定的区域的边框. 如果函数成功, 返回非零值, 如果函数失败, 返回值是零.
 //
-//	hrgn: 区域句柄.
+// hrgn: 区域句柄.
 //
-//	hbr: 画刷句柄.
+// hbr: 画刷句柄.
 //
-//	nWidth: 边框宽度, 垂直边.
+// nWidth: 边框宽度, 垂直边.
 //
-//	nHeight: 边框高度, 水平边.
+// nHeight: 边框高度, 水平边.
 func (d *Draw) GDI_FrameRgn(hrgn, hbr uintptr, nWidth, nHeight int32) bool {
 	return xc.XDraw_GDI_FrameRgn(d.Handle, hrgn, hbr, nWidth, nHeight)
 }
 
 // 绘制_焦点矩形.
 //
-//	pRect: 矩形坐标.
+// pRect: 矩形坐标.
 func (d *Draw) FocusRect(pRect *xc.RECT) *Draw {
 	xc.XDraw_FocusRect(d.Handle, pRect)
 	return d
@@ -690,7 +690,7 @@ func (d *Draw) FocusRect(pRect *xc.RECT) *Draw {
 
 // 绘制_焦点矩形F.
 //
-//	pRect: 矩形坐标.
+// pRect: 矩形坐标.
 func (d *Draw) FocusRectF(pRect *xc.RECTF) *Draw {
 	xc.XDraw_FocusRectF(d.Handle, pRect)
 	return d
@@ -698,40 +698,40 @@ func (d *Draw) FocusRectF(pRect *xc.RECTF) *Draw {
 
 // 绘制_移动到起点, 更新当前位置到指定点，并返回以前的位置. 如果函数成功, 返回非零值.
 //
-//	X: 坐标.
+// X: 坐标.
 //
-//	Y: 坐标.
+// Y: 坐标.
 //
-//	pPoint: 接收以前的当前位置到一个POINT结构的指针, 如果这个参数是NULL指针, 没有返回原来的位置.
+// pPoint: 接收以前的当前位置到一个POINT结构的指针, 如果这个参数是NULL指针, 没有返回原来的位置.
 func (d *Draw) GDI_MoveToEx(X, Y int32, pPoint *xc.POINT) bool {
 	return xc.XDraw_GDI_MoveToEx(d.Handle, X, Y, pPoint)
 }
 
 // 绘制_线终点, 函数绘制一条线从当前位置到, 但不包括指定点. 如果函数成功, 返回非零值.
 //
-//	nXEnd: X坐标, 线结束点.
+// nXEnd: X坐标, 线结束点.
 //
-//	nYEnd: Y坐标, 线结束点.
+// nYEnd: Y坐标, 线结束点.
 func (d *Draw) GDI_LineTo(nXEnd, nYEnd int32) bool {
 	return xc.XDraw_GDI_LineTo(d.Handle, nXEnd, nYEnd)
 }
 
 // 绘制_折线, Polyline() 参见MSDN.
 //
-//	pArrayPt: 参见MSDN.
+// pArrayPt: 参见MSDN.
 //
-//	arrayPtSize: 参见MSDN.
+// arrayPtSize: 参见MSDN.
 func (d *Draw) GDI_Polyline(pArrayPt []xc.POINT, arrayPtSize int32) bool {
 	return xc.XDraw_GDI_Polyline(d.Handle, pArrayPt, arrayPtSize)
 }
 
 // 绘制_置像素颜色, 函数设置在指定的坐标到指定的颜色的像素. 如果函数成功返回RGB值, 如果失败返回-1.
 //
-//	X: 坐标.
+// X: 坐标.
 //
-//	Y: 坐标.
+// Y: 坐标.
 //
-//	crColor: RGB颜色值.
+// crColor: RGB颜色值.
 func (d *Draw) GDI_SetPixel(X, Y int32, crColor int) int {
 	return xc.XDraw_GDI_SetPixel(d.Handle, X, Y, crColor)
 }
@@ -743,97 +743,97 @@ func (d *Draw) XDraw_GetD2dRenderTarget() int {
 
 // 绘制_图标, 绘制图标, DrawIconEx()参见MSDN.
 //
-//	xLeft: .
+// xLeft: .
 //
-//	yTop: .
+// yTop: .
 //
-//	hIcon: .
+// hIcon: .
 //
-//	cxWidth: .
+// cxWidth: .
 //
-//	cyWidth: .
+// cyWidth: .
 //
-//	istepIfAniCur: .
+// istepIfAniCur: .
 //
-//	hbrFlickerFreeDraw: .
+// hbrFlickerFreeDraw: .
 //
-//	diFlags: .
+// diFlags: .
 func (d *Draw) GDI_DrawIconEx(xLeft, yTop int32, hIcon uintptr, cxWidth, cyWidth int32, istepIfAniCur uint32, hbrFlickerFreeDraw uintptr, diFlags uint32) bool {
 	return xc.XDraw_GDI_DrawIconEx(d.Handle, xLeft, yTop, hIcon, cxWidth, cyWidth, istepIfAniCur, hbrFlickerFreeDraw, diFlags)
 }
 
 // 绘制_复制, BitBlt() 参见MSDN.
 //
-//	nXDest: XX.
+// nXDest: XX.
 //
-//	nYDest: XX.
+// nYDest: XX.
 //
-//	nWidth: XX.
+// nWidth: XX.
 //
-//	nHeight: XX.
+// nHeight: XX.
 //
-//	hdcSrc: XX.
+// hdcSrc: XX.
 //
-//	nXSrc: XX.
+// nXSrc: XX.
 //
-//	nYSrc: XX.
+// nYSrc: XX.
 //
-//	dwRop: XX.
+// dwRop: XX.
 func (d *Draw) GDI_BitBlt(nXDest, nYDest, nWidth, nHeight int32, hdcSrc uintptr, nXSrc, nYSrc int32, dwRop uint32) bool {
 	return xc.XDraw_GDI_BitBlt(d.Handle, nXDest, nYDest, nWidth, nHeight, hdcSrc, nXSrc, nYSrc, dwRop)
 }
 
 // 绘制_复制2, BitBlt() 参见MSDN.
 //
-//	nXDest: XX.
+// nXDest: XX.
 //
-//	nYDest: XX.
+// nYDest: XX.
 //
-//	nWidth: XX.
+// nWidth: XX.
 //
-//	nHeight: XX.
+// nHeight: XX.
 //
-//	hDrawSrc: XX.
+// hDrawSrc: XX.
 //
-//	nXSrc: XX.
+// nXSrc: XX.
 //
-//	nYSrc: XX.
+// nYSrc: XX.
 //
-//	dwRop: XX.
+// dwRop: XX.
 func (d *Draw) GDI_BitBlt2(nXDest, nYDest, nWidth, nHeight int32, hDrawSrc uintptr, nXSrc, nYSrc int32, dwRop uint32) bool {
 	return xc.XDraw_GDI_BitBlt2(d.Handle, nXDest, nYDest, nWidth, nHeight, hDrawSrc, nXSrc, nYSrc, dwRop)
 }
 
 // 绘制_带透明复制, AlphaBlend() 参见MSDN.
 //
-//	nXOriginDest: XX.
+// nXOriginDest: XX.
 //
-//	nYOriginDest: XX.
+// nYOriginDest: XX.
 //
-//	nWidthDest: XX.
+// nWidthDest: XX.
 //
-//	nHeightDest: XX.
+// nHeightDest: XX.
 //
-//	hdcSrc: XX.
+// hdcSrc: XX.
 //
-//	nXOriginSrc: XX.
+// nXOriginSrc: XX.
 //
-//	nYOriginSrc: XX.
+// nYOriginSrc: XX.
 //
-//	nWidthSrc: XX.
+// nWidthSrc: XX.
 //
-//	nHeightSrc: XX.
+// nHeightSrc: XX.
 //
-//	alpha: XX.
+// alpha: XX.
 func (d *Draw) GDI_AlphaBlend(nXOriginDest, nYOriginDest, nWidthDest, nHeightDest int32, hdcSrc uintptr, nXOriginSrc, nYOriginSrc, nWidthSrc, nHeightSrc, alpha int32) bool {
 	return xc.XDraw_GDI_AlphaBlend(d.Handle, nXOriginDest, nYOriginDest, nWidthDest, nHeightDest, hdcSrc, nXOriginSrc, nYOriginSrc, nWidthSrc, nHeightSrc, alpha)
 }
 
 // 绘制_填充多边形, 填充多边形.
 //
-//	points: 顶点坐标数组.
+// points: 顶点坐标数组.
 //
-//	nCount: 顶点数量.
+// nCount: 顶点数量.
 func (d *Draw) FillPolygon(points []xc.POINT, nCount int32) *Draw {
 	xc.XDraw_FillPolygon(d.Handle, points, nCount)
 	return d
@@ -841,9 +841,9 @@ func (d *Draw) FillPolygon(points []xc.POINT, nCount int32) *Draw {
 
 // 绘制_填充多边形F, 填充多边形.
 //
-//	points: 顶点坐标数组.
+// points: 顶点坐标数组.
 //
-//	nCount: 顶点数量.
+// nCount: 顶点数量.
 func (d *Draw) FillPolygonF(points []xc.POINTF, nCount int32) *Draw {
 	xc.XDraw_FillPolygonF(d.Handle, points, nCount)
 	return d
@@ -851,22 +851,22 @@ func (d *Draw) FillPolygonF(points []xc.POINTF, nCount int32) *Draw {
 
 // 绘制_图片.
 //
-//	hImageFrame: 图片句柄.
+// hImageFrame: 图片句柄.
 //
-//	x: x坐标.
+// x: x坐标.
 //
-//	y: y坐标.
+// y: y坐标.
 func (d *Draw) Image(hImageFrame int, x, y int32) {
 	xc.XDraw_Image(d.Handle, hImageFrame, x, y)
 }
 
 // 绘制_图片F.
 //
-//	hImageFrame: 图片句柄.
+// hImageFrame: 图片句柄.
 //
-//	x: x坐标.
+// x: x坐标.
 //
-//	y: y坐标.
+// y: y坐标.
 func (d *Draw) ImageF(hImageFrame int, x, y float32) *Draw {
 	xc.XDraw_ImageF(d.Handle, hImageFrame, x, y)
 	return d
@@ -874,11 +874,11 @@ func (d *Draw) ImageF(hImageFrame int, x, y float32) *Draw {
 
 // 绘制_图片自适应.
 //
-//	hImageFrame: 图片句柄.
+// hImageFrame: 图片句柄.
 //
-//	pRect: 坐标.
+// pRect: 坐标.
 //
-//	bOnlyBorder: 是否只绘制边缘区域.
+// bOnlyBorder: 是否只绘制边缘区域.
 func (d *Draw) ImageAdaptive(hImageFrame int, pRect *xc.RECT, bOnlyBorder bool) *Draw {
 	xc.XDraw_ImageAdaptive(d.Handle, hImageFrame, pRect, bOnlyBorder)
 	return d
@@ -886,11 +886,11 @@ func (d *Draw) ImageAdaptive(hImageFrame int, pRect *xc.RECT, bOnlyBorder bool) 
 
 // 绘制_图片自适应F.
 //
-//	hImageFrame: 图片句柄.
+// hImageFrame: 图片句柄.
 //
-//	pRect: 坐标.
+// pRect: 坐标.
 //
-//	bOnlyBorder: 是否只绘制边缘区域.
+// bOnlyBorder: 是否只绘制边缘区域.
 func (d *Draw) ImageAdaptiveF(hImageFrame int, pRect *xc.RECTF, bOnlyBorder bool) *Draw {
 	xc.XDraw_ImageAdaptiveF(d.Handle, hImageFrame, pRect, bOnlyBorder)
 	return d
@@ -898,15 +898,15 @@ func (d *Draw) ImageAdaptiveF(hImageFrame int, pRect *xc.RECTF, bOnlyBorder bool
 
 // 绘制_图片扩展, 绘制图片.
 //
-//	hImageFrame: 图片句柄.
+// hImageFrame: 图片句柄.
 //
-//	x: x坐标.
+// x: x坐标.
 //
-//	y: y坐标.
+// y: y坐标.
 //
-//	width: 宽度.
+// width: 宽度.
 //
-//	height: 高度.
+// height: 高度.
 func (d *Draw) XDraw_ImageEx(hImageFrame int, x, y, width, height int32) *Draw {
 	xc.XDraw_ImageEx(d.Handle, hImageFrame, x, y, width, height)
 	return d
@@ -914,15 +914,15 @@ func (d *Draw) XDraw_ImageEx(hImageFrame int, x, y, width, height int32) *Draw {
 
 // 绘制_图片扩展F, 绘制图片.
 //
-//	hImageFrame: 图片句柄.
+// hImageFrame: 图片句柄.
 //
-//	x: x坐标.
+// x: x坐标.
 //
-//	y: y坐标.
+// y: y坐标.
 //
-//	width: 宽度.
+// width: 宽度.
 //
-//	height: 高度.
+// height: 高度.
 func (d *Draw) XDraw_ImageExF(hImageFrame int, x, y, width, height float32) *Draw {
 	xc.XDraw_ImageExF(d.Handle, hImageFrame, x, y, width, height)
 	return d
@@ -930,11 +930,11 @@ func (d *Draw) XDraw_ImageExF(hImageFrame int, x, y, width, height float32) *Dra
 
 // 绘制_图片增强.
 //
-//	hImageFrame: 图片句柄.
+// hImageFrame: 图片句柄.
 //
-//	pRect: 坐标.
+// pRect: 坐标.
 //
-//	bClip: 是否裁剪区域.
+// bClip: 是否裁剪区域.
 func (d *Draw) ImageSuper(hImageFrame int, pRect *xc.RECT, bClip bool) *Draw {
 	xc.XDraw_ImageSuper(d.Handle, hImageFrame, pRect, bClip)
 	return d
@@ -942,11 +942,11 @@ func (d *Draw) ImageSuper(hImageFrame int, pRect *xc.RECT, bClip bool) *Draw {
 
 // 绘制_图片增强F.
 //
-//	hImageFrame: 图片句柄.
+// hImageFrame: 图片句柄.
 //
-//	pRect: 坐标.
+// pRect: 坐标.
 //
-//	bClip: 是否裁剪区域.
+// bClip: 是否裁剪区域.
 func (d *Draw) ImageSuperF(hImageFrame int, pRect *xc.RECTF, bClip bool) *Draw {
 	xc.XDraw_ImageSuperF(d.Handle, hImageFrame, pRect, bClip)
 	return d
@@ -954,11 +954,11 @@ func (d *Draw) ImageSuperF(hImageFrame int, pRect *xc.RECTF, bClip bool) *Draw {
 
 // 绘制_图片增强扩展.
 //
-//	hImageFrame: 图片句柄.
+// hImageFrame: 图片句柄.
 //
-//	prcDest: 目标坐标.
+// prcDest: 目标坐标.
 //
-//	prcSrc: 源坐标.
+// prcSrc: 源坐标.
 func (d *Draw) ImageSuperEx(hImageFrame int, prcDest *xc.RECT, prcSrc *xc.RECT) *Draw {
 	xc.XDraw_ImageSuperEx(d.Handle, hImageFrame, prcDest, prcSrc)
 	return d
@@ -966,11 +966,11 @@ func (d *Draw) ImageSuperEx(hImageFrame int, prcDest *xc.RECT, prcSrc *xc.RECT) 
 
 // 绘制_图片增强扩展F.
 //
-//	hImageFrame: 图片句柄.
+// hImageFrame: 图片句柄.
 //
-//	prcDest: 目标坐标.
+// prcDest: 目标坐标.
 //
-//	prcSrc: 源坐标.
+// prcSrc: 源坐标.
 func (d *Draw) ImageSuperExF(hImageFrame int, prcDest *xc.RECTF, prcSrc *xc.RECT) *Draw {
 	xc.XDraw_ImageSuperExF(d.Handle, hImageFrame, prcDest, prcSrc)
 	return d
@@ -978,15 +978,15 @@ func (d *Draw) ImageSuperExF(hImageFrame int, prcDest *xc.RECTF, prcSrc *xc.RECT
 
 // 绘制_图片增强遮盖, 绘制带遮盖的图片. D2D留空.
 //
-//	hImageFrame: 图片句柄.
+// hImageFrame: 图片句柄.
 //
-//	hImageFrameMask: 图片句柄, 遮盖.
+// hImageFrameMask: 图片句柄, 遮盖.
 //
-//	pRect: 坐标.
+// pRect: 坐标.
 //
-//	pRectMask: 坐标, 遮盖.
+// pRectMask: 坐标, 遮盖.
 //
-//	bClip: 是否裁剪区域.
+// bClip: 是否裁剪区域.
 func (d *Draw) ImageSuperMask(hImageFrame int, hImageFrameMask int, pRect *xc.RECT, pRectMask *xc.RECT, bClip bool) *Draw {
 	xc.XDraw_ImageSuperMask(d.Handle, hImageFrame, hImageFrameMask, pRect, pRectMask, bClip)
 	return d
@@ -994,11 +994,11 @@ func (d *Draw) ImageSuperMask(hImageFrame int, hImageFrameMask int, pRect *xc.RE
 
 // 绘制_图片平铺, 绘制图片.
 //
-//	hImageFrame: 图片句柄.
+// hImageFrame: 图片句柄.
 //
-//	pRect: 坐标.
+// pRect: 坐标.
 //
-//	flag: 标识, 0:从左上角开始平铺, 1:从左下角开始平铺.
+// flag: 标识, 0:从左上角开始平铺, 1:从左下角开始平铺.
 func (d *Draw) ImageTile(hImageFrame int, hImageFrameMask int, pRect *xc.RECT, flag int32) *Draw {
 	xc.XDraw_ImageTile(d.Handle, hImageFrame, hImageFrameMask, pRect, flag)
 	return d
@@ -1006,11 +1006,11 @@ func (d *Draw) ImageTile(hImageFrame int, hImageFrameMask int, pRect *xc.RECT, f
 
 // 绘制_图片平铺F, 绘制图片.
 //
-//	hImageFrame: 图片句柄.
+// hImageFrame: 图片句柄.
 //
-//	pRect: 坐标.
+// pRect: 坐标.
 //
-//	flag: 标识, 0:从左上角开始平铺, 1:从左下角开始平铺.
+// flag: 标识, 0:从左上角开始平铺, 1:从左下角开始平铺.
 func (d *Draw) ImageTileF(hImageFrame int, hImageFrameMask int, pRect *xc.RECTF, flag int32) *Draw {
 	xc.XDraw_ImageTileF(d.Handle, hImageFrame, hImageFrameMask, pRect, flag)
 	return d
@@ -1018,15 +1018,15 @@ func (d *Draw) ImageTileF(hImageFrame int, hImageFrameMask int, pRect *xc.RECTF,
 
 // 绘制_图片遮盖, 绘制带遮盖的图片, D2D留空.
 //
-//	hImageFrame: 图片句柄.
+// hImageFrame: 图片句柄.
 //
-//	hImageFrameMask: 图片句柄, 遮盖.
+// hImageFrameMask: 图片句柄, 遮盖.
 //
-//	pRect: 坐标.
+// pRect: 坐标.
 //
-//	x: 目标X坐标.
+// x: 目标X坐标.
 //
-//	y: 目标Y坐标.
+// y: 目标Y坐标.
 func (d *Draw) ImageMask(hImageFrame int, hImageFrameMask int, pRect *xc.RECT, x, y int32) *Draw {
 	xc.XDraw_ImageMask(d.Handle, hImageFrame, hImageFrameMask, pRect, x, y)
 	return d
@@ -1034,9 +1034,9 @@ func (d *Draw) ImageMask(hImageFrame int, hImageFrameMask int, pRect *xc.RECT, x
 
 // 绘制_文本指定矩形, DrawText() 参见MSDN.
 //
-//	lpString: 字符串.
+// lpString: 字符串.
 //
-//	lpRect: 坐标.
+// lpRect: 坐标.
 func (d *Draw) DrawText(lpString string, lpRect *xc.RECT) *Draw {
 	xc.XDraw_DrawText(d.Handle, lpString, lpRect)
 	return d
@@ -1044,9 +1044,9 @@ func (d *Draw) DrawText(lpString string, lpRect *xc.RECT) *Draw {
 
 // 绘制_文本指定矩形F, DrawText() 参见MSDN.
 //
-//	lpString: 字符串.
+// lpString: 字符串.
 //
-//	lpRect: 坐标.
+// lpRect: 坐标.
 func (d *Draw) DrawTextF(lpString string, lpRect *xc.RECTF) *Draw {
 	xc.XDraw_DrawTextF(d.Handle, lpString, lpRect)
 	return d
@@ -1054,11 +1054,11 @@ func (d *Draw) DrawTextF(lpString string, lpRect *xc.RECTF) *Draw {
 
 // 绘制_文本下划线.
 //
-//	lpString: 字符串.
+// lpString: 字符串.
 //
-//	lpRect: 坐标.
+// lpRect: 坐标.
 //
-//	colorLine: 下划线颜色, ARGB 颜色.
+// colorLine: 下划线颜色, ARGB 颜色.
 func (d *Draw) DrawTextUnderline(lpString string, lpRect *xc.RECT, colorLine int) *Draw {
 	xc.XDraw_DrawTextUnderline(d.Handle, lpString, lpRect, colorLine)
 	return d
@@ -1066,11 +1066,11 @@ func (d *Draw) DrawTextUnderline(lpString string, lpRect *xc.RECT, colorLine int
 
 // 绘制_文本下划线F.
 //
-//	lpString: 字符串.
+// lpString: 字符串.
 //
-//	lpRect: 坐标.
+// lpRect: 坐标.
 //
-//	colorLine: 下划线颜色, ARGB 颜色.
+// colorLine: 下划线颜色, ARGB 颜色.
 func (d *Draw) DrawTextUnderlineF(lpString string, lpRect *xc.RECTF, colorLine int) *Draw {
 	xc.XDraw_DrawTextUnderlineF(d.Handle, lpString, lpRect, colorLine)
 	return d
@@ -1078,13 +1078,13 @@ func (d *Draw) DrawTextUnderlineF(lpString string, lpRect *xc.RECTF, colorLine i
 
 // 绘制_文本, TextOut() 参见MSDN.
 //
-//	nXStart: XX.
+// nXStart: XX.
 //
-//	nYStart: XX.
+// nYStart: XX.
 //
-//	lpString: XX.
+// lpString: XX.
 //
-//	cbString: XX.
+// cbString: XX.
 func (d *Draw) TextOut(nXStart, nYStart int32, lpString string, cbString string) *Draw {
 	xc.XDraw_TextOut(d.Handle, nXStart, nYStart, lpString, cbString)
 	return d
@@ -1092,13 +1092,13 @@ func (d *Draw) TextOut(nXStart, nYStart int32, lpString string, cbString string)
 
 // 绘制_文本F, TextOut() 参见MSDN.
 //
-//	nXStart: XX.
+// nXStart: XX.
 //
-//	nYStart: XX.
+// nYStart: XX.
 //
-//	lpString: XX.
+// lpString: XX.
 //
-//	cbString: XX.
+// cbString: XX.
 func (d *Draw) TextOutF(nXStart, nYStart float32, lpString string, cbString string) *Draw {
 	xc.XDraw_TextOutF(d.Handle, nXStart, nYStart, lpString, cbString)
 	return d
@@ -1106,11 +1106,11 @@ func (d *Draw) TextOutF(nXStart, nYStart float32, lpString string, cbString stri
 
 // 绘制_文本扩展, TextOut() 参见MSDN.
 //
-//	nXStart: XX.
+// nXStart: XX.
 //
-//	nYStart: XX.
+// nYStart: XX.
 //
-//	lpString: XX.
+// lpString: XX.
 func (d *Draw) TextOutEx(nXStart, nYStart int32, lpString string) *Draw {
 	xc.XDraw_TextOutEx(d.Handle, nXStart, nYStart, lpString)
 	return d
@@ -1118,11 +1118,11 @@ func (d *Draw) TextOutEx(nXStart, nYStart int32, lpString string) *Draw {
 
 // 绘制_文本扩展F, TextOut() 参见MSDN.
 //
-//	nXStart: XX.
+// nXStart: XX.
 //
-//	nYStart: XX.
+// nYStart: XX.
 //
-//	lpString: XX.
+// lpString: XX.
 func (d *Draw) TextOutExF(nXStart, nYStart float32, lpString string) *Draw {
 	xc.XDraw_TextOutExF(d.Handle, nXStart, nYStart, lpString)
 	return d
@@ -1130,11 +1130,11 @@ func (d *Draw) TextOutExF(nXStart, nYStart float32, lpString string) *Draw {
 
 // 绘制_文本A, TextOut() 参见MSDN.
 //
-//	nXStart: XX.
+// nXStart: XX.
 //
-//	nYStart: XX.
+// nYStart: XX.
 //
-//	lpString: XX.
+// lpString: XX.
 func (d *Draw) TextOutA(nXStart, nYStart int32, lpString string) *Draw {
 	xc.XDraw_TextOutA(d.Handle, nXStart, nYStart, lpString)
 	return d
@@ -1142,11 +1142,11 @@ func (d *Draw) TextOutA(nXStart, nYStart int32, lpString string) *Draw {
 
 // 绘制_文本AF, TextOut() 参见MSDN.
 //
-//	nXStart: XX.
+// nXStart: XX.
 //
-//	nYStart: XX.
+// nYStart: XX.
 //
-//	lpString: XX.
+// lpString: XX.
 func (d *Draw) TextOutAF(nXStart, nYStart float32, lpString string) *Draw {
 	xc.XDraw_TextOutAF(d.Handle, nXStart, nYStart, lpString)
 	return d
@@ -1154,7 +1154,7 @@ func (d *Draw) TextOutAF(nXStart, nYStart float32, lpString string) *Draw {
 
 // 绘制_设置文本渲染提示.
 //
-//	nType: XX.
+// nType: XX.
 func (d *Draw) SetTextRenderingHint(nType int32) *Draw {
 	xc.XDraw_SetTextRenderingHint(d.Handle, nType)
 	return d
@@ -1162,7 +1162,7 @@ func (d *Draw) SetTextRenderingHint(nType int32) *Draw {
 
 // 绘制_SVG源.
 //
-//	hSvg: SVG句柄.
+// hSvg: SVG句柄.
 func (d *Draw) DrawSvgSrc(hSvg int) *Draw {
 	xc.XDraw_DrawSvgSrc(d.Handle, hSvg)
 	return d
@@ -1170,11 +1170,11 @@ func (d *Draw) DrawSvgSrc(hSvg int) *Draw {
 
 // 绘制_SVG.
 //
-//	hSvg: SVG句柄.
+// hSvg: SVG句柄.
 //
-//	x: x坐标.
+// x: x坐标.
 //
-//	y: y坐标.
+// y: y坐标.
 func (d *Draw) DrawSvg(hSvg int, x, y int32) *Draw {
 	xc.XDraw_DrawSvg(d.Handle, hSvg, x, y)
 	return d
@@ -1182,15 +1182,15 @@ func (d *Draw) DrawSvg(hSvg int, x, y int32) *Draw {
 
 // 绘制_SVG扩展.
 //
-//	hSvg: SVG句柄.
+// hSvg: SVG句柄.
 //
-//	x: x坐标.
+// x: x坐标.
 //
-//	y: y坐标.
+// y: y坐标.
 //
-//	nWidth: 宽度.
+// nWidth: 宽度.
 //
-//	nHeight: 高度.
+// nHeight: 高度.
 func (d *Draw) DrawSvgEx(hSvg int, x, y, nWidth, nHeight int32) *Draw {
 	xc.XDraw_DrawSvgEx(d.Handle, hSvg, x, y, nWidth, nHeight)
 	return d
@@ -1198,11 +1198,11 @@ func (d *Draw) DrawSvgEx(hSvg int, x, y, nWidth, nHeight int32) *Draw {
 
 // 绘制_SVG大小.
 //
-//	hSvg: SVG句柄.
+// hSvg: SVG句柄.
 //
-//	nWidth: 宽度.
+// nWidth: 宽度.
 //
-//	nHeight: 高度.
+// nHeight: 高度.
 func (d *Draw) DrawSvgSize(hSvg int, nWidth, nHeight int32) *Draw {
 	xc.XDraw_DrawSvgSize(d.Handle, hSvg, nWidth, nHeight)
 	return d
@@ -1210,7 +1210,7 @@ func (d *Draw) DrawSvgSize(hSvg int, nWidth, nHeight int32) *Draw {
 
 // 绘制_D2D_清理, 使用指定颜色清理画布.
 //
-//	color: ARGB 颜色值.
+// color: ARGB 颜色值.
 func (d *Draw) D2D_Clear(color int) *Draw {
 	xc.XDraw_D2D_Clear(d.Handle, color)
 	return d
@@ -1218,13 +1218,13 @@ func (d *Draw) D2D_Clear(color int) *Draw {
 
 // 绘制_图片遮盖矩形, 使用矩形作为遮罩.
 //
-//	hImageFrame: 图片句柄.
+// hImageFrame: 图片句柄.
 //
-//	pRect: 矩形坐标.
+// pRect: 矩形坐标.
 //
-//	pRcMask: 遮罩坐标.
+// pRcMask: 遮罩坐标.
 //
-//	pRcRoundAngle: 遮罩圆角.
+// pRcRoundAngle: 遮罩圆角.
 func (d *Draw) ImageMaskRect(hImageFrame int, pRect *xc.RECT, pRcMask *xc.RECT, pRcRoundAngle *xc.RECT) *Draw {
 	xc.XDraw_ImageMaskRect(d.Handle, hImageFrame, pRect, pRcMask, pRcRoundAngle)
 	return d
@@ -1232,11 +1232,11 @@ func (d *Draw) ImageMaskRect(hImageFrame int, pRect *xc.RECT, pRcMask *xc.RECT, 
 
 // 绘制_图片遮盖圆型, 使用圆形作为遮罩.
 //
-//	hImageFrame: 图片句柄.
+// hImageFrame: 图片句柄.
 //
-//	pRect: 矩形坐标.
+// pRect: 矩形坐标.
 //
-//	pRcMask: 遮罩坐标.
+// pRcMask: 遮罩坐标.
 func (d *Draw) ImageMaskEllipse(hImageFrame int, pRect *xc.RECT, pRcMask *xc.RECT) *Draw {
 	xc.XDraw_ImageMaskEllipse(d.Handle, hImageFrame, pRect, pRcMask)
 	return d

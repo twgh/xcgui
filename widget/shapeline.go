@@ -11,15 +11,15 @@ type ShapeLine struct {
 
 // 形状线_创建.
 //
-//	x1: 坐标.
+// x1: 坐标.
 //
-//	y1: 坐标.
+// y1: 坐标.
 //
-//	x2: 坐标.
+// x2: 坐标.
 //
-//	y2: 坐标.
+// y2: 坐标.
 //
-//	hParent: 父对象句柄.
+// hParent: 父对象句柄.
 func NewShapeLine(x1, y1, x2, y2 int32, hParent int) *ShapeLine {
 	p := &ShapeLine{}
 	p.SetHandle(xc.XShapeLine_Create(x1, y1, x2, y2, hParent))
@@ -68,13 +68,13 @@ func NewShapeLineByUIDName(name string) *ShapeLine {
 
 // 形状线_置位置.
 //
-//	x1: 坐标.
+// x1: 坐标.
 //
-//	y1: 坐标.
+// y1: 坐标.
 //
-//	x2: 坐标.
+// x2: 坐标.
 //
-//	y2: 坐标.
+// y2: 坐标.
 func (s *ShapeLine) SetPosition(x1, y1, x2, y2 int32) *ShapeLine {
 	xc.XShapeLine_SetPosition(s.Handle, x1, y1, x2, y2)
 	return s
@@ -82,7 +82,7 @@ func (s *ShapeLine) SetPosition(x1, y1, x2, y2 int32) *ShapeLine {
 
 // 形状线_置颜色, 设置直线颜色.
 //
-//	color: ARGB 颜色值.
+// color: ARGB 颜色值.
 func (s *ShapeLine) SetColor(color int) *ShapeLine {
 	xc.XShapeLine_SetColor(s.Handle, color)
 	return s

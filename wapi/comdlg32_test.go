@@ -12,7 +12,7 @@ import (
 
 // 多个过滤器, 打开单个文件.
 func TestGetOpenFileNameW(t *testing.T) {
-	lpstrFilter := strings.Join([]string{"Text Files(*txt)", "*.txt", "All Files(*.*)", "*.*"}, wapi.NULL) + wapi.NULL2
+	lpstrFilter := strings.Join([]string{"Text Files(*txt)", "*.txt", "All Files(*.*)", "*.*"}, wapi.NullStr) + wapi.NullStr2
 
 	lpstrFile := make([]uint16, 260)
 	lpstrFileTitle := make([]uint16, 260)
@@ -51,7 +51,7 @@ func TestGetOpenFileNameW(t *testing.T) {
 
 // 多个过滤器, 打开多个文件.
 func TestGetOpenFileNameW_2(t *testing.T) {
-	lpstrFilter := strings.Join([]string{"Text Files(*txt)", "*.txt", "All Files(*.*)", "*.*"}, wapi.NULL) + wapi.NULL2
+	lpstrFilter := strings.Join([]string{"Text Files(*txt)", "*.txt", "All Files(*.*)", "*.*"}, wapi.NullStr) + wapi.NullStr2
 
 	lpstrFile := make([]uint16, 512)
 
@@ -91,7 +91,7 @@ func TestGetOpenFileNameW_2(t *testing.T) {
 
 // 多个过滤器, 保存文件.
 func TestGetSaveFileNameW(t *testing.T) {
-	lpstrFilter := strings.Join([]string{"Text Files(*txt)", "*.txt", "All Files(*.*)", "*.*"}, wapi.NULL) + wapi.NULL2
+	lpstrFilter := strings.Join([]string{"Text Files(*txt)", "*.txt", "All Files(*.*)", "*.*"}, wapi.NullStr) + wapi.NullStr2
 
 	lpstrFile := make([]uint16, 260)
 	lpstrFileTitle := make([]uint16, 260)

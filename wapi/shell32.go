@@ -26,13 +26,13 @@ var (
 //
 // 详情: https://docs.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-DragQueryFileW.
 //
-//	hDrop: 句柄.
+// hDrop: 句柄.
 //
-//	iFile: 文件索引.
+// iFile: 文件索引.
 //
-//	lpszFile: 返回的文件路径.
+// lpszFile: 返回的文件路径.
 //
-//	cch: 接收的文件路径的字符数, 通常为260.
+// cch: 接收的文件路径的字符数, 通常为260.
 //
 //	@return: 返回文件路径的字符数.
 func DragQueryFileW(hDrop uintptr, iFile uint32, lpszFile *string, cch uint32) int {
@@ -46,7 +46,7 @@ func DragQueryFileW(hDrop uintptr, iFile uint32, lpszFile *string, cch uint32) i
 //
 // 详情: https://docs.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-DragFinish.
 //
-//	hDrop: 句柄.
+// hDrop: 句柄.
 func DragFinish(hDrop uintptr) {
 	dragFinish.Call(hDrop)
 }
@@ -55,9 +55,9 @@ func DragFinish(hDrop uintptr) {
 //
 // 详情: https://docs.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-DragQueryPoint.
 //
-//	hDrop: 句柄.
+// hDrop: 句柄.
 //
-//	ppt: 接收鼠标指针的坐标.
+// ppt: 接收鼠标指针的坐标.
 //
 //	@return: 如果拖放发生在窗口的客户区, 返回true；否则返回false.
 func DragQueryPoint(hDrop uintptr, ppt *xc.POINT) bool {
@@ -69,17 +69,17 @@ func DragQueryPoint(hDrop uintptr, ppt *xc.POINT) bool {
 //
 // 详情: https://docs.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shellexecutew.
 //
-//	hwnd: 用于显示 UI 或错误消息的父窗口的句柄。如果操作与窗口无关，则此值可以为0.
+// hwnd: 用于显示 UI 或错误消息的父窗口的句柄。如果操作与窗口无关，则此值可以为0.
 //
-//	lpOperation: 填“open”则打开lpFlie文档.
+// lpOperation: 填“open”则打开lpFlie文档.
 //
-//	lpFile: 想用关联的程序打印或打开的一个程序名或文件名.
+// lpFile: 想用关联的程序打印或打开的一个程序名或文件名.
 //
-//	lpParameters: 如果lpFile是一个可执行文件，则这个字串包含了传递给执行程序的参数.
+// lpParameters: 如果lpFile是一个可执行文件，则这个字串包含了传递给执行程序的参数.
 //
-//	lpDirectory: 想使用的默认路径完整路径.
+// lpDirectory: 想使用的默认路径完整路径.
 //
-//	nShowCmd: 定义了如何显示启动程序的常数值, xcc.SW_.
+// nShowCmd: 定义了如何显示启动程序的常数值, xcc.SW_.
 //
 //	@return: 如果函数成功，则返回大于32的值。如果函数失败，则返回指示失败原因的错误值.
 func ShellExecuteW(hwnd uintptr, lpOperation, lpFile, lpParameters, lpDirectory string, nShowCmd xcc.SW_) int {
@@ -92,7 +92,7 @@ func ShellExecuteW(hwnd uintptr, lpOperation, lpFile, lpParameters, lpDirectory 
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/shlobj_core/ns-shlobj_core-browseinfow.
 type BrowseInfoW struct {
 	HwndOwner      uintptr // 父窗口句柄
-	PidlRoot       uintptr // 指定开始浏览的根文件夹的位置。只有命名空间层次结构中的指定文件夹及其子文件夹出现在对话框中。该成员可以为NULL；在这种情况下，将使用默认位置.
+	PidlRoot       uintptr // 指定开始浏览的根文件夹的位置。只有命名空间层次结构中的指定文件夹及其子文件夹出现在对话框中。该成员可以为0；在这种情况下，将使用默认位置.
 	PszDisplayName uintptr // 指向缓冲区的指针，用于接收用户选择的文件夹的显示名称。此缓冲区的大小假定为 260 个字符.
 	LpszTitle      uintptr // 指向显示在对话框中树视图控件上方的以空字符结尾的字符串的指针。使用 common.StrPtr()函数生成.
 	UlFlags        BIF_    // 指定对话框选项的标志。可以为0，也可以是 wapi.BIF_ 的组合.
@@ -144,9 +144,9 @@ const (
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/shlobj_core/nf-shlobj_core-shbrowseforfolderw.
 //
-//	browseInfo: 指向 wapi.BrowseInfoW 结构的指针，该结构包含用于显示对话框的信息.
+// browseInfo: 指向 wapi.BrowseInfoW 结构的指针，该结构包含用于显示对话框的信息.
 //
-//	@return: 返回一个 PIDL，它指定所选文件夹相对于命名空间根的位置。如果用户在对话框中选择取消按钮，则返回值为NULL。返回的 PIDL 可能是文件夹快捷方式而不是文件夹.
+//	@return: 返回一个 PIDL，它指定所选文件夹相对于命名空间根的位置。如果用户在对话框中选择取消按钮，则返回值为0。返回的 PIDL 可能是文件夹快捷方式而不是文件夹.
 func SHBrowseForFolderW(browseInfo *BrowseInfoW) uintptr {
 	r, _, _ := sHBrowseForFolderW.Call(uintptr(unsafe.Pointer(browseInfo)))
 	return r
@@ -156,9 +156,9 @@ func SHBrowseForFolderW(browseInfo *BrowseInfoW) uintptr {
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/shlobj_core/nf-shlobj_core-shgetpathfromidlistw.
 //
-//	pidl: SHBrowseForFolderW 的返回值.
+// pidl: SHBrowseForFolderW 的返回值.
 //
-//	pszPath: 返回的文件路径.
+// pszPath: 返回的文件路径.
 func SHGetPathFromIDListW(pidl uintptr, pszPath *string) bool {
 	buf := make([]uint16, 260)
 	r, _, _ := sHGetPathFromIDListW.Call(pidl, common.Uint16SliceDataPtr(&buf))

@@ -5,7 +5,7 @@ type XE_ uint32
 
 const (
 	// XE_ELEPROCE 元素处理过程事件.
-	//	func onEleProce(nEvent int, wParam, lParam uint, pbHandled *bool) int {
+	//	func onEleProce(nEvent uint32, wParam, lParam uintptr, pbHandled *bool) int {
 	//		return 0
 	//	}
 	XE_ELEPROCE XE_ = 1

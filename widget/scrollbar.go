@@ -12,15 +12,15 @@ type ScrollBar struct {
 
 // 滚动条_创建, 创建滚动条元素, 返回元素句柄.
 //
-//	x: 元素x坐标.
+// x: 元素x坐标.
 //
-//	y: 元素y坐标.
+// y: 元素y坐标.
 //
-//	cx: 宽度.
+// cx: 宽度.
 //
-//	cy: 高度.
+// cy: 高度.
 //
-//	hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
+// hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
 func NewScrollBar(x, y, cx, cy int32, hParent int) *ScrollBar {
 	p := &ScrollBar{}
 	p.SetHandle(xc.XSBar_Create(x, y, cx, cy, hParent))
@@ -69,7 +69,7 @@ func NewScrollBarByUIDName(name string) *ScrollBar {
 
 // 滚动条_置范围, 设置滚动范围.
 //
-//	range_: 范围.
+// range_: 范围.
 func (s *ScrollBar) SetRange(range_ int32) *ScrollBar {
 	xc.XSBar_SetRange(s.Handle, range_)
 	return s
@@ -82,7 +82,7 @@ func (s *ScrollBar) GetRange() int32 {
 
 // 滚动条_显示上下按钮, 显示隐藏滚动条上下按钮.
 //
-//	bShow: 是否显示.
+// bShow: 是否显示.
 func (s *ScrollBar) ShowButton(bShow bool) *ScrollBar {
 	xc.XSBar_ShowButton(s.Handle, bShow)
 	return s
@@ -90,7 +90,7 @@ func (s *ScrollBar) ShowButton(bShow bool) *ScrollBar {
 
 // 滚动条_置滑块长度.
 //
-//	length: 长度.
+// length: 长度.
 func (s *ScrollBar) SetSliderLength(length int32) *ScrollBar {
 	xc.XSBar_SetSliderLength(s.Handle, length)
 	return s
@@ -98,7 +98,7 @@ func (s *ScrollBar) SetSliderLength(length int32) *ScrollBar {
 
 // 滚动条_置滑块最小长度.
 //
-//	minLength: 长度.
+// minLength: 长度.
 func (s *ScrollBar) SetSliderMinLength(minLength int32) *ScrollBar {
 	xc.XSBar_SetSliderMinLength(s.Handle, minLength)
 	return s
@@ -106,7 +106,7 @@ func (s *ScrollBar) SetSliderMinLength(minLength int32) *ScrollBar {
 
 // 滚动条_置滑块两边间隔, 设置滑块两边的间隔大小.
 //
-//	nPadding: 间隔大小.
+// nPadding: 间隔大小.
 func (s *ScrollBar) SetSliderPadding(nPadding int32) *ScrollBar {
 	xc.XSBar_SetSliderPadding(s.Handle, nPadding)
 	return s
@@ -114,7 +114,7 @@ func (s *ScrollBar) SetSliderPadding(nPadding int32) *ScrollBar {
 
 // 滚动条_置水平, 设置水平或者垂直.
 //
-//	bHorizon: 水平或垂直.
+// bHorizon: 水平或垂直.
 func (s *ScrollBar) EnableHorizon(bHorizon bool) bool {
 	return xc.XSBar_EnableHorizon(s.Handle, bHorizon)
 }
@@ -146,7 +146,7 @@ func (s *ScrollBar) ScrollBottom() bool {
 
 // 滚动条_滚动到指定位置, 滚动到指定位置点, 触发事件: XE_SBAR_SCROLL.
 //
-//	pos: 位置点.
+// pos: 位置点.
 func (s *ScrollBar) ScrollPos(pos int32) bool {
 	return xc.XSBar_ScrollPos(s.Handle, pos)
 }

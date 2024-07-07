@@ -12,15 +12,15 @@ type ListBox struct {
 
 // 列表框_创建, 创建列表框元素.
 //
-//	x: 元素x坐标.
+// x: 元素x坐标.
 //
-//	y: 元素y坐标.
+// y: 元素y坐标.
 //
-//	cx: 宽度.
+// cx: 宽度.
 //
-//	cy: 高度.
+// cy: 高度.
 //
-//	hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
+// hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
 func NewListBox(x, y, cx, cy int32, hParent int) *ListBox {
 	p := &ListBox{}
 	p.SetHandle(xc.XListBox_Create(x, y, cx, cy, hParent))
@@ -29,17 +29,17 @@ func NewListBox(x, y, cx, cy int32, hParent int) *ListBox {
 
 // 列表框_创建Ex, 创建列表框元素, 使用内置项模板, 自动创建数据适配器.
 //
-//	x: 元素x坐标.
+// x: 元素x坐标.
 //
-//	y: 元素y坐标.
+// y: 元素y坐标.
 //
-//	cx: 宽度.
+// cx: 宽度.
 //
-//	cy: 高度.
+// cy: 高度.
 //
-//	hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
+// hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
 //
-//	col_extend_count: 列数量. 例如: 内置模板是1列, 如果数据有5列, 那么此参数填5.
+// col_extend_count: 列数量. 例如: 内置模板是1列, 如果数据有5列, 那么此参数填5.
 func NewListBoxEx(x, y, cx, cy int32, hParent, col_extend_count int32) *ListBox {
 	p := &ListBox{}
 	p.SetHandle(xc.XListBox_CreateEx(x, y, cx, cy, hParent, col_extend_count))
@@ -88,7 +88,7 @@ func NewListBoxByUIDName(name string) *ListBox {
 
 // 列表框_启用固定行高.
 //
-//	bEnable: 是否启用.
+// bEnable: 是否启用.
 func (l *ListBox) EnableFixedRowHeight(bEnable bool) *ListBox {
 	xc.XListBox_EnableFixedRowHeight(l.Handle, bEnable)
 	return l
@@ -96,7 +96,7 @@ func (l *ListBox) EnableFixedRowHeight(bEnable bool) *ListBox {
 
 // 列表框_启用模板复用.
 //
-//	bEnable: 是否启用.
+// bEnable: 是否启用.
 func (l *ListBox) EnableTemplateReuse(bEnable bool) *ListBox {
 	xc.XListBox_EnableTemplateReuse(l.Handle, bEnable)
 	return l
@@ -104,7 +104,7 @@ func (l *ListBox) EnableTemplateReuse(bEnable bool) *ListBox {
 
 // 列表框_启用虚表.
 //
-//	bEnable: 是否启用.
+// bEnable: 是否启用.
 func (l *ListBox) EnableVirtualTable(bEnable bool) *ListBox {
 	xc.XListBox_EnableVirtualTable(l.Handle, bEnable)
 	return l
@@ -112,7 +112,7 @@ func (l *ListBox) EnableVirtualTable(bEnable bool) *ListBox {
 
 // 列表框_置虚表行数.
 //
-//	nRowCount: 行数.
+// nRowCount: 行数.
 func (l *ListBox) SetVirtualRowCount(nRowCount int32) *ListBox {
 	xc.XListBox_SetVirtualRowCount(l.Handle, nRowCount)
 	return l
@@ -120,7 +120,7 @@ func (l *ListBox) SetVirtualRowCount(nRowCount int32) *ListBox {
 
 // 列表框_置绘制项背景标志, 设置是否绘制指定状态下项的背景.
 //
-//	nFlags: 标志位, List_DrawItemBk_Flag_.
+// nFlags: 标志位, List_DrawItemBk_Flag_.
 func (l *ListBox) SetDrawItemBkFlags(nFlags xcc.List_DrawItemBk_Flag_) *ListBox {
 	xc.XListBox_SetDrawItemBkFlags(l.Handle, nFlags)
 	return l
@@ -128,41 +128,41 @@ func (l *ListBox) SetDrawItemBkFlags(nFlags xcc.List_DrawItemBk_Flag_) *ListBox 
 
 // 列表框_置项数据, 设置项用户数据.
 //
-//	iItem: 想索引.
+// iItem: 想索引.
 //
-//	nUserData: 用户数据.
+// nUserData: 用户数据.
 func (l *ListBox) SetItemData(iItem int32, nUserData int) bool {
 	return xc.XListBox_SetItemData(l.Handle, iItem, nUserData)
 }
 
 // 列表框_取项数据, 获取项用户数据.
 //
-//	iItem: 项索引.
+// iItem: 项索引.
 func (l *ListBox) GetItemData(iItem int32) int {
 	return xc.XListBox_GetItemData(l.Handle, iItem)
 }
 
 // 列表框_置项信息.
 //
-//	iItem: 项索引.
+// iItem: 项索引.
 //
-//	pItem: 项信息.
+// pItem: 项信息.
 func (l *ListBox) SetItemInfo(iItem int32, pItem *xc.ListBox_Item_Info_) bool {
 	return xc.XListBox_SetItemInfo(l.Handle, iItem, pItem)
 }
 
 // 列表框_取项背景信息, 获取项信息.
 //
-//	iItem: 项索引.
+// iItem: 项索引.
 //
-//	pItem: 项信息.
+// pItem: 项信息.
 func (l *ListBox) GetItemInfo(iItem int32, pItem *xc.ListBox_Item_Info_) bool {
 	return xc.XListBox_GetItemInfo(l.Handle, iItem, pItem)
 }
 
 // 列表框_置选择项, 设置选择选.
 //
-//	iItem: 项索引.
+// iItem: 项索引.
 func (l *ListBox) SetSelectItem(iItem int32) bool {
 	return xc.XListBox_SetSelectItem(l.Handle, iItem)
 }
@@ -174,14 +174,14 @@ func (l *ListBox) GetSelectItem() int32 {
 
 // 列表框_添加选择项.
 //
-//	iItem: 项索引.
+// iItem: 项索引.
 func (l *ListBox) AddSelectItem(iItem int32) bool {
 	return xc.XListBox_AddSelectItem(l.Handle, iItem)
 }
 
 // 列表框_取消选择项.
 //
-//	iItem: 项索引.
+// iItem: 项索引.
 func (l *ListBox) CancelSelectItem(iItem int32) bool {
 	return xc.XListBox_CancelSelectItem(l.Handle, iItem)
 }
@@ -193,9 +193,9 @@ func (l *ListBox) CancelSelectAll() bool {
 
 // 列表框_取全部选择, 获取所有选择项, 返回接收数量.
 //
-//	pArray: 数组缓冲区.
+// pArray: 数组缓冲区.
 //
-//	nArraySize: 数组大小.
+// nArraySize: 数组大小.
 func (l *ListBox) GetSelectAll(pArray *[]int32, nArraySize int32) int32 {
 	return xc.XListBox_GetSelectAll(l.Handle, pArray, nArraySize)
 }
@@ -217,7 +217,7 @@ func (l *ListBox) SelectAll() bool {
 
 // 列表框_显示指定项, 滚动视图让指定项可见.
 //
-//	iItem: 项索引.
+// iItem: 项索引.
 func (l *ListBox) VisibleItem(iItem int32) *ListBox {
 	xc.XListBox_VisibleItem(l.Handle, iItem)
 	return l
@@ -225,9 +225,9 @@ func (l *ListBox) VisibleItem(iItem int32) *ListBox {
 
 // 列表框_取可视行范围, 获取当前可见行范围.
 //
-//	piStart: 开始行索引.
+// piStart: 开始行索引.
 //
-//	piEnd: 结束行索引.
+// piEnd: 结束行索引.
 func (l *ListBox) GetVisibleRowRange(piStart *int32, piEnd *int32) *ListBox {
 	xc.XListBox_GetVisibleRowRange(l.Handle, piStart, piEnd)
 	return l
@@ -235,9 +235,9 @@ func (l *ListBox) GetVisibleRowRange(piStart *int32, piEnd *int32) *ListBox {
 
 // 列表框_置项默认高度.
 //
-//	nHeight: 项高度.
+// nHeight: 项高度.
 //
-//	nSelHeight: 选中项高度.
+// nSelHeight: 选中项高度.
 func (l *ListBox) SetItemHeightDefault(nHeight int32, nSelHeight int32) *ListBox {
 	xc.XListBox_SetItemHeightDefault(l.Handle, nHeight, nSelHeight)
 	return l
@@ -245,9 +245,9 @@ func (l *ListBox) SetItemHeightDefault(nHeight int32, nSelHeight int32) *ListBox
 
 // 列表框_取项默认高度.
 //
-//	pHeight: 高度.
+// pHeight: 高度.
 //
-//	pSelHeight: 选中时高度.
+// pSelHeight: 选中时高度.
 func (l *ListBox) GetItemHeightDefault(pHeight *int32, pSelHeight *int32) *ListBox {
 	xc.XListBox_GetItemHeightDefault(l.Handle, pHeight, pSelHeight)
 	return l
@@ -255,14 +255,14 @@ func (l *ListBox) GetItemHeightDefault(pHeight *int32, pSelHeight *int32) *ListB
 
 // 列表框_取所在行索引, 获取当前对象所在模板实例, 属于列表中哪一个项(行). 成功返回项索引, 否则返回XC_ID_ERROR.
 //
-//	hXCGUI: 对象句柄, UI元素句柄或形状对象句柄.
+// hXCGUI: 对象句柄, UI元素句柄或形状对象句柄.
 func (l *ListBox) GetItemIndexFromHXCGUI(hXCGUI int) int32 {
 	return xc.XListBox_GetItemIndexFromHXCGUI(l.Handle, hXCGUI)
 }
 
 // 列表框_置行间距.
 //
-//	nSpace: 间距大小.
+// nSpace: 间距大小.
 func (l *ListBox) SetRowSpace(nSpace int32) *ListBox {
 	xc.XListBox_SetRowSpace(l.Handle, nSpace)
 	return l
@@ -275,51 +275,51 @@ func (l *ListBox) GetRowSpace() int32 {
 
 // 列表框_测试点击项, 检测坐标点所在项, 返回项索引.
 //
-//	pPt: 坐标点.
+// pPt: 坐标点.
 func (l *ListBox) HitTest(pPt *xc.POINT) int32 {
 	return xc.XListBox_HitTest(l.Handle, pPt)
 }
 
 // 列表框_测试点击项扩展, 检测坐标点所在项, 自动添加滚动视图偏移量, 返回项索引.
 //
-//	pPt: 坐标点.
+// pPt: 坐标点.
 func (l *ListBox) HitTestOffset(pPt *xc.POINT) int32 {
 	return xc.XListBox_HitTestOffset(l.Handle, pPt)
 }
 
 // 列表框_置项模板文件, 设置列表项模板文件.
 //
-//	pXmlFile: 文件名.
+// pXmlFile: 文件名.
 func (l *ListBox) SetItemTemplateXML(pXmlFile string) bool {
 	return xc.XListBox_SetItemTemplateXML(l.Handle, pXmlFile)
 }
 
 // 列表框_置项模板, 设置列表项模板.
 //
-//	hTemp: 模板句柄.
+// hTemp: 模板句柄.
 func (l *ListBox) SetItemTemplate(hTemp int) bool {
 	return xc.XListBox_SetItemTemplate(l.Handle, hTemp)
 }
 
 // 列表框_置项模板从字符串, 设置项布局模板文件.
 //
-//	pStringXML: 字符串.
+// pStringXML: 字符串.
 func (l *ListBox) SetItemTemplateXMLFromString(pStringXML string) bool {
 	return xc.XListBox_SetItemTemplateXMLFromString(l.Handle, pStringXML)
 }
 
 // 列表框_取模板对象, 通过模板项ID, 获取实例化模板项ID对应的对象句柄, 成功返回对象句柄, 否则返回NULL.
 //
-//	iItem: 项索引.
+// iItem: 项索引.
 //
-//	nTempItemID: 模板项ID.
+// nTempItemID: 模板项ID.
 func (l *ListBox) GetTemplateObject(iItem, nTempItemID int32) int {
 	return xc.XListBox_GetTemplateObject(l.Handle, iItem, nTempItemID)
 }
 
 // 列表框_启用多选, 是否启用多行选择功能.
 //
-//	bEnable: 是否启用.
+// bEnable: 是否启用.
 func (l *ListBox) EnableMultiSel(bEnable bool) *ListBox {
 	xc.XListBox_EnableMultiSel(l.Handle, bEnable)
 	return l
@@ -332,7 +332,7 @@ func (l *ListBox) CreateAdapter() int {
 
 // 列表框_绑定数据适配器, 绑定数据适配器.
 //
-//	hAdapter: 数据适配器句柄 XAdTable.
+// hAdapter: 数据适配器句柄 XAdTable.
 func (l *ListBox) BindAdapter(hAdapter int) *ListBox {
 	xc.XListBox_BindAdapter(l.Handle, hAdapter)
 	return l
@@ -345,9 +345,9 @@ func (l *ListBox) GetAdapter() int {
 
 // 列表框_排序.
 //
-//	iColumnAdapter: 需要排序的数据在数据适配器中所属列索引.
+// iColumnAdapter: 需要排序的数据在数据适配器中所属列索引.
 //
-//	bAscending: 升序(TRUE)或降序(FALSE).
+// bAscending: 升序(TRUE)或降序(FALSE).
 func (l *ListBox) Sort(iColumnAdapter int32, bAscending bool) *ListBox {
 	xc.XListBox_Sort(l.Handle, iColumnAdapter, bAscending)
 	return l
@@ -361,7 +361,7 @@ func (l *ListBox) RefreshData() *ListBox {
 
 // 列表框_刷新指定项, 刷新指定项模板, 以便更新UI.
 //
-//	iItem: 项索引.
+// iItem: 项索引.
 func (l *ListBox) RefreshItem(iItem int32) *ListBox {
 	xc.XListBox_RefreshItem(l.Handle, iItem)
 	return l
@@ -369,256 +369,256 @@ func (l *ListBox) RefreshItem(iItem int32) *ListBox {
 
 // 列表框_添加项文本, XAdTable_AddRowText, 返回项索引.
 //
-//	pText:.
+// pText:.
 func (l *ListBox) AddItemText(pText string) int32 {
 	return xc.XListBox_AddItemText(l.Handle, pText)
 }
 
 // 列表框_添加项文本扩展, XAdTable_AddRowTextEx.
 //
-//	pName:.
+// pName:.
 //
-//	pText:.
+// pText:.
 func (l *ListBox) AddItemTextEx(pName string, pText string) int32 {
 	return xc.XListBox_AddItemTextEx(l.Handle, pName, pText)
 }
 
 // 列表框_添加项图片, XAdTable_AddRowImage.
 //
-//	hImage:.
+// hImage:.
 func (l *ListBox) AddItemImage(hImage int) int32 {
 	return xc.XListBox_AddItemImage(l.Handle, hImage)
 }
 
 // 列表框_添加项图片扩展, XAdTable_AddRowImageEx.
 //
-//	pName:.
+// pName:.
 //
-//	hImage:.
+// hImage:.
 func (l *ListBox) AddItemImageEx(pName string, hImage int) int32 {
 	return xc.XListBox_AddItemImageEx(l.Handle, pName, hImage)
 }
 
 // 列表框_插入项文本.
 //
-//	iItem:.
+// iItem:.
 //
-//	pValue:.
+// pValue:.
 func (l *ListBox) InsertItemText(iItem int32, pValue string) int32 {
 	return xc.XListBox_InsertItemText(l.Handle, iItem, pValue)
 }
 
 // 列表框_插入项文本扩展.
 //
-//	iItem:.
+// iItem:.
 //
-//	pName:.
+// pName:.
 //
-//	pValue:.
+// pValue:.
 func (l *ListBox) InsertItemTextEx(iItem int32, pName string, pValue string) int32 {
 	return xc.XListBox_InsertItemTextEx(l.Handle, iItem, pName, pValue)
 }
 
 // 列表框_插入项图片.
 //
-//	iItem:.
+// iItem:.
 //
-//	hImage:.
+// hImage:.
 func (l *ListBox) InsertItemImage(iItem int32, hImage int) int32 {
 	return xc.XListBox_InsertItemImage(l.Handle, iItem, hImage)
 }
 
 // 列表框_插入项图片扩展.
 //
-//	iItem:.
+// iItem:.
 //
-//	pName:.
+// pName:.
 //
-//	hImage:.
+// hImage:.
 func (l *ListBox) InsertItemImageEx(iItem int32, pName string, hImage int) int32 {
 	return xc.XListBox_InsertItemImageEx(l.Handle, iItem, pName, hImage)
 }
 
 // 列表框_置项文本.
 //
-//	iItem:.
+// iItem:.
 //
-//	iColumn:.
+// iColumn:.
 //
-//	pText:.
+// pText:.
 func (l *ListBox) SetItemText(iItem, iColumn int32, pText string) bool {
 	return xc.XListBox_SetItemText(l.Handle, iItem, iColumn, pText)
 }
 
 // 列表框_置项文本扩展.
 //
-//	iItem:.
+// iItem:.
 //
-//	pName:.
+// pName:.
 //
-//	pText:.
+// pText:.
 func (l *ListBox) SetItemTextEx(iItem int32, pName string, pText string) bool {
 	return xc.XListBox_SetItemTextEx(l.Handle, iItem, pName, pText)
 }
 
 // 列表框_置项图片.
 //
-//	iItem:.
+// iItem:.
 //
-//	iColumn:.
+// iColumn:.
 //
-//	hImage:.
+// hImage:.
 func (l *ListBox) SetItemImage(iItem, iColumn int32, hImage int) bool {
 	return xc.XListBox_SetItemImage(l.Handle, iItem, iColumn, hImage)
 }
 
 // 列表框_置项图片扩展.
 //
-//	iItem:.
+// iItem:.
 //
-//	pName:.
+// pName:.
 //
-//	hImage:.
+// hImage:.
 func (l *ListBox) SetItemImageEx(iItem int32, pName string, hImage int) bool {
 	return xc.XListBox_SetItemImageEx(l.Handle, iItem, pName, hImage)
 }
 
 // 列表框_置项整数值.
 //
-//	iItem:.
+// iItem:.
 //
-//	iColumn:.
+// iColumn:.
 //
-//	nValue:.
+// nValue:.
 func (l *ListBox) SetItemInt(iItem, iColumn int32, nValue int32) bool {
 	return xc.XListBox_SetItemInt(l.Handle, iItem, iColumn, nValue)
 }
 
 // 列表框_置项整数值扩展.
 //
-//	iItem:.
+// iItem:.
 //
-//	pName:.
+// pName:.
 //
-//	nValue:.
+// nValue:.
 func (l *ListBox) SetItemIntEx(iItem int32, pName string, nValue int32) bool {
 	return xc.XListBox_SetItemIntEx(l.Handle, iItem, pName, nValue)
 }
 
 // 列表框_置项浮点值.
 //
-//	iItem:.
+// iItem:.
 //
-//	iColumn:.
+// iColumn:.
 //
-//	fFloat:.
+// fFloat:.
 func (l *ListBox) SetItemFloat(iItem, iColumn int32, fFloat float32) bool {
 	return xc.XListBox_SetItemFloat(l.Handle, iItem, iColumn, fFloat)
 }
 
 // 列表框_置项浮点值扩展.
 //
-//	iItem:.
+// iItem:.
 //
-//	pName:.
+// pName:.
 //
-//	fFloat:.
+// fFloat:.
 func (l *ListBox) SetItemFloatEx(iItem int32, pName string, fFloat float32) bool {
 	return xc.XListBox_SetItemFloatEx(l.Handle, iItem, pName, fFloat)
 }
 
 // 列表框_取项文本.
 //
-//	iItem:.
+// iItem:.
 //
-//	iColumn:.
+// iColumn:.
 func (l *ListBox) GetItemText(iItem, iColumn int32) string {
 	return xc.XListBox_GetItemText(l.Handle, iItem, iColumn)
 }
 
 // 列表框_取项文本扩展.
 //
-//	iItem:.
+// iItem:.
 //
-//	pName:.
+// pName:.
 func (l *ListBox) GetItemTextEx(iItem int32, pName string) string {
 	return xc.XListBox_GetItemTextEx(l.Handle, iItem, pName)
 }
 
 // 列表框_取项图片. 返回图片句柄.
 //
-//	iItem:.
+// iItem:.
 //
-//	iColumn:.
+// iColumn:.
 func (l *ListBox) GetItemImage(iItem, iColumn int32) int {
 	return xc.XListBox_GetItemImage(l.Handle, iItem, iColumn)
 }
 
 // 列表框_取项图片扩展. 返回图片句柄.
 //
-//	iItem:.
+// iItem:.
 //
-//	pName:.
+// pName:.
 func (l *ListBox) GetItemImageEx(iItem int32, pName string) int {
 	return xc.XListBox_GetItemImageEx(l.Handle, iItem, pName)
 }
 
 // 列表框_取项整数值.
 //
-//	iItem:.
+// iItem:.
 //
-//	iColumn:.
+// iColumn:.
 //
-//	pOutValue:.
+// pOutValue:.
 func (l *ListBox) GetItemInt(iItem, iColumn int32, pOutValue *int32) bool {
 	return xc.XListBox_GetItemInt(l.Handle, iItem, iColumn, pOutValue)
 }
 
 // 列表框_取项整数值扩展.
 //
-//	iItem:.
+// iItem:.
 //
-//	pName:.
+// pName:.
 //
-//	pOutValue:.
+// pOutValue:.
 func (l *ListBox) GetItemIntEx(iItem int32, pName string, pOutValue *int32) bool {
 	return xc.XListBox_GetItemIntEx(l.Handle, iItem, pName, pOutValue)
 }
 
 // 列表框_取项浮点值.
 //
-//	iItem:.
+// iItem:.
 //
-//	iColumn:.
+// iColumn:.
 //
-//	pOutValue:.
+// pOutValue:.
 func (l *ListBox) GetItemFloat(iItem, iColumn int32, pOutValue *float32) bool {
 	return xc.XListBox_GetItemFloat(l.Handle, iItem, iColumn, pOutValue)
 }
 
 // 列表框_取项浮点值扩展.
 //
-//	iItem:.
+// iItem:.
 //
-//	pName:.
+// pName:.
 //
-//	pOutValue:.
+// pOutValue:.
 func (l *ListBox) GetItemFloatEx(iItem int32, pName string, pOutValue *float32) bool {
 	return xc.XListBox_GetItemFloatEx(l.Handle, iItem, pName, pOutValue)
 }
 
 // 列表框_删除项.
 //
-//	iItem:.
+// iItem:.
 func (l *ListBox) DeleteItem(iItem int32) bool {
 	return xc.XListBox_DeleteItem(l.Handle, iItem)
 }
 
 // 列表框_删除项扩展.
 //
-//	iItem:.
+// iItem:.
 //
-//	nCount:.
+// nCount:.
 func (l *ListBox) DeleteItemEx(iItem int32, nCount int32) bool {
 	return xc.XListBox_DeleteItemEx(l.Handle, iItem, nCount)
 }
@@ -647,7 +647,7 @@ func (l *ListBox) GetCountColumn_AD() int32 {
 
 // 列表框_置分割线颜色.
 //
-//	color: ARGB 颜色值.
+// color: ARGB 颜色值.
 func (l *ListBox) SetSplitLineColor(color int) *ListBox {
 	xc.XListBox_SetSplitLineColor(l.Handle, color)
 	return l
@@ -655,9 +655,9 @@ func (l *ListBox) SetSplitLineColor(color int) *ListBox {
 
 // 列表框_置拖动矩形颜色.
 //
-//	color: ARGB 颜色值.
+// color: ARGB 颜色值.
 //
-//	width: 线宽度.
+// width: 线宽度.
 func (l *ListBox) SetDragRectColor(color int, width int32) *ListBox {
 	xc.XListBox_SetDragRectColor(l.Handle, color, width)
 	return l
@@ -665,20 +665,20 @@ func (l *ListBox) SetDragRectColor(color int, width int32) *ListBox {
 
 // 列表框_置项模板从内存. 设置项模板文件.
 //
-//	data: 模板数据.
+// data: 模板数据.
 func (l *ListBox) SetItemTemplateXMLFromMem(data []byte) bool {
 	return xc.XListBox_SetItemTemplateXMLFromMem(l.Handle, data)
 }
 
 // 列表框_置项模板从资源ZIP. 设置项模板文件.
 //
-//	id: RC资源ID.
+// id: RC资源ID.
 //
-//	pFileName: 项模板文件名.
+// pFileName: 项模板文件名.
 //
-//	pPassword: zip密码.
+// pPassword: zip密码.
 //
-//	hModule: 模块句柄, 可填0.
+// hModule: 模块句柄, 可填0.
 func (l *ListBox) SetItemTemplateXMLFromZipRes(id int32, pFileName string, pPassword string, hModule uintptr) bool {
 	return xc.XListBox_SetItemTemplateXMLFromZipRes(l.Handle, id, pFileName, pPassword, hModule)
 }
@@ -690,11 +690,11 @@ func (l *ListBox) GetItemTemplate() int {
 
 // 列表框_置项高度. 注意:为了提高性能, 默认使用列表框的全局项高度, 如果需要指定项单独高度, 需要关闭固定行高: xc.XListBox_EnableFixedRowHeight
 //
-//	iItem: 项索引.
+// iItem: 项索引.
 //
-//	nHeight: 项高度.
+// nHeight: 项高度.
 //
-//	nSelHeight: 项选中时高度.
+// nSelHeight: 项选中时高度.
 func (l *ListBox) SetItemHeight(iItem, nHeight, nSelHeight int32) *ListBox {
 	xc.XListBox_SetItemHeight(l.Handle, iItem, nHeight, nSelHeight)
 	return l
@@ -702,11 +702,11 @@ func (l *ListBox) SetItemHeight(iItem, nHeight, nSelHeight int32) *ListBox {
 
 // 列表框_取项高度.
 //
-//	iItem: 项索引.
+// iItem: 项索引.
 //
-//	pHeight: 高度.
+// pHeight: 高度.
 //
-//	pSelHeight: 选中时高度.
+// pSelHeight: 选中时高度.
 func (l *ListBox) GetItemHeight(iItem int32, pHeight, pSelHeight *int32) *ListBox {
 	xc.XListBox_GetItemHeight(l.Handle, iItem, pHeight, pSelHeight)
 	return l

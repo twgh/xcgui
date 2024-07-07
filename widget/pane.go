@@ -12,13 +12,13 @@ type Pane struct {
 
 // 窗格_创建, 创建窗格元素, 返回元素句柄.
 //
-//	pName: 窗格标题.
+// pName: 窗格标题.
 //
-//	nWidth: 宽度.
+// nWidth: 宽度.
 //
-//	nHeight: 高度.
+// nHeight: 高度.
 //
-//	hFrameWnd: 框架窗口.
+// hFrameWnd: 框架窗口.
 func NewPane(pName string, nWidth, nHeight int32, hFrameWnd int) *Pane {
 	p := &Pane{}
 	p.SetHandle(xc.XPane_Create(pName, nWidth, nHeight, hFrameWnd))
@@ -67,7 +67,7 @@ func NewPaneByUIDName(name string) *Pane {
 
 // 窗格_置视图, 设置窗格视图元素.
 //
-//	hView: 绑定视图元素.
+// hView: 绑定视图元素.
 func (p *Pane) SetView(hView int) *Pane {
 	xc.XPane_SetView(p.Handle, hView)
 	return p
@@ -75,7 +75,7 @@ func (p *Pane) SetView(hView int) *Pane {
 
 // 窗格_置标题, 设置标题文本.
 //
-//	pTitle: 文本内容.
+// pTitle: 文本内容.
 func (p *Pane) SetTitle(pTitle string) *Pane {
 	xc.XPane_SetTitle(p.Handle, pTitle)
 	return p
@@ -88,7 +88,7 @@ func (p *Pane) GetTitle() string {
 
 // 窗格_置标题栏高度, 设置标题栏高度.
 //
-//	nHeight: 高度.
+// nHeight: 高度.
 func (p *Pane) SetCaptionHeight(nHeight int32) *Pane {
 	xc.XPane_SetCaptionHeight(p.Handle, nHeight)
 	return p
@@ -106,9 +106,9 @@ func (p *Pane) IsShowPane() bool {
 
 // 窗格_置大小, 设置窗格大小.
 //
-//	nWidth: 宽度.
+// nWidth: 宽度.
 //
-//	nHeight: 高度.
+// nHeight: 高度.
 func (p *Pane) SetSize(nWidth, nHeight int32) *Pane {
 	xc.XPane_SetSize(p.Handle, nWidth, nHeight)
 	return p
@@ -121,7 +121,7 @@ func (p *Pane) GetState() xcc.Pane_State_ {
 
 // 窗格_取视图坐标, 获取窗格视图坐标.
 //
-//	pRect: 接收返回的坐标值.
+// pRect: 接收返回的坐标值.
 func (p *Pane) GetViewRect(pRect *xc.RECT) *Pane {
 	xc.XPane_GetViewRect(p.Handle, pRect)
 	return p
@@ -129,7 +129,7 @@ func (p *Pane) GetViewRect(pRect *xc.RECT) *Pane {
 
 // HidePane 窗格_隐藏.
 //
-//	bGroupActivate: 当为窗格组成员时, 延迟处理窗格组成员激活的切换.
+// bGroupActivate: 当为窗格组成员时, 延迟处理窗格组成员激活的切换.
 func (p *Pane) HidePane(bGroupActivate bool) *Pane {
 	xc.XPane_HidePane(p.Handle, bGroupActivate)
 	return p
@@ -137,7 +137,7 @@ func (p *Pane) HidePane(bGroupActivate bool) *Pane {
 
 // ShowPane 窗格_显示.
 //
-//	bGroupActivate: 如果是窗格组成员, 那么窗格组切换当前窗格为显示状态.
+// bGroupActivate: 如果是窗格组成员, 那么窗格组切换当前窗格为显示状态.
 func (p *Pane) ShowPane(bGroupActivate bool) *Pane {
 	xc.XPane_ShowPane(p.Handle, bGroupActivate)
 	return p
@@ -163,7 +163,7 @@ func (p *Pane) FloatPane() *Pane {
 
 // 窗格_绘制, 手动调用该函数绘制窗格, 以便控制绘制顺序.
 //
-//	hDraw: 图形绘制句柄.
+// hDraw: 图形绘制句柄.
 func (p *Pane) DrawPane(hDraw int) *Pane {
 	xc.XPane_DrawPane(p.Handle, hDraw)
 	return p

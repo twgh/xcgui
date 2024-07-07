@@ -21,9 +21,9 @@ func NewByHandle(handle int) *BkObj {
 
 // NewByBkm 从BkManager对象创建BkObj对象, 失败返回nil.
 //
-//	bkm: 背景管理器对象.
+// bkm: 背景管理器对象.
 //
-//	id: 背景对象ID.
+// id: 背景对象ID.
 func NewByBkm(bkm *bkmanager.BkManager, id int32) *BkObj {
 	handle := bkm.GetObject(id)
 	if handle == 0 {
@@ -36,9 +36,9 @@ func NewByBkm(bkm *bkmanager.BkManager, id int32) *BkObj {
 
 // NewByBkmHandle 从BkManager句柄创建BkObj对象, 失败返回nil.
 //
-//	hBkm: 背景管理器句柄.
+// hBkm: 背景管理器句柄.
 //
-//	id: 背景对象ID.
+// id: 背景对象ID.
 func NewByBkmHandle(hBkm int, id int32) *BkObj {
 	handle := xc.XBkM_GetObject(hBkm, id)
 	if handle == 0 {
@@ -51,13 +51,13 @@ func NewByBkmHandle(hBkm int, id int32) *BkObj {
 
 // 背景对象_置外间距, 外间距与对齐标识(BkObject_Align_Flag_)互相依赖.
 //
-//	left: 左边间距.
+// left: 左边间距.
 //
-//	top: 顶部间距.
+// top: 顶部间距.
 //
-//	right: 右边间距.
+// right: 右边间距.
 //
-//	bottom: 底部间距.
+// bottom: 底部间距.
 func (b *BkObj) SetMargin(left, top, right, bottom int32) *BkObj {
 	xc.XBkObj_SetMargin(b.Handle, left, top, right, bottom)
 	return b
@@ -65,7 +65,7 @@ func (b *BkObj) SetMargin(left, top, right, bottom int32) *BkObj {
 
 // 背景对象_置对齐.
 //
-//	nFlags: 对齐方式: xcc.BkObject_Align_Flag_.
+// nFlags: 对齐方式: xcc.BkObject_Align_Flag_.
 func (b *BkObj) SetAlign(nFlags xcc.BkObject_Align_Flag_) *BkObj {
 	xc.XBkObj_SetAlign(b.Handle, nFlags)
 	return b
@@ -73,7 +73,7 @@ func (b *BkObj) SetAlign(nFlags xcc.BkObject_Align_Flag_) *BkObj {
 
 // 背景对象_置图片.
 //
-//	hImage: 图片句柄.
+// hImage: 图片句柄.
 func (b *BkObj) SetImage(hImage int) *BkObj {
 	xc.XBkObj_SetImage(b.Handle, hImage)
 	return b
@@ -81,7 +81,7 @@ func (b *BkObj) SetImage(hImage int) *BkObj {
 
 // 背景对象_置旋转.
 //
-//	angle: 旋转角度.
+// angle: 旋转角度.
 func (b *BkObj) SetRotate(angle float32) *BkObj {
 	xc.XBkObj_SetRotate(b.Handle, angle)
 	return b
@@ -89,7 +89,7 @@ func (b *BkObj) SetRotate(angle float32) *BkObj {
 
 // 背景对象_置填充颜色.
 //
-//	color: ARGB 颜色值.
+// color: ARGB 颜色值.
 func (b *BkObj) SetFillColor(color int) *BkObj {
 	xc.XBkObj_SetFillColor(b.Handle, color)
 	return b
@@ -97,7 +97,7 @@ func (b *BkObj) SetFillColor(color int) *BkObj {
 
 // 背景对象_置边框宽度.
 //
-//	width: 宽度.
+// width: 宽度.
 func (b *BkObj) SetBorderWidth(width int32) *BkObj {
 	xc.XBkObj_SetBorderWidth(b.Handle, width)
 	return b
@@ -105,7 +105,7 @@ func (b *BkObj) SetBorderWidth(width int32) *BkObj {
 
 // 背景对象_置边框颜色.
 //
-//	color: xc.ARGB 颜色值.
+// color: xc.ARGB 颜色值.
 func (b *BkObj) SetBorderColor(color int) *BkObj {
 	xc.XBkObj_SetBorderColor(b.Handle, color)
 	return b
@@ -113,13 +113,13 @@ func (b *BkObj) SetBorderColor(color int) *BkObj {
 
 // 背景对象_置矩形圆角.
 //
-//	leftTop: 左上角.
+// leftTop: 左上角.
 //
-//	leftBottom: 左下角.
+// leftBottom: 左下角.
 //
-//	rightTop: 右上角.
+// rightTop: 右上角.
 //
-//	rightBottom: 右下角.
+// rightBottom: 右下角.
 func (b *BkObj) SetRectRoundAngle(leftTop, leftBottom, rightTop, rightBottom int32) *BkObj {
 	xc.XBkObj_SetRectRoundAngle(b.Handle, leftTop, leftBottom, rightTop, rightBottom)
 	return b
@@ -127,7 +127,7 @@ func (b *BkObj) SetRectRoundAngle(leftTop, leftBottom, rightTop, rightBottom int
 
 // 背景对象_启用填充, 启用绘制填充.
 //
-//	bEnable: 是否启用.
+// bEnable: 是否启用.
 func (b *BkObj) EnableFill(bEnable bool) *BkObj {
 	xc.XBkObj_EnableFill(b.Handle, bEnable)
 	return b
@@ -135,7 +135,7 @@ func (b *BkObj) EnableFill(bEnable bool) *BkObj {
 
 // 背景对象_启用边框, 启用绘制边框.
 //
-//	bEnable: 是否启用.
+// bEnable: 是否启用.
 func (b *BkObj) EnableBorder(bEnable bool) *BkObj {
 	xc.XBkObj_EnableBorder(b.Handle, bEnable)
 	return b
@@ -143,7 +143,7 @@ func (b *BkObj) EnableBorder(bEnable bool) *BkObj {
 
 // 背景对象_置文本.
 //
-//	pText: 文本字符串.
+// pText: 文本字符串.
 func (b *BkObj) SetText(pText string) *BkObj {
 	xc.XBkObj_SetText(b.Handle, pText)
 	return b
@@ -151,7 +151,7 @@ func (b *BkObj) SetText(pText string) *BkObj {
 
 // 背景对象_置字体.
 //
-//	hFont: 字体句柄.
+// hFont: 字体句柄.
 func (b *BkObj) SetFont(hFont int) *BkObj {
 	xc.XBkObj_SetFont(b.Handle, hFont)
 	return b
@@ -159,7 +159,7 @@ func (b *BkObj) SetFont(hFont int) *BkObj {
 
 // 背景对象_置文本对齐.
 //
-//	nAlign: 文本对齐方式: xcc.TextFormatFlag_, xcc.TextAlignFlag_, xcc.TextTrimming_.
+// nAlign: 文本对齐方式: xcc.TextFormatFlag_, xcc.TextAlignFlag_, xcc.TextTrimming_.
 func (b *BkObj) SetTextAlign(nAlign xcc.TextFormatFlag_) *BkObj {
 	xc.XBkObj_SetTextAlign(b.Handle, nAlign)
 	return b
@@ -167,7 +167,7 @@ func (b *BkObj) SetTextAlign(nAlign xcc.TextFormatFlag_) *BkObj {
 
 // 背景对象_取外间距.
 //
-//	pMargin: 接收返回外间距.
+// pMargin: 接收返回外间距.
 func (b *BkObj) GetMargin(pMargin *xc.RECT) *BkObj {
 	xc.XBkObj_GetMargin(b.Handle, pMargin)
 	return b
@@ -207,7 +207,7 @@ func (b *BkObj) GetBorderWidth() *BkObj {
 
 // 背景对象_取矩形圆角.
 //
-//	pRect: 接收返回圆角大小.
+// pRect: 接收返回圆角大小.
 func (b *BkObj) GetRectRoundAngle(pRect *xc.RECT) *BkObj {
 	xc.XBkObj_GetRectRoundAngle(b.Handle, pRect)
 	return b

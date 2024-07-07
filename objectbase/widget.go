@@ -17,7 +17,7 @@ func (w *Widget) IsShow() bool {
 
 // 窗口组件_显示.
 //
-//	bShow: 是否显示.
+// bShow: 是否显示.
 func (w *Widget) Show(bShow bool) *Widget {
 	xc.XWidget_Show(w.Handle, bShow)
 	return w
@@ -25,7 +25,7 @@ func (w *Widget) Show(bShow bool) *Widget {
 
 // 窗口组件_启用布局控制.
 //
-//	bEnable:.
+// bEnable:.
 func (w *Widget) EnableLayoutControl(bEnable bool) *Widget {
 	xc.XWidget_EnableLayoutControl(w.Handle, bEnable)
 	return w
@@ -58,7 +58,7 @@ func (w *Widget) GetHWINDOW() int {
 
 // 窗口组件_布局项_启用换行, 强制换行.
 //
-//	bWrap: 是否换行.
+// bWrap: 是否换行.
 func (w *Widget) LayoutItem_EnableWrap(bWrap bool) *Widget {
 	xc.XWidget_LayoutItem_EnableWrap(w.Handle, bWrap)
 	return w
@@ -66,7 +66,7 @@ func (w *Widget) LayoutItem_EnableWrap(bWrap bool) *Widget {
 
 // 窗口组件_布局项_启用交换, 根据水平垂直布局变换, 交换属性(宽度,高度,最小宽度,最小高度).
 //
-//	bEnable: 是否启用.
+// bEnable: 是否启用.
 func (w *Widget) LayoutItem_EnableSwap(bEnable bool) *Widget {
 	xc.XWidget_LayoutItem_EnableSwap(w.Handle, bEnable)
 	return w
@@ -74,7 +74,7 @@ func (w *Widget) LayoutItem_EnableSwap(bEnable bool) *Widget {
 
 // 窗口组件_布局项_启用浮动, 向反方向对齐.
 //
-//	bFloat: 是否浮动.
+// bFloat: 是否浮动.
 func (w *Widget) LayoutItem_EnableFloat(bFloat bool) *Widget {
 	xc.XWidget_LayoutItem_EnableFloat(w.Handle, bFloat)
 	return w
@@ -82,9 +82,9 @@ func (w *Widget) LayoutItem_EnableFloat(bFloat bool) *Widget {
 
 // 窗口组件_布局项_置宽度.
 //
-//	nType: 类型: xcc.Layout_Size_.
+// nType: 类型: xcc.Layout_Size_.
 //
-//	nWidth: 宽度.
+// nWidth: 宽度.
 func (w *Widget) LayoutItem_SetWidth(nType xcc.Layout_Size_, nWidth int32) *Widget {
 	xc.XWidget_LayoutItem_SetWidth(w.Handle, nType, nWidth)
 	return w
@@ -92,9 +92,9 @@ func (w *Widget) LayoutItem_SetWidth(nType xcc.Layout_Size_, nWidth int32) *Widg
 
 // 窗口组件_布局项_置高度.
 //
-//	nType: 类型: xcc.Layout_Size_.
+// nType: 类型: xcc.Layout_Size_.
 //
-//	nHeight: 高度.
+// nHeight: 高度.
 func (w *Widget) LayoutItem_SetHeight(nType xcc.Layout_Size_, nHeight int32) *Widget {
 	xc.XWidget_LayoutItem_SetHeight(w.Handle, nType, nHeight)
 	return w
@@ -102,9 +102,9 @@ func (w *Widget) LayoutItem_SetHeight(nType xcc.Layout_Size_, nHeight int32) *Wi
 
 // 窗口组件_布局项_取宽度.
 //
-//	pType: 返回类型.
+// pType: 返回类型.
 //
-//	pWidth: 返回宽度.
+// pWidth: 返回宽度.
 func (w *Widget) LayoutItem_GetWidth(pType *xcc.Layout_Size_, pWidth *int32) *Widget {
 	xc.XWidget_LayoutItem_GetWidth(w.Handle, pType, pWidth)
 	return w
@@ -112,9 +112,9 @@ func (w *Widget) LayoutItem_GetWidth(pType *xcc.Layout_Size_, pWidth *int32) *Wi
 
 // 窗口组件_布局项_取高度.
 //
-//	pType: 返回类型.
+// pType: 返回类型.
 //
-//	pHeight: 返回高度.
+// pHeight: 返回高度.
 func (w *Widget) LayoutItem_GetHeight(pType *xcc.Layout_Size_, pHeight *int32) *Widget {
 	xc.XWidget_LayoutItem_GetHeight(w.Handle, pType, pHeight)
 	return w
@@ -122,7 +122,7 @@ func (w *Widget) LayoutItem_GetHeight(pType *xcc.Layout_Size_, pHeight *int32) *
 
 // 窗口组件_布局项_置对齐, 根据水平垂直轴变化对齐.
 //
-//	nAlign: 对齐方式: xcc.Layout_Align_Axis_.
+// nAlign: 对齐方式: xcc.Layout_Align_Axis_.
 func (w *Widget) LayoutItem_SetAlign(nAlign xcc.Layout_Align_Axis_) *Widget {
 	xc.XWidget_LayoutItem_SetAlign(w.Handle, nAlign)
 	return w
@@ -136,7 +136,7 @@ func (w *Widget) LayoutItem_SetMargin(left, top, right, bottom int32) *Widget {
 
 // 窗口组件_布局项_置对齐.
 //
-//	pMargin: 接收返回.
+// pMargin: 接收返回.
 func (w *Widget) LayoutItem_GetMargin(pMargin *xc.RECT) *Widget {
 	xc.XWidget_LayoutItem_GetMargin(w.Handle, pMargin)
 	return w
@@ -144,9 +144,9 @@ func (w *Widget) LayoutItem_GetMargin(pMargin *xc.RECT) *Widget {
 
 // 窗口组件_布局项_置最小大小, 限制大小仅针对缩放有效(自动, 填充父, 比例, 百分比).
 //
-//	width: 最小宽度.
+// width: 最小宽度.
 //
-//	height: 最小高度.
+// height: 最小高度.
 func (w *Widget) LayoutItem_SetMinSize(width, height int32) *Widget {
 	xc.XWidget_LayoutItem_SetMinSize(w.Handle, width, height)
 	return w
@@ -154,13 +154,13 @@ func (w *Widget) LayoutItem_SetMinSize(width, height int32) *Widget {
 
 // 窗口组件_布局项_置位置, 相对位置, 值大于等于0有效.
 //
-//	left: 左边距离.
+// left: 左边距离.
 //
-//	top: 上边距离.
+// top: 上边距离.
 //
-//	right: 右边距离.
+// right: 右边距离.
 //
-//	bottom: 下边距离.
+// bottom: 下边距离.
 func (w *Widget) LayoutItem_SetPosition(left, top, right, bottom int32) *Widget {
 	xc.XWidget_LayoutItem_SetPosition(w.Handle, left, top, right, bottom)
 	return w
@@ -168,7 +168,7 @@ func (w *Widget) LayoutItem_SetPosition(left, top, right, bottom int32) *Widget 
 
 // 窗口组件_置ID, 设置元素ID.
 //
-//	nID: ID值.
+// nID: ID值.
 func (w *Widget) SetID(nID int32) *Widget {
 	xc.XWidget_SetID(w.Handle, nID)
 	return w
@@ -176,7 +176,7 @@ func (w *Widget) SetID(nID int32) *Widget {
 
 // 窗口组件_置UID, 设置元素UID, 全局唯一标识符.
 //
-//	nUID: UID值.
+// nUID: UID值.
 func (w *Widget) SetUID(nUID int32) *Widget {
 	xc.XWidget_SetUID(w.Handle, nUID)
 	return w
@@ -184,7 +184,7 @@ func (w *Widget) SetUID(nUID int32) *Widget {
 
 // 窗口组件_置名称 设置元素name.
 //
-//	pName: name值.
+// pName: name值.
 func (w *Widget) SetName(pName string) *Widget {
 	xc.XWidget_SetName(w.Handle, pName)
 	return w

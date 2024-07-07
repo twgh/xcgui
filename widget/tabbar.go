@@ -12,15 +12,15 @@ type TabBar struct {
 
 // TAB条_创建, 创建tabBar元素, 返回元素句柄.
 //
-//	x: 元素x坐标.
+// x: 元素x坐标.
 //
-//	y: 元素y坐标.
+// y: 元素y坐标.
 //
-//	cx: 宽度.
+// cx: 宽度.
 //
-//	cy: 高度.
+// cy: 高度.
 //
-//	hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
+// hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
 func NewTabBar(x, y, cx, cy int32, hParent int) *TabBar {
 	p := &TabBar{}
 	p.SetHandle(xc.XTabBar_Create(x, y, cx, cy, hParent))
@@ -69,32 +69,32 @@ func NewTabBarByUIDName(name string) *TabBar {
 
 // TAB条_添加标签, 添加一个标签, 返回标签索引.
 //
-//	pName: 标签文本内容.
+// pName: 标签文本内容.
 func (t *TabBar) AddLabel(pName string) int32 {
 	return xc.XTabBar_AddLabel(t.Handle, pName)
 }
 
 // TAB条插入_标签, 插入一个标签, 返回标签索引.
 //
-//	index: 插入位置.
+// index: 插入位置.
 //
-//	pName: 标签文本内容.
+// pName: 标签文本内容.
 func (t *TabBar) InsertLabel(index int32, pName string) int32 {
 	return xc.XTabBar_InsertLabel(t.Handle, index, pName)
 }
 
 // TAB条_移动标签.
 //
-//	iSrc: 源位置索引.
+// iSrc: 源位置索引.
 //
-//	iDest: 目标位置索引.
+// iDest: 目标位置索引.
 func (t *TabBar) MoveLabel(iSrc int32, iDest int32) bool {
 	return xc.XTabBar_MoveLabel(t.Handle, iSrc, iDest)
 }
 
 // TAB条_删除标签, 删除一个标签.
 //
-//	index: 位置索引.
+// index: 位置索引.
 func (t *TabBar) DeleteLabel(index int32) bool {
 	return xc.XTabBar_DeleteLabel(t.Handle, index)
 }
@@ -107,14 +107,14 @@ func (t *TabBar) DeleteLabelAll() *TabBar {
 
 // TAB条_取标签, 获取标签按钮句柄.
 //
-//	index: 位置索引.
+// index: 位置索引.
 func (t *TabBar) GetLabel(index int32) int {
 	return xc.XTabBar_GetLabel(t.Handle, index)
 }
 
 // TAB条_取标签上的关闭按钮, 获取标签上关闭按钮句柄.
 //
-//	index: 位置索引.
+// index: 位置索引.
 func (t *TabBar) GetLabelClose(index int32) int {
 	return xc.XTabBar_GetLabelClose(t.Handle, index)
 }
@@ -151,14 +151,14 @@ func (t *TabBar) GetLabelCount() int32 {
 
 // TAB条_取标签位置索引, 获取标签按钮位置索引, 成功返回索引值, 否则返回 XC_ID_ERROR.
 //
-//	hLabel: 标签按钮句柄.
+// hLabel: 标签按钮句柄.
 func (t *TabBar) GetindexByEle(hLabel int) int32 {
 	return xc.XTabBar_GetindexByEle(t.Handle, hLabel)
 }
 
 // TAB条_置间隔, 设置标签间距, 0没有间距.
 //
-//	spacing: 标签间隔大小.
+// spacing: 标签间隔大小.
 func (t *TabBar) SetLabelSpacing(spacing int32) *TabBar {
 	xc.XTabBar_SetLabelSpacing(t.Handle, spacing)
 	return t
@@ -166,13 +166,13 @@ func (t *TabBar) SetLabelSpacing(spacing int32) *TabBar {
 
 // TAB条_置边距, 设置内容与边框的间隔大小.
 //
-//	left: 左边间隔大小.
+// left: 左边间隔大小.
 //
-//	top: 上边间隔大小.
+// top: 上边间隔大小.
 //
-//	right: 右边间隔大小.
+// right: 右边间隔大小.
 //
-//	bottom: 下边间隔大小.
+// bottom: 下边间隔大小.
 func (t *TabBar) SetPadding(left, top, right, bottom int32) *TabBar {
 	xc.XTabBar_SetPadding(t.Handle, left, top, right, bottom)
 	return t
@@ -180,7 +180,7 @@ func (t *TabBar) SetPadding(left, top, right, bottom int32) *TabBar {
 
 // TAB条_置选择, 设置选择标签.
 //
-//	index: 标签位置索引.
+// index: 标签位置索引.
 func (t *TabBar) SetSelect(index int32) *TabBar {
 	xc.XTabBar_SetSelect(t.Handle, index)
 	return t
@@ -200,7 +200,7 @@ func (t *TabBar) SetDown() *TabBar {
 
 // TAB条_启用平铺, 平铺标签, 每个标签显示相同大小.
 //
-//	bTile: 是否启用.
+// bTile: 是否启用.
 func (t *TabBar) EnableTile(bTile bool) *TabBar {
 	xc.XTabBar_EnableTile(t.Handle, bTile)
 	return t
@@ -208,7 +208,7 @@ func (t *TabBar) EnableTile(bTile bool) *TabBar {
 
 // TAB条_启用下拉菜单按钮.
 //
-//	bEnable:.
+// bEnable:.
 func (t *TabBar) EnableDropMenu(bEnable bool) *TabBar {
 	xc.XTabBar_EnableDropMenu(t.Handle, bEnable)
 	return t
@@ -216,7 +216,7 @@ func (t *TabBar) EnableDropMenu(bEnable bool) *TabBar {
 
 // TAB条_启用标签带关闭按钮, 启用关闭标签功能.
 //
-//	bEnable: 是否启用.
+// bEnable: 是否启用.
 func (t *TabBar) EnableClose(bEnable bool) *TabBar {
 	xc.XTabBar_EnableClose(t.Handle, bEnable)
 	return t
@@ -224,7 +224,7 @@ func (t *TabBar) EnableClose(bEnable bool) *TabBar {
 
 // TAB条_置关闭按钮大小, 设置关闭按钮大小.
 //
-//	pSize: 大小值, 宽度和高度可以为-1, -1代表默认值.
+// pSize: 大小值, 宽度和高度可以为-1, -1代表默认值.
 func (t *TabBar) SetCloseSize(pSize *xc.SIZE) *TabBar {
 	xc.XTabBar_SetCloseSize(t.Handle, pSize)
 	return t
@@ -232,7 +232,7 @@ func (t *TabBar) SetCloseSize(pSize *xc.SIZE) *TabBar {
 
 // TAB条_置滚动按钮大小.
 //
-//	pSize: 大小值, 宽度和高度可以为-1, -1代表默认值.
+// pSize: 大小值, 宽度和高度可以为-1, -1代表默认值.
 func (t *TabBar) SetTurnButtonSize(pSize *xc.SIZE) *TabBar {
 	xc.XTabBar_SetTurnButtonSize(t.Handle, pSize)
 	return t
@@ -240,9 +240,9 @@ func (t *TabBar) SetTurnButtonSize(pSize *xc.SIZE) *TabBar {
 
 // TAB条_置指定标签固定宽度.
 //
-//	index: 索引.
+// index: 索引.
 //
-//	nWidth: 宽度, , 如果值为-1, 那么自动计算宽度.
+// nWidth: 宽度, , 如果值为-1, 那么自动计算宽度.
 func (t *TabBar) SetLabelWidth(index, nWidth int32) *TabBar {
 	xc.XTabBar_SetLabelWidth(t.Handle, index, nWidth)
 	return t
@@ -250,9 +250,9 @@ func (t *TabBar) SetLabelWidth(index, nWidth int32) *TabBar {
 
 // TAB条_显示标签, 显示或隐藏指定标签.
 //
-//	index: 标签索引.
+// index: 标签索引.
 //
-//	bShow: 是否显示.
+// bShow: 是否显示.
 func (t *TabBar) ShowLabel(index int32, bShow bool) bool {
 	return xc.XTabBar_ShowLabel(t.Handle, index, bShow)
 }

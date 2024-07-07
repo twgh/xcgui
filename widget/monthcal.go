@@ -12,15 +12,15 @@ type MonthCal struct {
 
 // 月历_创建, 创建日期时间元素.
 //
-//	x: x坐标.
+// x: x坐标.
 //
-//	y: y坐标.
+// y: y坐标.
 //
-//	cx: 宽度.
+// cx: 宽度.
 //
-//	cy: 高度.
+// cy: 高度.
 //
-//	hParent: 父为窗口句柄或元素句柄.
+// hParent: 父为窗口句柄或元素句柄.
 func NewMonthCal(x, y, cx, cy int32, hParent int) *MonthCal {
 	p := &MonthCal{}
 	p.SetHandle(xc.XMonthCal_Create(x, y, cx, cy, hParent))
@@ -69,18 +69,18 @@ func NewMonthCalByUIDName(name string) *MonthCal {
 
 // 月历_取内部按钮, 获取内部按钮元素.
 //
-//	nType: 按钮类型, MonthCal_Button_Type_.
+// nType: 按钮类型, MonthCal_Button_Type_.
 func (m *MonthCal) GetButton(nType xcc.MonthCal_Button_Type_) int {
 	return xc.XMonthCal_GetButton(m.Handle, nType)
 }
 
 // 月历_置当前日期, 设置月历选中的年月日.
 //
-//	nYear: 年.
+// nYear: 年.
 //
-//	nMonth: 月.
+// nMonth: 月.
 //
-//	nDay: 日.
+// nDay: 日.
 func (m *MonthCal) SetToday(nYear int32, nMonth int32, nDay int32) *MonthCal {
 	xc.XMonthCal_SetToday(m.Handle, nYear, nMonth, nDay)
 	return m
@@ -88,11 +88,11 @@ func (m *MonthCal) SetToday(nYear int32, nMonth int32, nDay int32) *MonthCal {
 
 // 月历_取当前日期, 获取月历当前年月日.
 //
-//	pnYear: 年.
+// pnYear: 年.
 //
-//	pnMonth: 月.
+// pnMonth: 月.
 //
-//	pnDay: 日.
+// pnDay: 日.
 func (m *MonthCal) GetToday(pnYear *int32, pnMonth *int32, pnDay *int32) *MonthCal {
 	xc.XMonthCal_GetToday(m.Handle, pnYear, pnMonth, pnDay)
 	return m
@@ -100,11 +100,11 @@ func (m *MonthCal) GetToday(pnYear *int32, pnMonth *int32, pnDay *int32) *MonthC
 
 // 月历_取选择日期, 获取月历选中的年月日.
 //
-//	pnYear: 年.
+// pnYear: 年.
 //
-//	pnMonth: 月.
+// pnMonth: 月.
 //
-//	pnDay: 日.
+// pnDay: 日.
 func (m *MonthCal) GetSelDate(pnYear *int32, pnMonth *int32, pnDay *int32) *MonthCal {
 	xc.XMonthCal_GetSelDate(m.Handle, pnYear, pnMonth, pnDay)
 	return m
@@ -112,9 +112,9 @@ func (m *MonthCal) GetSelDate(pnYear *int32, pnMonth *int32, pnDay *int32) *Mont
 
 // 月历_置文本颜色.
 //
-//	nFlag: 1:周六, 周日文字颜色, 2:日期文字的颜色; 其它周文字颜色, 使用元素自身颜色.
+// nFlag: 1:周六, 周日文字颜色, 2:日期文字的颜色; 其它周文字颜色, 使用元素自身颜色.
 //
-//	color: ARGB 颜色值.
+// color: ARGB 颜色值.
 func (m *MonthCal) SetTextColor(nFlag int32, color int) *MonthCal {
 	xc.XMonthCal_SetTextColor(m.Handle, nFlag, color)
 	return m

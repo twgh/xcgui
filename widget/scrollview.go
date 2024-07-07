@@ -12,15 +12,15 @@ type ScrollView struct {
 
 // 滚动视_创建, 创建滚动视图元素, 返回元素句柄.
 //
-//	x: 元素x坐标.
+// x: 元素x坐标.
 //
-//	y: 元素y坐标.
+// y: 元素y坐标.
 //
-//	cx: 宽度.
+// cx: 宽度.
 //
-//	cy: 高度.
+// cy: 高度.
 //
-//	hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
+// hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
 func NewScrollView(x, y, cx, cy int32, hParent int) *ScrollView {
 	p := &ScrollView{}
 	p.SetHandle(xc.XSView_Create(x, y, cx, cy, hParent))
@@ -69,16 +69,16 @@ func NewScrollViewByUIDName(name string) *ScrollView {
 
 // 滚动视_置视图大小, 设置内容大小, 如果内容改变返回TRUE否则返回FALSE.
 //
-//	cx: 宽度.
+// cx: 宽度.
 //
-//	cy: 高度.
+// cy: 高度.
 func (s *ScrollView) SetTotalSize(cx, cy int32) bool {
 	return xc.XSView_SetTotalSize(s.Handle, cx, cy)
 }
 
 // 滚动视_取视图大小, 获取内容总大小.
 //
-//	pSize: 大小.
+// pSize: 大小.
 func (s *ScrollView) GetTotalSize(pSize *xc.SIZE) *ScrollView {
 	xc.XSView_GetTotalSize(s.Handle, pSize)
 	return s
@@ -86,16 +86,16 @@ func (s *ScrollView) GetTotalSize(pSize *xc.SIZE) *ScrollView {
 
 // 滚动视_置滚动单位大小, 设置滚动单位大小, 如果内容改变返回TRUE否则返回FALSE.
 //
-//	nWidth: 宽度.
+// nWidth: 宽度.
 //
-//	nHeight: 高度.
+// nHeight: 高度.
 func (s *ScrollView) SetLineSize(nWidth, nHeight int32) bool {
 	return xc.XSView_SetLineSize(s.Handle, nWidth, nHeight)
 }
 
 // 滚动视_取滚动单位大小, 获取滚动单位大小.
 //
-//	pSize: 返回大小.
+// pSize: 返回大小.
 func (s *ScrollView) GetLineSize(pSize *xc.SIZE) *ScrollView {
 	xc.XSView_GetLineSize(s.Handle, pSize)
 	return s
@@ -103,7 +103,7 @@ func (s *ScrollView) GetLineSize(pSize *xc.SIZE) *ScrollView {
 
 // 滚动视_置滚动条大小.
 //
-//	size: 滚动条大小.
+// size: 滚动条大小.
 func (s *ScrollView) SetScrollBarSize(size int32) *ScrollView {
 	xc.XSView_SetScrollBarSize(s.Handle, size)
 	return s
@@ -131,7 +131,7 @@ func (s *ScrollView) GetViewHeight() int32 {
 
 // 滚动视_取视口坐标.
 //
-//	pRect: 坐标.
+// pRect: 坐标.
 func (s *ScrollView) GetViewRect(pRect *xc.RECT) *ScrollView {
 	xc.XSView_GetViewRect(s.Handle, pRect)
 	return s
@@ -149,35 +149,35 @@ func (s *ScrollView) GetScrollBarV() int {
 
 // 滚动视_水平滚动, 水平滚动条, 滚动到指定位置点.
 //
-//	pos: 位置点.
+// pos: 位置点.
 func (s *ScrollView) ScrollPosH(pos int32) bool {
 	return xc.XSView_ScrollPosH(s.Handle, pos)
 }
 
 // 滚动视_垂直滚动, 垂直滚动条, 滚动到指定位置点.
 //
-//	pos: 位置点.
+// pos: 位置点.
 func (s *ScrollView) ScrollPosV(pos int32) bool {
 	return xc.XSView_ScrollPosV(s.Handle, pos)
 }
 
 // 滚动视_水平滚动到X, 水平滚动条, 滚动到指定坐标.
 //
-//	posX: X坐标.
+// posX: X坐标.
 func (s *ScrollView) ScrollPosXH(posX int32) bool {
 	return xc.XSView_ScrollPosXH(s.Handle, posX)
 }
 
 // 滚动视_垂直滚动到Y, 垂直滚动条, 滚动到指定坐标.
 //
-//	posY: Y坐标.
+// posY: Y坐标.
 func (s *ScrollView) ScrollPosYV(posY int32) bool {
 	return xc.XSView_ScrollPosYV(s.Handle, posY)
 }
 
 // 滚动视_显示水平滚动条.
 //
-//	bShow: 是否显示.
+// bShow: 是否显示.
 func (s *ScrollView) ShowSBarH(bShow bool) *ScrollView {
 	xc.XSView_ShowSBarH(s.Handle, bShow)
 	return s
@@ -185,7 +185,7 @@ func (s *ScrollView) ShowSBarH(bShow bool) *ScrollView {
 
 // 滚动视_显示垂直滚动条.
 //
-//	bShow: 是否显示.
+// bShow: 是否显示.
 func (s *ScrollView) ShowSBarV(bShow bool) *ScrollView {
 	xc.XSView_ShowSBarV(s.Handle, bShow)
 	return s
@@ -193,7 +193,7 @@ func (s *ScrollView) ShowSBarV(bShow bool) *ScrollView {
 
 // 滚动视_启用自动显示滚动条.
 //
-//	bEnable: 是否启用.
+// bEnable: 是否启用.
 func (s *ScrollView) EnableAutoShowScrollBar(bEnable bool) *ScrollView {
 	xc.XSView_EnableAutoShowScrollBar(s.Handle, bEnable)
 	return s

@@ -18,9 +18,9 @@ func uiThreadCallBack(data int) int {
 
 // XC_CallUiThreadEx 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI. 与 CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数.
 //
-//	f: 回调函数.
+// f: 回调函数.
 //
-//	data: 传进回调函数的用户自定义数据.
+// data: 传进回调函数的用户自定义数据.
 func XC_CallUiThreadEx(f func(data int) int, data int) int {
 	rwm.Lock()
 	uiThreadCallBackFunc = f
@@ -31,7 +31,7 @@ func XC_CallUiThreadEx(f func(data int) int, data int) int {
 
 // XC_CallUT 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI. 与 CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数. 回调函数没有参数也没有返回值.
 //
-//	f: 回调函数, 没有参数也没有返回值, 可以直接使用匿名函数.
+// f: 回调函数, 没有参数也没有返回值, 可以直接使用匿名函数.
 func XC_CallUT(f func()) {
 	rwm.Lock()
 	uiThreadCallBackFunc = func(data int) int {
@@ -49,9 +49,9 @@ type UiThreader interface {
 
 // XC_CallUiThreader 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI. 与 CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数.
 //
-//	u: xc.UiThreader.
+// u: xc.UiThreader.
 //
-//	data: 传进回调函数的用户自定义数据.
+// data: 传进回调函数的用户自定义数据.
 func XC_CallUiThreader(u UiThreader, data int) int {
 	rwm.Lock()
 	uiThreadCallBackFunc = u.UiThreadCallBack

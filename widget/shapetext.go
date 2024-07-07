@@ -12,17 +12,17 @@ type ShapeText struct {
 
 // 形状文本_创建, 创建形状对象文本.
 //
-//	x: X坐标.
+// x: X坐标.
 //
-//	y: Y坐标.
+// y: Y坐标.
 //
-//	cx: 宽度.
+// cx: 宽度.
 //
-//	cy: 高度.
+// cy: 高度.
 //
-//	pName: 文本内容.
+// pName: 文本内容.
 //
-//	hParent: 父对象句柄.
+// hParent: 父对象句柄.
 func NewShapeText(x, y, cx, cy int32, pName string, hParent int) *ShapeText {
 	p := &ShapeText{}
 	p.SetHandle(xc.XShapeText_Create(x, y, cx, cy, pName, hParent))
@@ -71,7 +71,7 @@ func NewShapeTextByUIDName(name string) *ShapeText {
 
 // 形状文本_置文本, 设置文本内容.
 //
-//	pName: 文本内容.
+// pName: 文本内容.
 func (s *ShapeText) SetText(pName string) *ShapeText {
 	xc.XShapeText_SetText(s.Handle, pName)
 	return s
@@ -89,7 +89,7 @@ func (s *ShapeText) GetTextLength() int32 {
 
 // 形状文本_置字体.
 //
-//	hFontx: 字体句柄.
+// hFontx: 字体句柄.
 func (s *ShapeText) SetFont(hFontx int) *ShapeText {
 	xc.XShapeText_SetFont(s.Handle, hFontx)
 	return s
@@ -102,7 +102,7 @@ func (s *ShapeText) GetFont() int {
 
 // 形状文本_置文本颜色, 设置文本颜色.
 //
-//	color: ARGB 颜色值.
+// color: ARGB 颜色值.
 func (s *ShapeText) SetTextColor(color int) *ShapeText {
 	xc.XShapeText_SetTextColor(s.Handle, color)
 	return s
@@ -115,7 +115,7 @@ func (s *ShapeText) GetTextColor() int {
 
 // 形状文本_置文本对齐.
 //
-//	align: 文本对齐方式, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
+// align: 文本对齐方式, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
 func (s *ShapeText) SetTextAlign(align xcc.TextFormatFlag_) *ShapeText {
 	xc.XShapeText_SetTextAlign(s.Handle, align)
 	return s
@@ -123,9 +123,9 @@ func (s *ShapeText) SetTextAlign(align xcc.TextFormatFlag_) *ShapeText {
 
 // 形状文本_置偏移, 设置内容偏移.
 //
-//	x: X坐标.
+// x: X坐标.
 //
-//	y: Y坐标.
+// y: Y坐标.
 func (s *ShapeText) SetOffset(x, y int32) *ShapeText {
 	xc.XShapeText_SetOffset(s.Handle, x, y)
 	return s

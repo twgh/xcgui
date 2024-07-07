@@ -1,6 +1,7 @@
 package wapi
 
 import (
+	"github.com/twgh/xcgui/xcc"
 	"syscall"
 	"unsafe"
 
@@ -41,14 +42,129 @@ var (
 	loadImageW                 = user32.NewProc("LoadImageW")
 	createIconFromResource     = user32.NewProc("CreateIconFromResource")
 	destroyIcon                = user32.NewProc("DestroyIcon")
+	setWindowsHookExW          = user32.NewProc("SetWindowsHookExW")
+	unhookWindowsHookEx        = user32.NewProc("UnhookWindowsHookEx")
+	callNextHookEx             = user32.NewProc("CallNextHookEx")
 )
+
+type WH_ int32
+
+const (
+	WH_JOURNALRECORD   WH_ = 0  // 用于记录发布到系统消息队列的输入消息。此挂钩可用于录制宏, win11不支持.
+	WH_JOURNALPLAYBACK WH_ = 1  // 该过程发布以前由 WH_JOURNALRECORD 挂钩过程记录的消息, win11不支持.
+	WH_KEYBOARD        WH_ = 2  // 安装监视击键消息的挂钩过程.
+	WH_GETMESSAGE      WH_ = 3  // 安装用于监视发布到消息队列的消息的挂钩过程.
+	WH_CALLWNDPROC     WH_ = 4  // 安装一个挂钩过程，该过程在系统将消息发送到目标窗口过程之前对其进行监视.
+	WH_CBT             WH_ = 5  // 安装一个挂钩过程，用于接收对 CBT 应用程序有用的通知.
+	WH_SYSMSGFILTER    WH_ = 6  // 安装一个挂钩过程，用于监视由于对话框、消息框、菜单或滚动条中的输入事件而生成的消息。 挂钩过程监视与调用线程相同的桌面中的所有应用程序的消息.
+	WH_MOUSE           WH_ = 7  // 安装监视鼠标消息的挂钩过程.
+	WH_DEBUG           WH_ = 9  // 安装一个挂钩过程，用于调试其他挂钩过程.
+	WH_SHELL           WH_ = 10 // 安装一个挂钩过程，用于接收对 shell 应用程序有用的通知.
+	WH_FOREGROUNDIDLE  WH_ = 11 // 安装一个挂钩过程，当应用程序的前景线程即将变为空闲状态时将调用该挂钩过程。 此挂钩可用于在空闲时间执行低优先级任务.
+	WH_CALLWNDPROCRET  WH_ = 12 // 安装挂钩过程，该挂钩过程在目标窗口过程处理消息后对其进行监视。 有关详细信息.
+	WH_KEYBOARD_LL     WH_ = 13 // 安装监视低级别键盘输入事件的挂钩过程.
+	WH_MOUSE_LL        WH_ = 14 // 安装用于监视低级别鼠标输入事件的挂钩过程.
+)
+
+// KBDLLHOOKSTRUCT 包含有关低级别键盘输入事件的信息.
+type KBDLLHOOKSTRUCT struct {
+	VkCode      uint32  // 虚拟按键代码, xcc.VK_ .详情: https://learn.microsoft.com/zh-cn/windows/win32/inputdev/virtual-key-codes.
+	ScanCode    uint32  // 按键代码的硬件扫描代码.
+	Flags       uint32  // 扩展键标志、事件注入标志、上下文代码和转换状态标志。此成员指定如下。应用程序可以使用以下值来测试击键标志。测试LLKHF_INJECTED (位 4) 将告知是否已注入事件。如果是，则测试 LLKHF_LOWER_IL_INJECTED (位 1) 会告诉你事件是否是从以较低完整性级别运行的进程注入的.
+	Time        uint32  // 此消息的时间戳，相当于 GetMessageTime 为此消息返回的时间戳.
+	DwExtraInfo uintptr // 与消息关联的其他信息.
+}
+
+// LowLevelKeyboardProc 是一个低级键盘钩子过程，它将接收有关键盘消息的信息.
+//
+// nCode: 挂钩过程用于确定如何处理消息的代码. 如果 nCode 小于零，则挂钩过程必须将消息传递给 CallNextHookEx 函数，而无需进一步处理，并且应返回 CallNextHookEx 返回的值.
+//
+// wParam: 键盘消息的标识符. 可以是以下消息之一： xcc.WM_KEYDOWN、xcc.WM_KEYUP、xcc.WM_SYSKEYDOWN 或 xcc.WM_SYSKEYUP.
+//
+// LPARAM: 指向 KBDLLHOOKSTRUCT 结构的指针.
+//
+// @return: 如果 nCode 小于零，则挂钩过程必须返回 CallNextHookEx 返回的值. 如果 nCode 大于或等于零，并且挂钩过程未处理消息，强烈建议调用 CallNextHookEx 并返回它返回的值;否则，安装 WH_KEYBOARD_LL 挂钩的其他应用程序将不会收到挂钩通知，因此行为可能不正确. 如果挂钩过程处理了消息，它可能会返回非零值，以防止系统将消息传递给挂钩链的其余部分或目标窗口过程.
+type LowLevelKeyboardProc func(nCode int32, wParam xcc.WM_, lParam *KBDLLHOOKSTRUCT) uintptr
+
+// WHEEL_DELTA 一次标准滚轮滚动的增量.
+const WHEEL_DELTA int16 = 120
+
+type MSLLHOOKSTRUCT struct {
+	PT POINT // 鼠标光标的屏幕坐标
+
+	// 说明:
+	//  - 如果消息是 xcc.WM_MOUSEWHEEL 鼠标滚轮滚动消息，正值表示滚轮向前/上旋转（远离用户）；负值表示滚轮向后/下旋转（朝向用户）。此成员的高位是滚轮增量, 可使用 wutil.GetHigh16Bits()来取高位值。保留低位。一次标准滚轮滚动的增量定义为 wapi.WHEEL_DELTA，即 120.
+	//  - 如果消息是 xcc.WM_XBUTTONDOWN、xcc.WM_XBUTTONUP、xcc.WM_XBUTTONDBLCLK、xcc.WM_NCXBUTTONDOWN、xcc.WM_NCXBUTTONUP 或 xcc.WM_NCXBUTTONDBLCLK，则高位指定按下或释放的 X 按钮, 可使用 wutil.GetHigh16Bits()来取高位值。并且保留低位。此值可以是以下一个或多个值: 1. 按下或释放第一个 X 按钮; 2. 按下或释放第二个 X 按钮。否则，不使用 mouseData.
+	MouseData int32
+
+	Flags       uint32  // 事件注入的标志。应用程序可以使用以下值来测试标志。测试 LLMHF_INJECTED (位 0) 将告知是否已注入事件。如果是，则测试 LLMHF_LOWER_IL_INJECTED (位 1) 将告诉你事件是否是从以较低完整性级别运行的进程注入的.
+	Time        uint32  // 此消息的时间戳.
+	DwExtraInfo uintptr // 与消息关联的其他信息.
+}
+
+// LowLevelMouseProc 是一个低级鼠标钩子过程，它将接收有关鼠标消息的信息.
+//
+// nCode: 挂钩过程用于确定如何处理消息的代码. 如果 nCode 小于零，则挂钩过程必须将消息传递给 CallNextHookEx 函数，而无需进一步处理，并且应返回 CallNextHookEx 返回的值.
+//
+// wParam: 鼠标消息的标识符. 可以是以下消息之一：xcc.WM_LBUTTONDOWN、xcc.WM_LBUTTONUP、xcc.WM_MOUSEMOVE、xcc.WM_MOUSEWHEEL、xcc.WM_RBUTTONDOWN 或 xcc.WM_RBUTTONUP.
+//
+// LPARAM: 指向 MSLLHOOKSTRUCT 结构的指针.
+//
+// @return: 如果 nCode 小于零，则挂钩过程必须返回 CallNextHookEx 返回的值. 如果 nCode 大于或等于零，并且挂钩过程未处理消息，强烈建议调用 CallNextHookEx 并返回它返回的值;否则，安装 WH_MOUSE_LL 挂钩的其他应用程序将不会收到挂钩通知，因此行为可能不正确. 如果挂钩过程处理了消息，它可能会返回非零值，以防止系统将消息传递给挂钩链的其余部分或目标窗口过程.
+type LowLevelMouseProc func(nCode int32, wParam xcc.WM_, lParam *MSLLHOOKSTRUCT) uintptr
+
+// SetWindowsHookExW 将应用程序定义的挂钩过程安装到挂钩链中。 需要安装挂钩过程来监视系统的某些类型的事件。 这些事件与特定线程或与调用线程位于同一桌面中的所有线程相关联.
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-setWindowsHookExW.
+//
+// idHook: 要安装的挂钩过程的类型, wapi.WH_ .
+//
+// lpfn: 回调函数指针, 使用 syscall.NewCallback()生成. 如果 dwThreadId 参数为零或指定由其他进程创建的线程的标识符，则 lpfn 参数必须指向 DLL 中的挂钩过程。否则，lpfn 可以指向与当前进程关联的代码中的挂钩过程.
+//
+// hmod: DLL 的句柄，包含 lpfn 参数指向的挂钩过程。如果 dwThreadId 参数指定当前进程创建的线程，并且挂钩过程位于与当前进程关联的代码中，则必须将 hMod 参数设置为 0.
+//
+// dwThreadId: 要与之关联的挂钩过程的线程的标识符。对于桌面应用，如果此参数为零，则挂钩过程与调用线程在同一桌面中运行的所有现有线程相关联.
+//
+// @return: 如果成功，则返回挂钩过程的句柄; 如果失败，则返回 0.
+func SetWindowsHookExW(idHook WH_, lpfn uintptr, hmod uintptr, dwThreadId uint32) uintptr {
+	r, _, _ := setWindowsHookExW.Call(uintptr(idHook), lpfn, hmod, uintptr(dwThreadId))
+	return r
+}
+
+// CallNextHookEx 将挂钩信息传递给当前挂钩链中的下一个挂钩过程。挂钩过程可以在处理挂钩信息之前或之后调用此函数.
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-callNextHookEx.
+//
+// hhk: 忽略此参数. 可填0.
+//
+// nCode: 传递给当前挂钩过程的挂钩代码。下一个挂钩过程使用此代码来确定如何处理挂钩信息.
+//
+// wParam: 传递给当前挂钩过程的 wParam 值。此参数的含义取决于与当前挂钩链关联的挂钩类型.
+//
+// lParam: 传递给当前挂钩过程的 lParam 值。此参数的含义取决于与当前挂钩链关联的挂钩类型.
+//
+// @return: 此值由链中的下一个挂钩过程返回。当前挂钩过程还必须返回此值。返回值的含义取决于挂钩类型。有关详细信息，请参阅各个挂钩过程的说明.
+func CallNextHookEx(hhk uintptr, nCode int32, wParam, lParam uintptr) uintptr {
+	r, _, _ := callNextHookEx.Call(hhk, uintptr(nCode), wParam, lParam)
+	return r
+}
+
+// UnhookWindowsHookEx 删除 SetWindowsHookExW 函数安装在挂钩链中的挂钩过程.
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-unhookWindowsHookEx.
+//
+// hhk: 要移除的挂钩的句柄。此参数是由先前调用 SetWindowsHookExW 获取的挂钩句柄.
+func UnhookWindowsHookEx(hhk uintptr) bool {
+	r, _, _ := unhookWindowsHookEx.Call(hhk)
+	return r != 0
+}
 
 // DestroyIcon 销毁图标并释放图标占用的任何内存.
 //   - 只需为使用以下函数创建的图标和游标调用 DestroyIcon ： CreateIconFromResourceEx (如果调用时没有 LR_SHARED 标志) 、 CreateIconIndirect 和 CopyIcon。 请勿使用此函数销毁共享图标。 只要从中加载共享图标的模块保留在内存中，共享图标就有效.
 //
 // 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-destroyicon.
 //
-//	hIcon: 要销毁的图标的句柄。 图标不得处于使用中.
+// hIcon: 要销毁的图标的句柄。 图标不得处于使用中.
 func DestroyIcon(hIcon uintptr) bool {
 	r, _, _ := destroyIcon.Call(hIcon)
 	return r != 0
@@ -59,13 +175,13 @@ func DestroyIcon(hIcon uintptr) bool {
 //
 // 详见: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-createiconfromresource.
 //
-//	presbits: 包含图标或游标资源位的 DWORD 对齐缓冲区指针。通常通过调用 LookupIconIdFromDirectory、 LookupIconIdFromDirectoryEx 和 LoadResource 函数来加载这些位.
+// presbits: 包含图标或游标资源位的 DWORD 对齐缓冲区指针。通常通过调用 LookupIconIdFromDirectory、 LookupIconIdFromDirectoryEx 和 LoadResource 函数来加载这些位.
 //
-//	dwResSize: 参数指向的位集的大小（以字节为单位）.
+// dwResSize: 参数指向的位集的大小（以字节为单位）.
 //
-//	fIcon: 指示是要创建图标还是游标。 如果此参数为 TRUE，则创建图标。 如果为 FALSE，则创建游标。LOCALHEADER 结构定义游标热点，是从游标资源位读取的第一个数据.
+// fIcon: 指示是要创建图标还是游标。 如果此参数为 TRUE，则创建图标。 如果为 FALSE，则创建游标。LOCALHEADER 结构定义游标热点，是从游标资源位读取的第一个数据.
 //
-//	dwVer: presbits 参数指向的资源位的图标或光标格式的版本号。 该值必须大于或等于 0x00020000 且小于或等于 0x00030000。 此参数通常设置为 0x00030000.
+// dwVer: presbits 参数指向的资源位的图标或光标格式的版本号。 该值必须大于或等于 0x00020000 且小于或等于 0x00030000。 此参数通常设置为 0x00030000.
 //
 //	@return: HICON句柄.
 func CreateIconFromResource(presbits uintptr, dwResSize uint32, fIcon bool, dwVer uint32) (uintptr, error) {
@@ -76,32 +192,32 @@ func CreateIconFromResource(presbits uintptr, dwResSize uint32, fIcon bool, dwVe
 type IMAGE_ uint32
 
 const (
-	IMAGE_BITMAP = 0 // 加载位图
-	IMAGE_ICON   = 1 // 加载图标
-	IMAGE_CURSOR = 2 // 加载游标
+	IMAGE_BITMAP IMAGE_ = 0 // 加载位图
+	IMAGE_ICON   IMAGE_ = 1 // 加载图标
+	IMAGE_CURSOR IMAGE_ = 2 // 加载游标
 )
 
 type LR_ uint32
 
 const (
-	LR_CREATEDIBSECTION = 0x00002000 // 当 uType 参数指定 IMAGE_BITMAP 时，会导致函数返回 DIB 节位图而不是兼容的位图。 此标志可用于加载位图而不将其映射到显示设备的颜色.
-	LR_DEFAULTCOLOR     = 0          // 默认标志;它不执行任何工作。 它的意思是“不 LR_MONOCHROME ”.
-	LR_DEFAULTSIZE      = 0x00000040 // 如果 cxDesired 或 cyDesired 值设置为零，则使用游标或图标的系统指标值指定的宽度或高度。 如果未指定此标志，并且 cxDesired 和 cyDesired 设置为零，则函数将使用实际资源大小。 如果资源包含多个图像，则 函数使用第一个图像的大小.
-	LR_LOADFROMFILE     = 0x00000010 // 从 名称 (图标、光标或位图文件指定的文件) 加载独立图像.
+	LR_CREATEDIBSECTION LR_ = 0x00002000 // 当 uType 参数指定 IMAGE_BITMAP 时，会导致函数返回 DIB 节位图而不是兼容的位图。 此标志可用于加载位图而不将其映射到显示设备的颜色.
+	LR_DEFAULTCOLOR     LR_ = 0          // 默认标志;它不执行任何工作。 它的意思是“不 LR_MONOCHROME ”.
+	LR_DEFAULTSIZE      LR_ = 0x00000040 // 如果 cxDesired 或 cyDesired 值设置为零，则使用游标或图标的系统指标值指定的宽度或高度。 如果未指定此标志，并且 cxDesired 和 cyDesired 设置为零，则函数将使用实际资源大小。 如果资源包含多个图像，则 函数使用第一个图像的大小.
+	LR_LOADFROMFILE     LR_ = 0x00000010 // 从 名称 (图标、光标或位图文件指定的文件) 加载独立图像.
 
 	// 在颜色表中搜索图像，并将以下灰色底纹替换为相应的三维颜色
 	//	- Dk 灰色，RGB (128，128，128) 与 COLOR_3DSHADOW
 	//	- 灰色，RGB (192，192，192) ，带 COLOR_3DFACE
 	//	- Lt Gray，RGB (223，223，223) 与 COLOR_3DLIGHT
-	LR_LOADMAP3DCOLORS = 0x00001000
+	LR_LOADMAP3DCOLORS LR_ = 0x00001000
 
 	// 检索图像中第一个像素的颜色值，并将颜色表中的相应条目替换为默认窗口颜色 (COLOR_WINDOW) 。 图像中使用该条目的所有像素都将成为默认的窗口颜色。 此值仅适用于具有相应颜色表的图像.
 	//
 	// 如果要加载颜色深度大于 8bpp 的位图，请不要使用此选项.
 	//
 	// 如果 fuLoad 同时包含 LR_LOADTRANSPARENT 值和 LR_LOADMAP3DCOLORS 值， LR_LOADTRANSPARENT 优先。 但是，颜色表条目将替换为 COLOR_3DFACE 而不是 COLOR_WINDOW.
-	LR_LOADTRANSPARENT = 0x00000020
-	LR_MONOCHROME      = 0x00000001 // 加载黑白图像.
+	LR_LOADTRANSPARENT LR_ = 0x00000020
+	LR_MONOCHROME      LR_ = 0x00000001 // 加载黑白图像.
 
 	// 如果多次加载映像，则共享映像句柄。 如果未设置 LR_SHARED ，则对同一资源的第二次 LoadImageW 调用将再次加载映像并返回不同的句柄.
 	//
@@ -112,25 +228,25 @@ const (
 	// 加载系统图标或光标时，必须使用 LR_SHARED 否则函数将无法加载资源.
 	//
 	// 无论请求的大小如何，此函数都会查找缓存中具有请求的资源名称的第一个映像.
-	LR_SHARED   = 0x00008000
-	LR_VGACOLOR = 0x00000080 // 使用真正的 VGA 颜色.
+	LR_SHARED   LR_ = 0x00008000
+	LR_VGACOLOR LR_ = 0x00000080 // 使用真正的 VGA 颜色.
 )
 
 // LoadImageW 加载图标、光标、动画光标或位图.
 //
 // 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-loadimagew.
 //
-//	hInst: 包含要加载的图像的 DLL 或可执行文件 (.exe) 模块的句柄。 有关详细信息，请参阅 GetModuleHandle。若要 (图标、光标或位图文件) 加载预定义图像或独立资源，请将此参数设置为0.
+// hInst: 包含要加载的图像的 DLL 或可执行文件 (.exe) 模块的句柄。 有关详细信息，请参阅 GetModuleHandle。若要 (图标、光标或位图文件) 加载预定义图像或独立资源，请将此参数设置为0.
 //
-//	name: 要加载的图像。如果 hInst 参数为非0且 fuLoad 参数省略 LR_LOADFROMFILE， 则 name 指定 hInst 模块中的图像资源。如果要按名称从模块加载图像资源， 则 name 参数是指向包含映像资源名称的字符串.
+// name: 要加载的图像。如果 hInst 参数为非0且 fuLoad 参数省略 LR_LOADFROMFILE， 则 name 指定 hInst 模块中的图像资源。如果要按名称从模块加载图像资源， 则 name 参数是指向包含映像资源名称的字符串.
 //
-//	Type: 要加载的图像的类型。 wapi.IMAGE_ .
+// Type: 要加载的图像的类型。 wapi.IMAGE_ .
 //
-//	cx: 图标或光标的宽度（以像素为单位）。 如果此参数为零且 fuLoad 参数 为LR_DEFAULTSIZE，则函数使用 SM_CXICON 或 SM_CXCURSOR 系统指标值来设置宽度。 如果此参数为零且未使用 LR_DEFAULTSIZE ，则函数使用实际资源宽度.
+// cx: 图标或光标的宽度（以像素为单位）。 如果此参数为零且 fuLoad 参数 为LR_DEFAULTSIZE，则函数使用 SM_CXICON 或 SM_CXCURSOR 系统指标值来设置宽度。 如果此参数为零且未使用 LR_DEFAULTSIZE ，则函数使用实际资源宽度.
 //
-//	cy: 图标或光标的高度（以像素为单位）。 如果此参数为零且 fuLoad 参数 为LR_DEFAULTSIZE，则函数使用 SM_CYICON 或 SM_CYCURSOR 系统指标值来设置高度。 如果此参数为零且未使用 LR_DEFAULTSIZE ，则函数使用实际资源高度.
+// cy: 图标或光标的高度（以像素为单位）。 如果此参数为零且 fuLoad 参数 为LR_DEFAULTSIZE，则函数使用 SM_CYICON 或 SM_CYCURSOR 系统指标值来设置高度。 如果此参数为零且未使用 LR_DEFAULTSIZE ，则函数使用实际资源高度.
 //
-//	fuLoad: 此参数可使用以下一个或多个值: wapi.LR_ .
+// fuLoad: 此参数可使用以下一个或多个值: wapi.LR_ .
 //
 //	@return: 返回HICON句柄.
 func LoadImageW(hInst uintptr, name string, Type IMAGE_, cx, cy int32, fuLoad LR_) uintptr {
@@ -139,18 +255,18 @@ func LoadImageW(hInst uintptr, name string, Type IMAGE_, cx, cy int32, fuLoad LR
 }
 
 const (
-	NULL  = "\x00"
-	NULL2 = NULL + NULL // 2个 NULL
+	NullStr  = "\x00"
+	NullStr2 = NullStr + NullStr // 2个 NullStr
 )
 
 // FindWindowW 检索顶级窗口的句柄，该窗口的类名称和窗口名称与指定的字符串匹配。 此函数不搜索子窗口。 此函数不执行区分大小写的搜索.
-//   - 如果 lpWindowName 参数不 为 NULL， FindWindowW 将调用 GetWindowTextW 函数以检索窗口名称进行比较。 有关可能出现的潜在问题的说明，请参阅 GetWindowTextW 的备注.
+//   - 如果 lpWindowName 参数不为空， FindWindowW 将调用 GetWindowTextW 函数以检索窗口名称进行比较。 有关可能出现的潜在问题的说明，请参阅 GetWindowTextW 的备注.
 //
 // 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-FindWindowW.
 //
-//	lpClassName: 窗口类名, 可为空.
+// lpClassName: 窗口类名, 可为空.
 //
-//	lpWindowName: 窗口名称（窗口的标题）, 可为空.
+// lpWindowName: 窗口名称（窗口的标题）, 可为空.
 //
 //	@return: 返回窗口句柄.
 func FindWindowW(lpClassName, lpWindowName string) uintptr {
@@ -162,7 +278,7 @@ func FindWindowW(lpClassName, lpWindowName string) uintptr {
 //
 // 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-RegisterWindowMessageW.
 //
-//	lpString: 要注册的消息.
+// lpString: 要注册的消息.
 //
 //	@return: 如果成功注册消息，则返回值是范围0xC000到0xFFFF的消息标识符. 如果函数失败，则返回值为零.
 func RegisterWindowMessageW(lpString string) int {
@@ -175,7 +291,7 @@ func RegisterWindowMessageW(lpString string) int {
 //
 // 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-iswindow.
 //
-//	hWnd: 要测试的窗口的句柄.
+// hWnd: 要测试的窗口的句柄.
 func IsWindow(hWnd uintptr) bool {
 	r, _, _ := isWindow.Call(hWnd)
 	return r != 0
@@ -215,19 +331,19 @@ const (
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-SetWindowPos.
 //
-//	hWnd: 欲定位的窗口句柄.
+// hWnd: 欲定位的窗口句柄.
 //
-//	hWndInsertAfter: 在Z序中位于定位窗口之前的窗口句柄. 此参数必须是窗口句柄或以下值之一: wapi.HWND_.
+// hWndInsertAfter: 在Z序中位于定位窗口之前的窗口句柄. 此参数必须是窗口句柄或以下值之一: wapi.HWND_.
 //
-//	x: 窗口新的x坐标。如hwnd是一个子窗口，则x用父窗口的客户区坐标表示.
+// x: 窗口新的x坐标。如hwnd是一个子窗口，则x用父窗口的客户区坐标表示.
 //
-//	y: 窗口新的y坐标。如hwnd是一个子窗口，则y用父窗口的客户区坐标表示.
+// y: 窗口新的y坐标。如hwnd是一个子窗口，则y用父窗口的客户区坐标表示.
 //
-//	cx: 指定新的窗口宽度.
+// cx: 指定新的窗口宽度.
 //
-//	cy: 指定新的窗口高度.
+// cy: 指定新的窗口高度.
 //
-//	wFlags: 窗口大小和定位的标志. 该参数可以是以下值的组合: wapi.SWP_.
+// wFlags: 窗口大小和定位的标志. 该参数可以是以下值的组合: wapi.SWP_.
 func SetWindowPos(hWnd uintptr, hWndInsertAfter HWND_, x, y, cx, cy int32, wFlags SWP_) bool {
 	r, _, _ := setWindowPos.Call(hWnd, uintptr(hWndInsertAfter), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), uintptr(wFlags))
 	return r != 0
@@ -299,7 +415,7 @@ const (
 	MB_SetForeground MB_ = 0x00010000 // 消息框成为前台窗口。在内部，系统为消息框调用 SetForegroundWindow 函数.
 	MB_TopMost       MB_ = 0x00040000 // 消息框是使用 WS_EX_TOPMOST 窗口样式创建的.
 
-	MB_Service_Notification MB_ = 0x00200000 // 调用者是通知用户事件的服务。即使没有用户登录到计算机，该功能也会在当前活动桌面上显示一个消息框。终端服务：如果调用线程具有模拟令牌，则该函数将消息框定向到模拟令牌中指定的会话。如果设置了此标志，则hWnd参数必须为NULL。这是为了使消息框可以出现在与hWnd对应的桌面以外的桌面上。有关使用此标志的安全注意事项的信息，请参阅交互式服务。特别要注意，此标志可以在锁定的桌面上生成交互式内容，因此只能用于非常有限的一组场景，例如资源耗尽.
+	MB_Service_Notification MB_ = 0x00200000 // 调用者是通知用户事件的服务。即使没有用户登录到计算机，该功能也会在当前活动桌面上显示一个消息框。终端服务：如果调用线程具有模拟令牌，则该函数将消息框定向到模拟令牌中指定的会话。如果设置了此标志，则hWnd参数必须为0。这是为了使消息框可以出现在与hWnd对应的桌面以外的桌面上。有关使用此标志的安全注意事项的信息，请参阅交互式服务。特别要注意，此标志可以在锁定的桌面上生成交互式内容，因此只能用于非常有限的一组场景，例如资源耗尽.
 )
 
 // ID_ 指示 MessageBoxW 的返回值.
@@ -321,13 +437,13 @@ const (
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-MessageBoxW.
 //
-//	hWnd: 要创建的消息框的所有者窗口的句柄。如果此参数为0，则消息框没有所有者窗口.
+// hWnd: 要创建的消息框的所有者窗口的句柄。如果此参数为0，则消息框没有所有者窗口.
 //
-//	lpText: 要显示的消息。如果字符串由多行组成，您可以在每行之间使用换行符分隔各行.
+// lpText: 要显示的消息。如果字符串由多行组成，您可以在每行之间使用换行符分隔各行.
 //
-//	lpCaption: 对话框标题。如果此参数为空，则默认标题为Error.
+// lpCaption: 对话框标题。如果此参数为空，则默认标题为Error.
 //
-//	uType: 对话框的内容和行为, 是以下值的组合: wapi.MB_.
+// uType: 对话框的内容和行为, 是以下值的组合: wapi.MB_.
 //
 //	@return: 如果函数失败，则返回值为0; 成功则返回一个整数，指示用户单击了哪个按钮.
 func MessageBoxW(hWnd uintptr, lpText, lpCaption string, uType MB_) ID_ {
@@ -343,7 +459,7 @@ func MessageBoxW(hWnd uintptr, lpText, lpCaption string, uType MB_) ID_ {
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-OpenClipboard.
 //
-//	hWnd: 要与打开的剪贴板关联的窗口句柄。如果此参数为0，则打开的剪贴板与当前任务相关联.
+// hWnd: 要与打开的剪贴板关联的窗口句柄。如果此参数为0，则打开的剪贴板与当前任务相关联.
 func OpenClipboard(hWnd uintptr) bool {
 	r, _, _ := openClipboard.Call(hWnd)
 	return r != 0
@@ -360,7 +476,7 @@ func CloseClipboard() bool {
 
 // EmptyClipboard 清空剪贴板并释放剪贴板中数据的句柄。然后该函数将剪贴板的所有权分配给当前打开剪贴板的窗口.
 //   - 在调用 EmptyClipboard 之前，应用程序必须使用 OpenClipboard 函数打开剪贴板.
-//   - 如果应用程序在打开剪贴板时指定了NULL窗口句柄，则 EmptyClipboard 会成功，但会将剪贴板所有者设置为NULL。请注意，这会导致 SetClipboardData 失败.
+//   - 如果应用程序在打开剪贴板时指定了0窗口句柄，则 EmptyClipboard 会成功，但会将剪贴板所有者设置为NULL。请注意，这会导致 SetClipboardData 失败.
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-EmptyClipboard.
 func EmptyClipboard() bool {
@@ -374,13 +490,13 @@ type CF_ uint32
 const (
 	CF_TEXT         CF_ = 1  // 文字格式。每行以回车/换行（CR-LF）组合结束。空字符表示数据的结尾。对ANSI文本使用此格式.
 	CF_BITMAP       CF_ = 2  // 位图的句柄（HBITMAP）
-	CF_METAFILEPICT CF_ = 3  // 处理由METAFILEPICT结构定义的图元文件图片格式。通过动态数据交换（DDE）传递CF_METAFILEPICT句柄时，负责删除【HMEM】的应用程序也应该释放CF_METAFILEPICT句柄引用的元文件.
+	CF_METAFILEPICT CF_ = 3  // 处理由METAFILEPICT结构定义的图元文件图片格式。通过动态数据交换（DDE）传递CF_METAFILEPICT句柄时，负责删除【HMEM】的应用程序也应该释放 CF_METAFILEPICT 句柄引用的元文件.
 	CF_SYLK         CF_ = 4  // Microsoft符号链接（SYLK）格式.
 	CF_DIF          CF_ = 5  // 软件艺术数据交换格式.
 	CF_TIFF         CF_ = 6  // 标记图像文件格式.
 	CF_OEMTEXT      CF_ = 7  // 文字格式包含OEM字符集中的字符。每行以回车/换行（CR-LF）组合结束。空字符表示数据的结尾.
 	CF_DIB          CF_ = 8  // 一个包含BITMAPINFO结构的内存对象，后跟位图位.
-	CF_PALETTE      CF_ = 9  // 处理调色板。每当应用程序将数据放置在依赖于或假定调色板的剪贴板中时，它也应将调色板放在剪贴板上。如果剪贴板包含CF_PALETTE（逻辑调色板）格式的数据，则应用程序应使用SelectPalette和RealizePalette函数来实现（比较）剪贴板中与该逻辑调色板的任何其他数据。当显示剪贴板数据时，Windows剪贴板始终将剪贴板上的任何对象用作CF_PALETTE格式的当前调色板.
+	CF_PALETTE      CF_ = 9  // 处理调色板。每当应用程序将数据放置在依赖于或假定调色板的剪贴板中时，它也应将调色板放在剪贴板上。如果剪贴板包含CF_PALETTE（逻辑调色板）格式的数据，则应用程序应使用 SelectPalette 和 RealizePalette 函数来实现（比较）剪贴板中与该逻辑调色板的任何其他数据。当显示剪贴板数据时，Windows剪贴板始终将剪贴板上的任何对象用作CF_PALETTE格式的当前调色板.
 	CF_PENDATA      CF_ = 10 // 用于Pen Computing的Microsoft Windows笔的扩展数据.
 	CF_RIFF         CF_ = 11 // 表示音频数据比CF_WAVE标准波形格式更复杂.
 	CF_WAVE         CF_ = 12 // 以诸如11 kHz或22 kHz脉冲编码调制（PCM）的标准波形格式之一表示音频数据.
@@ -393,7 +509,7 @@ const (
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-IsClipboardFormatAvailable.
 //
-//	uFormat: 标准或注册的剪贴板格式, wapi.CF_ .
+// uFormat: 标准或注册的剪贴板格式, wapi.CF_ .
 func IsClipboardFormatAvailable(uFormat CF_) bool {
 	r, _, _ := isClipboardFormatAvailable.Call(uintptr(uFormat))
 	return r != 0
@@ -403,9 +519,9 @@ func IsClipboardFormatAvailable(uFormat CF_) bool {
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetClipboardData.
 //
-//	uFormat: 剪贴板格式, wapi.CF_ .
+// uFormat: 剪贴板格式, wapi.CF_ .
 //
-//	@return: 如果函数成功，则返回值是指定格式的剪贴板对象的句柄. 如果函数失败，则返回值为NULL.
+//	@return: 如果函数成功，则返回值是指定格式的剪贴板对象的句柄. 如果函数失败，则返回值为0.
 func GetClipboardData(uFormat CF_) uintptr {
 	r, _, _ := getClipboardData.Call(uintptr(uFormat))
 	return r
@@ -415,11 +531,11 @@ func GetClipboardData(uFormat CF_) uintptr {
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-setclipboarddata.
 //
-//	uFormat: 标准或注册的剪贴板格式, wapi.CF_ .
+// uFormat: 标准或注册的剪贴板格式, wapi.CF_ .
 //
-//	hMem: 指定格式的数据的句柄。该参数可以为0，表示窗口根据请求提供指定剪贴板格式的数据（渲染格式）.
+// hMem: 指定格式的数据的句柄。该参数可以为0，表示窗口根据请求提供指定剪贴板格式的数据（渲染格式）.
 //
-//	@return: 如果函数成功，则返回值是数据的句柄. 如果函数失败，则返回值为NULL.
+//	@return: 如果函数成功，则返回值是数据的句柄. 如果函数失败，则返回值为0.
 func SetClipboardData(uFormat CF_, hMem uintptr) uintptr {
 	r, _, _ := setClipboardData.Call(uintptr(uFormat), hMem)
 	return r
@@ -429,7 +545,7 @@ func SetClipboardData(uFormat CF_, hMem uintptr) uintptr {
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-SetForegroundWindow.
 //
-//	hWnd: 应激活并置于前台的窗口句柄.
+// hWnd: 应激活并置于前台的窗口句柄.
 func SetForegroundWindow(hWnd uintptr) bool {
 	r, _, _ := setForegroundWindow.Call(hWnd)
 	return r != 0
@@ -439,13 +555,13 @@ func SetForegroundWindow(hWnd uintptr) bool {
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-FindWindowExW.
 //
-//	hWndParent: 要搜索其子窗口的父窗口的句柄. 如果hwndParent为0，该函数使用桌面窗口作为父窗口. 该函数在作为桌面子窗口的窗口中进行搜索.
+// hWndParent: 要搜索其子窗口的父窗口的句柄. 如果hwndParent为0，该函数使用桌面窗口作为父窗口. 该函数在作为桌面子窗口的窗口中进行搜索.
 //
-//	hWndChildAfter: 子窗口的句柄。搜索从 Z 顺序中的下一个子窗口开始。子窗口必须是hwndParent的直接子窗口，而不仅仅是后代窗口。 如果hwndChildAfter为0，则搜索从hwndParent的第一个子窗口开始。 请注意，如果hwndParent和hwndChildAfter都是0，则该函数将搜索所有顶级和仅消息窗口.
+// hWndChildAfter: 子窗口的句柄。搜索从 Z 顺序中的下一个子窗口开始。子窗口必须是hwndParent的直接子窗口，而不仅仅是后代窗口。 如果hwndChildAfter为0，则搜索从hwndParent的第一个子窗口开始。 请注意，如果hwndParent和hwndChildAfter都是0，则该函数将搜索所有顶级和仅消息窗口.
 //
-//	lpszClass: 窗口类名, 可空.
+// lpszClass: 窗口类名, 可空.
 //
-//	lpszWindow: 窗口名称（窗口的标题）, 可空.
+// lpszWindow: 窗口名称（窗口的标题）, 可空.
 func FindWindowExW(hWndParent, hWndChildAfter uintptr, lpszClass, lpszWindow string) uintptr {
 	r, _, _ := findWindowExW.Call(hWndParent, hWndChildAfter, common.StrPtr(lpszClass), common.StrPtr(lpszWindow))
 	return r
@@ -455,7 +571,7 @@ func FindWindowExW(hWndParent, hWndChildAfter uintptr, lpszClass, lpszWindow str
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetWindowTextLengthW.
 //
-//	hWnd: 窗口或控件的句柄.
+// hWnd: 窗口或控件的句柄.
 //
 //	@return: 如果成功，则返回值是文本的长度（以字符为单位）。在某些情况下，此值可能大于文本的长度。如果窗口没有文本，则返回值为零.
 func GetWindowTextLengthW(hWnd uintptr) int {
@@ -467,11 +583,11 @@ func GetWindowTextLengthW(hWnd uintptr) int {
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetWindowTextW.
 //
-//	hWnd: 包含文本的窗口或控件的句柄.
+// hWnd: 包含文本的窗口或控件的句柄.
 //
-//	lpString: 接收文本.
+// lpString: 接收文本.
 //
-//	nMaxCount: 复制到缓冲区的最大字符数，包括空字符。如果文本超出此限制，则将其截断.
+// nMaxCount: 复制到缓冲区的最大字符数，包括空字符。如果文本超出此限制，则将其截断.
 //
 //	@return: 如果函数成功，则返回值是复制字符串的长度（以字符为单位），不包括终止空字符。如果窗口没有标题栏或文本，如果标题栏为空，或者窗口或控制句柄无效，则返回值为零.
 func GetWindowTextW(hWnd uintptr, lpString *string, nMaxCount int) int {
@@ -485,9 +601,9 @@ func GetWindowTextW(hWnd uintptr, lpString *string, nMaxCount int) int {
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-ClientToScreen.
 //
-//	hWnd: 窗口真实句柄.
+// hWnd: 窗口真实句柄.
 //
-//	lpPoint: wapi.POINT 指针. 如果函数成功，则将新的屏幕坐标复制到此结构中.
+// lpPoint: wapi.POINT 指针. 如果函数成功，则将新的屏幕坐标复制到此结构中.
 func ClientToScreen(hWnd uintptr, lpPoint *POINT) bool {
 	r, _, _ := clientToScreen.Call(hWnd, uintptr(unsafe.Pointer(lpPoint)))
 	return r != 0
@@ -497,7 +613,7 @@ func ClientToScreen(hWnd uintptr, lpPoint *POINT) bool {
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-getcursorpos.
 //
-//	lpPoint: 指向接收光标屏幕坐标的 wapi.POINT 结构的指针.
+// lpPoint: 指向接收光标屏幕坐标的 wapi.POINT 结构的指针.
 func GetCursorPos(lpPoint *POINT) bool {
 	r, _, _ := getCursorPos.Call(uintptr(unsafe.Pointer(lpPoint)))
 	return r != 0
@@ -517,13 +633,13 @@ const (
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-registerhotkey.
 //
-//	hWnd: 真实窗口句柄。将接收由热键生成的 WM_HOTKEY 消息的窗口句柄。如果此参数为0，则 WM_HOTKEY 消息将发布到调用线程的消息队列中，并且必须在消息循环中进行处理.
+// hWnd: 真实窗口句柄。将接收由热键生成的 WM_HOTKEY 消息的窗口句柄。如果此参数为0，则 WM_HOTKEY 消息将发布到调用线程的消息队列中，并且必须在消息循环中进行处理.
 //
-//	id: 热键的标识符。如果hWnd参数为0，则热键与当前线程相关联，而不是与特定窗口相关联。如果已存在具有相同hWnd和id参数的热键，请参阅备注了解所采取的操作.
+// id: 热键的标识符。如果hWnd参数为0，则热键与当前线程相关联，而不是与特定窗口相关联。如果已存在具有相同hWnd和id参数的热键，请参阅备注了解所采取的操作.
 //
-//	fsModifiers: 为了生成 WM_HOTKEY 消息，必须与vk参数指定的键组合按下的键 。fsModifiers参数可以是以下值的组合: xcc.Mod_ .
+// fsModifiers: 为了生成 WM_HOTKEY 消息，必须与vk参数指定的键组合按下的键 。fsModifiers参数可以是以下值的组合: xcc.Mod_ .
 //
-//	vk: 热键的虚拟键代码: xcc.VK_ . 请参阅虚拟键码: https://docs.microsoft.com/zh-cn/windows/win32/inputdev/virtual-key-codes.
+// vk: 热键的虚拟键代码: xcc.VK_ . 请参阅虚拟键码: https://docs.microsoft.com/zh-cn/windows/win32/inputdev/virtual-key-codes.
 func RegisterHotKey(hWnd uintptr, id int32, fsModifiers, vk uint32) bool {
 	r, _, _ := registerHotKey.Call(hWnd, uintptr(id), uintptr(fsModifiers), uintptr(vk))
 	return r != 0
@@ -533,9 +649,9 @@ func RegisterHotKey(hWnd uintptr, id int32, fsModifiers, vk uint32) bool {
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-unregisterHotKey.
 //
-//	hWnd: 真实窗口句柄。与要释放的热键关联的窗口句柄。如果热键与窗口无关，则此参数应为0.
+// hWnd: 真实窗口句柄。与要释放的热键关联的窗口句柄。如果热键与窗口无关，则此参数应为0.
 //
-//	id: 要释放的热键的标识符.
+// id: 要释放的热键的标识符.
 func UnregisterHotKey(hWnd uintptr, id int32) bool {
 	r, _, _ := unregisterHotKey.Call(hWnd, uintptr(id))
 	return r != 0
@@ -545,13 +661,13 @@ func UnregisterHotKey(hWnd uintptr, id int32) bool {
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetMessageW.
 //
-//	pMsg: 指向从线程的消息队列接收消息信息的 MSG 结构的指针.
+// pMsg: 指向从线程的消息队列接收消息信息的 MSG 结构的指针.
 //
-//	hWnd: 要检索其消息的窗口的句柄。窗口必须属于当前线程。如果hWnd为0， GetMessage 检索属于当前线程的任何窗口的消息，以及当前线程的消息队列中hwnd值为0的任何消息（参见 MSG 结构）。因此，如果hWnd为0，则同时处理窗口消息和线程消息。如果hWnd为-1， GetMessage 仅检索当前线程的消息队列中hwnd值为0的消息，即 PostMessage （当hWnd参数为0时）或 PostThreadMessage 发布的线程消息.
+// hWnd: 要检索其消息的窗口的句柄。窗口必须属于当前线程。如果hWnd为0， GetMessage 检索属于当前线程的任何窗口的消息，以及当前线程的消息队列中hwnd值为0的任何消息（参见 MSG 结构）。因此，如果hWnd为0，则同时处理窗口消息和线程消息。如果hWnd为-1， GetMessage 仅检索当前线程的消息队列中hwnd值为0的消息，即 PostMessage （当hWnd参数为0时）或 PostThreadMessage 发布的线程消息.
 //
-//	wMsgFilterMin: 要检索的最低消息值的整数值。使用WM_KEYFIRST (0x0100) 指定第一条键盘消息或WM_MOUSEFIRST (0x0200) 指定第一条鼠标消息.
+// wMsgFilterMin: 要检索的最低消息值的整数值。使用WM_KEYFIRST (0x0100) 指定第一条键盘消息或WM_MOUSEFIRST (0x0200) 指定第一条鼠标消息.
 //
-//	wMsgFilterMax: 要检索的最高消息值的整数值。使用WM_KEYLAST指定最后一个键盘消息或WM_MOUSELAST指定最后一个鼠标消息.
+// wMsgFilterMax: 要检索的最高消息值的整数值。使用WM_KEYLAST指定最后一个键盘消息或WM_MOUSELAST指定最后一个鼠标消息.
 //
 //	@return: 如果函数检索到 WM_QUIT 以外的消息，则返回值非零。如果函数检索到 WM_QUIT 消息，则返回值为零。如果有错误，返回值为-1.
 func GetMessage(pMsg *MSG, hWnd uintptr, wMsgFilterMin uint32, wMsgFilterMax uint32) int32 {
@@ -563,7 +679,7 @@ func GetMessage(pMsg *MSG, hWnd uintptr, wMsgFilterMin uint32, wMsgFilterMax uin
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-TranslateMessage.
 //
-//	pMsg: 一个指向 MSG 结构的指针，该结构包含使用 GetMessage 或 PeekMessage 函数从调用线程的消息队列中检索到的消息信息.
+// pMsg: 一个指向 MSG 结构的指针，该结构包含使用 GetMessage 或 PeekMessage 函数从调用线程的消息队列中检索到的消息信息.
 func TranslateMessage(pMsg *MSG) bool {
 	r, _, _ := translateMessage.Call(uintptr(unsafe.Pointer(pMsg)))
 	return r != 0
@@ -573,7 +689,7 @@ func TranslateMessage(pMsg *MSG) bool {
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-DispatchMessageW.
 //
-//	pMsg: 指向包含消息的结构的指针.
+// pMsg: 指向包含消息的结构的指针.
 //
 //	@return: 返回值指定窗口过程返回的值。尽管它的含义取决于所发送的消息，但返回值通常会被忽略.
 func DispatchMessage(pMsg *MSG) int {
@@ -585,7 +701,7 @@ func DispatchMessage(pMsg *MSG) int {
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-PostQuitMessage.
 //
-//	nExitCode: 应用程序退出代码。该值用作 WM_QUIT 消息的wParam参数.
+// nExitCode: 应用程序退出代码。该值用作 WM_QUIT 消息的wParam参数.
 func PostQuitMessage(nExitCode int32) {
 	postQuitMessage.Call(uintptr(nExitCode))
 }
@@ -608,17 +724,17 @@ type POINT struct {
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-SendMessageW.
 //
-//	hWnd: 窗口句柄，其窗口过程将接收消息。如果该参数为 HWND_BROADCAST ((HWND)0xffff)，则将消息发送到系统中的所有顶层窗口，包括禁用或不可见的无主窗口、重叠窗口和弹出窗口；但消息不会发送到子窗口.
+// hWnd: 窗口句柄，其窗口过程将接收消息。如果该参数为 HWND_BROADCAST ((HWND)0xffff)，则将消息发送到系统中的所有顶层窗口，包括禁用或不可见的无主窗口、重叠窗口和弹出窗口；但消息不会发送到子窗口.
 //
-//	Msg: 要发送的消息。有关系统提供的消息的列表，请参阅: https://docs.microsoft.com/en-us/windows/win32/winmsg/about-messages-and-message-queues.
+// Msg: 要发送的消息。有关系统提供的消息的列表，请参阅: https://docs.microsoft.com/en-us/windows/win32/winmsg/about-messages-and-message-queues.
 //
-//	wParam: 其他特定于消息的信息.
+// wParam: 其他特定于消息的信息.
 //
-//	lParam: 其他特定于消息的信息.
+// lParam: 其他特定于消息的信息.
 //
 //	@return: 返回值指定消息处理的结果；这取决于发送的消息.
-func SendMessageW(hWnd uintptr, Msg int32, wParam, lParam uint) int {
-	r, _, _ := sendMessageW.Call(hWnd, uintptr(Msg), uintptr(wParam), uintptr(lParam))
+func SendMessageW(hWnd uintptr, Msg int32, wParam, lParam uintptr) int {
+	r, _, _ := sendMessageW.Call(hWnd, uintptr(Msg), wParam, lParam)
 	return int(r)
 }
 
@@ -626,14 +742,14 @@ func SendMessageW(hWnd uintptr, Msg int32, wParam, lParam uint) int {
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-postmessagew.
 //
-//	hWnd: 窗口句柄，其窗口过程将接收消息。如果该参数为 HWND_BROADCAST ((HWND)0xffff)，则将消息发送到系统中的所有顶层窗口，包括禁用或不可见的无主窗口、重叠窗口和弹出窗口；但消息不会发送到子窗口.
+// hWnd: 窗口句柄，其窗口过程将接收消息。如果该参数为 HWND_BROADCAST ((HWND)0xffff)，则将消息发送到系统中的所有顶层窗口，包括禁用或不可见的无主窗口、重叠窗口和弹出窗口；但消息不会发送到子窗口.
 //
-//	Msg: 要发送的消息。有关系统提供的消息的列表，请参阅: https://docs.microsoft.com/en-us/windows/win32/winmsg/about-messages-and-message-queues.
+// Msg: 要发送的消息。有关系统提供的消息的列表，请参阅: https://docs.microsoft.com/en-us/windows/win32/winmsg/about-messages-and-message-queues.
 //
-//	wParam: 其他特定于消息的信息.
+// wParam: 其他特定于消息的信息.
 //
-//	lParam: 其他特定于消息的信息.
-func PostMessageW(hWnd uintptr, Msg int32, wParam, lParam uint) bool {
-	r, _, _ := postMessageW.Call(hWnd, uintptr(Msg), uintptr(wParam), uintptr(lParam))
+// lParam: 其他特定于消息的信息.
+func PostMessageW(hWnd uintptr, Msg int32, wParam, lParam uintptr) bool {
+	r, _, _ := postMessageW.Call(hWnd, uintptr(Msg), wParam, lParam)
 	return r != 0
 }
