@@ -45,7 +45,7 @@ func (a *animaBase) EnableAutoDestroy(bEnable bool) *animaBase {
 	return a
 }
 
-// 动画_置回调.
+// 动画_置回调. TODO: 有问题用不了, 因为 syscall.NewCallback 创建不了没有返回值的回调函数指针.
 //
 // callback: 回调函数.
 func (a *animaBase) SetCallBack(callback xc.FunAnimation) *animaBase {

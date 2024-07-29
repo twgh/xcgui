@@ -16,6 +16,8 @@ func ExampleNewHookKeyboard() {
 	tf.TFunc(func(a *app.App, w *window.Window) {
 		widget.NewShapeText(40, 40, 300, 30, "在任何窗口按键都能够监听到", w.Handle)
 		widget.NewEdit(40, 80, 300, 30, w.Handle).SetFocus()
+		checkBtn := widget.NewButton(40, 120, 300, 30, "拦截A键按下", w.Handle).SetTypeEx(xcc.Button_Type_Check)
+		checkBtn.EnableBkTransparent(true)
 
 		kbHook := wutil.NewHookKeyboard(func(nCode int32, wParam xcc.WM_, lParam *wapi.KBDLLHOOKSTRUCT) uintptr {
 			if nCode < 0 { // nCode小于0时不应继续处理
@@ -23,12 +25,13 @@ func ExampleNewHookKeyboard() {
 			}
 
 			if wParam == xcc.WM_KEYDOWN { // 键盘按下
-				fmt.Printf("按键按下: 虚拟键码=%d, 扫描码=%d\n", lParam.VkCode, lParam.ScanCode)
-
-				if lParam.VkCode == xcc.VK_A {
-					fmt.Println("拦截了A键, 是不会输入文本框的")
-					return 1 // 返回1可拦截, 这时按下A键是不会输入文本框的
+				if checkBtn.GetStateEx() == xcc.Button_State_Check {
+					if lParam.VkCode == xcc.VK_A {
+						fmt.Println("拦截了A键按下, 是不会输入文本框的, 部分程序不会被拦截, 自行研究")
+						return 1 // 返回1可拦截, 这时按下A键是不会输入文本框的, 部分程序不会被拦截, 因为它可能进行了特殊处理
+					}
 				}
+				fmt.Printf("按键按下: 虚拟键码=%d, 扫描码=%d\n", lParam.VkCode, lParam.ScanCode)
 			} else if wParam == xcc.WM_KEYUP { // 键盘弹起
 				fmt.Printf("按键弹起: 虚拟键码=%d, 扫描码=%d\n", lParam.VkCode, lParam.ScanCode)
 			}
@@ -50,7 +53,7 @@ func ExampleNewHookMouse() {
 
 		// 注册事件_窗口鼠标右键按下, 用来检测是否真的拦截了鼠标右键按下消息
 		w.Event_RBUTTONDOWN(func(nFlags uint, pPt *xc.POINT, pbHandled *bool) int {
-			fmt.Println("响应了炫彩窗口鼠标右键被按下消息, 证明没有被拦截:", nFlags, pPt)
+			xc.XC_Alert("提示", fmt.Sprintf("响应了炫彩窗口鼠标右键被按下消息, 证明没有被拦截, nFlags: %d, pPt: %v", nFlags, pPt))
 			return 0
 		})
 

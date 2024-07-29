@@ -102,7 +102,7 @@ func (d *DateTime) GetSelBkColor() int {
 
 // 日期_置选择日期背景颜色, 设置被选择文字的背景颜色.
 //
-// crSelectBk: 文字被选中背景色, ARGB 颜色.
+// crSelectBk: 文字被选中背景色, xc.RGBA 颜色.
 func (d *DateTime) SetSelBkColor(crSelectBk int) *DateTime {
 	xc.XDateTime_SetSelBkColor(d.Handle, crSelectBk)
 	return d

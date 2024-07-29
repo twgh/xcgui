@@ -760,7 +760,7 @@ func (l *ListView) Item_GetImage(iGroup int32, iItem int32, iColumn int32) int {
 
 // 列表视_置拖动矩形颜色.
 //
-// color: ARGB 颜色.
+// color: xc.RGBA 颜色.
 //
 // width: 线宽度.
 func (l *ListView) SetDragRectColor(color int, width int32) *ListView {

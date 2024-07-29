@@ -69,7 +69,7 @@ func XShapeText_GetFont(hTextBlock int) int {
 //
 // hTextBlock: 形状对象文本句柄.
 //
-// color: ARGB 颜色值.
+// color: xc.RGBA 颜色值.
 func XShapeText_SetTextColor(hTextBlock int, color int) {
 	xShapeText_SetTextColor.Call(uintptr(hTextBlock), uintptr(color))
 }

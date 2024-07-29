@@ -22,7 +22,7 @@ func XShapeEllipse_Create(x, y, cx, cy int32, hParent int) int {
 //
 // hShape: 形状对象句柄.
 //
-// color: ARGB 颜色值.
+// color: xc.RGBA 颜色值.
 func XShapeEllipse_SetBorderColor(hShape int, color int) {
 	xShapeEllipse_SetBorderColor.Call(uintptr(hShape), uintptr(color))
 }
@@ -31,7 +31,7 @@ func XShapeEllipse_SetBorderColor(hShape int, color int) {
 //
 // hShape: 形状对象句柄.
 //
-// color: ARGB 颜色值.
+// color: xc.RGBA 颜色值.
 func XShapeEllipse_SetFillColor(hShape int, color int) {
 	xShapeEllipse_SetFillColor.Call(uintptr(hShape), uintptr(color))
 }

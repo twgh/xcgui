@@ -388,18 +388,18 @@ func (w *windowBase) SetFont(hFontx int) *windowBase {
 
 // 窗口_置文本颜色.
 //
-// color: ARGB 颜色值.
+// color: xc.RGBA 颜色值.
 func (w *windowBase) SetTextColor(color int) *windowBase {
 	xc.XWnd_SetTextColor(w.Handle, color)
 	return w
 }
 
-// 窗口_取文本颜色, 返回ARGB 颜色.
+// 窗口_取文本颜色, 返回xc.RGBA 颜色.
 func (w *windowBase) GetTextColor() int {
 	return xc.XWnd_GetTextColor(w.Handle)
 }
 
-// 窗口_取文本颜色扩展, 返回ARGB 颜色.
+// 窗口_取文本颜色扩展, 返回xc.RGBA 颜色.
 func (w *windowBase) GetTextColorEx() int {
 	return xc.XWnd_GetTextColorEx(w.Handle)
 }
@@ -614,7 +614,7 @@ func (w *windowBase) SetCaretPos(x, y, width, height int32, bUpdate bool) *windo
 
 // 窗口_置插入符颜色.
 //
-// color: 颜色值, ARGB 颜色.
+// color: 颜色值, xc.RGBA 颜色.
 func (w *windowBase) SetCaretColor(color int) *windowBase {
 	xc.XWnd_SetCaretColor(w.Handle, color)
 	return w
@@ -784,7 +784,7 @@ func (w *windowBase) SetTransparentAlpha(alpha byte) *windowBase {
 
 // 窗口_置透明色.
 //
-// color: 窗口透明色, ARGB 颜色.
+// color: 窗口透明色, xc.RGBA 颜色.
 func (w *windowBase) SetTransparentColor(color int) *windowBase {
 	xc.XWnd_SetTransparentColor(w.Handle, color)
 	return w
@@ -800,7 +800,7 @@ func (w *windowBase) SetTransparentColor(color int) *windowBase {
 //
 // bRightAngle: 是否强制直角.
 //
-// color: 阴影颜色, ARGB 颜色.
+// color: 阴影颜色, xc.RGBA 颜色.
 func (w *windowBase) SetShadowInfo(nSize int32, nDepth int32, nAngeleSize int32, bRightAngle bool, color int) *windowBase {
 	xc.XWnd_SetShadowInfo(w.Handle, nSize, nDepth, nAngeleSize, bRightAngle, color)
 	return w
@@ -816,7 +816,7 @@ func (w *windowBase) SetShadowInfo(nSize int32, nDepth int32, nAngeleSize int32,
 //
 // pbRightAngle: 是否强制直角.
 //
-// pColor: 阴影颜色, ARGB 颜色.
+// pColor: 阴影颜色, xc.RGBA 颜色.
 func (w *windowBase) GetShadowInfo(pnSize, pnDepth, pnAngeleSize *int32, pbRightAngle *bool, pColor *int) *windowBase {
 	xc.XWnd_GetShadowInfo(w.Handle, pnSize, pnDepth, pnAngeleSize, pbRightAngle, pColor)
 	return w
@@ -876,7 +876,7 @@ func (w *windowBase) SetTitle(pTitle string) *windowBase {
 
 // 窗口_置标题颜色.
 //
-// color: ARGB 颜色.
+// color: xc.RGBA 颜色.
 func (w *windowBase) SetTitleColor(color int) *windowBase {
 	xc.XWnd_SetTitleColor(w.Handle, color)
 	return w
@@ -899,7 +899,7 @@ func (w *windowBase) GetTitle() string {
 	return xc.XWnd_GetTitle(w.Handle)
 }
 
-// 窗口_取标题颜色, 返回ARGB 颜色.
+// 窗口_取标题颜色, 返回xc.RGBA 颜色.
 func (w *windowBase) GetTitleColor() int {
 	return xc.XWnd_GetTitleColor(w.Handle)
 }
@@ -908,7 +908,7 @@ func (w *windowBase) GetTitleColor() int {
 //
 // nState: 组合状态.
 //
-// color: ARGB 颜色.
+// color: xc.RGBA 颜色.
 //
 // width: 线宽.
 func (w *windowBase) AddBkBorder(nState xcc.Window_State_Flag_, color int, width int32) *windowBase {
@@ -920,7 +920,7 @@ func (w *windowBase) AddBkBorder(nState xcc.Window_State_Flag_, color int, width
 //
 // nState: 组合状态.
 //
-// color: ARGB 颜色.
+// color: xc.RGBA 颜色.
 func (w *windowBase) AddBkFill(nState xcc.Window_State_Flag_, color int) *windowBase {
 	xc.XWnd_AddBkFill(w.Handle, nState, color)
 	return w
@@ -1244,6 +1244,15 @@ func (w *windowBase) SetLeft(x int32) *windowBase {
 func (w *windowBase) SetTopEdge(y int32) *windowBase {
 	xc.XWnd_SetPosition(w.Handle, w.GetLeft(), y)
 	return w
+}
+
+// CreateTrayIcon 创建托盘图标对象. 之后需调用托盘图标对象的Show函数来显示到托盘.
+//
+// hIcon: 图标句柄. 可使用 wutil.HIcon 函数生成.
+//
+// tips: 提示文本, 长度不能超过 127 个字符.
+func (w *windowBase) CreateTrayIcon(hIcon uintptr, tips string) *TrayIcon {
+	return NewTrayIcon(w.Handle, hIcon, tips)
 }
 
 /*

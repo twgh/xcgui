@@ -20,7 +20,7 @@ func (a *AnimaItem) EnableCompleteRelease(bEnable bool) *AnimaItem {
 	return a
 }
 
-// 动画项_置回调.
+// 动画项_置回调. TODO: 有问题用不了, 因为 syscall.NewCallback 创建不了没有返回值的回调函数指针.
 //
 // callback: 回调函数.
 func (a *AnimaItem) SetCallback(callback xc.FunAnimationItem) *AnimaItem {

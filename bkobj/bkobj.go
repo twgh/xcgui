@@ -89,7 +89,7 @@ func (b *BkObj) SetRotate(angle float32) *BkObj {
 
 // 背景对象_置填充颜色.
 //
-// color: ARGB 颜色值.
+// color: xc.RGBA 颜色值.
 func (b *BkObj) SetFillColor(color int) *BkObj {
 	xc.XBkObj_SetFillColor(b.Handle, color)
 	return b
@@ -105,7 +105,7 @@ func (b *BkObj) SetBorderWidth(width int32) *BkObj {
 
 // 背景对象_置边框颜色.
 //
-// color: xc.ARGB 颜色值.
+// color: xc.RGBA 颜色值.
 func (b *BkObj) SetBorderColor(color int) *BkObj {
 	xc.XBkObj_SetBorderColor(b.Handle, color)
 	return b
@@ -189,12 +189,12 @@ func (b *BkObj) GetRotate() *BkObj {
 	return b
 }
 
-// 背景对象_取填充色, 返回ARGB填充色.
+// 背景对象_取填充色, 返回 xc.RGBA 填充色.
 func (b *BkObj) GetFillColor() int {
 	return xc.XBkObj_GetFillColor(b.Handle)
 }
 
-// 背景对象_取边框色, 返回ARGB边框色.
+// 背景对象_取边框色, 返回 xc.RGBA 边框色.
 func (b *BkObj) GetBorderColor() int {
 	return xc.XBkObj_GetBorderColor(b.Handle)
 }

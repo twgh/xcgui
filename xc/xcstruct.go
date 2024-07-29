@@ -144,14 +144,14 @@ type LOGFONTW struct {
 
 // Editor 颜色信息
 type Editor_Color_ struct {
-	ClrMargin1         int32 // 背景色1, ARGB 颜色
-	ClrMargin2         int32 // 背景色2, ARGB 颜色
-	ClrMarginText      int32 // 文本色, ARGB 颜色
-	ClrBreakpoint      int32 // 断点色, ARGB 颜色
-	ClrBreakpointArrow int32 // 断点箭头色, ARGB 颜色
-	ClrRun             int32 // 当前执行位置指示色, ARGB 颜色
-	ClrCurRow          int32 // 突出显示当前行颜色, ARGB 颜色
-	ClrMatch           int32 // 设置匹配文本背景色, ARGB 颜色
+	ClrMargin1         int32 // 背景色1, xc.RGBA 颜色
+	ClrMargin2         int32 // 背景色2, xc.RGBA 颜色
+	ClrMarginText      int32 // 文本色, xc.RGBA 颜色
+	ClrBreakpoint      int32 // 断点色, xc.RGBA 颜色
+	ClrBreakpointArrow int32 // 断点箭头色, xc.RGBA 颜色
+	ClrRun             int32 // 当前执行位置指示色, xc.RGBA 颜色
+	ClrCurRow          int32 // 突出显示当前行颜色, xc.RGBA 颜色
+	ClrMatch           int32 // 设置匹配文本背景色, xc.RGBA 颜色
 }
 
 // Edit 数据复制

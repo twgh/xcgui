@@ -69,7 +69,7 @@ func XDateTime_GetSelBkColor(hEle int) int {
 //
 // hEle: 元素句柄.
 //
-// crSelectBk: 文字被选中背景色, ARGB 颜色.
+// crSelectBk: 文字被选中背景色, xc.RGBA 颜色.
 func XDateTime_SetSelBkColor(hEle int, crSelectBk int) {
 	xDateTime_SetSelBkColor.Call(uintptr(hEle), uintptr(crSelectBk))
 }

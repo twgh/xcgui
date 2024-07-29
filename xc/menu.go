@@ -270,7 +270,7 @@ func XMenu_GetItemHeight(hMenu int) int32 {
 //
 // hMenu: 菜单句柄.
 //
-// crColor: ARGB 颜色.
+// crColor: xc.RGBA 颜色.
 func XMenu_SetBorderColor(hMenu int, crColor int) {
 	xMenu_SetBorderColor.Call(uintptr(hMenu), uintptr(crColor))
 }

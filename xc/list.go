@@ -1016,7 +1016,7 @@ func XList_GetCountColumn_AD(hEle int) int32 {
 //
 // hEle: 元素句柄.
 //
-// color: ARGB 颜色值.
+// color: xc.RGBA 颜色值.
 func XList_SetSplitLineColor(hEle int, color int) {
 	xList_SetSplitLineColor.Call(uintptr(hEle), uintptr(color))
 }
@@ -1051,7 +1051,7 @@ func XList_GetRowHeight(hEle int, iRow int32, pHeight, pSelHeight *int32) {
 //
 // hEle: 元素句柄.
 //
-// color: ARGB 颜色值.
+// color: xc.RGBA 颜色值.
 //
 // width: 线宽度.
 func XList_SetDragRectColor(hEle int, color int, width int32) {

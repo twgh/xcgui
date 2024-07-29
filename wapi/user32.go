@@ -242,9 +242,9 @@ const (
 //
 // Type: 要加载的图像的类型。 wapi.IMAGE_ .
 //
-// cx: 图标或光标的宽度（以像素为单位）。 如果此参数为零且 fuLoad 参数 为LR_DEFAULTSIZE，则函数使用 SM_CXICON 或 SM_CXCURSOR 系统指标值来设置宽度。 如果此参数为零且未使用 LR_DEFAULTSIZE ，则函数使用实际资源宽度.
+// cx: 图标或光标的宽度（以像素为单位）。 如果此参数为零且 fuLoad 参数 为 LR_DEFAULTSIZE，则函数使用 SM_CXICON 或 SM_CXCURSOR 系统指标值来设置宽度。 如果此参数为零且未使用 LR_DEFAULTSIZE ，则函数使用实际资源宽度.
 //
-// cy: 图标或光标的高度（以像素为单位）。 如果此参数为零且 fuLoad 参数 为LR_DEFAULTSIZE，则函数使用 SM_CYICON 或 SM_CYCURSOR 系统指标值来设置高度。 如果此参数为零且未使用 LR_DEFAULTSIZE ，则函数使用实际资源高度.
+// cy: 图标或光标的高度（以像素为单位）。 如果此参数为零且 fuLoad 参数 为 LR_DEFAULTSIZE，则函数使用 SM_CYICON 或 SM_CYCURSOR 系统指标值来设置高度。 如果此参数为零且未使用 LR_DEFAULTSIZE ，则函数使用实际资源高度.
 //
 // fuLoad: 此参数可使用以下一个或多个值: wapi.LR_ .
 //

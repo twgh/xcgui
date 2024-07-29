@@ -2,9 +2,8 @@ package xc
 
 import (
 	"github.com/twgh/xcgui/common"
-	"syscall"
-
 	"github.com/twgh/xcgui/xcc"
+	"syscall"
 )
 
 // 动画_运行, 并且增加引用计数.
@@ -212,7 +211,7 @@ func XAnima_AlphaEx(hSequence int, duration uint32, from_alpha byte, to_alpha by
 //
 // duration: 持续时间.
 //
-// color: ARGB 颜色.
+// color: xc.RGBA 颜色.
 //
 // nLoopCount: 动画循环次数, 0: 无限循环.
 //
@@ -230,9 +229,9 @@ func XAnima_Color(hSequence int, duration uint32, color int, nLoopCount int32, e
 //
 // duration: 持续时间.
 //
-// from: 起点颜色, ARGB 颜色.
+// from: 起点颜色, xc.RGBA 颜色.
 //
-// to: 终点颜色, ARGB 颜色.
+// to: 终点颜色, xc.RGBA 颜色.
 //
 // nLoopCount: 动画循环次数, 0: 无限循环.
 //
@@ -409,13 +408,35 @@ func XAnima_DestroyObjectUI(hSequence int, duration float32) int {
 	return int(r)
 }
 
-// 动画_置回调.
+/*var (
+	funAnimationCallBackFunc func(hAnimation int, flag int32)            // 真实执行的
+	funAnimationCallBackPtr  = syscall.NewCallback(funAnimationCallBack) // 壳
+	rwm2                     sync.RWMutex
+)
+
+// 壳
+func funAnimationCallBack(hAnimation int, flag int32) uintptr {
+	funAnimationCallBackFunc(hAnimation, flag)
+	return uintptr(0)
+}*/
+
+// FunAnimation 动画回调.
+//
+// hAnimation: 动画序列或动画组句柄.
+//
+// flag: 当前忽略.
+type FunAnimation func(hAnimation int, flag int32)
+
+// 动画_置回调. TODO: 有问题用不了, 因为 syscall.NewCallback 创建不了没有返回值的回调函数指针.
 //
 // hAnimationEx: 动画序列或动画组句柄.
 //
 // callback: 回调函数.
 func XAnima_SetCallBack(hAnimationEx int, callback FunAnimation) {
+	/*rwm2.Lock()
+	funAnimationCallBackFunc = callback*/
 	xAnima_SetCallBack.Call(uintptr(hAnimationEx), syscall.NewCallback(callback))
+	// rwm2.Unlock()
 }
 
 // 动画_置用户数据.
@@ -459,7 +480,7 @@ func XAnima_Pause(hAnimationEx int) bool {
 	return r != 0
 }
 
-// 动画项_置回调.
+// 动画项_置回调. TODO: 有问题用不了, 因为 syscall.NewCallback 创建不了没有返回值的回调函数指针.
 //
 // hAnimationItem: 动画项句柄.
 //
@@ -520,13 +541,6 @@ func XAnima_DelayEx(hSequence int, duration float32, nLoopCount int32, ease_flag
 func XAnimaMove_SetFlag(hAnimationMove int, flags xcc.Animation_Move_) {
 	xAnimaMove_SetFlag.Call(uintptr(hAnimationMove), uintptr(flags))
 }
-
-// FunAnimation 动画回调.
-//
-// hAnimation: 动画序列或动画组句柄.
-//
-// flag: 当前忽略.
-type FunAnimation func(hAnimation int, flag int32)
 
 // FunAnimationItem 动画项回调.
 //

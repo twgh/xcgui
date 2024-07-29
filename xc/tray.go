@@ -40,14 +40,14 @@ func XTrayIcon_Add(hWindow int, id int32) bool {
 
 // 托盘图标_置图标. 设置图标.
 //
-// hIcon: 图标句柄.
+// hIcon: 图标句柄. 可使用 wutil.HIcon 函数生成.
 func XTrayIcon_SetIcon(hIcon uintptr) {
 	xTrayIcon_SetIcon.Call(hIcon)
 }
 
 // 托盘图标_置提示文本. 设置工具提示内容.
 //
-// pTips: 提示文本内容, 长度不能超过127个字符.
+// pTips: 提示文本内容, 长度不能超过 127 个字符.
 func XTrayIcon_SetTips(pTips string) {
 	xTrayIcon_SetTips.Call(common.StrPtr(pTips))
 }

@@ -779,7 +779,7 @@ func XListBox_GetCountColumn_AD(hEle int) int32 {
 //
 // hEle: 元素句柄.
 //
-// color: ARGB 颜色值.
+// color: xc.RGBA 颜色值.
 func XListBox_SetSplitLineColor(hEle int, color int) {
 	xListBox_SetSplitLineColor.Call(uintptr(hEle), uintptr(color))
 }
@@ -788,7 +788,7 @@ func XListBox_SetSplitLineColor(hEle int, color int) {
 //
 // hEle: 元素句柄.
 //
-// color: ARGB 颜色值.
+// color: xc.RGBA 颜色值.
 //
 // width: 线宽度.
 func XListBox_SetDragRectColor(hEle int, color int, width int32) {

@@ -41,5 +41,5 @@ func TestSaveFile(t *testing.T) {
 func TestChooseColor(t *testing.T) {
 	rgb := wutil.ChooseColor(0)
 	fmt.Println("rgb颜色", rgb)
-	fmt.Println("ARGB颜色", xc.RGB2ARGB(rgb, 255))
+	fmt.Println("炫彩使用的颜色", xc.RGB2RGBA(rgb, 255))
 }

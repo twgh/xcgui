@@ -927,7 +927,7 @@ const (
 	TrayIcon_Flag_Nosound      TrayIcon_Flag_ = 0x10 // 禁止播放气泡声音 NIIF_NOSOUND
 )
 
-// ARGB颜色
+// 炫彩使用的颜色
 
 const (
 	COLOR_BLUE    = 0xFFFF0000 // 蓝色

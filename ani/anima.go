@@ -177,7 +177,7 @@ func (a *Anima) AlphaEx(duration uint32, from_alpha uint8, to_alpha uint8, nLoop
 //
 // duration: 持续时间.
 //
-// color: ARGB 颜色.
+// color: xc.RGBA 颜色.
 //
 // nLoopCount: 动画循环次数, 0: 无限循环.
 //
@@ -194,9 +194,9 @@ func (a *Anima) Color(duration uint32, color int, nLoopCount int32, ease_flag xc
 //
 // duration: 持续时间.
 //
-// from: 起点颜色, ARGB 颜色.
+// from: 起点颜色, xc.RGBA 颜色.
 //
-// to: 终点颜色, ARGB 颜色.
+// to: 终点颜色, xc.RGBA 颜色.
 //
 // nLoopCount: 动画循环次数, 0: 无限循环.
 //

@@ -198,7 +198,7 @@ func XEdit_SetDefaultText(hEle int, pString string) {
 //
 // hEle: 元素句柄.
 //
-// color: ARGB 颜色值.
+// color: xc.RGBA 颜色值.
 func XEdit_SetDefaultTextColor(hEle int, color int) {
 	xEdit_SetDefaultTextColor.Call(uintptr(hEle), uintptr(color))
 }
@@ -444,7 +444,7 @@ func XEdit_SetCaretWidth(hEle int, nWidth int32) {
 //
 // hEle: 元素句柄.
 //
-// color: ARGB 颜色.
+// color: xc.RGBA 颜色.
 func XEdit_SetSelectBkColor(hEle int, color int) {
 	xEdit_SetSelectBkColor.Call(uintptr(hEle), uintptr(color))
 }
@@ -796,7 +796,7 @@ func XEdit_ReleaseStyle(hEle int, iStyle int32) bool {
 //
 // hFont: 字体句柄.
 //
-// color: ARGB 颜色.
+// color: xc.RGBA 颜色.
 //
 // bColor: 是否使用颜色.
 func XEdit_ModifyStyle(hEle int, iStyle int32, hFont int, color int, bColor bool) bool {

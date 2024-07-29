@@ -10,30 +10,30 @@ import (
 
 // Deprecated
 //
-// !这是旧版函数, 请使用 ARGB
+// !这是旧版函数, 请使用 xc.RGBA
 func ABGR(r, g, b, a byte) int {
-	return ARGB(r, g, b, a)
+	return RGBA(r, g, b, a)
 }
 
 // Deprecated
 //
-// !这是旧版函数, 请使用 ARGB2
+// !这是旧版函数, 请使用 xc.RGBA2
 func ABGR2(rgb int, a byte) int {
-	return ARGB2(rgb, a)
+	return RGBA2(rgb, a)
 }
 
 // Deprecated
 //
-// !这是旧版函数, 请使用 RGB2ARGB
-func RGB2ABGR(rgb int, a byte) int {
-	return RGB2ARGB(rgb, a)
-}
-
-// Deprecated
-//
-// !这是旧版函数, 请使用 HexRGB2ARGB
+// !这是旧版函数, 请使用 xc.HexRGB2RGBA
 func HexRGB2ABGR(str string, a byte) int {
-	return HexRGB2ARGB(str, a)
+	return HexRGB2RGBA(str, a)
+}
+
+// Deprecated
+//
+// !这是旧版函数, 请使用 xc.RGB2RGBA
+func RGB2ABGR(rgb int, a byte) int {
+	return RGB2RGBA(rgb, a)
 }
 
 // Deprecated

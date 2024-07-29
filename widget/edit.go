@@ -206,7 +206,7 @@ func (e *Edit) SetDefaultText(pString string) *Edit {
 
 // 编辑框_置默认文本颜色.
 //
-// color: ARGB 颜色值.
+// color: xc.RGBA 颜色值.
 func (e *Edit) SetDefaultTextColor(color int) *Edit {
 	xc.XEdit_SetDefaultTextColor(e.Handle, color)
 	return e
@@ -430,7 +430,7 @@ func (e *Edit) SetCaretWidth(nWidth int32) *Edit {
 
 // 编辑框_置选择背景颜色.
 //
-// color: ARGB 颜色.
+// color: xc.RGBA 颜色.
 func (e *Edit) SetSelectBkColor(color int) *Edit {
 	xc.XEdit_SetSelectBkColor(e.Handle, color)
 	return e
@@ -714,7 +714,7 @@ func (e *Edit) ReleaseStyle(iStyle int32) bool {
 //
 // hFont: 字体句柄.
 //
-// color: ARGB 颜色.
+// color: xc.RGBA 颜色.
 //
 // bColor: 是否使用颜色.
 func (e *Edit) ModifyStyle(iStyle int32, hFont int, color int, bColor bool) bool {

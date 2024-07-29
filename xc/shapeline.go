@@ -35,7 +35,7 @@ func XShapeLine_SetPosition(hShape int, x1, y1, x2, y2 int32) {
 //
 // hShape: 形状对象句柄.
 //
-// color: ARGB 颜色值.
+// color: xc.RGBA 颜色值.
 func XShapeLine_SetColor(hShape int, color int) {
 	xShapeLine_SetColor.Call(uintptr(hShape), uintptr(color))
 }

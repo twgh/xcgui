@@ -70,7 +70,7 @@ func NewShapeGroupBoxByUIDName(name string) *ShapeGroupBox {
 
 // 形状组框_置边框颜色.
 //
-// color: ARGB 颜色值.
+// color: xc.RGBA 颜色值.
 func (s *ShapeGroupBox) SetBorderColor(color int) *ShapeGroupBox {
 	xc.XShapeGroupBox_SetBorderColor(s.Handle, color)
 	return s
@@ -78,7 +78,7 @@ func (s *ShapeGroupBox) SetBorderColor(color int) *ShapeGroupBox {
 
 // 形状组框_置文本颜色.
 //
-// color: ARGB 颜色值.
+// color: xc.RGBA 颜色值.
 func (s *ShapeGroupBox) SetTextColor(color int) *ShapeGroupBox {
 	xc.XShapeGroupBox_SetTextColor(s.Handle, color)
 	return s

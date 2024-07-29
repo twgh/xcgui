@@ -116,7 +116,7 @@ func (fw *FrameWindow) SetView(hEle int) *FrameWindow {
 
 // 框架窗口_置窗格分隔条颜色.
 //
-// color: ARGB 颜色值.
+// color: xc.RGBA 颜色值.
 func (fw *FrameWindow) SetPaneSplitBarColor(color int) *FrameWindow {
 	xc.XFrameWnd_SetPaneSplitBarColor(fw.Handle, color)
 	return fw

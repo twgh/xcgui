@@ -127,7 +127,7 @@ func (p *ProgressBar) EnableShowText(bShow bool) *ProgressBar {
 
 // 进度条_置进度颜色. 设置进度颜色.
 //
-// color: ARGB 颜色.
+// color: xc.RGBA 颜色.
 func (p *ProgressBar) SetColorLoad(color int) *ProgressBar {
 	xc.XProgBar_SetColorLoad(p.Handle, color)
 	return p
