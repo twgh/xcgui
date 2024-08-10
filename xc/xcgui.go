@@ -50,38 +50,31 @@ func GetXcgui() *syscall.LazyDLL {
 	return xcgui
 }
 
-// WriteDll 把 xcgui.dll 写出到windows临时目录中版本号文件夹里, 如果检测到dll已存在则不会写出.
+// WriteDll 把 xcgui.dll 写出到windows临时目录中版本号文件夹里.
 //
 // 使用完本函数后无需再调用 xc.SetXcguiPath(), 内部已自动操作.
 func WriteDll(dll []byte) error {
 	tmpDir := os.TempDir()
 	tmpPath := filepath.Join(tmpDir, "xcgui"+GetVer())
+
+	err := os.Mkdir(tmpPath, 0777)
+	if err != nil && !os.IsExist(err) {
+		return err
+	}
+
 	dllPath := filepath.Join(tmpPath, "xcgui.dll")
-
-	b, err := PathExists(tmpPath)
+	err = os.WriteFile(dllPath, dll, 0777)
 	if err != nil {
 		return err
-	}
-	if !b { // 目录不存在则创建
-		err = os.Mkdir(tmpPath, 0666)
-		if err != nil {
-			return err
-		}
-	}
-
-	b, err = PathExists(dllPath)
-	if err != nil {
-		return err
-	}
-	if !b { // dll不存在则创建
-		err = os.WriteFile(dllPath, dll, 0666)
-		if err != nil {
-			return err
-		}
 	}
 
 	xcguiPath = dllPath
 	return nil
+}
+
+// DelDll 删除 xcguiPath 指向的文件, 其默认值为xcgui.dll.
+func DelDll() error {
+	return os.RemoveAll(xcguiPath)
 }
 
 var (
