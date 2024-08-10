@@ -39,7 +39,7 @@
 ## 获取
 
 ```
-go get github.com/twgh/xcgui
+go get -u github.com/twgh/xcgui
 ```
 
 ## 可视化UI设计器

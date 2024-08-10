@@ -36,7 +36,7 @@ English | [简体中文](./README.md)
 ## Get
 
 ```
-go get github.com/twgh/xcgui
+go get -u github.com/twgh/xcgui
 ```
 
 ## Visualization UI Designer
