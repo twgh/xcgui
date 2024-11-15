@@ -4,13 +4,14 @@
     <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-3.3.9-blue" alt="XCGUI"></a>
    <a href="https://golang.org"> <img src="https://img.shields.io/badge/golang-≥1.16-blue" alt="golang"></a>
     <a href="https://pkg.go.dev/github.com/twgh/xcgui"><img src="https://img.shields.io/badge/go.dev-reference-brightgreen" alt="GoDoc"></a>
-    <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-brightgreen" alt="License"></a>
+    <a href="https://raw.githubusercontent.com/twgh/xcgui/refs/heads/main/xcgui%20license.txt"><img src="https://img.shields.io/badge/License-MIT-brightgreen" alt="License"></a>
     <br><br>
     <a href="https://github.com/twgh/xcgui-example">程序示例</a>&nbsp;&nbsp;
     <a href="http://www.xcgui.com/doc-ui/">官方文档</a>&nbsp;&nbsp;
 	<a href="https://pkg.go.dev/github.com/twgh/xcgui">项目文档</a>&nbsp;&nbsp;
 	<a href="http://mall.xcgui.com">官方资源</a>
 </p>
+
 
 
 
@@ -89,9 +90,9 @@ func main() {
 
 ## 动态链接库下载
 
-程序运行时需要把`xcgui.dll`放到程序运行目录。
+程序运行时需要把 `xcgui.dll` 放到程序运行目录。
 
-在开发时最好是放到`C:\Windows\System32`目录，这样就不需要频繁把dll放到不同程序的运行目录了。
+在开发时最好是放到 `C:\Windows\System32` 目录，这样就不需要频繁把dll放到不同程序的运行目录了。
 
 #### （1）文件直链
 
