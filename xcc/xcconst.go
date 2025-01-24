@@ -48,7 +48,7 @@ const (
 )
 
 // Window_Transparent_ 是炫彩窗口透明标识.
-type Window_Transparent_ int
+type Window_Transparent_ int32
 
 const (
 	Window_Transparent_False  Window_Transparent_ = iota // 默认窗口, 不透明
@@ -59,7 +59,7 @@ const (
 )
 
 // Layout_Align_Axis_ 是布局轴对齐.
-type Layout_Align_Axis_ int
+type Layout_Align_Axis_ int32
 
 const (
 	Layout_Align_Axis_Auto   Layout_Align_Axis_ = iota // 无
@@ -69,7 +69,7 @@ const (
 )
 
 // Layout_Size_ 是布局大小类型.
-type Layout_Size_ int
+type Layout_Size_ int32
 
 const (
 	Layout_Size_Fixed   Layout_Size_ = iota // 固定大小
@@ -81,7 +81,7 @@ const (
 )
 
 // Layout_Align_ 是布局_对齐.
-type Layout_Align_ int
+type Layout_Align_ int32
 
 const (
 	Layout_Align_Left        Layout_Align_ = iota // 左侧
@@ -93,7 +93,7 @@ const (
 )
 
 // XC_OBJECT_STYLE 对象样式(用于区分外观).
-type XC_OBJECT_STYLE int
+type XC_OBJECT_STYLE int32
 
 const (
 	Button_Style_Default XC_OBJECT_STYLE = iota // 默认风格
@@ -139,7 +139,7 @@ const (
 )
 
 // MessageBox_Flag_ 弹出消息框.
-type MessageBox_Flag_ int
+type MessageBox_Flag_ int32
 
 const (
 	MessageBox_Flag_Other  MessageBox_Flag_ = 0    // 其他
@@ -164,7 +164,7 @@ const (
 )
 
 // Button_State_ 按钮状态.
-type Button_State_ int
+type Button_State_ int32
 
 const (
 	Button_State_Leave   Button_State_ = iota // 离开状态
@@ -205,13 +205,107 @@ const (
 )
 
 // Button_Icon_Align_ 按钮图标对齐方式.
-type Button_Icon_Align_ int
+type Button_Icon_Align_ int32
 
 const (
 	Button_Icon_Align_Left   Button_Icon_Align_ = iota // 图标在左边
 	Button_Icon_Align_Top                              // 图标在顶部
 	Button_Icon_Align_Right                            // 图标在右边
 	Button_Icon_Align_Bottom                           // 图标在底部
+)
+
+// WS_ 窗口样式.
+type WS_ uint32
+
+const (
+	WS_BORDER       WS_ = 0x00800000 // 窗口具有细线边框
+	WS_CAPTION      WS_ = 0x00C00000 // 窗口具有标题栏（包括 WS_BORDER 样式）。
+	WS_CHILD        WS_ = 0x40000000 // 窗口是子窗口。具有此样式的窗口不能有菜单栏。此样式不能与 WS_POPUP 样式一起使用。
+	WS_CHILDWINDOW  WS_ = 0x40000000 // 与 WS_CHILD 样式相同。
+	WS_CLIPCHILDREN WS_ = 0x02000000 // 在父窗口内进行绘图时，不包括子窗口所占用的区域。创建父窗口时使用此样式。
+	WS_CLIPSIBLINGS WS_ = 0x04000000 // 相对于彼此剪裁子窗口；也就是说，当特定子窗口收到 WM_PAINT 消息时，WS_CLIPSIBLINGS 样式会将所有其他重叠的子窗口剪裁出要更新的子窗口的区域。
+	WS_DISABLED     WS_ = 0x08000000 // 窗口最初处于禁用状态。禁用的窗口无法接收用户的输入。若要在创建窗口后更改此值，请使用 EnableWindow 函数。
+	WS_DLGFRAME     WS_ = 0x00400000 // 窗口的边框样式通常与对话框相同。具有此样式的窗口不能有标题栏。
+
+	// 窗口是一组控件中的第一个控件。
+	//  - 该组包含此第一个控件及其之后定义的所有控件，直到下一个具有 WS_GROUP 样式的控件。 每个组中的第一个控件通常具有 WS_TABSTOP 样式，以便用户可以从组移动到组。 随后，用户可以使用方向键将键盘焦点从组中的一个控件切换为组中的下一个控件。
+	//  - 您可以打开和关闭此样式以更改对话框导航。 若要在创建窗口后更改此样式，请使用 SetWindowLong 函数。
+	WS_GROUP            WS_ = 0x00020000
+	WS_HSCROLL          WS_ = 0x00100000                                                                                // 窗口具有水平滚动条。
+	WS_ICONIC           WS_ = 0x20000000                                                                                // 窗口最初是最小化的。与 WS_MINIMIZE 样式相同。
+	WS_MAXIMIZE         WS_ = 0x01000000                                                                                // 窗口最初是最大化的。
+	WS_MAXIMIZEBOX      WS_ = 0x00010000                                                                                // 窗口具有最大化按钮。 不能与 WS_EX_CONTEXTHELP 样式组合。 还必须指定 WS_SYSMENU 样式。
+	WS_MINIMIZE         WS_ = 0x20000000                                                                                // 窗口最初是最小化的。与 WS_ICONIC 样式相同。
+	WS_MINIMIZEBOX      WS_ = 0x00020000                                                                                // 窗口具有最小化按钮。 不能与 WS_EX_CONTEXTHELP 样式组合。 还必须指定 WS_SYSMENU 样式。
+	WS_OVERLAPPED       WS_ = 0x00000000                                                                                // 窗口是重叠的窗口。重叠的窗口带有标题栏和边框。与 WS_TILED 样式相同。
+	WS_OVERLAPPEDWINDOW     = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX // 窗口是重叠的窗口。与 WS_TILEDWINDOW 样式相同。
+	WS_POPUP            WS_ = 0x80000000                                                                                // 窗口是弹出窗口。此样式不能与 WS_CHILD 样式一起使用。
+	WS_POPUPWINDOW          = WS_POPUP | WS_BORDER | WS_SYSMENU                                                         // 窗口是弹出窗口。必须组合 WS_CAPTION 和 WS_POPUPWINDOW 样式以使窗口菜单可见。
+	WS_SIZEBOX          WS_ = 0x00040000                                                                                // 窗口具有大小调整边框。与 WS_THICKFRAME 样式相同。
+	WS_SYSMENU          WS_ = 0x00080000                                                                                // 该窗口的标题栏上有一个窗口菜单。还必须指定 WS_CAPTION 样式。
+
+	// 窗口是一个控件，当用户按下 Tab 键时，该控件可以接收键盘焦点。
+	//  - 按下 Tab 键可将键盘焦点更改为具有 WS_TABSTOP 样式的下一个控件。
+	//  - 您可以打开和关闭此样式以更改对话框导航。 若要在创建窗口后更改此样式，请使用 SetWindowLong 函数。 要使用户创建的窗口和无模式对话框能够使用制表位，请更改消息循环以调用 IsDialogMessage 函数。
+	WS_TABSTOP     WS_ = 0x00010000
+	WS_THICKFRAME  WS_ = 0x00040000                                                                                // 窗口具有大小调整边框。与 WS_SIZEBOX 样式相同。
+	WS_TILED       WS_ = 0x00000000                                                                                // 窗口是重叠的窗口。重叠的窗口带有标题栏和边框。与 WS_OVERLAPPED 样式相同。
+	WS_TILEDWINDOW     = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX // 窗口是重叠的窗口。与 WS_OVERLAPPEDWINDOW 样式相同。
+	WS_VISIBLE     WS_ = 0x10000000                                                                                // 窗口最初可见。可以使用 ShowWindow 或 SetWindowPos 函数打开和关闭此样式。
+	WS_VSCROLL     WS_ = 0x00200000                                                                                // 窗口具有垂直滚动条。
+)
+
+// WS_EX_ 窗口扩展样式.
+type WS_EX_ uint32
+
+const (
+	WS_EX_ACCEPTFILES WS_EX_ = 0x00000010 // 窗口接受拖放文件。
+	WS_EX_APPWINDOW   WS_EX_ = 0x00040000 // 在顶级窗口可见时强行将其放在任务栏上。
+	WS_EX_CLIENTEDGE  WS_EX_ = 0x00000200 // 窗口有一个带有凹陷边缘的边框。
+
+	// 使用双缓冲按从下到上绘制顺序绘制窗口的所有后代。 从下到上绘制顺序允许后代窗口具有半透明 (alpha) 和透明度 (颜色键) 效果，但前提是后代窗口还设置了 WS_EX_TRANSPARENT 位。 通过双重缓冲，可以在不闪烁的情况下绘制窗口及其后代。 如果窗口的 类样式 为 CS_OWNDC 或 CS_CLASSDC ，则无法使用此选项。
+	WS_EX_COMPOSITED WS_EX_ = 0x02000000
+	// 窗口的标题栏包含问号。当用户单击该问号时，光标将变成带指针的问号。 如果用户随后单击子窗口，则子窗口将收到 WM_HELP 消息。 子窗口应将消息传递到父窗口过程，父窗口过程应使用 HELP_WM_HELP 命令调用 WinHelp 函数。 帮助应用程序显示一个弹出窗口，该窗口通常包含子窗口的帮助。 WS_EX_CONTEXTHELP 不能与 WS_MAXIMIZEBOX 或 WS_MINIMIZEBOX 样式一起使用。
+	WS_EX_CONTEXTHELP WS_EX_ = 0x00000400
+
+	WS_EX_CONTROLPARENT WS_EX_ = 0x00010000 // 窗口本身包含应参与对话框导航的子窗口。如果指定了此样式，则执行导航操作（例如处理 TAB 键、箭头键或键盘助记键）时，对话管理器将递归为此窗口的子级。
+	WS_EX_DLGMODALFRAME WS_EX_ = 0x00000001 // 窗口有一个双边框。（可选）可以通过在 dwStyle 参数中指定 WS_CAPTION 样式来创建带有标题栏的窗口。
+	WS_EX_LAYERED       WS_EX_ = 0x00080000 // 该窗口是一个分层窗口。如果窗口的 类样式 为 CS_OWNDC 或 CS_CLASSDC，则不能使用此样式。
+	WS_EX_LAYOUTRTL     WS_EX_ = 0x00400000 // 如果 shell 语言是希伯来语、阿拉伯语或其他支持阅读顺序对齐的语言，则窗口的水平原点位于右边缘。增加水平值后向左。
+	WS_EX_LEFT          WS_EX_ = 0x00000000 // 窗口具有泛型左对齐属性。这是默认设置。
+	WS_EX_LEFTSCROLLBAR WS_EX_ = 0x00004000 // 如果 shell 语言是希伯来语、阿拉伯语或其他支持阅读顺序对齐的语言，则垂直滚动条 (如果存在) 位于工作区左侧。对于其他语言，将忽略该样式。
+	WS_EX_LTRREADING    WS_EX_ = 0x00000000 // 窗口文本使用从左到右的阅读顺序属性显示。这是默认值。
+	WS_EX_MDICHILD      WS_EX_ = 0x00000040 // 该窗口是 MDI 子窗口。
+
+	// 说明:
+	//  - 用户单击时，使用此样式创建的顶级窗口不会成为前台窗口。
+	//  - 当用户最小化或关闭前台窗口时，系统不会将此窗口带到前台。
+	//  - 不应通过编程访问或通过键盘导航（如讲述人）激活窗口。
+	//  - 若要激活窗口，请使用 SetActiveWindow 或 SetForegroundWindow 函数。
+	//  - 默认情况下，窗口不会显示在任务栏上。 若要强制窗口显示在任务栏上，请使用 WS_EX_APPWINDOW 样式。
+	WS_EX_NOACTIVATE          WS_EX_ = 0x08000000
+	WS_EX_NOINHERITLAYOUT     WS_EX_ = 0x00100000                                          // 窗口不将其窗口布局传递给其子窗口。
+	WS_EX_NOPARENTNOTIFY      WS_EX_ = 0x00000004                                          // 创建或销毁时不会将 WM_PARENTNOTIFY 消息发送到其父窗口。
+	WS_EX_NOREDIRECTIONBITMAP WS_EX_ = 0x00200000                                          // 窗口不会呈现到重定向图面。这适用于没有可见内容或使用表面以外的机制提供其视觉对象的窗口。
+	WS_EX_OVERLAPPEDWINDOW           = WS_EX_WINDOWEDGE | WS_EX_CLIENTEDGE                 // 窗口是重叠的窗口。
+	WS_EX_PALETTEWINDOW              = WS_EX_WINDOWEDGE | WS_EX_TOOLWINDOW | WS_EX_TOPMOST // 窗口是调色板窗口，它是一个无模式对话框，显示命令数组。
+
+	// 窗口具有通用的“右对齐”属性。
+	//  - 这依赖于窗口类。 仅当 shell 语言是希伯来语、阿拉伯语或其他支持阅读顺序对齐的语言时，此样式才有效;否则，将忽略该样式。
+	//  - 对静态控件或编辑控件使用 WS_EX_RIGHT 样式的效果与分别使用 SS_RIGHT 或 ES_RIGHT 样式的效果相同。 将此样式用于按钮控件的效果与使用 BS_RIGHT 和 BS_RIGHTBUTTON 样式的效果相同。
+	WS_EX_RIGHT          WS_EX_ = 0x00001000
+	WS_EX_RIGHTSCROLLBAR WS_EX_ = 0x00000000 // 垂直滚动条 (如果存在) 位于工作区右侧。这是默认值。
+	WS_EX_RTLREADING     WS_EX_ = 0x00002000 // 如果 shell 语言是希伯来语、阿拉伯语或其他支持阅读顺序对齐的语言，则使用从右到左的阅读顺序属性显示窗口文本。对于其他语言，将忽略该样式。
+	WS_EX_STATICEDGE     WS_EX_ = 0x00020000 // 窗口具有三维边框样式，旨在用于不接受用户输入的项。
+
+	// 该窗口旨在用作浮动工具栏。
+	//  - 工具窗口具有短于普通标题栏的标题栏和使用较小的字体绘制的窗口标题。
+	//  - 工具窗口不会显示在任务栏中，也不会显示在用户按 Alt+TAB 时显示的对话框中。
+	//  - 如果工具窗口具有系统菜单，则其图标不会显示在标题栏上。但是，可以通过右键单击或键入 ALT+SPACE 来显示系统菜单。
+	WS_EX_TOOLWINDOW  WS_EX_ = 0x00000080
+	WS_EX_TOPMOST     WS_EX_ = 0x00000008 // 窗口应放置在所有非最顶部窗口的上方，并且应保持在窗口上方，即使窗口已停用也是如此。 若要添加或删除此样式，请使用 SetWindowPos 函数。
+	WS_EX_TRANSPARENT WS_EX_ = 0x00000020 // 在绘制由同一线程) 创建的窗口下的同级 (之前，不应绘制窗口。 该窗口显示为透明，因为基础同级窗口的位已被绘制。 若要在不受这些限制的情况下实现透明度，请使用 SetWindowRgn 函数。
+	WS_EX_WINDOWEDGE  WS_EX_ = 0x00000100 // 窗口的边框带有凸起的边缘。
 )
 
 // Window_Style_ 窗口样式.
@@ -245,7 +339,7 @@ const (
 )
 
 // XC_OBJECT_TYPE 对象句柄类型.
-type XC_OBJECT_TYPE int
+type XC_OBJECT_TYPE int32
 
 const (
 	XC_ERROR                XC_OBJECT_TYPE = -1 // 错误类型
@@ -344,7 +438,7 @@ const (
 )
 
 // XC_OBJECT_TYPE_EX 对象扩展类型(功能扩展).
-type XC_OBJECT_TYPE_EX int
+type XC_OBJECT_TYPE_EX int32
 
 const (
 	Button_Type_Default XC_OBJECT_TYPE_EX = iota // 默认类型
@@ -371,7 +465,7 @@ const (
 )
 
 // Position_Flag_ 位置标识.
-type Position_Flag_ int
+type Position_Flag_ int32
 
 const (
 	Position_Flag_Left        Position_Flag_ = iota // 左
@@ -386,7 +480,7 @@ const (
 )
 
 // Pane_Align_ 窗格_对齐.
-type Pane_Align_ int
+type Pane_Align_ int32
 
 const (
 	Pane_Align_Left   Pane_Align_ = iota // 左侧
@@ -411,7 +505,7 @@ const (
 )
 
 // Menu_Popup_Position_ 弹出菜单方向.
-type Menu_Popup_Position_ int
+type Menu_Popup_Position_ int32
 
 const (
 	Menu_Popup_Position_Left_Top      Menu_Popup_Position_ = iota // 左上角
@@ -425,7 +519,7 @@ const (
 )
 
 // ComboBox_State_ ComboBox状态.
-type ComboBox_State_ int
+type ComboBox_State_ int32
 
 const (
 	ComboBox_State_Leave ComboBox_State_ = iota // 鼠标离开状态
@@ -434,7 +528,7 @@ const (
 )
 
 // Adapter_Date_Type_ 数据适配器数据类型.
-type Adapter_Date_Type_ int
+type Adapter_Date_Type_ int32
 
 const (
 	Adapter_Date_Type_Int    Adapter_Date_Type_ = iota // 整形
@@ -455,7 +549,7 @@ const (
 )
 
 // Edit_Type_ 编辑框类型.
-type Edit_Type_ int
+type Edit_Type_ int32
 
 const (
 	Edit_Type_None      Edit_Type_ = iota // 普通编辑框, 每行的高度相同
@@ -505,7 +599,7 @@ const (
 )
 
 // Ease_Type_ 缓动类型.
-type Ease_Type_ int
+type Ease_Type_ int32
 
 const (
 	Ease_Type_In    Ease_Type_ = iota // 从慢到快
@@ -548,7 +642,7 @@ const (
 )
 
 // Image_Draw_Type_ 图片绘制类型.
-type Image_Draw_Type_ int
+type Image_Draw_Type_ int32
 
 const (
 	Image_Draw_Type_Default         Image_Draw_Type_ = iota // 默认
@@ -560,7 +654,7 @@ const (
 )
 
 // ListItemTemp_Type_ 列表项模板类型.
-type ListItemTemp_Type_ int
+type ListItemTemp_Type_ int32
 
 const (
 	ListItemTemp_Type_Tree           ListItemTemp_Type_ = 0x01                                                               // tree
@@ -574,7 +668,7 @@ const (
 )
 
 // Window_Position_ 窗口位置.
-type Window_Position_ int
+type Window_Position_ int32
 
 const (
 	Window_Position_Top    Window_Position_ = iota // 上
@@ -637,7 +731,7 @@ const (
 )
 
 // PropertyGrid_Item_Type_ 属性网格项类型.
-type PropertyGrid_Item_Type_ int
+type PropertyGrid_Item_Type_ int32
 
 const (
 	PropertyGrid_Item_Type_Text       PropertyGrid_Item_Type_ = iota // 默认,字符串类型
@@ -661,7 +755,7 @@ const (
 )
 
 // Pane_State_ 窗格状态.
-type Pane_State_ int
+type Pane_State_ int32
 
 const (
 	Pane_State_Any   Pane_State_ = iota
@@ -672,7 +766,7 @@ const (
 )
 
 // XC_DWRITE_RENDERING_MODE_ D2D文本渲染模式.
-type XC_DWRITE_RENDERING_MODE_ int
+type XC_DWRITE_RENDERING_MODE_ int32
 
 const (
 	XC_DWRITE_RENDERING_MODE_DEFAULT                     XC_DWRITE_RENDERING_MODE_ = iota // 指定根据字体和大小自动确定呈现模式.
@@ -721,7 +815,7 @@ const (
 )
 
 // NotifyMsg_Skin_ 通知消息外观.
-type NotifyMsg_Skin_ int
+type NotifyMsg_Skin_ int32
 
 const (
 	NotifyMsg_Skin_No      NotifyMsg_Skin_ = iota // 默认
@@ -732,7 +826,7 @@ const (
 )
 
 // Animation_Move_ 动画移动标识.
-type Animation_Move_ int
+type Animation_Move_ int32
 
 const (
 	Animation_Move_X Animation_Move_ = 0x01 // X轴移动.
@@ -753,7 +847,7 @@ const (
 )
 
 // FrameWnd_Cell_Type_ 框架窗口单元格类型
-type FrameWnd_Cell_Type_ int
+type FrameWnd_Cell_Type_ int32
 
 const (
 	FrameWnd_Cell_Type_No         FrameWnd_Cell_Type_ = 0 // 无
@@ -973,4 +1067,9 @@ const (
 	COLOR_GRAY_E7 = 0xFFE7E7E7 // 灰色值
 
 	COLOR_BLUE_98 = 0xFF980000 // 蓝色值
+)
+
+const (
+	ICON_BIG   = 1 // 大图标
+	ICON_SMALL = 0 // 小图标
 )

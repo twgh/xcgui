@@ -238,3 +238,42 @@ func XTable_GetItemRect(hShape int, iRow, iCol int32, pRect *RECT) bool {
 	r, _, _ := xTable_GetItemRect.Call(uintptr(hShape), uintptr(iRow), uintptr(iCol), uintptr(unsafe.Pointer(pRect)))
 	return r != 0
 }
+
+// 表格_取行数.
+//
+// hShape: 形状对象句柄.
+func XTable_GetRowCount(hShape int) int32 {
+	r, _, _ := xTable_GetRowCount.Call(uintptr(hShape))
+	return int32(r)
+}
+
+// 表格_取列数.
+//
+// hShape: 形状对象句柄.
+func XTable_GetColCount(hShape int) int32 {
+	r, _, _ := xTable_GetColCount.Call(uintptr(hShape))
+	return int32(r)
+}
+
+// 表格_置项文本Ex.
+//
+// hShape: 形状对象句柄.
+//
+// iRow: 行索引.
+//
+// iCol: 列索引.
+//
+// pText: 文本.
+//
+// textColor: 文本颜色, xc.RGBA 颜色.
+//
+// bkColor: 背景颜色, xc.RGBA 颜色.
+//
+// bTextColor: 是否使用文本颜色.
+//
+// bBkColor: 是否使用背景颜色.
+//
+// hFont: 炫彩字体句柄, 可为0.
+func XTable_SetItemTextEx(hShape int, iRow, iCol int32, pText string, textColor, bkColor int, bTextColor, bBkColor bool, hFont int) {
+	xTable_SetItemTextEx.Call(uintptr(hShape), uintptr(iRow), uintptr(iCol), common.StrPtr(pText), uintptr(textColor), uintptr(bkColor), common.BoolPtr(bTextColor), common.BoolPtr(bBkColor), uintptr(hFont))
+}

@@ -19,7 +19,7 @@ func PathExists(path string) (bool, error) {
 	return false, err // 如果返回的错误为其它类型, 则不确定是否在存在
 }
 
-// PathExists 判断文件或文件夹是否存在. 不考虑极端情况.
+// PathExists2 判断文件或文件夹是否存在. 不考虑极端情况.
 //
 // path: 文件或文件夹路径.
 func PathExists2(path string) bool {
@@ -49,28 +49,6 @@ func RGBA2(rgb int, a byte) int {
 	return int((uint32(rgb) & 16777215) | uint32(a)<<24)
 }
 
-// ARGB 根据r, g, b, a组合成炫彩使用的颜色. 和 RGBA 函数一模一样. 推荐统一用 xc.RGBA.
-//
-// r: 红色分量.
-//
-// g: 绿色分量.
-//
-// b: 蓝色分量.
-//
-// a: 透明度.
-func ARGB(r, g, b, a byte) int {
-	return RGBA(r, g, b, a)
-}
-
-// ARGB2 根据rgb, a组合成炫彩使用的颜色. 和 RGBA2 函数一模一样. 推荐统一用 xc.RGBA2.
-//
-// rgb: RGB 颜色.
-//
-// a: 透明度.
-func ARGB2(rgb int, a byte) int {
-	return RGBA2(rgb, a)
-}
-
 // RGB 根据r, g, b组合成炫彩以前使用的颜色. 现在已经不用这个了.
 //
 // r: 红色分量.
@@ -91,16 +69,7 @@ func RGB2RGBA(rgb int, a byte) int {
 	r := byte(rgb & 255)
 	g := byte((rgb >> 8) & 255)
 	b := byte((rgb >> 16) & 255)
-	return ARGB(r, g, b, a)
-}
-
-// RGB2ARGB 将 RGB 颜色转换到炫彩使用的颜色. 和 RGB2RGBA 函数一模一样. 推荐统一用 xc.RGB2RGBA.
-//
-// rgb: RGB 颜色.
-//
-// a: 透明度.
-func RGB2ARGB(rgb int, a byte) int {
-	return RGB2RGBA(rgb, a)
+	return RGBA(r, g, b, a)
 }
 
 // HexRGB2RGB 将十六进制 RGB 颜色转换到十进制 RGB 颜色.
@@ -125,16 +94,7 @@ func HexRGB2RGB(str string) int {
 //
 // a: 透明度.
 func HexRGB2RGBA(str string, a byte) int {
-	return ARGB2(HexRGB2RGB(str), a)
-}
-
-// HexRGB2ARGB 将十六进制 RGB 颜色转换到十进制炫彩使用的颜色. 和 HexRGB2RGBA 函数一模一样, . 推荐统一用 xc.HexRGB2RGBA.
-//
-// str: 十六进制 RGB 颜色, 开头有没有#都可以.
-//
-// a: 透明度.
-func HexRGB2ARGB(str string, a byte) int {
-	return HexRGB2RGBA(str, a)
+	return RGBA2(HexRGB2RGB(str), a)
 }
 
 func hexToByte(s string) byte {
@@ -158,13 +118,35 @@ func hexToNibble(c byte) byte {
 	}
 }
 
-// Itoa 将int32转换到string.
+// Itoa 将 int32 转换到 string.
 func Itoa(i32 int32) string {
 	return strconv.FormatInt(int64(i32), 10)
 }
 
-// Atoi 将string转换到int32.
+// Atoi 将 string 转换到 int32.
 func Atoi(s string) int32 {
 	i, _ := strconv.Atoi(s)
 	return int32(i)
+}
+
+// Ftoa 将 float32 转换到 string.
+func Ftoa(f float32) string {
+	return strconv.FormatFloat(float64(f), 'f', -1, 32)
+}
+
+// Atof 将 string 转换到 float32.
+func Atof(s string) float32 {
+	f, _ := strconv.ParseFloat(s, 32)
+	return float32(f)
+}
+
+// DpiConv 将int32类型的整数根据窗口dpi进行换算.
+//   - 开启自动DPI后, 你可能感觉到一些函数获取的坐标不对了, 因为你在用高分辨率屏幕, 然后系统里会有个缩放的设置, 可能是150%, 这时获取到的坐标应该乘以1.5才是屏幕上显示的真实的坐标.
+//
+// dpi: 使用窗口.GetDPI()函数获取.
+//
+// i: int32类型的整数.
+func DpiConv(dpi int32, i int32) int32 {
+	rate := float32(dpi) / 96.0
+	return int32(float32(i) * rate)
 }

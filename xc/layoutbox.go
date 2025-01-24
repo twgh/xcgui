@@ -64,7 +64,7 @@ func XLayoutBox_SetAlignBaseline(hLayoutBox int, nAlign xcc.Layout_Align_Axis_) 
 // hLayoutBox: 窗口或布局元素或布局框架句柄.
 //
 // nSpace: 项间距大小.
-func XLayoutBox_SetSpace(hLayoutBox int, nSpace int) {
+func XLayoutBox_SetSpace(hLayoutBox int, nSpace int32) {
 	xLayoutBox_SetSpace.Call(uintptr(hLayoutBox), uintptr(nSpace))
 }
 
@@ -73,6 +73,6 @@ func XLayoutBox_SetSpace(hLayoutBox int, nSpace int) {
 // hLayoutBox: 窗口或布局元素或布局框架句柄.
 //
 // nSpace: 行间距大小.
-func XLayoutBox_SetSpaceRow(hLayoutBox int, nSpace int) {
+func XLayoutBox_SetSpaceRow(hLayoutBox int, nSpace int32) {
 	xLayoutBox_SetSpaceRow.Call(uintptr(hLayoutBox), uintptr(nSpace))
 }

@@ -11,6 +11,34 @@ import (
 // Deprecated
 //
 // !这是旧版函数, 请使用 xc.RGBA
+func ARGB(r, g, b, a byte) int {
+	return RGBA(r, g, b, a)
+}
+
+// Deprecated
+//
+// !这是旧版函数, 请使用 xc.RGBA2
+func ARGB2(rgb int, a byte) int {
+	return RGBA2(rgb, a)
+}
+
+// Deprecated
+//
+// !这是旧版函数, 请使用 xc.RGB2RGBA
+func RGB2ARGB(rgb int, a byte) int {
+	return RGB2RGBA(rgb, a)
+}
+
+// Deprecated
+//
+// !这是旧版函数, 请使用 xc.HexRGB2RGBA
+func HexRGB2ARGB(str string, a byte) int {
+	return HexRGB2RGBA(str, a)
+}
+
+// Deprecated
+//
+// !这是旧版函数, 请使用 xc.RGBA
 func ABGR(r, g, b, a byte) int {
 	return RGBA(r, g, b, a)
 }

@@ -242,7 +242,9 @@ func XEle_GetCursor(hEle int) uintptr {
 //
 // hEle: 元素句柄.
 //
-// hCursor: 光标句柄.
+// hCursor: 光标句柄, 使用系统预定义的, 或者从文件加载.
+//   - hCur := wapi.LoadImageW(0, wapi.IDC_HAND, wapi.IMAGE_CURSOR, 0, 0, wapi.LR_DEFAULTSIZE|wapi.LR_SHARED)
+//   - hCur := wapi.LoadImageW(0, common.StrPtr("arrow.cur"), wapi.IMAGE_CURSOR, 0, 0, wapi.LR_LOADFROMFILE)
 func XEle_SetCursor(hEle int, hCursor uintptr) {
 	xEle_SetCursor.Call(uintptr(hEle), hCursor)
 }

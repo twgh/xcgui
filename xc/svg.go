@@ -209,7 +209,7 @@ func XSvg_GetAlpha(hSvg int) byte {
 //
 // hSvg: SVG句柄.
 //
-// color: 颜色, AGBR颜色.
+// color: xc.RGBA 颜色.
 //
 // bEnable: 是否有效.
 func XSvg_SetUserFillColor(hSvg int, color int, bEnable bool) {
@@ -220,7 +220,7 @@ func XSvg_SetUserFillColor(hSvg int, color int, bEnable bool) {
 //
 // hSvg: SVG句柄.
 //
-// color: 颜色, AGBR颜色.
+// color: xc.RGBA 颜色.
 //
 // strokeWidth: 笔触宽度.
 //
@@ -233,7 +233,7 @@ func XSvg_SetUserStrokeColor(hSvg int, color int, strokeWidth float32, bEnable b
 //
 // hSvg: SVG句柄.
 //
-// pColor: 返回颜色值, AGBR颜色.
+// pColor: 返回颜色值.
 func XSvg_GetUserFillColor(hSvg int, pColor *int) bool {
 	r, _, _ := xSvg_GetUserFillColor.Call(uintptr(hSvg), uintptr(unsafe.Pointer(pColor)))
 	return r != 0
@@ -243,7 +243,7 @@ func XSvg_GetUserFillColor(hSvg int, pColor *int) bool {
 //
 // hSvg: SVG句柄.
 //
-// pColor: 返回颜色值, AGBR颜色.
+// pColor: 返回颜色值.
 //
 // pStrokeWidth: .
 func XSvg_GetUserStrokeColor(hSvg int, pColor *int, pStrokeWidth *float32) bool {

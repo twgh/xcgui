@@ -68,4 +68,5 @@ const (
 	WM_CHAR            WM_ = 258    // 窗口字符消息.
 	WM_DROPFILES       WM_ = 563    // 拖动文件到窗口.
 	WM_HOTKEY          WM_ = 0x0312 // 当用户按下 wapi.RegisterHotKey 函数注册的热键时发布。消息放置在与注册热键的线程关联的消息队列的顶部.
+	WM_SETICON             = 0x0080 // 设置窗口图标的消息
 )

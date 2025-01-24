@@ -34,7 +34,7 @@ var (
 //
 // cch: 接收的文件路径的字符数, 通常为260.
 //
-//	@return: 返回文件路径的字符数.
+// 返回值: 返回文件路径的字符数.
 func DragQueryFileW(hDrop uintptr, iFile uint32, lpszFile *string, cch uint32) int {
 	buf := make([]uint16, cch)
 	r, _, _ := dragQueryFileW.Call(hDrop, uintptr(iFile), common.Uint16SliceDataPtr(&buf), uintptr(cch))
@@ -59,7 +59,7 @@ func DragFinish(hDrop uintptr) {
 //
 // ppt: 接收鼠标指针的坐标.
 //
-//	@return: 如果拖放发生在窗口的客户区, 返回true；否则返回false.
+// 返回值: 如果拖放发生在窗口的客户区, 返回true；否则返回false.
 func DragQueryPoint(hDrop uintptr, ppt *xc.POINT) bool {
 	r, _, _ := dragQueryPoint.Call(hDrop, uintptr(unsafe.Pointer(ppt)))
 	return r != 0
@@ -81,7 +81,7 @@ func DragQueryPoint(hDrop uintptr, ppt *xc.POINT) bool {
 //
 // nShowCmd: 定义了如何显示启动程序的常数值, xcc.SW_.
 //
-//	@return: 如果函数成功，则返回大于32的值。如果函数失败，则返回指示失败原因的错误值.
+// 返回值: 如果函数成功，则返回大于32的值。如果函数失败，则返回指示失败原因的错误值.
 func ShellExecuteW(hwnd uintptr, lpOperation, lpFile, lpParameters, lpDirectory string, nShowCmd xcc.SW_) int {
 	r, _, _ := shellExecuteW.Call(hwnd, common.StrPtr(lpOperation), common.StrPtr(lpFile), common.StrPtr(lpParameters), common.StrPtr(lpDirectory), uintptr(nShowCmd))
 	return int(r)
@@ -91,14 +91,22 @@ func ShellExecuteW(hwnd uintptr, lpOperation, lpFile, lpParameters, lpDirectory 
 //
 // 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/shlobj_core/ns-shlobj_core-browseinfow.
 type BrowseInfoW struct {
-	HwndOwner      uintptr // 父窗口句柄
-	PidlRoot       uintptr // 指定开始浏览的根文件夹的位置。只有命名空间层次结构中的指定文件夹及其子文件夹出现在对话框中。该成员可以为0；在这种情况下，将使用默认位置.
-	PszDisplayName uintptr // 指向缓冲区的指针，用于接收用户选择的文件夹的显示名称。此缓冲区的大小假定为 260 个字符.
-	LpszTitle      uintptr // 指向显示在对话框中树视图控件上方的以空字符结尾的字符串的指针。使用 common.StrPtr()函数生成.
-	UlFlags        BIF_    // 指定对话框选项的标志。可以为0，也可以是 wapi.BIF_ 的组合.
-	Lpfn           uintptr // 指向应用程序定义函数的指针，当事件发生时对话框调用该函数.
-	LParam         uintptr // 对话框传递给回调函数的应用程序定义的值（如果在lpfn中指定） .
-	IImage         int32   // 接收与所选文件夹关联的图像索引，存储在系统图像列表中.
+	HwndOwner uintptr // 父窗口句柄
+	PidlRoot  uintptr // 指定开始浏览的根文件夹的位置。只有命名空间层次结构中的指定文件夹及其子文件夹出现在对话框中。该成员可以为0；在这种情况下，将使用默认位置.
+
+	// 指向缓冲区的指针，用于接收用户选择的文件夹的显示名称。此缓冲区的大小假定为 260 个字符.
+	//	displayNameBuffer := make([]uint16, 260)
+	//	pszDisplayName := &displayNameBuffer[0]
+	PszDisplayName *uint16
+
+	// 指向显示在对话框中树视图控件上方的以空字符结尾的字符串的指针.
+	//	例: lpszTitle, _ := syscall.UTF16PtrFromString("请选择目录")
+	LpszTitle *uint16
+	
+	UlFlags BIF_    // 指定对话框选项的标志。可以为0，也可以是 wapi.BIF_ 的组合.
+	Lpfn    uintptr // 指向应用程序定义函数的指针，当事件发生时对话框调用该函数.
+	LParam  uintptr // 对话框传递给回调函数的应用程序定义的值（如果在lpfn中指定） .
+	IImage  int32   // 接收与所选文件夹关联的图像索引，存储在系统图像列表中.
 }
 
 // BIF_ 是指定对话框选项的标志.
@@ -146,7 +154,7 @@ const (
 //
 // browseInfo: 指向 wapi.BrowseInfoW 结构的指针，该结构包含用于显示对话框的信息.
 //
-//	@return: 返回一个 PIDL，它指定所选文件夹相对于命名空间根的位置。如果用户在对话框中选择取消按钮，则返回值为0。返回的 PIDL 可能是文件夹快捷方式而不是文件夹.
+// 返回值: 返回一个 PIDL，它指定所选文件夹相对于命名空间根的位置。如果用户在对话框中选择取消按钮，则返回值为0。返回的 PIDL 可能是文件夹快捷方式而不是文件夹.
 func SHBrowseForFolderW(browseInfo *BrowseInfoW) uintptr {
 	r, _, _ := sHBrowseForFolderW.Call(uintptr(unsafe.Pointer(browseInfo)))
 	return r
@@ -160,8 +168,8 @@ func SHBrowseForFolderW(browseInfo *BrowseInfoW) uintptr {
 //
 // pszPath: 返回的文件路径.
 func SHGetPathFromIDListW(pidl uintptr, pszPath *string) bool {
-	buf := make([]uint16, 260)
-	r, _, _ := sHGetPathFromIDListW.Call(pidl, common.Uint16SliceDataPtr(&buf))
-	*pszPath = syscall.UTF16ToString(buf)
+	pathBuffer := make([]uint16, 260)
+	r, _, _ := sHGetPathFromIDListW.Call(pidl, uintptr(unsafe.Pointer(&pathBuffer[0])))
+	*pszPath = syscall.UTF16ToString(pathBuffer)
 	return r != 0
 }

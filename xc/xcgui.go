@@ -10,7 +10,7 @@ import (
 
 // GetVer 获取当前库版本所需的 xcgui.dll 的版本号.
 func GetVer() string {
-	return "3.3.9.0"
+	return "3.3.9.1"
 }
 
 // xcguiPath 是xcgui.dll的完整路径（目录+文件名）, 也可以是相对路径, 默认值为'xcgui.dll'.
@@ -164,6 +164,8 @@ var (
 	xC_ShowSvgFrame            *syscall.LazyProc
 	xC_EnableAutoRedrawUI      *syscall.LazyProc
 	xC_GetHandleCount          *syscall.LazyProc
+	xC_SetD2dTextAntialiasMode *syscall.LazyProc
+	xC_IsInit                  *syscall.LazyProc
 
 	// UI Designer.
 	xC_LoadLayout       *syscall.LazyProc
@@ -308,6 +310,7 @@ var (
 	xWnd_ClientToScreen            *syscall.LazyProc
 	xWnd_ScreenToClient            *syscall.LazyProc
 	xWnd_SetDPI                    *syscall.LazyProc
+	xWnd_DestroyWindow             *syscall.LazyProc
 
 	// Widget.
 	xWidget_IsShow                 *syscall.LazyProc
@@ -991,6 +994,9 @@ var (
 	xTable_SetItemLine      *syscall.LazyProc
 	xTable_SetItemFlag      *syscall.LazyProc
 	xTable_GetItemRect      *syscall.LazyProc
+	xTable_SetItemTextEx    *syscall.LazyProc
+	xTable_GetRowCount      *syscall.LazyProc
+	xTable_GetColCount      *syscall.LazyProc
 
 	// BkManager.
 	xBkM_Create            *syscall.LazyProc
@@ -1982,6 +1988,8 @@ func _loadXCGUI() {
 	xC_EnableDPI = xcgui.NewProc("XC_EnableDPI")
 	xC_EnableAutoRedrawUI = xcgui.NewProc("XC_EnableAutoRedrawUI")
 	xC_GetHandleCount = xcgui.NewProc("XC_GetHandleCount")
+	xC_SetD2dTextAntialiasMode = xcgui.NewProc("XC_SetD2dTextAntialiasMode")
+	xC_IsInit = xcgui.NewProc("XC_IsInit")
 
 	// UI Designer.
 	xC_LoadLayout = xcgui.NewProc("XC_LoadLayout")
@@ -2121,6 +2129,7 @@ func _loadXCGUI() {
 	xWnd_ClientToScreen = xcgui.NewProc("XWnd_ClientToScreen")
 	xWnd_ScreenToClient = xcgui.NewProc("XWnd_ScreenToClient")
 	xWnd_SetDPI = xcgui.NewProc("XWnd_SetDPI")
+	xWnd_DestroyWindow = xcgui.NewProc("XWnd_DestroyWindow")
 
 	// Widget.
 	xWidget_IsShow = xcgui.NewProc("XWidget_IsShow")
@@ -2803,6 +2812,9 @@ func _loadXCGUI() {
 	xTable_SetItemLine = xcgui.NewProc("XTable_SetItemLine")
 	xTable_SetItemFlag = xcgui.NewProc("XTable_SetItemFlag")
 	xTable_GetItemRect = xcgui.NewProc("XTable_GetItemRect")
+	xTable_SetItemTextEx = xcgui.NewProc("XTable_SetItemTextEx")
+	xTable_GetRowCount = xcgui.NewProc("XTable_GetRowCount")
+	xTable_GetColCount = xcgui.NewProc("XTable_GetColCount")
 
 	// BkManager.
 	xBkM_Create = xcgui.NewProc("XBkM_Create")

@@ -263,3 +263,35 @@ func (t *Table) SetItemFlag(iRow, iCol int32, flag xcc.Table_Flag_) *Table {
 func (t *Table) GetItemRect(iRow, iCol int32, pRect *xc.RECT) bool {
 	return xc.XTable_GetItemRect(t.Handle, iRow, iCol, pRect)
 }
+
+// 表格_取行数.
+func (t *Table) GetRowCount() int32 {
+	return xc.XTable_GetRowCount(t.Handle)
+}
+
+// 表格_取列数.
+func (t *Table) GetColCount() int32 {
+	return xc.XTable_GetColCount(t.Handle)
+}
+
+// 表格_置项文本Ex.
+//
+// iRow: 行索引.
+//
+// iCol: 列索引.
+//
+// pText: 文本.
+//
+// textColor: 文本颜色, xc.RGBA 颜色.
+//
+// bkColor: 背景颜色, xc.RGBA 颜色.
+//
+// bTextColor: 是否使用文本颜色.
+//
+// bBkColor: 是否使用背景颜色.
+//
+// hFont: 炫彩字体句柄, 可为0.
+func (t *Table) SetItemTextEx(iRow, iCol int32, pText string, textColor, bkColor int, bTextColor, bBkColor bool, hFont int) *Table {
+	xc.XTable_SetItemTextEx(t.Handle, iRow, iCol, pText, textColor, bkColor, bTextColor, bBkColor, hFont)
+	return t
+}

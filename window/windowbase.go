@@ -12,7 +12,10 @@ type windowBase struct {
 	objectbase.UI
 }
 
-// MessageBox 炫彩_消息框. 返回值如下: xcc.MessageBox_Flag_Ok: 点击确定按钮退出. xcc.MessageBox_Flag_Cancel: 点击取消按钮退出. xcc.MessageBox_Flag_Other: 其他方式退出.
+// MessageBox 炫彩_消息框. 返回值如下:
+//   - xcc.MessageBox_Flag_Ok: 点击确定按钮退出.
+//   - xcc.MessageBox_Flag_Cancel: 点击取消按钮退出.
+//   - xcc.MessageBox_Flag_Other: 其他方式退出.
 //
 // pTitle: 标题.
 //
@@ -110,8 +113,10 @@ func (w *windowBase) ShowWindow(nCmdShow xcc.SW_) bool {
 }
 
 // 窗口_置顶.
-func (w *windowBase) SetTop() *windowBase {
-	xc.XWnd_SetTop(w.Handle)
+//
+// bTop: 是否置顶.
+func (w *windowBase) SetTop(bTop ...bool) *windowBase {
+	xc.XWnd_SetTop(w.Handle, bTop...)
 	return w
 }
 
@@ -366,9 +371,9 @@ func (w *windowBase) GetDrawRect(pRcPaint *xc.RECT) *windowBase {
 
 // 窗口_取绘制矩形ex.
 func (w *windowBase) GetDrawRectEx() xc.RECT {
-	var pRcPaint *xc.RECT
-	xc.XWnd_GetDrawRect(w.Handle, pRcPaint)
-	return *pRcPaint
+	rc := xc.RECT{}
+	xc.XWnd_GetDrawRect(w.Handle, &rc)
+	return rc
 }
 
 // 窗口_置系统光标.
@@ -454,9 +459,9 @@ func (w *windowBase) GetBorderSize(pBorder *xc.RECT) *windowBase {
 
 // 窗口_取边大小ex.
 func (w *windowBase) GetBorderSizeEx() xc.RECT {
-	var pBorder *xc.RECT
-	xc.XWnd_GetBorderSize(w.Handle, pBorder)
-	return *pBorder
+	rc := xc.RECT{}
+	xc.XWnd_GetBorderSize(w.Handle, &rc)
+	return rc
 }
 
 // 窗口_置布局内填充大小.
@@ -483,9 +488,9 @@ func (w *windowBase) GetPadding(pPadding *xc.RECT) *windowBase {
 
 // 窗口_取布局内填充大小ex.
 func (w *windowBase) GetPaddingEx() xc.RECT {
-	var pPadding *xc.RECT
-	xc.XWnd_GetPadding(w.Handle, pPadding)
-	return *pPadding
+	rc := xc.RECT{}
+	xc.XWnd_GetPadding(w.Handle, &rc)
+	return rc
 }
 
 // 窗口_置拖动边框大小.
@@ -512,9 +517,9 @@ func (w *windowBase) GetDragBorderSize(pBorder *xc.RECT) *windowBase {
 
 // 窗口_取拖动边框大小ex.
 func (w *windowBase) GetDragBorderSizeEx() xc.RECT {
-	var pBorder *xc.RECT
-	xc.XWnd_GetDragBorderSize(w.Handle, pBorder)
-	return *pBorder
+	rc := xc.RECT{}
+	xc.XWnd_GetDragBorderSize(w.Handle, &rc)
+	return rc
 }
 
 // 窗口_置最小大小.
@@ -648,9 +653,9 @@ func (w *windowBase) GetClientRect(pRect *xc.RECT) bool {
 
 // 窗口_取客户区坐标ex.
 func (w *windowBase) GetClientRectEx() xc.RECT {
-	var pRect *xc.RECT
-	xc.XWnd_GetClientRect(w.Handle, pRect)
-	return *pRect
+	rc := xc.RECT{}
+	xc.XWnd_GetClientRect(w.Handle, &rc)
+	return rc
 }
 
 // 窗口_取Body坐标.
@@ -663,9 +668,9 @@ func (w *windowBase) GetBodyRect(pRect *xc.RECT) *windowBase {
 
 // 窗口_取Body坐标ex.
 func (w *windowBase) GetBodyRectEx() xc.RECT {
-	var pRect *xc.RECT
-	xc.XWnd_GetBodyRect(w.Handle, pRect)
-	return *pRect
+	rc := xc.RECT{}
+	xc.XWnd_GetBodyRect(w.Handle, &rc)
+	return rc
 }
 
 // 窗口_取布局坐标.
@@ -678,9 +683,9 @@ func (w *windowBase) GetLayoutRect(pRect *xc.RECT) *windowBase {
 
 // 窗口_取布局坐标ex.
 func (w *windowBase) GetLayoutRectEx() xc.RECT {
-	var pRect *xc.RECT
-	xc.XWnd_GetLayoutRect(w.Handle, pRect)
-	return *pRect
+	rc := xc.RECT{}
+	xc.XWnd_GetLayoutRect(w.Handle, &rc)
+	return rc
 }
 
 // 窗口_移动窗口.
@@ -703,9 +708,21 @@ func (w *windowBase) GetRect(pRect *xc.RECT) *windowBase {
 
 // 窗口_取坐标ex.
 func (w *windowBase) GetRectEx() xc.RECT {
-	var pRect *xc.RECT
-	xc.XWnd_GetRect(w.Handle, pRect)
-	return *pRect
+	rc := xc.RECT{}
+	xc.XWnd_GetRect(w.Handle, &rc)
+	return rc
+}
+
+// 窗口_取坐标ex. 返回的坐标已经根据窗口dpi进行换算了, 换算后的结果就是屏幕上显示的真实坐标了.
+func (w *windowBase) GetRectDPI() xc.RECT {
+	rc := xc.RECT{}
+	xc.XWnd_GetRect(w.Handle, &rc)
+	dpi := xc.XWnd_GetDPI(w.Handle)
+	rc.Left = xc.DpiConv(dpi, rc.Left)
+	rc.Top = xc.DpiConv(dpi, rc.Top)
+	rc.Right = xc.DpiConv(dpi, rc.Right)
+	rc.Bottom = xc.DpiConv(dpi, rc.Bottom)
+	return rc
 }
 
 // 窗口_最大化.
@@ -1155,37 +1172,46 @@ func (w *windowBase) SetDPI(nDPI int32) *windowBase {
 	return w
 }
 
+// 窗口_销毁.
+func (w *windowBase) DestroyWindow() *windowBase {
+	xc.XWnd_DestroyWindow(w.Handle)
+	return w
+}
+
 // 窗口_置大小. 设置窗口宽高.
 //
 // 宽: width.
 //
 // 高: height.
-func (w *windowBase) SetSize(width, height int32) {
+func (w *windowBase) SetSize(width, height int32) *windowBase {
 	var rc xc.RECT
 	xc.XWnd_GetRect(w.Handle, &rc)
 	rc.Right = rc.Left + width
 	rc.Bottom = rc.Top + height
 	xc.XWnd_SetRect(w.Handle, &rc)
+	return w
 }
 
 // 窗口_置宽度.
 //
 // 宽: width.
-func (w *windowBase) SetWidth(width int32) {
+func (w *windowBase) SetWidth(width int32) *windowBase {
 	var rc xc.RECT
 	xc.XWnd_GetRect(w.Handle, &rc)
 	rc.Right = rc.Left + width
 	xc.XWnd_SetRect(w.Handle, &rc)
+	return w
 }
 
 // 窗口_置高度.
 //
 // 高: height.
-func (w *windowBase) SetHeight(height int32) {
+func (w *windowBase) SetHeight(height int32) *windowBase {
 	var rc xc.RECT
 	xc.XWnd_GetRect(w.Handle, &rc)
 	rc.Bottom = rc.Top + height
 	xc.XWnd_SetRect(w.Handle, &rc)
+	return w
 }
 
 // 窗口_取宽度.
@@ -1234,7 +1260,11 @@ func (w *windowBase) GetBottom() int32 {
 //
 // x: 左边x坐标.
 func (w *windowBase) SetLeft(x int32) *windowBase {
-	xc.XWnd_SetPosition(w.Handle, x, w.GetTop())
+	rc := w.GetRectEx()
+	width := rc.Right - rc.Left
+	rc.Left = x
+	rc.Right = rc.Left + width
+	xc.XWnd_SetRect(w.Handle, &rc)
 	return w
 }
 
@@ -1242,7 +1272,28 @@ func (w *windowBase) SetLeft(x int32) *windowBase {
 //
 // y: 顶边y坐标.
 func (w *windowBase) SetTopEdge(y int32) *windowBase {
-	xc.XWnd_SetPosition(w.Handle, w.GetLeft(), y)
+	rc := w.GetRectEx()
+	height := rc.Bottom - rc.Top
+	rc.Top = y
+	rc.Bottom = rc.Top + height
+	xc.XWnd_SetRect(w.Handle, &rc)
+	return w
+}
+
+// 窗口_置左边和顶边.
+//
+// x: 左边x坐标.
+//
+// y: 顶边y坐标.
+func (w *windowBase) SetLeftAndTop(x, y int32) *windowBase {
+	rc := w.GetRectEx()
+	width := rc.Right - rc.Left
+	height := rc.Bottom - rc.Top
+	rc.Left = x
+	rc.Top = y
+	rc.Right = rc.Left + width
+	rc.Bottom = rc.Top + height
+	xc.XWnd_SetRect(w.Handle, &rc)
 	return w
 }
 
@@ -1310,7 +1361,7 @@ func (w *windowBase) SetAlignBaseline(nAlign xcc.Layout_Align_Axis_) *windowBase
 // SetSpace 布局盒子_置间距.
 //
 // nSpace: 项间距大小.
-func (w *windowBase) SetSpace(nSpace int) *windowBase {
+func (w *windowBase) SetSpace(nSpace int32) *windowBase {
 	xc.XLayoutBox_SetSpace(w.Handle, nSpace)
 	return w
 }
@@ -1318,9 +1369,17 @@ func (w *windowBase) SetSpace(nSpace int) *windowBase {
 // SetSpaceRow 布局盒子_置行距.
 //
 // nSpace: 行间距大小.
-func (w *windowBase) SetSpaceRow(nSpace int) *windowBase {
+func (w *windowBase) SetSpaceRow(nSpace int32) *windowBase {
 	xc.XLayoutBox_SetSpaceRow(w.Handle, nSpace)
 	return w
+}
+
+// DpiConv 将int32类型的整数根据窗口dpi进行换算.
+//   - 开启自动DPI后, 你可能感觉到一些函数获取的坐标不对了, 因为你在用高分辨率屏幕, 然后系统里会有个缩放的设置, 可能是150%, 这时获取到的坐标应该乘以1.5才是屏幕上显示的真实的坐标.
+//
+// i: int32类型的整数.
+func (w *windowBase) DpiConv(i int32) int32 {
+	return xc.DpiConv(w.GetDPI(), i)
 }
 
 /*

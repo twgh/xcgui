@@ -30,9 +30,9 @@ func XWnd_Create(x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle 
 
 // 窗口_创建扩展, 返回: GUI库窗口资源句柄.
 //
-// dwExStyle: 窗口扩展样式.
+// dwExStyle: 窗口扩展样式. xcc.WS_EX_ .
 //
-// dwStyle: 窗口样式.
+// dwStyle: 窗口样式. xcc.WS_ .
 //
 // lpClassName: 窗口类名.
 //
@@ -49,7 +49,7 @@ func XWnd_Create(x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle 
 // hWndParent: 父窗口.
 //
 // XCStyle: GUI库窗口样式, Window_Style_.
-func XWnd_CreateEx(dwExStyle, dwStyle uint32, lpClassName string, x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
+func XWnd_CreateEx(dwExStyle xcc.WS_EX_, dwStyle xcc.WS_, lpClassName string, x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
 	r, _, _ := xWnd_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pTitle), hWndParent, uintptr(XCStyle))
 	return int(r)
 }
@@ -67,8 +67,14 @@ func XWnd_ShowWindow(hWindow int, nCmdShow xcc.SW_) bool {
 // 窗口_置顶.
 //
 // hWindow: 窗口句柄.
-func XWnd_SetTop(hWindow int) {
-	xWnd_SetTop.Call(uintptr(hWindow))
+//
+// bTop: 是否置顶. 默认为true.
+func XWnd_SetTop(hWindow int, bTop ...bool) {
+	isTop := true
+	if len(bTop) > 0 {
+		isTop = bTop[0]
+	}
+	xWnd_SetTop.Call(uintptr(hWindow), common.BoolPtr(isTop))
 }
 
 // 窗口_注册事件C.
@@ -1186,4 +1192,11 @@ func XWnd_ScreenToClient(hWindow int, pPt *POINT) bool {
 // nDPI: DPI值.
 func XWnd_SetDPI(hWindow int, nDPI int32) {
 	xWnd_SetDPI.Call(uintptr(hWindow), uintptr(nDPI))
+}
+
+// 窗口_销毁.
+//
+// hWindow: 窗口句柄.
+func XWnd_DestroyWindow(hWindow int) {
+	xWnd_DestroyWindow.Call(uintptr(hWindow))
 }

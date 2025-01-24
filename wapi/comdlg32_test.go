@@ -16,6 +16,8 @@ func TestGetOpenFileNameW(t *testing.T) {
 
 	lpstrFile := make([]uint16, 260)
 	lpstrFileTitle := make([]uint16, 260)
+	lpstrInitialDir, _ := syscall.UTF16PtrFromString("C:")
+	lpstrTitle, _ := syscall.UTF16PtrFromString("打开文件")
 
 	ofn := wapi.OpenFileNameW{
 		LStructSize:       76,
@@ -29,12 +31,12 @@ func TestGetOpenFileNameW(t *testing.T) {
 		NMaxFile:          260,
 		LpstrFileTitle:    &lpstrFileTitle[0],
 		NMaxFileTitle:     260,
-		LpstrInitialDir:   common.StrPtr("D:"),
-		LpstrTitle:        common.StrPtr("打开文件"),
+		LpstrInitialDir:   lpstrInitialDir,
+		LpstrTitle:        lpstrTitle,
 		Flags:             wapi.OFN_PATHMUTEXIST, // 用户只能键入有效的路径和文件名
 		NFileOffset:       0,
 		NFileExtension:    0,
-		LpstrDefExt:       0,
+		LpstrDefExt:       nil,
 		LCustData:         0,
 		LpfnHook:          0,
 		LpTemplateName:    0,
@@ -53,7 +55,9 @@ func TestGetOpenFileNameW(t *testing.T) {
 func TestGetOpenFileNameW_2(t *testing.T) {
 	lpstrFilter := strings.Join([]string{"Text Files(*txt)", "*.txt", "All Files(*.*)", "*.*"}, wapi.NullStr) + wapi.NullStr2
 
-	lpstrFile := make([]uint16, 512)
+	lpstrFile := make([]uint16, 65535)
+	lpstrInitialDir, _ := syscall.UTF16PtrFromString("C:")
+	lpstrTitle, _ := syscall.UTF16PtrFromString("打开文件(可选多个)")
 
 	ofn := wapi.OpenFileNameW{
 		LStructSize:       76,
@@ -64,15 +68,15 @@ func TestGetOpenFileNameW_2(t *testing.T) {
 		NMaxCustFilter:    0,
 		NFilterIndex:      1,
 		LpstrFile:         &lpstrFile[0],
-		NMaxFile:          512,
+		NMaxFile:          65535,
 		LpstrFileTitle:    nil,
 		NMaxFileTitle:     0,
-		LpstrInitialDir:   common.StrPtr("D:"),
-		LpstrTitle:        common.StrPtr("打开文件(可选多个)"),
+		LpstrInitialDir:   lpstrInitialDir,
+		LpstrTitle:        lpstrTitle,
 		Flags:             wapi.OFN_ALLOWMULTISELECT | wapi.OFN_EXPLORER | wapi.OFN_PATHMUTEXIST, // 允许文件多选 | 使用新界面 | 用户只能键入有效的路径和文件名
 		NFileOffset:       0,
 		NFileExtension:    0,
-		LpstrDefExt:       0,
+		LpstrDefExt:       nil,
 		LCustData:         0,
 		LpfnHook:          0,
 		LpTemplateName:    0,
@@ -95,6 +99,9 @@ func TestGetSaveFileNameW(t *testing.T) {
 
 	lpstrFile := make([]uint16, 260)
 	lpstrFileTitle := make([]uint16, 260)
+	lpstrInitialDir, _ := syscall.UTF16PtrFromString("C:")
+	lpstrTitle, _ := syscall.UTF16PtrFromString("保存文件")
+	lpstrDefExt, _ := syscall.UTF16PtrFromString("txt")
 
 	ofn := wapi.OpenFileNameW{
 		LStructSize:       76,
@@ -108,12 +115,12 @@ func TestGetSaveFileNameW(t *testing.T) {
 		NMaxFile:          260,
 		LpstrFileTitle:    &lpstrFileTitle[0],
 		NMaxFileTitle:     260,
-		LpstrInitialDir:   common.StrPtr("D:"),
-		LpstrTitle:        common.StrPtr("保存文件"),
+		LpstrInitialDir:   lpstrInitialDir,
+		LpstrTitle:        lpstrTitle,
 		Flags:             wapi.OFN_OVERWRITEPROMPT | wapi.OFN_PATHMUTEXIST | wapi.OFN_PATHMUTEXIST, // 如果所选文件已存在，则使“另存为”对话框生成一个消息框。用户必须确认是否覆盖文件。| 检测文件路径是否合法
 		NFileOffset:       0,
 		NFileExtension:    0,
-		LpstrDefExt:       common.StrPtr("txt"), // 如果用户没有输入文件扩展名, 则默认使用这个
+		LpstrDefExt:       lpstrDefExt, // 如果用户没有输入文件扩展名, 则默认使用这个
 		LCustData:         0,
 		LpfnHook:          0,
 		LpTemplateName:    0,

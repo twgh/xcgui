@@ -46,7 +46,10 @@ func XC_GetDefaultFont() int {
 	return int(r)
 }
 
-// XC_MessageBox 炫彩_消息框. 返回值如下: xcc.MessageBox_Flag_Ok: 点击确定按钮退出. xcc.MessageBox_Flag_Cancel: 点击取消按钮退出. xcc.MessageBox_Flag_Other: 其他方式退出.
+// XC_MessageBox 炫彩_消息框. 返回值如下:
+//   - xcc.MessageBox_Flag_Ok: 点击确定按钮退出.
+//   - xcc.MessageBox_Flag_Cancel: 点击取消按钮退出.
+//   - xcc.MessageBox_Flag_Other: 其他方式退出.
 //
 // pTitle: 标题.
 //
@@ -666,7 +669,7 @@ func XC_EnableAutoDPI(bEnabel bool) {
 //
 // 为go程序启用DPI的几种方式:
 //  1. 调用此函数.
-//  2. 使用程序清单文件.
+//  2. 使用程序清单文件, Windows文档里更推荐此方式.
 //  3. 自行调用Windows DPI命令.
 //
 // 参考[MSDN](https://learn.microsoft.com/zh-cn/windows/win32/hidpi/setting-the-default-dpi-awareness-for-a-process)
@@ -697,6 +700,19 @@ func XC_EnableAutoRedrawUI(bEnabel bool) {
 func XC_GetHandleCount() int32 {
 	r, _, _ := xC_GetHandleCount.Call()
 	return int32(r)
+}
+
+// 炫彩_置D2D文本抗锯齿模式.
+//
+// mode: 模式.
+func XC_SetD2dTextAntialiasMode(mode int32) {
+	xC_SetD2dTextAntialiasMode.Call(uintptr(mode))
+}
+
+// 炫彩_是否初始化.
+func XC_IsInit() bool {
+	r, _, _ := xC_IsInit.Call()
+	return r != 0
 }
 
 /* // 炫彩_打印调试信息, 打印调试信息到文件xcgui_debug.txt.[无效]

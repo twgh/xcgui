@@ -21,7 +21,7 @@ type LayoutFrame struct {
 // cy: 高度.
 //
 // hParent: 父为窗口句柄或元素句柄.
-func NewLayoutFrame(x int, y int, cx int, cy int, hParent int) *LayoutFrame {
+func NewLayoutFrame(x, y, cx, cy int32, hParent int) *LayoutFrame {
 	p := &LayoutFrame{}
 	p.SetHandle(xc.XLayoutFrame_Create(x, y, cx, cy, hParent))
 	return p
@@ -138,7 +138,7 @@ func (l *LayoutFrame) SetAlignBaseline(nAlign xcc.Layout_Align_Axis_) *LayoutFra
 // SetSpace 布局盒子_置间距.
 //
 // nSpace: 项间距大小.
-func (l *LayoutFrame) SetSpace(nSpace int) *LayoutFrame {
+func (l *LayoutFrame) SetSpace(nSpace int32) *LayoutFrame {
 	xc.XLayoutBox_SetSpace(l.Handle, nSpace)
 	return l
 }
@@ -146,7 +146,7 @@ func (l *LayoutFrame) SetSpace(nSpace int) *LayoutFrame {
 // SetSpaceRow 布局盒子_置行距.
 //
 // nSpace: 行间距大小.
-func (l *LayoutFrame) SetSpaceRow(nSpace int) *LayoutFrame {
+func (l *LayoutFrame) SetSpaceRow(nSpace int32) *LayoutFrame {
 	xc.XLayoutBox_SetSpaceRow(l.Handle, nSpace)
 	return l
 }

@@ -6,7 +6,7 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// ListItemTemplate 列表项模板.
+// ListItemTemplate 项模板.
 type ListItemTemplate struct {
 	objectbase.ObjectBase
 }
@@ -27,7 +27,7 @@ func NewByHandle(handle int) *ListItemTemplate {
 	return p
 }
 
-// 模板_加载从文件, 列表项模板文件载入.
+// 模板_加载从文件, 项模板文件载入.
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
@@ -38,7 +38,7 @@ func NewByXML(nType xcc.ListItemTemp_Type_, pFileName string) *ListItemTemplate 
 	return p
 }
 
-// 模板_加载从ZIP, 加载列表项模板从zip压缩包中.
+// 模板_加载从ZIP, 加载项模板从zip压缩包中.
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
@@ -53,7 +53,7 @@ func NewByZip(nType xcc.ListItemTemp_Type_, pZipFile string, pFileName string, p
 	return p
 }
 
-// 模板_加载从ZIP, 加载列表项模板从zip压缩包中.
+// 模板_加载从ZIP, 加载项模板从zip压缩包中.
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
@@ -70,7 +70,7 @@ func NewByZipRes(nType xcc.ListItemTemp_Type_, id int32, pFileName string, pPass
 	return p
 }
 
-// 模板_加载从内存ZIP, 加载列表项模板从内存zip压缩包中.
+// 模板_加载从内存ZIP, 加载项模板从内存zip压缩包中.
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
@@ -85,7 +85,7 @@ func NewByZipMem(nType xcc.ListItemTemp_Type_, data []byte, pFileName string, pP
 	return p
 }
 
-// 项模板_加载从内存. 加载列表项模板文件从内存.
+// 项模板_加载从内存. 加载项模板文件从内存.
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
@@ -96,7 +96,7 @@ func NewByXmlMem(nType xcc.ListItemTemp_Type_, data []byte) *ListItemTemplate {
 	return p
 }
 
-// 模板_加载从字符串, 加载列表项模板文件从内存字符串.
+// 模板_加载从字符串, 加载项模板文件从内存字符串.
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
@@ -114,7 +114,7 @@ func (l *ListItemTemplate) Clone() *ListItemTemplate {
 	return p
 }
 
-// 模板_取类型, 获取列表项模板类型, 返回: xcc.ListItemTemp_Type_.
+// 模板_取类型, 获取项模板类型, 返回: xcc.ListItemTemp_Type_.
 func (l *ListItemTemplate) GetType() xcc.ListItemTemp_Type_ {
 	return xc.XTemp_GetType(l.Handle)
 }
@@ -168,7 +168,7 @@ func (l *ListItemTemplate) List_MoveColumn(iColSrc, iColDest int32) bool {
 	return xc.XTemp_List_MoveColumn(l.Handle, iColSrc, iColDest)
 }
 
-// 模板_加载从文件扩展, 加载列表项模板从文件.
+// 模板_加载从文件扩展, 加载项模板从文件.
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
@@ -181,7 +181,7 @@ func LoadEx(nType xcc.ListItemTemp_Type_, pFileName string, pOutTemp1 *int, pOut
 	return xc.XTemp_LoadEx(nType, pFileName, pOutTemp1, pOutTemp2)
 }
 
-// 模板_加载从ZIP扩展, 加载列表项模板从zip压缩包中.
+// 模板_加载从ZIP扩展, 加载项模板从zip压缩包中.
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
@@ -198,7 +198,7 @@ func LoadZipEx(nType xcc.ListItemTemp_Type_, pZipFile string, pFileName string, 
 	return xc.XTemp_LoadZipEx(nType, pZipFile, pFileName, pPassword, pOutTemp1, pOutTemp2)
 }
 
-// 模板_加载从内存ZIP扩展, 加载列表项模板从内存zip压缩包中.
+// 模板_加载从内存ZIP扩展, 加载项模板从内存zip压缩包中.
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
@@ -215,7 +215,7 @@ func LoadZipMemEx(nType xcc.ListItemTemp_Type_, data []byte, pFileName string, p
 	return xc.XTemp_LoadZipMemEx(nType, data, pFileName, pPassword, pOutTemp1, pOutTemp2)
 }
 
-// 模板_加载从字符串扩展, 加载列表项模板文件从内存字符串.
+// 模板_加载从字符串扩展, 加载项模板文件从内存字符串.
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
@@ -228,7 +228,7 @@ func LoadFromStringEx(nType xcc.ListItemTemp_Type_, pStringXML string, pOutTemp1
 	return xc.XTemp_LoadFromStringEx(nType, pStringXML, pOutTemp1, pOutTemp2)
 }
 
-// 项模板_加载从内存扩展. 加载列表项模板文件从内存.
+// 项模板_加载从内存扩展. 加载项模板文件从内存.
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
@@ -241,7 +241,7 @@ func LoadFromMemEx(nType xcc.ListItemTemp_Type_, data []byte, pOutTemp1 *int, pO
 	return xc.XTemp_LoadFromMemEx(nType, data, pOutTemp1, pOutTemp2)
 }
 
-// 项模板_加载从资源ZIP扩展. 加载列表项模板文件从RC资源ZIP, 返回模板句柄.
+// 项模板_加载从资源ZIP扩展. 加载项模板文件从RC资源ZIP, 返回模板句柄.
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //

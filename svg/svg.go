@@ -10,7 +10,7 @@ type Svg struct {
 	objectbase.ObjectBase
 }
 
-// SVG_加载从文件, 返回Svg对象.
+// NewByFile SVG_加载从文件, 返回Svg对象.
 //
 // pFileName: 文件名.
 func NewByFile(pFileName string) *Svg {
@@ -19,7 +19,7 @@ func NewByFile(pFileName string) *Svg {
 	return p
 }
 
-// SVG_加载从字符串, 返回Svg对象.
+// NewByString SVG_加载从字符串, 返回Svg对象.
 //
 // pString: 字符串.
 func NewByString(pString string) *Svg {
@@ -28,7 +28,7 @@ func NewByString(pString string) *Svg {
 	return p
 }
 
-// SVG_加载从字符串W.
+// NewByStringW SVG_加载从字符串W.
 //
 // pString: 字符串.
 func NewByStringW(pString string) *Svg {
@@ -37,7 +37,7 @@ func NewByStringW(pString string) *Svg {
 	return p
 }
 
-// SVG_加载从字符串UTF8.
+// NewByStringUtf8 SVG_加载从字符串UTF8.
 //
 // pString: 字符串.
 func NewByStringUtf8(pString string) *Svg {
@@ -46,7 +46,7 @@ func NewByStringUtf8(pString string) *Svg {
 	return p
 }
 
-// SVG_加载从ZIP, 返回Svg对象.
+// NewByZip SVG_加载从ZIP, 返回Svg对象.
 //
 // pZipFileName: zip文件名.
 //
@@ -59,7 +59,7 @@ func NewByZip(pZipFileName, pFileName, pPassword string) *Svg {
 	return p
 }
 
-// SVG_加载从资源ZIP, 返回SVG对象.
+// NewByZipRes SVG_加载从资源ZIP, 返回SVG对象.
 //
 // id: 资源ID.
 //
@@ -74,7 +74,7 @@ func NewByZipRes(id int32, pFileName, pPassword string, hModule uintptr) *Svg {
 	return p
 }
 
-// SVG_加载从内存ZIP, 返回Svg对象.
+// NewByZipMem SVG_加载从内存ZIP, 返回Svg对象.
 //
 // data: zip数据.
 //
@@ -87,7 +87,7 @@ func NewByZipMem(data []byte, pFileName, pPassword string) *Svg {
 	return p
 }
 
-// SVG_加载从资源, 返回Svg对象.
+// NewByRes SVG_加载从资源, 返回Svg对象.
 //
 // id: 资源ID.
 //
@@ -224,7 +224,7 @@ func (s *Svg) GetAlpha() byte {
 
 // SVG_置用户填充颜色, 用户颜色将覆盖默认样式.
 //
-// color: 颜色, AGBR颜色.
+// color: xc.RGBA 颜色.
 //
 // bEnable: 是否有效.
 func (s *Svg) SetUserFillColor(color int, bEnable bool) *Svg {
@@ -234,7 +234,7 @@ func (s *Svg) SetUserFillColor(color int, bEnable bool) *Svg {
 
 // SVG_置用户笔触颜色, 用户颜色将覆盖默认样式.
 //
-// color: 颜色, AGBR颜色.
+// color: xc.RGBA 颜色.
 //
 // strokeWidth: 笔触宽度.
 //
@@ -246,14 +246,14 @@ func (s *Svg) SetUserStrokeColor(color int, strokeWidth float32, bEnable bool) *
 
 // SVG_取用户填充颜色.
 //
-// pColor: 返回颜色值, AGBR颜色.
+// pColor: 返回颜色值.
 func (s *Svg) GetUserFillColor(pColor *int) bool {
 	return xc.XSvg_GetUserFillColor(s.Handle, pColor)
 }
 
 // SVG_取用户笔触颜色.
 //
-// pColor: 返回颜色值, AGBR颜色.
+// pColor: 返回颜色值.
 //
 // pStrokeWidth: .
 func (s *Svg) GetUserStrokeColor(pColor *int, pStrokeWidth *float32) bool {

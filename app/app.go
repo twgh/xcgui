@@ -1101,7 +1101,7 @@ func (a *App) SetWindowIcon(hImage int) *App {
 //
 // 为go程序启用DPI的几种方式:
 //  1. 调用此函数.
-//  2. 使用程序清单文件.
+//  2. 使用程序清单文件, Windows文档里更推荐此方式.
 //  3. 自行调用Windows DPI命令.
 //
 // 参考[MSDN](https://learn.microsoft.com/zh-cn/windows/win32/hidpi/setting-the-default-dpi-awareness-for-a-process)
@@ -1124,4 +1124,17 @@ func (a *App) EnableAutoRedrawUI(bEnabel bool) *App {
 // 炫彩_取句柄总数. 获取当前所使用的句柄总数量, 返回当前所使用的句柄总数量.
 func (a *App) GetHandleCount() int32 {
 	return xc.XC_GetHandleCount()
+}
+
+// 炫彩_置D2D文本抗锯齿模式.
+//
+// mode: 模式.
+func (a *App) SetD2dTextAntialiasMode(mode int32) *App {
+	xc.XC_SetD2dTextAntialiasMode(mode)
+	return a
+}
+
+// 炫彩_是否初始化.
+func (a *App) IsInit() bool {
+	return xc.XC_IsInit()
 }

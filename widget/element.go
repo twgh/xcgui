@@ -152,9 +152,9 @@ func (e *Element) GetRect(pRect *xc.RECT) *Element {
 
 // 元素_取坐标ex.
 func (e *Element) GetRectEx() xc.RECT {
-	var pRect *xc.RECT
-	xc.XEle_GetRect(e.Handle, pRect)
-	return *pRect
+	rc := xc.RECT{}
+	xc.XEle_GetRect(e.Handle, &rc)
+	return rc
 }
 
 // 元素_取逻辑坐标, 获取元素坐标, 逻辑坐标, 包含滚动视图偏移.
@@ -167,9 +167,9 @@ func (e *Element) GetRectLogic(pRect *xc.RECT) *Element {
 
 // 元素_取逻辑坐标ex, 获取元素坐标, 逻辑坐标, 包含滚动视图偏移.
 func (e *Element) GetRectLogicEx() xc.RECT {
-	var pRect *xc.RECT
-	xc.XEle_GetRectLogic(e.Handle, pRect)
-	return *pRect
+	rc := xc.RECT{}
+	xc.XEle_GetRectLogic(e.Handle, &rc)
+	return rc
 }
 
 // 元素_取客户区坐标.
@@ -182,9 +182,9 @@ func (e *Element) GetClientRect(pRect *xc.RECT) *Element {
 
 // 元素_取客户区坐标ex.
 func (e *Element) GetClientRectEx() xc.RECT {
-	var pRect *xc.RECT
-	xc.XEle_GetClientRect(e.Handle, pRect)
-	return *pRect
+	rc := xc.RECT{}
+	xc.XEle_GetClientRect(e.Handle, &rc)
+	return rc
 }
 
 // 元素_置宽度.
@@ -255,9 +255,9 @@ func (e *Element) GetWndClientRect(pRect *xc.RECT) *Element {
 
 // 元素_基于窗口客户区坐标ex.
 func (e *Element) GetWndClientRectEx() xc.RECT {
-	var pRect *xc.RECT
-	xc.XEle_GetWndClientRect(e.Handle, pRect)
-	return *pRect
+	rc := xc.RECT{}
+	xc.XEle_GetWndClientRect(e.Handle, &rc)
+	return rc
 }
 
 // 元素_取光标, 获取元素鼠标光标, 返回光标句柄.
@@ -267,7 +267,9 @@ func (e *Element) GetCursor() uintptr {
 
 // 元素_置光标, 设置元素鼠标光标.
 //
-// hCursor: 光标句柄.
+// hCursor: 光标句柄, 使用系统预定义的, 或者从文件加载.
+//   - hCur := wapi.LoadImageW(0, wapi.IDC_HAND, wapi.IMAGE_CURSOR, 0, 0, wapi.LR_DEFAULTSIZE|wapi.LR_SHARED)
+//   - hCur := wapi.LoadImageW(0, common.StrPtr("arrow.cur"), wapi.IMAGE_CURSOR, 0, 0, wapi.LR_LOADFROMFILE)
 func (e *Element) SetCursor(hCursor uintptr) *Element {
 	xc.XEle_SetCursor(e.Handle, hCursor)
 	return e
@@ -621,9 +623,9 @@ func (e *Element) GetBorderSize(pBorder *xc.RECT) *Element {
 
 // 元素_取边框大小ex.
 func (e *Element) GetBorderSizeEx() xc.RECT {
-	var pBorder *xc.RECT
-	xc.XEle_GetBorderSize(e.Handle, pBorder)
-	return *pBorder
+	rc := xc.RECT{}
+	xc.XEle_GetBorderSize(e.Handle, &rc)
+	return rc
 }
 
 // 元素_置内填充大小.
@@ -650,9 +652,9 @@ func (e *Element) GetPadding(pPadding *xc.RECT) *Element {
 
 // 元素_取内填充大小ex.
 func (e *Element) GetPaddingEx() xc.RECT {
-	var pPadding *xc.RECT
-	xc.XEle_GetPadding(e.Handle, pPadding)
-	return *pPadding
+	rc := xc.RECT{}
+	xc.XEle_GetPadding(e.Handle, &rc)
+	return rc
 }
 
 // 元素_置拖动边框.
@@ -976,9 +978,9 @@ func (e *Element) GetPosition(pOutX, pOutY *int32) *Element {
 
 // 元素_取位置ex.
 func (e *Element) GetPositionEx() xc.POINT {
-	var pOutX, pOutY *int32
-	xc.XEle_GetPosition(e.Handle, pOutX, pOutY)
-	return xc.POINT{X: *pOutX, Y: *pOutY}
+	var pOutX, pOutY int32
+	xc.XEle_GetPosition(e.Handle, &pOutX, &pOutY)
+	return xc.POINT{X: pOutX, Y: pOutY}
 }
 
 // 元素_置大小.
@@ -1008,9 +1010,9 @@ func (e *Element) GetSize(pOutWidth, pOutHeight *int32) *Element {
 
 // 元素_取大小ex.
 func (e *Element) GetSizeEx() xc.POINT {
-	var pOutWidth, pOutHeight *int32
-	xc.XEle_GetSize(e.Handle, pOutWidth, pOutHeight)
-	return xc.POINT{X: *pOutWidth, Y: *pOutHeight}
+	var pOutWidth, pOutHeight int32
+	xc.XEle_GetSize(e.Handle, &pOutWidth, &pOutHeight)
+	return xc.POINT{X: pOutWidth, Y: pOutHeight}
 }
 
 // 元素_置背景, 设置背景内容, 返回设置的背景对象数量.
@@ -1030,9 +1032,9 @@ func (e *Element) GetWndClientRectDPI(pRect *xc.RECT) *Element {
 
 // 元素_取窗口客户区坐标DPIex. 基于DPI缩放后的坐标.
 func (e *Element) GetWndClientRectDPIEx() xc.RECT {
-	var pRect *xc.RECT
-	xc.XEle_GetWndClientRectDPI(e.Handle, pRect)
-	return *pRect
+	rc := xc.RECT{}
+	xc.XEle_GetWndClientRectDPI(e.Handle, &rc)
+	return rc
 }
 
 // 元素_取窗口客户区坐标DPI. 基于DPI缩放后的坐标.
@@ -1047,9 +1049,9 @@ func (e *Element) PointClientToWndClientDPI(pPt *xc.POINT) *Element {
 //
 // pPt: 接收返回坐标点.
 func (e *Element) PointClientToWndClientDPIEx() xc.POINT {
-	var pPt *xc.POINT
-	xc.XEle_PointClientToWndClientDPI(e.Handle, pPt)
-	return *pPt
+	pt := xc.POINT{}
+	xc.XEle_PointClientToWndClientDPI(e.Handle, &pt)
+	return pt
 }
 
 // 元素_客户区坐标到窗口客户区DPI. 基于DPI缩放后的坐标.

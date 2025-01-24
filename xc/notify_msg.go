@@ -13,7 +13,7 @@ import (
 //
 // pText: 内容.
 //
-// hIcon: 图标.
+// hIcon: 炫彩图片句柄.
 //
 // skin: 外观类型, NotifyMsg_Skin_.
 func XNotifyMsg_Popup(position xcc.Position_Flag_, pTitle, pText string, hIcon int, skin xcc.NotifyMsg_Skin_) int {
@@ -29,7 +29,7 @@ func XNotifyMsg_Popup(position xcc.Position_Flag_, pTitle, pText string, hIcon i
 //
 // pText: 内容.
 //
-// hIcon: 图标.
+// hIcon: 炫彩图片句柄.
 //
 // skin: 外观类型, NotifyMsg_Skin_.
 //
@@ -55,7 +55,7 @@ func XNotifyMsg_PopupEx(position xcc.Position_Flag_, pTitle, pText string, hIcon
 //
 // pText: 内容.
 //
-// hIcon: 图标.
+// hIcon: 炫彩图片句柄.
 //
 // skin: 外观类型, NotifyMsg_Skin_.
 func XNotifyMsg_WindowPopup(hWindow int, position xcc.Position_Flag_, pTitle, pText string, hIcon int, skin xcc.NotifyMsg_Skin_) int {
@@ -73,7 +73,7 @@ func XNotifyMsg_WindowPopup(hWindow int, position xcc.Position_Flag_, pTitle, pT
 //
 // pText: 内容.
 //
-// hIcon: 图标.
+// hIcon: 炫彩图片句柄.
 //
 // skin: 外观类型, NotifyMsg_Skin_.
 //

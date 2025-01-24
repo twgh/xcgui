@@ -21,7 +21,7 @@ type LayoutEle struct {
 // cy: 高度.
 //
 // hParent: 父为窗口句柄或元素句柄.
-func NewLayoutEle(x int, y int, cx int, cy int, hParent int) *LayoutEle {
+func NewLayoutEle(x, y, cx, cy int32, hParent int) *LayoutEle {
 	p := &LayoutEle{}
 	p.SetHandle(xc.XLayout_Create(x, y, cx, cy, hParent))
 	return p
@@ -331,12 +331,12 @@ func (l *LayoutEle) ShowLayoutFrame(bEnable bool) *LayoutEle {
 }
 
 // GetWidthIn 布局_取内宽度, 获取宽度, 不包含内边距大小.
-func (l *LayoutEle) GetWidthIn() int {
+func (l *LayoutEle) GetWidthIn() int32 {
 	return xc.XLayout_GetWidthIn(l.Handle)
 }
 
 // GetHeightIn 布局_取内高度, 获取高度, 不包含内边距大小.
-func (l *LayoutEle) GetHeightIn() int {
+func (l *LayoutEle) GetHeightIn() int32 {
 	return xc.XLayout_GetHeightIn(l.Handle)
 }
 
@@ -395,7 +395,7 @@ func (l *LayoutEle) SetAlignBaseline(nAlign xcc.Layout_Align_Axis_) *LayoutEle {
 // SetSpace 布局盒子_置间距.
 //
 // nSpace: 项间距大小.
-func (l *LayoutEle) SetSpace(nSpace int) *LayoutEle {
+func (l *LayoutEle) SetSpace(nSpace int32) *LayoutEle {
 	xc.XLayoutBox_SetSpace(l.Handle, nSpace)
 	return l
 }
@@ -403,7 +403,7 @@ func (l *LayoutEle) SetSpace(nSpace int) *LayoutEle {
 // SetSpaceRow 布局盒子_置行距.
 //
 // nSpace: 行间距大小.
-func (l *LayoutEle) SetSpaceRow(nSpace int) *LayoutEle {
+func (l *LayoutEle) SetSpaceRow(nSpace int32) *LayoutEle {
 	xc.XLayoutBox_SetSpaceRow(l.Handle, nSpace)
 	return l
 }

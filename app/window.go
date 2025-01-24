@@ -26,9 +26,9 @@ func NewWindow(x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xc
 
 // NewWindowEx 窗口_创建扩展.
 //
-// dwExStyle: 窗口扩展样式.
+// dwExStyle: 窗口扩展样式. xcc.WS_EX_ .
 //
-// dwStyle: 窗口样式.
+// dwStyle: 窗口样式. xcc.WS_ .
 //
 // lpClassName: 窗口类名.
 //
@@ -45,7 +45,7 @@ func NewWindow(x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xc
 // hWndParent: 父窗口.
 //
 // XCStyle: 窗口样式, xcc.Window_Style_.
-func NewWindowEx(dwExStyle, dwStyle uint32, lpClassName string, x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) *window.Window {
+func NewWindowEx(dwExStyle xcc.WS_EX_, dwStyle xcc.WS_, lpClassName string, x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) *window.Window {
 	return window.NewEx(dwExStyle, dwStyle, lpClassName, x, y, cx, cy, pTitle, hWndParent, XCStyle)
 }
 

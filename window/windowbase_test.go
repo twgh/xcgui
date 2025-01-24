@@ -1,6 +1,7 @@
 package window_test
 
 import (
+	"fmt"
 	"github.com/twgh/xcgui/app"
 	"github.com/twgh/xcgui/tf"
 	"github.com/twgh/xcgui/widget"
@@ -57,6 +58,30 @@ func Test_windowBase_SetTopEdge(t *testing.T) {
 	tf.TFunc(func(a *app.App, w *window.Window) {
 		widget.NewButton(50, 100, 100, 30, "SetTopEdge+5", w.Handle).Event_BnClick(func(pbHandled *bool) int {
 			w.SetTopEdge(w.GetTop() + 5)
+			return 0
+		})
+	})
+}
+
+func Test_windowBase_GetRectDPI(t *testing.T) {
+	tf.TFunc(func(a *app.App, w *window.Window) {
+		fmt.Printf("系统缩放倍数: %d%%\n", w.GetDPI()*100/96)
+		fmt.Println(w.GetRectEx())
+		fmt.Println(w.GetRectDPI())
+	})
+}
+
+func Test_windowBase_SetTop(t *testing.T) {
+	tf.TFunc(func(a *app.App, w *window.Window) {
+		btn := widget.NewButton(50, 100, 100, 30, "置顶", w.Handle)
+		btn.Event_BnClick(func(pbHandled *bool) int {
+			if btn.GetText() == "置顶" {
+				w.SetTop(true)
+				btn.SetText("取消置顶")
+			} else {
+				w.SetTop(false)
+				btn.SetText("置顶")
+			}
 			return 0
 		})
 	})

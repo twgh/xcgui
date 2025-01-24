@@ -13,7 +13,7 @@ import "github.com/twgh/xcgui/common"
 // cy: 高度.
 //
 // hParent: 父为窗口句柄或元素句柄.
-func XLayout_Create(x int, y int, cx int, cy int, hParent int) int {
+func XLayout_Create(x, y, cx, cy int32, hParent int) int {
 	r, _, _ := xLayout_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), uintptr(hParent))
 	return int(r)
 }
@@ -39,9 +39,8 @@ func XLayout_IsEnableLayout(hEle int) bool {
 // hEle: 元素句柄.
 //
 // bEnable: 是否启用.
-func XLayout_EnableLayout(hEle int, bEnable bool) int {
-	r, _, _ := xLayout_EnableLayout.Call(uintptr(hEle), common.BoolPtr(bEnable))
-	return int(r)
+func XLayout_EnableLayout(hEle int, bEnable bool) {
+	xLayout_EnableLayout.Call(uintptr(hEle), common.BoolPtr(bEnable))
 }
 
 // 布局_显示布局边界, 显示布局边界.
@@ -49,23 +48,22 @@ func XLayout_EnableLayout(hEle int, bEnable bool) int {
 // hEle: 元素句柄.
 //
 // bEnable: 是否显示.
-func XLayout_ShowLayoutFrame(hEle int, bEnable bool) int {
-	r, _, _ := xLayout_ShowLayoutFrame.Call(uintptr(hEle), common.BoolPtr(bEnable))
-	return int(r)
+func XLayout_ShowLayoutFrame(hEle int, bEnable bool) {
+	xLayout_ShowLayoutFrame.Call(uintptr(hEle), common.BoolPtr(bEnable))
 }
 
 // 布局_取内宽度, 获取宽度,不包含内边距大小.
 //
 // hEle: 元素句柄.
-func XLayout_GetWidthIn(hEle int) int {
+func XLayout_GetWidthIn(hEle int) int32 {
 	r, _, _ := xLayout_GetWidthIn.Call(uintptr(hEle))
-	return int(r)
+	return int32(r)
 }
 
 // 布局_取内高度, 获取高度,不包含内边距大小.
 //
 // hEle: 元素句柄.
-func XLayout_GetHeightIn(hEle int) int {
+func XLayout_GetHeightIn(hEle int) int32 {
 	r, _, _ := xLayout_GetHeightIn.Call(uintptr(hEle))
-	return int(r)
+	return int32(r)
 }

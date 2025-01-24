@@ -10,10 +10,82 @@ var (
 	comdlg32 = syscall.NewLazyDLL("comdlg32.dll")
 
 	// Functions.
-	getOpenFileNameW = comdlg32.NewProc("GetOpenFileNameW")
-	getSaveFileNameW = comdlg32.NewProc("GetSaveFileNameW")
-	chooseColorW     = comdlg32.NewProc("ChooseColorW")
+	getOpenFileNameW         = comdlg32.NewProc("GetOpenFileNameW")
+	getSaveFileNameW         = comdlg32.NewProc("GetSaveFileNameW")
+	chooseColorW             = comdlg32.NewProc("ChooseColorW")
+	procCommDlgExtendedError = comdlg32.NewProc("CommDlgExtendedError")
 )
+
+// CommDlgExtendedError 错误代码常量
+
+const (
+	// 无法创建对话框。通用对话框函数对 DialogBox 函数的调用失败。
+	// 例如，如果公共对话框调用指定了无效的窗口句柄，则会发生此错误。
+	CDERR_DIALOGFAILURE uint32 = 0xFFFF
+
+	// 通用对话框函数未能找到指定的资源。
+	CDERR_FINDRESFAILURE uint32 = 0x0006
+
+	// 常见对话框函数在初始化期间失败。当内存不足时，通常会发生此错误。
+	CDERR_INITIALIZATION uint32 = 0x0002
+
+	// 通用对话框函数未能加载指定的资源。
+	CDERR_LOADRESFAILURE uint32 = 0x0007
+
+	// 通用对话框函数未能加载指定的字符串。
+	CDERR_LOADSTRFAILURE uint32 = 0x0005
+
+	// 通用对话框函数未能锁定指定的资源。
+	CDERR_LOCKRESFAILURE uint32 = 0x0008
+
+	// 通用对话框函数无法为内部结构分配内存。
+	CDERR_MEMALLOCFAILURE uint32 = 0x0009
+
+	// 通用对话框函数无法锁定与句柄关联的内存。
+	CDERR_MEMLOCKFAILURE uint32 = 0x000A
+
+	// ENABLETEMPLATE 标志是在相应公共对话框的初始化结构的 Flags 成员中设置的，
+	// 但未能提供相应的实例句柄。
+	CDERR_NOHINSTANCE uint32 = 0x0004
+
+	// ENABLEHOOK 标志是在相应公共对话框的初始化结构的 Flags 成员中设置的，
+	// 但未能提供指向相应挂钩过程的指针。
+	CDERR_NOHOOK uint32 = 0x000B
+
+	// ENABLETEMPLATE 标志是在相应公共对话框的初始化结构的 Flags 成员中设置的，
+	// 但未能提供相应的模板。
+	CDERR_NOTEMPLATE uint32 = 0x0003
+
+	// RegisterWindowMessage 函数在由通用对话框函数调用时返回错误代码。
+	CDERR_REGISTERMSGFAIL uint32 = 0x000C
+
+	// 对应公共对话框的初始化结构的 lStructSize 成员无效。
+	CDERR_STRUCTSIZE uint32 = 0x0001
+
+	// CHOOSEFONT 结构的 nSizeMax 成员中指定的大小小于 nSizeMin 成员中指定的大小。
+	CFERR_MAXLESSTHANMIN uint32 = 0x2002
+	// 不存在字体。
+	CFERR_NOFONTS uint32 = 0x2001
+
+	// OPENFILENAME 结构的 lpstrFile 成员指向的缓冲区对于用户指定的文件名来说太小。
+	// lpstrFile 缓冲区的前两个字节包含一个整数值，该值指定接收全名所需的大小（以字符为单位）。
+	FNERR_BUFFERTOOSMALL uint32 = 0x3003
+	// 文件名无效。
+	FNERR_INVALIDFILENAME uint32 = 0x3002
+	// 尝试将列表框子类化失败，因为没有足够的内存可用。
+	FNERR_SUBCLASSFAILURE uint32 = 0x3001
+
+	// FINDREPLACE 结构的成员指向无效的缓冲区。
+	FRERR_BUFFERLENGTHZERO uint32 = 0x4001
+)
+
+// CommDlgExtendedError 返回常见对话框错误代码。此代码指示执行其中一个常见对话框函数期间发生的最新错误。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/commdlg/nf-commdlg-commdlgextendederror.
+func CommDlgExtendedError() uint32 {
+	ret, _, _ := procCommDlgExtendedError.Call()
+	return uint32(ret)
+}
 
 // OpenFileNameW 包含 GetOpenFileNameW 和 GetSaveFileNameW 函数用于初始化“打开”或“另存为”对话框的信息。用户关闭对话框后，系统在此结构中返回有关用户选择的信息.
 //
@@ -41,7 +113,7 @@ type OpenFileNameW struct {
 	//
 	// 例子:
 	//	lpstrFilter := strings.Join([]string{"Text Files(*txt)", "*.txt", "All Files(*.*)", "*.*"}, wapi.NullStr) + wapi.NullStr2
-	//	common.StringToUint16Ptr(lpstrFilter)
+	//	lpstrFilter := common.StringToUint16Ptr(lpstrFilter)
 	LpstrFilter *uint16
 
 	// 一个静态缓冲区，其中包含一对以空值结尾的过滤器字符串，用于保存用户选择的过滤器模式。第一个字符串是描述自定义过滤器的显示字符串，第二个字符串是用户选择的过滤器模式。当您的应用程序第一次创建对话框时，您指定第一个字符串，它可以是任何非空字符串。当用户选择一个文件时，对话框将当前过滤模式复制到第二个字符串。保留的过滤器模式可以是lpstrFilter缓冲区中指定的模式之一，也可以是用户键入的过滤器模式。下次创建对话框时，系统使用字符串初始化用户定义的文件过滤器。如果nFilterIndex成员为零，对话框使用自定义过滤器.
@@ -60,8 +132,8 @@ type OpenFileNameW struct {
 	//  - 如果缓冲区太小，该函数返回FALSE并且 CommDlgExtendedError 函数返回 FNERR_BUFFERTOOSMALL 。在这种情况下， lpstrFile 缓冲区的前两个字节包含所需的大小，以字节或字符为单位.
 	//
 	// 例子:
-	//	lpstrFile := make([]uint16, 260)//初始大小如果是单选文件的话, 就填260. 多选文件的话, 可根据情况增大
-	//	然后填写: &lpstrFile[0]
+	//	fileBuffer := make([]uint16, 260)//初始大小如果是单选文件的话, 就填260. 多选文件的话, 可根据情况增大
+	//	lpstrFile := &fileBuffer[0]
 	LpstrFile *uint16
 
 	// lpstrFile指向的缓冲区的大小（以字符为单位）。缓冲区必须足够大以存储路径和文件名字符串或字符串，包括终止 NullStr 字符。如果缓冲区太小而无法包含文件信息， GetOpenFileNameW 和 GetSaveFileNameW 函数将返回FALSE 。缓冲区的长度应至少为 256 个字符.
@@ -78,12 +150,12 @@ type OpenFileNameW struct {
 	NMaxFileTitle uint32
 
 	// 初始目录.
-	//	例: common.StrPtr("D:").
-	LpstrInitialDir uintptr
+	//	例: lpstrInitialDir, _ := syscall.UTF16PtrFromString("D:")
+	LpstrInitialDir *uint16
 
 	// 要放置在对话框标题栏中的字符串。如果此成员为NULL，则系统使用默认标题（即"另存为"或"打开"）.
-	//	例: common.StrPtr("打开文件")
-	LpstrTitle uintptr
+	//	例: lpstrTitle, _ := syscall.UTF16PtrFromString("打开文件")
+	LpstrTitle *uint16
 
 	// 标志: wapi.OFN_ , 可组合, 可为0.
 	Flags OFN_
@@ -102,8 +174,8 @@ type OpenFileNameW struct {
 
 	// 默认扩展名。如果用户未能键入扩展名， GetOpenFileNameW 和 GetSaveFileNameW 会将此扩展名附加到文件名中。此字符串可以是任意长度，但仅附加前三个字符。该字符串不应包含句点 (.)。如果此成员为NULL并且用户未能键入扩展名，则不会附加任何扩展名.
 	//
-	//	例子: common.StrPtr("txt")
-	LpstrDefExt uintptr
+	//	例: lpstrDefExt, _ := syscall.UTF16PtrFromString("txt")
+	LpstrDefExt *uint16
 
 	// 系统传递给由 lpfnHook 成员标识的钩子过程的应用程序定义的数据。当系统向挂钩过程发送 WM_INITDIALOG 消息时，该消息的 lParam 参数是一个指向对话框创建时指定的 OpenFileNameW 结构的指针。挂钩过程可以使用此指针来获取 lCustData 值.
 	LCustData uintptr

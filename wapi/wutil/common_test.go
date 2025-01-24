@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/twgh/xcgui/app"
 	"github.com/twgh/xcgui/tf"
+	"github.com/twgh/xcgui/wapi"
 	"github.com/twgh/xcgui/wapi/wutil"
 	"github.com/twgh/xcgui/window"
 	"github.com/twgh/xcgui/xc"
@@ -28,9 +29,22 @@ func TestOpenFile(t *testing.T) {
 	fmt.Println(wutil.OpenFile(0, []string{"Text Files(*txt)", "*.txt", "All Files(*.*)", "*.*"}, ""))
 }
 
-func TestOpenFiles(t *testing.T) {
-	for _, s := range wutil.OpenFiles(0, []string{"Text Files(*txt)", "*.txt", "All Files(*.*)", "*.*"}, "") {
-		fmt.Println(s)
+func TestOpenFileEx(t *testing.T) {
+	arr := wutil.OpenFileEx(wutil.OpenFileOption{
+		Title:        "打开文件 (最多选择2个)",
+		Filters:      []string{"All Files(*.*)", "*.*", "Text Files(*txt)", "*.txt"},
+		MaxOpenFiles: 2,
+		// 打开多个文件时, 需要填这个
+		Flags: wapi.OFN_ALLOWMULTISELECT | wapi.OFN_EXPLORER | wapi.OFN_PATHMUTEXIST,
+	})
+
+	if arr == nil && wapi.CommDlgExtendedError() == wapi.FNERR_BUFFERTOOSMALL {
+		fmt.Println("提示", "最多只能选择2个文件")
+		return
+	}
+
+	for i, s := range arr {
+		fmt.Printf("第%d个文件: %s\n", i+1, s)
 	}
 }
 

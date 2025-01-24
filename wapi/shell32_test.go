@@ -2,7 +2,6 @@ package wapi_test
 
 import (
 	"fmt"
-	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"github.com/twgh/xcgui/xcc"
 	"syscall"
@@ -17,20 +16,29 @@ func TestShellExecuteW(t *testing.T) {
 }
 
 func TestSHBrowseForFolderW(t *testing.T) {
-	buf := make([]uint16, 260)
+	displayNameBuffer := make([]uint16, 260)
+	lpszTitle, _ := syscall.UTF16PtrFromString("显示在对话框中树视图控件上方的文本")
+
 	bi := wapi.BrowseInfoW{
 		HwndOwner:      0,
 		PidlRoot:       0,
-		PszDisplayName: common.Uint16SliceDataPtr(&buf),
-		LpszTitle:      common.StrPtr("显示在对话框中树视图控件上方的文本"),
+		PszDisplayName: &displayNameBuffer[0],
+		LpszTitle:      lpszTitle,
 		UlFlags:        wapi.BIF_USENEWUI,
 		Lpfn:           0,
 		LParam:         0,
 		IImage:         0,
 	}
+
+	pidl := wapi.SHBrowseForFolderW(&bi)
+	if pidl == 0 {
+		fmt.Println("用户取消了选择")
+		return
+	}
+
 	var pszPath string
-	ret := wapi.SHGetPathFromIDListW(wapi.SHBrowseForFolderW(&bi), &pszPath)
+	ret := wapi.SHGetPathFromIDListW(pidl, &pszPath)
 	fmt.Println(ret)
-	fmt.Println("pszPath:", pszPath)                           // 用户选择的文件夹完整路径
-	fmt.Println("PszDisplayName:", syscall.UTF16ToString(buf)) // 用户选择的文件夹的名称
+	fmt.Println("用户选择的文件夹完整路径:", pszPath)
+	fmt.Println("用户选择的文件夹的名称:", syscall.UTF16ToString(displayNameBuffer))
 }

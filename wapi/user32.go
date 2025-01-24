@@ -13,39 +13,123 @@ var (
 	user32 = syscall.NewLazyDLL("user32.dll")
 
 	// Functions.
-	setWindowPos               = user32.NewProc("SetWindowPos")
-	getDesktopWindow           = user32.NewProc("GetDesktopWindow")
-	messageBoxW                = user32.NewProc("MessageBoxW")
-	isClipboardFormatAvailable = user32.NewProc("IsClipboardFormatAvailable")
-	openClipboard              = user32.NewProc("OpenClipboard")
-	closeClipboard             = user32.NewProc("CloseClipboard")
-	emptyClipboard             = user32.NewProc("EmptyClipboard")
-	getClipboardData           = user32.NewProc("GetClipboardData")
-	setClipboardData           = user32.NewProc("SetClipboardData")
-	setForegroundWindow        = user32.NewProc("SetForegroundWindow")
-	findWindowExW              = user32.NewProc("FindWindowExW")
-	getWindowTextLengthW       = user32.NewProc("GetWindowTextLengthW")
-	getWindowTextW             = user32.NewProc("GetWindowTextW")
-	clientToScreen             = user32.NewProc("ClientToScreen")
-	getCursorPos               = user32.NewProc("GetCursorPos")
-	registerHotKey             = user32.NewProc("RegisterHotKey")
-	unregisterHotKey           = user32.NewProc("UnregisterHotKey")
-	getMessageW                = user32.NewProc("GetMessageW")
-	translateMessage           = user32.NewProc("TranslateMessage")
-	dispatchMessageW           = user32.NewProc("DispatchMessageW")
-	postQuitMessage            = user32.NewProc("PostQuitMessage")
-	sendMessageW               = user32.NewProc("SendMessageW")
-	postMessageW               = user32.NewProc("PostMessageW")
-	isWindow                   = user32.NewProc("IsWindow")
-	registerWindowMessageW     = user32.NewProc("RegisterWindowMessageW")
-	findWindowW                = user32.NewProc("FindWindowW")
-	loadImageW                 = user32.NewProc("LoadImageW")
-	createIconFromResource     = user32.NewProc("CreateIconFromResource")
-	destroyIcon                = user32.NewProc("DestroyIcon")
-	setWindowsHookExW          = user32.NewProc("SetWindowsHookExW")
-	unhookWindowsHookEx        = user32.NewProc("UnhookWindowsHookEx")
-	callNextHookEx             = user32.NewProc("CallNextHookEx")
+	setWindowPos                               = user32.NewProc("SetWindowPos")
+	getDesktopWindow                           = user32.NewProc("GetDesktopWindow")
+	messageBoxW                                = user32.NewProc("MessageBoxW")
+	isClipboardFormatAvailable                 = user32.NewProc("IsClipboardFormatAvailable")
+	openClipboard                              = user32.NewProc("OpenClipboard")
+	closeClipboard                             = user32.NewProc("CloseClipboard")
+	emptyClipboard                             = user32.NewProc("EmptyClipboard")
+	getClipboardData                           = user32.NewProc("GetClipboardData")
+	setClipboardData                           = user32.NewProc("SetClipboardData")
+	setForegroundWindow                        = user32.NewProc("SetForegroundWindow")
+	findWindowExW                              = user32.NewProc("FindWindowExW")
+	getWindowTextLengthW                       = user32.NewProc("GetWindowTextLengthW")
+	getWindowTextW                             = user32.NewProc("GetWindowTextW")
+	clientToScreen                             = user32.NewProc("ClientToScreen")
+	getCursorPos                               = user32.NewProc("GetCursorPos")
+	registerHotKey                             = user32.NewProc("RegisterHotKey")
+	unregisterHotKey                           = user32.NewProc("UnregisterHotKey")
+	getMessageW                                = user32.NewProc("GetMessageW")
+	translateMessage                           = user32.NewProc("TranslateMessage")
+	dispatchMessageW                           = user32.NewProc("DispatchMessageW")
+	postQuitMessage                            = user32.NewProc("PostQuitMessage")
+	sendMessageW                               = user32.NewProc("SendMessageW")
+	postMessageW                               = user32.NewProc("PostMessageW")
+	isWindow                                   = user32.NewProc("IsWindow")
+	registerWindowMessageW                     = user32.NewProc("RegisterWindowMessageW")
+	findWindowW                                = user32.NewProc("FindWindowW")
+	loadImageW                                 = user32.NewProc("LoadImageW")
+	createIconFromResource                     = user32.NewProc("CreateIconFromResource")
+	destroyIcon                                = user32.NewProc("DestroyIcon")
+	setWindowsHookExW                          = user32.NewProc("SetWindowsHookExW")
+	unhookWindowsHookEx                        = user32.NewProc("UnhookWindowsHookEx")
+	callNextHookEx                             = user32.NewProc("CallNextHookEx")
+	procSetWindowLongPtrW                      = user32.NewProc("SetWindowLongPtrW")
+	procGetWindowLongPtrW                      = user32.NewProc("GetWindowLongPtrW")
+	procPhysicalToLogicalPointForPerMonitorDPI = user32.NewProc("PhysicalToLogicalPointForPerMonitorDPI")
 )
+
+// PhysicalToLogicalPointForPerMonitorDPI 将窗口中的点从物理坐标转换为逻辑坐标，而不考虑每英寸点数 (dpi) 对调用者的感知。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-physicaltologicalpointforpermonitordpi.
+//
+// hWnd: 窗口句柄。
+//
+// lpPoint: 指向 POINT 结构的指针，包含物理坐标，函数会将其转换为逻辑坐标。
+func PhysicalToLogicalPointForPerMonitorDPI(hWnd uintptr, lpPoint *POINT) bool {
+	ret, _, _ := procPhysicalToLogicalPointForPerMonitorDPI.Call(
+		hWnd, uintptr(unsafe.Pointer(lpPoint)),
+	)
+	return ret != 0
+}
+
+// 窗口属性索引常量.
+const (
+	// GWL_EXSTYLE 设置新的扩展窗口样式。
+	GWL_EXSTYLE int32 = -20
+
+	// GWLP_HINSTANCE 设置新的应用程序实例句柄。
+	GWLP_HINSTANCE int32 = -6
+
+	// GWLP_ID 设置子窗口的新标识符。窗口不能是顶级窗口。
+	GWLP_ID int32 = -12
+
+	// GWL_STYLE 设置新的窗口样式。
+	GWL_STYLE int32 = -16
+
+	// GWLP_USERDATA 设置与窗口关联的用户数据。
+	// 此数据供创建窗口的应用程序使用。其值最初为零。
+	GWLP_USERDATA int32 = -21
+
+	// GWLP_WNDPROC 设置窗口过程的新地址。
+	GWLP_WNDPROC int32 = -4
+)
+
+// 对话框属性索引常量
+const (
+	// DWLP_DLGPROC 设置指向对话框过程的新指针。
+	DWLP_DLGPROC = unsafe.Sizeof(uintptr(0)) * 4 // 通常为 4 或 8，取决于系统架构（32 位或 64 位）
+
+	// DWLP_MSGRESULT 设置在对话框过程中处理的消息的返回值。
+	DWLP_MSGRESULT = 0
+
+	// DWLP_USER 设置与对话框关联的用户数据。
+	DWLP_USER = DWLP_DLGPROC + unsafe.Sizeof(uintptr(0)) // 通常为 DWLP_DLGPROC + 4 或 +8
+)
+
+// SetWindowLongPtrW 更改指定窗口的属性。该函数还会在额外的窗口内存中设置指定偏移量的值。返回设置前的属性值。如果函数失败，返回值为 0。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-SetWindowLongPtrW.
+//
+// hWnd: 窗口的句柄，间接地是窗口所属的类。如果拥有由 hWnd 参数指定的进程位于 UIPI 层次结构中的进程高于调用线程所在的进程，则 SetWindowLongPtrW 函数将失败。
+//
+// nIndex: 要设置的值的从零开始的偏移量。有效值介于零到额外窗口内存的字节数之间，减去 LONG_PTR 的大小。若要设置任何其他值，请指定以下值之一: wapi.GWL_ , wapi.GWLP_ . 当 hWnd 参数标识对话框时，也可以使用以下值: wapi.DWLP_ .
+//
+// dwNewLong: 要设置的新值。
+func SetWindowLongPtrW(hWnd uintptr, nIndex int32, dwNewLong int) int {
+	ret, _, _ := procSetWindowLongPtrW.Call(
+		hWnd,               // 窗口句柄
+		uintptr(nIndex),    // 属性索引
+		uintptr(dwNewLong), // 新值
+	)
+	return int(ret) // 返回设置前的值
+}
+
+// GetWindowLongPtrW 检索有关指定窗口的信息。该函数还会在额外的窗口内存中检索指定偏移量处的值。返回指定属性的当前值。如果函数失败，返回值为 0。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetWindowLongPtrW.
+//
+// hWnd: 窗口的句柄，间接地是窗口所属的类。
+//
+// nIndex: 要检索的值的从零开始的偏移量。有效值介于零到额外窗口内存的字节数之间，减去 LONG_PTR 的大小。若要设置任何其他值，请指定以下值之一: wapi.GWL_ , wapi.GWLP_ . 当 hWnd 参数标识对话框时，也可以使用以下值: wapi.DWLP_ .
+func GetWindowLongPtrW(hWnd uintptr, nIndex int32) int {
+	ret, _, _ := procGetWindowLongPtrW.Call(
+		hWnd,            // 窗口句柄
+		uintptr(nIndex), // 属性索引
+	)
+	return int(ret) // 返回属性值
+}
 
 type WH_ int32
 
@@ -68,7 +152,7 @@ const (
 
 // KBDLLHOOKSTRUCT 包含有关低级别键盘输入事件的信息.
 type KBDLLHOOKSTRUCT struct {
-	VkCode      uint32  // 虚拟按键代码, xcc.VK_ .详情: https://learn.microsoft.com/zh-cn/windows/win32/inputdev/virtual-key-codes.
+	VkCode      uint32  // 虚拟按键代码, xcc.VK_ . 详情: https://learn.microsoft.com/zh-cn/windows/win32/inputdev/virtual-key-codes.
 	ScanCode    uint32  // 按键代码的硬件扫描代码.
 	Flags       uint32  // 扩展键标志、事件注入标志、上下文代码和转换状态标志。此成员指定如下。应用程序可以使用以下值来测试击键标志。测试LLKHF_INJECTED (位 4) 将告知是否已注入事件。如果是，则测试 LLKHF_LOWER_IL_INJECTED (位 1) 会告诉你事件是否是从以较低完整性级别运行的进程注入的.
 	Time        uint32  // 此消息的时间戳，相当于 GetMessageTime 为此消息返回的时间戳.
@@ -83,7 +167,7 @@ type KBDLLHOOKSTRUCT struct {
 //
 // LPARAM: 指向 KBDLLHOOKSTRUCT 结构的指针.
 //
-// @return: 如果 nCode 小于零，则挂钩过程必须返回 CallNextHookEx 返回的值. 如果 nCode 大于或等于零，并且挂钩过程未处理消息，强烈建议调用 CallNextHookEx 并返回它返回的值;否则，安装 WH_KEYBOARD_LL 挂钩的其他应用程序将不会收到挂钩通知，因此行为可能不正确. 如果挂钩过程处理了消息，它可能会返回非零值，以防止系统将消息传递给挂钩链的其余部分或目标窗口过程.
+// 返回值: 如果 nCode 小于零，则挂钩过程必须返回 CallNextHookEx 返回的值. 如果 nCode 大于或等于零，并且挂钩过程未处理消息，强烈建议调用 CallNextHookEx 并返回它返回的值;否则，安装 WH_KEYBOARD_LL 挂钩的其他应用程序将不会收到挂钩通知，因此行为可能不正确. 如果挂钩过程处理了消息，它可能会返回非零值，以防止系统将消息传递给挂钩链的其余部分或目标窗口过程.
 type LowLevelKeyboardProc func(nCode int32, wParam xcc.WM_, lParam *KBDLLHOOKSTRUCT) uintptr
 
 // WHEEL_DELTA 一次标准滚轮滚动的增量.
@@ -110,7 +194,7 @@ type MSLLHOOKSTRUCT struct {
 //
 // LPARAM: 指向 MSLLHOOKSTRUCT 结构的指针.
 //
-// @return: 如果 nCode 小于零，则挂钩过程必须返回 CallNextHookEx 返回的值. 如果 nCode 大于或等于零，并且挂钩过程未处理消息，强烈建议调用 CallNextHookEx 并返回它返回的值;否则，安装 WH_MOUSE_LL 挂钩的其他应用程序将不会收到挂钩通知，因此行为可能不正确. 如果挂钩过程处理了消息，它可能会返回非零值，以防止系统将消息传递给挂钩链的其余部分或目标窗口过程.
+// 返回值: 如果 nCode 小于零，则挂钩过程必须返回 CallNextHookEx 返回的值. 如果 nCode 大于或等于零，并且挂钩过程未处理消息，强烈建议调用 CallNextHookEx 并返回它返回的值;否则，安装 WH_MOUSE_LL 挂钩的其他应用程序将不会收到挂钩通知，因此行为可能不正确. 如果挂钩过程处理了消息，它可能会返回非零值，以防止系统将消息传递给挂钩链的其余部分或目标窗口过程.
 type LowLevelMouseProc func(nCode int32, wParam xcc.WM_, lParam *MSLLHOOKSTRUCT) uintptr
 
 // SetWindowsHookExW 将应用程序定义的挂钩过程安装到挂钩链中。 需要安装挂钩过程来监视系统的某些类型的事件。 这些事件与特定线程或与调用线程位于同一桌面中的所有线程相关联.
@@ -125,7 +209,7 @@ type LowLevelMouseProc func(nCode int32, wParam xcc.WM_, lParam *MSLLHOOKSTRUCT)
 //
 // dwThreadId: 要与之关联的挂钩过程的线程的标识符。对于桌面应用，如果此参数为零，则挂钩过程与调用线程在同一桌面中运行的所有现有线程相关联.
 //
-// @return: 如果成功，则返回挂钩过程的句柄; 如果失败，则返回 0.
+// 返回值: 如果成功，则返回挂钩过程的句柄; 如果失败，则返回 0.
 func SetWindowsHookExW(idHook WH_, lpfn uintptr, hmod uintptr, dwThreadId uint32) uintptr {
 	r, _, _ := setWindowsHookExW.Call(uintptr(idHook), lpfn, hmod, uintptr(dwThreadId))
 	return r
@@ -143,7 +227,7 @@ func SetWindowsHookExW(idHook WH_, lpfn uintptr, hmod uintptr, dwThreadId uint32
 //
 // lParam: 传递给当前挂钩过程的 lParam 值。此参数的含义取决于与当前挂钩链关联的挂钩类型.
 //
-// @return: 此值由链中的下一个挂钩过程返回。当前挂钩过程还必须返回此值。返回值的含义取决于挂钩类型。有关详细信息，请参阅各个挂钩过程的说明.
+// 返回值: 此值由链中的下一个挂钩过程返回。当前挂钩过程还必须返回此值。返回值的含义取决于挂钩类型。有关详细信息，请参阅各个挂钩过程的说明.
 func CallNextHookEx(hhk uintptr, nCode int32, wParam, lParam uintptr) uintptr {
 	r, _, _ := callNextHookEx.Call(hhk, uintptr(nCode), wParam, lParam)
 	return r
@@ -183,11 +267,31 @@ func DestroyIcon(hIcon uintptr) bool {
 //
 // dwVer: presbits 参数指向的资源位的图标或光标格式的版本号。 该值必须大于或等于 0x00020000 且小于或等于 0x00030000。 此参数通常设置为 0x00030000.
 //
-//	@return: HICON句柄.
+// 返回值: HICON句柄.
 func CreateIconFromResource(presbits uintptr, dwResSize uint32, fIcon bool, dwVer uint32) (uintptr, error) {
 	r, _, err := createIconFromResource.Call(presbits, uintptr(dwResSize), common.BoolPtr(fIcon), uintptr(dwVer))
 	return r, err
 }
+
+// 系统预定义的标准光标标识符, https://learn.microsoft.com/zh-cn/windows/win32/menurc/about-cursors.
+const (
+	IDC_ARROW       = 32512 // 标准箭头光标
+	IDC_IBEAM       = 32513 // 文本输入光标（I 型光标）
+	IDC_WAIT        = 32514 // 等待光标（沙漏）
+	IDC_CROSS       = 32515 // 十字光标
+	IDC_UPARROW     = 32516 // 垂直箭头光标
+	IDC_SIZENWSE    = 32642 // 双箭头光标, 对角线调整大小 1（西北-东南）
+	IDC_SIZENESW    = 32643 // 双箭头光标, 对角线调整大小 2（东北-西南）
+	IDC_SIZEWE      = 32644 // 双箭头光标, 水平调整大小（水平）
+	IDC_SIZENS      = 32645 // 双箭头光标, 垂直调整大小（垂直）
+	IDC_SIZEALL     = 32646 // 四向箭头光标, 移动
+	IDC_NO          = 32648 // 禁止光标（圆圈斜杠）
+	IDC_HAND        = 32649 // 手形光标
+	IDC_APPSTARTING = 32650 // 应用程序启动光标（箭头+沙漏）
+	IDC_HELP        = 32651 // 帮助光标（箭头+问号）
+	IDC_PIN         = 32671 // 位置选择（表示固定或定位）
+	IDC_PERSON      = 32672 // 人员选择（表示用户或联系人）
+)
 
 type IMAGE_ uint32
 
@@ -238,7 +342,7 @@ const (
 //
 // hInst: 包含要加载的图像的 DLL 或可执行文件 (.exe) 模块的句柄。 有关详细信息，请参阅 GetModuleHandle。若要 (图标、光标或位图文件) 加载预定义图像或独立资源，请将此参数设置为0.
 //
-// name: 要加载的图像。如果 hInst 参数为非0且 fuLoad 参数省略 LR_LOADFROMFILE， 则 name 指定 hInst 模块中的图像资源。如果要按名称从模块加载图像资源， 则 name 参数是指向包含映像资源名称的字符串.
+// name: 要加载的图像。如果 hInst 参数为非0且 fuLoad 参数省略 LR_LOADFROMFILE， 则 name 指定 hInst 模块中的图像资源。如果要按名称从模块加载图像资源， 则 name 参数是指向包含映像资源名称的字符串. 如果要传字符串请用: common.StrPtr().
 //
 // Type: 要加载的图像的类型。 wapi.IMAGE_ .
 //
@@ -248,9 +352,9 @@ const (
 //
 // fuLoad: 此参数可使用以下一个或多个值: wapi.LR_ .
 //
-//	@return: 返回HICON句柄.
-func LoadImageW(hInst uintptr, name string, Type IMAGE_, cx, cy int32, fuLoad LR_) uintptr {
-	r, _, _ := loadImageW.Call(hInst, common.StrPtr(name), uintptr(Type), uintptr(cx), uintptr(cy), uintptr(fuLoad))
+// 返回值: 返回 HICON 句柄.
+func LoadImageW(hInst uintptr, name uintptr, Type IMAGE_, cx, cy int32, fuLoad LR_) uintptr {
+	r, _, _ := loadImageW.Call(hInst, name, uintptr(Type), uintptr(cx), uintptr(cy), uintptr(fuLoad))
 	return r
 }
 
@@ -268,7 +372,7 @@ const (
 //
 // lpWindowName: 窗口名称（窗口的标题）, 可为空.
 //
-//	@return: 返回窗口句柄.
+// 返回值: 返回窗口句柄.
 func FindWindowW(lpClassName, lpWindowName string) uintptr {
 	r, _, _ := findWindowW.Call(common.StrPtr(lpClassName), common.StrPtr(lpWindowName))
 	return r
@@ -280,7 +384,7 @@ func FindWindowW(lpClassName, lpWindowName string) uintptr {
 //
 // lpString: 要注册的消息.
 //
-//	@return: 如果成功注册消息，则返回值是范围0xC000到0xFFFF的消息标识符. 如果函数失败，则返回值为零.
+// 返回值: 如果成功注册消息，则返回值是范围0xC000到0xFFFF的消息标识符. 如果函数失败，则返回值为零.
 func RegisterWindowMessageW(lpString string) int {
 	r, _, _ := registerWindowMessageW.Call(common.StrPtr(lpString))
 	return int(r)
@@ -445,7 +549,7 @@ const (
 //
 // uType: 对话框的内容和行为, 是以下值的组合: wapi.MB_.
 //
-//	@return: 如果函数失败，则返回值为0; 成功则返回一个整数，指示用户单击了哪个按钮.
+// 返回值: 如果函数失败，则返回值为0; 成功则返回一个整数，指示用户单击了哪个按钮.
 func MessageBoxW(hWnd uintptr, lpText, lpCaption string, uType MB_) ID_ {
 	r, _, _ := messageBoxW.Call(hWnd, common.StrPtr(lpText), common.StrPtr(lpCaption), uintptr(uType))
 	return ID_(r)
@@ -521,7 +625,7 @@ func IsClipboardFormatAvailable(uFormat CF_) bool {
 //
 // uFormat: 剪贴板格式, wapi.CF_ .
 //
-//	@return: 如果函数成功，则返回值是指定格式的剪贴板对象的句柄. 如果函数失败，则返回值为0.
+// 返回值: 如果函数成功，则返回值是指定格式的剪贴板对象的句柄. 如果函数失败，则返回值为0.
 func GetClipboardData(uFormat CF_) uintptr {
 	r, _, _ := getClipboardData.Call(uintptr(uFormat))
 	return r
@@ -535,7 +639,7 @@ func GetClipboardData(uFormat CF_) uintptr {
 //
 // hMem: 指定格式的数据的句柄。该参数可以为0，表示窗口根据请求提供指定剪贴板格式的数据（渲染格式）.
 //
-//	@return: 如果函数成功，则返回值是数据的句柄. 如果函数失败，则返回值为0.
+// 返回值: 如果函数成功，则返回值是数据的句柄. 如果函数失败，则返回值为0.
 func SetClipboardData(uFormat CF_, hMem uintptr) uintptr {
 	r, _, _ := setClipboardData.Call(uintptr(uFormat), hMem)
 	return r
@@ -573,7 +677,7 @@ func FindWindowExW(hWndParent, hWndChildAfter uintptr, lpszClass, lpszWindow str
 //
 // hWnd: 窗口或控件的句柄.
 //
-//	@return: 如果成功，则返回值是文本的长度（以字符为单位）。在某些情况下，此值可能大于文本的长度。如果窗口没有文本，则返回值为零.
+// 返回值: 如果成功，则返回值是文本的长度（以字符为单位）。在某些情况下，此值可能大于文本的长度。如果窗口没有文本，则返回值为零.
 func GetWindowTextLengthW(hWnd uintptr) int {
 	r, _, _ := getWindowTextLengthW.Call(hWnd)
 	return int(r)
@@ -589,7 +693,7 @@ func GetWindowTextLengthW(hWnd uintptr) int {
 //
 // nMaxCount: 复制到缓冲区的最大字符数，包括空字符。如果文本超出此限制，则将其截断.
 //
-//	@return: 如果函数成功，则返回值是复制字符串的长度（以字符为单位），不包括终止空字符。如果窗口没有标题栏或文本，如果标题栏为空，或者窗口或控制句柄无效，则返回值为零.
+// 返回值: 如果函数成功，则返回值是复制字符串的长度（以字符为单位），不包括终止空字符。如果窗口没有标题栏或文本，如果标题栏为空，或者窗口或控制句柄无效，则返回值为零.
 func GetWindowTextW(hWnd uintptr, lpString *string, nMaxCount int) int {
 	buf := make([]uint16, nMaxCount)
 	r, _, _ := getWindowTextW.Call(hWnd, common.Uint16SliceDataPtr(&buf), uintptr(nMaxCount))
@@ -669,7 +773,7 @@ func UnregisterHotKey(hWnd uintptr, id int32) bool {
 //
 // wMsgFilterMax: 要检索的最高消息值的整数值。使用WM_KEYLAST指定最后一个键盘消息或WM_MOUSELAST指定最后一个鼠标消息.
 //
-//	@return: 如果函数检索到 WM_QUIT 以外的消息，则返回值非零。如果函数检索到 WM_QUIT 消息，则返回值为零。如果有错误，返回值为-1.
+// 返回值: 如果函数检索到 WM_QUIT 以外的消息，则返回值非零。如果函数检索到 WM_QUIT 消息，则返回值为零。如果有错误，返回值为-1.
 func GetMessage(pMsg *MSG, hWnd uintptr, wMsgFilterMin uint32, wMsgFilterMax uint32) int32 {
 	r, _, _ := getMessageW.Call(uintptr(unsafe.Pointer(pMsg)), hWnd, uintptr(wMsgFilterMin), uintptr(wMsgFilterMax))
 	return int32(r)
@@ -691,7 +795,7 @@ func TranslateMessage(pMsg *MSG) bool {
 //
 // pMsg: 指向包含消息的结构的指针.
 //
-//	@return: 返回值指定窗口过程返回的值。尽管它的含义取决于所发送的消息，但返回值通常会被忽略.
+// 返回值: 返回值指定窗口过程返回的值。尽管它的含义取决于所发送的消息，但返回值通常会被忽略.
 func DispatchMessage(pMsg *MSG) int {
 	r, _, _ := dispatchMessageW.Call(uintptr(unsafe.Pointer(pMsg)))
 	return int(r)
@@ -732,7 +836,7 @@ type POINT struct {
 //
 // lParam: 其他特定于消息的信息.
 //
-//	@return: 返回值指定消息处理的结果；这取决于发送的消息.
+// 返回值: 返回值指定消息处理的结果；这取决于发送的消息.
 func SendMessageW(hWnd uintptr, Msg int32, wParam, lParam uintptr) int {
 	r, _, _ := sendMessageW.Call(hWnd, uintptr(Msg), wParam, lParam)
 	return int(r)
