@@ -290,7 +290,7 @@ func (w *windowBase) EnableDrawBk(bEnable bool) *windowBase {
 	return w
 }
 
-// 窗口_启用自动焦点.
+// 窗口_启用自动焦点. 当鼠标左键按下是否获得焦点.
 //
 // bEnable: 是否启用.
 func (w *windowBase) EnableAutoFocus(bEnable bool) *windowBase {

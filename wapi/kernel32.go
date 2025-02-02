@@ -10,18 +10,27 @@ var (
 	kernel32 = syscall.NewLazyDLL("kernel32.dll")
 
 	// Functions.
-	sleep            = kernel32.NewProc("Sleep")
-	sleepEx          = kernel32.NewProc("SleepEx")
-	closeHandle      = kernel32.NewProc("CloseHandle")
-	globalLock       = kernel32.NewProc("GlobalLock")
-	globalSize       = kernel32.NewProc("GlobalSize")
-	globalUnlock     = kernel32.NewProc("GlobalUnlock")
-	globalAlloc      = kernel32.NewProc("GlobalAlloc")
-	lstrcpyW         = kernel32.NewProc("lstrcpyW")
-	globalFree       = kernel32.NewProc("GlobalFree")
-	getLastError     = kernel32.NewProc("GetLastError")
-	getModuleHandleW = kernel32.NewProc("GetModuleHandleW")
+	sleep                   = kernel32.NewProc("Sleep")
+	sleepEx                 = kernel32.NewProc("SleepEx")
+	closeHandle             = kernel32.NewProc("CloseHandle")
+	globalLock              = kernel32.NewProc("GlobalLock")
+	globalSize              = kernel32.NewProc("GlobalSize")
+	globalUnlock            = kernel32.NewProc("GlobalUnlock")
+	globalAlloc             = kernel32.NewProc("GlobalAlloc")
+	lstrcpyW                = kernel32.NewProc("lstrcpyW")
+	globalFree              = kernel32.NewProc("GlobalFree")
+	getLastError            = kernel32.NewProc("GetLastError")
+	getModuleHandleW        = kernel32.NewProc("GetModuleHandleW")
+	procGetCurrentProcessId = kernel32.NewProc("GetCurrentProcessId")
 )
+
+// GetCurrentProcessId 检索调用进程的进程标识符。在进程终止之前，进程标识符将在整个系统中唯一标识进程。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/libloaderapi/nf-libloaderapi-GetCurrentProcessId.
+func GetCurrentProcessId() uint32 {
+	ret, _, _ := procGetCurrentProcessId.Call()
+	return uint32(ret)
+}
 
 // GetModuleHandleW 检索指定模块的模块句柄。 模块必须已由调用进程加载.
 //

@@ -48,7 +48,193 @@ var (
 	procSetWindowLongPtrW                      = user32.NewProc("SetWindowLongPtrW")
 	procGetWindowLongPtrW                      = user32.NewProc("GetWindowLongPtrW")
 	procPhysicalToLogicalPointForPerMonitorDPI = user32.NewProc("PhysicalToLogicalPointForPerMonitorDPI")
+	procMoveWindow                             = user32.NewProc("MoveWindow")
+	procSetParent                              = user32.NewProc("SetParent")
+	procShowWindow                             = user32.NewProc("ShowWindow")
+	procUpdateWindow                           = user32.NewProc("UpdateWindow")
+	procSetFocus                               = user32.NewProc("SetFocus")
+	procGetClassName                           = user32.NewProc("GetClassNameW")
+	procEnumWindows                            = user32.NewProc("EnumWindows")
+	procIsWindowVisible                        = user32.NewProc("IsWindowVisible")
+	procGetWindowThreadProcessId               = user32.NewProc("GetWindowThreadProcessId")
+	procGetParent                              = user32.NewProc("GetParent")
 )
+
+const (
+	CS_BYTEALIGNCLIENT = 0x1000     // 将窗口的工作区与 x 方向的字节边界对齐. 此样式会影响窗口的宽度及其在显示器上的水平位置。
+	CS_BYTEALIGNWINDOW = 0x2000     // 使窗口在字节边界 (沿 x 方向) 对齐. 此样式会影响窗口的宽度及其在显示器上的水平位置。
+	CS_CLASSDC         = 0x0040     // 分配一个设备上下文，以便类中的所有窗口共享. 由于窗口类特定于进程，因此应用程序的多个线程可以创建同一类的窗口。 线程还可以尝试同时使用设备上下文。 发生这种情况时，系统仅允许一个线程成功完成其绘制操作。
+	CS_DBLCLKS         = 0x0008     // 当用户在光标位于属于类的窗口中时双击鼠标时，将双击消息发送到窗口过程
+	CS_DROPSHADOW      = 0x00020000 // 在窗口上启用投影效果. 通过 SPI_SETDROPSHADOW 打开和关闭效果。 通常，对于小型、生存期较短的窗口（如菜单）启用此功能，以强调其与其他窗口的 Z 顺序关系。 从具有此样式的类创建的 Windows 必须是顶级窗口;它们可能不是子窗口。
+	CS_GLOBALCLASS     = 0x4000     // 指示窗口类是应用程序全局类
+	CS_HREDRAW         = 0x0002     // 如果移动或大小调整更改了工作区的宽度，则重绘整个窗口
+	CS_NOCLOSE         = 0x0200     // 在窗口菜单上禁用“关闭”
+	CS_OWNDC           = 0x0020     // 为类中的每个窗口分配唯一的设备上下文
+	CS_PARENTDC        = 0x0080     // 将子窗口的剪裁矩形设置为父窗口的剪裁矩形，以便子窗口可以在父窗口上绘制. 具有 CS_PARENTDC 样式位的窗口从系统的设备上下文缓存接收常规设备上下文。 它不会为子级提供父级的设备上下文或设备上下文设置。 指定 CS_PARENTDC 可增强应用程序的性能。
+
+	// 保存此类窗口遮盖的屏幕图像部分作为位图。 删除窗口时，系统会使用保存的位图还原屏幕图像，包括被遮盖的其他窗口。 因此，如果位图使用的内存尚未丢弃，并且其他屏幕操作未使存储的图像失效，则系统不会将 WM_PAINT 消息发送到被遮盖的窗口。
+	//
+	// 此样式适用于小型窗口 (例如菜单或对话框) ，这些菜单或对话框在发生其他屏幕活动之前会短暂显示，然后删除。 此样式会增加显示窗口所需的时间，因为系统必须先分配内存来存储位图。
+	CS_SAVEBITS = 0x0800
+	CS_VREDRAW  = 0x0001 // 如果移动或大小调整更改了工作区的高度，则重新绘制整个窗口
+)
+
+// GetParent 检索指定窗口的父级或所有者的句柄。若要检索指定上级的句柄，请使用 GetAncestor 函数。
+//   - 如果窗口是子窗口，则返回值是父窗口的句柄。 如果窗口是具有 WS_POPUP 样式的顶级窗口，则返回值是所有者窗口的句柄。
+//   - 如果函数失败，则返回值为 NULL。 要获得更多的错误信息，请调用 GetLastError。
+//   - 此函数通常由于以下原因之一而失败：1. 该窗口是无所有者或没有 WS_POPUP 样式的顶级窗口。2. 所有者窗口具有 WS_POPUP 样式。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetParent.
+//
+// hWnd: 要检索其父窗口句柄的窗口的句柄。
+func GetParent(hWnd uintptr) uintptr {
+	ret, _, _ := procGetParent.Call(hWnd)
+	return ret
+}
+
+// IsWindowVisible 确定指定窗口的可见性状态。
+//   - 如果指定的窗口、其父窗口等具有 WS_VISIBLE 样式，则返回值为非零。 否则返回值为零。
+//   - 由于返回值指定窗口是否具有 WS_VISIBLE 样式，因此即使窗口被其他窗口完全遮挡，也可能为非零。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-IsWindowVisible.
+//
+// hWnd: 窗口的句柄。
+func IsWindowVisible(hWnd uintptr) bool {
+	ret, _, _ := procIsWindowVisible.Call(hWnd)
+	return ret != 0
+}
+
+// GetClassName 检索指定窗口所属的类的名称。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetClassName.
+//
+// hWnd: 窗口的句柄，以及窗口所属的类的间接句柄。
+func GetClassName(hWnd uintptr) string {
+	buf := make([]uint16, 256)
+	ret, _, _ := procGetClassName.Call(hWnd, uintptr(unsafe.Pointer(&buf[0])), uintptr(256))
+	return common.UintPtrToString(ret)
+}
+
+// EnumWindows 通过将句柄传递到每个窗口，进而将传递给应用程序定义的回调函数，枚举屏幕上的所有顶级窗口。
+//   - 枚举窗口 将一直持续到最后一个顶级窗口被枚举或回调函数返回 FALSE。
+//   - EnumWindows 函数不枚举子窗口，但系统拥有的几个具有 WS_CHILD 样式的顶级窗口除外。
+//   - 此函数比在循环中调用 GetWindow 函数更可靠。 调用 GetWindow 以执行此任务的应用程序有被捕获到无限循环或引用已销毁窗口的句柄的风险。
+//   - 如果 EnumWindowsProc 返回零，则返回值也为零。 在这种情况下，回调函数应调用 SetLastError 以获取要返回到 EnumWindows 调用方有意义的错误代码。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-EnumWindows.
+//
+// lpEnumFunc: 指向应用程序定义的回调函数的指针。使用 syscall.NewCallback 生成. 格式: func (hwnd, lParam uintptr) uintptr {return 1}, return 0 可立刻终止.
+//
+// lParam: 要传递给回调函数的应用程序定义值。
+func EnumWindows(lpEnumFunc uintptr, lParam uintptr) bool {
+	ret, _, _ := procEnumWindows.Call(lpEnumFunc, lParam)
+	return ret != 0
+}
+
+// EnumWindowsEx 通过将句柄传递到每个窗口，进而将传递给应用程序定义的回调函数，枚举屏幕上的所有顶级窗口。
+//   - 枚举窗口 将一直持续到最后一个顶级窗口被枚举或回调函数返回 FALSE。
+//   - EnumWindowsEx 函数不枚举子窗口，但系统拥有的几个具有 WS_CHILD 样式的顶级窗口除外。
+//   - 此函数比在循环中调用 GetWindow 函数更可靠。 调用 GetWindow 以执行此任务的应用程序有被捕获到无限循环或引用已销毁窗口的句柄的风险。
+//   - 如果 EnumWindowsProc 返回零，则返回值也为零。 在这种情况下，回调函数应调用 SetLastError 以获取要返回到 EnumWindowsEx 调用方有意义的错误代码。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-EnumWindows.
+//
+// EnumWindowsProc: 回调函数. return 0 可立刻终止. return 1 继续枚举.
+//
+// lParam: 要传递给回调函数的应用程序定义值。
+func EnumWindowsEx(EnumWindowsProc func(hwnd, lParam uintptr) uintptr, lParam uintptr) bool {
+	ret, _, _ := procEnumWindows.Call(syscall.NewCallback(EnumWindowsProc), lParam)
+	return ret != 0
+}
+
+// SetFocus 将键盘焦点设置为指定的窗口。窗口必须附加到调用线程的消息队列。如果函数成功，则返回值是以前具有键盘焦点的窗口的句柄。 如果 hWnd 参数无效或窗口未附加到调用线程的消息队列，则返回值为 NULL。 若要获取扩展错误信息，请调用 GetLastError 函数。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-SetFocus.
+//
+// hWnd: 将接收键盘输入的窗口的句柄。 如果此参数为 NULL，则忽略击键。
+func SetFocus(hwnd uintptr) uintptr {
+	ret, _, _ := procSetFocus.Call(
+		hwnd,
+	)
+	return ret
+}
+
+// UpdateWindow 如果窗口的更新区域不为空， UpdateWindow 函数通过向窗口发送 WM_PAINT 消息来更新指定窗口的工作区。 函数绕过应用程序队列，将 WM_PAINT 消息直接发送到指定窗口的窗口过程。 如果更新区域为空，则不发送任何消息。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-UpdateWindow.
+//
+// hWnd: 要更新的窗口的句柄。
+func UpdateWindow(hWnd uintptr) bool {
+	ret, _, _ := procUpdateWindow.Call(
+		hWnd,
+	)
+	return ret != 0
+}
+
+// ShowWindow 设置指定窗口的显示状态。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-ShowWindow.
+//
+// hWnd: 窗口的句柄。
+//
+// nCmdShow: 指定窗口如何显示: xcc.SW_ .
+func ShowWindow(hWnd uintptr, nCmdShow xcc.SW_) bool {
+	ret, _, _ := procShowWindow.Call(
+		hWnd,
+		uintptr(nCmdShow),
+	)
+	return ret != 0
+}
+
+// SetParent 更改指定子窗口的父窗口。如果函数成功，则返回值是上一个父窗口的句柄。失败则为0.
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-SetParent.
+//
+// hWndChild: 子窗口的句柄。
+//
+// hWndNewParent: 新父窗口的句柄。 如果此参数为 NULL，桌面窗口将成为新的父窗口。 如果此参数 HWND_MESSAGE，则子窗口将成为 仅消息窗口。
+func SetParent(hWndChild, hWndNewParent uintptr) uintptr {
+	ret, _, _ := procSetParent.Call(hWndChild, hWndNewParent)
+	return ret
+}
+
+// MoveWindow 更改指定窗口的位置和尺寸。 对于顶级窗口，位置和尺寸是相对于屏幕左上角的。 对于子窗口，它们相对于父窗口工作区的左上角。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-MoveWindow.
+//
+// hWnd: 窗口句柄。
+//
+// x: 窗口左上角的新 x 坐标。
+//
+// y: 窗口左上角的新 y 坐标。
+//
+// width: 窗口的新宽度。
+//
+// height: 窗口的新高度。
+//
+// bRepaint: 是否重绘窗口。这适用于工作区、非工作区 (包括标题栏和滚动条) ，以及由于移动子窗口而发现父窗口的任何部分。
+func MoveWindow(hWnd uintptr, x, y, width, height int32, bRepaint bool) bool {
+	r, _, _ := procMoveWindow.Call(
+		hWnd,
+		uintptr(x),
+		uintptr(y),
+		uintptr(width),
+		uintptr(height),
+		common.BoolPtr(bRepaint),
+	)
+	return r != 0
+}
+
+// GetWindowThreadProcessId 检索创建指定窗口的线程的标识符，以及创建该窗口的进程（可选）的标识符。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetWindowThreadProcessId.
+//
+// hWnd: 窗口句柄。
+func GetWindowThreadProcessId(hWnd uintptr) uint32 {
+	var processId uint32
+	procGetWindowThreadProcessId.Call(hWnd, uintptr(unsafe.Pointer(&processId)))
+	return processId
+}
 
 // PhysicalToLogicalPointForPerMonitorDPI 将窗口中的点从物理坐标转换为逻辑坐标，而不考虑每英寸点数 (dpi) 对调用者的感知。
 //

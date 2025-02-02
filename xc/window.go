@@ -314,7 +314,7 @@ func XWnd_EnableDrawBk(hWindow int, bEnable bool) {
 	xWnd_EnableDrawBk.Call(uintptr(hWindow), common.BoolPtr(bEnable))
 }
 
-// 窗口_启用自动焦点.
+// 窗口_启用自动焦点. 当鼠标左键按下是否获得焦点.
 //
 // hWindow: 窗口句柄.
 //
