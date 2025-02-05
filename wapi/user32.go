@@ -58,6 +58,353 @@ var (
 	procIsWindowVisible                        = user32.NewProc("IsWindowVisible")
 	procGetWindowThreadProcessId               = user32.NewProc("GetWindowThreadProcessId")
 	procGetParent                              = user32.NewProc("GetParent")
+	procPeekMessageW                           = user32.NewProc("PeekMessageW")
+	procGetSystemMetrics                       = user32.NewProc("GetSystemMetrics")
+	procRegisterClassExW                       = user32.NewProc("RegisterClassExW")
+	procDefWindowProcW                         = user32.NewProc("DefWindowProcW")
+	procCreateWindowExW                        = user32.NewProc("CreateWindowExW")
+	procPostThreadMessageW                     = user32.NewProc("PostThreadMessageW")
+	procIsDialogMessageW                       = user32.NewProc("IsDialogMessageW")
+	procGetAncestor                            = user32.NewProc("GetAncestor")
+	procDestroyWindow                          = user32.NewProc("DestroyWindow")
+)
+
+// DestroyWindow 销毁指定的窗口。 函数将 WM_DESTROY 和 WM_NCDESTROY 消息发送到窗口，以停用窗口并从窗口中删除键盘焦点。 如果窗口位于查看器链) 的顶部，函数还会销毁窗口的菜单、销毁计时器、删除剪贴板所有权，并中断剪贴板查看器链 。
+//   - 如果指定的窗口是父窗口或所有者窗口， 则 DestroyWindow 会在销毁父窗口或所有者窗口时自动销毁关联的子窗口或拥有窗口。 函数首先销毁子窗口或拥有的窗口，然后销毁父窗口或所有者窗口。
+//   - DestroyWindow 还会销毁 CreateDialog 函数创建的无模式对话框。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-DestroyWindow.
+//
+// hwnd: 要检索其上级窗口的句柄。 如果此参数是桌面窗口，则该函数返回 NULL。
+func DestroyWindow(hwnd uintptr) bool {
+	ret, _, _ := procDestroyWindow.Call(
+		hwnd,
+	)
+	return ret != 0
+}
+
+// GetAncestor 检索指定窗口的上级句柄。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetAncestor.
+//
+// hwnd: 要检索其上级窗口的句柄。 如果此参数是桌面窗口，则该函数返回 NULL。
+//
+// gaFlags: 要检索的上级。 此参数的取值可为下列值之一：wapi.GA_ .
+func GetAncestor(hwnd uintptr, gaFlags GA_) uintptr {
+	ret, _, _ := procGetAncestor.Call(
+		hwnd,
+		uintptr(gaFlags),
+	)
+	return ret
+}
+
+// GA_ 指定要检索的上级。
+type GA_ uint32
+
+const (
+	GA_PARENT    GA_ = 1 // 检索父窗口。 这不包括所有者，因为它与 GetParent 函数一样。
+	GA_ROOT      GA_ = 2 // 通过遍历父窗口链来检索根窗口。
+	GA_ROOTOWNER GA_ = 3 // 通过遍历 GetParent 返回的父窗口和所有者窗口链来检索拥有的根窗口。
+)
+
+// IsDialogMessage 确定消息是否适用于指定的对话框，如果是，则处理该消息。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-IsDialogMessageW.
+//
+// hDlg: 对话框的句柄。
+//
+// msg: 指向包含要检查的消息的 MSG 结构的指针。
+func IsDialogMessage(hDlg uintptr, lpMsg *MSG) bool {
+	ret, _, _ := procIsDialogMessageW.Call(
+		hDlg,
+		uintptr(unsafe.Pointer(lpMsg)),
+	)
+	return ret != 0
+}
+
+// PostThreadMessage 将消息发布到指定线程的消息队列。它返回时不等待线程处理消息。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-PostThreadMessageW.
+//
+// threadID: 要向其发布消息的线程的标识符。
+//   - 如果指定的线程没有消息队列，该函数将失败。 当线程首次调用某个用户或 GDI 函数时，系统会创建线程的消息队列。
+//   - 消息发布受 UIPI 的约束。 进程的线程只能将消息发布到较低或等于完整性级别的线程的已发布消息队列。
+//   - 此线程必须具有 SE_TCB_NAME 特权，才能将消息发布到属于具有相同本地唯一标识符（LUID）但位于其他桌面中的进程的线程。 否则，函数将失败并返回 ERROR_INVALID_THREAD_ID。
+//   - 此线程必须与调用线程属于同一桌面，或者属于具有相同 LUID 的进程。 否则，函数将失败并返回 ERROR_INVALID_THREAD_ID。
+//
+// msg: 要发布的消息。
+//
+// wParam: 消息的附加参数。
+//
+// lParam: 消息的附加参数。
+func PostThreadMessage(threadID uint32, msg uint32, wParam, lParam uintptr) bool {
+	ret, _, _ := procPostThreadMessageW.Call(
+		uintptr(threadID),
+		uintptr(msg),
+		wParam,
+		lParam,
+	)
+	return ret != 0
+}
+
+// DefWindowProc 调用默认窗口过程，为应用程序未处理的任何窗口消息提供默认处理。此函数可确保处理每个消息。返回值是消息处理的结果，取决于消息。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-DefWindowProcW.
+//
+// hWnd: 接收消息的窗口过程的句柄。
+//
+// Msg: 消息。
+//
+// wParam: 消息的附加参数。
+//
+// lParam: 消息的附加参数。
+func DefWindowProc(hWnd uintptr, Msg uint32, wParam, lParam uintptr) uintptr {
+	r, _, _ := procDefWindowProcW.Call(
+		hWnd,
+		uintptr(Msg),
+		wParam,
+		lParam,
+	)
+	return r
+}
+
+// CreateWindowEx 创建具有扩展窗口样式的重叠、弹出窗口或子窗口; 否则，此函数与 CreateWindow 函数相同。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-CreateWindowExW.
+//
+// exStyle: 窗口的扩展样式。 此参数可以是以下值的组合：xcc.WS_EX_ .
+//
+// className: 类名。
+//
+// windowName: 窗口名称。
+//
+// style: 窗口的样式。 此参数可以是以下值的组合：xcc.WS_ .
+//
+// x: 窗口的初始水平位置。 对于重叠窗口或弹出窗口，x 参数是窗口左上角的初始 x 坐标，以屏幕坐标表示。 对于子窗口，x 是窗口左上角相对于父窗口工作区左上角的 x 坐标。 如果 x 设置为 CW_USEDEFAULT, 系统将选择窗口左上角的默认位置，并忽略 y 参数。 CW_USEDEFAULT 仅适用于重叠窗口; 如果为弹出窗口或子窗口指定，则 x 和 y 参数设置为零。
+//
+// y: 窗口的初始垂直位置。 对于重叠窗口或弹出窗口，y 参数是窗口左上角的初始 y 坐标，以屏幕坐标表示。 对于子窗口，y 是子窗口左上角相对于父窗口工作区左上角的初始 y 坐标。 对于列表框 y 是列表框工作区左上角相对于父窗口工作区左上角的初始 y 坐标。如果使用 WS_VISIBLE 样式位设置创建重叠窗口，并将 x 参数设置为 CW_USEDEFAULT，则 y 参数将确定窗口的显示方式。 如果 y 参数 CW_USEDEFAULT，则窗口管理器会在创建窗口后使用 SW_SHOW 标志调用 ShowWindow。 如果 y 参数是一些其他值，则窗口管理器会调用 ShowWindow，该值作为 nCmdShow 参数。
+//
+// nWidth: 窗口的宽度（以设备单位为单位）。 对于重叠窗口，nWidth 是窗口的宽度、屏幕坐标或 CW_USEDEFAULT。 如果 nWidth 为 CW_USEDEFAULT，则系统会选择窗口的默认宽度和高度;默认宽度从初始 x 坐标扩展到屏幕右边缘;默认高度从初始 y 坐标扩展到图标区域的顶部。 CW_USEDEFAULT 仅适用于重叠窗口;如果为弹出窗口或子窗口指定了 CW_USEDEFAULT，则 nWidth，nHeight 参数设置为零。
+//
+// nHeight: 窗口的高度（以设备单位为单位）。 对于重叠窗口，nHeight 是窗口的高度（以屏幕坐标为单位）。 如果 nWidth 参数设置为 CW_USEDEFAULT，则系统将忽略 nHeight 。
+//
+// hWndParent: 正在创建的窗口的父窗口或所有者窗口的句柄。 若要创建子窗口或拥有的窗口，请提供有效的窗口句柄。 对于弹出窗口，此参数是可选的。
+//
+// hMenu; 菜单的句柄，或指定子窗口标识符，具体取决于窗口样式。 对于重叠或弹出窗口，hMenu 标识要与窗口一起使用的菜单;如果要使用类菜单，它可以 NULL。 对于子窗口，hMenu 指定子窗口标识符，这是对话框控件用来通知其父级事件的整数值。 应用程序确定子窗口标识符;对于具有相同父窗口的所有子窗口，它必须是唯一的。
+//
+// hInstance: 要与窗口关联的模块实例的句柄。
+//
+// lpParam: 指向通过 CREATESTRUCT 结构（lpCreateParams 成员）指向的值的指针，该参数由 WM_CREATE 消息的 lParam 参数指向。 此消息在返回之前由此函数发送到创建的窗口。如果应用程序调用 CreateWindow 来创建 MDI 客户端窗口，lpParam 应指向 CLIENTCREATESTRUCT 结构。 如果 MDI 客户端窗口调用 CreateWindow 创建 MDI 子窗口，lpParam 应指向 MDICREATESTRUCT 结构。 如果不需要其他数据，lpParam 可能会 NULL。
+func CreateWindowEx(exStyle xcc.WS_EX_, className, windowName string, style xcc.WS_, x, y, nWidth, nHeight int32, hWndParent uintptr, hMenu uintptr, hInstance uintptr, lpParam uintptr) uintptr {
+	r, _, _ := procCreateWindowExW.Call(
+		uintptr(exStyle),
+		common.StrPtr(className),
+		common.StrPtr(windowName),
+		uintptr(style),
+		uintptr(x),
+		uintptr(y),
+		uintptr(nWidth),
+		uintptr(nHeight),
+		hWndParent,
+		hMenu,
+		hInstance,
+		lpParam,
+	)
+	return r
+}
+
+// RegisterClassEx 注册一个窗口类，以便在调用 CreateWindow 或 CreateWindowEx 函数时使用。
+//   - 如果函数成功，则返回值为唯一标识要注册的类的类原子。 此原子只能由 CreateWindow, CreateWindowEx, GetClassInfo, GetClassInfoEx 使用， FindWindow, FindWindowEx 和 UnregisterClass 函数和 IActiveIMMap：：FilterClientWindows 方法。
+//   - 如果函数失败，则返回值为零。 若要获取扩展的错误信息，请调用 GetLastError。
+//   - 卸载 DLL 时，不会取消注册 DLL 注册的窗口类。 DLL 必须在卸载时显式注销其类。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-registerclassexw.
+//
+// wc: 在将结构传递给函数之前，必须用相应的类属性填充结构。
+func RegisterClassEx(wc *WNDCLASSEX) uintptr {
+	r, _, _ := procRegisterClassExW.Call(uintptr(unsafe.Pointer(wc)))
+	return r
+}
+
+// WNDCLASSEX 包含窗口类信息。它与 RegisterClassEx 和 GetClassInfoEx 函数一起使用。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/ns-winuser-wndclassexw.
+type WNDCLASSEX struct {
+	CbSize      uint32  // 此结构的大小（以字节为单位）。 将此成员设置为 sizeof(WNDCLASSEX)。 在调用 GetClassInfoEx 函数之前，请务必设置此成员。
+	Style       uint32  // 类样式（s）。 此成员可以是 类样式的任意组合。
+	LpfnWndProc uintptr // 指向窗口过程的指针。 必须使用 CallWindowProc 函数来调用窗口过程。 有关详细信息，请参阅 WindowProc。
+	CbClsExtra  int32   // 要按照窗口类结构分配的额外字节数。 系统将字节初始化为零。
+	CbWndExtra  int32   // 在窗口实例之后分配的额外字节数。 系统将字节初始化为零。 如果应用程序使用 WNDCLASSEX 注册通过使用资源文件中的 CLASS 指令创建的对话框，则必须将此成员设置为 DLGWINDOWEXTRA。
+	HInstance   uintptr // 包含类的窗口过程的实例的句柄。
+	HIcon       uintptr // 类图标的句柄。 此成员必须是图标资源的句柄。 如果此成员 NULL，则系统提供默认图标。
+	HCursor     uintptr // 类游标的句柄。 此成员必须是游标资源的句柄。 如果此成员 NULL，则每当鼠标移动到应用程序的窗口中时，应用程序都必须显式设置光标形状。
+
+	// 类背景画笔的句柄。 此成员可以是用于绘制背景的画笔的句柄，也可以是颜色值。 颜色值必须是以下标准系统颜色之一（值 1 必须添加到所选颜色中）。 如果提供了颜色值，则必须将其转换为以下 HBRUSH 类型之一：
+	//
+	// 使用 UnregisterClass 注销类时，系统会自动删除类背景画笔。 应用程序不应删除这些画笔。
+	//
+	// 当此成员 NULL时，每当请求应用程序在其工作区中绘制时，都必须绘制其自己的背景。 若要确定是否必须绘制背景，应用程序可以处理 WM_ERASEBKGND 消息，也可以测试由 beginPaint 函数 填充的 PAINTSTRUCT 结构的 fErase 成员。
+	HbrBackground uintptr
+	LpszMenuName  uintptr // 指向以 null 结尾的字符串的指针, 使用 common.StrPtr 生成，该字符串指定类菜单的资源名称，因为名称显示在资源文件中。  如果此成员 NULL，则属于此类的窗口没有默认菜单。
+
+	// 指向以 null 结尾的字符串或原子的指针, 使用 common.StrPtr 生成。 如果此参数是 atom，则它必须是上一次调用 RegisterClass 或 RegisterClassEx 函数创建的类 atom。 原子必须位于 lpszClassName 的低序单词中;高序单词必须为零。
+	//
+	// 如果 lpszClassName 是字符串，则指定窗口类名。 类名称可以是注册到 RegisterClass 或 RegisterClassEx 的任何名称，也可以是预定义的控件类名称。
+	//
+	// lpszClassName 的最大长度为 256。 如果 lpszClassName 大于最大长度，则 RegisterClassEx 函数将失败。
+	LpszClassName uintptr
+	HIconSm       uintptr // 与窗口类关联的小图标的句柄。 如果此成员 NULL，系统将搜索由 hIcon 成员指定的图标资源，以获取要用作小图标的相应大小的图标。
+}
+
+// GetSystemMetrics 检索指定的系统指标或系统配置设置。检索的所有维度都以像素为单位。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetSystemMetrics.
+//
+// nIndex: 要检索的系统指标或配置设置。 此参数的取值可为下列值之一：wapi.SM_ . 请注意: 所有SM_CX* 值为宽度，所有SM_CY* 值为高度。
+func GetSystemMetrics(nIndex SM_) int32 {
+	ret, _, _ := procGetSystemMetrics.Call(uintptr(nIndex))
+	return int32(ret)
+}
+
+// SM_ 定义了一些常用的系统度量索引
+type SM_ int32
+
+const (
+	SM_CXSCREEN          SM_ = 0      // 屏幕宽度（像素）
+	SM_CYSCREEN          SM_ = 1      // 屏幕高度（像素）
+	SM_CXVSCROLL         SM_ = 2      // 垂直滚动条箭头宽度
+	SM_CYHSCROLL         SM_ = 3      // 水平滚动条箭头高度
+	SM_CYCAPTION         SM_ = 4      // 标题栏高度
+	SM_CXBORDER          SM_ = 5      // 窗口边框宽度
+	SM_CYBORDER          SM_ = 6      // 窗口边框高度
+	SM_CXDLGFRAME        SM_ = 7      // 对话框边框宽度
+	SM_CYDLGFRAME        SM_ = 8      // 对话框边框高度
+	SM_CYVTHUMB          SM_ = 9      // 垂直滚动条滑块高度
+	SM_CXHTHUMB          SM_ = 10     // 水平滚动条滑块宽度
+	SM_CXICON            SM_ = 11     // 默认图标宽度
+	SM_CYICON            SM_ = 12     // 默认图标高度
+	SM_CXCURSOR          SM_ = 13     // 光标宽度
+	SM_CYCURSOR          SM_ = 14     // 光标高度
+	SM_CYMENU            SM_ = 15     // 菜单栏高度
+	SM_CXFULLSCREEN      SM_ = 16     // 全屏窗口的客户区宽度
+	SM_CYFULLSCREEN      SM_ = 17     // 全屏窗口的客户区高度
+	SM_CYKANJIWINDOW     SM_ = 18     // 日语汉字窗口高度（已废弃）
+	SM_MOUSEPRESENT      SM_ = 19     // 鼠标是否存在（0=无，非零=有）
+	SM_CYVSCROLL         SM_ = 20     // 垂直滚动条高度
+	SM_CXHSCROLL         SM_ = 21     // 水平滚动条宽度
+	SM_DEBUG             SM_ = 22     // 是否启用调试版本
+	SM_SWAPBUTTON        SM_ = 23     // 鼠标左右键是否交换
+	SM_CXMIN             SM_ = 28     // 窗口最小宽度
+	SM_CYMIN             SM_ = 29     // 窗口最小高度
+	SM_CXSIZE            SM_ = 30     // 标题栏按钮宽度
+	SM_CYSIZE            SM_ = 31     // 标题栏按钮高度
+	SM_CXFRAME           SM_ = 32     // 可调整边框宽度（同 SM_CXSIZEFRAME ）
+	SM_CYFRAME           SM_ = 33     // 可调整边框高度（同 SM_CYSIZEFRAME ）
+	SM_CXMINTRACK        SM_ = 34     // 窗口最小跟踪宽度
+	SM_CYMINTRACK        SM_ = 35     // 窗口最小跟踪高度
+	SM_CXDOUBLECLK       SM_ = 36     // 双击有效区域宽度
+	SM_CYDOUBLECLK       SM_ = 37     // 双击有效区域高度
+	SM_CXICONSPACING     SM_ = 38     // 图标排列单元格宽度
+	SM_CYICONSPACING     SM_ = 39     // 图标排列单元格高度
+	SM_MENUDROPALIGNMENT SM_ = 40     // 菜单弹出方向（0=左对齐，非零=右对齐）
+	SM_PENWINDOWS        SM_ = 41     // PenWindows 是否加载
+	SM_DBCSENABLED       SM_ = 42     // 是否启用 DBCS 字符集
+	SM_CMOUSEBUTTONS     SM_ = 43     // 鼠标按钮数量（0=无鼠标）
+	SM_SECURE            SM_ = 44     // 是否启用安全模式
+	SM_CXEDGE            SM_ = 45     // 3D边框宽度
+	SM_CYEDGE            SM_ = 46     // 3D边框高度
+	SM_CXMINSPACING      SM_ = 47     // 图标网格单元格宽度
+	SM_CYMINSPACING      SM_ = 48     // 图标网格单元格高度
+	SM_CXSMICON          SM_ = 49     // 小图标建议宽度
+	SM_CYSMICON          SM_ = 50     // 小图标建议高度
+	SM_CYSMCAPTION       SM_ = 51     // 小标题栏高度
+	SM_CXSMSIZE          SM_ = 52     // 小标题栏按钮宽度
+	SM_CYSMSIZE          SM_ = 53     // 小标题栏按钮高度
+	SM_CXMENUSIZE        SM_ = 54     // 菜单栏按钮宽度
+	SM_CYMENUSIZE        SM_ = 55     // 菜单栏按钮高度
+	SM_ARRANGE           SM_ = 56     // 排列方向标志
+	SM_CXMINIMIZED       SM_ = 57     // 最小化窗口宽度
+	SM_CYMINIMIZED       SM_ = 58     // 最小化窗口高度
+	SM_CXMAXTRACK        SM_ = 59     // 窗口最大可调宽度
+	SM_CYMAXTRACK        SM_ = 60     // 窗口最大可调高度
+	SM_CXMAXIMIZED       SM_ = 61     // 最大化窗口宽度
+	SM_CYMAXIMIZED       SM_ = 62     // 最大化窗口高度
+	SM_NETWORK           SM_ = 63     // 网络存在标志（最低位=1表示存在）
+	SM_CLEANBOOT         SM_ = 67     // 启动模式（0=正常，1=安全模式，2=带网络的安全模式）
+	SM_CXDRAG            SM_ = 68     // 拖动生效区域宽度
+	SM_CYDRAG            SM_ = 69     // 拖动生效区域高度
+	SM_SHOWSOUNDS        SM_ = 70     // 是否强制视觉提示代替声音
+	SM_CXMENUCHECK       SM_ = 71     // 菜单复选框宽度
+	SM_CYMENUCHECK       SM_ = 72     // 菜单复选框高度
+	SM_SLOWMACHINE       SM_ = 73     // 是否低性能计算机
+	SM_MIDEASTENABLED    SM_ = 74     // 是否启用中东语言支持
+	SM_MOUSEWHEELPRESENT SM_ = 75     // 是否支持鼠标滚轮
+	SM_XVIRTUALSCREEN    SM_ = 76     // 虚拟屏幕左上角X坐标
+	SM_YVIRTUALSCREEN    SM_ = 77     // 虚拟屏幕左上角Y坐标
+	SM_CXVIRTUALSCREEN   SM_ = 78     // 虚拟屏幕宽度
+	SM_CYVIRTUALSCREEN   SM_ = 79     // 虚拟屏幕高度
+	SM_CMONITORS         SM_ = 80     // 显示器数量
+	SM_SAMEDISPLAYFORMAT SM_ = 81     // 所有显示器颜色格式是否相同
+	SM_IMMENABLED        SM_ = 82     // 是否启用输入法
+	SM_CXFOCUSBORDER     SM_ = 83     // 焦点边框宽度
+	SM_CYFOCUSBORDER     SM_ = 84     // 焦点边框高度
+	SM_TABLETPC          SM_ = 86     // 是否是 Tablet PC
+	SM_MEDIACENTER       SM_ = 87     // 是否是 Media Center Edition
+	SM_STARTER           SM_ = 88     // 是否是 Windows Starter Edition
+	SM_SERVERR2          SM_ = 89     // 是否是 Windows Server 2003 R2
+	SM_REMOTESESSION     SM_ = 0x1000 // 是否在远程会话中
+)
+
+// PeekMessage 调度传入的非排队消息，检查已发布的消息的线程消息队列，并检索消息（如果有）。如果消息可用，则返回值为true。如果没有消息可用，则返回值为false。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-PeekMessageW.
+//
+// lpMsg: 指向 MSG 结构的指针，该结构接收消息。
+//
+// hWnd: 要检索其消息队列的窗口的句柄。窗口必须属于当前线程。如果 hWnd 为 NULL，则函数检索与调用线程关联的窗口的消息队列。
+//
+// wMsgFilterMin: 指定要检索的最小消息 ID。 如果 wMsgFilterMin 为零，则不检查最小消息 ID。使用 WM_KEYFIRST（0x0100）指定第一条键盘消息或 WM_MOUSEFIRST（0x0200）来指定第一条鼠标消息。如果 wMsgFilterMin 和 wMsgFilterMax 均为零，PeekMessage 将返回所有可用消息（即，不执行范围筛选）。
+//
+// wMsgFilterMax: 指定要检索的最大消息 ID。 使用 WM_KEYLAST 指定最后一条键盘消息或 WM_MOUSELAST 指定最后一条鼠标消息。如果 wMsgFilterMin 和 wMsgFilterMax 均为零，PeekMessage 将返回所有可用消息（即，不执行范围筛选）。
+//
+// wRemoveMsg: 指定如何处理消息。此参数可以是以下一个或多个值: wapi.PM_。默认情况下，将处理所有消息类型。 若要指定只应处理某些消息，请指定以下一个或多个值: wapi.PM_QS_。
+func PeekMessage(lpMsg *MSG, hWnd uintptr, wMsgFilterMin, wMsgFilterMax, wRemoveMsg uint32) bool {
+	ret, _, _ := procPeekMessageW.Call(
+		uintptr(unsafe.Pointer(lpMsg)),
+		hWnd,
+		uintptr(wMsgFilterMin),
+		uintptr(wMsgFilterMax),
+		uintptr(wRemoveMsg),
+	)
+	return ret != 0
+}
+
+const (
+	PM_NOREMOVE uint32 = 0x0000 // PeekMessage 处理后，消息不会从队列中删除。
+	PM_REMOVE   uint32 = 0x0001 // PeekMessage 处理后，将从队列中删除消息。
+	PM_NOYIELD  uint32 = 0x0002 // 防止系统释放等待调用方空闲的任何线程（请参阅 WaitForInputIdle）。将此值与 PM_NOREMOVE 或 PM_REMOVE 组合在一起。
+)
+
+const (
+	PM_QS_INPUT       = QS_INPUT << 16                                // 处理鼠标和键盘消息
+	PM_QS_PAINT       = QS_PAINT << 16                                // 处理绘制消息
+	PM_QS_POSTMESSAGE = (QS_POSTMESSAGE | QS_HOTKEY | QS_TIMER) << 16 // 处理所有已发布的消息，包括计时器和热键
+	PM_QS_SENDMESSAGE = QS_SENDMESSAGE << 16                          // 处理所有已发送的消息
+)
+
+const (
+	QS_KEY                  uint32 = 0x0001                          // 键盘消息
+	QS_MOUSEMOVE            uint32 = 0x0002                          // 鼠标移动消息
+	QS_MOUSEBUTTON          uint32 = 0x0004                          // 鼠标按钮消息
+	QS_POSTMESSAGE          uint32 = 0x0008                          // 已发布的消息
+	QS_TIMER                uint32 = 0x0010                          // 计时器消息
+	QS_PAINT                uint32 = 0x0020                          // 绘制消息
+	QS_SENDMESSAGE          uint32 = 0x0040                          // 已发送的消息
+	QS_HOTKEY               uint32 = 0x0080                          // 热键消息
+	QS_ALLPOSTMESSAGEuint32 uint32 = 0x0100                          // 所有已发布的消息
+	QS_RAWINPUT             uint32 = 0x0400                          // 原始输入消息
+	QS_MOUSE                       = QS_MOUSEMOVE | QS_MOUSEBUTTON   // 所有鼠标消息
+	QS_INPUT                       = QS_MOUSE | QS_KEY | QS_RAWINPUT // 所有输入消息
 )
 
 const (
@@ -1023,7 +1370,7 @@ type POINT struct {
 // lParam: 其他特定于消息的信息.
 //
 // 返回值: 返回值指定消息处理的结果；这取决于发送的消息.
-func SendMessageW(hWnd uintptr, Msg int32, wParam, lParam uintptr) int {
+func SendMessageW(hWnd uintptr, Msg uint32, wParam, lParam uintptr) int {
 	r, _, _ := sendMessageW.Call(hWnd, uintptr(Msg), wParam, lParam)
 	return int(r)
 }
@@ -1039,7 +1386,51 @@ func SendMessageW(hWnd uintptr, Msg int32, wParam, lParam uintptr) int {
 // wParam: 其他特定于消息的信息.
 //
 // lParam: 其他特定于消息的信息.
-func PostMessageW(hWnd uintptr, Msg int32, wParam, lParam uintptr) bool {
+func PostMessageW(hWnd uintptr, Msg uint32, wParam, lParam uintptr) bool {
 	r, _, _ := postMessageW.Call(hWnd, uintptr(Msg), wParam, lParam)
 	return r != 0
 }
+
+const (
+	WM_PAINT           uint32 = 15     // 窗口绘制消息
+	WM_CLOSE           uint32 = 16     // 窗口关闭消息.
+	WM_DESTROY         uint32 = 2      // 窗口销毁消息.
+	WM_NCDESTROY       uint32 = 130    // 窗口非客户区销毁消息.
+	WM_MOUSEMOVE       uint32 = 512    // 窗口鼠标移动消息.
+	WM_LBUTTONDOWN     uint32 = 513    // 窗口鼠标左键按下消息
+	WM_LBUTTONUP       uint32 = 514    // 窗口鼠标左键弹起消息.
+	WM_RBUTTONDOWN     uint32 = 516    // 窗口鼠标右键按下消息.
+	WM_RBUTTONUP       uint32 = 517    // 窗口鼠标右键弹起消息.
+	WM_LBUTTONDBLCLK   uint32 = 515    // 窗口鼠标左键双击消息.
+	WM_RBUTTONDBLCLK   uint32 = 518    // 窗口鼠标右键双击消息.
+	WM_MBUTTONDOWN     uint32 = 519    // 窗口鼠标中键按下消息.
+	WM_MBUTTONUP       uint32 = 520    // 窗口鼠标中键弹起消息.
+	WM_MOUSEWHEEL      uint32 = 522    // 窗口鼠标滚轮滚动消息.
+	WM_XBUTTONDOWN     uint32 = 523    // 鼠标按下第一个或第二个 X 按钮.
+	WM_XBUTTONUP       uint32 = 524    // 鼠标弹起第一个或第二个 X 按钮.
+	WM_XBUTTONDBLCLK   uint32 = 525    // 鼠标双击第一个或第二个 X 按钮.
+	WM_NCXBUTTONDOWN   uint32 = 171    // 鼠标按下第一个或第二个 X 按钮.
+	WM_NCXBUTTONUP     uint32 = 172    // 鼠标弹起第一个或第二个 X 按钮.
+	WM_NCXBUTTONDBLCLK uint32 = 173    // 鼠标双击第一个或第二个 X 按钮.
+	WM_EXITSIZEMOVE    uint32 = 562    // 窗口退出移动或调整大小模式循环改，详情参见MSDN.
+	WM_MOUSEHOVER      uint32 = 673    // 窗口鼠标进入消息
+	WM_MOUSELEAVE      uint32 = 675    // 窗口鼠标离开消息.
+	WM_SIZE            uint32 = 5      // 窗口大小改变消息.
+	WM_TIMER           uint32 = 275    // 窗口定时器消息.
+	WM_SETFOCUS        uint32 = 7      // 窗口获得焦点.
+	WM_KILLFOCUS       uint32 = 8      // 窗口失去焦点.
+	WM_KEYDOWN         uint32 = 256    // 窗口键盘按键消息.
+	WM_KEYUP           uint32 = 257    // 窗口键盘按键弹起消息.
+	WM_SYSKEYDOWN      uint32 = 260    // 当用户按下F10键（激活菜单栏）或按住ALT键然后按下另一个键时，发布到具有键盘焦点的窗口。当当前没有窗口具有键盘焦点时，也会发生这种情况;在这种情况下， WM_SYSKEYDOWN 消息被发送到活动窗口。接收消息的窗口可以通过检查lParam参数中的上下文代码来区分这两个上下文.
+	WM_SYSKEYUP        uint32 = 261    // 当用户释放按住 Alt 键时按下的键时，使用键盘焦点发布到窗口。 当当前没有窗口具有键盘焦点时，也会发生这种情况;在这种情况下， WM_SYSKEYUP 消息将发送到活动窗口。 接收消息的窗口可以通过检查 lParam 中的上下文代码来区分这两个上下文.
+	WM_CAPTURECHANGED  uint32 = 533    // 窗口鼠标捕获改变消息.
+	WM_SETCURSOR       uint32 = 32     // 窗口设置鼠标光标.
+	WM_CHAR            uint32 = 258    // 窗口字符消息.
+	WM_DROPFILES       uint32 = 563    // 拖动文件到窗口.
+	WM_HOTKEY          uint32 = 0x0312 // 当用户按下 RegisterHotKey 函数注册的热键时发布。消息放置在与注册热键的线程关联的消息队列的顶部.
+	WM_SETICON         uint32 = 0x0080 // 设置窗口图标的消息
+	WM_ACTIVATE        uint32 = 6      // 窗口激活消息, 发送到正在激活的窗口和正在停用的窗口.
+	WM_MOVE            uint32 = 3      // 窗口移动消息.
+	WM_MOVING          uint32 = 534    // 当用户正在移动窗口时，该消息会被发送到窗口.
+	WM_GETMINMAXINFO   uint32 = 36     // 获取窗口最小最大尺寸信息.
+)

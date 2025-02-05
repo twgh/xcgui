@@ -3,6 +3,7 @@ package wapi
 import (
 	"github.com/twgh/xcgui/common"
 	"syscall"
+	"unsafe"
 )
 
 var (
@@ -22,7 +23,45 @@ var (
 	getLastError            = kernel32.NewProc("GetLastError")
 	getModuleHandleW        = kernel32.NewProc("GetModuleHandleW")
 	procGetCurrentProcessId = kernel32.NewProc("GetCurrentProcessId")
+	procGetModuleHandleEx   = kernel32.NewProc("GetModuleHandleExW")
 )
+
+// GET_MODULE_HANDLE_EX_FLAG_ 在 GetModuleHandleEx 中使用.
+type GET_MODULE_HANDLE_EX_FLAG_ uint32
+
+const (
+	GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS GET_MODULE_HANDLE_EX_FLAG_ = 0x00000004 // lpModuleName 参数是模块中的地址。
+
+	// 无论调用 FreeLibrary 多少次，模块都会一直加载到进程终止。
+	//
+	// 此选项不能用于 GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT。
+	GET_MODULE_HANDLE_EX_FLAG_PIN GET_MODULE_HANDLE_EX_FLAG_ = 0x00000001
+
+	// 模块的引用计数不会递增。 此选项等效于 GetModuleHandleW 的行为。不要将检索到的模块句柄传递给 FreeLibrary 函数;这样做可能会导致 DLL 过早地取消映射。 有关详细信息，请参阅“备注”。
+	//
+	// 此选项不能用于 GET_MODULE_HANDLE_EX_FLAG_PIN。
+	GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT GET_MODULE_HANDLE_EX_FLAG_ = 0x00000002
+)
+
+// GetModuleHandleEx 检索调用进程的进程标识符。在进程终止之前，进程标识符将在整个系统中唯一标识进程。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/libloaderapi/nf-libloaderapi-GetModuleHandleExW.
+//
+// dwFlags: 此参数可以是零个或以下一个或多个值: wapi.GET_MODULE_HANDLE_EX_FLAG_。如果模块的引用计数递增，调用方必须使用 FreeLibrary 函数在不再需要模块句柄时递减引用计数。
+//
+// lpModuleName: 使用 common.StrPtr 生成. 加载的模块的名称（.dll 或 .exe 文件），或模块中的地址（如果 dwFlags = GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS）。
+//   - 对于模块名称，如果省略文件扩展名，则会追加默认库扩展名 .dll。 文件名字符串可以包含尾随点字符 （.），以指示模块名称没有扩展名。 该字符串不必指定路径。 指定路径时，请务必使用反斜杠（\），而不是正斜杠（/）。 名称与当前映射到调用进程的地址空间的模块的名称进行比较（大小写）。
+//   - 如果此参数为空，则该函数将返回用于创建调用进程的文件的句柄（.exe 文件）。
+//   - GetModuleHandleEx 函数不会检索使用 LOAD_LIBRARY_AS_DATAFILE 标志加载的模块的句柄。
+func GetModuleHandleEx(dwFlags GET_MODULE_HANDLE_EX_FLAG_, lpModuleName string) uintptr {
+	var phModule uintptr
+	_, _, _ = procGetModuleHandleEx.Call(
+		uintptr(dwFlags),
+		common.StrPtr(lpModuleName),
+		uintptr(unsafe.Pointer(&phModule)),
+	)
+	return phModule
+}
 
 // GetCurrentProcessId 检索调用进程的进程标识符。在进程终止之前，进程标识符将在整个系统中唯一标识进程。
 //

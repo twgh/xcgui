@@ -99,3 +99,9 @@ func TestSetForegroundWindow(t *testing.T) {
 		})
 	})
 }
+
+func TestGetSystemMetrics(t *testing.T) {
+	x := wapi.GetSystemMetrics(wapi.SM_CXSCREEN)
+	y := wapi.GetSystemMetrics(wapi.SM_CYSCREEN)
+	fmt.Println("屏幕宽高:", x, y)
+}

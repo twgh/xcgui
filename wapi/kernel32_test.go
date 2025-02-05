@@ -12,3 +12,8 @@ func TestSleep(t *testing.T) {
 		wapi.Sleep(1000)
 	}
 }
+
+func TestGetModuleHandleEx(t *testing.T) {
+	fmt.Println(wapi.GetModuleHandleEx(0, "kernel32.dll"))
+	fmt.Println(wapi.GetModuleHandleEx(0, ""))
+}
