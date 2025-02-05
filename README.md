@@ -1,6 +1,6 @@
 <h1 align="center">XCGUI</h1>
 <p align="center">
-    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.393-blue" alt="release"></a>
+    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.394-blue" alt="release"></a>
     <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-3.3.9.1-blue" alt="XCGUI"></a>
    <a href="https://golang.org"> <img src="https://img.shields.io/badge/golang-≥1.16-blue" alt="golang"></a>
     <a href="https://pkg.go.dev/github.com/twgh/xcgui"><img src="https://img.shields.io/badge/go.dev-reference-brightgreen" alt="GoDoc"></a>
@@ -11,6 +11,7 @@
 	<a href="https://pkg.go.dev/github.com/twgh/xcgui">项目文档</a>&nbsp;&nbsp;
 	<a href="http://mall.xcgui.com">官方资源</a>
 </p>
+
 
 
 
@@ -37,7 +38,8 @@
 - 支持Direct2D，硬件加速，能更大程度的发挥硬件特性，创建高性能，高质量的2D图形。
 - [WIKI](https://github.com/twgh/xcgui/wiki) 里有简单的入门教程，有空可以看一下，少走弯路。
 - 有完善的 [中文官方文档](http://www.xcgui.com/doc-ui/)，[官方资源社区](http://mall.xcgui.com)。
-- 官方QQ群(能回答问题的人多)：[2283812](https://jq.qq.com/?_wv=1027&k=AiXY4uMc)，只聊Go语言版的QQ群：[793788011](https://jq.qq.com/?_wv=1027&k=bkKgsYYk)
+- 其它相关项目：[XWebView](https://github.com/twgh/xwebview) ，[xc-elementui](https://github.com/twgh/xc-elementui)
+- 官方QQ群 (能回答问题的人多)：[2283812](https://jq.qq.com/?_wv=1027&k=AiXY4uMc)，只聊Go语言版的QQ群：[793788011](https://jq.qq.com/?_wv=1027&k=bkKgsYYk)
 
 ## 获取
 

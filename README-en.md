@@ -1,6 +1,6 @@
 <h1 align="center">XCGUI</h1>
 <p align="center">
-    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.393-blue" alt="release"></a>
+    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.394-blue" alt="release"></a>
     <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-3.3.9.1-blue" alt="XCGUI"></a>
    <a href="https://golang.org"> <img src="https://img.shields.io/badge/golang-≥1.16-blue" alt="golang"></a>
     <a href="https://pkg.go.dev/github.com/twgh/xcgui"><img src="https://img.shields.io/badge/go.dev-reference-brightgreen" alt="GoDoc"></a>
@@ -24,6 +24,7 @@
 
 
 
+
 ## Introduction
 
 English | [简体中文](./README.md)
@@ -34,6 +35,7 @@ English | [简体中文](./README.md)
 - Has a free UI designer tool: rapid development tools, what you see is what you get, a highly customizable system (DIY), making UI development easier.
 - Support Direct2D, hardware acceleration, can make full use of hardware features to create high-performance, high-quality 2D graphics.
 - [WIKI](https://github.com/twgh/xcgui/wiki) There is a simple introductory tutorial, you can take a look when you have time.
+- Other related projects：[XWebView](https://github.com/twgh/xwebview) ，[xc-elementui](https://github.com/twgh/xc-elementui)
 
 ## Get
 
