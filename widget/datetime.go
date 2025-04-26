@@ -120,6 +120,13 @@ func (d *DateTime) GetDate(pnYear *int32, pnMonth *int32, pnDay *int32) *DateTim
 	return d
 }
 
+// 日期_取当前日期Ex.
+func (d *DateTime) GetDateEx() (year, month, day int32) {
+	var pnYear, pnMonth, pnDay int32
+	xc.XDateTime_GetDate(d.Handle, &pnYear, &pnMonth, &pnDay)
+	return pnYear, pnMonth, pnDay
+}
+
 // 日期_置当前日期.
 //
 // nYear: 年.
@@ -144,7 +151,14 @@ func (d *DateTime) GetTime(pnHour *int32, pnMinute *int32, pnSecond *int32) *Dat
 	return d
 }
 
-// 日期_社区当前时间, 设置当前时分秒.
+// 日期_取当前时间Ex.
+func (d *DateTime) GetTimeEx() (hour int32, minute int32, second int32) {
+	var pnHour, pnMinute, pnSecond int32
+	xc.XDateTime_GetTime(d.Handle, &pnHour, &pnMinute, &pnSecond)
+	return pnHour, pnMinute, pnSecond
+}
+
+// 日期_设置当前时间, 设置当前时分秒.
 //
 // nHour: 时.
 //
@@ -162,9 +176,7 @@ func (d *DateTime) Popup() *DateTime {
 	return d
 }
 
-/*
-以下都是事件
-*/
+// ------------------------- 事件 ------------------------- //
 
 type XE_DATETIME_CHANGE func(pbHandled *bool) int                                                     // 日期时间元素,内容改变事件.
 type XE_DATETIME_CHANGE1 func(hEle int, pbHandled *bool) int                                          // 日期时间元素,内容改变事件.
@@ -201,4 +213,78 @@ func (d *DateTime) Event_DATETIME_EXIT_MONTHCAL(pFun XE_DATETIME_EXIT_MONTHCAL) 
 // 日期时间元素,弹出的月历卡片退出事件.
 func (d *DateTime) Event_DATETIME_EXIT_MONTHCAL1(pFun XE_DATETIME_EXIT_MONTHCAL1) bool {
 	return xc.XEle_RegEventC1(d.Handle, xcc.XE_DATETIME_EXIT_MONTHCAL, pFun)
+}
+
+// ------------------------- AddEvent ------------------------- //
+
+// AddEvent_DateTime_Change 添加日期时间元素内容改变事件.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (d *DateTime) AddEvent_DateTime_Change(pFun XE_DATETIME_CHANGE1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(d.Handle, xcc.XE_DATETIME_CHANGE, onXE_DATETIME_CHANGE, pFun, allowAddingMultiple...)
+}
+
+// onXE_DATETIME_CHANGE 日期时间元素内容改变事件.
+func onXE_DATETIME_CHANGE(hEle int, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_DATETIME_CHANGE)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_DATETIME_CHANGE1)(hEle, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_DateTime_Popup_MonthCal 添加日期时间元素弹出月历卡片事件.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (d *DateTime) AddEvent_DateTime_Popup_MonthCal(pFun XE_DATETIME_POPUP_MONTHCAL1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(d.Handle, xcc.XE_DATETIME_POPUP_MONTHCAL, onXE_DATETIME_POPUP_MONTHCAL, pFun, allowAddingMultiple...)
+}
+
+// onXE_DATETIME_POPUP_MONTHCAL 日期时间元素弹出月历卡片事件.
+func onXE_DATETIME_POPUP_MONTHCAL(hEle int, hMonthCalWnd int, hMonthCal int, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_DATETIME_POPUP_MONTHCAL)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_DATETIME_POPUP_MONTHCAL1)(hEle, hMonthCalWnd, hMonthCal, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_DateTime_Exit_MonthCal 添加日期时间元素弹出的月历卡片退出事件.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (d *DateTime) AddEvent_DateTime_Exit_MonthCal(pFun XE_DATETIME_EXIT_MONTHCAL1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(d.Handle, xcc.XE_DATETIME_EXIT_MONTHCAL, onXE_DATETIME_EXIT_MONTHCAL, pFun, allowAddingMultiple...)
+}
+
+// onXE_DATETIME_EXIT_MONTHCAL 日期时间元素弹出的月历卡片退出事件.
+func onXE_DATETIME_EXIT_MONTHCAL(hEle int, hMonthCalWnd int, hMonthCal int, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_DATETIME_EXIT_MONTHCAL)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_DATETIME_EXIT_MONTHCAL1)(hEle, hMonthCalWnd, hMonthCal, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
 }

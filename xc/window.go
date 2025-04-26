@@ -83,9 +83,9 @@ func XWnd_SetTop(hWindow int, bTop ...bool) {
 //
 // nEvent: 事件类型: xcc.WM_, xcc.XWM_.
 //
-// pFun: 事件函数.
-func XWnd_RegEventC(hWindow int, nEvent xcc.WM_, pFun interface{}) bool {
-	r, _, _ := xWnd_RegEventC.Call(uintptr(hWindow), uintptr(nEvent), syscall.NewCallback(pFun))
+// fun: 事件函数.
+func XWnd_RegEventC(hWindow int, nEvent xcc.WM_, fun interface{}) bool {
+	r, _, _ := xWnd_RegEventC.Call(uintptr(hWindow), uintptr(nEvent), syscall.NewCallback(fun))
 	return r != 0
 }
 
@@ -95,9 +95,9 @@ func XWnd_RegEventC(hWindow int, nEvent xcc.WM_, pFun interface{}) bool {
 //
 // nEvent: 事件类型: xcc.WM_, xcc.XWM_.
 //
-// pFun: 事件函数.
-func XWnd_RegEventC1(hWindow int, nEvent xcc.WM_, pFun interface{}) bool {
-	r, _, _ := xWnd_RegEventC1.Call(uintptr(hWindow), uintptr(nEvent), syscall.NewCallback(pFun))
+// fun: 事件函数.
+func XWnd_RegEventC1(hWindow int, nEvent xcc.WM_, fun interface{}) bool {
+	r, _, _ := xWnd_RegEventC1.Call(uintptr(hWindow), uintptr(nEvent), syscall.NewCallback(fun))
 	return r != 0
 }
 
@@ -107,9 +107,9 @@ func XWnd_RegEventC1(hWindow int, nEvent xcc.WM_, pFun interface{}) bool {
 //
 // nEvent: 事件类型: xcc.WM_, xcc.XWM_.
 //
-// pFun: 事件函数.
-func XWnd_RemoveEventC(hWindow int, nEvent xcc.WM_, pFun interface{}) bool {
-	r, _, _ := xWnd_RemoveEventC.Call(uintptr(hWindow), uintptr(nEvent), syscall.NewCallback(pFun))
+// fun: 事件函数.
+func XWnd_RemoveEventC(hWindow int, nEvent xcc.WM_, fun interface{}) bool {
+	r, _, _ := xWnd_RemoveEventC.Call(uintptr(hWindow), uintptr(nEvent), syscall.NewCallback(fun))
 	return r != 0
 }
 

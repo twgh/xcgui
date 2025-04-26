@@ -1,7 +1,15 @@
 package common
 
 import (
+	"bytes"
+	"errors"
+	"image"
+	"image/draw"
+	"image/gif"
+	"image/png"
+	"io"
 	"syscall"
+	"time"
 	"unicode/utf16"
 	"unsafe"
 )
@@ -175,4 +183,47 @@ func Uint16SliceToStringSlice(s []uint16) []string {
 		}
 	}
 	return strSlice
+}
+
+// GifFrame 包含 Gif 每帧的二进制数据和延时信息.
+type GifFrame struct {
+	ImageData []byte        // PNG 格式的二进制数据
+	Delay     time.Duration // 帧延时
+}
+
+// ExtractGifFrames 提取 GIF 的所有帧.
+func ExtractGifFrames(gifReader io.Reader) ([]GifFrame, error) {
+	// 解码 GIF
+	gifData, err := gif.DecodeAll(gifReader)
+	if err != nil {
+		return nil, err
+	}
+
+	if len(gifData.Image) == 0 {
+		return nil, errors.New("no image in gif")
+	}
+
+	// 创建背景画布（使用第一帧的尺寸）
+	bounds := gifData.Image[0].Bounds()
+	baseImage := image.NewRGBA(bounds)
+
+	var frames []GifFrame
+	// 遍历每一帧
+	for i, srcFrame := range gifData.Image {
+		// 将当前帧绘制到画布上
+		draw.Draw(baseImage, bounds, srcFrame, image.Point{}, draw.Over)
+
+		// 将画布编码为 PNG 字节
+		var buf bytes.Buffer
+		if err := png.Encode(&buf, baseImage); err != nil {
+			return nil, err
+		}
+
+		// 收集帧数据
+		frames = append(frames, GifFrame{
+			ImageData: buf.Bytes(),
+			Delay:     time.Duration(gifData.Delay[i]) * 10 * time.Millisecond,
+		})
+	}
+	return frames, nil
 }

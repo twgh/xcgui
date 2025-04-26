@@ -30,9 +30,9 @@ func XEle_Create(x, y, cx, cy int32, hParent int) int {
 //
 // nEvent: 事件类型: xcc.XE_.
 //
-// pFun: 事件函数.
-func XEle_RegEventC(hEle int, nEvent xcc.XE_, pFun interface{}) bool {
-	r, _, _ := xEle_RegEventC.Call(uintptr(hEle), uintptr(nEvent), syscall.NewCallback(pFun))
+// fun: 事件函数.
+func XEle_RegEventC(hEle int, nEvent xcc.XE_, fun interface{}) bool {
+	r, _, _ := xEle_RegEventC.Call(uintptr(hEle), uintptr(nEvent), syscall.NewCallback(fun))
 	return r != 0
 }
 
@@ -42,9 +42,9 @@ func XEle_RegEventC(hEle int, nEvent xcc.XE_, pFun interface{}) bool {
 //
 // nEvent: 事件类型: xcc.XE_.
 //
-// pFun: 事件函数.
-func XEle_RegEventC1(hEle int, nEvent xcc.XE_, pFun interface{}) bool {
-	r, _, _ := xEle_RegEventC1.Call(uintptr(hEle), uintptr(nEvent), syscall.NewCallback(pFun))
+// fun: 事件函数.
+func XEle_RegEventC1(hEle int, nEvent xcc.XE_, fun interface{}) bool {
+	r, _, _ := xEle_RegEventC1.Call(uintptr(hEle), uintptr(nEvent), syscall.NewCallback(fun))
 	return r != 0
 }
 
@@ -54,9 +54,9 @@ func XEle_RegEventC1(hEle int, nEvent xcc.XE_, pFun interface{}) bool {
 //
 // nEvent: 事件类型: xcc.XE_.
 //
-// pFun: 事件函数.
-func XEle_RemoveEventC(hEle int, nEvent xcc.XE_, pFun interface{}) bool {
-	r, _, _ := xEle_RemoveEventC.Call(uintptr(hEle), uintptr(nEvent), syscall.NewCallback(pFun))
+// fun: 事件函数.
+func XEle_RemoveEventC(hEle int, nEvent xcc.XE_, fun interface{}) bool {
+	r, _, _ := xEle_RemoveEventC.Call(uintptr(hEle), uintptr(nEvent), syscall.NewCallback(fun))
 	return r != 0
 }
 

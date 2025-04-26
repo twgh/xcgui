@@ -4,10 +4,10 @@ import "syscall"
 
 var (
 	// Library.
-	ntdll = syscall.NewLazyDLL("ntdll.dll")
+	Ntdll = syscall.NewLazyDLL("ntdll.dll")
 
 	// Functions.
-	rtlMoveMemory = ntdll.NewProc("RtlMoveMemory")
+	rtlMoveMemory = Ntdll.NewProc("RtlMoveMemory")
 )
 
 // RtlMoveMemory 将源内存块的内容复制到目标内存块，并支持重叠的源内存块和目标内存块.

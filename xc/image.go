@@ -265,7 +265,7 @@ func XImage_IsTile(hImage int) bool {
 //
 // hImage: 图片句柄.
 //
-// nType: 图片绘制类型, Image_Draw_Type_.
+// nType: 图片绘制类型, xcc.Image_Draw_Type_.
 func XImage_SetDrawType(hImage int, nType xcc.Image_Draw_Type_) bool {
 	r, _, _ := xImage_SetDrawType.Call(uintptr(hImage), uintptr(nType))
 	return r != 0

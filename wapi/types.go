@@ -4,3 +4,5 @@ package wapi
 type LONG_PTR int
 
 type DWORD uint32
+
+type HRESULT uintptr

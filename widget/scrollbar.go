@@ -166,9 +166,7 @@ func (s *ScrollBar) GetButtonSlider() int {
 	return xc.XSBar_GetButtonSlider(s.Handle)
 }
 
-/*
-以下都是事件
-*/
+// ------------------------- 事件 ------------------------- //
 
 type XE_SBAR_SCROLL func(pos int32, pbHandled *bool) int            // 滚动条元素滚动事件,滚动条触发.
 type XE_SBAR_SCROLL1 func(hEle int, pos int32, pbHandled *bool) int // 滚动条元素滚动事件,滚动条触发.
@@ -181,4 +179,30 @@ func (s *ScrollBar) Event_SBAR_SCROLL(pFun XE_SBAR_SCROLL) bool {
 // 滚动条元素滚动事件,滚动条触发.
 func (s *ScrollBar) Event_SBAR_SCROLL1(pFun XE_SBAR_SCROLL1) bool {
 	return xc.XEle_RegEventC1(s.Handle, xcc.XE_SBAR_SCROLL, pFun)
+}
+
+// ------------------------- AddEvent ------------------------- //
+
+// AddEvent_SBar_Scroll 添加滚动条元素滚动事件.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (s *ScrollBar) AddEvent_SBar_Scroll(pFun XE_SBAR_SCROLL1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(s.Handle, xcc.XE_SBAR_SCROLL, onXE_SBAR_SCROLL, pFun, allowAddingMultiple...)
+}
+
+// onXE_SBAR_SCROLL 滚动条元素滚动事件处理.
+func onXE_SBAR_SCROLL(hEle int, pos int32, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_SBAR_SCROLL)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_SBAR_SCROLL1)(hEle, pos, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
 }

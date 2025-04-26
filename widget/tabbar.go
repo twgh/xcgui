@@ -10,7 +10,7 @@ type TabBar struct {
 	Element
 }
 
-// TAB条_创建, 创建tabBar元素, 返回元素句柄.
+// TAB条_创建, 创建 TabBar 元素.
 //
 // x: 元素x坐标.
 //
@@ -149,7 +149,7 @@ func (t *TabBar) GetLabelCount() int32 {
 	return xc.XTabBar_GetLabelCount(t.Handle)
 }
 
-// TAB条_取标签位置索引, 获取标签按钮位置索引, 成功返回索引值, 否则返回 XC_ID_ERROR.
+// TAB条_取标签位置索引, 获取标签按钮位置索引, 成功返回索引值, 否则返回 xcc.XC_ID_ERROR.
 //
 // hLabel: 标签按钮句柄.
 func (t *TabBar) GetindexByEle(hLabel int) int32 {
@@ -257,9 +257,7 @@ func (t *TabBar) ShowLabel(index int32, bShow bool) bool {
 	return xc.XTabBar_ShowLabel(t.Handle, index, bShow)
 }
 
-/*
-以下都是事件
-*/
+// ------------------------- 事件 ------------------------- //
 
 type XE_TABBAR_SELECT func(iItem int32, pbHandled *bool) int            // TabBar标签按钮选择改变事件. iItem: 标签位置索引.
 type XE_TABBAR_SELECT1 func(hEle int, iItem int32, pbHandled *bool) int // TabBar标签按钮选择改变事件. iItem: 标签位置索引.
@@ -284,4 +282,56 @@ func (t *TabBar) Event_TABBAR_DELETE(pFun XE_TABBAR_DELETE) bool {
 // TabBar标签按钮删除事件.
 func (t *TabBar) Event_TABBAR_DELETE1(pFun XE_TABBAR_DELETE1) bool {
 	return xc.XEle_RegEventC1(t.Handle, xcc.XE_TABBAR_DELETE, pFun)
+}
+
+// ------------------------- AddEvent ------------------------- //
+
+// AddEvent_TabBar_Select 添加标签按钮选择改变事件.
+//   - iItem: 标签位置索引.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (t *TabBar) AddEvent_TabBar_Select(pFun XE_TABBAR_SELECT1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(t.Handle, xcc.XE_TABBAR_SELECT, onXE_TABBAR_SELECT, pFun, allowAddingMultiple...)
+}
+
+// onXE_TABBAR_SELECT 标签按钮选择改变事件.
+func onXE_TABBAR_SELECT(hEle int, iItem int32, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_TABBAR_SELECT)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_TABBAR_SELECT1)(hEle, iItem, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_TabBar_Delete 添加标签按钮删除事件.
+//   - iItem: 标签位置索引.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (t *TabBar) AddEvent_TabBar_Delete(pFun XE_TABBAR_DELETE1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(t.Handle, xcc.XE_TABBAR_DELETE, onXE_TABBAR_DELETE, pFun, allowAddingMultiple...)
+}
+
+// onXE_TABBAR_DELETE 标签按钮删除事件.
+func onXE_TABBAR_DELETE(hEle int, iItem int32, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_TABBAR_DELETE)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_TABBAR_DELETE1)(hEle, iItem, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
 }

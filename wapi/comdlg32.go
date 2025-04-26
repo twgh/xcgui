@@ -7,13 +7,13 @@ import (
 
 var (
 	// Library.
-	comdlg32 = syscall.NewLazyDLL("comdlg32.dll")
+	Comdlg32 = syscall.NewLazyDLL("comdlg32.dll")
 
 	// Functions.
-	getOpenFileNameW         = comdlg32.NewProc("GetOpenFileNameW")
-	getSaveFileNameW         = comdlg32.NewProc("GetSaveFileNameW")
-	chooseColorW             = comdlg32.NewProc("ChooseColorW")
-	procCommDlgExtendedError = comdlg32.NewProc("CommDlgExtendedError")
+	getOpenFileNameW         = Comdlg32.NewProc("GetOpenFileNameW")
+	getSaveFileNameW         = Comdlg32.NewProc("GetSaveFileNameW")
+	chooseColorW             = Comdlg32.NewProc("ChooseColorW")
+	procCommDlgExtendedError = Comdlg32.NewProc("CommDlgExtendedError")
 )
 
 // CommDlgExtendedError 错误代码常量

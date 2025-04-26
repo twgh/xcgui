@@ -22,7 +22,7 @@ type Window struct {
 //
 // pTitle: 窗口标题.
 //
-// hWndParent: 父窗口.
+// hWndParent: 父窗口(真实窗口句柄).
 //
 // XCStyle: 窗口样式: xcc.Window_Style_.
 func New(x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) *Window {
@@ -49,7 +49,7 @@ func New(x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Wind
 //
 // pTitle: 窗口名.
 //
-// hWndParent: 父窗口.
+// hWndParent: 父窗口(真实窗口句柄).
 //
 // XCStyle: 窗口样式, xcc.Window_Style_.
 func NewEx(dwExStyle xcc.WS_EX_, dwStyle xcc.WS_, lpClassName string, x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) *Window {

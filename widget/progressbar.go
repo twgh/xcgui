@@ -133,9 +133,7 @@ func (p *ProgressBar) SetColorLoad(color int) *ProgressBar {
 	return p
 }
 
-/*
-以下都是事件
-*/
+// ------------------------- 事件 ------------------------- //
 
 type XE_PROGRESSBAR_CHANGE func(pos int32, pbHandled *bool) int            // 进度条元素,进度改变事件.
 type XE_PROGRESSBAR_CHANGE1 func(hEle int, pos int32, pbHandled *bool) int // 进度条元素,进度改变事件.
@@ -148,4 +146,30 @@ func (p *ProgressBar) Event_PROGRESSBAR_CHANGE(pFun XE_PROGRESSBAR_CHANGE) bool 
 // 进度条元素,进度改变事件.
 func (p *ProgressBar) Event_PROGRESSBAR_CHANGE1(pFun XE_PROGRESSBAR_CHANGE1) bool {
 	return xc.XEle_RegEventC1(p.Handle, xcc.XE_PROGRESSBAR_CHANGE, pFun)
+}
+
+// ------------------------- AddEvent ------------------------- //
+
+// AddEvent_ProgressBar_Change 添加进度条元素进度改变事件.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (p *ProgressBar) AddEvent_ProgressBar_Change(pFun XE_PROGRESSBAR_CHANGE1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(p.Handle, xcc.XE_PROGRESSBAR_CHANGE, onXE_PROGRESSBAR_CHANGE, pFun, allowAddingMultiple...)
+}
+
+// onXE_PROGRESSBAR_CHANGE 进度条元素进度改变事件.
+func onXE_PROGRESSBAR_CHANGE(hEle int, pos int32, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_PROGRESSBAR_CHANGE)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_PROGRESSBAR_CHANGE1)(hEle, pos, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
 }

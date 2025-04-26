@@ -8,23 +8,32 @@ import (
 
 var (
 	// Library.
-	kernel32 = syscall.NewLazyDLL("kernel32.dll")
+	Kernel32 = syscall.NewLazyDLL("kernel32.dll")
 
 	// Functions.
-	sleep                   = kernel32.NewProc("Sleep")
-	sleepEx                 = kernel32.NewProc("SleepEx")
-	closeHandle             = kernel32.NewProc("CloseHandle")
-	globalLock              = kernel32.NewProc("GlobalLock")
-	globalSize              = kernel32.NewProc("GlobalSize")
-	globalUnlock            = kernel32.NewProc("GlobalUnlock")
-	globalAlloc             = kernel32.NewProc("GlobalAlloc")
-	lstrcpyW                = kernel32.NewProc("lstrcpyW")
-	globalFree              = kernel32.NewProc("GlobalFree")
-	getLastError            = kernel32.NewProc("GetLastError")
-	getModuleHandleW        = kernel32.NewProc("GetModuleHandleW")
-	procGetCurrentProcessId = kernel32.NewProc("GetCurrentProcessId")
-	procGetModuleHandleEx   = kernel32.NewProc("GetModuleHandleExW")
+	sleep                   = Kernel32.NewProc("Sleep")
+	sleepEx                 = Kernel32.NewProc("SleepEx")
+	closeHandle             = Kernel32.NewProc("CloseHandle")
+	globalLock              = Kernel32.NewProc("GlobalLock")
+	globalSize              = Kernel32.NewProc("GlobalSize")
+	globalUnlock            = Kernel32.NewProc("GlobalUnlock")
+	globalAlloc             = Kernel32.NewProc("GlobalAlloc")
+	lstrcpyW                = Kernel32.NewProc("lstrcpyW")
+	globalFree              = Kernel32.NewProc("GlobalFree")
+	getLastError            = Kernel32.NewProc("GetLastError")
+	getModuleHandleW        = Kernel32.NewProc("GetModuleHandleW")
+	procGetCurrentProcessId = Kernel32.NewProc("GetCurrentProcessId")
+	procGetModuleHandleEx   = Kernel32.NewProc("GetModuleHandleExW")
+	procGetCurrentThreadId  = Kernel32.NewProc("GetCurrentThreadId")
 )
+
+// GetCurrentThreadId 检索调用线程的线程标识符。在线程终止之前，线程标识符将在整个系统中唯一标识线程。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/processthreadsapi/nf-processthreadsapi-getcurrentthreadid
+func GetCurrentThreadId() uint32 {
+	ret, _, _ := procGetCurrentThreadId.Call()
+	return uint32(ret)
+}
 
 // GET_MODULE_HANDLE_EX_FLAG_ 在 GetModuleHandleEx 中使用.
 type GET_MODULE_HANDLE_EX_FLAG_ uint32

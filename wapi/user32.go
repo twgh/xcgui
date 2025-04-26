@@ -1,6 +1,7 @@
 package wapi
 
 import (
+	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
 	"syscall"
 	"unsafe"
@@ -10,72 +11,141 @@ import (
 
 var (
 	// Library.
-	user32 = syscall.NewLazyDLL("user32.dll")
+	User32 = syscall.NewLazyDLL("user32.dll")
 
 	// Functions.
-	setWindowPos                               = user32.NewProc("SetWindowPos")
-	getDesktopWindow                           = user32.NewProc("GetDesktopWindow")
-	messageBoxW                                = user32.NewProc("MessageBoxW")
-	isClipboardFormatAvailable                 = user32.NewProc("IsClipboardFormatAvailable")
-	openClipboard                              = user32.NewProc("OpenClipboard")
-	closeClipboard                             = user32.NewProc("CloseClipboard")
-	emptyClipboard                             = user32.NewProc("EmptyClipboard")
-	getClipboardData                           = user32.NewProc("GetClipboardData")
-	setClipboardData                           = user32.NewProc("SetClipboardData")
-	setForegroundWindow                        = user32.NewProc("SetForegroundWindow")
-	findWindowExW                              = user32.NewProc("FindWindowExW")
-	getWindowTextLengthW                       = user32.NewProc("GetWindowTextLengthW")
-	getWindowTextW                             = user32.NewProc("GetWindowTextW")
-	clientToScreen                             = user32.NewProc("ClientToScreen")
-	getCursorPos                               = user32.NewProc("GetCursorPos")
-	registerHotKey                             = user32.NewProc("RegisterHotKey")
-	unregisterHotKey                           = user32.NewProc("UnregisterHotKey")
-	getMessageW                                = user32.NewProc("GetMessageW")
-	translateMessage                           = user32.NewProc("TranslateMessage")
-	dispatchMessageW                           = user32.NewProc("DispatchMessageW")
-	postQuitMessage                            = user32.NewProc("PostQuitMessage")
-	sendMessageW                               = user32.NewProc("SendMessageW")
-	postMessageW                               = user32.NewProc("PostMessageW")
-	isWindow                                   = user32.NewProc("IsWindow")
-	registerWindowMessageW                     = user32.NewProc("RegisterWindowMessageW")
-	findWindowW                                = user32.NewProc("FindWindowW")
-	loadImageW                                 = user32.NewProc("LoadImageW")
-	createIconFromResource                     = user32.NewProc("CreateIconFromResource")
-	destroyIcon                                = user32.NewProc("DestroyIcon")
-	setWindowsHookExW                          = user32.NewProc("SetWindowsHookExW")
-	unhookWindowsHookEx                        = user32.NewProc("UnhookWindowsHookEx")
-	callNextHookEx                             = user32.NewProc("CallNextHookEx")
-	procSetWindowLongPtrW                      = user32.NewProc("SetWindowLongPtrW")
-	procGetWindowLongPtrW                      = user32.NewProc("GetWindowLongPtrW")
-	procPhysicalToLogicalPointForPerMonitorDPI = user32.NewProc("PhysicalToLogicalPointForPerMonitorDPI")
-	procMoveWindow                             = user32.NewProc("MoveWindow")
-	procSetParent                              = user32.NewProc("SetParent")
-	procShowWindow                             = user32.NewProc("ShowWindow")
-	procUpdateWindow                           = user32.NewProc("UpdateWindow")
-	procSetFocus                               = user32.NewProc("SetFocus")
-	procGetClassName                           = user32.NewProc("GetClassNameW")
-	procEnumWindows                            = user32.NewProc("EnumWindows")
-	procIsWindowVisible                        = user32.NewProc("IsWindowVisible")
-	procGetWindowThreadProcessId               = user32.NewProc("GetWindowThreadProcessId")
-	procGetParent                              = user32.NewProc("GetParent")
-	procPeekMessageW                           = user32.NewProc("PeekMessageW")
-	procGetSystemMetrics                       = user32.NewProc("GetSystemMetrics")
-	procRegisterClassExW                       = user32.NewProc("RegisterClassExW")
-	procDefWindowProcW                         = user32.NewProc("DefWindowProcW")
-	procCreateWindowExW                        = user32.NewProc("CreateWindowExW")
-	procPostThreadMessageW                     = user32.NewProc("PostThreadMessageW")
-	procIsDialogMessageW                       = user32.NewProc("IsDialogMessageW")
-	procGetAncestor                            = user32.NewProc("GetAncestor")
-	procDestroyWindow                          = user32.NewProc("DestroyWindow")
+	setWindowPos                               = User32.NewProc("SetWindowPos")
+	getDesktopWindow                           = User32.NewProc("GetDesktopWindow")
+	messageBoxW                                = User32.NewProc("MessageBoxW")
+	isClipboardFormatAvailable                 = User32.NewProc("IsClipboardFormatAvailable")
+	openClipboard                              = User32.NewProc("OpenClipboard")
+	closeClipboard                             = User32.NewProc("CloseClipboard")
+	emptyClipboard                             = User32.NewProc("EmptyClipboard")
+	getClipboardData                           = User32.NewProc("GetClipboardData")
+	setClipboardData                           = User32.NewProc("SetClipboardData")
+	setForegroundWindow                        = User32.NewProc("SetForegroundWindow")
+	findWindowExW                              = User32.NewProc("FindWindowExW")
+	getWindowTextLengthW                       = User32.NewProc("GetWindowTextLengthW")
+	getWindowTextW                             = User32.NewProc("GetWindowTextW")
+	clientToScreen                             = User32.NewProc("ClientToScreen")
+	getCursorPos                               = User32.NewProc("GetCursorPos")
+	registerHotKey                             = User32.NewProc("RegisterHotKey")
+	unregisterHotKey                           = User32.NewProc("UnregisterHotKey")
+	getMessageW                                = User32.NewProc("GetMessageW")
+	translateMessage                           = User32.NewProc("TranslateMessage")
+	dispatchMessageW                           = User32.NewProc("DispatchMessageW")
+	postQuitMessage                            = User32.NewProc("PostQuitMessage")
+	sendMessageW                               = User32.NewProc("SendMessageW")
+	postMessageW                               = User32.NewProc("PostMessageW")
+	isWindow                                   = User32.NewProc("IsWindow")
+	registerWindowMessageW                     = User32.NewProc("RegisterWindowMessageW")
+	findWindowW                                = User32.NewProc("FindWindowW")
+	loadImageW                                 = User32.NewProc("LoadImageW")
+	createIconFromResource                     = User32.NewProc("CreateIconFromResource")
+	destroyIcon                                = User32.NewProc("DestroyIcon")
+	setWindowsHookExW                          = User32.NewProc("SetWindowsHookExW")
+	unhookWindowsHookEx                        = User32.NewProc("UnhookWindowsHookEx")
+	callNextHookEx                             = User32.NewProc("CallNextHookEx")
+	procSetWindowLongPtrW                      = User32.NewProc("SetWindowLongPtrW")
+	procGetWindowLongPtrW                      = User32.NewProc("GetWindowLongPtrW")
+	procPhysicalToLogicalPointForPerMonitorDPI = User32.NewProc("PhysicalToLogicalPointForPerMonitorDPI")
+	procMoveWindow                             = User32.NewProc("MoveWindow")
+	procSetParent                              = User32.NewProc("SetParent")
+	procShowWindow                             = User32.NewProc("ShowWindow")
+	procUpdateWindow                           = User32.NewProc("UpdateWindow")
+	procSetFocus                               = User32.NewProc("SetFocus")
+	procGetClassName                           = User32.NewProc("GetClassNameW")
+	procEnumWindows                            = User32.NewProc("EnumWindows")
+	procIsWindowVisible                        = User32.NewProc("IsWindowVisible")
+	procGetWindowThreadProcessId               = User32.NewProc("GetWindowThreadProcessId")
+	procGetParent                              = User32.NewProc("GetParent")
+	procPeekMessageW                           = User32.NewProc("PeekMessageW")
+	procGetSystemMetrics                       = User32.NewProc("GetSystemMetrics")
+	procRegisterClassExW                       = User32.NewProc("RegisterClassExW")
+	procDefWindowProcW                         = User32.NewProc("DefWindowProcW")
+	procCreateWindowExW                        = User32.NewProc("CreateWindowExW")
+	procPostThreadMessageW                     = User32.NewProc("PostThreadMessageW")
+	procIsDialogMessageW                       = User32.NewProc("IsDialogMessageW")
+	procGetAncestor                            = User32.NewProc("GetAncestor")
+	procDestroyWindow                          = User32.NewProc("DestroyWindow")
+	procGetClientRect                          = User32.NewProc("GetClientRect")
+	procSetWindowTextW                         = User32.NewProc("SetWindowTextW")
+	procAdjustWindowRect                       = User32.NewProc("AdjustWindowRect")
+	procgetAsyncKeyState                       = User32.NewProc("GetAsyncKeyState")
 )
+
+// GetAsyncKeyState 确定在调用此函数时是否按下了键，以及自上次调用 GetAsyncKeyState 以来是否按下了该键。
+//   - 如果在调用此函数时按下了键，则返回值的最高位位于位置 1。
+//   - 如果自上次调用 GetAsyncKeyState 以来按下了该键，则返回值的最低有效位设置为 1。
+//   - 如果在调用此函数时未按下该键，则返回值为零。
+//   - 如果自上次调用 GetAsyncKeyState 以来未按下该键，则返回值为零。
+//
+// vKey: 虚拟键码。有关代码的列表，请参阅虚拟键码: xcc.VK_ .
+//
+// 返回值: 如果函数成功，则返回值指定最高位和最低有效位的状态。如果函数失败，则返回值为零。要获取扩展错误信息，请调用 GetLastError。
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-getasynckeystate
+func GetAsyncKeyState(vKey int32) int16 {
+	ret, _, _ := procgetAsyncKeyState.Call(uintptr(vKey))
+	return int16(ret)
+}
+
+// AdjustWindowRect 计算窗口矩形的所需大小，以便客户区域具有指定的大小。返回的窗口矩形用于传递给 CreateWindowEx 函数来创建具有指定客户区域大小的窗口。
+//
+// lpRect: 指向 xc.RECT 结构的指针，该结构包含客户区域所需的大小。返回时，结构包含窗口所需的大小。
+//
+// dwStyle: 要创建的窗口的窗口样式。此参数可以是以下值的组合：xcc.WS_ . 不能指定 xcc.WS_OVERLAPPED 样式。
+//
+// bMenu: 指示窗口是否有菜单。
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-AdjustWindowRect.
+func AdjustWindowRect(lpRect *xc.RECT, dwStyle xcc.WS_, bMenu bool) bool {
+	ret, _, _ := procAdjustWindowRect.Call(
+		uintptr(unsafe.Pointer(lpRect)),
+		uintptr(dwStyle),
+		common.BoolPtr(bMenu),
+	)
+	return ret != 0
+}
+
+// SetWindowText 改变指定窗口的标题栏文本（如果有）或指定控件的文本内容。无法更改其他应用程序中控件的文本。
+//
+// hWnd: 要改变文本的窗口或控件的句柄。
+//
+// str: 要用作窗口或控件新文本的字符串。
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-setwindowtextw.
+func SetWindowText(hWnd uintptr, str string) bool {
+	ret, _, _ := procSetWindowTextW.Call(
+		hWnd,
+		common.StrPtr(str),
+	)
+	return ret != 0
+}
+
+// GetClientRect 检索指定窗口客户区的坐标。客户区是整个窗口的工作区，不包括标题栏、菜单栏和滚动条。
+// 左上角坐标总是(0,0)。右下角坐标指定客户区的宽度和高度。
+//
+// hWnd: 要获取其客户区坐标的窗口句柄。
+//
+// lpRect: 指向 xc.RECT 结构的指针，该结构接收客户区的坐标。左上角坐标为(0,0)，右下角坐标指定宽度和高度。
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetClientRect.
+func GetClientRect(hWnd uintptr, lpRect *xc.RECT) bool {
+	ret, _, _ := procGetClientRect.Call(
+		hWnd,
+		uintptr(unsafe.Pointer(lpRect)),
+	)
+	return ret != 0
+}
 
 // DestroyWindow 销毁指定的窗口。 函数将 WM_DESTROY 和 WM_NCDESTROY 消息发送到窗口，以停用窗口并从窗口中删除键盘焦点。 如果窗口位于查看器链) 的顶部，函数还会销毁窗口的菜单、销毁计时器、删除剪贴板所有权，并中断剪贴板查看器链 。
 //   - 如果指定的窗口是父窗口或所有者窗口， 则 DestroyWindow 会在销毁父窗口或所有者窗口时自动销毁关联的子窗口或拥有窗口。 函数首先销毁子窗口或拥有的窗口，然后销毁父窗口或所有者窗口。
 //   - DestroyWindow 还会销毁 CreateDialog 函数创建的无模式对话框。
 //
-// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-DestroyWindow.
-//
 // hwnd: 要检索其上级窗口的句柄。 如果此参数是桌面窗口，则该函数返回 NULL。
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-DestroyWindow.
 func DestroyWindow(hwnd uintptr) bool {
 	ret, _, _ := procDestroyWindow.Call(
 		hwnd,
@@ -948,19 +1018,19 @@ type SWP_ uint32
 
 const (
 	SWP_ASYNCWINDOWPOS SWP_ = 0x4000 // 如果调用线程和拥有窗口的线程连接到不同的输入队列，系统会将请求发布到拥有窗口的线程。这可以防止调用线程在其他线程处理请求时阻塞其执行.
-	SWP_DEFERERASE     SWP_ = 0x2000 // 防止生成WM_SYNCPAINT消息.
+	SWP_DEFERERASE     SWP_ = 0x2000 // 防止生成 WM_SYNCPAINT 消息.
 	SWP_DRAWFRAME      SWP_ = 0x0020 // 在窗口周围绘制一个框架（在窗口的类描述中定义）.
-	SWP_FRAMECHANGED   SWP_ = 0x0020 // 应用使用 SetWindowLong 函数 设置的新框架样式。向窗口发送WM_NCCALCSIZE消息，即使窗口大小没有改变。如果未指定此标志，则仅在更改窗口大小时发送 WM_NCCALCSIZE .
+	SWP_FRAMECHANGED   SWP_ = 0x0020 // 应用使用 SetWindowLong 函数 设置的新框架样式。向窗口发送WM_NCCALCSIZE 消息，即使窗口大小没有改变。如果未指定此标志，则仅在更改窗口大小时发送 WM_NCCALCSIZE .
 	SWP_HIDEWINDOW     SWP_ = 0x0080 // 隐藏窗口.
-	SWP_NOACTIVATE     SWP_ = 0x0010 // 不激活窗口。如果未设置此标志，则窗口被激活并移动到最顶层或非最顶层组的顶部（取决于hWndInsertAfter参数的设置）.
+	SWP_NOACTIVATE     SWP_ = 0x0010 // 不激活窗口。如果未设置此标志，则窗口被激活并移动到最顶层或非最顶层组的顶部（取决于 hWndInsertAfter 参数的设置）.
 	SWP_NOCOPYBITS     SWP_ = 0x0100 // 丢弃客户区的全部内容。如果未指定此标志，则在调整窗口大小或重新定位后，将保存客户区的有效内容并将其复制回客户区.
-	SWP_NOMOVE         SWP_ = 0x0002 // 保留当前位置（忽略X和Y参数）.
+	SWP_NOMOVE         SWP_ = 0x0002 // 保留当前位置（忽略 X 和 Y 参数）.
 	SWP_NOOWNERZORDER  SWP_ = 0x0200 // 不改变所有者窗口在 Z 顺序中的位置.
 	SWP_NOREDRAW       SWP_ = 0x0008 // 不重绘更改。如果设置了此标志，则不会发生任何类型的重新绘制。这适用于客户区、非客户区（包括标题栏和滚动条）以及由于窗口移动而未覆盖的父窗口的任何部分。设置此标志时，应用程序必须显式地使需要重绘的窗口和父窗口的任何部分无效或重绘.
-	SWP_NOREPOSITION   SWP_ = 0x0200 // 与SWP_NOOWNERZORDER标志相同.
-	SWP_NOSENDCHANGING SWP_ = 0x0400 // 阻止窗口接收WM_WINDOWPOSCHANGING消息.
-	SWP_NOSIZE         SWP_ = 0x0001 // 保留当前大小（忽略cx和cy参数）.
-	SWP_NOZORDER       SWP_ = 0x0004 // 保留当前 Z 顺序（忽略hWndInsertAfter参数）.
+	SWP_NOREPOSITION   SWP_ = 0x0200 // 与 SWP_NOOWNERZORDER 标志相同.
+	SWP_NOSENDCHANGING SWP_ = 0x0400 // 阻止窗口接收 WM_WINDOWPOSCHANGING 消息.
+	SWP_NOSIZE         SWP_ = 0x0001 // 保留当前大小（忽略 cx 和 cy 参数）.
+	SWP_NOZORDER       SWP_ = 0x0004 // 保留当前 Z 顺序（忽略 hWndInsertAfter 参数）.
 	SWP_SHOWWINDOW     SWP_ = 0x0040 // 显示窗口.
 )
 
@@ -1256,14 +1326,14 @@ func GetCursorPos(lpPoint *POINT) bool {
 	return r != 0
 }
 
-type Mod_ uint32
+// type Mod_ uint32
 
 const (
-	Mod_Alt      Mod_ = 0x0001 // 必须按住任一 ALT 键.
-	Mod_Control  Mod_ = 0x0002 // 必须按住任一 CTRL 键.
-	Mod_Norepeat Mod_ = 0x4000 // 更改热键行为，以便键盘自动重复不会产生多个热键通知。Windows Vista：  不支持此标志.
-	Mod_Shift    Mod_ = 0x0004 // 必须按住任一 SHIFT 键.
-	Mod_Win      Mod_ = 0x0008 // 任一 WINDOWS 键被按住。这些键标有 Windows 徽标。涉及 WINDOWS 键的键盘快捷键保留供操作系统使用.
+	Mod_Alt      uint32 = 0x0001 // 必须按住任一 ALT 键.
+	Mod_Control  uint32 = 0x0002 // 必须按住任一 CTRL 键.
+	Mod_Norepeat uint32 = 0x4000 // 更改热键行为，以便键盘自动重复不会产生多个热键通知。Windows Vista：  不支持此标志.
+	Mod_Shift    uint32 = 0x0004 // 必须按住任一 SHIFT 键.
+	Mod_Win      uint32 = 0x0008 // 任一 WINDOWS 键被按住。这些键标有 Windows 徽标。涉及 WINDOWS 键的键盘快捷键保留供操作系统使用.
 )
 
 // RegisterHotKey 注册系统范围的热键.
@@ -1274,7 +1344,7 @@ const (
 //
 // id: 热键的标识符。如果hWnd参数为0，则热键与当前线程相关联，而不是与特定窗口相关联。如果已存在具有相同hWnd和id参数的热键，请参阅备注了解所采取的操作.
 //
-// fsModifiers: 为了生成 WM_HOTKEY 消息，必须与vk参数指定的键组合按下的键 。fsModifiers参数可以是以下值的组合: xcc.Mod_ .
+// fsModifiers: 为了生成 WM_HOTKEY 消息，必须与vk参数指定的键组合按下的键 。fsModifiers参数可以是以下值的组合: wapi.Mod_ .
 //
 // vk: 热键的虚拟键代码: xcc.VK_ . 请参阅虚拟键码: https://docs.microsoft.com/zh-cn/windows/win32/inputdev/virtual-key-codes.
 func RegisterHotKey(hWnd uintptr, id int32, fsModifiers, vk uint32) bool {
@@ -1296,17 +1366,19 @@ func UnregisterHotKey(hWnd uintptr, id int32) bool {
 
 // GetMessage 从调用线程的消息队列中检索消息。应用程序通常使用返回值来确定是否结束主消息循环并退出程序。该函数分派传入的已发送消息，直到发布的消息可用于检索。 与 GetMessage 不同， PeekMessage 函数在返回之前不会等待消息发布.
 //
-// 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetMessageW.
-//
 // pMsg: 指向从线程的消息队列接收消息信息的 MSG 结构的指针.
 //
-// hWnd: 要检索其消息的窗口的句柄。窗口必须属于当前线程。如果hWnd为0， GetMessage 检索属于当前线程的任何窗口的消息，以及当前线程的消息队列中hwnd值为0的任何消息（参见 MSG 结构）。因此，如果hWnd为0，则同时处理窗口消息和线程消息。如果hWnd为-1， GetMessage 仅检索当前线程的消息队列中hwnd值为0的消息，即 PostMessage （当hWnd参数为0时）或 PostThreadMessage 发布的线程消息.
+// hWnd: 要检索其消息的窗口的句柄。窗口必须属于当前线程。
+//   - 如果 hWnd 为0， GetMessage 检索属于当前线程的任何窗口的消息，以及当前线程的消息队列中 hwnd 值为0的任何消息（参见 MSG 结构）。因此，如果 hWnd 为0，则同时处理窗口消息和线程消息。
+//   - 如果 hWnd 为-1， GetMessage 仅检索当前线程的消息队列中 hwnd 值为0的消息，即 PostMessageW （当 hWnd 参数为0时）或 PostThreadMessage 发布的线程消息.
 //
-// wMsgFilterMin: 要检索的最低消息值的整数值。使用WM_KEYFIRST (0x0100) 指定第一条键盘消息或WM_MOUSEFIRST (0x0200) 指定第一条鼠标消息.
+// wMsgFilterMin: 要检索的最低消息值的整数值。使用 WM_KEYFIRST (0x0100) 指定第一条键盘消息或 WM_MOUSEFIRST (0x0200) 指定第一条鼠标消息.
 //
-// wMsgFilterMax: 要检索的最高消息值的整数值。使用WM_KEYLAST指定最后一个键盘消息或WM_MOUSELAST指定最后一个鼠标消息.
+// wMsgFilterMax: 要检索的最高消息值的整数值。使用 WM_KEYLAST 指定最后一个键盘消息或 WM_MOUSELAST 指定最后一个鼠标消息.
 //
-// 返回值: 如果函数检索到 WM_QUIT 以外的消息，则返回值非零。如果函数检索到 WM_QUIT 消息，则返回值为零。如果有错误，返回值为-1.
+// 返回值: 如果函数检索到 WM_QUIT 以外的消息，则返回值非0。如果函数检索到 WM_QUIT 消息，则返回值为0。如果有错误，返回值为-1.
+//
+// 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetMessageW.
 func GetMessage(pMsg *MSG, hWnd uintptr, wMsgFilterMin uint32, wMsgFilterMax uint32) int32 {
 	r, _, _ := getMessageW.Call(uintptr(unsafe.Pointer(pMsg)), hWnd, uintptr(wMsgFilterMin), uintptr(wMsgFilterMax))
 	return int32(r)
@@ -1433,4 +1505,49 @@ const (
 	WM_MOVE            uint32 = 3      // 窗口移动消息.
 	WM_MOVING          uint32 = 534    // 当用户正在移动窗口时，该消息会被发送到窗口.
 	WM_GETMINMAXINFO   uint32 = 36     // 获取窗口最小最大尺寸信息.
+	WM_QUIT            uint32 = 0x0012 // 应用程序退出消息.
+	WM_KEYFIRST        uint32 = 0x0100 // 按键消息的第一个值.
+	WM_MOUSEFIRST      uint32 = 0x0200 // 鼠标消息的第一个值.
+	WM_KEYLAST         uint32 = 0x0109 // 按键消息的最后一个值.
+	WM_MOUSELAST       uint32 = 0x020E // 鼠标消息的最后一个值.
+)
+
+const (
+	ICON_BIG   = 1 // 大图标
+	ICON_SMALL = 0 // 小图标
+)
+
+// WM_SIZE 消息的 wParam 值
+const (
+	SIZE_RESTORED  = iota // 0: 窗口恢复（正常大小）
+	SIZE_MINIMIZED        // 1: 窗口最小化（任务栏）
+	SIZE_MAXIMIZED        // 2: 窗口最大化（全屏）
+	SIZE_MAXSHOW          // 3: 其他窗口最大化时触发显示（如任务栏自动隐藏）
+	SIZE_MAXHIDE          // 4: 其他窗口最大化时触发隐藏（如任务栏自动隐藏）
+)
+
+// WM_ACTIVATE 消息的窗口激活状态值（对应 wParam）
+const (
+	WA_INACTIVE    = 0 // 窗口被停用（非活动状态）
+	WA_ACTIVE      = 1 // 窗口被激活（例如通过键盘切换）
+	WA_CLICKACTIVE = 2 // 窗口通过鼠标点击激活
+)
+
+// WM_KEYUP, WM_KEYDOWN, WM_CHAR 消息的 lParam 高位标志（HIWORD）
+const (
+	KF_EXTENDED = 0x0100 // 扩展键（如右侧Alt/Ctrl/方向键）
+	KF_DLGMODE  = 0x0800 // 对话框激活状态下的按键
+	KF_MENUMODE = 0x1000 // 菜单激活状态下的按键
+	KF_ALTDOWN  = 0x2000 // Alt键被按住
+	KF_REPEAT   = 0x4000 // 重复按键计数标志
+	KF_UP       = 0x8000 // 按键释放事件（用于 WM_KEYUP）
+)
+
+// 低级键盘钩子标志 (KBDLLHOOKSTRUCT.flags)
+const (
+	LLKHF_EXTENDED          = 0x0001 // 扩展键标志 (如右Alt/Ctrl)
+	LLKHF_INJECTED          = 0x0010 // 事件由其他进程注入
+	LLKHF_ALTDOWN           = 0x0020 // Alt键按下状态
+	LLKHF_UP                = 0x0080 // 按键释放事件
+	LLKHF_LOWER_IL_INJECTED = 0x0002 // 低完整性进程注入事件
 )

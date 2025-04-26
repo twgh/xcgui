@@ -12,6 +12,41 @@ type windowBase struct {
 	objectbase.UI
 }
 
+// 模态窗口_启用自动关闭, 是否自动关闭窗口, 当窗口失去焦点时.
+//
+// bEnable: 开启开关.
+func (m *windowBase) EnableAutoClose(bEnable bool) *windowBase {
+	xc.XModalWnd_EnableAutoClose(m.Handle, bEnable)
+	return m
+}
+
+// 模态窗口_启用ESC关闭, 当用户按ESC键时自动关闭模态窗口.
+//
+// bEnable: 是否启用.
+func (m *windowBase) EnableEscClose(bEnable bool) *windowBase {
+	xc.XModalWnd_EnableEscClose(m.Handle, bEnable)
+	return m
+}
+
+// 模态窗口_启动, 启动显示模态窗口, 当窗口关闭时返回:
+//   - xcc.MessageBox_Flag_Ok: 点击确定按钮退出.
+//   - xcc.MessageBox_Flag_Cancel: 点击取消按钮退出.
+//   - xcc.MessageBox_Flag_Other: 其他方式退出.
+func (m *windowBase) DoModal() xcc.MessageBox_Flag_ {
+	return xc.XModalWnd_DoModal(m.Handle)
+}
+
+// 模态窗口_结束, 结束模态窗口.
+//
+// nResult: 用作 xc.XModalWnd_DoModal 的返回值:
+//   - xcc.MessageBox_Flag_Ok: 点击确定按钮退出.
+//   - xcc.MessageBox_Flag_Cancel: 点击取消按钮退出.
+//   - xcc.MessageBox_Flag_Other: 其他方式退出.
+func (m *windowBase) EndModal(nResult xcc.MessageBox_Flag_) *windowBase {
+	xc.XModalWnd_EndModal(m.Handle, nResult)
+	return m
+}
+
 // MessageBox 炫彩_消息框. 返回值如下:
 //   - xcc.MessageBox_Flag_Ok: 点击确定按钮退出.
 //   - xcc.MessageBox_Flag_Cancel: 点击取消按钮退出.
@@ -28,7 +63,7 @@ func (w *windowBase) MessageBox(pTitle, pText string, nFlags xcc.MessageBox_Flag
 	return xc.XC_MessageBox(pTitle, pText, nFlags, w.GetHWND(), XCStyle)
 }
 
-// Msg_Create 消息框_创建, 返回模态窗口对象. 此窗口是一个模态窗口, 弹出窗口请调用 DoModal().
+// Msg_Create 消息框_创建, 返回消息框窗口对象.
 //
 // pTitle: 标题.
 //
@@ -37,17 +72,20 @@ func (w *windowBase) MessageBox(pTitle, pText string, nFlags xcc.MessageBox_Flag
 // nFlags: 标识: xcc.MessageBox_Flag_.
 //
 // XCStyle: xcc.Window_Style_.
-func (w *windowBase) Msg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, XCStyle xcc.Window_Style_) *ModalWindow {
-	p := &ModalWindow{}
-	p.SetHandle(xc.XMsg_Create(pTitle, pText, nFlags, w.GetHWND(), XCStyle))
-	return p
+func (w *windowBase) Msg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, XCStyle xcc.Window_Style_) *Window {
+	wd := &Window{}
+	hWindow := xc.XMsg_Create(pTitle, pText, nFlags, w.GetHWND(), XCStyle)
+	if xc.XC_IsHWINDOW(hWindow) {
+		wd.SetHandle(hWindow)
+	}
+	return wd
 }
 
-// Msg_CreateEx 消息框_创建扩展, 返回模态窗口对象. 此窗口是一个模态窗口, 弹出窗口请调用 DoModal().
+// Msg_CreateEx 消息框_创建扩展, 返回消息框窗口对象.
 //
-// dwExStyle: 窗口扩展样式.
+// dwExStyle: 窗口扩展样式, xcc.WS_EX_ 常量组合.
 //
-// dwStyle: 窗口样式.
+// dwStyle: 窗口样式, xcc.WS_ 常量组合.
 //
 // lpClassName: 窗口类名.
 //
@@ -58,10 +96,13 @@ func (w *windowBase) Msg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag
 // nFlags: 标识: xcc.MessageBox_Flag_.
 //
 // XCStyle: xcc.Window_Style_.
-func (w *windowBase) Msg_CreateEx(dwExStyle, dwStyle uintptr, lpClassName, pTitle, pText string, nFlags xcc.MessageBox_Flag_, XCStyle xcc.Window_Style_) *ModalWindow {
-	p := &ModalWindow{}
-	p.SetHandle(xc.XMsg_CreateEx(dwExStyle, dwStyle, lpClassName, pTitle, pText, nFlags, w.GetHWND(), XCStyle))
-	return p
+func (w *windowBase) Msg_CreateEx(dwExStyle xcc.WS_EX_, dwStyle xcc.WS_, lpClassName, pTitle, pText string, nFlags xcc.MessageBox_Flag_, XCStyle xcc.Window_Style_) *Window {
+	wd := &Window{}
+	hWindow := xc.XMsg_CreateEx(dwExStyle, dwStyle, lpClassName, pTitle, pText, nFlags, w.GetHWND(), XCStyle)
+	if xc.XC_IsHWINDOW(hWindow) {
+		wd.SetHandle(hWindow)
+	}
+	return wd
 }
 
 // 炫彩_发送窗口消息.
@@ -120,31 +161,51 @@ func (w *windowBase) SetTop(bTop ...bool) *windowBase {
 	return w
 }
 
+// 窗口_移除事件. 只适用于 AddEvent_ 方式添加的事件.
+//
+// nEvent: 事件类型: xcc.WM_, xcc.XWM_.
+//
+// index: 使用 AddEvent_ 函数返回的回调函数索引.
+//   - 为空时, 直接移除事件.
+//   - 不为空时, 移除指定索引的回调函数.
+func (w *windowBase) RemoveEvent(nEvent xcc.WM_, index ...int) *windowBase {
+	if len(index) > 0 {
+		EventHandler.RemoveCallBack(w.Handle, nEvent, index[0])
+	} else { // 移除事件
+		cbPtr := EventHandler.EventInfoMap[w.Handle][nEvent].EvnetFuncPtr
+		if cbPtr > 0 {
+			xc.XWnd_RemoveEventCEx(w.Handle, nEvent, cbPtr)
+		}
+		EventHandler.RemoveEvent(w.Handle, nEvent)
+	}
+	return w
+}
+
 // 窗口_注册事件C.
 //
 // nEvent: 事件类型: xcc.WM_, xcc.XWM_.
 //
-// pFun: 事件函数.
-func (w *windowBase) RegEventC(nEvent xcc.WM_, pFun interface{}) bool {
-	return xc.XWnd_RegEventC(w.Handle, nEvent, pFun)
+// fun: 事件函数.
+func (w *windowBase) RegEventC(nEvent xcc.WM_, fun interface{}) bool {
+	return xc.XWnd_RegEventC(w.Handle, nEvent, fun)
 }
 
 // 窗口_注册事件C1.
 //
 // nEvent: 事件类型: xcc.WM_, xcc.XWM_.
 //
-// pFun: 事件函数.
-func (w *windowBase) RegEventC1(nEvent xcc.WM_, pFun interface{}) bool {
-	return xc.XWnd_RegEventC1(w.Handle, nEvent, pFun)
+// fun: 事件函数.
+func (w *windowBase) RegEventC1(nEvent xcc.WM_, fun interface{}) bool {
+	return xc.XWnd_RegEventC1(w.Handle, nEvent, fun)
 }
 
 // 窗口_移除事件C.
 //
 // nEvent: 事件类型: xcc.WM_, xcc.XWM_.
 //
-// pFun: 事件函数.
-func (w *windowBase) RemoveEventC(nEvent xcc.WM_, pFun interface{}) bool {
-	return xc.XWnd_RemoveEventC(w.Handle, nEvent, pFun)
+// fun: 事件函数.
+func (w *windowBase) RemoveEventC(nEvent xcc.WM_, fun interface{}) bool {
+	return xc.XWnd_RemoveEventC(w.Handle, nEvent, fun)
 }
 
 // 窗口_移除事件CEx, 和非Ex版相比只是最后一个参数不同.
@@ -179,9 +240,13 @@ func (w *windowBase) GetHWND() uintptr {
 
 // 窗口_重绘.
 //
-// bImmediate: 是否立即重绘, 默认为否.
-func (w *windowBase) Redraw(bImmediate bool) *windowBase {
-	xc.XWnd_Redraw(w.Handle, bImmediate)
+// bImmediate: 是否立即重绘, 通常为false即可.
+func (w *windowBase) Redraw(bImmediate ...bool) *windowBase {
+	b := false
+	if len(bImmediate) > 0 {
+		b = bImmediate[0]
+	}
+	xc.XWnd_Redraw(w.Handle, b)
 	return w
 }
 
@@ -1382,9 +1447,7 @@ func (w *windowBase) DpiConv(i int32) int32 {
 	return xc.DpiConv(w.GetDPI(), i)
 }
 
-/*
-下面都是事件
-*/
+// ------------------------- 事件 ------------------------- //
 
 type XWM_TRAYICON func(wParam, lParam uintptr, pbHandled *bool) int // 托盘图标事件.
 
@@ -1404,6 +1467,7 @@ type XWM_DOCK_POPUP func(hWindowDock, hPane int, pbHandled *bool) int           
 type XWM_DOCK_POPUP1 func(hWindow int, hWindowDock, hPane int, pbHandled *bool) int               // 框架窗口码头弹出窗格, 当用户点击码头上的按钮时, 显示对应的窗格, 当失去焦点时自动隐藏窗格.
 type XWM_BODYVIEW_RECT func(width, height int32, pbHandled *bool) int                             // 框架窗口主视图坐标改变, 如果主视图没有绑定元素, 那么当坐标改变时触发此事件
 type XWM_BODYVIEW_RECT1 func(hWindow int, width, height int32, pbHandled *bool) int               // 框架窗口主视图坐标改变, 如果主视图没有绑定元素, 那么当坐标改变时触发此事件
+
 // 浮动窗口拖动, 用户拖动浮动窗口移动, 显示停靠提示.
 //
 // hFloatWnd: 拖动的浮动窗口句柄.
@@ -1885,4 +1949,801 @@ func (w *windowBase) Event_MENU_DRAWITEM(pFun XWM_MENU_DRAWITEM) bool {
 // 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
 func (w *windowBase) Event_MENU_DRAWITEM1(pFun XWM_MENU_DRAWITEM1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_DRAWITEM, pFun)
+}
+
+// ------------------------- AddEvent ------------------------- //
+
+// AddEvent_NCDestroy 添加窗口非客户区销毁事件. 在窗口销毁之后触发.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_NCDestroy(fun WM_NCDESTROY1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.WM_NCDESTROY, onWM_NCDESTROY, fun, allowAddingMultiple...)
+}
+
+// onWM_NCDESTROY 窗口非客户区销毁事件.
+func onWM_NCDESTROY(hWindow int, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.WM_NCDESTROY)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(WM_NCDESTROY1)(hWindow, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+
+	EventHandler.RemoveAllCallBack(hWindow)
+	return ret
+}
+
+// AddEvent_DockPopup 添加框架窗口码头弹出窗格事件. 当用户点击码头上的按钮时, 显示对应的窗格, 当失去焦点时自动隐藏窗格.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_DockPopup(fun XWM_DOCK_POPUP1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.XWM_DOCK_POPUP, onXWM_DOCK_POPUP, fun, allowAddingMultiple...)
+}
+
+// onXWM_DOCK_POPUP 框架窗口码头弹出窗格事件.
+func onXWM_DOCK_POPUP(hWindow int, hWindowDock, hPane int, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.XWM_DOCK_POPUP)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XWM_DOCK_POPUP1)(hWindow, hWindowDock, hPane, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_WindProc 添加窗口消息过程事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_WindProc(fun XWM_WINDPROC1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.XWM_WINDPROC, onXWM_WINDPROC, fun, allowAddingMultiple...)
+}
+
+// onXWM_WINDPROC 窗口消息过程事件.
+func onXWM_WINDPROC(hWindow int, message uint32, wParam, lParam uintptr, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.XWM_WINDPROC)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XWM_WINDPROC1)(hWindow, message, wParam, lParam, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_XC_Timer 添加炫彩定时器事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_XC_Timer(fun XWM_XC_TIMER1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.XWM_XC_TIMER, onXWM_XC_TIMER, fun, allowAddingMultiple...)
+}
+
+// onXWM_XC_TIMER 炫彩定时器事件.
+func onXWM_XC_TIMER(hWindow int, nIDEvent uint, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.XWM_XC_TIMER)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XWM_XC_TIMER1)(hWindow, nIDEvent, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_SetFocus_Ele 添加窗口置焦点元素事件. 指定元素获得焦点.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_SetFocus_Ele(fun XWM_SETFOCUS_ELE1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.XWM_SETFOCUS_ELE, onXWM_SETFOCUS_ELE, fun, allowAddingMultiple...)
+}
+
+// onXWM_SETFOCUS_ELE 窗口置焦点元素事件. 指定元素获得焦点.
+func onXWM_SETFOCUS_ELE(hWindow int, hEle int, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.XWM_SETFOCUS_ELE)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XWM_SETFOCUS_ELE1)(hWindow, hEle, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_Float_Pane 添加浮动窗格事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_Float_Pane(fun XWM_FLOAT_PANE1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.XWM_FLOAT_PANE, onXWM_FLOAT_PANE, fun, allowAddingMultiple...)
+}
+
+// onXWM_FLOAT_PANE 浮动窗格事件.
+func onXWM_FLOAT_PANE(hWindow int, hFloatWnd int, hPane int, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.XWM_FLOAT_PANE)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XWM_FLOAT_PANE1)(hWindow, hFloatWnd, hPane, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_Paint_End 添加窗口绘制完成事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_Paint_End(fun XWM_PAINT_END1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.XWM_PAINT_END, onXWM_PAINT_END, fun, allowAddingMultiple...)
+}
+
+// onXWM_PAINT_END 窗口绘制完成事件.
+func onXWM_PAINT_END(hWindow int, hDraw int, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.XWM_PAINT_END)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XWM_PAINT_END1)(hWindow, hDraw, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_Paint_Display 添加窗口绘制完成并且已经显示到屏幕事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_Paint_Display(fun XWM_PAINT_DISPLAY1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.XWM_PAINT_DISPLAY, onXWM_PAINT_DISPLAY, fun, allowAddingMultiple...)
+}
+
+// onXWM_PAINT_DISPLAY 窗口绘制完成并且已经显示到屏幕事件.
+func onXWM_PAINT_DISPLAY(hWindow int, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.XWM_PAINT_DISPLAY)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XWM_PAINT_DISPLAY1)(hWindow, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_BodyView_Rect 添加框架窗口主视图坐标改变事件. 如果主视图没有绑定元素, 那么当坐标改变时触发此事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_BodyView_Rect(fun XWM_BODYVIEW_RECT1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.XWM_BODYVIEW_RECT, onXWM_BODYVIEW_RECT, fun, allowAddingMultiple...)
+}
+
+// onXWM_BODYVIEW_RECT 框架窗口主视图坐标改变事件.
+func onXWM_BODYVIEW_RECT(hWindow int, width, height int32, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.XWM_BODYVIEW_RECT)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XWM_BODYVIEW_RECT1)(hWindow, width, height, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_FloatWnd_Drag 添加浮动窗口拖动事件. 用户拖动浮动窗口移动, 显示停靠提示.
+//   - hArray: HWINDOW array[6], 窗格停靠提示窗口句柄数组, 有6个成员, 分别为:[0]中间十字, [1]左侧, [2]顶部, [3]右侧, [4]底部, [5]停靠位置预览.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_FloatWnd_Drag(fun XWM_FLOATWND_DRAG1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.XWM_FLOATWND_DRAG, onXWM_FLOATWND_DRAG, fun, allowAddingMultiple...)
+}
+
+// onXWM_FLOATWND_DRAG 浮动窗口拖动事件.
+func onXWM_FLOATWND_DRAG(hWindow int, hFloatWnd int, hArray *[6]int, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.XWM_FLOATWND_DRAG)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XWM_FLOATWND_DRAG1)(hWindow, hFloatWnd, hArray, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_Paint 添加窗口绘制事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_Paint(fun WM_PAINT1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.WM_PAINT, onWM_PAINT, fun, allowAddingMultiple...)
+}
+
+// onWM_PAINT 窗口绘制事件.
+func onWM_PAINT(hWindow int, hDraw int, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.WM_PAINT)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(WM_PAINT1)(hWindow, hDraw, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_Close 添加窗口关闭事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_Close(fun WM_CLOSE1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.WM_CLOSE, onWM_CLOSE, fun, allowAddingMultiple...)
+}
+
+// onWM_CLOSE 窗口关闭事件.
+func onWM_CLOSE(hWindow int, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.WM_CLOSE)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(WM_CLOSE1)(hWindow, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_Destroy 添加窗口销毁事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_Destroy(fun WM_DESTROY1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.WM_DESTROY, onWM_DESTROY, fun, allowAddingMultiple...)
+}
+
+// onWM_DESTROY 窗口销毁事件.
+func onWM_DESTROY(hWindow int, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.WM_DESTROY)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(WM_DESTROY1)(hWindow, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_MouseMove 添加窗口鼠标移动事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_MouseMove(fun WM_MOUSEMOVE1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.WM_MOUSEMOVE, onWM_MOUSEMOVE, fun, allowAddingMultiple...)
+}
+
+// onWM_MOUSEMOVE 窗口鼠标移动事件.
+func onWM_MOUSEMOVE(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.WM_MOUSEMOVE)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(WM_MOUSEMOVE1)(hWindow, nFlags, pPt, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_LButtonDown 添加窗口鼠标左键按下事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_LButtonDown(fun WM_LBUTTONDOWN1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.WM_LBUTTONDOWN, onWM_LBUTTONDOWN, fun, allowAddingMultiple...)
+}
+
+// onWM_LBUTTONDOWN 窗口鼠标左键按下事件.
+func onWM_LBUTTONDOWN(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.WM_LBUTTONDOWN)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(WM_LBUTTONDOWN1)(hWindow, nFlags, pPt, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_LButtonUp 添加窗口鼠标左键弹起事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_LButtonUp(fun WM_LBUTTONUP1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.WM_LBUTTONUP, onWM_LBUTTONUP, fun, allowAddingMultiple...)
+}
+
+// onWM_LBUTTONUP 窗口鼠标左键弹起事件.
+func onWM_LBUTTONUP(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.WM_LBUTTONUP)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(WM_LBUTTONUP1)(hWindow, nFlags, pPt, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_RButtonDown 添加窗口鼠标右键按下事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_RButtonDown(fun WM_RBUTTONDOWN1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.WM_RBUTTONDOWN, onWM_RBUTTONDOWN, fun, allowAddingMultiple...)
+}
+
+// onWM_RBUTTONDOWN 窗口鼠标右键按下事件.
+func onWM_RBUTTONDOWN(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.WM_RBUTTONDOWN)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(WM_RBUTTONDOWN1)(hWindow, nFlags, pPt, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_RButtonUp 添加窗口鼠标右键弹起事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_RButtonUp(fun WM_RBUTTONUP1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.WM_RBUTTONUP, onWM_RBUTTONUP, fun, allowAddingMultiple...)
+}
+
+// onWM_RBUTTONUP 窗口鼠标右键弹起事件.
+func onWM_RBUTTONUP(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.WM_RBUTTONUP)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(WM_RBUTTONUP1)(hWindow, nFlags, pPt, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_LButtonDBClick 添加窗口鼠标左键双击事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_LButtonDBClick(fun WM_LBUTTONDBLCLK1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.WM_LBUTTONDBLCLK, onWM_LBUTTONDBLCLK, fun, allowAddingMultiple...)
+}
+
+// onWM_LBUTTONDBLCLK 窗口鼠标左键双击事件.
+func onWM_LBUTTONDBLCLK(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.WM_LBUTTONDBLCLK)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(WM_LBUTTONDBLCLK1)(hWindow, nFlags, pPt, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_RButtonDBClick 添加窗口鼠标右键双击事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_RButtonDBClick(fun WM_RBUTTONDBLCLK1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.WM_RBUTTONDBLCLK, onWM_RBUTTONDBLCLK, fun, allowAddingMultiple...)
+}
+
+// onWM_RBUTTONDBLCLK 窗口鼠标右键双击事件.
+func onWM_RBUTTONDBLCLK(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.WM_RBUTTONDBLCLK)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(WM_RBUTTONDBLCLK1)(hWindow, nFlags, pPt, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_MouseWheel 添加窗口鼠标滚轮滚动事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_MouseWheel(fun WM_MOUSEWHEEL1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.WM_MOUSEWHEEL, onWM_MOUSEWHEEL, fun, allowAddingMultiple...)
+}
+
+// onWM_MOUSEWHEEL 窗口鼠标滚轮滚动事件.
+func onWM_MOUSEWHEEL(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.WM_MOUSEWHEEL)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(WM_MOUSEWHEEL1)(hWindow, nFlags, pPt, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_ExitSizeMove 添加窗口退出移动或调整大小模式循环事件. pbHandled 参数暂无效.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_ExitSizeMove(fun WM_EXITSIZEMOVE1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.WM_EXITSIZEMOVE, onWM_EXITSIZEMOVE, fun, allowAddingMultiple...)
+}
+
+// onWM_EXITSIZEMOVE 窗口退出移动或调整大小模式循环事件.
+func onWM_EXITSIZEMOVE(hWindow int, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.WM_EXITSIZEMOVE)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(WM_EXITSIZEMOVE1)(hWindow, pbHandled)
+			/*if *pbHandled {TODO: BUG, pbHandled 是 nil
+				break
+			}*/
+		}
+	}
+	return ret
+}
+
+// AddEvent_MouseHover 添加窗口鼠标进入事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_MouseHover(fun WM_MOUSEHOVER1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.WM_MOUSEHOVER, onWM_MOUSEHOVER, fun, allowAddingMultiple...)
+}
+
+// onWM_MOUSEHOVER 窗口鼠标进入事件.
+func onWM_MOUSEHOVER(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.WM_MOUSEHOVER)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(WM_MOUSEHOVER1)(hWindow, nFlags, pPt, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_MouseLeave 添加窗口鼠标离开事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_MouseLeave(fun WM_MOUSELEAVE1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.WM_MOUSELEAVE, onWM_MOUSELEAVE, fun, allowAddingMultiple...)
+}
+
+// onWM_MOUSELEAVE 窗口鼠标离开事件.
+func onWM_MOUSELEAVE(hWindow int, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.WM_MOUSELEAVE)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(WM_MOUSELEAVE1)(hWindow, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_Size 添加窗口大小改变事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_Size(fun WM_SIZE1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.WM_SIZE, onWM_SIZE, fun, allowAddingMultiple...)
+}
+
+// onWM_SIZE 窗口大小改变事件.
+func onWM_SIZE(hWindow int, nFlags uint, pPt *xc.SIZE, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.WM_SIZE)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(WM_SIZE1)(hWindow, nFlags, pPt, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_Timer 添加窗口定时器事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_Timer(fun WM_TIMER1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.WM_TIMER, onWM_TIMER, fun, allowAddingMultiple...)
+}
+
+// onWM_TIMER 窗口定时器事件.
+func onWM_TIMER(hWindow int, nIDEvent uint, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.WM_TIMER)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(WM_TIMER1)(hWindow, nIDEvent, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_SetFocus 添加窗口获得焦点事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_SetFocus(fun WM_SETFOCUS1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.WM_SETFOCUS, onWM_SETFOCUS, fun, allowAddingMultiple...)
+}
+
+// onWM_SETFOCUS 窗口获得焦点事件.
+func onWM_SETFOCUS(hWindow int, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.WM_SETFOCUS)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(WM_SETFOCUS1)(hWindow, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_KillFocus 添加窗口失去焦点事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_KillFocus(fun WM_KILLFOCUS1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.WM_KILLFOCUS, onWM_KILLFOCUS, fun, allowAddingMultiple...)
+}
+
+// onWM_KILLFOCUS 窗口失去焦点事件.
+func onWM_KILLFOCUS(hWindow int, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.WM_KILLFOCUS)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(WM_KILLFOCUS1)(hWindow, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_KeyDown 添加窗口键盘按键事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_KeyDown(fun WM_KEYDOWN1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.WM_KEYDOWN, onWM_KEYDOWN, fun, allowAddingMultiple...)
+}
+
+// onWM_KEYDOWN 窗口键盘按键事件.
+func onWM_KEYDOWN(hWindow int, wParam, lParam uintptr, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.WM_KEYDOWN)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(WM_KEYDOWN1)(hWindow, wParam, lParam, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_CaptureChanged 添加窗口鼠标捕获改变事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_CaptureChanged(fun WM_CAPTURECHANGED1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.WM_CAPTURECHANGED, onWM_CAPTURECHANGED, fun, allowAddingMultiple...)
+}
+
+// onWM_CAPTURECHANGED 窗口鼠标捕获改变事件.
+func onWM_CAPTURECHANGED(hWindow int, hWnd uintptr, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.WM_CAPTURECHANGED)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(WM_CAPTURECHANGED1)(hWindow, hWnd, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_SetCursor 添加窗口设置鼠标光标事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_SetCursor(fun WM_SETCURSOR1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.WM_SETCURSOR, onWM_SETCURSOR, fun, allowAddingMultiple...)
+}
+
+// onWM_SETCURSOR 窗口设置鼠标光标事件.
+func onWM_SETCURSOR(hWindow int, wParam, lParam uintptr, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.WM_SETCURSOR)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(WM_SETCURSOR1)(hWindow, wParam, lParam, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_Char 添加窗口字符事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_Char(fun WM_CHAR1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.WM_CHAR, onWM_CHAR, fun, allowAddingMultiple...)
+}
+
+// onWM_CHAR 窗口字符事件.
+func onWM_CHAR(hWindow int, wParam, lParam uintptr, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.WM_CHAR)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(WM_CHAR1)(hWindow, wParam, lParam, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_DropFiles 添加拖动文件到窗口事件.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (b *windowBase) AddEvent_DropFiles(fun WM_DROPFILES1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(b.Handle, xcc.WM_DROPFILES, onWM_DROPFILES, fun, allowAddingMultiple...)
+}
+
+// onWM_DROPFILES 拖动文件到窗口事件.
+func onWM_DROPFILES(hWindow int, hDropInfo uintptr, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hWindow, xcc.WM_DROPFILES)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(WM_DROPFILES1)(hWindow, hDropInfo, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
 }

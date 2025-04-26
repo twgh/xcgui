@@ -946,9 +946,7 @@ func (l *List) CreateAdapters(col_extend_count int32) bool {
 	return xc.XList_CreateAdapters(l.Handle, col_extend_count)
 }
 
-/*
-// //////////////////////////////////// 以下是事件 //////////////////////////////////////
-*/
+// ------------------------- 事件 ------------------------- //
 
 // 列表元素-项模板创建事件,模板复用机制需先启用;替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复.
 //
@@ -1140,4 +1138,321 @@ func (l *List) Event_LIST_HEADER_TEMP_ADJUST_COORDINATE(pFun XE_LIST_HEADER_TEMP
 // 列表元素,列表头项模板调整坐标. 已停用.
 func (l *List) Event_LIST_HEADER_TEMP_ADJUST_COORDINATE1(pFun XE_LIST_HEADER_TEMP_ADJUST_COORDINATE1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LIST_HEADER_TEMP_ADJUST_COORDINATE, pFun)
+}
+
+// ------------------------- AddEvent ------------------------- //
+
+// AddEvent_List_Temp_Create 添加列表项模板创建事件. 模板复用机制需先启用; 替换模板无效判断 nFlag, 因为内部会检查模板是否改变, 不用担心重复.
+//   - nFlag: 0: 状态改变(复用); 1: 新模板实例; 2: 旧模板复用
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (l *List) AddEvent_List_Temp_Create(pFun XE_LIST_TEMP_CREATE1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(l.Handle, xcc.XE_LIST_TEMP_CREATE, onXE_LIST_TEMP_CREATE, pFun, allowAddingMultiple...)
+}
+
+// onXE_LIST_TEMP_CREATE 列表项模板创建事件.
+func onXE_LIST_TEMP_CREATE(hEle int, pItem *xc.List_Item_, nFlag int32, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_LIST_TEMP_CREATE)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_LIST_TEMP_CREATE1)(hEle, pItem, nFlag, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_List_Temp_Create_End 添加列表项模板创建完成事件. 模板复用机制需先启用; 不管是新建还是复用, 都需要更新数据, 当为复用时不要注册事件以免重复注册.
+//   - nFlag: 0: 状态改变(复用); 1: 新模板实例; 2: 旧模板复用
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (l *List) AddEvent_List_Temp_Create_End(pFun XE_LIST_TEMP_CREATE_END1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(l.Handle, xcc.XE_LIST_TEMP_CREATE_END, onXE_LIST_TEMP_CREATE_END, pFun, allowAddingMultiple...)
+}
+
+// onXE_LIST_TEMP_CREATE_END 列表项模板创建完成事件.
+func onXE_LIST_TEMP_CREATE_END(hEle int, pItem *xc.List_Item_, nFlag int32, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_LIST_TEMP_CREATE_END)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_LIST_TEMP_CREATE_END1)(hEle, pItem, nFlag, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_List_Temp_Destroy 添加列表项模板销毁事件.
+//   - nFlag: 0: 正常销毁; 1: 移动到缓存(不会被销毁, 临时缓存备用, 当需要时被复用)
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (l *List) AddEvent_List_Temp_Destroy(pFun XE_LIST_TEMP_DESTROY1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(l.Handle, xcc.XE_LIST_TEMP_DESTROY, onXE_LIST_TEMP_DESTROY, pFun, allowAddingMultiple...)
+}
+
+// onXE_LIST_TEMP_DESTROY 列表项模板销毁事件.
+func onXE_LIST_TEMP_DESTROY(hEle int, pItem *xc.List_Item_, nFlag int32, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_LIST_TEMP_DESTROY)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_LIST_TEMP_DESTROY1)(hEle, pItem, nFlag, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_List_Temp_Adjust_Coordinate 添加列表项模板调整坐标事件. 已停用.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (l *List) AddEvent_List_Temp_Adjust_Coordinate(pFun XE_LIST_TEMP_ADJUST_COORDINATE1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(l.Handle, xcc.XE_LIST_TEMP_ADJUST_COORDINATE, onXE_LIST_TEMP_ADJUST_COORDINATE, pFun, allowAddingMultiple...)
+}
+
+// onXE_LIST_TEMP_ADJUST_COORDINATE 列表项模板调整坐标事件.
+func onXE_LIST_TEMP_ADJUST_COORDINATE(hEle int, pItem *xc.List_Item_, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_LIST_TEMP_ADJUST_COORDINATE)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_LIST_TEMP_ADJUST_COORDINATE1)(hEle, pItem, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_List_DrawItem 添加列表项绘制事件.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (l *List) AddEvent_List_DrawItem(pFun XE_LIST_DRAWITEM1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(l.Handle, xcc.XE_LIST_DRAWITEM, onXE_LIST_DRAWITEM, pFun, allowAddingMultiple...)
+}
+
+// onXE_LIST_DRAWITEM 列表项绘制事件.
+func onXE_LIST_DRAWITEM(hEle int, hDraw int, pItem *xc.List_Item_, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_LIST_DRAWITEM)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_LIST_DRAWITEM1)(hEle, hDraw, pItem, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_List_Select 添加列表项选择事件.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (l *List) AddEvent_List_Select(pFun XE_LIST_SELECT1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(l.Handle, xcc.XE_LIST_SELECT, onXE_LIST_SELECT, pFun, allowAddingMultiple...)
+}
+
+// onXE_LIST_SELECT 列表项选择事件.
+func onXE_LIST_SELECT(hEle int, iItem int32, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_LIST_SELECT)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_LIST_SELECT1)(hEle, iItem, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_List_Header_DrawItem 添加列表头项绘制事件.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (l *List) AddEvent_List_Header_DrawItem(pFun XE_LIST_HEADER_DRAWITEM1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(l.Handle, xcc.XE_LIST_HEADER_DRAWITEM, onXE_LIST_HEADER_DRAWITEM, pFun, allowAddingMultiple...)
+}
+
+// onXE_LIST_HEADER_DRAWITEM 列表头项绘制事件.
+func onXE_LIST_HEADER_DRAWITEM(hEle int, hDraw int, pItem *xc.List_Header_Item_, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_LIST_HEADER_DRAWITEM)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_LIST_HEADER_DRAWITEM1)(hEle, hDraw, pItem, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_List_Header_Click 添加列表头项点击事件.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (l *List) AddEvent_List_Header_Click(pFun XE_LIST_HEADER_CLICK1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(l.Handle, xcc.XE_LIST_HEADER_CLICK, onXE_LIST_HEADER_CLICK, pFun, allowAddingMultiple...)
+}
+
+// onXE_LIST_HEADER_CLICK 列表头项点击事件.
+func onXE_LIST_HEADER_CLICK(hEle int, iItem int32, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_LIST_HEADER_CLICK)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_LIST_HEADER_CLICK1)(hEle, iItem, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_List_Header_Width_Change 添加列表头项宽度改变事件.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (l *List) AddEvent_List_Header_Width_Change(pFun XE_LIST_HEADER_WIDTH_CHANGE1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(l.Handle, xcc.XE_LIST_HEADER_WIDTH_CHANGE, onXE_LIST_HEADER_WIDTH_CHANGE, pFun, allowAddingMultiple...)
+}
+
+// onXE_LIST_HEADER_WIDTH_CHANGE 列表头项宽度改变事件.
+func onXE_LIST_HEADER_WIDTH_CHANGE(hEle int, iItem int32, nWidth int32, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_LIST_HEADER_WIDTH_CHANGE)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_LIST_HEADER_WIDTH_CHANGE1)(hEle, iItem, nWidth, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_List_Header_Temp_Create 添加列表头项模板创建事件.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (l *List) AddEvent_List_Header_Temp_Create(pFun XE_LIST_HEADER_TEMP_CREATE1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(l.Handle, xcc.XE_LIST_HEADER_TEMP_CREATE, onXE_LIST_HEADER_TEMP_CREATE, pFun, allowAddingMultiple...)
+}
+
+// onXE_LIST_HEADER_TEMP_CREATE 列表头项模板创建事件.
+func onXE_LIST_HEADER_TEMP_CREATE(hEle int, pItem *xc.List_Header_Item_, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_LIST_HEADER_TEMP_CREATE)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_LIST_HEADER_TEMP_CREATE1)(hEle, pItem, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_List_Header_Temp_Create_End 添加列表头项模板创建完成事件.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (l *List) AddEvent_List_Header_Temp_Create_End(pFun XE_LIST_HEADER_TEMP_CREATE_END1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(l.Handle, xcc.XE_LIST_HEADER_TEMP_CREATE_END, onXE_LIST_HEADER_TEMP_CREATE_END, pFun, allowAddingMultiple...)
+}
+
+// onXE_LIST_HEADER_TEMP_CREATE_END 列表头项模板创建完成事件.
+func onXE_LIST_HEADER_TEMP_CREATE_END(hEle int, pItem *xc.List_Header_Item_, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_LIST_HEADER_TEMP_CREATE_END)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_LIST_HEADER_TEMP_CREATE_END1)(hEle, pItem, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_List_Header_Temp_Destroy 添加列表头项模板销毁事件.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (l *List) AddEvent_List_Header_Temp_Destroy(pFun XE_LIST_HEADER_TEMP_DESTROY1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(l.Handle, xcc.XE_LIST_HEADER_TEMP_DESTROY, onXE_LIST_HEADER_TEMP_DESTROY, pFun, allowAddingMultiple...)
+}
+
+// onXE_LIST_HEADER_TEMP_DESTROY 列表头项模板销毁事件.
+func onXE_LIST_HEADER_TEMP_DESTROY(hEle int, pItem *xc.List_Header_Item_, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_LIST_HEADER_TEMP_DESTROY)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_LIST_HEADER_TEMP_DESTROY1)(hEle, pItem, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_List_Header_Temp_Adjust_Coordinate 添加列表头项模板调整坐标事件. 已停用.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (l *List) AddEvent_List_Header_Temp_Adjust_Coordinate(pFun XE_LIST_HEADER_TEMP_ADJUST_COORDINATE1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(l.Handle, xcc.XE_LIST_HEADER_TEMP_ADJUST_COORDINATE, onXE_LIST_HEADER_TEMP_ADJUST_COORDINATE, pFun, allowAddingMultiple...)
+}
+
+// onXE_LIST_HEADER_TEMP_ADJUST_COORDINATE 列表头项模板调整坐标事件.
+func onXE_LIST_HEADER_TEMP_ADJUST_COORDINATE(hEle int, pItem *xc.List_Header_Item_, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_LIST_HEADER_TEMP_ADJUST_COORDINATE)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_LIST_HEADER_TEMP_ADJUST_COORDINATE1)(hEle, pItem, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
 }

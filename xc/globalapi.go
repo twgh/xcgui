@@ -65,7 +65,7 @@ func XC_MessageBox(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent
 	return xcc.MessageBox_Flag_(r)
 }
 
-// XMsg_Create 消息框_创建, 返回消息框窗口句柄. 此窗口是一个模态窗口, 弹出窗口请调用 xc.XModalWnd_DoModal().
+// XMsg_Create 消息框_创建, 返回消息框窗口句柄.
 //
 // pTitle: 标题.
 //
@@ -81,11 +81,11 @@ func XMsg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent u
 	return int(r)
 }
 
-// XMsg_CreateEx 消息框_创建扩展, 返回消息框窗口句柄. 此窗口是一个模态窗口, 弹出窗口请调用 xc.XModalWnd_DoModal().
+// XMsg_CreateEx 消息框_创建扩展, 返回消息框窗口句柄.
 //
-// dwExStyle: 窗口扩展样式.
+// dwExStyle: 窗口扩展样式, xcc.WS_EX_ 常量组合.
 //
-// dwStyle: 窗口样式.
+// dwStyle: 窗口样式, xcc.WS_ 常量组合.
 //
 // lpClassName: 窗口类名.
 //
@@ -98,8 +98,8 @@ func XMsg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent u
 // hWndParent: 父窗口句柄(真实的窗口句柄).
 //
 // XCStyle: xcc.Window_Style_.
-func XMsg_CreateEx(dwExStyle, dwStyle uintptr, lpClassName, pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xMsg_CreateEx.Call(dwExStyle, dwStyle, common.StrPtr(lpClassName), common.StrPtr(pTitle), common.StrPtr(pText), uintptr(nFlags), hWndParent, uintptr(XCStyle))
+func XMsg_CreateEx(dwExStyle xcc.WS_EX_, dwStyle xcc.WS_, lpClassName, pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
+	r, _, _ := xMsg_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), common.StrPtr(pTitle), common.StrPtr(pText), uintptr(nFlags), hWndParent, uintptr(XCStyle))
 	return int(r)
 }
 

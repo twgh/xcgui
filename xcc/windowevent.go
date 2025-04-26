@@ -35,7 +35,7 @@ const (
 	WM_PAINT           WM_ = 15     // 窗口绘制消息
 	WM_CLOSE           WM_ = 16     // 窗口关闭消息.
 	WM_DESTROY         WM_ = 2      // 窗口销毁消息.
-	WM_NCDESTROY       WM_ = 130    // 窗口非客户区销毁消息.
+	WM_NCDESTROY       WM_ = 130    // 窗口非客户区销毁消息. 在 WM_DESTROY 之后.
 	WM_MOUSEMOVE       WM_ = 512    // 窗口鼠标移动消息.
 	WM_LBUTTONDOWN     WM_ = 513    // 窗口鼠标左键按下消息
 	WM_LBUTTONUP       WM_ = 514    // 窗口鼠标左键弹起消息.
@@ -68,5 +68,14 @@ const (
 	WM_CHAR            WM_ = 258    // 窗口字符消息.
 	WM_DROPFILES       WM_ = 563    // 拖动文件到窗口.
 	WM_HOTKEY          WM_ = 0x0312 // 当用户按下 wapi.RegisterHotKey 函数注册的热键时发布。消息放置在与注册热键的线程关联的消息队列的顶部.
-	WM_SETICON         WM_ = 0x0080 // 设置窗口图标的消息
+	WM_SETICON         WM_ = 0x0080 // 设置窗口图标的消息.
+	WM_ACTIVATE        WM_ = 6      // 窗口激活消息, 发送到正在激活的窗口和正在停用的窗口.
+	WM_MOVE            WM_ = 3      // 窗口移动消息.
+	WM_MOVING          WM_ = 534    // 当用户正在移动窗口时，该消息会被发送到窗口.
+	WM_GETMINMAXINFO   WM_ = 36     // 获取窗口最小最大尺寸信息.
+	WM_QUIT            WM_ = 0x0012 // 应用程序退出消息.
+	WM_KEYFIRST        WM_ = 0x0100 // 按键消息的第一个值.
+	WM_MOUSEFIRST      WM_ = 0x0200 // 鼠标消息的第一个值.
+	WM_KEYLAST         WM_ = 0x0109 // 按键消息的最后一个值.
+	WM_MOUSELAST       WM_ = 0x020E // 鼠标消息的最后一个值.
 )

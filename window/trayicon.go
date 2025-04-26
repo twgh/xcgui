@@ -61,7 +61,7 @@ func (t *TrayIcon) Show(isShow bool) *TrayIcon {
 	return t
 }
 
-// Del 托盘图标_删除. 从系统托盘删除图标.
+// Del 托盘图标_删除. 从系统托盘删除图标. 等同于 Show(false).
 func (t *TrayIcon) Del() *TrayIcon {
 	t.Result = xc.XTrayIcon_Del()
 	return t

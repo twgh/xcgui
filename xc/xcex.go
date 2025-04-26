@@ -9,7 +9,7 @@ import (
 var (
 	uiThreadCallBackFunc func(data int) int                      // 真实执行的
 	uiThreadCallBackPtr  = syscall.NewCallback(uiThreadCallBack) // 壳
-	rwm                  sync.RWMutex
+	utLock               sync.Mutex
 )
 
 // uiThreadCallBack UI线程回调函数
@@ -23,10 +23,10 @@ func uiThreadCallBack(data int) int {
 //
 // data: 传进回调函数的用户自定义数据.
 func XC_CallUiThreadEx(f func(data int) int, data int) int {
-	rwm.Lock()
+	utLock.Lock()
+	defer utLock.Unlock()
 	uiThreadCallBackFunc = f
 	r, _, _ := xC_CallUiThread.Call(uiThreadCallBackPtr, uintptr(data))
-	rwm.Unlock()
 	return int(r)
 }
 
@@ -34,13 +34,13 @@ func XC_CallUiThreadEx(f func(data int) int, data int) int {
 //
 // f: 回调函数, 没有参数也没有返回值, 可以直接使用匿名函数.
 func XC_CallUT(f func()) {
-	rwm.Lock()
+	utLock.Lock()
+	defer utLock.Unlock()
 	uiThreadCallBackFunc = func(data int) int {
 		f()
 		return 0
 	}
 	xC_CallUiThread.Call(uiThreadCallBackPtr, uintptr(0))
-	rwm.Unlock()
 }
 
 // UiThreader 用于在UI线程操作UI.
@@ -54,10 +54,10 @@ type UiThreader interface {
 //
 // data: 传进回调函数的用户自定义数据.
 func XC_CallUiThreader(u UiThreader, data int) int {
-	rwm.Lock()
+	utLock.Lock()
+	defer utLock.Unlock()
 	uiThreadCallBackFunc = u.UiThreadCallBack
 	r, _, _ := xC_CallUiThread.Call(uiThreadCallBackPtr, uintptr(data))
-	rwm.Unlock()
 	return int(r)
 }
 

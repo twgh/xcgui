@@ -113,7 +113,7 @@ func XDateTime_GetTime(hEle int, pnHour *int32, pnMinute *int32, pnSecond *int32
 	xDateTime_GetTime.Call(uintptr(hEle), uintptr(unsafe.Pointer(pnHour)), uintptr(unsafe.Pointer(pnMinute)), uintptr(unsafe.Pointer(pnSecond)))
 }
 
-// 日期_社区当前时间, 设置当前时分秒.
+// 日期_设置当前时间, 设置当前时分秒.
 //
 // hEle: 元素句柄.
 //

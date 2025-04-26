@@ -15,7 +15,7 @@ import (
 //
 // hWndParent: 父窗口句柄.
 //
-// XCStyle: 炫彩窗口样式: Window_Style_.
+// XCStyle: 炫彩窗口样式: xcc.Window_Style_.
 func XModalWnd_Create(nWidth, nHeight int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
 	r, _, _ := xModalWnd_Create.Call(uintptr(nWidth), uintptr(nHeight), common.StrPtr(pTitle), hWndParent, uintptr(XCStyle))
 	return int(r)
@@ -41,7 +41,7 @@ func XModalWnd_Create(nWidth, nHeight int32, pTitle string, hWndParent uintptr, 
 //
 // hWndParent: 父窗口.
 //
-// XCStyle: GUI库窗口样式: Window_Style_.
+// XCStyle: GUI库窗口样式: xcc.Window_Style_.
 func XModalWnd_CreateEx(dwExStyle, dwStyle uint32, lpClassName string, x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
 	r, _, _ := xModalWnd_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pTitle), hWndParent, uintptr(XCStyle))
 	return int(r)
@@ -67,7 +67,10 @@ func XModalWnd_EnableEscClose(hWindow int, bEnable bool) int {
 	return int(r)
 }
 
-// 模态窗口_启动, 启动显示模态窗口, 当窗口关闭时返回: MessageBox_Flag_Ok: 点击确定按钮退出, MessageBox_Flag_Cancel: 点击取消按钮退出, MessageBox_Flag_Other: 其他方式退出.
+// 模态窗口_启动, 启动显示模态窗口, 当窗口关闭时返回:
+//   - xcc.MessageBox_Flag_Ok: 点击确定按钮退出.
+//   - xcc.MessageBox_Flag_Cancel: 点击取消按钮退出.
+//   - xcc.MessageBox_Flag_Other: 其他方式退出.
 //
 // hWindow: 模态窗口句柄.
 func XModalWnd_DoModal(hWindow int) xcc.MessageBox_Flag_ {
@@ -79,7 +82,10 @@ func XModalWnd_DoModal(hWindow int) xcc.MessageBox_Flag_ {
 //
 // hWindow: 窗口句柄.
 //
-// nResult: 用作XModalWnd_DoModal()的返回值. MessageBox_Flag_Ok: 点击确定按钮退出, MessageBox_Flag_Cancel: 点击取消按钮退出, MessageBox_Flag_Other: 其他方式退出.
+// nResult: 用作 XModalWnd_DoModal 的返回值:
+//   - xcc.MessageBox_Flag_Ok: 点击确定按钮退出.
+//   - xcc.MessageBox_Flag_Cancel: 点击取消按钮退出.
+//   - xcc.MessageBox_Flag_Other: 其他方式退出.
 func XModalWnd_EndModal(hWindow int, nResult xcc.MessageBox_Flag_) int {
 	r, _, _ := xModalWnd_EndModal.Call(uintptr(hWindow), uintptr(nResult))
 	return int(r)
@@ -89,7 +95,7 @@ func XModalWnd_EndModal(hWindow int, nResult xcc.MessageBox_Flag_) int {
 //
 // hWnd: 要附加的外部窗口句柄.
 //
-// XCStyle: 炫彩窗口样式: Window_Style_.
+// XCStyle: 炫彩窗口样式: xcc.Window_Style_.
 func XModalWnd_Attach(hWnd uintptr, XCStyle xcc.Window_Style_) int {
 	r, _, _ := xModalWnd_Attach.Call(hWnd, uintptr(XCStyle))
 	return int(r)

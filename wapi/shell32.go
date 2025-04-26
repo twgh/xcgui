@@ -11,15 +11,15 @@ import (
 
 var (
 	// Library.
-	shell32 = syscall.NewLazyDLL("shell32.dll")
+	Shell32 = syscall.NewLazyDLL("shell32.dll")
 
 	// Functions.
-	dragQueryFileW       = shell32.NewProc("DragQueryFileW")
-	dragFinish           = shell32.NewProc("DragFinish")
-	dragQueryPoint       = shell32.NewProc("DragQueryPoint")
-	shellExecuteW        = shell32.NewProc("ShellExecuteW")
-	sHBrowseForFolderW   = shell32.NewProc("SHBrowseForFolderW")
-	sHGetPathFromIDListW = shell32.NewProc("SHGetPathFromIDListW")
+	dragQueryFileW       = Shell32.NewProc("DragQueryFileW")
+	dragFinish           = Shell32.NewProc("DragFinish")
+	dragQueryPoint       = Shell32.NewProc("DragQueryPoint")
+	shellExecuteW        = Shell32.NewProc("ShellExecuteW")
+	sHBrowseForFolderW   = Shell32.NewProc("SHBrowseForFolderW")
+	sHGetPathFromIDListW = Shell32.NewProc("SHGetPathFromIDListW")
 )
 
 // DragQueryFileW 检索由成功的拖放操作产生的文件路径.
@@ -102,7 +102,7 @@ type BrowseInfoW struct {
 	// 指向显示在对话框中树视图控件上方的以空字符结尾的字符串的指针.
 	//	例: lpszTitle, _ := syscall.UTF16PtrFromString("请选择目录")
 	LpszTitle *uint16
-	
+
 	UlFlags BIF_    // 指定对话框选项的标志。可以为0，也可以是 wapi.BIF_ 的组合.
 	Lpfn    uintptr // 指向应用程序定义函数的指针，当事件发生时对话框调用该函数.
 	LParam  uintptr // 对话框传递给回调函数的应用程序定义的值（如果在lpfn中指定） .
