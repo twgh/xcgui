@@ -1646,7 +1646,7 @@ func (e *Element) Event_MENU_DRAWITEM1(pFun XE_MENU_DRAWITEM1) bool {
 
 // ------------------------- AddEvent ------------------------- //
 
-// AddEvent_Destroy_End 添加元素销毁完成事件. 在销毁子对象之后触发. 注意此事件的 pbHandled 暂无效.
+// AddEvent_Destroy_End 添加元素销毁完成事件. 在销毁子对象之后触发.
 //
 // pFun: 回调函数.
 //
@@ -1662,9 +1662,9 @@ func onXE_DESTROY_END(hEle int, pbHandled *bool) int {
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cbs[i] != nil {
 			ret = cbs[i].(XE_DESTROY_END1)(hEle, pbHandled)
-			/*if *pbHandled {TODO: 这是BUG, XE_DESTROY_END1 的 pbHandled 是 nil
+			if *pbHandled {
 				break
-			}*/
+			}
 		}
 	}
 

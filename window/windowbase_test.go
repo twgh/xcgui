@@ -105,3 +105,12 @@ func Test_windowBase_AddEvent_NCDestroy(t *testing.T) {
 		})
 	})
 }
+
+func Test_onWM_EXITSIZEMOVE(t *testing.T) {
+	tf.TFunc(func(a *app.App, w *window.Window) {
+		w.AddEvent_ExitSizeMove(func(hWindow int, pbHandled *bool) int {
+			t.Log("窗口大小改变事件")
+			return 0
+		})
+	})
+}

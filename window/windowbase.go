@@ -2460,7 +2460,7 @@ func onWM_MOUSEWHEEL(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) i
 	return ret
 }
 
-// AddEvent_ExitSizeMove 添加窗口退出移动或调整大小模式循环事件. pbHandled 参数暂无效.
+// AddEvent_ExitSizeMove 添加窗口退出移动或调整大小模式循环事件.
 //
 // fun: 回调函数.
 //
@@ -2476,9 +2476,9 @@ func onWM_EXITSIZEMOVE(hWindow int, pbHandled *bool) int {
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cbs[i] != nil {
 			ret = cbs[i].(WM_EXITSIZEMOVE1)(hWindow, pbHandled)
-			/*if *pbHandled {TODO: BUG, pbHandled 是 nil
+			if *pbHandled {
 				break
-			}*/
+			}
 		}
 	}
 	return ret

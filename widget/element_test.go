@@ -7,6 +7,7 @@ import (
 	"github.com/twgh/xcgui/window"
 	"github.com/twgh/xcgui/xc"
 	"testing"
+	"time"
 )
 
 func TestElement_SetFocus(t *testing.T) {
@@ -54,6 +55,23 @@ func TestElement_AddEvent_MOUSESTAY(t *testing.T) {
 		btn.AddEvent_MouseLeave(func(hEle int, hEleStay int, pbHandled *bool) int {
 			t.Log("鼠标离开", hEleStay)
 			return 0
+		})
+	})
+}
+
+func Test_onXE_DESTROY_END(t *testing.T) {
+	tf.TFunc(func(a *app.App, w *window.Window) {
+		btn1 := widget.NewButton(20, 40, 300, 100, "2秒后自动销毁", w.Handle)
+		btn1.AddEvent_Destroy(func(hEle int, pbHandled *bool) int {
+			t.Log("btn1 销毁事件")
+			return 0
+		})
+
+		time.AfterFunc(time.Second*2, func() {
+			xc.XC_CallUT(func() {
+				btn1.Destroy()
+				w.Redraw(false)
+			})
 		})
 	})
 }
