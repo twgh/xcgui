@@ -1231,14 +1231,17 @@ type XE_SIZE func(nFlags xcc.AdjustLayout_, nAdjustNo uint32, pbHandled *bool) i
 // nAdjustNo: 调整布局流水号.
 type XE_SIZE1 func(hEle int, nFlags xcc.AdjustLayout_, nAdjustNo uint32, pbHandled *bool) int
 
-type XE_SHOW func(bShow bool, pbHandled *bool) int                             // 元素显示隐藏事件.
-type XE_SHOW1 func(hEle int, bShow bool, pbHandled *bool) int                  // 元素显示隐藏事件.
-type XE_SETFONT func(pbHandled *bool) int                                      // 元素设置字体事件.
-type XE_SETFONT1 func(hEle int, pbHandled *bool) int                           // 元素设置字体事件.
-type XE_KEYDOWN func(wParam, lParam uintptr, pbHandled *bool) int              // 元素按键事件.
-type XE_KEYDOWN1 func(hEle int, wParam, lParam uintptr, pbHandled *bool) int   // 元素按键事件.
-type XE_KEYUP func(wParam, lParam uintptr, pbHandled *bool) int                // 元素按键事件.
-type XE_KEYUP1 func(hEle int, wParam, lParam uintptr, pbHandled *bool) int     // 元素按键事件.
+type XE_SHOW func(bShow bool, pbHandled *bool) int                              // 元素显示隐藏事件.
+type XE_SHOW1 func(hEle int, bShow bool, pbHandled *bool) int                   // 元素显示隐藏事件.
+type XE_SETFONT func(pbHandled *bool) int                                       // 元素设置字体事件.
+type XE_SETFONT1 func(hEle int, pbHandled *bool) int                            // 元素设置字体事件.
+type XE_KEYDOWN func(wParam, lParam uintptr, pbHandled *bool) int               // 元素按键按下事件.
+type XE_KEYDOWN1 func(hEle int, wParam, lParam uintptr, pbHandled *bool) int    // 元素按键按下事件.
+type XE_KEYUP func(wParam, lParam uintptr, pbHandled *bool) int                 // 元素按键弹起事件.
+type XE_KEYUP1 func(hEle int, wParam, lParam uintptr, pbHandled *bool) int      // 元素按键弹起事件.
+type XE_SYSKEYDOWN1 func(hEle int, wParam, lParam uintptr, pbHandled *bool) int // 元素系统按键按下事件.
+type XE_SYSKEYUP1 func(hEle int, wParam, lParam uintptr, pbHandled *bool) int   // 元素系统按键弹起事件
+
 type XE_CHAR func(wParam, lParam uintptr, pbHandled *bool) int                 // 通过TranslateMessage函数翻译的字符事件.
 type XE_CHAR1 func(hEle int, wParam, lParam uintptr, pbHandled *bool) int      // 通过TranslateMessage函数翻译的字符事件.
 type XE_SETCAPTURE func(pbHandled *bool) int                                   // 元素设置鼠标捕获.
@@ -1490,27 +1493,37 @@ func (e *Element) Event_SETFONT1(pFun XE_SETFONT1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_SETFONT, pFun)
 }
 
-// 元素按键事件.
+// 元素按键按下事件.
 func (e *Element) Event_KEYDOWN(pFun XE_KEYDOWN) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_KEYDOWN, pFun)
 }
 
-// 元素按键事件.
+// 元素按键按下事件.
 func (e *Element) Event_KEYDOWN1(pFun XE_KEYDOWN1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_KEYDOWN, pFun)
 }
 
-// 元素按键事件.
+// 元素按键弹起事件.
 func (e *Element) Event_KEYUP(pFun XE_KEYUP) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_KEYUP, pFun)
 }
 
-// 元素按键事件.
+// 元素按键弹起事件.
 func (e *Element) Event_KEYUP1(pFun XE_KEYUP1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_KEYUP, pFun)
 }
 
-// 通过TranslateMessage函数翻译的字符事件.
+// 元素系统按键按下事件.
+func (e *Element) Event_SYSKEYDOWN1(pFun XE_SYSKEYDOWN1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_SYSKEYDOWN, pFun)
+}
+
+// 元素系统按键弹起事件.
+func (e *Element) Event_SYSKEYUP1(pFun XE_SYSKEYUP1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_SYSKEYUP, pFun)
+}
+
+// 通过 TranslateMessage 函数翻译的字符事件.
 func (e *Element) Event_CHAR(pFun XE_CHAR) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_CHAR, pFun)
 }
@@ -2288,6 +2301,54 @@ func onXE_KEYUP(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cbs[i] != nil {
 			ret = cbs[i].(XE_KEYUP1)(hEle, wParam, lParam, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_SysKeyDown 添加元素系统按键按下事件.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (e *Element) AddEvent_SysKeyDown(pFun XE_SYSKEYDOWN1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(e.Handle, xcc.XE_SYSKEYDOWN, onXE_SYSKEYDOWN, pFun, allowAddingMultiple...)
+}
+
+// onXE_SYSKEYDOWN 元素系统按键按下事件.
+func onXE_SYSKEYDOWN(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_SYSKEYDOWN)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_SYSKEYDOWN1)(hEle, wParam, lParam, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_SysKeyUp 添加元素系统按键弹起事件.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (e *Element) AddEvent_SysKeyUp(pFun XE_SYSKEYUP1, allowAddingMultiple ...bool) int {
+	return EventHandler.AddCallBack(e.Handle, xcc.XE_SYSKEYUP, onXE_SYSKEYUP, pFun, allowAddingMultiple...)
+}
+
+// onXE_SYSKEYUP 元素系统按键弹起事件.
+func onXE_SYSKEYUP(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
+	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_SYSKEYUP)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_SYSKEYUP1)(hEle, wParam, lParam, pbHandled)
 			if *pbHandled {
 				break
 			}

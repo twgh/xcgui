@@ -2,6 +2,7 @@ package xc
 
 import (
 	"errors"
+	"github.com/twgh/xcgui/common"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -56,12 +57,12 @@ func GetXcgui() *syscall.LazyDLL {
 	return xcgui
 }
 
-// WriteDll 把 xcgui.dll 写出到 windows 临时目录中 'xcgui+版本号' 文件夹里.
+// WriteDll 把 xcgui.dll 写出到 windows 临时目录中 'xcgui+版本号+_编译时的目标架构' 文件夹里.
 //
 // 使用完本函数后无需再调用 xc.SetXcguiPath(), 内部已自动操作.
 func WriteDll(dll []byte) error {
 	tmpDir := os.TempDir()
-	tmpPath := filepath.Join(tmpDir, "xcgui"+GetVer())
+	tmpPath := filepath.Join(tmpDir, "xcgui"+GetVer()+"_"+runtime.GOARCH)
 
 	err := os.Mkdir(tmpPath, 0777)
 	if err != nil && !os.IsExist(err) {
@@ -76,6 +77,18 @@ func WriteDll(dll []byte) error {
 
 	xcguiPath = dllPath
 	return nil
+}
+
+// WriteDllOrExit 把 xcgui.dll 写出到 windows 临时目录中 'xcgui+版本号+_编译时的目标架构' 文件夹里.
+//   - 使用完本函数后无需再调用 xc.SetXcguiPath(), 内部已自动操作.
+//   - 如果出错, 会弹窗提示错误, 然后退出程序.
+func WriteDllOrExit(dll []byte) {
+	err := WriteDll(dll)
+	if err != nil {
+		user32 := syscall.NewLazyDLL("user32.dll")
+		user32.NewProc("MessageBoxW").Call(0, common.StrPtr("写出 xcgui.dll 失败: "+err.Error()), common.StrPtr("提示"), uintptr(0x00000010))
+		os.Exit(3)
+	}
 }
 
 // DelDll 删除 xcguiPath 指向的文件, 其默认值为xcgui.dll.
@@ -1906,7 +1919,7 @@ func _loadXCGUI() {
 	// Library.
 	xcgui = syscall.NewLazyDLL(xcguiPath)
 	if xcgui.Handle() == 0 {
-		return
+		panic("载入失败: " + xcguiPath)
 	}
 
 	// Global Functions.

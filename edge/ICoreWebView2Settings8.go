@@ -1,0 +1,58 @@
+package edge
+
+import (
+	"errors"
+	"golang.org/x/sys/windows"
+	"syscall"
+	"unsafe"
+)
+
+// ICoreWebView2Settings8 是 ICoreWebView2Settings7 接口的延续, 支持管理是否需要信誉检查。
+//
+// https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2settings8
+type ICoreWebView2Settings8 struct {
+	Vtbl *ICoreWebView2Settings8Vtbl
+}
+
+type ICoreWebView2Settings8Vtbl struct {
+	ICoreWebView2Settings7Vtbl
+	GetIsReputationCheckingRequired ComProc
+	PutIsReputationCheckingRequired ComProc
+}
+
+// GetIsReputationCheckingRequired 获取是否需要进行信誉检查。
+func (i *ICoreWebView2Settings8) GetIsReputationCheckingRequired() (bool, error) {
+	var required bool
+	r, _, err := i.Vtbl.GetIsReputationCheckingRequired.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(&required)),
+	)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return false, err
+	}
+	if r != 0 {
+		return false, syscall.Errno(r)
+	}
+	return required, nil
+}
+
+// MustGetIsReputationCheckingRequired 获取是否需要进行信誉检查。忽略错误。
+func (i *ICoreWebView2Settings8) MustGetIsReputationCheckingRequired() bool {
+	required, _ := i.GetIsReputationCheckingRequired()
+	return required
+}
+
+// PutIsReputationCheckingRequired 设置是否需要进行信誉检查。默认值为 true。
+func (i *ICoreWebView2Settings8) PutIsReputationCheckingRequired(required bool) error {
+	r, _, err := i.Vtbl.PutIsReputationCheckingRequired.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(BoolToInt(required)),
+	)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}

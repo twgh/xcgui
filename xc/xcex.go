@@ -1,9 +1,11 @@
 package xc
 
 import (
+	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/xcc"
 	"sync"
 	"syscall"
+	"unsafe"
 )
 
 var (
@@ -17,7 +19,8 @@ func uiThreadCallBack(data int) int {
 	return uiThreadCallBackFunc(data)
 }
 
-// XC_CallUiThreadEx 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI. 与 XC_CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数.
+// XC_CallUiThreadEx 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
+//   - 与 XC_CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数.
 //
 // f: 回调函数.
 //
@@ -30,7 +33,9 @@ func XC_CallUiThreadEx(f func(data int) int, data int) int {
 	return int(r)
 }
 
-// XC_CallUT 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI. 与 XC_CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数. 回调函数没有参数也没有返回值.
+// XC_CallUT 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
+//   - 与 XC_CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数.
+//   - 回调函数没有参数也没有返回值.
 //
 // f: 回调函数, 没有参数也没有返回值, 可以直接使用匿名函数.
 func XC_CallUT(f func()) {
@@ -41,6 +46,60 @@ func XC_CallUT(f func()) {
 		return 0
 	}
 	xC_CallUiThread.Call(uiThreadCallBackPtr, uintptr(0))
+}
+
+// CallUTAny 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
+//   - 与 XC_CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数.
+//   - 可以传入任意参数.
+//
+// f: 回调函数.
+//
+// data: 传进回调函数的用户自定义数据.
+func CallUTAny(f func(data ...interface{}) int, data ...interface{}) int {
+	utLock.Lock()
+	defer utLock.Unlock()
+
+	uiThreadCallBackFunc = func(args int) int {
+		s := common.UintPtrToSlice(uintptr(args))
+		return f(s...)
+	}
+
+	var dataPtr uintptr
+	if len(data) > 0 {
+		dataPtr = uintptr(unsafe.Pointer(&data[0]))
+	}
+	r, _, _ := xC_CallUiThread.Call(uiThreadCallBackPtr, dataPtr)
+	return int(r)
+}
+
+// Auto 用于在UI线程操作UI.
+//   - 会自动判断当前是否在UI线程, 如果在UI线程则直接执行, 如果不在UI线程则会调用 XC_CallUT.
+func Auto(f func()) {
+	if IsUiThread() {
+		f()
+	} else {
+		XC_CallUT(f)
+	}
+}
+
+// AutoInt 用于在UI线程操作UI.
+//   - 会自动判断当前是否在UI线程, 如果在UI线程则直接执行, 如果不在UI线程则会调用 XC_CallUiThreadEx.
+func AutoInt(f func(data int) int, data int) int {
+	if IsUiThread() {
+		return f(data)
+	} else {
+		return XC_CallUiThreadEx(f, data)
+	}
+}
+
+// AutoAny 用于在UI线程操作UI.
+//   - 会自动判断当前是否在UI线程, 如果在UI线程则直接执行, 如果不在UI线程则会调用 CallUTAny.
+func AutoAny(f func(data ...interface{}) int, data ...interface{}) int {
+	if IsUiThread() {
+		return f(data...)
+	} else {
+		return CallUTAny(f, data...)
+	}
 }
 
 // UiThreader 用于在UI线程操作UI.

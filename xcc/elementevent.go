@@ -62,9 +62,11 @@ const (
 	XE_SIZE                               XE_ = 36  // 元素大小改变事件.
 	XE_SHOW                               XE_ = 37  // 元素显示隐藏事件.
 	XE_SETFONT                            XE_ = 38  // 元素设置字体事件.
-	XE_KEYDOWN                            XE_ = 39  // 元素按键事件.
-	XE_KEYUP                              XE_ = 40  // 元素按键事件.
+	XE_KEYDOWN                            XE_ = 39  // 元素按键按下事件.
+	XE_KEYUP                              XE_ = 40  // 元素按键弹起事件.
 	XE_CHAR                               XE_ = 41  // 通过TranslateMessage函数翻译的字符事件.
+	XE_SYSKEYDOWN                         XE_ = 43  // 元素系统按键按下事件.
+	XE_SYSKEYUP                           XE_ = 44  // 元素系统按键弹起事件.
 	XE_SETCAPTURE                         XE_ = 51  // 元素设置鼠标捕获.
 	XE_KILLCAPTURE                        XE_ = 52  // 元素失去鼠标捕获.
 	XE_SETCURSOR                          XE_ = 53  // 设置鼠标光标

@@ -1,20 +1,41 @@
 package xc
 
 import (
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/xcc"
 	"syscall"
 	"unsafe"
-
-	"github.com/twgh/xcgui/common"
-
-	"github.com/twgh/xcgui/xcc"
 )
+
+var (
+	kernel32               = syscall.NewLazyDLL("kernel32.dll")
+	procGetCurrentThreadId = kernel32.NewProc("GetCurrentThreadId")
+)
+
+// 获取当前线程ID.
+func getCurrentThreadId() uint32 {
+	r, _, _ := procGetCurrentThreadId.Call()
+	return uint32(r)
+}
+
+// ThreadId 是 UI 线程 ID. 会在炫彩初始化时赋值.
+var ThreadId uint32
+
+// IsUiThread 判断当前线程是否是 UI 线程.
+func IsUiThread() bool {
+	return ThreadId == getCurrentThreadId()
+}
 
 // XInitXCGUI 炫彩_初始化. 在调用本函数之前请先调用 xc.LoadXCGUI().
 //
 // bD2D: 是否启用D2D.
 func XInitXCGUI(bD2D bool) bool {
 	r, _, _ := xInitXCGUI.Call(common.BoolPtr(bD2D))
-	return r != 0
+	if r != 0 {
+		ThreadId = getCurrentThreadId()
+		return true
+	}
+	return false
 }
 
 // XRunXCGUI 炫彩_运行, 运行消息循环, 当炫彩窗口数量为0时退出.
@@ -131,7 +152,9 @@ func XC_PostMessage(hWindow int, msg uint32, wParam, lParam uintptr) bool {
 	return r != 0
 }
 
-// XC_CallUiThread 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI. 回调函数尽量不要使用匿名函数, 使用匿名函数意味着你每次都在创建1个新的回调, 超过2000个时, 程序必将panic. 如果使用 CallUiThreadEx 和 CallUiThreader 则没有此限制.
+// XC_CallUiThread 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
+//   - 回调函数尽量不要使用匿名函数, 使用匿名函数意味着你每次都在创建1个新的回调, 超过2000个时, 程序必将panic.
+//   - 如果使用 XC_CallUiThreadEx, XC_CallUiThreader, XC_CallUT, CallUTAny 则没有此限制.
 //
 // pCall: 回调函数.
 //

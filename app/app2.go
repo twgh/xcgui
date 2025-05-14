@@ -79,7 +79,9 @@ func PostMessage(hWindow int, msg uint32, wParam, lParam uintptr) bool {
 	return xc.XC_PostMessage(hWindow, msg, wParam, lParam)
 }
 
-// CallUiThread 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI. 回调函数尽量不要使用匿名函数, 使用匿名函数意味着你每次都在创建1个新的回调, 超过2000个时, 程序必将panic. 如果使用 CallUiThreadEx 和 CallUiThreader 则没有此限制.
+// CallUiThread 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
+//   - 回调函数尽量不要使用匿名函数, 使用匿名函数意味着你每次都在创建1个新的回调, 超过2000个时, 程序必将panic.
+//   - 如果使用 CallUiThreadEx, CallUiThreader, CallUT, CallUTAny 则没有上述限制.
 //
 // pCall: 回调函数.
 //
@@ -88,7 +90,8 @@ func CallUiThread(pCall func(data int) int, data int) int {
 	return xc.XC_CallUiThread(pCall, data)
 }
 
-// CallUiThreadEx 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI. 与 CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数.
+// CallUiThreadEx 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
+//   - 与 CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数.
 //
 // f: 回调函数.
 //
@@ -97,14 +100,28 @@ func CallUiThreadEx(pCall func(data int) int, data int) int {
 	return xc.XC_CallUiThreadEx(pCall, data)
 }
 
-// CallUT 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI. 与 CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数. 回调函数没有参数也没有返回值.
+// CallUT 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
+//   - 与 CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数.
+//   - 回调函数没有参数也没有返回值.
 //
 // f: 回调函数, 没有参数也没有返回值, 可以直接使用匿名函数.
 func CallUT(f func()) {
 	xc.XC_CallUT(f)
 }
 
-// CallUiThreader 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI. 与 CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数.
+// CallUTAny 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
+//   - 与 XC_CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数.
+//   - 可以传入任意参数.
+//
+// f: 回调函数.
+//
+// data: 传进回调函数的用户自定义数据.
+func CallUTAny(f func(data ...interface{}) int, data ...interface{}) int {
+	return xc.CallUTAny(f, data...)
+}
+
+// CallUiThreader 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
+//   - 与 CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数.
 //
 // u: xc.UiThreader.
 //

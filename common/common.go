@@ -86,6 +86,24 @@ func UintPtrToString(ptr uintptr) string {
 	return string(utf16.Decode(s))
 }
 
+// UintPtrToSlice 将uintptr转换到[]interface{}.
+//
+// ptr: uintptr.
+func UintPtrToSlice(ptr uintptr) []interface{} {
+	if ptr == 0 {
+		return nil
+	}
+	s := *(*[]interface{})(unsafe.Pointer(&ptr)) // uintptr转换到[]interface{}
+	for i := 0; i < len(s); i++ {
+		if s[i] == nil {
+			(*sliceHeader)(unsafe.Pointer(&s)).Cap = i // 修改切片的cap
+			s = s[0:i]
+			break
+		}
+	}
+	return s
+}
+
 // Uint16SliceDataPtr 将uint16[0]指针转换到uintptr.
 //
 // p: uint16[0]的指针.

@@ -1,6 +1,7 @@
 package widget_test
 
 import (
+	"fmt"
 	"github.com/twgh/xcgui/app"
 	"github.com/twgh/xcgui/tf"
 	"github.com/twgh/xcgui/widget"
@@ -14,7 +15,7 @@ func TestElement_SetFocus(t *testing.T) {
 	tf.TFunc(func(a *app.App, w *window.Window) {
 		layout := widget.NewLayoutEle(50, 50, 150, 50, w.Handle)
 		edit := widget.NewEdit(0, 0, 100, 30, layout.Handle)
-		widget.NewButton(50, 100, 100, 30, "setfocus", w.Handle).Event_BnClick(func(pbHandled *bool) int {
+		widget.NewButton(50, 100, 100, 30, "setfocus", w.Handle).AddEvent_BnClick(func(hEle int, pbHandled *bool) int {
 			edit.SetFocus()
 			return 0
 		})
@@ -24,7 +25,7 @@ func TestElement_SetFocus(t *testing.T) {
 func TestElement_SetLeft(t *testing.T) {
 	tf.TFunc(func(a *app.App, w *window.Window) {
 		btn := widget.NewButton(10, 40, 100, 30, "setleft+5", w.Handle)
-		btn.Event_BnClick(func(pbHandled *bool) int {
+		btn.AddEvent_BnClick(func(hEle int, pbHandled *bool) int {
 			btn.SetLeft(btn.GetLeft()+5, true)
 			return 0
 		})
@@ -33,9 +34,19 @@ func TestElement_SetLeft(t *testing.T) {
 
 func TestElement_SetTop(t *testing.T) {
 	tf.TFunc(func(a *app.App, w *window.Window) {
-		btn2 := widget.NewButton(10, 80, 100, 30, "settop+5", w.Handle)
-		btn2.Event_BnClick(func(pbHandled *bool) int {
-			btn2.SetTop(btn2.GetTop()+5, true)
+		btn := widget.NewButton(10, 80, 100, 30, "settop+5", w.Handle)
+		btn.AddEvent_BnClick(func(hEle int, pbHandled *bool) int {
+			btn.SetTop(btn.GetTop()+5, true)
+			return 0
+		})
+
+		edit := widget.NewEdit(10, 40, 100, 30, w.Handle)
+		edit.AddEvent_KeyDown(func(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
+			fmt.Println("键按下", wParam, lParam)
+			return 0
+		})
+		edit.AddEvent_SysKeyDown(func(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
+			fmt.Println("系统键按下", wParam, lParam)
 			return 0
 		})
 	})

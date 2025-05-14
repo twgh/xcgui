@@ -1,0 +1,33 @@
+package edge
+
+// ICoreWebView2_9 是 ICoreWebView2_8 接口的延续，默认下载对话框定位和锚定。
+//
+// https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2_9
+type ICoreWebView2_9 struct {
+	Vtbl *ICoreWebView2_9Vtbl
+}
+
+type ICoreWebView2_9Vtbl struct {
+	ICoreWebView2_8Vtbl
+	AddIsDefaultDownloadDialogOpenChanged    ComProc
+	RemoveIsDefaultDownloadDialogOpenChanged ComProc
+	GetIsDefaultDownloadDialogOpen           ComProc
+	OpenDefaultDownloadDialog                ComProc
+	CloseDefaultDownloadDialog               ComProc
+	GetDefaultDownloadDialogCornerAlignment  ComProc
+	PutDefaultDownloadDialogCornerAlignment  ComProc
+	GetDefaultDownloadDialogMargin           ComProc
+	PutDefaultDownloadDialogMargin           ComProc
+}
+
+/*TODO:
+AddIsDefaultDownloadDialogOpenChanged
+RemoveIsDefaultDownloadDialogOpenChanged
+GetIsDefaultDownloadDialogOpen
+OpenDefaultDownloadDialog
+CloseDefaultDownloadDialog
+GetDefaultDownloadDialogCornerAlignment
+PutDefaultDownloadDialogCornerAlignment
+GetDefaultDownloadDialogMargin
+PutDefaultDownloadDialogMargin
+*/
