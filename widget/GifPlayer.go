@@ -12,8 +12,9 @@ import (
 
 // GifPlayer Gif 播放器.
 type GifPlayer struct {
-	HImages []int           // Gif 帧图片句柄
-	Delays  []time.Duration // Gif 帧延迟
+	HImages         []int           // Gif 帧图片句柄
+	Delays          []time.Duration // Gif 帧延迟
+	ImmediateRedraw bool            // 控制在播放 Gif 帧时是否立即重绘, 默认为 false.
 }
 
 // NewGifPlayer 创建 Gif 播放器.
@@ -25,10 +26,13 @@ func NewGifPlayer(gifReader io.Reader) (*GifPlayer, error) {
 	if err != nil {
 		return nil, errors.New("读取 GIF 数据时出错: " + err.Error())
 	}
+	frameCount := len(frames)
 
 	gp := &GifPlayer{}
+	gp.HImages = make([]int, 0, frameCount)
+	gp.Delays = make([]time.Duration, 0, frameCount)
 	// 将 GIF 帧加载为图片句柄
-	for i := 0; i < len(frames); i++ {
+	for i := 0; i < frameCount; i++ {
 		hImage := xc.XImage_LoadMemory(frames[i].ImageData)
 		if hImage > 0 {
 			gp.HImages = append(gp.HImages, hImage)
@@ -45,19 +49,19 @@ func NewGifPlayer(gifReader io.Reader) (*GifPlayer, error) {
 //
 // fullEle: 是否填满元素. true: 自适应填满元素. false: 保持原大小.
 //
-// loopCount: 控制 Gif 在显示期间重新启动的次数。默认为0.
+// loopCount: 控制 Gif 在显示期间重新启动的次数。
 //   - < 1: 永远循环。
 //   - > 0: 循环 loopCount 次。
-func (p *GifPlayer) Play(hEle int, fullEle bool, loopCount ...int) *GifPlayerHandler {
+//
+// onFrame: 帧事件, 此事件中的代码是在 UI 线程执行的. 可不填.
+func (p *GifPlayer) Play(hEle int, fullEle bool, loopCount int, onFrame ...func(h *GifPlayerHandler, frame int)) *GifPlayerHandler {
 	gph := NewGifPlayerHandler()
 	gph.hEle = hEle
 
 	// 添加元素绘制事件.
 	ele := NewElementByHandle(hEle)
 	ele.AddEvent_Paint(func(hEle int, hDraw int, pbHandled *bool) int {
-		// 在自绘事件函数中, 用户手动调用绘制元素, 以便控制绘制顺序
-		xc.XEle_DrawEle(hEle, hDraw)
-
+		*pbHandled = true
 		if fullEle {
 			var rc xc.RECT
 			xc.XEle_GetRect(hEle, &rc)
@@ -70,57 +74,58 @@ func (p *GifPlayer) Play(hEle int, fullEle bool, loopCount ...int) *GifPlayerHan
 		return 0
 	})
 
-	// Gif 循环次数
-	LoopCount := 0
-	if len(loopCount) > 0 {
-		LoopCount = loopCount[0]
+	// 帧事件
+	if len(onFrame) > 0 {
+		gph.OnFrame = onFrame[0]
 	}
 	// 最大帧索引
-	gph.maxFrame = len(p.HImages)
+	gph.maxFrame = len(p.HImages) - 1
 
 	gph.stopped = false
 	gph.paused = false
 	go func() {
 		for {
-			// 状态检查
-			gph.mu.Lock()
-			// 优先检查停止状态
-			if gph.stopped {
-				gph.mu.Unlock()
+			if gph.isReturn() {
 				return
 			}
-			// 严格循环检查暂停条件
-			for gph.paused && !gph.stopped {
-				gph.cond.Wait()
-			}
-			// 再次确认是否停止
-			if gph.stopped {
-				gph.mu.Unlock()
-				return
-			}
-			gph.mu.Unlock()
+
+			// 更新帧
+			xc.XC_CallUT(func() {
+				if gph.IsStopped() {
+					return
+				}
+				if gph.OnFrame != nil {
+					gph.OnFrame(gph, gph.GetCurrentFrame())
+				}
+				if xc.XC_IsHELE(hEle) {
+					xc.XEle_Redraw(hEle, p.ImmediateRedraw)
+				}
+			})
 
 			// 帧延迟
 			time.Sleep(p.Delays[gph.GetCurrentFrame()])
 
-			// 设置当前帧索引
-			gph.SetCurrentFrame((gph.GetCurrentFrame() + 1) % gph.GetMaxFrame())
+			if gph.isReturn() {
+				return
+			}
 
-			// 更新到下一帧
-			xc.XC_CallUT(func() {
-				if xc.XC_IsHELE(hEle) {
-					xc.XEle_Redraw(hEle, false)
-				}
-			})
+			// 更新当前帧索引
+			newFrame := gph.GetCurrentFrame() + 1
 
-			// 处理循环次数
-			if LoopCount > 0 && gph.GetCurrentFrame() == gph.GetMaxFrame()-1 { // >0: 循环指定次数
-				if LoopCount--; LoopCount == 0 {
-					gph.mu.Lock()
-					gph.stopped = true // 标记为已停止
-					gph.mu.Unlock()
-					break
+			if newFrame > gph.GetMaxFrame() {
+				// 处理循环次数, loopCount > 0: 循环指定次数
+				if loopCount > 0 {
+					if loopCount--; loopCount == 0 {
+						gph.mu.Lock()
+						gph.stopped = true // 标记为已停止
+						gph.mu.Unlock()
+						break
+					}
 				}
+				gph.SetCurrentFrame(0)
+			} else {
+				// 设置当前帧索引
+				gph.SetCurrentFrame(newFrame)
 			}
 		}
 	}()
@@ -136,6 +141,9 @@ func (p *GifPlayer) ReleaseImages() {
 
 // GifPlayerHandler 用于操作 Gif 播放器.
 type GifPlayerHandler struct {
+	// 帧事件, 此事件是在 UI 线程执行的
+	OnFrame func(h *GifPlayerHandler, frame int)
+
 	rwx sync.RWMutex
 
 	mu   sync.Mutex
@@ -155,10 +163,31 @@ func NewGifPlayerHandler() *GifPlayerHandler {
 	return gph
 }
 
+func (g *GifPlayerHandler) isReturn() bool {
+	// 状态检查
+	g.mu.Lock()
+	// 优先检查停止状态
+	if g.stopped {
+		g.mu.Unlock()
+		return true
+	}
+	// 严格循环检查暂停条件
+	for g.paused && !g.stopped {
+		g.cond.Wait()
+	}
+	// 再次确认是否停止
+	if g.stopped {
+		g.mu.Unlock()
+		return true
+	}
+	g.mu.Unlock()
+	return false
+}
+
 // SetCurrentFrame 设置当前帧索引.
 func (g *GifPlayerHandler) SetCurrentFrame(frame int) {
-	if frame < 0 || frame >= g.maxFrame {
-		return
+	if frame < 0 {
+		frame = 0
 	}
 	g.rwx.Lock()
 	g.curFrame = frame
@@ -193,8 +222,10 @@ func (g *GifPlayerHandler) GetMaxFrame() int {
 func (g *GifPlayerHandler) Destroy() {
 	g.Stop()
 	ele := NewElementByHandle(g.hEle)
-	ele.RemoveEvent(xcc.XE_PAINT)
-	ele.Redraw(false)
+	xc.Auto(func() {
+		ele.RemoveEvent(xcc.XE_PAINT)
+		ele.Redraw(true)
+	})
 }
 
 // Stop 停止播放.
