@@ -63,13 +63,17 @@ func GetXcgui() *syscall.LazyDLL {
 func WriteDll(dll []byte) error {
 	tmpDir := os.TempDir()
 	tmpPath := filepath.Join(tmpDir, "xcgui"+GetVer()+"_"+runtime.GOARCH)
+	dllPath := filepath.Join(tmpPath, "xcgui.dll")
+	if PathExists2(dllPath) { // 已存在就不写出了
+		xcguiPath = dllPath
+		return nil
+	}
 
 	err := os.Mkdir(tmpPath, 0777)
 	if err != nil && !os.IsExist(err) {
 		return err
 	}
 
-	dllPath := filepath.Join(tmpPath, "xcgui.dll")
 	err = os.WriteFile(dllPath, dll, 0777)
 	if err != nil {
 		return err

@@ -20,7 +20,7 @@ func init() {
 	if !xc.PathExists2("WebView2Loader.dll") {
 		err := writeDll(Dll)
 		if err != nil {
-			panic("写出 WebView2Loader.dll 时报错: " + err.Error())
+			log.Println("写出 WebView2Loader.dll 时报错:", err.Error())
 		}
 	}
 	loadDll()
@@ -44,13 +44,17 @@ func GetVersion() string {
 func writeDll(dll []byte) error {
 	tmpDir := os.TempDir()
 	tmpPath := filepath.Join(tmpDir, "WebView2Loader"+GetVersion()+"_"+runtime.GOARCH)
+	DllPath := filepath.Join(tmpPath, "WebView2Loader.dll")
+	if xc.PathExists2(DllPath) { // 已存在就不写出了
+		dllPath = DllPath
+		return nil
+	}
 
 	err := os.Mkdir(tmpPath, 0777)
 	if err != nil && !os.IsExist(err) {
 		return err
 	}
 
-	DllPath := filepath.Join(tmpPath, "WebView2Loader.dll")
 	err = os.WriteFile(DllPath, dll, 0777)
 	if err != nil {
 		return err
@@ -78,7 +82,7 @@ func loadDll() {
 	once.Do(func() {
 		dllModule = syscall.NewLazyDLL(dllPath)
 		if dllModule.Handle() == 0 {
-			panic("载入失败: " + dllPath)
+			log.Println("载入 WebView2Loader.dll 失败:", dllPath)
 		}
 
 		procCreateCoreWebView2EnvironmentWithOptions = dllModule.NewProc("CreateCoreWebView2EnvironmentWithOptions")
