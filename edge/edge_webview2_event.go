@@ -57,7 +57,7 @@ func (e *webview2) WebResourceRequested(sender *ICoreWebView2, args *ICoreWebVie
 func (e *webview2) Event_WebResourceRequested(cb func(sender *ICoreWebView2, args *ICoreWebView2WebResourceRequestedEventArgs) uintptr) {
 	if e.webResourceRequestedEventHandler == nil {
 		e.webResourceRequestedEventHandler = NewICoreWebView2WebResourceRequestedEventHandler(e)
-		_ = e.CoreWebView.AddWebResourceRequested(e.webResourceRequestedEventHandler, e.eventRegistrationToken)
+		_ = e.CoreWebView.AddWebResourceRequested(e.webResourceRequestedEventHandler, e.EventRegistrationToken)
 	}
 	e.webResourceRequestedCallback = cb
 }
@@ -74,7 +74,7 @@ func (e *webview2) NavigationCompleted(sender *ICoreWebView2, args *ICoreWebView
 func (e *webview2) Event_NavigationCompleted(cb func(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr) {
 	if e.navigationCompletedEventHandler == nil {
 		e.navigationCompletedEventHandler = NewICoreWebView2NavigationCompletedEventHandler(e)
-		_ = e.CoreWebView.AddNavigationCompleted(e.navigationCompletedEventHandler, e.eventRegistrationToken)
+		_ = e.CoreWebView.AddNavigationCompleted(e.navigationCompletedEventHandler, e.EventRegistrationToken)
 	}
 	e.navigationCompletedCallback = cb
 }
@@ -91,7 +91,7 @@ func (e *webview2) NavigationStarting(sender *ICoreWebView2, args *ICoreWebView2
 func (e *webview2) Event_NavigationStarting(cb func(sender *ICoreWebView2, args *ICoreWebView2NavigationStartingEventArgs) uintptr) {
 	if e.navigationStartingEventHandler == nil {
 		e.navigationStartingEventHandler = NewICoreWebView2NavigationStartingEventHandler(e)
-		_ = e.CoreWebView.AddNavigationStarting(e.navigationStartingEventHandler, e.eventRegistrationToken)
+		_ = e.CoreWebView.AddNavigationStarting(e.navigationStartingEventHandler, e.EventRegistrationToken)
 	}
 	e.navigationStartingCallback = cb
 }
@@ -108,7 +108,7 @@ func (e *webview2) AcceleratorKeyPressed(sender *ICoreWebView2Controller, args *
 func (e *webview2) Event_AcceleratorKeyPressed(cb func(sender *ICoreWebView2Controller, args *ICoreWebView2AcceleratorKeyPressedEventArgs) uintptr) {
 	if e.acceleratorKeyPressedEventHandler == nil {
 		e.acceleratorKeyPressedEventHandler = NewICoreWebView2AcceleratorKeyPressedEventHandler(e)
-		_ = e.Controller.AddAcceleratorKeyPressed(e.acceleratorKeyPressedEventHandler, e.eventRegistrationToken)
+		_ = e.Controller.AddAcceleratorKeyPressed(e.acceleratorKeyPressedEventHandler, e.EventRegistrationToken)
 	}
 	e.acceleratorKeyPressedCallback = cb
 }
@@ -127,7 +127,7 @@ func (e *webview2) ContentLoading(sender *ICoreWebView2, args *ICoreWebView2Cont
 func (e *webview2) Event_ContentLoading(cb func(sender *ICoreWebView2, args *ICoreWebView2ContentLoadingEventArgs) uintptr) {
 	if e.contentLoadingEventHandler == nil {
 		e.contentLoadingEventHandler = NewICoreWebView2ContentLoadingEventHandler(e)
-		_ = e.CoreWebView.AddContentLoading(e.contentLoadingEventHandler, e.eventRegistrationToken)
+		_ = e.CoreWebView.AddContentLoading(e.contentLoadingEventHandler, e.EventRegistrationToken)
 	}
 	e.contentLoadingCallback = cb
 }

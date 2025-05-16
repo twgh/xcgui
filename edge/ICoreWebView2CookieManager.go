@@ -1,5 +1,7 @@
 package edge
 
+// ok
+
 import (
 	"errors"
 	"golang.org/x/sys/windows"
@@ -236,6 +238,28 @@ func (i *ICoreWebView2CookieManager) DeleteCookies(name, uri string) error {
 	return nil
 }
 
-/* TODO
-GetCookies
-*/
+// GetCookies 获取与指定 URI 匹配的所有 Cookie。
+//   - 如果 uri 为空字符串，则返回同一配置文件下的所有 Cookie。
+//   - 你可以通过调用 ICoreWebView2CookieManager.AddOrUpdateCookie 来修改 Cookie 对象，所做的更改将应用到WebView中。
+//
+// uri: 要匹配的 URI.
+func (i *ICoreWebView2CookieManager) GetCookies(uri string, handler *ICoreWebView2GetCookiesCompletedHandler) error {
+	_uri, err := windows.UTF16PtrFromString(uri)
+	if err != nil {
+		return err
+	}
+
+	r, _, err := i.Vtbl.GetCookies.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(_uri)),
+		uintptr(unsafe.Pointer(handler)),
+	)
+
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}

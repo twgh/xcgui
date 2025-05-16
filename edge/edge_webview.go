@@ -331,9 +331,9 @@ func (w *WebView) newWebView2Controller() error {
 		w.CoreWebView.AddRef()
 
 		// 添加 web 消息接收事件处理程序
-		_ = w.CoreWebView.AddWebMessageReceived(w.webMessageReceivedEventHandler, w.eventRegistrationToken)
+		_ = w.CoreWebView.AddWebMessageReceived(w.webMessageReceivedEventHandler, w.EventRegistrationToken)
 		// 添加权限请求事件处理程序
-		_ = w.CoreWebView.AddPermissionRequested(w.permissionRequestedEventHandler, w.eventRegistrationToken)
+		_ = w.CoreWebView.AddPermissionRequested(w.permissionRequestedEventHandler, w.EventRegistrationToken)
 		// 添加在创建文档时要执行的脚本
 		_ = w.CoreWebView.AddScriptToExecuteOnDocumentCreated("window.external={invoke:s=>window.chrome.webview.postMessage(s)}", nil)
 

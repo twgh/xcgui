@@ -13,25 +13,20 @@ type webview2 struct {
 	Controller  *ICoreWebView2Controller // WebView2 控制器
 	CoreWebView *ICoreWebView2           // CoreWebView2
 	Edge        *Edge
-	hwnd        uintptr
 
 	// 注册事件时使用的Token
-	eventRegistrationToken *EventRegistrationToken
-
-	// 权限map读写锁
-	rwxPermissions sync.RWMutex
-	// 权限map
-	permissions map[COREWEBVIEW2_PERMISSION_KIND]COREWEBVIEW2_PERMISSION_STATE
+	EventRegistrationToken *EventRegistrationToken
 
 	// -------------------- Handlers --------------------
-	// todo Handlers 全部移动到 Edge里? 需要测试
 
-	// 在调用 ICoreWebView2_3.TrySuspend 时使用
-	trySuspendCompletedHandler *ICoreWebView2TrySuspendCompletedHandler
-	// 执行脚本完成
-	executeScriptCompletedHandler *ICoreWebView2ExecuteScriptCompletedHandler
-	// 在文档创建前添加脚本完成
-	addScriptToExecuteOnDocumentCreatedCompletedHandler *ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler
+	// Handler_TrySuspendCompleted 在调用 ICoreWebView2_3.TrySuspend 时使用. 如果为 nil, 需自行调用 NewICoreWebView2TrySuspendCompletedHandler 来赋值.
+	Handler_TrySuspendCompleted *ICoreWebView2TrySuspendCompletedHandler
+	// Handler_ExecuteScriptCompleted 在调用 ICoreWebView2.ExecuteScript 时使用. 如果为 nil, 需自行调用 NewICoreWebView2ExecuteScriptCompletedHandler 来赋值.
+	Handler_ExecuteScriptCompleted *ICoreWebView2ExecuteScriptCompletedHandler
+	// Handler_AddScriptToExecuteOnDocumentCreatedCompleted 在调用 ICoreWebView2.AddScriptToExecuteOnDocumentCreated 时使用. 如果为 nil, 需自行调用 NewICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler 来赋值.
+	Handler_AddScriptToExecuteOnDocumentCreatedCompleted *ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler
+	// Handler_GetCookiesCompleted 在调用 ICoreWebView2CookieManager.GetCookies 时使用. 如果为 nil, 需自行调用 NewICoreWebView2GetCookiesCompletedHandler 来赋值.
+	Handler_GetCookiesCompleted *ICoreWebView2GetCookiesCompletedHandler
 
 	// 网页消息接收事件
 	webMessageReceivedEventHandler *ICoreWebView2WebMessageReceivedEventHandler
@@ -50,14 +45,16 @@ type webview2 struct {
 
 	// -------------------- Callbacks --------------------
 
-	// 仅供内部使用的网页消息事件回调
-	msgcb_xcgui func(string)
 	// 挂起事件结果回调
 	trySuspendCompletedCallBack func(errorCode syscall.Errno, isSuccessful bool) uintptr
 	// 执行脚本完成事件回调
 	executeScriptCompletedCallback func(errorCode syscall.Errno, result string) uintptr
 	// 在文档创建前添加脚本完成回调
 	addScriptToExecuteOnDocumentCreatedCompletedCallback func(errorCode syscall.Errno, id string) uintptr
+	// 获取 Cookies 完成回调
+	getCookiesCompletedCallback func(errorCode syscall.Errno, cookies *ICoreWebView2CookieList) uintptr
+	// 仅供内部使用的网页消息事件回调
+	msgcb_xcgui func(string)
 
 	// 网页消息事件回调
 	messageReceivedCallback func(sender *ICoreWebView2, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr
@@ -74,7 +71,14 @@ type webview2 struct {
 	// 权限请求事件回调
 	permissionRequestedCallback func(sender *ICoreWebView2, args *ICoreWebView2PermissionRequestedEventArgs) uintptr
 
-	focusOnInit bool // WebView2 控制器创建完成后是否自动获取焦点
+	// 宿主窗口句柄
+	hwnd uintptr
+	// 权限map读写锁
+	rwxPermissions sync.RWMutex
+	// 权限map
+	permissions map[COREWEBVIEW2_PERMISSION_KIND]COREWEBVIEW2_PERMISSION_STATE
+	// WebView2 控制器创建完成后是否自动获取焦点
+	focusOnInit bool
 }
 
 func (e *webview2) init() {
@@ -203,58 +207,17 @@ func (e *webview2) Focus() error {
 	return e.Controller.MoveFocus(COREWEBVIEW2_MOVE_FOCUS_REASON_PROGRAMMATIC)
 }
 
-// GetEventRegistrationToken 获取事件注册令牌.
-func (e *webview2) GetEventRegistrationToken() *EventRegistrationToken {
-	return e.eventRegistrationToken
-}
-
-// GetTrySuspendCompletedHandler 在调用 ICoreWebView2_3.TrySuspend 时作为参数使用.
-func (e *webview2) GetTrySuspendCompletedHandler() *ICoreWebView2TrySuspendCompletedHandler {
-	return e.trySuspendCompletedHandler
-}
-
-// GetExecuteScriptCompletedHandler 在调用 ICoreWebView2.ExecuteScript 时作为参数使用.
-func (e *webview2) GetExecuteScriptCompletedHandler() *ICoreWebView2ExecuteScriptCompletedHandler {
-	return e.executeScriptCompletedHandler
-}
-
-// GetAddScriptToExecuteOnDocumentCreatedCompletedHandler 在调用 ICoreWebView2.AddScriptToExecuteOnDocumentCreated 时作为参数使用.
-func (e *webview2) GetAddScriptToExecuteOnDocumentCreatedCompletedHandler() *ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler {
-	return e.addScriptToExecuteOnDocumentCreatedCompletedHandler
-}
-
-// setTrySuspendCompletedCallBack 设置挂起事件结果回调.
-func (e *webview2) setTrySuspendCompletedCallBack(cb func(errorCode syscall.Errno, isSuccessful bool) uintptr) {
-	if e.trySuspendCompletedHandler == nil {
-		e.trySuspendCompletedHandler = NewICoreWebView2TrySuspendCompletedHandler(e)
-	}
-	e.trySuspendCompletedCallBack = cb
-}
-
-// setExecuteScriptCompletedCallBack 设置执行脚本完成事件回调.
-func (e *webview2) setExecuteScriptCompletedCallBack(cb func(errorCode syscall.Errno, result string) uintptr) {
-	if e.executeScriptCompletedHandler == nil {
-		e.executeScriptCompletedHandler = NewICoreWebView2ExecuteScriptCompletedHandler(e)
-	}
-	e.executeScriptCompletedCallback = cb
-}
-
-// setAddScriptToExecuteOnDocumentCreatedCompletedCallBack 设置添加脚本完成事件回调.
-func (e *webview2) setAddScriptToExecuteOnDocumentCreatedCompletedCallBack(cb func(errorCode syscall.Errno, id string) uintptr) {
-	if e.addScriptToExecuteOnDocumentCreatedCompletedHandler == nil {
-		e.addScriptToExecuteOnDocumentCreatedCompletedHandler = NewICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler(e)
-	}
-	e.addScriptToExecuteOnDocumentCreatedCompletedCallback = cb
-}
-
 // ExecuteScript 在主页面上下文中执行 JavaScript 代码(异步)。
 //
 // javaScript: 要执行的 JavaScript 代码。
 //
 // cb: 回调函数, 在回调函数里可获取 js 代码返回值.
 func (e *webview2) ExecuteScript(javaScript string, cb func(errorCode syscall.Errno, result string) uintptr) error {
-	e.setExecuteScriptCompletedCallBack(cb)
-	return e.CoreWebView.ExecuteScript(javaScript, e.executeScriptCompletedHandler)
+	if e.Handler_ExecuteScriptCompleted == nil {
+		e.Handler_ExecuteScriptCompleted = NewICoreWebView2ExecuteScriptCompletedHandler(e)
+	}
+	e.executeScriptCompletedCallback = cb
+	return e.CoreWebView.ExecuteScript(javaScript, e.Handler_ExecuteScriptCompleted)
 }
 
 // AddScriptToExecuteOnDocumentCreated 在主页面上下文中添加 JavaScript 代码(异步)。
@@ -263,8 +226,11 @@ func (e *webview2) ExecuteScript(javaScript string, cb func(errorCode syscall.Er
 //
 // cb: 回调函数, 在回调函数里可获取添加脚本结果和 id.
 func (e *webview2) AddScriptToExecuteOnDocumentCreated(javaScript string, cb func(errorCode syscall.Errno, id string) uintptr) error {
-	e.setAddScriptToExecuteOnDocumentCreatedCompletedCallBack(cb)
-	return e.CoreWebView.AddScriptToExecuteOnDocumentCreated(javaScript, e.addScriptToExecuteOnDocumentCreatedCompletedHandler)
+	if e.Handler_AddScriptToExecuteOnDocumentCreatedCompleted == nil {
+		e.Handler_AddScriptToExecuteOnDocumentCreatedCompleted = NewICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler(e)
+	}
+	e.addScriptToExecuteOnDocumentCreatedCompletedCallback = cb
+	return e.CoreWebView.AddScriptToExecuteOnDocumentCreated(javaScript, e.Handler_AddScriptToExecuteOnDocumentCreatedCompleted)
 }
 
 // RemoveScriptToExecuteOnDocumentCreated 移除在创建文档时要执行的脚本。
@@ -285,8 +251,12 @@ func (e *webview2) TrySuspend(cb func(errorCode syscall.Errno, isSuccessful bool
 	if WebView2_3 == nil {
 		return errors.New("GetICoreWebView2_3 = nil")
 	}
-	e.setTrySuspendCompletedCallBack(cb)
-	return WebView2_3.TrySuspend(e.trySuspendCompletedHandler)
+
+	if e.Handler_TrySuspendCompleted == nil {
+		e.Handler_TrySuspendCompleted = NewICoreWebView2TrySuspendCompletedHandler(e)
+	}
+	e.trySuspendCompletedCallBack = cb
+	return WebView2_3.TrySuspend(e.Handler_TrySuspendCompleted)
 }
 
 // Resume 尝试挂起 WebView 控件, 以节省内存。
@@ -308,6 +278,32 @@ func (e *webview2) IsSuspended() bool {
 		return false
 	}
 	return WebView2_3.MustGetIsSuspended()
+}
+
+// GetCookieManager 获取关联的 cookie 管理器对象，失败返回 nil。
+func (e *webview2) GetCookieManager() *ICoreWebView2CookieManager {
+	WebView2_2, err := e.CoreWebView.GetICoreWebView2_2()
+	if err != nil {
+		return nil
+	}
+	return WebView2_2.MustGetCookieManager()
+}
+
+// GetCookies 获取与指定 URI 匹配的所有 Cookie，失败返回 nil。
+//   - 如果 uri 为空字符串，则返回同一配置文件下的所有 Cookie。
+//   - 你可以通过调用 ICoreWebView2CookieManager.AddOrUpdateCookie 来修改 Cookie 对象，所做的更改将应用到WebView中。
+//
+// uri: 要匹配的 URI.
+func (e *webview2) GetCookies(uri string, cb func(errorCode syscall.Errno, cookies *ICoreWebView2CookieList) uintptr) error {
+	CookieManager := e.GetCookieManager()
+	if CookieManager == nil {
+		return nil
+	}
+	if e.Handler_GetCookiesCompleted == nil {
+		e.Handler_GetCookiesCompleted = NewICoreWebView2GetCookiesCompletedHandler(e)
+	}
+	e.getCookiesCompletedCallback = cb
+	return CookieManager.GetCookies(uri, e.Handler_GetCookiesCompleted)
 }
 
 // --------------------------- 回调实现 ---------------------------
@@ -340,6 +336,14 @@ func (e *webview2) AddScriptToExecuteOnDocumentCreatedCompleted(errorCode syscal
 			idStr = windows.UTF16PtrToString(id)
 		}
 		e.addScriptToExecuteOnDocumentCreatedCompletedCallback(errorCode, idStr)
+	}
+	return 0
+}
+
+// GetCookiesCompleted 获取 cookies 完成后调用, 以获取执行结果.
+func (e *webview2) GetCookiesCompleted(errorCode syscall.Errno, cookies *ICoreWebView2CookieList) uintptr {
+	if e.getCookiesCompletedCallback != nil {
+		e.getCookiesCompletedCallback(errorCode, cookies)
 	}
 	return 0
 }
