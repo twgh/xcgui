@@ -62,20 +62,17 @@ type Edge struct {
 	// WebView2 环境
 	Environment *ICoreWebView2Environment
 
+	// 环境初始化完成事件处理程序
+	handler_CreateCoreWebView2EnvironmentCompleted *ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler
+	cb_EnvCompleted                                func(result uintptr, env *ICoreWebView2Environment)
+	// 控制器创建完成事件处理程序
+	handler_CreateCoreWebView2ControllerCompleted *ICoreWebView2CreateCoreWebView2ControllerCompletedHandler
+	cb_CreateCoreWebView2ControllerCompleted      func(result uintptr, controller *ICoreWebView2Controller)
+
 	// WebView2 环境创建完成回调 [内部使用]
-	_envCompletedCallback func(result uintptr, env *ICoreWebView2Environment)
+	_cbEnvCompleted func(result uintptr, env *ICoreWebView2Environment)
 	// WebView2 控制器创建完成回调 [内部使用]
-	_createCoreWebView2ControllerCompletedCallback func(result uintptr, controller *ICoreWebView2Controller)
-
-	// WebView2 环境创建完成回调
-	envCompletedCallback func(result uintptr, env *ICoreWebView2Environment)
-	// WebView2 控制器创建完成回调
-	createCoreWebView2ControllerCompletedCallback func(result uintptr, controller *ICoreWebView2Controller)
-
-	// 环境初始化完成事件
-	createCoreWebView2EnvironmentCompletedHandler *ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler
-	// 控制器创建完成事件
-	createCoreWebView2ControllerCompletedHandler *ICoreWebView2CreateCoreWebView2ControllerCompletedHandler
+	_cbCreateCoreWebView2ControllerCompleted func(result uintptr, controller *ICoreWebView2Controller)
 }
 
 // New Edge 在整个应用程序的生命周期里应该只创建一次.
@@ -83,14 +80,14 @@ type Edge struct {
 // opt: Edge选项.
 func New(opt Option) (*Edge, error) {
 	e := &Edge{}
-	e.envCompletedCallback = opt.EnvCompletedCallback
+	e.cb_EnvCompleted = opt.EnvCompletedCallback
 
 	var err error
 	if atomic.LoadUintptr(&envInited) == 0 {
 		// 环境初始化完成事件
-		e.createCoreWebView2EnvironmentCompletedHandler = NewICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler(e)
+		e.handler_CreateCoreWebView2EnvironmentCompleted = NewICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler(e)
 		// 控制器创建完成事件
-		e.createCoreWebView2ControllerCompletedHandler = NewICoreWebView2CreateCoreWebView2ControllerCompletedHandler(e)
+		e.handler_CreateCoreWebView2ControllerCompleted = NewICoreWebView2CreateCoreWebView2ControllerCompletedHandler(e)
 
 		// 处理用户数据文件夹路径, 如果为空, 则使用当前可执行文件所在目录下的 AppData 文件夹
 		dataPath := opt.UserDataFolder
@@ -104,7 +101,7 @@ func New(opt Option) (*Edge, error) {
 			dataPath = filepath.Join(os.Getenv("AppData"), currentExeName)
 		}
 
-		e._envCompletedCallback = func(result uintptr, env *ICoreWebView2Environment) {
+		e._cbEnvCompleted = func(result uintptr, env *ICoreWebView2Environment) {
 			if result == 0 { // 成功
 				env.AddRef()
 				e.Environment = env
@@ -115,7 +112,7 @@ func New(opt Option) (*Edge, error) {
 		}
 
 		// 创建 WebView2 环境
-		result, err := CreateCoreWebView2EnvironmentWithOptions(opt.BrowserExecutableFolder, dataPath, opt.EnvironmentOptions, e.createCoreWebView2EnvironmentCompletedHandler)
+		result, err := CreateCoreWebView2EnvironmentWithOptions(opt.BrowserExecutableFolder, dataPath, opt.EnvironmentOptions, e.handler_CreateCoreWebView2EnvironmentCompleted)
 		if err != nil {
 			return nil, errors.New("error calling CreateCoreWebView2EnvironmentWithOptions: " + err.Error())
 		} else if result != 0 {
@@ -156,27 +153,27 @@ func (e *Edge) Release() uintptr {
 
 // EnvironmentCompleted 环境创建完成.
 func (e *Edge) EnvironmentCompleted(result uintptr, env *ICoreWebView2Environment) uintptr {
-	if e._envCompletedCallback != nil {
-		e._envCompletedCallback(result, env)
+	if e._cbEnvCompleted != nil {
+		e._cbEnvCompleted(result, env)
 	}
-	if e.envCompletedCallback != nil {
-		e.envCompletedCallback(result, env)
+	if e.cb_EnvCompleted != nil {
+		e.cb_EnvCompleted(result, env)
 	}
 	return 0
 }
 
 // CreateCoreWebView2ControllerCompleted WebView2 控制器创建完成.
 func (e *Edge) CreateCoreWebView2ControllerCompleted(result uintptr, controller *ICoreWebView2Controller) uintptr {
-	if e._createCoreWebView2ControllerCompletedCallback != nil {
-		e._createCoreWebView2ControllerCompletedCallback(result, controller)
+	if e._cbCreateCoreWebView2ControllerCompleted != nil {
+		e._cbCreateCoreWebView2ControllerCompleted(result, controller)
 	}
-	if e.createCoreWebView2ControllerCompletedCallback != nil {
-		e.createCoreWebView2ControllerCompletedCallback(result, controller)
+	if e.cb_CreateCoreWebView2ControllerCompleted != nil {
+		e.cb_CreateCoreWebView2ControllerCompleted(result, controller)
 	}
 	return 0
 }
 
 // Event_CreateCoreWebView2ControllerCompleted 是 WebView2 控制器创建完成事件. 需用在 NewWebView 之前.
 func (e *Edge) Event_CreateCoreWebView2ControllerCompleted(cb func(result uintptr, controller *ICoreWebView2Controller)) {
-	e.createCoreWebView2ControllerCompletedCallback = cb
+	e.cb_CreateCoreWebView2ControllerCompleted = cb
 }

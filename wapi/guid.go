@@ -1,4 +1,4 @@
-package edge
+package wapi
 
 // This code has been adapted from: https://github.com/go-ole/go-ole
 

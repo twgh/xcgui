@@ -113,8 +113,10 @@ func wndproc(hwnd uintptr, msg uint32, wp, lp uintptr) uintptr {
 		switch msg {
 		case wapi.WM_MOVE, wapi.WM_MOVING:
 			_ = w.NotifyParentWindowPositionChanged()
+			return 0
 		case wapi.WM_SIZE:
 			w.Resize()
+			return 0
 		case wapi.WM_ACTIVATE:
 			if wp == wapi.WA_INACTIVE {
 				break
@@ -122,9 +124,11 @@ func wndproc(hwnd uintptr, msg uint32, wp, lp uintptr) uintptr {
 			if w.autofocus {
 				w.Focus()
 			}
+			return 0
 		case wapi.WM_CLOSE:
 			w.Close()
 			wapi.DestroyWindow(hwnd)
+			return 0
 		case wapi.WM_NCDESTROY: // 窗口非客户区销毁
 			// 移除事件
 			if xc.XC_IsHWINDOW(w.hWindow) {
@@ -135,13 +139,14 @@ func wndproc(hwnd uintptr, msg uint32, wp, lp uintptr) uintptr {
 				xc.XEle_RemoveEventC(w.hParent, xcc.XE_SHOW, onEleShow)
 				xc.XEle_RemoveEventC(w.hParent, xcc.XE_DESTROY, onEleDestroy)
 			}
+			return 0
 		}
 	}
 	return wapi.DefWindowProc(hwnd, msg, wp, lp)
 }
 
 /*// SetSize 更新原生窗口大小。
-//   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口里的.
+//   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
 func (w *WebView) SetSize(width, height int32) {
 	wapi.SetWindowPos(w.hwnd, 0, 0, 0, width, height, wapi.SWP_NOMOVE|wapi.SWP_NOZORDER|wapi.SWP_NOACTIVATE)
 }*/
@@ -224,9 +229,21 @@ func (w *WebView) UnbindAll() {
 }
 
 // GetHWND 返回 webview 所在的原生窗口句柄.
-//   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口里的.
+//   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
 func (w *WebView) GetHWND() uintptr {
 	return w.hwnd
+}
+
+// GetHWindow 返回 webview 所在的炫彩窗口句柄.
+//   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
+func (w *WebView) GetHWindow() int {
+	return w.hWindow
+}
+
+// GetHParernt 返回 webview 所在的炫彩元素或窗口句柄.
+//   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
+func (w *WebView) GetHParent() int {
+	return w.hParent
 }
 
 // EvalAsync 执行 js 代码, 可在回调函数中异步获取结果. 必须在 UI 线程执行.
@@ -318,7 +335,7 @@ func (w *WebView) newWebView2Controller() error {
 	var isDone bool
 	var err2 error
 	// WebView2 控制器创建完成回调
-	w.Edge._createCoreWebView2ControllerCompletedCallback = func(result uintptr, controller *ICoreWebView2Controller) {
+	w.Edge._cbCreateCoreWebView2ControllerCompleted = func(result uintptr, controller *ICoreWebView2Controller) {
 		if result != 0 { // 失败
 			err2 = fmt.Errorf("CreateCoreWebView2Controller failed: 0x%08x", result)
 			isDone = true
@@ -331,9 +348,9 @@ func (w *WebView) newWebView2Controller() error {
 		w.CoreWebView.AddRef()
 
 		// 添加 web 消息接收事件处理程序
-		_ = w.CoreWebView.AddWebMessageReceived(w.webMessageReceivedEventHandler, w.EventRegistrationToken)
+		_ = w.CoreWebView.AddWebMessageReceived(w.handler_WebMessageReceivedEvent, w.EventRegistrationToken)
 		// 添加权限请求事件处理程序
-		_ = w.CoreWebView.AddPermissionRequested(w.permissionRequestedEventHandler, w.EventRegistrationToken)
+		_ = w.CoreWebView.AddPermissionRequested(w.handler_PermissionRequestedEvent, w.EventRegistrationToken)
 		// 添加在创建文档时要执行的脚本
 		_ = w.CoreWebView.AddScriptToExecuteOnDocumentCreated("window.external={invoke:s=>window.chrome.webview.postMessage(s)}", nil)
 
@@ -344,7 +361,7 @@ func (w *WebView) newWebView2Controller() error {
 	}
 
 	// 创建 WebView2 控制器
-	err := w.Edge.Environment.CreateCoreWebView2Controller(w.hwnd, w.Edge.createCoreWebView2ControllerCompletedHandler)
+	err := w.Edge.Environment.CreateCoreWebView2Controller(w.hwnd, w.Edge.handler_CreateCoreWebView2ControllerCompleted)
 	if err != nil {
 		return fmt.Errorf("creating WebView2 controller return: %v", err)
 	}

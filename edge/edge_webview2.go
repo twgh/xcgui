@@ -10,8 +10,8 @@ import (
 )
 
 type webview2 struct {
-	Controller  *ICoreWebView2Controller // WebView2 控制器
 	CoreWebView *ICoreWebView2           // CoreWebView2
+	Controller  *ICoreWebView2Controller // WebView2 控制器
 	Edge        *Edge
 
 	// 注册事件时使用的Token
@@ -28,48 +28,48 @@ type webview2 struct {
 	// Handler_GetCookiesCompleted 在调用 ICoreWebView2CookieManager.GetCookies 时使用. 如果为 nil, 需自行调用 NewICoreWebView2GetCookiesCompletedHandler 来赋值.
 	Handler_GetCookiesCompleted *ICoreWebView2GetCookiesCompletedHandler
 
-	// 网页消息接收事件
-	webMessageReceivedEventHandler *ICoreWebView2WebMessageReceivedEventHandler
-	// 权限请求事件
-	permissionRequestedEventHandler *ICoreWebView2PermissionRequestedEventHandler
-	// 网络资源请求事件
-	webResourceRequestedEventHandler *ICoreWebView2WebResourceRequestedEventHandler
-	// 快捷键事件
-	acceleratorKeyPressedEventHandler *ICoreWebView2AcceleratorKeyPressedEventHandler
-	// 导航完成事件
-	navigationCompletedEventHandler *ICoreWebView2NavigationCompletedEventHandler
-	// 导航开始事件
-	navigationStartingEventHandler *ICoreWebView2NavigationStartingEventHandler
-	// 内容加载事件
-	contentLoadingEventHandler *ICoreWebView2ContentLoadingEventHandler
-
 	// -------------------- Callbacks --------------------
 
 	// 挂起事件结果回调
-	trySuspendCompletedCallBack func(errorCode syscall.Errno, isSuccessful bool) uintptr
+	cb_TrySuspendCompleted func(errorCode syscall.Errno, isSuccessful bool) uintptr
 	// 执行脚本完成事件回调
-	executeScriptCompletedCallback func(errorCode syscall.Errno, result string) uintptr
+	cb_ExecuteScriptCompleted func(errorCode syscall.Errno, result string) uintptr
 	// 在文档创建前添加脚本完成回调
-	addScriptToExecuteOnDocumentCreatedCompletedCallback func(errorCode syscall.Errno, id string) uintptr
+	cb_AddScriptToExecuteOnDocumentCreatedCompleted func(errorCode syscall.Errno, id string) uintptr
 	// 获取 Cookies 完成回调
-	getCookiesCompletedCallback func(errorCode syscall.Errno, cookies *ICoreWebView2CookieList) uintptr
+	cb_GetCookiesCompleted func(errorCode syscall.Errno, cookies *ICoreWebView2CookieList) uintptr
 	// 仅供内部使用的网页消息事件回调
 	msgcb_xcgui func(string)
 
-	// 网页消息事件回调
-	messageReceivedCallback func(sender *ICoreWebView2, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr
-	// 网络资源请求事件回调
-	webResourceRequestedCallback func(sender *ICoreWebView2, args *ICoreWebView2WebResourceRequestedEventArgs) uintptr
-	// 导航完成事件回调
-	navigationCompletedCallback func(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr
-	// 导航开始事件回调
-	navigationStartingCallback func(sender *ICoreWebView2, args *ICoreWebView2NavigationStartingEventArgs) uintptr
-	// 快捷键事件回调
-	acceleratorKeyPressedCallback func(sender *ICoreWebView2Controller, args *ICoreWebView2AcceleratorKeyPressedEventArgs) uintptr
-	// 内容加载事件回调
-	contentLoadingCallback func(sender *ICoreWebView2, args *ICoreWebView2ContentLoadingEventArgs) uintptr
-	// 权限请求事件回调
-	permissionRequestedCallback func(sender *ICoreWebView2, args *ICoreWebView2PermissionRequestedEventArgs) uintptr
+	// -------------------- 事件 Handlers 和 Callbacks --------------------
+
+	// 网页消息接收事件处理程序. [内部需要使用, 不能移除]
+	handler_WebMessageReceivedEvent *ICoreWebView2WebMessageReceivedEventHandler
+	cb_MessageReceivedEvent         func(sender *ICoreWebView2, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr
+	// 权限请求事件处理程序. [内部需要使用, 不能移除]
+	handler_PermissionRequestedEvent *ICoreWebView2PermissionRequestedEventHandler
+	cb_PermissionRequestedEvent      func(sender *ICoreWebView2, args *ICoreWebView2PermissionRequestedEventArgs) uintptr
+	// Handler_WebResourceRequestedEvent 网络资源请求事件处理程序. 在调用 Event_ 时会自动赋值.
+	Handler_WebResourceRequestedEvent *ICoreWebView2WebResourceRequestedEventHandler
+	cb_WebResourceRequestedEvent      func(sender *ICoreWebView2, args *ICoreWebView2WebResourceRequestedEventArgs) uintptr
+	// Handler_AcceleratorKeyPressedEvent 快捷键事件处理程序. 在调用 Event_ 时会自动赋值.
+	Handler_AcceleratorKeyPressedEvent *ICoreWebView2AcceleratorKeyPressedEventHandler
+	cb_AcceleratorKeyPressedEvent      func(sender *ICoreWebView2Controller, args *ICoreWebView2AcceleratorKeyPressedEventArgs) uintptr
+	// Handler_NavigationCompletedEvent 导航完成事件处理程序. 在调用 Event_ 时会自动赋值.
+	Handler_NavigationCompletedEvent *ICoreWebView2NavigationCompletedEventHandler
+	cb_NavigationCompletedEvent      func(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr
+	// Handler_NavigationStartingEvent 导航开始事件处理程序. 在调用 Event_ 时会自动赋值.
+	Handler_NavigationStartingEvent *ICoreWebView2NavigationStartingEventHandler
+	cb_NavigationStartingEvent      func(sender *ICoreWebView2, args *ICoreWebView2NavigationStartingEventArgs) uintptr
+	// Handler_ContentLoadingEvent 内容加载事件处理程序. 在调用 Event_ 时会自动赋值.
+	Handler_ContentLoadingEvent *ICoreWebView2ContentLoadingEventHandler
+	cb_ContentLoadingEvent      func(sender *ICoreWebView2, args *ICoreWebView2ContentLoadingEventArgs) uintptr
+	// Handler_NewWindowRequestedEvent 新窗口请求事件处理程序. 在调用 Event_ 时会自动赋值.
+	Handler_NewWindowRequestedEvent *ICoreWebView2NewWindowRequestedEventHandler
+	cb_NewWindowRequestedEvent      func(sender *ICoreWebView2, args *ICoreWebView2NewWindowRequestedEventArgs) uintptr
+	// Handler_SourceChanged 源改变事件处理程序. 在调用 Event_ 时会自动赋值.
+	Handler_SourceChangedEvent *ICoreWebView2SourceChangedEventHandler
+	cb_SourceChangedEvent      func(sender *ICoreWebView2, args *ICoreWebView2SourceChangedEventArgs) uintptr
 
 	// 宿主窗口句柄
 	hwnd uintptr
@@ -82,8 +82,8 @@ type webview2 struct {
 }
 
 func (e *webview2) init() {
-	e.webMessageReceivedEventHandler = NewICoreWebView2WebMessageReceivedEventHandler(e)
-	e.permissionRequestedEventHandler = NewICoreWebView2PermissionRequestedEventHandler(e)
+	e.handler_WebMessageReceivedEvent = NewICoreWebView2WebMessageReceivedEventHandler(e)
+	e.handler_PermissionRequestedEvent = NewICoreWebView2PermissionRequestedEventHandler(e)
 
 	e.permissions = make(map[COREWEBVIEW2_PERMISSION_KIND]COREWEBVIEW2_PERMISSION_STATE)
 }
@@ -160,7 +160,8 @@ func (e *webview2) SetPermission(kind COREWEBVIEW2_PERMISSION_KIND, state COREWE
 	e.rwxPermissions.Unlock()
 }
 
-// AddWebResourceRequestedFilter 添加web资源请求过滤器。
+// AddWebResourceRequestedFilter 添加web资源请求过滤器。[已过时]
+//   - 请改用 ICoreWebView2_22.AddWebResourceRequestedFilterWithRequestSourceKinds，该方法将针对文档中的所有 iframe 触发此事件。
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2#addwebresourcerequestedfilter
 func (e *webview2) AddWebResourceRequestedFilter(filter string, ctx COREWEBVIEW2_WEB_RESOURCE_CONTEXT) error {
@@ -173,7 +174,7 @@ func (e *webview2) GetSettings() (*ICoreWebView2Settings, error) {
 }
 
 // Close 关闭 WebView 并清理底层浏览器实例, 且关闭原生窗口。
-//   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口里的.
+//   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
 func (e *webview2) Close() error {
 	var err error
 	if e.Controller != nil {
@@ -216,7 +217,7 @@ func (e *webview2) ExecuteScript(javaScript string, cb func(errorCode syscall.Er
 	if e.Handler_ExecuteScriptCompleted == nil {
 		e.Handler_ExecuteScriptCompleted = NewICoreWebView2ExecuteScriptCompletedHandler(e)
 	}
-	e.executeScriptCompletedCallback = cb
+	e.cb_ExecuteScriptCompleted = cb
 	return e.CoreWebView.ExecuteScript(javaScript, e.Handler_ExecuteScriptCompleted)
 }
 
@@ -229,7 +230,7 @@ func (e *webview2) AddScriptToExecuteOnDocumentCreated(javaScript string, cb fun
 	if e.Handler_AddScriptToExecuteOnDocumentCreatedCompleted == nil {
 		e.Handler_AddScriptToExecuteOnDocumentCreatedCompleted = NewICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler(e)
 	}
-	e.addScriptToExecuteOnDocumentCreatedCompletedCallback = cb
+	e.cb_AddScriptToExecuteOnDocumentCreatedCompleted = cb
 	return e.CoreWebView.AddScriptToExecuteOnDocumentCreated(javaScript, e.Handler_AddScriptToExecuteOnDocumentCreatedCompleted)
 }
 
@@ -255,7 +256,7 @@ func (e *webview2) TrySuspend(cb func(errorCode syscall.Errno, isSuccessful bool
 	if e.Handler_TrySuspendCompleted == nil {
 		e.Handler_TrySuspendCompleted = NewICoreWebView2TrySuspendCompletedHandler(e)
 	}
-	e.trySuspendCompletedCallBack = cb
+	e.cb_TrySuspendCompleted = cb
 	return WebView2_3.TrySuspend(e.Handler_TrySuspendCompleted)
 }
 
@@ -302,7 +303,7 @@ func (e *webview2) GetCookies(uri string, cb func(errorCode syscall.Errno, cooki
 	if e.Handler_GetCookiesCompleted == nil {
 		e.Handler_GetCookiesCompleted = NewICoreWebView2GetCookiesCompletedHandler(e)
 	}
-	e.getCookiesCompletedCallback = cb
+	e.cb_GetCookiesCompleted = cb
 	return CookieManager.GetCookies(uri, e.Handler_GetCookiesCompleted)
 }
 
@@ -310,40 +311,40 @@ func (e *webview2) GetCookies(uri string, cb func(errorCode syscall.Errno, cooki
 
 // TrySuspendCompleted 尝试挂起 webview 后调用, 以获取执行结果.
 func (e *webview2) TrySuspendCompleted(errorCode syscall.Errno, isSuccessful bool) uintptr {
-	if e.trySuspendCompletedCallBack != nil {
-		e.trySuspendCompletedCallBack(errorCode, isSuccessful)
+	if e.cb_TrySuspendCompleted != nil {
+		e.cb_TrySuspendCompleted(errorCode, isSuccessful)
 	}
 	return 0
 }
 
 // ExecuteScriptCompleted 执行 js 脚本完成后调用, 以获取执行结果.
 func (e *webview2) ExecuteScriptCompleted(errorCode syscall.Errno, result *uint16) uintptr {
-	if e.executeScriptCompletedCallback != nil {
+	if e.cb_ExecuteScriptCompleted != nil {
 		var str string
 		if result != nil && *result != 0 {
 			str = windows.UTF16PtrToString(result)
 		}
-		e.executeScriptCompletedCallback(errorCode, str)
+		e.cb_ExecuteScriptCompleted(errorCode, str)
 	}
 	return 0
 }
 
 // AddScriptToExecuteOnDocumentCreatedCompleted 添加 js 脚本完成后调用, 以获取执行结果.
 func (e *webview2) AddScriptToExecuteOnDocumentCreatedCompleted(errorCode syscall.Errno, id *uint16) uintptr {
-	if e.addScriptToExecuteOnDocumentCreatedCompletedCallback != nil {
+	if e.cb_AddScriptToExecuteOnDocumentCreatedCompleted != nil {
 		var idStr string
 		if id != nil && *id != 0 {
 			idStr = windows.UTF16PtrToString(id)
 		}
-		e.addScriptToExecuteOnDocumentCreatedCompletedCallback(errorCode, idStr)
+		e.cb_AddScriptToExecuteOnDocumentCreatedCompleted(errorCode, idStr)
 	}
 	return 0
 }
 
 // GetCookiesCompleted 获取 cookies 完成后调用, 以获取执行结果.
 func (e *webview2) GetCookiesCompleted(errorCode syscall.Errno, cookies *ICoreWebView2CookieList) uintptr {
-	if e.getCookiesCompletedCallback != nil {
-		e.getCookiesCompletedCallback(errorCode, cookies)
+	if e.cb_GetCookiesCompleted != nil {
+		e.cb_GetCookiesCompleted(errorCode, cookies)
 	}
 	return 0
 }

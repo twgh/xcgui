@@ -4,6 +4,7 @@ package edge
 
 import (
 	"errors"
+	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 
@@ -410,7 +411,7 @@ func (i *ICoreWebView2Settings) PutIsBuiltInErrorPageEnabled(enabled bool) error
 // GetICoreWebView2Settings2 获取 ICoreWebView2Settings2 对象。
 func (i *ICoreWebView2Settings) GetICoreWebView2Settings2() (*ICoreWebView2Settings2, error) {
 	var result *ICoreWebView2Settings2
-	iidICoreWebView2Settings2 := NewGUID(IID_ICoreWebView2Settings2)
+	iidICoreWebView2Settings2 := wapi.NewGUID(IID_ICoreWebView2Settings2)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2Settings2)),
 		uintptr(unsafe.Pointer(&result)))
@@ -426,7 +427,7 @@ func (i *ICoreWebView2Settings) MustGetICoreWebView2Settings2() *ICoreWebView2Se
 // GetICoreWebView2Settings3 获取 ICoreWebView2Settings3 对象。
 func (i *ICoreWebView2Settings) GetICoreWebView2Settings3() (*ICoreWebView2Settings3, error) {
 	var result *ICoreWebView2Settings3
-	iidICoreWebView2Settings3 := NewGUID(IID_ICoreWebView2Settings3)
+	iidICoreWebView2Settings3 := wapi.NewGUID(IID_ICoreWebView2Settings3)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2Settings3)),
 		uintptr(unsafe.Pointer(&result)))
@@ -442,7 +443,7 @@ func (i *ICoreWebView2Settings) MustGetICoreWebView2Settings3() *ICoreWebView2Se
 // GetICoreWebView2Settings4 获取 ICoreWebView2Settings4 对象。
 func (i *ICoreWebView2Settings) GetICoreWebView2Settings4() (*ICoreWebView2Settings4, error) {
 	var result *ICoreWebView2Settings4
-	iidICoreWebView2Settings4 := NewGUID(IID_ICoreWebView2Settings4)
+	iidICoreWebView2Settings4 := wapi.NewGUID(IID_ICoreWebView2Settings4)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2Settings4)),
 		uintptr(unsafe.Pointer(&result)))
@@ -458,7 +459,7 @@ func (i *ICoreWebView2Settings) MustGetICoreWebView2Settings4() *ICoreWebView2Se
 // GetICoreWebView2Settings5 获取 ICoreWebView2Settings5 对象。
 func (i *ICoreWebView2Settings) GetICoreWebView2Settings5() (*ICoreWebView2Settings5, error) {
 	var result *ICoreWebView2Settings5
-	iidICoreWebView2Settings5 := NewGUID(IID_ICoreWebView2Settings5)
+	iidICoreWebView2Settings5 := wapi.NewGUID(IID_ICoreWebView2Settings5)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2Settings5)),
 		uintptr(unsafe.Pointer(&result)))
@@ -474,7 +475,7 @@ func (i *ICoreWebView2Settings) MustGetICoreWebView2Settings5() *ICoreWebView2Se
 // GetICoreWebView2Settings6 获取 ICoreWebView2Settings6 对象。
 func (i *ICoreWebView2Settings) GetICoreWebView2Settings6() (*ICoreWebView2Settings6, error) {
 	var result *ICoreWebView2Settings6
-	iidICoreWebView2Settings6 := NewGUID(IID_ICoreWebView2Settings6)
+	iidICoreWebView2Settings6 := wapi.NewGUID(IID_ICoreWebView2Settings6)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2Settings6)),
 		uintptr(unsafe.Pointer(&result)))
@@ -490,7 +491,7 @@ func (i *ICoreWebView2Settings) MustGetICoreWebView2Settings6() *ICoreWebView2Se
 // GetICoreWebView2Settings7 获取 ICoreWebView2Settings7 对象。
 func (i *ICoreWebView2Settings) GetICoreWebView2Settings7() (*ICoreWebView2Settings7, error) {
 	var result *ICoreWebView2Settings7
-	iidICoreWebView2Settings7 := NewGUID(IID_ICoreWebView2Settings7)
+	iidICoreWebView2Settings7 := wapi.NewGUID(IID_ICoreWebView2Settings7)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2Settings7)),
 		uintptr(unsafe.Pointer(&result)))
@@ -506,7 +507,7 @@ func (i *ICoreWebView2Settings) MustGetICoreWebView2Settings7() *ICoreWebView2Se
 // GetICoreWebView2Settings8 获取 ICoreWebView2Settings8 对象。
 func (i *ICoreWebView2Settings) GetICoreWebView2Settings8() (*ICoreWebView2Settings8, error) {
 	var result *ICoreWebView2Settings8
-	iidICoreWebView2Settings8 := NewGUID(IID_ICoreWebView2Settings8)
+	iidICoreWebView2Settings8 := wapi.NewGUID(IID_ICoreWebView2Settings8)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2Settings8)),
 		uintptr(unsafe.Pointer(&result)))
@@ -522,7 +523,7 @@ func (i *ICoreWebView2Settings) MustGetICoreWebView2Settings8() *ICoreWebView2Se
 // GetICoreWebView2Settings9 获取 ICoreWebView2Settings9 对象。
 func (i *ICoreWebView2Settings) GetICoreWebView2Settings9() (*ICoreWebView2Settings9, error) {
 	var result *ICoreWebView2Settings9
-	iidICoreWebView2Settings9 := NewGUID(IID_ICoreWebView2Settings9)
+	iidICoreWebView2Settings9 := wapi.NewGUID(IID_ICoreWebView2Settings9)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2Settings9)),
 		uintptr(unsafe.Pointer(&result)))

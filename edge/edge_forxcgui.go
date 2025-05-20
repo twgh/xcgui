@@ -47,7 +47,7 @@ type WebViewOption struct {
 	AutoFocus bool
 }
 
-// WebView 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口里的.
+// WebView 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
 //
 // 对 webview 的一些更改操作必须在炫彩 UI 线程里执行.
 type WebView struct {
@@ -153,7 +153,7 @@ func (w *WebView) createWithOptionsByXcgui(hParent int, opt WebViewOption) error
 	setWindowContext(hWnd, w)
 
 	// 显示窗口, 更新窗口, 设置焦点
-	wapi.ShowWindow(w.hwnd, xcc.SW_SHOW)
+	wapi.ShowWindow(w.hwnd, xcc.SW_SHOWMINIMIZED)
 	wapi.UpdateWindow(w.hwnd)
 	wapi.SetFocus(w.hwnd)
 
@@ -296,7 +296,7 @@ func (w *WebView) msgcb_xcgui(msg string) {
 }
 
 // SetTitle 更新原生窗口的标题。
-//   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口里的.
+//   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
 func (w *WebView) SetTitle(title string) {
 	wapi.SetWindowText(w.hwnd, title)
 }

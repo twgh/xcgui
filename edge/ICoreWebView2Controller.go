@@ -2,6 +2,7 @@ package edge
 
 import (
 	"errors"
+	"github.com/twgh/xcgui/wapi"
 	"github.com/twgh/xcgui/xc"
 	"syscall"
 	"unsafe"
@@ -104,6 +105,7 @@ func (i *ICoreWebView2Controller) PutBounds(bounds xc.RECT) error {
 }
 
 // AddAcceleratorKeyPressed 添加键盘快捷键事件处理程序.
+//   - AcceleratorKeyPressed 在 Webview 获得焦点时，当按下或释放快捷键或组合键时运行。
 func (i *ICoreWebView2Controller) AddAcceleratorKeyPressed(eventHandler *ICoreWebView2AcceleratorKeyPressedEventHandler, token *EventRegistrationToken) error {
 	r, _, err := i.Vtbl.AddAcceleratorKeyPressed.Call(
 		uintptr(unsafe.Pointer(i)),
@@ -349,7 +351,7 @@ RemoveLostFocus
 // GetICoreWebView2Controller2 获取 ICoreWebView2Controller2 对象。
 func (i *ICoreWebView2Controller) GetICoreWebView2Controller2() (*ICoreWebView2Controller2, error) {
 	var result *ICoreWebView2Controller2
-	iidICoreWebView2Controller2 := NewGUID(IID_ICoreWebView2Controller2)
+	iidICoreWebView2Controller2 := wapi.NewGUID(IID_ICoreWebView2Controller2)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2Controller2)),
 		uintptr(unsafe.Pointer(&result)))
