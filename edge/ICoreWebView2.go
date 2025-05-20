@@ -2,6 +2,7 @@ package edge
 
 import (
 	"errors"
+	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 
@@ -120,7 +121,8 @@ func (i *ICoreWebView2) MustGetSettings() *ICoreWebView2Settings {
 	return s
 }
 
-// AddWebResourceRequestedFilter 添加 web 资源请求过滤器.
+// AddWebResourceRequestedFilter 添加 web 资源请求过滤器. [已过时]
+//   - 请改用 ICoreWebView2_22.AddWebResourceRequestedFilterWithRequestSourceKinds，该方法将针对文档中的所有 iframe 触发此事件。
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2#addwebresourcerequestedfilter
 func (i *ICoreWebView2) AddWebResourceRequestedFilter(uri string, resourceContext COREWEBVIEW2_WEB_RESOURCE_CONTEXT) error {
@@ -142,17 +144,53 @@ func (i *ICoreWebView2) AddWebResourceRequestedFilter(uri string, resourceContex
 	return nil
 }
 
+// RemoveWebResourceRequestedFilter 移除 web 资源请求过滤器.
+func (i *ICoreWebView2) RemoveWebResourceRequestedFilter(uri string, resourceContext COREWEBVIEW2_WEB_RESOURCE_CONTEXT) error {
+	_uri, err := windows.UTF16PtrFromString(uri)
+	if err != nil {
+		return err
+	}
+	r, _, err := i.Vtbl.RemoveWebResourceRequestedFilter.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(_uri)),
+		uintptr(resourceContext),
+	)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
 // EventRegistrationToken 事件注册令牌.
 type EventRegistrationToken struct {
 	Value int64
 }
 
 // AddNavigationCompleted 添加导航完成事件处理程序.
+//   - NavigationCompleted 事件会在 Webview 完全加载完毕（与 body.onload 事件同时发生）或加载因错误而停止时触发。
 func (i *ICoreWebView2) AddNavigationCompleted(eventHandler *ICoreWebView2NavigationCompletedEventHandler, token *EventRegistrationToken) error {
 	r, _, err := i.Vtbl.AddNavigationCompleted.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(&token)),
+	)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
+// RemoveNavigationCompleted 移除导航完成事件处理程序。
+func (i *ICoreWebView2) RemoveNavigationCompleted(token EventRegistrationToken) error {
+	r, _, err := i.Vtbl.RemoveNavigationCompleted.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(token.Value),
 	)
 	if !errors.Is(err, windows.ERROR_SUCCESS) {
 		return err
@@ -231,6 +269,8 @@ func (i *ICoreWebView2) MustGetSource() string {
 }
 
 // AddNavigationStarting 添加导航开始事件处理程序。
+//   - NavigationStarting 在 Webview 主框架请求导航到不同的统一资源标识符 (URI) 权限时运行。重定向也会触发此操作，并且导航 ID 与原始 ID 相同。
+//   - 在所有 NavigationStarting 事件处理程序返回之前，导航将被阻止。
 func (i *ICoreWebView2) AddNavigationStarting(eventHandler *ICoreWebView2NavigationStartingEventHandler, token *EventRegistrationToken) error {
 	r, _, err := i.Vtbl.AddNavigationStarting.Call(
 		uintptr(unsafe.Pointer(i)),
@@ -262,6 +302,9 @@ func (i *ICoreWebView2) RemoveNavigationStarting(token *EventRegistrationToken) 
 }
 
 // AddContentLoading 添加内容加载事件处理程序。
+//   - ContentLoading 会在任何内容加载之前触发，包括使用 AddScriptToExecuteOnDocumentCreated 添加的脚本。
+//   - ContentLoading 在发生相同页面导航时（例如通过 fragment 导航或 history.pushState 导航）不会触发。
+//   - 此操作在 NavigationStarting 和 SourceChanged 事件之后，以及 HistoryChanged 和 NavigationCompleted 事件之前发生。
 func (i *ICoreWebView2) AddContentLoading(eventHandler *ICoreWebView2ContentLoadingEventHandler, token *EventRegistrationToken) error {
 	r, _, err := i.Vtbl.AddContentLoading.Call(
 		uintptr(unsafe.Pointer(i)),
@@ -324,6 +367,8 @@ func (i *ICoreWebView2) RemoveWebResourceRequested(token *EventRegistrationToken
 }
 
 // AddWebMessageReceived 添加 web 消息接收事件处理程序。
+//   - 当 Webview 的顶级文档运行 window.chrome.webview.postMessage 时，WebMessageReceived 事件会运行。
+//   - postMessage 函数为 void postMessage(object)，其中 object 是任何受 JSON 转换支持的对象。
 func (i *ICoreWebView2) AddWebMessageReceived(eventHandler *ICoreWebView2WebMessageReceivedEventHandler, token *EventRegistrationToken) error {
 	r, _, err := i.Vtbl.AddWebMessageReceived.Call(
 		uintptr(unsafe.Pointer(i)),
@@ -355,6 +400,7 @@ func (i *ICoreWebView2) RemoveWebMessageReceived(token *EventRegistrationToken) 
 }
 
 // AddPermissionRequested 添加权限请求事件处理程序。
+//   - PermissionRequested 在 Webview 中的内容请求访问某些特权资源的权限时运行。
 func (i *ICoreWebView2) AddPermissionRequested(eventHandler *ICoreWebView2PermissionRequestedEventHandler, token *EventRegistrationToken) error {
 	r, _, err := i.Vtbl.AddPermissionRequested.Call(
 		uintptr(unsafe.Pointer(i)),
@@ -678,18 +724,85 @@ func (i *ICoreWebView2) RemoveScriptToExecuteOnDocumentCreated(id string) error 
 	return nil
 }
 
+// AddNewWindowRequested 添加新窗口请求事件处理程序.
+//   - 当 Webview 内的内容请求打开新窗口时（例如通过 NewWindowRequested），NewWindowRequested 事件将运行。
+//   - 应用可以传递一个被视为已打开窗口的目标 Webview，或者将该事件标记为 Handled，在此情况下，WebView2 不会打开窗口。
+//   - 如果 Handled 或 NewWindow 属性均未设置，目标内容将在弹出窗口中打开。
+func (i *ICoreWebView2) AddNewWindowRequested(eventHandler *ICoreWebView2NewWindowRequestedEventHandler, token *EventRegistrationToken) error {
+	r, _, err := i.Vtbl.AddNewWindowRequested.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(eventHandler)),
+		uintptr(unsafe.Pointer(token)),
+	)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
+// RemoveNewWindowRequested 移除新窗口请求事件处理程序.
+func (i *ICoreWebView2) RemoveNewWindowRequested(token EventRegistrationToken) error {
+	r, _, err := i.Vtbl.RemoveNewWindowRequested.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(token.Value),
+	)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
+// AddSourceChanged 添加源改变事件处理程序.
+//   - SourceChanged 会在 Source 属性发生变化时触发。
+//   - SourceChanged 会在导航到不同站点或进行片段导航时运行。
+//   - 对于其他类型的导航，例如页面刷新或 history.pushState（使用与当前页面相同的 URL），它不会触发。
+//   - SourceChanged 会在导航到新文档时，在 ContentLoading 之前运行。
+func (i *ICoreWebView2) AddSourceChanged(eventHandler *ICoreWebView2SourceChangedEventHandler, token *EventRegistrationToken) error {
+	r, _, err := i.Vtbl.AddSourceChanged.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(eventHandler)),
+		uintptr(unsafe.Pointer(token)),
+	)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
+// RemoveSourceChanged 移除源改变事件处理程序.
+func (i *ICoreWebView2) RemoveSourceChanged(token EventRegistrationToken) error {
+	r, _, err := i.Vtbl.RemoveSourceChanged.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(token.Value),
+	)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
 /*TODO:
 
 CapturePreview
 
 GetDevToolsProtocolEventReceiver
 CallDevToolsProtocolMethod
-AddSourceChanged
-RemoveSourceChanged
+
 AddHistoryChanged
 RemoveHistoryChanged
-AddNavigationCompleted
-RemoveNavigationCompleted
+
 AddFrameNavigationStarting
 RemoveFrameNavigationStarting
 AddFrameNavigationCompleted
@@ -699,16 +812,13 @@ RemoveScriptDialogOpening
 AddProcessFailed
 RemoveProcessFailed
 
-AddNewWindowRequested
-RemoveNewWindowRequested
 AddDocumentTitleChanged
 RemoveDocumentTitleChanged
 AddHostObjectToScript
 RemoveHostObjectFromScript
 AddContainsFullScreenElementChanged
 RemoveContainsFullScreenElementChanged
-AddWebResourceRequestedFilter
-RemoveWebResourceRequestedFilter
+
 AddWindowCloseRequested
 RemoveWindowCloseRequested
 */
@@ -716,7 +826,7 @@ RemoveWindowCloseRequested
 // GetICoreWebView2_2 获取 ICoreWebView2_2。
 func (i *ICoreWebView2) GetICoreWebView2_2() (*ICoreWebView2_2, error) {
 	var result *ICoreWebView2_2
-	iidICoreWebView2_2 := NewGUID(IID_ICoreWebView2_2)
+	iidICoreWebView2_2 := wapi.NewGUID(IID_ICoreWebView2_2)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_2)),
 		uintptr(unsafe.Pointer(&result)))
@@ -732,7 +842,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_2() *ICoreWebView2_2 {
 // GetICoreWebView2_3 获取 ICoreWebView2_3。
 func (i *ICoreWebView2) GetICoreWebView2_3() (*ICoreWebView2_3, error) {
 	var result *ICoreWebView2_3
-	iidICoreWebView2_3 := NewGUID(IID_ICoreWebView2_3)
+	iidICoreWebView2_3 := wapi.NewGUID(IID_ICoreWebView2_3)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_3)),
 		uintptr(unsafe.Pointer(&result)))
@@ -748,7 +858,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_3() *ICoreWebView2_3 {
 // GetICoreWebView2_4 获取 ICoreWebView2_4。
 func (i *ICoreWebView2) GetICoreWebView2_4() (*ICoreWebView2_4, error) {
 	var result *ICoreWebView2_4
-	iidICoreWebView2_4 := NewGUID(IID_ICoreWebView2_4)
+	iidICoreWebView2_4 := wapi.NewGUID(IID_ICoreWebView2_4)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_4)),
 		uintptr(unsafe.Pointer(&result)))
@@ -764,7 +874,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_4() *ICoreWebView2_4 {
 // GetICoreWebView2_5 获取 ICoreWebView2_5。
 func (i *ICoreWebView2) GetICoreWebView2_5() (*ICoreWebView2_5, error) {
 	var result *ICoreWebView2_5
-	iidICoreWebView2_5 := NewGUID(IID_ICoreWebView2_5)
+	iidICoreWebView2_5 := wapi.NewGUID(IID_ICoreWebView2_5)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_5)),
 		uintptr(unsafe.Pointer(&result)))
@@ -780,7 +890,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_5() *ICoreWebView2_5 {
 // GetICoreWebView2_6 获取 ICoreWebView2_6。
 func (i *ICoreWebView2) GetICoreWebView2_6() (*ICoreWebView2_6, error) {
 	var result *ICoreWebView2_6
-	iidICoreWebView2_6 := NewGUID(IID_ICoreWebView2_6)
+	iidICoreWebView2_6 := wapi.NewGUID(IID_ICoreWebView2_6)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_6)),
 		uintptr(unsafe.Pointer(&result)))
@@ -796,7 +906,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_6() *ICoreWebView2_6 {
 // GetICoreWebView2_7 获取 ICoreWebView2_7。
 func (i *ICoreWebView2) GetICoreWebView2_7() (*ICoreWebView2_7, error) {
 	var result *ICoreWebView2_7
-	iidICoreWebView2_7 := NewGUID(IID_ICoreWebView2_7)
+	iidICoreWebView2_7 := wapi.NewGUID(IID_ICoreWebView2_7)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_7)),
 		uintptr(unsafe.Pointer(&result)))
@@ -812,7 +922,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_7() *ICoreWebView2_7 {
 // GetICoreWebView2_8 获取 ICoreWebView2_8。
 func (i *ICoreWebView2) GetICoreWebView2_8() (*ICoreWebView2_8, error) {
 	var result *ICoreWebView2_8
-	iidICoreWebView2_8 := NewGUID(IID_ICoreWebView2_8)
+	iidICoreWebView2_8 := wapi.NewGUID(IID_ICoreWebView2_8)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_8)),
 		uintptr(unsafe.Pointer(&result)))
@@ -828,7 +938,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_8() *ICoreWebView2_8 {
 // GetICoreWebView2_9 获取 ICoreWebView2_9。
 func (i *ICoreWebView2) GetICoreWebView2_9() (*ICoreWebView2_9, error) {
 	var result *ICoreWebView2_9
-	iidICoreWebView2_9 := NewGUID(IID_ICoreWebView2_9)
+	iidICoreWebView2_9 := wapi.NewGUID(IID_ICoreWebView2_9)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_9)),
 		uintptr(unsafe.Pointer(&result)))
@@ -844,7 +954,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_9() *ICoreWebView2_9 {
 // GetICoreWebView2_10 获取 ICoreWebView2_10。
 func (i *ICoreWebView2) GetICoreWebView2_10() (*ICoreWebView2_10, error) {
 	var result *ICoreWebView2_10
-	iidICoreWebView2_10 := NewGUID(IID_ICoreWebView2_10)
+	iidICoreWebView2_10 := wapi.NewGUID(IID_ICoreWebView2_10)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_10)),
 		uintptr(unsafe.Pointer(&result)))
@@ -860,7 +970,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_10() *ICoreWebView2_10 {
 // GetICoreWebView2_11 获取 ICoreWebView2_11。
 func (i *ICoreWebView2) GetICoreWebView2_11() (*ICoreWebView2_11, error) {
 	var result *ICoreWebView2_11
-	iidICoreWebView2_11 := NewGUID(IID_ICoreWebView2_11)
+	iidICoreWebView2_11 := wapi.NewGUID(IID_ICoreWebView2_11)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_11)),
 		uintptr(unsafe.Pointer(&result)))
@@ -876,7 +986,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_11() *ICoreWebView2_11 {
 // GetICoreWebView2_12 获取 ICoreWebView2_12。
 func (i *ICoreWebView2) GetICoreWebView2_12() (*ICoreWebView2_12, error) {
 	var result *ICoreWebView2_12
-	iidICoreWebView2_12 := NewGUID(IID_ICoreWebView2_12)
+	iidICoreWebView2_12 := wapi.NewGUID(IID_ICoreWebView2_12)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_12)),
 		uintptr(unsafe.Pointer(&result)))
@@ -892,7 +1002,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_12() *ICoreWebView2_12 {
 // GetICoreWebView2_13 获取 ICoreWebView2_13。
 func (i *ICoreWebView2) GetICoreWebView2_13() (*ICoreWebView2_13, error) {
 	var result *ICoreWebView2_13
-	iidICoreWebView2_13 := NewGUID(IID_ICoreWebView2_13)
+	iidICoreWebView2_13 := wapi.NewGUID(IID_ICoreWebView2_13)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_13)),
 		uintptr(unsafe.Pointer(&result)))
@@ -908,7 +1018,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_13() *ICoreWebView2_13 {
 // GetICoreWebView2_14 获取 ICoreWebView2_14。
 func (i *ICoreWebView2) GetICoreWebView2_14() (*ICoreWebView2_14, error) {
 	var result *ICoreWebView2_14
-	iidICoreWebView2_14 := NewGUID(IID_ICoreWebView2_14)
+	iidICoreWebView2_14 := wapi.NewGUID(IID_ICoreWebView2_14)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_14)),
 		uintptr(unsafe.Pointer(&result)))
@@ -924,7 +1034,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_14() *ICoreWebView2_14 {
 // GetICoreWebView2_15 获取 ICoreWebView2_15。
 func (i *ICoreWebView2) GetICoreWebView2_15() (*ICoreWebView2_15, error) {
 	var result *ICoreWebView2_15
-	iidICoreWebView2_15 := NewGUID(IID_ICoreWebView2_15)
+	iidICoreWebView2_15 := wapi.NewGUID(IID_ICoreWebView2_15)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_15)),
 		uintptr(unsafe.Pointer(&result)))
@@ -940,7 +1050,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_15() *ICoreWebView2_15 {
 // GetICoreWebView2_16 获取 ICoreWebView2_16。
 func (i *ICoreWebView2) GetICoreWebView2_16() (*ICoreWebView2_16, error) {
 	var result *ICoreWebView2_16
-	iidICoreWebView2_16 := NewGUID(IID_ICoreWebView2_16)
+	iidICoreWebView2_16 := wapi.NewGUID(IID_ICoreWebView2_16)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_16)),
 		uintptr(unsafe.Pointer(&result)))
@@ -956,7 +1066,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_16() *ICoreWebView2_16 {
 // GetICoreWebView2_17 获取 ICoreWebView2_17。
 func (i *ICoreWebView2) GetICoreWebView2_17() (*ICoreWebView2_17, error) {
 	var result *ICoreWebView2_17
-	iidICoreWebView2_17 := NewGUID(IID_ICoreWebView2_17)
+	iidICoreWebView2_17 := wapi.NewGUID(IID_ICoreWebView2_17)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_17)),
 		uintptr(unsafe.Pointer(&result)))
@@ -972,7 +1082,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_17() *ICoreWebView2_17 {
 // GetICoreWebView2_18 获取 ICoreWebView2_18。
 func (i *ICoreWebView2) GetICoreWebView2_18() (*ICoreWebView2_18, error) {
 	var result *ICoreWebView2_18
-	iidICoreWebView2_18 := NewGUID(IID_ICoreWebView2_18)
+	iidICoreWebView2_18 := wapi.NewGUID(IID_ICoreWebView2_18)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_18)),
 		uintptr(unsafe.Pointer(&result)))
@@ -988,7 +1098,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_18() *ICoreWebView2_18 {
 // GetICoreWebView2_19 获取 ICoreWebView2_19。
 func (i *ICoreWebView2) GetICoreWebView2_19() (*ICoreWebView2_19, error) {
 	var result *ICoreWebView2_19
-	iidICoreWebView2_19 := NewGUID(IID_ICoreWebView2_19)
+	iidICoreWebView2_19 := wapi.NewGUID(IID_ICoreWebView2_19)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_19)),
 		uintptr(unsafe.Pointer(&result)))
@@ -1004,7 +1114,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_19() *ICoreWebView2_19 {
 // GetICoreWebView2_20 获取 ICoreWebView2_20。
 func (i *ICoreWebView2) GetICoreWebView2_20() (*ICoreWebView2_20, error) {
 	var result *ICoreWebView2_20
-	iidICoreWebView2_20 := NewGUID(IID_ICoreWebView2_20)
+	iidICoreWebView2_20 := wapi.NewGUID(IID_ICoreWebView2_20)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_20)),
 		uintptr(unsafe.Pointer(&result)))
@@ -1020,7 +1130,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_20() *ICoreWebView2_20 {
 // GetICoreWebView2_21 获取 ICoreWebView2_21。
 func (i *ICoreWebView2) GetICoreWebView2_21() (*ICoreWebView2_21, error) {
 	var result *ICoreWebView2_21
-	iidICoreWebView2_21 := NewGUID(IID_ICoreWebView2_21)
+	iidICoreWebView2_21 := wapi.NewGUID(IID_ICoreWebView2_21)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_21)),
 		uintptr(unsafe.Pointer(&result)))
@@ -1036,7 +1146,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_21() *ICoreWebView2_21 {
 // GetICoreWebView2_22 获取 ICoreWebView2_22。
 func (i *ICoreWebView2) GetICoreWebView2_22() (*ICoreWebView2_22, error) {
 	var result *ICoreWebView2_22
-	iidICoreWebView2_22 := NewGUID(IID_ICoreWebView2_22)
+	iidICoreWebView2_22 := wapi.NewGUID(IID_ICoreWebView2_22)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_22)),
 		uintptr(unsafe.Pointer(&result)))
@@ -1052,7 +1162,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_22() *ICoreWebView2_22 {
 // GetICoreWebView2_23 获取 ICoreWebView2_23。
 func (i *ICoreWebView2) GetICoreWebView2_23() (*ICoreWebView2_23, error) {
 	var result *ICoreWebView2_23
-	iidICoreWebView2_23 := NewGUID(IID_ICoreWebView2_23)
+	iidICoreWebView2_23 := wapi.NewGUID(IID_ICoreWebView2_23)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_23)),
 		uintptr(unsafe.Pointer(&result)))
@@ -1068,7 +1178,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_23() *ICoreWebView2_23 {
 // GetICoreWebView2_24 获取 ICoreWebView2_24。
 func (i *ICoreWebView2) GetICoreWebView2_24() (*ICoreWebView2_24, error) {
 	var result *ICoreWebView2_24
-	iidICoreWebView2_24 := NewGUID(IID_ICoreWebView2_24)
+	iidICoreWebView2_24 := wapi.NewGUID(IID_ICoreWebView2_24)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_24)),
 		uintptr(unsafe.Pointer(&result)))
@@ -1084,7 +1194,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_24() *ICoreWebView2_24 {
 // GetICoreWebView2_25 获取 ICoreWebView2_25。
 func (i *ICoreWebView2) GetICoreWebView2_25() (*ICoreWebView2_25, error) {
 	var result *ICoreWebView2_25
-	iidICoreWebView2_25 := NewGUID(IID_ICoreWebView2_25)
+	iidICoreWebView2_25 := wapi.NewGUID(IID_ICoreWebView2_25)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_25)),
 		uintptr(unsafe.Pointer(&result)))
@@ -1100,7 +1210,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_25() *ICoreWebView2_25 {
 // GetICoreWebView2_26 获取 ICoreWebView2_26。
 func (i *ICoreWebView2) GetICoreWebView2_26() (*ICoreWebView2_26, error) {
 	var result *ICoreWebView2_26
-	iidICoreWebView2_26 := NewGUID(IID_ICoreWebView2_26)
+	iidICoreWebView2_26 := wapi.NewGUID(IID_ICoreWebView2_26)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_26)),
 		uintptr(unsafe.Pointer(&result)))
@@ -1116,7 +1226,7 @@ func (i *ICoreWebView2) MustGetICoreWebView2_26() *ICoreWebView2_26 {
 // GetICoreWebView2_27 获取 ICoreWebView2_27。
 func (i *ICoreWebView2) GetICoreWebView2_27() (*ICoreWebView2_27, error) {
 	var result *ICoreWebView2_27
-	iidICoreWebView2_27 := NewGUID(IID_ICoreWebView2_27)
+	iidICoreWebView2_27 := wapi.NewGUID(IID_ICoreWebView2_27)
 	err := i.QueryInterface(
 		uintptr(unsafe.Pointer(iidICoreWebView2_27)),
 		uintptr(unsafe.Pointer(&result)))
