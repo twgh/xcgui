@@ -23,6 +23,27 @@ type ICoreWebView2WebMessageReceivedEventArgsVtbl struct {
 	TryGetWebMessageAsString ComProc
 }
 
+func (i *ICoreWebView2WebMessageReceivedEventArgs) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2WebMessageReceivedEventArgs) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2WebMessageReceivedEventArgs) QueryInterface(refiid, object uintptr) error {
+	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
 // TryGetWebMessageAsString 尝试获取 web 消息作为字符串。
 //   - 如果发布的消息是其他类型的 JavaScript 类型，则该方法失败，并返回错误: wapi.E_INVALIDARG。
 func (e *ICoreWebView2WebMessageReceivedEventArgs) TryGetWebMessageAsString() (string, error) {

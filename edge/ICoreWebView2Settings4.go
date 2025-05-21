@@ -22,6 +22,27 @@ type ICoreWebView2Settings4Vtbl struct {
 	PutIsGeneralAutofillEnabled  ComProc
 }
 
+func (i *ICoreWebView2Settings4) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2Settings4) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2Settings4) QueryInterface(refiid, object uintptr) error {
+	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
 // GetIsPasswordAutosaveEnabled 获取是否允许自动保存密码。
 func (i *ICoreWebView2Settings4) GetIsPasswordAutosaveEnabled() (bool, error) {
 	var enabled bool

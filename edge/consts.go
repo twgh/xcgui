@@ -1,5 +1,6 @@
 package edge
 
+// todo 定义所有的IID
 const (
 	IID_ICoreWebView2_2  = "{B4BC1926-7305-11EE-B962-0242AC120002}"
 	IID_ICoreWebView2_3  = "{A0D6DF20-3B92-416D-AA0C-437A9C727857}"

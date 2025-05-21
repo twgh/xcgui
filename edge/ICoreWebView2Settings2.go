@@ -20,6 +20,27 @@ type ICoreWebView2Settings2Vtbl struct {
 	PutUserAgent ComProc
 }
 
+func (i *ICoreWebView2Settings2) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2Settings2) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2Settings2) QueryInterface(refiid, object uintptr) error {
+	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
 // GetUserAgent 获取 UserAgent。
 func (i *ICoreWebView2Settings2) GetUserAgent() (string, error) {
 	var _userAgent *uint16

@@ -20,6 +20,27 @@ type ICoreWebView2Settings5Vtbl struct {
 	PutIsPinchZoomEnabled ComProc
 }
 
+func (i *ICoreWebView2Settings5) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2Settings5) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2Settings5) QueryInterface(refiid, object uintptr) error {
+	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
 // GetIsPinchZoomEnabled 获取是否允许缩放。
 func (i *ICoreWebView2Settings5) GetIsPinchZoomEnabled() (bool, error) {
 	var enabled bool

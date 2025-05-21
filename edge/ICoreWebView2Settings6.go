@@ -20,6 +20,27 @@ type ICoreWebView2Settings6Vtbl struct {
 	PutIsSwipeNavigationEnabled ComProc
 }
 
+func (i *ICoreWebView2Settings6) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2Settings6) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2Settings6) QueryInterface(refiid, object uintptr) error {
+	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
 // GetIsSwipeNavigationEnabled 获取是否允许滑动导航。
 func (i *ICoreWebView2Settings6) GetIsSwipeNavigationEnabled() (bool, error) {
 	var enabled bool

@@ -51,7 +51,7 @@ type WebViewOption struct {
 //
 // 对 webview 的一些更改操作必须在炫彩 UI 线程里执行.
 type WebView struct {
-	webview2
+	Webview2
 
 	// 读写锁bindings
 	rwxBindings sync.RWMutex
@@ -159,7 +159,7 @@ func (w *WebView) createWithOptionsByXcgui(hParent int, opt WebViewOption) error
 
 	// ------------------------ 创建 WebView2 控制器 ------------------------
 	w.init()
-	w.webview2.msgcb_xcgui = w.msgcb_xcgui
+	w.Webview2.msgcb_xcgui = w.msgcb_xcgui
 	w.SetPermission(COREWEBVIEW2_PERMISSION_KIND_CLIPBOARD_READ, COREWEBVIEW2_PERMISSION_STATE_ALLOW)
 
 	err := w.newWebView2Controller()

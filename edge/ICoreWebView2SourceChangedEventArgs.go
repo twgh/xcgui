@@ -21,6 +21,27 @@ type ICoreWebView2SourceChangedEventArgsVtbl struct {
 	GetIsNewDocument ComProc
 }
 
+func (i *ICoreWebView2SourceChangedEventArgs) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2SourceChangedEventArgs) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2SourceChangedEventArgs) QueryInterface(refiid, object uintptr) error {
+	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
 // GetIsNewDocument 获取导航到的页面是否为一个新文档.
 func (i *ICoreWebView2SourceChangedEventArgs) GetIsNewDocument() (bool, error) {
 	var isNewDocument bool

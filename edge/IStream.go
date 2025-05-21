@@ -1,6 +1,8 @@
 package edge
 
 import (
+	"errors"
+	"golang.org/x/sys/windows"
 	"syscall"
 	"unsafe"
 )
@@ -32,6 +34,27 @@ type IStreamVtbl struct {
 	UnlockRegion ComProc
 	Stat         ComProc
 	Clone        ComProc
+}
+
+func (i *IStream) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *IStream) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *IStream) QueryInterface(refiid, object uintptr) error {
+	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
 }
 
 // Read 从当前搜寻指针开始，将指定数量的字节从流对象读取到内存中。
@@ -66,15 +89,6 @@ func (i *IStream) Write(buffer []byte) (int, error) {
 		return 0, syscall.Errno(hr)
 	}
 	return int(bytesWritten), nil
-}
-
-// Release 释放 COM 对象。
-func (i *IStream) Release() error {
-	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
 }
 
 // STREAM_SEEK 表示流式数据中的定位方式

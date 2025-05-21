@@ -22,6 +22,27 @@ type ICoreWebView2_22Vtbl struct {
 	RemoveWebResourceRequestedFilterWithRequestSourceKinds ComProc
 }
 
+func (i *ICoreWebView2_22) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2_22) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2_22) QueryInterface(refiid, object uintptr) error {
+	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
 // AddWebResourceRequestedFilterWithRequestSourceKinds 添加带有请求源类型的 Web 资源请求过滤器.
 //
 // uri: 要过滤的 URI.

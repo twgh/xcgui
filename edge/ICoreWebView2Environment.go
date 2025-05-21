@@ -30,7 +30,7 @@ func (i *ICoreWebView2Environment) AddRef() uintptr {
 }
 
 func (i *ICoreWebView2Environment) Release() uintptr {
-	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
 	return r
 }
 

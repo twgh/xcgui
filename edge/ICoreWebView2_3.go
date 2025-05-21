@@ -26,6 +26,27 @@ type ICoreWebView2_3Vtbl struct {
 	ClearVirtualHostNameToFolderMapping ComProc
 }
 
+func (i *ICoreWebView2_3) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2_3) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2_3) QueryInterface(refiid, object uintptr) error {
+	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
 // GetIsSuspended 获取 WebView 控件是否已挂起。
 func (i *ICoreWebView2_3) GetIsSuspended() (bool, error) {
 	var result bool

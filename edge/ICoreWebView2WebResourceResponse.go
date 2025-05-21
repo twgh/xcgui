@@ -35,7 +35,7 @@ func (i *ICoreWebView2WebResourceResponse) AddRef() uintptr {
 }
 
 func (i *ICoreWebView2WebResourceResponse) Release() uintptr {
-	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
 	return r
 }
 

@@ -20,6 +20,27 @@ type ICoreWebView2Settings8Vtbl struct {
 	PutIsReputationCheckingRequired ComProc
 }
 
+func (i *ICoreWebView2Settings8) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2Settings8) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2Settings8) QueryInterface(refiid, object uintptr) error {
+	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
 // GetIsReputationCheckingRequired 获取是否需要进行信誉检查。
 func (i *ICoreWebView2Settings8) GetIsReputationCheckingRequired() (bool, error) {
 	var required bool

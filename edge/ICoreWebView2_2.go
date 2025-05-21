@@ -25,6 +25,27 @@ type ICoreWebView2_2Vtbl struct {
 	GetEnvironment                    ComProc
 }
 
+func (i *ICoreWebView2_2) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2_2) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2_2) QueryInterface(refiid, object uintptr) error {
+	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
 // GetEnvironment 获取用于创建此 ICoreWebView2 的 ICoreWebView2Environment.
 func (i *ICoreWebView2_2) GetEnvironment() (*ICoreWebView2Environment, error) {
 	var environment *ICoreWebView2Environment

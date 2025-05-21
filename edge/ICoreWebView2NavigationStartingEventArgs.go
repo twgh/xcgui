@@ -9,7 +9,7 @@ import (
 	"unsafe"
 )
 
-// ICoreWebView2NavigationStartingEventArgs 是 NavigationStarting 事件的事件参数。
+// ICoreWebView2NavigationStartingEventArgs 是 NavigationStarting 和 FrameNavigationStarting 事件的事件参数。
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2navigationstartingeventargs
 type ICoreWebView2NavigationStartingEventArgs struct {
@@ -33,7 +33,7 @@ func (i *ICoreWebView2NavigationStartingEventArgs) AddRef() uintptr {
 }
 
 func (i *ICoreWebView2NavigationStartingEventArgs) Release() uintptr {
-	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
 	return r
 }
 

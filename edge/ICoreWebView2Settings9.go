@@ -20,6 +20,27 @@ type ICoreWebView2Settings9Vtbl struct {
 	PutIsNonClientRegionSupportEnabled ComProc
 }
 
+func (i *ICoreWebView2Settings9) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2Settings9) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2Settings9) QueryInterface(refiid, object uintptr) error {
+	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
 // GetIsNonClientRegionSupportEnabled 获取是否启用非客户区域支持。
 func (i *ICoreWebView2Settings9) GetIsNonClientRegionSupportEnabled() (bool, error) {
 	var enabled bool

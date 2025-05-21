@@ -84,7 +84,7 @@ func (i *ICoreWebView2) AddRef() uintptr {
 }
 
 func (i *ICoreWebView2) Release() uintptr {
-	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
 	return r
 }
 
@@ -793,6 +793,102 @@ func (i *ICoreWebView2) RemoveSourceChanged(token EventRegistrationToken) error 
 	return nil
 }
 
+// AddFrameNavigationStarting 添加框架导航开始事件处理程序。
+//   - 框架导航开始事件会在 Webview 中的子框架请求导航到不同 URI 的权限时触发。重定向也会触发此操作，并且导航 ID 与原始 ID 相同。
+//   - 在所有框架导航开始事件处理程序返回之前，导航将被阻止。
+func (i *ICoreWebView2) AddFrameNavigationStarting(eventHandler *ICoreWebView2NavigationStartingEventHandler2, token *EventRegistrationToken) error {
+	r, _, err := i.Vtbl.AddFrameNavigationStarting.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(eventHandler)),
+		uintptr(unsafe.Pointer(token)),
+	)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
+// RemoveFrameNavigationStarting 移除框架导航开始事件处理程序。
+func (i *ICoreWebView2) RemoveFrameNavigationStarting(token EventRegistrationToken) error {
+	r, _, err := i.Vtbl.RemoveFrameNavigationStarting.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(token.Value),
+	)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
+// AddFrameNavigationCompleted 添加框架导航完成事件处理程序。
+//   - 框架导航完成事件会在 Webview 中的子框架完全加载完毕（与 body.onload 触发同时）或加载因错误而停止时触发。
+func (i *ICoreWebView2) AddFrameNavigationCompleted(eventHandler *ICoreWebView2NavigationCompletedEventHandler2, token *EventRegistrationToken) error {
+	r, _, err := i.Vtbl.AddFrameNavigationCompleted.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(eventHandler)),
+		uintptr(unsafe.Pointer(token)),
+	)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
+// RemoveFrameNavigationCompleted 移除框架导航完成事件处理程序。
+func (i *ICoreWebView2) RemoveFrameNavigationCompleted(token EventRegistrationToken) error {
+	r, _, err := i.Vtbl.RemoveFrameNavigationCompleted.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(token.Value),
+	)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
+// AddWindowCloseRequested 添加窗口关闭请求事件处理程序
+func (i *ICoreWebView2) AddWindowCloseRequested(eventHandler *ICoreWebView2WindowCloseRequestedEventHandler, token *EventRegistrationToken) error {
+	r, _, err := i.Vtbl.AddWindowCloseRequested.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(eventHandler)),
+		uintptr(unsafe.Pointer(token)),
+	)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
+// RemoveWindowCloseRequested 移除窗口关闭请求事件处理程序
+func (i *ICoreWebView2) RemoveWindowCloseRequested(token EventRegistrationToken) error {
+	r, _, err := i.Vtbl.RemoveWindowCloseRequested.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(token.Value),
+	)
+	if !errors.Is(err, windows.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
 /*TODO:
 
 CapturePreview
@@ -803,24 +899,21 @@ CallDevToolsProtocolMethod
 AddHistoryChanged
 RemoveHistoryChanged
 
-AddFrameNavigationStarting
-RemoveFrameNavigationStarting
-AddFrameNavigationCompleted
-RemoveFrameNavigationCompleted
 AddScriptDialogOpening
 RemoveScriptDialogOpening
+
 AddProcessFailed
 RemoveProcessFailed
 
 AddDocumentTitleChanged
 RemoveDocumentTitleChanged
+
 AddHostObjectToScript
 RemoveHostObjectFromScript
+
 AddContainsFullScreenElementChanged
 RemoveContainsFullScreenElementChanged
 
-AddWindowCloseRequested
-RemoveWindowCloseRequested
 */
 
 // GetICoreWebView2_2 获取 ICoreWebView2_2。
