@@ -67,9 +67,10 @@ func (i *ICoreWebView2WindowFeatures) GetHasPosition() (bool, error) {
 	return value, nil
 }
 
-// MustGetHasPosition 获取窗口是否指定了位置. 忽略错误.
+// MustGetHasPosition 获取窗口是否指定了位置. 出错时会触发全局错误回调.
 func (i *ICoreWebView2WindowFeatures) MustGetHasPosition() bool {
-	value, _ := i.GetHasPosition()
+	value, err := i.GetHasPosition()
+	ReportError2(err)
 	return value
 }
 
@@ -89,9 +90,10 @@ func (i *ICoreWebView2WindowFeatures) GetHasSize() (bool, error) {
 	return value, nil
 }
 
-// MustGetHasSize 获取窗口是否指定了大小. 忽略错误.
+// MustGetHasSize 获取窗口是否指定了大小. 出错时会触发全局错误回调.
 func (i *ICoreWebView2WindowFeatures) MustGetHasSize() bool {
-	value, _ := i.GetHasSize()
+	value, err := i.GetHasSize()
+	ReportError2(err)
 	return value
 }
 
@@ -111,9 +113,10 @@ func (i *ICoreWebView2WindowFeatures) GetLeft() (uint32, error) {
 	return value, nil
 }
 
-// MustGetLeft 获取窗口顶部位置. 忽略错误.
+// MustGetLeft 获取窗口顶部位置. 出错时会触发全局错误回调.
 func (i *ICoreWebView2WindowFeatures) MustGetLeft() uint32 {
-	value, _ := i.GetLeft()
+	value, err := i.GetLeft()
+	ReportError2(err)
 	return value
 }
 
@@ -133,9 +136,10 @@ func (i *ICoreWebView2WindowFeatures) GetTop() (uint32, error) {
 	return value, nil
 }
 
-// MustGetTop 获取窗口顶部位置. 忽略错误.
+// MustGetTop 获取窗口顶部位置. 出错时会触发全局错误回调.
 func (i *ICoreWebView2WindowFeatures) MustGetTop() uint32 {
-	value, _ := i.GetTop()
+	value, err := i.GetTop()
+	ReportError2(err)
 	return value
 }
 
@@ -155,9 +159,10 @@ func (i *ICoreWebView2WindowFeatures) GetHeight() (uint32, error) {
 	return value, nil
 }
 
-// MustGetHeight 获取窗口高度. 忽略错误.
+// MustGetHeight 获取窗口高度. 出错时会触发全局错误回调.
 func (i *ICoreWebView2WindowFeatures) MustGetHeight() uint32 {
-	value, _ := i.GetHeight()
+	value, err := i.GetHeight()
+	ReportError2(err)
 	return value
 }
 
@@ -177,9 +182,10 @@ func (i *ICoreWebView2WindowFeatures) GetWidth() (uint32, error) {
 	return value, nil
 }
 
-// MustGetWidth 获取窗口宽度. 忽略错误.
+// MustGetWidth 获取窗口宽度. 出错时会触发全局错误回调.
 func (i *ICoreWebView2WindowFeatures) MustGetWidth() uint32 {
-	value, _ := i.GetWidth()
+	value, err := i.GetWidth()
+	ReportError2(err)
 	return value
 }
 
@@ -199,9 +205,10 @@ func (i *ICoreWebView2WindowFeatures) GetShouldDisplayMenuBar() (bool, error) {
 	return value, nil
 }
 
-// MustGetShouldDisplayMenuBar 获取是否显示菜单栏. 忽略错误.
+// MustGetShouldDisplayMenuBar 获取是否显示菜单栏. 出错时会触发全局错误回调.
 func (i *ICoreWebView2WindowFeatures) MustGetShouldDisplayMenuBar() bool {
-	value, _ := i.GetShouldDisplayMenuBar()
+	value, err := i.GetShouldDisplayMenuBar()
+	ReportError2(err)
 	return value
 }
 
@@ -221,9 +228,10 @@ func (i *ICoreWebView2WindowFeatures) GetShouldDisplayStatus() (bool, error) {
 	return value, nil
 }
 
-// MustGetShouldDisplayStatus 获取是否显示状态栏. 忽略错误.
+// MustGetShouldDisplayStatus 获取是否显示状态栏. 出错时会触发全局错误回调.
 func (i *ICoreWebView2WindowFeatures) MustGetShouldDisplayStatus() bool {
-	value, _ := i.GetShouldDisplayStatus()
+	value, err := i.GetShouldDisplayStatus()
+	ReportError2(err)
 	return value
 }
 
@@ -243,9 +251,10 @@ func (i *ICoreWebView2WindowFeatures) GetShouldDisplayToolbar() (bool, error) {
 	return value, nil
 }
 
-// MustGetShouldDisplayToolbar 获取是否显示工具栏. 忽略错误.
+// MustGetShouldDisplayToolbar 获取是否显示工具栏. 出错时会触发全局错误回调.
 func (i *ICoreWebView2WindowFeatures) MustGetShouldDisplayToolbar() bool {
-	value, _ := i.GetShouldDisplayToolbar()
+	value, err := i.GetShouldDisplayToolbar()
+	ReportError2(err)
 	return value
 }
 
@@ -265,8 +274,9 @@ func (i *ICoreWebView2WindowFeatures) GetShouldDisplayScrollBars() (bool, error)
 	return value, nil
 }
 
-// MustGetShouldDisplayScrollBars 获取是否显示滚动条. 忽略错误.
+// MustGetShouldDisplayScrollBars 获取是否显示滚动条. 出错时会触发全局错误回调.
 func (i *ICoreWebView2WindowFeatures) MustGetShouldDisplayScrollBars() bool {
-	value, _ := i.GetShouldDisplayScrollBars()
+	value, err := i.GetShouldDisplayScrollBars()
+	ReportError2(err)
 	return value
 }

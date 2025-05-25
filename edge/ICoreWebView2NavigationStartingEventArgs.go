@@ -4,6 +4,7 @@ package edge
 
 import (
 	"errors"
+	"github.com/twgh/xcgui/common"
 	"golang.org/x/sys/windows"
 	"syscall"
 	"unsafe"
@@ -19,12 +20,12 @@ type ICoreWebView2NavigationStartingEventArgs struct {
 type ICoreWebView2NavigationStartingEventArgsVtbl struct {
 	IUnknownVtbl
 	GetUri             ComProc
-	GetNavigationId    ComProc
 	GetIsUserInitiated ComProc
 	GetIsRedirected    ComProc
 	GetRequestHeaders  ComProc
 	GetCancel          ComProc
 	PutCancel          ComProc
+	GetNavigationId    ComProc
 }
 
 func (i *ICoreWebView2NavigationStartingEventArgs) AddRef() uintptr {
@@ -66,9 +67,10 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetUri() (string, error) {
 	return uri, nil
 }
 
-// MustGetUri 获取请求的导航的 uri。忽略错误。
+// MustGetUri 获取请求的导航的 uri。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationStartingEventArgs) MustGetUri() string {
-	uri, _ := i.GetUri()
+	uri, err := i.GetUri()
+	ReportError2(err)
 	return uri
 }
 
@@ -88,9 +90,10 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetNavigationId() (uint64, er
 	return id, nil
 }
 
-// MustGetNavigationId 获取导航的 ID。忽略错误。
+// MustGetNavigationId 获取导航的 ID。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationStartingEventArgs) MustGetNavigationId() uint64 {
-	id, _ := i.GetNavigationId()
+	id, err := i.GetNavigationId()
+	ReportError2(err)
 	return id
 }
 
@@ -110,9 +113,10 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetIsUserInitiated() (bool, e
 	return isUserInitiated, nil
 }
 
-// MustGetIsUserInitiated 获取导航是否由用户发起。忽略错误。
+// MustGetIsUserInitiated 获取导航是否由用户发起。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationStartingEventArgs) MustGetIsUserInitiated() bool {
-	isUserInitiated, _ := i.GetIsUserInitiated()
+	isUserInitiated, err := i.GetIsUserInitiated()
+	ReportError2(err)
 	return isUserInitiated
 }
 
@@ -132,9 +136,10 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetIsRedirected() (bool, erro
 	return isRedirected, nil
 }
 
-// MustGetIsRedirected 获取导航是否是重定向的结果。忽略错误。
+// MustGetIsRedirected 获取导航是否是重定向的结果。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationStartingEventArgs) MustGetIsRedirected() bool {
-	isRedirected, _ := i.GetIsRedirected()
+	isRedirected, err := i.GetIsRedirected()
+	ReportError2(err)
 	return isRedirected
 }
 
@@ -154,9 +159,10 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetRequestHeaders() (*ICoreWe
 	return headers, nil
 }
 
-// MustGetRequestHeaders 获取导航请求的 HTTP 请求头。忽略错误。
+// MustGetRequestHeaders 获取导航请求的 HTTP 请求头。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationStartingEventArgs) MustGetRequestHeaders() *ICoreWebView2HttpRequestHeaders {
-	headers, _ := i.GetRequestHeaders()
+	headers, err := i.GetRequestHeaders()
+	ReportError2(err)
 	return headers
 }
 
@@ -176,17 +182,18 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetCancel() (bool, error) {
 	return cancel, nil
 }
 
-// MustGetCancel 获取是否取消导航。忽略错误。
+// MustGetCancel 获取是否取消导航。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationStartingEventArgs) MustGetCancel() bool {
-	cancel, _ := i.GetCancel()
+	cancel, err := i.GetCancel()
+	ReportError2(err)
 	return cancel
 }
 
-// PutCancel 设置是否取消导航。 TODO: BUG, 调用会直接崩溃
+// PutCancel 设置是否取消导航。
 func (i *ICoreWebView2NavigationStartingEventArgs) PutCancel(cancel bool) error {
 	r, _, err := i.Vtbl.PutCancel.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(BoolToInt(cancel)),
+		common.BoolPtr(cancel),
 	)
 	if !errors.Is(err, windows.ERROR_SUCCESS) {
 		return err

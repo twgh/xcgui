@@ -59,9 +59,10 @@ func (i *ICoreWebView2ContentLoadingEventArgs) GetIsErrorPage() (bool, error) {
 	return isErrorPage, nil
 }
 
-// MustGetIsErrorPage 获取当前导航是否为错误页面。忽略错误。
+// MustGetIsErrorPage 获取当前导航是否为错误页面。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContentLoadingEventArgs) MustGetIsErrorPage() bool {
-	isErrorPage, _ := i.GetIsErrorPage()
+	isErrorPage, err := i.GetIsErrorPage()
+	ReportError2(err)
 	return isErrorPage
 }
 
@@ -81,8 +82,9 @@ func (i *ICoreWebView2ContentLoadingEventArgs) GetNavigationId() (uint64, error)
 	return id, nil
 }
 
-// MustGetNavigationId 获取导航的 ID。忽略错误。
+// MustGetNavigationId 获取导航的 ID。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContentLoadingEventArgs) MustGetNavigationId() uint64 {
-	id, _ := i.GetNavigationId()
+	id, err := i.GetNavigationId()
+	ReportError2(err)
 	return id
 }

@@ -57,9 +57,10 @@ func (i *ICoreWebView2Settings5) GetIsPinchZoomEnabled() (bool, error) {
 	return enabled, nil
 }
 
-// MustGetIsPinchZoomEnabled 获取是否允许缩放。忽略错误。
+// MustGetIsPinchZoomEnabled 获取是否允许缩放。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings5) MustGetIsPinchZoomEnabled() bool {
-	enabled, _ := i.GetIsPinchZoomEnabled()
+	enabled, err := i.GetIsPinchZoomEnabled()
+	ReportError2(err)
 	return enabled
 }
 

@@ -25,8 +25,8 @@ type ICoreWebView2CookieManagerVtbl struct {
 	AddOrUpdateCookie              ComProc
 	DeleteCookie                   ComProc
 	DeleteCookies                  ComProc
-	DeleteAllCookies               ComProc
 	DeleteCookiesWithDomainAndPath ComProc
+	DeleteAllCookies               ComProc
 }
 
 func (i *ICoreWebView2CookieManager) AddRef() uintptr {
@@ -114,7 +114,7 @@ func (i *ICoreWebView2CookieManager) CopyCookie(cookieParam *ICoreWebView2Cookie
 	return cookie, nil
 }
 
-// MustCopyCookie 创建一个 ICoreWebView2Cookie 对象，该对象是指定 cookie 的副本。忽略错误。
+// MustCopyCookie 创建一个 ICoreWebView2Cookie 对象，该对象是指定 cookie 的副本。出错时会触发全局错误回调。
 func (i *ICoreWebView2CookieManager) MustCopyCookie(cookieParam *ICoreWebView2Cookie) *ICoreWebView2Cookie {
 	cookie, _ := i.CopyCookie(cookieParam)
 	return cookie

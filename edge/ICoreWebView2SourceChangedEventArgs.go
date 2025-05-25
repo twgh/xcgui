@@ -58,8 +58,9 @@ func (i *ICoreWebView2SourceChangedEventArgs) GetIsNewDocument() (bool, error) {
 	return isNewDocument, nil
 }
 
-// MustGetIsNewDocument 获取导航到的页面是否为一个新文档. 忽略错误.
+// MustGetIsNewDocument 获取导航到的页面是否为一个新文档. 出错时会触发全局错误回调.
 func (i *ICoreWebView2SourceChangedEventArgs) MustGetIsNewDocument() bool {
-	isNewDocument, _ := i.GetIsNewDocument()
+	isNewDocument, err := i.GetIsNewDocument()
+	ReportError2(err)
 	return isNewDocument
 }

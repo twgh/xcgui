@@ -57,9 +57,10 @@ func (i *ICoreWebView2Settings7) GetHiddenPdfToolbarItems() (COREWEBVIEW2_PDF_TO
 	return items, nil
 }
 
-// MustGetHiddenPdfToolbarItems 获取 PDF 工具栏项。忽略错误。
+// MustGetHiddenPdfToolbarItems 获取 PDF 工具栏项。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings7) MustGetHiddenPdfToolbarItems() COREWEBVIEW2_PDF_TOOLBAR_ITEMS {
-	items, _ := i.GetHiddenPdfToolbarItems()
+	items, err := i.GetHiddenPdfToolbarItems()
+	ReportError2(err)
 	return items
 }
 

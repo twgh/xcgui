@@ -57,9 +57,10 @@ func (i *ICoreWebView2Settings3) GetAreBrowserAcceleratorKeysEnabled() (bool, er
 	return enabled, nil
 }
 
-// MustGetAreBrowserAcceleratorKeysEnabled 获取是否允许浏览器快捷键。忽略错误。
+// MustGetAreBrowserAcceleratorKeysEnabled 获取是否允许浏览器快捷键。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings3) MustGetAreBrowserAcceleratorKeysEnabled() bool {
-	enabled, _ := i.GetAreBrowserAcceleratorKeysEnabled()
+	enabled, err := i.GetAreBrowserAcceleratorKeysEnabled()
+	ReportError2(err)
 	return enabled
 }
 

@@ -79,11 +79,12 @@ func (i *ICoreWebView2Settings) GetIsScriptEnabled() (bool, error) {
 	return isScriptEnabled, nil
 }
 
-// MustGetIsScriptEnabled 获取是否在 WebView 中的所有未来导航中启用运行 JavaScript。忽略错误。
+// MustGetIsScriptEnabled 获取是否在 WebView 中的所有未来导航中启用运行 JavaScript。出错时会触发全局错误回调。
 //   - 这仅影响文档中的脚本。
 //   - 即使脚本被禁用，用 ExecuteScript 注入的脚本也会运行。
 func (i *ICoreWebView2Settings) MustGetIsScriptEnabled() bool {
-	enabled, _ := i.GetIsScriptEnabled()
+	enabled, err := i.GetIsScriptEnabled()
+	ReportError2(err)
 	return enabled
 }
 
@@ -121,9 +122,10 @@ func (i *ICoreWebView2Settings) GetIsWebMessageEnabled() (bool, error) {
 	return isWebMessageEnabled, nil
 }
 
-// MustGetIsWebMessageEnabled 获取是否允许 WebView 发送和接收 WebMessage。忽略错误。
+// MustGetIsWebMessageEnabled 获取是否允许 WebView 发送和接收 WebMessage。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetIsWebMessageEnabled() bool {
-	enabled, _ := i.GetIsWebMessageEnabled()
+	enabled, err := i.GetIsWebMessageEnabled()
+	ReportError2(err)
 	return enabled
 }
 
@@ -158,9 +160,10 @@ func (i *ICoreWebView2Settings) GetAreDefaultScriptDialogsEnabled() (bool, error
 	return areDefaultScriptDialogsEnabled, nil
 }
 
-// MustGetAreDefaultScriptDialogsEnabled 获取是否允许在 WebView 中显示默认的 JavaScript 对话框。忽略错误。
+// MustGetAreDefaultScriptDialogsEnabled 获取是否允许在 WebView 中显示默认的 JavaScript 对话框。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetAreDefaultScriptDialogsEnabled() bool {
-	enabled, _ := i.GetAreDefaultScriptDialogsEnabled()
+	enabled, err := i.GetAreDefaultScriptDialogsEnabled()
+	ReportError2(err)
 	return enabled
 }
 
@@ -197,11 +200,12 @@ func (i *ICoreWebView2Settings) GetIsStatusBarEnabled() (bool, error) {
 	return isStatusBarEnabled, nil
 }
 
-// MustGetIsStatusBarEnabled 获取是否在 WebView 中显示状态栏。忽略错误。
+// MustGetIsStatusBarEnabled 获取是否在 WebView 中显示状态栏。出错时会触发全局错误回调。
 //   - 状态栏通常显示在WebView的左下角，显示用户悬停在链接上时链接的 URI 等信息。
 //   - 状态栏 UI 可以通过 web 内容进行更改，不应被视为安全。
 func (i *ICoreWebView2Settings) MustGetIsStatusBarEnabled() bool {
-	enabled, _ := i.GetIsStatusBarEnabled()
+	enabled, err := i.GetIsStatusBarEnabled()
+	ReportError2(err)
 	return enabled
 }
 
@@ -239,9 +243,10 @@ func (i *ICoreWebView2Settings) GetAreDevToolsEnabled() (bool, error) {
 	return areDevToolsEnabled, nil
 }
 
-// MustGetAreDevToolsEnabled 获取是否允许在 WebView 中显示开发者工具。忽略错误。
+// MustGetAreDevToolsEnabled 获取是否允许在 WebView 中显示开发者工具。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetAreDevToolsEnabled() bool {
-	enabled, _ := i.GetAreDevToolsEnabled()
+	enabled, err := i.GetAreDevToolsEnabled()
+	ReportError2(err)
 	return enabled
 }
 
@@ -276,9 +281,10 @@ func (i *ICoreWebView2Settings) GetAreDefaultContextMenusEnabled() (bool, error)
 	return enabled, nil
 }
 
-// MustGetAreDefaultContextMenusEnabled 获取是否允许在 WebView 中显示默认的上下文菜单。忽略错误。
+// MustGetAreDefaultContextMenusEnabled 获取是否允许在 WebView 中显示默认的上下文菜单。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetAreDefaultContextMenusEnabled() bool {
-	enabled, _ := i.GetAreDefaultContextMenusEnabled()
+	enabled, err := i.GetAreDefaultContextMenusEnabled()
+	ReportError2(err)
 	return enabled
 }
 
@@ -313,9 +319,10 @@ func (i *ICoreWebView2Settings) GetAreHostObjectsAllowed() (bool, error) {
 	return allowed, nil
 }
 
-// MustGetAreHostObjectsAllowed 获取是否允许在 WebView 中显示主机对象。忽略错误。
+// MustGetAreHostObjectsAllowed 获取是否允许在 WebView 中显示主机对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetAreHostObjectsAllowed() bool {
-	allowed, _ := i.GetAreHostObjectsAllowed()
+	allowed, err := i.GetAreHostObjectsAllowed()
+	ReportError2(err)
 	return allowed
 }
 
@@ -350,9 +357,10 @@ func (i *ICoreWebView2Settings) GetIsZoomControlEnabled() (bool, error) {
 	return enabled, nil
 }
 
-// MustGetIsZoomControlEnabled 获取是否允许在 WebView 中显示缩放控件。忽略错误。
+// MustGetIsZoomControlEnabled 获取是否允许在 WebView 中显示缩放控件。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetIsZoomControlEnabled() bool {
-	enabled, _ := i.GetIsZoomControlEnabled()
+	enabled, err := i.GetIsZoomControlEnabled()
+	ReportError2(err)
 	return enabled
 }
 
@@ -389,7 +397,8 @@ func (i *ICoreWebView2Settings) GetIsBuiltInErrorPageEnabled() (bool, error) {
 
 // MustGetIsBuiltInErrorPageEnabled 获取是否显示内置的错误页面。禁用时，当发生相关错误时，会显示一个空白页。
 func (i *ICoreWebView2Settings) MustGetIsBuiltInErrorPageEnabled() bool {
-	enabled, _ := i.GetIsBuiltInErrorPageEnabled()
+	enabled, err := i.GetIsBuiltInErrorPageEnabled()
+	ReportError2(err)
 	return enabled
 }
 
@@ -418,9 +427,10 @@ func (i *ICoreWebView2Settings) GetICoreWebView2Settings2() (*ICoreWebView2Setti
 	return result, err
 }
 
-// MustGetICoreWebView2Settings2 获取 ICoreWebView2Settings2 对象。忽略错误。
+// MustGetICoreWebView2Settings2 获取 ICoreWebView2Settings2 对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetICoreWebView2Settings2() *ICoreWebView2Settings2 {
-	c, _ := i.GetICoreWebView2Settings2()
+	c, err := i.GetICoreWebView2Settings2()
+	ReportError2(err)
 	return c
 }
 
@@ -434,9 +444,10 @@ func (i *ICoreWebView2Settings) GetICoreWebView2Settings3() (*ICoreWebView2Setti
 	return result, err
 }
 
-// MustGetICoreWebView2Settings3 获取 ICoreWebView2Settings3 对象。忽略错误。
+// MustGetICoreWebView2Settings3 获取 ICoreWebView2Settings3 对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetICoreWebView2Settings3() *ICoreWebView2Settings3 {
-	c, _ := i.GetICoreWebView2Settings3()
+	c, err := i.GetICoreWebView2Settings3()
+	ReportError2(err)
 	return c
 }
 
@@ -450,9 +461,10 @@ func (i *ICoreWebView2Settings) GetICoreWebView2Settings4() (*ICoreWebView2Setti
 	return result, err
 }
 
-// MustGetICoreWebView2Settings4 获取 ICoreWebView2Settings4 对象。忽略错误。
+// MustGetICoreWebView2Settings4 获取 ICoreWebView2Settings4 对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetICoreWebView2Settings4() *ICoreWebView2Settings4 {
-	c, _ := i.GetICoreWebView2Settings4()
+	c, err := i.GetICoreWebView2Settings4()
+	ReportError2(err)
 	return c
 }
 
@@ -466,9 +478,10 @@ func (i *ICoreWebView2Settings) GetICoreWebView2Settings5() (*ICoreWebView2Setti
 	return result, err
 }
 
-// MustGetICoreWebView2Settings5 获取 ICoreWebView2Settings5 对象。忽略错误。
+// MustGetICoreWebView2Settings5 获取 ICoreWebView2Settings5 对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetICoreWebView2Settings5() *ICoreWebView2Settings5 {
-	c, _ := i.GetICoreWebView2Settings5()
+	c, err := i.GetICoreWebView2Settings5()
+	ReportError2(err)
 	return c
 }
 
@@ -482,9 +495,10 @@ func (i *ICoreWebView2Settings) GetICoreWebView2Settings6() (*ICoreWebView2Setti
 	return result, err
 }
 
-// MustGetICoreWebView2Settings6 获取 ICoreWebView2Settings6 对象。忽略错误。
+// MustGetICoreWebView2Settings6 获取 ICoreWebView2Settings6 对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetICoreWebView2Settings6() *ICoreWebView2Settings6 {
-	c, _ := i.GetICoreWebView2Settings6()
+	c, err := i.GetICoreWebView2Settings6()
+	ReportError2(err)
 	return c
 }
 
@@ -498,9 +512,10 @@ func (i *ICoreWebView2Settings) GetICoreWebView2Settings7() (*ICoreWebView2Setti
 	return result, err
 }
 
-// MustGetICoreWebView2Settings7 获取 ICoreWebView2Settings7 对象。忽略错误。
+// MustGetICoreWebView2Settings7 获取 ICoreWebView2Settings7 对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetICoreWebView2Settings7() *ICoreWebView2Settings7 {
-	c, _ := i.GetICoreWebView2Settings7()
+	c, err := i.GetICoreWebView2Settings7()
+	ReportError2(err)
 	return c
 }
 
@@ -514,9 +529,10 @@ func (i *ICoreWebView2Settings) GetICoreWebView2Settings8() (*ICoreWebView2Setti
 	return result, err
 }
 
-// MustGetICoreWebView2Settings8 获取 ICoreWebView2Settings8 对象。忽略错误。
+// MustGetICoreWebView2Settings8 获取 ICoreWebView2Settings8 对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetICoreWebView2Settings8() *ICoreWebView2Settings8 {
-	c, _ := i.GetICoreWebView2Settings8()
+	c, err := i.GetICoreWebView2Settings8()
+	ReportError2(err)
 	return c
 }
 
@@ -530,8 +546,9 @@ func (i *ICoreWebView2Settings) GetICoreWebView2Settings9() (*ICoreWebView2Setti
 	return result, err
 }
 
-// MustGetICoreWebView2Settings9 获取 ICoreWebView2Settings9 对象。忽略错误。
+// MustGetICoreWebView2Settings9 获取 ICoreWebView2Settings9 对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetICoreWebView2Settings9() *ICoreWebView2Settings9 {
-	c, _ := i.GetICoreWebView2Settings9()
+	c, err := i.GetICoreWebView2Settings9()
+	ReportError2(err)
 	return c
 }

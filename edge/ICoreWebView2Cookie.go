@@ -20,18 +20,18 @@ type ICoreWebView2CookieVtbl struct {
 	IUnknownVtbl
 	GetName       ComProc
 	GetValue      ComProc
+	PutValue      ComProc
 	GetDomain     ComProc
 	GetPath       ComProc
 	GetExpires    ComProc
-	GetIsHttpOnly ComProc
-	GetSameSite   ComProc
-	GetIsSecure   ComProc
-	GetIsSession  ComProc
-	PutValue      ComProc
 	PutExpires    ComProc
+	GetIsHttpOnly ComProc
 	PutIsHttpOnly ComProc
+	GetSameSite   ComProc
 	PutSameSite   ComProc
+	GetIsSecure   ComProc
 	PutIsSecure   ComProc
+	GetIsSession  ComProc
 }
 
 func (i *ICoreWebView2Cookie) AddRef() uintptr {
@@ -75,11 +75,12 @@ func (i *ICoreWebView2Cookie) GetDomain() (string, error) {
 	return domain, nil
 }
 
-// MustGetDomain 获取 Cookie 的域。忽略错误.
+// MustGetDomain 获取 Cookie 的域。出错时会触发全局错误回调.
 //   - 默认值是从中接收此 cookie 的主机。
 //   - 请注意，例如: “.bing.com”、“bing.com”和“www.bing.com”被认为是不同的域。
 func (i *ICoreWebView2Cookie) MustGetDomain() string {
-	domain, _ := i.GetDomain()
+	domain, err := i.GetDomain()
+	ReportError2(err)
 	return domain
 }
 
@@ -101,9 +102,10 @@ func (i *ICoreWebView2Cookie) GetName() (string, error) {
 	return name, nil
 }
 
-// MustGetName 获取 Cookie 的名称。忽略错误。
+// MustGetName 获取 Cookie 的名称。出错时会触发全局错误回调。
 func (i *ICoreWebView2Cookie) MustGetName() string {
-	name, _ := i.GetName()
+	name, err := i.GetName()
+	ReportError2(err)
 	return name
 }
 
@@ -125,9 +127,10 @@ func (i *ICoreWebView2Cookie) GetValue() (string, error) {
 	return value, nil
 }
 
-// MustGetValue 获取 Cookie 的值。忽略错误。
+// MustGetValue 获取 Cookie 的值。出错时会触发全局错误回调。
 func (i *ICoreWebView2Cookie) MustGetValue() string {
-	value, _ := i.GetValue()
+	value, err := i.GetValue()
+	ReportError2(err)
 	return value
 }
 
@@ -150,10 +153,11 @@ func (i *ICoreWebView2Cookie) GetPath() (string, error) {
 	return path, nil
 }
 
-// MustGetPath 获取 Cookie 的路径。忽略错误。
+// MustGetPath 获取 Cookie 的路径。出错时会触发全局错误回调。
 //   - 默认值为“/”，这意味着此 cookie 将发送到域上的所有页面。
 func (i *ICoreWebView2Cookie) MustGetPath() string {
-	path, _ := i.GetPath()
+	path, err := i.GetPath()
+	ReportError2(err)
 	return path
 }
 
@@ -174,10 +178,11 @@ func (i *ICoreWebView2Cookie) GetExpires() (float64, error) {
 	return expires, nil
 }
 
-// MustGetExpires 获取 Cookie 的到期日期和时间，自 UNIX 纪元以来的秒数。忽略错误。
+// MustGetExpires 获取 Cookie 的到期日期和时间，自 UNIX 纪元以来的秒数。出错时会触发全局错误回调。
 //   - 默认值为 -1.0，这意味着默认情况下 Cookie 是会话 Cookie。
 func (i *ICoreWebView2Cookie) MustGetExpires() float64 {
-	expires, _ := i.GetExpires()
+	expires, err := i.GetExpires()
+	ReportError2(err)
 	return expires
 }
 
@@ -198,10 +203,11 @@ func (i *ICoreWebView2Cookie) GetIsHttpOnly() (bool, error) {
 	return isHttpOnly, nil
 }
 
-// MustGetIsHttpOnly 获取 Cookie 是否为 HttpOnly。忽略错误。
+// MustGetIsHttpOnly 获取 Cookie 是否为 HttpOnly。出错时会触发全局错误回调。
 //   - 如果页面脚本或其他活动内容无法访问此 cookie，则为 true。默认值为 false。
 func (i *ICoreWebView2Cookie) MustGetIsHttpOnly() bool {
-	isHttpOnly, _ := i.GetIsHttpOnly()
+	isHttpOnly, err := i.GetIsHttpOnly()
+	ReportError2(err)
 	return isHttpOnly
 }
 
@@ -222,10 +228,11 @@ func (i *ICoreWebView2Cookie) GetSameSite() (COREWEBVIEW2_COOKIE_SAME_SITE_KIND,
 	return sameSite, nil
 }
 
-// MustGetSameSite 获取 Cookie 的 SameSite 状态，表示cookie的强制模式。忽略错误。
+// MustGetSameSite 获取 Cookie 的 SameSite 状态，表示cookie的强制模式。出错时会触发全局错误回调。
 //   - 默认为 COREWEBVIEW2_COOKIE_SAME_SITE_KIND_LAX。
 func (i *ICoreWebView2Cookie) MustGetSameSite() COREWEBVIEW2_COOKIE_SAME_SITE_KIND {
-	sameSite, _ := i.GetSameSite()
+	sameSite, err := i.GetSameSite()
+	ReportError2(err)
 	return sameSite
 }
 
@@ -248,12 +255,13 @@ func (i *ICoreWebView2Cookie) GetIsSecure() (bool, error) {
 	return isSecure, nil
 }
 
-// MustGetIsSecure 获取 Cookie 的安全级别。忽略错误。
+// MustGetIsSecure 获取 Cookie 的安全级别。出错时会触发全局错误回调。
 //   - 如果客户端仅在后续请求中返回 cookie（如果这些请求使用 HTTPS），则为 true。
 //   - 默认值为 false。
 //   - 请注意，请求 COREWEBVIEW2_COOKIE_SAME_SITE_KIND_NONE 但未标记为安全的 cookie 将被拒绝。
 func (i *ICoreWebView2Cookie) MustGetIsSecure() bool {
-	isSecure, _ := i.GetIsSecure()
+	isSecure, err := i.GetIsSecure()
+	ReportError2(err)
 	return isSecure
 }
 
@@ -273,9 +281,10 @@ func (i *ICoreWebView2Cookie) GetIsSession() (bool, error) {
 	return isSession, nil
 }
 
-// MustGetIsSession 获取 Cookie 是否为会话 Cookie, 默认值为false。忽略错误。
+// MustGetIsSession 获取 Cookie 是否为会话 Cookie, 默认值为false。出错时会触发全局错误回调。
 func (i *ICoreWebView2Cookie) MustGetIsSession() bool {
-	isSession, _ := i.GetIsSession()
+	isSession, err := i.GetIsSession()
+	ReportError2(err)
 	return isSession
 }
 

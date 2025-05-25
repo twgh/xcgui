@@ -118,7 +118,7 @@ func (e *ICoreWebView2Environment) GetBrowserVersionString() (string, error) {
 	return version, nil
 }
 
-// MustGetBrowserVersionString 获取当前 ICoreWebView2Environment 的浏览器版本信息，如果不是WebView2运行时，则包括通道名称。忽略错误。
+// MustGetBrowserVersionString 获取当前 ICoreWebView2Environment 的浏览器版本信息，如果不是WebView2运行时，则包括通道名称。出错时会触发全局错误回调。
 func (e *ICoreWebView2Environment) MustGetBrowserVersionString() string {
 	version, _ := e.GetBrowserVersionString()
 	return version

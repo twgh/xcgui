@@ -19,8 +19,8 @@ type ICoreWebView2HttpHeadersCollectionIterator struct {
 type ICoreWebView2HttpHeadersCollectionIteratorVtbl struct {
 	IUnknownVtbl
 	GetCurrentHeader    ComProc
-	MoveNext            ComProc
 	GetHasCurrentHeader ComProc
+	MoveNext            ComProc
 }
 
 func (i *ICoreWebView2HttpHeadersCollectionIterator) AddRef() uintptr {
@@ -65,7 +65,7 @@ func (i *ICoreWebView2HttpHeadersCollectionIterator) GetCurrentHeader() (name st
 	return name, value, nil
 }
 
-// MustGetCurrentHeader 获取当前HTTP头的名称和值。忽略错误。
+// MustGetCurrentHeader 获取当前HTTP头的名称和值。出错时会触发全局错误回调。
 func (i *ICoreWebView2HttpHeadersCollectionIterator) MustGetCurrentHeader() (name string, value string) {
 	name, value, _ = i.GetCurrentHeader()
 	return
@@ -87,7 +87,7 @@ func (i *ICoreWebView2HttpHeadersCollectionIterator) MoveNext() (bool, error) {
 	return hasNext != 0, nil
 }
 
-// MustMoveNext 将迭代器移动到下一个HTTP头。忽略错误。
+// MustMoveNext 将迭代器移动到下一个HTTP头。出错时会触发全局错误回调。
 func (i *ICoreWebView2HttpHeadersCollectionIterator) MustMoveNext() bool {
 	hasNext, _ := i.MoveNext()
 	return hasNext
@@ -109,8 +109,9 @@ func (i *ICoreWebView2HttpHeadersCollectionIterator) GetHasCurrentHeader() (bool
 	return hasCurrent != 0, nil
 }
 
-// MustGetHasCurrentHeader 检查迭代器是否有当前HTTP头。忽略错误。
+// MustGetHasCurrentHeader 检查迭代器是否有当前HTTP头。出错时会触发全局错误回调。
 func (i *ICoreWebView2HttpHeadersCollectionIterator) MustGetHasCurrentHeader() bool {
-	hasCurrent, _ := i.GetHasCurrentHeader()
+	hasCurrent, err := i.GetHasCurrentHeader()
+	ReportError2(err)
 	return hasCurrent
 }

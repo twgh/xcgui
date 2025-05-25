@@ -174,14 +174,20 @@ func (w *WebView) createWithOptionsByXcgui(hParent int, opt WebViewOption) error
 	settings, _ := w.GetSettings()
 	if settings != nil {
 		// 设置是否可开启开发人员工具
-		_ = settings.PutAreDevToolsEnabled(opt.Debug)
+		err = settings.PutAreDevToolsEnabled(opt.Debug)
+		ReportError2(err)
 		// 设置是否启用非客户区域支持
-		s9, _ := settings.GetICoreWebView2Settings9()
-		if s9 != nil {
-			_ = s9.PutIsNonClientRegionSupportEnabled(opt.AppDrag)
+		s9, err := settings.GetICoreWebView2Settings9()
+		if err != nil {
+			ReportError2(err)
+		} else {
+			err = s9.PutIsNonClientRegionSupportEnabled(opt.AppDrag)
+			ReportError2(err)
+			s9.Release()
 		}
 	}
-	w.Resize()
+	err = w.Resize()
+	ReportError2(err)
 	// ------------------------ 创建 WebView2 控制器 END ------------------------
 
 	// 设置 WebView2 宿主窗口为炫彩父窗口或元素的子窗口
@@ -282,15 +288,15 @@ func (w *WebView) msgcb_xcgui(msg string) {
 	id := strconv.Itoa(d.ID)
 	if res, err := w.callbinding(&d); err != nil {
 		xc.XC_CallUT(func() {
-			w.Eval("window._rpc[" + id + "].reject(" + jsString(err.Error()) + "); window._rpc[" + id + "] = undefined")
+			_ = w.Eval("window._rpc[" + id + "].reject(" + jsString(err.Error()) + "); window._rpc[" + id + "] = undefined")
 		})
 	} else if b, err := json.Marshal(res); err != nil {
 		xc.XC_CallUT(func() {
-			w.Eval("window._rpc[" + id + "].reject(" + jsString(err.Error()) + "); window._rpc[" + id + "] = undefined")
+			_ = w.Eval("window._rpc[" + id + "].reject(" + jsString(err.Error()) + "); window._rpc[" + id + "] = undefined")
 		})
 	} else {
 		xc.XC_CallUT(func() {
-			w.Eval("window._rpc[" + id + "].resolve(" + string(b) + "); window._rpc[" + id + "] = undefined")
+			_ = w.Eval("window._rpc[" + id + "].resolve(" + string(b) + "); window._rpc[" + id + "] = undefined")
 		})
 	}
 }

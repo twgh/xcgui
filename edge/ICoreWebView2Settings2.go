@@ -59,9 +59,10 @@ func (i *ICoreWebView2Settings2) GetUserAgent() (string, error) {
 	return userAgent, nil
 }
 
-// MustGetUserAgent 获取 UserAgent。忽略错误。
+// MustGetUserAgent 获取 UserAgent。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings2) MustGetUserAgent() string {
-	userAgent, _ := i.GetUserAgent()
+	userAgent, err := i.GetUserAgent()
+	ReportError2(err)
 	return userAgent
 }
 

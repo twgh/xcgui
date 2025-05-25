@@ -4,6 +4,57 @@ import "strings"
 
 // --------------------------- 事件 ---------------------------
 
+// DocumentTitleChanged 在文档标题发生变化时调用.
+func (e *Webview2) DocumentTitleChanged(sender *ICoreWebView2, args *IUnknown) uintptr {
+	if e.cbDocumentTitleChangedEvent != nil {
+		e.cbDocumentTitleChangedEvent(sender, args)
+	}
+	return 0
+}
+
+// Event_DocumentTitleChanged 文档标题改变事件.
+//   - 当 Webview 的 DocumentTitle 属性发生变化时，DocumentTitleChanged 会运行，并且可能在 NavigationCompleted 事件之前或之后运行。
+func (e *Webview2) Event_DocumentTitleChanged(cb func(sender *ICoreWebView2, args *IUnknown) uintptr) error {
+	if e.HandlerDocumentTitleChangedEvent == nil {
+		e.HandlerDocumentTitleChangedEvent = NewICoreWebView2DocumentTitleChangedEventHandler(e)
+		err := e.CoreWebView.AddDocumentTitleChanged(e.HandlerDocumentTitleChangedEvent, e.EventRegistrationToken)
+		if err != nil {
+			e.HandlerDocumentTitleChangedEvent = nil
+			return err
+		}
+	}
+	e.cbDocumentTitleChangedEvent = cb
+	return nil
+}
+
+// RasterizationScaleChanged 在光栅化缩放比例发生变化时调用.
+func (e *Webview2) RasterizationScaleChanged(sender *ICoreWebView2Controller, args *IUnknown) uintptr {
+	if e.cbRasterizationScaleChangedEvent != nil {
+		e.cbRasterizationScaleChangedEvent(sender, args)
+	}
+	return 0
+}
+
+// Event_RasterizationScaleChanged 光栅化缩放比例改变事件.
+//   - 当 Webview 检测到显示器 DPI 缩放比例已更改、ShouldDetectMonitorScaleChanges 为 true 且 Webview 已更改 RasterizationScale 属性时，将引发此事件。
+func (e *Webview2) Event_RasterizationScaleChanged(cb func(sender *ICoreWebView2Controller, args *IUnknown) uintptr) error {
+	c3, err := e.Controller.GetICoreWebView2Controller3()
+	if err != nil {
+		return err
+	}
+	defer c3.Release()
+	if e.HandlerRasterizationScaleChangedEvent == nil {
+		e.HandlerRasterizationScaleChangedEvent = NewICoreWebView2RasterizationScaleChangedEventHandler(e)
+		e.TokenRasterizationScaleChangedEvent, err = c3.AddRasterizationScaleChanged(e.HandlerRasterizationScaleChangedEvent)
+		if err != nil {
+			e.HandlerRasterizationScaleChangedEvent = nil
+			return err
+		}
+	}
+	e.cbRasterizationScaleChangedEvent = cb
+	return nil
+}
+
 // WindowCloseRequested 在窗口关闭请求时调用.
 func (e *Webview2) WindowCloseRequested(sender *ICoreWebView2, args *IUnknown) uintptr {
 	if e.cbWindowCloseRequestedEvent != nil {

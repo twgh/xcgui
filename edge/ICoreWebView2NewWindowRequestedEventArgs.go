@@ -66,9 +66,10 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetUri() (string, error) {
 	return windows.UTF16PtrToString(uri), nil
 }
 
-// MustGetUri 获取新窗口请求的 URI. 忽略错误.
+// MustGetUri 获取新窗口请求的 URI. 出错时会触发全局错误回调.
 func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetUri() string {
-	uri, _ := i.GetUri()
+	uri, err := i.GetUri()
+	ReportError2(err)
 	return uri
 }
 
@@ -112,9 +113,10 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetNewWindow() (*ICoreWebView
 	return newWindow, nil
 }
 
-// MustGetNewWindow 获取新窗口的 ICoreWebView2 实例. 忽略错误.
+// MustGetNewWindow 获取新窗口的 ICoreWebView2 实例. 出错时会触发全局错误回调.
 func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetNewWindow() *ICoreWebView2 {
-	newWindow, _ := i.GetNewWindow()
+	newWindow, err := i.GetNewWindow()
+	ReportError2(err)
 	return newWindow
 }
 
@@ -152,9 +154,10 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetHandled() (bool, error) {
 	return handled, nil
 }
 
-// MustGetHandled 获取是否处理了新窗口请求. 忽略错误.
+// MustGetHandled 获取是否处理了新窗口请求. 出错时会触发全局错误回调.
 func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetHandled() bool {
-	handled, _ := i.GetHandled()
+	handled, err := i.GetHandled()
+	ReportError2(err)
 	return handled
 }
 
@@ -174,9 +177,10 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetIsUserInitiated() (bool, e
 	return isUserInitiated, nil
 }
 
-// MustGetIsUserInitiated 获取新窗口请求是否由用户发起. 忽略错误.
+// MustGetIsUserInitiated 获取新窗口请求是否由用户发起. 出错时会触发全局错误回调.
 func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetIsUserInitiated() bool {
-	isUserInitiated, _ := i.GetIsUserInitiated()
+	isUserInitiated, err := i.GetIsUserInitiated()
+	ReportError2(err)
 	return isUserInitiated
 }
 
@@ -196,9 +200,10 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetDeferral() (*ICoreWebView2
 	return deferral, nil
 }
 
-// MustGetDeferral 获取延迟对象，并将事件置于延迟状态. 忽略错误.
+// MustGetDeferral 获取延迟对象，并将事件置于延迟状态. 出错时会触发全局错误回调.
 func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetDeferral() *ICoreWebView2Deferral {
-	deferral, _ := i.GetDeferral()
+	deferral, err := i.GetDeferral()
+	ReportError2(err)
 	return deferral
 }
 

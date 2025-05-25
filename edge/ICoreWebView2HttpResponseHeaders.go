@@ -97,7 +97,7 @@ func (i *ICoreWebView2HttpResponseHeaders) Contains(name string) (bool, error) {
 	return contains, nil
 }
 
-// MustContains 检查是否存在具有给定名称的标头。忽略错误。
+// MustContains 检查是否存在具有给定名称的标头。出错时会触发全局错误回调。
 func (i *ICoreWebView2HttpResponseHeaders) MustContains(name string) bool {
 	contains, _ := i.Contains(name)
 	return contains
@@ -128,9 +128,10 @@ func (i *ICoreWebView2HttpResponseHeaders) GetHeader(name string) (string, error
 	return value, nil
 }
 
-// MustGetHeader 获取具有给定名称的标头值。忽略错误。
+// MustGetHeader 获取具有给定名称的标头值。出错时会触发全局错误回调。
 func (i *ICoreWebView2HttpResponseHeaders) MustGetHeader(name string) string {
-	value, _ := i.GetHeader(name)
+	value, err := i.GetHeader(name)
+	ReportError2(err)
 	return value
 }
 
@@ -157,9 +158,10 @@ func (i *ICoreWebView2HttpResponseHeaders) GetHeaders(name string) (*ICoreWebVie
 	return iterator, nil
 }
 
-// MustGetHeaders 获取具有给定名称的所有标头值。忽略错误。
+// MustGetHeaders 获取具有给定名称的所有标头值。出错时会触发全局错误回调。
 func (i *ICoreWebView2HttpResponseHeaders) MustGetHeaders(name string) *ICoreWebView2HttpHeadersCollectionIterator {
-	iterator, _ := i.GetHeaders(name)
+	iterator, err := i.GetHeaders(name)
+	ReportError2(err)
 	return iterator
 }
 
@@ -179,8 +181,9 @@ func (i *ICoreWebView2HttpResponseHeaders) GetIterator() (*ICoreWebView2HttpHead
 	return iterator, nil
 }
 
-// MustGetIterator 获取集合中所有标头的迭代器。忽略错误。
+// MustGetIterator 获取集合中所有标头的迭代器。出错时会触发全局错误回调。
 func (i *ICoreWebView2HttpResponseHeaders) MustGetIterator() *ICoreWebView2HttpHeadersCollectionIterator {
-	iterator, _ := i.GetIterator()
+	iterator, err := i.GetIterator()
+	ReportError2(err)
 	return iterator
 }

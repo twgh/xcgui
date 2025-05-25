@@ -81,9 +81,10 @@ func (i *ICoreWebView2Controller) GetBounds() (xc.RECT, error) {
 	return bounds, nil
 }
 
-// MustGetBounds 获取 WebView 的边界。忽略错误.
+// MustGetBounds 获取 WebView 的边界。出错时会触发全局错误回调.
 func (i *ICoreWebView2Controller) MustGetBounds() xc.RECT {
-	b, _ := i.GetBounds()
+	b, err := i.GetBounds()
+	ReportError2(err)
 	return b
 }
 
@@ -152,9 +153,10 @@ func (i *ICoreWebView2Controller) GetIsVisible() (bool, error) {
 	return isVisible, nil
 }
 
-// MustGetIsVisible 获取 WebView 是否可见。忽略错误。
+// MustGetIsVisible 获取 WebView 是否可见。出错时会触发全局错误回调。
 func (i *ICoreWebView2Controller) MustGetIsVisible() bool {
-	v, _ := i.GetIsVisible()
+	v, err := i.GetIsVisible()
+	ReportError2(err)
 	return v
 }
 
@@ -220,9 +222,10 @@ func (i *ICoreWebView2Controller) GetCoreWebView2() (*ICoreWebView2, error) {
 	return webView, nil
 }
 
-// MustGetCoreWebView2 获取 WebView2 对象。忽略错误。
+// MustGetCoreWebView2 获取 WebView2 对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Controller) MustGetCoreWebView2() *ICoreWebView2 {
-	w, _ := i.GetCoreWebView2()
+	w, err := i.GetCoreWebView2()
+	ReportError2(err)
 	return w
 }
 
@@ -242,9 +245,10 @@ func (i *ICoreWebView2Controller) GetZoomFactor() (float64, error) {
 	return zoomFactor, nil
 }
 
-// MustGetZoomFactor 获取 WebView 的缩放系数。忽略错误。
+// MustGetZoomFactor 获取 WebView 的缩放系数。出错时会触发全局错误回调。
 func (i *ICoreWebView2Controller) MustGetZoomFactor() float64 {
-	z, _ := i.GetZoomFactor()
+	z, err := i.GetZoomFactor()
+	ReportError2(err)
 	return z
 }
 
@@ -313,9 +317,10 @@ func (i *ICoreWebView2Controller) GetParentWindow() (uintptr, error) {
 	return parentWindow, nil
 }
 
-// MustGetParentWindow 获取 WebView 的父窗口句柄。忽略错误。
+// MustGetParentWindow 获取 WebView 的父窗口句柄。出错时会触发全局错误回调。
 func (i *ICoreWebView2Controller) MustGetParentWindow() uintptr {
-	h, _ := i.GetParentWindow()
+	h, err := i.GetParentWindow()
+	ReportError2(err)
 	return h
 }
 
@@ -358,8 +363,43 @@ func (i *ICoreWebView2Controller) GetICoreWebView2Controller2() (*ICoreWebView2C
 	return result, err
 }
 
-// MustGetICoreWebView2Controller2 获取 ICoreWebView2Controller2 对象。忽略错误。
+// MustGetICoreWebView2Controller2 获取 ICoreWebView2Controller2 对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Controller) MustGetICoreWebView2Controller2() *ICoreWebView2Controller2 {
-	c, _ := i.GetICoreWebView2Controller2()
+	c, err := i.GetICoreWebView2Controller2()
+	ReportError2(err)
+	return c
+}
+
+// GetICoreWebView2Controller3 获取 ICoreWebView2Controller3 对象。
+func (i *ICoreWebView2Controller) GetICoreWebView2Controller3() (*ICoreWebView2Controller3, error) {
+	var result *ICoreWebView2Controller3
+	iidICoreWebView2Controller3 := wapi.NewGUID(IID_ICoreWebView2Controller3)
+	err := i.QueryInterface(
+		uintptr(unsafe.Pointer(iidICoreWebView2Controller3)),
+		uintptr(unsafe.Pointer(&result)))
+	return result, err
+}
+
+// MustGetICoreWebView2Controller3 获取 ICoreWebView2Controller3 对象。出错时会触发全局错误回调。
+func (i *ICoreWebView2Controller) MustGetICoreWebView2Controller3() *ICoreWebView2Controller3 {
+	c, err := i.GetICoreWebView2Controller3()
+	ReportError2(err)
+	return c
+}
+
+// GetICoreWebView2Controller4 获取 ICoreWebView2Controller4 对象。
+func (i *ICoreWebView2Controller) GetICoreWebView2Controller4() (*ICoreWebView2Controller4, error) {
+	var result *ICoreWebView2Controller4
+	iidICoreWebView2Controller4 := wapi.NewGUID(IID_ICoreWebView2Controller4)
+	err := i.QueryInterface(
+		uintptr(unsafe.Pointer(iidICoreWebView2Controller4)),
+		uintptr(unsafe.Pointer(&result)))
+	return result, err
+}
+
+// MustGetICoreWebView2Controller4 获取 ICoreWebView2Controller4 对象。出错时会触发全局错误回调。
+func (i *ICoreWebView2Controller) MustGetICoreWebView2Controller4() *ICoreWebView2Controller4 {
+	c, err := i.GetICoreWebView2Controller4()
+	ReportError2(err)
 	return c
 }

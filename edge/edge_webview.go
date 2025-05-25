@@ -112,7 +112,8 @@ func wndproc(hwnd uintptr, msg uint32, wp, lp uintptr) uintptr {
 	if w, ok := getWindowContext(hwnd).(*WebView); ok {
 		switch msg {
 		case wapi.WM_MOVE, wapi.WM_MOVING:
-			_ = w.NotifyParentWindowPositionChanged()
+			err := w.NotifyParentWindowPositionChanged()
+			ReportError2(err)
 			return 0
 		case wapi.WM_SIZE:
 			w.Resize()
@@ -344,15 +345,24 @@ func (w *WebView) newWebView2Controller() error {
 		controller.AddRef()
 		w.Controller = controller
 
-		w.CoreWebView, _ = controller.GetCoreWebView2()
+		var err error
+		w.CoreWebView, err = controller.GetCoreWebView2()
+		if err != nil {
+			err2 = errors.New("GetCoreWebView2 failed: " + err.Error())
+			isDone = true
+			return
+		}
 		w.CoreWebView.AddRef()
 
 		// 添加 web 消息接收事件处理程序
-		_ = w.CoreWebView.AddWebMessageReceived(w.handlerWebMessageReceivedEvent, w.EventRegistrationToken)
+		err = w.CoreWebView.AddWebMessageReceived(w.handlerWebMessageReceivedEvent, w.EventRegistrationToken)
+		ReportError2(err)
 		// 添加权限请求事件处理程序
-		_ = w.CoreWebView.AddPermissionRequested(w.handlerPermissionRequestedEvent, w.EventRegistrationToken)
+		err = w.CoreWebView.AddPermissionRequested(w.handlerPermissionRequestedEvent, w.EventRegistrationToken)
+		ReportError2(err)
 		// 添加在创建文档时要执行的脚本
-		_ = w.CoreWebView.AddScriptToExecuteOnDocumentCreated("window.external={invoke:s=>window.chrome.webview.postMessage(s)}", nil)
+		err = w.CoreWebView.AddScriptToExecuteOnDocumentCreated("window.external={invoke:s=>window.chrome.webview.postMessage(s)}", nil)
+		ReportError2(err)
 
 		if w.focusOnInit {
 			w.Focus()

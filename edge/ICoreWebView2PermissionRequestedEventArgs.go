@@ -65,9 +65,10 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) GetUri() (string, error) {
 	return uri, nil
 }
 
-// MustGetUri 获取请求权限的 web 内容的来源。忽略错误.
+// MustGetUri 获取请求权限的 web 内容的来源。出错时会触发全局错误回调.
 func (i *ICoreWebView2PermissionRequestedEventArgs) MustGetUri() string {
-	uri, _ := i.GetUri()
+	uri, err := i.GetUri()
+	ReportError2(err)
 	return uri
 }
 
@@ -87,9 +88,10 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) GetPermissionKind() (COREWEB
 	return kind, nil
 }
 
-// MustGetPermissionKind 获取请求的权限类型。忽略错误。
+// MustGetPermissionKind 获取请求的权限类型。出错时会触发全局错误回调。
 func (i *ICoreWebView2PermissionRequestedEventArgs) MustGetPermissionKind() COREWEBVIEW2_PERMISSION_KIND {
-	kind, _ := i.GetPermissionKind()
+	kind, err := i.GetPermissionKind()
+	ReportError2(err)
 	return kind
 }
 
@@ -109,9 +111,10 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) GetIsUserInitiated() (bool, 
 	return isUserInitiated, nil
 }
 
-// MustGetIsUserInitiated 获取权限请求是否由用户发起。忽略错误。
+// MustGetIsUserInitiated 获取权限请求是否由用户发起。出错时会触发全局错误回调。
 func (i *ICoreWebView2PermissionRequestedEventArgs) MustGetIsUserInitiated() bool {
-	isUserInitiated, _ := i.GetIsUserInitiated()
+	isUserInitiated, err := i.GetIsUserInitiated()
+	ReportError2(err)
 	return isUserInitiated
 }
 
@@ -131,9 +134,10 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) GetState() (COREWEBVIEW2_PER
 	return state, nil
 }
 
-// MustGetState 获取权限请求的状态。默认值为 COREWEBVIEW2_PERMISSION_STATE_DEFAULT。忽略错误。
+// MustGetState 获取权限请求的状态。默认值为 COREWEBVIEW2_PERMISSION_STATE_DEFAULT。出错时会触发全局错误回调。
 func (i *ICoreWebView2PermissionRequestedEventArgs) MustGetState() COREWEBVIEW2_PERMISSION_STATE {
-	state, _ := i.GetState()
+	state, err := i.GetState()
+	ReportError2(err)
 	return state
 }
 
@@ -168,8 +172,9 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) GetDeferral() (*ICoreWebView
 	return deferral, nil
 }
 
-// MustGetDeferral 获取权限请求的延迟对象。忽略错误。
+// MustGetDeferral 获取权限请求的延迟对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2PermissionRequestedEventArgs) MustGetDeferral() *ICoreWebView2Deferral {
-	deferral, _ := i.GetDeferral()
+	deferral, err := i.GetDeferral()
+	ReportError2(err)
 	return deferral
 }

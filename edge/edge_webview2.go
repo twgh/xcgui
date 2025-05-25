@@ -16,32 +16,32 @@ type Webview2 struct {
 
 	// ------------------- WebView2_ 系列对象  -------------------
 
-	WebView2_2  *ICoreWebView2_2  // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_3  *ICoreWebView2_3  // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_4  *ICoreWebView2_4  // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_5  *ICoreWebView2_5  // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_6  *ICoreWebView2_6  // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_7  *ICoreWebView2_7  // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_8  *ICoreWebView2_8  // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_9  *ICoreWebView2_9  // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_10 *ICoreWebView2_10 // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_11 *ICoreWebView2_11 // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_12 *ICoreWebView2_12 // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_13 *ICoreWebView2_13 // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_14 *ICoreWebView2_14 // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_15 *ICoreWebView2_15 // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_16 *ICoreWebView2_16 // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_17 *ICoreWebView2_17 // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_18 *ICoreWebView2_18 // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_19 *ICoreWebView2_19 // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_20 *ICoreWebView2_20 // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_21 *ICoreWebView2_21 // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_22 *ICoreWebView2_22 // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_23 *ICoreWebView2_23 // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_24 *ICoreWebView2_24 // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_25 *ICoreWebView2_25 // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_26 *ICoreWebView2_26 // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
-	WebView2_27 *ICoreWebView2_27 // 默认值为 nil, 使用前需自行赋值, 或调用一次 GetAllWebView2_
+	WebView2_2  *ICoreWebView2_2  // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_3  *ICoreWebView2_3  // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_4  *ICoreWebView2_4  // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_5  *ICoreWebView2_5  // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_6  *ICoreWebView2_6  // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_7  *ICoreWebView2_7  // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_8  *ICoreWebView2_8  // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_9  *ICoreWebView2_9  // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_10 *ICoreWebView2_10 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_11 *ICoreWebView2_11 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_12 *ICoreWebView2_12 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_13 *ICoreWebView2_13 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_14 *ICoreWebView2_14 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_15 *ICoreWebView2_15 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_16 *ICoreWebView2_16 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_17 *ICoreWebView2_17 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_18 *ICoreWebView2_18 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_19 *ICoreWebView2_19 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_20 *ICoreWebView2_20 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_21 *ICoreWebView2_21 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_22 *ICoreWebView2_22 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_23 *ICoreWebView2_23 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_24 *ICoreWebView2_24 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_25 *ICoreWebView2_25 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_26 *ICoreWebView2_26 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	WebView2_27 *ICoreWebView2_27 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
 
 	// 注册事件时使用的Token
 	EventRegistrationToken *EventRegistrationToken
@@ -108,6 +108,15 @@ type Webview2 struct {
 	// HandlerWindowCloseRequestedEvent 窗口关闭请求事件处理程序. 在调用 Event_ 时自动赋值.
 	HandlerWindowCloseRequestedEvent *ICoreWebView2WindowCloseRequestedEventHandler
 	cbWindowCloseRequestedEvent      func(sender *ICoreWebView2, args *IUnknown) uintptr
+	// HandlerDocumentTitleChangedEvent 文档标题改变事件处理程序. 在调用 Event_ 时会自动赋值.
+	HandlerDocumentTitleChangedEvent *ICoreWebView2DocumentTitleChangedEventHandler
+	cbDocumentTitleChangedEvent      func(sender *ICoreWebView2, args *IUnknown) uintptr
+
+	// 添加窗口光栅化缩放比例改变事件处理程序时返回的 Token
+	TokenRasterizationScaleChangedEvent EventRegistrationToken
+	// HandlerRasterizationScaleChanged 窗口光栅化缩放比例改变事件处理程序. 在调用 Event_ 时会自动赋值.
+	HandlerRasterizationScaleChangedEvent *ICoreWebView2RasterizationScaleChangedEventHandler
+	cbRasterizationScaleChangedEvent      func(sender *ICoreWebView2Controller, args *IUnknown) uintptr
 
 	// 宿主窗口句柄
 	hwnd uintptr
@@ -126,12 +135,12 @@ func (e *Webview2) init() {
 	e.permissions = make(map[COREWEBVIEW2_PERMISSION_KIND]COREWEBVIEW2_PERMISSION_STATE)
 }
 
-// GetAllWebView2_ 获取所有的 WebView2_ 系列对象.
+// InitAllWebView2_ 初始化所有的 WebView2_ 系列对象, 给本类成员赋值.
 //   - 从 2 到 27 按顺序获取, 出错时返回出错序号.
 //   - 比如获取 WebView2_2 时失败返回 2, 获取 WebView2_3 时失败返回 3, 以此类推.
 //   - 如果返回0, 代表成功获取到了 WebView2_2 到 WebView2_27.
 //   - 这些对象, 只要运行时版本支持, 基本是不会获取出错的.
-func (e *Webview2) GetAllWebView2_() int {
+func (e *Webview2) InitAllWebView2_() int {
 	var err error
 	if e.WebView2_2 == nil {
 		e.WebView2_2, err = e.CoreWebView.GetICoreWebView2_2()
@@ -598,27 +607,22 @@ func (e *Webview2) IsSuspended() bool {
 	return e.WebView2_3.MustGetIsSuspended()
 }
 
-// GetCookieManager 获取关联的 cookie 管理器对象，失败返回 nil。
-func (e *Webview2) GetCookieManager() *ICoreWebView2CookieManager {
-	if e.WebView2_2 == nil {
-		var err error
-		e.WebView2_2, err = e.CoreWebView.GetICoreWebView2_2()
-		if err != nil {
-			return nil
-		}
-	}
-	return e.WebView2_2.MustGetCookieManager()
-}
-
 // GetCookies 获取与指定 URI 匹配的所有 Cookie，失败返回 nil。
 //   - 如果 uri 为空字符串，则返回同一配置文件下的所有 Cookie。
 //   - 你可以通过调用 ICoreWebView2CookieManager.AddOrUpdateCookie 来修改 Cookie 对象，所做的更改将应用到WebView中。
 //
 // uri: 要匹配的 URI.
 func (e *Webview2) GetCookies(uri string, cb func(errorCode syscall.Errno, cookies *ICoreWebView2CookieList) uintptr) error {
-	CookieManager := e.GetCookieManager()
-	if CookieManager == nil {
-		return nil
+	if e.WebView2_2 == nil {
+		var err error
+		e.WebView2_2, err = e.CoreWebView.GetICoreWebView2_2()
+		if err != nil {
+			return err
+		}
+	}
+	CookieManager, err := e.WebView2_2.GetCookieManager()
+	if err != nil {
+		return err
 	}
 	if e.HandlerGetCookiesCompleted == nil {
 		e.HandlerGetCookiesCompleted = NewICoreWebView2GetCookiesCompletedHandler(e)

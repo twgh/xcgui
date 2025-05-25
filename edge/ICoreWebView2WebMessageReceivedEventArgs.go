@@ -63,7 +63,7 @@ func (e *ICoreWebView2WebMessageReceivedEventArgs) TryGetWebMessageAsString() (s
 	return message, nil
 }
 
-// MustTryGetWebMessageAsString 尝试获取 web 消息作为字符串。忽略错误。
+// MustTryGetWebMessageAsString 尝试获取 web 消息作为字符串。出错时会触发全局错误回调。
 func (e *ICoreWebView2WebMessageReceivedEventArgs) MustTryGetWebMessageAsString() string {
 	message, _ := e.TryGetWebMessageAsString()
 	return message
@@ -87,7 +87,7 @@ func (e *ICoreWebView2WebMessageReceivedEventArgs) GetWebMessageAsJSON() (string
 	return json, nil
 }
 
-// MustGetWebMessageAsJSON 获取 web 消息作为 JSON 字符串。忽略错误。
+// MustGetWebMessageAsJSON 获取 web 消息作为 JSON 字符串。出错时会触发全局错误回调。
 func (e *ICoreWebView2WebMessageReceivedEventArgs) MustGetWebMessageAsJSON() string {
 	json, _ := e.GetWebMessageAsJSON()
 	return json
@@ -111,7 +111,7 @@ func (e *ICoreWebView2WebMessageReceivedEventArgs) GetSource() (string, error) {
 	return source, nil
 }
 
-// MustGetSource 获取发送此 web 消息的文档的 URI。忽略错误。
+// MustGetSource 获取发送此 web 消息的文档的 URI。出错时会触发全局错误回调。
 func (e *ICoreWebView2WebMessageReceivedEventArgs) MustGetSource() string {
 	source, _ := e.GetSource()
 	return source

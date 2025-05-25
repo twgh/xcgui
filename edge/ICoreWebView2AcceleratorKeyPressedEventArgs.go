@@ -64,9 +64,10 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetKeyEventKind() (COREWEB
 	return keyEventKind, nil
 }
 
-// MustGetKeyEventKind 获取键事件类型。忽略错误.
+// MustGetKeyEventKind 获取键事件类型。出错时会触发全局错误回调.
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) MustGetKeyEventKind() COREWEBVIEW2_KEY_EVENT_KIND {
-	keyEventKind, _ := i.GetKeyEventKind()
+	keyEventKind, err := i.GetKeyEventKind()
+	ReportError2(err)
 	return keyEventKind
 }
 
@@ -86,9 +87,10 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetVirtualKey() (uint, err
 	return virtualKey, nil
 }
 
-// MustGetVirtualKey 获取按下或释放的虚拟键代码。忽略错误.
+// MustGetVirtualKey 获取按下或释放的虚拟键代码。出错时会触发全局错误回调.
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) MustGetVirtualKey() uint {
-	virtualKey, _ := i.GetVirtualKey()
+	virtualKey, err := i.GetVirtualKey()
+	ReportError2(err)
 	return virtualKey
 }
 
@@ -120,9 +122,10 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetPhysicalKeyStatus() (CO
 	return physicalKeyStatus, nil
 }
 
-// MustGetPhysicalKeyStatus 获取有关按下或释放的键的物理状态的信息。忽略错误.
+// MustGetPhysicalKeyStatus 获取有关按下或释放的键的物理状态的信息。出错时会触发全局错误回调.
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) MustGetPhysicalKeyStatus() COREWEBVIEW2_PHYSICAL_KEY_STATUS {
-	physicalKeyStatus, _ := i.GetPhysicalKeyStatus()
+	physicalKeyStatus, err := i.GetPhysicalKeyStatus()
+	ReportError2(err)
 	return physicalKeyStatus
 }
 
@@ -158,9 +161,10 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetKeyEventLParam() (int, 
 	return lParam, nil
 }
 
-// MustGetKeyEventLParam 获取键事件的 LPARAM。忽略错误。
+// MustGetKeyEventLParam 获取键事件的 LPARAM。出错时会触发全局错误回调。
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) MustGetKeyEventLParam() int {
-	lParam, _ := i.GetKeyEventLParam()
+	lParam, err := i.GetKeyEventLParam()
+	ReportError2(err)
 	return lParam
 }
 
@@ -180,8 +184,9 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetHandled() (bool, error)
 	return handled != 0, nil
 }
 
-// MustGetHandled 获取事件是否已处理。忽略错误。
+// MustGetHandled 获取事件是否已处理。出错时会触发全局错误回调。
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) MustGetHandled() bool {
-	handled, _ := i.GetHandled()
+	handled, err := i.GetHandled()
+	ReportError2(err)
 	return handled
 }
