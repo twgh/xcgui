@@ -1,417 +1,40 @@
 package edge
 
 import (
+	"embed"
 	"errors"
 	"github.com/twgh/xcgui/wapi"
 	"github.com/twgh/xcgui/xc"
-	"golang.org/x/sys/windows"
-	"sync"
+	"io/fs"
 	"syscall"
 )
 
 type Webview2 struct {
+	// WebView2_ 系列对象
+	Webview2_Objs
+
+	// 事件接口实现
+	Webview2Impl
+
 	CoreWebView *ICoreWebView2           // CoreWebView2
 	Controller  *ICoreWebView2Controller // WebView2 控制器
-	Edge        *Edge
-
-	// ------------------- WebView2_ 系列对象  -------------------
-
-	WebView2_2  *ICoreWebView2_2  // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_3  *ICoreWebView2_3  // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_4  *ICoreWebView2_4  // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_5  *ICoreWebView2_5  // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_6  *ICoreWebView2_6  // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_7  *ICoreWebView2_7  // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_8  *ICoreWebView2_8  // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_9  *ICoreWebView2_9  // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_10 *ICoreWebView2_10 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_11 *ICoreWebView2_11 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_12 *ICoreWebView2_12 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_13 *ICoreWebView2_13 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_14 *ICoreWebView2_14 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_15 *ICoreWebView2_15 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_16 *ICoreWebView2_16 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_17 *ICoreWebView2_17 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_18 *ICoreWebView2_18 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_19 *ICoreWebView2_19 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_20 *ICoreWebView2_20 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_21 *ICoreWebView2_21 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_22 *ICoreWebView2_22 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_23 *ICoreWebView2_23 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_24 *ICoreWebView2_24 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_25 *ICoreWebView2_25 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_26 *ICoreWebView2_26 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
-	WebView2_27 *ICoreWebView2_27 // 默认值为 nil, 使用前需自行赋值, 或调用一次 InitAllWebView2_
+	Edge        *Edge                    // WebView2 环境
 
 	// 注册事件时使用的Token
 	EventRegistrationToken *EventRegistrationToken
 
-	// -------------------- Handlers --------------------
-
-	// HandlerTrySuspendCompleted 在调用 ICoreWebView2_3.TrySuspend 时使用. 如果为 nil, 需自行调用 NewICoreWebView2TrySuspendCompletedHandler 来赋值.
-	HandlerTrySuspendCompleted *ICoreWebView2TrySuspendCompletedHandler
-	// HandlerExecuteScriptCompleted 在调用 ICoreWebView2.ExecuteScript 时使用. 如果为 nil, 需自行调用 NewICoreWebView2ExecuteScriptCompletedHandler 来赋值.
-	HandlerExecuteScriptCompleted *ICoreWebView2ExecuteScriptCompletedHandler
-	// HandlerAddScriptToExecuteOnDocumentCreatedCompleted 在调用 ICoreWebView2.AddScriptToExecuteOnDocumentCreated 时使用. 如果为 nil, 需自行调用 NewICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler 来赋值.
-	HandlerAddScriptToExecuteOnDocumentCreatedCompleted *ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler
-	// HandlerGetCookiesCompleted 在调用 ICoreWebView2CookieManager.GetCookies 时使用. 如果为 nil, 需自行调用 NewICoreWebView2GetCookiesCompletedHandler 来赋值.
-	HandlerGetCookiesCompleted *ICoreWebView2GetCookiesCompletedHandler
-
-	// -------------------- Callbacks --------------------
-
-	// 挂起事件结果回调
-	cbTrySuspendCompleted func(errorCode syscall.Errno, isSuccessful bool) uintptr
-	// 执行脚本完成事件回调
-	cbExecuteScriptCompleted func(errorCode syscall.Errno, result string) uintptr
-	// 在文档创建前添加脚本完成回调
-	cbAddScriptToExecuteOnDocumentCreatedCompleted func(errorCode syscall.Errno, id string) uintptr
-	// 获取 Cookies 完成回调
-	cbGetCookiesCompleted func(errorCode syscall.Errno, cookies *ICoreWebView2CookieList) uintptr
-	// 仅供内部使用的网页消息事件回调
-	msgcb_xcgui func(string)
-
-	// -------------------- 事件 Handlers 和 Callbacks --------------------
-
-	// 网页消息接收事件处理程序. [内部需要使用, 不能移除]
-	handlerWebMessageReceivedEvent *ICoreWebView2WebMessageReceivedEventHandler
-	cbMessageReceivedEvent         func(sender *ICoreWebView2, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr
-	// 权限请求事件处理程序. [内部需要使用, 不能移除]
-	handlerPermissionRequestedEvent *ICoreWebView2PermissionRequestedEventHandler
-	cbPermissionRequestedEvent      func(sender *ICoreWebView2, args *ICoreWebView2PermissionRequestedEventArgs) uintptr
-	// HandlerWebResourceRequestedEvent 网络资源请求事件处理程序. 在调用 Event_ 时会自动赋值.
-	HandlerWebResourceRequestedEvent *ICoreWebView2WebResourceRequestedEventHandler
-	cbWebResourceRequestedEvent      func(sender *ICoreWebView2, args *ICoreWebView2WebResourceRequestedEventArgs) uintptr
-	// HandlerAcceleratorKeyPressedEvent 快捷键事件处理程序. 在调用 Event_ 时会自动赋值.
-	HandlerAcceleratorKeyPressedEvent *ICoreWebView2AcceleratorKeyPressedEventHandler
-	cbAcceleratorKeyPressedEvent      func(sender *ICoreWebView2Controller, args *ICoreWebView2AcceleratorKeyPressedEventArgs) uintptr
-	// HandlerNavigationCompletedEvent 导航完成事件处理程序. 在调用 Event_ 时会自动赋值.
-	HandlerNavigationCompletedEvent *ICoreWebView2NavigationCompletedEventHandler
-	cbNavigationCompletedEvent      func(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr
-	// HandlerNavigationStartingEvent 导航开始事件处理程序. 在调用 Event_ 时会自动赋值.
-	HandlerNavigationStartingEvent *ICoreWebView2NavigationStartingEventHandler
-	cbNavigationStartingEvent      func(sender *ICoreWebView2, args *ICoreWebView2NavigationStartingEventArgs) uintptr
-	// HandlerContentLoadingEvent 内容加载事件处理程序. 在调用 Event_ 时会自动赋值.
-	HandlerContentLoadingEvent *ICoreWebView2ContentLoadingEventHandler
-	cbContentLoadingEvent      func(sender *ICoreWebView2, args *ICoreWebView2ContentLoadingEventArgs) uintptr
-	// HandlerNewWindowRequestedEvent 新窗口请求事件处理程序. 在调用 Event_ 时会自动赋值.
-	HandlerNewWindowRequestedEvent *ICoreWebView2NewWindowRequestedEventHandler
-	cbNewWindowRequestedEvent      func(sender *ICoreWebView2, args *ICoreWebView2NewWindowRequestedEventArgs) uintptr
-	// HandlerSourceChangedEvent 源改变事件处理程序. 在调用 Event_ 时会自动赋值.
-	HandlerSourceChangedEvent *ICoreWebView2SourceChangedEventHandler
-	cbSourceChangedEvent      func(sender *ICoreWebView2, args *ICoreWebView2SourceChangedEventArgs) uintptr
-	// HandlerFrameNavigationStartingEvent 框架导航开始事件处理程序. 在调用 Event_ 时会自动赋值.
-	HandlerFrameNavigationStartingEvent *ICoreWebView2NavigationStartingEventHandler2
-	cbFrameNavigationStartingEvent      func(sender *ICoreWebView2, args *ICoreWebView2NavigationStartingEventArgs) uintptr
-	// HandlerFrameNavigationCompletedEvent 框架导航完成事件处理程序. 在调用 Event_ 时会自动赋值.
-	HandlerFrameNavigationCompletedEvent *ICoreWebView2NavigationCompletedEventHandler2
-	cbFrameNavigationCompletedEvent      func(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr
-	// HandlerWindowCloseRequestedEvent 窗口关闭请求事件处理程序. 在调用 Event_ 时自动赋值.
-	HandlerWindowCloseRequestedEvent *ICoreWebView2WindowCloseRequestedEventHandler
-	cbWindowCloseRequestedEvent      func(sender *ICoreWebView2, args *IUnknown) uintptr
-	// HandlerDocumentTitleChangedEvent 文档标题改变事件处理程序. 在调用 Event_ 时会自动赋值.
-	HandlerDocumentTitleChangedEvent *ICoreWebView2DocumentTitleChangedEventHandler
-	cbDocumentTitleChangedEvent      func(sender *ICoreWebView2, args *IUnknown) uintptr
-
-	// 添加窗口光栅化缩放比例改变事件处理程序时返回的 Token
-	TokenRasterizationScaleChangedEvent EventRegistrationToken
-	// HandlerRasterizationScaleChanged 窗口光栅化缩放比例改变事件处理程序. 在调用 Event_ 时会自动赋值.
-	HandlerRasterizationScaleChangedEvent *ICoreWebView2RasterizationScaleChangedEventHandler
-	cbRasterizationScaleChangedEvent      func(sender *ICoreWebView2Controller, args *IUnknown) uintptr
-
 	// 宿主窗口句柄
 	hwnd uintptr
-	// 权限map读写锁
-	rwxPermissions sync.RWMutex
-	// 权限map
-	permissions map[COREWEBVIEW2_PERMISSION_KIND]COREWEBVIEW2_PERMISSION_STATE
 	// WebView2 控制器创建完成后是否自动获取焦点
 	focusOnInit bool
 }
 
 func (e *Webview2) init() {
+	e.edge = e.Edge
 	e.handlerWebMessageReceivedEvent = NewICoreWebView2WebMessageReceivedEventHandler(e)
 	e.handlerPermissionRequestedEvent = NewICoreWebView2PermissionRequestedEventHandler(e)
 
 	e.permissions = make(map[COREWEBVIEW2_PERMISSION_KIND]COREWEBVIEW2_PERMISSION_STATE)
-}
-
-// InitAllWebView2_ 初始化所有的 WebView2_ 系列对象, 给本类成员赋值.
-//   - 从 2 到 27 按顺序获取, 出错时返回出错序号.
-//   - 比如获取 WebView2_2 时失败返回 2, 获取 WebView2_3 时失败返回 3, 以此类推.
-//   - 如果返回0, 代表成功获取到了 WebView2_2 到 WebView2_27.
-//   - 这些对象, 只要运行时版本支持, 基本是不会获取出错的.
-func (e *Webview2) InitAllWebView2_() int {
-	var err error
-	if e.WebView2_2 == nil {
-		e.WebView2_2, err = e.CoreWebView.GetICoreWebView2_2()
-		if err != nil {
-			return 2
-		}
-	}
-	if e.WebView2_3 == nil {
-		e.WebView2_3, err = e.CoreWebView.GetICoreWebView2_3()
-		if err != nil {
-			return 3
-		}
-	}
-	if e.WebView2_4 == nil {
-		e.WebView2_4, err = e.CoreWebView.GetICoreWebView2_4()
-		if err != nil {
-			return 4
-		}
-	}
-	if e.WebView2_5 == nil {
-		e.WebView2_5, err = e.CoreWebView.GetICoreWebView2_5()
-		if err != nil {
-			return 5
-		}
-	}
-	if e.WebView2_6 == nil {
-		e.WebView2_6, err = e.CoreWebView.GetICoreWebView2_6()
-		if err != nil {
-			return 6
-		}
-	}
-	if e.WebView2_7 == nil {
-		e.WebView2_7, err = e.CoreWebView.GetICoreWebView2_7()
-		if err != nil {
-			return 7
-		}
-	}
-	if e.WebView2_8 == nil {
-		e.WebView2_8, err = e.CoreWebView.GetICoreWebView2_8()
-		if err != nil {
-			return 8
-		}
-	}
-	if e.WebView2_9 == nil {
-		e.WebView2_9, err = e.CoreWebView.GetICoreWebView2_9()
-		if err != nil {
-			return 9
-		}
-	}
-	if e.WebView2_10 == nil {
-		e.WebView2_10, err = e.CoreWebView.GetICoreWebView2_10()
-		if err != nil {
-			return 10
-		}
-	}
-	if e.WebView2_11 == nil {
-		e.WebView2_11, err = e.CoreWebView.GetICoreWebView2_11()
-		if err != nil {
-			return 11
-		}
-	}
-	if e.WebView2_12 == nil {
-		e.WebView2_12, err = e.CoreWebView.GetICoreWebView2_12()
-		if err != nil {
-			return 12
-		}
-	}
-	if e.WebView2_13 == nil {
-		e.WebView2_13, err = e.CoreWebView.GetICoreWebView2_13()
-		if err != nil {
-			return 13
-		}
-	}
-	if e.WebView2_14 == nil {
-		e.WebView2_14, err = e.CoreWebView.GetICoreWebView2_14()
-		if err != nil {
-			return 14
-		}
-	}
-	if e.WebView2_15 == nil {
-		e.WebView2_15, err = e.CoreWebView.GetICoreWebView2_15()
-		if err != nil {
-			return 15
-		}
-	}
-	if e.WebView2_16 == nil {
-		e.WebView2_16, err = e.CoreWebView.GetICoreWebView2_16()
-		if err != nil {
-			return 16
-		}
-	}
-	if e.WebView2_17 == nil {
-		e.WebView2_17, err = e.CoreWebView.GetICoreWebView2_17()
-		if err != nil {
-			return 17
-		}
-	}
-	if e.WebView2_18 == nil {
-		e.WebView2_18, err = e.CoreWebView.GetICoreWebView2_18()
-		if err != nil {
-			return 18
-		}
-	}
-	if e.WebView2_19 == nil {
-		e.WebView2_19, err = e.CoreWebView.GetICoreWebView2_19()
-		if err != nil {
-			return 19
-		}
-	}
-	if e.WebView2_20 == nil {
-		e.WebView2_20, err = e.CoreWebView.GetICoreWebView2_20()
-		if err != nil {
-			return 20
-		}
-	}
-	if e.WebView2_21 == nil {
-		e.WebView2_21, err = e.CoreWebView.GetICoreWebView2_21()
-		if err != nil {
-			return 21
-		}
-	}
-	if e.WebView2_22 == nil {
-		e.WebView2_22, err = e.CoreWebView.GetICoreWebView2_22()
-		if err != nil {
-			return 22
-		}
-	}
-	if e.WebView2_23 == nil {
-		e.WebView2_23, err = e.CoreWebView.GetICoreWebView2_23()
-		if err != nil {
-			return 23
-		}
-	}
-	if e.WebView2_24 == nil {
-		e.WebView2_24, err = e.CoreWebView.GetICoreWebView2_24()
-		if err != nil {
-			return 24
-		}
-	}
-	if e.WebView2_25 == nil {
-		e.WebView2_25, err = e.CoreWebView.GetICoreWebView2_25()
-		if err != nil {
-			return 25
-		}
-	}
-	if e.WebView2_26 == nil {
-		e.WebView2_26, err = e.CoreWebView.GetICoreWebView2_26()
-		if err != nil {
-			return 26
-		}
-	}
-	if e.WebView2_27 == nil {
-		e.WebView2_27, err = e.CoreWebView.GetICoreWebView2_27()
-		if err != nil {
-			return 27
-		}
-	}
-	return 0
-}
-
-// 释放所有的 WebView2_ 系列对象. 会在使用 Close 时自动调用.
-func (e *Webview2) releaseAllWebView2_() {
-	if e.WebView2_2 != nil {
-		e.WebView2_2.Release()
-		e.WebView2_2 = nil
-	}
-	if e.WebView2_3 != nil {
-		e.WebView2_3.Release()
-		e.WebView2_3 = nil
-	}
-	if e.WebView2_4 != nil {
-		e.WebView2_4.Release()
-		e.WebView2_4 = nil
-	}
-	if e.WebView2_5 != nil {
-		e.WebView2_5.Release()
-		e.WebView2_5 = nil
-	}
-	if e.WebView2_6 != nil {
-		e.WebView2_6.Release()
-		e.WebView2_6 = nil
-	}
-	if e.WebView2_7 != nil {
-		e.WebView2_7.Release()
-		e.WebView2_7 = nil
-	}
-	if e.WebView2_8 != nil {
-		e.WebView2_8.Release()
-		e.WebView2_8 = nil
-	}
-	if e.WebView2_9 != nil {
-		e.WebView2_9.Release()
-		e.WebView2_9 = nil
-	}
-	if e.WebView2_10 != nil {
-		e.WebView2_10.Release()
-		e.WebView2_10 = nil
-	}
-	if e.WebView2_11 != nil {
-		e.WebView2_11.Release()
-		e.WebView2_11 = nil
-	}
-	if e.WebView2_12 != nil {
-		e.WebView2_12.Release()
-		e.WebView2_12 = nil
-	}
-	if e.WebView2_13 != nil {
-		e.WebView2_13.Release()
-		e.WebView2_13 = nil
-	}
-	if e.WebView2_14 != nil {
-		e.WebView2_14.Release()
-		e.WebView2_14 = nil
-	}
-	if e.WebView2_15 != nil {
-		e.WebView2_15.Release()
-		e.WebView2_15 = nil
-	}
-	if e.WebView2_16 != nil {
-		e.WebView2_16.Release()
-		e.WebView2_16 = nil
-	}
-	if e.WebView2_17 != nil {
-		e.WebView2_17.Release()
-		e.WebView2_17 = nil
-	}
-	if e.WebView2_18 != nil {
-		e.WebView2_18.Release()
-		e.WebView2_18 = nil
-	}
-	if e.WebView2_19 != nil {
-		e.WebView2_19.Release()
-		e.WebView2_19 = nil
-	}
-	if e.WebView2_20 != nil {
-		e.WebView2_20.Release()
-		e.WebView2_20 = nil
-	}
-	if e.WebView2_21 != nil {
-		e.WebView2_21.Release()
-		e.WebView2_21 = nil
-	}
-	if e.WebView2_22 != nil {
-		e.WebView2_22.Release()
-		e.WebView2_22 = nil
-	}
-	if e.WebView2_23 != nil {
-		e.WebView2_23.Release()
-		e.WebView2_23 = nil
-	}
-	if e.WebView2_24 != nil {
-		e.WebView2_24.Release()
-		e.WebView2_24 = nil
-	}
-	if e.WebView2_25 != nil {
-		e.WebView2_25.Release()
-		e.WebView2_25 = nil
-	}
-	if e.WebView2_26 != nil {
-		e.WebView2_26.Release()
-		e.WebView2_26 = nil
-	}
-	if e.WebView2_27 != nil {
-		e.WebView2_27.Release()
-		e.WebView2_27 = nil
-	}
-
-	if e.CoreWebView != nil {
-		e.CoreWebView.Release()
-		e.CoreWebView = nil
-	}
 }
 
 // Navigate 导航 webview 到给定的 URL。
@@ -434,7 +57,7 @@ func (e *Webview2) Eval(script string) error {
 	return e.CoreWebView.ExecuteScript(script, nil)
 }
 
-// Refresh 网页_刷新, 调用js代码刷新. 必须在 UI 线程执行.
+// Refresh 网页_刷新, 调用js代码刷新(location.reload). 必须在 UI 线程执行.
 //
 // forceReload: 是否强制刷新, 默认为false. 为 true 时，浏览器会强制重新加载页面，忽略缓存。这意味着无论页面是否已经在本地缓存中，都会从服务器重新获取资源。
 func (e *Webview2) Refresh(forceReload ...bool) error {
@@ -463,20 +86,6 @@ func (e *Webview2) Resize() error {
 	var bounds xc.RECT
 	wapi.GetClientRect(e.hwnd, &bounds)
 	return e.Controller.PutBounds(bounds)
-}
-
-func (e *Webview2) QueryInterface(refiid, object uintptr) uintptr {
-	err := e.CoreWebView.QueryInterface(refiid, object)
-	errno, _ := ErrorToErrno(err)
-	return uintptr(errno)
-}
-
-func (e *Webview2) AddRef() uintptr {
-	return 1
-}
-
-func (e *Webview2) Release() uintptr {
-	return 1
 }
 
 // SetPermission 设置权限。设置后如果网页请求该权限, 会根据设置的 state 来允许或拒绝请求。
@@ -509,7 +118,7 @@ func (e *Webview2) Close() error {
 		e.Controller = nil
 	}
 
-	e.releaseAllWebView2_()
+	e.releaseAllWebView2_Objs()
 	wapi.PostMessageW(e.hwnd, wapi.WM_CLOSE, 0, 0)
 	return err
 }
@@ -631,44 +240,60 @@ func (e *Webview2) GetCookies(uri string, cb func(errorCode syscall.Errno, cooki
 	return CookieManager.GetCookies(uri, e.HandlerGetCookiesCompleted)
 }
 
-// --------------------------- 回调实现 ---------------------------
+// 设置虚拟主机名和嵌入文件系统之间的映射，以便通过该主机名对网站可用.
+//
+// hostName: 要映射的主机名。
+//
+// embedFS: 要映射的文件系统。
+//
+// dir: 上面嵌入的目录名。例如: "assets". 不填则自动获取.
+func (e *Webview2) SetVirtualHostNameToEmbedFSMapping(hostName string, embedFS embed.FS, dir ...string) error {
+	var dirName string
 
-// TrySuspendCompleted 尝试挂起 webview 后调用, 以获取执行结果.
-func (e *Webview2) TrySuspendCompleted(errorCode syscall.Errno, isSuccessful bool) uintptr {
-	if e.cbTrySuspendCompleted != nil {
-		e.cbTrySuspendCompleted(errorCode, isSuccessful)
-	}
-	return 0
-}
-
-// ExecuteScriptCompleted 执行 js 脚本完成后调用, 以获取执行结果.
-func (e *Webview2) ExecuteScriptCompleted(errorCode syscall.Errno, result *uint16) uintptr {
-	if e.cbExecuteScriptCompleted != nil {
-		var str string
-		if result != nil && *result != 0 {
-			str = windows.UTF16PtrToString(result)
+	if len(dir) > 0 { // 使用指定的目录名
+		dirName = dir[0]
+	} else {
+		// 自动检测目录名
+		entries, err := embedFS.ReadDir(".")
+		if err != nil {
+			return errors.New("自动获取目录名时报错: " + err.Error())
 		}
-		e.cbExecuteScriptCompleted(errorCode, str)
-	}
-	return 0
-}
-
-// AddScriptToExecuteOnDocumentCreatedCompleted 添加 js 脚本完成后调用, 以获取执行结果.
-func (e *Webview2) AddScriptToExecuteOnDocumentCreatedCompleted(errorCode syscall.Errno, id *uint16) uintptr {
-	if e.cbAddScriptToExecuteOnDocumentCreatedCompleted != nil {
-		var idStr string
-		if id != nil && *id != 0 {
-			idStr = windows.UTF16PtrToString(id)
+		if len(entries) != 1 || !entries[0].IsDir() {
+			return errors.New("自动获取目录名失败")
 		}
-		e.cbAddScriptToExecuteOnDocumentCreatedCompleted(errorCode, idStr)
+		dirName = entries[0].Name()
 	}
-	return 0
-}
 
-// GetCookiesCompleted 获取 cookies 完成后调用, 以获取执行结果.
-func (e *Webview2) GetCookiesCompleted(errorCode syscall.Errno, cookies *ICoreWebView2CookieList) uintptr {
-	if e.cbGetCookiesCompleted != nil {
-		e.cbGetCookiesCompleted(errorCode, cookies)
+	subFS, err := fs.Sub(embedFS, dirName)
+	if err != nil {
+		return errors.New("创建子文件系统失败: " + err.Error())
 	}
-	return 0
+
+	filter := "*://" + hostName + "/*"
+	if e.WebView2_22 == nil {
+		e.WebView2_22, err = e.CoreWebView.GetICoreWebView2_22()
+		if err == nil {
+			err = e.WebView2_22.AddWebResourceRequestedFilterWithRequestSourceKinds(filter, COREWEBVIEW2_WEB_RESOURCE_CONTEXT_ALL, COREWEBVIEW2_WEB_RESOURCE_REQUEST_SOURCE_KINDS_ALL)
+		} else {
+			err = e.AddWebResourceRequestedFilter(filter, COREWEBVIEW2_WEB_RESOURCE_CONTEXT_ALL)
+		}
+	}
+	if err != nil {
+		return err
+	}
+
+	if e.HandlerWebResourceRequestedEvent == nil {
+		e.HandlerWebResourceRequestedEvent = NewICoreWebView2WebResourceRequestedEventHandler(e)
+		err := e.CoreWebView.AddWebResourceRequested(e.HandlerWebResourceRequestedEvent, e.EventRegistrationToken)
+		if err != nil {
+			e.HandlerWebResourceRequestedEvent = nil
+			return err
+		}
+	}
+
+	e.firstResponse, err = e.Edge.Environment.CreateWebResourceResponse(nil, 200, "OK", "")
+	ReportError2(err)
+	e.hostName = "http://" + hostName + "/"
+	e.embedFS = subFS
+	return nil
 }

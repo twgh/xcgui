@@ -1,16 +1,6 @@
 package edge
 
-import "strings"
-
 // --------------------------- 事件 ---------------------------
-
-// DocumentTitleChanged 在文档标题发生变化时调用.
-func (e *Webview2) DocumentTitleChanged(sender *ICoreWebView2, args *IUnknown) uintptr {
-	if e.cbDocumentTitleChangedEvent != nil {
-		e.cbDocumentTitleChangedEvent(sender, args)
-	}
-	return 0
-}
 
 // Event_DocumentTitleChanged 文档标题改变事件.
 //   - 当 Webview 的 DocumentTitle 属性发生变化时，DocumentTitleChanged 会运行，并且可能在 NavigationCompleted 事件之前或之后运行。
@@ -25,14 +15,6 @@ func (e *Webview2) Event_DocumentTitleChanged(cb func(sender *ICoreWebView2, arg
 	}
 	e.cbDocumentTitleChangedEvent = cb
 	return nil
-}
-
-// RasterizationScaleChanged 在光栅化缩放比例发生变化时调用.
-func (e *Webview2) RasterizationScaleChanged(sender *ICoreWebView2Controller, args *IUnknown) uintptr {
-	if e.cbRasterizationScaleChangedEvent != nil {
-		e.cbRasterizationScaleChangedEvent(sender, args)
-	}
-	return 0
 }
 
 // Event_RasterizationScaleChanged 光栅化缩放比例改变事件.
@@ -53,14 +35,6 @@ func (e *Webview2) Event_RasterizationScaleChanged(cb func(sender *ICoreWebView2
 	}
 	e.cbRasterizationScaleChangedEvent = cb
 	return nil
-}
-
-// WindowCloseRequested 在窗口关闭请求时调用.
-func (e *Webview2) WindowCloseRequested(sender *ICoreWebView2, args *IUnknown) uintptr {
-	if e.cbWindowCloseRequestedEvent != nil {
-		e.cbWindowCloseRequestedEvent(sender, args)
-	}
-	return 0
 }
 
 // Event_WindowCloseRequested 窗口关闭请求事件.
@@ -97,14 +71,6 @@ func (e *Webview2) Event_SourceChanged(cb func(sender *ICoreWebView2, args *ICor
 	return nil
 }
 
-// SourceChanged 当源改变时调用。
-func (e *Webview2) SourceChanged(sender *ICoreWebView2, args *ICoreWebView2SourceChangedEventArgs) uintptr {
-	if e.cbSourceChangedEvent != nil {
-		e.cbSourceChangedEvent(sender, args)
-	}
-	return 0
-}
-
 // Event_NewWindowRequested 新窗口请求事件.
 //   - 当 Webview 内的内容请求打开新窗口时（例如通过 NewWindowRequested），NewWindowRequested 事件将运行。
 //   - 应用可以传递一个目标 Webview 作为打开的窗口，或者将该事件标记为 Handled，在这种情况下，WebView2 不会打开窗口。
@@ -122,49 +88,10 @@ func (e *Webview2) Event_NewWindowRequested(cb func(sender *ICoreWebView2, args 
 	return nil
 }
 
-// NewWindowRequested 当收到新窗口请求时调用。
-func (e *Webview2) NewWindowRequested(sender *ICoreWebView2, args *ICoreWebView2NewWindowRequestedEventArgs) uintptr {
-	if e.cbNewWindowRequestedEvent != nil {
-		e.cbNewWindowRequestedEvent(sender, args)
-	}
-	return 0
-}
-
-// PermissionRequested 当收到权限请求时调用。
-func (e *Webview2) PermissionRequested(sender *ICoreWebView2, args *ICoreWebView2PermissionRequestedEventArgs) uintptr {
-	kind, _ := args.GetPermissionKind()
-	e.rwxPermissions.RLock()
-	result, ok := e.permissions[kind]
-	e.rwxPermissions.RUnlock()
-	if !ok {
-		result = COREWEBVIEW2_PERMISSION_STATE_DEFAULT
-	}
-	_ = args.PutState(result)
-
-	if e.cbPermissionRequestedEvent != nil {
-		e.cbPermissionRequestedEvent(sender, args)
-	}
-	return 0
-}
-
 // Event_PermissionRequested 权限请求事件.
 //   - PermissionRequested 在 Webview 中的内容请求访问某些特权资源的权限时运行。
 func (e *Webview2) Event_PermissionRequested(cb func(sender *ICoreWebView2, args *ICoreWebView2PermissionRequestedEventArgs) uintptr) {
 	e.cbPermissionRequestedEvent = cb
-}
-
-// MessageReceived 当从 webview 收到消息时调用。
-func (e *Webview2) MessageReceived(sender *ICoreWebView2, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr {
-	if e.msgcb_xcgui != nil {
-		message, err := args.TryGetWebMessageAsString()
-		if err == nil && strings.HasPrefix(message, "{\"id\":") {
-			e.msgcb_xcgui(message)
-		}
-	}
-	if e.cbMessageReceivedEvent != nil {
-		e.cbMessageReceivedEvent(sender, args)
-	}
-	return 0
 }
 
 // Event_MessageReceived 网页消息事件.
@@ -172,14 +99,6 @@ func (e *Webview2) MessageReceived(sender *ICoreWebView2, args *ICoreWebView2Web
 //   - postMessage 函数为 void postMessage(object)，其中 object 是任何受 JSON 转换支持的对象。
 func (e *Webview2) Event_MessageReceived(cb func(sender *ICoreWebView2, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr) {
 	e.cbMessageReceivedEvent = cb
-}
-
-// WebResourceRequested 当收到资源请求时调用。
-func (e *Webview2) WebResourceRequested(sender *ICoreWebView2, args *ICoreWebView2WebResourceRequestedEventArgs) uintptr {
-	if e.cbWebResourceRequestedEvent != nil {
-		e.cbWebResourceRequestedEvent(sender, args)
-	}
-	return 0
 }
 
 // Event_WebResourceRequested 网页资源请求事件.
@@ -194,14 +113,6 @@ func (e *Webview2) Event_WebResourceRequested(cb func(sender *ICoreWebView2, arg
 	}
 	e.cbWebResourceRequestedEvent = cb
 	return nil
-}
-
-// NavigationCompleted 当导航完成时调用。
-func (e *Webview2) NavigationCompleted(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr {
-	if e.cbNavigationCompletedEvent != nil {
-		e.cbNavigationCompletedEvent(sender, args)
-	}
-	return 0
 }
 
 // Event_NavigationCompleted 导航完成事件.
@@ -219,14 +130,6 @@ func (e *Webview2) Event_NavigationCompleted(cb func(sender *ICoreWebView2, args
 	return nil
 }
 
-// NavigationCompleted2 当框架导航完成时调用。
-func (e *Webview2) NavigationCompleted2(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr {
-	if e.cbFrameNavigationCompletedEvent != nil {
-		e.cbFrameNavigationCompletedEvent(sender, args)
-	}
-	return 0
-}
-
 // Event_FrameNavigationCompleted 框架导航完成事件.
 //   - 框架导航完成(NavigationCompleted2)事件会在 Webview 中的子框架完全加载完毕（与 body.onload 触发同时）或加载因错误而停止时触发。
 func (e *Webview2) Event_FrameNavigationCompleted(cb func(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr) error {
@@ -240,14 +143,6 @@ func (e *Webview2) Event_FrameNavigationCompleted(cb func(sender *ICoreWebView2,
 	}
 	e.cbFrameNavigationCompletedEvent = cb
 	return nil
-}
-
-// NavigationStarting2 当框架导航开始时调用。
-func (e *Webview2) NavigationStarting2(sender *ICoreWebView2, args *ICoreWebView2NavigationStartingEventArgs) uintptr {
-	if e.cbFrameNavigationStartingEvent != nil {
-		e.cbFrameNavigationStartingEvent(sender, args)
-	}
-	return 0
 }
 
 // Event_FrameNavigationStarting 框架导航开始事件。
@@ -266,14 +161,6 @@ func (e *Webview2) Event_FrameNavigationStarting(cb func(sender *ICoreWebView2, 
 	return nil
 }
 
-// NavigationStarting 当导航开始时调用。
-func (e *Webview2) NavigationStarting(sender *ICoreWebView2, args *ICoreWebView2NavigationStartingEventArgs) uintptr {
-	if e.cbNavigationStartingEvent != nil {
-		e.cbNavigationStartingEvent(sender, args)
-	}
-	return 0
-}
-
 // Event_NavigationStarting 导航开始事件.
 //   - NavigationStarting 在 Webview 主框架请求导航到不同的统一资源标识符 (URI) 权限时运行。重定向也会触发此操作，并且导航 ID 与原始 ID 相同。
 //   - 在所有 NavigationStarting 事件处理程序返回之前，导航将被阻止。
@@ -290,14 +177,6 @@ func (e *Webview2) Event_NavigationStarting(cb func(sender *ICoreWebView2, args 
 	return nil
 }
 
-// AcceleratorKeyPressed 当使用快捷键时调用。
-func (e *Webview2) AcceleratorKeyPressed(sender *ICoreWebView2Controller, args *ICoreWebView2AcceleratorKeyPressedEventArgs) uintptr {
-	if e.cbAcceleratorKeyPressedEvent != nil {
-		e.cbAcceleratorKeyPressedEvent(sender, args)
-	}
-	return 0
-}
-
 // Event_AcceleratorKeyPressed 快捷键事件.
 //   - AcceleratorKeyPressed 在 Webview 获得焦点时，当按下或释放快捷键或组合键时运行。
 func (e *Webview2) Event_AcceleratorKeyPressed(cb func(sender *ICoreWebView2Controller, args *ICoreWebView2AcceleratorKeyPressedEventArgs) uintptr) error {
@@ -311,14 +190,6 @@ func (e *Webview2) Event_AcceleratorKeyPressed(cb func(sender *ICoreWebView2Cont
 	}
 	e.cbAcceleratorKeyPressedEvent = cb
 	return nil
-}
-
-// ContentLoading 当 WebView 控件开始加载内容时调用。
-func (e *Webview2) ContentLoading(sender *ICoreWebView2, args *ICoreWebView2ContentLoadingEventArgs) uintptr {
-	if e.cbContentLoadingEvent != nil {
-		e.cbContentLoadingEvent(sender, args)
-	}
-	return 0
 }
 
 // Event_ContentLoading 网页内容正在加载事件.

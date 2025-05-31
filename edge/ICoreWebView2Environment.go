@@ -2,7 +2,6 @@ package edge
 
 import (
 	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"golang.org/x/sys/windows"
 	"syscall"
 	"unsafe"
@@ -64,14 +63,15 @@ func (e *ICoreWebView2Environment) CreateCoreWebView2Controller(parentWindow uin
 // CreateWebResourceResponse 创建新的web资源响应对象。
 func (e *ICoreWebView2Environment) CreateWebResourceResponse(content []byte, statusCode int, reasonPhrase string, headers string) (*ICoreWebView2WebResourceResponse, error) {
 	var err error
-	var stream uintptr
-
+	var streamPtr uintptr
+	var stream *IStream
 	if len(content) > 0 {
-		// Create stream for response
-		stream, err = wapi.SHCreateMemStream(content)
+		stream, err = NewMemStream(content)
 		if err != nil {
 			return nil, err
 		}
+		defer stream.Release()
+		streamPtr = stream.GetPtr()
 	}
 
 	_reason, err := windows.UTF16PtrFromString(reasonPhrase)
@@ -85,7 +85,7 @@ func (e *ICoreWebView2Environment) CreateWebResourceResponse(content []byte, sta
 	var response *ICoreWebView2WebResourceResponse
 	r, _, err := e.Vtbl.CreateWebResourceResponse.Call(
 		uintptr(unsafe.Pointer(e)),
-		stream,
+		streamPtr,
 		uintptr(statusCode),
 		uintptr(unsafe.Pointer(_reason)),
 		uintptr(unsafe.Pointer(_headers)),

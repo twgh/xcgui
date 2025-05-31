@@ -2,16 +2,31 @@ package edge
 
 import (
 	"errors"
+	"github.com/twgh/xcgui/wapi"
 	"golang.org/x/sys/windows"
 	"syscall"
 	"unsafe"
 )
 
-// IStream 接口允许读取和写入数据流对象。
+// IStream 允许读取和写入数据流对象。
 //
 // https://learn.microsoft.com/zh-cn/windows/win32/api/objidl/nn-objidl-istream
 type IStream struct {
 	Vtbl *IStreamVtbl
+}
+
+// NewMemStream 创建内存流对象.
+//
+// data: 用于设置内存流的初始内容, 如果此参数为 nil，则返回的内存流没有任何初始内容。
+func NewMemStream(data []byte) (*IStream, error) {
+	streamPtr, err := wapi.SHCreateMemStream(data)
+	if err != nil {
+		return nil, err
+	}
+	if streamPtr == 0 {
+		return nil, errors.New("createMemStream failed")
+	}
+	return NewIStreamByPtr(streamPtr), nil
 }
 
 // NewIStreamByPtr 从 streamPtr 创建一个新的 IStream 实例。
@@ -34,6 +49,10 @@ type IStreamVtbl struct {
 	UnlockRegion ComProc
 	Stat         ComProc
 	Clone        ComProc
+}
+
+func (i *IStream) GetPtr() uintptr {
+	return uintptr(unsafe.Pointer(i))
 }
 
 func (i *IStream) AddRef() uintptr {

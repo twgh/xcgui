@@ -106,31 +106,33 @@ func (w *WebView) callbinding(d *rpcMessage) (interface{}, error) {
 }
 
 func wndproc(hwnd uintptr, msg uint32, wp, lp uintptr) uintptr {
-	if msg != wapi.WM_MOVE && msg != wapi.WM_MOVING && msg != wapi.WM_SIZE && msg != wapi.WM_ACTIVATE && msg != wapi.WM_CLOSE && msg != wapi.WM_NCDESTROY {
-		return wapi.DefWindowProc(hwnd, msg, wp, lp)
-	}
-	if w, ok := getWindowContext(hwnd).(*WebView); ok {
-		switch msg {
-		case wapi.WM_MOVE, wapi.WM_MOVING:
-			err := w.NotifyParentWindowPositionChanged()
-			ReportError2(err)
+	switch msg {
+	case wapi.WM_MOVE, wapi.WM_MOVING:
+		if w, ok := getWindowContext(hwnd).(*WebView); ok {
+			_ = w.NotifyParentWindowPositionChanged()
 			return 0
-		case wapi.WM_SIZE:
-			w.Resize()
+		}
+	case wapi.WM_SIZE:
+		if w, ok := getWindowContext(hwnd).(*WebView); ok {
+			_ = w.Resize()
 			return 0
-		case wapi.WM_ACTIVATE:
-			if wp == wapi.WA_INACTIVE {
-				break
-			}
-			if w.autofocus {
-				w.Focus()
-			}
+		}
+	case wapi.WM_ACTIVATE:
+		if wp == wapi.WA_INACTIVE {
+			break
+		}
+		if w, ok := getWindowContext(hwnd).(*WebView); ok && w.autofocus {
+			_ = w.Focus()
 			return 0
-		case wapi.WM_CLOSE:
-			w.Close()
+		}
+	case wapi.WM_CLOSE:
+		if w, ok := getWindowContext(hwnd).(*WebView); ok {
+			ReportError2(w.Close())
 			wapi.DestroyWindow(hwnd)
 			return 0
-		case wapi.WM_NCDESTROY: // 窗口非客户区销毁
+		}
+	case wapi.WM_NCDESTROY: // 窗口非客户区销毁
+		if w, ok := getWindowContext(hwnd).(*WebView); ok {
 			// 移除事件
 			if xc.XC_IsHWINDOW(w.hWindow) {
 				xc.XWnd_RemoveEventC(w.hWindow, xcc.XWM_WINDPROC, onWndProc)
@@ -223,7 +225,7 @@ func (w *WebView) UnbindAll() {
 	w.bindings = map[string]interface{}{}
 
 	for _, id := range w.bindingsid {
-		w.RemoveScriptToExecuteOnDocumentCreated(id)
+		_ = w.RemoveScriptToExecuteOnDocumentCreated(id)
 	}
 	w.bindingsid = map[string]string{}
 	w.rwxBindings.Unlock()
@@ -365,7 +367,8 @@ func (w *WebView) newWebView2Controller() error {
 		ReportError2(err)
 
 		if w.focusOnInit {
-			w.Focus()
+			err = w.Focus()
+			ReportError2(err)
 		}
 		isDone = true
 	}

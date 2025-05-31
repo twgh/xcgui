@@ -58,6 +58,7 @@ type Option struct {
 	EnvCompletedCallback func(result uintptr, env *ICoreWebView2Environment)
 }
 
+// Edge WebView2 环境.
 type Edge struct {
 	// WebView2 环境
 	Environment *ICoreWebView2Environment

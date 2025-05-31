@@ -92,7 +92,7 @@ func (i *ICoreWebView2WebResourceRequest) GetContent() ([]byte, error) {
 	if streamPtr == 0 {
 		return nil, nil
 	}
-	stream := (*IStream)(unsafe.Pointer(streamPtr))
+	stream := NewIStreamByPtr(streamPtr)
 	defer stream.Release()
 
 	const bufferSize = 4096
@@ -190,17 +190,20 @@ func (i *ICoreWebView2WebResourceRequest) PutUri(uri string) error {
 // PutContent 设置请求的内容。
 func (i *ICoreWebView2WebResourceRequest) PutContent(content []byte) error {
 	var err error
-	var stream uintptr
-	// 创建内存流
+	var streamPtr uintptr
+	var stream *IStream
 	if len(content) > 0 {
-		stream, err = wapi.SHCreateMemStream(content)
+		// 创建内存流
+		stream, err = NewMemStream(content)
 		if err != nil {
 			return err
 		}
+		defer stream.Release()
+		streamPtr = stream.GetPtr()
 	}
 	r, _, err := i.Vtbl.PutContent.Call(
 		uintptr(unsafe.Pointer(i)),
-		stream,
+		streamPtr,
 	)
 	if !errors.Is(err, windows.ERROR_SUCCESS) {
 		return err
