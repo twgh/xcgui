@@ -70,7 +70,7 @@ func (i *ICoreWebView2EnvironmentOptions) GetAdditionalBrowserArguments() (strin
 // MustGetAdditionalBrowserArguments 获取创建 WebView2 环境时要传递给浏览器进程的其它命令行参数。出错时会触发全局错误回调。
 func (i *ICoreWebView2EnvironmentOptions) MustGetAdditionalBrowserArguments() string {
 	value, err := i.GetAdditionalBrowserArguments()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return value
 }
 
@@ -157,7 +157,7 @@ func (i *ICoreWebView2EnvironmentOptions) GetTargetCompatibleBrowserVersion() (s
 // MustGetTargetCompatibleBrowserVersion 获取目标兼容的浏览器版本。出错时会触发全局错误回调。
 func (i *ICoreWebView2EnvironmentOptions) MustGetTargetCompatibleBrowserVersion() string {
 	value, err := i.GetTargetCompatibleBrowserVersion()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return value
 }
 
@@ -199,7 +199,7 @@ func (i *ICoreWebView2EnvironmentOptions) GetAllowSingleSignOnUsingOSPrimaryAcco
 // MustGetAllowSingleSignOnUsingOSPrimaryAccount 获取是否允许 Azure Active Directory (AAD) 和个人 Microsoft Account (MSA) 资源的单点登录。出错时会触发全局错误回调。
 func (i *ICoreWebView2EnvironmentOptions) MustGetAllowSingleSignOnUsingOSPrimaryAccount() bool {
 	value, err := i.GetAllowSingleSignOnUsingOSPrimaryAccount()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return value
 }
 

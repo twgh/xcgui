@@ -68,7 +68,7 @@ func (i *ICoreWebView2Controller3) GetRasterizationScale() (float64, error) {
 // MustGetRasterizationScale 获取当前光栅化缩放比例。出错时会触发全局错误回调。
 func (i *ICoreWebView2Controller3) MustGetRasterizationScale() float64 {
 	scale, err := i.GetRasterizationScale()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return scale
 }
 
@@ -106,7 +106,7 @@ func (i *ICoreWebView2Controller3) GetShouldDetectMonitorScaleChanges() (bool, e
 // MustGetShouldDetectMonitorScaleChanges 获取是否尝试跟踪显示器DPI缩放变化。出错时会触发全局错误回调。
 func (i *ICoreWebView2Controller3) MustGetShouldDetectMonitorScaleChanges() bool {
 	value, err := i.GetShouldDetectMonitorScaleChanges()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return value
 }
 
@@ -146,7 +146,7 @@ func (i *ICoreWebView2Controller3) GetBoundsMode() (COREWEBVIEW2_BOUNDS_MODE, er
 //   - BoundsMode 会影响 Bounds 和 RasterizationScale 属性的设置方式。
 func (i *ICoreWebView2Controller3) MustGetBoundsMode() COREWEBVIEW2_BOUNDS_MODE {
 	boundsMode, err := i.GetBoundsMode()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return boundsMode
 }
 

@@ -62,7 +62,7 @@ func (i *ICoreWebView2Settings2) GetUserAgent() (string, error) {
 // MustGetUserAgent 获取 UserAgent。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings2) MustGetUserAgent() string {
 	userAgent, err := i.GetUserAgent()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return userAgent
 }
 

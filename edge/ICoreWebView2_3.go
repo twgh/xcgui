@@ -66,7 +66,7 @@ func (i *ICoreWebView2_3) GetIsSuspended() (bool, error) {
 // MustGetIsSuspended 获取 WebView 控件是否已挂起。出错时会触发全局错误回调。
 func (i *ICoreWebView2_3) MustGetIsSuspended() bool {
 	r, err := i.GetIsSuspended()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return r
 }
 

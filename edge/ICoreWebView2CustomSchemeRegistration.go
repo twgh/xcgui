@@ -71,7 +71,7 @@ func (i *ICoreWebView2CustomSchemeRegistration) GetSchemeName() (string, error) 
 // MustGetSchemeName 获取自定义方案名称。出错时会触发全局错误回调。
 func (i *ICoreWebView2CustomSchemeRegistration) MustGetSchemeName() string {
 	value, err := i.GetSchemeName()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return value
 }
 
@@ -94,7 +94,7 @@ func (i *ICoreWebView2CustomSchemeRegistration) GetTreatAsSecure() (bool, error)
 // MustGetTreatAsSecure 获取采用此方案的网站是否会像 HTTPS 网站一样被视为安全上下文。出错时会触发全局错误回调。
 func (i *ICoreWebView2CustomSchemeRegistration) MustGetTreatAsSecure() bool {
 	value, err := i.GetTreatAsSecure()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return value
 }
 
@@ -142,7 +142,7 @@ func (i *ICoreWebView2CustomSchemeRegistration) GetAllowedOrigins() ([]string, e
 // MustGetAllowedOrigins 获取允许使用自定义方案（如带有 Origin 标头的 XHR 请求和子资源请求）发出请求的来源列表。出错时会触发全局错误回调。
 func (i *ICoreWebView2CustomSchemeRegistration) MustGetAllowedOrigins() []string {
 	origins, err := i.GetAllowedOrigins()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return origins
 }
 

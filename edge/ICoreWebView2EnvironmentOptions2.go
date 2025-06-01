@@ -68,7 +68,7 @@ func (i *ICoreWebView2EnvironmentOptions2) GetExclusiveUserDataFolderAccess() (b
 // 100.0.1185.39
 func (i *ICoreWebView2EnvironmentOptions2) MustGetExclusiveUserDataFolderAccess() bool {
 	value, err := i.GetExclusiveUserDataFolderAccess()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return value
 }
 

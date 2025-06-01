@@ -150,7 +150,7 @@ func (i *ICoreWebView2WebResourceResponse) GetStatusCode() (int32, error) {
 // MustGetStatusCode 获取响应的 HTTP 状态码。出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceResponse) MustGetStatusCode() int32 {
 	statusCode, err := i.GetStatusCode()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return statusCode
 }
 
@@ -196,7 +196,7 @@ func (i *ICoreWebView2WebResourceResponse) GetReasonPhrase() (string, error) {
 // MustGetReasonPhrase 获取响应的 HTTP 状态码描述。出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceResponse) MustGetReasonPhrase() string {
 	reasonPhrase, err := i.GetReasonPhrase()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return reasonPhrase
 }
 
@@ -219,7 +219,7 @@ func (i *ICoreWebView2WebResourceResponse) GetHeaders() (*ICoreWebView2HttpRespo
 // MustGetHeaders 获取响应的 HTTP 标头。出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceResponse) MustGetHeaders() *ICoreWebView2HttpResponseHeaders {
 	headers, err := i.GetHeaders()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return headers
 }
 
@@ -263,6 +263,6 @@ func (i *ICoreWebView2WebResourceResponse) GetHeadersMap() (map[string]string, e
 // MustGetHeadersMap 获取请求的HTTP标头并转换为map。出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceResponse) MustGetHeadersMap() map[string]string {
 	headers, err := i.GetHeadersMap()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return headers
 }

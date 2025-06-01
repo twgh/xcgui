@@ -74,80 +74,83 @@ type Edge struct {
 	_cbEnvCompleted func(result uintptr, env *ICoreWebView2Environment)
 	// WebView2 控制器创建完成回调 [内部使用]
 	_cbCreateCoreWebView2ControllerCompleted func(result uintptr, controller *ICoreWebView2Controller)
+
+	ref int32 // 引用计数
 }
 
 // New Edge 在整个应用程序的生命周期里应该只创建一次.
 //
 // opt: Edge选项.
 func New(opt Option) (*Edge, error) {
-	e := &Edge{}
-	e.cbEnvCompleted = opt.EnvCompletedCallback
+	if atomic.LoadUintptr(&envInited) != 0 {
+		return nil, errors.New("edge environment already inited")
+	}
 
 	var err error
-	if atomic.LoadUintptr(&envInited) == 0 {
-		// 环境初始化完成事件
-		e.handlerCreateCoreWebView2EnvironmentCompleted = NewICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler(e)
-		// 控制器创建完成事件
-		e.handler_CreateCoreWebView2ControllerCompleted = NewICoreWebView2CreateCoreWebView2ControllerCompletedHandler(e)
+	e := &Edge{}
+	e.cbEnvCompleted = opt.EnvCompletedCallback
+	// 环境初始化完成事件
+	e.handlerCreateCoreWebView2EnvironmentCompleted = NewICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler(e)
+	// 控制器创建完成事件
+	e.handler_CreateCoreWebView2ControllerCompleted = NewICoreWebView2CreateCoreWebView2ControllerCompletedHandler(e)
 
-		// 处理用户数据文件夹路径, 如果为空, 则使用当前可执行文件所在目录下的 AppData 文件夹
-		dataPath := opt.UserDataFolder
-		if dataPath == "" {
-			currentExePath := make([]uint16, windows.MAX_PATH)
-			_, err := windows.GetModuleFileName(windows.Handle(0), &currentExePath[0], windows.MAX_PATH)
-			if err != nil {
-				return nil, errors.New("error calling GetModuleFileName: " + err.Error())
-			}
-			currentExeName := filepath.Base(windows.UTF16ToString(currentExePath))
-			dataPath = filepath.Join(os.Getenv("AppData"), currentExeName)
-		}
-
-		e._cbEnvCompleted = func(result uintptr, env *ICoreWebView2Environment) {
-			if result == 0 { // 成功
-				env.AddRef()
-				e.Environment = env
-				atomic.StoreUintptr(&envInited, 1)
-			} else {
-				err = fmt.Errorf("CreateCoreWebView2EnvironmentWithOptions failed: 0x%08x", result)
-			}
-		}
-
-		// 创建 WebView2 环境
-		result, err := CreateCoreWebView2EnvironmentWithOptions(opt.BrowserExecutableFolder, dataPath, opt.EnvironmentOptions, e.handlerCreateCoreWebView2EnvironmentCompleted)
+	// 处理用户数据文件夹路径, 如果为空, 则使用当前可执行文件所在目录下的 AppData 文件夹
+	dataPath := opt.UserDataFolder
+	if dataPath == "" {
+		currentExePath := make([]uint16, windows.MAX_PATH)
+		_, err := windows.GetModuleFileName(windows.Handle(0), &currentExePath[0], windows.MAX_PATH)
 		if err != nil {
-			return nil, errors.New("error calling CreateCoreWebView2EnvironmentWithOptions: " + err.Error())
-		} else if result != 0 {
-			return nil, fmt.Errorf("calling CreateCoreWebView2EnvironmentWithOptions return: 0x%08x", result)
+			return nil, errors.New("error calling GetModuleFileName: " + err.Error())
 		}
+		currentExeName := filepath.Base(windows.UTF16ToString(currentExePath))
+		dataPath = filepath.Join(os.Getenv("AppData"), currentExeName)
+	}
 
-		// 等待 webview2 环境创建完成
-		var msg wapi.MSG
-		for {
-			if atomic.LoadUintptr(&envInited) != 0 {
-				break
-			}
-			if wapi.GetMessage(&msg, 0, 0, 0) == 0 {
-				break
-			}
-			wapi.TranslateMessage(&msg)
-			wapi.DispatchMessage(&msg)
+	e._cbEnvCompleted = func(result uintptr, env *ICoreWebView2Environment) {
+		if result == 0 { // 成功
+			env.AddRef()
+			e.Environment = env
+			atomic.StoreUintptr(&envInited, 1)
+		} else {
+			err = fmt.Errorf("CreateCoreWebView2EnvironmentWithOptions failed: 0x%08x", result)
 		}
+	}
+
+	// 创建 WebView2 环境
+	result, err := CreateCoreWebView2EnvironmentWithOptions(opt.BrowserExecutableFolder, dataPath, opt.EnvironmentOptions, e.handlerCreateCoreWebView2EnvironmentCompleted)
+	if err != nil {
+		return nil, errors.New("error calling CreateCoreWebView2EnvironmentWithOptions: " + err.Error())
+	} else if result != 0 {
+		return nil, fmt.Errorf("calling CreateCoreWebView2EnvironmentWithOptions return: 0x%08x", result)
+	}
+
+	// 等待 webview2 环境创建完成
+	var msg wapi.MSG
+	for {
+		if atomic.LoadUintptr(&envInited) != 0 {
+			break
+		}
+		if wapi.GetMessage(&msg, 0, 0, 0) == 0 {
+			break
+		}
+		wapi.TranslateMessage(&msg)
+		wapi.DispatchMessage(&msg)
 	}
 	return e, err
 }
 
-func (e *Edge) QueryInterface(refiid, object uintptr) uintptr {
-	err := e.Environment.QueryInterface(refiid, object)
-	errno, _ := ErrorToErrno(err)
-	return uintptr(errno)
+func (e *Edge) QueryInterface(_, _ uintptr) uintptr {
+	return 0
 }
 
 func (e *Edge) AddRef() uintptr {
-	return 1
+	atomic.AddInt32(&e.ref, 1)
+	return uintptr(e.ref)
 }
 
 func (e *Edge) Release() uintptr {
-	return 1
+	atomic.AddInt32(&e.ref, -1)
+	return uintptr(e.ref)
 }
 
 // --------------------------- 事件 ---------------------------

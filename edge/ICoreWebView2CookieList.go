@@ -63,7 +63,7 @@ func (i *ICoreWebView2CookieList) GetCount() (uint32, error) {
 // MustGetCount 获取 Cookie 列表中的 Cookie 数量. 出错时会触发全局错误回调.
 func (i *ICoreWebView2CookieList) MustGetCount() uint32 {
 	count, err := i.GetCount()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return count
 }
 
@@ -88,6 +88,6 @@ func (i *ICoreWebView2CookieList) GetValueAtIndex(index uint32) (*ICoreWebView2C
 // MustGetValueAtIndex 根据索引获取 Cookie 列表中的指定 Cookie. 出错时会触发全局错误回调.
 func (i *ICoreWebView2CookieList) MustGetValueAtIndex(index uint32) *ICoreWebView2Cookie {
 	cookie, err := i.GetValueAtIndex(index)
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return cookie
 }

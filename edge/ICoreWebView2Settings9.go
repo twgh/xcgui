@@ -60,7 +60,7 @@ func (i *ICoreWebView2Settings9) GetIsNonClientRegionSupportEnabled() (bool, err
 // MustGetIsNonClientRegionSupportEnabled 获取是否启用非客户区域支持。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings9) MustGetIsNonClientRegionSupportEnabled() bool {
 	enabled, err := i.GetIsNonClientRegionSupportEnabled()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return enabled
 }
 

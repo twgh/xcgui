@@ -240,6 +240,24 @@ func (e *Webview2) GetCookies(uri string, cb func(errorCode syscall.Errno, cooki
 	return CookieManager.GetCookies(uri, e.HandlerGetCookiesCompleted)
 }
 
+// SetVirtualHostNameToFolderMapping 设置虚拟主机名和文件夹路径之间的映射，以便通过该主机名对网站可用.
+//
+// hostName: 要映射的主机名。
+//
+// folderPath: 要映射的文件夹路径。
+//
+// accessKind: 资源访问权限。
+func (e *Webview2) SetVirtualHostNameToFolderMapping(hostName string, folderPath string, accessKind COREWEBVIEW2_HOST_RESOURCE_ACCESS_KIND) error {
+	if e.WebView2_3 == nil {
+		var err error
+		e.WebView2_3, err = e.CoreWebView.GetICoreWebView2_3()
+		if err != nil {
+			return err
+		}
+	}
+	return e.WebView2_3.SetVirtualHostNameToFolderMapping(hostName, folderPath, accessKind)
+}
+
 // 设置虚拟主机名和嵌入文件系统之间的映射，以便通过该主机名对网站可用.
 //
 // hostName: 要映射的主机名。
@@ -256,17 +274,17 @@ func (e *Webview2) SetVirtualHostNameToEmbedFSMapping(hostName string, embedFS e
 		// 自动检测目录名
 		entries, err := embedFS.ReadDir(".")
 		if err != nil {
-			return errors.New("自动获取目录名时报错: " + err.Error())
+			return errors.New("error reported when automatically obtaining directory name: " + err.Error())
 		}
 		if len(entries) != 1 || !entries[0].IsDir() {
-			return errors.New("自动获取目录名失败")
+			return errors.New("automatic retrieval of directory name failed")
 		}
 		dirName = entries[0].Name()
 	}
 
 	subFS, err := fs.Sub(embedFS, dirName)
 	if err != nil {
-		return errors.New("创建子文件系统失败: " + err.Error())
+		return errors.New("failed to create sub file system: " + err.Error())
 	}
 
 	filter := "*://" + hostName + "/*"
@@ -291,8 +309,10 @@ func (e *Webview2) SetVirtualHostNameToEmbedFSMapping(hostName string, embedFS e
 		}
 	}
 
-	e.firstResponse, err = e.Edge.Environment.CreateWebResourceResponse(nil, 200, "OK", "")
-	ReportError2(err)
+	if !once { // 只创建一次
+		e.firstResponse, err = e.Edge.Environment.CreateWebResourceResponse(nil, 200, "OK", "")
+		ReportErrorAtuo(err)
+	}
 	e.hostName = "http://" + hostName + "/"
 	e.embedFS = subFS
 	return nil

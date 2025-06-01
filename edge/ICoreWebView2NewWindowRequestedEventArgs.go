@@ -69,7 +69,7 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetUri() (string, error) {
 // MustGetUri 获取新窗口请求的 URI. 出错时会触发全局错误回调.
 func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetUri() string {
 	uri, err := i.GetUri()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return uri
 }
 
@@ -116,7 +116,7 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetNewWindow() (*ICoreWebView
 // MustGetNewWindow 获取新窗口的 ICoreWebView2 实例. 出错时会触发全局错误回调.
 func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetNewWindow() *ICoreWebView2 {
 	newWindow, err := i.GetNewWindow()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return newWindow
 }
 
@@ -157,7 +157,7 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetHandled() (bool, error) {
 // MustGetHandled 获取是否处理了新窗口请求. 出错时会触发全局错误回调.
 func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetHandled() bool {
 	handled, err := i.GetHandled()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return handled
 }
 
@@ -180,7 +180,7 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetIsUserInitiated() (bool, e
 // MustGetIsUserInitiated 获取新窗口请求是否由用户发起. 出错时会触发全局错误回调.
 func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetIsUserInitiated() bool {
 	isUserInitiated, err := i.GetIsUserInitiated()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return isUserInitiated
 }
 
@@ -203,7 +203,7 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetDeferral() (*ICoreWebView2
 // MustGetDeferral 获取延迟对象，并将事件置于延迟状态. 出错时会触发全局错误回调.
 func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetDeferral() *ICoreWebView2Deferral {
 	deferral, err := i.GetDeferral()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return deferral
 }
 

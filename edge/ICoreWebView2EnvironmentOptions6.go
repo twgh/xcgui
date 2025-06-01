@@ -62,7 +62,7 @@ func (i *ICoreWebView2EnvironmentOptions6) GetAreBrowserExtensionsEnabled() (boo
 // MustGetAreBrowserExtensionsEnabled 获取是否启用浏览器扩展功能.
 func (i *ICoreWebView2EnvironmentOptions6) MustGetAreBrowserExtensionsEnabled() bool {
 	value, err := i.GetAreBrowserExtensionsEnabled()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return value
 }
 

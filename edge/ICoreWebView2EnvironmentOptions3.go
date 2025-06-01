@@ -68,7 +68,7 @@ func (i *ICoreWebView2EnvironmentOptions3) GetIsCustomCrashReportingEnabled() (b
 // 109.0.1518.46
 func (i *ICoreWebView2EnvironmentOptions3) MustGetIsCustomCrashReportingEnabled() bool {
 	value, err := i.GetIsCustomCrashReportingEnabled()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return value
 }
 

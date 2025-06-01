@@ -62,7 +62,7 @@ func (i *ICoreWebView2Settings4) GetIsPasswordAutosaveEnabled() (bool, error) {
 // MustGetIsPasswordAutosaveEnabled 获取是否允许自动保存密码。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings4) MustGetIsPasswordAutosaveEnabled() bool {
 	enabled, err := i.GetIsPasswordAutosaveEnabled()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return enabled
 }
 
@@ -100,7 +100,7 @@ func (i *ICoreWebView2Settings4) GetIsGeneralAutofillEnabled() (bool, error) {
 // MustGetIsGeneralAutofillEnabled 获取是否允许自动填充表单。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings4) MustGetIsGeneralAutofillEnabled() bool {
 	enabled, err := i.GetIsGeneralAutofillEnabled()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return enabled
 }
 

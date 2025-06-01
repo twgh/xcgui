@@ -70,7 +70,7 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetUri() (string, error) {
 // MustGetUri 获取请求的导航的 uri。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationStartingEventArgs) MustGetUri() string {
 	uri, err := i.GetUri()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return uri
 }
 
@@ -93,7 +93,7 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetNavigationId() (uint64, er
 // MustGetNavigationId 获取导航的 ID。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationStartingEventArgs) MustGetNavigationId() uint64 {
 	id, err := i.GetNavigationId()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return id
 }
 
@@ -116,7 +116,7 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetIsUserInitiated() (bool, e
 // MustGetIsUserInitiated 获取导航是否由用户发起。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationStartingEventArgs) MustGetIsUserInitiated() bool {
 	isUserInitiated, err := i.GetIsUserInitiated()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return isUserInitiated
 }
 
@@ -139,7 +139,7 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetIsRedirected() (bool, erro
 // MustGetIsRedirected 获取导航是否是重定向的结果。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationStartingEventArgs) MustGetIsRedirected() bool {
 	isRedirected, err := i.GetIsRedirected()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return isRedirected
 }
 
@@ -162,7 +162,7 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetRequestHeaders() (*ICoreWe
 // MustGetRequestHeaders 获取导航请求的 HTTP 请求头。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationStartingEventArgs) MustGetRequestHeaders() *ICoreWebView2HttpRequestHeaders {
 	headers, err := i.GetRequestHeaders()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return headers
 }
 
@@ -185,7 +185,7 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetCancel() (bool, error) {
 // MustGetCancel 获取是否取消导航。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationStartingEventArgs) MustGetCancel() bool {
 	cancel, err := i.GetCancel()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return cancel
 }
 

@@ -60,7 +60,7 @@ func (i *ICoreWebView2Settings8) GetIsReputationCheckingRequired() (bool, error)
 // MustGetIsReputationCheckingRequired 获取是否需要进行信誉检查。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings8) MustGetIsReputationCheckingRequired() bool {
 	required, err := i.GetIsReputationCheckingRequired()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return required
 }
 

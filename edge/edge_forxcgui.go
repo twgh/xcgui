@@ -62,7 +62,7 @@ type WebView struct {
 
 	updateWebviewSize func()
 	hWindow           int // 炫彩窗口句柄
-	hParent           int
+	hParent           int // 原生窗口宿主炫彩窗口或元素句柄
 
 	// 在窗口获得焦点时尝试保持 webView 的焦点。
 	autofocus bool
@@ -94,16 +94,16 @@ func (e *Edge) NewWebView(hParent int, opt WebViewOption) (*WebView, error) {
 // 创建 webview 宿主窗口.
 func (w *WebView) createWithOptionsByXcgui(hParent int, opt WebViewOption) error {
 	w.hParent = hParent
-	// 获取父窗口或元素的HWND
-	var hWnd uintptr
-	var isWindow bool
+	// 获取父窗口或元素的HWND, 其实是一个, 就是父窗口的HWND, 炫彩元素没有自己的HWND
+	var hWndXC uintptr
+	var isInWindow bool
 	if w.hParent > 0 {
 		if xc.XC_IsHWINDOW(w.hParent) {
 			w.hWindow = w.hParent
-			isWindow = true
-			hWnd = xc.XWnd_GetHWND(w.hParent)
+			isInWindow = true
+			hWndXC = xc.XWnd_GetHWND(w.hParent)
 		} else if xc.XC_IsHELE(w.hParent) {
-			hWnd = xc.XWidget_GetHWND(w.hParent)
+			hWndXC = xc.XWidget_GetHWND(w.hParent)
 			w.hWindow = xc.XWidget_GetHWINDOW(w.hParent)
 		}
 	}
@@ -133,7 +133,7 @@ func (w *WebView) createWithOptionsByXcgui(hParent int, opt WebViewOption) error
 		opt.ClassName = "go_xcgui_WebView"
 	}
 	wc := wapi.WNDCLASSEX{
-		Style:         wapi.CS_HREDRAW | wapi.CS_VREDRAW | wapi.CS_PARENTDC,
+		Style:         wapi.CS_HREDRAW | wapi.CS_VREDRAW, // | wapi.CS_PARENTDC
 		CbSize:        uint32(unsafe.Sizeof(wapi.WNDCLASSEX{})),
 		HInstance:     hInstance,
 		LpszClassName: common.StrPtr(opt.ClassName),
@@ -149,8 +149,9 @@ func (w *WebView) createWithOptionsByXcgui(hParent int, opt WebViewOption) error
 	// 创建宿主窗口
 	w.hwnd = wapi.CreateWindowEx(0, opt.ClassName, opt.Title, xcc.WS_MINIMIZE, left, top, width, height, 0, 0, hInstance, 0)
 
-	setWindowContext(w.hwnd, w)
-	setWindowContext(hWnd, w)
+	// 记录窗口上下文
+	hwndContext.SetWindowContext(w.hwnd, w)
+	xcContext.SetWindowContext(uintptr(w.hParent), w)
 
 	// 显示窗口, 更新窗口, 设置焦点
 	wapi.ShowWindow(w.hwnd, xcc.SW_SHOWMINIMIZED)
@@ -160,38 +161,39 @@ func (w *WebView) createWithOptionsByXcgui(hParent int, opt WebViewOption) error
 	// ------------------------ 创建 WebView2 控制器 ------------------------
 	w.init()
 	w.Webview2.msgcb_xcgui = w.msgcb_xcgui
-	w.SetPermission(COREWEBVIEW2_PERMISSION_KIND_CLIPBOARD_READ, COREWEBVIEW2_PERMISSION_STATE_ALLOW)
 
 	err := w.newWebView2Controller()
 	if err != nil {
 		// 销毁原生窗口
 		wapi.PostMessageW(w.hwnd, wapi.WM_CLOSE, 0, 0)
-		deleteWindowContext(w.hwnd)
 		return err
 	}
 
 	// 获取浏览器设置
-	settings, _ := w.GetSettings()
-	if settings != nil {
+	settings, err := w.GetSettings()
+	if err != nil {
+		ReportErrorAtuo(err)
+	} else {
 		// 设置是否可开启开发人员工具
 		err = settings.PutAreDevToolsEnabled(opt.Debug)
-		ReportError2(err)
+		ReportErrorAtuo(err)
 		// 设置是否启用非客户区域支持
 		s9, err := settings.GetICoreWebView2Settings9()
 		if err != nil {
-			ReportError2(err)
+			ReportErrorAtuo(err)
 		} else {
 			err = s9.PutIsNonClientRegionSupportEnabled(opt.AppDrag)
-			ReportError2(err)
+			ReportErrorAtuo(err)
 			s9.Release()
 		}
+		settings.Release()
 	}
 	err = w.Resize()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	// ------------------------ 创建 WebView2 控制器 END ------------------------
 
 	// 设置 WebView2 宿主窗口为炫彩父窗口或元素的子窗口
-	wapi.SetParent(w.hwnd, hWnd)
+	wapi.SetParent(w.hwnd, hWndXC)
 	// 设置 WebView2 宿主窗口样式
 	wapi.SetWindowLongPtrW(w.hwnd, wapi.GWL_STYLE, int(xcc.WS_CHILD|xcc.WS_VISIBLE))
 
@@ -201,7 +203,7 @@ func (w *WebView) createWithOptionsByXcgui(hParent int, opt WebViewOption) error
 			return
 		}
 		var rc xc.RECT
-		if isWindow {
+		if isInWindow {
 			xc.XWnd_GetBodyRect(w.hParent, &rc)
 		} else {
 			xc.XEle_GetWndClientRect(w.hParent, &rc)
@@ -222,7 +224,7 @@ func (w *WebView) createWithOptionsByXcgui(hParent int, opt WebViewOption) error
 	xc.XWnd_RegEventC1(w.hWindow, xcc.XWM_WINDPROC, onWndProc)
 
 	// 元素事件
-	if !isWindow {
+	if !isInWindow {
 		// 调整位置和大小
 		xc.XEle_RemoveEventC(w.hParent, xcc.XE_SIZE, onEleSize)
 		xc.XEle_RegEventC1(w.hParent, xcc.XE_SIZE, onEleSize)
@@ -241,32 +243,25 @@ func (w *WebView) createWithOptionsByXcgui(hParent int, opt WebViewOption) error
 }
 
 func onEleDestroy(hEle int, pbHandled *bool) int {
-	if w, ok := getWindowContext(xc.XWidget_GetHWND(hEle)).(*WebView); ok {
+	handle := uintptr(hEle)
+	if w := xcContext.GetWindowContext(handle); w != nil {
 		if wapi.IsWindow(w.hwnd) {
 			wapi.PostMessageW(w.hwnd, wapi.WM_CLOSE, 0, 0)
 		}
+		xcContext.DeleteWindowContext(handle)
 	}
 	return 0
 }
 
 func onEleSize(hEle int, nFlags xcc.AdjustLayout_, nAdjustNo uint32, pbHandled *bool) int {
-	if w, ok := getWindowContext(xc.XWidget_GetHWND(hEle)).(*WebView); ok {
+	if w := xcContext.GetWindowContext(uintptr(hEle)); w != nil {
 		w.updateWebviewSize()
 	}
 	return 0
 }
 
-func onWndProc(hWindow int, message uint32, wParam, lParam uintptr, pbHandled *bool) int {
-	if message == wapi.WM_SIZE {
-		if w, ok := getWindowContext(xc.XWnd_GetHWND(hWindow)).(*WebView); ok {
-			w.updateWebviewSize()
-		}
-	}
-	return 0
-}
-
 func onEleShow(hEle int, bShow bool, pbHandled *bool) int {
-	if w, ok := getWindowContext(xc.XWidget_GetHWND(hEle)).(*WebView); ok {
+	if w := xcContext.GetWindowContext(uintptr(hEle)); w != nil {
 		if !wapi.IsWindow(w.hwnd) {
 			return 0
 		}
@@ -279,6 +274,31 @@ func onEleShow(hEle int, bShow bool, pbHandled *bool) int {
 	return 0
 }
 
+func onWndProc(hWindow int, message uint32, wParam, lParam uintptr, pbHandled *bool) int {
+	switch message {
+	case wapi.WM_SIZE:
+		if w := xcContext.GetWindowContext(uintptr(hWindow)); w != nil { // 原生窗口宿主是炫彩窗口
+			w.updateWebviewSize()
+		} else { // 更新每个元素中的 webview 位置
+			hEles := xcContext.GetHEles(hWindow)
+			for i := 0; i < len(hEles); i++ {
+				if w := xcContext.GetWindowContext(uintptr(hEles[i])); w != nil {
+					w.updateWebviewSize()
+				}
+			}
+		}
+	case wapi.WM_CLOSE:
+		handle := uintptr(hWindow)
+		if w := xcContext.GetWindowContext(handle); w != nil { // 原生窗口宿主是炫彩窗口
+			if wapi.IsWindow(w.hwnd) {
+				wapi.PostMessageW(w.hwnd, wapi.WM_CLOSE, 0, 0)
+			}
+			xcContext.DeleteWindowContext(handle)
+		}
+	}
+	return 0
+}
+
 func (w *WebView) msgcb_xcgui(msg string) {
 	d := rpcMessage{}
 	if err := json.Unmarshal(common.String2Bytes(msg), &d); err != nil {
@@ -287,17 +307,14 @@ func (w *WebView) msgcb_xcgui(msg string) {
 
 	id := strconv.Itoa(d.ID)
 	if res, err := w.callbinding(&d); err != nil {
-		xc.XC_CallUT(func() {
-			_ = w.Eval("window._rpc[" + id + "].reject(" + jsString(err.Error()) + "); window._rpc[" + id + "] = undefined")
-		})
+		err = w.Eval("window._rpc[" + id + "].reject(" + jsString(err.Error()) + "); window._rpc[" + id + "] = undefined")
+		ReportErrorAtuo(err)
 	} else if b, err := json.Marshal(res); err != nil {
-		xc.XC_CallUT(func() {
-			_ = w.Eval("window._rpc[" + id + "].reject(" + jsString(err.Error()) + "); window._rpc[" + id + "] = undefined")
-		})
+		err = w.Eval("window._rpc[" + id + "].reject(" + jsString(err.Error()) + "); window._rpc[" + id + "] = undefined")
+		ReportErrorAtuo(err)
 	} else {
-		xc.XC_CallUT(func() {
-			_ = w.Eval("window._rpc[" + id + "].resolve(" + string(b) + "); window._rpc[" + id + "] = undefined")
-		})
+		err = w.Eval("window._rpc[" + id + "].resolve(" + string(b) + "); window._rpc[" + id + "] = undefined")
+		ReportErrorAtuo(err)
 	}
 }
 

@@ -71,8 +71,24 @@ var (
 	procGetClientRect                          = User32.NewProc("GetClientRect")
 	procSetWindowTextW                         = User32.NewProc("SetWindowTextW")
 	procAdjustWindowRect                       = User32.NewProc("AdjustWindowRect")
-	procgetAsyncKeyState                       = User32.NewProc("GetAsyncKeyState")
+	procGetAsyncKeyState                       = User32.NewProc("GetAsyncKeyState")
+	procSetCursor                              = User32.NewProc("SetCursor")
+	procGetWindowRect                          = User32.NewProc("GetWindowRect")
 )
+
+// SetCursor 设置鼠标光标。
+//   - 返回值是上一个游标的句柄（如果有）。
+//   - 如果没有上一个游标，则返回值为 0。
+//
+// hCursor: 要设置的鼠标光标的句柄。
+//   - 游标必须由 CreateCursor 或 CreateIconIndirect 函数创建，或者由 LoadCursor 或 LoadImage 函数加载。
+//   - 如果此参数为 0，则光标将从屏幕中删除。
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-setcursor
+func SetCursor(hCursor uintptr) uintptr {
+	ret, _, _ := procSetCursor.Call(hCursor)
+	return ret
+}
 
 // GetAsyncKeyState 确定在调用此函数时是否按下了键，以及自上次调用 GetAsyncKeyState 以来是否按下了该键。
 //   - 如果在调用此函数时按下了键，则返回值的最高位位于位置 1。
@@ -86,7 +102,7 @@ var (
 //
 // https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-getasynckeystate
 func GetAsyncKeyState(vKey int32) int16 {
-	ret, _, _ := procgetAsyncKeyState.Call(uintptr(vKey))
+	ret, _, _ := procGetAsyncKeyState.Call(uintptr(vKey))
 	return int16(ret)
 }
 
@@ -133,6 +149,21 @@ func SetWindowText(hWnd uintptr, str string) bool {
 // https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetClientRect.
 func GetClientRect(hWnd uintptr, lpRect *xc.RECT) bool {
 	ret, _, _ := procGetClientRect.Call(
+		hWnd,
+		uintptr(unsafe.Pointer(lpRect)),
+	)
+	return ret != 0
+}
+
+// GetWindowRect 检索指定窗口的边界矩形的尺寸。 尺寸以相对于屏幕左上角的屏幕坐标提供。
+//
+// hWnd: 窗口句柄。
+//
+// lpRect: 指向 xc.RECT 结构的指针，该结构接收窗口左上角和右下角的屏幕坐标。
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetWindowRect.
+func GetWindowRect(hWnd uintptr, lpRect *xc.RECT) bool {
+	ret, _, _ := procGetWindowRect.Call(
 		hWnd,
 		uintptr(unsafe.Pointer(lpRect)),
 	)
@@ -1467,7 +1498,7 @@ const (
 	WM_PAINT           uint32 = 15     // 窗口绘制消息
 	WM_CLOSE           uint32 = 16     // 窗口关闭消息.
 	WM_DESTROY         uint32 = 2      // 窗口销毁消息.
-	WM_NCDESTROY       uint32 = 130    // 窗口非客户区销毁消息.
+	WM_NCDESTROY       uint32 = 130    // 窗口非客户区销毁消息, 在 WM_DESTROY 之后.
 	WM_MOUSEMOVE       uint32 = 512    // 窗口鼠标移动消息.
 	WM_LBUTTONDOWN     uint32 = 513    // 窗口鼠标左键按下消息
 	WM_LBUTTONUP       uint32 = 514    // 窗口鼠标左键弹起消息.

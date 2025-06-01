@@ -72,7 +72,7 @@ func (i *ICoreWebView2WebResourceRequest) GetUri() (string, error) {
 // MustGetUri 获取请求URI。出错时会触发全局错误回调.
 func (i *ICoreWebView2WebResourceRequest) MustGetUri() string {
 	uri, err := i.GetUri()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return uri
 }
 
@@ -116,7 +116,7 @@ func (i *ICoreWebView2WebResourceRequest) GetContent() ([]byte, error) {
 // MustGetContent 获取请求的内容。出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceRequest) MustGetContent() []byte {
 	content, err := i.GetContent()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return content
 }
 
@@ -141,7 +141,7 @@ func (i *ICoreWebView2WebResourceRequest) GetMethod() (string, error) {
 // MustGetMethod 获取请求的HTTP方法。出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceRequest) MustGetMethod() string {
 	method, err := i.GetMethod()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return method
 }
 
@@ -164,7 +164,7 @@ func (i *ICoreWebView2WebResourceRequest) GetHeaders() (*ICoreWebView2HttpReques
 // MustGetHeaders 获取请求的HTTP标头。出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceRequest) MustGetHeaders() *ICoreWebView2HttpRequestHeaders {
 	headers, err := i.GetHeaders()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return headers
 }
 
@@ -273,6 +273,6 @@ func (i *ICoreWebView2WebResourceRequest) GetHeadersMap() (map[string]string, er
 // MustGetHeadersMap 获取请求的HTTP标头并转换为map。出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceRequest) MustGetHeadersMap() map[string]string {
 	headers, err := i.GetHeadersMap()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return headers
 }

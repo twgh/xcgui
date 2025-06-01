@@ -15,26 +15,51 @@ import (
 )
 
 var (
-	windowContext     = map[uintptr]interface{}{}
-	windowContextSync sync.RWMutex
+	hwndContext = newWindowContext() // 原生窗口上下文
+	xcContext   = newWindowContext() // 炫彩窗口或元素上下文
 )
 
-func getWindowContext(wnd uintptr) interface{} {
-	windowContextSync.RLock()
-	defer windowContextSync.RUnlock()
-	return windowContext[wnd]
+// 窗口上下文
+type windowContext struct {
+	m    map[uintptr]*WebView
+	lock sync.RWMutex
 }
 
-func setWindowContext(wnd uintptr, data interface{}) {
-	windowContextSync.Lock()
-	defer windowContextSync.Unlock()
-	windowContext[wnd] = data
+// 创建一个窗口上下文
+func newWindowContext() *windowContext {
+	return &windowContext{
+		m: map[uintptr]*WebView{},
+	}
 }
 
-func deleteWindowContext(wnd uintptr) {
-	windowContextSync.Lock()
-	defer windowContextSync.Unlock()
-	delete(windowContext, wnd)
+func (w *windowContext) GetWindowContext(handle uintptr) *WebView {
+	w.lock.RLock()
+	defer w.lock.RUnlock()
+	return w.m[handle]
+}
+
+func (w *windowContext) SetWindowContext(handle uintptr, data *WebView) {
+	w.lock.Lock()
+	defer w.lock.Unlock()
+	w.m[handle] = data
+}
+
+func (w *windowContext) DeleteWindowContext(handle uintptr) {
+	w.lock.Lock()
+	defer w.lock.Unlock()
+	delete(w.m, handle)
+}
+
+// GetHEles 获取已记录的所有属于指定窗口的元素句柄.
+func (w *windowContext) GetHEles(handle int) []int {
+	var hEles []int
+	for hEle, _ := range w.m {
+		hEle2 := int(hEle)
+		if xc.XC_IsHELE(hEle2) && xc.XWidget_GetHWINDOW(hEle2) == handle {
+			hEles = append(hEles, hEle2)
+		}
+	}
+	return hEles
 }
 
 type rpcMessage struct {
@@ -105,47 +130,65 @@ func (w *WebView) callbinding(d *rpcMessage) (interface{}, error) {
 	}
 }
 
-func wndproc(hwnd uintptr, msg uint32, wp, lp uintptr) uintptr {
-	switch msg {
+// 非客户区鼠标光标句柄
+var cursorNoClient uintptr
+
+// 设置非客户区的鼠标光标.
+func setNoClientCursor() {
+	if cursorNoClient == 0 {
+		cursorNoClient = wapi.LoadImageW(0, uintptr(wapi.IDC_ARROW), wapi.IMAGE_CURSOR, 0, 0, wapi.LR_DEFAULTSIZE|wapi.LR_SHARED)
+	}
+	if cursorNoClient != 0 {
+		wapi.SetCursor(cursorNoClient)
+	}
+}
+
+func wndproc(hwnd uintptr, message uint32, wParam, lParam uintptr) uintptr {
+	switch message {
+	case wapi.WM_SETCURSOR:
+		setNoClientCursor()
+		return 0
 	case wapi.WM_MOVE, wapi.WM_MOVING:
-		if w, ok := getWindowContext(hwnd).(*WebView); ok {
+		if w := hwndContext.GetWindowContext(hwnd); w != nil {
 			_ = w.NotifyParentWindowPositionChanged()
 			return 0
 		}
 	case wapi.WM_SIZE:
-		if w, ok := getWindowContext(hwnd).(*WebView); ok {
+		if w := hwndContext.GetWindowContext(hwnd); w != nil {
 			_ = w.Resize()
 			return 0
 		}
 	case wapi.WM_ACTIVATE:
-		if wp == wapi.WA_INACTIVE {
+		if wParam == wapi.WA_INACTIVE {
 			break
 		}
-		if w, ok := getWindowContext(hwnd).(*WebView); ok && w.autofocus {
+		if w := hwndContext.GetWindowContext(hwnd); w != nil && w.autofocus {
 			_ = w.Focus()
 			return 0
 		}
 	case wapi.WM_CLOSE:
-		if w, ok := getWindowContext(hwnd).(*WebView); ok {
-			ReportError2(w.Close())
+		if w := hwndContext.GetWindowContext(hwnd); w != nil {
+			ReportErrorAtuo(w.Close())
 			wapi.DestroyWindow(hwnd)
 			return 0
 		}
-	case wapi.WM_NCDESTROY: // 窗口非客户区销毁
-		if w, ok := getWindowContext(hwnd).(*WebView); ok {
+	case wapi.WM_NCDESTROY: // 窗口非客户区销毁, 在 WM_DESTROY 之后
+		if w := hwndContext.GetWindowContext(hwnd); w != nil {
 			// 移除事件
-			if xc.XC_IsHWINDOW(w.hWindow) {
-				xc.XWnd_RemoveEventC(w.hWindow, xcc.XWM_WINDPROC, onWndProc)
-			}
-			if xc.XC_IsHELE(w.hParent) {
+			if xc.XC_IsHWINDOW(w.hParent) { // 原生窗口宿主是炫彩窗口
+				xc.XWnd_RemoveEventC(w.hParent, xcc.XWM_WINDPROC, onWndProc)
+				xcContext.DeleteWindowContext(uintptr(w.hParent))
+			} else if xc.XC_IsHELE(w.hParent) { // 原生窗口宿主是炫彩元素
 				xc.XEle_RemoveEventC(w.hParent, xcc.XE_SIZE, onEleSize)
 				xc.XEle_RemoveEventC(w.hParent, xcc.XE_SHOW, onEleShow)
 				xc.XEle_RemoveEventC(w.hParent, xcc.XE_DESTROY, onEleDestroy)
+				xcContext.DeleteWindowContext(uintptr(w.hParent))
 			}
+			hwndContext.DeleteWindowContext(w.hwnd)
 			return 0
 		}
 	}
-	return wapi.DefWindowProc(hwnd, msg, wp, lp)
+	return wapi.DefWindowProc(hwnd, message, wParam, lParam)
 }
 
 /*// SetSize 更新原生窗口大小。
@@ -358,17 +401,17 @@ func (w *WebView) newWebView2Controller() error {
 
 		// 添加 web 消息接收事件处理程序
 		err = w.CoreWebView.AddWebMessageReceived(w.handlerWebMessageReceivedEvent, w.EventRegistrationToken)
-		ReportError2(err)
+		ReportErrorAtuo(err)
 		// 添加权限请求事件处理程序
 		err = w.CoreWebView.AddPermissionRequested(w.handlerPermissionRequestedEvent, w.EventRegistrationToken)
-		ReportError2(err)
+		ReportErrorAtuo(err)
 		// 添加在创建文档时要执行的脚本
 		err = w.CoreWebView.AddScriptToExecuteOnDocumentCreated("window.external={invoke:s=>window.chrome.webview.postMessage(s)}", nil)
-		ReportError2(err)
+		ReportErrorAtuo(err)
 
 		if w.focusOnInit {
 			err = w.Focus()
-			ReportError2(err)
+			ReportErrorAtuo(err)
 		}
 		isDone = true
 	}

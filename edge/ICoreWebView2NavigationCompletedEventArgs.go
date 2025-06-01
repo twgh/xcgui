@@ -63,7 +63,7 @@ func (i *ICoreWebView2NavigationCompletedEventArgs) GetIsSuccess() (bool, error)
 // MustGetIsSuccess 导航是否成功。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationCompletedEventArgs) MustGetIsSuccess() bool {
 	isSuccess, err := i.GetIsSuccess()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return isSuccess
 }
 
@@ -86,7 +86,7 @@ func (i *ICoreWebView2NavigationCompletedEventArgs) GetWebErrorStatus() (COREWEB
 // MustGetWebErrorStatus 获取导航错误状态。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationCompletedEventArgs) MustGetWebErrorStatus() COREWEBVIEW2_WEB_ERROR_STATUS {
 	status, err := i.GetWebErrorStatus()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return status
 }
 
@@ -109,6 +109,6 @@ func (i *ICoreWebView2NavigationCompletedEventArgs) GetNavigationId() (uint64, e
 // MustGetNavigationId 获取导航 ID。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationCompletedEventArgs) MustGetNavigationId() uint64 {
 	id, err := i.GetNavigationId()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return id
 }

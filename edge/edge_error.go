@@ -21,37 +21,56 @@ func ReportError(method string, err error) {
 	}
 }
 
-// ReportError2 报告错误到全局错误回调, 自动获取调用者函数名.
-func ReportError2(err error) {
+// ReportErrorAtuo 报告错误到全局错误回调, 自动获取调用者信息.
+func ReportErrorAtuo(err error) {
 	if err != nil && webviewErrorCallBack != nil {
-		webviewErrorCallBack(NewWebViewError2(err))
+		webviewErrorCallBack(NewWebViewErrorWithSkip(err, 2))
 	}
 }
 
 // WebViewError 是 WebView 错误.
 type WebViewError struct {
-	FullName string
-	Method   string
-	File     string
-	Line     int
-	Err      error
+	FullName string // 报错所在的完整函数路径, 例: github.com/twgh/xcgui/edge.(*ICoreWebView2).Reload
+	Method   string // 报错所在的函数名, 例: Reload
+	File     string // 报错所在文件, 例: D:/GOProject/src/github.com/twgh/xcgui/edge/ICoreWebView2.go
+	Line     int    // 报错所在文件的行号
+	Err      error  // 错误
 }
 
 func (e *WebViewError) Error() string {
-	return fmt.Sprintf("%s failed: %v", e.FullName, e.Err)
+	return e.Err.Error()
 }
 
-// NewWebViewError2 创建 WebViewError. 自动获取调用者方法名. 向上查找 2 层调用者.
-func NewWebViewError2(err error) *WebViewError {
-	return newWebViewErrorWithSkip(err, 2)
+// 例: Reload report error: xxx
+func (e *WebViewError) ErrorWithMethod() string {
+	return fmt.Sprintf("%s report error: %v", e.Method, e.Err)
 }
 
-// NewWebViewError1 创建 WebViewError. 自动获取调用者方法名. 向上查找 1 层调用者.
-func NewWebViewError1(err error) *WebViewError {
-	return newWebViewErrorWithSkip(err, 1)
+// 例: github.com/twgh/xcgui/edge.(*ICoreWebView2).Reload report error: xxx
+func (e *WebViewError) ErrorWithFullName() string {
+	return fmt.Sprintf("%s report error: %v", e.FullName, e.Err)
 }
 
-func newWebViewErrorWithSkip(err error, skip int) *WebViewError {
+// 例: D:/GOProject/src/github.com/twgh/xcgui/edge/ICoreWebView2.go:480, github.com/twgh/xcgui/edge.(*ICoreWebView2).Reload report error: xxx
+func (e *WebViewError) ErrorWithFile() string {
+	return fmt.Sprintf("%s:%d, %s report error: %v", e.File, e.Line, e.FullName, e.Err)
+}
+
+// NewWebViewError 创建 WebViewError.
+func NewWebViewError(method string, err error) *WebViewError {
+	return &WebViewError{
+		Method: method,
+		Err:    err,
+	}
+}
+
+// NewWebViewErrorAuto 创建 WebViewError. 自动获取调用者信息.
+func NewWebViewErrorAuto(err error) *WebViewError {
+	return NewWebViewErrorWithSkip(err, 2)
+}
+
+// NewWebViewErrorWithSkip 创建 WebViewError. 可以指定跳过多少层调用来自动获取调用者信息.
+func NewWebViewErrorWithSkip(err error, skip int) *WebViewError {
 	pc, _file, line, ok := runtime.Caller(skip)
 	if !ok {
 		return &WebViewError{Method: "unknown", Err: err}
@@ -69,17 +88,9 @@ func extractMethodName(fullName string) string {
 		return fullName
 	}
 	lastPart := parts[len(parts)-1]
-	// 去除类型前缀（如 "(*ICoreWebView2_2)"）
+	// 去除类型前缀（如 "main.(*ICoreWebView2_2)"）
 	if strings.Contains(lastPart, ")") {
 		return strings.Split(lastPart, ")")[1]
 	}
 	return lastPart
-}
-
-// NewWebViewError 创建 WebViewError.
-func NewWebViewError(method string, err error) *WebViewError {
-	return &WebViewError{
-		Method: method,
-		Err:    err,
-	}
 }

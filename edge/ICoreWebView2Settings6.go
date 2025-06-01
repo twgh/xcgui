@@ -60,7 +60,7 @@ func (i *ICoreWebView2Settings6) GetIsSwipeNavigationEnabled() (bool, error) {
 // MustGetIsSwipeNavigationEnabled 获取是否允许滑动导航。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings6) MustGetIsSwipeNavigationEnabled() bool {
 	enabled, err := i.GetIsSwipeNavigationEnabled()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return enabled
 }
 

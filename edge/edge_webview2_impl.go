@@ -6,6 +6,7 @@ import (
 	"io/fs"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"syscall"
 )
 
@@ -83,6 +84,7 @@ type Webview2Impl struct {
 	// 仅供内部使用的网页消息事件回调
 	msgcb_xcgui func(string)
 
+	ref int32 // 引用计数
 	// 权限map读写锁
 	rwxPermissions sync.RWMutex
 	// 权限map
@@ -102,11 +104,13 @@ func (e *Webview2Impl) QueryInterface(_, _ uintptr) uintptr {
 }
 
 func (e *Webview2Impl) AddRef() uintptr {
-	return 1
+	atomic.AddInt32(&e.ref, 1)
+	return uintptr(e.ref)
 }
 
 func (e *Webview2Impl) Release() uintptr {
-	return 1
+	atomic.AddInt32(&e.ref, -1)
+	return uintptr(e.ref)
 }
 
 // --------------------------- 回调实现 ---------------------------
@@ -203,7 +207,7 @@ func (e *Webview2Impl) PermissionRequested(sender *ICoreWebView2, args *ICoreWeb
 		result = COREWEBVIEW2_PERMISSION_STATE_DEFAULT
 	}
 	err := args.PutState(result)
-	ReportError2(err)
+	ReportErrorAtuo(err)
 
 	if e.cbPermissionRequestedEvent != nil {
 		e.cbPermissionRequestedEvent(sender, args)
@@ -238,7 +242,7 @@ func (e *Webview2Impl) WebResourceRequested(sender *ICoreWebView2, args *ICoreWe
 	if e.hostName != "" { // 使用嵌入的文件系统映射
 		request, err := args.GetRequest()
 		if err != nil {
-			ReportError2(errors.New("网络资源请求事件, GetRequest 失败: " + err.Error()))
+			ReportErrorAtuo(errors.New("webResourceRequested, GetRequest failed: " + err.Error()))
 			return 0
 		}
 
@@ -259,16 +263,16 @@ func (e *Webview2Impl) WebResourceRequested(sender *ICoreWebView2, args *ICoreWe
 		data, err := fs.ReadFile(e.embedFS, embedPath)
 		if err != nil {
 			// 固定会有一个对 favicon.ico 的请求, 没有这个文件的话, 这里肯定会触发一次, 没啥影响
-			ReportError2(errors.New("网络资源请求事件, ReadFile 失败1: " + err.Error()))
+			ReportErrorAtuo(errors.New("webResourceRequested, ReadFile failed1: " + err.Error()))
 			// 返回 404
 			res, err := e.edge.Environment.CreateWebResourceResponse(nil, 404, "Not Found", "")
 			if err != nil {
-				ReportError2(errors.New("网络资源请求事件, CreateWebResourceResponse 失败1: " + err.Error()))
+				ReportErrorAtuo(errors.New("webResourceRequested, CreateWebResourceResponse failed1: " + err.Error()))
 				return 0
 			}
 			err = args.PutResponse(res)
 			if err != nil {
-				ReportError2(errors.New("网络资源请求事件, PutResponse 失败1: " + err.Error()))
+				ReportErrorAtuo(errors.New("webResourceRequested, PutResponse failed1: " + err.Error()))
 				return 0
 			}
 			return 0
@@ -279,7 +283,7 @@ func (e *Webview2Impl) WebResourceRequested(sender *ICoreWebView2, args *ICoreWe
 			once = true
 			err = e.firstResponse.PutContent(data)
 			if err != nil {
-				ReportError2(errors.New("网络资源请求事件, PutContent 失败: " + err.Error()))
+				ReportErrorAtuo(errors.New("webResourceRequested, PutContent failed: " + err.Error()))
 			}
 			res = e.firstResponse
 			defer func() {
@@ -290,14 +294,14 @@ func (e *Webview2Impl) WebResourceRequested(sender *ICoreWebView2, args *ICoreWe
 			// 返回动态生成的响应
 			res, err = e.edge.Environment.CreateWebResourceResponse(data, 200, "OK", "")
 			if err != nil {
-				ReportError2(errors.New("网络资源请求事件, CreateWebResourceResponse 失败2: " + err.Error()))
+				ReportErrorAtuo(errors.New("webResourceRequested, CreateWebResourceResponse failed2: " + err.Error()))
 				return 0
 			}
 		}
 
 		err = args.PutResponse(res)
 		if err != nil {
-			ReportError2(errors.New("网络资源请求事件, PutResponse 失败2: " + err.Error()))
+			ReportErrorAtuo(errors.New("webResourceRequested, PutResponse failed2: " + err.Error()))
 			return 0
 		}
 	}

@@ -43,7 +43,7 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs2) GetIsBrowserAcceleratorKe
 //   - 浏览器快捷键是用于访问网络浏览器特定功能的按键或按键组合.
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs2) MustGetIsBrowserAcceleratorKeyEnabled() bool {
 	enabled, err := i.GetIsBrowserAcceleratorKeyEnabled()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return enabled
 }
 

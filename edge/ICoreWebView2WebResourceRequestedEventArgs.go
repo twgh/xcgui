@@ -83,7 +83,7 @@ func (i *ICoreWebView2WebResourceRequestedEventArgs) GetRequest() (*ICoreWebView
 // MustGetRequest 获取请求。出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceRequestedEventArgs) MustGetRequest() *ICoreWebView2WebResourceRequest {
 	request, err := i.GetRequest()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return request
 }
 
@@ -106,7 +106,7 @@ func (i *ICoreWebView2WebResourceRequestedEventArgs) GetResponse() (*ICoreWebVie
 // MustGetResponse 获取响应。出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceRequestedEventArgs) MustGetResponse() *ICoreWebView2WebResourceResponse {
 	response, err := i.GetResponse()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return response
 }
 
@@ -129,7 +129,7 @@ func (i *ICoreWebView2WebResourceRequestedEventArgs) GetDeferral() (*ICoreWebVie
 // MustGetDeferral 获取 ICoreWebView2Deferral 对象，并将事件置于延迟状态。出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceRequestedEventArgs) MustGetDeferral() *ICoreWebView2Deferral {
 	deferral, err := i.GetDeferral()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return deferral
 }
 
@@ -152,6 +152,6 @@ func (i *ICoreWebView2WebResourceRequestedEventArgs) GetResourceContext() (COREW
 // MustGetResourceContext 获取资源上下文。出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceRequestedEventArgs) MustGetResourceContext() COREWEBVIEW2_WEB_RESOURCE_CONTEXT {
 	context, err := i.GetResourceContext()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return context
 }

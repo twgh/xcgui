@@ -67,7 +67,7 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetKeyEventKind() (COREWEB
 // MustGetKeyEventKind 获取键事件类型。出错时会触发全局错误回调.
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) MustGetKeyEventKind() COREWEBVIEW2_KEY_EVENT_KIND {
 	keyEventKind, err := i.GetKeyEventKind()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return keyEventKind
 }
 
@@ -90,7 +90,7 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetVirtualKey() (uint, err
 // MustGetVirtualKey 获取按下或释放的虚拟键代码。出错时会触发全局错误回调.
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) MustGetVirtualKey() uint {
 	virtualKey, err := i.GetVirtualKey()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return virtualKey
 }
 
@@ -125,7 +125,7 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetPhysicalKeyStatus() (CO
 // MustGetPhysicalKeyStatus 获取有关按下或释放的键的物理状态的信息。出错时会触发全局错误回调.
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) MustGetPhysicalKeyStatus() COREWEBVIEW2_PHYSICAL_KEY_STATUS {
 	physicalKeyStatus, err := i.GetPhysicalKeyStatus()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return physicalKeyStatus
 }
 
@@ -164,7 +164,7 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetKeyEventLParam() (int, 
 // MustGetKeyEventLParam 获取键事件的 LPARAM。出错时会触发全局错误回调。
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) MustGetKeyEventLParam() int {
 	lParam, err := i.GetKeyEventLParam()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return lParam
 }
 
@@ -187,6 +187,6 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetHandled() (bool, error)
 // MustGetHandled 获取事件是否已处理。出错时会触发全局错误回调。
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) MustGetHandled() bool {
 	handled, err := i.GetHandled()
-	ReportError2(err)
+	ReportErrorAtuo(err)
 	return handled
 }
