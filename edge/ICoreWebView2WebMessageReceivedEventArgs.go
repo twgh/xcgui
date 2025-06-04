@@ -4,7 +4,9 @@ package edge
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
+
 	"syscall"
 	"unsafe"
 )
@@ -35,7 +37,7 @@ func (i *ICoreWebView2WebMessageReceivedEventArgs) Release() uintptr {
 
 func (i *ICoreWebView2WebMessageReceivedEventArgs) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -52,14 +54,14 @@ func (e *ICoreWebView2WebMessageReceivedEventArgs) TryGetWebMessageAsString() (s
 		uintptr(unsafe.Pointer(e)),
 		uintptr(unsafe.Pointer(&_message)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return "", err
 	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
-	message := windows.UTF16PtrToString(_message)
-	windows.CoTaskMemFree(unsafe.Pointer(_message))
+	message := common.UTF16PtrToString(_message)
+	wapi.CoTaskMemFree(unsafe.Pointer(_message))
 	return message, nil
 }
 
@@ -76,14 +78,14 @@ func (e *ICoreWebView2WebMessageReceivedEventArgs) GetWebMessageAsJSON() (string
 		uintptr(unsafe.Pointer(e)),
 		uintptr(unsafe.Pointer(&_json)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return "", err
 	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
-	json := windows.UTF16PtrToString(_json)
-	windows.CoTaskMemFree(unsafe.Pointer(_json))
+	json := common.UTF16PtrToString(_json)
+	wapi.CoTaskMemFree(unsafe.Pointer(_json))
 	return json, nil
 }
 
@@ -100,14 +102,14 @@ func (e *ICoreWebView2WebMessageReceivedEventArgs) GetSource() (string, error) {
 		uintptr(unsafe.Pointer(e)),
 		uintptr(unsafe.Pointer(&_source)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return "", err
 	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
-	source := windows.UTF16PtrToString(_source)
-	windows.CoTaskMemFree(unsafe.Pointer(_source))
+	source := common.UTF16PtrToString(_source)
+	wapi.CoTaskMemFree(unsafe.Pointer(_source))
 	return source, nil
 }
 

@@ -4,7 +4,7 @@ package edge
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -34,7 +34,7 @@ func (i *ICoreWebView2ContentLoadingEventArgs) Release() uintptr {
 
 func (i *ICoreWebView2ContentLoadingEventArgs) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -50,7 +50,7 @@ func (i *ICoreWebView2ContentLoadingEventArgs) GetIsErrorPage() (bool, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isErrorPage)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return isErrorPage, err
 	}
 	if r != 0 {
@@ -73,7 +73,7 @@ func (i *ICoreWebView2ContentLoadingEventArgs) GetNavigationId() (uint64, error)
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&id)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return id, err
 	}
 	if r != 0 {

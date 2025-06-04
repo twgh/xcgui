@@ -4,10 +4,9 @@ package edge
 
 import (
 	"errors"
+	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
-
-	"golang.org/x/sys/windows"
 )
 
 // ICoreWebView2WebResourceRequestedEventArgs 是 WebResourceRequested 事件的事件参数。
@@ -38,7 +37,7 @@ func (i *ICoreWebView2WebResourceRequestedEventArgs) Release() uintptr {
 
 func (i *ICoreWebView2WebResourceRequestedEventArgs) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -55,7 +54,7 @@ func (i *ICoreWebView2WebResourceRequestedEventArgs) PutResponse(response *ICore
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(response)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -71,7 +70,7 @@ func (i *ICoreWebView2WebResourceRequestedEventArgs) GetRequest() (*ICoreWebView
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&request)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return nil, err
 	}
 	if r != 0 {
@@ -94,7 +93,7 @@ func (i *ICoreWebView2WebResourceRequestedEventArgs) GetResponse() (*ICoreWebVie
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&response)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return nil, err
 	}
 	if r != 0 {
@@ -117,7 +116,7 @@ func (i *ICoreWebView2WebResourceRequestedEventArgs) GetDeferral() (*ICoreWebVie
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&deferral)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return nil, err
 	}
 	if r != 0 {
@@ -140,7 +139,7 @@ func (i *ICoreWebView2WebResourceRequestedEventArgs) GetResourceContext() (COREW
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&context)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return 0, err
 	}
 	if r != 0 {

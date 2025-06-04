@@ -4,7 +4,7 @@ package edge
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -33,7 +33,7 @@ func (i *ICoreWebView2SourceChangedEventArgs) Release() uintptr {
 
 func (i *ICoreWebView2SourceChangedEventArgs) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -49,7 +49,7 @@ func (i *ICoreWebView2SourceChangedEventArgs) GetIsNewDocument() (bool, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isNewDocument)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {

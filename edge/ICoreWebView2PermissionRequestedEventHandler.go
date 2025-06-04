@@ -1,5 +1,7 @@
 package edge
 
+import "unsafe"
+
 type iCoreWebView2PermissionRequestedEventHandlerImpl interface {
 	IUnknownImpl
 	PermissionRequested(sender *ICoreWebView2, args *ICoreWebView2PermissionRequestedEventArgs) uintptr
@@ -16,6 +18,16 @@ type iCoreWebView2PermissionRequestedEventHandlerVtbl struct {
 type ICoreWebView2PermissionRequestedEventHandler struct {
 	vtbl *iCoreWebView2PermissionRequestedEventHandlerVtbl
 	impl iCoreWebView2PermissionRequestedEventHandlerImpl
+}
+
+func (i *ICoreWebView2PermissionRequestedEventHandler) AddRef() uintptr {
+	r, _, _ := i.vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2PermissionRequestedEventHandler) Release() uintptr {
+	r, _, _ := i.vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
 }
 
 func _ICoreWebView2PermissionRequestedEventHandlerIUnknownQueryInterface(this *ICoreWebView2PermissionRequestedEventHandler, refiid, object uintptr) uintptr {

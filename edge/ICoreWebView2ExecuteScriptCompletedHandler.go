@@ -1,6 +1,9 @@
 package edge
 
-import "syscall"
+import (
+	"syscall"
+	"unsafe"
+)
 
 type _ICoreWebView2ExecuteScriptCompletedHandlerVtbl struct {
 	IUnknownVtbl
@@ -13,6 +16,16 @@ type _ICoreWebView2ExecuteScriptCompletedHandlerVtbl struct {
 type ICoreWebView2ExecuteScriptCompletedHandler struct {
 	vtbl *_ICoreWebView2ExecuteScriptCompletedHandlerVtbl
 	impl _ICoreWebView2ExecuteScriptCompletedHandlerImpl
+}
+
+func (i *ICoreWebView2ExecuteScriptCompletedHandler) AddRef() uintptr {
+	r, _, _ := i.vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2ExecuteScriptCompletedHandler) Release() uintptr {
+	r, _, _ := i.vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
 }
 
 func _ICoreWebView2ExecuteScriptCompletedHandlerIUnknownQueryInterface(this *ICoreWebView2ExecuteScriptCompletedHandler, refiid, object uintptr) uintptr {

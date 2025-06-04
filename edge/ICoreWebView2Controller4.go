@@ -4,7 +4,7 @@ package edge
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -29,7 +29,7 @@ func (i *ICoreWebView2Controller4) GetAllowExternalDrop() (bool, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {
@@ -51,7 +51,7 @@ func (i *ICoreWebView2Controller4) PutAllowExternalDrop(value bool) error {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {

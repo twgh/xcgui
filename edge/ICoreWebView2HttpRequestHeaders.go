@@ -4,7 +4,9 @@ package edge
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
+
 	"syscall"
 	"unsafe"
 )
@@ -38,7 +40,7 @@ func (i *ICoreWebView2HttpRequestHeaders) Release() uintptr {
 
 func (i *ICoreWebView2HttpRequestHeaders) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -51,7 +53,7 @@ func (i *ICoreWebView2HttpRequestHeaders) QueryInterface(refiid, object uintptr)
 //
 // name: 标头名称。
 func (i *ICoreWebView2HttpRequestHeaders) GetHeader(name string) (string, error) {
-	_name, err := windows.UTF16PtrFromString(name)
+	_name, err := syscall.UTF16PtrFromString(name)
 	if err != nil {
 		return "", err
 	}
@@ -62,14 +64,14 @@ func (i *ICoreWebView2HttpRequestHeaders) GetHeader(name string) (string, error)
 		uintptr(unsafe.Pointer(_name)),
 		uintptr(unsafe.Pointer(&_value)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return "", err
 	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
-	value := windows.UTF16PtrToString(_value)
-	windows.CoTaskMemFree(unsafe.Pointer(_value))
+	value := common.UTF16PtrToString(_value)
+	wapi.CoTaskMemFree(unsafe.Pointer(_value))
 	return value, nil
 }
 
@@ -86,7 +88,7 @@ func (i *ICoreWebView2HttpRequestHeaders) MustGetHeader(name string) string {
 //
 // name: 标头名称。
 func (i *ICoreWebView2HttpRequestHeaders) Contains(name string) (bool, error) {
-	_name, err := windows.UTF16PtrFromString(name)
+	_name, err := syscall.UTF16PtrFromString(name)
 	if err != nil {
 		return false, err
 	}
@@ -97,7 +99,7 @@ func (i *ICoreWebView2HttpRequestHeaders) Contains(name string) (bool, error) {
 		uintptr(unsafe.Pointer(_name)),
 		uintptr(unsafe.Pointer(&contains)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {
@@ -114,7 +116,7 @@ func (i *ICoreWebView2HttpRequestHeaders) MustContains(name string) bool {
 
 // RemoveHeader 删除指定名称的HTTP头。
 func (i *ICoreWebView2HttpRequestHeaders) RemoveHeader(name string) error {
-	_name, err := windows.UTF16PtrFromString(name)
+	_name, err := syscall.UTF16PtrFromString(name)
 	if err != nil {
 		return err
 	}
@@ -122,7 +124,7 @@ func (i *ICoreWebView2HttpRequestHeaders) RemoveHeader(name string) error {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_name)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -137,11 +139,11 @@ func (i *ICoreWebView2HttpRequestHeaders) RemoveHeader(name string) error {
 //
 // value: 标头值。
 func (i *ICoreWebView2HttpRequestHeaders) SetHeader(name string, value string) error {
-	_name, err := windows.UTF16PtrFromString(name)
+	_name, err := syscall.UTF16PtrFromString(name)
 	if err != nil {
 		return err
 	}
-	_value, err := windows.UTF16PtrFromString(value)
+	_value, err := syscall.UTF16PtrFromString(value)
 	if err != nil {
 		return err
 	}
@@ -151,7 +153,7 @@ func (i *ICoreWebView2HttpRequestHeaders) SetHeader(name string, value string) e
 		uintptr(unsafe.Pointer(_name)),
 		uintptr(unsafe.Pointer(_value)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -167,7 +169,7 @@ func (i *ICoreWebView2HttpRequestHeaders) GetIterator() (*ICoreWebView2HttpHeade
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&iterator)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return nil, err
 	}
 	if r != 0 {
@@ -187,7 +189,7 @@ func (i *ICoreWebView2HttpRequestHeaders) MustGetIterator() *ICoreWebView2HttpHe
 //
 // name: 标头名称。
 func (i *ICoreWebView2HttpRequestHeaders) GetHeaders(name string) (*ICoreWebView2HttpHeadersCollectionIterator, error) {
-	_name, err := windows.UTF16PtrFromString(name)
+	_name, err := syscall.UTF16PtrFromString(name)
 	if err != nil {
 		return nil, err
 	}
@@ -198,7 +200,7 @@ func (i *ICoreWebView2HttpRequestHeaders) GetHeaders(name string) (*ICoreWebView
 		uintptr(unsafe.Pointer(_name)),
 		uintptr(unsafe.Pointer(&iterator)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return nil, err
 	}
 	if r != 0 {

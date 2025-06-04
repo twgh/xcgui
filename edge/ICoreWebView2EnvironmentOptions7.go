@@ -4,7 +4,7 @@ package edge
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -36,7 +36,7 @@ func (i *ICoreWebView2EnvironmentOptions7) Release() uintptr {
 
 func (i *ICoreWebView2EnvironmentOptions7) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -52,7 +52,7 @@ func (i *ICoreWebView2EnvironmentOptions7) GetChannelSearchKind() (COREWEBVIEW2_
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return 0, err
 	}
 	if r != 0 {
@@ -77,7 +77,7 @@ func (i *ICoreWebView2EnvironmentOptions7) PutChannelSearchKind(value COREWEBVIE
 		uintptr(unsafe.Pointer(i)),
 		uintptr(value),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -93,7 +93,7 @@ func (i *ICoreWebView2EnvironmentOptions7) GetReleaseChannels() (COREWEBVIEW2_RE
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return 0, err
 	}
 	if r != 0 {
@@ -118,7 +118,7 @@ func (i *ICoreWebView2EnvironmentOptions7) PutReleaseChannels(value COREWEBVIEW2
 		uintptr(unsafe.Pointer(i)),
 		uintptr(value),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {

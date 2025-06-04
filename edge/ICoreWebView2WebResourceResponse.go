@@ -5,8 +5,9 @@ package edge
 import (
 	"errors"
 	"fmt"
+	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
-	"golang.org/x/sys/windows"
+
 	"syscall"
 	"unsafe"
 )
@@ -41,7 +42,7 @@ func (i *ICoreWebView2WebResourceResponse) Release() uintptr {
 
 func (i *ICoreWebView2WebResourceResponse) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -57,7 +58,7 @@ func (i *ICoreWebView2WebResourceResponse) GetContent() ([]byte, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&streamPtr)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return nil, err
 	}
 	if hr != 0 {
@@ -94,7 +95,7 @@ func (i *ICoreWebView2WebResourceResponse) PutContent(content []byte) error {
 	var stream *IStream
 	// 创建内存流
 	if len(content) > 0 {
-		stream, err = NewMemStream(content)
+		stream, err = NewStreamMem(content)
 		if err != nil {
 			return err
 		}
@@ -105,7 +106,7 @@ func (i *ICoreWebView2WebResourceResponse) PutContent(content []byte) error {
 		uintptr(unsafe.Pointer(i)),
 		streamPtr,
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -122,7 +123,7 @@ func (i *ICoreWebView2WebResourceResponse) PutStatusCode(statusCode int32) error
 		uintptr(unsafe.Pointer(i)),
 		uintptr(statusCode),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -138,7 +139,7 @@ func (i *ICoreWebView2WebResourceResponse) GetStatusCode() (int32, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&statusCode)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return 0, err
 	}
 	if r != 0 {
@@ -158,7 +159,7 @@ func (i *ICoreWebView2WebResourceResponse) MustGetStatusCode() int32 {
 //
 // reasonPhrase: 要设置的 HTTP 状态码描述。
 func (i *ICoreWebView2WebResourceResponse) PutReasonPhrase(reasonPhrase string) error {
-	ptr, err := windows.UTF16PtrFromString(reasonPhrase)
+	ptr, err := syscall.UTF16PtrFromString(reasonPhrase)
 	if err != nil {
 		return err
 	}
@@ -166,7 +167,7 @@ func (i *ICoreWebView2WebResourceResponse) PutReasonPhrase(reasonPhrase string) 
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(ptr)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -182,14 +183,14 @@ func (i *ICoreWebView2WebResourceResponse) GetReasonPhrase() (string, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_reasonPhrase)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return "", err
 	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
-	reasonPhrase := windows.UTF16PtrToString(_reasonPhrase)
-	windows.CoTaskMemFree(unsafe.Pointer(_reasonPhrase))
+	reasonPhrase := common.UTF16PtrToString(_reasonPhrase)
+	wapi.CoTaskMemFree(unsafe.Pointer(_reasonPhrase))
 	return reasonPhrase, nil
 }
 
@@ -207,7 +208,7 @@ func (i *ICoreWebView2WebResourceResponse) GetHeaders() (*ICoreWebView2HttpRespo
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&headers)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return nil, err
 	}
 	if r != 0 {

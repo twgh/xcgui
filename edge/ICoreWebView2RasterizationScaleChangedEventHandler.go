@@ -1,5 +1,7 @@
 package edge
 
+import "unsafe"
+
 type _ICoreWebView2RasterizationScaleChangedEventHandlerVtbl struct {
 	IUnknownVtbl
 	Invoke ComProc
@@ -11,6 +13,16 @@ type _ICoreWebView2RasterizationScaleChangedEventHandlerVtbl struct {
 type ICoreWebView2RasterizationScaleChangedEventHandler struct {
 	vtbl *_ICoreWebView2RasterizationScaleChangedEventHandlerVtbl
 	impl _ICoreWebView2RasterizationScaleChangedEventHandlerImpl
+}
+
+func (i *ICoreWebView2RasterizationScaleChangedEventHandler) AddRef() uintptr {
+	r, _, _ := i.vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2RasterizationScaleChangedEventHandler) Release() uintptr {
+	r, _, _ := i.vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
 }
 
 func _ICoreWebView2RasterizationScaleChangedEventHandlerIUnknownQueryInterface(this *ICoreWebView2RasterizationScaleChangedEventHandler, refiid, object uintptr) uintptr {

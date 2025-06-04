@@ -3,9 +3,9 @@ package edge
 import (
 	"errors"
 	"fmt"
+	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"github.com/twgh/xcgui/xcc"
-	"golang.org/x/sys/windows"
 	"log"
 	"os"
 	"path/filepath"
@@ -48,7 +48,7 @@ type Option struct {
 	// 浏览器可执行文件的文件夹路径, 为空则使用本机安装的 webview2 运行时。
 	BrowserExecutableFolder string
 
-	// 用户数据文件夹路径。为空则使用当前可执行文件所在目录下的 AppData 文件夹。
+	// 用户数据文件夹路径。为空则使用 AppData 环境变量下的当前进程名文件夹。
 	UserDataFolder string
 
 	// 创建 WebView2 环境的配置选项。为 nil 则使用默认配置。
@@ -60,6 +60,7 @@ type Option struct {
 
 // Edge WebView2 环境.
 type Edge struct {
+	IUnknown_Impl
 	// WebView2 环境
 	Environment *ICoreWebView2Environment
 
@@ -74,8 +75,6 @@ type Edge struct {
 	_cbEnvCompleted func(result uintptr, env *ICoreWebView2Environment)
 	// WebView2 控制器创建完成回调 [内部使用]
 	_cbCreateCoreWebView2ControllerCompleted func(result uintptr, controller *ICoreWebView2Controller)
-
-	ref int32 // 引用计数
 }
 
 // New Edge 在整个应用程序的生命周期里应该只创建一次.
@@ -94,15 +93,13 @@ func New(opt Option) (*Edge, error) {
 	// 控制器创建完成事件
 	e.handler_CreateCoreWebView2ControllerCompleted = NewICoreWebView2CreateCoreWebView2ControllerCompletedHandler(e)
 
-	// 处理用户数据文件夹路径, 如果为空, 则使用当前可执行文件所在目录下的 AppData 文件夹
+	// 处理用户数据文件夹路径, 如果为空, 则使用 AppData 环境变量下的当前进程名文件夹
 	dataPath := opt.UserDataFolder
 	if dataPath == "" {
-		currentExePath := make([]uint16, windows.MAX_PATH)
-		_, err := windows.GetModuleFileName(windows.Handle(0), &currentExePath[0], windows.MAX_PATH)
-		if err != nil {
-			return nil, errors.New("error calling GetModuleFileName: " + err.Error())
+		currentExeName := common.GetProcessNameNoExt()
+		if currentExeName == "" {
+			currentExeName = "xcgui_webview"
 		}
-		currentExeName := filepath.Base(windows.UTF16ToString(currentExePath))
 		dataPath = filepath.Join(os.Getenv("AppData"), currentExeName)
 	}
 
@@ -139,21 +136,7 @@ func New(opt Option) (*Edge, error) {
 	return e, err
 }
 
-func (e *Edge) QueryInterface(_, _ uintptr) uintptr {
-	return 0
-}
-
-func (e *Edge) AddRef() uintptr {
-	atomic.AddInt32(&e.ref, 1)
-	return uintptr(e.ref)
-}
-
-func (e *Edge) Release() uintptr {
-	atomic.AddInt32(&e.ref, -1)
-	return uintptr(e.ref)
-}
-
-// --------------------------- 事件 ---------------------------
+// --------------------------- 事件接口实现 ---------------------------
 
 // EnvironmentCompleted 环境创建完成.
 func (e *Edge) EnvironmentCompleted(result uintptr, env *ICoreWebView2Environment) uintptr {
@@ -176,6 +159,8 @@ func (e *Edge) CreateCoreWebView2ControllerCompleted(result uintptr, controller 
 	}
 	return 0
 }
+
+// --------------------------- 事件 ---------------------------
 
 // Event_CreateCoreWebView2ControllerCompleted 是 WebView2 控制器创建完成事件. 需用在 NewWebView 之前.
 func (e *Edge) Event_CreateCoreWebView2ControllerCompleted(cb func(result uintptr, controller *ICoreWebView2Controller)) {

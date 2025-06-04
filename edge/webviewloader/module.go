@@ -12,8 +12,6 @@ import (
 	"sync"
 	"syscall"
 	"unsafe"
-
-	"golang.org/x/sys/windows"
 )
 
 func init() {
@@ -103,7 +101,7 @@ func CompareBrowserVersions(v1 string, v2 string) (int, error) {
 		common.StrPtr(v1),
 		common.StrPtr(v2),
 		uintptr(unsafe.Pointer(&result)))
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return result, err
 	}
 	if r != 0 {
@@ -125,18 +123,18 @@ func GetAvailableBrowserVersion(browserExecutableFolder ...string) (string, erro
 	r, _, err := procGetAvailableCoreWebView2BrowserVersionString.Call(
 		common.StrPtr(_browserExecutableFolder),
 		uintptr(unsafe.Pointer(&result)))
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return "", err
 	}
 	if r != 0 {
 		// HRESULT 的低16位（错误代码本身）是 ERROR_FILE_NOT_FOUND，这意味着无可匹配版本
-		if r&0xFFFF == uintptr(windows.ERROR_FILE_NOT_FOUND) {
+		if r&0xFFFF == uintptr(wapi.ERROR_FILE_NOT_FOUND) {
 			return "", nil // 返回一个空字符串，但不返回错误，因为我们成功检测到没有可匹配版本
 		}
 		return "", syscall.Errno(r)
 	}
-	version := windows.UTF16PtrToString(result)
-	windows.CoTaskMemFree(unsafe.Pointer(result))
+	version := common.UTF16PtrToString(result)
+	wapi.CoTaskMemFree(unsafe.Pointer(result))
 	return version, nil
 }
 
@@ -151,18 +149,18 @@ func GetAvailableBrowserVersionWithOptions(browserExecutableFolder string, envir
 		common.StrPtr(browserExecutableFolder),
 		environmentOptions,
 		uintptr(unsafe.Pointer(&result)))
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return "", err
 	}
 	if r != 0 {
 		// HRESULT 的低16位（错误代码本身）是 ERROR_FILE_NOT_FOUND，这意味着无可匹配版本
-		if r&0xFFFF == uintptr(windows.ERROR_FILE_NOT_FOUND) {
+		if r&0xFFFF == uintptr(wapi.ERROR_FILE_NOT_FOUND) {
 			return "", nil // 返回一个空字符串，但不返回错误，因为我们成功检测到没有可匹配版本
 		}
 		return "", syscall.Errno(r)
 	}
-	version := windows.UTF16PtrToString(result)
-	windows.CoTaskMemFree(unsafe.Pointer(result))
+	version := common.UTF16PtrToString(result)
+	wapi.CoTaskMemFree(unsafe.Pointer(result))
 	return version, nil
 }
 

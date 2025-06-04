@@ -4,7 +4,7 @@ package edge
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -34,7 +34,7 @@ func (i *ICoreWebView2CookieList) Release() uintptr {
 
 func (i *ICoreWebView2CookieList) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -51,7 +51,7 @@ func (i *ICoreWebView2CookieList) GetCount() (uint32, error) {
 		uintptr(unsafe.Pointer(&count)),
 	)
 
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return 0, err
 	}
 	if r != 0 {
@@ -76,7 +76,7 @@ func (i *ICoreWebView2CookieList) GetValueAtIndex(index uint32) (*ICoreWebView2C
 		uintptr(unsafe.Pointer(&cookie)),
 	)
 
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return nil, err
 	}
 	if r != 0 {

@@ -1,32 +1,9 @@
 package edge
 
 import (
-	"errors"
 	"github.com/twgh/xcgui/edge/webviewloader"
-	"golang.org/x/sys/windows"
-	"syscall"
 	"unsafe"
 )
-
-func BoolToInt(input bool) int {
-	if input {
-		return 1
-	}
-	return 0
-}
-
-// CoTaskMemFree 用于释放通过 COM（Component Object Model）任务内存分配器分配的内存。
-func CoTaskMemFree(address unsafe.Pointer) {
-	windows.CoTaskMemFree(address)
-}
-
-func ErrorToErrno(err error) (syscall.Errno, bool) {
-	var errno syscall.Errno
-	if errors.As(err, &errno) { // 处理嵌套错误
-		return errno, true
-	}
-	return 0, false
-}
 
 // CreateCoreWebView2EnvironmentWithOptions 使用指定选项创建一个 WebView2 环境。
 //

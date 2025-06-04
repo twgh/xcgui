@@ -4,7 +4,8 @@ package edge
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -34,7 +35,7 @@ func (i *ICoreWebView2EnvironmentOptions6) Release() uintptr {
 
 func (i *ICoreWebView2EnvironmentOptions6) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -50,7 +51,7 @@ func (i *ICoreWebView2EnvironmentOptions6) GetAreBrowserExtensionsEnabled() (boo
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {
@@ -70,9 +71,9 @@ func (i *ICoreWebView2EnvironmentOptions6) MustGetAreBrowserExtensionsEnabled() 
 func (i *ICoreWebView2EnvironmentOptions6) PutAreBrowserExtensionsEnabled(value bool) error {
 	r, _, err := i.Vtbl.PutAreBrowserExtensionsEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(BoolToInt(value)),
+		common.BoolPtr(value),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {

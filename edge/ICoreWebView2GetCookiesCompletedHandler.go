@@ -1,6 +1,9 @@
 package edge
 
-import "syscall"
+import (
+	"syscall"
+	"unsafe"
+)
 
 // ICoreWebView2GetCookiesCompletedHandler 接收 ICoreWebView2CookieManager.GetCookies 方法的结果。
 //
@@ -8,6 +11,16 @@ import "syscall"
 type ICoreWebView2GetCookiesCompletedHandler struct {
 	vtbl *_ICoreWebView2GetCookiesCompletedHandlerVtbl
 	impl _ICoreWebView2GetCookiesCompletedHandlerImpl
+}
+
+func (i *ICoreWebView2GetCookiesCompletedHandler) AddRef() uintptr {
+	r, _, _ := i.vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2GetCookiesCompletedHandler) Release() uintptr {
+	r, _, _ := i.vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
 }
 
 type _ICoreWebView2GetCookiesCompletedHandlerVtbl struct {

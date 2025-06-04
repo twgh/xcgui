@@ -2,12 +2,11 @@ package edge
 
 import (
 	"errors"
+	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"github.com/twgh/xcgui/xc"
 	"syscall"
 	"unsafe"
-
-	"golang.org/x/sys/windows"
 )
 
 // ICoreWebView2Controller 是 CoreWebView2 对象的所有者，该对象支持调整大小、显示和隐藏、聚焦以及与窗口和合成相关的其他功能。
@@ -56,7 +55,7 @@ func (i *ICoreWebView2Controller) Release() uintptr {
 
 func (i *ICoreWebView2Controller) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -72,7 +71,7 @@ func (i *ICoreWebView2Controller) GetBounds() (xc.RECT, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&bounds)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return bounds, err
 	}
 	if r != 0 {
@@ -96,7 +95,7 @@ func (i *ICoreWebView2Controller) PutBounds(bounds xc.RECT) error {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&bounds)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -113,7 +112,7 @@ func (i *ICoreWebView2Controller) AddAcceleratorKeyPressed(eventHandler *ICoreWe
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(&token)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -128,7 +127,7 @@ func (i *ICoreWebView2Controller) RemoveAcceleratorKeyPressed(token *EventRegist
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -144,7 +143,7 @@ func (i *ICoreWebView2Controller) GetIsVisible() (bool, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isVisible)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return isVisible, err
 	}
 	if r != 0 {
@@ -164,9 +163,9 @@ func (i *ICoreWebView2Controller) MustGetIsVisible() bool {
 func (i *ICoreWebView2Controller) PutIsVisible(isVisible bool) error {
 	r, _, err := i.Vtbl.PutIsVisible.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(BoolToInt(isVisible)),
+		common.BoolPtr(isVisible),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -180,7 +179,7 @@ func (i *ICoreWebView2Controller) NotifyParentWindowPositionChanged() error {
 	r, _, err := i.Vtbl.NotifyParentWindowPositionChanged.Call(
 		uintptr(unsafe.Pointer(i)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -197,7 +196,7 @@ func (i *ICoreWebView2Controller) MoveFocus(reason COREWEBVIEW2_MOVE_FOCUS_REASO
 		uintptr(unsafe.Pointer(i)),
 		uintptr(reason),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -213,7 +212,7 @@ func (i *ICoreWebView2Controller) GetCoreWebView2() (*ICoreWebView2, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&webView)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return nil, err
 	}
 	if r != 0 {
@@ -236,7 +235,7 @@ func (i *ICoreWebView2Controller) GetZoomFactor() (float64, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&zoomFactor)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return zoomFactor, err
 	}
 	if r != 0 {
@@ -258,7 +257,7 @@ func (i *ICoreWebView2Controller) PutZoomFactor(zoomFactor float64) error {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&zoomFactor)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -278,7 +277,7 @@ func (i *ICoreWebView2Controller) SetBoundsAndZoomFactor(bounds xc.RECT, zoomFac
 		uintptr(unsafe.Pointer(&bounds)),
 		uintptr(unsafe.Pointer(&zoomFactor)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -292,7 +291,7 @@ func (i *ICoreWebView2Controller) Close() error {
 	r, _, err := i.Vtbl.Close.Call(
 		uintptr(unsafe.Pointer(i)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -308,7 +307,7 @@ func (i *ICoreWebView2Controller) GetParentWindow() (uintptr, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&parentWindow)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return parentWindow, err
 	}
 	if r != 0 {
@@ -330,7 +329,7 @@ func (i *ICoreWebView2Controller) PutParentWindow(parentWindow uintptr) error {
 		uintptr(unsafe.Pointer(i)),
 		parentWindow,
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {

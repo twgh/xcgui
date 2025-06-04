@@ -20,7 +20,7 @@ type WebViewOption struct {
 	// webview 宿主窗口类名
 	ClassName string
 
-	// load icon from resource
+	// 资源文件中的图标资源 id, 给原生窗口设置图标, 如果为 0, 则使用默认图标.
 	IconId uint
 
 	// webview 左边
@@ -43,7 +43,7 @@ type WebViewOption struct {
 	//   - 系统菜单在右键单击时显示，双击将触发最大化/恢复窗口大小。
 	AppDrag bool
 
-	// AutoFocus 将在窗口获得焦点时尝试保持 webView 的焦点。
+	// AutoFocus 将在窗口获得焦点时尝试保持 WebView 的焦点。
 	AutoFocus bool
 }
 
@@ -51,7 +51,7 @@ type WebViewOption struct {
 //
 // 对 webview 的一些更改操作必须在炫彩 UI 线程里执行.
 type WebView struct {
-	Webview2
+	WebView2
 
 	// 读写锁bindings
 	rwxBindings sync.RWMutex
@@ -160,12 +160,12 @@ func (w *WebView) createWithOptionsByXcgui(hParent int, opt WebViewOption) error
 
 	// ------------------------ 创建 WebView2 控制器 ------------------------
 	w.init()
-	w.Webview2.msgcb_xcgui = w.msgcb_xcgui
+	w.WebView2.msgcb_xcgui = w.msgcb_xcgui
 
 	err := w.newWebView2Controller()
 	if err != nil {
-		// 销毁原生窗口
-		wapi.PostMessageW(w.hwnd, wapi.WM_CLOSE, 0, 0)
+		// 关闭原生窗口
+		wapi.SendMessageW(w.hwnd, wapi.WM_CLOSE, 0, 0)
 		return err
 	}
 
@@ -246,7 +246,7 @@ func onEleDestroy(hEle int, pbHandled *bool) int {
 	handle := uintptr(hEle)
 	if w := xcContext.GetWindowContext(handle); w != nil {
 		if wapi.IsWindow(w.hwnd) {
-			wapi.PostMessageW(w.hwnd, wapi.WM_CLOSE, 0, 0)
+			wapi.SendMessageW(w.hwnd, wapi.WM_CLOSE, 0, 0)
 		}
 		xcContext.DeleteWindowContext(handle)
 	}
@@ -291,9 +291,14 @@ func onWndProc(hWindow int, message uint32, wParam, lParam uintptr, pbHandled *b
 		handle := uintptr(hWindow)
 		if w := xcContext.GetWindowContext(handle); w != nil { // 原生窗口宿主是炫彩窗口
 			if wapi.IsWindow(w.hwnd) {
-				wapi.PostMessageW(w.hwnd, wapi.WM_CLOSE, 0, 0)
+				wapi.SendMessageW(w.hwnd, wapi.WM_CLOSE, 0, 0)
 			}
 			xcContext.DeleteWindowContext(handle)
+		} else { // 触发元素销毁事件
+			hEles := xcContext.GetHEles(hWindow)
+			for i := 0; i < len(hEles); i++ {
+				xc.XEle_SendEvent(hEles[i], xcc.XE_DESTROY, 0, 0)
+			}
 		}
 	}
 	return 0

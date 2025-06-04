@@ -4,52 +4,49 @@ package edge
 
 // Event_DocumentTitleChanged 文档标题改变事件.
 //   - 当 Webview 的 DocumentTitle 属性发生变化时，DocumentTitleChanged 会运行，并且可能在 NavigationCompleted 事件之前或之后运行。
-func (e *Webview2) Event_DocumentTitleChanged(cb func(sender *ICoreWebView2, args *IUnknown) uintptr) error {
-	if e.HandlerDocumentTitleChangedEvent == nil {
-		e.HandlerDocumentTitleChangedEvent = NewICoreWebView2DocumentTitleChangedEventHandler(e)
-		err := e.CoreWebView.AddDocumentTitleChanged(e.HandlerDocumentTitleChangedEvent, e.EventRegistrationToken)
-		if err != nil {
-			e.HandlerDocumentTitleChangedEvent = nil
-			return err
-		}
+func (w *WebViewEventImpl) Event_DocumentTitleChanged(cb func(sender *ICoreWebView2, args *IUnknown) uintptr) error {
+	if w.HandlerDocumentTitleChangedEvent == nil {
+		w.HandlerDocumentTitleChangedEvent = NewICoreWebView2DocumentTitleChangedEventHandler(w)
 	}
-	e.cbDocumentTitleChangedEvent = cb
+	err := w.CoreWebView.AddDocumentTitleChanged(w.HandlerDocumentTitleChangedEvent, w.EventRegistrationToken)
+	if err != nil {
+		return err
+	}
+	w.cbDocumentTitleChangedEvent = cb
 	return nil
 }
 
 // Event_RasterizationScaleChanged 光栅化缩放比例改变事件.
 //   - 当 Webview 检测到显示器 DPI 缩放比例已更改、ShouldDetectMonitorScaleChanges 为 true 且 Webview 已更改 RasterizationScale 属性时，将引发此事件。
-func (e *Webview2) Event_RasterizationScaleChanged(cb func(sender *ICoreWebView2Controller, args *IUnknown) uintptr) error {
-	c3, err := e.Controller.GetICoreWebView2Controller3()
+func (w *WebViewEventImpl) Event_RasterizationScaleChanged(cb func(sender *ICoreWebView2Controller, args *IUnknown) uintptr) error {
+	c3, err := w.Controller.GetICoreWebView2Controller3()
 	if err != nil {
 		return err
 	}
 	defer c3.Release()
-	if e.HandlerRasterizationScaleChangedEvent == nil {
-		e.HandlerRasterizationScaleChangedEvent = NewICoreWebView2RasterizationScaleChangedEventHandler(e)
-		e.TokenRasterizationScaleChangedEvent, err = c3.AddRasterizationScaleChanged(e.HandlerRasterizationScaleChangedEvent)
-		if err != nil {
-			e.HandlerRasterizationScaleChangedEvent = nil
-			return err
-		}
+	if w.HandlerRasterizationScaleChangedEvent == nil {
+		w.HandlerRasterizationScaleChangedEvent = NewICoreWebView2RasterizationScaleChangedEventHandler(w)
 	}
-	e.cbRasterizationScaleChangedEvent = cb
+	w.TokenRasterizationScaleChangedEvent, err = c3.AddRasterizationScaleChanged(w.HandlerRasterizationScaleChangedEvent)
+	if err != nil {
+		return err
+	}
+	w.cbRasterizationScaleChangedEvent = cb
 	return nil
 }
 
 // Event_WindowCloseRequested 窗口关闭请求事件.
 //   - WindowCloseRequested 在 Webview 内部的内容请求关闭窗口时触发，例如在运行 window.close 之后。如果这对应用程序有意义，应用程序应该关闭 Webview 和相关的应用程序窗口。
 //   - 在首次调用 window.close() 之后，对于任何紧接着连续调用的 window.close()，此事件可能不会触发。
-func (e *Webview2) Event_WindowCloseRequested(cb func(sender *ICoreWebView2, args *IUnknown) uintptr) error {
-	if e.HandlerWindowCloseRequestedEvent == nil {
-		e.HandlerWindowCloseRequestedEvent = NewICoreWebView2WindowCloseRequestedEventHandler(e)
-		err := e.CoreWebView.AddWindowCloseRequested(e.HandlerWindowCloseRequestedEvent, e.EventRegistrationToken)
-		if err != nil {
-			e.HandlerWindowCloseRequestedEvent = nil
-			return err
-		}
+func (w *WebViewEventImpl) Event_WindowCloseRequested(cb func(sender *ICoreWebView2, args *IUnknown) uintptr) error {
+	if w.HandlerWindowCloseRequestedEvent == nil {
+		w.HandlerWindowCloseRequestedEvent = NewICoreWebView2WindowCloseRequestedEventHandler(w)
 	}
-	e.cbWindowCloseRequestedEvent = cb
+	err := w.CoreWebView.AddWindowCloseRequested(w.HandlerWindowCloseRequestedEvent, w.EventRegistrationToken)
+	if err != nil {
+		return err
+	}
+	w.cbWindowCloseRequestedEvent = cb
 	return nil
 }
 
@@ -58,16 +55,15 @@ func (e *Webview2) Event_WindowCloseRequested(cb func(sender *ICoreWebView2, arg
 //   - SourceChanged 会在导航到不同站点或进行片段导航时运行。
 //   - 对于其他类型的导航，例如页面刷新或 history.pushState（使用与当前页面相同的 URL），它不会触发。
 //   - SourceChanged 会在导航到新文档时，在 ContentLoading 之前运行。
-func (e *Webview2) Event_SourceChanged(cb func(sender *ICoreWebView2, args *ICoreWebView2SourceChangedEventArgs) uintptr) error {
-	if e.HandlerSourceChangedEvent == nil {
-		e.HandlerSourceChangedEvent = NewICoreWebView2SourceChangedEventHandler(e)
-		err := e.CoreWebView.AddSourceChanged(e.HandlerSourceChangedEvent, e.EventRegistrationToken)
-		if err != nil {
-			e.HandlerSourceChangedEvent = nil
-			return err
-		}
+func (w *WebViewEventImpl) Event_SourceChanged(cb func(sender *ICoreWebView2, args *ICoreWebView2SourceChangedEventArgs) uintptr) error {
+	if w.HandlerSourceChangedEvent == nil {
+		w.HandlerSourceChangedEvent = NewICoreWebView2SourceChangedEventHandler(w)
 	}
-	e.cbSourceChangedEvent = cb
+	err := w.CoreWebView.AddSourceChanged(w.HandlerSourceChangedEvent, w.EventRegistrationToken)
+	if err != nil {
+		return err
+	}
+	w.cbSourceChangedEvent = cb
 	return nil
 }
 
@@ -75,120 +71,113 @@ func (e *Webview2) Event_SourceChanged(cb func(sender *ICoreWebView2, args *ICor
 //   - 当 Webview 内的内容请求打开新窗口时（例如通过 NewWindowRequested），NewWindowRequested 事件将运行。
 //   - 应用可以传递一个目标 Webview 作为打开的窗口，或者将该事件标记为 Handled，在这种情况下，WebView2 不会打开窗口。
 //   - 如果 Handled 或 NewWindow 属性均未设置，目标内容将在弹出窗口中打开。
-func (e *Webview2) Event_NewWindowRequested(cb func(sender *ICoreWebView2, args *ICoreWebView2NewWindowRequestedEventArgs) uintptr) error {
-	if e.HandlerNewWindowRequestedEvent == nil {
-		e.HandlerNewWindowRequestedEvent = NewICoreWebView2NewWindowRequestedEventHandler(e)
-		err := e.CoreWebView.AddNewWindowRequested(e.HandlerNewWindowRequestedEvent, e.EventRegistrationToken)
-		if err != nil {
-			e.HandlerNewWindowRequestedEvent = nil
-			return err
-		}
+func (w *WebViewEventImpl) Event_NewWindowRequested(cb func(sender *ICoreWebView2, args *ICoreWebView2NewWindowRequestedEventArgs) uintptr) error {
+	if w.HandlerNewWindowRequestedEvent == nil {
+		w.HandlerNewWindowRequestedEvent = NewICoreWebView2NewWindowRequestedEventHandler(w)
 	}
-	e.cbNewWindowRequestedEvent = cb
+	err := w.CoreWebView.AddNewWindowRequested(w.HandlerNewWindowRequestedEvent, w.EventRegistrationToken)
+	if err != nil {
+		return err
+	}
+	w.cbNewWindowRequestedEvent = cb
 	return nil
 }
 
 // Event_PermissionRequested 权限请求事件.
 //   - PermissionRequested 在 Webview 中的内容请求访问某些特权资源的权限时运行。
-func (e *Webview2) Event_PermissionRequested(cb func(sender *ICoreWebView2, args *ICoreWebView2PermissionRequestedEventArgs) uintptr) {
-	e.cbPermissionRequestedEvent = cb
+func (w *WebViewEventImpl) Event_PermissionRequested(cb func(sender *ICoreWebView2, args *ICoreWebView2PermissionRequestedEventArgs) uintptr) {
+	w.cbPermissionRequestedEvent = cb
 }
 
 // Event_MessageReceived 网页消息事件.
 //   - 当 Webview 的顶级文档运行 window.chrome.webview.postMessage 时，WebMessageReceived 事件会运行。
 //   - postMessage 函数为 void postMessage(object)，其中 object 是任何受 JSON 转换支持的对象。
-func (e *Webview2) Event_MessageReceived(cb func(sender *ICoreWebView2, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr) {
-	e.cbMessageReceivedEvent = cb
+func (w *WebViewEventImpl) Event_MessageReceived(cb func(sender *ICoreWebView2, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr) {
+	w.cbMessageReceivedEvent = cb
 }
 
 // Event_WebResourceRequested 网页资源请求事件.
-func (e *Webview2) Event_WebResourceRequested(cb func(sender *ICoreWebView2, args *ICoreWebView2WebResourceRequestedEventArgs) uintptr) error {
-	if e.HandlerWebResourceRequestedEvent == nil {
-		e.HandlerWebResourceRequestedEvent = NewICoreWebView2WebResourceRequestedEventHandler(e)
-		err := e.CoreWebView.AddWebResourceRequested(e.HandlerWebResourceRequestedEvent, e.EventRegistrationToken)
-		if err != nil {
-			e.HandlerWebResourceRequestedEvent = nil
-			return err
-		}
+func (w *WebViewEventImpl) Event_WebResourceRequested(cb func(sender *ICoreWebView2, args *ICoreWebView2WebResourceRequestedEventArgs) uintptr) error {
+	if w.HandlerWebResourceRequestedEvent == nil {
+		w.HandlerWebResourceRequestedEvent = NewICoreWebView2WebResourceRequestedEventHandler(w)
 	}
-	e.cbWebResourceRequestedEvent = cb
+	err := w.CoreWebView.AddWebResourceRequested(w.HandlerWebResourceRequestedEvent, w.EventRegistrationToken)
+	if err != nil {
+		return err
+	}
+	w.cbWebResourceRequestedEvent = cb
 	return nil
 }
 
 // Event_NavigationCompleted 导航完成事件.
 //   - NavigationCompleted 事件会在 Webview 完全加载完毕（与 body.onload 事件同时发生）或加载因错误而停止时触发。
-func (e *Webview2) Event_NavigationCompleted(cb func(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr) error {
-	if e.HandlerNavigationCompletedEvent == nil {
-		e.HandlerNavigationCompletedEvent = NewICoreWebView2NavigationCompletedEventHandler(e)
-		err := e.CoreWebView.AddNavigationCompleted(e.HandlerNavigationCompletedEvent, e.EventRegistrationToken)
-		if err != nil {
-			e.HandlerNavigationCompletedEvent = nil
-			return err
-		}
+func (w *WebViewEventImpl) Event_NavigationCompleted(cb func(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr) error {
+	if w.HandlerNavigationCompletedEvent == nil {
+		w.HandlerNavigationCompletedEvent = NewICoreWebView2NavigationCompletedEventHandler(w)
 	}
-	e.cbNavigationCompletedEvent = cb
+	err := w.CoreWebView.AddNavigationCompleted(w.HandlerNavigationCompletedEvent, w.EventRegistrationToken)
+	if err != nil {
+		return err
+	}
+	w.cbNavigationCompletedEvent = cb
 	return nil
 }
 
 // Event_FrameNavigationCompleted 框架导航完成事件.
 //   - 框架导航完成(NavigationCompleted2)事件会在 Webview 中的子框架完全加载完毕（与 body.onload 触发同时）或加载因错误而停止时触发。
-func (e *Webview2) Event_FrameNavigationCompleted(cb func(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr) error {
-	if e.HandlerFrameNavigationCompletedEvent == nil {
-		e.HandlerFrameNavigationCompletedEvent = NewICoreWebView2NavigationCompletedEventHandler2(e)
-		err := e.CoreWebView.AddFrameNavigationCompleted(e.HandlerFrameNavigationCompletedEvent, e.EventRegistrationToken)
-		if err != nil {
-			e.HandlerFrameNavigationCompletedEvent = nil
-			return err
-		}
+func (w *WebViewEventImpl) Event_FrameNavigationCompleted(cb func(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr) error {
+	if w.HandlerFrameNavigationCompletedEvent == nil {
+		w.HandlerFrameNavigationCompletedEvent = NewICoreWebView2NavigationCompletedEventHandler2(w)
 	}
-	e.cbFrameNavigationCompletedEvent = cb
+	err := w.CoreWebView.AddFrameNavigationCompleted(w.HandlerFrameNavigationCompletedEvent, w.EventRegistrationToken)
+	if err != nil {
+		return err
+	}
+	w.cbFrameNavigationCompletedEvent = cb
 	return nil
 }
 
 // Event_FrameNavigationStarting 框架导航开始事件。
 //   - 框架导航开始(NavigationStarting2)事件会在 Webview 中的子框架请求导航到不同 URI 的权限时触发。重定向也会触发此操作，并且导航 ID 与原始 ID 相同。
 //   - 在所有框架导航开始((NavigationStarting2))事件处理程序返回之前，导航将被阻止。
-func (e *Webview2) Event_FrameNavigationStarting(cb func(sender *ICoreWebView2, args *ICoreWebView2NavigationStartingEventArgs) uintptr) error {
-	if e.HandlerFrameNavigationStartingEvent == nil {
-		e.HandlerFrameNavigationStartingEvent = NewICoreWebView2NavigationStartingEventHandler2(e)
-		err := e.CoreWebView.AddFrameNavigationStarting(e.HandlerFrameNavigationStartingEvent, e.EventRegistrationToken)
-		if err != nil {
-			e.HandlerFrameNavigationStartingEvent = nil
-			return err
-		}
+func (w *WebViewEventImpl) Event_FrameNavigationStarting(cb func(sender *ICoreWebView2, args *ICoreWebView2NavigationStartingEventArgs) uintptr) error {
+	if w.HandlerFrameNavigationStartingEvent == nil {
+		w.HandlerFrameNavigationStartingEvent = NewICoreWebView2NavigationStartingEventHandler2(w)
 	}
-	e.cbFrameNavigationStartingEvent = cb
+	err := w.CoreWebView.AddFrameNavigationStarting(w.HandlerFrameNavigationStartingEvent, w.EventRegistrationToken)
+	if err != nil {
+		return err
+	}
+	w.cbFrameNavigationStartingEvent = cb
 	return nil
 }
 
 // Event_NavigationStarting 导航开始事件.
 //   - NavigationStarting 在 Webview 主框架请求导航到不同的统一资源标识符 (URI) 权限时运行。重定向也会触发此操作，并且导航 ID 与原始 ID 相同。
 //   - 在所有 NavigationStarting 事件处理程序返回之前，导航将被阻止。
-func (e *Webview2) Event_NavigationStarting(cb func(sender *ICoreWebView2, args *ICoreWebView2NavigationStartingEventArgs) uintptr) error {
-	if e.HandlerNavigationStartingEvent == nil {
-		e.HandlerNavigationStartingEvent = NewICoreWebView2NavigationStartingEventHandler(e)
-		err := e.CoreWebView.AddNavigationStarting(e.HandlerNavigationStartingEvent, e.EventRegistrationToken)
-		if err != nil {
-			e.HandlerNavigationStartingEvent = nil
-			return err
-		}
+func (w *WebViewEventImpl) Event_NavigationStarting(cb func(sender *ICoreWebView2, args *ICoreWebView2NavigationStartingEventArgs) uintptr) error {
+	if w.HandlerNavigationStartingEvent == nil {
+		w.HandlerNavigationStartingEvent = NewICoreWebView2NavigationStartingEventHandler(w)
 	}
-	e.cbNavigationStartingEvent = cb
+	err := w.CoreWebView.AddNavigationStarting(w.HandlerNavigationStartingEvent, w.EventRegistrationToken)
+	if err != nil {
+		return err
+	}
+	w.cbNavigationStartingEvent = cb
 	return nil
 }
 
 // Event_AcceleratorKeyPressed 快捷键事件.
 //   - AcceleratorKeyPressed 在 Webview 获得焦点时，当按下或释放快捷键或组合键时运行。
-func (e *Webview2) Event_AcceleratorKeyPressed(cb func(sender *ICoreWebView2Controller, args *ICoreWebView2AcceleratorKeyPressedEventArgs) uintptr) error {
-	if e.HandlerAcceleratorKeyPressedEvent == nil {
-		e.HandlerAcceleratorKeyPressedEvent = NewICoreWebView2AcceleratorKeyPressedEventHandler(e)
-		err := e.Controller.AddAcceleratorKeyPressed(e.HandlerAcceleratorKeyPressedEvent, e.EventRegistrationToken)
-		if err != nil {
-			e.HandlerAcceleratorKeyPressedEvent = nil
-			return err
-		}
+func (w *WebViewEventImpl) Event_AcceleratorKeyPressed(cb func(sender *ICoreWebView2Controller, args *ICoreWebView2AcceleratorKeyPressedEventArgs) uintptr) error {
+	if w.HandlerAcceleratorKeyPressedEvent == nil {
+		w.HandlerAcceleratorKeyPressedEvent = NewICoreWebView2AcceleratorKeyPressedEventHandler(w)
 	}
-	e.cbAcceleratorKeyPressedEvent = cb
+	err := w.Controller.AddAcceleratorKeyPressed(w.HandlerAcceleratorKeyPressedEvent, w.EventRegistrationToken)
+	if err != nil {
+		return err
+	}
+	w.cbAcceleratorKeyPressedEvent = cb
 	return nil
 }
 
@@ -196,15 +185,93 @@ func (e *Webview2) Event_AcceleratorKeyPressed(cb func(sender *ICoreWebView2Cont
 //   - ContentLoading 会在任何内容加载之前触发，包括使用 AddScriptToExecuteOnDocumentCreated 添加的脚本。
 //   - ContentLoading 在发生相同页面导航时（例如通过 fragment 导航或 history.pushState 导航）不会触发。
 //   - 此操作在 NavigationStarting 和 SourceChanged 事件之后，以及 HistoryChanged 和 NavigationCompleted 事件之前发生。
-func (e *Webview2) Event_ContentLoading(cb func(sender *ICoreWebView2, args *ICoreWebView2ContentLoadingEventArgs) uintptr) error {
-	if e.HandlerContentLoadingEvent == nil {
-		e.HandlerContentLoadingEvent = NewICoreWebView2ContentLoadingEventHandler(e)
-		err := e.CoreWebView.AddContentLoading(e.HandlerContentLoadingEvent, e.EventRegistrationToken)
+func (w *WebViewEventImpl) Event_ContentLoading(cb func(sender *ICoreWebView2, args *ICoreWebView2ContentLoadingEventArgs) uintptr) error {
+	if w.HandlerContentLoadingEvent == nil {
+		w.HandlerContentLoadingEvent = NewICoreWebView2ContentLoadingEventHandler(w)
+	}
+	err := w.CoreWebView.AddContentLoading(w.HandlerContentLoadingEvent, w.EventRegistrationToken)
+	if err != nil {
+		return err
+	}
+	w.cbContentLoadingEvent = cb
+	return nil
+}
+
+// Event_ContainsFullScreenElementChanged 是 ContainsFullScreenElement(是否包含全屏元素) 属性改变事件.
+//   - 当 ContainsFullScreenElement 属性发生变化时触发
+func (w *WebViewEventImpl) Event_ContainsFullScreenElementChanged(cb func(sender *ICoreWebView2, args *IUnknown) uintptr) error {
+	if w.HandlerContainsFullScreenElementChangedEvent == nil {
+		w.HandlerContainsFullScreenElementChangedEvent = NewICoreWebView2ContainsFullScreenElementChangedEventHandler(w)
+	}
+	err := w.CoreWebView.AddContainsFullScreenElementChanged(w.HandlerContainsFullScreenElementChangedEvent, w.EventRegistrationToken)
+	if err != nil {
+		return err
+	}
+	w.cbContainsFullScreenElementChangedEvent = cb
+	return nil
+}
+
+// Event_ProcessFailed 进程失败事件.
+//   - 当 Webview 的进程因任何原因失败时，ProcessFailed 事件将运行。
+func (w *WebViewEventImpl) Event_ProcessFailed(cb func(sender *ICoreWebView2, args *ICoreWebView2ProcessFailedEventArgs) uintptr) error {
+	if w.HandlerProcessFailedEvent == nil {
+		w.HandlerProcessFailedEvent = NewICoreWebView2ProcessFailedEventHandler(w)
+	}
+	err := w.CoreWebView.AddProcessFailed(w.HandlerProcessFailedEvent, w.EventRegistrationToken)
+	if err != nil {
+		return err
+	}
+	w.cbProcessFailedEvent = cb
+	return nil
+}
+
+// Event_HistoryChanged 历史记录改变事件.
+//   - HistoryChanged 在联合会话历史记录发生更改时引发，该历史记录由顶级和手动框架导航组成。
+func (w *WebViewEventImpl) Event_HistoryChanged(cb func(sender *ICoreWebView2, args *IUnknown) uintptr) error {
+	if w.HandlerHistoryChangedEvent == nil {
+		w.HandlerHistoryChangedEvent = NewICoreWebView2HistoryChangedEventHandler(w)
+	}
+	err := w.CoreWebView.AddHistoryChanged(w.HandlerHistoryChangedEvent, w.EventRegistrationToken)
+	if err != nil {
+		return err
+	}
+	w.cbHistoryChangedEvent = cb
+	return nil
+}
+
+// Event_ScriptDialogOpening 脚本对话框打开事件.
+//   - 当 JavaScript 代码调用 alert、confirm、prompt 或 beforeunload 时触发此事件。
+//   - 仅当 ICoreWebView2Settings.AreDefaultScriptDialogsEnabled 属性设置为 FALSE 时，此事件才会触发。
+//   - ScriptDialogOpening 事件会抑制对话框，或使用自定义对话框替换默认对话框。
+func (w *WebViewEventImpl) Event_ScriptDialogOpening(cb func(sender *ICoreWebView2, args *ICoreWebView2ScriptDialogOpeningEventArgs) uintptr) error {
+	if w.HandlerScriptDialogOpeningEvent == nil {
+		w.HandlerScriptDialogOpeningEvent = NewICoreWebView2ScriptDialogOpeningEventHandler(w)
+	}
+	err := w.CoreWebView.AddScriptDialogOpening(w.HandlerScriptDialogOpeningEvent, w.EventRegistrationToken)
+	if err != nil {
+		return err
+	}
+	w.cbScriptDialogOpeningEvent = cb
+	return nil
+}
+
+// Event_DevToolsProtocolEventReceived DevTools 协议事件接收事件.
+//   - DevToolsProtocolEventReceived 在收到来自 DevTools 协议的事件时运行。
+func (w *WebViewEventImpl) Event_DevToolsProtocolEventReceived(eventName string, cb func(sender *ICoreWebView2, args *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) uintptr) error {
+	if w.DevToolsProtocolEventReceiver == nil {
+		var err error
+		w.DevToolsProtocolEventReceiver, err = w.CoreWebView.GetDevToolsProtocolEventReceiver(eventName)
 		if err != nil {
-			e.HandlerContentLoadingEvent = nil
 			return err
 		}
 	}
-	e.cbContentLoadingEvent = cb
+	if w.HandlerDevToolsProtocolEventReceivedEvent == nil {
+		w.HandlerDevToolsProtocolEventReceivedEvent = NewICoreWebView2DevToolsProtocolEventReceivedEventHandler(w)
+	}
+	err := w.DevToolsProtocolEventReceiver.AddDevToolsProtocolEventReceived(w.HandlerDevToolsProtocolEventReceivedEvent, w.EventRegistrationToken)
+	if err != nil {
+		return err
+	}
+	w.cbDevToolsProtocolEventReceivedEvent = cb
 	return nil
 }

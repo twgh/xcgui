@@ -8,6 +8,9 @@ import (
 	"image/gif"
 	"image/png"
 	"io"
+	"os"
+	"path/filepath"
+	"strings"
 	"syscall"
 	"time"
 	"unicode/utf16"
@@ -84,6 +87,25 @@ func UintPtrToString(ptr uintptr) string {
 		}
 	}
 	return string(utf16.Decode(s))
+}
+
+// UTF16PtrToString 接收一个指向 UTF-16 切片的指针，并返回对应的 UTF-8 编码字符串。
+//   - 如果指针为空，则返回空字符串。该函数假设 UTF-16 序列以零字符结尾；
+//   - 如果不存在零字符，程序可能会崩溃。
+func UTF16PtrToString(p *uint16) string {
+	if p == nil {
+		return ""
+	}
+	if *p == 0 {
+		return ""
+	}
+
+	// Find NUL terminator.
+	n := 0
+	for ptr := unsafe.Pointer(p); *(*uint16)(ptr) != 0; n++ {
+		ptr = unsafe.Pointer(uintptr(ptr) + unsafe.Sizeof(*p))
+	}
+	return syscall.UTF16ToString(unsafe.Slice(p, n))
 }
 
 // UintPtrToSlice 将uintptr转换到[]interface{}.
@@ -244,4 +266,47 @@ func ExtractGifFrames(gifReader io.Reader) ([]GifFrame, error) {
 		})
 	}
 	return frames, nil
+}
+
+// GetProcessName 取当前进程名.
+func GetProcessName() string {
+	// 获取可执行文件路径
+	var exePath string
+	if path, err := os.Executable(); err == nil {
+		exePath = path
+	} else { // Executable 获取失败时使用 os.Args[0] 作为备份
+		exePath = os.Args[0]
+	}
+	// 提取文件名
+	return filepath.Base(exePath)
+}
+
+// GetProcessNameNoExt 取当前进程名（不含扩展名）.
+func GetProcessNameNoExt() string {
+	filename := GetProcessName()
+	// 去除扩展名
+	extension := filepath.Ext(filename)
+	return strings.TrimSuffix(filename, extension)
+}
+
+func BoolToInt(input bool) int {
+	if input {
+		return 1
+	}
+	return 0
+}
+
+// ErrorToErrno 将错误转换为系统调用错误号.
+//
+// err: 需要转换的错误对象
+//
+// 返回值:
+//   - syscall.Errno: 转换后的系统错误号
+//   - bool: 是否成功转换的标志
+func ErrorToErrno(err error) (syscall.Errno, bool) {
+	var errno syscall.Errno
+	if errors.As(err, &errno) { // 处理嵌套错误
+		return errno, true
+	}
+	return 0, false
 }

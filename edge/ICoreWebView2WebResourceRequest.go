@@ -5,11 +5,10 @@ package edge
 import (
 	"errors"
 	"fmt"
+	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
-
-	"golang.org/x/sys/windows"
 )
 
 // ICoreWebView2WebResourceRequest 是与 WebResourceRequested 事件一起使用的HTTP请求。
@@ -42,7 +41,7 @@ func (i *ICoreWebView2WebResourceRequest) Release() uintptr {
 
 func (i *ICoreWebView2WebResourceRequest) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -58,14 +57,14 @@ func (i *ICoreWebView2WebResourceRequest) GetUri() (string, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_uri)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return "", err
 	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
-	uri := windows.UTF16PtrToString(_uri)
-	windows.CoTaskMemFree(unsafe.Pointer(_uri))
+	uri := common.UTF16PtrToString(_uri)
+	wapi.CoTaskMemFree(unsafe.Pointer(_uri))
 	return uri, nil
 }
 
@@ -83,7 +82,7 @@ func (i *ICoreWebView2WebResourceRequest) GetContent() ([]byte, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&streamPtr)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return nil, err
 	}
 	if hr != 0 {
@@ -127,14 +126,14 @@ func (i *ICoreWebView2WebResourceRequest) GetMethod() (string, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_method)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return "", err
 	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
-	method := windows.UTF16PtrToString(_method)
-	windows.CoTaskMemFree(unsafe.Pointer(_method))
+	method := common.UTF16PtrToString(_method)
+	wapi.CoTaskMemFree(unsafe.Pointer(_method))
 	return method, nil
 }
 
@@ -152,7 +151,7 @@ func (i *ICoreWebView2WebResourceRequest) GetHeaders() (*ICoreWebView2HttpReques
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&headers)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return nil, err
 	}
 	if r != 0 {
@@ -170,7 +169,7 @@ func (i *ICoreWebView2WebResourceRequest) MustGetHeaders() *ICoreWebView2HttpReq
 
 // PutUri 设置请求URI。
 func (i *ICoreWebView2WebResourceRequest) PutUri(uri string) error {
-	_uri, err := windows.UTF16PtrFromString(uri)
+	_uri, err := syscall.UTF16PtrFromString(uri)
 	if err != nil {
 		return err
 	}
@@ -178,7 +177,7 @@ func (i *ICoreWebView2WebResourceRequest) PutUri(uri string) error {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_uri)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -194,7 +193,7 @@ func (i *ICoreWebView2WebResourceRequest) PutContent(content []byte) error {
 	var stream *IStream
 	if len(content) > 0 {
 		// 创建内存流
-		stream, err = NewMemStream(content)
+		stream, err = NewStreamMem(content)
 		if err != nil {
 			return err
 		}
@@ -205,7 +204,7 @@ func (i *ICoreWebView2WebResourceRequest) PutContent(content []byte) error {
 		uintptr(unsafe.Pointer(i)),
 		streamPtr,
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -216,7 +215,7 @@ func (i *ICoreWebView2WebResourceRequest) PutContent(content []byte) error {
 
 // PutMethod 设置请求的HTTP方法。
 func (i *ICoreWebView2WebResourceRequest) PutMethod(method string) error {
-	_method, err := windows.UTF16PtrFromString(method)
+	_method, err := syscall.UTF16PtrFromString(method)
 	if err != nil {
 		return err
 	}
@@ -224,7 +223,7 @@ func (i *ICoreWebView2WebResourceRequest) PutMethod(method string) error {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_method)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {

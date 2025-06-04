@@ -1,5 +1,7 @@
 package edge
 
+import "unsafe"
+
 type _ICoreWebView2WindowCloseRequestedEventHandlerVtbl struct {
 	IUnknownVtbl
 	Invoke ComProc
@@ -11,6 +13,16 @@ type _ICoreWebView2WindowCloseRequestedEventHandlerVtbl struct {
 type ICoreWebView2WindowCloseRequestedEventHandler struct {
 	vtbl *_ICoreWebView2WindowCloseRequestedEventHandlerVtbl
 	impl _ICoreWebView2WindowCloseRequestedEventHandlerImpl
+}
+
+func (i *ICoreWebView2WindowCloseRequestedEventHandler) AddRef() uintptr {
+	r, _, _ := i.vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2WindowCloseRequestedEventHandler) Release() uintptr {
+	r, _, _ := i.vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
 }
 
 func _ICoreWebView2WindowCloseRequestedEventHandlerIUnknownQueryInterface(this *ICoreWebView2WindowCloseRequestedEventHandler, refiid, object uintptr) uintptr {

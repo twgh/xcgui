@@ -4,7 +4,9 @@ package edge
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
+
 	"syscall"
 	"unsafe"
 )
@@ -41,7 +43,7 @@ func (i *ICoreWebView2CustomSchemeRegistration) Release() uintptr {
 
 func (i *ICoreWebView2CustomSchemeRegistration) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -57,14 +59,14 @@ func (i *ICoreWebView2CustomSchemeRegistration) GetSchemeName() (string, error) 
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return "", err
 	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
-	str := windows.UTF16PtrToString(value)
-	windows.CoTaskMemFree(unsafe.Pointer(value))
+	str := common.UTF16PtrToString(value)
+	wapi.CoTaskMemFree(unsafe.Pointer(value))
 	return str, nil
 }
 
@@ -82,7 +84,7 @@ func (i *ICoreWebView2CustomSchemeRegistration) GetTreatAsSecure() (bool, error)
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {
@@ -102,9 +104,9 @@ func (i *ICoreWebView2CustomSchemeRegistration) MustGetTreatAsSecure() bool {
 func (i *ICoreWebView2CustomSchemeRegistration) PutTreatAsSecure(value bool) error {
 	r, _, err := i.Vtbl.PutTreatAsSecure.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(BoolToInt(value)),
+		common.BoolPtr(value),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -122,19 +124,19 @@ func (i *ICoreWebView2CustomSchemeRegistration) GetAllowedOrigins() ([]string, e
 		uintptr(unsafe.Pointer(&count)),
 		uintptr(unsafe.Pointer(&origins)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return nil, err
 	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
-	defer windows.CoTaskMemFree(unsafe.Pointer(origins))
+	defer wapi.CoTaskMemFree(unsafe.Pointer(origins))
 
 	result := make([]string, count)
 	slice := unsafe.Slice(origins, count)
 	for i := range slice {
-		result[i] = windows.UTF16PtrToString(slice[i])
-		windows.CoTaskMemFree(unsafe.Pointer(slice[i]))
+		result[i] = common.UTF16PtrToString(slice[i])
+		wapi.CoTaskMemFree(unsafe.Pointer(slice[i]))
 	}
 	return result, nil
 }
@@ -153,7 +155,7 @@ func (i *ICoreWebView2CustomSchemeRegistration) SetAllowedOrigins(origins []stri
 	}
 	_origins := make([]*uint16, len(origins))
 	for i := range origins {
-		_origin, err := windows.UTF16PtrFromString(origins[i])
+		_origin, err := syscall.UTF16PtrFromString(origins[i])
 		if err != nil {
 			return err
 		}
@@ -164,7 +166,7 @@ func (i *ICoreWebView2CustomSchemeRegistration) SetAllowedOrigins(origins []stri
 		uintptr(len(origins)),
 		uintptr(unsafe.Pointer(&_origins[0])),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -180,7 +182,7 @@ func (i *ICoreWebView2CustomSchemeRegistration) GetHasAuthorityComponent() (bool
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {
@@ -193,9 +195,9 @@ func (i *ICoreWebView2CustomSchemeRegistration) GetHasAuthorityComponent() (bool
 func (i *ICoreWebView2CustomSchemeRegistration) PutHasAuthorityComponent(value bool) error {
 	r, _, err := i.Vtbl.PutHasAuthorityComponent.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(BoolToInt(value)),
+		common.BoolPtr(value),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {

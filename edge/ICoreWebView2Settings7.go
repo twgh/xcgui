@@ -2,7 +2,7 @@ package edge
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -32,7 +32,7 @@ func (i *ICoreWebView2Settings7) Release() uintptr {
 
 func (i *ICoreWebView2Settings7) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -48,7 +48,7 @@ func (i *ICoreWebView2Settings7) GetHiddenPdfToolbarItems() (COREWEBVIEW2_PDF_TO
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&items)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return 0, err
 	}
 	if r != 0 {
@@ -70,7 +70,7 @@ func (i *ICoreWebView2Settings7) PutHiddenPdfToolbarItems(items COREWEBVIEW2_PDF
 		uintptr(unsafe.Pointer(i)),
 		uintptr(items),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {

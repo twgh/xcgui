@@ -4,7 +4,9 @@ package edge
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
+
 	"syscall"
 	"unsafe"
 )
@@ -38,7 +40,7 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) Release() uintptr {
 
 func (i *ICoreWebView2PermissionRequestedEventArgs) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -54,14 +56,14 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) GetUri() (string, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_uri)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return "", err
 	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
-	uri := windows.UTF16PtrToString(_uri)
-	windows.CoTaskMemFree(unsafe.Pointer(_uri))
+	uri := common.UTF16PtrToString(_uri)
+	wapi.CoTaskMemFree(unsafe.Pointer(_uri))
 	return uri, nil
 }
 
@@ -79,7 +81,7 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) GetPermissionKind() (COREWEB
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&kind)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return 0, err
 	}
 	if r != 0 {
@@ -102,7 +104,7 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) GetIsUserInitiated() (bool, 
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isUserInitiated)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return isUserInitiated, err
 	}
 	if r != 0 {
@@ -125,7 +127,7 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) GetState() (COREWEBVIEW2_PER
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&state)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return 0, err
 	}
 	if r != 0 {
@@ -147,7 +149,7 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) PutState(state COREWEBVIEW2_
 		uintptr(unsafe.Pointer(i)),
 		uintptr(state),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -163,7 +165,7 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) GetDeferral() (*ICoreWebView
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&deferral)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return nil, err
 	}
 	if r != 0 {

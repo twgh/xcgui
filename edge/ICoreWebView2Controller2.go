@@ -4,10 +4,9 @@ package edge
 
 import (
 	"errors"
+	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
-
-	"golang.org/x/sys/windows"
 )
 
 // ICoreWebView2Controller2 是 ICoreWebView2Controller 接口的延续。支持设置 WebView2 的默认背景色。
@@ -35,7 +34,7 @@ func (i *ICoreWebView2Controller2) Release() uintptr {
 
 func (i *ICoreWebView2Controller2) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -51,7 +50,7 @@ func (i *ICoreWebView2Controller2) GetDefaultBackgroundColor() (*COREWEBVIEW2_CO
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&backgroundColor)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return nil, err
 	}
 	if r != 0 {
@@ -69,7 +68,7 @@ func (i *ICoreWebView2Controller2) PutDefaultBackgroundColor(backgroundColor COR
 		uintptr(unsafe.Pointer(i)),
 		uintptr(col),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {

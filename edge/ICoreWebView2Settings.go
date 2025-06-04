@@ -4,11 +4,10 @@ package edge
 
 import (
 	"errors"
+	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
-
-	"golang.org/x/sys/windows"
 )
 
 // ICoreWebView2Settings 是 WebView2 的设置。
@@ -52,7 +51,7 @@ func (i *ICoreWebView2Settings) Release() uintptr {
 
 func (i *ICoreWebView2Settings) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -70,7 +69,7 @@ func (i *ICoreWebView2Settings) GetIsScriptEnabled() (bool, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isScriptEnabled)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {
@@ -95,9 +94,9 @@ func (i *ICoreWebView2Settings) MustGetIsScriptEnabled() bool {
 func (i *ICoreWebView2Settings) PutIsScriptEnabled(isScriptEnabled bool) error {
 	r, _, err := i.Vtbl.PutIsScriptEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(BoolToInt(isScriptEnabled)),
+		common.BoolPtr(isScriptEnabled),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -113,7 +112,7 @@ func (i *ICoreWebView2Settings) GetIsWebMessageEnabled() (bool, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isWebMessageEnabled)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {
@@ -133,9 +132,9 @@ func (i *ICoreWebView2Settings) MustGetIsWebMessageEnabled() bool {
 func (i *ICoreWebView2Settings) PutIsWebMessageEnabled(isWebMessageEnabled bool) error {
 	r, _, err := i.Vtbl.PutIsWebMessageEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(BoolToInt(isWebMessageEnabled)),
+		common.BoolPtr(isWebMessageEnabled),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -151,7 +150,7 @@ func (i *ICoreWebView2Settings) GetAreDefaultScriptDialogsEnabled() (bool, error
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&areDefaultScriptDialogsEnabled)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {
@@ -171,9 +170,9 @@ func (i *ICoreWebView2Settings) MustGetAreDefaultScriptDialogsEnabled() bool {
 func (i *ICoreWebView2Settings) PutAreDefaultScriptDialogsEnabled(areDefaultScriptDialogsEnabled bool) error {
 	r, _, err := i.Vtbl.PutAreDefaultScriptDialogsEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(BoolToInt(areDefaultScriptDialogsEnabled)),
+		common.BoolPtr(areDefaultScriptDialogsEnabled),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -191,7 +190,7 @@ func (i *ICoreWebView2Settings) GetIsStatusBarEnabled() (bool, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isStatusBarEnabled)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {
@@ -216,9 +215,9 @@ func (i *ICoreWebView2Settings) MustGetIsStatusBarEnabled() bool {
 func (i *ICoreWebView2Settings) PutIsStatusBarEnabled(isStatusBarEnabled bool) error {
 	r, _, err := i.Vtbl.PutIsStatusBarEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(BoolToInt(isStatusBarEnabled)),
+		common.BoolPtr(isStatusBarEnabled),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -234,7 +233,7 @@ func (i *ICoreWebView2Settings) GetAreDevToolsEnabled() (bool, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&areDevToolsEnabled)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {
@@ -254,9 +253,9 @@ func (i *ICoreWebView2Settings) MustGetAreDevToolsEnabled() bool {
 func (i *ICoreWebView2Settings) PutAreDevToolsEnabled(areDevToolsEnabled bool) error {
 	r, _, err := i.Vtbl.PutAreDevToolsEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(BoolToInt(areDevToolsEnabled)),
+		common.BoolPtr(areDevToolsEnabled),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -272,7 +271,7 @@ func (i *ICoreWebView2Settings) GetAreDefaultContextMenusEnabled() (bool, error)
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&enabled)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {
@@ -292,9 +291,9 @@ func (i *ICoreWebView2Settings) MustGetAreDefaultContextMenusEnabled() bool {
 func (i *ICoreWebView2Settings) PutAreDefaultContextMenusEnabled(enabled bool) error {
 	r, _, err := i.Vtbl.PutAreDefaultContextMenusEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(BoolToInt(enabled)),
+		common.BoolPtr(enabled),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -310,7 +309,7 @@ func (i *ICoreWebView2Settings) GetAreHostObjectsAllowed() (bool, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&allowed)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {
@@ -330,9 +329,9 @@ func (i *ICoreWebView2Settings) MustGetAreHostObjectsAllowed() bool {
 func (i *ICoreWebView2Settings) PutAreHostObjectsAllowed(allowed bool) error {
 	r, _, err := i.Vtbl.PutAreHostObjectsAllowed.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(BoolToInt(allowed)),
+		common.BoolPtr(allowed),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -348,7 +347,7 @@ func (i *ICoreWebView2Settings) GetIsZoomControlEnabled() (bool, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&enabled)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {
@@ -368,9 +367,9 @@ func (i *ICoreWebView2Settings) MustGetIsZoomControlEnabled() bool {
 func (i *ICoreWebView2Settings) PutIsZoomControlEnabled(enabled bool) error {
 	r, _, err := i.Vtbl.PutIsZoomControlEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(BoolToInt(enabled)),
+		common.BoolPtr(enabled),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -386,7 +385,7 @@ func (i *ICoreWebView2Settings) GetIsBuiltInErrorPageEnabled() (bool, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&enabled)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {
@@ -406,9 +405,9 @@ func (i *ICoreWebView2Settings) MustGetIsBuiltInErrorPageEnabled() bool {
 func (i *ICoreWebView2Settings) PutIsBuiltInErrorPageEnabled(enabled bool) error {
 	r, _, err := i.Vtbl.PutIsBuiltInErrorPageEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(BoolToInt(enabled)),
+		common.BoolPtr(enabled),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {

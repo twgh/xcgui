@@ -2,7 +2,9 @@ package edge
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
+
 	"syscall"
 	"unsafe"
 )
@@ -35,7 +37,7 @@ func (i *ICoreWebView2Environment) Release() uintptr {
 
 func (i *ICoreWebView2Environment) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -45,13 +47,13 @@ func (i *ICoreWebView2Environment) QueryInterface(refiid, object uintptr) error 
 }
 
 // CreateCoreWebView2Controller 异步创建新的 WebView。
-func (e *ICoreWebView2Environment) CreateCoreWebView2Controller(parentWindow uintptr, handler *ICoreWebView2CreateCoreWebView2ControllerCompletedHandler) error {
-	r, _, err := e.Vtbl.CreateCoreWebView2Controller.Call(
-		uintptr(unsafe.Pointer(e)),
+func (i *ICoreWebView2Environment) CreateCoreWebView2Controller(parentWindow uintptr, handler *ICoreWebView2CreateCoreWebView2ControllerCompletedHandler) error {
+	r, _, err := i.Vtbl.CreateCoreWebView2Controller.Call(
+		uintptr(unsafe.Pointer(i)),
 		parentWindow,
 		uintptr(unsafe.Pointer(handler)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -61,12 +63,12 @@ func (e *ICoreWebView2Environment) CreateCoreWebView2Controller(parentWindow uin
 }
 
 // CreateWebResourceResponse 创建新的web资源响应对象。
-func (e *ICoreWebView2Environment) CreateWebResourceResponse(content []byte, statusCode int, reasonPhrase string, headers string) (*ICoreWebView2WebResourceResponse, error) {
+func (i *ICoreWebView2Environment) CreateWebResourceResponse(content []byte, statusCode int, reasonPhrase string, headers string) (*ICoreWebView2WebResourceResponse, error) {
 	var err error
 	var streamPtr uintptr
 	var stream *IStream
 	if len(content) > 0 {
-		stream, err = NewMemStream(content)
+		stream, err = NewStreamMem(content)
 		if err != nil {
 			return nil, err
 		}
@@ -74,24 +76,24 @@ func (e *ICoreWebView2Environment) CreateWebResourceResponse(content []byte, sta
 		streamPtr = stream.GetPtr()
 	}
 
-	_reason, err := windows.UTF16PtrFromString(reasonPhrase)
+	_reason, err := syscall.UTF16PtrFromString(reasonPhrase)
 	if err != nil {
 		return nil, err
 	}
-	_headers, err := windows.UTF16PtrFromString(headers)
+	_headers, err := syscall.UTF16PtrFromString(headers)
 	if err != nil {
 		return nil, err
 	}
 	var response *ICoreWebView2WebResourceResponse
-	r, _, err := e.Vtbl.CreateWebResourceResponse.Call(
-		uintptr(unsafe.Pointer(e)),
+	r, _, err := i.Vtbl.CreateWebResourceResponse.Call(
+		uintptr(unsafe.Pointer(i)),
 		streamPtr,
 		uintptr(statusCode),
 		uintptr(unsafe.Pointer(_reason)),
 		uintptr(unsafe.Pointer(_headers)),
 		uintptr(unsafe.Pointer(&response)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return nil, err
 	}
 	if r != 0 {
@@ -101,26 +103,26 @@ func (e *ICoreWebView2Environment) CreateWebResourceResponse(content []byte, sta
 }
 
 // GetBrowserVersionString 获取当前 ICoreWebView2Environment 的浏览器版本信息，如果不是 WebView2 运行时，则包括通道名称。
-func (e *ICoreWebView2Environment) GetBrowserVersionString() (string, error) {
+func (i *ICoreWebView2Environment) GetBrowserVersionString() (string, error) {
 	var _version *uint16
-	r, _, err := e.Vtbl.GetBrowserVersionString.Call(
-		uintptr(unsafe.Pointer(e)),
+	r, _, err := i.Vtbl.GetBrowserVersionString.Call(
+		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_version)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return "", err
 	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
-	version := windows.UTF16PtrToString(_version)
-	windows.CoTaskMemFree(unsafe.Pointer(_version))
+	version := common.UTF16PtrToString(_version)
+	wapi.CoTaskMemFree(unsafe.Pointer(_version))
 	return version, nil
 }
 
 // MustGetBrowserVersionString 获取当前 ICoreWebView2Environment 的浏览器版本信息，如果不是WebView2运行时，则包括通道名称。出错时会触发全局错误回调。
-func (e *ICoreWebView2Environment) MustGetBrowserVersionString() string {
-	version, _ := e.GetBrowserVersionString()
+func (i *ICoreWebView2Environment) MustGetBrowserVersionString() string {
+	version, _ := i.GetBrowserVersionString()
 	return version
 }
 

@@ -2,8 +2,9 @@ package edge
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/wapi"
 	"sync/atomic"
+
 	"syscall"
 	"unsafe"
 )
@@ -20,11 +21,32 @@ type IUnknownImpl interface {
 	Release() uintptr
 }
 
-// IUnknown 封装了COM基础的IUnknown接口
+// IUnknown 封装了 COM 基础的 IUnknown 接口.
 type IUnknown struct {
 	Vtbl *IUnknownVtbl
 	impl IUnknownImpl
 	ref  int32
+}
+
+func (i *IUnknown) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *IUnknown) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *IUnknown) QueryInterface(refiid, object uintptr) error {
+	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
 }
 
 // NewIUnknown 创建一个新的 IUnknown 实例
@@ -57,23 +79,17 @@ func release(this *IUnknown) uintptr {
 	return uintptr(ref)
 }
 
-func (i *IUnknown) AddRef() uintptr {
-	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
-	return r
+type IUnknown_Impl struct {
 }
 
-func (i *IUnknown) Release() uintptr {
-	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
-	return r
+func (w *IUnknown_Impl) QueryInterface(_, _ uintptr) uintptr {
+	return 0
 }
 
-func (i *IUnknown) QueryInterface(refiid, object uintptr) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
-		return err
-	}
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
+func (w *IUnknown_Impl) AddRef() uintptr {
+	return 1
+}
+
+func (w *IUnknown_Impl) Release() uintptr {
+	return 1
 }

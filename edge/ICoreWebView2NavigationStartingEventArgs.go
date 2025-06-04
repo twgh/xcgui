@@ -5,7 +5,8 @@ package edge
 import (
 	"errors"
 	"github.com/twgh/xcgui/common"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/wapi"
+
 	"syscall"
 	"unsafe"
 )
@@ -40,7 +41,7 @@ func (i *ICoreWebView2NavigationStartingEventArgs) Release() uintptr {
 
 func (i *ICoreWebView2NavigationStartingEventArgs) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -56,14 +57,14 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetUri() (string, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_uri)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return "", err
 	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
-	uri := windows.UTF16PtrToString(_uri)
-	windows.CoTaskMemFree(unsafe.Pointer(_uri))
+	uri := common.UTF16PtrToString(_uri)
+	wapi.CoTaskMemFree(unsafe.Pointer(_uri))
 	return uri, nil
 }
 
@@ -81,7 +82,7 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetNavigationId() (uint64, er
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&id)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return id, err
 	}
 	if r != 0 {
@@ -104,7 +105,7 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetIsUserInitiated() (bool, e
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isUserInitiated)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return isUserInitiated, err
 	}
 	if r != 0 {
@@ -127,7 +128,7 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetIsRedirected() (bool, erro
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isRedirected)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return isRedirected, err
 	}
 	if r != 0 {
@@ -150,7 +151,7 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetRequestHeaders() (*ICoreWe
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&headers)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return nil, err
 	}
 	if r != 0 {
@@ -173,7 +174,7 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetCancel() (bool, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&cancel)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return cancel, err
 	}
 	if r != 0 {
@@ -195,7 +196,7 @@ func (i *ICoreWebView2NavigationStartingEventArgs) PutCancel(cancel bool) error 
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(cancel),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {

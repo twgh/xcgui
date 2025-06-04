@@ -1,5 +1,7 @@
 package edge
 
+import "unsafe"
+
 type _ICoreWebView2DocumentTitleChangedEventHandlerVtbl struct {
 	IUnknownVtbl
 	Invoke ComProc
@@ -11,6 +13,16 @@ type _ICoreWebView2DocumentTitleChangedEventHandlerVtbl struct {
 type ICoreWebView2DocumentTitleChangedEventHandler struct {
 	vtbl *_ICoreWebView2DocumentTitleChangedEventHandlerVtbl
 	impl _ICoreWebView2DocumentTitleChangedEventHandlerImpl
+}
+
+func (i *ICoreWebView2DocumentTitleChangedEventHandler) AddRef() uintptr {
+	r, _, _ := i.vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2DocumentTitleChangedEventHandler) Release() uintptr {
+	r, _, _ := i.vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
 }
 
 func _ICoreWebView2DocumentTitleChangedEventHandlerIUnknownQueryInterface(this *ICoreWebView2DocumentTitleChangedEventHandler, refiid, object uintptr) uintptr {

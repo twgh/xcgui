@@ -4,7 +4,7 @@ package edge
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -36,7 +36,7 @@ func (i *ICoreWebView2EnvironmentOptions4) Release() uintptr {
 
 func (i *ICoreWebView2EnvironmentOptions4) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -58,13 +58,13 @@ func (i *ICoreWebView2EnvironmentOptions4) GetCustomSchemeRegistrations() ([]*IC
 		uintptr(unsafe.Pointer(&count)),
 		uintptr(unsafe.Pointer(&registrations)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return nil, err
 	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
-	defer windows.CoTaskMemFree(unsafe.Pointer(registrations))
+	defer wapi.CoTaskMemFree(unsafe.Pointer(registrations))
 
 	result := make([]*ICoreWebView2CustomSchemeRegistration, count)
 	slice := unsafe.Slice(registrations, count)
@@ -106,7 +106,7 @@ func (i *ICoreWebView2EnvironmentOptions4) SetCustomSchemeRegistrations(registra
 		uintptr(len(registrations)),
 		uintptr(unsafe.Pointer(&registrations[0])),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {

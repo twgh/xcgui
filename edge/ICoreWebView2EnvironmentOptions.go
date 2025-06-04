@@ -4,7 +4,9 @@ package edge
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
+
 	"syscall"
 	"unsafe"
 )
@@ -40,7 +42,7 @@ func (i *ICoreWebView2EnvironmentOptions) Release() uintptr {
 
 func (i *ICoreWebView2EnvironmentOptions) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -56,14 +58,14 @@ func (i *ICoreWebView2EnvironmentOptions) GetAdditionalBrowserArguments() (strin
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return "", err
 	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
-	str := windows.UTF16PtrToString(value)
-	windows.CoTaskMemFree(unsafe.Pointer(value))
+	str := common.UTF16PtrToString(value)
+	wapi.CoTaskMemFree(unsafe.Pointer(value))
 	return str, nil
 }
 
@@ -79,7 +81,7 @@ func (i *ICoreWebView2EnvironmentOptions) MustGetAdditionalBrowserArguments() st
 //   - 如果有多个命令行参数，它们之间应该用空格分隔。
 //   - 唯一的例外是，如果为单个命令行参数启用/禁用了多个功能，则这些功能应该用逗号分隔。例如：“--disable-features=feature1,feature2 --some-other-switch --do-something”
 func (i *ICoreWebView2EnvironmentOptions) PutAdditionalBrowserArguments(value string) error {
-	_value, err := windows.UTF16PtrFromString(value)
+	_value, err := syscall.UTF16PtrFromString(value)
 	if err != nil {
 		return err
 	}
@@ -87,7 +89,7 @@ func (i *ICoreWebView2EnvironmentOptions) PutAdditionalBrowserArguments(value st
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_value)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -103,14 +105,14 @@ func (i *ICoreWebView2EnvironmentOptions) GetLanguage() (string, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return "", err
 	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
-	str := windows.UTF16PtrToString(value)
-	windows.CoTaskMemFree(unsafe.Pointer(value))
+	str := common.UTF16PtrToString(value)
+	wapi.CoTaskMemFree(unsafe.Pointer(value))
 	return str, nil
 }
 
@@ -119,7 +121,7 @@ func (i *ICoreWebView2EnvironmentOptions) GetLanguage() (string, error) {
 //   - 它也适用于 WebView 向网站发送的 accept - languages HTTP 头部。
 //   - 预期的语言环境值采用 BCP 47 语言标签的格式。更多信息可从 IETF BCP47 中获取。
 func (i *ICoreWebView2EnvironmentOptions) PutLanguage(value string) error {
-	_value, err := windows.UTF16PtrFromString(value)
+	_value, err := syscall.UTF16PtrFromString(value)
 	if err != nil {
 		return err
 	}
@@ -127,7 +129,7 @@ func (i *ICoreWebView2EnvironmentOptions) PutLanguage(value string) error {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_value)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -143,14 +145,14 @@ func (i *ICoreWebView2EnvironmentOptions) GetTargetCompatibleBrowserVersion() (s
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return "", err
 	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
-	str := windows.UTF16PtrToString(value)
-	windows.CoTaskMemFree(unsafe.Pointer(value))
+	str := common.UTF16PtrToString(value)
+	wapi.CoTaskMemFree(unsafe.Pointer(value))
 	return str, nil
 }
 
@@ -163,7 +165,7 @@ func (i *ICoreWebView2EnvironmentOptions) MustGetTargetCompatibleBrowserVersion(
 
 // PutTargetCompatibleBrowserVersion 设置目标兼容的浏览器版本。
 func (i *ICoreWebView2EnvironmentOptions) PutTargetCompatibleBrowserVersion(value string) error {
-	_value, err := windows.UTF16PtrFromString(value)
+	_value, err := syscall.UTF16PtrFromString(value)
 	if err != nil {
 		return err
 	}
@@ -171,7 +173,7 @@ func (i *ICoreWebView2EnvironmentOptions) PutTargetCompatibleBrowserVersion(valu
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_value)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -187,7 +189,7 @@ func (i *ICoreWebView2EnvironmentOptions) GetAllowSingleSignOnUsingOSPrimaryAcco
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {
@@ -207,9 +209,9 @@ func (i *ICoreWebView2EnvironmentOptions) MustGetAllowSingleSignOnUsingOSPrimary
 func (i *ICoreWebView2EnvironmentOptions) PutAllowSingleSignOnUsingOSPrimaryAccount(value bool) error {
 	r, _, err := i.Vtbl.PutAllowSingleSignOnUsingOSPrimaryAccount.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(BoolToInt(value)),
+		common.BoolPtr(value),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {

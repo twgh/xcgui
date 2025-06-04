@@ -4,10 +4,10 @@ package edge
 
 import (
 	"errors"
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
-
-	"golang.org/x/sys/windows"
 )
 
 // ICoreWebView2AcceleratorKeyPressedEventArgs 是 AcceleratorKeyPressed 事件的事件参数。
@@ -39,7 +39,7 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) Release() uintptr {
 
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -55,7 +55,7 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetKeyEventKind() (COREWEB
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&keyEventKind)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return 0, err
 	}
 	if r != 0 {
@@ -78,7 +78,7 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetVirtualKey() (uint, err
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&virtualKey)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return 0, err
 	}
 	if r != 0 {
@@ -113,7 +113,7 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetPhysicalKeyStatus() (CO
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&physicalKeyStatus)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return COREWEBVIEW2_PHYSICAL_KEY_STATUS{}, err
 	}
 	if r != 0 {
@@ -134,9 +134,9 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) MustGetPhysicalKeyStatus()
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) PutHandled(handled bool) error {
 	r, _, err := i.Vtbl.PutHandled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(BoolToInt(handled)),
+		common.BoolPtr(handled),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -152,7 +152,7 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetKeyEventLParam() (int, 
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&lParam)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return 0, err
 	}
 	if r != 0 {
@@ -175,7 +175,7 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetHandled() (bool, error)
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&handled)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {

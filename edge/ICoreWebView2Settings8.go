@@ -2,7 +2,8 @@ package edge
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -32,7 +33,7 @@ func (i *ICoreWebView2Settings8) Release() uintptr {
 
 func (i *ICoreWebView2Settings8) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -48,7 +49,7 @@ func (i *ICoreWebView2Settings8) GetIsReputationCheckingRequired() (bool, error)
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&required)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {
@@ -68,9 +69,9 @@ func (i *ICoreWebView2Settings8) MustGetIsReputationCheckingRequired() bool {
 func (i *ICoreWebView2Settings8) PutIsReputationCheckingRequired(required bool) error {
 	r, _, err := i.Vtbl.PutIsReputationCheckingRequired.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(BoolToInt(required)),
+		common.BoolPtr(required),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {

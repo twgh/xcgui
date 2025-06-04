@@ -2,7 +2,9 @@ package edge
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
+
 	"syscall"
 	"unsafe"
 )
@@ -32,7 +34,7 @@ func (i *ICoreWebView2Settings2) Release() uintptr {
 
 func (i *ICoreWebView2Settings2) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -48,14 +50,14 @@ func (i *ICoreWebView2Settings2) GetUserAgent() (string, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_userAgent)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return "", err
 	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
-	userAgent := windows.UTF16PtrToString(_userAgent)
-	windows.CoTaskMemFree(unsafe.Pointer(_userAgent))
+	userAgent := common.UTF16PtrToString(_userAgent)
+	wapi.CoTaskMemFree(unsafe.Pointer(_userAgent))
 	return userAgent, nil
 }
 
@@ -68,7 +70,7 @@ func (i *ICoreWebView2Settings2) MustGetUserAgent() string {
 
 // PutUserAgent 设置 UserAgent。
 func (i *ICoreWebView2Settings2) PutUserAgent(userAgent string) error {
-	_userAgent, err := windows.UTF16PtrFromString(userAgent)
+	_userAgent, err := syscall.UTF16PtrFromString(userAgent)
 	if err != nil {
 		return err
 	}
@@ -76,7 +78,7 @@ func (i *ICoreWebView2Settings2) PutUserAgent(userAgent string) error {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_userAgent)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {

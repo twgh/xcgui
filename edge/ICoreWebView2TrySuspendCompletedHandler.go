@@ -1,6 +1,9 @@
 package edge
 
-import "syscall"
+import (
+	"syscall"
+	"unsafe"
+)
 
 type _ICoreWebView2TrySuspendCompletedHandlerVtbl struct {
 	IUnknownVtbl
@@ -13,6 +16,16 @@ type _ICoreWebView2TrySuspendCompletedHandlerVtbl struct {
 type ICoreWebView2TrySuspendCompletedHandler struct {
 	vtbl *_ICoreWebView2TrySuspendCompletedHandlerVtbl
 	impl _ICoreWebView2TrySuspendCompletedHandlerImpl
+}
+
+func (i *ICoreWebView2TrySuspendCompletedHandler) AddRef() uintptr {
+	r, _, _ := i.vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2TrySuspendCompletedHandler) Release() uintptr {
+	r, _, _ := i.vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
 }
 
 // IUnknown 方法实现

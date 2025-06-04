@@ -12,7 +12,17 @@ var (
 	// Functions.
 	procCoInitializeEx   = Ole32.NewProc("CoInitializeEx")
 	procCoCreateInstance = Ole32.NewProc("CoCreateInstance")
+	procCoTaskMemFree    = Ole32.NewProc("CoTaskMemFree")
 )
+
+// CoTaskMemFree 释放由 COM 任务内存分配器分配的内存块。
+//
+// pv: 指向要释放的内存块的指针。如果为 NULL，则函数不执行任何操作。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/combaseapi/nf-combaseapi-cotaskmemfree
+func CoTaskMemFree(pv unsafe.Pointer) {
+	_, _, _ = procCoTaskMemFree.Call(uintptr(pv))
+}
 
 // CoCreateInstance 创建并默认初始化与指定 CLSID 关联的类的单个对象。
 //
@@ -63,8 +73,6 @@ const (
 	COINIT_DISABLE_OLE1DDE   COINIT_ = 0x4 // 禁用 DDE 以支持 OLE1
 	COINIT_SPEED_OVER_MEMORY COINIT_ = 0x8 // 增加内存使用量，以尝试提高性能
 )
-
-// COM 初始化状态码
 
 const (
 	S_OK               syscall.Errno = 0x00000000

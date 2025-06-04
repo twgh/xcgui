@@ -2,7 +2,7 @@ package edge
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -37,7 +37,7 @@ func (i *ICoreWebView2_2) Release() uintptr {
 
 func (i *ICoreWebView2_2) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -53,7 +53,7 @@ func (i *ICoreWebView2_2) GetEnvironment() (*ICoreWebView2Environment, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&environment)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return nil, err
 	}
 	if r != 0 {
@@ -75,7 +75,7 @@ func (i *ICoreWebView2_2) NavigateWithWebResourceRequest(request *ICoreWebView2W
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(request)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -91,7 +91,7 @@ func (i *ICoreWebView2_2) GetCookieManager() (*ICoreWebView2CookieManager, error
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&cookieManager)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return nil, err
 	}
 	if r != 0 {

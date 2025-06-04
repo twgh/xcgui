@@ -1,5 +1,7 @@
 package edge
 
+import "unsafe"
+
 type iCoreWebView2WebMessageReceivedEventHandlerImpl interface {
 	IUnknownImpl
 	MessageReceived(sender *ICoreWebView2, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr
@@ -16,6 +18,16 @@ type iCoreWebView2WebMessageReceivedEventHandlerVtbl struct {
 type ICoreWebView2WebMessageReceivedEventHandler struct {
 	vtbl *iCoreWebView2WebMessageReceivedEventHandlerVtbl
 	impl iCoreWebView2WebMessageReceivedEventHandlerImpl
+}
+
+func (i *ICoreWebView2WebMessageReceivedEventHandler) AddRef() uintptr {
+	r, _, _ := i.vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2WebMessageReceivedEventHandler) Release() uintptr {
+	r, _, _ := i.vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
 }
 
 func _ICoreWebView2WebMessageReceivedEventHandlerIUnknownQueryInterface(this *ICoreWebView2WebMessageReceivedEventHandler, refiid, object uintptr) uintptr {

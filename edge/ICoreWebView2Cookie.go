@@ -4,7 +4,9 @@ package edge
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
+
 	"syscall"
 	"unsafe"
 )
@@ -46,7 +48,7 @@ func (i *ICoreWebView2Cookie) Release() uintptr {
 
 func (i *ICoreWebView2Cookie) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -64,14 +66,14 @@ func (i *ICoreWebView2Cookie) GetDomain() (string, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_domain)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return "", err
 	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
-	domain := windows.UTF16PtrToString(_domain)
-	windows.CoTaskMemFree(unsafe.Pointer(_domain))
+	domain := common.UTF16PtrToString(_domain)
+	wapi.CoTaskMemFree(unsafe.Pointer(_domain))
 	return domain, nil
 }
 
@@ -91,14 +93,14 @@ func (i *ICoreWebView2Cookie) GetName() (string, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_name)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return "", err
 	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
-	name := windows.UTF16PtrToString(_name)
-	windows.CoTaskMemFree(unsafe.Pointer(_name))
+	name := common.UTF16PtrToString(_name)
+	wapi.CoTaskMemFree(unsafe.Pointer(_name))
 	return name, nil
 }
 
@@ -116,14 +118,14 @@ func (i *ICoreWebView2Cookie) GetValue() (string, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_value)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return "", err
 	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
-	value := windows.UTF16PtrToString(_value)
-	windows.CoTaskMemFree(unsafe.Pointer(_value))
+	value := common.UTF16PtrToString(_value)
+	wapi.CoTaskMemFree(unsafe.Pointer(_value))
 	return value, nil
 }
 
@@ -142,14 +144,14 @@ func (i *ICoreWebView2Cookie) GetPath() (string, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_path)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return "", err
 	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
-	path := windows.UTF16PtrToString(_path)
-	windows.CoTaskMemFree(unsafe.Pointer(_path))
+	path := common.UTF16PtrToString(_path)
+	wapi.CoTaskMemFree(unsafe.Pointer(_path))
 	return path, nil
 }
 
@@ -169,7 +171,7 @@ func (i *ICoreWebView2Cookie) GetExpires() (float64, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&expires)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return 0, err
 	}
 	if r != 0 {
@@ -194,7 +196,7 @@ func (i *ICoreWebView2Cookie) GetIsHttpOnly() (bool, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isHttpOnly)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {
@@ -219,7 +221,7 @@ func (i *ICoreWebView2Cookie) GetSameSite() (COREWEBVIEW2_COOKIE_SAME_SITE_KIND,
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&sameSite)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return 0, err
 	}
 	if r != 0 {
@@ -246,7 +248,7 @@ func (i *ICoreWebView2Cookie) GetIsSecure() (bool, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isSecure)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {
@@ -272,7 +274,7 @@ func (i *ICoreWebView2Cookie) GetIsSession() (bool, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isSession)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {
@@ -290,7 +292,7 @@ func (i *ICoreWebView2Cookie) MustGetIsSession() bool {
 
 // PutValue 设置 Cookie 的值。
 func (i *ICoreWebView2Cookie) PutValue(value string) error {
-	_value, err := windows.UTF16PtrFromString(value)
+	_value, err := syscall.UTF16PtrFromString(value)
 	if err != nil {
 		return err
 	}
@@ -298,7 +300,7 @@ func (i *ICoreWebView2Cookie) PutValue(value string) error {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_value)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -311,9 +313,9 @@ func (i *ICoreWebView2Cookie) PutValue(value string) error {
 func (i *ICoreWebView2Cookie) PutIsHttpOnly(isHttpOnly bool) error {
 	r, _, err := i.Vtbl.PutIsHttpOnly.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(BoolToInt(isHttpOnly)),
+		common.BoolPtr(isHttpOnly),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -328,7 +330,7 @@ func (i *ICoreWebView2Cookie) PutSameSite(sameSite COREWEBVIEW2_COOKIE_SAME_SITE
 		uintptr(unsafe.Pointer(i)),
 		uintptr(sameSite),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -345,7 +347,7 @@ func (i *ICoreWebView2Cookie) PutExpires(expires float64) error {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&expires)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -358,9 +360,9 @@ func (i *ICoreWebView2Cookie) PutExpires(expires float64) error {
 func (i *ICoreWebView2Cookie) PutIsSecure(isSecure bool) error {
 	r, _, err := i.Vtbl.PutIsSecure.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(BoolToInt(isSecure)),
+		common.BoolPtr(isSecure),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {

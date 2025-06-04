@@ -4,7 +4,7 @@ package edge
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -33,7 +33,7 @@ func (i *ICoreWebView2Deferral) Release() uintptr {
 
 func (i *ICoreWebView2Deferral) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -45,7 +45,7 @@ func (i *ICoreWebView2Deferral) QueryInterface(refiid, object uintptr) error {
 // Complete 完成相关的延迟事件。每次延期只应运行一次完成。
 func (i *ICoreWebView2Deferral) Complete() error {
 	r, _, err := i.Vtbl.Complete.Call(uintptr(unsafe.Pointer(i)))
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {

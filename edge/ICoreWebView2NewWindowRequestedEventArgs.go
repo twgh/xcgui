@@ -4,7 +4,9 @@ package edge
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
+
 	"syscall"
 	"unsafe"
 )
@@ -40,7 +42,7 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) Release() uintptr {
 
 func (i *ICoreWebView2NewWindowRequestedEventArgs) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -56,14 +58,14 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetUri() (string, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&uri)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return "", err
 	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
-	defer windows.CoTaskMemFree(unsafe.Pointer(uri))
-	return windows.UTF16PtrToString(uri), nil
+	defer wapi.CoTaskMemFree(unsafe.Pointer(uri))
+	return common.UTF16PtrToString(uri), nil
 }
 
 // MustGetUri 获取新窗口请求的 URI. 出错时会触发全局错误回调.
@@ -88,7 +90,7 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) PutNewWindow(newWindow *ICore
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(newWindow)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -104,7 +106,7 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetNewWindow() (*ICoreWebView
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&newWindow)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return nil, err
 	}
 	if r != 0 {
@@ -127,9 +129,9 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetNewWindow() *ICoreWebV
 func (i *ICoreWebView2NewWindowRequestedEventArgs) PutHandled(handled bool) error {
 	r, _, err := i.Vtbl.PutHandled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(BoolToInt(handled)),
+		common.BoolPtr(handled),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -145,7 +147,7 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetHandled() (bool, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&handled)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {
@@ -168,7 +170,7 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetIsUserInitiated() (bool, e
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isUserInitiated)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {
@@ -191,7 +193,7 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetDeferral() (*ICoreWebView2
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&deferral)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return nil, err
 	}
 	if r != 0 {
@@ -215,7 +217,7 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetWindowFeatures() (*ICoreWe
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&features)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return nil, err
 	}
 	if r != 0 {

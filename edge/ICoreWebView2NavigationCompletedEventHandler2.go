@@ -1,5 +1,7 @@
 package edge
 
+import "unsafe"
+
 type _ICoreWebView2NavigationCompletedEventHandler2Vtbl struct {
 	IUnknownVtbl
 	Invoke ComProc
@@ -11,6 +13,16 @@ type _ICoreWebView2NavigationCompletedEventHandler2Vtbl struct {
 type ICoreWebView2NavigationCompletedEventHandler2 struct {
 	vtbl *_ICoreWebView2NavigationCompletedEventHandler2Vtbl
 	impl _ICoreWebView2NavigationCompletedEventHandler2Impl
+}
+
+func (i *ICoreWebView2NavigationCompletedEventHandler2) AddRef() uintptr {
+	r, _, _ := i.vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2NavigationCompletedEventHandler2) Release() uintptr {
+	r, _, _ := i.vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
 }
 
 func _ICoreWebView2NavigationCompletedEventHandler2IUnknownQueryInterface(this *ICoreWebView2NavigationCompletedEventHandler2, refiid, object uintptr) uintptr {

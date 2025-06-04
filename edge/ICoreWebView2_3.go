@@ -4,10 +4,9 @@ package edge
 
 import (
 	"errors"
+	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
-
-	"golang.org/x/sys/windows"
 )
 
 // ICoreWebView2_3 是 ICoreWebView2_2 接口的延续.
@@ -38,7 +37,7 @@ func (i *ICoreWebView2_3) Release() uintptr {
 
 func (i *ICoreWebView2_3) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -54,7 +53,7 @@ func (i *ICoreWebView2_3) GetIsSuspended() (bool, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&result)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return result, err
 	}
 	if r != 0 {
@@ -75,7 +74,7 @@ func (i *ICoreWebView2_3) Resume() error {
 	r, _, err := i.Vtbl.Resume.Call(
 		uintptr(unsafe.Pointer(i)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -92,7 +91,7 @@ func (i *ICoreWebView2_3) TrySuspend(handler *ICoreWebView2TrySuspendCompletedHa
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(handler)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -105,7 +104,7 @@ func (i *ICoreWebView2_3) TrySuspend(handler *ICoreWebView2TrySuspendCompletedHa
 //
 // hostName: 要清除的主机名。
 func (i *ICoreWebView2_3) ClearVirtualHostNameToFolderMapping(hostName string) error {
-	_hostName, err := windows.UTF16PtrFromString(hostName)
+	_hostName, err := syscall.UTF16PtrFromString(hostName)
 	if err != nil {
 		return err
 	}
@@ -114,7 +113,7 @@ func (i *ICoreWebView2_3) ClearVirtualHostNameToFolderMapping(hostName string) e
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_hostName)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -131,11 +130,11 @@ func (i *ICoreWebView2_3) ClearVirtualHostNameToFolderMapping(hostName string) e
 //
 // accessKind: 资源访问权限。
 func (i *ICoreWebView2_3) SetVirtualHostNameToFolderMapping(hostName, folderPath string, accessKind COREWEBVIEW2_HOST_RESOURCE_ACCESS_KIND) error {
-	_hostName, err := windows.UTF16PtrFromString(hostName)
+	_hostName, err := syscall.UTF16PtrFromString(hostName)
 	if err != nil {
 		return err
 	}
-	_folderPath, err := windows.UTF16PtrFromString(folderPath)
+	_folderPath, err := syscall.UTF16PtrFromString(folderPath)
 	if err != nil {
 		return err
 	}
@@ -146,7 +145,7 @@ func (i *ICoreWebView2_3) SetVirtualHostNameToFolderMapping(hostName, folderPath
 		uintptr(unsafe.Pointer(_folderPath)),
 		uintptr(accessKind),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {

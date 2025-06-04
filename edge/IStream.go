@@ -2,8 +2,9 @@ package edge
 
 import (
 	"errors"
+	"fmt"
 	"github.com/twgh/xcgui/wapi"
-	"golang.org/x/sys/windows"
+
 	"syscall"
 	"unsafe"
 )
@@ -15,10 +16,10 @@ type IStream struct {
 	Vtbl *IStreamVtbl
 }
 
-// NewMemStream 创建内存流对象.
+// NewStreamMem 创建内存流对象.
 //
 // data: 用于设置内存流的初始内容, 如果此参数为 nil，则返回的内存流没有任何初始内容。
-func NewMemStream(data []byte) (*IStream, error) {
+func NewStreamMem(data []byte) (*IStream, error) {
 	streamPtr, err := wapi.SHCreateMemStream(data)
 	if err != nil {
 		return nil, err
@@ -67,7 +68,7 @@ func (i *IStream) Release() uintptr {
 
 func (i *IStream) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -288,7 +289,7 @@ func (i *IStream) UnlockRegion(offset uint64, count uint64, lockType LOCK) error
 //
 // https://learn.microsoft.com/zh-cn/windows/win32/api/objidl/ns-objidl-statstg
 type STATSTG struct {
-	// 对象名称指针 (OLE字符串)，使用后需调用 windows.CoTaskMemFree 释放.
+	// 对象名称指针 (OLE字符串)，使用后需调用 wapi.CoTaskMemFree 释放.
 	//
 	// 转换字符串方法：syscall.UTF16PtrToString(PwcsName)
 	//
@@ -466,4 +467,28 @@ func (i *IStream) Clone() (*IStream, error) {
 		return nil, syscall.Errno(hr)
 	}
 	return clone, nil
+}
+
+// GetBytes 获取流的内容。
+func (i *IStream) GetBytes() ([]byte, error) {
+	const bufferSize = 4096
+	var content []byte
+	for {
+		buffer := make([]byte, bufferSize)
+		n, hr := i.Read(buffer)
+		if hr != nil && !errors.Is(hr, wapi.S_FALSE) {
+			return nil, fmt.Errorf("stream read failed: 0x%08X", hr)
+		}
+		if n == 0 {
+			break
+		}
+		content = append(content, buffer[:n]...)
+	}
+	return content, nil
+}
+
+// GetBytesAndRelease 获取流的内容并释放流。
+func (i *IStream) GetBytesAndRelease() ([]byte, error) {
+	defer i.Release()
+	return i.GetBytes()
 }

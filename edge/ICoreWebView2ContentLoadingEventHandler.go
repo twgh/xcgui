@@ -1,5 +1,7 @@
 package edge
 
+import "unsafe"
+
 type _ICoreWebView2ContentLoadingEventHandlerVtbl struct {
 	IUnknownVtbl
 	Invoke ComProc
@@ -11,6 +13,16 @@ type _ICoreWebView2ContentLoadingEventHandlerVtbl struct {
 type ICoreWebView2ContentLoadingEventHandler struct {
 	vtbl *_ICoreWebView2ContentLoadingEventHandlerVtbl
 	impl _ICoreWebView2ContentLoadingEventHandlerImpl
+}
+
+func (i *ICoreWebView2ContentLoadingEventHandler) AddRef() uintptr {
+	r, _, _ := i.vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2ContentLoadingEventHandler) Release() uintptr {
+	r, _, _ := i.vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
 }
 
 func _ICoreWebView2ContentLoadingEventHandlerIUnknownQueryInterface(

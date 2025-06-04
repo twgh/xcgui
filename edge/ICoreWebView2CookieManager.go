@@ -4,7 +4,8 @@ package edge
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/wapi"
+
 	"syscall"
 	"unsafe"
 )
@@ -41,7 +42,7 @@ func (i *ICoreWebView2CookieManager) Release() uintptr {
 
 func (i *ICoreWebView2CookieManager) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -61,19 +62,19 @@ func (i *ICoreWebView2CookieManager) QueryInterface(refiid, object uintptr) erro
 // path: cookie 的路径.
 func (i *ICoreWebView2CookieManager) CreateCookie(name, value, domain, path string) (*ICoreWebView2Cookie, error) {
 	var cookie *ICoreWebView2Cookie
-	_name, err := windows.UTF16PtrFromString(name)
+	_name, err := syscall.UTF16PtrFromString(name)
 	if err != nil {
 		return nil, err
 	}
-	_value, err := windows.UTF16PtrFromString(value)
+	_value, err := syscall.UTF16PtrFromString(value)
 	if err != nil {
 		return nil, err
 	}
-	_domain, err := windows.UTF16PtrFromString(domain)
+	_domain, err := syscall.UTF16PtrFromString(domain)
 	if err != nil {
 		return nil, err
 	}
-	_path, err := windows.UTF16PtrFromString(path)
+	_path, err := syscall.UTF16PtrFromString(path)
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +88,7 @@ func (i *ICoreWebView2CookieManager) CreateCookie(name, value, domain, path stri
 		uintptr(unsafe.Pointer(&cookie)),
 	)
 
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return nil, err
 	}
 	if r != 0 {
@@ -105,7 +106,7 @@ func (i *ICoreWebView2CookieManager) CopyCookie(cookieParam *ICoreWebView2Cookie
 		uintptr(unsafe.Pointer(&cookie)),
 	)
 
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return nil, err
 	}
 	if r != 0 {
@@ -127,7 +128,7 @@ func (i *ICoreWebView2CookieManager) AddOrUpdateCookie(cookie *ICoreWebView2Cook
 		uintptr(unsafe.Pointer(cookie)),
 	)
 
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -143,7 +144,7 @@ func (i *ICoreWebView2CookieManager) DeleteCookie(cookie *ICoreWebView2Cookie) e
 		uintptr(unsafe.Pointer(cookie)),
 	)
 
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -158,7 +159,7 @@ func (i *ICoreWebView2CookieManager) DeleteAllCookies() error {
 		uintptr(unsafe.Pointer(i)),
 	)
 
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -178,15 +179,15 @@ func (i *ICoreWebView2CookieManager) DeleteAllCookies() error {
 //
 // path: cookie 的路径.
 func (i *ICoreWebView2CookieManager) DeleteCookiesWithDomainAndPath(name, domain, path string) error {
-	_name, err := windows.UTF16PtrFromString(name)
+	_name, err := syscall.UTF16PtrFromString(name)
 	if err != nil {
 		return err
 	}
-	_domain, err := windows.UTF16PtrFromString(domain)
+	_domain, err := syscall.UTF16PtrFromString(domain)
 	if err != nil {
 		return err
 	}
-	_path, err := windows.UTF16PtrFromString(path)
+	_path, err := syscall.UTF16PtrFromString(path)
 	if err != nil {
 		return err
 	}
@@ -198,7 +199,7 @@ func (i *ICoreWebView2CookieManager) DeleteCookiesWithDomainAndPath(name, domain
 		uintptr(unsafe.Pointer(_path)),
 	)
 
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -214,11 +215,11 @@ func (i *ICoreWebView2CookieManager) DeleteCookiesWithDomainAndPath(name, domain
 //
 // uri: .
 func (i *ICoreWebView2CookieManager) DeleteCookies(name, uri string) error {
-	_name, err := windows.UTF16PtrFromString(name)
+	_name, err := syscall.UTF16PtrFromString(name)
 	if err != nil {
 		return err
 	}
-	_uri, err := windows.UTF16PtrFromString(uri)
+	_uri, err := syscall.UTF16PtrFromString(uri)
 	if err != nil {
 		return err
 	}
@@ -229,7 +230,7 @@ func (i *ICoreWebView2CookieManager) DeleteCookies(name, uri string) error {
 		uintptr(unsafe.Pointer(_uri)),
 	)
 
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -244,7 +245,7 @@ func (i *ICoreWebView2CookieManager) DeleteCookies(name, uri string) error {
 //
 // uri: 要匹配的 URI.
 func (i *ICoreWebView2CookieManager) GetCookies(uri string, handler *ICoreWebView2GetCookiesCompletedHandler) error {
-	_uri, err := windows.UTF16PtrFromString(uri)
+	_uri, err := syscall.UTF16PtrFromString(uri)
 	if err != nil {
 		return err
 	}
@@ -255,7 +256,7 @@ func (i *ICoreWebView2CookieManager) GetCookies(uri string, handler *ICoreWebVie
 		uintptr(unsafe.Pointer(handler)),
 	)
 
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {

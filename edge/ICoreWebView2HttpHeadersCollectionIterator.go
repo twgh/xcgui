@@ -4,7 +4,9 @@ package edge
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
+
 	"syscall"
 	"unsafe"
 )
@@ -35,7 +37,7 @@ func (i *ICoreWebView2HttpHeadersCollectionIterator) Release() uintptr {
 
 func (i *ICoreWebView2HttpHeadersCollectionIterator) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -52,16 +54,16 @@ func (i *ICoreWebView2HttpHeadersCollectionIterator) GetCurrentHeader() (name st
 		uintptr(unsafe.Pointer(&_name)),
 		uintptr(unsafe.Pointer(&_value)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return "", "", err
 	}
 	if r != 0 {
 		return "", "", syscall.Errno(r)
 	}
-	name = windows.UTF16PtrToString(_name)
-	value = windows.UTF16PtrToString(_value)
-	windows.CoTaskMemFree(unsafe.Pointer(_name))
-	windows.CoTaskMemFree(unsafe.Pointer(_value))
+	name = common.UTF16PtrToString(_name)
+	value = common.UTF16PtrToString(_value)
+	wapi.CoTaskMemFree(unsafe.Pointer(_name))
+	wapi.CoTaskMemFree(unsafe.Pointer(_value))
 	return name, value, nil
 }
 
@@ -78,7 +80,7 @@ func (i *ICoreWebView2HttpHeadersCollectionIterator) MoveNext() (bool, error) {
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&hasNext)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {
@@ -100,7 +102,7 @@ func (i *ICoreWebView2HttpHeadersCollectionIterator) GetHasCurrentHeader() (bool
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&hasCurrent)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return false, err
 	}
 	if r != 0 {

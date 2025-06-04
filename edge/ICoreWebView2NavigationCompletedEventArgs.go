@@ -4,7 +4,7 @@ package edge
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
+	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -35,7 +35,7 @@ func (i *ICoreWebView2NavigationCompletedEventArgs) Release() uintptr {
 
 func (i *ICoreWebView2NavigationCompletedEventArgs) QueryInterface(refiid, object uintptr) error {
 	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
 	if r != 0 {
@@ -51,7 +51,7 @@ func (i *ICoreWebView2NavigationCompletedEventArgs) GetIsSuccess() (bool, error)
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isSuccess)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return isSuccess, err
 	}
 	if r != 0 {
@@ -74,7 +74,7 @@ func (i *ICoreWebView2NavigationCompletedEventArgs) GetWebErrorStatus() (COREWEB
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&status)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return status, err
 	}
 	if r != 0 {
@@ -97,7 +97,7 @@ func (i *ICoreWebView2NavigationCompletedEventArgs) GetNavigationId() (uint64, e
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&navigationId)),
 	)
-	if !errors.Is(err, windows.ERROR_SUCCESS) {
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return navigationId, err
 	}
 	if r != 0 {
