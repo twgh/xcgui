@@ -50,10 +50,10 @@ func TestButton_AddEvent_BnClick(t *testing.T) {
 		btn3.AddEvent_BnClick(func(hEle int, pbHandled *bool) int {
 			if xc.XC_IsHELE(btn1.Handle) {
 				t.Logf("销毁按钮1, 句柄: %d, 它的所有事件会被自动移除\n", btn1.Handle)
-				t.Log("销毁前map:", EventHandler.EventInfoMap)
+				t.Log("销毁前map:", xc.EleEventHandler.EventInfoMap)
 				btn1.Destroy()
 				w.Redraw(false)
-				t.Log("销毁后map:", EventHandler.EventInfoMap)
+				t.Log("销毁后map:", xc.EleEventHandler.EventInfoMap)
 			} else {
 				t.Log("按钮1已不存在")
 			}

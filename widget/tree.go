@@ -633,6 +633,227 @@ func (t *Tree) GetItemTemplate() int {
 	return xc.XTree_GetItemTemplate(t.Handle)
 }
 
+// ------------------------- AddEvent ------------------------- //
+
+// AddEvent_Tree_Temp_Create 添加列表树元素-项模板创建事件, 模板复用机制需先启用. 替换模板无效判断 nFlag, 因为内部会检查模板是否改变, 不用担心重复.
+//   - nFlag: 0: 状态改变; 1: 新模板实例; 2: 旧模板复用
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (t *Tree) AddEvent_Tree_Temp_Create(pFun XE_TREE_TEMP_CREATE1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(t.Handle, xcc.XE_TREE_TEMP_CREATE, onXE_TREE_TEMP_CREATE, pFun, allowAddingMultiple...)
+}
+
+// onXE_TREE_TEMP_CREATE 列表树元素-项模板创建事件, 模板复用机制需先启用.
+func onXE_TREE_TEMP_CREATE(hEle int, pItem *xc.Tree_Item_, nFlag int32, pbHandled *bool) int {
+	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_TREE_TEMP_CREATE)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_TREE_TEMP_CREATE1)(hEle, pItem, nFlag, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_Tree_Temp_Create_End 添加列表树元素-项模板创建完成事件, 模板复用机制需先启用. 不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册.
+//   - nFlag: 0: 状态改变(复用); 1: 新模板实例; 2: 旧模板复用
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (t *Tree) AddEvent_Tree_Temp_Create_End(pFun XE_TREE_TEMP_CREATE_END1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(t.Handle, xcc.XE_TREE_TEMP_CREATE_END, onXE_TREE_TEMP_CREATE_END, pFun, allowAddingMultiple...)
+}
+
+// onXE_TREE_TEMP_CREATE_END 列表树元素-项模板创建完成事件, 模板复用机制需先启用.
+func onXE_TREE_TEMP_CREATE_END(hEle int, pItem *xc.Tree_Item_, nFlag int32, pbHandled *bool) int {
+	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_TREE_TEMP_CREATE_END)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_TREE_TEMP_CREATE_END1)(hEle, pItem, nFlag, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_Tree_Temp_Destroy 添加列表树元素-项模板销毁事件, 模板复用机制需先启用.
+//   - nFlag: 0: 正常销毁; 1: 移动到缓存(不会被销毁, 临时缓存备用, 当需要时被复用)
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (t *Tree) AddEvent_Tree_Temp_Destroy(pFun XE_TREE_TEMP_DESTROY1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(t.Handle, xcc.XE_TREE_TEMP_DESTROY, onXE_TREE_TEMP_DESTROY, pFun, allowAddingMultiple...)
+}
+
+// onXE_TREE_TEMP_DESTROY 列表树元素-项模板销毁事件, 模板复用机制需先启用.
+func onXE_TREE_TEMP_DESTROY(hEle int, pItem *xc.Tree_Item_, nFlag int32, pbHandled *bool) int {
+	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_TREE_TEMP_DESTROY)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_TREE_TEMP_DESTROY1)(hEle, pItem, nFlag, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_Tree_Temp_Adjust_Coordinate 添加树元素-项模板-调整项坐标事件. 已停用.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (t *Tree) AddEvent_Tree_Temp_Adjust_Coordinate(pFun XE_TREE_TEMP_ADJUST_COORDINATE1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(t.Handle, xcc.XE_TREE_TEMP_ADJUST_COORDINATE, onXE_TREE_TEMP_ADJUST_COORDINATE, pFun, allowAddingMultiple...)
+}
+
+// onXE_TREE_TEMP_ADJUST_COORDINATE 树元素-项模板-调整项坐标事件. 已停用.
+func onXE_TREE_TEMP_ADJUST_COORDINATE(hEle int, pItem *xc.Tree_Item_, pbHandled *bool) int {
+	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_TREE_TEMP_ADJUST_COORDINATE)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_TREE_TEMP_ADJUST_COORDINATE1)(hEle, pItem, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_Tree_DrawItem 添加树元素-绘制项事件.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (t *Tree) AddEvent_Tree_DrawItem(pFun XE_TREE_DRAWITEM1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(t.Handle, xcc.XE_TREE_DRAWITEM, onXE_TREE_DRAWITEM, pFun, allowAddingMultiple...)
+}
+
+// onXE_TREE_DRAWITEM 树元素-绘制项事件.
+func onXE_TREE_DRAWITEM(hEle int, hDraw int, pItem *xc.Tree_Item_, pbHandled *bool) int {
+	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_TREE_DRAWITEM)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_TREE_DRAWITEM1)(hEle, hDraw, pItem, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_Tree_Select 添加树元素-项选择事件.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (t *Tree) AddEvent_Tree_Select(pFun XE_TREE_SELECT1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(t.Handle, xcc.XE_TREE_SELECT, onXE_TREE_SELECT, pFun, allowAddingMultiple...)
+}
+
+// onXE_TREE_SELECT 树元素-项选择事件.
+func onXE_TREE_SELECT(hEle int, nItemID int32, pbHandled *bool) int {
+	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_TREE_SELECT)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_TREE_SELECT1)(hEle, nItemID, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_Tree_Expand 添加树元素-项展开收缩事件.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (t *Tree) AddEvent_Tree_Expand(pFun XE_TREE_EXPAND1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(t.Handle, xcc.XE_TREE_EXPAND, onXE_TREE_EXPAND, pFun, allowAddingMultiple...)
+}
+
+// onXE_TREE_EXPAND 树元素-项展开收缩事件.
+func onXE_TREE_EXPAND(hEle int, id int32, bExpand bool, pbHandled *bool) int {
+	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_TREE_EXPAND)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_TREE_EXPAND1)(hEle, id, bExpand, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_Tree_Drag_Item_Ing 添加树元素-用户正在拖动项事件, 可对参数值修改.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (t *Tree) AddEvent_Tree_Drag_Item_Ing(pFun XE_TREE_DRAG_ITEM_ING1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(t.Handle, xcc.XE_TREE_DRAG_ITEM_ING, onXE_TREE_DRAG_ITEM_ING, pFun, allowAddingMultiple...)
+}
+
+// onXE_TREE_DRAG_ITEM_ING 树元素-用户正在拖动项事件.
+func onXE_TREE_DRAG_ITEM_ING(hEle int, pInfo *xc.Tree_Drag_Item_, pbHandled *bool) int {
+	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_TREE_DRAG_ITEM_ING)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_TREE_DRAG_ITEM_ING1)(hEle, pInfo, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_Tree_Drag_Item 添加树元素-拖动项事件.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (t *Tree) AddEvent_Tree_Drag_Item(pFun XE_TREE_DRAG_ITEM1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(t.Handle, xcc.XE_TREE_DRAG_ITEM, onXE_TREE_DRAG_ITEM, pFun, allowAddingMultiple...)
+}
+
+// onXE_TREE_DRAG_ITEM 树元素-拖动项事件.
+func onXE_TREE_DRAG_ITEM(hEle int, pInfo *xc.Tree_Drag_Item_, pbHandled *bool) int {
+	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_TREE_DRAG_ITEM)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_TREE_DRAG_ITEM1)(hEle, pInfo, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
 // ------------------------- 事件 ------------------------- //
 
 // 列表树元素-项模板创建,模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复.
@@ -777,225 +998,4 @@ func (t *Tree) Event_TREE_DRAG_ITEM(pFun XE_TREE_DRAG_ITEM) bool {
 // 树元素,拖动项事件.
 func (t *Tree) Event_TREE_DRAG_ITEM1(pFun XE_TREE_DRAG_ITEM1) bool {
 	return xc.XEle_RegEventC1(t.Handle, xcc.XE_TREE_DRAG_ITEM, pFun)
-}
-
-// ------------------------- AddEvent ------------------------- //
-
-// AddEvent_Tree_Temp_Create 添加列表树元素-项模板创建事件, 模板复用机制需先启用. 替换模板无效判断 nFlag, 因为内部会检查模板是否改变, 不用担心重复.
-//   - nFlag: 0: 状态改变; 1: 新模板实例; 2: 旧模板复用
-//
-// pFun: 回调函数.
-//
-// allowAddingMultiple: 允许添加多个回调函数.
-func (t *Tree) AddEvent_Tree_Temp_Create(pFun XE_TREE_TEMP_CREATE1, allowAddingMultiple ...bool) int {
-	return EventHandler.AddCallBack(t.Handle, xcc.XE_TREE_TEMP_CREATE, onXE_TREE_TEMP_CREATE, pFun, allowAddingMultiple...)
-}
-
-// onXE_TREE_TEMP_CREATE 列表树元素-项模板创建事件, 模板复用机制需先启用.
-func onXE_TREE_TEMP_CREATE(hEle int, pItem *xc.Tree_Item_, nFlag int32, pbHandled *bool) int {
-	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_TREE_TEMP_CREATE)
-	var ret int
-	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_TREE_TEMP_CREATE1)(hEle, pItem, nFlag, pbHandled)
-			if *pbHandled {
-				break
-			}
-		}
-	}
-	return ret
-}
-
-// AddEvent_Tree_Temp_Create_End 添加列表树元素-项模板创建完成事件, 模板复用机制需先启用. 不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册.
-//   - nFlag: 0: 状态改变(复用); 1: 新模板实例; 2: 旧模板复用
-//
-// pFun: 回调函数.
-//
-// allowAddingMultiple: 允许添加多个回调函数.
-func (t *Tree) AddEvent_Tree_Temp_Create_End(pFun XE_TREE_TEMP_CREATE_END1, allowAddingMultiple ...bool) int {
-	return EventHandler.AddCallBack(t.Handle, xcc.XE_TREE_TEMP_CREATE_END, onXE_TREE_TEMP_CREATE_END, pFun, allowAddingMultiple...)
-}
-
-// onXE_TREE_TEMP_CREATE_END 列表树元素-项模板创建完成事件, 模板复用机制需先启用.
-func onXE_TREE_TEMP_CREATE_END(hEle int, pItem *xc.Tree_Item_, nFlag int32, pbHandled *bool) int {
-	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_TREE_TEMP_CREATE_END)
-	var ret int
-	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_TREE_TEMP_CREATE_END1)(hEle, pItem, nFlag, pbHandled)
-			if *pbHandled {
-				break
-			}
-		}
-	}
-	return ret
-}
-
-// AddEvent_Tree_Temp_Destroy 添加列表树元素-项模板销毁事件, 模板复用机制需先启用.
-//   - nFlag: 0: 正常销毁; 1: 移动到缓存(不会被销毁, 临时缓存备用, 当需要时被复用)
-//
-// pFun: 回调函数.
-//
-// allowAddingMultiple: 允许添加多个回调函数.
-func (t *Tree) AddEvent_Tree_Temp_Destroy(pFun XE_TREE_TEMP_DESTROY1, allowAddingMultiple ...bool) int {
-	return EventHandler.AddCallBack(t.Handle, xcc.XE_TREE_TEMP_DESTROY, onXE_TREE_TEMP_DESTROY, pFun, allowAddingMultiple...)
-}
-
-// onXE_TREE_TEMP_DESTROY 列表树元素-项模板销毁事件, 模板复用机制需先启用.
-func onXE_TREE_TEMP_DESTROY(hEle int, pItem *xc.Tree_Item_, nFlag int32, pbHandled *bool) int {
-	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_TREE_TEMP_DESTROY)
-	var ret int
-	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_TREE_TEMP_DESTROY1)(hEle, pItem, nFlag, pbHandled)
-			if *pbHandled {
-				break
-			}
-		}
-	}
-	return ret
-}
-
-// AddEvent_Tree_Temp_Adjust_Coordinate 添加树元素-项模板-调整项坐标事件. 已停用.
-//
-// pFun: 回调函数.
-//
-// allowAddingMultiple: 允许添加多个回调函数.
-func (t *Tree) AddEvent_Tree_Temp_Adjust_Coordinate(pFun XE_TREE_TEMP_ADJUST_COORDINATE1, allowAddingMultiple ...bool) int {
-	return EventHandler.AddCallBack(t.Handle, xcc.XE_TREE_TEMP_ADJUST_COORDINATE, onXE_TREE_TEMP_ADJUST_COORDINATE, pFun, allowAddingMultiple...)
-}
-
-// onXE_TREE_TEMP_ADJUST_COORDINATE 树元素-项模板-调整项坐标事件. 已停用.
-func onXE_TREE_TEMP_ADJUST_COORDINATE(hEle int, pItem *xc.Tree_Item_, pbHandled *bool) int {
-	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_TREE_TEMP_ADJUST_COORDINATE)
-	var ret int
-	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_TREE_TEMP_ADJUST_COORDINATE1)(hEle, pItem, pbHandled)
-			if *pbHandled {
-				break
-			}
-		}
-	}
-	return ret
-}
-
-// AddEvent_Tree_DrawItem 添加树元素-绘制项事件.
-//
-// pFun: 回调函数.
-//
-// allowAddingMultiple: 允许添加多个回调函数.
-func (t *Tree) AddEvent_Tree_DrawItem(pFun XE_TREE_DRAWITEM1, allowAddingMultiple ...bool) int {
-	return EventHandler.AddCallBack(t.Handle, xcc.XE_TREE_DRAWITEM, onXE_TREE_DRAWITEM, pFun, allowAddingMultiple...)
-}
-
-// onXE_TREE_DRAWITEM 树元素-绘制项事件.
-func onXE_TREE_DRAWITEM(hEle int, hDraw int, pItem *xc.Tree_Item_, pbHandled *bool) int {
-	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_TREE_DRAWITEM)
-	var ret int
-	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_TREE_DRAWITEM1)(hEle, hDraw, pItem, pbHandled)
-			if *pbHandled {
-				break
-			}
-		}
-	}
-	return ret
-}
-
-// AddEvent_Tree_Select 添加树元素-项选择事件.
-//
-// pFun: 回调函数.
-//
-// allowAddingMultiple: 允许添加多个回调函数.
-func (t *Tree) AddEvent_Tree_Select(pFun XE_TREE_SELECT1, allowAddingMultiple ...bool) int {
-	return EventHandler.AddCallBack(t.Handle, xcc.XE_TREE_SELECT, onXE_TREE_SELECT, pFun, allowAddingMultiple...)
-}
-
-// onXE_TREE_SELECT 树元素-项选择事件.
-func onXE_TREE_SELECT(hEle int, nItemID int32, pbHandled *bool) int {
-	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_TREE_SELECT)
-	var ret int
-	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_TREE_SELECT1)(hEle, nItemID, pbHandled)
-			if *pbHandled {
-				break
-			}
-		}
-	}
-	return ret
-}
-
-// AddEvent_Tree_Expand 添加树元素-项展开收缩事件.
-//
-// pFun: 回调函数.
-//
-// allowAddingMultiple: 允许添加多个回调函数.
-func (t *Tree) AddEvent_Tree_Expand(pFun XE_TREE_EXPAND1, allowAddingMultiple ...bool) int {
-	return EventHandler.AddCallBack(t.Handle, xcc.XE_TREE_EXPAND, onXE_TREE_EXPAND, pFun, allowAddingMultiple...)
-}
-
-// onXE_TREE_EXPAND 树元素-项展开收缩事件.
-func onXE_TREE_EXPAND(hEle int, id int32, bExpand bool, pbHandled *bool) int {
-	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_TREE_EXPAND)
-	var ret int
-	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_TREE_EXPAND1)(hEle, id, bExpand, pbHandled)
-			if *pbHandled {
-				break
-			}
-		}
-	}
-	return ret
-}
-
-// AddEvent_Tree_Drag_Item_Ing 添加树元素-用户正在拖动项事件, 可对参数值修改.
-//
-// pFun: 回调函数.
-//
-// allowAddingMultiple: 允许添加多个回调函数.
-func (t *Tree) AddEvent_Tree_Drag_Item_Ing(pFun XE_TREE_DRAG_ITEM_ING1, allowAddingMultiple ...bool) int {
-	return EventHandler.AddCallBack(t.Handle, xcc.XE_TREE_DRAG_ITEM_ING, onXE_TREE_DRAG_ITEM_ING, pFun, allowAddingMultiple...)
-}
-
-// onXE_TREE_DRAG_ITEM_ING 树元素-用户正在拖动项事件.
-func onXE_TREE_DRAG_ITEM_ING(hEle int, pInfo *xc.Tree_Drag_Item_, pbHandled *bool) int {
-	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_TREE_DRAG_ITEM_ING)
-	var ret int
-	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_TREE_DRAG_ITEM_ING1)(hEle, pInfo, pbHandled)
-			if *pbHandled {
-				break
-			}
-		}
-	}
-	return ret
-}
-
-// AddEvent_Tree_Drag_Item 添加树元素-拖动项事件.
-//
-// pFun: 回调函数.
-//
-// allowAddingMultiple: 允许添加多个回调函数.
-func (t *Tree) AddEvent_Tree_Drag_Item(pFun XE_TREE_DRAG_ITEM1, allowAddingMultiple ...bool) int {
-	return EventHandler.AddCallBack(t.Handle, xcc.XE_TREE_DRAG_ITEM, onXE_TREE_DRAG_ITEM, pFun, allowAddingMultiple...)
-}
-
-// onXE_TREE_DRAG_ITEM 树元素-拖动项事件.
-func onXE_TREE_DRAG_ITEM(hEle int, pInfo *xc.Tree_Drag_Item_, pbHandled *bool) int {
-	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_TREE_DRAG_ITEM)
-	var ret int
-	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_TREE_DRAG_ITEM1)(hEle, pInfo, pbHandled)
-			if *pbHandled {
-				break
-			}
-		}
-	}
-	return ret
 }

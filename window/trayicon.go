@@ -122,6 +122,24 @@ func (t *TrayIcon) Reset() *TrayIcon {
 	return t
 }
 
+// AddEvent_TrayIcon 添加托盘图标事件.
+//
+// hWindow: 炫彩窗口句柄.
+//
+// fun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (w *TrayIcon) AddEvent_TrayIcon(hWindow int, fun XWM_TRAYICON, allowAddingMultiple ...bool) int {
+	return xc.WndEventHandler.AddCallBack(hWindow, xcc.XWM_TRAYICON, onXWM_TRAYICON, fun, allowAddingMultiple...)
+}
+
+// 托盘图标事件.
+//
+// hWindow: 炫彩窗口句柄.
+func (w *TrayIcon) Event_TRAYICON(hWindow int, fun XWM_TRAYICON) bool {
+	return xc.XWnd_RegEventC(hWindow, xcc.XWM_TRAYICON, fun)
+}
+
 // 获取元素在slice中的索引, 找不到则返回-1.
 func sliceIndexOf(slice []int32, element int32) int {
 	for i := 0; i < len(slice); i++ {

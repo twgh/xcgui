@@ -130,6 +130,32 @@ func (s *SliderBar) EnableHorizon(bHorizon bool) *SliderBar {
 	return s
 }
 
+// ------------------------- AddEvent ------------------------- //
+
+// AddEvent_SliderBar_Change 添加滑动条元素滑块位置改变事件.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (s *SliderBar) AddEvent_SliderBar_Change(pFun XE_SLIDERBAR_CHANGE1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(s.Handle, xcc.XE_SLIDERBAR_CHANGE, onXE_SLIDERBAR_CHANGE, pFun, allowAddingMultiple...)
+}
+
+// onXE_SLIDERBAR_CHANGE 滑动条元素滑块位置改变事件.
+func onXE_SLIDERBAR_CHANGE(hEle int, pos int32, pbHandled *bool) int {
+	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_SLIDERBAR_CHANGE)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_SLIDERBAR_CHANGE1)(hEle, pos, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
 // ------------------------- 事件 ------------------------- //
 
 type XE_SLIDERBAR_CHANGE func(pos int32, pbHandled *bool) int            // 滑动条元素,滑块位置改变事件.
@@ -143,30 +169,4 @@ func (s *SliderBar) Event_SLIDERBAR_CHANGE(pFun XE_SLIDERBAR_CHANGE) bool {
 // 滑动条元素,滑块位置改变事件.
 func (s *SliderBar) Event_SLIDERBAR_CHANGE1(pFun XE_SLIDERBAR_CHANGE1) bool {
 	return xc.XEle_RegEventC1(s.Handle, xcc.XE_SLIDERBAR_CHANGE, pFun)
-}
-
-// ------------------------- AddEvent ------------------------- //
-
-// AddEvent_SliderBar_Change 添加滑动条元素滑块位置改变事件.
-//
-// pFun: 回调函数.
-//
-// allowAddingMultiple: 允许添加多个回调函数.
-func (s *SliderBar) AddEvent_SliderBar_Change(pFun XE_SLIDERBAR_CHANGE1, allowAddingMultiple ...bool) int {
-	return EventHandler.AddCallBack(s.Handle, xcc.XE_SLIDERBAR_CHANGE, onXE_SLIDERBAR_CHANGE, pFun, allowAddingMultiple...)
-}
-
-// onXE_SLIDERBAR_CHANGE 滑动条元素滑块位置改变事件.
-func onXE_SLIDERBAR_CHANGE(hEle int, pos int32, pbHandled *bool) int {
-	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_SLIDERBAR_CHANGE)
-	var ret int
-	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_SLIDERBAR_CHANGE1)(hEle, pos, pbHandled)
-			if *pbHandled {
-				break
-			}
-		}
-	}
-	return ret
 }

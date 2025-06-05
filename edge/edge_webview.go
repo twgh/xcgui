@@ -53,7 +53,7 @@ func (w *windowContext) DeleteWindowContext(handle uintptr) {
 // GetHEles 获取已记录的所有属于指定窗口的元素句柄.
 func (w *windowContext) GetHEles(handle int) []int {
 	var hEles []int
-	for hEle, _ := range w.m {
+	for hEle := range w.m {
 		hEle2 := int(hEle)
 		if xc.XC_IsHELE(hEle2) && xc.XWidget_GetHWINDOW(hEle2) == handle {
 			hEles = append(hEles, hEle2)

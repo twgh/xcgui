@@ -1160,14 +1160,36 @@ func (i *ICoreWebView2) MustGetDevToolsProtocolEventReceiver(eventName string) *
 	return receiver
 }
 
-/*TODO:
-
-
-CallDevToolsProtocolMethod
-
-
-
-*/
+// CallDevToolsProtocolMethod 调用 Chrome DevTools 协议方法。
+//
+// methodName: DevTools 协议方法的完整名称，格式为 {domain}.{method}。
+//
+// parametersAsJson: JSON 字符串，其中包含相应方法的参数。
+//
+// handler: 执行完成后的回调处理程序，接收返回的 JSON 结果。
+func (i *ICoreWebView2) CallDevToolsProtocolMethod(methodName string, parametersAsJson string, handler *ICoreWebView2CallDevToolsProtocolMethodCompletedHandler) error {
+	_methodName, err := syscall.UTF16PtrFromString(methodName)
+	if err != nil {
+		return err
+	}
+	_parametersAsJson, err := syscall.UTF16PtrFromString(parametersAsJson)
+	if err != nil {
+		return err
+	}
+	r, _, err := i.Vtbl.CallDevToolsProtocolMethod.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(_methodName)),
+		uintptr(unsafe.Pointer(_parametersAsJson)),
+		uintptr(unsafe.Pointer(handler)),
+	)
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
 
 // GetICoreWebView2_2 获取 ICoreWebView2_2。
 func (i *ICoreWebView2) GetICoreWebView2_2() (*ICoreWebView2_2, error) {

@@ -332,3 +332,241 @@ func (m *Menu) SetItemWidth(nID, nWidth int32) bool {
 func (m *Menu) GetMenuBar() int {
 	return xc.XMenu_GetMenuBar(m.Handle)
 }
+
+// ------------------------- AddEvent ------------------------- //
+
+// AddEvent_Menu_Select 添加弹出菜单项选择事件.
+//
+// hwindowOrhEle: 炫彩元素或窗口句柄.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (m *Menu) AddEvent_Menu_Select(hwindowOrhEle int, pFun XE_MENU_SELECT1, allowAddingMultiple ...bool) int {
+	ret := -1
+	if xc.XC_IsHWINDOW(hwindowOrhEle) {
+		ret = xc.WndEventHandler.AddCallBack(hwindowOrhEle, xcc.XWM_MENU_SELECT, xc.OnXWM_MENU_SELECT, pFun, allowAddingMultiple...)
+	} else if xc.XC_IsHELE(hwindowOrhEle) {
+		ret = xc.EleEventHandler.AddCallBack(hwindowOrhEle, xcc.XE_MENU_SELECT, onXE_MENU_SELECT, pFun, allowAddingMultiple...)
+	}
+	return ret
+}
+
+// AddEvent_Menu_Popup 添加菜单弹出事件.
+//
+// hwindowOrhEle: 炫彩元素或窗口句柄.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (m *Menu) AddEvent_Menu_Popup(hwindowOrhEle int, pFun XE_MENU_POPUP1, allowAddingMultiple ...bool) int {
+	ret := -1
+	if xc.XC_IsHWINDOW(hwindowOrhEle) {
+		ret = xc.WndEventHandler.AddCallBack(hwindowOrhEle, xcc.XWM_MENU_POPUP, xc.OnXWM_MENU_POPUP, pFun, allowAddingMultiple...)
+	} else if xc.XC_IsHELE(hwindowOrhEle) {
+		ret = xc.EleEventHandler.AddCallBack(hwindowOrhEle, xcc.XE_MENU_POPUP, onXE_MENU_POPUP, pFun, allowAddingMultiple...)
+	}
+	return ret
+}
+
+// AddEvent_Menu_Exit 添加菜单退出事件.
+//
+// hwindowOrhEle: 炫彩元素或窗口句柄.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (m *Menu) AddEvent_Menu_Exit(hwindowOrhEle int, pFun XE_MENU_EXIT1, allowAddingMultiple ...bool) int {
+	ret := -1
+	if xc.XC_IsHWINDOW(hwindowOrhEle) {
+		ret = xc.WndEventHandler.AddCallBack(hwindowOrhEle, xcc.XWM_MENU_EXIT, xc.OnXWM_MENU_EXIT, pFun, allowAddingMultiple...)
+	} else if xc.XC_IsHELE(hwindowOrhEle) {
+		ret = xc.EleEventHandler.AddCallBack(hwindowOrhEle, xcc.XE_MENU_EXIT, onXE_MENU_EXIT, pFun, allowAddingMultiple...)
+	}
+	return ret
+}
+
+// AddEvent_Menu_Popup_Wnd 添加菜单弹出窗口事件.
+//
+// hwindowOrhEle: 炫彩元素或窗口句柄.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (m *Menu) AddEvent_Menu_Popup_Wnd(hwindowOrhEle int, pFun XE_MENU_POPUP_WND1, allowAddingMultiple ...bool) int {
+	ret := -1
+	if xc.XC_IsHWINDOW(hwindowOrhEle) {
+		ret = xc.WndEventHandler.AddCallBack(hwindowOrhEle, xcc.XWM_MENU_POPUP_WND, xc.OnXWM_MENU_POPUP_WND, pFun, allowAddingMultiple...)
+	} else if xc.XC_IsHELE(hwindowOrhEle) {
+		ret = xc.EleEventHandler.AddCallBack(hwindowOrhEle, xcc.XE_MENU_POPUP_WND, onXE_MENU_POPUP_WND, pFun, allowAddingMultiple...)
+	}
+	return ret
+}
+
+// AddEvent_Menu_Draw_Background 添加菜单绘制背景事件. 启用该功能需要调用 xc.XMenu_EnableDrawBackground.
+//
+// hwindowOrhEle: 炫彩元素或窗口句柄.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (m *Menu) AddEvent_Menu_Draw_Background(hwindowOrhEle int, pFun XE_MENU_DRAW_BACKGROUND1, allowAddingMultiple ...bool) int {
+	ret := -1
+	if xc.XC_IsHWINDOW(hwindowOrhEle) {
+		ret = xc.WndEventHandler.AddCallBack(hwindowOrhEle, xcc.XWM_MENU_DRAW_BACKGROUND, xc.OnXWM_MENU_DRAW_BACKGROUND, pFun, allowAddingMultiple...)
+	} else if xc.XC_IsHELE(hwindowOrhEle) {
+		ret = xc.EleEventHandler.AddCallBack(hwindowOrhEle, xcc.XE_MENU_DRAW_BACKGROUND, onXE_MENU_DRAW_BACKGROUND, pFun, allowAddingMultiple...)
+	}
+	return ret
+}
+
+// AddEvent_Menu_DrawItem 添加菜单项绘制事件. 启用该功能需要调用 xc.XMenu_EnableDrawItem.
+//
+// hwindowOrhEle: 炫彩元素或窗口句柄.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (m *Menu) AddEvent_Menu_DrawItem(hwindowOrhEle int, pFun XE_MENU_DRAWITEM1, allowAddingMultiple ...bool) int {
+	ret := -1
+	if xc.XC_IsHWINDOW(hwindowOrhEle) {
+		ret = xc.WndEventHandler.AddCallBack(hwindowOrhEle, xcc.XWM_MENU_DRAWITEM, xc.OnXWM_MENU_DRAWITEM, pFun, allowAddingMultiple...)
+	} else if xc.XC_IsHELE(hwindowOrhEle) {
+		ret = xc.EleEventHandler.AddCallBack(hwindowOrhEle, xcc.XE_MENU_DRAWITEM, onXE_MENU_DRAWITEM, pFun, allowAddingMultiple...)
+	}
+	return ret
+}
+
+// ------------------------------------- 事件 ------------------------------------- //
+
+// 事件_弹出菜单项被选择.
+func (m *Menu) Event_MENU_SELECT(hwindowOrhEle int, pFun XE_MENU_SELECT) bool {
+	ret := false
+	if xc.XC_IsHWINDOW(hwindowOrhEle) {
+		ret = xc.XWnd_RegEventC(hwindowOrhEle, xcc.XWM_MENU_SELECT, pFun)
+	} else if xc.XC_IsHELE(hwindowOrhEle) {
+		ret = xc.XEle_RegEventC(hwindowOrhEle, xcc.XE_MENU_SELECT, pFun)
+	}
+	return ret
+}
+
+// 事件_菜单弹出.
+func (m *Menu) Event_MENU_POPUP(hwindowOrhEle int, pFun XE_MENU_POPUP) bool {
+	ret := false
+	if xc.XC_IsHWINDOW(hwindowOrhEle) {
+		ret = xc.XWnd_RegEventC(hwindowOrhEle, xcc.XWM_MENU_POPUP, pFun)
+	} else if xc.XC_IsHELE(hwindowOrhEle) {
+		ret = xc.XEle_RegEventC(hwindowOrhEle, xcc.XE_MENU_POPUP, pFun)
+	}
+	return ret
+}
+
+// 事件_菜单退出.
+func (m *Menu) Event_MENU_EXIT(hwindowOrhEle int, pFun XE_MENU_EXIT) bool {
+	ret := false
+	if xc.XC_IsHWINDOW(hwindowOrhEle) {
+		ret = xc.XWnd_RegEventC(hwindowOrhEle, xcc.XWM_MENU_EXIT, pFun)
+	} else if xc.XC_IsHELE(hwindowOrhEle) {
+		ret = xc.XEle_RegEventC(hwindowOrhEle, xcc.XE_MENU_EXIT, pFun)
+	}
+	return ret
+}
+
+// 菜单弹出窗口.
+func (m *Menu) Event_MENU_POPUP_WND(hwindowOrhEle int, pFun XE_MENU_POPUP_WND) bool {
+	ret := false
+	if xc.XC_IsHWINDOW(hwindowOrhEle) {
+		ret = xc.XWnd_RegEventC(hwindowOrhEle, xcc.XWM_MENU_POPUP_WND, pFun)
+	} else if xc.XC_IsHELE(hwindowOrhEle) {
+		ret = xc.XEle_RegEventC(hwindowOrhEle, xcc.XE_MENU_POPUP_WND, pFun)
+	}
+	return ret
+}
+
+// 绘制菜单背景, 启用该功能需要调用 xc.XMenu_EnableDrawBackground.
+func (m *Menu) Event_MENU_DRAW_BACKGROUND(hwindowOrhEle int, pFun XE_MENU_DRAW_BACKGROUND) bool {
+	ret := false
+	if xc.XC_IsHWINDOW(hwindowOrhEle) {
+		ret = xc.XWnd_RegEventC(hwindowOrhEle, xcc.XWM_MENU_DRAW_BACKGROUND, pFun)
+	} else if xc.XC_IsHELE(hwindowOrhEle) {
+		ret = xc.XEle_RegEventC(hwindowOrhEle, xcc.XE_MENU_DRAW_BACKGROUND, pFun)
+	}
+	return ret
+}
+
+// 绘制菜单项事件, 启用该功能需要调用 xc.XMenu_EnableDrawItem.
+func (m *Menu) Event_MENU_DRAWITEM(hwindowOrhEle int, pFun XE_MENU_DRAWITEM) bool {
+	ret := false
+	if xc.XC_IsHWINDOW(hwindowOrhEle) {
+		ret = xc.XWnd_RegEventC(hwindowOrhEle, xcc.XWM_MENU_DRAWITEM, pFun)
+	} else if xc.XC_IsHELE(hwindowOrhEle) {
+		ret = xc.XEle_RegEventC(hwindowOrhEle, xcc.XE_MENU_DRAWITEM, pFun)
+	}
+	return ret
+}
+
+// 事件_弹出菜单项被选择.
+func (m *Menu) Event_MENU_SELECT1(hwindowOrhEle int, pFun XE_MENU_SELECT) bool {
+	ret := false
+	if xc.XC_IsHWINDOW(hwindowOrhEle) {
+		ret = xc.XWnd_RegEventC1(hwindowOrhEle, xcc.XWM_MENU_SELECT, pFun)
+	} else if xc.XC_IsHELE(hwindowOrhEle) {
+		ret = xc.XEle_RegEventC1(hwindowOrhEle, xcc.XE_MENU_SELECT, pFun)
+	}
+	return ret
+}
+
+// 事件_菜单弹出.
+func (m *Menu) Event_MENU_POPUP1(hwindowOrhEle int, pFun XE_MENU_POPUP) bool {
+	ret := false
+	if xc.XC_IsHWINDOW(hwindowOrhEle) {
+		ret = xc.XWnd_RegEventC1(hwindowOrhEle, xcc.XWM_MENU_POPUP, pFun)
+	} else if xc.XC_IsHELE(hwindowOrhEle) {
+		ret = xc.XEle_RegEventC1(hwindowOrhEle, xcc.XE_MENU_POPUP, pFun)
+	}
+	return ret
+}
+
+// 事件_菜单退出.
+func (m *Menu) Event_MENU_EXIT1(hwindowOrhEle int, pFun XE_MENU_EXIT) bool {
+	ret := false
+	if xc.XC_IsHWINDOW(hwindowOrhEle) {
+		ret = xc.XWnd_RegEventC1(hwindowOrhEle, xcc.XWM_MENU_EXIT, pFun)
+	} else if xc.XC_IsHELE(hwindowOrhEle) {
+		ret = xc.XEle_RegEventC1(hwindowOrhEle, xcc.XE_MENU_EXIT, pFun)
+	}
+	return ret
+}
+
+// 菜单弹出窗口.
+func (m *Menu) Event_MENU_POPUP_WND1(hwindowOrhEle int, pFun XE_MENU_POPUP_WND) bool {
+	ret := false
+	if xc.XC_IsHWINDOW(hwindowOrhEle) {
+		ret = xc.XWnd_RegEventC1(hwindowOrhEle, xcc.XWM_MENU_POPUP_WND, pFun)
+	} else if xc.XC_IsHELE(hwindowOrhEle) {
+		ret = xc.XEle_RegEventC1(hwindowOrhEle, xcc.XE_MENU_POPUP_WND, pFun)
+	}
+	return ret
+}
+
+// 绘制菜单背景, 启用该功能需要调用 xc.XMenu_EnableDrawBackground.
+func (m *Menu) Event_MENU_DRAW_BACKGROUND1(hwindowOrhEle int, pFun XE_MENU_DRAW_BACKGROUND) bool {
+	ret := false
+	if xc.XC_IsHWINDOW(hwindowOrhEle) {
+		ret = xc.XWnd_RegEventC1(hwindowOrhEle, xcc.XWM_MENU_DRAW_BACKGROUND, pFun)
+	} else if xc.XC_IsHELE(hwindowOrhEle) {
+		ret = xc.XEle_RegEventC1(hwindowOrhEle, xcc.XE_MENU_DRAW_BACKGROUND, pFun)
+	}
+	return ret
+}
+
+// 绘制菜单项事件, 启用该功能需要调用 xc.XMenu_EnableDrawItem.
+func (m *Menu) Event_MENU_DRAWITEM1(hwindowOrhEle int, pFun XE_MENU_DRAWITEM) bool {
+	ret := false
+	if xc.XC_IsHWINDOW(hwindowOrhEle) {
+		ret = xc.XWnd_RegEventC1(hwindowOrhEle, xcc.XWM_MENU_DRAWITEM, pFun)
+	} else if xc.XC_IsHELE(hwindowOrhEle) {
+		ret = xc.XEle_RegEventC1(hwindowOrhEle, xcc.XE_MENU_DRAWITEM, pFun)
+	}
+	return ret
+}

@@ -798,6 +798,179 @@ func (l *ListView) GetItemTemplateGroup() int {
 	return xc.XListView_GetItemTemplateGroup(l.Handle)
 }
 
+// ------------------------- AddEvent ------------------------- //
+
+// AddEvent_ListView_Temp_Create 添加列表视元素-项模板创建事件, 模板复用机制需先启用. 替换模板无效判断nFlag, 因为内部会检查模板是否改变, 不用担心重复.
+//   - nFlag: 0: 状态改变(当前未使用); 1: 新模板实例; 2: 旧模板复用
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (l *ListView) AddEvent_ListView_Temp_Create(pFun XE_LISTVIEW_TEMP_CREATE1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LISTVIEW_TEMP_CREATE, onXE_LISTVIEW_TEMP_CREATE, pFun, allowAddingMultiple...)
+}
+
+// onXE_LISTVIEW_TEMP_CREATE 列表视元素-项模板创建事件, 模板复用机制需先启用.
+func onXE_LISTVIEW_TEMP_CREATE(hEle int, pItem *xc.ListView_Item_, nFlag int32, pbHandled *bool) int {
+	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTVIEW_TEMP_CREATE)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_LISTVIEW_TEMP_CREATE1)(hEle, pItem, nFlag, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_ListView_Temp_Create_End 添加列表视元素-项模板创建完成事件, 模板复用机制需先启用. 不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册.
+//   - nFlag: 0: 状态改变(复用,当前未使用); 1: 新模板实例; 2: 旧模板复用
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (l *ListView) AddEvent_ListView_Temp_Create_End(pFun XE_LISTVIEW_TEMP_CREATE_END1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LISTVIEW_TEMP_CREATE_END, onXE_LISTVIEW_TEMP_CREATE_END, pFun, allowAddingMultiple...)
+}
+
+// onXE_LISTVIEW_TEMP_CREATE_END 列表视元素-项模板创建完成事件, 模板复用机制需先启用.
+func onXE_LISTVIEW_TEMP_CREATE_END(hEle int, pItem *xc.ListView_Item_, nFlag int32, pbHandled *bool) int {
+	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTVIEW_TEMP_CREATE_END)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_LISTVIEW_TEMP_CREATE_END1)(hEle, pItem, nFlag, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_ListView_Temp_Destroy 添加列表视元素-项模板销毁事件, 模板复用机制需先启用.
+//   - nFlag: 0: 正常销毁; 1: 移动到缓存列表(不会被销毁, 临时缓存备用, 当需要时被复用)
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (l *ListView) AddEvent_ListView_Temp_Destroy(pFun XE_LISTVIEW_TEMP_DESTROY1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LISTVIEW_TEMP_DESTROY, onXE_LISTVIEW_TEMP_DESTROY, pFun, allowAddingMultiple...)
+}
+
+// onXE_LISTVIEW_TEMP_DESTROY 列表视元素-项模板销毁事件, 模板复用机制需先启用.
+func onXE_LISTVIEW_TEMP_DESTROY(hEle int, pItem *xc.ListView_Item_, nFlag int32, pbHandled *bool) int {
+	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTVIEW_TEMP_DESTROY)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_LISTVIEW_TEMP_DESTROY1)(hEle, pItem, nFlag, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_ListView_Temp_Adjust_Coordinate 添加列表视元素-项模板调整坐标事件. 已停用.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (l *ListView) AddEvent_ListView_Temp_Adjust_Coordinate(pFun XE_LISTVIEW_TEMP_ADJUST_COORDINATE1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LISTVIEW_TEMP_ADJUST_COORDINATE, onXE_LISTVIEW_TEMP_ADJUST_COORDINATE, pFun, allowAddingMultiple...)
+}
+
+// onXE_LISTVIEW_TEMP_ADJUST_COORDINATE 列表视元素-项模板调整坐标事件.已停用.
+func onXE_LISTVIEW_TEMP_ADJUST_COORDINATE(hEle int, pItem *xc.ListView_Item_, pbHandled *bool) int {
+	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTVIEW_TEMP_ADJUST_COORDINATE)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_LISTVIEW_TEMP_ADJUST_COORDINATE1)(hEle, pItem, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_ListView_DrawItem 添加列表视元素-自绘项事件.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (l *ListView) AddEvent_ListView_DrawItem(pFun XE_LISTVIEW_DRAWITEM1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LISTVIEW_DRAWITEM, onXE_LISTVIEW_DRAWITEM, pFun, allowAddingMultiple...)
+}
+
+// onXE_LISTVIEW_DRAWITEM 列表视元素-自绘项事件.
+func onXE_LISTVIEW_DRAWITEM(hEle int, hDraw int, pItem *xc.ListView_Item_, pbHandled *bool) int {
+	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTVIEW_DRAWITEM)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_LISTVIEW_DRAWITEM1)(hEle, hDraw, pItem, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_ListView_Select 添加列表视元素-项选择事件.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (l *ListView) AddEvent_ListView_Select(pFun XE_LISTVIEW_SELECT1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LISTVIEW_SELECT, onXE_LISTVIEW_SELECT, pFun, allowAddingMultiple...)
+}
+
+// onXE_LISTVIEW_SELECT 列表视元素-项选择事件.
+func onXE_LISTVIEW_SELECT(hEle int, iGroup int32, iItem int32, pbHandled *bool) int {
+	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTVIEW_SELECT)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_LISTVIEW_SELECT1)(hEle, iGroup, iItem, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
+// AddEvent_ListView_Expand 添加列表视元素-组展开收缩事件.
+//
+// pFun: 回调函数.
+//
+// allowAddingMultiple: 允许添加多个回调函数.
+func (l *ListView) AddEvent_ListView_Expand(pFun XE_LISTVIEW_EXPAND1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LISTVIEW_EXPAND, onXE_LISTVIEW_EXPAND, pFun, allowAddingMultiple...)
+}
+
+// onXE_LISTVIEW_EXPAND 列表视元素-组展开收缩事件.
+func onXE_LISTVIEW_EXPAND(hEle int, iGroup int32, bExpand bool, pbHandled *bool) int {
+	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTVIEW_EXPAND)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(XE_LISTVIEW_EXPAND1)(hEle, iGroup, bExpand, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+	return ret
+}
+
 // ------------------------- 事件 ------------------------- //
 
 // 列表视元素-项模板创建事件,模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复.
@@ -918,177 +1091,4 @@ func (l *ListView) Event_LISTVIEW_EXPAND(pFun XE_LISTVIEW_EXPAND) bool {
 // 列表视元素,组展开收缩事件.
 func (l *ListView) Event_LISTVIEW_EXPAND1(pFun XE_LISTVIEW_EXPAND1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LISTVIEW_EXPAND, pFun)
-}
-
-// ------------------------- AddEvent ------------------------- //
-
-// AddEvent_ListView_Temp_Create 添加列表视元素-项模板创建事件, 模板复用机制需先启用. 替换模板无效判断nFlag, 因为内部会检查模板是否改变, 不用担心重复.
-//   - nFlag: 0: 状态改变(当前未使用); 1: 新模板实例; 2: 旧模板复用
-//
-// pFun: 回调函数.
-//
-// allowAddingMultiple: 允许添加多个回调函数.
-func (l *ListView) AddEvent_ListView_Temp_Create(pFun XE_LISTVIEW_TEMP_CREATE1, allowAddingMultiple ...bool) int {
-	return EventHandler.AddCallBack(l.Handle, xcc.XE_LISTVIEW_TEMP_CREATE, onXE_LISTVIEW_TEMP_CREATE, pFun, allowAddingMultiple...)
-}
-
-// onXE_LISTVIEW_TEMP_CREATE 列表视元素-项模板创建事件, 模板复用机制需先启用.
-func onXE_LISTVIEW_TEMP_CREATE(hEle int, pItem *xc.ListView_Item_, nFlag int32, pbHandled *bool) int {
-	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_LISTVIEW_TEMP_CREATE)
-	var ret int
-	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LISTVIEW_TEMP_CREATE1)(hEle, pItem, nFlag, pbHandled)
-			if *pbHandled {
-				break
-			}
-		}
-	}
-	return ret
-}
-
-// AddEvent_ListView_Temp_Create_End 添加列表视元素-项模板创建完成事件, 模板复用机制需先启用. 不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册.
-//   - nFlag: 0: 状态改变(复用,当前未使用); 1: 新模板实例; 2: 旧模板复用
-//
-// pFun: 回调函数.
-//
-// allowAddingMultiple: 允许添加多个回调函数.
-func (l *ListView) AddEvent_ListView_Temp_Create_End(pFun XE_LISTVIEW_TEMP_CREATE_END1, allowAddingMultiple ...bool) int {
-	return EventHandler.AddCallBack(l.Handle, xcc.XE_LISTVIEW_TEMP_CREATE_END, onXE_LISTVIEW_TEMP_CREATE_END, pFun, allowAddingMultiple...)
-}
-
-// onXE_LISTVIEW_TEMP_CREATE_END 列表视元素-项模板创建完成事件, 模板复用机制需先启用.
-func onXE_LISTVIEW_TEMP_CREATE_END(hEle int, pItem *xc.ListView_Item_, nFlag int32, pbHandled *bool) int {
-	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_LISTVIEW_TEMP_CREATE_END)
-	var ret int
-	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LISTVIEW_TEMP_CREATE_END1)(hEle, pItem, nFlag, pbHandled)
-			if *pbHandled {
-				break
-			}
-		}
-	}
-	return ret
-}
-
-// AddEvent_ListView_Temp_Destroy 添加列表视元素-项模板销毁事件, 模板复用机制需先启用.
-//   - nFlag: 0: 正常销毁; 1: 移动到缓存列表(不会被销毁, 临时缓存备用, 当需要时被复用)
-//
-// pFun: 回调函数.
-//
-// allowAddingMultiple: 允许添加多个回调函数.
-func (l *ListView) AddEvent_ListView_Temp_Destroy(pFun XE_LISTVIEW_TEMP_DESTROY1, allowAddingMultiple ...bool) int {
-	return EventHandler.AddCallBack(l.Handle, xcc.XE_LISTVIEW_TEMP_DESTROY, onXE_LISTVIEW_TEMP_DESTROY, pFun, allowAddingMultiple...)
-}
-
-// onXE_LISTVIEW_TEMP_DESTROY 列表视元素-项模板销毁事件, 模板复用机制需先启用.
-func onXE_LISTVIEW_TEMP_DESTROY(hEle int, pItem *xc.ListView_Item_, nFlag int32, pbHandled *bool) int {
-	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_LISTVIEW_TEMP_DESTROY)
-	var ret int
-	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LISTVIEW_TEMP_DESTROY1)(hEle, pItem, nFlag, pbHandled)
-			if *pbHandled {
-				break
-			}
-		}
-	}
-	return ret
-}
-
-// AddEvent_ListView_Temp_Adjust_Coordinate 添加列表视元素-项模板调整坐标事件. 已停用.
-//
-// pFun: 回调函数.
-//
-// allowAddingMultiple: 允许添加多个回调函数.
-func (l *ListView) AddEvent_ListView_Temp_Adjust_Coordinate(pFun XE_LISTVIEW_TEMP_ADJUST_COORDINATE1, allowAddingMultiple ...bool) int {
-	return EventHandler.AddCallBack(l.Handle, xcc.XE_LISTVIEW_TEMP_ADJUST_COORDINATE, onXE_LISTVIEW_TEMP_ADJUST_COORDINATE, pFun, allowAddingMultiple...)
-}
-
-// onXE_LISTVIEW_TEMP_ADJUST_COORDINATE 列表视元素-项模板调整坐标事件.已停用.
-func onXE_LISTVIEW_TEMP_ADJUST_COORDINATE(hEle int, pItem *xc.ListView_Item_, pbHandled *bool) int {
-	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_LISTVIEW_TEMP_ADJUST_COORDINATE)
-	var ret int
-	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LISTVIEW_TEMP_ADJUST_COORDINATE1)(hEle, pItem, pbHandled)
-			if *pbHandled {
-				break
-			}
-		}
-	}
-	return ret
-}
-
-// AddEvent_ListView_DrawItem 添加列表视元素-自绘项事件.
-//
-// pFun: 回调函数.
-//
-// allowAddingMultiple: 允许添加多个回调函数.
-func (l *ListView) AddEvent_ListView_DrawItem(pFun XE_LISTVIEW_DRAWITEM1, allowAddingMultiple ...bool) int {
-	return EventHandler.AddCallBack(l.Handle, xcc.XE_LISTVIEW_DRAWITEM, onXE_LISTVIEW_DRAWITEM, pFun, allowAddingMultiple...)
-}
-
-// onXE_LISTVIEW_DRAWITEM 列表视元素-自绘项事件.
-func onXE_LISTVIEW_DRAWITEM(hEle int, hDraw int, pItem *xc.ListView_Item_, pbHandled *bool) int {
-	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_LISTVIEW_DRAWITEM)
-	var ret int
-	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LISTVIEW_DRAWITEM1)(hEle, hDraw, pItem, pbHandled)
-			if *pbHandled {
-				break
-			}
-		}
-	}
-	return ret
-}
-
-// AddEvent_ListView_Select 添加列表视元素-项选择事件.
-//
-// pFun: 回调函数.
-//
-// allowAddingMultiple: 允许添加多个回调函数.
-func (l *ListView) AddEvent_ListView_Select(pFun XE_LISTVIEW_SELECT1, allowAddingMultiple ...bool) int {
-	return EventHandler.AddCallBack(l.Handle, xcc.XE_LISTVIEW_SELECT, onXE_LISTVIEW_SELECT, pFun, allowAddingMultiple...)
-}
-
-// onXE_LISTVIEW_SELECT 列表视元素-项选择事件.
-func onXE_LISTVIEW_SELECT(hEle int, iGroup int32, iItem int32, pbHandled *bool) int {
-	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_LISTVIEW_SELECT)
-	var ret int
-	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LISTVIEW_SELECT1)(hEle, iGroup, iItem, pbHandled)
-			if *pbHandled {
-				break
-			}
-		}
-	}
-	return ret
-}
-
-// AddEvent_ListView_Expand 添加列表视元素-组展开收缩事件.
-//
-// pFun: 回调函数.
-//
-// allowAddingMultiple: 允许添加多个回调函数.
-func (l *ListView) AddEvent_ListView_Expand(pFun XE_LISTVIEW_EXPAND1, allowAddingMultiple ...bool) int {
-	return EventHandler.AddCallBack(l.Handle, xcc.XE_LISTVIEW_EXPAND, onXE_LISTVIEW_EXPAND, pFun, allowAddingMultiple...)
-}
-
-// onXE_LISTVIEW_EXPAND 列表视元素-组展开收缩事件.
-func onXE_LISTVIEW_EXPAND(hEle int, iGroup int32, bExpand bool, pbHandled *bool) int {
-	cbs := EventHandler.GetCallBacks(hEle, xcc.XE_LISTVIEW_EXPAND)
-	var ret int
-	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LISTVIEW_EXPAND1)(hEle, iGroup, bExpand, pbHandled)
-			if *pbHandled {
-				break
-			}
-		}
-	}
-	return ret
 }

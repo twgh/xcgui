@@ -45,6 +45,9 @@ func (w *WebView2) NavigateToString(htmlContent string) error {
 
 // Eval 执行 JS 代码(异步). 必须在 UI 线程执行.
 func (w *WebView2) Eval(script string) error {
+	if w.CoreWebView == nil {
+		return errors.New("CoreWebView is nil")
+	}
 	return w.CoreWebView.ExecuteScript(script, nil)
 }
 

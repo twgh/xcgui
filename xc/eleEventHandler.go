@@ -1,13 +1,12 @@
-package widget
+package xc
 
 import (
-	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
 	"sync"
 	"syscall"
 )
 
-var EventHandler = newEleEventHandler()
+var EleEventHandler = newEleEventHandler()
 
 type eleEventHandler struct {
 	sync.RWMutex
@@ -58,7 +57,7 @@ func (h *eleEventHandler) AddCallBack(hEle int, eventType xcc.XE_, eventFunc int
 		// 不是元素销毁完成事件, 才注册
 		if eventType != xcc.XE_DESTROY_END {
 			cbPtr := syscall.NewCallback(eventFunc)
-			if !xc.XEle_RegEventC1Ex(hEle, eventType, cbPtr) {
+			if !XEle_RegEventC1Ex(hEle, eventType, cbPtr) {
 				return -1
 			}
 			info.EvnetFuncPtr = cbPtr
@@ -121,12 +120,12 @@ func (h *eleEventHandler) RemoveEvent(hWindow int, eventType xcc.XE_) {
 
 // regEleDestroyEnd 注册元素销毁完成事件. 每个元素只注册一次.
 func (h *eleEventHandler) regEleDestroyEnd(hEle int) bool {
-	if xc.XC_GetProperty(hEle, "IsRegEleDestroyEnd") == "1" {
+	if XC_GetProperty(hEle, "IsRegEleDestroyEnd") == "1" {
 		return true
 	}
-	cbPtr := syscall.NewCallback(onXE_DESTROY_END)
-	if xc.XEle_RegEventC1Ex(hEle, xcc.XE_DESTROY_END, cbPtr) {
-		xc.XC_SetProperty(hEle, "IsRegEleDestroyEnd", "1")
+	cbPtr := syscall.NewCallback(OnXE_DESTROY_END)
+	if XEle_RegEventC1Ex(hEle, xcc.XE_DESTROY_END, cbPtr) {
+		XC_SetProperty(hEle, "IsRegEleDestroyEnd", "1")
 		m := h.EventInfoMap[hEle]
 		if m == nil {
 			m = make(map[xcc.XE_]eventInfo)
@@ -136,4 +135,23 @@ func (h *eleEventHandler) regEleDestroyEnd(hEle int) bool {
 		return true
 	}
 	return false
+}
+
+// ![仅供内部使用]
+//
+// OnXE_DESTROY_END 元素销毁完成事件. 在销毁子对象之后触发.
+func OnXE_DESTROY_END(hEle int, pbHandled *bool) int {
+	cbs := EleEventHandler.GetCallBacks(hEle, xcc.XE_DESTROY_END)
+	var ret int
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cbs[i] != nil {
+			ret = cbs[i].(func(hEle int, pbHandled *bool) int)(hEle, pbHandled)
+			if *pbHandled {
+				break
+			}
+		}
+	}
+
+	EleEventHandler.RemoveAllCallBack(hEle)
+	return ret
 }

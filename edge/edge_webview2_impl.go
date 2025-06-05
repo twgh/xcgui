@@ -44,6 +44,23 @@ type WebViewEventImpl struct {
 	HandlerGetCookiesCompleted *ICoreWebView2GetCookiesCompletedHandler
 	// HandlerCapturePreviewCompleted 在调用 ICoreWebView2.CapturePreview 时使用. 如果为 nil, 需自行调用 NewICoreWebView2CapturePreviewCompletedHandler 来赋值.
 	HandlerCapturePreviewCompleted *ICoreWebView2CapturePreviewCompletedHandler
+	// HandlerCallDevToolsProtocolMethodCompleted 在调用 ICoreWebView2.CallDevToolsProtocolMethod 时使用. 如果为 nil, 需自行调用 NewICoreWebView2CallDevToolsProtocolMethodCompletedHandler 来赋值.
+	HandlerCallDevToolsProtocolMethodCompleted *ICoreWebView2CallDevToolsProtocolMethodCompletedHandler
+
+	// -------------------- Callbacks --------------------
+
+	// 挂起事件结果回调
+	cbTrySuspendCompleted func(errorCode syscall.Errno, isSuccessful bool) uintptr
+	// 执行脚本完成事件回调
+	cbExecuteScriptCompleted func(errorCode syscall.Errno, result string) uintptr
+	// 在文档创建前添加脚本完成回调
+	cbAddScriptToExecuteOnDocumentCreatedCompleted func(errorCode syscall.Errno, id string) uintptr
+	// 获取 Cookies 完成回调
+	cbGetCookiesCompleted func(errorCode syscall.Errno, cookies *ICoreWebView2CookieList) uintptr
+	// 截图完成回调
+	cbCapturePreviewCompleted func(errorCode syscall.Errno) uintptr
+	// 调用 DevTools 协议方法完成回调
+	cbCallDevToolsProtocolMethodCompleted func(errorCode syscall.Errno, result string) uintptr
 
 	// -------------------- 事件 Handlers 和 Callbacks --------------------
 
@@ -110,20 +127,8 @@ type WebViewEventImpl struct {
 	// DevToolsProtocolEventReceiver 是 DevTools 协议事件接收器. 在调用 Event_ 时会自动赋值.
 	DevToolsProtocolEventReceiver *ICoreWebView2DevToolsProtocolEventReceiver
 
-	// -------------------- Callbacks --------------------
-
 	// 仅供内部使用的网页消息事件回调
 	msgcb_xcgui func(string)
-	// 挂起事件结果回调
-	cbTrySuspendCompleted func(errorCode syscall.Errno, isSuccessful bool) uintptr
-	// 执行脚本完成事件回调
-	cbExecuteScriptCompleted func(errorCode syscall.Errno, result string) uintptr
-	// 在文档创建前添加脚本完成回调
-	cbAddScriptToExecuteOnDocumentCreatedCompleted func(errorCode syscall.Errno, id string) uintptr
-	// 获取 Cookies 完成回调
-	cbGetCookiesCompleted func(errorCode syscall.Errno, cookies *ICoreWebView2CookieList) uintptr
-	// 截图完成回调
-	cbCapturePreviewCompleted func(errorCode syscall.Errno) uintptr
 
 	// 权限map读写锁
 	rwxPermissions sync.RWMutex
@@ -266,6 +271,18 @@ func (w *WebViewEventImpl) ExecuteScriptCompleted(errorCode syscall.Errno, resul
 	return 0
 }
 
+// ExecuteScriptCompleted 执行 js 脚本完成后调用, 以获取执行结果.
+func (w *WebViewEventImpl) CallDevToolsProtocolMethodCompleted(errorCode syscall.Errno, result *uint16) uintptr {
+	if w.cbCallDevToolsProtocolMethodCompleted != nil {
+		var str string
+		if result != nil && *result != 0 {
+			str = common.UTF16PtrToString(result)
+		}
+		w.cbCallDevToolsProtocolMethodCompleted(errorCode, str)
+	}
+	return 0
+}
+
 // AddScriptToExecuteOnDocumentCreatedCompleted 添加 js 脚本完成后调用, 以获取执行结果.
 func (w *WebViewEventImpl) AddScriptToExecuteOnDocumentCreatedCompleted(errorCode syscall.Errno, id *uint16) uintptr {
 	if w.cbAddScriptToExecuteOnDocumentCreatedCompleted != nil {
@@ -360,8 +377,10 @@ func (w *WebViewEventImpl) PermissionRequested(sender *ICoreWebView2, args *ICor
 func (w *WebViewEventImpl) MessageReceived(sender *ICoreWebView2, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr {
 	if w.msgcb_xcgui != nil {
 		message, err := args.TryGetWebMessageAsString()
-		if err == nil && strings.HasPrefix(message, "{\"id\":") {
-			w.msgcb_xcgui(message)
+		if err == nil {
+			if strings.HasPrefix(message, "{\"id\":") {
+				w.msgcb_xcgui(message)
+			}
 		}
 	}
 	if w.cbMessageReceivedEvent != nil {
