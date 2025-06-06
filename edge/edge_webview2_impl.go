@@ -3,6 +3,7 @@ package edge
 import (
 	"errors"
 	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
 
 	"io/fs"
 	"strings"
@@ -46,6 +47,8 @@ type WebViewEventImpl struct {
 	HandlerCapturePreviewCompleted *ICoreWebView2CapturePreviewCompletedHandler
 	// HandlerCallDevToolsProtocolMethodCompleted 在调用 ICoreWebView2.CallDevToolsProtocolMethod 时使用. 如果为 nil, 需自行调用 NewICoreWebView2CallDevToolsProtocolMethodCompletedHandler 来赋值.
 	HandlerCallDevToolsProtocolMethodCompleted *ICoreWebView2CallDevToolsProtocolMethodCompletedHandler
+	// HandlerWebResourceResponseViewGetContentCompleted 在调用 ICoreWebView2WebResourceResponseView.GetContent 时使用. 如果为 nil, 需自行调用 NewICoreWebView2WebResourceResponseViewGetContentCompletedHandler 来赋值.
+	HandlerWebResourceResponseViewGetContentCompleted *ICoreWebView2WebResourceResponseViewGetContentCompletedHandler
 
 	// -------------------- Callbacks --------------------
 
@@ -61,6 +64,8 @@ type WebViewEventImpl struct {
 	cbCapturePreviewCompleted func(errorCode syscall.Errno) uintptr
 	// 调用 DevTools 协议方法完成回调
 	cbCallDevToolsProtocolMethodCompleted func(errorCode syscall.Errno, result string) uintptr
+	// ICoreWebView2WebResourceResponseView.GetContent 完成回调
+	cbWebResourceResponseViewGetContentCompleted func(errorCode syscall.Errno, content []byte) uintptr
 
 	// -------------------- 事件 Handlers 和 Callbacks --------------------
 
@@ -104,9 +109,9 @@ type WebViewEventImpl struct {
 	HandlerDocumentTitleChangedEvent *ICoreWebView2DocumentTitleChangedEventHandler
 	cbDocumentTitleChangedEvent      func(sender *ICoreWebView2, args *IUnknown) uintptr
 
-	// 添加窗口光栅化缩放比例改变事件处理程序时返回的 Token
+	// TokenRasterizationScaleChangedEvent 添加窗口光栅化缩放比例改变事件处理程序时返回的 Token
 	TokenRasterizationScaleChangedEvent EventRegistrationToken
-	// HandlerRasterizationScaleChanged 窗口光栅化缩放比例改变事件处理程序. 在调用 Event_ 时会自动赋值.
+	// HandlerRasterizationScaleChangedEvent 窗口光栅化缩放比例改变事件处理程序. 在调用 Event_ 时会自动赋值.
 	HandlerRasterizationScaleChangedEvent *ICoreWebView2RasterizationScaleChangedEventHandler
 	cbRasterizationScaleChangedEvent      func(sender *ICoreWebView2Controller, args *IUnknown) uintptr
 	// HandlerContainsFullScreenElementChangedEvent 是 ContainsFullScreenElement(是否包含全屏元素) 属性改变事件处理程序. 在调用 Event_ 时会自动赋值.
@@ -121,11 +126,21 @@ type WebViewEventImpl struct {
 	// HandlerScriptDialogOpeningEvent 脚本对话框打开事件处理程序. 在调用 Event_ 时会自动赋值.
 	HandlerScriptDialogOpeningEvent *ICoreWebView2ScriptDialogOpeningEventHandler
 	cbScriptDialogOpeningEvent      func(sender *ICoreWebView2, args *ICoreWebView2ScriptDialogOpeningEventArgs) uintptr
-	// HandlerDevToolsProtocolEventReceived DevTools 协议事件处理程序. 在调用 Event_ 时会自动赋值.
+	// HandlerDevToolsProtocolEventReceivedEvent 是 DevTools 协议事件处理程序. 在调用 Event_ 时会自动赋值.
 	HandlerDevToolsProtocolEventReceivedEvent *ICoreWebView2DevToolsProtocolEventReceivedEventHandler
 	cbDevToolsProtocolEventReceivedEvent      func(sender *ICoreWebView2, args *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) uintptr
 	// DevToolsProtocolEventReceiver 是 DevTools 协议事件接收器. 在调用 Event_ 时会自动赋值.
 	DevToolsProtocolEventReceiver *ICoreWebView2DevToolsProtocolEventReceiver
+	// HandlerWebResourceResponseReceivedEvent Web 资源响应事件处理程序. 在调用 Event_ 时会自动赋值.
+	HandlerWebResourceResponseReceivedEvent *ICoreWebView2WebResourceResponseReceivedEventHandler
+	cbWebResourceResponseReceivedEvent      func(sender *ICoreWebView2, args *ICoreWebView2WebResourceResponseReceivedEventArgs) uintptr
+	// TokenWebResourceResponseReceivedEvent 添加 Web 资源响应事件处理程序时返回的 Token
+	TokenWebResourceResponseReceivedEvent EventRegistrationToken
+	// HandlerDOMContentLoadedEvent 是 DOMContentLoaded 事件处理程序. 在调用 Event_ 时会自动赋值.
+	HandlerDOMContentLoadedEvent *ICoreWebView2DOMContentLoadedEventHandler
+	cbDOMContentLoadedEvent      func(sender *ICoreWebView2, args *ICoreWebView2DOMContentLoadedEventArgs) uintptr
+	// TokenDOMContentLoadedEvent 添加 DOMContentLoaded 事件处理程序时返回的 Token
+	TokenDOMContentLoadedEvent EventRegistrationToken
 
 	// 仅供内部使用的网页消息事件回调
 	msgcb_xcgui func(string)
@@ -147,6 +162,18 @@ type WebViewEventImpl struct {
 //   - 此方法会在关闭 WebView 前自动调用, 无需手动调用.
 //   - 如果此 WebViewEventImpl 对象实例是你另外手动创建的, 需要在关闭 WebView 前自行调用此方法释放.
 func (w *WebViewEventImpl) ReleaseEventHandler() {
+	if w.HandlerDOMContentLoadedEvent != nil {
+		w.HandlerDOMContentLoadedEvent.Release()
+		w.HandlerDOMContentLoadedEvent = nil
+	}
+	if w.HandlerWebResourceResponseReceivedEvent != nil {
+		w.HandlerWebResourceResponseReceivedEvent.Release()
+		w.HandlerWebResourceResponseReceivedEvent = nil
+	}
+	if w.HandlerCallDevToolsProtocolMethodCompleted != nil {
+		w.HandlerCallDevToolsProtocolMethodCompleted.Release()
+		w.HandlerCallDevToolsProtocolMethodCompleted = nil
+	}
 	if w.DevToolsProtocolEventReceiver != nil {
 		w.DevToolsProtocolEventReceiver.Release()
 		w.DevToolsProtocolEventReceiver = nil
@@ -263,7 +290,7 @@ func (w *WebViewEventImpl) TrySuspendCompleted(errorCode syscall.Errno, isSucces
 func (w *WebViewEventImpl) ExecuteScriptCompleted(errorCode syscall.Errno, result *uint16) uintptr {
 	if w.cbExecuteScriptCompleted != nil {
 		var str string
-		if result != nil && *result != 0 {
+		if errors.Is(errorCode, wapi.S_OK) && result != nil && *result != 0 {
 			str = common.UTF16PtrToString(result)
 		}
 		w.cbExecuteScriptCompleted(errorCode, str)
@@ -275,7 +302,7 @@ func (w *WebViewEventImpl) ExecuteScriptCompleted(errorCode syscall.Errno, resul
 func (w *WebViewEventImpl) CallDevToolsProtocolMethodCompleted(errorCode syscall.Errno, result *uint16) uintptr {
 	if w.cbCallDevToolsProtocolMethodCompleted != nil {
 		var str string
-		if result != nil && *result != 0 {
+		if errors.Is(errorCode, wapi.S_OK) && result != nil && *result != 0 {
 			str = common.UTF16PtrToString(result)
 		}
 		w.cbCallDevToolsProtocolMethodCompleted(errorCode, str)
@@ -287,7 +314,7 @@ func (w *WebViewEventImpl) CallDevToolsProtocolMethodCompleted(errorCode syscall
 func (w *WebViewEventImpl) AddScriptToExecuteOnDocumentCreatedCompleted(errorCode syscall.Errno, id *uint16) uintptr {
 	if w.cbAddScriptToExecuteOnDocumentCreatedCompleted != nil {
 		var idStr string
-		if id != nil && *id != 0 {
+		if errors.Is(errorCode, wapi.S_OK) && id != nil && *id != 0 {
 			idStr = common.UTF16PtrToString(id)
 		}
 		w.cbAddScriptToExecuteOnDocumentCreatedCompleted(errorCode, idStr)
@@ -552,6 +579,43 @@ func (w *WebViewEventImpl) ScriptDialogOpening(sender *ICoreWebView2, args *ICor
 func (w *WebViewEventImpl) DevToolsProtocolEventReceived(sender *ICoreWebView2, args *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) uintptr {
 	if w.cbDevToolsProtocolEventReceivedEvent != nil {
 		w.cbDevToolsProtocolEventReceivedEvent(sender, args)
+	}
+	return 0
+}
+
+// WebResourceResponseReceived 当 WebView 接收到对网络资源请求的响应时调用。
+//   - WebView 执行的任何URI解析；例如HTTP/HTTPS、来自重定向、导航、HTML声明、隐式 favicon 图标的查找和数据请求，以及文档中 fetch API 的使用都会触发此事件。
+//   - 宿主应用可以使用此事件查看网络资源的实际请求和响应。
+//   - 无法保证 WebView 处理响应的顺序与宿主应用的处理程序运行的顺序。
+//   - 应用的处理程序不会阻止 WebView 处理响应。
+func (w *WebViewEventImpl) WebResourceResponseReceived(sender *ICoreWebView2, args *ICoreWebView2WebResourceResponseReceivedEventArgs) uintptr {
+	if w.cbWebResourceResponseReceivedEvent != nil {
+		w.cbWebResourceResponseReceivedEvent(sender, args)
+	}
+	return 0
+}
+
+// WebResourceResponseViewGetContentCompleted 当 ICoreWebView2WebResourceResponseView.GetContent 完成时调用。
+func (w *WebViewEventImpl) WebResourceResponseViewGetContentCompleted(errorCode syscall.Errno, result *IStream) uintptr {
+	if w.cbWebResourceResponseViewGetContentCompleted != nil {
+		var bs []byte
+		if errors.Is(errorCode, wapi.S_OK) && result != nil {
+			defer result.Release()
+			var err error
+			bs, err = result.GetBytes()
+			if err != nil {
+				ReportErrorAtuo(errors.New("WebResourceResponseViewGetContentCompleted, GetBytes failed: " + err.Error()))
+			}
+		}
+		w.cbWebResourceResponseViewGetContentCompleted(errorCode, bs)
+	}
+	return 0
+}
+
+// DOMContentLoaded 当初始 HTML 文档解析完成时触发。
+func (w *WebViewEventImpl) DOMContentLoaded(sender *ICoreWebView2, args *ICoreWebView2DOMContentLoadedEventArgs) uintptr {
+	if w.cbDOMContentLoadedEvent != nil {
+		w.cbDOMContentLoadedEvent(sender, args)
 	}
 	return 0
 }

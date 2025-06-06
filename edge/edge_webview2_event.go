@@ -255,7 +255,7 @@ func (w *WebViewEventImpl) Event_ScriptDialogOpening(cb func(sender *ICoreWebVie
 	return nil
 }
 
-// Event_DevToolsProtocolEventReceived DevTools 协议事件接收事件.
+// Event_DevToolsProtocolEventReceived 是 DevTools 协议事件接收事件.
 //   - DevToolsProtocolEventReceived 在收到来自 DevTools 协议的事件时运行。
 func (w *WebViewEventImpl) Event_DevToolsProtocolEventReceived(eventName string, cb func(sender *ICoreWebView2, args *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) uintptr) error {
 	if w.DevToolsProtocolEventReceiver == nil {
@@ -273,5 +273,46 @@ func (w *WebViewEventImpl) Event_DevToolsProtocolEventReceived(eventName string,
 		return err
 	}
 	w.cbDevToolsProtocolEventReceivedEvent = cb
+	return nil
+}
+
+// Event_WebResourceResponseReceived 是 Web 资源响应接收事件.
+//   - 当 WebView 接收到对网络资源请求的响应时，会引发 WebResourceResponseReceived 事件（WebView执行的任何URI解析；例如HTTP/HTTPS、来自重定向、导航、HTML声明、隐式 favicon 图标的查找和数据请求，以及文档中 fetch API 的使用）。
+//   - 宿主应用可以使用此事件查看网络资源的实际请求和响应。
+//   - 无法保证 WebView 处理响应的顺序与宿主应用的处理程序运行的顺序。
+//   - 应用的处理程序不会阻止 WebView 处理响应。
+func (w *WebViewEventImpl) Event_WebResourceResponseReceived(cb func(sender *ICoreWebView2, args *ICoreWebView2WebResourceResponseReceivedEventArgs) uintptr) error {
+	w2_2, err := w.CoreWebView.GetICoreWebView2_2()
+	if err != nil {
+		return err
+	}
+	defer w2_2.Release()
+	if w.HandlerWebResourceResponseReceivedEvent == nil {
+		w.HandlerWebResourceResponseReceivedEvent = NewICoreWebView2WebResourceResponseReceivedEventHandler(w)
+	}
+	w.TokenWebResourceResponseReceivedEvent, err = w2_2.AddWebResourceResponseReceived(w.HandlerWebResourceResponseReceivedEvent)
+	if err != nil {
+		return err
+	}
+	w.cbWebResourceResponseReceivedEvent = cb
+	return nil
+}
+
+// Event_DOMContentLoaded 是 DOM 内容加载完成事件.
+//   - 当初始 HTML 文档解析完成时，会触发 DOMContentLoaded 事件。这与 HTML 中文档的 DOMContentLoaded 事件一致。
+func (w *WebViewEventImpl) Event_DOMContentLoaded(cb func(sender *ICoreWebView2, args *ICoreWebView2DOMContentLoadedEventArgs) uintptr) error {
+	w2_2, err := w.CoreWebView.GetICoreWebView2_2()
+	if err != nil {
+		return err
+	}
+	defer w2_2.Release()
+	if w.HandlerDOMContentLoadedEvent == nil {
+		w.HandlerDOMContentLoadedEvent = NewICoreWebView2DOMContentLoadedEventHandler(w)
+	}
+	w.TokenDOMContentLoadedEvent, err = w2_2.AddDomContentLoaded(w.HandlerDOMContentLoadedEvent)
+	if err != nil {
+		return err
+	}
+	w.cbDOMContentLoadedEvent = cb
 	return nil
 }

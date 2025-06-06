@@ -40,6 +40,29 @@ func (i *ICoreWebView2_17) QueryInterface(refiid, object uintptr) error {
 	return nil
 }
 
-/*TODO:
-PostSharedBufferToScript
-*/
+// PostSharedBufferToScript 在 WebView 中与主框架的脚本共享一个共享缓冲区对象。
+func (i *ICoreWebView2_17) PostSharedBufferToScript(sharedBuffer *ICoreWebView2SharedBuffer, access COREWEBVIEW2_SHARED_BUFFER_ACCESS, additionalDataAsJson string) error {
+	_additionalDataAsJson, err := syscall.UTF16PtrFromString(additionalDataAsJson)
+	if err != nil {
+		return err
+	}
+	r, _, err := i.Vtbl.PostSharedBufferToScript.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(sharedBuffer)),
+		uintptr(access),
+		uintptr(unsafe.Pointer(_additionalDataAsJson)),
+	)
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
+// MustPostSharedBufferToScript 在 WebView 中与主框架的脚本共享一个共享缓冲区对象。出错时会触发全局错误回调。
+func (i *ICoreWebView2_17) MustPostSharedBufferToScript(sharedBuffer *ICoreWebView2SharedBuffer, access COREWEBVIEW2_SHARED_BUFFER_ACCESS, additionalDataAsJson string) {
+	err := i.PostSharedBufferToScript(sharedBuffer, access, additionalDataAsJson)
+	ReportErrorAtuo(err)
+}
