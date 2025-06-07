@@ -4,7 +4,6 @@ package edge
 
 import (
 	"errors"
-	"fmt"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"syscall"
@@ -39,8 +38,8 @@ func (i *ICoreWebView2WebResourceRequest) Release() uintptr {
 	return r
 }
 
-func (i *ICoreWebView2WebResourceRequest) QueryInterface(refiid, object uintptr) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
+func (i *ICoreWebView2WebResourceRequest) QueryInterface(refiid, object unsafe.Pointer) error {
+	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
@@ -101,7 +100,7 @@ func (i *ICoreWebView2WebResourceRequest) GetContent() ([]byte, error) {
 		buffer := make([]byte, bufferSize)
 		n, hr := stream.Read(buffer)
 		if hr != nil && !errors.Is(hr, wapi.S_FALSE) {
-			return nil, fmt.Errorf("stream read failed: 0x%08X", hr)
+			return nil, errors.New("stream read failed: " + hr.Error())
 		}
 		if n == 0 {
 			break

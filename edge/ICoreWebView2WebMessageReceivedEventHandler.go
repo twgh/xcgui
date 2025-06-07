@@ -30,7 +30,7 @@ func (i *ICoreWebView2WebMessageReceivedEventHandler) Release() uintptr {
 	return r
 }
 
-func _ICoreWebView2WebMessageReceivedEventHandlerIUnknownQueryInterface(this *ICoreWebView2WebMessageReceivedEventHandler, refiid, object uintptr) uintptr {
+func _ICoreWebView2WebMessageReceivedEventHandlerIUnknownQueryInterface(this *ICoreWebView2WebMessageReceivedEventHandler, refiid, object unsafe.Pointer) uintptr {
 	return this.impl.QueryInterface(refiid, object)
 }
 

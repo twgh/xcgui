@@ -25,7 +25,7 @@ func (i *ICoreWebView2DocumentTitleChangedEventHandler) Release() uintptr {
 	return r
 }
 
-func _ICoreWebView2DocumentTitleChangedEventHandlerIUnknownQueryInterface(this *ICoreWebView2DocumentTitleChangedEventHandler, refiid, object uintptr) uintptr {
+func _ICoreWebView2DocumentTitleChangedEventHandlerIUnknownQueryInterface(this *ICoreWebView2DocumentTitleChangedEventHandler, refiid, object unsafe.Pointer) uintptr {
 	return this.impl.QueryInterface(refiid, object)
 }
 

@@ -1,5 +1,10 @@
 package edge
 
+import (
+	"syscall"
+	"unsafe"
+)
+
 type _ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerVtbl struct {
 	IUnknownVtbl
 	Invoke ComProc
@@ -13,7 +18,7 @@ type ICoreWebView2CreateCoreWebView2ControllerCompletedHandler struct {
 	impl _ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerImpl
 }
 
-func _ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerIUnknownQueryInterface(this *ICoreWebView2CreateCoreWebView2ControllerCompletedHandler, refiid, object uintptr) uintptr {
+func _ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerIUnknownQueryInterface(this *ICoreWebView2CreateCoreWebView2ControllerCompletedHandler, refiid, object unsafe.Pointer) uintptr {
 	return this.impl.QueryInterface(refiid, object)
 }
 
@@ -25,13 +30,13 @@ func _ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerIUnknownRelease(t
 	return this.impl.Release()
 }
 
-func _ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerInvoke(this *ICoreWebView2CreateCoreWebView2ControllerCompletedHandler, errorCode uintptr, createdController *ICoreWebView2Controller) uintptr {
+func _ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerInvoke(this *ICoreWebView2CreateCoreWebView2ControllerCompletedHandler, errorCode syscall.Errno, createdController *ICoreWebView2Controller) uintptr {
 	return this.impl.CreateCoreWebView2ControllerCompleted(errorCode, createdController)
 }
 
 type _ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerImpl interface {
 	IUnknownImpl
-	CreateCoreWebView2ControllerCompleted(errorCode uintptr, createdController *ICoreWebView2Controller) uintptr
+	CreateCoreWebView2ControllerCompleted(errorCode syscall.Errno, createdController *ICoreWebView2Controller) uintptr
 }
 
 var _ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerFn = _ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerVtbl{

@@ -53,8 +53,8 @@ func (i *ICoreWebView2Controller) Release() uintptr {
 	return r
 }
 
-func (i *ICoreWebView2Controller) QueryInterface(refiid, object uintptr) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
+func (i *ICoreWebView2Controller) QueryInterface(refiid, object unsafe.Pointer) error {
+	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
@@ -357,8 +357,8 @@ func (i *ICoreWebView2Controller) GetICoreWebView2Controller2() (*ICoreWebView2C
 	var result *ICoreWebView2Controller2
 	iidICoreWebView2Controller2 := wapi.NewGUID(IID_ICoreWebView2Controller2)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2Controller2)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2Controller2),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -374,8 +374,8 @@ func (i *ICoreWebView2Controller) GetICoreWebView2Controller3() (*ICoreWebView2C
 	var result *ICoreWebView2Controller3
 	iidICoreWebView2Controller3 := wapi.NewGUID(IID_ICoreWebView2Controller3)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2Controller3)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2Controller3),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -391,8 +391,8 @@ func (i *ICoreWebView2Controller) GetICoreWebView2Controller4() (*ICoreWebView2C
 	var result *ICoreWebView2Controller4
 	iidICoreWebView2Controller4 := wapi.NewGUID(IID_ICoreWebView2Controller4)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2Controller4)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2Controller4),
+		unsafe.Pointer(&result))
 	return result, err
 }
 

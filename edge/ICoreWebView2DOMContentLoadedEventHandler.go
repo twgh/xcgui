@@ -25,7 +25,7 @@ func (i *ICoreWebView2DOMContentLoadedEventHandler) Release() uintptr {
 	return r
 }
 
-func _ICoreWebView2DOMContentLoadedEventHandlerIUnknownQueryInterface(this *ICoreWebView2DOMContentLoadedEventHandler, refiid, object uintptr) uintptr {
+func _ICoreWebView2DOMContentLoadedEventHandlerIUnknownQueryInterface(this *ICoreWebView2DOMContentLoadedEventHandler, refiid, object unsafe.Pointer) uintptr {
 	return this.impl.QueryInterface(refiid, object)
 }
 

@@ -39,9 +39,9 @@ func CoTaskMemFree(pv unsafe.Pointer) {
 // 返回: S_OK 表示成功，其他值表示失败。
 //
 // 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/combaseapi/nf-combaseapi-cocreateinstance
-func CoCreateInstance(rclsid, pUnkOuter uintptr, dwClsContext uint32, riid uintptr) (unsafe.Pointer, syscall.Errno) {
+func CoCreateInstance(rclsid, pUnkOuter unsafe.Pointer, dwClsContext uint32, riid unsafe.Pointer) (unsafe.Pointer, syscall.Errno) {
 	var ppv unsafe.Pointer
-	r, _, _ := procCoCreateInstance.Call(rclsid, pUnkOuter, uintptr(dwClsContext), riid, uintptr(unsafe.Pointer(&ppv)))
+	r, _, _ := procCoCreateInstance.Call(uintptr(rclsid), uintptr(pUnkOuter), uintptr(dwClsContext), uintptr(riid), uintptr(unsafe.Pointer(&ppv)))
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}

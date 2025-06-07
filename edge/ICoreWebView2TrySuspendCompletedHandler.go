@@ -31,7 +31,7 @@ func (i *ICoreWebView2TrySuspendCompletedHandler) Release() uintptr {
 // IUnknown 方法实现
 func _ICoreWebView2TrySuspendCompletedHandlerIUnknownQueryInterface(
 	this *ICoreWebView2TrySuspendCompletedHandler,
-	refiid, object uintptr,
+	refiid, object unsafe.Pointer,
 ) uintptr {
 	return this.impl.QueryInterface(refiid, object)
 }

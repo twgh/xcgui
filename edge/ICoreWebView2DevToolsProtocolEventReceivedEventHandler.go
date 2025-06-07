@@ -25,7 +25,7 @@ func (i *ICoreWebView2DevToolsProtocolEventReceivedEventHandler) Release() uintp
 	return r
 }
 
-func _ICoreWebView2DevToolsProtocolEventReceivedEventHandlerIUnknownQueryInterface(this *ICoreWebView2DevToolsProtocolEventReceivedEventHandler, refiid, object uintptr) uintptr {
+func _ICoreWebView2DevToolsProtocolEventReceivedEventHandlerIUnknownQueryInterface(this *ICoreWebView2DevToolsProtocolEventReceivedEventHandler, refiid, object unsafe.Pointer) uintptr {
 	return this.impl.QueryInterface(refiid, object)
 }
 

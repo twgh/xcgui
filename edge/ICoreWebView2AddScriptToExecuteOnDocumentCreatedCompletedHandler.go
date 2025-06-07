@@ -28,7 +28,7 @@ func (i *ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler) Relea
 	return r
 }
 
-func _ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerIUnknownQueryInterface(this *ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler, refiid, object uintptr) uintptr {
+func _ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerIUnknownQueryInterface(this *ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler, refiid, object unsafe.Pointer) uintptr {
 	return this.impl.QueryInterface(refiid, object)
 }
 

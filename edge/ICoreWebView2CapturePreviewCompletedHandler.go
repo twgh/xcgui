@@ -30,7 +30,7 @@ func (i *ICoreWebView2CapturePreviewCompletedHandler) Release() uintptr {
 
 func _ICoreWebView2CapturePreviewCompletedHandlerIUnknownQueryInterface(
 	this *ICoreWebView2CapturePreviewCompletedHandler,
-	refiid, object uintptr,
+	refiid, object unsafe.Pointer,
 ) uintptr {
 	return this.impl.QueryInterface(refiid, object)
 }

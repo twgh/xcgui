@@ -1,8 +1,13 @@
 package edge
 
+import (
+	"syscall"
+	"unsafe"
+)
+
 type iCoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerImpl interface {
 	IUnknownImpl
-	EnvironmentCompleted(result uintptr, env *ICoreWebView2Environment) uintptr
+	EnvironmentCompleted(result syscall.Errno, env *ICoreWebView2Environment) uintptr
 }
 
 type iCoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerVtbl struct {
@@ -18,7 +23,7 @@ type ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler struct {
 	impl iCoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerImpl
 }
 
-func _ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerIUnknownQueryInterface(this *ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler, refiid, object uintptr) uintptr {
+func _ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerIUnknownQueryInterface(this *ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler, refiid, object unsafe.Pointer) uintptr {
 	return this.impl.QueryInterface(refiid, object)
 }
 
@@ -30,7 +35,7 @@ func _ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerIUnknownRelease(
 	return this.impl.Release()
 }
 
-func _ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerInvoke(this *ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler, result uintptr, env *ICoreWebView2Environment) uintptr {
+func _ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerInvoke(this *ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler, result syscall.Errno, env *ICoreWebView2Environment) uintptr {
 	return this.impl.EnvironmentCompleted(result, env)
 }
 

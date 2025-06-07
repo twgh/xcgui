@@ -24,8 +24,8 @@ func init() {
 	loadDll()
 
 	hr := wapi.CoInitializeEx(0, wapi.COINIT_APARTMENTTHREADED)
-	if hr < 0 {
-		log.Printf("Warning: CoInitializeEx call failed: 0x%08x", hr)
+	if !errors.Is(hr, wapi.S_OK) {
+		log.Println("Warning: CoInitializeEx call failed:", hr.Error())
 	}
 }
 
@@ -143,11 +143,11 @@ func GetAvailableBrowserVersion(browserExecutableFolder ...string) (string, erro
 // browserExecutableFolder: webview2 可执行文件的文件夹路径, 为空则获取本机安装的。
 //
 // environmentOptions: 包含 WebView2 环境选项的 ICoreWebView2EnvironmentOptions 对象指针。
-func GetAvailableBrowserVersionWithOptions(browserExecutableFolder string, environmentOptions uintptr) (string, error) {
+func GetAvailableBrowserVersionWithOptions(browserExecutableFolder string, environmentOptions unsafe.Pointer) (string, error) {
 	var result *uint16
 	r, _, err := procGetAvailableCoreWebView2BrowserVersionStringWithOptions.Call(
 		common.StrPtr(browserExecutableFolder),
-		environmentOptions,
+		uintptr(environmentOptions),
 		uintptr(unsafe.Pointer(&result)))
 	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return "", err
@@ -173,12 +173,18 @@ func GetAvailableBrowserVersionWithOptions(browserExecutableFolder string, envir
 // environmentOptions: WebView2 环境选项的 ICoreWebView2EnvironmentOptions 对象指针。
 //
 // environmentCompletedHandler: 一个回调指针，当 WebView2 环境创建完成时调用。
-func CreateCoreWebView2EnvironmentWithOptions(browserExecutableFolder, userDataFolder string, environmentOptions uintptr, environmentCompletedHandler uintptr) (uintptr, error) {
-	result, _, _ := procCreateCoreWebView2EnvironmentWithOptions.Call(
+func CreateCoreWebView2EnvironmentWithOptions(browserExecutableFolder, userDataFolder string, environmentOptions, environmentCompletedHandler unsafe.Pointer) error {
+	r, _, err := procCreateCoreWebView2EnvironmentWithOptions.Call(
 		common.StrPtr(browserExecutableFolder),
 		common.StrPtr(userDataFolder),
-		environmentOptions,
-		environmentCompletedHandler,
+		uintptr(environmentOptions),
+		uintptr(environmentCompletedHandler),
 	)
-	return result, nil
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
 }

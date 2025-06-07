@@ -49,8 +49,8 @@ func (i *ICoreWebView2Settings) Release() uintptr {
 	return r
 }
 
-func (i *ICoreWebView2Settings) QueryInterface(refiid, object uintptr) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
+func (i *ICoreWebView2Settings) QueryInterface(refiid, object unsafe.Pointer) error {
+	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
@@ -421,8 +421,8 @@ func (i *ICoreWebView2Settings) GetICoreWebView2Settings2() (*ICoreWebView2Setti
 	var result *ICoreWebView2Settings2
 	iidICoreWebView2Settings2 := wapi.NewGUID(IID_ICoreWebView2Settings2)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2Settings2)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2Settings2),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -438,8 +438,8 @@ func (i *ICoreWebView2Settings) GetICoreWebView2Settings3() (*ICoreWebView2Setti
 	var result *ICoreWebView2Settings3
 	iidICoreWebView2Settings3 := wapi.NewGUID(IID_ICoreWebView2Settings3)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2Settings3)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2Settings3),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -455,8 +455,8 @@ func (i *ICoreWebView2Settings) GetICoreWebView2Settings4() (*ICoreWebView2Setti
 	var result *ICoreWebView2Settings4
 	iidICoreWebView2Settings4 := wapi.NewGUID(IID_ICoreWebView2Settings4)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2Settings4)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2Settings4),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -472,8 +472,8 @@ func (i *ICoreWebView2Settings) GetICoreWebView2Settings5() (*ICoreWebView2Setti
 	var result *ICoreWebView2Settings5
 	iidICoreWebView2Settings5 := wapi.NewGUID(IID_ICoreWebView2Settings5)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2Settings5)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2Settings5),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -489,8 +489,8 @@ func (i *ICoreWebView2Settings) GetICoreWebView2Settings6() (*ICoreWebView2Setti
 	var result *ICoreWebView2Settings6
 	iidICoreWebView2Settings6 := wapi.NewGUID(IID_ICoreWebView2Settings6)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2Settings6)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2Settings6),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -506,8 +506,8 @@ func (i *ICoreWebView2Settings) GetICoreWebView2Settings7() (*ICoreWebView2Setti
 	var result *ICoreWebView2Settings7
 	iidICoreWebView2Settings7 := wapi.NewGUID(IID_ICoreWebView2Settings7)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2Settings7)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2Settings7),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -523,8 +523,8 @@ func (i *ICoreWebView2Settings) GetICoreWebView2Settings8() (*ICoreWebView2Setti
 	var result *ICoreWebView2Settings8
 	iidICoreWebView2Settings8 := wapi.NewGUID(IID_ICoreWebView2Settings8)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2Settings8)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2Settings8),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -540,8 +540,8 @@ func (i *ICoreWebView2Settings) GetICoreWebView2Settings9() (*ICoreWebView2Setti
 	var result *ICoreWebView2Settings9
 	iidICoreWebView2Settings9 := wapi.NewGUID(IID_ICoreWebView2Settings9)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2Settings9)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2Settings9),
+		unsafe.Pointer(&result))
 	return result, err
 }
 

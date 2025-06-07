@@ -27,7 +27,7 @@ func (i *ICoreWebView2NavigationStartingEventHandler) Release() uintptr {
 
 func _ICoreWebView2NavigationStartingEventHandlerIUnknownQueryInterface(
 	this *ICoreWebView2NavigationStartingEventHandler,
-	refiid, object uintptr,
+	refiid, object unsafe.Pointer,
 ) uintptr {
 	return this.impl.QueryInterface(refiid, object)
 }

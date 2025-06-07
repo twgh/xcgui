@@ -16,7 +16,7 @@ type IUnknownVtbl struct {
 }
 
 type IUnknownImpl interface {
-	QueryInterface(refiid, object uintptr) uintptr
+	QueryInterface(refiid, object unsafe.Pointer) uintptr
 	AddRef() uintptr
 	Release() uintptr
 }
@@ -38,8 +38,8 @@ func (i *IUnknown) Release() uintptr {
 	return r
 }
 
-func (i *IUnknown) QueryInterface(refiid, object uintptr) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
+func (i *IUnknown) QueryInterface(refiid, object unsafe.Pointer) error {
+	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
@@ -62,7 +62,7 @@ func NewIUnknown(impl IUnknownImpl) *IUnknown {
 	}
 }
 
-func queryInterface(this *IUnknown, refiid uintptr, object uintptr) uintptr {
+func queryInterface(this *IUnknown, refiid, object unsafe.Pointer) uintptr {
 	return this.impl.QueryInterface(refiid, object)
 }
 
@@ -82,7 +82,7 @@ func release(this *IUnknown) uintptr {
 type IUnknown_Impl struct {
 }
 
-func (w *IUnknown_Impl) QueryInterface(_, _ uintptr) uintptr {
+func (w *IUnknown_Impl) QueryInterface(_, _ unsafe.Pointer) uintptr {
 	return 0
 }
 

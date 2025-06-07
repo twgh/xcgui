@@ -88,8 +88,8 @@ func (i *ICoreWebView2) Release() uintptr {
 	return r
 }
 
-func (i *ICoreWebView2) QueryInterface(refiid, object uintptr) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), refiid, object)
+func (i *ICoreWebView2) QueryInterface(refiid, object unsafe.Pointer) error {
+	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
 	}
@@ -1196,8 +1196,8 @@ func (i *ICoreWebView2) GetICoreWebView2_2() (*ICoreWebView2_2, error) {
 	var result *ICoreWebView2_2
 	iidICoreWebView2_2 := wapi.NewGUID(IID_ICoreWebView2_2)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_2)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_2),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1213,8 +1213,8 @@ func (i *ICoreWebView2) GetICoreWebView2_3() (*ICoreWebView2_3, error) {
 	var result *ICoreWebView2_3
 	iidICoreWebView2_3 := wapi.NewGUID(IID_ICoreWebView2_3)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_3)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_3),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1230,8 +1230,8 @@ func (i *ICoreWebView2) GetICoreWebView2_4() (*ICoreWebView2_4, error) {
 	var result *ICoreWebView2_4
 	iidICoreWebView2_4 := wapi.NewGUID(IID_ICoreWebView2_4)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_4)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_4),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1247,8 +1247,8 @@ func (i *ICoreWebView2) GetICoreWebView2_5() (*ICoreWebView2_5, error) {
 	var result *ICoreWebView2_5
 	iidICoreWebView2_5 := wapi.NewGUID(IID_ICoreWebView2_5)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_5)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_5),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1264,8 +1264,8 @@ func (i *ICoreWebView2) GetICoreWebView2_6() (*ICoreWebView2_6, error) {
 	var result *ICoreWebView2_6
 	iidICoreWebView2_6 := wapi.NewGUID(IID_ICoreWebView2_6)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_6)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_6),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1281,8 +1281,8 @@ func (i *ICoreWebView2) GetICoreWebView2_7() (*ICoreWebView2_7, error) {
 	var result *ICoreWebView2_7
 	iidICoreWebView2_7 := wapi.NewGUID(IID_ICoreWebView2_7)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_7)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_7),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1298,8 +1298,8 @@ func (i *ICoreWebView2) GetICoreWebView2_8() (*ICoreWebView2_8, error) {
 	var result *ICoreWebView2_8
 	iidICoreWebView2_8 := wapi.NewGUID(IID_ICoreWebView2_8)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_8)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_8),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1315,8 +1315,8 @@ func (i *ICoreWebView2) GetICoreWebView2_9() (*ICoreWebView2_9, error) {
 	var result *ICoreWebView2_9
 	iidICoreWebView2_9 := wapi.NewGUID(IID_ICoreWebView2_9)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_9)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_9),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1332,8 +1332,8 @@ func (i *ICoreWebView2) GetICoreWebView2_10() (*ICoreWebView2_10, error) {
 	var result *ICoreWebView2_10
 	iidICoreWebView2_10 := wapi.NewGUID(IID_ICoreWebView2_10)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_10)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_10),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1349,8 +1349,8 @@ func (i *ICoreWebView2) GetICoreWebView2_11() (*ICoreWebView2_11, error) {
 	var result *ICoreWebView2_11
 	iidICoreWebView2_11 := wapi.NewGUID(IID_ICoreWebView2_11)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_11)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_11),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1366,8 +1366,8 @@ func (i *ICoreWebView2) GetICoreWebView2_12() (*ICoreWebView2_12, error) {
 	var result *ICoreWebView2_12
 	iidICoreWebView2_12 := wapi.NewGUID(IID_ICoreWebView2_12)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_12)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_12),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1383,8 +1383,8 @@ func (i *ICoreWebView2) GetICoreWebView2_13() (*ICoreWebView2_13, error) {
 	var result *ICoreWebView2_13
 	iidICoreWebView2_13 := wapi.NewGUID(IID_ICoreWebView2_13)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_13)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_13),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1400,8 +1400,8 @@ func (i *ICoreWebView2) GetICoreWebView2_14() (*ICoreWebView2_14, error) {
 	var result *ICoreWebView2_14
 	iidICoreWebView2_14 := wapi.NewGUID(IID_ICoreWebView2_14)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_14)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_14),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1417,8 +1417,8 @@ func (i *ICoreWebView2) GetICoreWebView2_15() (*ICoreWebView2_15, error) {
 	var result *ICoreWebView2_15
 	iidICoreWebView2_15 := wapi.NewGUID(IID_ICoreWebView2_15)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_15)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_15),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1434,8 +1434,8 @@ func (i *ICoreWebView2) GetICoreWebView2_16() (*ICoreWebView2_16, error) {
 	var result *ICoreWebView2_16
 	iidICoreWebView2_16 := wapi.NewGUID(IID_ICoreWebView2_16)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_16)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_16),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1451,8 +1451,8 @@ func (i *ICoreWebView2) GetICoreWebView2_17() (*ICoreWebView2_17, error) {
 	var result *ICoreWebView2_17
 	iidICoreWebView2_17 := wapi.NewGUID(IID_ICoreWebView2_17)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_17)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_17),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1468,8 +1468,8 @@ func (i *ICoreWebView2) GetICoreWebView2_18() (*ICoreWebView2_18, error) {
 	var result *ICoreWebView2_18
 	iidICoreWebView2_18 := wapi.NewGUID(IID_ICoreWebView2_18)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_18)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_18),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1485,8 +1485,8 @@ func (i *ICoreWebView2) GetICoreWebView2_19() (*ICoreWebView2_19, error) {
 	var result *ICoreWebView2_19
 	iidICoreWebView2_19 := wapi.NewGUID(IID_ICoreWebView2_19)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_19)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_19),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1502,8 +1502,8 @@ func (i *ICoreWebView2) GetICoreWebView2_20() (*ICoreWebView2_20, error) {
 	var result *ICoreWebView2_20
 	iidICoreWebView2_20 := wapi.NewGUID(IID_ICoreWebView2_20)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_20)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_20),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1519,8 +1519,8 @@ func (i *ICoreWebView2) GetICoreWebView2_21() (*ICoreWebView2_21, error) {
 	var result *ICoreWebView2_21
 	iidICoreWebView2_21 := wapi.NewGUID(IID_ICoreWebView2_21)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_21)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_21),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1536,8 +1536,8 @@ func (i *ICoreWebView2) GetICoreWebView2_22() (*ICoreWebView2_22, error) {
 	var result *ICoreWebView2_22
 	iidICoreWebView2_22 := wapi.NewGUID(IID_ICoreWebView2_22)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_22)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_22),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1553,8 +1553,8 @@ func (i *ICoreWebView2) GetICoreWebView2_23() (*ICoreWebView2_23, error) {
 	var result *ICoreWebView2_23
 	iidICoreWebView2_23 := wapi.NewGUID(IID_ICoreWebView2_23)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_23)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_23),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1570,8 +1570,8 @@ func (i *ICoreWebView2) GetICoreWebView2_24() (*ICoreWebView2_24, error) {
 	var result *ICoreWebView2_24
 	iidICoreWebView2_24 := wapi.NewGUID(IID_ICoreWebView2_24)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_24)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_24),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1587,8 +1587,8 @@ func (i *ICoreWebView2) GetICoreWebView2_25() (*ICoreWebView2_25, error) {
 	var result *ICoreWebView2_25
 	iidICoreWebView2_25 := wapi.NewGUID(IID_ICoreWebView2_25)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_25)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_25),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1604,8 +1604,8 @@ func (i *ICoreWebView2) GetICoreWebView2_26() (*ICoreWebView2_26, error) {
 	var result *ICoreWebView2_26
 	iidICoreWebView2_26 := wapi.NewGUID(IID_ICoreWebView2_26)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_26)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_26),
+		unsafe.Pointer(&result))
 	return result, err
 }
 
@@ -1621,8 +1621,8 @@ func (i *ICoreWebView2) GetICoreWebView2_27() (*ICoreWebView2_27, error) {
 	var result *ICoreWebView2_27
 	iidICoreWebView2_27 := wapi.NewGUID(IID_ICoreWebView2_27)
 	err := i.QueryInterface(
-		uintptr(unsafe.Pointer(iidICoreWebView2_27)),
-		uintptr(unsafe.Pointer(&result)))
+		unsafe.Pointer(iidICoreWebView2_27),
+		unsafe.Pointer(&result))
 	return result, err
 }
 

@@ -30,7 +30,7 @@ func (i *ICoreWebView2PermissionRequestedEventHandler) Release() uintptr {
 	return r
 }
 
-func _ICoreWebView2PermissionRequestedEventHandlerIUnknownQueryInterface(this *ICoreWebView2PermissionRequestedEventHandler, refiid, object uintptr) uintptr {
+func _ICoreWebView2PermissionRequestedEventHandlerIUnknownQueryInterface(this *ICoreWebView2PermissionRequestedEventHandler, refiid, object unsafe.Pointer) uintptr {
 	return this.impl.QueryInterface(refiid, object)
 }
 

@@ -25,7 +25,7 @@ func (i *ICoreWebView2ScriptDialogOpeningEventHandler) Release() uintptr {
 	return r
 }
 
-func _ICoreWebView2ScriptDialogOpeningEventHandlerIUnknownQueryInterface(this *ICoreWebView2ScriptDialogOpeningEventHandler, refiid, object uintptr) uintptr {
+func _ICoreWebView2ScriptDialogOpeningEventHandlerIUnknownQueryInterface(this *ICoreWebView2ScriptDialogOpeningEventHandler, refiid, object unsafe.Pointer) uintptr {
 	return this.impl.QueryInterface(refiid, object)
 }
 

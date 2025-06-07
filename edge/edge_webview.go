@@ -381,9 +381,9 @@ func (w *WebView) newWebView2Controller() error {
 	var isDone bool
 	var err2 error
 	// WebView2 控制器创建完成回调
-	w.Edge._cbCreateCoreWebView2ControllerCompleted = func(result uintptr, controller *ICoreWebView2Controller) {
-		if result != 0 { // 失败
-			err2 = fmt.Errorf("CreateCoreWebView2Controller failed: 0x%08x", result)
+	w.Edge._cbCreateCoreWebView2ControllerCompleted = func(result syscall.Errno, controller *ICoreWebView2Controller) {
+		if !errors.Is(result, wapi.S_OK) { // 失败
+			err2 = errors.New("CreateCoreWebView2Controller failed: " + result.Error())
 			isDone = true
 			return
 		}
