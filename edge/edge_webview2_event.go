@@ -7,10 +7,10 @@ package edge
 func (w *WebViewEventImpl) Event_DocumentTitleChanged(cb func(sender *ICoreWebView2, args *IUnknown) uintptr) error {
 	if w.HandlerDocumentTitleChangedEvent == nil {
 		w.HandlerDocumentTitleChangedEvent = NewICoreWebView2DocumentTitleChangedEventHandler(w)
-	}
-	err := w.CoreWebView.AddDocumentTitleChanged(w.HandlerDocumentTitleChangedEvent, w.EventRegistrationToken)
-	if err != nil {
-		return err
+		err := w.CoreWebView.AddDocumentTitleChanged(w.HandlerDocumentTitleChangedEvent, w.EventRegistrationToken)
+		if err != nil {
+			return err
+		}
 	}
 	w.cbDocumentTitleChangedEvent = cb
 	return nil
@@ -26,10 +26,10 @@ func (w *WebViewEventImpl) Event_RasterizationScaleChanged(cb func(sender *ICore
 	defer c3.Release()
 	if w.HandlerRasterizationScaleChangedEvent == nil {
 		w.HandlerRasterizationScaleChangedEvent = NewICoreWebView2RasterizationScaleChangedEventHandler(w)
-	}
-	w.TokenRasterizationScaleChangedEvent, err = c3.AddRasterizationScaleChanged(w.HandlerRasterizationScaleChangedEvent)
-	if err != nil {
-		return err
+		w.TokenRasterizationScaleChangedEvent, err = c3.AddRasterizationScaleChanged(w.HandlerRasterizationScaleChangedEvent)
+		if err != nil {
+			return err
+		}
 	}
 	w.cbRasterizationScaleChangedEvent = cb
 	return nil
@@ -41,10 +41,10 @@ func (w *WebViewEventImpl) Event_RasterizationScaleChanged(cb func(sender *ICore
 func (w *WebViewEventImpl) Event_WindowCloseRequested(cb func(sender *ICoreWebView2, args *IUnknown) uintptr) error {
 	if w.HandlerWindowCloseRequestedEvent == nil {
 		w.HandlerWindowCloseRequestedEvent = NewICoreWebView2WindowCloseRequestedEventHandler(w)
-	}
-	err := w.CoreWebView.AddWindowCloseRequested(w.HandlerWindowCloseRequestedEvent, w.EventRegistrationToken)
-	if err != nil {
-		return err
+		err := w.CoreWebView.AddWindowCloseRequested(w.HandlerWindowCloseRequestedEvent, w.EventRegistrationToken)
+		if err != nil {
+			return err
+		}
 	}
 	w.cbWindowCloseRequestedEvent = cb
 	return nil
@@ -58,10 +58,10 @@ func (w *WebViewEventImpl) Event_WindowCloseRequested(cb func(sender *ICoreWebVi
 func (w *WebViewEventImpl) Event_SourceChanged(cb func(sender *ICoreWebView2, args *ICoreWebView2SourceChangedEventArgs) uintptr) error {
 	if w.HandlerSourceChangedEvent == nil {
 		w.HandlerSourceChangedEvent = NewICoreWebView2SourceChangedEventHandler(w)
-	}
-	err := w.CoreWebView.AddSourceChanged(w.HandlerSourceChangedEvent, w.EventRegistrationToken)
-	if err != nil {
-		return err
+		err := w.CoreWebView.AddSourceChanged(w.HandlerSourceChangedEvent, w.EventRegistrationToken)
+		if err != nil {
+			return err
+		}
 	}
 	w.cbSourceChangedEvent = cb
 	return nil
@@ -74,10 +74,10 @@ func (w *WebViewEventImpl) Event_SourceChanged(cb func(sender *ICoreWebView2, ar
 func (w *WebViewEventImpl) Event_NewWindowRequested(cb func(sender *ICoreWebView2, args *ICoreWebView2NewWindowRequestedEventArgs) uintptr) error {
 	if w.HandlerNewWindowRequestedEvent == nil {
 		w.HandlerNewWindowRequestedEvent = NewICoreWebView2NewWindowRequestedEventHandler(w)
-	}
-	err := w.CoreWebView.AddNewWindowRequested(w.HandlerNewWindowRequestedEvent, w.EventRegistrationToken)
-	if err != nil {
-		return err
+		err := w.CoreWebView.AddNewWindowRequested(w.HandlerNewWindowRequestedEvent, w.EventRegistrationToken)
+		if err != nil {
+			return err
+		}
 	}
 	w.cbNewWindowRequestedEvent = cb
 	return nil
@@ -100,10 +100,10 @@ func (w *WebViewEventImpl) Event_MessageReceived(cb func(sender *ICoreWebView2, 
 func (w *WebViewEventImpl) Event_WebResourceRequested(cb func(sender *ICoreWebView2, args *ICoreWebView2WebResourceRequestedEventArgs) uintptr) error {
 	if w.HandlerWebResourceRequestedEvent == nil {
 		w.HandlerWebResourceRequestedEvent = NewICoreWebView2WebResourceRequestedEventHandler(w)
-	}
-	err := w.CoreWebView.AddWebResourceRequested(w.HandlerWebResourceRequestedEvent, w.EventRegistrationToken)
-	if err != nil {
-		return err
+		err := w.CoreWebView.AddWebResourceRequested(w.HandlerWebResourceRequestedEvent, w.EventRegistrationToken)
+		if err != nil {
+			return err
+		}
 	}
 	w.cbWebResourceRequestedEvent = cb
 	return nil
@@ -114,10 +114,10 @@ func (w *WebViewEventImpl) Event_WebResourceRequested(cb func(sender *ICoreWebVi
 func (w *WebViewEventImpl) Event_NavigationCompleted(cb func(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr) error {
 	if w.HandlerNavigationCompletedEvent == nil {
 		w.HandlerNavigationCompletedEvent = NewICoreWebView2NavigationCompletedEventHandler(w)
-	}
-	err := w.CoreWebView.AddNavigationCompleted(w.HandlerNavigationCompletedEvent, w.EventRegistrationToken)
-	if err != nil {
-		return err
+		err := w.CoreWebView.AddNavigationCompleted(w.HandlerNavigationCompletedEvent, w.EventRegistrationToken)
+		if err != nil {
+			return err
+		}
 	}
 	w.cbNavigationCompletedEvent = cb
 	return nil
@@ -128,10 +128,10 @@ func (w *WebViewEventImpl) Event_NavigationCompleted(cb func(sender *ICoreWebVie
 func (w *WebViewEventImpl) Event_FrameNavigationCompleted(cb func(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr) error {
 	if w.HandlerFrameNavigationCompletedEvent == nil {
 		w.HandlerFrameNavigationCompletedEvent = NewICoreWebView2NavigationCompletedEventHandler2(w)
-	}
-	err := w.CoreWebView.AddFrameNavigationCompleted(w.HandlerFrameNavigationCompletedEvent, w.EventRegistrationToken)
-	if err != nil {
-		return err
+		err := w.CoreWebView.AddFrameNavigationCompleted(w.HandlerFrameNavigationCompletedEvent, w.EventRegistrationToken)
+		if err != nil {
+			return err
+		}
 	}
 	w.cbFrameNavigationCompletedEvent = cb
 	return nil
@@ -143,10 +143,10 @@ func (w *WebViewEventImpl) Event_FrameNavigationCompleted(cb func(sender *ICoreW
 func (w *WebViewEventImpl) Event_FrameNavigationStarting(cb func(sender *ICoreWebView2, args *ICoreWebView2NavigationStartingEventArgs) uintptr) error {
 	if w.HandlerFrameNavigationStartingEvent == nil {
 		w.HandlerFrameNavigationStartingEvent = NewICoreWebView2NavigationStartingEventHandler2(w)
-	}
-	err := w.CoreWebView.AddFrameNavigationStarting(w.HandlerFrameNavigationStartingEvent, w.EventRegistrationToken)
-	if err != nil {
-		return err
+		err := w.CoreWebView.AddFrameNavigationStarting(w.HandlerFrameNavigationStartingEvent, w.EventRegistrationToken)
+		if err != nil {
+			return err
+		}
 	}
 	w.cbFrameNavigationStartingEvent = cb
 	return nil
@@ -158,10 +158,10 @@ func (w *WebViewEventImpl) Event_FrameNavigationStarting(cb func(sender *ICoreWe
 func (w *WebViewEventImpl) Event_NavigationStarting(cb func(sender *ICoreWebView2, args *ICoreWebView2NavigationStartingEventArgs) uintptr) error {
 	if w.HandlerNavigationStartingEvent == nil {
 		w.HandlerNavigationStartingEvent = NewICoreWebView2NavigationStartingEventHandler(w)
-	}
-	err := w.CoreWebView.AddNavigationStarting(w.HandlerNavigationStartingEvent, w.EventRegistrationToken)
-	if err != nil {
-		return err
+		err := w.CoreWebView.AddNavigationStarting(w.HandlerNavigationStartingEvent, w.EventRegistrationToken)
+		if err != nil {
+			return err
+		}
 	}
 	w.cbNavigationStartingEvent = cb
 	return nil
@@ -172,10 +172,10 @@ func (w *WebViewEventImpl) Event_NavigationStarting(cb func(sender *ICoreWebView
 func (w *WebViewEventImpl) Event_AcceleratorKeyPressed(cb func(sender *ICoreWebView2Controller, args *ICoreWebView2AcceleratorKeyPressedEventArgs) uintptr) error {
 	if w.HandlerAcceleratorKeyPressedEvent == nil {
 		w.HandlerAcceleratorKeyPressedEvent = NewICoreWebView2AcceleratorKeyPressedEventHandler(w)
-	}
-	err := w.Controller.AddAcceleratorKeyPressed(w.HandlerAcceleratorKeyPressedEvent, w.EventRegistrationToken)
-	if err != nil {
-		return err
+		err := w.Controller.AddAcceleratorKeyPressed(w.HandlerAcceleratorKeyPressedEvent, w.EventRegistrationToken)
+		if err != nil {
+			return err
+		}
 	}
 	w.cbAcceleratorKeyPressedEvent = cb
 	return nil
@@ -188,10 +188,10 @@ func (w *WebViewEventImpl) Event_AcceleratorKeyPressed(cb func(sender *ICoreWebV
 func (w *WebViewEventImpl) Event_ContentLoading(cb func(sender *ICoreWebView2, args *ICoreWebView2ContentLoadingEventArgs) uintptr) error {
 	if w.HandlerContentLoadingEvent == nil {
 		w.HandlerContentLoadingEvent = NewICoreWebView2ContentLoadingEventHandler(w)
-	}
-	err := w.CoreWebView.AddContentLoading(w.HandlerContentLoadingEvent, w.EventRegistrationToken)
-	if err != nil {
-		return err
+		err := w.CoreWebView.AddContentLoading(w.HandlerContentLoadingEvent, w.EventRegistrationToken)
+		if err != nil {
+			return err
+		}
 	}
 	w.cbContentLoadingEvent = cb
 	return nil
@@ -202,10 +202,10 @@ func (w *WebViewEventImpl) Event_ContentLoading(cb func(sender *ICoreWebView2, a
 func (w *WebViewEventImpl) Event_ContainsFullScreenElementChanged(cb func(sender *ICoreWebView2, args *IUnknown) uintptr) error {
 	if w.HandlerContainsFullScreenElementChangedEvent == nil {
 		w.HandlerContainsFullScreenElementChangedEvent = NewICoreWebView2ContainsFullScreenElementChangedEventHandler(w)
-	}
-	err := w.CoreWebView.AddContainsFullScreenElementChanged(w.HandlerContainsFullScreenElementChangedEvent, w.EventRegistrationToken)
-	if err != nil {
-		return err
+		err := w.CoreWebView.AddContainsFullScreenElementChanged(w.HandlerContainsFullScreenElementChangedEvent, w.EventRegistrationToken)
+		if err != nil {
+			return err
+		}
 	}
 	w.cbContainsFullScreenElementChangedEvent = cb
 	return nil
@@ -216,10 +216,10 @@ func (w *WebViewEventImpl) Event_ContainsFullScreenElementChanged(cb func(sender
 func (w *WebViewEventImpl) Event_ProcessFailed(cb func(sender *ICoreWebView2, args *ICoreWebView2ProcessFailedEventArgs) uintptr) error {
 	if w.HandlerProcessFailedEvent == nil {
 		w.HandlerProcessFailedEvent = NewICoreWebView2ProcessFailedEventHandler(w)
-	}
-	err := w.CoreWebView.AddProcessFailed(w.HandlerProcessFailedEvent, w.EventRegistrationToken)
-	if err != nil {
-		return err
+		err := w.CoreWebView.AddProcessFailed(w.HandlerProcessFailedEvent, w.EventRegistrationToken)
+		if err != nil {
+			return err
+		}
 	}
 	w.cbProcessFailedEvent = cb
 	return nil
@@ -230,10 +230,10 @@ func (w *WebViewEventImpl) Event_ProcessFailed(cb func(sender *ICoreWebView2, ar
 func (w *WebViewEventImpl) Event_HistoryChanged(cb func(sender *ICoreWebView2, args *IUnknown) uintptr) error {
 	if w.HandlerHistoryChangedEvent == nil {
 		w.HandlerHistoryChangedEvent = NewICoreWebView2HistoryChangedEventHandler(w)
-	}
-	err := w.CoreWebView.AddHistoryChanged(w.HandlerHistoryChangedEvent, w.EventRegistrationToken)
-	if err != nil {
-		return err
+		err := w.CoreWebView.AddHistoryChanged(w.HandlerHistoryChangedEvent, w.EventRegistrationToken)
+		if err != nil {
+			return err
+		}
 	}
 	w.cbHistoryChangedEvent = cb
 	return nil
@@ -246,10 +246,10 @@ func (w *WebViewEventImpl) Event_HistoryChanged(cb func(sender *ICoreWebView2, a
 func (w *WebViewEventImpl) Event_ScriptDialogOpening(cb func(sender *ICoreWebView2, args *ICoreWebView2ScriptDialogOpeningEventArgs) uintptr) error {
 	if w.HandlerScriptDialogOpeningEvent == nil {
 		w.HandlerScriptDialogOpeningEvent = NewICoreWebView2ScriptDialogOpeningEventHandler(w)
-	}
-	err := w.CoreWebView.AddScriptDialogOpening(w.HandlerScriptDialogOpeningEvent, w.EventRegistrationToken)
-	if err != nil {
-		return err
+		err := w.CoreWebView.AddScriptDialogOpening(w.HandlerScriptDialogOpeningEvent, w.EventRegistrationToken)
+		if err != nil {
+			return err
+		}
 	}
 	w.cbScriptDialogOpeningEvent = cb
 	return nil
@@ -267,10 +267,10 @@ func (w *WebViewEventImpl) Event_DevToolsProtocolEventReceived(eventName string,
 	}
 	if w.HandlerDevToolsProtocolEventReceivedEvent == nil {
 		w.HandlerDevToolsProtocolEventReceivedEvent = NewICoreWebView2DevToolsProtocolEventReceivedEventHandler(w)
-	}
-	err := w.DevToolsProtocolEventReceiver.AddDevToolsProtocolEventReceived(w.HandlerDevToolsProtocolEventReceivedEvent, w.EventRegistrationToken)
-	if err != nil {
-		return err
+		err := w.DevToolsProtocolEventReceiver.AddDevToolsProtocolEventReceived(w.HandlerDevToolsProtocolEventReceivedEvent, w.EventRegistrationToken)
+		if err != nil {
+			return err
+		}
 	}
 	w.cbDevToolsProtocolEventReceivedEvent = cb
 	return nil
@@ -289,10 +289,10 @@ func (w *WebViewEventImpl) Event_WebResourceResponseReceived(cb func(sender *ICo
 	defer w2_2.Release()
 	if w.HandlerWebResourceResponseReceivedEvent == nil {
 		w.HandlerWebResourceResponseReceivedEvent = NewICoreWebView2WebResourceResponseReceivedEventHandler(w)
-	}
-	w.TokenWebResourceResponseReceivedEvent, err = w2_2.AddWebResourceResponseReceived(w.HandlerWebResourceResponseReceivedEvent)
-	if err != nil {
-		return err
+		w.TokenWebResourceResponseReceivedEvent, err = w2_2.AddWebResourceResponseReceived(w.HandlerWebResourceResponseReceivedEvent)
+		if err != nil {
+			return err
+		}
 	}
 	w.cbWebResourceResponseReceivedEvent = cb
 	return nil
@@ -308,11 +308,59 @@ func (w *WebViewEventImpl) Event_DOMContentLoaded(cb func(sender *ICoreWebView2,
 	defer w2_2.Release()
 	if w.HandlerDOMContentLoadedEvent == nil {
 		w.HandlerDOMContentLoadedEvent = NewICoreWebView2DOMContentLoadedEventHandler(w)
+		w.TokenDOMContentLoadedEvent, err = w2_2.AddDomContentLoaded(w.HandlerDOMContentLoadedEvent)
+		if err != nil {
+			return err
+		}
 	}
-	w.TokenDOMContentLoadedEvent, err = w2_2.AddDomContentLoaded(w.HandlerDOMContentLoadedEvent)
+	w.cbDOMContentLoadedEvent = cb
+	return nil
+}
+
+// Event_FrameCreated 框架创建完成事件.
+//   - 当创建新的 iframe 时触发。
+//   - 处理此事件以访问 ICoreWebView2Frame 对象。
+func (w *WebViewEventImpl) Event_FrameCreated(cb func(sender *ICoreWebView2, args *ICoreWebView2FrameCreatedEventArgs) uintptr) error {
+	w2_4, err := w.CoreWebView.GetICoreWebView2_4()
 	if err != nil {
 		return err
 	}
-	w.cbDOMContentLoadedEvent = cb
+	defer w2_4.Release()
+	if w.HandlerFrameCreatedEvent == nil {
+		w.HandlerFrameCreatedEvent = NewICoreWebView2FrameCreatedEventHandler(w)
+		err = w2_4.AddFrameCreated(w.HandlerFrameCreatedEvent, w.EventRegistrationToken)
+		if err != nil {
+			return err
+		}
+	}
+	w.cbFrameCreatedEvent = cb
+	return nil
+}
+
+// Event_FrameNameChanged 框架名称改变事件.
+//   - 当 iframe 更改其 window.name 属性时触发。
+func (w *WebViewEventImpl) Event_FrameNameChanged(frame *ICoreWebView2Frame, cb func(sender *ICoreWebView2Frame, args *IUnknown) uintptr) error {
+	if w.HandlerFrameNameChangedEvent == nil {
+		w.HandlerFrameNameChangedEvent = NewICoreWebView2FrameNameChangedEventHandler(w)
+		err := frame.AddNameChanged(w.HandlerFrameNameChangedEvent, w.EventRegistrationToken)
+		if err != nil {
+			return err
+		}
+	}
+	w.cbFrameNameChangedEvent = cb
+	return nil
+}
+
+// Event_FrameDestroyed 框架销毁事件.
+//   - 当与此 ICoreWebView2Frame 对象对应的 iframe 被移除或包含该 iframe 的文档被销毁时触发。
+func (w *WebViewEventImpl) Event_FrameDestroyed(frame *ICoreWebView2Frame, cb func(sender *ICoreWebView2Frame, args *IUnknown) uintptr) error {
+	if w.HandlerFrameDestroyedEvent == nil {
+		w.HandlerFrameDestroyedEvent = NewICoreWebView2FrameDestroyedEventHandler(w)
+		err := frame.AddDestroyed(w.HandlerFrameDestroyedEvent, w.EventRegistrationToken)
+		if err != nil {
+			return err
+		}
+	}
+	w.cbFrameDestroyedEvent = cb
 	return nil
 }

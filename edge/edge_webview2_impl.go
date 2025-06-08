@@ -141,6 +141,15 @@ type WebViewEventImpl struct {
 	cbDOMContentLoadedEvent      func(sender *ICoreWebView2, args *ICoreWebView2DOMContentLoadedEventArgs) uintptr
 	// TokenDOMContentLoadedEvent 添加 DOMContentLoaded 事件处理程序时返回的 Token
 	TokenDOMContentLoadedEvent EventRegistrationToken
+	// HandlerFrameCreatedEvent 框架创建完成事件处理程序. 在调用 Event_ 时会自动赋值.
+	HandlerFrameCreatedEvent *ICoreWebView2FrameCreatedEventHandler
+	cbFrameCreatedEvent      func(sender *ICoreWebView2, args *ICoreWebView2FrameCreatedEventArgs) uintptr
+	// HandlerFrameNameChangedEvent 框架名称改变事件处理程序. 在调用 Event_ 时会自动赋值.
+	HandlerFrameNameChangedEvent *ICoreWebView2FrameNameChangedEventHandler
+	cbFrameNameChangedEvent      func(sender *ICoreWebView2Frame, args *IUnknown) uintptr
+	// HandlerFrameDestroyedEvent 框架销毁事件处理程序. 在调用 Event_ 时会自动赋值.
+	HandlerFrameDestroyedEvent *ICoreWebView2FrameDestroyedEventHandler
+	cbFrameDestroyedEvent      func(sender *ICoreWebView2Frame, args *IUnknown) uintptr
 
 	// 仅供内部使用的网页消息事件回调
 	msgcb_xcgui func(string)
@@ -273,6 +282,18 @@ func (w *WebViewEventImpl) ReleaseEventHandler() {
 	if w.HandlerDevToolsProtocolEventReceivedEvent != nil {
 		w.HandlerDevToolsProtocolEventReceivedEvent.Release()
 		w.HandlerDevToolsProtocolEventReceivedEvent = nil
+	}
+	if w.HandlerFrameCreatedEvent != nil {
+		w.HandlerFrameCreatedEvent.Release()
+		w.HandlerFrameCreatedEvent = nil
+	}
+	if w.HandlerFrameDestroyedEvent != nil {
+		w.HandlerFrameDestroyedEvent.Release()
+		w.HandlerFrameDestroyedEvent = nil
+	}
+	if w.HandlerFrameNameChangedEvent != nil {
+		w.HandlerFrameNameChangedEvent.Release()
+		w.HandlerFrameNameChangedEvent = nil
 	}
 }
 
@@ -616,6 +637,30 @@ func (w *WebViewEventImpl) WebResourceResponseViewGetContentCompleted(errorCode 
 func (w *WebViewEventImpl) DOMContentLoaded(sender *ICoreWebView2, args *ICoreWebView2DOMContentLoadedEventArgs) uintptr {
 	if w.cbDOMContentLoadedEvent != nil {
 		w.cbDOMContentLoadedEvent(sender, args)
+	}
+	return 0
+}
+
+// FrameCreated 当创建新的 iframe 时触发。
+func (w *WebViewEventImpl) FrameCreated(sender *ICoreWebView2, args *ICoreWebView2FrameCreatedEventArgs) uintptr {
+	if w.cbFrameCreatedEvent != nil {
+		w.cbFrameCreatedEvent(sender, args)
+	}
+	return 0
+}
+
+// FrameNameChanged 当框架名称更改时调用。
+func (w *WebViewEventImpl) FrameNameChanged(sender *ICoreWebView2Frame, args *IUnknown) uintptr {
+	if w.cbFrameNameChangedEvent != nil {
+		w.cbFrameNameChangedEvent(sender, args)
+	}
+	return 0
+}
+
+// FrameDestroyed 当框架被销毁时调用。
+func (w *WebViewEventImpl) FrameDestroyed(sender *ICoreWebView2Frame, args *IUnknown) uintptr {
+	if w.cbFrameDestroyedEvent != nil {
+		w.cbFrameDestroyedEvent(sender, args)
 	}
 	return 0
 }
