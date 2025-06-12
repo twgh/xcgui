@@ -258,19 +258,17 @@ func (w *WebViewEventImpl) Event_ScriptDialogOpening(cb func(sender *ICoreWebVie
 // Event_DevToolsProtocolEventReceived 是 DevTools 协议事件接收事件.
 //   - DevToolsProtocolEventReceived 在收到来自 DevTools 协议的事件时运行。
 func (w *WebViewEventImpl) Event_DevToolsProtocolEventReceived(eventName string, cb func(sender *ICoreWebView2, args *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) uintptr) error {
-	if w.DevToolsProtocolEventReceiver == nil {
-		var err error
-		w.DevToolsProtocolEventReceiver, err = w.CoreWebView.GetDevToolsProtocolEventReceiver(eventName)
-		if err != nil {
-			return err
-		}
+	var err error
+	w.DevToolsProtocolEventReceiver, err = w.CoreWebView.GetDevToolsProtocolEventReceiver(eventName)
+	if err != nil {
+		return err
 	}
 	if w.HandlerDevToolsProtocolEventReceivedEvent == nil {
 		w.HandlerDevToolsProtocolEventReceivedEvent = NewICoreWebView2DevToolsProtocolEventReceivedEventHandler(w)
-		err := w.DevToolsProtocolEventReceiver.AddDevToolsProtocolEventReceived(w.HandlerDevToolsProtocolEventReceivedEvent, w.EventRegistrationToken)
-		if err != nil {
-			return err
-		}
+	}
+	err = w.DevToolsProtocolEventReceiver.AddDevToolsProtocolEventReceived(w.HandlerDevToolsProtocolEventReceivedEvent, w.EventRegistrationToken)
+	if err != nil {
+		return err
 	}
 	w.cbDevToolsProtocolEventReceivedEvent = cb
 	return nil
@@ -342,10 +340,10 @@ func (w *WebViewEventImpl) Event_FrameCreated(cb func(sender *ICoreWebView2, arg
 func (w *WebViewEventImpl) Event_FrameNameChanged(frame *ICoreWebView2Frame, cb func(sender *ICoreWebView2Frame, args *IUnknown) uintptr) error {
 	if w.HandlerFrameNameChangedEvent == nil {
 		w.HandlerFrameNameChangedEvent = NewICoreWebView2FrameNameChangedEventHandler(w)
-		err := frame.AddNameChanged(w.HandlerFrameNameChangedEvent, w.EventRegistrationToken)
-		if err != nil {
-			return err
-		}
+	}
+	err := frame.AddNameChanged(w.HandlerFrameNameChangedEvent, w.EventRegistrationToken)
+	if err != nil {
+		return err
 	}
 	w.cbFrameNameChangedEvent = cb
 	return nil
@@ -356,11 +354,49 @@ func (w *WebViewEventImpl) Event_FrameNameChanged(frame *ICoreWebView2Frame, cb 
 func (w *WebViewEventImpl) Event_FrameDestroyed(frame *ICoreWebView2Frame, cb func(sender *ICoreWebView2Frame, args *IUnknown) uintptr) error {
 	if w.HandlerFrameDestroyedEvent == nil {
 		w.HandlerFrameDestroyedEvent = NewICoreWebView2FrameDestroyedEventHandler(w)
-		err := frame.AddDestroyed(w.HandlerFrameDestroyedEvent, w.EventRegistrationToken)
+	}
+	err := frame.AddDestroyed(w.HandlerFrameDestroyedEvent, w.EventRegistrationToken)
+	if err != nil {
+		return err
+	}
+	w.cbFrameDestroyedEvent = cb
+	return nil
+}
+
+// Event_DownloadStarting 下载开始事件.
+//   - 当下载开始时触发，该事件会阻止默认的下载对话框弹出，但不会阻止下载进程。
+//   - 主机可以选择取消下载、更改结果文件路径以及隐藏默认下载对话框。
+//   - 如果主机选择取消下载，则不会保存下载内容，不会显示对话框，并且状态将更改为 COREWEBVIEW2_DOWNLOAD_STATE_INTERRUPTED，中断原因是 COREWEBVIEW2_DOWNLOAD_INTERRUPT_REASON_USER_CANCELED.
+//   - 否则，事件完成后，下载内容将保存到默认路径，如果主机未选择隐藏默认下载对话框，则会显示该对话框。
+//   - 主机可以使用 Handled 属性更改下载对话框的可见性。
+//   - 如果未处理该事件，下载将正常完成并显示默认对话框。
+func (w *WebViewEventImpl) Event_DownloadStarting(cb func(sender *ICoreWebView2, args *ICoreWebView2DownloadStartingEventArgs) uintptr) error {
+	w2_4, err := w.CoreWebView.GetICoreWebView2_4()
+	if err != nil {
+		return err
+	}
+	defer w2_4.Release()
+	if w.HandlerDownloadStartingEvent == nil {
+		w.HandlerDownloadStartingEvent = NewICoreWebView2DownloadStartingEventHandler(w)
+		err = w2_4.AddDownloadStarting(w.HandlerDownloadStartingEvent, w.EventRegistrationToken)
 		if err != nil {
 			return err
 		}
 	}
-	w.cbFrameDestroyedEvent = cb
+	w.cbDownloadStartingEvent = cb
+	return nil
+}
+
+// Event_BytesReceivedChanged 下载字节改变事件.
+//   - 当下载的字节数发生更改时触发。
+func (w *WebViewEventImpl) Event_BytesReceivedChanged(downloadOperation *ICoreWebView2DownloadOperation, cb func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr) error {
+	if w.HandlerBytesReceivedChangedEvent == nil {
+		w.HandlerBytesReceivedChangedEvent = NewICoreWebView2BytesReceivedChangedEventHandler(w)
+	}
+	err := downloadOperation.AddBytesReceivedChanged(w.HandlerBytesReceivedChangedEvent, w.EventRegistrationToken)
+	if err != nil {
+		return err
+	}
+	w.cbBytesReceivedChangedEvent = cb
 	return nil
 }

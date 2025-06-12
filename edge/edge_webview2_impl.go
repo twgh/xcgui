@@ -14,6 +14,7 @@ import (
 // NewWebViewEventImpl 创建一个 WebView 事件接口实现对象.
 //   - 使用此函数创建 WebViewEventImpl 对象, 用于给指定 WebView 添加更多的事件处理函数, 也就是一个类型的事件可以添加多个事件处理函数.
 //   - 此种方法是高度封装的版本, 你也可以用更原生的方法来添加事件处理函数, 自行创建新的 EventHandler.
+//   - 需要注意的是你自己创建的这个对象不能让它被 GC 回收, 也就是不能创建为局部变量. 或可使用 runtime.Pinner.
 func NewWebViewEventImpl(wv *WebView) *WebViewEventImpl {
 	return &WebViewEventImpl{
 		CoreWebView: wv.CoreWebView,
@@ -150,6 +151,12 @@ type WebViewEventImpl struct {
 	// HandlerFrameDestroyedEvent 框架销毁事件处理程序. 在调用 Event_ 时会自动赋值.
 	HandlerFrameDestroyedEvent *ICoreWebView2FrameDestroyedEventHandler
 	cbFrameDestroyedEvent      func(sender *ICoreWebView2Frame, args *IUnknown) uintptr
+	// HandlerDownloadStartingEvent 下载开始事件处理程序. 在调用 Event_ 时会自动赋值.
+	HandlerDownloadStartingEvent *ICoreWebView2DownloadStartingEventHandler
+	cbDownloadStartingEvent      func(sender *ICoreWebView2, args *ICoreWebView2DownloadStartingEventArgs) uintptr
+	// HandlerBytesReceivedChangedEvent 接收到的字节数改变事件处理程序. 在调用 Event_ 时会自动赋值.
+	HandlerBytesReceivedChangedEvent *ICoreWebView2BytesReceivedChangedEventHandler
+	cbBytesReceivedChangedEvent      func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr
 
 	// 仅供内部使用的网页消息事件回调
 	msgcb_xcgui func(string)
@@ -294,6 +301,26 @@ func (w *WebViewEventImpl) ReleaseEventHandler() {
 	if w.HandlerFrameNameChangedEvent != nil {
 		w.HandlerFrameNameChangedEvent.Release()
 		w.HandlerFrameNameChangedEvent = nil
+	}
+	if w.HandlerDownloadStartingEvent != nil {
+		w.HandlerDownloadStartingEvent.Release()
+		w.HandlerDownloadStartingEvent = nil
+	}
+	if w.HandlerBytesReceivedChangedEvent != nil {
+		w.HandlerBytesReceivedChangedEvent.Release()
+		w.HandlerBytesReceivedChangedEvent = nil
+	}
+}
+
+// GetNewWebViewEventImpl 获取一个新的 WebView 事件接口实现对象.
+//   - 使用此函数创建 WebViewEventImpl 对象, 用于给指定 WebView 添加更多的事件处理函数, 也就是一个类型的事件可以添加多个事件处理函数.
+//   - 此种方法是高度封装的版本, 你也可以用更原生的方法来添加事件处理函数, 自行创建新的 EventHandler.
+//   - 需要注意的是你自己创建的这个对象不能让它被 GC 回收, 也就是不能创建为局部变量. 或可使用 runtime.Pinner.
+func (w *WebViewEventImpl) GetNewWebViewEventImpl() *WebViewEventImpl {
+	return &WebViewEventImpl{
+		CoreWebView: w.CoreWebView,
+		Controller:  w.Controller,
+		Edge:        w.Edge,
 	}
 }
 
@@ -661,6 +688,22 @@ func (w *WebViewEventImpl) FrameNameChanged(sender *ICoreWebView2Frame, args *IU
 func (w *WebViewEventImpl) FrameDestroyed(sender *ICoreWebView2Frame, args *IUnknown) uintptr {
 	if w.cbFrameDestroyedEvent != nil {
 		w.cbFrameDestroyedEvent(sender, args)
+	}
+	return 0
+}
+
+// DownloadStarting 当下载开始时调用。
+func (w *WebViewEventImpl) DownloadStarting(sender *ICoreWebView2, args *ICoreWebView2DownloadStartingEventArgs) uintptr {
+	if w.cbDownloadStartingEvent != nil {
+		w.cbDownloadStartingEvent(sender, args)
+	}
+	return 0
+}
+
+// BytesReceivedChanged 当下载的字节数更改时调用。
+func (w *WebViewEventImpl) BytesReceivedChanged(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr {
+	if w.cbBytesReceivedChangedEvent != nil {
+		w.cbBytesReceivedChangedEvent(sender, args)
 	}
 	return 0
 }

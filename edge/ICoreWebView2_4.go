@@ -76,8 +76,39 @@ func (i *ICoreWebView2_4) RemoveFrameCreated(token EventRegistrationToken) error
 	return nil
 }
 
-/*TODO:
+// AddDownloadStarting 添加下载开始事件处理程序。
+//   - 当下载开始时触发，该事件会阻止默认的下载对话框弹出，但不会阻止下载进程。
+//   - 主机可以选择取消下载、更改结果文件路径以及隐藏默认下载对话框。
+//   - 如果主机选择取消下载，则不会保存下载内容，不会显示对话框，并且状态将更改为 COREWEBVIEW2_DOWNLOAD_STATE_INTERRUPTED，中断原因是 COREWEBVIEW2_DOWNLOAD_INTERRUPT_REASON_USER_CANCELED.
+//   - 否则，事件完成后，下载内容将保存到默认路径，如果主机未选择隐藏默认下载对话框，则会显示该对话框。
+//   - 主机可以使用 Handled 属性更改下载对话框的可见性。
+//   - 如果未处理该事件，下载将正常完成并显示默认对话框。
+func (i *ICoreWebView2_4) AddDownloadStarting(eventHandler *ICoreWebView2DownloadStartingEventHandler, token *EventRegistrationToken) error {
+	r, _, err := i.Vtbl.AddDownloadStarting.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(eventHandler)),
+		uintptr(unsafe.Pointer(token)),
+	)
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
 
-AddDownloadStarting
-RemoveDownloadStarting
-*/
+// RemoveDownloadStarting 移除下载开始事件处理程序。
+func (i *ICoreWebView2_4) RemoveDownloadStarting(token EventRegistrationToken) error {
+	r, _, err := i.Vtbl.RemoveDownloadStarting.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(token.Value),
+	)
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
