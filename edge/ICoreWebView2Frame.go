@@ -199,3 +199,15 @@ func (i *ICoreWebView2Frame) MustIsDestroyed() bool {
 	ReportErrorAtuo(err)
 	return result
 }
+
+// Event_FrameNameChanged 框架名称改变事件.
+//   - 当 iframe 更改其 window.name 属性时触发。
+func (i *ICoreWebView2Frame) Event_FrameNameChanged(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
+	return WvEventHandler.AddCallBack(impl, "FrameNameChanged", cb, i, allowAddingMultiple...)
+}
+
+// Event_FrameDestroyed 框架销毁事件.
+//   - 当与此 ICoreWebView2Frame 对象对应的 iframe 被移除或包含该 iframe 的文档被销毁时触发。
+func (i *ICoreWebView2Frame) Event_FrameDestroyed(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
+	return WvEventHandler.AddCallBack(impl, "FrameDestroyed", cb, i, allowAddingMultiple...)
+}

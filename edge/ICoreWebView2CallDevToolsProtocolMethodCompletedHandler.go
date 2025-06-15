@@ -49,18 +49,21 @@ type _ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerImpl interface {
 	CallDevToolsProtocolMethodCompleted(errorCode syscall.Errno, result *uint16) uintptr
 }
 
-var _ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerFn = _ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerInvoke),
-}
+var _ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerFn *_ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerVtbl
 
 func NewICoreWebView2CallDevToolsProtocolMethodCompletedHandler(impl _ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerImpl) *ICoreWebView2CallDevToolsProtocolMethodCompletedHandler {
+	if _ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerFn == nil {
+		_ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerFn = &_ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2CallDevToolsProtocolMethodCompletedHandler{
-		vtbl: &_ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerFn,
+		vtbl: _ICoreWebView2CallDevToolsProtocolMethodCompletedHandlerFn,
 		impl: impl,
 	}
 }

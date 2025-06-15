@@ -46,18 +46,21 @@ type _ICoreWebView2DocumentTitleChangedEventHandlerImpl interface {
 	DocumentTitleChanged(sender *ICoreWebView2, args *IUnknown) uintptr
 }
 
-var _ICoreWebView2DocumentTitleChangedEventHandlerFn = _ICoreWebView2DocumentTitleChangedEventHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2DocumentTitleChangedEventHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2DocumentTitleChangedEventHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2DocumentTitleChangedEventHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2DocumentTitleChangedEventHandlerInvoke),
-}
+var _ICoreWebView2DocumentTitleChangedEventHandlerFn *_ICoreWebView2DocumentTitleChangedEventHandlerVtbl
 
 func NewICoreWebView2DocumentTitleChangedEventHandler(impl _ICoreWebView2DocumentTitleChangedEventHandlerImpl) *ICoreWebView2DocumentTitleChangedEventHandler {
+	if _ICoreWebView2DocumentTitleChangedEventHandlerFn == nil {
+		_ICoreWebView2DocumentTitleChangedEventHandlerFn = &_ICoreWebView2DocumentTitleChangedEventHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2DocumentTitleChangedEventHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2DocumentTitleChangedEventHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2DocumentTitleChangedEventHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2DocumentTitleChangedEventHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2DocumentTitleChangedEventHandler{
-		vtbl: &_ICoreWebView2DocumentTitleChangedEventHandlerFn,
+		vtbl: _ICoreWebView2DocumentTitleChangedEventHandlerFn,
 		impl: impl,
 	}
 }

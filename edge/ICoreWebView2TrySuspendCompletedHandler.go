@@ -64,20 +64,23 @@ type _ICoreWebView2TrySuspendCompletedHandlerImpl interface {
 	TrySuspendCompleted(errorCode syscall.Errno, isSuccessful bool) uintptr
 }
 
-var _ICoreWebView2TrySuspendCompletedHandlerFn = _ICoreWebView2TrySuspendCompletedHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2TrySuspendCompletedHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2TrySuspendCompletedHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2TrySuspendCompletedHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2TrySuspendCompletedHandlerInvoke),
-}
+var _ICoreWebView2TrySuspendCompletedHandlerFn *_ICoreWebView2TrySuspendCompletedHandlerVtbl
 
 func NewICoreWebView2TrySuspendCompletedHandler(
 	impl _ICoreWebView2TrySuspendCompletedHandlerImpl,
 ) *ICoreWebView2TrySuspendCompletedHandler {
+	if _ICoreWebView2TrySuspendCompletedHandlerFn == nil {
+		_ICoreWebView2TrySuspendCompletedHandlerFn = &_ICoreWebView2TrySuspendCompletedHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2TrySuspendCompletedHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2TrySuspendCompletedHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2TrySuspendCompletedHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2TrySuspendCompletedHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2TrySuspendCompletedHandler{
-		vtbl: &_ICoreWebView2TrySuspendCompletedHandlerFn,
+		vtbl: _ICoreWebView2TrySuspendCompletedHandlerFn,
 		impl: impl,
 	}
 }

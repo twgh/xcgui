@@ -46,18 +46,21 @@ type _ICoreWebView2ContainsFullScreenElementChangedEventHandlerImpl interface {
 	ContainsFullScreenElementChanged(sender *ICoreWebView2, args *IUnknown) uintptr
 }
 
-var _ICoreWebView2ContainsFullScreenElementChangedEventHandlerFn = _ICoreWebView2ContainsFullScreenElementChangedEventHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2ContainsFullScreenElementChangedEventHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2ContainsFullScreenElementChangedEventHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2ContainsFullScreenElementChangedEventHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2ContainsFullScreenElementChangedEventHandlerInvoke),
-}
+var _ICoreWebView2ContainsFullScreenElementChangedEventHandlerFn *_ICoreWebView2ContainsFullScreenElementChangedEventHandlerVtbl
 
 func NewICoreWebView2ContainsFullScreenElementChangedEventHandler(impl _ICoreWebView2ContainsFullScreenElementChangedEventHandlerImpl) *ICoreWebView2ContainsFullScreenElementChangedEventHandler {
+	if _ICoreWebView2ContainsFullScreenElementChangedEventHandlerFn == nil {
+		_ICoreWebView2ContainsFullScreenElementChangedEventHandlerFn = &_ICoreWebView2ContainsFullScreenElementChangedEventHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2ContainsFullScreenElementChangedEventHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2ContainsFullScreenElementChangedEventHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2ContainsFullScreenElementChangedEventHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2ContainsFullScreenElementChangedEventHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2ContainsFullScreenElementChangedEventHandler{
-		vtbl: &_ICoreWebView2ContainsFullScreenElementChangedEventHandlerFn,
+		vtbl: _ICoreWebView2ContainsFullScreenElementChangedEventHandlerFn,
 		impl: impl,
 	}
 }

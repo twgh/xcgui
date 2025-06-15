@@ -46,18 +46,21 @@ type _ICoreWebView2FrameCreatedEventHandlerImpl interface {
 	FrameCreated(sender *ICoreWebView2, args *ICoreWebView2FrameCreatedEventArgs) uintptr
 }
 
-var _ICoreWebView2FrameCreatedEventHandlerFn = _ICoreWebView2FrameCreatedEventHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2FrameCreatedEventHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2FrameCreatedEventHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2FrameCreatedEventHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2FrameCreatedEventHandlerInvoke),
-}
+var _ICoreWebView2FrameCreatedEventHandlerFn *_ICoreWebView2FrameCreatedEventHandlerVtbl
 
 func NewICoreWebView2FrameCreatedEventHandler(impl _ICoreWebView2FrameCreatedEventHandlerImpl) *ICoreWebView2FrameCreatedEventHandler {
+	if _ICoreWebView2FrameCreatedEventHandlerFn == nil {
+		_ICoreWebView2FrameCreatedEventHandlerFn = &_ICoreWebView2FrameCreatedEventHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2FrameCreatedEventHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2FrameCreatedEventHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2FrameCreatedEventHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2FrameCreatedEventHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2FrameCreatedEventHandler{
-		vtbl: &_ICoreWebView2FrameCreatedEventHandlerFn,
+		vtbl: _ICoreWebView2FrameCreatedEventHandlerFn,
 		impl: impl,
 	}
 }

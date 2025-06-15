@@ -60,8 +60,8 @@ type Edge struct {
 	handlerCreateCoreWebView2EnvironmentCompleted *ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler
 	cbEnvCompleted                                func(result syscall.Errno, env *ICoreWebView2Environment)
 	// 控制器创建完成事件处理程序
-	handler_CreateCoreWebView2ControllerCompleted *ICoreWebView2CreateCoreWebView2ControllerCompletedHandler
-	cbCreateCoreWebView2ControllerCompleted       func(result syscall.Errno, controller *ICoreWebView2Controller)
+	handlerCreateCoreWebView2ControllerCompleted *ICoreWebView2CreateCoreWebView2ControllerCompletedHandler
+	cbCreateCoreWebView2ControllerCompleted      func(result syscall.Errno, controller *ICoreWebView2Controller)
 
 	// WebView2 环境创建完成回调 [内部使用]
 	_cbEnvCompleted func(result syscall.Errno, env *ICoreWebView2Environment)
@@ -83,7 +83,7 @@ func New(opt Option) (*Edge, error) {
 	// 环境初始化完成事件
 	e.handlerCreateCoreWebView2EnvironmentCompleted = NewICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler(e)
 	// 控制器创建完成事件
-	e.handler_CreateCoreWebView2ControllerCompleted = NewICoreWebView2CreateCoreWebView2ControllerCompletedHandler(e)
+	e.handlerCreateCoreWebView2ControllerCompleted = NewICoreWebView2CreateCoreWebView2ControllerCompletedHandler(e)
 
 	// 处理用户数据文件夹路径, 如果为空, 则使用 AppData 环境变量下的当前进程名文件夹
 	dataPath := opt.UserDataFolder

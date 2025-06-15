@@ -57,20 +57,23 @@ type _ICoreWebView2NavigationStartingEventHandlerImpl interface {
 	NavigationStarting(sender *ICoreWebView2, args *ICoreWebView2NavigationStartingEventArgs) uintptr
 }
 
-var _ICoreWebView2NavigationStartingEventHandlerFn = _ICoreWebView2NavigationStartingEventHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2NavigationStartingEventHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2NavigationStartingEventHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2NavigationStartingEventHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2NavigationStartingEventHandlerInvoke),
-}
+var _ICoreWebView2NavigationStartingEventHandlerFn *_ICoreWebView2NavigationStartingEventHandlerVtbl
 
 func NewICoreWebView2NavigationStartingEventHandler(
 	impl _ICoreWebView2NavigationStartingEventHandlerImpl,
 ) *ICoreWebView2NavigationStartingEventHandler {
+	if _ICoreWebView2NavigationStartingEventHandlerFn == nil {
+		_ICoreWebView2NavigationStartingEventHandlerFn = &_ICoreWebView2NavigationStartingEventHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2NavigationStartingEventHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2NavigationStartingEventHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2NavigationStartingEventHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2NavigationStartingEventHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2NavigationStartingEventHandler{
-		vtbl: &_ICoreWebView2NavigationStartingEventHandlerFn,
+		vtbl: _ICoreWebView2NavigationStartingEventHandlerFn,
 		impl: impl,
 	}
 }

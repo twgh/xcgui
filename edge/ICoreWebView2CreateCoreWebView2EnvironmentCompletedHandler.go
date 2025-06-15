@@ -39,18 +39,21 @@ func _ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerInvoke(this *ICo
 	return this.impl.EnvironmentCompleted(result, env)
 }
 
-var iCoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerFn = iCoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerInvoke),
-}
+var iCoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerFn *iCoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerVtbl
 
 func NewICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler(impl iCoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerImpl) *ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler {
+	if iCoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerFn == nil {
+		iCoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerFn = &iCoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler{
-		vtbl: &iCoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerFn,
+		vtbl: iCoreWebView2CreateCoreWebView2EnvironmentCompletedHandlerFn,
 		impl: impl,
 	}
 }

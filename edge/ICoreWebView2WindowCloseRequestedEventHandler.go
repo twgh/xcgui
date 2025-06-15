@@ -46,18 +46,21 @@ type _ICoreWebView2WindowCloseRequestedEventHandlerImpl interface {
 	WindowCloseRequested(sender *ICoreWebView2, args *IUnknown) uintptr
 }
 
-var _ICoreWebView2WindowCloseRequestedEventHandlerFn = _ICoreWebView2WindowCloseRequestedEventHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2WindowCloseRequestedEventHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2WindowCloseRequestedEventHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2WindowCloseRequestedEventHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2WindowCloseRequestedEventHandlerInvoke),
-}
+var _ICoreWebView2WindowCloseRequestedEventHandlerFn *_ICoreWebView2WindowCloseRequestedEventHandlerVtbl
 
 func NewICoreWebView2WindowCloseRequestedEventHandler(impl _ICoreWebView2WindowCloseRequestedEventHandlerImpl) *ICoreWebView2WindowCloseRequestedEventHandler {
+	if _ICoreWebView2WindowCloseRequestedEventHandlerFn == nil {
+		_ICoreWebView2WindowCloseRequestedEventHandlerFn = &_ICoreWebView2WindowCloseRequestedEventHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2WindowCloseRequestedEventHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2WindowCloseRequestedEventHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2WindowCloseRequestedEventHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2WindowCloseRequestedEventHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2WindowCloseRequestedEventHandler{
-		vtbl: &_ICoreWebView2WindowCloseRequestedEventHandlerFn,
+		vtbl: _ICoreWebView2WindowCloseRequestedEventHandlerFn,
 		impl: impl,
 	}
 }

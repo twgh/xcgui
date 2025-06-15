@@ -815,11 +815,9 @@ func onXE_LISTVIEW_TEMP_CREATE(hEle int, pItem *xc.ListView_Item_, nFlag int32, 
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTVIEW_TEMP_CREATE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LISTVIEW_TEMP_CREATE1)(hEle, pItem, nFlag, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_LISTVIEW_TEMP_CREATE1)(hEle, pItem, nFlag, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -840,11 +838,9 @@ func onXE_LISTVIEW_TEMP_CREATE_END(hEle int, pItem *xc.ListView_Item_, nFlag int
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTVIEW_TEMP_CREATE_END)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LISTVIEW_TEMP_CREATE_END1)(hEle, pItem, nFlag, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_LISTVIEW_TEMP_CREATE_END1)(hEle, pItem, nFlag, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -865,11 +861,9 @@ func onXE_LISTVIEW_TEMP_DESTROY(hEle int, pItem *xc.ListView_Item_, nFlag int32,
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTVIEW_TEMP_DESTROY)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LISTVIEW_TEMP_DESTROY1)(hEle, pItem, nFlag, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_LISTVIEW_TEMP_DESTROY1)(hEle, pItem, nFlag, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -889,11 +883,9 @@ func onXE_LISTVIEW_TEMP_ADJUST_COORDINATE(hEle int, pItem *xc.ListView_Item_, pb
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTVIEW_TEMP_ADJUST_COORDINATE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LISTVIEW_TEMP_ADJUST_COORDINATE1)(hEle, pItem, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_LISTVIEW_TEMP_ADJUST_COORDINATE1)(hEle, pItem, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -913,11 +905,9 @@ func onXE_LISTVIEW_DRAWITEM(hEle int, hDraw int, pItem *xc.ListView_Item_, pbHan
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTVIEW_DRAWITEM)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LISTVIEW_DRAWITEM1)(hEle, hDraw, pItem, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_LISTVIEW_DRAWITEM1)(hEle, hDraw, pItem, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -937,11 +927,9 @@ func onXE_LISTVIEW_SELECT(hEle int, iGroup int32, iItem int32, pbHandled *bool) 
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTVIEW_SELECT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LISTVIEW_SELECT1)(hEle, iGroup, iItem, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_LISTVIEW_SELECT1)(hEle, iGroup, iItem, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -961,11 +949,9 @@ func onXE_LISTVIEW_EXPAND(hEle int, iGroup int32, bExpand bool, pbHandled *bool)
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTVIEW_EXPAND)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LISTVIEW_EXPAND1)(hEle, iGroup, bExpand, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_LISTVIEW_EXPAND1)(hEle, iGroup, bExpand, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret

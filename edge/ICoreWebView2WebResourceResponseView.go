@@ -1,5 +1,7 @@
 package edge
 
+// ok
+
 import (
 	"errors"
 	"github.com/twgh/xcgui/common"
@@ -133,4 +135,27 @@ func (i *ICoreWebView2WebResourceResponseView) GetContent(handler *ICoreWebView2
 		return syscall.Errno(r)
 	}
 	return nil
+}
+
+// GetContentEx 获取响应内容。处理程序将接收响应内容流。
+//   - 如果内容大小超过 123MB，或者对于会变成下载的导航，又或者如果响应是可下载内容类型（例如，application/octet-stream），则此方法返回 null。请参阅 DownloadStarting 事件来处理该响应。
+//   - 如果在首次调用完成之前再次调用此方法，将在调用先前调用的处理程序的同时调用该处理程序。
+//   - 如果在首次调用完成之后调用此方法，该处理程序将立即被调用。
+//
+// impl: *WebViewEventImpl。
+//
+// cb: 执行完成后的回调处理程序，接收返回结果。
+func (i *ICoreWebView2WebResourceResponseView) GetContentEx(impl *WebViewEventImpl, cb func(errorCode syscall.Errno, content []byte) uintptr) error {
+	handler := WvEventHandler.GetHandler(impl, "WebResourceResponseViewGetContentCompleted")
+	if handler == nil {
+		var c interface{}
+		if cb == nil {
+			c = nil
+		} else {
+			c = cb
+		}
+		_, _ = WvEventHandler.AddCallBack(impl, "WebResourceResponseViewGetContentCompleted", c, nil)
+		handler = WvEventHandler.GetHandler(impl, "WebResourceResponseViewGetContentCompleted")
+	}
+	return i.GetContent((*ICoreWebView2WebResourceResponseViewGetContentCompletedHandler)(handler))
 }

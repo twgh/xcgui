@@ -650,11 +650,9 @@ func onXE_TREE_TEMP_CREATE(hEle int, pItem *xc.Tree_Item_, nFlag int32, pbHandle
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_TREE_TEMP_CREATE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_TREE_TEMP_CREATE1)(hEle, pItem, nFlag, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_TREE_TEMP_CREATE1)(hEle, pItem, nFlag, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -675,11 +673,9 @@ func onXE_TREE_TEMP_CREATE_END(hEle int, pItem *xc.Tree_Item_, nFlag int32, pbHa
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_TREE_TEMP_CREATE_END)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_TREE_TEMP_CREATE_END1)(hEle, pItem, nFlag, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_TREE_TEMP_CREATE_END1)(hEle, pItem, nFlag, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -700,11 +696,9 @@ func onXE_TREE_TEMP_DESTROY(hEle int, pItem *xc.Tree_Item_, nFlag int32, pbHandl
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_TREE_TEMP_DESTROY)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_TREE_TEMP_DESTROY1)(hEle, pItem, nFlag, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_TREE_TEMP_DESTROY1)(hEle, pItem, nFlag, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -724,11 +718,9 @@ func onXE_TREE_TEMP_ADJUST_COORDINATE(hEle int, pItem *xc.Tree_Item_, pbHandled 
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_TREE_TEMP_ADJUST_COORDINATE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_TREE_TEMP_ADJUST_COORDINATE1)(hEle, pItem, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_TREE_TEMP_ADJUST_COORDINATE1)(hEle, pItem, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -748,11 +740,9 @@ func onXE_TREE_DRAWITEM(hEle int, hDraw int, pItem *xc.Tree_Item_, pbHandled *bo
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_TREE_DRAWITEM)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_TREE_DRAWITEM1)(hEle, hDraw, pItem, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_TREE_DRAWITEM1)(hEle, hDraw, pItem, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -772,11 +762,9 @@ func onXE_TREE_SELECT(hEle int, nItemID int32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_TREE_SELECT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_TREE_SELECT1)(hEle, nItemID, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_TREE_SELECT1)(hEle, nItemID, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -796,11 +784,9 @@ func onXE_TREE_EXPAND(hEle int, id int32, bExpand bool, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_TREE_EXPAND)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_TREE_EXPAND1)(hEle, id, bExpand, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_TREE_EXPAND1)(hEle, id, bExpand, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -820,11 +806,9 @@ func onXE_TREE_DRAG_ITEM_ING(hEle int, pInfo *xc.Tree_Drag_Item_, pbHandled *boo
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_TREE_DRAG_ITEM_ING)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_TREE_DRAG_ITEM_ING1)(hEle, pInfo, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_TREE_DRAG_ITEM_ING1)(hEle, pInfo, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -844,11 +828,9 @@ func onXE_TREE_DRAG_ITEM(hEle int, pInfo *xc.Tree_Drag_Item_, pbHandled *bool) i
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_TREE_DRAG_ITEM)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_TREE_DRAG_ITEM1)(hEle, pInfo, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_TREE_DRAG_ITEM1)(hEle, pInfo, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret

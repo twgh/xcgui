@@ -49,18 +49,21 @@ type _ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerImpl inter
 	AddScriptToExecuteOnDocumentCreatedCompleted(errorCode syscall.Errno, id *uint16) uintptr
 }
 
-var _ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerFn = _ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerInvoke),
-}
+var _ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerFn *_ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerVtbl
 
 func NewICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler(impl _ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerImpl) *ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler {
+	if _ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerFn == nil {
+		_ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerFn = &_ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler{
-		vtbl: &_ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerFn,
+		vtbl: _ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerFn,
 		impl: impl,
 	}
 }

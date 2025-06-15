@@ -46,18 +46,21 @@ type _ICoreWebView2ScriptDialogOpeningEventHandlerImpl interface {
 	ScriptDialogOpening(sender *ICoreWebView2, args *ICoreWebView2ScriptDialogOpeningEventArgs) uintptr
 }
 
-var _ICoreWebView2ScriptDialogOpeningEventHandlerFn = _ICoreWebView2ScriptDialogOpeningEventHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2ScriptDialogOpeningEventHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2ScriptDialogOpeningEventHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2ScriptDialogOpeningEventHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2ScriptDialogOpeningEventHandlerInvoke),
-}
+var _ICoreWebView2ScriptDialogOpeningEventHandlerFn *_ICoreWebView2ScriptDialogOpeningEventHandlerVtbl
 
 func NewICoreWebView2ScriptDialogOpeningEventHandler(impl _ICoreWebView2ScriptDialogOpeningEventHandlerImpl) *ICoreWebView2ScriptDialogOpeningEventHandler {
+	if _ICoreWebView2ScriptDialogOpeningEventHandlerFn == nil {
+		_ICoreWebView2ScriptDialogOpeningEventHandlerFn = &_ICoreWebView2ScriptDialogOpeningEventHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2ScriptDialogOpeningEventHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2ScriptDialogOpeningEventHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2ScriptDialogOpeningEventHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2ScriptDialogOpeningEventHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2ScriptDialogOpeningEventHandler{
-		vtbl: &_ICoreWebView2ScriptDialogOpeningEventHandlerFn,
+		vtbl: _ICoreWebView2ScriptDialogOpeningEventHandlerFn,
 		impl: impl,
 	}
 }

@@ -264,3 +264,27 @@ func (i *ICoreWebView2CookieManager) GetCookies(uri string, handler *ICoreWebVie
 	}
 	return nil
 }
+
+// GetCookiesEx 获取与指定 URI 匹配的所有 Cookie。
+//   - 如果 uri 为空字符串，则返回同一配置文件下的所有 Cookie。
+//   - 你可以通过调用 ICoreWebView2CookieManager.AddOrUpdateCookie 来修改 Cookie 对象，所做的更改将应用到WebView中。
+//
+// impl: *WebViewEventImpl.
+//
+// uri: 要匹配的 URI.
+//
+// cb: 接收结果的回调函数.
+func (i *ICoreWebView2CookieManager) GetCookiesEx(impl *WebViewEventImpl, uri string, cb func(errorCode syscall.Errno, cookies *ICoreWebView2CookieList) uintptr) error {
+	handler := WvEventHandler.GetHandler(impl, "GetCookiesCompleted")
+	if handler == nil {
+		var c interface{}
+		if cb == nil {
+			c = nil
+		} else {
+			c = cb
+		}
+		_, _ = WvEventHandler.AddCallBack(impl, "GetCookiesCompleted", c, nil)
+		handler = WvEventHandler.GetHandler(impl, "GetCookiesCompleted")
+	}
+	return i.GetCookies(uri, (*ICoreWebView2GetCookiesCompletedHandler)(handler))
+}

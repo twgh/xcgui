@@ -848,11 +848,9 @@ func onXE_EDIT_SET(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDIT_SET)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_EDIT_SET1)(hEle, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_EDIT_SET1)(hEle, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -872,11 +870,9 @@ func onXE_EDIT_DRAWROW(hEle int, hDraw int, iRow int32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDIT_DRAWROW)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_EDIT_DRAWROW1)(hEle, hDraw, iRow, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_EDIT_DRAWROW1)(hEle, hDraw, iRow, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -896,11 +892,9 @@ func onXE_EDIT_CHANGED(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDIT_CHANGED)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_EDIT_CHANGED1)(hEle, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_EDIT_CHANGED1)(hEle, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -920,11 +914,9 @@ func onXE_EDIT_POS_CHANGED(hEle int, iPos int32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDIT_POS_CHANGED)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_EDIT_POS_CHANGED1)(hEle, iPos, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_EDIT_POS_CHANGED1)(hEle, iPos, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -944,11 +936,9 @@ func onXE_EDIT_STYLE_CHANGED(hEle int, iStyle int32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDIT_STYLE_CHANGED)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_EDIT_STYLE_CHANGED1)(hEle, iStyle, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_EDIT_STYLE_CHANGED1)(hEle, iStyle, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -968,11 +958,9 @@ func onXE_EDIT_ENTER_GET_TABALIGN(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDIT_ENTER_GET_TABALIGN)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_EDIT_ENTER_GET_TABALIGN1)(hEle, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_EDIT_ENTER_GET_TABALIGN1)(hEle, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -994,11 +982,9 @@ func onXE_EDIT_ROW_CHANGED(hEle int, iRow int32, nChangeRows int32, pbHandled *b
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDIT_ROW_CHANGED)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_EDIT_ROW_CHANGED1)(hEle, iRow, nChangeRows, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_EDIT_ROW_CHANGED1)(hEle, iRow, nChangeRows, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -1018,11 +1004,9 @@ func onXE_EDIT_SWAPROW(hEle int, iRow int32, bArrowUp int32, pbHandled *bool) in
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDIT_SWAPROW)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_EDIT_SWAPROW1)(hEle, iRow, bArrowUp, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_EDIT_SWAPROW1)(hEle, iRow, bArrowUp, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -1042,11 +1026,9 @@ func onXE_EDIT_COLOR_CHANGE(hEle int, color int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDIT_COLOR_CHANGE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_EDIT_COLOR_CHANGE1)(hEle, color, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_EDIT_COLOR_CHANGE1)(hEle, color, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret

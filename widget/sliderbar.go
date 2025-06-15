@@ -146,11 +146,9 @@ func onXE_SLIDERBAR_CHANGE(hEle int, pos int32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_SLIDERBAR_CHANGE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_SLIDERBAR_CHANGE1)(hEle, pos, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_SLIDERBAR_CHANGE1)(hEle, pos, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret

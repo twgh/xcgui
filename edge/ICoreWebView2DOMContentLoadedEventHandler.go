@@ -46,18 +46,21 @@ type _ICoreWebView2DOMContentLoadedEventHandlerImpl interface {
 	DOMContentLoaded(sender *ICoreWebView2, args *ICoreWebView2DOMContentLoadedEventArgs) uintptr
 }
 
-var _ICoreWebView2DOMContentLoadedEventHandlerFn = _ICoreWebView2DOMContentLoadedEventHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2DOMContentLoadedEventHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2DOMContentLoadedEventHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2DOMContentLoadedEventHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2DOMContentLoadedEventHandlerInvoke),
-}
+var _ICoreWebView2DOMContentLoadedEventHandlerFn *_ICoreWebView2DOMContentLoadedEventHandlerVtbl
 
 func NewICoreWebView2DOMContentLoadedEventHandler(impl _ICoreWebView2DOMContentLoadedEventHandlerImpl) *ICoreWebView2DOMContentLoadedEventHandler {
+	if _ICoreWebView2DOMContentLoadedEventHandlerFn == nil {
+		_ICoreWebView2DOMContentLoadedEventHandlerFn = &_ICoreWebView2DOMContentLoadedEventHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2DOMContentLoadedEventHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2DOMContentLoadedEventHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2DOMContentLoadedEventHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2DOMContentLoadedEventHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2DOMContentLoadedEventHandler{
-		vtbl: &_ICoreWebView2DOMContentLoadedEventHandlerFn,
+		vtbl: _ICoreWebView2DOMContentLoadedEventHandlerFn,
 		impl: impl,
 	}
 }

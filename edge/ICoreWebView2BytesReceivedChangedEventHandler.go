@@ -46,18 +46,21 @@ type _ICoreWebView2BytesReceivedChangedEventHandlerImpl interface {
 	BytesReceivedChanged(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr
 }
 
-var _ICoreWebView2BytesReceivedChangedEventHandlerFn = _ICoreWebView2BytesReceivedChangedEventHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2BytesReceivedChangedEventHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2BytesReceivedChangedEventHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2BytesReceivedChangedEventHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2BytesReceivedChangedEventHandlerInvoke),
-}
+var _ICoreWebView2BytesReceivedChangedEventHandlerFn *_ICoreWebView2BytesReceivedChangedEventHandlerVtbl
 
 func NewICoreWebView2BytesReceivedChangedEventHandler(impl _ICoreWebView2BytesReceivedChangedEventHandlerImpl) *ICoreWebView2BytesReceivedChangedEventHandler {
+	if _ICoreWebView2BytesReceivedChangedEventHandlerFn == nil {
+		_ICoreWebView2BytesReceivedChangedEventHandlerFn = &_ICoreWebView2BytesReceivedChangedEventHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2BytesReceivedChangedEventHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2BytesReceivedChangedEventHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2BytesReceivedChangedEventHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2BytesReceivedChangedEventHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2BytesReceivedChangedEventHandler{
-		vtbl: &_ICoreWebView2BytesReceivedChangedEventHandlerFn,
+		vtbl: _ICoreWebView2BytesReceivedChangedEventHandlerFn,
 		impl: impl,
 	}
 }

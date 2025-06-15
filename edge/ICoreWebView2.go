@@ -557,6 +557,28 @@ func (i *ICoreWebView2) ExecuteScript(javaScript string, handler *ICoreWebView2E
 	return nil
 }
 
+// ExecuteScriptEx 在主页面上下文中执行 JavaScript 代码。
+//
+// impl: *WebViewEventImpl。
+//
+// javaScript: 要执行的 JavaScript 代码。
+//
+// cb: 执行完成后的回调处理程序，可以为 nil。如果 JavaScript 返回值，将通过 cb 返回。
+func (i *ICoreWebView2) ExecuteScriptEx(impl *WebViewEventImpl, javaScript string, cb func(errorCode syscall.Errno, result string) uintptr) error {
+	handler := WvEventHandler.GetHandler(impl, "ExecuteScriptCompleted")
+	if handler == nil {
+		var c interface{}
+		if cb == nil {
+			c = nil
+		} else {
+			c = cb
+		}
+		_, _ = WvEventHandler.AddCallBack(impl, "ExecuteScriptCompleted", c, nil)
+		handler = WvEventHandler.GetHandler(impl, "ExecuteScriptCompleted")
+	}
+	return i.ExecuteScript(javaScript, (*ICoreWebView2ExecuteScriptCompletedHandler)(handler))
+}
+
 // OpenDevToolsWindow 打开开发者工具窗口。
 func (i *ICoreWebView2) OpenDevToolsWindow() error {
 	r, _, err := i.Vtbl.OpenDevToolsWindow.Call(
@@ -712,6 +734,28 @@ func (i *ICoreWebView2) AddScriptToExecuteOnDocumentCreated(javaScript string, h
 	return nil
 }
 
+// AddScriptToExecuteOnDocumentCreated 添加在创建文档时要执行的脚本。
+//
+// impl: *WebViewEventImpl。
+//
+// javaScript: 要执行的 JavaScript 代码。
+//
+// cb: 添加脚本完成后的回调处理程序。
+func (i *ICoreWebView2) AddScriptToExecuteOnDocumentCreatedEx(impl *WebViewEventImpl, javaScript string, cb func(errorCode syscall.Errno, id string) uintptr) error {
+	handler := WvEventHandler.GetHandler(impl, "AddScriptToExecuteOnDocumentCreatedCompleted")
+	if handler == nil {
+		var c interface{}
+		if cb == nil {
+			c = nil
+		} else {
+			c = cb
+		}
+		_, _ = WvEventHandler.AddCallBack(impl, "AddScriptToExecuteOnDocumentCreatedCompleted", c, nil)
+		handler = WvEventHandler.GetHandler(impl, "AddScriptToExecuteOnDocumentCreatedCompleted")
+	}
+	return i.AddScriptToExecuteOnDocumentCreated(javaScript, (*ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler)(handler))
+}
+
 // RemoveScriptToExecuteOnDocumentCreated 移除在创建文档时要执行的脚本。
 //
 // id: 要移除的脚本的 ID。
@@ -805,7 +849,7 @@ func (i *ICoreWebView2) RemoveSourceChanged(token EventRegistrationToken) error 
 // AddFrameNavigationStarting 添加框架导航开始事件处理程序。
 //   - 框架导航开始事件会在 Webview 中的子框架请求导航到不同 URI 的权限时触发。重定向也会触发此操作，并且导航 ID 与原始 ID 相同。
 //   - 在所有框架导航开始事件处理程序返回之前，导航将被阻止。
-func (i *ICoreWebView2) AddFrameNavigationStarting(eventHandler *ICoreWebView2NavigationStartingEventHandler2, token *EventRegistrationToken) error {
+func (i *ICoreWebView2) AddFrameNavigationStarting(eventHandler *ICoreWebView2_Frame_NavigationStartingEventHandler, token *EventRegistrationToken) error {
 	r, _, err := i.Vtbl.AddFrameNavigationStarting.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
@@ -837,7 +881,7 @@ func (i *ICoreWebView2) RemoveFrameNavigationStarting(token EventRegistrationTok
 
 // AddFrameNavigationCompleted 添加框架导航完成事件处理程序。
 //   - 框架导航完成事件会在 Webview 中的子框架完全加载完毕（与 body.onload 触发同时）或加载因错误而停止时触发。
-func (i *ICoreWebView2) AddFrameNavigationCompleted(eventHandler *ICoreWebView2NavigationCompletedEventHandler2, token *EventRegistrationToken) error {
+func (i *ICoreWebView2) AddFrameNavigationCompleted(eventHandler *ICoreWebView2_Frame_NavigationCompletedEventHandler, token *EventRegistrationToken) error {
 	r, _, err := i.Vtbl.AddFrameNavigationCompleted.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
@@ -999,6 +1043,30 @@ func (i *ICoreWebView2) CapturePreview(imageFormat COREWEBVIEW2_CAPTURE_PREVIEW_
 		return syscall.Errno(r)
 	}
 	return nil
+}
+
+// CapturePreviewEx 捕获 Webview 的预览图像。
+//
+// impl: *WebViewEventImpl.
+//
+// imageFormat: 图像格式枚举值.
+//
+// imageStream: 接收图像数据的流对象.
+//
+// cb: 捕获完成后的回调处理程序. 写入流完毕后触发.
+func (i *ICoreWebView2) CapturePreviewEx(impl *WebViewEventImpl, imageFormat COREWEBVIEW2_CAPTURE_PREVIEW_IMAGE_FORMAT, imageStream *IStream, cb func(errorCode syscall.Errno) uintptr) error {
+	handler := WvEventHandler.GetHandler(impl, "CapturePreviewCompleted")
+	if handler == nil {
+		var c interface{}
+		if cb == nil {
+			c = nil
+		} else {
+			c = cb
+		}
+		_, _ = WvEventHandler.AddCallBack(impl, "CapturePreviewCompleted", c, nil)
+		handler = WvEventHandler.GetHandler(impl, "CapturePreviewCompleted")
+	}
+	return i.CapturePreview(imageFormat, imageStream, (*ICoreWebView2CapturePreviewCompletedHandler)(handler))
 }
 
 // AddContainsFullScreenElementChanged 添加是否包含全屏元素属性改变事件处理程序.
@@ -1191,6 +1259,30 @@ func (i *ICoreWebView2) CallDevToolsProtocolMethod(methodName string, parameters
 		return syscall.Errno(r)
 	}
 	return nil
+}
+
+// CallDevToolsProtocolMethodEx 调用 Chrome DevTools 协议方法。
+//
+// impl: *WebViewEventImpl。
+//
+// methodName: DevTools 协议方法的完整名称，格式为 {domain}.{method}。
+//
+// parametersAsJson: JSON 字符串，其中包含相应方法的参数。
+//
+// cb: 执行完成后的回调处理程序，接收返回的 JSON 结果。
+func (i *ICoreWebView2) CallDevToolsProtocolMethodEx(impl *WebViewEventImpl, methodName string, parametersAsJson string, cb func(errorCode syscall.Errno, result string) uintptr) error {
+	handler := WvEventHandler.GetHandler(impl, "CallDevToolsProtocolMethodCompleted")
+	if handler == nil {
+		var c interface{}
+		if cb == nil {
+			c = nil
+		} else {
+			c = cb
+		}
+		_, _ = WvEventHandler.AddCallBack(impl, "CallDevToolsProtocolMethodCompleted", c, nil)
+		handler = WvEventHandler.GetHandler(impl, "CallDevToolsProtocolMethodCompleted")
+	}
+	return i.CallDevToolsProtocolMethod(methodName, parametersAsJson, (*ICoreWebView2CallDevToolsProtocolMethodCompletedHandler)(handler))
 }
 
 // GetICoreWebView2_2 获取 ICoreWebView2_2。

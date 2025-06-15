@@ -335,11 +335,9 @@ func onXE_EDITOR_MODIFY_ROWS(hEle int, iRow int32, nRows int32, pbHandled *bool)
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDITOR_MODIFY_ROWS)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_EDITOR_MODIFY_ROWS1)(hEle, iRow, nRows, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_EDITOR_MODIFY_ROWS1)(hEle, iRow, nRows, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -359,11 +357,9 @@ func onXE_EDITOR_SETBREAKPOINT(hEle int, iRow int32, bCheck bool, pbHandled *boo
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDITOR_SETBREAKPOINT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_EDITOR_SETBREAKPOINT1)(hEle, iRow, bCheck, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_EDITOR_SETBREAKPOINT1)(hEle, iRow, bCheck, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -383,11 +379,9 @@ func onXE_EDITOR_REMOVEBREAKPOINT(hEle int, iRow int32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDITOR_REMOVEBREAKPOINT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_EDITOR_REMOVEBREAKPOINT1)(hEle, iRow, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_EDITOR_REMOVEBREAKPOINT1)(hEle, iRow, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -407,11 +401,9 @@ func onXE_EDITOR_AUTOMATCH_SELECT(hEle int, iRow int32, nRows int32, pbHandled *
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDITOR_AUTOMATCH_SELECT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_EDITOR_AUTOMATCH_SELECT1)(hEle, iRow, nRows, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_EDITOR_AUTOMATCH_SELECT1)(hEle, iRow, nRows, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret

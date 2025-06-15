@@ -46,18 +46,21 @@ type _ICoreWebView2AcceleratorKeyPressedEventHandlerImpl interface {
 	AcceleratorKeyPressed(sender *ICoreWebView2Controller, args *ICoreWebView2AcceleratorKeyPressedEventArgs) uintptr
 }
 
-var _ICoreWebView2AcceleratorKeyPressedEventHandlerFn = _ICoreWebView2AcceleratorKeyPressedEventHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2AcceleratorKeyPressedEventHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2AcceleratorKeyPressedEventHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2AcceleratorKeyPressedEventHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2AcceleratorKeyPressedEventHandlerInvoke),
-}
+var _ICoreWebView2AcceleratorKeyPressedEventHandlerFn *_ICoreWebView2AcceleratorKeyPressedEventHandlerVtbl
 
 func NewICoreWebView2AcceleratorKeyPressedEventHandler(impl _ICoreWebView2AcceleratorKeyPressedEventHandlerImpl) *ICoreWebView2AcceleratorKeyPressedEventHandler {
+	if _ICoreWebView2AcceleratorKeyPressedEventHandlerFn == nil {
+		_ICoreWebView2AcceleratorKeyPressedEventHandlerFn = &_ICoreWebView2AcceleratorKeyPressedEventHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2AcceleratorKeyPressedEventHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2AcceleratorKeyPressedEventHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2AcceleratorKeyPressedEventHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2AcceleratorKeyPressedEventHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2AcceleratorKeyPressedEventHandler{
-		vtbl: &_ICoreWebView2AcceleratorKeyPressedEventHandlerFn,
+		vtbl: _ICoreWebView2AcceleratorKeyPressedEventHandlerFn,
 		impl: impl,
 	}
 }

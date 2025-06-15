@@ -46,18 +46,21 @@ type _ICoreWebView2SourceChangedEventHandlerImpl interface {
 	SourceChanged(sender *ICoreWebView2, args *ICoreWebView2SourceChangedEventArgs) uintptr
 }
 
-var _ICoreWebView2SourceChangedEventHandlerFn = _ICoreWebView2SourceChangedEventHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2SourceChangedEventHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2SourceChangedEventHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2SourceChangedEventHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2SourceChangedEventHandlerInvoke),
-}
+var _ICoreWebView2SourceChangedEventHandlerFn *_ICoreWebView2SourceChangedEventHandlerVtbl
 
 func NewICoreWebView2SourceChangedEventHandler(impl _ICoreWebView2SourceChangedEventHandlerImpl) *ICoreWebView2SourceChangedEventHandler {
+	if _ICoreWebView2SourceChangedEventHandlerFn == nil {
+		_ICoreWebView2SourceChangedEventHandlerFn = &_ICoreWebView2SourceChangedEventHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2SourceChangedEventHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2SourceChangedEventHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2SourceChangedEventHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2SourceChangedEventHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2SourceChangedEventHandler{
-		vtbl: &_ICoreWebView2SourceChangedEventHandlerFn,
+		vtbl: _ICoreWebView2SourceChangedEventHandlerFn,
 		impl: impl,
 	}
 }

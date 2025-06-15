@@ -46,18 +46,21 @@ type _ICoreWebView2ProcessFailedEventHandlerImpl interface {
 	ProcessFailed(sender *ICoreWebView2, args *ICoreWebView2ProcessFailedEventArgs) uintptr
 }
 
-var _ICoreWebView2ProcessFailedEventHandlerFn = _ICoreWebView2ProcessFailedEventHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2ProcessFailedEventHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2ProcessFailedEventHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2ProcessFailedEventHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2ProcessFailedEventHandlerInvoke),
-}
+var _ICoreWebView2ProcessFailedEventHandlerFn *_ICoreWebView2ProcessFailedEventHandlerVtbl
 
 func NewICoreWebView2ProcessFailedEventHandler(impl _ICoreWebView2ProcessFailedEventHandlerImpl) *ICoreWebView2ProcessFailedEventHandler {
+	if _ICoreWebView2ProcessFailedEventHandlerFn == nil {
+		_ICoreWebView2ProcessFailedEventHandlerFn = &_ICoreWebView2ProcessFailedEventHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2ProcessFailedEventHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2ProcessFailedEventHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2ProcessFailedEventHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2ProcessFailedEventHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2ProcessFailedEventHandler{
-		vtbl: &_ICoreWebView2ProcessFailedEventHandlerFn,
+		vtbl: _ICoreWebView2ProcessFailedEventHandlerFn,
 		impl: impl,
 	}
 }

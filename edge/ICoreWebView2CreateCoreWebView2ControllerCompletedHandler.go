@@ -39,18 +39,21 @@ type _ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerImpl interface {
 	CreateCoreWebView2ControllerCompleted(errorCode syscall.Errno, createdController *ICoreWebView2Controller) uintptr
 }
 
-var _ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerFn = _ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerInvoke),
-}
+var _ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerFn *_ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerVtbl
 
 func NewICoreWebView2CreateCoreWebView2ControllerCompletedHandler(impl _ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerImpl) *ICoreWebView2CreateCoreWebView2ControllerCompletedHandler {
+	if _ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerFn == nil {
+		_ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerFn = &_ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2CreateCoreWebView2ControllerCompletedHandler{
-		vtbl: &_ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerFn,
+		vtbl: _ICoreWebView2CreateCoreWebView2ControllerCompletedHandlerFn,
 		impl: impl,
 	}
 }

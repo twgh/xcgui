@@ -38,6 +38,27 @@ type ICoreWebView2DownloadOperationVtbl struct {
 	GetCanResume                  ComProc
 }
 
+func (i *ICoreWebView2DownloadOperation) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2DownloadOperation) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2DownloadOperation) QueryInterface(refiid, object unsafe.Pointer) error {
+	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
 // AddBytesReceivedChanged 添加接收到的字节数改变事件处理程序.
 func (i *ICoreWebView2DownloadOperation) AddBytesReceivedChanged(eventHandler *ICoreWebView2BytesReceivedChangedEventHandler, token *EventRegistrationToken) error {
 	r, _, err := i.Vtbl.AddBytesReceivedChanged.Call(
@@ -362,6 +383,12 @@ func (i *ICoreWebView2DownloadOperation) MustGetCanResume() bool {
 	canResume, err := i.GetCanResume()
 	ReportErrorAtuo(err)
 	return canResume
+}
+
+// Event_BytesReceivedChanged 下载字节改变事件.
+//   - 当下载的字节数发生更改时触发。
+func (i *ICoreWebView2DownloadOperation) Event_BytesReceivedChanged(w *WebViewEventImpl, cb func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
+	return WvEventHandler.AddCallBack(w, "BytesReceivedChanged", cb, i, allowAddingMultiple...)
 }
 
 /*TODO:

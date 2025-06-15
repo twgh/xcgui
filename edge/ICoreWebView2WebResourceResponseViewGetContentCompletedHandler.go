@@ -49,18 +49,21 @@ type _ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerImpl interfa
 	WebResourceResponseViewGetContentCompleted(errorCode syscall.Errno, result *IStream) uintptr
 }
 
-var _ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerFn = _ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerInvoke),
-}
+var _ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerFn *_ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerVtbl
 
 func NewICoreWebView2WebResourceResponseViewGetContentCompletedHandler(impl _ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerImpl) *ICoreWebView2WebResourceResponseViewGetContentCompletedHandler {
+	if _ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerFn == nil {
+		_ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerFn = &_ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2WebResourceResponseViewGetContentCompletedHandler{
-		vtbl: &_ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerFn,
+		vtbl: _ICoreWebView2WebResourceResponseViewGetContentCompletedHandlerFn,
 		impl: impl,
 	}
 }

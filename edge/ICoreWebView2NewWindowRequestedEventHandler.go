@@ -46,18 +46,21 @@ type _ICoreWebView2NewWindowRequestedEventHandlerImpl interface {
 	NewWindowRequested(sender *ICoreWebView2, args *ICoreWebView2NewWindowRequestedEventArgs) uintptr
 }
 
-var _ICoreWebView2NewWindowRequestedEventHandlerFn = _ICoreWebView2NewWindowRequestedEventHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2NewWindowRequestedEventHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2NewWindowRequestedEventHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2NewWindowRequestedEventHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2NewWindowRequestedEventHandlerInvoke),
-}
+var _ICoreWebView2NewWindowRequestedEventHandlerFn *_ICoreWebView2NewWindowRequestedEventHandlerVtbl
 
 func NewICoreWebView2NewWindowRequestedEventHandler(impl _ICoreWebView2NewWindowRequestedEventHandlerImpl) *ICoreWebView2NewWindowRequestedEventHandler {
+	if _ICoreWebView2NewWindowRequestedEventHandlerFn == nil {
+		_ICoreWebView2NewWindowRequestedEventHandlerFn = &_ICoreWebView2NewWindowRequestedEventHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2NewWindowRequestedEventHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2NewWindowRequestedEventHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2NewWindowRequestedEventHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2NewWindowRequestedEventHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2NewWindowRequestedEventHandler{
-		vtbl: &_ICoreWebView2NewWindowRequestedEventHandlerFn,
+		vtbl: _ICoreWebView2NewWindowRequestedEventHandlerFn,
 		impl: impl,
 	}
 }

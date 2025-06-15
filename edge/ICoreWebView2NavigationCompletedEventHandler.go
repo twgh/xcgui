@@ -46,18 +46,21 @@ type _ICoreWebView2NavigationCompletedEventHandlerImpl interface {
 	NavigationCompleted(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr
 }
 
-var _ICoreWebView2NavigationCompletedEventHandlerFn = _ICoreWebView2NavigationCompletedEventHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2NavigationCompletedEventHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2NavigationCompletedEventHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2NavigationCompletedEventHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2NavigationCompletedEventHandlerInvoke),
-}
+var _ICoreWebView2NavigationCompletedEventHandlerFn *_ICoreWebView2NavigationCompletedEventHandlerVtbl
 
 func NewICoreWebView2NavigationCompletedEventHandler(impl _ICoreWebView2NavigationCompletedEventHandlerImpl) *ICoreWebView2NavigationCompletedEventHandler {
+	if _ICoreWebView2NavigationCompletedEventHandlerFn == nil {
+		_ICoreWebView2NavigationCompletedEventHandlerFn = &_ICoreWebView2NavigationCompletedEventHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2NavigationCompletedEventHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2NavigationCompletedEventHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2NavigationCompletedEventHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2NavigationCompletedEventHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2NavigationCompletedEventHandler{
-		vtbl: &_ICoreWebView2NavigationCompletedEventHandlerFn,
+		vtbl: _ICoreWebView2NavigationCompletedEventHandlerFn,
 		impl: impl,
 	}
 }

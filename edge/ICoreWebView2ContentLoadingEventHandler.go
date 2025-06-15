@@ -57,20 +57,23 @@ type _ICoreWebView2ContentLoadingEventHandlerImpl interface {
 	ContentLoading(sender *ICoreWebView2, args *ICoreWebView2ContentLoadingEventArgs) uintptr
 }
 
-var _ICoreWebView2ContentLoadingEventHandlerFn = _ICoreWebView2ContentLoadingEventHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2ContentLoadingEventHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2ContentLoadingEventHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2ContentLoadingEventHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2ContentLoadingEventHandlerInvoke),
-}
+var _ICoreWebView2ContentLoadingEventHandlerFn *_ICoreWebView2ContentLoadingEventHandlerVtbl
 
 func NewICoreWebView2ContentLoadingEventHandler(
 	impl _ICoreWebView2ContentLoadingEventHandlerImpl,
 ) *ICoreWebView2ContentLoadingEventHandler {
+	if _ICoreWebView2ContentLoadingEventHandlerFn == nil {
+		_ICoreWebView2ContentLoadingEventHandlerFn = &_ICoreWebView2ContentLoadingEventHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2ContentLoadingEventHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2ContentLoadingEventHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2ContentLoadingEventHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2ContentLoadingEventHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2ContentLoadingEventHandler{
-		vtbl: &_ICoreWebView2ContentLoadingEventHandlerFn,
+		vtbl: _ICoreWebView2ContentLoadingEventHandlerFn,
 		impl: impl,
 	}
 }

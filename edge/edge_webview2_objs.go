@@ -1,8 +1,10 @@
 package edge
 
-// Webview2_Objs 中声明了 WebView2_2 - WebView2_27,
-// 默认值为 nil, 使用前需赋值, 或调用一次 WebView2.InitAllWebView2_Objs() 进行统一赋值, 在 webview 关闭时会自动释放所有的 WebView2_ 系列对象.
-type Webview2_Objs struct {
+// WebView2_Objs 中声明了 WebView2_2 - WebView2_27,
+// 默认值为 nil, 使用前需赋值.
+//   - 可调用 InitWebView2_Objs 进行统一赋值.
+//   - 在 WebView 关闭时会自动调用 ReleaseWebView2_Objs, 自己额外创建的 WebView2_Objs 得自己手动释放.
+type WebView2_Objs struct {
 	WebView2_2  *ICoreWebView2_2  // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
 	WebView2_3  *ICoreWebView2_3  // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
 	WebView2_4  *ICoreWebView2_4  // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
@@ -31,165 +33,165 @@ type Webview2_Objs struct {
 	WebView2_27 *ICoreWebView2_27 // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
 }
 
-// InitAllWebView2_Objs 初始化所有的 WebView2_ 系列对象, 给本类 Webview2_Objs 中的成员赋值.
+// InitWebView2_Objs 初始化所有的 WebView2_ 系列对象.
 //   - 从 2 到 27 按顺序获取, 出错时返回出错序号.
 //   - 比如获取 WebView2_2 时失败返回 2, 获取 WebView2_3 时失败返回 3, 以此类推.
 //   - 如果返回0, 代表成功获取到了 WebView2_2 到 WebView2_27.
 //   - 这些对象, 只要运行时版本支持, 基本是不会获取出错的.
-func (w *WebView2) InitAllWebView2_Objs() int {
+func (w *WebView2_Objs) InitWebView2_Objs(CoreWebView *ICoreWebView2) int {
 	var err error
 	if w.WebView2_2 == nil {
-		w.WebView2_2, err = w.CoreWebView.GetICoreWebView2_2()
+		w.WebView2_2, err = CoreWebView.GetICoreWebView2_2()
 		if err != nil {
 			return 2
 		}
 	}
 	if w.WebView2_3 == nil {
-		w.WebView2_3, err = w.CoreWebView.GetICoreWebView2_3()
+		w.WebView2_3, err = CoreWebView.GetICoreWebView2_3()
 		if err != nil {
 			return 3
 		}
 	}
 	if w.WebView2_4 == nil {
-		w.WebView2_4, err = w.CoreWebView.GetICoreWebView2_4()
+		w.WebView2_4, err = CoreWebView.GetICoreWebView2_4()
 		if err != nil {
 			return 4
 		}
 	}
 	if w.WebView2_5 == nil {
-		w.WebView2_5, err = w.CoreWebView.GetICoreWebView2_5()
+		w.WebView2_5, err = CoreWebView.GetICoreWebView2_5()
 		if err != nil {
 			return 5
 		}
 	}
 	if w.WebView2_6 == nil {
-		w.WebView2_6, err = w.CoreWebView.GetICoreWebView2_6()
+		w.WebView2_6, err = CoreWebView.GetICoreWebView2_6()
 		if err != nil {
 			return 6
 		}
 	}
 	if w.WebView2_7 == nil {
-		w.WebView2_7, err = w.CoreWebView.GetICoreWebView2_7()
+		w.WebView2_7, err = CoreWebView.GetICoreWebView2_7()
 		if err != nil {
 			return 7
 		}
 	}
 	if w.WebView2_8 == nil {
-		w.WebView2_8, err = w.CoreWebView.GetICoreWebView2_8()
+		w.WebView2_8, err = CoreWebView.GetICoreWebView2_8()
 		if err != nil {
 			return 8
 		}
 	}
 	if w.WebView2_9 == nil {
-		w.WebView2_9, err = w.CoreWebView.GetICoreWebView2_9()
+		w.WebView2_9, err = CoreWebView.GetICoreWebView2_9()
 		if err != nil {
 			return 9
 		}
 	}
 	if w.WebView2_10 == nil {
-		w.WebView2_10, err = w.CoreWebView.GetICoreWebView2_10()
+		w.WebView2_10, err = CoreWebView.GetICoreWebView2_10()
 		if err != nil {
 			return 10
 		}
 	}
 	if w.WebView2_11 == nil {
-		w.WebView2_11, err = w.CoreWebView.GetICoreWebView2_11()
+		w.WebView2_11, err = CoreWebView.GetICoreWebView2_11()
 		if err != nil {
 			return 11
 		}
 	}
 	if w.WebView2_12 == nil {
-		w.WebView2_12, err = w.CoreWebView.GetICoreWebView2_12()
+		w.WebView2_12, err = CoreWebView.GetICoreWebView2_12()
 		if err != nil {
 			return 12
 		}
 	}
 	if w.WebView2_13 == nil {
-		w.WebView2_13, err = w.CoreWebView.GetICoreWebView2_13()
+		w.WebView2_13, err = CoreWebView.GetICoreWebView2_13()
 		if err != nil {
 			return 13
 		}
 	}
 	if w.WebView2_14 == nil {
-		w.WebView2_14, err = w.CoreWebView.GetICoreWebView2_14()
+		w.WebView2_14, err = CoreWebView.GetICoreWebView2_14()
 		if err != nil {
 			return 14
 		}
 	}
 	if w.WebView2_15 == nil {
-		w.WebView2_15, err = w.CoreWebView.GetICoreWebView2_15()
+		w.WebView2_15, err = CoreWebView.GetICoreWebView2_15()
 		if err != nil {
 			return 15
 		}
 	}
 	if w.WebView2_16 == nil {
-		w.WebView2_16, err = w.CoreWebView.GetICoreWebView2_16()
+		w.WebView2_16, err = CoreWebView.GetICoreWebView2_16()
 		if err != nil {
 			return 16
 		}
 	}
 	if w.WebView2_17 == nil {
-		w.WebView2_17, err = w.CoreWebView.GetICoreWebView2_17()
+		w.WebView2_17, err = CoreWebView.GetICoreWebView2_17()
 		if err != nil {
 			return 17
 		}
 	}
 	if w.WebView2_18 == nil {
-		w.WebView2_18, err = w.CoreWebView.GetICoreWebView2_18()
+		w.WebView2_18, err = CoreWebView.GetICoreWebView2_18()
 		if err != nil {
 			return 18
 		}
 	}
 	if w.WebView2_19 == nil {
-		w.WebView2_19, err = w.CoreWebView.GetICoreWebView2_19()
+		w.WebView2_19, err = CoreWebView.GetICoreWebView2_19()
 		if err != nil {
 			return 19
 		}
 	}
 	if w.WebView2_20 == nil {
-		w.WebView2_20, err = w.CoreWebView.GetICoreWebView2_20()
+		w.WebView2_20, err = CoreWebView.GetICoreWebView2_20()
 		if err != nil {
 			return 20
 		}
 	}
 	if w.WebView2_21 == nil {
-		w.WebView2_21, err = w.CoreWebView.GetICoreWebView2_21()
+		w.WebView2_21, err = CoreWebView.GetICoreWebView2_21()
 		if err != nil {
 			return 21
 		}
 	}
 	if w.WebView2_22 == nil {
-		w.WebView2_22, err = w.CoreWebView.GetICoreWebView2_22()
+		w.WebView2_22, err = CoreWebView.GetICoreWebView2_22()
 		if err != nil {
 			return 22
 		}
 	}
 	if w.WebView2_23 == nil {
-		w.WebView2_23, err = w.CoreWebView.GetICoreWebView2_23()
+		w.WebView2_23, err = CoreWebView.GetICoreWebView2_23()
 		if err != nil {
 			return 23
 		}
 	}
 	if w.WebView2_24 == nil {
-		w.WebView2_24, err = w.CoreWebView.GetICoreWebView2_24()
+		w.WebView2_24, err = CoreWebView.GetICoreWebView2_24()
 		if err != nil {
 			return 24
 		}
 	}
 	if w.WebView2_25 == nil {
-		w.WebView2_25, err = w.CoreWebView.GetICoreWebView2_25()
+		w.WebView2_25, err = CoreWebView.GetICoreWebView2_25()
 		if err != nil {
 			return 25
 		}
 	}
 	if w.WebView2_26 == nil {
-		w.WebView2_26, err = w.CoreWebView.GetICoreWebView2_26()
+		w.WebView2_26, err = CoreWebView.GetICoreWebView2_26()
 		if err != nil {
 			return 26
 		}
 	}
 	if w.WebView2_27 == nil {
-		w.WebView2_27, err = w.CoreWebView.GetICoreWebView2_27()
+		w.WebView2_27, err = CoreWebView.GetICoreWebView2_27()
 		if err != nil {
 			return 27
 		}
@@ -197,8 +199,8 @@ func (w *WebView2) InitAllWebView2_Objs() int {
 	return 0
 }
 
-// 释放所有的 WebView2_ 系列对象. 会在使用 Close 时自动调用.
-func (w *WebView2) releaseAllWebView2_Objs() {
+// ReleaseWebView2_Objs 释放所有的 WebView2_ 系列对象.
+func (w *WebView2_Objs) ReleaseWebView2_Objs() {
 	if w.WebView2_2 != nil {
 		w.WebView2_2.Release()
 		w.WebView2_2 = nil
@@ -302,10 +304,5 @@ func (w *WebView2) releaseAllWebView2_Objs() {
 	if w.WebView2_27 != nil {
 		w.WebView2_27.Release()
 		w.WebView2_27 = nil
-	}
-
-	if w.CoreWebView != nil {
-		w.CoreWebView.Release()
-		w.CoreWebView = nil
 	}
 }

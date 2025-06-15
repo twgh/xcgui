@@ -46,18 +46,21 @@ type _ICoreWebView2RasterizationScaleChangedEventHandlerImpl interface {
 	RasterizationScaleChanged(sender *ICoreWebView2Controller, args *IUnknown) uintptr
 }
 
-var _ICoreWebView2RasterizationScaleChangedEventHandlerFn = _ICoreWebView2RasterizationScaleChangedEventHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2RasterizationScaleChangedEventHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2RasterizationScaleChangedEventHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2RasterizationScaleChangedEventHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2RasterizationScaleChangedEventHandlerInvoke),
-}
+var _ICoreWebView2RasterizationScaleChangedEventHandlerFn *_ICoreWebView2RasterizationScaleChangedEventHandlerVtbl
 
 func NewICoreWebView2RasterizationScaleChangedEventHandler(impl _ICoreWebView2RasterizationScaleChangedEventHandlerImpl) *ICoreWebView2RasterizationScaleChangedEventHandler {
+	if _ICoreWebView2RasterizationScaleChangedEventHandlerFn == nil {
+		_ICoreWebView2RasterizationScaleChangedEventHandlerFn = &_ICoreWebView2RasterizationScaleChangedEventHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2RasterizationScaleChangedEventHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2RasterizationScaleChangedEventHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2RasterizationScaleChangedEventHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2RasterizationScaleChangedEventHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2RasterizationScaleChangedEventHandler{
-		vtbl: &_ICoreWebView2RasterizationScaleChangedEventHandlerFn,
+		vtbl: _ICoreWebView2RasterizationScaleChangedEventHandlerFn,
 		impl: impl,
 	}
 }

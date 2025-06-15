@@ -59,20 +59,23 @@ type _ICoreWebView2CapturePreviewCompletedHandlerImpl interface {
 	CapturePreviewCompleted(errorCode syscall.Errno) uintptr
 }
 
-var _ICoreWebView2CapturePreviewCompletedHandlerFn = _ICoreWebView2CapturePreviewCompletedHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2CapturePreviewCompletedHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2CapturePreviewCompletedHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2CapturePreviewCompletedHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2CapturePreviewCompletedHandlerInvoke),
-}
+var _ICoreWebView2CapturePreviewCompletedHandlerFn *_ICoreWebView2CapturePreviewCompletedHandlerVtbl
 
 func NewICoreWebView2CapturePreviewCompletedHandler(
 	impl _ICoreWebView2CapturePreviewCompletedHandlerImpl,
 ) *ICoreWebView2CapturePreviewCompletedHandler {
+	if _ICoreWebView2CapturePreviewCompletedHandlerFn == nil {
+		_ICoreWebView2CapturePreviewCompletedHandlerFn = &_ICoreWebView2CapturePreviewCompletedHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2CapturePreviewCompletedHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2CapturePreviewCompletedHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2CapturePreviewCompletedHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2CapturePreviewCompletedHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2CapturePreviewCompletedHandler{
-		vtbl: &_ICoreWebView2CapturePreviewCompletedHandlerFn,
+		vtbl: _ICoreWebView2CapturePreviewCompletedHandlerFn,
 		impl: impl,
 	}
 }

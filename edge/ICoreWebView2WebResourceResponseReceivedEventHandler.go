@@ -46,18 +46,21 @@ type _ICoreWebView2WebResourceResponseReceivedEventHandlerImpl interface {
 	WebResourceResponseReceived(sender *ICoreWebView2, args *ICoreWebView2WebResourceResponseReceivedEventArgs) uintptr
 }
 
-var _ICoreWebView2WebResourceResponseReceivedEventHandlerFn = _ICoreWebView2WebResourceResponseReceivedEventHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2WebResourceResponseReceivedEventHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2WebResourceResponseReceivedEventHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2WebResourceResponseReceivedEventHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2WebResourceResponseReceivedEventHandlerInvoke),
-}
+var _ICoreWebView2WebResourceResponseReceivedEventHandlerFn *_ICoreWebView2WebResourceResponseReceivedEventHandlerVtbl
 
 func NewICoreWebView2WebResourceResponseReceivedEventHandler(impl _ICoreWebView2WebResourceResponseReceivedEventHandlerImpl) *ICoreWebView2WebResourceResponseReceivedEventHandler {
+	if _ICoreWebView2WebResourceResponseReceivedEventHandlerFn == nil {
+		_ICoreWebView2WebResourceResponseReceivedEventHandlerFn = &_ICoreWebView2WebResourceResponseReceivedEventHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2WebResourceResponseReceivedEventHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2WebResourceResponseReceivedEventHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2WebResourceResponseReceivedEventHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2WebResourceResponseReceivedEventHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2WebResourceResponseReceivedEventHandler{
-		vtbl: &_ICoreWebView2WebResourceResponseReceivedEventHandlerFn,
+		vtbl: _ICoreWebView2WebResourceResponseReceivedEventHandlerFn,
 		impl: impl,
 	}
 }

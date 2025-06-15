@@ -49,18 +49,21 @@ type _ICoreWebView2GetCookiesCompletedHandlerImpl interface {
 	GetCookiesCompleted(errorCode syscall.Errno, cookies *ICoreWebView2CookieList) uintptr
 }
 
-var _ICoreWebView2GetCookiesCompletedHandlerFn = _ICoreWebView2GetCookiesCompletedHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2GetCookiesCompletedHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2GetCookiesCompletedHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2GetCookiesCompletedHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2GetCookiesCompletedHandlerInvoke),
-}
+var _ICoreWebView2GetCookiesCompletedHandlerFn *_ICoreWebView2GetCookiesCompletedHandlerVtbl
 
 func NewICoreWebView2GetCookiesCompletedHandler(impl _ICoreWebView2GetCookiesCompletedHandlerImpl) *ICoreWebView2GetCookiesCompletedHandler {
+	if _ICoreWebView2GetCookiesCompletedHandlerFn == nil {
+		_ICoreWebView2GetCookiesCompletedHandlerFn = &_ICoreWebView2GetCookiesCompletedHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2GetCookiesCompletedHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2GetCookiesCompletedHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2GetCookiesCompletedHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2GetCookiesCompletedHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2GetCookiesCompletedHandler{
-		vtbl: &_ICoreWebView2GetCookiesCompletedHandlerFn,
+		vtbl: _ICoreWebView2GetCookiesCompletedHandlerFn,
 		impl: impl,
 	}
 }

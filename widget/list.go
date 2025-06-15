@@ -963,11 +963,9 @@ func onXE_LIST_TEMP_CREATE(hEle int, pItem *xc.List_Item_, nFlag int32, pbHandle
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_TEMP_CREATE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LIST_TEMP_CREATE1)(hEle, pItem, nFlag, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_LIST_TEMP_CREATE1)(hEle, pItem, nFlag, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -988,11 +986,9 @@ func onXE_LIST_TEMP_CREATE_END(hEle int, pItem *xc.List_Item_, nFlag int32, pbHa
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_TEMP_CREATE_END)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LIST_TEMP_CREATE_END1)(hEle, pItem, nFlag, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_LIST_TEMP_CREATE_END1)(hEle, pItem, nFlag, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -1013,11 +1009,9 @@ func onXE_LIST_TEMP_DESTROY(hEle int, pItem *xc.List_Item_, nFlag int32, pbHandl
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_TEMP_DESTROY)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LIST_TEMP_DESTROY1)(hEle, pItem, nFlag, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_LIST_TEMP_DESTROY1)(hEle, pItem, nFlag, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -1037,11 +1031,9 @@ func onXE_LIST_TEMP_ADJUST_COORDINATE(hEle int, pItem *xc.List_Item_, pbHandled 
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_TEMP_ADJUST_COORDINATE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LIST_TEMP_ADJUST_COORDINATE1)(hEle, pItem, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_LIST_TEMP_ADJUST_COORDINATE1)(hEle, pItem, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -1061,11 +1053,9 @@ func onXE_LIST_DRAWITEM(hEle int, hDraw int, pItem *xc.List_Item_, pbHandled *bo
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_DRAWITEM)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LIST_DRAWITEM1)(hEle, hDraw, pItem, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_LIST_DRAWITEM1)(hEle, hDraw, pItem, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -1085,11 +1075,9 @@ func onXE_LIST_SELECT(hEle int, iItem int32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_SELECT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LIST_SELECT1)(hEle, iItem, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_LIST_SELECT1)(hEle, iItem, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -1109,11 +1097,9 @@ func onXE_LIST_HEADER_DRAWITEM(hEle int, hDraw int, pItem *xc.List_Header_Item_,
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_HEADER_DRAWITEM)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LIST_HEADER_DRAWITEM1)(hEle, hDraw, pItem, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_LIST_HEADER_DRAWITEM1)(hEle, hDraw, pItem, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -1133,11 +1119,9 @@ func onXE_LIST_HEADER_CLICK(hEle int, iItem int32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_HEADER_CLICK)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LIST_HEADER_CLICK1)(hEle, iItem, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_LIST_HEADER_CLICK1)(hEle, iItem, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -1157,11 +1141,9 @@ func onXE_LIST_HEADER_WIDTH_CHANGE(hEle int, iItem int32, nWidth int32, pbHandle
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_HEADER_WIDTH_CHANGE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LIST_HEADER_WIDTH_CHANGE1)(hEle, iItem, nWidth, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_LIST_HEADER_WIDTH_CHANGE1)(hEle, iItem, nWidth, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -1181,11 +1163,9 @@ func onXE_LIST_HEADER_TEMP_CREATE(hEle int, pItem *xc.List_Header_Item_, pbHandl
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_HEADER_TEMP_CREATE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LIST_HEADER_TEMP_CREATE1)(hEle, pItem, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_LIST_HEADER_TEMP_CREATE1)(hEle, pItem, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -1205,11 +1185,9 @@ func onXE_LIST_HEADER_TEMP_CREATE_END(hEle int, pItem *xc.List_Header_Item_, pbH
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_HEADER_TEMP_CREATE_END)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LIST_HEADER_TEMP_CREATE_END1)(hEle, pItem, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_LIST_HEADER_TEMP_CREATE_END1)(hEle, pItem, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -1229,11 +1207,9 @@ func onXE_LIST_HEADER_TEMP_DESTROY(hEle int, pItem *xc.List_Header_Item_, pbHand
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_HEADER_TEMP_DESTROY)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LIST_HEADER_TEMP_DESTROY1)(hEle, pItem, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_LIST_HEADER_TEMP_DESTROY1)(hEle, pItem, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret
@@ -1253,11 +1229,9 @@ func onXE_LIST_HEADER_TEMP_ADJUST_COORDINATE(hEle int, pItem *xc.List_Header_Ite
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_HEADER_TEMP_ADJUST_COORDINATE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(XE_LIST_HEADER_TEMP_ADJUST_COORDINATE1)(hEle, pItem, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(XE_LIST_HEADER_TEMP_ADJUST_COORDINATE1)(hEle, pItem, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 	return ret

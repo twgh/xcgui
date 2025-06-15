@@ -32,12 +32,12 @@ func newEleEventHandler() *eleEventHandler {
 //
 // eventFunc: 事件函数.
 //
-// fun: 回调函数.
+// cb: 回调函数. 不能为 nil.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 默认为 false.
 //   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 //   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-func (h *eleEventHandler) AddCallBack(hEle int, eventType xcc.XE_, eventFunc interface{}, fun interface{}, allowAddingMultiple ...bool) int {
+func (h *eleEventHandler) AddCallBack(hEle int, eventType xcc.XE_, eventFunc interface{}, cb interface{}, allowAddingMultiple ...bool) int {
 	h.Lock()
 	defer h.Unlock()
 
@@ -70,10 +70,10 @@ func (h *eleEventHandler) AddCallBack(hEle int, eventType xcc.XE_, eventFunc int
 	}
 	idnex := 0
 	if isAddingMultiple {
-		info.Cbs = append(info.Cbs, fun)
+		info.Cbs = append(info.Cbs, cb)
 		idnex = len(info.Cbs) - 1
 	} else {
-		info.Cbs = []interface{}{fun}
+		info.Cbs = []interface{}{cb}
 	}
 	eventMap[eventType] = info
 	h.EventInfoMap[hEle] = eventMap
@@ -87,7 +87,7 @@ func (h *eleEventHandler) GetCallBacks(hEle int, eventType xcc.XE_) []interface{
 	return h.EventInfoMap[hEle][eventType].Cbs
 }
 
-// RemoveAllCallBack 从 map 里移除指定元素的所有事件.
+// RemoveAllCallBack 从 map 里移除指定元素的所有事件以及CallBack.
 func (h *eleEventHandler) RemoveAllCallBack(hEle int) {
 	h.Lock()
 	delete(h.EventInfoMap, hEle)
@@ -111,11 +111,11 @@ func (h *eleEventHandler) RemoveCallBack(hEle int, eventType xcc.XE_, index int)
 	return true
 }
 
-// RemoveEvent 从 map 里移除指定元素的指定事件.
-func (h *eleEventHandler) RemoveEvent(hWindow int, eventType xcc.XE_) {
+// RemoveEvent 从 map 里移除指定元素的指定事件的所有CallBack.
+func (h *eleEventHandler) RemoveEvent(hEle int, eventType xcc.XE_) {
 	h.Lock()
 	defer h.Unlock()
-	delete(h.EventInfoMap[hWindow], eventType)
+	delete(h.EventInfoMap[hEle], eventType)
 }
 
 // regEleDestroyEnd 注册元素销毁完成事件. 每个元素只注册一次.
@@ -144,11 +144,9 @@ func OnXE_DESTROY_END(hEle int, pbHandled *bool) int {
 	cbs := EleEventHandler.GetCallBacks(hEle, xcc.XE_DESTROY_END)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cbs[i] != nil {
-			ret = cbs[i].(func(hEle int, pbHandled *bool) int)(hEle, pbHandled)
-			if *pbHandled {
-				break
-			}
+		ret = cbs[i].(func(hEle int, pbHandled *bool) int)(hEle, pbHandled)
+		if *pbHandled {
+			break
 		}
 	}
 

@@ -46,18 +46,21 @@ type _ICoreWebView2DevToolsProtocolEventReceivedEventHandlerImpl interface {
 	DevToolsProtocolEventReceived(sender *ICoreWebView2, args *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) uintptr
 }
 
-var _ICoreWebView2DevToolsProtocolEventReceivedEventHandlerFn = _ICoreWebView2DevToolsProtocolEventReceivedEventHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2DevToolsProtocolEventReceivedEventHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2DevToolsProtocolEventReceivedEventHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2DevToolsProtocolEventReceivedEventHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2DevToolsProtocolEventReceivedEventHandlerInvoke),
-}
+var _ICoreWebView2DevToolsProtocolEventReceivedEventHandlerFn *_ICoreWebView2DevToolsProtocolEventReceivedEventHandlerVtbl
 
 func NewICoreWebView2DevToolsProtocolEventReceivedEventHandler(impl _ICoreWebView2DevToolsProtocolEventReceivedEventHandlerImpl) *ICoreWebView2DevToolsProtocolEventReceivedEventHandler {
+	if _ICoreWebView2DevToolsProtocolEventReceivedEventHandlerFn == nil {
+		_ICoreWebView2DevToolsProtocolEventReceivedEventHandlerFn = &_ICoreWebView2DevToolsProtocolEventReceivedEventHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2DevToolsProtocolEventReceivedEventHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2DevToolsProtocolEventReceivedEventHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2DevToolsProtocolEventReceivedEventHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2DevToolsProtocolEventReceivedEventHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2DevToolsProtocolEventReceivedEventHandler{
-		vtbl: &_ICoreWebView2DevToolsProtocolEventReceivedEventHandlerFn,
+		vtbl: _ICoreWebView2DevToolsProtocolEventReceivedEventHandlerFn,
 		impl: impl,
 	}
 }

@@ -46,18 +46,21 @@ func _ICoreWebView2PermissionRequestedEventHandlerInvoke(this *ICoreWebView2Perm
 	return this.impl.PermissionRequested(sender, args)
 }
 
-var iCoreWebView2PermissionRequestedEventHandlerFn = iCoreWebView2PermissionRequestedEventHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2PermissionRequestedEventHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2PermissionRequestedEventHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2PermissionRequestedEventHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2PermissionRequestedEventHandlerInvoke),
-}
+var iCoreWebView2PermissionRequestedEventHandlerFn *iCoreWebView2PermissionRequestedEventHandlerVtbl
 
 func NewICoreWebView2PermissionRequestedEventHandler(impl iCoreWebView2PermissionRequestedEventHandlerImpl) *ICoreWebView2PermissionRequestedEventHandler {
+	if iCoreWebView2PermissionRequestedEventHandlerFn == nil {
+		iCoreWebView2PermissionRequestedEventHandlerFn = &iCoreWebView2PermissionRequestedEventHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2PermissionRequestedEventHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2PermissionRequestedEventHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2PermissionRequestedEventHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2PermissionRequestedEventHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2PermissionRequestedEventHandler{
-		vtbl: &iCoreWebView2PermissionRequestedEventHandlerFn,
+		vtbl: iCoreWebView2PermissionRequestedEventHandlerFn,
 		impl: impl,
 	}
 }

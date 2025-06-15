@@ -46,18 +46,21 @@ type _ICoreWebView2HistoryChangedEventHandlerImpl interface {
 	HistoryChanged(sender *ICoreWebView2, args *IUnknown) uintptr
 }
 
-var _ICoreWebView2HistoryChangedEventHandlerFn = _ICoreWebView2HistoryChangedEventHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2HistoryChangedEventHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2HistoryChangedEventHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2HistoryChangedEventHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2HistoryChangedEventHandlerInvoke),
-}
+var _ICoreWebView2HistoryChangedEventHandlerFn *_ICoreWebView2HistoryChangedEventHandlerVtbl
 
 func NewICoreWebView2HistoryChangedEventHandler(impl _ICoreWebView2HistoryChangedEventHandlerImpl) *ICoreWebView2HistoryChangedEventHandler {
+	if _ICoreWebView2HistoryChangedEventHandlerFn == nil {
+		_ICoreWebView2HistoryChangedEventHandlerFn = &_ICoreWebView2HistoryChangedEventHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2HistoryChangedEventHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2HistoryChangedEventHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2HistoryChangedEventHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2HistoryChangedEventHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2HistoryChangedEventHandler{
-		vtbl: &_ICoreWebView2HistoryChangedEventHandlerFn,
+		vtbl: _ICoreWebView2HistoryChangedEventHandlerFn,
 		impl: impl,
 	}
 }

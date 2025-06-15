@@ -4,7 +4,7 @@ import "unsafe"
 
 type iCoreWebView2WebMessageReceivedEventHandlerImpl interface {
 	IUnknownImpl
-	MessageReceived(sender *ICoreWebView2, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr
+	WebMessageReceived(sender *ICoreWebView2, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr
 }
 
 type iCoreWebView2WebMessageReceivedEventHandlerVtbl struct {
@@ -43,21 +43,24 @@ func _ICoreWebView2WebMessageReceivedEventHandlerIUnknownRelease(this *ICoreWebV
 }
 
 func _ICoreWebView2WebMessageReceivedEventHandlerInvoke(this *ICoreWebView2WebMessageReceivedEventHandler, sender *ICoreWebView2, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr {
-	return this.impl.MessageReceived(sender, args)
+	return this.impl.WebMessageReceived(sender, args)
 }
 
-var iCoreWebView2WebMessageReceivedEventHandlerFn = iCoreWebView2WebMessageReceivedEventHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2WebMessageReceivedEventHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2WebMessageReceivedEventHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2WebMessageReceivedEventHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2WebMessageReceivedEventHandlerInvoke),
-}
+var iCoreWebView2WebMessageReceivedEventHandlerFn *iCoreWebView2WebMessageReceivedEventHandlerVtbl
 
 func NewICoreWebView2WebMessageReceivedEventHandler(impl iCoreWebView2WebMessageReceivedEventHandlerImpl) *ICoreWebView2WebMessageReceivedEventHandler {
+	if iCoreWebView2WebMessageReceivedEventHandlerFn == nil {
+		iCoreWebView2WebMessageReceivedEventHandlerFn = &iCoreWebView2WebMessageReceivedEventHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2WebMessageReceivedEventHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2WebMessageReceivedEventHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2WebMessageReceivedEventHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2WebMessageReceivedEventHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2WebMessageReceivedEventHandler{
-		vtbl: &iCoreWebView2WebMessageReceivedEventHandlerFn,
+		vtbl: iCoreWebView2WebMessageReceivedEventHandlerFn,
 		impl: impl,
 	}
 }

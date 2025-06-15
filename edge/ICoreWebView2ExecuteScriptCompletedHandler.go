@@ -49,18 +49,21 @@ type _ICoreWebView2ExecuteScriptCompletedHandlerImpl interface {
 	ExecuteScriptCompleted(errorCode syscall.Errno, result *uint16) uintptr
 }
 
-var _ICoreWebView2ExecuteScriptCompletedHandlerFn = _ICoreWebView2ExecuteScriptCompletedHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2ExecuteScriptCompletedHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2ExecuteScriptCompletedHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2ExecuteScriptCompletedHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2ExecuteScriptCompletedHandlerInvoke),
-}
+var _ICoreWebView2ExecuteScriptCompletedHandlerFn *_ICoreWebView2ExecuteScriptCompletedHandlerVtbl
 
 func NewICoreWebView2ExecuteScriptCompletedHandler(impl _ICoreWebView2ExecuteScriptCompletedHandlerImpl) *ICoreWebView2ExecuteScriptCompletedHandler {
+	if _ICoreWebView2ExecuteScriptCompletedHandlerFn == nil {
+		_ICoreWebView2ExecuteScriptCompletedHandlerFn = &_ICoreWebView2ExecuteScriptCompletedHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2ExecuteScriptCompletedHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2ExecuteScriptCompletedHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2ExecuteScriptCompletedHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2ExecuteScriptCompletedHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2ExecuteScriptCompletedHandler{
-		vtbl: &_ICoreWebView2ExecuteScriptCompletedHandlerFn,
+		vtbl: _ICoreWebView2ExecuteScriptCompletedHandlerFn,
 		impl: impl,
 	}
 }

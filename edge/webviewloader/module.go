@@ -166,7 +166,7 @@ func GetAvailableBrowserVersionWithOptions(browserExecutableFolder string, envir
 
 // CreateCoreWebView2EnvironmentWithOptions 使用指定选项创建一个 WebView2 环境。
 //
-// browserExecutableFolder: 浏览器可执行文件的文件夹路径, 可为空字符串。
+// browserExecutableFolder: 浏览器可执行文件的文件夹路径, 可为空字符串。如包含\Edge\Application\则失败.
 //
 // userDataFolder: 用户数据文件夹路径。
 //

@@ -46,18 +46,21 @@ type _ICoreWebView2FrameNameChangedEventHandlerImpl interface {
 	FrameNameChanged(sender *ICoreWebView2Frame, args *IUnknown) uintptr
 }
 
-var _ICoreWebView2FrameNameChangedEventHandlerFn = _ICoreWebView2FrameNameChangedEventHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2FrameNameChangedEventHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2FrameNameChangedEventHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2FrameNameChangedEventHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2FrameNameChangedEventHandlerInvoke),
-}
+var _ICoreWebView2FrameNameChangedEventHandlerFn *_ICoreWebView2FrameNameChangedEventHandlerVtbl
 
 func NewICoreWebView2FrameNameChangedEventHandler(impl _ICoreWebView2FrameNameChangedEventHandlerImpl) *ICoreWebView2FrameNameChangedEventHandler {
+	if _ICoreWebView2FrameNameChangedEventHandlerFn == nil {
+		_ICoreWebView2FrameNameChangedEventHandlerFn = &_ICoreWebView2FrameNameChangedEventHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2FrameNameChangedEventHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2FrameNameChangedEventHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2FrameNameChangedEventHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2FrameNameChangedEventHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2FrameNameChangedEventHandler{
-		vtbl: &_ICoreWebView2FrameNameChangedEventHandlerFn,
+		vtbl: _ICoreWebView2FrameNameChangedEventHandlerFn,
 		impl: impl,
 	}
 }

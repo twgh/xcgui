@@ -46,18 +46,21 @@ type _ICoreWebView2DownloadStartingEventHandlerImpl interface {
 	DownloadStarting(sender *ICoreWebView2, args *ICoreWebView2DownloadStartingEventArgs) uintptr
 }
 
-var _ICoreWebView2DownloadStartingEventHandlerFn = _ICoreWebView2DownloadStartingEventHandlerVtbl{
-	IUnknownVtbl{
-		NewComProc(_ICoreWebView2DownloadStartingEventHandlerIUnknownQueryInterface),
-		NewComProc(_ICoreWebView2DownloadStartingEventHandlerIUnknownAddRef),
-		NewComProc(_ICoreWebView2DownloadStartingEventHandlerIUnknownRelease),
-	},
-	NewComProc(_ICoreWebView2DownloadStartingEventHandlerInvoke),
-}
+var _ICoreWebView2DownloadStartingEventHandlerFn *_ICoreWebView2DownloadStartingEventHandlerVtbl
 
 func NewICoreWebView2DownloadStartingEventHandler(impl _ICoreWebView2DownloadStartingEventHandlerImpl) *ICoreWebView2DownloadStartingEventHandler {
+	if _ICoreWebView2DownloadStartingEventHandlerFn == nil {
+		_ICoreWebView2DownloadStartingEventHandlerFn = &_ICoreWebView2DownloadStartingEventHandlerVtbl{
+			IUnknownVtbl{
+				NewComProc(_ICoreWebView2DownloadStartingEventHandlerIUnknownQueryInterface),
+				NewComProc(_ICoreWebView2DownloadStartingEventHandlerIUnknownAddRef),
+				NewComProc(_ICoreWebView2DownloadStartingEventHandlerIUnknownRelease),
+			},
+			NewComProc(_ICoreWebView2DownloadStartingEventHandlerInvoke),
+		}
+	}
 	return &ICoreWebView2DownloadStartingEventHandler{
-		vtbl: &_ICoreWebView2DownloadStartingEventHandlerFn,
+		vtbl: _ICoreWebView2DownloadStartingEventHandlerFn,
 		impl: impl,
 	}
 }

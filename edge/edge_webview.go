@@ -199,41 +199,95 @@ func (w *WebView) SetSize(width, height int32) {
 
 // Bind 绑定一个 Go 函数，使其以给定的名称作为全局 JavaScript 函数出现。必须在UI线程执行.
 //
-// f 必须是一个函数:
-//   - 函数参数可使用基本类型, 其它的自行测试
-//   - 函数可以没有返回值
-//   - 函数返回值可以是一个值或一个error
-//   - 函数返回值可以是一个值和一个error
-func (w *WebView) Bind(name string, f interface{}) error {
-	v := reflect.ValueOf(f)
+// name: 函数名. 如果已有同名函数, 则会覆盖.
+//   - 可以只是一个name, 将直接绑定在 window.
+//   - 可以是多个层级: a.b.c.name, 调用方式: a.b.c.name().
+//   - 每个层级的命名规则都必须和 js 变量命名规则一致.
+//
+// fun: 必须是一个函数:
+//   - 函数参数可使用基本类型, 其它的自行测试, 暂不支持[]byte.
+//   - 函数可以没有返回值.
+//   - 函数返回值可以是一个值或一个error.
+//   - 函数返回值可以是一个值和一个error.
+func (w *WebView) Bind(name string, fun interface{}) error {
+	if name == "" {
+		return errors.New("name is empty")
+	}
+	if strings.Contains(name, " ") {
+		return errors.New("name can't contain spaces")
+	}
+	if fun == nil {
+		return errors.New("fun is nil")
+	}
+	v := reflect.ValueOf(fun)
 	if v.Kind() != reflect.Func {
 		return errors.New("only functions can be bound")
 	}
 	if n := v.Type().NumOut(); n > 2 {
 		return errors.New("function may only return a value or a value+error")
 	}
+
 	w.rwxBindings.Lock()
-	w.bindings[name] = f
+	w.bindings[name] = fun
 	w.rwxBindings.Unlock()
 
-	initCode := "(function() { var name = " + jsString(name) + ";" + `
-		var RPC = window._rpc = (window._rpc || {nextSeq: 1});
-		window[name] = function() {
-		  var seq = RPC.nextSeq++;
-		  var promise = new Promise(function(resolve, reject) {
-			RPC[seq] = {
-			  resolve: resolve,
-			  reject: reject,
-			};
-		  });
-		  window.external.invoke(JSON.stringify({
-			id: seq,
-			method: name,
-			params: Array.prototype.slice.call(arguments),
-		  }));
-		  return promise;
-		}
-	})()`
+	initCode := fmt.Sprintf(`(function() {
+    var RPC = window._rpc = (window._rpc || {
+        nextSeq: 1,
+        MAX_SEQ: 9007199254740991,
+        cleanup: function() {
+            var now = Date.now();
+            Object.keys(RPC).forEach(function(key) {
+                if (key === 'nextSeq' || key === 'MAX_SEQ' || key === 'cleanup') return;
+                var req = RPC[key];
+                if (req && req.resolved && (now - req.resolvedTime > 300000)) {
+                    delete RPC[key];
+                }
+            });
+        }
+    });
+    var parts = %q.split('.');
+    var base = window;
+    for (var i = 0; i < parts.length - 1; i++) {
+        if (!base[parts[i]]) {
+            base[parts[i]] = {};
+        }
+        base = base[parts[i]];
+    }
+    var funcName = parts[parts.length - 1];
+    base[funcName] = function() {
+        var seq = RPC.nextSeq++;
+        if (RPC.nextSeq > RPC.MAX_SEQ - 1000) {
+            RPC.nextSeq = 1;
+            RPC.cleanup();
+        }
+        if (seq %% 100 === 0) {
+            RPC.cleanup();
+        }
+        var promise = new Promise(function(resolve, reject) {
+            RPC[seq] = {
+                resolve: function(value) {
+                    this.resolved = true;
+                    this.resolvedTime = Date.now();
+                    resolve(value);
+                },
+                reject: function(reason) {
+                    this.resolved = true;
+                    this.resolvedTime = Date.now();
+                    reject(reason);
+                },
+                resolved: false,
+                resolvedTime: 0
+            };
+        });
+        window.external.invoke(JSON.stringify({
+            id: seq,
+            method: %q,
+            params: Array.prototype.slice.call(arguments),
+        }));
+        return promise;
+    };
+})()`, name, name)
 
 	err := w.Eval(initCode)
 	if err != nil {
@@ -244,9 +298,8 @@ func (w *WebView) Bind(name string, f interface{}) error {
 		if !errors.Is(errorCode, wapi.S_OK) {
 			return 0
 		}
-		// 存储id
 		w.rwxBindings.Lock()
-		w.bindingsid[name] = id
+		w.bindingsid[name] = id // 存储id
 		w.rwxBindings.Unlock()
 		return 0
 	})
@@ -353,23 +406,21 @@ func (w *WebView) EvalSync(js string, timeout ...time.Duration) (string, error) 
 			wapi.TranslateMessage(&msg)
 			wapi.DispatchMessage(&msg)
 		} else {
-			wapi.Sleep(1) // 避免 CPU 空转
+			wapi.Sleep(0) // 避免 CPU 空转
 		}
 	}
 	return ret, err
 }
 
-// BindLog 绑定一个日志输出函数, 参数不限个数, 在js代码中调用, 会在go控制台中输出.
+// BindLog 绑定一个控制台输出函数, 参数不限个数, 可使用基本类型, 在 js 代码中调用, 会在 go 控制台中输出.
 //
-// funcName: 自定义函数名, 为空默认为glog.
+// funcName: 自定义函数名, 为空默认为 glog.
 func (w *WebView) BindLog(funcName ...string) error {
-	name := "glog"
+	var name string
 	if len(funcName) > 0 {
 		name = funcName[0]
-		// 名字中不能有空格
-		if strings.Contains(name, " ") {
-			return errors.New("funcName 中不能有空格")
-		}
+	} else {
+		name = "glog"
 	}
 	return w.Bind(name, func(msg ...interface{}) {
 		fmt.Printf("%v\n", msg...)
@@ -399,11 +450,11 @@ func (w *WebView) newWebView2Controller() error {
 		}
 		w.CoreWebView.AddRef()
 
-		// 添加 web 消息接收事件处理程序
-		err = w.CoreWebView.AddWebMessageReceived(w.handlerWebMessageReceivedEvent, w.EventRegistrationToken)
+		// 添加 web 消息接收事件处理程序, 添加空回调, 主要目的是注册一下事件
+		_, err = w.Event_WebMessageReceived(nil, true)
 		ReportErrorAtuo(err)
-		// 添加权限请求事件处理程序
-		err = w.CoreWebView.AddPermissionRequested(w.handlerPermissionRequestedEvent, w.EventRegistrationToken)
+		// 添加权限请求事件处理程序, 添加空回调, 主要目的是注册一下事件
+		_, err = w.Event_PermissionRequested(nil, true)
 		ReportErrorAtuo(err)
 		// 添加在创建文档时要执行的脚本
 		err = w.CoreWebView.AddScriptToExecuteOnDocumentCreated("window.external={invoke:s=>window.chrome.webview.postMessage(s)}", nil)
@@ -417,7 +468,7 @@ func (w *WebView) newWebView2Controller() error {
 	}
 
 	// 创建 WebView2 控制器
-	err := w.Edge.Environment.CreateCoreWebView2Controller(w.hwnd, w.Edge.handler_CreateCoreWebView2ControllerCompleted)
+	err := w.Edge.Environment.CreateCoreWebView2Controller(w.hwnd, w.Edge.handlerCreateCoreWebView2ControllerCompleted)
 	if err != nil {
 		return fmt.Errorf("creating WebView2 controller return: %v", err)
 	}

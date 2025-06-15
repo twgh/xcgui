@@ -13,7 +13,7 @@ type WebView2 struct {
 	// 事件接口实现
 	WebViewEventImpl
 	// WebView2_ 系列对象
-	Webview2_Objs
+	WebView2_Objs
 
 	// 宿主窗口句柄
 	hwnd uintptr
@@ -22,10 +22,11 @@ type WebView2 struct {
 }
 
 func (w *WebView2) init() {
-	w.handlerWebMessageReceivedEvent = NewICoreWebView2WebMessageReceivedEventHandler(w)
-	w.handlerPermissionRequestedEvent = NewICoreWebView2PermissionRequestedEventHandler(w)
-
 	w.permissions = make(map[COREWEBVIEW2_PERMISSION_KIND]COREWEBVIEW2_PERMISSION_STATE)
+}
+
+func (w *WebView2) GetWebViewEventImpl() *WebViewEventImpl {
+	return &w.WebViewEventImpl
 }
 
 // Navigate 导航 webview 到给定的 URL。
@@ -112,8 +113,13 @@ func (w *WebView2) Close() error {
 		w.Controller = nil
 	}
 
-	w.ReleaseEventHandler()
-	w.releaseAllWebView2_Objs()
+	WvEventHandler.ReleaseAllEventHandler(&w.WebViewEventImpl)
+	w.ReleaseWebView2_Objs()
+
+	if w.CoreWebView != nil {
+		w.CoreWebView.Release()
+		w.CoreWebView = nil
+	}
 	wapi.DestroyWindow(w.hwnd)
 	return err
 }
@@ -141,11 +147,7 @@ func (w *WebView2) Focus() error {
 //
 // cb: 回调函数, 在回调函数里可获取 js 代码返回值.
 func (w *WebView2) ExecuteScript(javaScript string, cb func(errorCode syscall.Errno, result string) uintptr) error {
-	if w.HandlerExecuteScriptCompleted == nil {
-		w.HandlerExecuteScriptCompleted = NewICoreWebView2ExecuteScriptCompletedHandler(w)
-	}
-	w.cbExecuteScriptCompleted = cb
-	return w.CoreWebView.ExecuteScript(javaScript, w.HandlerExecuteScriptCompleted)
+	return w.CoreWebView.ExecuteScriptEx(&w.WebViewEventImpl, javaScript, cb)
 }
 
 // AddScriptToExecuteOnDocumentCreated 在主页面上下文中添加 JavaScript 代码(异步)。
@@ -154,11 +156,7 @@ func (w *WebView2) ExecuteScript(javaScript string, cb func(errorCode syscall.Er
 //
 // cb: 回调函数, 在回调函数里可获取添加脚本结果和 id.
 func (w *WebView2) AddScriptToExecuteOnDocumentCreated(javaScript string, cb func(errorCode syscall.Errno, id string) uintptr) error {
-	if w.HandlerAddScriptToExecuteOnDocumentCreatedCompleted == nil {
-		w.HandlerAddScriptToExecuteOnDocumentCreatedCompleted = NewICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler(w)
-	}
-	w.cbAddScriptToExecuteOnDocumentCreatedCompleted = cb
-	return w.CoreWebView.AddScriptToExecuteOnDocumentCreated(javaScript, w.HandlerAddScriptToExecuteOnDocumentCreatedCompleted)
+	return w.CoreWebView.AddScriptToExecuteOnDocumentCreatedEx(&w.WebViewEventImpl, javaScript, cb)
 }
 
 // RemoveScriptToExecuteOnDocumentCreated 移除在创建文档时要执行的脚本。
@@ -179,15 +177,10 @@ func (w *WebView2) TrySuspend(cb func(errorCode syscall.Errno, isSuccessful bool
 			return err
 		}
 	}
-
-	if w.HandlerTrySuspendCompleted == nil {
-		w.HandlerTrySuspendCompleted = NewICoreWebView2TrySuspendCompletedHandler(w)
-	}
-	w.cbTrySuspendCompleted = cb
-	return w.WebView2_3.TrySuspend(w.HandlerTrySuspendCompleted)
+	return w.WebView2_3.TrySuspendEx(&w.WebViewEventImpl, cb)
 }
 
-// Resume 尝试挂起 WebView 控件, 以节省内存。
+// Resume 恢复WebView，以便它恢复网页上的活动。
 func (w *WebView2) Resume() error {
 	if w.WebView2_3 == nil {
 		var err error
@@ -211,28 +204,42 @@ func (w *WebView2) IsSuspended() bool {
 	return w.WebView2_3.MustGetIsSuspended()
 }
 
-// GetCookies 获取与指定 URI 匹配的所有 Cookie，失败返回 nil。
-//   - 如果 uri 为空字符串，则返回同一配置文件下的所有 Cookie。
-//   - 你可以通过调用 ICoreWebView2CookieManager.AddOrUpdateCookie 来修改 Cookie 对象，所做的更改将应用到WebView中。
-//
-// uri: 要匹配的 URI.
-func (w *WebView2) GetCookies(uri string, cb func(errorCode syscall.Errno, cookies *ICoreWebView2CookieList) uintptr) error {
+// GetGetCookieManager 获取 ICoreWebView2CookieManager 对象，用于管理 Cookie。
+func (w *WebView2) GetGetCookieManager() (*ICoreWebView2CookieManager, error) {
 	if w.WebView2_2 == nil {
 		var err error
 		w.WebView2_2, err = w.CoreWebView.GetICoreWebView2_2()
 		if err != nil {
-			return err
+			return nil, err
 		}
 	}
-	CookieManager, err := w.WebView2_2.GetCookieManager()
+	return w.WebView2_2.GetCookieManager()
+}
+
+// GetCookies 获取与指定 URI 匹配的所有 Cookie，失败返回 nil。
+//   - 如果 uri 为空字符串，则返回同一配置文件下的所有 Cookie。
+//   - 你可以通过调用 ICoreWebView2CookieManager.AddOrUpdateCookie 来修改 Cookie 对象，所做的更改将应用到 WebView 中。
+//
+// uri: 要匹配的 URI.
+//
+// cb: 接收结果的回调函数.
+func (w *WebView2) GetCookies(uri string, cb func(errorCode syscall.Errno, cookies *ICoreWebView2CookieList) uintptr) error {
+	CookieManager, err := w.GetGetCookieManager()
 	if err != nil {
 		return err
 	}
-	if w.HandlerGetCookiesCompleted == nil {
-		w.HandlerGetCookiesCompleted = NewICoreWebView2GetCookiesCompletedHandler(w)
-	}
-	w.cbGetCookiesCompleted = cb
-	return CookieManager.GetCookies(uri, w.HandlerGetCookiesCompleted)
+	return CookieManager.GetCookiesEx(&w.WebViewEventImpl, uri, cb)
+}
+
+// CapturePreview 捕获 Webview 的预览图像。
+//
+// imageFormat: 图像格式枚举值.
+//
+// imageStream: 接收图像数据的流对象.
+//
+// cb: 捕获完成后的回调处理程序. 写入流完毕后触发.
+func (w *WebView2) CapturePreview(imageFormat COREWEBVIEW2_CAPTURE_PREVIEW_IMAGE_FORMAT, imageStream *IStream, cb func(errorCode syscall.Errno) uintptr) error {
+	return w.CoreWebView.CapturePreviewEx(&w.WebViewEventImpl, imageFormat, imageStream, cb)
 }
 
 // SetVirtualHostNameToFolderMapping 设置虚拟主机名和文件夹路径之间的映射，以便通过该主机名对网站可用.
@@ -295,36 +302,16 @@ func (w *WebView2) SetVirtualHostNameToEmbedFSMapping(hostName string, embedFS e
 		return err
 	}
 
-	if w.HandlerWebResourceRequestedEvent == nil {
-		w.HandlerWebResourceRequestedEvent = NewICoreWebView2WebResourceRequestedEventHandler(w)
-		err := w.CoreWebView.AddWebResourceRequested(w.HandlerWebResourceRequestedEvent, w.EventRegistrationToken)
-		if err != nil {
-			w.HandlerWebResourceRequestedEvent = nil
-			return err
-		}
+	// 添加网页资源请求事件, 添加空回调, 主要目的是注册一下事件
+	_, err = w.Event_WebResourceRequested(nil, true)
+	if err != nil {
+		return err
 	}
-
 	if !once { // 只创建一次
 		w.firstResponse, err = w.Edge.Environment.CreateWebResourceResponse(nil, 200, "OK", "")
 		ReportErrorAtuo(err)
 	}
 	w.hostName = "http://" + hostName + "/"
 	w.embedFS = subFS
-	return nil
-}
-
-// CapturePreview 捕获 Webview 的预览图像。
-//
-// imageFormat: 图像格式枚举值.
-func (w *WebView2) CapturePreview(imageFormat COREWEBVIEW2_CAPTURE_PREVIEW_IMAGE_FORMAT, stream *IStream, cb func(errorCode syscall.Errno) uintptr) error {
-	if w.HandlerCapturePreviewCompleted == nil {
-		w.HandlerCapturePreviewCompleted = NewICoreWebView2CapturePreviewCompletedHandler(w)
-	}
-
-	w.cbCapturePreviewCompleted = cb
-	err := w.CoreWebView.CapturePreview(imageFormat, stream, w.HandlerCapturePreviewCompleted)
-	if err != nil {
-		return err
-	}
 	return nil
 }
