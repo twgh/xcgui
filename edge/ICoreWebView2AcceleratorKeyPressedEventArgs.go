@@ -190,3 +190,19 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) MustGetHandled() bool {
 	ReportErrorAtuo(err)
 	return handled
 }
+
+// GetICoreWebView2AcceleratorKeyPressedEventArgs2 获取 ICoreWebView2AcceleratorKeyPressedEventArgs2。
+func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetICoreWebView2AcceleratorKeyPressedEventArgs2() (*ICoreWebView2AcceleratorKeyPressedEventArgs2, error) {
+	var result *ICoreWebView2AcceleratorKeyPressedEventArgs2
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2AcceleratorKeyPressedEventArgs2)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
+// MustGetICoreWebView2AcceleratorKeyPressedEventArgs2 获取 ICoreWebView2AcceleratorKeyPressedEventArgs2。出错时会触发全局错误回调。
+func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) MustGetICoreWebView2AcceleratorKeyPressedEventArgs2() *ICoreWebView2AcceleratorKeyPressedEventArgs2 {
+	result, err := i.GetICoreWebView2AcceleratorKeyPressedEventArgs2()
+	ReportErrorAtuo(err)
+	return result
+}

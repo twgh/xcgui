@@ -219,3 +219,115 @@ func (i *ICoreWebView2EnvironmentOptions) PutAllowSingleSignOnUsingOSPrimaryAcco
 	}
 	return nil
 }
+
+// GetICoreWebView2EnvironmentOptions2 获取 ICoreWebView2EnvironmentOptions2。
+func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions2() (*ICoreWebView2EnvironmentOptions2, error) {
+	var result *ICoreWebView2EnvironmentOptions2
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2EnvironmentOptions2)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
+// MustGetICoreWebView2EnvironmentOptions2 获取 ICoreWebView2EnvironmentOptions2。出错时会触发全局错误回调。
+func (i *ICoreWebView2EnvironmentOptions) MustGetICoreWebView2EnvironmentOptions2() *ICoreWebView2EnvironmentOptions2 {
+	result, err := i.GetICoreWebView2EnvironmentOptions2()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// GetICoreWebView2EnvironmentOptions3 获取 ICoreWebView2EnvironmentOptions3。
+func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions3() (*ICoreWebView2EnvironmentOptions3, error) {
+	var result *ICoreWebView2EnvironmentOptions3
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2EnvironmentOptions3)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
+// MustGetICoreWebView2EnvironmentOptions3 获取 ICoreWebView2EnvironmentOptions3。出错时会触发全局错误回调。
+func (i *ICoreWebView2EnvironmentOptions) MustGetICoreWebView2EnvironmentOptions3() *ICoreWebView2EnvironmentOptions3 {
+	result, err := i.GetICoreWebView2EnvironmentOptions3()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// GetICoreWebView2EnvironmentOptions4 获取 ICoreWebView2EnvironmentOptions4。
+func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions4() (*ICoreWebView2EnvironmentOptions4, error) {
+	var result *ICoreWebView2EnvironmentOptions4
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2EnvironmentOptions4)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
+// MustGetICoreWebView2EnvironmentOptions4 获取 ICoreWebView2EnvironmentOptions4。出错时会触发全局错误回调。
+func (i *ICoreWebView2EnvironmentOptions) MustGetICoreWebView2EnvironmentOptions4() *ICoreWebView2EnvironmentOptions4 {
+	result, err := i.GetICoreWebView2EnvironmentOptions4()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// GetICoreWebView2EnvironmentOptions5 获取 ICoreWebView2EnvironmentOptions5。
+func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions5() (*ICoreWebView2EnvironmentOptions5, error) {
+	var result *ICoreWebView2EnvironmentOptions5
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2EnvironmentOptions5)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
+// MustGetICoreWebView2EnvironmentOptions5 获取 ICoreWebView2EnvironmentOptions5。出错时会触发全局错误回调。
+func (i *ICoreWebView2EnvironmentOptions) MustGetICoreWebView2EnvironmentOptions5() *ICoreWebView2EnvironmentOptions5 {
+	result, err := i.GetICoreWebView2EnvironmentOptions5()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// GetICoreWebView2EnvironmentOptions6 获取 ICoreWebView2EnvironmentOptions6。
+func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions6() (*ICoreWebView2EnvironmentOptions6, error) {
+	var result *ICoreWebView2EnvironmentOptions6
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2EnvironmentOptions6)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
+// MustGetICoreWebView2EnvironmentOptions6 获取 ICoreWebView2EnvironmentOptions6。出错时会触发全局错误回调。
+func (i *ICoreWebView2EnvironmentOptions) MustGetICoreWebView2EnvironmentOptions6() *ICoreWebView2EnvironmentOptions6 {
+	result, err := i.GetICoreWebView2EnvironmentOptions6()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// GetICoreWebView2EnvironmentOptions7 获取 ICoreWebView2EnvironmentOptions7。
+func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions7() (*ICoreWebView2EnvironmentOptions7, error) {
+	var result *ICoreWebView2EnvironmentOptions7
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2EnvironmentOptions7)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
+// MustGetICoreWebView2EnvironmentOptions7 获取 ICoreWebView2EnvironmentOptions7。出错时会触发全局错误回调。
+func (i *ICoreWebView2EnvironmentOptions) MustGetICoreWebView2EnvironmentOptions7() *ICoreWebView2EnvironmentOptions7 {
+	result, err := i.GetICoreWebView2EnvironmentOptions7()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// GetICoreWebView2EnvironmentOptions8 获取 ICoreWebView2EnvironmentOptions8。
+func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions8() (*ICoreWebView2EnvironmentOptions8, error) {
+	var result *ICoreWebView2EnvironmentOptions8
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2EnvironmentOptions8)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
+// MustGetICoreWebView2EnvironmentOptions8 获取 ICoreWebView2EnvironmentOptions8。出错时会触发全局错误回调。
+func (i *ICoreWebView2EnvironmentOptions) MustGetICoreWebView2EnvironmentOptions8() *ICoreWebView2EnvironmentOptions8 {
+	result, err := i.GetICoreWebView2EnvironmentOptions8()
+	ReportErrorAtuo(err)
+	return result
+}

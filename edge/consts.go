@@ -58,6 +58,8 @@ const (
 	IID_ICoreWebView2EnvironmentOptions8 = "{7C7ECF51-E918-5CAF-853C-E9A2BCC27775}"
 )
 
+const IID_ICoreWebView2AcceleratorKeyPressedEventArgs2 = "{03b2c8c8-7799-4e34-bd66-ed26aa85f2bf}"
+
 // COREWEBVIEW2_BOUNDS_MODE 定义了边界模式类型
 type COREWEBVIEW2_BOUNDS_MODE uint32
 
