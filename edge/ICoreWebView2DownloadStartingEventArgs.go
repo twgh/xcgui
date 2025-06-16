@@ -29,6 +29,27 @@ type ICoreWebView2DownloadStartingEventArgsVtbl struct {
 	GetDeferral          ComProc
 }
 
+func (i *ICoreWebView2DownloadStartingEventArgs) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2DownloadStartingEventArgs) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2DownloadStartingEventArgs) QueryInterface(refiid, object unsafe.Pointer) error {
+	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
 // GetDownloadOperation 获取已开始下载的下载操作对象.
 func (i *ICoreWebView2DownloadStartingEventArgs) GetDownloadOperation() (*ICoreWebView2DownloadOperation, error) {
 	var downloadOperation *ICoreWebView2DownloadOperation
@@ -80,7 +101,7 @@ func (i *ICoreWebView2DownloadStartingEventArgs) MustGetCancel() bool {
 func (i *ICoreWebView2DownloadStartingEventArgs) PutCancel(cancel bool) error {
 	r, _, err := i.Vtbl.PutCancel.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(common.BoolToInt(cancel)),
+		common.BoolPtr(cancel),
 	)
 	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
@@ -175,7 +196,7 @@ func (i *ICoreWebView2DownloadStartingEventArgs) MustGetHandled() bool {
 func (i *ICoreWebView2DownloadStartingEventArgs) PutHandled(handled bool) error {
 	r, _, err := i.Vtbl.PutHandled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(common.BoolToInt(handled)),
+		common.BoolPtr(handled),
 	)
 	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err

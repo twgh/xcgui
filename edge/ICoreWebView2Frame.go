@@ -27,6 +27,27 @@ type ICoreWebView2FrameVtbl struct {
 	IsDestroyed                      ComProc
 }
 
+func (i *ICoreWebView2Frame) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2Frame) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2Frame) QueryInterface(refiid, object unsafe.Pointer) error {
+	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
 // GetName 获取 iframe 的 window.name 属性的值。
 //   - 默认值等同于声明它的 iframe HTML 标签。
 //   - 即使 iframe 被销毁，你也可以访问此属性。

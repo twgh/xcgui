@@ -247,12 +247,11 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 			}
 			defer c3.Release()
 			eventHandler := NewICoreWebView2RasterizationScaleChangedEventHandler(impl)
-			token, err := c3.AddRasterizationScaleChanged(eventHandler)
+			err = c3.AddRasterizationScaleChanged(eventHandler, info.EventToken)
 			if err != nil {
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EventToken = &token
 			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
 		case "DOMContentLoaded":
 			w2_2, err := impl.CoreWebView.GetICoreWebView2_2()
@@ -261,12 +260,11 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 			}
 			defer w2_2.Release()
 			eventHandler := NewICoreWebView2DOMContentLoadedEventHandler(impl)
-			token, err := w2_2.AddDomContentLoaded(eventHandler)
+			err = w2_2.AddDomContentLoaded(eventHandler, info.EventToken)
 			if err != nil {
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EventToken = &token
 			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
 		case "WebResourceResponseReceived":
 			w2_2, err := impl.CoreWebView.GetICoreWebView2_2()
@@ -275,12 +273,11 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 			}
 			defer w2_2.Release()
 			eventHandler := NewICoreWebView2WebResourceResponseReceivedEventHandler(impl)
-			token, err := w2_2.AddWebResourceResponseReceived(eventHandler)
+			err = w2_2.AddWebResourceResponseReceived(eventHandler, info.EventToken)
 			if err != nil {
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EventToken = &token
 			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
 		case "DownloadStarting":
 			w2_4, err := impl.CoreWebView.GetICoreWebView2_4()
@@ -316,6 +313,32 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 			defer w2_5.Release()
 			eventHandler := NewICoreWebView2ClientCertificateRequestedEventHandler(impl)
 			err = w2_5.AddClientCertificateRequested(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+		case "IsMutedChanged":
+			w2_8, err := impl.CoreWebView.GetICoreWebView2_8()
+			if err != nil {
+				return -1, err
+			}
+			defer w2_8.Release()
+			eventHandler := NewICoreWebView2IsMutedChangedEventHandler(impl)
+			err = w2_8.AddIsMutedChanged(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+		case "DocumentPlayingAudioChanged":
+			w2_8, err := impl.CoreWebView.GetICoreWebView2_8()
+			if err != nil {
+				return -1, err
+			}
+			defer w2_8.Release()
+			eventHandler := NewICoreWebView2IsDocumentPlayingAudioChangedEventHandler(impl)
+			err = w2_8.AddIsDocumentPlayingAudioChanged(eventHandler, info.EventToken)
 			if err != nil {
 				eventHandler.Release()
 				return -1, err

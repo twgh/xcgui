@@ -122,10 +122,10 @@ func (i *ICoreWebView2Controller) AddAcceleratorKeyPressed(eventHandler *ICoreWe
 }
 
 // RemoveAcceleratorKeyPressed 移除键盘快捷键事件处理程序.
-func (i *ICoreWebView2Controller) RemoveAcceleratorKeyPressed(token *EventRegistrationToken) error {
+func (i *ICoreWebView2Controller) RemoveAcceleratorKeyPressed(token EventRegistrationToken) error {
 	r, _, err := i.Vtbl.RemoveAcceleratorKeyPressed.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(token)),
+		uintptr(token.Value),
 	)
 	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err

@@ -114,20 +114,19 @@ func (i *ICoreWebView2_2) MustGetCookieManager() *ICoreWebView2CookieManager {
 //   - 宿主应用可以使用此事件查看网络资源的实际请求和响应。
 //   - 无法保证 WebView 处理响应的顺序与宿主应用的处理程序运行的顺序。
 //   - 应用的处理程序不会阻止 WebView 处理响应。
-func (i *ICoreWebView2_2) AddWebResourceResponseReceived(handler *ICoreWebView2WebResourceResponseReceivedEventHandler) (EventRegistrationToken, error) {
-	var token EventRegistrationToken
+func (i *ICoreWebView2_2) AddWebResourceResponseReceived(handler *ICoreWebView2WebResourceResponseReceivedEventHandler, token *EventRegistrationToken) error {
 	r, _, err := i.Vtbl.AddWebResourceResponseReceived.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(handler)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(unsafe.Pointer(token)),
 	)
 	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return token, err
+		return err
 	}
 	if r != 0 {
-		return token, syscall.Errno(r)
+		return syscall.Errno(r)
 	}
-	return token, nil
+	return nil
 }
 
 // RemoveWebResourceResponseReceived 移除 WebResourceResponseReceived 事件处理程序。
@@ -147,20 +146,19 @@ func (i *ICoreWebView2_2) RemoveWebResourceResponseReceived(token EventRegistrat
 
 // AddDomContentLoaded 添加 DomContentLoaded 事件处理程序。
 //   - 当初始 HTML 文档解析完成时，会触发 DOMContentLoaded 事件。这与 HTML 中文档的 DOMContentLoaded 事件一致。
-func (i *ICoreWebView2_2) AddDomContentLoaded(handler *ICoreWebView2DOMContentLoadedEventHandler) (EventRegistrationToken, error) {
-	var token EventRegistrationToken
+func (i *ICoreWebView2_2) AddDomContentLoaded(handler *ICoreWebView2DOMContentLoadedEventHandler, token *EventRegistrationToken) error {
 	r, _, err := i.Vtbl.AddDomContentLoaded.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(handler)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(unsafe.Pointer(token)),
 	)
 	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return token, err
+		return err
 	}
 	if r != 0 {
-		return token, syscall.Errno(r)
+		return syscall.Errno(r)
 	}
-	return token, nil
+	return nil
 }
 
 // RemoveDomContentLoaded 移除 DomContentLoaded 事件处理程序。

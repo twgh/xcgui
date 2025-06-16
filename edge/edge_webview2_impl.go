@@ -532,3 +532,23 @@ func (w *WebViewEventImpl) ClientCertificateRequested(sender *ICoreWebView2, arg
 	}
 	return ret
 }
+
+// IsMutedChanged 当 WebView 的静音状态更改时调用。
+func (w *WebViewEventImpl) IsMutedChanged(sender *ICoreWebView2, args *IUnknown) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "IsMutedChanged")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2, args *IUnknown) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// DocumentPlayingAudioChanged 当文档播放音频状态改变时调用。
+func (w *WebViewEventImpl) DocumentPlayingAudioChanged(sender *ICoreWebView2, args *IUnknown) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "DocumentPlayingAudioChanged")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2, args *IUnknown) uintptr)(sender, args)
+	}
+	return ret
+}

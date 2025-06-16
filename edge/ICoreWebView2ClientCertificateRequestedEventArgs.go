@@ -192,7 +192,7 @@ func (i *ICoreWebView2ClientCertificateRequestedEventArgs) MustGetCancel() bool 
 func (i *ICoreWebView2ClientCertificateRequestedEventArgs) PutCancel(cancel bool) error {
 	r, _, err := i.Vtbl.PutCancel.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&cancel)),
+		common.BoolPtr(cancel),
 	)
 	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
@@ -256,7 +256,7 @@ func (i *ICoreWebView2ClientCertificateRequestedEventArgs) MustGetHandled() bool
 func (i *ICoreWebView2ClientCertificateRequestedEventArgs) PutHandled(handled bool) error {
 	r, _, err := i.Vtbl.PutHandled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&handled)),
+		common.BoolPtr(handled),
 	)
 	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err

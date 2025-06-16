@@ -1,7 +1,10 @@
 package edge
 
+// ok
+
 import (
 	"errors"
+	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
@@ -73,7 +76,7 @@ func (i *ICoreWebView2_8) MustGetIsMuted() bool {
 func (i *ICoreWebView2_8) PutIsMuted(isMuted bool) error {
 	r, _, err := i.Vtbl.PutIsMuted.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&isMuted)),
+		common.BoolPtr(isMuted),
 	)
 	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
@@ -109,9 +112,64 @@ func (i *ICoreWebView2_8) MustGetIsDocumentPlayingAudio() bool {
 	return result
 }
 
-/*TODO:
-AddIsMutedChanged
-RemoveIsMutedChanged
-AddIsDocumentPlayingAudioChanged
-RemoveIsDocumentPlayingAudioChanged
-*/
+// AddIsMutedChanged 添加静音状态改变事件处理程序.
+func (i *ICoreWebView2_8) AddIsMutedChanged(eventHandler *ICoreWebView2IsMutedChangedEventHandler, token *EventRegistrationToken) error {
+	r, _, err := i.Vtbl.AddIsMutedChanged.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(eventHandler)),
+		uintptr(unsafe.Pointer(token)),
+	)
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
+// RemoveIsMutedChanged 移除静音状态改变事件处理程序.
+func (i *ICoreWebView2_8) RemoveIsMutedChanged(token EventRegistrationToken) error {
+	r, _, err := i.Vtbl.RemoveIsMutedChanged.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(token.Value),
+	)
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
+// AddIsDocumentPlayingAudioChanged 添加文档音频播放状态改变事件处理程序.
+func (i *ICoreWebView2_8) AddIsDocumentPlayingAudioChanged(eventHandler *ICoreWebView2IsDocumentPlayingAudioChangedEventHandler, token *EventRegistrationToken) error {
+	r, _, err := i.Vtbl.AddIsDocumentPlayingAudioChanged.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(eventHandler)),
+		uintptr(unsafe.Pointer(token)),
+	)
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
+// RemoveIsDocumentPlayingAudioChanged 移除文档音频播放状态改变事件处理程序.
+func (i *ICoreWebView2_8) RemoveIsDocumentPlayingAudioChanged(token EventRegistrationToken) error {
+	r, _, err := i.Vtbl.RemoveIsDocumentPlayingAudioChanged.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(token.Value),
+	)
+	if !errors.Is(err, wapi.ERROR_SUCCESS) {
+		return err
+	}
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}

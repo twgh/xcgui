@@ -180,8 +180,8 @@ func (w *WebViewEventImpl) Event_ContentLoading(cb func(sender *ICoreWebView2, a
 	return WvEventHandler.AddCallBack(w, "ContentLoading", c, nil, allowAddingMultiple...)
 }
 
-// Event_ContainsFullScreenElementChanged 是 ContainsFullScreenElement(是否包含全屏元素) 属性改变事件.
-//   - 当 ContainsFullScreenElement 属性发生变化时触发
+// Event_ContainsFullScreenElementChanged 全屏元素状态改变事件.
+//   - 当 ContainsFullScreenElement 属性发生变化时触发。
 func (w *WebViewEventImpl) Event_ContainsFullScreenElementChanged(cb func(sender *ICoreWebView2, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -298,4 +298,27 @@ func (w *WebViewEventImpl) Event_ClientCertificateRequested(cb func(sender *ICor
 		c = cb
 	}
 	return WvEventHandler.AddCallBack(w, "ClientCertificateRequested", c, nil, allowAddingMultiple...)
+}
+
+// Event_IsMutedChanged 静音状态改变事件.
+//   - 当 WebView 的静音状态更改时调用。
+func (w *WebViewEventImpl) Event_IsMutedChanged(cb func(sender *ICoreWebView2, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
+	}
+	return WvEventHandler.AddCallBack(w, "IsMutedChanged", c, nil, allowAddingMultiple...)
+}
+
+// Event_DocumentPlayingAudioChanged 文档播放音频状态改变事件.
+func (w *WebViewEventImpl) Event_DocumentPlayingAudioChanged(cb func(sender *ICoreWebView2, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
+	}
+	return WvEventHandler.AddCallBack(w, "DocumentPlayingAudioChanged", c, nil, allowAddingMultiple...)
 }

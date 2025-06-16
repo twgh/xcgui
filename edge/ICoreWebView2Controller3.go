@@ -168,20 +168,19 @@ func (i *ICoreWebView2Controller3) PutBoundsMode(boundsMode COREWEBVIEW2_BOUNDS_
 
 // AddRasterizationScaleChanged 添加光栅化缩放比例改变事件处理程序.
 //   - 当 Webview 检测到显示器 DPI 缩放比例已更改、ShouldDetectMonitorScaleChanges 为 true 且 Webview 已更改 RasterizationScale 属性时，将引发此事件。
-func (i *ICoreWebView2Controller3) AddRasterizationScaleChanged(eventHandler *ICoreWebView2RasterizationScaleChangedEventHandler) (EventRegistrationToken, error) {
-	var token EventRegistrationToken
+func (i *ICoreWebView2Controller3) AddRasterizationScaleChanged(eventHandler *ICoreWebView2RasterizationScaleChangedEventHandler, token *EventRegistrationToken) error {
 	r, _, err := i.Vtbl.AddRasterizationScaleChanged.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(unsafe.Pointer(token)),
 	)
 	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return EventRegistrationToken{}, err
+		return err
 	}
 	if r != 0 {
-		return EventRegistrationToken{}, syscall.Errno(r)
+		return syscall.Errno(r)
 	}
-	return token, nil
+	return nil
 }
 
 // RemoveRasterizationScaleChanged 移除光栅化缩放比例改变事件处理程序.
