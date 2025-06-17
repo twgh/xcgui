@@ -60,13 +60,6 @@ func (i *ICoreWebView2StringCollection) GetCount() (uint32, error) {
 	return count, nil
 }
 
-// MustGetCount 获取集合中的字符串数量. 出错时会触发全局错误回调.
-func (i *ICoreWebView2StringCollection) MustGetCount() uint32 {
-	count, err := i.GetCount()
-	ReportErrorAtuo(err)
-	return count
-}
-
 // GetValueAtIndex 获取指定索引处的字符串值.
 func (i *ICoreWebView2StringCollection) GetValueAtIndex(index uint32) (string, error) {
 	var value *uint16
@@ -83,6 +76,13 @@ func (i *ICoreWebView2StringCollection) GetValueAtIndex(index uint32) (string, e
 	}
 	defer wapi.CoTaskMemFree(unsafe.Pointer(value))
 	return common.UTF16PtrToString(value), nil
+}
+
+// MustGetCount 获取集合中的字符串数量. 出错时会触发全局错误回调.
+func (i *ICoreWebView2StringCollection) MustGetCount() uint32 {
+	count, err := i.GetCount()
+	ReportErrorAtuo(err)
+	return count
 }
 
 // MustGetValueAtIndex 获取指定索引处的字符串值. 出错时会触发全局错误回调.

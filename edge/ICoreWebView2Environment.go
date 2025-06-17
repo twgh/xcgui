@@ -63,19 +63,7 @@ func (i *ICoreWebView2Environment) CreateCoreWebView2Controller(parentWindow uin
 }
 
 // CreateWebResourceResponse 创建新的web资源响应对象。
-func (i *ICoreWebView2Environment) CreateWebResourceResponse(content []byte, statusCode int, reasonPhrase string, headers string) (*ICoreWebView2WebResourceResponse, error) {
-	var err error
-	var streamPtr uintptr
-	var stream *IStream
-	if len(content) > 0 {
-		stream, err = NewStreamMem(content)
-		if err != nil {
-			return nil, err
-		}
-		defer stream.Release()
-		streamPtr = stream.GetPtr()
-	}
-
+func (i *ICoreWebView2Environment) CreateWebResourceResponse(content *IStream, statusCode int, reasonPhrase string, headers string) (*ICoreWebView2WebResourceResponse, error) {
 	_reason, err := syscall.UTF16PtrFromString(reasonPhrase)
 	if err != nil {
 		return nil, err
@@ -87,7 +75,7 @@ func (i *ICoreWebView2Environment) CreateWebResourceResponse(content []byte, sta
 	var response *ICoreWebView2WebResourceResponse
 	r, _, err := i.Vtbl.CreateWebResourceResponse.Call(
 		uintptr(unsafe.Pointer(i)),
-		streamPtr,
+		uintptr(unsafe.Pointer(content)),
 		uintptr(statusCode),
 		uintptr(unsafe.Pointer(_reason)),
 		uintptr(unsafe.Pointer(_headers)),
@@ -120,13 +108,13 @@ func (i *ICoreWebView2Environment) GetBrowserVersionString() (string, error) {
 	return version, nil
 }
 
+/*todo
+AddNewBrowserVersionAvailable
+RemoveNewBrowserVersionAvailable
+*/
+
 // MustGetBrowserVersionString 获取当前 ICoreWebView2Environment 的浏览器版本信息，如果不是WebView2运行时，则包括通道名称。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment) MustGetBrowserVersionString() string {
 	version, _ := i.GetBrowserVersionString()
 	return version
 }
-
-/*todo
-AddNewBrowserVersionAvailable
-RemoveNewBrowserVersionAvailable
-*/

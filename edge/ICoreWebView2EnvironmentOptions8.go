@@ -59,15 +59,8 @@ func (i *ICoreWebView2EnvironmentOptions8) GetScrollBarStyle() (COREWEBVIEW2_SCR
 	return value, nil
 }
 
-// MustGetScrollBarStyle 获取滚动条样式.
-func (i *ICoreWebView2EnvironmentOptions8) MustGetScrollBarStyle() COREWEBVIEW2_SCROLLBAR_STYLE {
-	value, err := i.GetScrollBarStyle()
-	ReportErrorAtuo(err)
-	return value
-}
-
-// PutScrollBarStyle 设置滚动条样式.
-func (i *ICoreWebView2EnvironmentOptions8) PutScrollBarStyle(value COREWEBVIEW2_SCROLLBAR_STYLE) error {
+// SetScrollBarStyle 设置滚动条样式.
+func (i *ICoreWebView2EnvironmentOptions8) SetScrollBarStyle(value COREWEBVIEW2_SCROLLBAR_STYLE) error {
 	r, _, err := i.Vtbl.PutScrollBarStyle.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(value),
@@ -79,4 +72,11 @@ func (i *ICoreWebView2EnvironmentOptions8) PutScrollBarStyle(value COREWEBVIEW2_
 		return syscall.Errno(r)
 	}
 	return nil
+}
+
+// MustGetScrollBarStyle 获取滚动条样式.
+func (i *ICoreWebView2EnvironmentOptions8) MustGetScrollBarStyle() COREWEBVIEW2_SCROLLBAR_STYLE {
+	value, err := i.GetScrollBarStyle()
+	ReportErrorAtuo(err)
+	return value
 }

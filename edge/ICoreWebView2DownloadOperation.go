@@ -59,6 +59,12 @@ func (i *ICoreWebView2DownloadOperation) QueryInterface(refiid, object unsafe.Po
 	return nil
 }
 
+// Event_BytesReceivedChanged 下载字节改变事件.
+//   - 当下载的字节数发生更改时触发。
+func (i *ICoreWebView2DownloadOperation) Event_BytesReceivedChanged(w *WebViewEventImpl, cb func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
+	return WvEventHandler.AddCallBack(w, "BytesReceivedChanged", cb, i, allowAddingMultiple...)
+}
+
 // AddBytesReceivedChanged 添加接收到的字节数改变事件处理程序.
 func (i *ICoreWebView2DownloadOperation) AddBytesReceivedChanged(eventHandler *ICoreWebView2BytesReceivedChangedEventHandler, token *EventRegistrationToken) error {
 	r, _, err := i.Vtbl.AddBytesReceivedChanged.Call(
@@ -106,13 +112,6 @@ func (i *ICoreWebView2DownloadOperation) GetUri() (string, error) {
 	result := common.UTF16PtrToString(uri)
 	wapi.CoTaskMemFree(unsafe.Pointer(uri))
 	return result, nil
-}
-
-// MustGetUri 获取下载的 URI。出错时会触发全局错误回调。
-func (i *ICoreWebView2DownloadOperation) MustGetUri() string {
-	uri, err := i.GetUri()
-	ReportErrorAtuo(err)
-	return uri
 }
 
 // Cancel 取消下载.
@@ -182,13 +181,6 @@ func (i *ICoreWebView2DownloadOperation) GetContentDisposition() (string, error)
 	return result, nil
 }
 
-// MustGetContentDisposition 获取下载的HTTP响应中的 Content-Disposition 标头值。出错时会触发全局错误回调。
-func (i *ICoreWebView2DownloadOperation) MustGetContentDisposition() string {
-	contentDisposition, err := i.GetContentDisposition()
-	ReportErrorAtuo(err)
-	return contentDisposition
-}
-
 // GetMimeType 获取下载内容的 MIME 类型.
 func (i *ICoreWebView2DownloadOperation) GetMimeType() (string, error) {
 	var mimeType *uint16
@@ -205,13 +197,6 @@ func (i *ICoreWebView2DownloadOperation) GetMimeType() (string, error) {
 	result := common.UTF16PtrToString(mimeType)
 	wapi.CoTaskMemFree(unsafe.Pointer(mimeType))
 	return result, nil
-}
-
-// MustGetMimeType 获取下载内容的 MIME 类型。出错时会触发全局错误回调。
-func (i *ICoreWebView2DownloadOperation) MustGetMimeType() string {
-	mimeType, err := i.GetMimeType()
-	ReportErrorAtuo(err)
-	return mimeType
 }
 
 // GetTotalBytesToReceive 获取根据 HTTP Content-Length 标头计算出的下载内容总字节数的预期大小。
@@ -231,14 +216,6 @@ func (i *ICoreWebView2DownloadOperation) GetTotalBytesToReceive() (int64, error)
 	return totalBytes, nil
 }
 
-// MustGetTotalBytesToReceive 获取根据 HTTP Content-Length 标头计算出的下载内容总字节数的预期大小。出错时会触发全局错误回调。
-//   - 如果大小未知，则返回 -1。
-func (i *ICoreWebView2DownloadOperation) MustGetTotalBytesToReceive() int64 {
-	totalBytes, err := i.GetTotalBytesToReceive()
-	ReportErrorAtuo(err)
-	return totalBytes
-}
-
 // GetBytesReceived 获取已写入下载文件的字节数。
 func (i *ICoreWebView2DownloadOperation) GetBytesReceived() (int64, error) {
 	var bytesReceived int64
@@ -253,13 +230,6 @@ func (i *ICoreWebView2DownloadOperation) GetBytesReceived() (int64, error) {
 		return 0, syscall.Errno(r)
 	}
 	return bytesReceived, nil
-}
-
-// MustGetBytesReceived 获取已写入下载文件的字节数。出错时会触发全局错误回调。
-func (i *ICoreWebView2DownloadOperation) MustGetBytesReceived() int64 {
-	bytesReceived, err := i.GetBytesReceived()
-	ReportErrorAtuo(err)
-	return bytesReceived
 }
 
 // GetEstimatedEndTime 获取预计结束时间，采用 ISO 8601 日期和时间格式。
@@ -278,13 +248,6 @@ func (i *ICoreWebView2DownloadOperation) GetEstimatedEndTime() (string, error) {
 	result := common.UTF16PtrToString(estimatedEndTime)
 	wapi.CoTaskMemFree(unsafe.Pointer(estimatedEndTime))
 	return result, nil
-}
-
-// MustGetEstimatedEndTime 获取预计结束时间，采用 ISO 8601 日期和时间格式。出错时会触发全局错误回调。
-func (i *ICoreWebView2DownloadOperation) MustGetEstimatedEndTime() string {
-	estimatedEndTime, err := i.GetEstimatedEndTime()
-	ReportErrorAtuo(err)
-	return estimatedEndTime
 }
 
 // GetResultFilePath 获取下载文件的绝对路径，包括文件名。
@@ -306,14 +269,6 @@ func (i *ICoreWebView2DownloadOperation) GetResultFilePath() (string, error) {
 	return result, nil
 }
 
-// MustGetResultFilePath 获取下载文件的绝对路径，包括文件名。出错时会触发全局错误回调。
-//   - 宿主可以从 ICoreWebView2DownloadStartingEventArgs 更改此设置。
-func (i *ICoreWebView2DownloadOperation) MustGetResultFilePath() string {
-	resultFilePath, err := i.GetResultFilePath()
-	ReportErrorAtuo(err)
-	return resultFilePath
-}
-
 // GetState 获取下载状态。
 func (i *ICoreWebView2DownloadOperation) GetState() (COREWEBVIEW2_DOWNLOAD_STATE, error) {
 	var state COREWEBVIEW2_DOWNLOAD_STATE
@@ -330,13 +285,6 @@ func (i *ICoreWebView2DownloadOperation) GetState() (COREWEBVIEW2_DOWNLOAD_STATE
 	return state, nil
 }
 
-// MustGetState 获取下载状态。出错时会触发全局错误回调.
-func (i *ICoreWebView2DownloadOperation) MustGetState() COREWEBVIEW2_DOWNLOAD_STATE {
-	state, err := i.GetState()
-	ReportErrorAtuo(err)
-	return state
-}
-
 // GetInterruptReason 获取下载中断的原因.
 func (i *ICoreWebView2DownloadOperation) GetInterruptReason() (COREWEBVIEW2_DOWNLOAD_INTERRUPT_REASON, error) {
 	var reason COREWEBVIEW2_DOWNLOAD_INTERRUPT_REASON
@@ -351,13 +299,6 @@ func (i *ICoreWebView2DownloadOperation) GetInterruptReason() (COREWEBVIEW2_DOWN
 		return 0, syscall.Errno(r)
 	}
 	return reason, nil
-}
-
-// MustGetInterruptReason 获取下载中断的原因。出错时会触发全局错误回调.
-func (i *ICoreWebView2DownloadOperation) MustGetInterruptReason() COREWEBVIEW2_DOWNLOAD_INTERRUPT_REASON {
-	reason, err := i.GetInterruptReason()
-	ReportErrorAtuo(err)
-	return reason
 }
 
 // GetCanResume 获取下载是否可以恢复.
@@ -377,6 +318,78 @@ func (i *ICoreWebView2DownloadOperation) GetCanResume() (bool, error) {
 	return canResume, nil
 }
 
+/*TODO:
+AddEstimatedEndTimeChanged
+RemoveEstimatedEndTimeChanged
+AddStateChanged
+RemoveStateChanged
+*/
+
+// MustGetUri 获取下载的 URI。出错时会触发全局错误回调。
+func (i *ICoreWebView2DownloadOperation) MustGetUri() string {
+	uri, err := i.GetUri()
+	ReportErrorAtuo(err)
+	return uri
+}
+
+// MustGetContentDisposition 获取下载的HTTP响应中的 Content-Disposition 标头值。出错时会触发全局错误回调。
+func (i *ICoreWebView2DownloadOperation) MustGetContentDisposition() string {
+	contentDisposition, err := i.GetContentDisposition()
+	ReportErrorAtuo(err)
+	return contentDisposition
+}
+
+// MustGetMimeType 获取下载内容的 MIME 类型。出错时会触发全局错误回调。
+func (i *ICoreWebView2DownloadOperation) MustGetMimeType() string {
+	mimeType, err := i.GetMimeType()
+	ReportErrorAtuo(err)
+	return mimeType
+}
+
+// MustGetTotalBytesToReceive 获取根据 HTTP Content-Length 标头计算出的下载内容总字节数的预期大小。出错时会触发全局错误回调。
+//   - 如果大小未知，则返回 -1。
+func (i *ICoreWebView2DownloadOperation) MustGetTotalBytesToReceive() int64 {
+	totalBytes, err := i.GetTotalBytesToReceive()
+	ReportErrorAtuo(err)
+	return totalBytes
+}
+
+// MustGetBytesReceived 获取已写入下载文件的字节数。出错时会触发全局错误回调。
+func (i *ICoreWebView2DownloadOperation) MustGetBytesReceived() int64 {
+	bytesReceived, err := i.GetBytesReceived()
+	ReportErrorAtuo(err)
+	return bytesReceived
+}
+
+// MustGetEstimatedEndTime 获取预计结束时间，采用 ISO 8601 日期和时间格式。出错时会触发全局错误回调。
+func (i *ICoreWebView2DownloadOperation) MustGetEstimatedEndTime() string {
+	estimatedEndTime, err := i.GetEstimatedEndTime()
+	ReportErrorAtuo(err)
+	return estimatedEndTime
+}
+
+// MustGetResultFilePath 获取下载文件的绝对路径，包括文件名。出错时会触发全局错误回调。
+//   - 宿主可以从 ICoreWebView2DownloadStartingEventArgs 更改此设置。
+func (i *ICoreWebView2DownloadOperation) MustGetResultFilePath() string {
+	resultFilePath, err := i.GetResultFilePath()
+	ReportErrorAtuo(err)
+	return resultFilePath
+}
+
+// MustGetState 获取下载状态。出错时会触发全局错误回调.
+func (i *ICoreWebView2DownloadOperation) MustGetState() COREWEBVIEW2_DOWNLOAD_STATE {
+	state, err := i.GetState()
+	ReportErrorAtuo(err)
+	return state
+}
+
+// MustGetInterruptReason 获取下载中断的原因。出错时会触发全局错误回调.
+func (i *ICoreWebView2DownloadOperation) MustGetInterruptReason() COREWEBVIEW2_DOWNLOAD_INTERRUPT_REASON {
+	reason, err := i.GetInterruptReason()
+	ReportErrorAtuo(err)
+	return reason
+}
+
 // MustGetCanResume 获取下载是否可以恢复。出错时会触发全局错误回调.
 //   - 以下中断原因导致的下载可能无需你调用任何方法即可自动恢复: COREWEBVIEW2_DOWNLOAD_INTERRUPT_REASON_SERVER_NO_RANGE、 COREWEBVIEW2_DOWNLOAD_INTERRUPT_REASON_FILE_HASH_MISMATCH、 COREWEBVIEW2_DOWNLOAD_INTERRUPT_REASON_FILE_TOO_SHORT。在这些情况下，下载进度可能会重新开始，且 BytesReceived 将重置为0。
 func (i *ICoreWebView2DownloadOperation) MustGetCanResume() bool {
@@ -384,16 +397,3 @@ func (i *ICoreWebView2DownloadOperation) MustGetCanResume() bool {
 	ReportErrorAtuo(err)
 	return canResume
 }
-
-// Event_BytesReceivedChanged 下载字节改变事件.
-//   - 当下载的字节数发生更改时触发。
-func (i *ICoreWebView2DownloadOperation) Event_BytesReceivedChanged(w *WebViewEventImpl, cb func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
-	return WvEventHandler.AddCallBack(w, "BytesReceivedChanged", cb, i, allowAddingMultiple...)
-}
-
-/*TODO:
-AddEstimatedEndTimeChanged
-RemoveEstimatedEndTimeChanged
-AddStateChanged
-RemoveStateChanged
-*/

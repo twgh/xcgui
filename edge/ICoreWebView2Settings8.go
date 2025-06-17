@@ -1,5 +1,7 @@
 package edge
 
+// ok
+
 import (
 	"errors"
 	"github.com/twgh/xcgui/common"
@@ -58,15 +60,8 @@ func (i *ICoreWebView2Settings8) GetIsReputationCheckingRequired() (bool, error)
 	return required, nil
 }
 
-// MustGetIsReputationCheckingRequired 获取是否需要进行信誉检查。出错时会触发全局错误回调。
-func (i *ICoreWebView2Settings8) MustGetIsReputationCheckingRequired() bool {
-	required, err := i.GetIsReputationCheckingRequired()
-	ReportErrorAtuo(err)
-	return required
-}
-
-// PutIsReputationCheckingRequired 设置是否需要进行信誉检查。默认值为 true。
-func (i *ICoreWebView2Settings8) PutIsReputationCheckingRequired(required bool) error {
+// SetIsReputationCheckingRequired 设置是否需要进行信誉检查。默认值为 true。
+func (i *ICoreWebView2Settings8) SetIsReputationCheckingRequired(required bool) error {
 	r, _, err := i.Vtbl.PutIsReputationCheckingRequired.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(required),
@@ -78,4 +73,11 @@ func (i *ICoreWebView2Settings8) PutIsReputationCheckingRequired(required bool) 
 		return syscall.Errno(r)
 	}
 	return nil
+}
+
+// MustGetIsReputationCheckingRequired 获取是否需要进行信誉检查。出错时会触发全局错误回调。
+func (i *ICoreWebView2Settings8) MustGetIsReputationCheckingRequired() bool {
+	required, err := i.GetIsReputationCheckingRequired()
+	ReportErrorAtuo(err)
+	return required
 }

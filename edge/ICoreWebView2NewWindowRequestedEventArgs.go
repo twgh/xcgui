@@ -68,14 +68,7 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetUri() (string, error) {
 	return common.UTF16PtrToString(uri), nil
 }
 
-// MustGetUri 获取新窗口请求的 URI. 出错时会触发全局错误回调.
-func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetUri() string {
-	uri, err := i.GetUri()
-	ReportErrorAtuo(err)
-	return uri
-}
-
-// PutNewWindow 设置一个 ICoreWebView2 作为 NewWindowRequested 事件的结果。
+// SetNewWindow 设置一个 ICoreWebView2 作为 NewWindowRequested 事件的结果。
 //   - 为来自请求 Webview 内部的 window.open() 提供一个 Webview 作为目标。
 //   - 如果设置了此项，此 Webview 的顶级窗口会作为已打开的 WindowProxy 返回给打开者脚本。
 //   - 如果未设置此项，则会检查 Handled 以确定 NewWindowRequested 事件的行为。
@@ -85,7 +78,7 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetUri() string {
 //   - 应在调用 PutNewWindow 之前更改设置，以确保这些设置对新设置的 WebView 生效。
 //   - 一旦设置了“NewWindow”，此 CoreWebView2 的基础网页内容将被替换，并会针对新窗口进行适当导航。
 //   - 设置新窗口后无法更改，否则将返回错误。
-func (i *ICoreWebView2NewWindowRequestedEventArgs) PutNewWindow(newWindow *ICoreWebView2) error {
+func (i *ICoreWebView2NewWindowRequestedEventArgs) SetNewWindow(newWindow *ICoreWebView2) error {
 	r, _, err := i.Vtbl.PutNewWindow.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(newWindow)),
@@ -115,18 +108,11 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetNewWindow() (*ICoreWebView
 	return newWindow, nil
 }
 
-// MustGetNewWindow 获取新窗口的 ICoreWebView2 实例. 出错时会触发全局错误回调.
-func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetNewWindow() *ICoreWebView2 {
-	newWindow, err := i.GetNewWindow()
-	ReportErrorAtuo(err)
-	return newWindow
-}
-
-// PutHandled 设置是否处理新窗口请求.
+// SetHandled 设置是否处理新窗口请求.
 //   - 如果此值为 false 且未设置 NewWindow，WebView 将打开一个弹出窗口，并返回已打开的 WindowProxy。
 //   - 如果设置为 true 且未为 NewWindow 设置 window.open，则打开的 WindowProxy 用于测试窗口对象，且不会加载任何窗口。
 //   - 默认值为 false。
-func (i *ICoreWebView2NewWindowRequestedEventArgs) PutHandled(handled bool) error {
+func (i *ICoreWebView2NewWindowRequestedEventArgs) SetHandled(handled bool) error {
 	r, _, err := i.Vtbl.PutHandled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(handled),
@@ -156,13 +142,6 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetHandled() (bool, error) {
 	return handled, nil
 }
 
-// MustGetHandled 获取是否处理了新窗口请求. 出错时会触发全局错误回调.
-func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetHandled() bool {
-	handled, err := i.GetHandled()
-	ReportErrorAtuo(err)
-	return handled
-}
-
 // GetIsUserInitiated 获取新窗口请求是否由用户发起.
 func (i *ICoreWebView2NewWindowRequestedEventArgs) GetIsUserInitiated() (bool, error) {
 	var isUserInitiated bool
@@ -177,13 +156,6 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetIsUserInitiated() (bool, e
 		return false, syscall.Errno(r)
 	}
 	return isUserInitiated, nil
-}
-
-// MustGetIsUserInitiated 获取新窗口请求是否由用户发起. 出错时会触发全局错误回调.
-func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetIsUserInitiated() bool {
-	isUserInitiated, err := i.GetIsUserInitiated()
-	ReportErrorAtuo(err)
-	return isUserInitiated
 }
 
 // GetDeferral 获取延迟对象，并将事件置于延迟状态。
@@ -202,13 +174,6 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetDeferral() (*ICoreWebView2
 	return deferral, nil
 }
 
-// MustGetDeferral 获取延迟对象，并将事件置于延迟状态. 出错时会触发全局错误回调.
-func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetDeferral() *ICoreWebView2Deferral {
-	deferral, err := i.GetDeferral()
-	ReportErrorAtuo(err)
-	return deferral
-}
-
 // GetWindowFeatures 获取由 window.open 指定的窗口特性。
 //   - 新 Webview 窗口的定位和大小调整应考虑这些特性。
 func (i *ICoreWebView2NewWindowRequestedEventArgs) GetWindowFeatures() (*ICoreWebView2WindowFeatures, error) {
@@ -224,4 +189,39 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetWindowFeatures() (*ICoreWe
 		return nil, syscall.Errno(r)
 	}
 	return features, nil
+}
+
+// MustGetUri 获取新窗口请求的 URI. 出错时会触发全局错误回调.
+func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetUri() string {
+	uri, err := i.GetUri()
+	ReportErrorAtuo(err)
+	return uri
+}
+
+// MustGetNewWindow 获取新窗口的 ICoreWebView2 实例. 出错时会触发全局错误回调.
+func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetNewWindow() *ICoreWebView2 {
+	newWindow, err := i.GetNewWindow()
+	ReportErrorAtuo(err)
+	return newWindow
+}
+
+// MustGetHandled 获取是否处理了新窗口请求. 出错时会触发全局错误回调.
+func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetHandled() bool {
+	handled, err := i.GetHandled()
+	ReportErrorAtuo(err)
+	return handled
+}
+
+// MustGetIsUserInitiated 获取新窗口请求是否由用户发起. 出错时会触发全局错误回调.
+func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetIsUserInitiated() bool {
+	isUserInitiated, err := i.GetIsUserInitiated()
+	ReportErrorAtuo(err)
+	return isUserInitiated
+}
+
+// MustGetDeferral 获取延迟对象，并将事件置于延迟状态. 出错时会触发全局错误回调.
+func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetDeferral() *ICoreWebView2Deferral {
+	deferral, err := i.GetDeferral()
+	ReportErrorAtuo(err)
+	return deferral
 }

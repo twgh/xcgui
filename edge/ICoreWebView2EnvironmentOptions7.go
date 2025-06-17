@@ -61,18 +61,11 @@ func (i *ICoreWebView2EnvironmentOptions7) GetChannelSearchKind() (COREWEBVIEW2_
 	return value, nil
 }
 
-// MustGetChannelSearchKind 获取频道搜索类型.
-func (i *ICoreWebView2EnvironmentOptions7) MustGetChannelSearchKind() COREWEBVIEW2_CHANNEL_SEARCH_KIND {
-	value, err := i.GetChannelSearchKind()
-	ReportErrorAtuo(err)
-	return value
-}
-
-// PutChannelSearchKind 设置频道搜索类型.
+// SetChannelSearchKind 设置频道搜索类型.
 //   - ChannelSearchKind 属性默认值为 COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE.
 //   - 环境创建会按稳定性从高到低的顺序在计算机上搜索发布通道，并使用找到的第一个通道。
 //   - 默认搜索顺序为：WebView2 运行时 -> Beta -> Dev -> Canary。
-func (i *ICoreWebView2EnvironmentOptions7) PutChannelSearchKind(value COREWEBVIEW2_CHANNEL_SEARCH_KIND) error {
+func (i *ICoreWebView2EnvironmentOptions7) SetChannelSearchKind(value COREWEBVIEW2_CHANNEL_SEARCH_KIND) error {
 	r, _, err := i.Vtbl.PutChannelSearchKind.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(value),
@@ -102,18 +95,11 @@ func (i *ICoreWebView2EnvironmentOptions7) GetReleaseChannels() (COREWEBVIEW2_RE
 	return value, nil
 }
 
-// MustGetReleaseChannels 获取发布频道.
-func (i *ICoreWebView2EnvironmentOptions7) MustGetReleaseChannels() COREWEBVIEW2_RELEASE_CHANNELS {
-	value, err := i.GetReleaseChannels()
-	ReportErrorAtuo(err)
-	return value
-}
-
-// PutReleaseChannels 设置发布频道.
+// SetReleaseChannels 设置发布频道.
 //
 // value: 一个或多个 COREWEBVIEW2_RELEASE_CHANNELS 的组合，指示环境创建应搜索哪些频道。
 //   - 默认值是所有通道.
-func (i *ICoreWebView2EnvironmentOptions7) PutReleaseChannels(value COREWEBVIEW2_RELEASE_CHANNELS) error {
+func (i *ICoreWebView2EnvironmentOptions7) SetReleaseChannels(value COREWEBVIEW2_RELEASE_CHANNELS) error {
 	r, _, err := i.Vtbl.PutReleaseChannels.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(value),
@@ -125,4 +111,18 @@ func (i *ICoreWebView2EnvironmentOptions7) PutReleaseChannels(value COREWEBVIEW2
 		return syscall.Errno(r)
 	}
 	return nil
+}
+
+// MustGetChannelSearchKind 获取频道搜索类型.
+func (i *ICoreWebView2EnvironmentOptions7) MustGetChannelSearchKind() COREWEBVIEW2_CHANNEL_SEARCH_KIND {
+	value, err := i.GetChannelSearchKind()
+	ReportErrorAtuo(err)
+	return value
+}
+
+// MustGetReleaseChannels 获取发布频道.
+func (i *ICoreWebView2EnvironmentOptions7) MustGetReleaseChannels() COREWEBVIEW2_RELEASE_CHANNELS {
+	value, err := i.GetReleaseChannels()
+	ReportErrorAtuo(err)
+	return value
 }

@@ -69,18 +69,11 @@ func (i *ICoreWebView2EnvironmentOptions) GetAdditionalBrowserArguments() (strin
 	return str, nil
 }
 
-// MustGetAdditionalBrowserArguments 获取创建 WebView2 环境时要传递给浏览器进程的其它命令行参数。出错时会触发全局错误回调。
-func (i *ICoreWebView2EnvironmentOptions) MustGetAdditionalBrowserArguments() string {
-	value, err := i.GetAdditionalBrowserArguments()
-	ReportErrorAtuo(err)
-	return value
-}
-
-// PutAdditionalBrowserArguments 设置创建 WebView2 环境时要传递给浏览器进程的其它命令行参数。
+// SetAdditionalBrowserArguments 设置创建 WebView2 环境时要传递给浏览器进程的其它命令行参数。
 //   - 请注意，调用此 API 多次时将替换之前的值，而不是追加到其中。
 //   - 如果有多个命令行参数，它们之间应该用空格分隔。
 //   - 唯一的例外是，如果为单个命令行参数启用/禁用了多个功能，则这些功能应该用逗号分隔。例如：“--disable-features=feature1,feature2 --some-other-switch --do-something”
-func (i *ICoreWebView2EnvironmentOptions) PutAdditionalBrowserArguments(value string) error {
+func (i *ICoreWebView2EnvironmentOptions) SetAdditionalBrowserArguments(value string) error {
 	_value, err := syscall.UTF16PtrFromString(value)
 	if err != nil {
 		return err
@@ -116,11 +109,11 @@ func (i *ICoreWebView2EnvironmentOptions) GetLanguage() (string, error) {
 	return str, nil
 }
 
-// PutLanguage 设置 WebView2 环境的语言。
+// SetLanguage 设置 WebView2 环境的语言。
 //   - 它适用于浏览器用户界面，如上下文菜单和对话框。
 //   - 它也适用于 WebView 向网站发送的 accept - languages HTTP 头部。
 //   - 预期的语言环境值采用 BCP 47 语言标签的格式。更多信息可从 IETF BCP47 中获取。
-func (i *ICoreWebView2EnvironmentOptions) PutLanguage(value string) error {
+func (i *ICoreWebView2EnvironmentOptions) SetLanguage(value string) error {
 	_value, err := syscall.UTF16PtrFromString(value)
 	if err != nil {
 		return err
@@ -156,15 +149,8 @@ func (i *ICoreWebView2EnvironmentOptions) GetTargetCompatibleBrowserVersion() (s
 	return str, nil
 }
 
-// MustGetTargetCompatibleBrowserVersion 获取目标兼容的浏览器版本。出错时会触发全局错误回调。
-func (i *ICoreWebView2EnvironmentOptions) MustGetTargetCompatibleBrowserVersion() string {
-	value, err := i.GetTargetCompatibleBrowserVersion()
-	ReportErrorAtuo(err)
-	return value
-}
-
-// PutTargetCompatibleBrowserVersion 设置目标兼容的浏览器版本。
-func (i *ICoreWebView2EnvironmentOptions) PutTargetCompatibleBrowserVersion(value string) error {
+// SetTargetCompatibleBrowserVersion 设置目标兼容的浏览器版本。
+func (i *ICoreWebView2EnvironmentOptions) SetTargetCompatibleBrowserVersion(value string) error {
 	_value, err := syscall.UTF16PtrFromString(value)
 	if err != nil {
 		return err
@@ -198,15 +184,8 @@ func (i *ICoreWebView2EnvironmentOptions) GetAllowSingleSignOnUsingOSPrimaryAcco
 	return value, nil
 }
 
-// MustGetAllowSingleSignOnUsingOSPrimaryAccount 获取是否允许 Azure Active Directory (AAD) 和个人 Microsoft Account (MSA) 资源的单点登录。出错时会触发全局错误回调。
-func (i *ICoreWebView2EnvironmentOptions) MustGetAllowSingleSignOnUsingOSPrimaryAccount() bool {
-	value, err := i.GetAllowSingleSignOnUsingOSPrimaryAccount()
-	ReportErrorAtuo(err)
-	return value
-}
-
-// PutAllowSingleSignOnUsingOSPrimaryAccount 设置是否允许 Azure Active Directory (AAD) 和个人 Microsoft Account (MSA) 资源的单点登录。
-func (i *ICoreWebView2EnvironmentOptions) PutAllowSingleSignOnUsingOSPrimaryAccount(value bool) error {
+// SetAllowSingleSignOnUsingOSPrimaryAccount 设置是否允许 Azure Active Directory (AAD) 和个人 Microsoft Account (MSA) 资源的单点登录。
+func (i *ICoreWebView2EnvironmentOptions) SetAllowSingleSignOnUsingOSPrimaryAccount(value bool) error {
 	r, _, err := i.Vtbl.PutAllowSingleSignOnUsingOSPrimaryAccount.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(value),
@@ -229,13 +208,6 @@ func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions2() 
 	return result, err
 }
 
-// MustGetICoreWebView2EnvironmentOptions2 获取 ICoreWebView2EnvironmentOptions2。出错时会触发全局错误回调。
-func (i *ICoreWebView2EnvironmentOptions) MustGetICoreWebView2EnvironmentOptions2() *ICoreWebView2EnvironmentOptions2 {
-	result, err := i.GetICoreWebView2EnvironmentOptions2()
-	ReportErrorAtuo(err)
-	return result
-}
-
 // GetICoreWebView2EnvironmentOptions3 获取 ICoreWebView2EnvironmentOptions3。
 func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions3() (*ICoreWebView2EnvironmentOptions3, error) {
 	var result *ICoreWebView2EnvironmentOptions3
@@ -243,13 +215,6 @@ func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions3() 
 		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2EnvironmentOptions3)),
 		unsafe.Pointer(&result))
 	return result, err
-}
-
-// MustGetICoreWebView2EnvironmentOptions3 获取 ICoreWebView2EnvironmentOptions3。出错时会触发全局错误回调。
-func (i *ICoreWebView2EnvironmentOptions) MustGetICoreWebView2EnvironmentOptions3() *ICoreWebView2EnvironmentOptions3 {
-	result, err := i.GetICoreWebView2EnvironmentOptions3()
-	ReportErrorAtuo(err)
-	return result
 }
 
 // GetICoreWebView2EnvironmentOptions4 获取 ICoreWebView2EnvironmentOptions4。
@@ -261,13 +226,6 @@ func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions4() 
 	return result, err
 }
 
-// MustGetICoreWebView2EnvironmentOptions4 获取 ICoreWebView2EnvironmentOptions4。出错时会触发全局错误回调。
-func (i *ICoreWebView2EnvironmentOptions) MustGetICoreWebView2EnvironmentOptions4() *ICoreWebView2EnvironmentOptions4 {
-	result, err := i.GetICoreWebView2EnvironmentOptions4()
-	ReportErrorAtuo(err)
-	return result
-}
-
 // GetICoreWebView2EnvironmentOptions5 获取 ICoreWebView2EnvironmentOptions5。
 func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions5() (*ICoreWebView2EnvironmentOptions5, error) {
 	var result *ICoreWebView2EnvironmentOptions5
@@ -275,13 +233,6 @@ func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions5() 
 		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2EnvironmentOptions5)),
 		unsafe.Pointer(&result))
 	return result, err
-}
-
-// MustGetICoreWebView2EnvironmentOptions5 获取 ICoreWebView2EnvironmentOptions5。出错时会触发全局错误回调。
-func (i *ICoreWebView2EnvironmentOptions) MustGetICoreWebView2EnvironmentOptions5() *ICoreWebView2EnvironmentOptions5 {
-	result, err := i.GetICoreWebView2EnvironmentOptions5()
-	ReportErrorAtuo(err)
-	return result
 }
 
 // GetICoreWebView2EnvironmentOptions6 获取 ICoreWebView2EnvironmentOptions6。
@@ -293,13 +244,6 @@ func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions6() 
 	return result, err
 }
 
-// MustGetICoreWebView2EnvironmentOptions6 获取 ICoreWebView2EnvironmentOptions6。出错时会触发全局错误回调。
-func (i *ICoreWebView2EnvironmentOptions) MustGetICoreWebView2EnvironmentOptions6() *ICoreWebView2EnvironmentOptions6 {
-	result, err := i.GetICoreWebView2EnvironmentOptions6()
-	ReportErrorAtuo(err)
-	return result
-}
-
 // GetICoreWebView2EnvironmentOptions7 获取 ICoreWebView2EnvironmentOptions7。
 func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions7() (*ICoreWebView2EnvironmentOptions7, error) {
 	var result *ICoreWebView2EnvironmentOptions7
@@ -309,13 +253,6 @@ func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions7() 
 	return result, err
 }
 
-// MustGetICoreWebView2EnvironmentOptions7 获取 ICoreWebView2EnvironmentOptions7。出错时会触发全局错误回调。
-func (i *ICoreWebView2EnvironmentOptions) MustGetICoreWebView2EnvironmentOptions7() *ICoreWebView2EnvironmentOptions7 {
-	result, err := i.GetICoreWebView2EnvironmentOptions7()
-	ReportErrorAtuo(err)
-	return result
-}
-
 // GetICoreWebView2EnvironmentOptions8 获取 ICoreWebView2EnvironmentOptions8。
 func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions8() (*ICoreWebView2EnvironmentOptions8, error) {
 	var result *ICoreWebView2EnvironmentOptions8
@@ -323,6 +260,69 @@ func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions8() 
 		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2EnvironmentOptions8)),
 		unsafe.Pointer(&result))
 	return result, err
+}
+
+// MustGetAdditionalBrowserArguments 获取创建 WebView2 环境时要传递给浏览器进程的其它命令行参数。出错时会触发全局错误回调。
+func (i *ICoreWebView2EnvironmentOptions) MustGetAdditionalBrowserArguments() string {
+	value, err := i.GetAdditionalBrowserArguments()
+	ReportErrorAtuo(err)
+	return value
+}
+
+// MustGetTargetCompatibleBrowserVersion 获取目标兼容的浏览器版本。出错时会触发全局错误回调。
+func (i *ICoreWebView2EnvironmentOptions) MustGetTargetCompatibleBrowserVersion() string {
+	value, err := i.GetTargetCompatibleBrowserVersion()
+	ReportErrorAtuo(err)
+	return value
+}
+
+// MustGetAllowSingleSignOnUsingOSPrimaryAccount 获取是否允许 Azure Active Directory (AAD) 和个人 Microsoft Account (MSA) 资源的单点登录。出错时会触发全局错误回调。
+func (i *ICoreWebView2EnvironmentOptions) MustGetAllowSingleSignOnUsingOSPrimaryAccount() bool {
+	value, err := i.GetAllowSingleSignOnUsingOSPrimaryAccount()
+	ReportErrorAtuo(err)
+	return value
+}
+
+// MustGetICoreWebView2EnvironmentOptions2 获取 ICoreWebView2EnvironmentOptions2。出错时会触发全局错误回调。
+func (i *ICoreWebView2EnvironmentOptions) MustGetICoreWebView2EnvironmentOptions2() *ICoreWebView2EnvironmentOptions2 {
+	result, err := i.GetICoreWebView2EnvironmentOptions2()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2EnvironmentOptions3 获取 ICoreWebView2EnvironmentOptions3。出错时会触发全局错误回调。
+func (i *ICoreWebView2EnvironmentOptions) MustGetICoreWebView2EnvironmentOptions3() *ICoreWebView2EnvironmentOptions3 {
+	result, err := i.GetICoreWebView2EnvironmentOptions3()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2EnvironmentOptions4 获取 ICoreWebView2EnvironmentOptions4。出错时会触发全局错误回调。
+func (i *ICoreWebView2EnvironmentOptions) MustGetICoreWebView2EnvironmentOptions4() *ICoreWebView2EnvironmentOptions4 {
+	result, err := i.GetICoreWebView2EnvironmentOptions4()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2EnvironmentOptions5 获取 ICoreWebView2EnvironmentOptions5。出错时会触发全局错误回调。
+func (i *ICoreWebView2EnvironmentOptions) MustGetICoreWebView2EnvironmentOptions5() *ICoreWebView2EnvironmentOptions5 {
+	result, err := i.GetICoreWebView2EnvironmentOptions5()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2EnvironmentOptions6 获取 ICoreWebView2EnvironmentOptions6。出错时会触发全局错误回调。
+func (i *ICoreWebView2EnvironmentOptions) MustGetICoreWebView2EnvironmentOptions6() *ICoreWebView2EnvironmentOptions6 {
+	result, err := i.GetICoreWebView2EnvironmentOptions6()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2EnvironmentOptions7 获取 ICoreWebView2EnvironmentOptions7。出错时会触发全局错误回调。
+func (i *ICoreWebView2EnvironmentOptions) MustGetICoreWebView2EnvironmentOptions7() *ICoreWebView2EnvironmentOptions7 {
+	result, err := i.GetICoreWebView2EnvironmentOptions7()
+	ReportErrorAtuo(err)
+	return result
 }
 
 // MustGetICoreWebView2EnvironmentOptions8 获取 ICoreWebView2EnvironmentOptions8。出错时会触发全局错误回调。

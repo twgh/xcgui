@@ -47,8 +47,6 @@ func (i *ICoreWebView2EnvironmentOptions2) QueryInterface(refiid, object unsafe.
 }
 
 // GetExclusiveUserDataFolderAccess 获取其他进程是否可以从使用相同用户数据文件夹创建的 WebView2Environment 创建 WebView2，从而共享同一个 WebView 浏览器进程实例。
-//
-// 100.0.1185.39
 func (i *ICoreWebView2EnvironmentOptions2) GetExclusiveUserDataFolderAccess() (bool, error) {
 	var value bool
 	r, _, err := i.Vtbl.GetExclusiveUserDataFolderAccess.Call(
@@ -64,19 +62,8 @@ func (i *ICoreWebView2EnvironmentOptions2) GetExclusiveUserDataFolderAccess() (b
 	return value, nil
 }
 
-// MustGetExclusiveUserDataFolderAccess 获取其他进程是否可以从使用相同用户数据文件夹创建的 WebView2Environment 创建 WebView2，从而共享同一个 WebView 浏览器进程实例。出错时会触发全局错误回调。
-//
-// 100.0.1185.39
-func (i *ICoreWebView2EnvironmentOptions2) MustGetExclusiveUserDataFolderAccess() bool {
-	value, err := i.GetExclusiveUserDataFolderAccess()
-	ReportErrorAtuo(err)
-	return value
-}
-
-// PutExclusiveUserDataFolderAccess 设置其他进程是否可以从使用相同用户数据文件夹创建的 WebView2Environment 创建 WebView2，从而共享同一个 WebView 浏览器进程实例。默认为 false。
-//
-// 100.0.1185.39
-func (i *ICoreWebView2EnvironmentOptions2) PutExclusiveUserDataFolderAccess(value bool) error {
+// SetExclusiveUserDataFolderAccess 设置其他进程是否可以从使用相同用户数据文件夹创建的 WebView2Environment 创建 WebView2，从而共享同一个 WebView 浏览器进程实例。默认为 false。
+func (i *ICoreWebView2EnvironmentOptions2) SetExclusiveUserDataFolderAccess(value bool) error {
 	r, _, err := i.Vtbl.PutExclusiveUserDataFolderAccess.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(value),
@@ -88,4 +75,11 @@ func (i *ICoreWebView2EnvironmentOptions2) PutExclusiveUserDataFolderAccess(valu
 		return syscall.Errno(r)
 	}
 	return nil
+}
+
+// MustGetExclusiveUserDataFolderAccess 获取其他进程是否可以从使用相同用户数据文件夹创建的 WebView2Environment 创建 WebView2，从而共享同一个 WebView 浏览器进程实例。出错时会触发全局错误回调。
+func (i *ICoreWebView2EnvironmentOptions2) MustGetExclusiveUserDataFolderAccess() bool {
+	value, err := i.GetExclusiveUserDataFolderAccess()
+	ReportErrorAtuo(err)
+	return value
 }

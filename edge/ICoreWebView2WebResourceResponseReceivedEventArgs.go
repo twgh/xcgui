@@ -1,5 +1,7 @@
 package edge
 
+// ok
+
 import (
 	"errors"
 	"github.com/twgh/xcgui/wapi"
@@ -59,15 +61,6 @@ func (i *ICoreWebView2WebResourceResponseReceivedEventArgs) GetRequest() (*ICore
 	return request, nil
 }
 
-// MustGetRequest 获取已提交的 Web 资源请求对象。出错时会触发全局错误回调。
-//   - 这包括网络堆栈添加的、在关联的 WebResourceRequested 事件期间未包含的标头，例如身份验证标头。
-//   - 对此对象的修改对请求的处理方式没有影响，因为请求已被发送。
-func (i *ICoreWebView2WebResourceResponseReceivedEventArgs) MustGetRequest() *ICoreWebView2WebResourceRequest {
-	request, err := i.GetRequest()
-	ReportErrorAtuo(err)
-	return request
-}
-
 // GetResponse 获取收到的网络资源响应对象的视图。
 func (i *ICoreWebView2WebResourceResponseReceivedEventArgs) GetResponse() (*ICoreWebView2WebResourceResponseView, error) {
 	var response *ICoreWebView2WebResourceResponseView
@@ -82,6 +75,15 @@ func (i *ICoreWebView2WebResourceResponseReceivedEventArgs) GetResponse() (*ICor
 		return nil, syscall.Errno(r)
 	}
 	return response, nil
+}
+
+// MustGetRequest 获取已提交的 Web 资源请求对象。出错时会触发全局错误回调。
+//   - 这包括网络堆栈添加的、在关联的 WebResourceRequested 事件期间未包含的标头，例如身份验证标头。
+//   - 对此对象的修改对请求的处理方式没有影响，因为请求已被发送。
+func (i *ICoreWebView2WebResourceResponseReceivedEventArgs) MustGetRequest() *ICoreWebView2WebResourceRequest {
+	request, err := i.GetRequest()
+	ReportErrorAtuo(err)
+	return request
 }
 
 // MustGetResponse 获取收到的网络资源响应对象的视图。出错时会触发全局错误回调。

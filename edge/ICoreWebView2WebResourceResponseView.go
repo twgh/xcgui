@@ -64,13 +64,6 @@ func (i *ICoreWebView2WebResourceResponseView) GetHeaders() (*ICoreWebView2HttpR
 	return headers, nil
 }
 
-// MustGetHeaders 获取 HTTP 响应头，出错时会触发全局错误回调。
-func (i *ICoreWebView2WebResourceResponseView) MustGetHeaders() *ICoreWebView2HttpResponseHeaders {
-	headers, err := i.GetHeaders()
-	ReportErrorAtuo(err)
-	return headers
-}
-
 // GetStatusCode 获取 HTTP 响应状态码。
 func (i *ICoreWebView2WebResourceResponseView) GetStatusCode() (int, error) {
 	var statusCode int
@@ -85,13 +78,6 @@ func (i *ICoreWebView2WebResourceResponseView) GetStatusCode() (int, error) {
 		return 0, syscall.Errno(r)
 	}
 	return statusCode, nil
-}
-
-// MustGetStatusCode 获取 HTTP 响应状态码，出错时会触发全局错误回调。
-func (i *ICoreWebView2WebResourceResponseView) MustGetStatusCode() int {
-	statusCode, err := i.GetStatusCode()
-	ReportErrorAtuo(err)
-	return statusCode
 }
 
 // GetReasonPhrase 获取 HTTP 响应原因短语。
@@ -110,13 +96,6 @@ func (i *ICoreWebView2WebResourceResponseView) GetReasonPhrase() (string, error)
 	phrase := common.UTF16PtrToString(reasonPhrase)
 	wapi.CoTaskMemFree(unsafe.Pointer(reasonPhrase))
 	return phrase, nil
-}
-
-// MustGetReasonPhrase 获取 HTTP 响应原因短语，出错时会触发全局错误回调。
-func (i *ICoreWebView2WebResourceResponseView) MustGetReasonPhrase() string {
-	phrase, err := i.GetReasonPhrase()
-	ReportErrorAtuo(err)
-	return phrase
 }
 
 // GetContent 获取响应内容。处理程序将接收响应内容流。
@@ -158,4 +137,25 @@ func (i *ICoreWebView2WebResourceResponseView) GetContentEx(impl *WebViewEventIm
 		handler = WvEventHandler.GetHandler(impl, "WebResourceResponseViewGetContentCompleted")
 	}
 	return i.GetContent((*ICoreWebView2WebResourceResponseViewGetContentCompletedHandler)(handler))
+}
+
+// MustGetHeaders 获取 HTTP 响应头，出错时会触发全局错误回调。
+func (i *ICoreWebView2WebResourceResponseView) MustGetHeaders() *ICoreWebView2HttpResponseHeaders {
+	headers, err := i.GetHeaders()
+	ReportErrorAtuo(err)
+	return headers
+}
+
+// MustGetStatusCode 获取 HTTP 响应状态码，出错时会触发全局错误回调。
+func (i *ICoreWebView2WebResourceResponseView) MustGetStatusCode() int {
+	statusCode, err := i.GetStatusCode()
+	ReportErrorAtuo(err)
+	return statusCode
+}
+
+// MustGetReasonPhrase 获取 HTTP 响应原因短语，出错时会触发全局错误回调。
+func (i *ICoreWebView2WebResourceResponseView) MustGetReasonPhrase() string {
+	phrase, err := i.GetReasonPhrase()
+	ReportErrorAtuo(err)
+	return phrase
 }

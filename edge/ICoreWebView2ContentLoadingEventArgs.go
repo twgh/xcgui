@@ -59,13 +59,6 @@ func (i *ICoreWebView2ContentLoadingEventArgs) GetIsErrorPage() (bool, error) {
 	return isErrorPage, nil
 }
 
-// MustGetIsErrorPage 获取当前导航是否为错误页面。出错时会触发全局错误回调。
-func (i *ICoreWebView2ContentLoadingEventArgs) MustGetIsErrorPage() bool {
-	isErrorPage, err := i.GetIsErrorPage()
-	ReportErrorAtuo(err)
-	return isErrorPage
-}
-
 // GetNavigationId 获取导航的 ID。
 func (i *ICoreWebView2ContentLoadingEventArgs) GetNavigationId() (uint64, error) {
 	var id uint64
@@ -80,6 +73,13 @@ func (i *ICoreWebView2ContentLoadingEventArgs) GetNavigationId() (uint64, error)
 		return id, syscall.Errno(r)
 	}
 	return id, nil
+}
+
+// MustGetIsErrorPage 获取当前导航是否为错误页面。出错时会触发全局错误回调。
+func (i *ICoreWebView2ContentLoadingEventArgs) MustGetIsErrorPage() bool {
+	isErrorPage, err := i.GetIsErrorPage()
+	ReportErrorAtuo(err)
+	return isErrorPage
 }
 
 // MustGetNavigationId 获取导航的 ID。出错时会触发全局错误回调。

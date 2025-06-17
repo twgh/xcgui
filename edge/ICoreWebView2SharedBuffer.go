@@ -1,5 +1,7 @@
 package edge
 
+// ok
+
 import (
 	"errors"
 	"github.com/twgh/xcgui/wapi"
@@ -60,13 +62,6 @@ func (i *ICoreWebView2SharedBuffer) GetSize() (uint64, error) {
 	return size, nil
 }
 
-// MustGetSize 获取共享缓冲区的大小（以字节为单位），出错时会触发全局错误回调。
-func (i *ICoreWebView2SharedBuffer) MustGetSize() uint64 {
-	size, err := i.GetSize()
-	ReportErrorAtuo(err)
-	return size
-}
-
 // GetBuffer 获取共享缓冲区的内存地址.
 func (i *ICoreWebView2SharedBuffer) GetBuffer() (unsafe.Pointer, error) {
 	var buffer unsafe.Pointer
@@ -81,13 +76,6 @@ func (i *ICoreWebView2SharedBuffer) GetBuffer() (unsafe.Pointer, error) {
 		return nil, syscall.Errno(r)
 	}
 	return buffer, nil
-}
-
-// MustGetBuffer 获取共享缓冲区的内存地址，出错时会触发全局错误回调。
-func (i *ICoreWebView2SharedBuffer) MustGetBuffer() unsafe.Pointer {
-	buffer, err := i.GetBuffer()
-	ReportErrorAtuo(err)
-	return buffer
 }
 
 // OpenStream 获取一个可用于访问共享缓冲区的 IStream 对象。
@@ -106,13 +94,6 @@ func (i *ICoreWebView2SharedBuffer) OpenStream() (*IStream, error) {
 	return stream, nil
 }
 
-// MustOpenStream 获取一个可用于访问共享缓冲区的 IStream 对象，出错时会触发全局错误回调。
-func (i *ICoreWebView2SharedBuffer) MustOpenStream() *IStream {
-	stream, err := i.OpenStream()
-	ReportErrorAtuo(err)
-	return stream
-}
-
 // GetFileMappingHandle 返回指向支持此共享缓冲区的文件映射对象的句柄。
 func (i *ICoreWebView2SharedBuffer) GetFileMappingHandle() (uintptr, error) {
 	var handle uintptr
@@ -127,13 +108,6 @@ func (i *ICoreWebView2SharedBuffer) GetFileMappingHandle() (uintptr, error) {
 		return 0, syscall.Errno(r)
 	}
 	return handle, nil
-}
-
-// MustGetFileMappingHandle 返回指向支持此共享缓冲区的文件映射对象的句柄，出错时会触发全局错误回调。
-func (i *ICoreWebView2SharedBuffer) MustGetFileMappingHandle() uintptr {
-	handle, err := i.GetFileMappingHandle()
-	ReportErrorAtuo(err)
-	return handle
 }
 
 // Close 关闭共享缓冲区.
@@ -151,4 +125,32 @@ func (i *ICoreWebView2SharedBuffer) Close() error {
 		return syscall.Errno(r)
 	}
 	return nil
+}
+
+// MustGetSize 获取共享缓冲区的大小（以字节为单位），出错时会触发全局错误回调。
+func (i *ICoreWebView2SharedBuffer) MustGetSize() uint64 {
+	size, err := i.GetSize()
+	ReportErrorAtuo(err)
+	return size
+}
+
+// MustGetBuffer 获取共享缓冲区的内存地址，出错时会触发全局错误回调。
+func (i *ICoreWebView2SharedBuffer) MustGetBuffer() unsafe.Pointer {
+	buffer, err := i.GetBuffer()
+	ReportErrorAtuo(err)
+	return buffer
+}
+
+// MustOpenStream 获取一个可用于访问共享缓冲区的 IStream 对象，出错时会触发全局错误回调。
+func (i *ICoreWebView2SharedBuffer) MustOpenStream() *IStream {
+	stream, err := i.OpenStream()
+	ReportErrorAtuo(err)
+	return stream
+}
+
+// MustGetFileMappingHandle 返回指向支持此共享缓冲区的文件映射对象的句柄，出错时会触发全局错误回调。
+func (i *ICoreWebView2SharedBuffer) MustGetFileMappingHandle() uintptr {
+	handle, err := i.GetFileMappingHandle()
+	ReportErrorAtuo(err)
+	return handle
 }

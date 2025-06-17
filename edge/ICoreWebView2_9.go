@@ -67,15 +67,6 @@ func (i *ICoreWebView2_9) GetIsDefaultDownloadDialogOpen() (bool, error) {
 	return isOpen, nil
 }
 
-// MustGetIsDefaultDownloadDialogOpen 获取默认下载对话框是否处于打开状态。出错时会触发全局错误回调。
-//   - 此属性的值仅在显式打开或关闭默认下载对话框时才会改变。
-//   - 隐藏 WebView 会隐式隐藏该对话框，但不会改变此属性的值。
-func (i *ICoreWebView2_9) MustGetIsDefaultDownloadDialogOpen() bool {
-	result, err := i.GetIsDefaultDownloadDialogOpen()
-	ReportErrorAtuo(err)
-	return result
-}
-
 // OpenDefaultDownloadDialog 打开默认下载对话框.
 //   - 如果在存在最近下载记录之前打开该对话框，对话框将显示当前配置文件的所有过往下载记录。
 //   - 否则，对话框仅显示最近的下载记录，并提供一个“查看更多”按钮以查看过往下载记录。
@@ -126,20 +117,13 @@ func (i *ICoreWebView2_9) GetDefaultDownloadDialogCornerAlignment() (COREWEBVIEW
 	return alignment, nil
 }
 
-// MustGetDefaultDownloadDialogCornerAlignment 获取默认下载对话框的边角对齐方式。出错时会触发全局错误回调。
-func (i *ICoreWebView2_9) MustGetDefaultDownloadDialogCornerAlignment() COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT {
-	alignment, err := i.GetDefaultDownloadDialogCornerAlignment()
-	ReportErrorAtuo(err)
-	return alignment
-}
-
-// PutDefaultDownloadDialogCornerAlignment 设置默认下载对话框的边角对齐方式。
+// SetDefaultDownloadDialogCornerAlignment 设置默认下载对话框的边角对齐方式。
 //   - 该对话框可以对齐到 WebView 的任意一个角（请参阅 COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT）。
 //   - 当 WebView 或对话框大小发生变化时，对话框会保持其相对于该角的位置。
 //   - 如果 WebView 足够小，对话框可能会部分或完全位于 WebView 边界之外。
 //   - 使用 PutDefaultDownloadDialogMargin 设置相对于该角的边距。
 //   - 应在初始化期间设置角对齐方式和边距，以确保在首次计算布局时正确应用它们，否则它们将不会生效，直到下次更新 WebView 的位置或大小。
-func (i *ICoreWebView2_9) PutDefaultDownloadDialogCornerAlignment(alignment COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT) error {
+func (i *ICoreWebView2_9) SetDefaultDownloadDialogCornerAlignment(alignment COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT) error {
 	r, _, err := i.Vtbl.PutDefaultDownloadDialogCornerAlignment.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(alignment),
@@ -169,19 +153,12 @@ func (i *ICoreWebView2_9) GetDefaultDownloadDialogMargin() (xc.POINT, error) {
 	return margin, nil
 }
 
-// MustGetDefaultDownloadDialogMargin 获取默认下载对话框的边距。出错时会触发全局错误回调。
-func (i *ICoreWebView2_9) MustGetDefaultDownloadDialogMargin() xc.POINT {
-	margin, err := i.GetDefaultDownloadDialogMargin()
-	ReportErrorAtuo(err)
-	return margin
-}
-
-// PutDefaultDownloadDialogMargin 设置默认下载对话框的边距.
+// SetDefaultDownloadDialogMargin 设置默认下载对话框的边距.
 //   - 边距是一个点，用于描述所选 WebView 角与距离它最近的默认下载对话框角之间的垂直和水平距离。
 //   - 正值会使对话框从所选 WebView 角向 WebView 中心移动，负值则会使对话框远离该角。
 //   - 使用(0, 0)可使对话框与 WebView 角对齐且无边距。
 //   - 应在初始化期间设置角对齐方式和边距，以确保在首次计算布局时它们能正确应用，否则它们将不会生效，直到下次 WebView 位置或大小更新。
-func (i *ICoreWebView2_9) PutDefaultDownloadDialogMargin(margin xc.POINT) error {
+func (i *ICoreWebView2_9) SetDefaultDownloadDialogMargin(margin xc.POINT) error {
 	r, _, err := i.Vtbl.PutDefaultDownloadDialogMargin.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&margin)),
@@ -199,3 +176,26 @@ func (i *ICoreWebView2_9) PutDefaultDownloadDialogMargin(margin xc.POINT) error 
 AddIsDefaultDownloadDialogOpenChanged
 RemoveIsDefaultDownloadDialogOpenChanged
 */
+
+// MustGetIsDefaultDownloadDialogOpen 获取默认下载对话框是否处于打开状态。出错时会触发全局错误回调。
+//   - 此属性的值仅在显式打开或关闭默认下载对话框时才会改变。
+//   - 隐藏 WebView 会隐式隐藏该对话框，但不会改变此属性的值。
+func (i *ICoreWebView2_9) MustGetIsDefaultDownloadDialogOpen() bool {
+	result, err := i.GetIsDefaultDownloadDialogOpen()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetDefaultDownloadDialogCornerAlignment 获取默认下载对话框的边角对齐方式。出错时会触发全局错误回调。
+func (i *ICoreWebView2_9) MustGetDefaultDownloadDialogCornerAlignment() COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT {
+	alignment, err := i.GetDefaultDownloadDialogCornerAlignment()
+	ReportErrorAtuo(err)
+	return alignment
+}
+
+// MustGetDefaultDownloadDialogMargin 获取默认下载对话框的边距。出错时会触发全局错误回调。
+func (i *ICoreWebView2_9) MustGetDefaultDownloadDialogMargin() xc.POINT {
+	margin, err := i.GetDefaultDownloadDialogMargin()
+	ReportErrorAtuo(err)
+	return margin
+}

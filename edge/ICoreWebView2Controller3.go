@@ -65,15 +65,8 @@ func (i *ICoreWebView2Controller3) GetRasterizationScale() (float64, error) {
 	return scale, nil
 }
 
-// MustGetRasterizationScale 获取当前光栅化缩放比例。出错时会触发全局错误回调。
-func (i *ICoreWebView2Controller3) MustGetRasterizationScale() float64 {
-	scale, err := i.GetRasterizationScale()
-	ReportErrorAtuo(err)
-	return scale
-}
-
-// PutRasterizationScale 设置光栅化缩放比例.
-func (i *ICoreWebView2Controller3) PutRasterizationScale(scale float64) error {
+// SetRasterizationScale 设置光栅化缩放比例.
+func (i *ICoreWebView2Controller3) SetRasterizationScale(scale float64) error {
 	r, _, err := i.Vtbl.PutRasterizationScale.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(scale),
@@ -103,15 +96,8 @@ func (i *ICoreWebView2Controller3) GetShouldDetectMonitorScaleChanges() (bool, e
 	return value, nil
 }
 
-// MustGetShouldDetectMonitorScaleChanges 获取是否尝试跟踪显示器DPI缩放变化。出错时会触发全局错误回调。
-func (i *ICoreWebView2Controller3) MustGetShouldDetectMonitorScaleChanges() bool {
-	value, err := i.GetShouldDetectMonitorScaleChanges()
-	ReportErrorAtuo(err)
-	return value
-}
-
-// PutShouldDetectMonitorScaleChanges 设置是否尝试跟踪显示器DPI缩放变化.
-func (i *ICoreWebView2Controller3) PutShouldDetectMonitorScaleChanges(value bool) error {
+// SetShouldDetectMonitorScaleChanges 设置是否尝试跟踪显示器DPI缩放变化.
+func (i *ICoreWebView2Controller3) SetShouldDetectMonitorScaleChanges(value bool) error {
 	r, _, err := i.Vtbl.PutShouldDetectMonitorScaleChanges.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
@@ -142,17 +128,9 @@ func (i *ICoreWebView2Controller3) GetBoundsMode() (COREWEBVIEW2_BOUNDS_MODE, er
 	return boundsMode, nil
 }
 
-// MustGetBoundsMode 获取当前边界模式。出错时会触发全局错误回调。
+// SetBoundsMode 设置边界模式.
 //   - BoundsMode 会影响 Bounds 和 RasterizationScale 属性的设置方式。
-func (i *ICoreWebView2Controller3) MustGetBoundsMode() COREWEBVIEW2_BOUNDS_MODE {
-	boundsMode, err := i.GetBoundsMode()
-	ReportErrorAtuo(err)
-	return boundsMode
-}
-
-// PutBoundsMode 设置边界模式.
-//   - BoundsMode 会影响 Bounds 和 RasterizationScale 属性的设置方式。
-func (i *ICoreWebView2Controller3) PutBoundsMode(boundsMode COREWEBVIEW2_BOUNDS_MODE) error {
+func (i *ICoreWebView2Controller3) SetBoundsMode(boundsMode COREWEBVIEW2_BOUNDS_MODE) error {
 	r, _, err := i.Vtbl.PutBoundsMode.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(boundsMode),
@@ -196,4 +174,26 @@ func (i *ICoreWebView2Controller3) RemoveRasterizationScaleChanged(token EventRe
 		return syscall.Errno(r)
 	}
 	return nil
+}
+
+// MustGetRasterizationScale 获取当前光栅化缩放比例。出错时会触发全局错误回调。
+func (i *ICoreWebView2Controller3) MustGetRasterizationScale() float64 {
+	scale, err := i.GetRasterizationScale()
+	ReportErrorAtuo(err)
+	return scale
+}
+
+// MustGetShouldDetectMonitorScaleChanges 获取是否尝试跟踪显示器DPI缩放变化。出错时会触发全局错误回调。
+func (i *ICoreWebView2Controller3) MustGetShouldDetectMonitorScaleChanges() bool {
+	value, err := i.GetShouldDetectMonitorScaleChanges()
+	ReportErrorAtuo(err)
+	return value
+}
+
+// MustGetBoundsMode 获取当前边界模式。出错时会触发全局错误回调。
+//   - BoundsMode 会影响 Bounds 和 RasterizationScale 属性的设置方式。
+func (i *ICoreWebView2Controller3) MustGetBoundsMode() COREWEBVIEW2_BOUNDS_MODE {
+	boundsMode, err := i.GetBoundsMode()
+	ReportErrorAtuo(err)
+	return boundsMode
 }

@@ -67,13 +67,6 @@ func (i *ICoreWebView2WebResourceRequest) GetUri() (string, error) {
 	return uri, nil
 }
 
-// MustGetUri 获取请求URI。出错时会触发全局错误回调.
-func (i *ICoreWebView2WebResourceRequest) MustGetUri() string {
-	uri, err := i.GetUri()
-	ReportErrorAtuo(err)
-	return uri
-}
-
 // GetContent 获取请求的内容。
 func (i *ICoreWebView2WebResourceRequest) GetContent() ([]byte, error) {
 	var streamPtr uintptr
@@ -91,31 +84,11 @@ func (i *ICoreWebView2WebResourceRequest) GetContent() ([]byte, error) {
 		return nil, nil
 	}
 	stream := NewIStreamByPtr(streamPtr)
-	defer stream.Release()
-
-	const bufferSize = 4096
-	var content []byte
-
-	for {
-		buffer := make([]byte, bufferSize)
-		n, hr := stream.Read(buffer)
-		if hr != nil && !errors.Is(hr, wapi.S_FALSE) {
-			return nil, errors.New("stream read failed: " + hr.Error())
-		}
-		if n == 0 {
-			break
-		}
-		content = append(content, buffer[:n]...)
+	content, err := stream.GetBytesAndRelease()
+	if err != nil {
+		return nil, err
 	}
-
 	return content, nil
-}
-
-// MustGetContent 获取请求的内容。出错时会触发全局错误回调。
-func (i *ICoreWebView2WebResourceRequest) MustGetContent() []byte {
-	content, err := i.GetContent()
-	ReportErrorAtuo(err)
-	return content
 }
 
 // GetMethod 获取请求的HTTP方法。
@@ -136,13 +109,6 @@ func (i *ICoreWebView2WebResourceRequest) GetMethod() (string, error) {
 	return method, nil
 }
 
-// MustGetMethod 获取请求的HTTP方法。出错时会触发全局错误回调。
-func (i *ICoreWebView2WebResourceRequest) MustGetMethod() string {
-	method, err := i.GetMethod()
-	ReportErrorAtuo(err)
-	return method
-}
-
 // GetHeaders 获取请求的HTTP标头。
 func (i *ICoreWebView2WebResourceRequest) GetHeaders() (*ICoreWebView2HttpRequestHeaders, error) {
 	var headers *ICoreWebView2HttpRequestHeaders
@@ -159,15 +125,8 @@ func (i *ICoreWebView2WebResourceRequest) GetHeaders() (*ICoreWebView2HttpReques
 	return headers, nil
 }
 
-// MustGetHeaders 获取请求的HTTP标头。出错时会触发全局错误回调。
-func (i *ICoreWebView2WebResourceRequest) MustGetHeaders() *ICoreWebView2HttpRequestHeaders {
-	headers, err := i.GetHeaders()
-	ReportErrorAtuo(err)
-	return headers
-}
-
-// PutUri 设置请求URI。
-func (i *ICoreWebView2WebResourceRequest) PutUri(uri string) error {
+// SetUri 设置请求URI。
+func (i *ICoreWebView2WebResourceRequest) SetUri(uri string) error {
 	_uri, err := syscall.UTF16PtrFromString(uri)
 	if err != nil {
 		return err
@@ -185,23 +144,11 @@ func (i *ICoreWebView2WebResourceRequest) PutUri(uri string) error {
 	return nil
 }
 
-// PutContent 设置请求的内容。
-func (i *ICoreWebView2WebResourceRequest) PutContent(content []byte) error {
-	var err error
-	var streamPtr uintptr
-	var stream *IStream
-	if len(content) > 0 {
-		// 创建内存流
-		stream, err = NewStreamMem(content)
-		if err != nil {
-			return err
-		}
-		defer stream.Release()
-		streamPtr = stream.GetPtr()
-	}
+// SetContent 设置请求的内容。
+func (i *ICoreWebView2WebResourceRequest) SetContent(content *IStream) error {
 	r, _, err := i.Vtbl.PutContent.Call(
 		uintptr(unsafe.Pointer(i)),
-		streamPtr,
+		uintptr(unsafe.Pointer(content)),
 	)
 	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
@@ -212,8 +159,8 @@ func (i *ICoreWebView2WebResourceRequest) PutContent(content []byte) error {
 	return nil
 }
 
-// PutMethod 设置请求的HTTP方法。
-func (i *ICoreWebView2WebResourceRequest) PutMethod(method string) error {
+// SetMethod 设置请求的HTTP方法。
+func (i *ICoreWebView2WebResourceRequest) SetMethod(method string) error {
 	_method, err := syscall.UTF16PtrFromString(method)
 	if err != nil {
 		return err
@@ -266,6 +213,34 @@ func (i *ICoreWebView2WebResourceRequest) GetHeadersMap() (map[string]string, er
 	}
 
 	return result, nil
+}
+
+// MustGetUri 获取请求URI。出错时会触发全局错误回调.
+func (i *ICoreWebView2WebResourceRequest) MustGetUri() string {
+	uri, err := i.GetUri()
+	ReportErrorAtuo(err)
+	return uri
+}
+
+// MustGetContent 获取请求的内容。出错时会触发全局错误回调。
+func (i *ICoreWebView2WebResourceRequest) MustGetContent() []byte {
+	content, err := i.GetContent()
+	ReportErrorAtuo(err)
+	return content
+}
+
+// MustGetMethod 获取请求的HTTP方法。出错时会触发全局错误回调。
+func (i *ICoreWebView2WebResourceRequest) MustGetMethod() string {
+	method, err := i.GetMethod()
+	ReportErrorAtuo(err)
+	return method
+}
+
+// MustGetHeaders 获取请求的HTTP标头。出错时会触发全局错误回调。
+func (i *ICoreWebView2WebResourceRequest) MustGetHeaders() *ICoreWebView2HttpRequestHeaders {
+	headers, err := i.GetHeaders()
+	ReportErrorAtuo(err)
+	return headers
 }
 
 // MustGetHeadersMap 获取请求的HTTP标头并转换为map。出错时会触发全局错误回调。

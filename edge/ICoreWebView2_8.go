@@ -65,15 +65,8 @@ func (i *ICoreWebView2_8) GetIsMuted() (bool, error) {
 	return isMuted, nil
 }
 
-// MustGetIsMuted 获取 WebView 是否静音。出错时会触发全局错误回调。
-func (i *ICoreWebView2_8) MustGetIsMuted() bool {
-	result, err := i.GetIsMuted()
-	ReportErrorAtuo(err)
-	return result
-}
-
-// PutIsMuted 设置 WebView 静音状态。
-func (i *ICoreWebView2_8) PutIsMuted(isMuted bool) error {
+// SetIsMuted 设置 WebView 静音状态。
+func (i *ICoreWebView2_8) SetIsMuted(isMuted bool) error {
 	r, _, err := i.Vtbl.PutIsMuted.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(isMuted),
@@ -102,14 +95,6 @@ func (i *ICoreWebView2_8) GetIsDocumentPlayingAudio() (bool, error) {
 		return false, syscall.Errno(r)
 	}
 	return isPlaying, nil
-}
-
-// MustGetIsDocumentPlayingAudio 获取当前文档是否正在播放音频。出错时会触发全局错误回调。
-//   - 如果音频正在播放，即使是静音状态，此属性也将为真。
-func (i *ICoreWebView2_8) MustGetIsDocumentPlayingAudio() bool {
-	result, err := i.GetIsDocumentPlayingAudio()
-	ReportErrorAtuo(err)
-	return result
 }
 
 // AddIsMutedChanged 添加静音状态改变事件处理程序.
@@ -172,4 +157,19 @@ func (i *ICoreWebView2_8) RemoveIsDocumentPlayingAudioChanged(token EventRegistr
 		return syscall.Errno(r)
 	}
 	return nil
+}
+
+// MustGetIsMuted 获取 WebView 是否静音。出错时会触发全局错误回调。
+func (i *ICoreWebView2_8) MustGetIsMuted() bool {
+	result, err := i.GetIsMuted()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetIsDocumentPlayingAudio 获取当前文档是否正在播放音频。出错时会触发全局错误回调。
+//   - 如果音频正在播放，即使是静音状态，此属性也将为真。
+func (i *ICoreWebView2_8) MustGetIsDocumentPlayingAudio() bool {
+	result, err := i.GetIsDocumentPlayingAudio()
+	ReportErrorAtuo(err)
+	return result
 }

@@ -59,8 +59,8 @@ func (i *ICoreWebView2Controller2) GetDefaultBackgroundColor() (*COREWEBVIEW2_CO
 	return backgroundColor, nil
 }
 
-// PutDefaultBackgroundColor 设置 WebView2 的默认背景色。
-func (i *ICoreWebView2Controller2) PutDefaultBackgroundColor(backgroundColor COREWEBVIEW2_COLOR) error {
+// SetDefaultBackgroundColor 设置 WebView2 的默认背景色。
+func (i *ICoreWebView2Controller2) SetDefaultBackgroundColor(backgroundColor COREWEBVIEW2_COLOR) error {
 	// Cast to a uint32 as that's what the call is expecting
 	col := *(*uint32)(unsafe.Pointer(&backgroundColor))
 

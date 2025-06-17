@@ -60,15 +60,8 @@ func (i *ICoreWebView2EnvironmentOptions6) GetAreBrowserExtensionsEnabled() (boo
 	return value, nil
 }
 
-// MustGetAreBrowserExtensionsEnabled 获取是否启用浏览器扩展功能.
-func (i *ICoreWebView2EnvironmentOptions6) MustGetAreBrowserExtensionsEnabled() bool {
-	value, err := i.GetAreBrowserExtensionsEnabled()
-	ReportErrorAtuo(err)
-	return value
-}
-
-// PutAreBrowserExtensionsEnabled 设置是否启用浏览器扩展功能. 默认为 false.
-func (i *ICoreWebView2EnvironmentOptions6) PutAreBrowserExtensionsEnabled(value bool) error {
+// SetAreBrowserExtensionsEnabled 设置是否启用浏览器扩展功能. 默认为 false.
+func (i *ICoreWebView2EnvironmentOptions6) SetAreBrowserExtensionsEnabled(value bool) error {
 	r, _, err := i.Vtbl.PutAreBrowserExtensionsEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(value),
@@ -80,4 +73,11 @@ func (i *ICoreWebView2EnvironmentOptions6) PutAreBrowserExtensionsEnabled(value 
 		return syscall.Errno(r)
 	}
 	return nil
+}
+
+// MustGetAreBrowserExtensionsEnabled 获取是否启用浏览器扩展功能.
+func (i *ICoreWebView2EnvironmentOptions6) MustGetAreBrowserExtensionsEnabled() bool {
+	value, err := i.GetAreBrowserExtensionsEnabled()
+	ReportErrorAtuo(err)
+	return value
 }

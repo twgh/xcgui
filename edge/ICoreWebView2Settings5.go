@@ -1,5 +1,7 @@
 package edge
 
+// ok
+
 import (
 	"errors"
 	"github.com/twgh/xcgui/common"
@@ -58,15 +60,8 @@ func (i *ICoreWebView2Settings5) GetIsPinchZoomEnabled() (bool, error) {
 	return enabled, nil
 }
 
-// MustGetIsPinchZoomEnabled 获取是否允许缩放。出错时会触发全局错误回调。
-func (i *ICoreWebView2Settings5) MustGetIsPinchZoomEnabled() bool {
-	enabled, err := i.GetIsPinchZoomEnabled()
-	ReportErrorAtuo(err)
-	return enabled
-}
-
-// PutIsPinchZoomEnabled 设置是否允许缩放。默认值为 true。
-func (i *ICoreWebView2Settings5) PutIsPinchZoomEnabled(enabled bool) error {
+// SetIsPinchZoomEnabled 设置是否允许缩放。默认值为 true。
+func (i *ICoreWebView2Settings5) SetIsPinchZoomEnabled(enabled bool) error {
 	r, _, err := i.Vtbl.PutIsPinchZoomEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(enabled),
@@ -78,4 +73,11 @@ func (i *ICoreWebView2Settings5) PutIsPinchZoomEnabled(enabled bool) error {
 		return syscall.Errno(r)
 	}
 	return nil
+}
+
+// MustGetIsPinchZoomEnabled 获取是否允许缩放。出错时会触发全局错误回调。
+func (i *ICoreWebView2Settings5) MustGetIsPinchZoomEnabled() bool {
+	enabled, err := i.GetIsPinchZoomEnabled()
+	ReportErrorAtuo(err)
+	return enabled
 }

@@ -227,7 +227,7 @@ func (w *WebViewEventImpl) PermissionRequested(sender *ICoreWebView2, args *ICor
 		if !ok {
 			result = COREWEBVIEW2_PERMISSION_STATE_DEFAULT
 		}
-		err := args.PutState(result)
+		err := args.SetState(result)
 		ReportErrorAtuo(err)
 	}
 
@@ -301,9 +301,9 @@ func (w *WebViewEventImpl) WebResourceRequested(sender *ICoreWebView2, args *ICo
 				ReportErrorAtuo(errors.New("webResourceRequested, CreateWebResourceResponse failed1: " + err.Error()))
 				return 0
 			}
-			err = args.PutResponse(res)
+			err = args.SetResponse(res)
 			if err != nil {
-				ReportErrorAtuo(errors.New("webResourceRequested, PutResponse failed1: " + err.Error()))
+				ReportErrorAtuo(errors.New("webResourceRequested, SetResponse failed1: " + err.Error()))
 				return 0
 			}
 			return 0
@@ -312,27 +312,39 @@ func (w *WebViewEventImpl) WebResourceRequested(sender *ICoreWebView2, args *ICo
 		var res *ICoreWebView2WebResourceResponse
 		if !once && w.firstResponse != nil { // 仅第一次时这样
 			once = true
-			err = w.firstResponse.PutContent(data)
+			stream, err := NewStreamMem(data)
 			if err != nil {
-				ReportErrorAtuo(errors.New("webResourceRequested, PutContent failed: " + err.Error()))
+				ReportErrorAtuo(errors.New("webResourceRequested, create stream failed: " + err.Error()))
+			} else {
+				defer stream.Release()
+			}
+			err = w.firstResponse.SetContent(stream)
+			if err != nil {
+				ReportErrorAtuo(errors.New("webResourceRequested, SetContent failed: " + err.Error()))
 			}
 			res = w.firstResponse
 			defer func() {
 				w.firstResponse.Release()
 				w.firstResponse = nil
 			}()
-		} else {
-			// 返回动态生成的响应
-			res, err = w.Edge.Environment.CreateWebResourceResponse(data, 200, "OK", "")
+		} else { // 返回动态生成的响应
+			// 创建响应流
+			stream, err := NewStreamMem(data)
+			if err != nil {
+				ReportErrorAtuo(errors.New("webResourceRequested, create stream failed2: " + err.Error()))
+			} else {
+				defer stream.Release()
+			}
+			res, err = w.Edge.Environment.CreateWebResourceResponse(stream, 200, "OK", "")
 			if err != nil {
 				ReportErrorAtuo(errors.New("webResourceRequested, CreateWebResourceResponse failed2: " + err.Error()))
 				return 0
 			}
 		}
 
-		err = args.PutResponse(res)
+		err = args.SetResponse(res)
 		if err != nil {
-			ReportErrorAtuo(errors.New("webResourceRequested, PutResponse failed2: " + err.Error()))
+			ReportErrorAtuo(errors.New("webResourceRequested, SetResponse failed2: " + err.Error()))
 			return 0
 		}
 	}
@@ -549,6 +561,26 @@ func (w *WebViewEventImpl) DocumentPlayingAudioChanged(sender *ICoreWebView2, ar
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		ret = cbs[i].(func(sender *ICoreWebView2, args *IUnknown) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// ContextMenuRequested 当用户请求上下文菜单，且 WebView 内部的内容未禁用上下文菜单时调用。
+func (w *WebViewEventImpl) ContextMenuRequested(sender *ICoreWebView2, args *ICoreWebView2ContextMenuRequestedEventArgs) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "ContextMenuRequested")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2ContextMenuRequestedEventArgs) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// CustomItemSelected 当用户选择自定义上下文菜单项时调用。
+func (w *WebViewEventImpl) CustomItemSelected(sender *ICoreWebView2ContextMenuItem, args *IUnknown) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "CustomItemSelected")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2ContextMenuItem, args *IUnknown) uintptr)(sender, args)
 	}
 	return ret
 }

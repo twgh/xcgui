@@ -1,5 +1,7 @@
 package edge
 
+// ok
+
 import (
 	"errors"
 	"github.com/twgh/xcgui/common"
@@ -61,15 +63,8 @@ func (i *ICoreWebView2Settings2) GetUserAgent() (string, error) {
 	return userAgent, nil
 }
 
-// MustGetUserAgent 获取 UserAgent。出错时会触发全局错误回调。
-func (i *ICoreWebView2Settings2) MustGetUserAgent() string {
-	userAgent, err := i.GetUserAgent()
-	ReportErrorAtuo(err)
-	return userAgent
-}
-
-// PutUserAgent 设置 UserAgent。
-func (i *ICoreWebView2Settings2) PutUserAgent(userAgent string) error {
+// SetUserAgent 设置 UserAgent。
+func (i *ICoreWebView2Settings2) SetUserAgent(userAgent string) error {
 	_userAgent, err := syscall.UTF16PtrFromString(userAgent)
 	if err != nil {
 		return err
@@ -85,4 +80,11 @@ func (i *ICoreWebView2Settings2) PutUserAgent(userAgent string) error {
 		return syscall.Errno(r)
 	}
 	return nil
+}
+
+// MustGetUserAgent 获取 UserAgent。出错时会触发全局错误回调。
+func (i *ICoreWebView2Settings2) MustGetUserAgent() string {
+	userAgent, err := i.GetUserAgent()
+	ReportErrorAtuo(err)
+	return userAgent
 }

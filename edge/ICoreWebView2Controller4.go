@@ -38,15 +38,8 @@ func (i *ICoreWebView2Controller4) GetAllowExternalDrop() (bool, error) {
 	return value, nil
 }
 
-// MustGetAllowExternalDrop 获取是否允许外部拖放. 出错时会触发全局错误回调。
-func (i *ICoreWebView2Controller4) MustGetAllowExternalDrop() bool {
-	value, err := i.GetAllowExternalDrop()
-	ReportErrorAtuo(err)
-	return value
-}
-
-// PutAllowExternalDrop 设置是否允许外部拖放. 默认值为 true.
-func (i *ICoreWebView2Controller4) PutAllowExternalDrop(value bool) error {
+// SetAllowExternalDrop 设置是否允许外部拖放. 默认值为 true.
+func (i *ICoreWebView2Controller4) SetAllowExternalDrop(value bool) error {
 	r, _, err := i.Vtbl.PutAllowExternalDrop.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
@@ -58,4 +51,11 @@ func (i *ICoreWebView2Controller4) PutAllowExternalDrop(value bool) error {
 		return syscall.Errno(r)
 	}
 	return nil
+}
+
+// MustGetAllowExternalDrop 获取是否允许外部拖放. 出错时会触发全局错误回调。
+func (i *ICoreWebView2Controller4) MustGetAllowExternalDrop() bool {
+	value, err := i.GetAllowExternalDrop()
+	ReportErrorAtuo(err)
+	return value
 }

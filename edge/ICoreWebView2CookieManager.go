@@ -115,12 +115,6 @@ func (i *ICoreWebView2CookieManager) CopyCookie(cookieParam *ICoreWebView2Cookie
 	return cookie, nil
 }
 
-// MustCopyCookie 创建一个 ICoreWebView2Cookie 对象，该对象是指定 cookie 的副本。出错时会触发全局错误回调。
-func (i *ICoreWebView2CookieManager) MustCopyCookie(cookieParam *ICoreWebView2Cookie) *ICoreWebView2Cookie {
-	cookie, _ := i.CopyCookie(cookieParam)
-	return cookie
-}
-
 // AddOrUpdateCookie 使用给定的 cookie 数据添加或更新 cookie；可以用匹配的名称、域和路径覆盖 Cookie（如果存在）。
 func (i *ICoreWebView2CookieManager) AddOrUpdateCookie(cookie *ICoreWebView2Cookie) error {
 	r, _, err := i.Vtbl.AddOrUpdateCookie.Call(
@@ -287,4 +281,10 @@ func (i *ICoreWebView2CookieManager) GetCookiesEx(impl *WebViewEventImpl, uri st
 		handler = WvEventHandler.GetHandler(impl, "GetCookiesCompleted")
 	}
 	return i.GetCookies(uri, (*ICoreWebView2GetCookiesCompletedHandler)(handler))
+}
+
+// MustCopyCookie 创建一个 ICoreWebView2Cookie 对象，该对象是指定 cookie 的副本。出错时会触发全局错误回调。
+func (i *ICoreWebView2CookieManager) MustCopyCookie(cookieParam *ICoreWebView2Cookie) *ICoreWebView2Cookie {
+	cookie, _ := i.CopyCookie(cookieParam)
+	return cookie
 }

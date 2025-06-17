@@ -59,13 +59,6 @@ func (i *ICoreWebView2ClientCertificateCollection) GetCount() (uint32, error) {
 	return count, nil
 }
 
-// MustGetCount 获取集合中的证书数量. 出错时会触发全局错误回调.
-func (i *ICoreWebView2ClientCertificateCollection) MustGetCount() uint32 {
-	count, err := i.GetCount()
-	ReportErrorAtuo(err)
-	return count
-}
-
 // GetValueAtIndex 获取指定索引处的证书.
 func (i *ICoreWebView2ClientCertificateCollection) GetValueAtIndex(index uint32) (*ICoreWebView2ClientCertificate, error) {
 	var cert *ICoreWebView2ClientCertificate
@@ -81,6 +74,13 @@ func (i *ICoreWebView2ClientCertificateCollection) GetValueAtIndex(index uint32)
 		return nil, syscall.Errno(r)
 	}
 	return cert, nil
+}
+
+// MustGetCount 获取集合中的证书数量. 出错时会触发全局错误回调.
+func (i *ICoreWebView2ClientCertificateCollection) MustGetCount() uint32 {
+	count, err := i.GetCount()
+	ReportErrorAtuo(err)
+	return count
 }
 
 // MustGetValueAtIndex 获取指定索引处的证书. 出错时会触发全局错误回调.

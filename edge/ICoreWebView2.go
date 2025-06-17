@@ -117,13 +117,6 @@ func (i *ICoreWebView2) GetSettings() (*ICoreWebView2Settings, error) {
 	return settings, nil
 }
 
-// MustGetSettings 获取 ICoreWebView2Settings 对象, 它包含正在运行的 WebView 的各种可修改设置。出错时会触发全局错误回调.
-func (i *ICoreWebView2) MustGetSettings() *ICoreWebView2Settings {
-	s, err := i.GetSettings()
-	ReportErrorAtuo(err)
-	return s
-}
-
 // AddWebResourceRequestedFilter 添加 web 资源请求过滤器. [已过时]
 //   - 请改用 ICoreWebView2_22.AddWebResourceRequestedFilterWithRequestSourceKinds，该方法将针对文档中的所有 iframe 触发此事件。
 //
@@ -263,13 +256,6 @@ func (i *ICoreWebView2) GetSource() (string, error) {
 	uri := common.UTF16PtrToString(_uri)
 	wapi.CoTaskMemFree(unsafe.Pointer(_uri))
 	return uri, nil
-}
-
-// MustGetSource 获取当前顶级文档的URI。如果导航正在进行中，则返回即将导航到的URI。出错时会触发全局错误回调.
-func (i *ICoreWebView2) MustGetSource() string {
-	uri, err := i.GetSource()
-	ReportErrorAtuo(err)
-	return uri
 }
 
 // AddNavigationStarting 添加导航开始事件处理程序。
@@ -609,13 +595,6 @@ func (i *ICoreWebView2) GetContainsFullScreenElement() (bool, error) {
 	return containsFullScreenElement, nil
 }
 
-// MustGetContainsFullScreenElement 获取 WebView 是否包含全屏元素。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetContainsFullScreenElement() bool {
-	result, err := i.GetContainsFullScreenElement()
-	ReportErrorAtuo(err)
-	return result
-}
-
 // GetDocumentTitle 获取当前顶级文档的标题。
 func (i *ICoreWebView2) GetDocumentTitle() (string, error) {
 	var title *uint16
@@ -634,13 +613,6 @@ func (i *ICoreWebView2) GetDocumentTitle() (string, error) {
 	return result, nil
 }
 
-// MustGetDocumentTitle 获取当前顶级文档的标题。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetDocumentTitle() string {
-	title, err := i.GetDocumentTitle()
-	ReportErrorAtuo(err)
-	return title
-}
-
 // GetBrowserProcessID 获取承载 WebView 的浏览器进程的 ID。
 func (i *ICoreWebView2) GetBrowserProcessID() (uint32, error) {
 	var pid uint32
@@ -655,13 +627,6 @@ func (i *ICoreWebView2) GetBrowserProcessID() (uint32, error) {
 		return 0, syscall.Errno(r)
 	}
 	return pid, nil
-}
-
-// MustGetBrowserProcessID 获取承载 WebView 的浏览器进程的 ID。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetBrowserProcessID() uint32 {
-	pid, err := i.GetBrowserProcessID()
-	ReportErrorAtuo(err)
-	return pid
 }
 
 // GetCanGoBack 获取 WebView 是否可以导航到上一页。
@@ -680,13 +645,6 @@ func (i *ICoreWebView2) GetCanGoBack() (bool, error) {
 	return canGoBack, nil
 }
 
-// MustGetCanGoBack 获取 WebView 是否可以导航到上一页。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetCanGoBack() bool {
-	result, err := i.GetCanGoBack()
-	ReportErrorAtuo(err)
-	return result
-}
-
 // GetCanGoForward 获取 WebView 是否可以导航到下一页。
 func (i *ICoreWebView2) GetCanGoForward() (bool, error) {
 	var canGoForward bool
@@ -701,13 +659,6 @@ func (i *ICoreWebView2) GetCanGoForward() (bool, error) {
 		return false, syscall.Errno(r)
 	}
 	return canGoForward, nil
-}
-
-// MustGetCanGoForward 获取 WebView 是否可以导航到下一页。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetCanGoForward() bool {
-	result, err := i.GetCanGoForward()
-	ReportErrorAtuo(err)
-	return result
 }
 
 // AddScriptToExecuteOnDocumentCreated 添加在创建文档时要执行的脚本。
@@ -1221,15 +1172,6 @@ func (i *ICoreWebView2) GetDevToolsProtocolEventReceiver(eventName string) (*ICo
 	return receiver, nil
 }
 
-// MustGetDevToolsProtocolEventReceiver 获取指定 DevTools 协议事件的接收器。出错时会触发全局错误回调。
-//
-// eventName: DevTools 协议事件的完整名称，格式为 {domain}.{event}。
-func (i *ICoreWebView2) MustGetDevToolsProtocolEventReceiver(eventName string) *ICoreWebView2DevToolsProtocolEventReceiver {
-	receiver, err := i.GetDevToolsProtocolEventReceiver(eventName)
-	ReportErrorAtuo(err)
-	return receiver
-}
-
 // CallDevToolsProtocolMethod 调用 Chrome DevTools 协议方法。
 //
 // methodName: DevTools 协议方法的完整名称，格式为 {domain}.{method}。
@@ -1283,4 +1225,62 @@ func (i *ICoreWebView2) CallDevToolsProtocolMethodEx(impl *WebViewEventImpl, met
 		handler = WvEventHandler.GetHandler(impl, "CallDevToolsProtocolMethodCompleted")
 	}
 	return i.CallDevToolsProtocolMethod(methodName, parametersAsJson, (*ICoreWebView2CallDevToolsProtocolMethodCompletedHandler)(handler))
+}
+
+// MustGetSettings 获取 ICoreWebView2Settings 对象, 它包含正在运行的 WebView 的各种可修改设置。出错时会触发全局错误回调.
+func (i *ICoreWebView2) MustGetSettings() *ICoreWebView2Settings {
+	s, err := i.GetSettings()
+	ReportErrorAtuo(err)
+	return s
+}
+
+// MustGetSource 获取当前顶级文档的URI。如果导航正在进行中，则返回即将导航到的URI。出错时会触发全局错误回调.
+func (i *ICoreWebView2) MustGetSource() string {
+	uri, err := i.GetSource()
+	ReportErrorAtuo(err)
+	return uri
+}
+
+// MustGetContainsFullScreenElement 获取 WebView 是否包含全屏元素。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetContainsFullScreenElement() bool {
+	result, err := i.GetContainsFullScreenElement()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetDocumentTitle 获取当前顶级文档的标题。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetDocumentTitle() string {
+	title, err := i.GetDocumentTitle()
+	ReportErrorAtuo(err)
+	return title
+}
+
+// MustGetBrowserProcessID 获取承载 WebView 的浏览器进程的 ID。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetBrowserProcessID() uint32 {
+	pid, err := i.GetBrowserProcessID()
+	ReportErrorAtuo(err)
+	return pid
+}
+
+// MustGetCanGoBack 获取 WebView 是否可以导航到上一页。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetCanGoBack() bool {
+	result, err := i.GetCanGoBack()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetCanGoForward 获取 WebView 是否可以导航到下一页。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetCanGoForward() bool {
+	result, err := i.GetCanGoForward()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetDevToolsProtocolEventReceiver 获取指定 DevTools 协议事件的接收器。出错时会触发全局错误回调。
+//
+// eventName: DevTools 协议事件的完整名称，格式为 {domain}.{event}。
+func (i *ICoreWebView2) MustGetDevToolsProtocolEventReceiver(eventName string) *ICoreWebView2DevToolsProtocolEventReceiver {
+	receiver, err := i.GetDevToolsProtocolEventReceiver(eventName)
+	ReportErrorAtuo(err)
+	return receiver
 }

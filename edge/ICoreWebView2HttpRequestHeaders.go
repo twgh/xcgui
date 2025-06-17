@@ -75,15 +75,6 @@ func (i *ICoreWebView2HttpRequestHeaders) GetHeader(name string) (string, error)
 	return value, nil
 }
 
-// MustGetHeader 获取指定名称的HTTP头的值。出错时会触发全局错误回调。
-//
-// name: 标头名称。
-func (i *ICoreWebView2HttpRequestHeaders) MustGetHeader(name string) string {
-	value, err := i.GetHeader(name)
-	ReportErrorAtuo(err)
-	return value
-}
-
 // Contains 检查是否存在指定名称的HTTP头。
 //
 // name: 标头名称。
@@ -106,12 +97,6 @@ func (i *ICoreWebView2HttpRequestHeaders) Contains(name string) (bool, error) {
 		return false, syscall.Errno(r)
 	}
 	return contains != 0, nil
-}
-
-// MustContains 检查是否存在指定名称的HTTP头。出错时会触发全局错误回调。
-func (i *ICoreWebView2HttpRequestHeaders) MustContains(name string) bool {
-	contains, _ := i.Contains(name)
-	return contains
 }
 
 // RemoveHeader 删除指定名称的HTTP头。
@@ -178,13 +163,6 @@ func (i *ICoreWebView2HttpRequestHeaders) GetIterator() (*ICoreWebView2HttpHeade
 	return iterator, nil
 }
 
-// MustGetIterator 获取一个迭代器来枚举所有HTTP头。出错时会触发全局错误回调。
-func (i *ICoreWebView2HttpRequestHeaders) MustGetIterator() *ICoreWebView2HttpHeadersCollectionIterator {
-	iterator, err := i.GetIterator()
-	ReportErrorAtuo(err)
-	return iterator
-}
-
 // GetHeaders 获取指定名称的所有HTTP头的值。
 //
 // name: 标头名称。
@@ -207,6 +185,28 @@ func (i *ICoreWebView2HttpRequestHeaders) GetHeaders(name string) (*ICoreWebView
 		return nil, syscall.Errno(r)
 	}
 	return iterator, nil
+}
+
+// MustGetHeader 获取指定名称的HTTP头的值。出错时会触发全局错误回调。
+//
+// name: 标头名称。
+func (i *ICoreWebView2HttpRequestHeaders) MustGetHeader(name string) string {
+	value, err := i.GetHeader(name)
+	ReportErrorAtuo(err)
+	return value
+}
+
+// MustContains 检查是否存在指定名称的HTTP头。出错时会触发全局错误回调。
+func (i *ICoreWebView2HttpRequestHeaders) MustContains(name string) bool {
+	contains, _ := i.Contains(name)
+	return contains
+}
+
+// MustGetIterator 获取一个迭代器来枚举所有HTTP头。出错时会触发全局错误回调。
+func (i *ICoreWebView2HttpRequestHeaders) MustGetIterator() *ICoreWebView2HttpHeadersCollectionIterator {
+	iterator, err := i.GetIterator()
+	ReportErrorAtuo(err)
+	return iterator
 }
 
 // MustGetHeaders 获取指定名称的所有HTTP头的值。出错时会触发全局错误回调。

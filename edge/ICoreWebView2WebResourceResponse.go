@@ -67,43 +67,18 @@ func (i *ICoreWebView2WebResourceResponse) GetContent() ([]byte, error) {
 		return nil, nil
 	}
 	stream := NewIStreamByPtr(streamPtr)
-	defer stream.Release()
-
-	const bufferSize = 4096
-	var content []byte
-
-	for {
-		buffer := make([]byte, bufferSize)
-		n, hr := stream.Read(buffer)
-		if hr != nil && !errors.Is(hr, wapi.S_FALSE) {
-			return nil, errors.New("stream read failed: " + hr.Error())
-		}
-		if n == 0 {
-			break
-		}
-		content = append(content, buffer[:n]...)
+	content, err := stream.GetBytesAndRelease()
+	if err != nil {
+		return nil, err
 	}
-
 	return content, nil
 }
 
-// PutContent 设置请求的内容。
-func (i *ICoreWebView2WebResourceResponse) PutContent(content []byte) error {
-	var err error
-	var streamPtr uintptr
-	var stream *IStream
-	// 创建内存流
-	if len(content) > 0 {
-		stream, err = NewStreamMem(content)
-		if err != nil {
-			return err
-		}
-		defer stream.Release()
-		streamPtr = stream.GetPtr()
-	}
+// SetContent 设置请求的内容。
+func (i *ICoreWebView2WebResourceResponse) SetContent(content *IStream) error {
 	r, _, err := i.Vtbl.PutContent.Call(
 		uintptr(unsafe.Pointer(i)),
-		streamPtr,
+		uintptr(unsafe.Pointer(content)),
 	)
 	if !errors.Is(err, wapi.ERROR_SUCCESS) {
 		return err
@@ -114,10 +89,10 @@ func (i *ICoreWebView2WebResourceResponse) PutContent(content []byte) error {
 	return nil
 }
 
-// PutStatusCode 设置响应的 HTTP 状态码。
+// SetStatusCode 设置响应的 HTTP 状态码。
 //
 // statusCode: 要设置的 HTTP 状态码。
-func (i *ICoreWebView2WebResourceResponse) PutStatusCode(statusCode int32) error {
+func (i *ICoreWebView2WebResourceResponse) SetStatusCode(statusCode int32) error {
 	r, _, err := i.Vtbl.PutStatusCode.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(statusCode),
@@ -147,17 +122,10 @@ func (i *ICoreWebView2WebResourceResponse) GetStatusCode() (int32, error) {
 	return statusCode, nil
 }
 
-// MustGetStatusCode 获取响应的 HTTP 状态码。出错时会触发全局错误回调。
-func (i *ICoreWebView2WebResourceResponse) MustGetStatusCode() int32 {
-	statusCode, err := i.GetStatusCode()
-	ReportErrorAtuo(err)
-	return statusCode
-}
-
-// PutReasonPhrase 设置响应的 HTTP 状态码描述。
+// SetReasonPhrase 设置响应的 HTTP 状态码描述。
 //
 // reasonPhrase: 要设置的 HTTP 状态码描述。
-func (i *ICoreWebView2WebResourceResponse) PutReasonPhrase(reasonPhrase string) error {
+func (i *ICoreWebView2WebResourceResponse) SetReasonPhrase(reasonPhrase string) error {
 	ptr, err := syscall.UTF16PtrFromString(reasonPhrase)
 	if err != nil {
 		return err
@@ -193,13 +161,6 @@ func (i *ICoreWebView2WebResourceResponse) GetReasonPhrase() (string, error) {
 	return reasonPhrase, nil
 }
 
-// MustGetReasonPhrase 获取响应的 HTTP 状态码描述。出错时会触发全局错误回调。
-func (i *ICoreWebView2WebResourceResponse) MustGetReasonPhrase() string {
-	reasonPhrase, err := i.GetReasonPhrase()
-	ReportErrorAtuo(err)
-	return reasonPhrase
-}
-
 // GetHeaders 获取响应的 HTTP 标头。
 func (i *ICoreWebView2WebResourceResponse) GetHeaders() (*ICoreWebView2HttpResponseHeaders, error) {
 	var headers *ICoreWebView2HttpResponseHeaders
@@ -214,13 +175,6 @@ func (i *ICoreWebView2WebResourceResponse) GetHeaders() (*ICoreWebView2HttpRespo
 		return nil, syscall.Errno(r)
 	}
 	return headers, nil
-}
-
-// MustGetHeaders 获取响应的 HTTP 标头。出错时会触发全局错误回调。
-func (i *ICoreWebView2WebResourceResponse) MustGetHeaders() *ICoreWebView2HttpResponseHeaders {
-	headers, err := i.GetHeaders()
-	ReportErrorAtuo(err)
-	return headers
 }
 
 // GetHeadersMap 获取请求的HTTP标头并转换为map。
@@ -258,6 +212,27 @@ func (i *ICoreWebView2WebResourceResponse) GetHeadersMap() (map[string]string, e
 	}
 
 	return result, nil
+}
+
+// MustGetStatusCode 获取响应的 HTTP 状态码。出错时会触发全局错误回调。
+func (i *ICoreWebView2WebResourceResponse) MustGetStatusCode() int32 {
+	statusCode, err := i.GetStatusCode()
+	ReportErrorAtuo(err)
+	return statusCode
+}
+
+// MustGetReasonPhrase 获取响应的 HTTP 状态码描述。出错时会触发全局错误回调。
+func (i *ICoreWebView2WebResourceResponse) MustGetReasonPhrase() string {
+	reasonPhrase, err := i.GetReasonPhrase()
+	ReportErrorAtuo(err)
+	return reasonPhrase
+}
+
+// MustGetHeaders 获取响应的 HTTP 标头。出错时会触发全局错误回调。
+func (i *ICoreWebView2WebResourceResponse) MustGetHeaders() *ICoreWebView2HttpResponseHeaders {
+	headers, err := i.GetHeaders()
+	ReportErrorAtuo(err)
+	return headers
 }
 
 // MustGetHeadersMap 获取请求的HTTP标头并转换为map。出错时会触发全局错误回调。

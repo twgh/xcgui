@@ -175,14 +175,14 @@ func (w *WebView) createWithOptionsByXcgui(hParent int, opt WebViewOption) error
 		ReportErrorAtuo(err)
 	} else {
 		// 设置是否可开启开发人员工具
-		err = settings.PutAreDevToolsEnabled(opt.Debug)
+		err = settings.SetAreDevToolsEnabled(opt.Debug)
 		ReportErrorAtuo(err)
 		// 设置是否启用非客户区域支持
 		s9, err := settings.GetICoreWebView2Settings9()
 		if err != nil {
 			ReportErrorAtuo(err)
 		} else {
-			err = s9.PutIsNonClientRegionSupportEnabled(opt.AppDrag)
+			err = s9.SetIsNonClientRegionSupportEnabled(opt.AppDrag)
 			ReportErrorAtuo(err)
 			s9.Release()
 		}

@@ -218,7 +218,7 @@ func (w *WebViewEventImpl) Event_HistoryChanged(cb func(sender *ICoreWebView2, a
 
 // Event_ScriptDialogOpening 脚本对话框打开事件.
 //   - 当 JavaScript 代码调用 alert、confirm、prompt 或 beforeunload 时触发此事件。
-//   - 需 ICoreWebView2Settings.PutAreDefaultScriptDialogsEnabled(false) 后，此事件才会触发。
+//   - 需 ICoreWebView2Settings.SetAreDefaultScriptDialogsEnabled(false) 后，此事件才会触发。
 //   - ScriptDialogOpening 事件会抑制对话框，或使用自定义对话框替换默认对话框。
 func (w *WebViewEventImpl) Event_ScriptDialogOpening(cb func(sender *ICoreWebView2, args *ICoreWebView2ScriptDialogOpeningEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
@@ -321,4 +321,18 @@ func (w *WebViewEventImpl) Event_DocumentPlayingAudioChanged(cb func(sender *ICo
 		c = cb
 	}
 	return WvEventHandler.AddCallBack(w, "DocumentPlayingAudioChanged", c, nil, allowAddingMultiple...)
+}
+
+// Event_ContextMenuRequested 上下文菜单请求事件.
+//   - 当用户请求上下文菜单，且 WebView 内部的内容未禁用上下文菜单时，将引发 ContextMenuRequested 事件。
+//   - 宿主可以选择使用事件中提供的信息创建自己的上下文菜单，也可以向 WebView 上下文菜单添加或删除菜单项。
+//   - 如果宿主不处理该事件， WebView 将显示默认上下文菜单。
+func (w *WebViewEventImpl) Event_ContextMenuRequested(cb func(sender *ICoreWebView2, args *ICoreWebView2ContextMenuRequestedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
+	}
+	return WvEventHandler.AddCallBack(w, "ContextMenuRequested", c, nil, allowAddingMultiple...)
 }

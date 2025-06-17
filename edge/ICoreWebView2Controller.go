@@ -80,17 +80,10 @@ func (i *ICoreWebView2Controller) GetBounds() (xc.RECT, error) {
 	return bounds, nil
 }
 
-// MustGetBounds 获取 WebView 的边界。出错时会触发全局错误回调.
-func (i *ICoreWebView2Controller) MustGetBounds() xc.RECT {
-	b, err := i.GetBounds()
-	ReportErrorAtuo(err)
-	return b
-}
-
-// PutBounds 设置 WebView 的边界。
+// SetBounds 设置 WebView 的边界。
 //
 // bounds: WebView 的边界矩形。
-func (i *ICoreWebView2Controller) PutBounds(bounds xc.RECT) error {
+func (i *ICoreWebView2Controller) SetBounds(bounds xc.RECT) error {
 	r, _, err := i.Vtbl.PutBounds.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&bounds)),
@@ -152,15 +145,8 @@ func (i *ICoreWebView2Controller) GetIsVisible() (bool, error) {
 	return isVisible, nil
 }
 
-// MustGetIsVisible 获取 WebView 是否可见。出错时会触发全局错误回调。
-func (i *ICoreWebView2Controller) MustGetIsVisible() bool {
-	v, err := i.GetIsVisible()
-	ReportErrorAtuo(err)
-	return v
-}
-
-// PutIsVisible 设置 WebView 是否可见。
-func (i *ICoreWebView2Controller) PutIsVisible(isVisible bool) error {
+// SetIsVisible 设置 WebView 是否可见。
+func (i *ICoreWebView2Controller) SetIsVisible(isVisible bool) error {
 	r, _, err := i.Vtbl.PutIsVisible.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(isVisible),
@@ -221,13 +207,6 @@ func (i *ICoreWebView2Controller) GetCoreWebView2() (*ICoreWebView2, error) {
 	return webView, nil
 }
 
-// MustGetCoreWebView2 获取 WebView2 对象。出错时会触发全局错误回调。
-func (i *ICoreWebView2Controller) MustGetCoreWebView2() *ICoreWebView2 {
-	w, err := i.GetCoreWebView2()
-	ReportErrorAtuo(err)
-	return w
-}
-
 // GetZoomFactor 获取 WebView 的缩放系数。
 func (i *ICoreWebView2Controller) GetZoomFactor() (float64, error) {
 	var zoomFactor float64
@@ -244,15 +223,8 @@ func (i *ICoreWebView2Controller) GetZoomFactor() (float64, error) {
 	return zoomFactor, nil
 }
 
-// MustGetZoomFactor 获取 WebView 的缩放系数。出错时会触发全局错误回调。
-func (i *ICoreWebView2Controller) MustGetZoomFactor() float64 {
-	z, err := i.GetZoomFactor()
-	ReportErrorAtuo(err)
-	return z
-}
-
-// PutZoomFactor 设置 WebView 的缩放系数。
-func (i *ICoreWebView2Controller) PutZoomFactor(zoomFactor float64) error {
+// SetZoomFactor 设置 WebView 的缩放系数。
+func (i *ICoreWebView2Controller) SetZoomFactor(zoomFactor float64) error {
 	r, _, err := i.Vtbl.PutZoomFactor.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&zoomFactor)),
@@ -316,15 +288,8 @@ func (i *ICoreWebView2Controller) GetParentWindow() (uintptr, error) {
 	return parentWindow, nil
 }
 
-// MustGetParentWindow 获取 WebView 的父窗口句柄。出错时会触发全局错误回调。
-func (i *ICoreWebView2Controller) MustGetParentWindow() uintptr {
-	h, err := i.GetParentWindow()
-	ReportErrorAtuo(err)
-	return h
-}
-
-// PutParentWindow 设置 WebView 的父窗口句柄。
-func (i *ICoreWebView2Controller) PutParentWindow(parentWindow uintptr) error {
+// SetParentWindow 设置 WebView 的父窗口句柄。
+func (i *ICoreWebView2Controller) SetParentWindow(parentWindow uintptr) error {
 	r, _, err := i.Vtbl.PutParentWindow.Call(
 		uintptr(unsafe.Pointer(i)),
 		parentWindow,
@@ -362,13 +327,6 @@ func (i *ICoreWebView2Controller) GetICoreWebView2Controller2() (*ICoreWebView2C
 	return result, err
 }
 
-// MustGetICoreWebView2Controller2 获取 ICoreWebView2Controller2 对象。出错时会触发全局错误回调。
-func (i *ICoreWebView2Controller) MustGetICoreWebView2Controller2() *ICoreWebView2Controller2 {
-	c, err := i.GetICoreWebView2Controller2()
-	ReportErrorAtuo(err)
-	return c
-}
-
 // GetICoreWebView2Controller3 获取 ICoreWebView2Controller3 对象。
 func (i *ICoreWebView2Controller) GetICoreWebView2Controller3() (*ICoreWebView2Controller3, error) {
 	var result *ICoreWebView2Controller3
@@ -379,13 +337,6 @@ func (i *ICoreWebView2Controller) GetICoreWebView2Controller3() (*ICoreWebView2C
 	return result, err
 }
 
-// MustGetICoreWebView2Controller3 获取 ICoreWebView2Controller3 对象。出错时会触发全局错误回调。
-func (i *ICoreWebView2Controller) MustGetICoreWebView2Controller3() *ICoreWebView2Controller3 {
-	c, err := i.GetICoreWebView2Controller3()
-	ReportErrorAtuo(err)
-	return c
-}
-
 // GetICoreWebView2Controller4 获取 ICoreWebView2Controller4 对象。
 func (i *ICoreWebView2Controller) GetICoreWebView2Controller4() (*ICoreWebView2Controller4, error) {
 	var result *ICoreWebView2Controller4
@@ -394,6 +345,55 @@ func (i *ICoreWebView2Controller) GetICoreWebView2Controller4() (*ICoreWebView2C
 		unsafe.Pointer(iidICoreWebView2Controller4),
 		unsafe.Pointer(&result))
 	return result, err
+}
+
+// MustGetBounds 获取 WebView 的边界。出错时会触发全局错误回调.
+func (i *ICoreWebView2Controller) MustGetBounds() xc.RECT {
+	b, err := i.GetBounds()
+	ReportErrorAtuo(err)
+	return b
+}
+
+// MustGetIsVisible 获取 WebView 是否可见。出错时会触发全局错误回调。
+func (i *ICoreWebView2Controller) MustGetIsVisible() bool {
+	v, err := i.GetIsVisible()
+	ReportErrorAtuo(err)
+	return v
+}
+
+// MustGetCoreWebView2 获取 WebView2 对象。出错时会触发全局错误回调。
+func (i *ICoreWebView2Controller) MustGetCoreWebView2() *ICoreWebView2 {
+	w, err := i.GetCoreWebView2()
+	ReportErrorAtuo(err)
+	return w
+}
+
+// MustGetZoomFactor 获取 WebView 的缩放系数。出错时会触发全局错误回调。
+func (i *ICoreWebView2Controller) MustGetZoomFactor() float64 {
+	z, err := i.GetZoomFactor()
+	ReportErrorAtuo(err)
+	return z
+}
+
+// MustGetParentWindow 获取 WebView 的父窗口句柄。出错时会触发全局错误回调。
+func (i *ICoreWebView2Controller) MustGetParentWindow() uintptr {
+	h, err := i.GetParentWindow()
+	ReportErrorAtuo(err)
+	return h
+}
+
+// MustGetICoreWebView2Controller2 获取 ICoreWebView2Controller2 对象。出错时会触发全局错误回调。
+func (i *ICoreWebView2Controller) MustGetICoreWebView2Controller2() *ICoreWebView2Controller2 {
+	c, err := i.GetICoreWebView2Controller2()
+	ReportErrorAtuo(err)
+	return c
+}
+
+// MustGetICoreWebView2Controller3 获取 ICoreWebView2Controller3 对象。出错时会触发全局错误回调。
+func (i *ICoreWebView2Controller) MustGetICoreWebView2Controller3() *ICoreWebView2Controller3 {
+	c, err := i.GetICoreWebView2Controller3()
+	ReportErrorAtuo(err)
+	return c
 }
 
 // MustGetICoreWebView2Controller4 获取 ICoreWebView2Controller4 对象。出错时会触发全局错误回调。

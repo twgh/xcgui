@@ -99,12 +99,6 @@ func (i *ICoreWebView2HttpResponseHeaders) Contains(name string) (bool, error) {
 	return contains, nil
 }
 
-// MustContains 检查是否存在具有给定名称的标头。出错时会触发全局错误回调。
-func (i *ICoreWebView2HttpResponseHeaders) MustContains(name string) bool {
-	contains, _ := i.Contains(name)
-	return contains
-}
-
 // GetHeader 获取集合中与该名称匹配的第一个标头值。
 //
 // name: 要获取的标头名称。
@@ -130,13 +124,6 @@ func (i *ICoreWebView2HttpResponseHeaders) GetHeader(name string) (string, error
 	return value, nil
 }
 
-// MustGetHeader 获取具有给定名称的标头值。出错时会触发全局错误回调。
-func (i *ICoreWebView2HttpResponseHeaders) MustGetHeader(name string) string {
-	value, err := i.GetHeader(name)
-	ReportErrorAtuo(err)
-	return value
-}
-
 // GetHeaders 获取具有给定名称的所有标头值。
 //
 // name: 要获取的标头名称。
@@ -160,13 +147,6 @@ func (i *ICoreWebView2HttpResponseHeaders) GetHeaders(name string) (*ICoreWebVie
 	return iterator, nil
 }
 
-// MustGetHeaders 获取具有给定名称的所有标头值。出错时会触发全局错误回调。
-func (i *ICoreWebView2HttpResponseHeaders) MustGetHeaders(name string) *ICoreWebView2HttpHeadersCollectionIterator {
-	iterator, err := i.GetHeaders(name)
-	ReportErrorAtuo(err)
-	return iterator
-}
-
 // GetIterator 获取集合中所有标头的迭代器。
 func (i *ICoreWebView2HttpResponseHeaders) GetIterator() (*ICoreWebView2HttpHeadersCollectionIterator, error) {
 	var iterator *ICoreWebView2HttpHeadersCollectionIterator
@@ -181,6 +161,26 @@ func (i *ICoreWebView2HttpResponseHeaders) GetIterator() (*ICoreWebView2HttpHead
 		return nil, syscall.Errno(r)
 	}
 	return iterator, nil
+}
+
+// MustContains 检查是否存在具有给定名称的标头。出错时会触发全局错误回调。
+func (i *ICoreWebView2HttpResponseHeaders) MustContains(name string) bool {
+	contains, _ := i.Contains(name)
+	return contains
+}
+
+// MustGetHeader 获取具有给定名称的标头值。出错时会触发全局错误回调。
+func (i *ICoreWebView2HttpResponseHeaders) MustGetHeader(name string) string {
+	value, err := i.GetHeader(name)
+	ReportErrorAtuo(err)
+	return value
+}
+
+// MustGetHeaders 获取具有给定名称的所有标头值。出错时会触发全局错误回调。
+func (i *ICoreWebView2HttpResponseHeaders) MustGetHeaders(name string) *ICoreWebView2HttpHeadersCollectionIterator {
+	iterator, err := i.GetHeaders(name)
+	ReportErrorAtuo(err)
+	return iterator
 }
 
 // MustGetIterator 获取集合中所有标头的迭代器。出错时会触发全局错误回调。

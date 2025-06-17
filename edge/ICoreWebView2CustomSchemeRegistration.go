@@ -70,13 +70,6 @@ func (i *ICoreWebView2CustomSchemeRegistration) GetSchemeName() (string, error) 
 	return str, nil
 }
 
-// MustGetSchemeName 获取自定义方案名称。出错时会触发全局错误回调。
-func (i *ICoreWebView2CustomSchemeRegistration) MustGetSchemeName() string {
-	value, err := i.GetSchemeName()
-	ReportErrorAtuo(err)
-	return value
-}
-
 // GetTreatAsSecure 获取采用此方案的网站是否会像 HTTPS 网站一样被视为安全上下文。
 func (i *ICoreWebView2CustomSchemeRegistration) GetTreatAsSecure() (bool, error) {
 	var value bool
@@ -93,15 +86,8 @@ func (i *ICoreWebView2CustomSchemeRegistration) GetTreatAsSecure() (bool, error)
 	return value, nil
 }
 
-// MustGetTreatAsSecure 获取采用此方案的网站是否会像 HTTPS 网站一样被视为安全上下文。出错时会触发全局错误回调。
-func (i *ICoreWebView2CustomSchemeRegistration) MustGetTreatAsSecure() bool {
-	value, err := i.GetTreatAsSecure()
-	ReportErrorAtuo(err)
-	return value
-}
-
-// PutTreatAsSecure 设置该方案是否将被视为安全上下文。
-func (i *ICoreWebView2CustomSchemeRegistration) PutTreatAsSecure(value bool) error {
+// SetTreatAsSecure 设置该方案是否将被视为安全上下文。
+func (i *ICoreWebView2CustomSchemeRegistration) SetTreatAsSecure(value bool) error {
 	r, _, err := i.Vtbl.PutTreatAsSecure.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(value),
@@ -139,13 +125,6 @@ func (i *ICoreWebView2CustomSchemeRegistration) GetAllowedOrigins() ([]string, e
 		wapi.CoTaskMemFree(unsafe.Pointer(slice[i]))
 	}
 	return result, nil
-}
-
-// MustGetAllowedOrigins 获取允许使用自定义方案（如带有 Origin 标头的 XHR 请求和子资源请求）发出请求的来源列表。出错时会触发全局错误回调。
-func (i *ICoreWebView2CustomSchemeRegistration) MustGetAllowedOrigins() []string {
-	origins, err := i.GetAllowedOrigins()
-	ReportErrorAtuo(err)
-	return origins
 }
 
 // SetAllowedOrigins 设置被允许使用该方案（协议）的源数组。
@@ -191,8 +170,8 @@ func (i *ICoreWebView2CustomSchemeRegistration) GetHasAuthorityComponent() (bool
 	return value, nil
 }
 
-// PutHasAuthorityComponent 设置具有此自定义方案的 URI 是否将包含一个授权组件（自定义方案的主机）。
-func (i *ICoreWebView2CustomSchemeRegistration) PutHasAuthorityComponent(value bool) error {
+// SetHasAuthorityComponent 设置具有此自定义方案的 URI 是否将包含一个授权组件（自定义方案的主机）。
+func (i *ICoreWebView2CustomSchemeRegistration) SetHasAuthorityComponent(value bool) error {
 	r, _, err := i.Vtbl.PutHasAuthorityComponent.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(value),
@@ -204,4 +183,25 @@ func (i *ICoreWebView2CustomSchemeRegistration) PutHasAuthorityComponent(value b
 		return syscall.Errno(r)
 	}
 	return nil
+}
+
+// MustGetSchemeName 获取自定义方案名称。出错时会触发全局错误回调。
+func (i *ICoreWebView2CustomSchemeRegistration) MustGetSchemeName() string {
+	value, err := i.GetSchemeName()
+	ReportErrorAtuo(err)
+	return value
+}
+
+// MustGetTreatAsSecure 获取采用此方案的网站是否会像 HTTPS 网站一样被视为安全上下文。出错时会触发全局错误回调。
+func (i *ICoreWebView2CustomSchemeRegistration) MustGetTreatAsSecure() bool {
+	value, err := i.GetTreatAsSecure()
+	ReportErrorAtuo(err)
+	return value
+}
+
+// MustGetAllowedOrigins 获取允许使用自定义方案（如带有 Origin 标头的 XHR 请求和子资源请求）发出请求的来源列表。出错时会触发全局错误回调。
+func (i *ICoreWebView2CustomSchemeRegistration) MustGetAllowedOrigins() []string {
+	origins, err := i.GetAllowedOrigins()
+	ReportErrorAtuo(err)
+	return origins
 }

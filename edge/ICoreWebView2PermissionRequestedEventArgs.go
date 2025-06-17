@@ -67,13 +67,6 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) GetUri() (string, error) {
 	return uri, nil
 }
 
-// MustGetUri 获取请求权限的 web 内容的来源。出错时会触发全局错误回调.
-func (i *ICoreWebView2PermissionRequestedEventArgs) MustGetUri() string {
-	uri, err := i.GetUri()
-	ReportErrorAtuo(err)
-	return uri
-}
-
 // GetPermissionKind 获取请求的权限类型。
 func (i *ICoreWebView2PermissionRequestedEventArgs) GetPermissionKind() (COREWEBVIEW2_PERMISSION_KIND, error) {
 	var kind COREWEBVIEW2_PERMISSION_KIND
@@ -88,13 +81,6 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) GetPermissionKind() (COREWEB
 		return 0, syscall.Errno(r)
 	}
 	return kind, nil
-}
-
-// MustGetPermissionKind 获取请求的权限类型。出错时会触发全局错误回调。
-func (i *ICoreWebView2PermissionRequestedEventArgs) MustGetPermissionKind() COREWEBVIEW2_PERMISSION_KIND {
-	kind, err := i.GetPermissionKind()
-	ReportErrorAtuo(err)
-	return kind
 }
 
 // GetIsUserInitiated 获取权限请求是否由用户发起。
@@ -113,13 +99,6 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) GetIsUserInitiated() (bool, 
 	return isUserInitiated, nil
 }
 
-// MustGetIsUserInitiated 获取权限请求是否由用户发起。出错时会触发全局错误回调。
-func (i *ICoreWebView2PermissionRequestedEventArgs) MustGetIsUserInitiated() bool {
-	isUserInitiated, err := i.GetIsUserInitiated()
-	ReportErrorAtuo(err)
-	return isUserInitiated
-}
-
 // GetState 获取权限请求的状态。默认值为 COREWEBVIEW2_PERMISSION_STATE_DEFAULT。
 func (i *ICoreWebView2PermissionRequestedEventArgs) GetState() (COREWEBVIEW2_PERMISSION_STATE, error) {
 	var state COREWEBVIEW2_PERMISSION_STATE
@@ -136,15 +115,8 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) GetState() (COREWEBVIEW2_PER
 	return state, nil
 }
 
-// MustGetState 获取权限请求的状态。默认值为 COREWEBVIEW2_PERMISSION_STATE_DEFAULT。出错时会触发全局错误回调。
-func (i *ICoreWebView2PermissionRequestedEventArgs) MustGetState() COREWEBVIEW2_PERMISSION_STATE {
-	state, err := i.GetState()
-	ReportErrorAtuo(err)
-	return state
-}
-
-// PutState 设置权限请求的状态。
-func (i *ICoreWebView2PermissionRequestedEventArgs) PutState(state COREWEBVIEW2_PERMISSION_STATE) error {
+// SetState 设置权限请求的状态。
+func (i *ICoreWebView2PermissionRequestedEventArgs) SetState(state COREWEBVIEW2_PERMISSION_STATE) error {
 	r, _, err := i.Vtbl.PutState.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(state),
@@ -172,6 +144,34 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) GetDeferral() (*ICoreWebView
 		return nil, syscall.Errno(r)
 	}
 	return deferral, nil
+}
+
+// MustGetUri 获取请求权限的 web 内容的来源。出错时会触发全局错误回调.
+func (i *ICoreWebView2PermissionRequestedEventArgs) MustGetUri() string {
+	uri, err := i.GetUri()
+	ReportErrorAtuo(err)
+	return uri
+}
+
+// MustGetPermissionKind 获取请求的权限类型。出错时会触发全局错误回调。
+func (i *ICoreWebView2PermissionRequestedEventArgs) MustGetPermissionKind() COREWEBVIEW2_PERMISSION_KIND {
+	kind, err := i.GetPermissionKind()
+	ReportErrorAtuo(err)
+	return kind
+}
+
+// MustGetIsUserInitiated 获取权限请求是否由用户发起。出错时会触发全局错误回调。
+func (i *ICoreWebView2PermissionRequestedEventArgs) MustGetIsUserInitiated() bool {
+	isUserInitiated, err := i.GetIsUserInitiated()
+	ReportErrorAtuo(err)
+	return isUserInitiated
+}
+
+// MustGetState 获取权限请求的状态。默认值为 COREWEBVIEW2_PERMISSION_STATE_DEFAULT。出错时会触发全局错误回调。
+func (i *ICoreWebView2PermissionRequestedEventArgs) MustGetState() COREWEBVIEW2_PERMISSION_STATE {
+	state, err := i.GetState()
+	ReportErrorAtuo(err)
+	return state
 }
 
 // MustGetDeferral 获取权限请求的延迟对象。出错时会触发全局错误回调。

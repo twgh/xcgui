@@ -1,5 +1,7 @@
 package edge
 
+// ok
+
 import (
 	"errors"
 	"github.com/twgh/xcgui/common"
@@ -60,15 +62,8 @@ func (i *ICoreWebView2Settings4) GetIsPasswordAutosaveEnabled() (bool, error) {
 	return enabled, nil
 }
 
-// MustGetIsPasswordAutosaveEnabled 获取是否允许自动保存密码。出错时会触发全局错误回调。
-func (i *ICoreWebView2Settings4) MustGetIsPasswordAutosaveEnabled() bool {
-	enabled, err := i.GetIsPasswordAutosaveEnabled()
-	ReportErrorAtuo(err)
-	return enabled
-}
-
-// PutIsPasswordAutosaveEnabled 设置是否允许自动保存密码。默认值为 false。
-func (i *ICoreWebView2Settings4) PutIsPasswordAutosaveEnabled(enabled bool) error {
+// SetIsPasswordAutosaveEnabled 设置是否允许自动保存密码。默认值为 false。
+func (i *ICoreWebView2Settings4) SetIsPasswordAutosaveEnabled(enabled bool) error {
 	r, _, err := i.Vtbl.PutIsPasswordAutosaveEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(enabled),
@@ -98,15 +93,8 @@ func (i *ICoreWebView2Settings4) GetIsGeneralAutofillEnabled() (bool, error) {
 	return enabled, nil
 }
 
-// MustGetIsGeneralAutofillEnabled 获取是否允许自动填充表单。出错时会触发全局错误回调。
-func (i *ICoreWebView2Settings4) MustGetIsGeneralAutofillEnabled() bool {
-	enabled, err := i.GetIsGeneralAutofillEnabled()
-	ReportErrorAtuo(err)
-	return enabled
-}
-
-// PutIsGeneralAutofillEnabled 设置是否允许自动填充表单。默认值为 true。
-func (i *ICoreWebView2Settings4) PutIsGeneralAutofillEnabled(enabled bool) error {
+// SetIsGeneralAutofillEnabled 设置是否允许自动填充表单。默认值为 true。
+func (i *ICoreWebView2Settings4) SetIsGeneralAutofillEnabled(enabled bool) error {
 	r, _, err := i.Vtbl.PutIsGeneralAutofillEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(enabled),
@@ -118,4 +106,18 @@ func (i *ICoreWebView2Settings4) PutIsGeneralAutofillEnabled(enabled bool) error
 		return syscall.Errno(r)
 	}
 	return nil
+}
+
+// MustGetIsPasswordAutosaveEnabled 获取是否允许自动保存密码。出错时会触发全局错误回调。
+func (i *ICoreWebView2Settings4) MustGetIsPasswordAutosaveEnabled() bool {
+	enabled, err := i.GetIsPasswordAutosaveEnabled()
+	ReportErrorAtuo(err)
+	return enabled
+}
+
+// MustGetIsGeneralAutofillEnabled 获取是否允许自动填充表单。出错时会触发全局错误回调。
+func (i *ICoreWebView2Settings4) MustGetIsGeneralAutofillEnabled() bool {
+	enabled, err := i.GetIsGeneralAutofillEnabled()
+	ReportErrorAtuo(err)
+	return enabled
 }

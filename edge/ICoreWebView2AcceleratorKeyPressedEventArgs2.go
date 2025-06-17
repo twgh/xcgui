@@ -40,17 +40,9 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs2) GetIsBrowserAcceleratorKe
 	return enabled != 0, nil
 }
 
-// MustGetIsBrowserAcceleratorKeyEnabled 获取特定浏览器快捷键是否启用. 出错时会触发全局错误回调。
+// SetIsBrowserAcceleratorKeyEnabled 设置特定浏览器快捷键是否启用.
 //   - 浏览器快捷键是用于访问网络浏览器特定功能的按键或按键组合.
-func (i *ICoreWebView2AcceleratorKeyPressedEventArgs2) MustGetIsBrowserAcceleratorKeyEnabled() bool {
-	enabled, err := i.GetIsBrowserAcceleratorKeyEnabled()
-	ReportErrorAtuo(err)
-	return enabled
-}
-
-// PutIsBrowserAcceleratorKeyEnabled 设置特定浏览器快捷键是否启用.
-//   - 浏览器快捷键是用于访问网络浏览器特定功能的按键或按键组合.
-func (i *ICoreWebView2AcceleratorKeyPressedEventArgs2) PutIsBrowserAcceleratorKeyEnabled(enabled bool) error {
+func (i *ICoreWebView2AcceleratorKeyPressedEventArgs2) SetIsBrowserAcceleratorKeyEnabled(enabled bool) error {
 	r, _, err := i.Vtbl.PutIsBrowserAcceleratorKeyEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(enabled),
@@ -62,4 +54,12 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs2) PutIsBrowserAcceleratorKe
 		return syscall.Errno(r)
 	}
 	return nil
+}
+
+// MustGetIsBrowserAcceleratorKeyEnabled 获取特定浏览器快捷键是否启用. 出错时会触发全局错误回调。
+//   - 浏览器快捷键是用于访问网络浏览器特定功能的按键或按键组合.
+func (i *ICoreWebView2AcceleratorKeyPressedEventArgs2) MustGetIsBrowserAcceleratorKeyEnabled() bool {
+	enabled, err := i.GetIsBrowserAcceleratorKeyEnabled()
+	ReportErrorAtuo(err)
+	return enabled
 }

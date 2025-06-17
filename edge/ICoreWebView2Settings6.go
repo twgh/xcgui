@@ -1,5 +1,7 @@
 package edge
 
+// ok
+
 import (
 	"errors"
 	"github.com/twgh/xcgui/common"
@@ -58,15 +60,8 @@ func (i *ICoreWebView2Settings6) GetIsSwipeNavigationEnabled() (bool, error) {
 	return enabled, nil
 }
 
-// MustGetIsSwipeNavigationEnabled 获取是否允许滑动导航。出错时会触发全局错误回调。
-func (i *ICoreWebView2Settings6) MustGetIsSwipeNavigationEnabled() bool {
-	enabled, err := i.GetIsSwipeNavigationEnabled()
-	ReportErrorAtuo(err)
-	return enabled
-}
-
-// PutIsSwipeNavigationEnabled 设置是否允许滑动导航。默认值为 true。
-func (i *ICoreWebView2Settings6) PutIsSwipeNavigationEnabled(enabled bool) error {
+// SetIsSwipeNavigationEnabled 设置是否允许滑动导航。默认值为 true。
+func (i *ICoreWebView2Settings6) SetIsSwipeNavigationEnabled(enabled bool) error {
 	r, _, err := i.Vtbl.PutIsSwipeNavigationEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(enabled),
@@ -78,4 +73,11 @@ func (i *ICoreWebView2Settings6) PutIsSwipeNavigationEnabled(enabled bool) error
 		return syscall.Errno(r)
 	}
 	return nil
+}
+
+// MustGetIsSwipeNavigationEnabled 获取是否允许滑动导航。出错时会触发全局错误回调。
+func (i *ICoreWebView2Settings6) MustGetIsSwipeNavigationEnabled() bool {
+	enabled, err := i.GetIsSwipeNavigationEnabled()
+	ReportErrorAtuo(err)
+	return enabled
 }

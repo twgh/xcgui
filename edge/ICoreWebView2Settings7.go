@@ -1,5 +1,7 @@
 package edge
 
+// ok
+
 import (
 	"errors"
 	"github.com/twgh/xcgui/wapi"
@@ -57,15 +59,8 @@ func (i *ICoreWebView2Settings7) GetHiddenPdfToolbarItems() (COREWEBVIEW2_PDF_TO
 	return items, nil
 }
 
-// MustGetHiddenPdfToolbarItems 获取 PDF 工具栏项。出错时会触发全局错误回调。
-func (i *ICoreWebView2Settings7) MustGetHiddenPdfToolbarItems() COREWEBVIEW2_PDF_TOOLBAR_ITEMS {
-	items, err := i.GetHiddenPdfToolbarItems()
-	ReportErrorAtuo(err)
-	return items
-}
-
-// PutHiddenPdfToolbarItems 用于自定义 PDF 工具栏项。
-func (i *ICoreWebView2Settings7) PutHiddenPdfToolbarItems(items COREWEBVIEW2_PDF_TOOLBAR_ITEMS) error {
+// SetHiddenPdfToolbarItems 用于自定义 PDF 工具栏项。
+func (i *ICoreWebView2Settings7) SetHiddenPdfToolbarItems(items COREWEBVIEW2_PDF_TOOLBAR_ITEMS) error {
 	r, _, err := i.Vtbl.PutHiddenPdfToolbarItems.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(items),
@@ -77,4 +72,11 @@ func (i *ICoreWebView2Settings7) PutHiddenPdfToolbarItems(items COREWEBVIEW2_PDF
 		return syscall.Errno(r)
 	}
 	return nil
+}
+
+// MustGetHiddenPdfToolbarItems 获取 PDF 工具栏项。出错时会触发全局错误回调。
+func (i *ICoreWebView2Settings7) MustGetHiddenPdfToolbarItems() COREWEBVIEW2_PDF_TOOLBAR_ITEMS {
+	items, err := i.GetHiddenPdfToolbarItems()
+	ReportErrorAtuo(err)
+	return items
 }

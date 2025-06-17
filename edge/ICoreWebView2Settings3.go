@@ -1,5 +1,7 @@
 package edge
 
+// ok
+
 import (
 	"errors"
 	"github.com/twgh/xcgui/common"
@@ -58,15 +60,8 @@ func (i *ICoreWebView2Settings3) GetAreBrowserAcceleratorKeysEnabled() (bool, er
 	return enabled, nil
 }
 
-// MustGetAreBrowserAcceleratorKeysEnabled 获取是否允许浏览器快捷键。出错时会触发全局错误回调。
-func (i *ICoreWebView2Settings3) MustGetAreBrowserAcceleratorKeysEnabled() bool {
-	enabled, err := i.GetAreBrowserAcceleratorKeysEnabled()
-	ReportErrorAtuo(err)
-	return enabled
-}
-
-// PutAreBrowserAcceleratorKeysEnabled 设置是否允许浏览器快捷键。默认值为 true。此设置对 AcceleratorKeyPressed 事件没有影响。
-func (i *ICoreWebView2Settings3) PutAreBrowserAcceleratorKeysEnabled(enabled bool) error {
+// SetAreBrowserAcceleratorKeysEnabled 设置是否允许浏览器快捷键。默认值为 true。此设置对 AcceleratorKeyPressed 事件没有影响。
+func (i *ICoreWebView2Settings3) SetAreBrowserAcceleratorKeysEnabled(enabled bool) error {
 	r, _, err := i.Vtbl.PutAreBrowserAcceleratorKeysEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(enabled),
@@ -78,4 +73,11 @@ func (i *ICoreWebView2Settings3) PutAreBrowserAcceleratorKeysEnabled(enabled boo
 		return syscall.Errno(r)
 	}
 	return nil
+}
+
+// MustGetAreBrowserAcceleratorKeysEnabled 获取是否允许浏览器快捷键。出错时会触发全局错误回调。
+func (i *ICoreWebView2Settings3) MustGetAreBrowserAcceleratorKeysEnabled() bool {
+	enabled, err := i.GetAreBrowserAcceleratorKeysEnabled()
+	ReportErrorAtuo(err)
+	return enabled
 }

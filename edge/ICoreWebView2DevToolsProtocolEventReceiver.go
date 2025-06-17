@@ -43,6 +43,12 @@ func (i *ICoreWebView2DevToolsProtocolEventReceiver) QueryInterface(refiid, obje
 	return nil
 }
 
+// Event_DevToolsProtocolEventReceived 是 DevTools 协议事件接收事件.
+//   - DevToolsProtocolEventReceived 在收到来自 DevTools 协议的事件时运行。
+func (i *ICoreWebView2DevToolsProtocolEventReceiver) Event_DevToolsProtocolEventReceived(w *WebViewEventImpl, cb func(sender *ICoreWebView2, args *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
+	return WvEventHandler.AddCallBack(w, "DevToolsProtocolEventReceived", cb, i, allowAddingMultiple...)
+}
+
 // AddDevToolsProtocolEventReceived 添加 DevTools 协议事件接收处理程序.
 func (i *ICoreWebView2DevToolsProtocolEventReceiver) AddDevToolsProtocolEventReceived(eventHandler *ICoreWebView2DevToolsProtocolEventReceivedEventHandler, token *EventRegistrationToken) error {
 	r, _, err := i.Vtbl.AddDevToolsProtocolEventReceived.Call(
@@ -72,10 +78,4 @@ func (i *ICoreWebView2DevToolsProtocolEventReceiver) RemoveDevToolsProtocolEvent
 		return syscall.Errno(r)
 	}
 	return nil
-}
-
-// Event_DevToolsProtocolEventReceived 是 DevTools 协议事件接收事件.
-//   - DevToolsProtocolEventReceived 在收到来自 DevTools 协议的事件时运行。
-func (i *ICoreWebView2DevToolsProtocolEventReceiver) Event_DevToolsProtocolEventReceived(w *WebViewEventImpl, cb func(sender *ICoreWebView2, args *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
-	return WvEventHandler.AddCallBack(w, "DevToolsProtocolEventReceived", cb, i, allowAddingMultiple...)
 }

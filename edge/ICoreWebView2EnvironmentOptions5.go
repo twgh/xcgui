@@ -64,13 +64,13 @@ func (i *ICoreWebView2EnvironmentOptions5) GetEnableTrackingPrevention() (bool, 
 	return value, nil
 }
 
-// PutEnableTrackingPrevention 设置是否启用 WebView2 中的跟踪防护功能。默认为 true。
+// SetEnableTrackingPrevention 设置是否启用 WebView2 中的跟踪防护功能。默认为 true。
 //   - 此属性可启用/禁用在同一环境中创建的所有 WebView2 的跟踪防护功能。默认情况下，该功能处于启用状态，用于阻止潜在有害的跟踪器以及来自从未访问过的网站的跟踪器，并设置为 COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED 或配置文件上次更改/保存的任何值。
 //   - 如果应用程序仅在 WebView2 中渲染已知安全的内容，则可以将此属性设置为 false 以禁用跟踪防护功能。在创建环境时禁用此功能还可以通过跳过相关代码来提高运行时性能。
 //   - 如果将 WebView2 用作具有任意导航功能的“完整浏览器”，则不应禁用此属性，并且应保护最终用户的隐私。
 //
 // 111.0.1661.34
-func (i *ICoreWebView2EnvironmentOptions5) PutEnableTrackingPrevention(value bool) error {
+func (i *ICoreWebView2EnvironmentOptions5) SetEnableTrackingPrevention(value bool) error {
 	r, _, err := i.Vtbl.PutEnableTrackingPrevention.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(value),

@@ -322,13 +322,6 @@ func (i *ICoreWebView2) GetICoreWebView2_2() (*ICoreWebView2_2, error) {
 	return result, err
 }
 
-// MustGetICoreWebView2_2 获取 ICoreWebView2_2。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_2() *ICoreWebView2_2 {
-	result, err := i.GetICoreWebView2_2()
-	ReportErrorAtuo(err)
-	return result
-}
-
 // GetICoreWebView2_3 获取 ICoreWebView2_3。
 func (i *ICoreWebView2) GetICoreWebView2_3() (*ICoreWebView2_3, error) {
 	var result *ICoreWebView2_3
@@ -337,13 +330,6 @@ func (i *ICoreWebView2) GetICoreWebView2_3() (*ICoreWebView2_3, error) {
 		unsafe.Pointer(iidICoreWebView2_3),
 		unsafe.Pointer(&result))
 	return result, err
-}
-
-// MustGetICoreWebView2_3 获取 ICoreWebView2_3。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_3() *ICoreWebView2_3 {
-	result, err := i.GetICoreWebView2_3()
-	ReportErrorAtuo(err)
-	return result
 }
 
 // GetICoreWebView2_4 获取 ICoreWebView2_4。
@@ -356,13 +342,6 @@ func (i *ICoreWebView2) GetICoreWebView2_4() (*ICoreWebView2_4, error) {
 	return result, err
 }
 
-// MustGetICoreWebView2_4 获取 ICoreWebView2_4。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_4() *ICoreWebView2_4 {
-	result, err := i.GetICoreWebView2_4()
-	ReportErrorAtuo(err)
-	return result
-}
-
 // GetICoreWebView2_5 获取 ICoreWebView2_5。
 func (i *ICoreWebView2) GetICoreWebView2_5() (*ICoreWebView2_5, error) {
 	var result *ICoreWebView2_5
@@ -371,13 +350,6 @@ func (i *ICoreWebView2) GetICoreWebView2_5() (*ICoreWebView2_5, error) {
 		unsafe.Pointer(iidICoreWebView2_5),
 		unsafe.Pointer(&result))
 	return result, err
-}
-
-// MustGetICoreWebView2_5 获取 ICoreWebView2_5。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_5() *ICoreWebView2_5 {
-	result, err := i.GetICoreWebView2_5()
-	ReportErrorAtuo(err)
-	return result
 }
 
 // GetICoreWebView2_6 获取 ICoreWebView2_6。
@@ -390,13 +362,6 @@ func (i *ICoreWebView2) GetICoreWebView2_6() (*ICoreWebView2_6, error) {
 	return result, err
 }
 
-// MustGetICoreWebView2_6 获取 ICoreWebView2_6。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_6() *ICoreWebView2_6 {
-	result, err := i.GetICoreWebView2_6()
-	ReportErrorAtuo(err)
-	return result
-}
-
 // GetICoreWebView2_7 获取 ICoreWebView2_7。
 func (i *ICoreWebView2) GetICoreWebView2_7() (*ICoreWebView2_7, error) {
 	var result *ICoreWebView2_7
@@ -405,13 +370,6 @@ func (i *ICoreWebView2) GetICoreWebView2_7() (*ICoreWebView2_7, error) {
 		unsafe.Pointer(iidICoreWebView2_7),
 		unsafe.Pointer(&result))
 	return result, err
-}
-
-// MustGetICoreWebView2_7 获取 ICoreWebView2_7。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_7() *ICoreWebView2_7 {
-	result, err := i.GetICoreWebView2_7()
-	ReportErrorAtuo(err)
-	return result
 }
 
 // GetICoreWebView2_8 获取 ICoreWebView2_8。
@@ -424,13 +382,6 @@ func (i *ICoreWebView2) GetICoreWebView2_8() (*ICoreWebView2_8, error) {
 	return result, err
 }
 
-// MustGetICoreWebView2_8 获取 ICoreWebView2_8。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_8() *ICoreWebView2_8 {
-	result, err := i.GetICoreWebView2_8()
-	ReportErrorAtuo(err)
-	return result
-}
-
 // GetICoreWebView2_9 获取 ICoreWebView2_9。
 func (i *ICoreWebView2) GetICoreWebView2_9() (*ICoreWebView2_9, error) {
 	var result *ICoreWebView2_9
@@ -439,13 +390,6 @@ func (i *ICoreWebView2) GetICoreWebView2_9() (*ICoreWebView2_9, error) {
 		unsafe.Pointer(iidICoreWebView2_9),
 		unsafe.Pointer(&result))
 	return result, err
-}
-
-// MustGetICoreWebView2_9 获取 ICoreWebView2_9。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_9() *ICoreWebView2_9 {
-	result, err := i.GetICoreWebView2_9()
-	ReportErrorAtuo(err)
-	return result
 }
 
 // GetICoreWebView2_10 获取 ICoreWebView2_10。
@@ -458,13 +402,6 @@ func (i *ICoreWebView2) GetICoreWebView2_10() (*ICoreWebView2_10, error) {
 	return result, err
 }
 
-// MustGetICoreWebView2_10 获取 ICoreWebView2_10。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_10() *ICoreWebView2_10 {
-	result, err := i.GetICoreWebView2_10()
-	ReportErrorAtuo(err)
-	return result
-}
-
 // GetICoreWebView2_11 获取 ICoreWebView2_11。
 func (i *ICoreWebView2) GetICoreWebView2_11() (*ICoreWebView2_11, error) {
 	var result *ICoreWebView2_11
@@ -473,13 +410,6 @@ func (i *ICoreWebView2) GetICoreWebView2_11() (*ICoreWebView2_11, error) {
 		unsafe.Pointer(iidICoreWebView2_11),
 		unsafe.Pointer(&result))
 	return result, err
-}
-
-// MustGetICoreWebView2_11 获取 ICoreWebView2_11。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_11() *ICoreWebView2_11 {
-	result, err := i.GetICoreWebView2_11()
-	ReportErrorAtuo(err)
-	return result
 }
 
 // GetICoreWebView2_12 获取 ICoreWebView2_12。
@@ -492,13 +422,6 @@ func (i *ICoreWebView2) GetICoreWebView2_12() (*ICoreWebView2_12, error) {
 	return result, err
 }
 
-// MustGetICoreWebView2_12 获取 ICoreWebView2_12。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_12() *ICoreWebView2_12 {
-	result, err := i.GetICoreWebView2_12()
-	ReportErrorAtuo(err)
-	return result
-}
-
 // GetICoreWebView2_13 获取 ICoreWebView2_13。
 func (i *ICoreWebView2) GetICoreWebView2_13() (*ICoreWebView2_13, error) {
 	var result *ICoreWebView2_13
@@ -507,13 +430,6 @@ func (i *ICoreWebView2) GetICoreWebView2_13() (*ICoreWebView2_13, error) {
 		unsafe.Pointer(iidICoreWebView2_13),
 		unsafe.Pointer(&result))
 	return result, err
-}
-
-// MustGetICoreWebView2_13 获取 ICoreWebView2_13。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_13() *ICoreWebView2_13 {
-	result, err := i.GetICoreWebView2_13()
-	ReportErrorAtuo(err)
-	return result
 }
 
 // GetICoreWebView2_14 获取 ICoreWebView2_14。
@@ -526,13 +442,6 @@ func (i *ICoreWebView2) GetICoreWebView2_14() (*ICoreWebView2_14, error) {
 	return result, err
 }
 
-// MustGetICoreWebView2_14 获取 ICoreWebView2_14。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_14() *ICoreWebView2_14 {
-	result, err := i.GetICoreWebView2_14()
-	ReportErrorAtuo(err)
-	return result
-}
-
 // GetICoreWebView2_15 获取 ICoreWebView2_15。
 func (i *ICoreWebView2) GetICoreWebView2_15() (*ICoreWebView2_15, error) {
 	var result *ICoreWebView2_15
@@ -541,13 +450,6 @@ func (i *ICoreWebView2) GetICoreWebView2_15() (*ICoreWebView2_15, error) {
 		unsafe.Pointer(iidICoreWebView2_15),
 		unsafe.Pointer(&result))
 	return result, err
-}
-
-// MustGetICoreWebView2_15 获取 ICoreWebView2_15。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_15() *ICoreWebView2_15 {
-	result, err := i.GetICoreWebView2_15()
-	ReportErrorAtuo(err)
-	return result
 }
 
 // GetICoreWebView2_16 获取 ICoreWebView2_16。
@@ -560,13 +462,6 @@ func (i *ICoreWebView2) GetICoreWebView2_16() (*ICoreWebView2_16, error) {
 	return result, err
 }
 
-// MustGetICoreWebView2_16 获取 ICoreWebView2_16。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_16() *ICoreWebView2_16 {
-	result, err := i.GetICoreWebView2_16()
-	ReportErrorAtuo(err)
-	return result
-}
-
 // GetICoreWebView2_17 获取 ICoreWebView2_17。
 func (i *ICoreWebView2) GetICoreWebView2_17() (*ICoreWebView2_17, error) {
 	var result *ICoreWebView2_17
@@ -575,13 +470,6 @@ func (i *ICoreWebView2) GetICoreWebView2_17() (*ICoreWebView2_17, error) {
 		unsafe.Pointer(iidICoreWebView2_17),
 		unsafe.Pointer(&result))
 	return result, err
-}
-
-// MustGetICoreWebView2_17 获取 ICoreWebView2_17。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_17() *ICoreWebView2_17 {
-	result, err := i.GetICoreWebView2_17()
-	ReportErrorAtuo(err)
-	return result
 }
 
 // GetICoreWebView2_18 获取 ICoreWebView2_18。
@@ -594,13 +482,6 @@ func (i *ICoreWebView2) GetICoreWebView2_18() (*ICoreWebView2_18, error) {
 	return result, err
 }
 
-// MustGetICoreWebView2_18 获取 ICoreWebView2_18。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_18() *ICoreWebView2_18 {
-	result, err := i.GetICoreWebView2_18()
-	ReportErrorAtuo(err)
-	return result
-}
-
 // GetICoreWebView2_19 获取 ICoreWebView2_19。
 func (i *ICoreWebView2) GetICoreWebView2_19() (*ICoreWebView2_19, error) {
 	var result *ICoreWebView2_19
@@ -609,13 +490,6 @@ func (i *ICoreWebView2) GetICoreWebView2_19() (*ICoreWebView2_19, error) {
 		unsafe.Pointer(iidICoreWebView2_19),
 		unsafe.Pointer(&result))
 	return result, err
-}
-
-// MustGetICoreWebView2_19 获取 ICoreWebView2_19。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_19() *ICoreWebView2_19 {
-	result, err := i.GetICoreWebView2_19()
-	ReportErrorAtuo(err)
-	return result
 }
 
 // GetICoreWebView2_20 获取 ICoreWebView2_20。
@@ -628,13 +502,6 @@ func (i *ICoreWebView2) GetICoreWebView2_20() (*ICoreWebView2_20, error) {
 	return result, err
 }
 
-// MustGetICoreWebView2_20 获取 ICoreWebView2_20。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_20() *ICoreWebView2_20 {
-	result, err := i.GetICoreWebView2_20()
-	ReportErrorAtuo(err)
-	return result
-}
-
 // GetICoreWebView2_21 获取 ICoreWebView2_21。
 func (i *ICoreWebView2) GetICoreWebView2_21() (*ICoreWebView2_21, error) {
 	var result *ICoreWebView2_21
@@ -643,13 +510,6 @@ func (i *ICoreWebView2) GetICoreWebView2_21() (*ICoreWebView2_21, error) {
 		unsafe.Pointer(iidICoreWebView2_21),
 		unsafe.Pointer(&result))
 	return result, err
-}
-
-// MustGetICoreWebView2_21 获取 ICoreWebView2_21。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_21() *ICoreWebView2_21 {
-	result, err := i.GetICoreWebView2_21()
-	ReportErrorAtuo(err)
-	return result
 }
 
 // GetICoreWebView2_22 获取 ICoreWebView2_22。
@@ -662,13 +522,6 @@ func (i *ICoreWebView2) GetICoreWebView2_22() (*ICoreWebView2_22, error) {
 	return result, err
 }
 
-// MustGetICoreWebView2_22 获取 ICoreWebView2_22。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_22() *ICoreWebView2_22 {
-	result, err := i.GetICoreWebView2_22()
-	ReportErrorAtuo(err)
-	return result
-}
-
 // GetICoreWebView2_23 获取 ICoreWebView2_23。
 func (i *ICoreWebView2) GetICoreWebView2_23() (*ICoreWebView2_23, error) {
 	var result *ICoreWebView2_23
@@ -677,13 +530,6 @@ func (i *ICoreWebView2) GetICoreWebView2_23() (*ICoreWebView2_23, error) {
 		unsafe.Pointer(iidICoreWebView2_23),
 		unsafe.Pointer(&result))
 	return result, err
-}
-
-// MustGetICoreWebView2_23 获取 ICoreWebView2_23。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_23() *ICoreWebView2_23 {
-	result, err := i.GetICoreWebView2_23()
-	ReportErrorAtuo(err)
-	return result
 }
 
 // GetICoreWebView2_24 获取 ICoreWebView2_24。
@@ -696,13 +542,6 @@ func (i *ICoreWebView2) GetICoreWebView2_24() (*ICoreWebView2_24, error) {
 	return result, err
 }
 
-// MustGetICoreWebView2_24 获取 ICoreWebView2_24。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_24() *ICoreWebView2_24 {
-	result, err := i.GetICoreWebView2_24()
-	ReportErrorAtuo(err)
-	return result
-}
-
 // GetICoreWebView2_25 获取 ICoreWebView2_25。
 func (i *ICoreWebView2) GetICoreWebView2_25() (*ICoreWebView2_25, error) {
 	var result *ICoreWebView2_25
@@ -711,13 +550,6 @@ func (i *ICoreWebView2) GetICoreWebView2_25() (*ICoreWebView2_25, error) {
 		unsafe.Pointer(iidICoreWebView2_25),
 		unsafe.Pointer(&result))
 	return result, err
-}
-
-// MustGetICoreWebView2_25 获取 ICoreWebView2_25。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_25() *ICoreWebView2_25 {
-	result, err := i.GetICoreWebView2_25()
-	ReportErrorAtuo(err)
-	return result
 }
 
 // GetICoreWebView2_26 获取 ICoreWebView2_26。
@@ -730,13 +562,6 @@ func (i *ICoreWebView2) GetICoreWebView2_26() (*ICoreWebView2_26, error) {
 	return result, err
 }
 
-// MustGetICoreWebView2_26 获取 ICoreWebView2_26。出错时会触发全局错误回调。
-func (i *ICoreWebView2) MustGetICoreWebView2_26() *ICoreWebView2_26 {
-	result, err := i.GetICoreWebView2_26()
-	ReportErrorAtuo(err)
-	return result
-}
-
 // GetICoreWebView2_27 获取 ICoreWebView2_27。
 func (i *ICoreWebView2) GetICoreWebView2_27() (*ICoreWebView2_27, error) {
 	var result *ICoreWebView2_27
@@ -745,6 +570,181 @@ func (i *ICoreWebView2) GetICoreWebView2_27() (*ICoreWebView2_27, error) {
 		unsafe.Pointer(iidICoreWebView2_27),
 		unsafe.Pointer(&result))
 	return result, err
+}
+
+// MustGetICoreWebView2_2 获取 ICoreWebView2_2。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_2() *ICoreWebView2_2 {
+	result, err := i.GetICoreWebView2_2()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2_3 获取 ICoreWebView2_3。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_3() *ICoreWebView2_3 {
+	result, err := i.GetICoreWebView2_3()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2_4 获取 ICoreWebView2_4。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_4() *ICoreWebView2_4 {
+	result, err := i.GetICoreWebView2_4()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2_5 获取 ICoreWebView2_5。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_5() *ICoreWebView2_5 {
+	result, err := i.GetICoreWebView2_5()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2_6 获取 ICoreWebView2_6。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_6() *ICoreWebView2_6 {
+	result, err := i.GetICoreWebView2_6()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2_7 获取 ICoreWebView2_7。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_7() *ICoreWebView2_7 {
+	result, err := i.GetICoreWebView2_7()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2_8 获取 ICoreWebView2_8。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_8() *ICoreWebView2_8 {
+	result, err := i.GetICoreWebView2_8()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2_9 获取 ICoreWebView2_9。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_9() *ICoreWebView2_9 {
+	result, err := i.GetICoreWebView2_9()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2_10 获取 ICoreWebView2_10。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_10() *ICoreWebView2_10 {
+	result, err := i.GetICoreWebView2_10()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2_11 获取 ICoreWebView2_11。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_11() *ICoreWebView2_11 {
+	result, err := i.GetICoreWebView2_11()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2_12 获取 ICoreWebView2_12。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_12() *ICoreWebView2_12 {
+	result, err := i.GetICoreWebView2_12()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2_13 获取 ICoreWebView2_13。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_13() *ICoreWebView2_13 {
+	result, err := i.GetICoreWebView2_13()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2_14 获取 ICoreWebView2_14。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_14() *ICoreWebView2_14 {
+	result, err := i.GetICoreWebView2_14()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2_15 获取 ICoreWebView2_15。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_15() *ICoreWebView2_15 {
+	result, err := i.GetICoreWebView2_15()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2_16 获取 ICoreWebView2_16。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_16() *ICoreWebView2_16 {
+	result, err := i.GetICoreWebView2_16()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2_17 获取 ICoreWebView2_17。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_17() *ICoreWebView2_17 {
+	result, err := i.GetICoreWebView2_17()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2_18 获取 ICoreWebView2_18。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_18() *ICoreWebView2_18 {
+	result, err := i.GetICoreWebView2_18()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2_19 获取 ICoreWebView2_19。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_19() *ICoreWebView2_19 {
+	result, err := i.GetICoreWebView2_19()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2_20 获取 ICoreWebView2_20。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_20() *ICoreWebView2_20 {
+	result, err := i.GetICoreWebView2_20()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2_21 获取 ICoreWebView2_21。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_21() *ICoreWebView2_21 {
+	result, err := i.GetICoreWebView2_21()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2_22 获取 ICoreWebView2_22。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_22() *ICoreWebView2_22 {
+	result, err := i.GetICoreWebView2_22()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2_23 获取 ICoreWebView2_23。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_23() *ICoreWebView2_23 {
+	result, err := i.GetICoreWebView2_23()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2_24 获取 ICoreWebView2_24。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_24() *ICoreWebView2_24 {
+	result, err := i.GetICoreWebView2_24()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2_25 获取 ICoreWebView2_25。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_25() *ICoreWebView2_25 {
+	result, err := i.GetICoreWebView2_25()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2_26 获取 ICoreWebView2_26。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_26() *ICoreWebView2_26 {
+	result, err := i.GetICoreWebView2_26()
+	ReportErrorAtuo(err)
+	return result
 }
 
 // MustGetICoreWebView2_27 获取 ICoreWebView2_27。出错时会触发全局错误回调。

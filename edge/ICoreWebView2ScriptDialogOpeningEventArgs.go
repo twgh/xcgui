@@ -1,5 +1,7 @@
 package edge
 
+// ok
+
 import (
 	"errors"
 	"github.com/twgh/xcgui/common"
@@ -66,13 +68,6 @@ func (i *ICoreWebView2ScriptDialogOpeningEventArgs) GetUri() (string, error) {
 	return uri, nil
 }
 
-// MustGetUri 获取对话框来源的URI。出错时会触发全局错误回调。
-func (i *ICoreWebView2ScriptDialogOpeningEventArgs) MustGetUri() string {
-	uri, err := i.GetUri()
-	ReportErrorAtuo(err)
-	return uri
-}
-
 // GetKind 获取 JavaScript 对话框的类型。alert、confirm、prompt 或 beforeunload。
 func (i *ICoreWebView2ScriptDialogOpeningEventArgs) GetKind() (COREWEBVIEW2_SCRIPT_DIALOG_KIND, error) {
 	var kind COREWEBVIEW2_SCRIPT_DIALOG_KIND
@@ -87,13 +82,6 @@ func (i *ICoreWebView2ScriptDialogOpeningEventArgs) GetKind() (COREWEBVIEW2_SCRI
 		return kind, syscall.Errno(r)
 	}
 	return kind, nil
-}
-
-// MustGetKind 获取 JavaScript 对话框的类型。alert、confirm、prompt 或 beforeunload。出错时会触发全局错误回调。
-func (i *ICoreWebView2ScriptDialogOpeningEventArgs) MustGetKind() COREWEBVIEW2_SCRIPT_DIALOG_KIND {
-	kind, err := i.GetKind()
-	ReportErrorAtuo(err)
-	return kind
 }
 
 // GetMessage 获取对话框消息内容。
@@ -113,14 +101,6 @@ func (i *ICoreWebView2ScriptDialogOpeningEventArgs) GetMessage() (string, error)
 	message := common.UTF16PtrToString(_message)
 	wapi.CoTaskMemFree(unsafe.Pointer(_message))
 	return message, nil
-}
-
-// MustGetMessage 获取对话框消息内容。出错时会触发全局错误回调。
-//   - 从 JavaScript 角度来看，这是传递给 alert、confirm 和 prompt 的第一个参数，对于 beforeunload 来说，该参数为空。
-func (i *ICoreWebView2ScriptDialogOpeningEventArgs) MustGetMessage() string {
-	message, err := i.GetMessage()
-	ReportErrorAtuo(err)
-	return message
 }
 
 // Accept 接受对话框。
@@ -157,14 +137,6 @@ func (i *ICoreWebView2ScriptDialogOpeningEventArgs) GetDefaultText() (string, er
 	return defaultText, nil
 }
 
-// MustGetDefaultText 获取对话框默认文本。即传递给 JavaScript 提示对话框的第二个参数。
-//   - prompt JavaScript 函数的结果将此值用作默认值。
-func (i *ICoreWebView2ScriptDialogOpeningEventArgs) MustGetDefaultText() string {
-	defaultText, err := i.GetDefaultText()
-	ReportErrorAtuo(err)
-	return defaultText
-}
-
 // GetResultText 获取对话框结果文本。如果运行 Accept，JavaScript 提示函数的返回值。
 //   - 对于除提示之外的其他对话框类型，此值将被忽略。
 //   - 如果未运行 Accept，则此值将被忽略，并且提示将返回 FALSE。
@@ -185,17 +157,8 @@ func (i *ICoreWebView2ScriptDialogOpeningEventArgs) GetResultText() (string, err
 	return resultText, nil
 }
 
-// MustGetResultText 获取对话框结果文本。如果运行 Accept，JavaScript 提示函数的返回值。
-//   - 对于除提示之外的其他对话框类型，此值将被忽略。
-//   - 如果未运行 Accept，则此值将被忽略，并且提示将返回 FALSE。
-func (i *ICoreWebView2ScriptDialogOpeningEventArgs) MustGetResultText() string {
-	resultText, err := i.GetResultText()
-	ReportErrorAtuo(err)
-	return resultText
-}
-
-// PutResultText 设置对话框结果文本。
-func (i *ICoreWebView2ScriptDialogOpeningEventArgs) PutResultText(resultText string) error {
+// SetResultText 设置对话框结果文本。
+func (i *ICoreWebView2ScriptDialogOpeningEventArgs) SetResultText(resultText string) error {
 	_resultText, err := syscall.UTF16PtrFromString(resultText)
 	if err != nil {
 		return err
@@ -227,4 +190,43 @@ func (i *ICoreWebView2ScriptDialogOpeningEventArgs) GetDeferral() (*ICoreWebView
 		return nil, syscall.Errno(r)
 	}
 	return deferral, nil
+}
+
+// MustGetUri 获取对话框来源的URI。出错时会触发全局错误回调。
+func (i *ICoreWebView2ScriptDialogOpeningEventArgs) MustGetUri() string {
+	uri, err := i.GetUri()
+	ReportErrorAtuo(err)
+	return uri
+}
+
+// MustGetKind 获取 JavaScript 对话框的类型。alert、confirm、prompt 或 beforeunload。出错时会触发全局错误回调。
+func (i *ICoreWebView2ScriptDialogOpeningEventArgs) MustGetKind() COREWEBVIEW2_SCRIPT_DIALOG_KIND {
+	kind, err := i.GetKind()
+	ReportErrorAtuo(err)
+	return kind
+}
+
+// MustGetMessage 获取对话框消息内容。出错时会触发全局错误回调。
+//   - 从 JavaScript 角度来看，这是传递给 alert、confirm 和 prompt 的第一个参数，对于 beforeunload 来说，该参数为空。
+func (i *ICoreWebView2ScriptDialogOpeningEventArgs) MustGetMessage() string {
+	message, err := i.GetMessage()
+	ReportErrorAtuo(err)
+	return message
+}
+
+// MustGetDefaultText 获取对话框默认文本。即传递给 JavaScript 提示对话框的第二个参数。
+//   - prompt JavaScript 函数的结果将此值用作默认值。
+func (i *ICoreWebView2ScriptDialogOpeningEventArgs) MustGetDefaultText() string {
+	defaultText, err := i.GetDefaultText()
+	ReportErrorAtuo(err)
+	return defaultText
+}
+
+// MustGetResultText 获取对话框结果文本。如果运行 Accept，JavaScript 提示函数的返回值。
+//   - 对于除提示之外的其他对话框类型，此值将被忽略。
+//   - 如果未运行 Accept，则此值将被忽略，并且提示将返回 FALSE。
+func (i *ICoreWebView2ScriptDialogOpeningEventArgs) MustGetResultText() string {
+	resultText, err := i.GetResultText()
+	ReportErrorAtuo(err)
+	return resultText
 }

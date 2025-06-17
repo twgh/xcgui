@@ -62,13 +62,6 @@ func (i *ICoreWebView2_3) GetIsSuspended() (bool, error) {
 	return result, nil
 }
 
-// MustGetIsSuspended 获取 WebView 控件是否已挂起。出错时会触发全局错误回调。
-func (i *ICoreWebView2_3) MustGetIsSuspended() bool {
-	r, err := i.GetIsSuspended()
-	ReportErrorAtuo(err)
-	return r
-}
-
 // Resume 恢复 WebView，以便它恢复网页上的活动。
 func (i *ICoreWebView2_3) Resume() error {
 	r, _, err := i.Vtbl.Resume.Call(
@@ -175,4 +168,11 @@ func (i *ICoreWebView2_3) SetVirtualHostNameToFolderMapping(hostName, folderPath
 		return syscall.Errno(r)
 	}
 	return nil
+}
+
+// MustGetIsSuspended 获取 WebView 控件是否已挂起。出错时会触发全局错误回调。
+func (i *ICoreWebView2_3) MustGetIsSuspended() bool {
+	r, err := i.GetIsSuspended()
+	ReportErrorAtuo(err)
+	return r
 }

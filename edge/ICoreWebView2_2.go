@@ -64,13 +64,6 @@ func (i *ICoreWebView2_2) GetEnvironment() (*ICoreWebView2Environment, error) {
 	return environment, nil
 }
 
-// MustGetEnvironment 获取用于创建此 ICoreWebView2 的 ICoreWebView2Environment. 出错时会触发全局错误回调.
-func (i *ICoreWebView2_2) MustGetEnvironment() *ICoreWebView2Environment {
-	environment, err := i.GetEnvironment()
-	ReportErrorAtuo(err)
-	return environment
-}
-
 // NavigateWithWebResourceRequest 使用构造的 ICoreWebView2WebResourceRequest 对象进行导航。
 func (i *ICoreWebView2_2) NavigateWithWebResourceRequest(request *ICoreWebView2WebResourceRequest) error {
 	r, _, err := i.Vtbl.NavigateWithWebResourceRequest.Call(
@@ -100,13 +93,6 @@ func (i *ICoreWebView2_2) GetCookieManager() (*ICoreWebView2CookieManager, error
 		return nil, syscall.Errno(r)
 	}
 	return cookieManager, nil
-}
-
-// MustGetCookieManager 获取与此 ICoreWebView2 关联的 cookie 管理器对象。出错时会触发全局错误回调。
-func (i *ICoreWebView2_2) MustGetCookieManager() *ICoreWebView2CookieManager {
-	cookieManager, err := i.GetCookieManager()
-	ReportErrorAtuo(err)
-	return cookieManager
 }
 
 // AddWebResourceResponseReceived 添加 WebResourceResponseReceived 事件处理程序。
@@ -174,4 +160,18 @@ func (i *ICoreWebView2_2) RemoveDomContentLoaded(token EventRegistrationToken) e
 		return syscall.Errno(r)
 	}
 	return nil
+}
+
+// MustGetEnvironment 获取用于创建此 ICoreWebView2 的 ICoreWebView2Environment. 出错时会触发全局错误回调.
+func (i *ICoreWebView2_2) MustGetEnvironment() *ICoreWebView2Environment {
+	environment, err := i.GetEnvironment()
+	ReportErrorAtuo(err)
+	return environment
+}
+
+// MustGetCookieManager 获取与此 ICoreWebView2 关联的 cookie 管理器对象。出错时会触发全局错误回调。
+func (i *ICoreWebView2_2) MustGetCookieManager() *ICoreWebView2CookieManager {
+	cookieManager, err := i.GetCookieManager()
+	ReportErrorAtuo(err)
+	return cookieManager
 }

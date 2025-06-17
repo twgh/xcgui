@@ -56,6 +56,18 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 	if !ok {
 		info.EventToken = &EventRegistrationToken{}
 		switch eventType {
+		case "CustomItemSelected":
+			menuItem, ok := obj.(*ICoreWebView2ContextMenuItem)
+			if !ok {
+				return -1, errors.New("obj is not *ICoreWebView2ContextMenuItem")
+			}
+			eventHandler := NewICoreWebView2CustomItemSelectedEventHandler(impl)
+			err := menuItem.AddCustomItemSelected(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
 		case "DevToolsProtocolEventReceived":
 			receiver, ok := obj.(*ICoreWebView2DevToolsProtocolEventReceiver)
 			if !ok {
@@ -248,6 +260,19 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 			defer c3.Release()
 			eventHandler := NewICoreWebView2RasterizationScaleChangedEventHandler(impl)
 			err = c3.AddRasterizationScaleChanged(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+		case "ContextMenuRequested":
+			w2_11, err := impl.CoreWebView.GetICoreWebView2_11()
+			if err != nil {
+				return -1, err
+			}
+			defer w2_11.Release()
+			eventHandler := NewICoreWebView2ContextMenuRequestedEventHandler(impl)
+			err = w2_11.AddContextMenuRequested(eventHandler, info.EventToken)
 			if err != nil {
 				eventHandler.Release()
 				return -1, err

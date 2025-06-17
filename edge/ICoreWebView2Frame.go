@@ -1,5 +1,7 @@
 package edge
 
+// ok
+
 import (
 	"errors"
 	"github.com/twgh/xcgui/common"
@@ -68,11 +70,16 @@ func (i *ICoreWebView2Frame) GetName() (string, error) {
 	return result, nil
 }
 
-// MustGetName 获取 iframe 的 window.name 属性的值。出错时会触发全局错误回调。
-func (i *ICoreWebView2Frame) MustGetName() string {
-	name, err := i.GetName()
-	ReportErrorAtuo(err)
-	return name
+// Event_FrameNameChanged 框架名称改变事件.
+//   - 当 iframe 更改其 window.name 属性时触发。
+func (i *ICoreWebView2Frame) Event_FrameNameChanged(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
+	return WvEventHandler.AddCallBack(impl, "FrameNameChanged", cb, i, allowAddingMultiple...)
+}
+
+// Event_FrameDestroyed 框架销毁事件.
+//   - 当与此 ICoreWebView2Frame 对象对应的 iframe 被移除或包含该 iframe 的文档被销毁时触发。
+func (i *ICoreWebView2Frame) Event_FrameDestroyed(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
+	return WvEventHandler.AddCallBack(impl, "FrameDestroyed", cb, i, allowAddingMultiple...)
 }
 
 // AddNameChanged 添加名称改变事件处理程序.
@@ -214,21 +221,16 @@ func (i *ICoreWebView2Frame) IsDestroyed() (bool, error) {
 	return destroyed, nil
 }
 
+// MustGetName 获取 iframe 的 window.name 属性的值。出错时会触发全局错误回调。
+func (i *ICoreWebView2Frame) MustGetName() string {
+	name, err := i.GetName()
+	ReportErrorAtuo(err)
+	return name
+}
+
 // MustIsDestroyed 检查框架是否已被销毁。在销毁事件期间返回 true。出错时会触发全局错误回调。
 func (i *ICoreWebView2Frame) MustIsDestroyed() bool {
 	result, err := i.IsDestroyed()
 	ReportErrorAtuo(err)
 	return result
-}
-
-// Event_FrameNameChanged 框架名称改变事件.
-//   - 当 iframe 更改其 window.name 属性时触发。
-func (i *ICoreWebView2Frame) Event_FrameNameChanged(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
-	return WvEventHandler.AddCallBack(impl, "FrameNameChanged", cb, i, allowAddingMultiple...)
-}
-
-// Event_FrameDestroyed 框架销毁事件.
-//   - 当与此 ICoreWebView2Frame 对象对应的 iframe 被移除或包含该 iframe 的文档被销毁时触发。
-func (i *ICoreWebView2Frame) Event_FrameDestroyed(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
-	return WvEventHandler.AddCallBack(impl, "FrameDestroyed", cb, i, allowAddingMultiple...)
 }

@@ -65,12 +65,12 @@ func (w *WebView2) Refresh(forceReload ...bool) error {
 
 // Show 显示 webview。
 func (w *WebView2) Show() error {
-	return w.Controller.PutIsVisible(true)
+	return w.Controller.SetIsVisible(true)
 }
 
 // Hide 隐藏 webview。
 func (w *WebView2) Hide() error {
-	return w.Controller.PutIsVisible(false)
+	return w.Controller.SetIsVisible(false)
 }
 
 // Resize 重新设置 webview 窗口大小和宿主窗口的客户区大小一致.
@@ -80,7 +80,7 @@ func (w *WebView2) Resize() error {
 	}
 	var bounds xc.RECT
 	wapi.GetClientRect(w.hwnd, &bounds)
-	return w.Controller.PutBounds(bounds)
+	return w.Controller.SetBounds(bounds)
 }
 
 // SetPermission 设置权限。设置后如果网页请求该权限, 会根据设置的 state 来允许或拒绝请求。
