@@ -75,3 +75,12 @@ func (i *ICoreWebView2Environment2) CreateWebResourceRequest(uri string, method 
 	}
 	return request, nil
 }
+
+// MustCreateWebResourceRequest 创建一个新的网络资源请求对象。出错时会触发全局错误回调。
+//   - URI 参数必须是绝对 URI。
+//   - 标头字符串是由 CRLF 分隔的原始请求标头字符串（最后一个标头中可选）。也可以使用空标头字符串创建此对象，然后使用 ICoreWebView2HttpRequestHeaders 逐行构造标头。
+func (i *ICoreWebView2Environment2) MustCreateWebResourceRequest(uri string, method string, postData *IStream, headers string) *ICoreWebView2WebResourceRequest {
+	request, err := i.CreateWebResourceRequest(uri, method, postData, headers)
+	ReportErrorAtuo(err)
+	return request
+}

@@ -56,6 +56,18 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 	if !ok {
 		info.EventToken = &EventRegistrationToken{}
 		switch eventType {
+		case "CursorChanged":
+			obj2, ok := obj.(*ICoreWebView2CompositionController)
+			if !ok {
+				return -1, errors.New("obj is not *ICoreWebView2CompositionController")
+			}
+			eventHandler := NewICoreWebView2CursorChangedEventHandler(impl)
+			err := obj2.AddCursorChanged(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
 		case "CustomItemSelected":
 			menuItem, ok := obj.(*ICoreWebView2ContextMenuItem)
 			if !ok {
@@ -390,6 +402,9 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 		case "WebResourceResponseViewGetContentCompleted":
 			info.EventToken = nil
 			info.EvnetHandlerPointer = unsafe.Pointer(NewICoreWebView2WebResourceResponseViewGetContentCompletedHandler(impl))
+		case "CreateCoreWebView2CompositionControllerCompleted":
+			info.EventToken = nil
+			info.EvnetHandlerPointer = unsafe.Pointer(NewICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler(impl))
 		}
 	}
 

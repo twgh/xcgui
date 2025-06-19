@@ -584,3 +584,23 @@ func (w *WebViewEventImpl) CustomItemSelected(sender *ICoreWebView2ContextMenuIt
 	}
 	return ret
 }
+
+// CreateCoreWebView2CompositionControllerCompleted 当创建 WebView2CompositionController 完成时调用。
+func (w *WebViewEventImpl) CreateCoreWebView2CompositionControllerCompleted(errorCode syscall.Errno, result *ICoreWebView2CompositionController) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "CreateCoreWebView2CompositionControllerCompleted")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(errorCode syscall.Errno, result *ICoreWebView2CompositionController) uintptr)(errorCode, result)
+	}
+	return ret
+}
+
+// CursorChanged 当光标更改时调用。
+func (w *WebViewEventImpl) CursorChanged(sender *ICoreWebView2CompositionController, args *IUnknown) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "CursorChanged")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2CompositionController, args *IUnknown) uintptr)(sender, args)
+	}
+	return ret
+}

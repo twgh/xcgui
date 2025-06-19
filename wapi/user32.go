@@ -1582,3 +1582,96 @@ const (
 	LLKHF_UP                = 0x0080 // 按键释放事件
 	LLKHF_LOWER_IL_INJECTED = 0x0002 // 低完整性进程注入事件
 )
+
+// PT_ 定义了指针输入的类型
+type PT_ uint32
+
+const (
+	// PT_POINTER 普通指针输入
+	PT_POINTER PT_ = iota + 1
+	// PT_TOUCH 触摸输入
+	PT_TOUCH
+	// PT_PEN 笔输入
+	PT_PEN
+	// PT_MOUSE 鼠标输入
+	PT_MOUSE
+	// PT_TOUCHPAD 触摸板输入
+	PT_TOUCHPAD
+)
+
+// POINTER_FLAG_ 指针输入标志常量
+type POINTER_FLAG_ uint32
+
+const (
+	POINTER_FLAG_NONE           POINTER_FLAG_ = 0x00000000 // 默认无标志
+	POINTER_FLAG_NEW            POINTER_FLAG_ = 0x00000001 // 新指针
+	POINTER_FLAG_INRANGE        POINTER_FLAG_ = 0x00000002 // 指针未离开范围
+	POINTER_FLAG_INCONTACT      POINTER_FLAG_ = 0x00000004 // 指针处于接触状态
+	POINTER_FLAG_FIRSTBUTTON    POINTER_FLAG_ = 0x00000010 // 主按钮动作
+	POINTER_FLAG_SECONDBUTTON   POINTER_FLAG_ = 0x00000020 // 副按钮动作
+	POINTER_FLAG_THIRDBUTTON    POINTER_FLAG_ = 0x00000040 // 第三按钮
+	POINTER_FLAG_FOURTHBUTTON   POINTER_FLAG_ = 0x00000080 // 第四按钮
+	POINTER_FLAG_FIFTHBUTTON    POINTER_FLAG_ = 0x00000100 // 第五按钮
+	POINTER_FLAG_PRIMARY        POINTER_FLAG_ = 0x00002000 // 系统主指针
+	POINTER_FLAG_CONFIDENCE     POINTER_FLAG_ = 0x00004000 // 非意外触发的指针
+	POINTER_FLAG_CANCELED       POINTER_FLAG_ = 0x00008000 // 异常离开的指针
+	POINTER_FLAG_DOWN           POINTER_FLAG_ = 0x00010000 // 指针按下状态(接触开始)
+	POINTER_FLAG_UPDATE         POINTER_FLAG_ = 0x00020000 // 指针更新
+	POINTER_FLAG_UP             POINTER_FLAG_ = 0x00040000 // 指针抬起状态(接触结束)
+	POINTER_FLAG_WHEEL          POINTER_FLAG_ = 0x00080000 // 垂直滚轮
+	POINTER_FLAG_HWHEEL         POINTER_FLAG_ = 0x00100000 // 水平滚轮
+	POINTER_FLAG_CAPTURECHANGED POINTER_FLAG_ = 0x00200000 // 捕获丢失
+	POINTER_FLAG_HASTRANSFORM   POINTER_FLAG_ = 0x00400000 // 关联变换矩阵的输入
+)
+
+// POINTER_CHANGE_ 定义了指针按钮状态变化的类型
+type POINTER_CHANGE_ uint32
+
+const (
+	POINTER_CHANGE_NONE              POINTER_CHANGE_ = iota // 无按钮状态变化
+	POINTER_CHANGE_FIRSTBUTTON_DOWN                         // 第一个按钮按下
+	POINTER_CHANGE_FIRSTBUTTON_UP                           // 第一个按钮释放
+	POINTER_CHANGE_SECONDBUTTON_DOWN                        // 第二个按钮按下
+	POINTER_CHANGE_SECONDBUTTON_UP                          // 第二个按钮释放
+	POINTER_CHANGE_THIRDBUTTON_DOWN                         // 第三个按钮按下
+	POINTER_CHANGE_THIRDBUTTON_UP                           // 第三个按钮释放
+	POINTER_CHANGE_FOURTHBUTTON_DOWN                        // 第四个按钮按下
+	POINTER_CHANGE_FOURTHBUTTON_UP                          // 第四个按钮释放
+	POINTER_CHANGE_FIFTHBUTTON_DOWN                         // 第五个按钮按下
+	POINTER_CHANGE_FIFTHBUTTON_UP                           // 第五个按钮释放
+)
+
+// PEN_FLAG_ 定义笔输入标志常量
+type PEN_FLAG_ uint32
+
+const (
+	PEN_FLAG_NONE     PEN_FLAG_ = 0x00000000 // 默认无标志
+	PEN_FLAG_BARREL   PEN_FLAG_ = 0x00000001 // 笔杆按钮按下
+	PEN_FLAG_INVERTED PEN_FLAG_ = 0x00000002 // 笔尖倒置
+	PEN_FLAG_ERASER   PEN_FLAG_ = 0x00000004 // 橡皮擦按钮按下
+)
+
+// PEN_MASK_ 定义笔输入掩码常量
+type PEN_MASK_ uint32
+
+const (
+	PEN_MASK_NONE     PEN_MASK_ = 0x00000000 // 默认值 - 所有可选字段均无效
+	PEN_MASK_PRESSURE PEN_MASK_ = 0x00000001 // 压力字段有效
+	PEN_MASK_ROTATION PEN_MASK_ = 0x00000002 // 旋转字段有效
+	PEN_MASK_TILT_X   PEN_MASK_ = 0x00000004 // X轴倾斜字段有效
+	PEN_MASK_TILT_Y   PEN_MASK_ = 0x00000008 // Y轴倾斜字段有效
+)
+
+// TOUCH_MASK_ 定义触摸输入掩码常量
+type TOUCH_MASK_ uint32
+
+const (
+	TOUCH_MASK_NONE        TOUCH_MASK_ = 0x00000000 // 默认 - 所有可选字段均无效
+	TOUCH_MASK_CONTACTAREA TOUCH_MASK_ = 0x00000001 // rcContact 字段有效
+	TOUCH_MASK_ORIENTATION TOUCH_MASK_ = 0x00000002 // orientation 字段有效
+	TOUCH_MASK_PRESSURE    TOUCH_MASK_ = 0x00000004 // pressure 字段有效
+)
+
+const (
+	TOUCH_FLAG_NONE uint32 = 0x00000000 // 默认
+)
