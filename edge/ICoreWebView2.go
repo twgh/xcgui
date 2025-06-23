@@ -1,9 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"syscall"
 	"unsafe"
@@ -91,10 +88,7 @@ func (i *ICoreWebView2) Release() uintptr {
 }
 
 func (i *ICoreWebView2) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -104,13 +98,10 @@ func (i *ICoreWebView2) QueryInterface(refiid, object unsafe.Pointer) error {
 // GetSettings 获取 ICoreWebView2Settings 对象, 它包含正在运行的 WebView 的各种可修改设置。
 func (i *ICoreWebView2) GetSettings() (*ICoreWebView2Settings, error) {
 	var settings *ICoreWebView2Settings
-	r, _, err := i.Vtbl.GetSettings.Call(
+	r, _, _ := i.Vtbl.GetSettings.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&settings)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -126,14 +117,11 @@ func (i *ICoreWebView2) AddWebResourceRequestedFilter(uri string, resourceContex
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.AddWebResourceRequestedFilter.Call(
+	r, _, _ := i.Vtbl.AddWebResourceRequestedFilter.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_uri)),
 		uintptr(resourceContext),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -146,14 +134,11 @@ func (i *ICoreWebView2) RemoveWebResourceRequestedFilter(uri string, resourceCon
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.RemoveWebResourceRequestedFilter.Call(
+	r, _, _ := i.Vtbl.RemoveWebResourceRequestedFilter.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_uri)),
 		uintptr(resourceContext),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -168,14 +153,11 @@ type EventRegistrationToken struct {
 // AddNavigationCompleted 添加导航完成事件处理程序.
 //   - NavigationCompleted 事件会在 Webview 完全加载完毕（与 body.onload 事件同时发生）或加载因错误而停止时触发。
 func (i *ICoreWebView2) AddNavigationCompleted(eventHandler *ICoreWebView2NavigationCompletedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddNavigationCompleted.Call(
+	r, _, _ := i.Vtbl.AddNavigationCompleted.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(&token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -184,13 +166,10 @@ func (i *ICoreWebView2) AddNavigationCompleted(eventHandler *ICoreWebView2Naviga
 
 // RemoveNavigationCompleted 移除导航完成事件处理程序。
 func (i *ICoreWebView2) RemoveNavigationCompleted(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveNavigationCompleted.Call(
+	r, _, _ := i.Vtbl.RemoveNavigationCompleted.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -205,13 +184,10 @@ func (i *ICoreWebView2) Navigate(uri string) error {
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.Navigate.Call(
+	r, _, _ := i.Vtbl.Navigate.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_uri)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -227,13 +203,10 @@ func (i *ICoreWebView2) NavigateToString(htmlContent string) error {
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.NavigateToString.Call(
+	r, _, _ := i.Vtbl.NavigateToString.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_htmlContent)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -243,13 +216,10 @@ func (i *ICoreWebView2) NavigateToString(htmlContent string) error {
 // GetSource 获取当前顶级文档的URI。如果导航正在进行中，则返回即将导航到的URI。
 func (i *ICoreWebView2) GetSource() (string, error) {
 	var _uri *uint16
-	r, _, err := i.Vtbl.GetSource.Call(
+	r, _, _ := i.Vtbl.GetSource.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_uri)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -262,14 +232,11 @@ func (i *ICoreWebView2) GetSource() (string, error) {
 //   - NavigationStarting 在 Webview 主框架请求导航到不同的统一资源标识符 (URI) 权限时运行。重定向也会触发此操作，并且导航 ID 与原始 ID 相同。
 //   - 在所有 NavigationStarting 事件处理程序返回之前，导航将被阻止。
 func (i *ICoreWebView2) AddNavigationStarting(eventHandler *ICoreWebView2NavigationStartingEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddNavigationStarting.Call(
+	r, _, _ := i.Vtbl.AddNavigationStarting.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -278,13 +245,10 @@ func (i *ICoreWebView2) AddNavigationStarting(eventHandler *ICoreWebView2Navigat
 
 // RemoveNavigationStarting 移除导航开始事件处理程序。
 func (i *ICoreWebView2) RemoveNavigationStarting(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveNavigationStarting.Call(
+	r, _, _ := i.Vtbl.RemoveNavigationStarting.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -296,14 +260,11 @@ func (i *ICoreWebView2) RemoveNavigationStarting(token EventRegistrationToken) e
 //   - ContentLoading 在发生相同页面导航时（例如通过 fragment 导航或 history.pushState 导航）不会触发。
 //   - 此操作在 NavigationStarting 和 SourceChanged 事件之后，以及 HistoryChanged 和 NavigationCompleted 事件之前发生。
 func (i *ICoreWebView2) AddContentLoading(eventHandler *ICoreWebView2ContentLoadingEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddContentLoading.Call(
+	r, _, _ := i.Vtbl.AddContentLoading.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -312,13 +273,10 @@ func (i *ICoreWebView2) AddContentLoading(eventHandler *ICoreWebView2ContentLoad
 
 // RemoveContentLoading 移除内容加载事件处理程序。
 func (i *ICoreWebView2) RemoveContentLoading(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveContentLoading.Call(
+	r, _, _ := i.Vtbl.RemoveContentLoading.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -327,14 +285,11 @@ func (i *ICoreWebView2) RemoveContentLoading(token EventRegistrationToken) error
 
 // AddWebResourceRequested 添加 web 资源请求事件处理程序。
 func (i *ICoreWebView2) AddWebResourceRequested(eventHandler *ICoreWebView2WebResourceRequestedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddWebResourceRequested.Call(
+	r, _, _ := i.Vtbl.AddWebResourceRequested.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -343,13 +298,10 @@ func (i *ICoreWebView2) AddWebResourceRequested(eventHandler *ICoreWebView2WebRe
 
 // RemoveWebResourceRequested 移除 web 资源请求事件处理程序。
 func (i *ICoreWebView2) RemoveWebResourceRequested(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveWebResourceRequested.Call(
+	r, _, _ := i.Vtbl.RemoveWebResourceRequested.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -360,14 +312,11 @@ func (i *ICoreWebView2) RemoveWebResourceRequested(token EventRegistrationToken)
 //   - 当 Webview 的顶级文档运行 window.chrome.webview.postMessage 时，WebMessageReceived 事件会运行。
 //   - postMessage 函数为 void postMessage(object)，其中 object 是任何受 JSON 转换支持的对象。
 func (i *ICoreWebView2) AddWebMessageReceived(eventHandler *ICoreWebView2WebMessageReceivedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddWebMessageReceived.Call(
+	r, _, _ := i.Vtbl.AddWebMessageReceived.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -376,13 +325,10 @@ func (i *ICoreWebView2) AddWebMessageReceived(eventHandler *ICoreWebView2WebMess
 
 // RemoveWebMessageReceived 移除 web 消息接收事件处理程序。
 func (i *ICoreWebView2) RemoveWebMessageReceived(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveWebMessageReceived.Call(
+	r, _, _ := i.Vtbl.RemoveWebMessageReceived.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -392,14 +338,11 @@ func (i *ICoreWebView2) RemoveWebMessageReceived(token EventRegistrationToken) e
 // AddPermissionRequested 添加权限请求事件处理程序。
 //   - PermissionRequested 在 Webview 中的内容请求访问某些特权资源的权限时运行。
 func (i *ICoreWebView2) AddPermissionRequested(eventHandler *ICoreWebView2PermissionRequestedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddPermissionRequested.Call(
+	r, _, _ := i.Vtbl.AddPermissionRequested.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -408,13 +351,10 @@ func (i *ICoreWebView2) AddPermissionRequested(eventHandler *ICoreWebView2Permis
 
 // RemovePermissionRequested 移除权限请求事件处理程序。
 func (i *ICoreWebView2) RemovePermissionRequested(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemovePermissionRequested.Call(
+	r, _, _ := i.Vtbl.RemovePermissionRequested.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -429,13 +369,10 @@ func (i *ICoreWebView2) PostWebMessageAsString(webMessageAsString string) error 
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.PostWebMessageAsString.Call(
+	r, _, _ := i.Vtbl.PostWebMessageAsString.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_webMessageAsString)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -450,13 +387,10 @@ func (i *ICoreWebView2) PostWebMessageAsJSON(webMessageAsJSON string) error {
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.PostWebMessageAsJSON.Call(
+	r, _, _ := i.Vtbl.PostWebMessageAsJSON.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_webMessageAsJSON)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -465,12 +399,9 @@ func (i *ICoreWebView2) PostWebMessageAsJSON(webMessageAsJSON string) error {
 
 // Reload 重新加载当前页面。
 func (i *ICoreWebView2) Reload() error {
-	r, _, err := i.Vtbl.Reload.Call(
+	r, _, _ := i.Vtbl.Reload.Call(
 		uintptr(unsafe.Pointer(i)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -479,12 +410,9 @@ func (i *ICoreWebView2) Reload() error {
 
 // GoBack 将 WebView 导航到导航历史记录中的上一页。
 func (i *ICoreWebView2) GoBack() error {
-	r, _, err := i.Vtbl.GoBack.Call(
+	r, _, _ := i.Vtbl.GoBack.Call(
 		uintptr(unsafe.Pointer(i)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -493,12 +421,9 @@ func (i *ICoreWebView2) GoBack() error {
 
 // GoForward 将 WebView 导航到导航历史记录中的下一页。
 func (i *ICoreWebView2) GoForward() error {
-	r, _, err := i.Vtbl.GoForward.Call(
+	r, _, _ := i.Vtbl.GoForward.Call(
 		uintptr(unsafe.Pointer(i)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -507,12 +432,9 @@ func (i *ICoreWebView2) GoForward() error {
 
 // Stop 停止所有导航和挂起的资源获取。不停止脚本。
 func (i *ICoreWebView2) Stop() error {
-	r, _, err := i.Vtbl.Stop.Call(
+	r, _, _ := i.Vtbl.Stop.Call(
 		uintptr(unsafe.Pointer(i)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -529,14 +451,11 @@ func (i *ICoreWebView2) ExecuteScript(javaScript string, handler *ICoreWebView2E
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.ExecuteScript.Call(
+	r, _, _ := i.Vtbl.ExecuteScript.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_javaScript)),
 		uintptr(unsafe.Pointer(handler)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -567,12 +486,9 @@ func (i *ICoreWebView2) ExecuteScriptEx(impl *WebViewEventImpl, javaScript strin
 
 // OpenDevToolsWindow 打开开发者工具窗口。
 func (i *ICoreWebView2) OpenDevToolsWindow() error {
-	r, _, err := i.Vtbl.OpenDevToolsWindow.Call(
+	r, _, _ := i.Vtbl.OpenDevToolsWindow.Call(
 		uintptr(unsafe.Pointer(i)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -582,13 +498,10 @@ func (i *ICoreWebView2) OpenDevToolsWindow() error {
 // GetContainsFullScreenElement 获取 WebView 是否包含全屏元素。
 func (i *ICoreWebView2) GetContainsFullScreenElement() (bool, error) {
 	var containsFullScreenElement bool
-	r, _, err := i.Vtbl.GetContainsFullScreenElement.Call(
+	r, _, _ := i.Vtbl.GetContainsFullScreenElement.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&containsFullScreenElement)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -598,13 +511,10 @@ func (i *ICoreWebView2) GetContainsFullScreenElement() (bool, error) {
 // GetDocumentTitle 获取当前顶级文档的标题。
 func (i *ICoreWebView2) GetDocumentTitle() (string, error) {
 	var title *uint16
-	r, _, err := i.Vtbl.GetDocumentTitle.Call(
+	r, _, _ := i.Vtbl.GetDocumentTitle.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&title)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -616,13 +526,10 @@ func (i *ICoreWebView2) GetDocumentTitle() (string, error) {
 // GetBrowserProcessID 获取承载 WebView 的浏览器进程的 ID。
 func (i *ICoreWebView2) GetBrowserProcessID() (uint32, error) {
 	var pid uint32
-	r, _, err := i.Vtbl.GetBrowserProcessID.Call(
+	r, _, _ := i.Vtbl.GetBrowserProcessID.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&pid)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -632,13 +539,10 @@ func (i *ICoreWebView2) GetBrowserProcessID() (uint32, error) {
 // GetCanGoBack 获取 WebView 是否可以导航到上一页。
 func (i *ICoreWebView2) GetCanGoBack() (bool, error) {
 	var canGoBack bool
-	r, _, err := i.Vtbl.GetCanGoBack.Call(
+	r, _, _ := i.Vtbl.GetCanGoBack.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&canGoBack)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -648,13 +552,10 @@ func (i *ICoreWebView2) GetCanGoBack() (bool, error) {
 // GetCanGoForward 获取 WebView 是否可以导航到下一页。
 func (i *ICoreWebView2) GetCanGoForward() (bool, error) {
 	var canGoForward bool
-	r, _, err := i.Vtbl.GetCanGoForward.Call(
+	r, _, _ := i.Vtbl.GetCanGoForward.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&canGoForward)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -671,14 +572,11 @@ func (i *ICoreWebView2) AddScriptToExecuteOnDocumentCreated(javaScript string, h
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.AddScriptToExecuteOnDocumentCreated.Call(
+	r, _, _ := i.Vtbl.AddScriptToExecuteOnDocumentCreated.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_javaScript)),
 		uintptr(unsafe.Pointer(handler)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -715,13 +613,10 @@ func (i *ICoreWebView2) RemoveScriptToExecuteOnDocumentCreated(id string) error 
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.RemoveScriptToExecuteOnDocumentCreated.Call(
+	r, _, _ := i.Vtbl.RemoveScriptToExecuteOnDocumentCreated.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_id)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -733,14 +628,11 @@ func (i *ICoreWebView2) RemoveScriptToExecuteOnDocumentCreated(id string) error 
 //   - 应用可以传递一个被视为已打开窗口的目标 Webview，或者将该事件标记为 Handled，在此情况下，WebView2 不会打开窗口。
 //   - 如果 Handled 或 NewWindow 属性均未设置，目标内容将在弹出窗口中打开。
 func (i *ICoreWebView2) AddNewWindowRequested(eventHandler *ICoreWebView2NewWindowRequestedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddNewWindowRequested.Call(
+	r, _, _ := i.Vtbl.AddNewWindowRequested.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -749,13 +641,10 @@ func (i *ICoreWebView2) AddNewWindowRequested(eventHandler *ICoreWebView2NewWind
 
 // RemoveNewWindowRequested 移除新窗口请求事件处理程序.
 func (i *ICoreWebView2) RemoveNewWindowRequested(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveNewWindowRequested.Call(
+	r, _, _ := i.Vtbl.RemoveNewWindowRequested.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -768,14 +657,11 @@ func (i *ICoreWebView2) RemoveNewWindowRequested(token EventRegistrationToken) e
 //   - 对于其他类型的导航，例如页面刷新或 history.pushState（使用与当前页面相同的 URL），它不会触发。
 //   - SourceChanged 会在导航到新文档时，在 ContentLoading 之前运行。
 func (i *ICoreWebView2) AddSourceChanged(eventHandler *ICoreWebView2SourceChangedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddSourceChanged.Call(
+	r, _, _ := i.Vtbl.AddSourceChanged.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -784,13 +670,10 @@ func (i *ICoreWebView2) AddSourceChanged(eventHandler *ICoreWebView2SourceChange
 
 // RemoveSourceChanged 移除源改变事件处理程序.
 func (i *ICoreWebView2) RemoveSourceChanged(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveSourceChanged.Call(
+	r, _, _ := i.Vtbl.RemoveSourceChanged.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -801,14 +684,11 @@ func (i *ICoreWebView2) RemoveSourceChanged(token EventRegistrationToken) error 
 //   - 框架导航开始事件会在 Webview 中的子框架请求导航到不同 URI 的权限时触发。重定向也会触发此操作，并且导航 ID 与原始 ID 相同。
 //   - 在所有框架导航开始事件处理程序返回之前，导航将被阻止。
 func (i *ICoreWebView2) AddFrameNavigationStarting(eventHandler *ICoreWebView2_Frame_NavigationStartingEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddFrameNavigationStarting.Call(
+	r, _, _ := i.Vtbl.AddFrameNavigationStarting.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -817,13 +697,10 @@ func (i *ICoreWebView2) AddFrameNavigationStarting(eventHandler *ICoreWebView2_F
 
 // RemoveFrameNavigationStarting 移除框架导航开始事件处理程序。
 func (i *ICoreWebView2) RemoveFrameNavigationStarting(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveFrameNavigationStarting.Call(
+	r, _, _ := i.Vtbl.RemoveFrameNavigationStarting.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -833,14 +710,11 @@ func (i *ICoreWebView2) RemoveFrameNavigationStarting(token EventRegistrationTok
 // AddFrameNavigationCompleted 添加框架导航完成事件处理程序。
 //   - 框架导航完成事件会在 Webview 中的子框架完全加载完毕（与 body.onload 触发同时）或加载因错误而停止时触发。
 func (i *ICoreWebView2) AddFrameNavigationCompleted(eventHandler *ICoreWebView2_Frame_NavigationCompletedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddFrameNavigationCompleted.Call(
+	r, _, _ := i.Vtbl.AddFrameNavigationCompleted.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -849,13 +723,10 @@ func (i *ICoreWebView2) AddFrameNavigationCompleted(eventHandler *ICoreWebView2_
 
 // RemoveFrameNavigationCompleted 移除框架导航完成事件处理程序。
 func (i *ICoreWebView2) RemoveFrameNavigationCompleted(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveFrameNavigationCompleted.Call(
+	r, _, _ := i.Vtbl.RemoveFrameNavigationCompleted.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -866,14 +737,11 @@ func (i *ICoreWebView2) RemoveFrameNavigationCompleted(token EventRegistrationTo
 //   - WindowCloseRequested 在 Webview 内部的内容请求关闭窗口时触发，例如在运行 window.close 之后。如果这对应用程序有意义，应用程序应该关闭 Webview 和相关的应用程序窗口。
 //   - 在首次调用 window.close() 之后，对于任何紧接着连续调用的 window.close()，此事件可能不会触发。
 func (i *ICoreWebView2) AddWindowCloseRequested(eventHandler *ICoreWebView2WindowCloseRequestedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddWindowCloseRequested.Call(
+	r, _, _ := i.Vtbl.AddWindowCloseRequested.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -882,13 +750,10 @@ func (i *ICoreWebView2) AddWindowCloseRequested(eventHandler *ICoreWebView2Windo
 
 // RemoveWindowCloseRequested 移除窗口关闭请求事件处理程序.
 func (i *ICoreWebView2) RemoveWindowCloseRequested(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveWindowCloseRequested.Call(
+	r, _, _ := i.Vtbl.RemoveWindowCloseRequested.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -906,14 +771,11 @@ func (i *ICoreWebView2) AddHostObjectToScript(name string, object interface{}) e
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.AddHostObjectToScript.Call(
+	r, _, _ := i.Vtbl.AddHostObjectToScript.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_name)),
 		uintptr(unsafe.Pointer(&object)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -928,13 +790,10 @@ func (i *ICoreWebView2) RemoveHostObjectFromScript(name string) error {
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.RemoveHostObjectFromScript.Call(
+	r, _, _ := i.Vtbl.RemoveHostObjectFromScript.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_name)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -944,14 +803,11 @@ func (i *ICoreWebView2) RemoveHostObjectFromScript(name string) error {
 // AddDocumentTitleChanged 添加文档标题改变事件处理程序.
 //   - 当 Webview 的 DocumentTitle 属性发生变化时，DocumentTitleChanged 会运行，并且可能在 NavigationCompleted 事件之前或之后运行。
 func (i *ICoreWebView2) AddDocumentTitleChanged(eventHandler *ICoreWebView2DocumentTitleChangedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddDocumentTitleChanged.Call(
+	r, _, _ := i.Vtbl.AddDocumentTitleChanged.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -960,13 +816,10 @@ func (i *ICoreWebView2) AddDocumentTitleChanged(eventHandler *ICoreWebView2Docum
 
 // RemoveDocumentTitleChanged 移除文档标题改变事件处理程序.
 func (i *ICoreWebView2) RemoveDocumentTitleChanged(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveDocumentTitleChanged.Call(
+	r, _, _ := i.Vtbl.RemoveDocumentTitleChanged.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -981,15 +834,12 @@ func (i *ICoreWebView2) RemoveDocumentTitleChanged(token EventRegistrationToken)
 //
 // handler: 捕获完成后的回调处理程序. 写入流完毕后触发.
 func (i *ICoreWebView2) CapturePreview(imageFormat COREWEBVIEW2_CAPTURE_PREVIEW_IMAGE_FORMAT, imageStream *IStream, handler *ICoreWebView2CapturePreviewCompletedHandler) error {
-	r, _, err := i.Vtbl.CapturePreview.Call(
+	r, _, _ := i.Vtbl.CapturePreview.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(imageFormat),
 		uintptr(unsafe.Pointer(imageStream)),
 		uintptr(unsafe.Pointer(handler)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -1022,14 +872,11 @@ func (i *ICoreWebView2) CapturePreviewEx(impl *WebViewEventImpl, imageFormat COR
 
 // AddContainsFullScreenElementChanged 添加全屏元素状态改变事件处理程序.
 func (i *ICoreWebView2) AddContainsFullScreenElementChanged(eventHandler *ICoreWebView2ContainsFullScreenElementChangedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddContainsFullScreenElementChanged.Call(
+	r, _, _ := i.Vtbl.AddContainsFullScreenElementChanged.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -1038,13 +885,10 @@ func (i *ICoreWebView2) AddContainsFullScreenElementChanged(eventHandler *ICoreW
 
 // RemoveContainsFullScreenElementChanged 移除是否包含全屏元素属性改变事件处理程序.
 func (i *ICoreWebView2) RemoveContainsFullScreenElementChanged(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveContainsFullScreenElementChanged.Call(
+	r, _, _ := i.Vtbl.RemoveContainsFullScreenElementChanged.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -1054,14 +898,11 @@ func (i *ICoreWebView2) RemoveContainsFullScreenElementChanged(token EventRegist
 // AddProcessFailed 添加进程失败事件处理程序.
 //   - 当 WebView 的浏览器进程意外终止时触发此事件.
 func (i *ICoreWebView2) AddProcessFailed(eventHandler *ICoreWebView2ProcessFailedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddProcessFailed.Call(
+	r, _, _ := i.Vtbl.AddProcessFailed.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -1070,13 +911,10 @@ func (i *ICoreWebView2) AddProcessFailed(eventHandler *ICoreWebView2ProcessFaile
 
 // RemoveProcessFailed 移除进程失败事件处理程序.
 func (i *ICoreWebView2) RemoveProcessFailed(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveProcessFailed.Call(
+	r, _, _ := i.Vtbl.RemoveProcessFailed.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -1086,14 +924,11 @@ func (i *ICoreWebView2) RemoveProcessFailed(token EventRegistrationToken) error 
 // AddHistoryChanged 添加历史记录改变事件处理程序.
 //   - HistoryChanged 在联合会话历史记录发生更改时引发，该历史记录由顶级和手动框架导航组成.
 func (i *ICoreWebView2) AddHistoryChanged(eventHandler *ICoreWebView2HistoryChangedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddHistoryChanged.Call(
+	r, _, _ := i.Vtbl.AddHistoryChanged.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -1102,13 +937,10 @@ func (i *ICoreWebView2) AddHistoryChanged(eventHandler *ICoreWebView2HistoryChan
 
 // RemoveHistoryChanged 移除历史记录改变事件处理程序.
 func (i *ICoreWebView2) RemoveHistoryChanged(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveHistoryChanged.Call(
+	r, _, _ := i.Vtbl.RemoveHistoryChanged.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -1120,14 +952,11 @@ func (i *ICoreWebView2) RemoveHistoryChanged(token EventRegistrationToken) error
 //   - 仅当 ICoreWebView2Settings.AreDefaultScriptDialogsEnabled 属性设置为 FALSE 时，此事件才会触发。
 //   - ScriptDialogOpening 事件会抑制对话框，或使用自定义对话框替换默认对话框。
 func (i *ICoreWebView2) AddScriptDialogOpening(eventHandler *ICoreWebView2ScriptDialogOpeningEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddScriptDialogOpening.Call(
+	r, _, _ := i.Vtbl.AddScriptDialogOpening.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -1136,13 +965,10 @@ func (i *ICoreWebView2) AddScriptDialogOpening(eventHandler *ICoreWebView2Script
 
 // RemoveScriptDialogOpening 移除脚本对话框打开事件处理程序。
 func (i *ICoreWebView2) RemoveScriptDialogOpening(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveScriptDialogOpening.Call(
+	r, _, _ := i.Vtbl.RemoveScriptDialogOpening.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -1158,14 +984,11 @@ func (i *ICoreWebView2) GetDevToolsProtocolEventReceiver(eventName string) (*ICo
 		return nil, err
 	}
 	var receiver *ICoreWebView2DevToolsProtocolEventReceiver
-	r, _, err := i.Vtbl.GetDevToolsProtocolEventReceiver.Call(
+	r, _, _ := i.Vtbl.GetDevToolsProtocolEventReceiver.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_eventName)),
 		uintptr(unsafe.Pointer(&receiver)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -1188,15 +1011,12 @@ func (i *ICoreWebView2) CallDevToolsProtocolMethod(methodName string, parameters
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.CallDevToolsProtocolMethod.Call(
+	r, _, _ := i.Vtbl.CallDevToolsProtocolMethod.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_methodName)),
 		uintptr(unsafe.Pointer(_parametersAsJson)),
 		uintptr(unsafe.Pointer(handler)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

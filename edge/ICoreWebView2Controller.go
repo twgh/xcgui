@@ -1,7 +1,6 @@
 package edge
 
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"github.com/twgh/xcgui/xc"
@@ -54,10 +53,7 @@ func (i *ICoreWebView2Controller) Release() uintptr {
 }
 
 func (i *ICoreWebView2Controller) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -67,13 +63,10 @@ func (i *ICoreWebView2Controller) QueryInterface(refiid, object unsafe.Pointer) 
 // GetBounds 获取 WebView 的边界。
 func (i *ICoreWebView2Controller) GetBounds() (xc.RECT, error) {
 	var bounds xc.RECT
-	r, _, err := i.Vtbl.GetBounds.Call(
+	r, _, _ := i.Vtbl.GetBounds.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&bounds)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return bounds, err
-	}
 	if r != 0 {
 		return bounds, syscall.Errno(r)
 	}
@@ -84,13 +77,10 @@ func (i *ICoreWebView2Controller) GetBounds() (xc.RECT, error) {
 //
 // bounds: WebView 的边界矩形。
 func (i *ICoreWebView2Controller) SetBounds(bounds xc.RECT) error {
-	r, _, err := i.Vtbl.PutBounds.Call(
+	r, _, _ := i.Vtbl.PutBounds.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&bounds)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -100,14 +90,11 @@ func (i *ICoreWebView2Controller) SetBounds(bounds xc.RECT) error {
 // AddAcceleratorKeyPressed 添加键盘快捷键事件处理程序.
 //   - AcceleratorKeyPressed 在 Webview 获得焦点时，当按下或释放快捷键或组合键时运行。
 func (i *ICoreWebView2Controller) AddAcceleratorKeyPressed(eventHandler *ICoreWebView2AcceleratorKeyPressedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddAcceleratorKeyPressed.Call(
+	r, _, _ := i.Vtbl.AddAcceleratorKeyPressed.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(&token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -116,13 +103,10 @@ func (i *ICoreWebView2Controller) AddAcceleratorKeyPressed(eventHandler *ICoreWe
 
 // RemoveAcceleratorKeyPressed 移除键盘快捷键事件处理程序.
 func (i *ICoreWebView2Controller) RemoveAcceleratorKeyPressed(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveAcceleratorKeyPressed.Call(
+	r, _, _ := i.Vtbl.RemoveAcceleratorKeyPressed.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -132,13 +116,10 @@ func (i *ICoreWebView2Controller) RemoveAcceleratorKeyPressed(token EventRegistr
 // GetIsVisible 获取 WebView 是否可见。
 func (i *ICoreWebView2Controller) GetIsVisible() (bool, error) {
 	var isVisible bool
-	r, _, err := i.Vtbl.GetIsVisible.Call(
+	r, _, _ := i.Vtbl.GetIsVisible.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isVisible)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return isVisible, err
-	}
 	if r != 0 {
 		return isVisible, syscall.Errno(r)
 	}
@@ -147,13 +128,10 @@ func (i *ICoreWebView2Controller) GetIsVisible() (bool, error) {
 
 // SetIsVisible 设置 WebView 是否可见。
 func (i *ICoreWebView2Controller) SetIsVisible(isVisible bool) error {
-	r, _, err := i.Vtbl.PutIsVisible.Call(
+	r, _, _ := i.Vtbl.PutIsVisible.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(isVisible),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -162,12 +140,9 @@ func (i *ICoreWebView2Controller) SetIsVisible(isVisible bool) error {
 
 // NotifyParentWindowPositionChanged 通知父窗口位置已更改。
 func (i *ICoreWebView2Controller) NotifyParentWindowPositionChanged() error {
-	r, _, err := i.Vtbl.NotifyParentWindowPositionChanged.Call(
+	r, _, _ := i.Vtbl.NotifyParentWindowPositionChanged.Call(
 		uintptr(unsafe.Pointer(i)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -178,13 +153,10 @@ func (i *ICoreWebView2Controller) NotifyParentWindowPositionChanged() error {
 //
 // reason: 用于确定焦点移动原因的 COREWEBVIEW2_MOVE_FOCUS_REASON 常量值。
 func (i *ICoreWebView2Controller) MoveFocus(reason COREWEBVIEW2_MOVE_FOCUS_REASON) error {
-	r, _, err := i.Vtbl.MoveFocus.Call(
+	r, _, _ := i.Vtbl.MoveFocus.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(reason),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -194,13 +166,10 @@ func (i *ICoreWebView2Controller) MoveFocus(reason COREWEBVIEW2_MOVE_FOCUS_REASO
 // GetCoreWebView2 获取 WebView2 对象。
 func (i *ICoreWebView2Controller) GetCoreWebView2() (*ICoreWebView2, error) {
 	var webView *ICoreWebView2
-	r, _, err := i.Vtbl.GetCoreWebView2.Call(
+	r, _, _ := i.Vtbl.GetCoreWebView2.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&webView)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -210,13 +179,10 @@ func (i *ICoreWebView2Controller) GetCoreWebView2() (*ICoreWebView2, error) {
 // GetZoomFactor 获取 WebView 的缩放系数。
 func (i *ICoreWebView2Controller) GetZoomFactor() (float64, error) {
 	var zoomFactor float64
-	r, _, err := i.Vtbl.GetZoomFactor.Call(
+	r, _, _ := i.Vtbl.GetZoomFactor.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&zoomFactor)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return zoomFactor, err
-	}
 	if r != 0 {
 		return zoomFactor, syscall.Errno(r)
 	}
@@ -225,13 +191,10 @@ func (i *ICoreWebView2Controller) GetZoomFactor() (float64, error) {
 
 // SetZoomFactor 设置 WebView 的缩放系数。
 func (i *ICoreWebView2Controller) SetZoomFactor(zoomFactor float64) error {
-	r, _, err := i.Vtbl.PutZoomFactor.Call(
+	r, _, _ := i.Vtbl.PutZoomFactor.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&zoomFactor)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -244,14 +207,11 @@ func (i *ICoreWebView2Controller) SetZoomFactor(zoomFactor float64) error {
 //
 // zoomFactor: 缩放系数
 func (i *ICoreWebView2Controller) SetBoundsAndZoomFactor(bounds xc.RECT, zoomFactor float64) error {
-	r, _, err := i.Vtbl.SetBoundsAndZoomFactor.Call(
+	r, _, _ := i.Vtbl.SetBoundsAndZoomFactor.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&bounds)),
 		uintptr(unsafe.Pointer(&zoomFactor)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -260,12 +220,9 @@ func (i *ICoreWebView2Controller) SetBoundsAndZoomFactor(bounds xc.RECT, zoomFac
 
 // Close 关闭 WebView 并清理底层浏览器实例。
 func (i *ICoreWebView2Controller) Close() error {
-	r, _, err := i.Vtbl.Close.Call(
+	r, _, _ := i.Vtbl.Close.Call(
 		uintptr(unsafe.Pointer(i)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -275,13 +232,10 @@ func (i *ICoreWebView2Controller) Close() error {
 // GetParentWindow 获取 WebView 的父窗口句柄。
 func (i *ICoreWebView2Controller) GetParentWindow() (uintptr, error) {
 	var parentWindow uintptr
-	r, _, err := i.Vtbl.GetParentWindow.Call(
+	r, _, _ := i.Vtbl.GetParentWindow.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&parentWindow)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return parentWindow, err
-	}
 	if r != 0 {
 		return parentWindow, syscall.Errno(r)
 	}
@@ -290,13 +244,10 @@ func (i *ICoreWebView2Controller) GetParentWindow() (uintptr, error) {
 
 // SetParentWindow 设置 WebView 的父窗口句柄。
 func (i *ICoreWebView2Controller) SetParentWindow(parentWindow uintptr) error {
-	r, _, err := i.Vtbl.PutParentWindow.Call(
+	r, _, _ := i.Vtbl.PutParentWindow.Call(
 		uintptr(unsafe.Pointer(i)),
 		parentWindow,
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

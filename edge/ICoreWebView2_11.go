@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -34,10 +30,7 @@ func (i *ICoreWebView2_11) Release() uintptr {
 }
 
 func (i *ICoreWebView2_11) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -66,16 +59,13 @@ func (i *ICoreWebView2_11) CallDevToolsProtocolMethodForSession(sessionId string
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.CallDevToolsProtocolMethodForSession.Call(
+	r, _, _ := i.Vtbl.CallDevToolsProtocolMethodForSession.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_sessionId)),
 		uintptr(unsafe.Pointer(_methodName)),
 		uintptr(unsafe.Pointer(_parametersAsJson)),
 		uintptr(unsafe.Pointer(handler)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -113,14 +103,11 @@ func (i *ICoreWebView2_11) CallDevToolsProtocolMethodForSessionEx(impl *WebViewE
 //   - 宿主可以选择使用事件中提供的信息创建自己的上下文菜单，也可以向 WebView 上下文菜单添加或删除菜单项。
 //   - 如果宿主不处理该事件， WebView 将显示默认上下文菜单。
 func (i *ICoreWebView2_11) AddContextMenuRequested(eventHandler *ICoreWebView2ContextMenuRequestedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddContextMenuRequested.Call(
+	r, _, _ := i.Vtbl.AddContextMenuRequested.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -129,13 +116,10 @@ func (i *ICoreWebView2_11) AddContextMenuRequested(eventHandler *ICoreWebView2Co
 
 // RemoveContextMenuRequested 移除上下文菜单请求事件处理程序.
 func (i *ICoreWebView2_11) RemoveContextMenuRequested(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveContextMenuRequested.Call(
+	r, _, _ := i.Vtbl.RemoveContextMenuRequested.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

@@ -1,7 +1,6 @@
 package edge
 
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"syscall"
@@ -49,10 +48,7 @@ func (i *ICoreWebView2DownloadOperation) Release() uintptr {
 }
 
 func (i *ICoreWebView2DownloadOperation) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -67,14 +63,11 @@ func (i *ICoreWebView2DownloadOperation) Event_BytesReceivedChanged(w *WebViewEv
 
 // AddBytesReceivedChanged 添加接收到的字节数改变事件处理程序.
 func (i *ICoreWebView2DownloadOperation) AddBytesReceivedChanged(eventHandler *ICoreWebView2BytesReceivedChangedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddBytesReceivedChanged.Call(
+	r, _, _ := i.Vtbl.AddBytesReceivedChanged.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -83,13 +76,10 @@ func (i *ICoreWebView2DownloadOperation) AddBytesReceivedChanged(eventHandler *I
 
 // RemoveBytesReceivedChanged 移除下载字节数改变事件处理程序
 func (i *ICoreWebView2DownloadOperation) RemoveBytesReceivedChanged(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveBytesReceivedChanged.Call(
+	r, _, _ := i.Vtbl.RemoveBytesReceivedChanged.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -99,13 +89,10 @@ func (i *ICoreWebView2DownloadOperation) RemoveBytesReceivedChanged(token EventR
 // GetUri 获取下载的 URI.
 func (i *ICoreWebView2DownloadOperation) GetUri() (string, error) {
 	var uri *uint16
-	r, _, err := i.Vtbl.GetUri.Call(
+	r, _, _ := i.Vtbl.GetUri.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&uri)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -118,12 +105,9 @@ func (i *ICoreWebView2DownloadOperation) GetUri() (string, error) {
 //   - 如果取消下载，默认下载对话框会显示下载已取消。
 //   - 如果要取消下载且不显示默认下载对话框，宿主应设置 Cancel 中的 ICoreWebView2DownloadStartingEventArgs 属性。
 func (i *ICoreWebView2DownloadOperation) Cancel() error {
-	r, _, err := i.Vtbl.Cancel.Call(
+	r, _, _ := i.Vtbl.Cancel.Call(
 		uintptr(unsafe.Pointer(i)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -135,12 +119,9 @@ func (i *ICoreWebView2DownloadOperation) Cancel() error {
 //   - 如果下载已暂停，则无效果。
 //   - 暂停下载会将状态更改为 COREWEBVIEW2_DOWNLOAD_STATE_INTERRUPTED，并将 InterruptReason 设置为 COREWEBVIEW2_DOWNLOAD_INTERRUPT_REASON_USER_PAUSED.
 func (i *ICoreWebView2DownloadOperation) Pause() error {
-	r, _, err := i.Vtbl.Pause.Call(
+	r, _, _ := i.Vtbl.Pause.Call(
 		uintptr(unsafe.Pointer(i)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -151,12 +132,9 @@ func (i *ICoreWebView2DownloadOperation) Pause() error {
 //   - 如果 CanResume 返回 true，还可以恢复因其他原因中断的下载。
 //   - 恢复下载会将状态从 COREWEBVIEW2_DOWNLOAD_STATE_INTERRUPTED 更改为 COREWEBVIEW2_DOWNLOAD_STATE_IN_PROGRESS.
 func (i *ICoreWebView2DownloadOperation) Resume() error {
-	r, _, err := i.Vtbl.Resume.Call(
+	r, _, _ := i.Vtbl.Resume.Call(
 		uintptr(unsafe.Pointer(i)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -166,13 +144,10 @@ func (i *ICoreWebView2DownloadOperation) Resume() error {
 // GetContentDisposition 获取下载的HTTP响应中的 Content-Disposition 标头值。
 func (i *ICoreWebView2DownloadOperation) GetContentDisposition() (string, error) {
 	var contentDisposition *uint16
-	r, _, err := i.Vtbl.GetContentDisposition.Call(
+	r, _, _ := i.Vtbl.GetContentDisposition.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&contentDisposition)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -184,13 +159,10 @@ func (i *ICoreWebView2DownloadOperation) GetContentDisposition() (string, error)
 // GetMimeType 获取下载内容的 MIME 类型.
 func (i *ICoreWebView2DownloadOperation) GetMimeType() (string, error) {
 	var mimeType *uint16
-	r, _, err := i.Vtbl.GetMimeType.Call(
+	r, _, _ := i.Vtbl.GetMimeType.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&mimeType)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -203,13 +175,10 @@ func (i *ICoreWebView2DownloadOperation) GetMimeType() (string, error) {
 //   - 如果大小未知，则返回 -1。
 func (i *ICoreWebView2DownloadOperation) GetTotalBytesToReceive() (int64, error) {
 	var totalBytes int64
-	r, _, err := i.Vtbl.GetTotalBytesToReceive.Call(
+	r, _, _ := i.Vtbl.GetTotalBytesToReceive.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&totalBytes)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -219,13 +188,10 @@ func (i *ICoreWebView2DownloadOperation) GetTotalBytesToReceive() (int64, error)
 // GetBytesReceived 获取已写入下载文件的字节数。
 func (i *ICoreWebView2DownloadOperation) GetBytesReceived() (int64, error) {
 	var bytesReceived int64
-	r, _, err := i.Vtbl.GetBytesReceived.Call(
+	r, _, _ := i.Vtbl.GetBytesReceived.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&bytesReceived)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -235,13 +201,10 @@ func (i *ICoreWebView2DownloadOperation) GetBytesReceived() (int64, error) {
 // GetEstimatedEndTime 获取预计结束时间，采用 ISO 8601 日期和时间格式。
 func (i *ICoreWebView2DownloadOperation) GetEstimatedEndTime() (string, error) {
 	var estimatedEndTime *uint16
-	r, _, err := i.Vtbl.GetEstimatedEndTime.Call(
+	r, _, _ := i.Vtbl.GetEstimatedEndTime.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&estimatedEndTime)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -254,13 +217,10 @@ func (i *ICoreWebView2DownloadOperation) GetEstimatedEndTime() (string, error) {
 //   - 宿主可以从 ICoreWebView2DownloadStartingEventArgs 更改此设置。
 func (i *ICoreWebView2DownloadOperation) GetResultFilePath() (string, error) {
 	var resultFilePath *uint16
-	r, _, err := i.Vtbl.GetResultFilePath.Call(
+	r, _, _ := i.Vtbl.GetResultFilePath.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&resultFilePath)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -272,13 +232,10 @@ func (i *ICoreWebView2DownloadOperation) GetResultFilePath() (string, error) {
 // GetState 获取下载状态。
 func (i *ICoreWebView2DownloadOperation) GetState() (COREWEBVIEW2_DOWNLOAD_STATE, error) {
 	var state COREWEBVIEW2_DOWNLOAD_STATE
-	r, _, err := i.Vtbl.GetState.Call(
+	r, _, _ := i.Vtbl.GetState.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&state)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -288,13 +245,10 @@ func (i *ICoreWebView2DownloadOperation) GetState() (COREWEBVIEW2_DOWNLOAD_STATE
 // GetInterruptReason 获取下载中断的原因.
 func (i *ICoreWebView2DownloadOperation) GetInterruptReason() (COREWEBVIEW2_DOWNLOAD_INTERRUPT_REASON, error) {
 	var reason COREWEBVIEW2_DOWNLOAD_INTERRUPT_REASON
-	r, _, err := i.Vtbl.GetInterruptReason.Call(
+	r, _, _ := i.Vtbl.GetInterruptReason.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&reason)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -305,13 +259,10 @@ func (i *ICoreWebView2DownloadOperation) GetInterruptReason() (COREWEBVIEW2_DOWN
 //   - 以下中断原因导致的下载可能无需你调用任何方法即可自动恢复: COREWEBVIEW2_DOWNLOAD_INTERRUPT_REASON_SERVER_NO_RANGE、 COREWEBVIEW2_DOWNLOAD_INTERRUPT_REASON_FILE_HASH_MISMATCH、 COREWEBVIEW2_DOWNLOAD_INTERRUPT_REASON_FILE_TOO_SHORT。在这些情况下，下载进度可能会重新开始，且 BytesReceived 将重置为0。
 func (i *ICoreWebView2DownloadOperation) GetCanResume() (bool, error) {
 	var canResume bool
-	r, _, err := i.Vtbl.GetCanResume.Call(
+	r, _, _ := i.Vtbl.GetCanResume.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&canResume)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}

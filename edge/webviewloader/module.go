@@ -97,13 +97,10 @@ func loadDll() {
 //	 1 = v1 > v2
 func CompareBrowserVersions(v1 string, v2 string) (int, error) {
 	var result int
-	r, _, err := procCompareBrowserVersions.Call(
+	r, _, _ := procCompareBrowserVersions.Call(
 		common.StrPtr(v1),
 		common.StrPtr(v2),
 		uintptr(unsafe.Pointer(&result)))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return result, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -120,12 +117,9 @@ func GetAvailableBrowserVersion(browserExecutableFolder ...string) (string, erro
 	}
 
 	var result *uint16
-	r, _, err := procGetAvailableCoreWebView2BrowserVersionString.Call(
+	r, _, _ := procGetAvailableCoreWebView2BrowserVersionString.Call(
 		common.StrPtr(_browserExecutableFolder),
 		uintptr(unsafe.Pointer(&result)))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		// HRESULT 的低16位（错误代码本身）是 ERROR_FILE_NOT_FOUND，这意味着无可匹配版本
 		if r&0xFFFF == uintptr(wapi.ERROR_FILE_NOT_FOUND) {
@@ -145,13 +139,10 @@ func GetAvailableBrowserVersion(browserExecutableFolder ...string) (string, erro
 // environmentOptions: 包含 WebView2 环境选项的 ICoreWebView2EnvironmentOptions 对象指针。
 func GetAvailableBrowserVersionWithOptions(browserExecutableFolder string, environmentOptions unsafe.Pointer) (string, error) {
 	var result *uint16
-	r, _, err := procGetAvailableCoreWebView2BrowserVersionStringWithOptions.Call(
+	r, _, _ := procGetAvailableCoreWebView2BrowserVersionStringWithOptions.Call(
 		common.StrPtr(browserExecutableFolder),
 		uintptr(environmentOptions),
 		uintptr(unsafe.Pointer(&result)))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		// HRESULT 的低16位（错误代码本身）是 ERROR_FILE_NOT_FOUND，这意味着无可匹配版本
 		if r&0xFFFF == uintptr(wapi.ERROR_FILE_NOT_FOUND) {
@@ -174,15 +165,12 @@ func GetAvailableBrowserVersionWithOptions(browserExecutableFolder string, envir
 //
 // environmentCompletedHandler: 一个回调指针，当 WebView2 环境创建完成时调用。
 func CreateCoreWebView2EnvironmentWithOptions(browserExecutableFolder, userDataFolder string, environmentOptions, environmentCompletedHandler unsafe.Pointer) error {
-	r, _, err := procCreateCoreWebView2EnvironmentWithOptions.Call(
+	r, _, _ := procCreateCoreWebView2EnvironmentWithOptions.Call(
 		common.StrPtr(browserExecutableFolder),
 		common.StrPtr(userDataFolder),
 		uintptr(environmentOptions),
 		uintptr(environmentCompletedHandler),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

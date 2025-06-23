@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -33,10 +29,7 @@ func (i *ICoreWebView2_5) Release() uintptr {
 }
 
 func (i *ICoreWebView2_5) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -47,14 +40,11 @@ func (i *ICoreWebView2_5) QueryInterface(refiid, object unsafe.Pointer) error {
 //   - 当 WebView2 向需要客户端证书进行 HTTP 身份验证的 HTTP 服务器发出请求时触发.
 //   - 如果不处理该事件， WebView2 将向用户显示默认的客户端证书选择对话框提示。
 func (i *ICoreWebView2_5) AddClientCertificateRequested(eventHandler *ICoreWebView2ClientCertificateRequestedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddClientCertificateRequested.Call(
+	r, _, _ := i.Vtbl.AddClientCertificateRequested.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -63,13 +53,10 @@ func (i *ICoreWebView2_5) AddClientCertificateRequested(eventHandler *ICoreWebVi
 
 // RemoveClientCertificateRequested 移除客户端证书请求事件处理程序
 func (i *ICoreWebView2_5) RemoveClientCertificateRequested(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveClientCertificateRequested.Call(
+	r, _, _ := i.Vtbl.RemoveClientCertificateRequested.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

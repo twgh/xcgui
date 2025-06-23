@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -33,10 +29,7 @@ func (i *ICoreWebView2Environment3) Release() uintptr {
 }
 
 func (i *ICoreWebView2Environment3) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -48,14 +41,11 @@ func (i *ICoreWebView2Environment3) QueryInterface(refiid, object unsafe.Pointer
 //   - 应用将通过此窗口句柄接收WebView的指针/鼠标输入（并且需要使用 SendMouseInput / SendPointerInput 进行转发）。
 //   - 如果应用将WebView可视化树移动到其他窗口下，则需要调用 SetParentWindow 来更新可视化树的新父窗口句柄。
 func (i *ICoreWebView2Environment3) CreateCoreWebView2CompositionController(parentWindow uintptr, handler *ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler) error {
-	r, _, err := i.Vtbl.CreateCoreWebView2CompositionController.Call(
+	r, _, _ := i.Vtbl.CreateCoreWebView2CompositionController.Call(
 		uintptr(unsafe.Pointer(i)),
 		parentWindow,
 		uintptr(unsafe.Pointer(handler)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -90,13 +80,10 @@ func (i *ICoreWebView2Environment3) CreateCoreWebView2CompositionControllerEx(im
 //   - 返回的 ICoreWebView2PointerInfo 需要在调用 SendPointerInput 之前填充所有相关信息。
 func (i *ICoreWebView2Environment3) CreateCoreWebView2PointerInfo() (*ICoreWebView2PointerInfo, error) {
 	var pointerInfo *ICoreWebView2PointerInfo
-	r, _, err := i.Vtbl.CreateCoreWebView2PointerInfo.Call(
+	r, _, _ := i.Vtbl.CreateCoreWebView2PointerInfo.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&pointerInfo)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}

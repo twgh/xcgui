@@ -1,9 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 
@@ -39,10 +36,7 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) Release() uintptr {
 }
 
 func (i *ICoreWebView2PermissionRequestedEventArgs) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -52,13 +46,10 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) QueryInterface(refiid, objec
 // GetUri 获取请求权限的 web 内容的来源。
 func (i *ICoreWebView2PermissionRequestedEventArgs) GetUri() (string, error) {
 	var _uri *uint16
-	r, _, err := i.Vtbl.GetUri.Call(
+	r, _, _ := i.Vtbl.GetUri.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_uri)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -70,13 +61,10 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) GetUri() (string, error) {
 // GetPermissionKind 获取请求的权限类型。
 func (i *ICoreWebView2PermissionRequestedEventArgs) GetPermissionKind() (COREWEBVIEW2_PERMISSION_KIND, error) {
 	var kind COREWEBVIEW2_PERMISSION_KIND
-	r, _, err := i.Vtbl.GetPermissionKind.Call(
+	r, _, _ := i.Vtbl.GetPermissionKind.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&kind)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -86,13 +74,10 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) GetPermissionKind() (COREWEB
 // GetIsUserInitiated 获取权限请求是否由用户发起。
 func (i *ICoreWebView2PermissionRequestedEventArgs) GetIsUserInitiated() (bool, error) {
 	var isUserInitiated bool
-	r, _, err := i.Vtbl.GetIsUserInitiated.Call(
+	r, _, _ := i.Vtbl.GetIsUserInitiated.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isUserInitiated)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return isUserInitiated, err
-	}
 	if r != 0 {
 		return isUserInitiated, syscall.Errno(r)
 	}
@@ -102,13 +87,10 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) GetIsUserInitiated() (bool, 
 // GetState 获取权限请求的状态。默认值为 COREWEBVIEW2_PERMISSION_STATE_DEFAULT。
 func (i *ICoreWebView2PermissionRequestedEventArgs) GetState() (COREWEBVIEW2_PERMISSION_STATE, error) {
 	var state COREWEBVIEW2_PERMISSION_STATE
-	r, _, err := i.Vtbl.GetState.Call(
+	r, _, _ := i.Vtbl.GetState.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&state)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -117,13 +99,10 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) GetState() (COREWEBVIEW2_PER
 
 // SetState 设置权限请求的状态。
 func (i *ICoreWebView2PermissionRequestedEventArgs) SetState(state COREWEBVIEW2_PERMISSION_STATE) error {
-	r, _, err := i.Vtbl.PutState.Call(
+	r, _, _ := i.Vtbl.PutState.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(state),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -133,13 +112,10 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) SetState(state COREWEBVIEW2_
 // GetDeferral 获取权限请求的延迟对象。
 func (i *ICoreWebView2PermissionRequestedEventArgs) GetDeferral() (*ICoreWebView2Deferral, error) {
 	var deferral *ICoreWebView2Deferral
-	r, _, err := i.Vtbl.GetDeferral.Call(
+	r, _, _ := i.Vtbl.GetDeferral.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&deferral)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}

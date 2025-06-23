@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -33,10 +29,7 @@ func (i *ICoreWebView2Settings7) Release() uintptr {
 }
 
 func (i *ICoreWebView2Settings7) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -46,13 +39,10 @@ func (i *ICoreWebView2Settings7) QueryInterface(refiid, object unsafe.Pointer) e
 // GetHiddenPdfToolbarItems 获取隐藏的 PDF 工具栏项目。
 func (i *ICoreWebView2Settings7) GetHiddenPdfToolbarItems() (COREWEBVIEW2_PDF_TOOLBAR_ITEMS, error) {
 	var items COREWEBVIEW2_PDF_TOOLBAR_ITEMS
-	r, _, err := i.Vtbl.GetHiddenPdfToolbarItems.Call(
+	r, _, _ := i.Vtbl.GetHiddenPdfToolbarItems.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&items)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -61,13 +51,10 @@ func (i *ICoreWebView2Settings7) GetHiddenPdfToolbarItems() (COREWEBVIEW2_PDF_TO
 
 // SetHiddenPdfToolbarItems 用于自定义 PDF 工具栏项。
 func (i *ICoreWebView2Settings7) SetHiddenPdfToolbarItems(items COREWEBVIEW2_PDF_TOOLBAR_ITEMS) error {
-	r, _, err := i.Vtbl.PutHiddenPdfToolbarItems.Call(
+	r, _, _ := i.Vtbl.PutHiddenPdfToolbarItems.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(items),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

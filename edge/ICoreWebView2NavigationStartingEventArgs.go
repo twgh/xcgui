@@ -1,9 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 
@@ -40,10 +37,7 @@ func (i *ICoreWebView2NavigationStartingEventArgs) Release() uintptr {
 }
 
 func (i *ICoreWebView2NavigationStartingEventArgs) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -53,13 +47,10 @@ func (i *ICoreWebView2NavigationStartingEventArgs) QueryInterface(refiid, object
 // GetUri 获取请求的导航的 uri。
 func (i *ICoreWebView2NavigationStartingEventArgs) GetUri() (string, error) {
 	var _uri *uint16
-	r, _, err := i.Vtbl.GetUri.Call(
+	r, _, _ := i.Vtbl.GetUri.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_uri)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -71,13 +62,10 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetUri() (string, error) {
 // GetNavigationId 获取导航的 ID。
 func (i *ICoreWebView2NavigationStartingEventArgs) GetNavigationId() (uint64, error) {
 	var id uint64
-	r, _, err := i.Vtbl.GetNavigationId.Call(
+	r, _, _ := i.Vtbl.GetNavigationId.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&id)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return id, err
-	}
 	if r != 0 {
 		return id, syscall.Errno(r)
 	}
@@ -87,13 +75,10 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetNavigationId() (uint64, er
 // GetIsUserInitiated 获取导航是否由用户发起。
 func (i *ICoreWebView2NavigationStartingEventArgs) GetIsUserInitiated() (bool, error) {
 	var isUserInitiated bool
-	r, _, err := i.Vtbl.GetIsUserInitiated.Call(
+	r, _, _ := i.Vtbl.GetIsUserInitiated.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isUserInitiated)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return isUserInitiated, err
-	}
 	if r != 0 {
 		return isUserInitiated, syscall.Errno(r)
 	}
@@ -103,13 +88,10 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetIsUserInitiated() (bool, e
 // GetIsRedirected 获取导航是否是重定向的结果。
 func (i *ICoreWebView2NavigationStartingEventArgs) GetIsRedirected() (bool, error) {
 	var isRedirected bool
-	r, _, err := i.Vtbl.GetIsRedirected.Call(
+	r, _, _ := i.Vtbl.GetIsRedirected.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isRedirected)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return isRedirected, err
-	}
 	if r != 0 {
 		return isRedirected, syscall.Errno(r)
 	}
@@ -119,13 +101,10 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetIsRedirected() (bool, erro
 // GetRequestHeaders 获取导航请求的 HTTP 请求头。你无法在 NavigationStarting 事件中修改HTTP请求标头。
 func (i *ICoreWebView2NavigationStartingEventArgs) GetRequestHeaders() (*ICoreWebView2HttpRequestHeaders, error) {
 	var headers *ICoreWebView2HttpRequestHeaders
-	r, _, err := i.Vtbl.GetRequestHeaders.Call(
+	r, _, _ := i.Vtbl.GetRequestHeaders.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&headers)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -135,13 +114,10 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetRequestHeaders() (*ICoreWe
 // GetCancel 获取是否取消导航。
 func (i *ICoreWebView2NavigationStartingEventArgs) GetCancel() (bool, error) {
 	var cancel bool
-	r, _, err := i.Vtbl.GetCancel.Call(
+	r, _, _ := i.Vtbl.GetCancel.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&cancel)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return cancel, err
-	}
 	if r != 0 {
 		return cancel, syscall.Errno(r)
 	}
@@ -150,13 +126,10 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetCancel() (bool, error) {
 
 // SetCancel 设置是否取消导航。
 func (i *ICoreWebView2NavigationStartingEventArgs) SetCancel(cancel bool) error {
-	r, _, err := i.Vtbl.PutCancel.Call(
+	r, _, _ := i.Vtbl.PutCancel.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(cancel),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

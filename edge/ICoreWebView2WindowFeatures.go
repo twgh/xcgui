@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -41,10 +37,7 @@ func (i *ICoreWebView2WindowFeatures) Release() uintptr {
 }
 
 func (i *ICoreWebView2WindowFeatures) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -54,13 +47,10 @@ func (i *ICoreWebView2WindowFeatures) QueryInterface(refiid, object unsafe.Point
 // GetHasPosition 获取窗口是否指定了位置.
 func (i *ICoreWebView2WindowFeatures) GetHasPosition() (bool, error) {
 	var value bool
-	r, _, err := i.Vtbl.GetHasPosition.Call(
+	r, _, _ := i.Vtbl.GetHasPosition.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -70,13 +60,10 @@ func (i *ICoreWebView2WindowFeatures) GetHasPosition() (bool, error) {
 // GetHasSize 获取窗口是否指定了大小
 func (i *ICoreWebView2WindowFeatures) GetHasSize() (bool, error) {
 	var value bool
-	r, _, err := i.Vtbl.GetHasSize.Call(
+	r, _, _ := i.Vtbl.GetHasSize.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -86,13 +73,10 @@ func (i *ICoreWebView2WindowFeatures) GetHasSize() (bool, error) {
 // GetLeft 获取窗口左侧位置.
 func (i *ICoreWebView2WindowFeatures) GetLeft() (uint32, error) {
 	var value uint32
-	r, _, err := i.Vtbl.GetLeft.Call(
+	r, _, _ := i.Vtbl.GetLeft.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -102,13 +86,10 @@ func (i *ICoreWebView2WindowFeatures) GetLeft() (uint32, error) {
 // GetTop 获取窗口顶部位置.
 func (i *ICoreWebView2WindowFeatures) GetTop() (uint32, error) {
 	var value uint32
-	r, _, err := i.Vtbl.GetTop.Call(
+	r, _, _ := i.Vtbl.GetTop.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -118,13 +99,10 @@ func (i *ICoreWebView2WindowFeatures) GetTop() (uint32, error) {
 // GetHeight 获取窗口高度.
 func (i *ICoreWebView2WindowFeatures) GetHeight() (uint32, error) {
 	var value uint32
-	r, _, err := i.Vtbl.GetHeight.Call(
+	r, _, _ := i.Vtbl.GetHeight.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -134,13 +112,10 @@ func (i *ICoreWebView2WindowFeatures) GetHeight() (uint32, error) {
 // GetWidth 获取窗口宽度.
 func (i *ICoreWebView2WindowFeatures) GetWidth() (uint32, error) {
 	var value uint32
-	r, _, err := i.Vtbl.GetWidth.Call(
+	r, _, _ := i.Vtbl.GetWidth.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -150,13 +125,10 @@ func (i *ICoreWebView2WindowFeatures) GetWidth() (uint32, error) {
 // GetShouldDisplayMenuBar 获取是否显示菜单栏.
 func (i *ICoreWebView2WindowFeatures) GetShouldDisplayMenuBar() (bool, error) {
 	var value bool
-	r, _, err := i.Vtbl.GetShouldDisplayMenuBar.Call(
+	r, _, _ := i.Vtbl.GetShouldDisplayMenuBar.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -166,13 +138,10 @@ func (i *ICoreWebView2WindowFeatures) GetShouldDisplayMenuBar() (bool, error) {
 // GetShouldDisplayStatus 获取是否显示状态栏.
 func (i *ICoreWebView2WindowFeatures) GetShouldDisplayStatus() (bool, error) {
 	var value bool
-	r, _, err := i.Vtbl.GetShouldDisplayStatus.Call(
+	r, _, _ := i.Vtbl.GetShouldDisplayStatus.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -182,13 +151,10 @@ func (i *ICoreWebView2WindowFeatures) GetShouldDisplayStatus() (bool, error) {
 // GetShouldDisplayToolbar 获取是否显示工具栏.
 func (i *ICoreWebView2WindowFeatures) GetShouldDisplayToolbar() (bool, error) {
 	var value bool
-	r, _, err := i.Vtbl.GetShouldDisplayToolbar.Call(
+	r, _, _ := i.Vtbl.GetShouldDisplayToolbar.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -198,13 +164,10 @@ func (i *ICoreWebView2WindowFeatures) GetShouldDisplayToolbar() (bool, error) {
 // GetShouldDisplayScrollBars 获取是否显示滚动条.
 func (i *ICoreWebView2WindowFeatures) GetShouldDisplayScrollBars() (bool, error) {
 	var value bool
-	r, _, err := i.Vtbl.GetShouldDisplayScrollBars.Call(
+	r, _, _ := i.Vtbl.GetShouldDisplayScrollBars.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}

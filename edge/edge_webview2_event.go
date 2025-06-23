@@ -336,3 +336,27 @@ func (w *WebViewEventImpl) Event_ContextMenuRequested(cb func(sender *ICoreWebVi
 	}
 	return WvEventHandler.AddCallBack(w, "ContextMenuRequested", c, nil, allowAddingMultiple...)
 }
+
+// Event_BrowserProcessExited 浏览器进程退出事件.
+//   - 当与 WebView2 关联的浏览器进程退出时触发此事件。
+func (w *WebViewEventImpl) Event_BrowserProcessExited(cb func(sender *ICoreWebView2, args *ICoreWebView2BrowserProcessExitedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
+	}
+	return WvEventHandler.AddCallBack(w, "BrowserProcessExited", c, nil, allowAddingMultiple...)
+}
+
+// Event_ProcessInfosChanged 进程信息变更事件.
+//   - 当 WebView2 运行时的进程列表发生变化时触发
+func (w *WebViewEventImpl) Event_ProcessInfosChanged(cb func(sender *ICoreWebView2Environment, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
+	}
+	return WvEventHandler.AddCallBack(w, "ProcessInfosChanged", c, nil, allowAddingMultiple...)
+}

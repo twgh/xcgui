@@ -1,9 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
@@ -35,10 +32,7 @@ func (i *ICoreWebView2EnvironmentOptions4) Release() uintptr {
 }
 
 func (i *ICoreWebView2EnvironmentOptions4) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -53,14 +47,11 @@ func (i *ICoreWebView2EnvironmentOptions4) QueryInterface(refiid, object unsafe.
 func (i *ICoreWebView2EnvironmentOptions4) GetCustomSchemeRegistrations() ([]*ICoreWebView2CustomSchemeRegistration, error) {
 	var count uint32
 	var registrations **ICoreWebView2CustomSchemeRegistration
-	r, _, err := i.Vtbl.GetCustomSchemeRegistrations.Call(
+	r, _, _ := i.Vtbl.GetCustomSchemeRegistrations.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&count)),
 		uintptr(unsafe.Pointer(&registrations)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -90,14 +81,11 @@ func (i *ICoreWebView2EnvironmentOptions4) ReleaseCustomSchemeRegistrations(regi
 //
 // 110.0.1587.40
 func (i *ICoreWebView2EnvironmentOptions4) SetCustomSchemeRegistrations(registrations []*ICoreWebView2CustomSchemeRegistration) error {
-	r, _, err := i.Vtbl.SetCustomSchemeRegistrations.Call(
+	r, _, _ := i.Vtbl.SetCustomSchemeRegistrations.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(len(registrations)),
 		uintptr(unsafe.Pointer(&registrations[0])),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

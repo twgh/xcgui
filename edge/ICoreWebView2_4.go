@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -35,10 +31,7 @@ func (i *ICoreWebView2_4) Release() uintptr {
 }
 
 func (i *ICoreWebView2_4) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -49,14 +42,11 @@ func (i *ICoreWebView2_4) QueryInterface(refiid, object unsafe.Pointer) error {
 //   - 当创建新的 iframe 时触发。
 //   - 处理此事件以访问 ICoreWebView2Frame 对象。
 func (i *ICoreWebView2_4) AddFrameCreated(eventHandler *ICoreWebView2FrameCreatedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddFrameCreated.Call(
+	r, _, _ := i.Vtbl.AddFrameCreated.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -65,13 +55,10 @@ func (i *ICoreWebView2_4) AddFrameCreated(eventHandler *ICoreWebView2FrameCreate
 
 // RemoveFrameCreated 移除框架创建事件处理程序。
 func (i *ICoreWebView2_4) RemoveFrameCreated(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveFrameCreated.Call(
+	r, _, _ := i.Vtbl.RemoveFrameCreated.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -86,14 +73,11 @@ func (i *ICoreWebView2_4) RemoveFrameCreated(token EventRegistrationToken) error
 //   - 主机可以使用 Handled 属性更改下载对话框的可见性。
 //   - 如果未处理该事件，下载将正常完成并显示默认对话框。
 func (i *ICoreWebView2_4) AddDownloadStarting(eventHandler *ICoreWebView2DownloadStartingEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddDownloadStarting.Call(
+	r, _, _ := i.Vtbl.AddDownloadStarting.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -102,13 +86,10 @@ func (i *ICoreWebView2_4) AddDownloadStarting(eventHandler *ICoreWebView2Downloa
 
 // RemoveDownloadStarting 移除下载开始事件处理程序。
 func (i *ICoreWebView2_4) RemoveDownloadStarting(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveDownloadStarting.Call(
+	r, _, _ := i.Vtbl.RemoveDownloadStarting.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

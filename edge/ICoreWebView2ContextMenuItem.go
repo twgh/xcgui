@@ -1,9 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"syscall"
@@ -45,10 +42,7 @@ func (i *ICoreWebView2ContextMenuItem) Release() uintptr {
 }
 
 func (i *ICoreWebView2ContextMenuItem) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -61,13 +55,10 @@ func (i *ICoreWebView2ContextMenuItem) QueryInterface(refiid, object unsafe.Poin
 //   - 还有: copyImage, openLinkInNewWindow, cut, copy, paste等.
 func (i *ICoreWebView2ContextMenuItem) GetName() (string, error) {
 	var name *uint16
-	r, _, err := i.Vtbl.GetName.Call(
+	r, _, _ := i.Vtbl.GetName.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&name)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -79,13 +70,10 @@ func (i *ICoreWebView2ContextMenuItem) GetName() (string, error) {
 // GetLabel 获取菜单项显示的标签. 将包含用作键盘快捷键的字符的 & 号。
 func (i *ICoreWebView2ContextMenuItem) GetLabel() (string, error) {
 	var label *uint16
-	r, _, err := i.Vtbl.GetLabel.Call(
+	r, _, _ := i.Vtbl.GetLabel.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&label)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -98,13 +86,10 @@ func (i *ICoreWebView2ContextMenuItem) GetLabel() (string, error) {
 //   - 使用此方法在 ContextMenuRequested 事件中报告 SelectedCommandId。
 func (i *ICoreWebView2ContextMenuItem) GetCommandId() (int32, error) {
 	var commandId int32
-	r, _, err := i.Vtbl.GetCommandId.Call(
+	r, _, _ := i.Vtbl.GetCommandId.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&commandId)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -116,13 +101,10 @@ func (i *ICoreWebView2ContextMenuItem) GetCommandId() (int32, error) {
 //   - 此文本旨在向最终用户显示键盘快捷键。例如，“检查”菜单项的此属性为 Ctrl+Shift+I。
 func (i *ICoreWebView2ContextMenuItem) GetShortcutKeyDescription() (string, error) {
 	var desc *uint16
-	r, _, err := i.Vtbl.GetShortcutKeyDescription.Call(
+	r, _, _ := i.Vtbl.GetShortcutKeyDescription.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&desc)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -136,13 +118,10 @@ func (i *ICoreWebView2ContextMenuItem) GetShortcutKeyDescription() (string, erro
 //   - 获取后要释放 IStream.
 func (i *ICoreWebView2ContextMenuItem) GetIcon() ([]byte, error) {
 	var streamPtr uintptr
-	r, _, err := i.Vtbl.GetIcon.Call(
+	r, _, _ := i.Vtbl.GetIcon.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&streamPtr)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -160,13 +139,10 @@ func (i *ICoreWebView2ContextMenuItem) GetIcon() ([]byte, error) {
 // GetKind 获取菜单项类型.
 func (i *ICoreWebView2ContextMenuItem) GetKind() (COREWEBVIEW2_CONTEXT_MENU_ITEM_KIND, error) {
 	var kind COREWEBVIEW2_CONTEXT_MENU_ITEM_KIND
-	r, _, err := i.Vtbl.GetKind.Call(
+	r, _, _ := i.Vtbl.GetKind.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&kind)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -176,13 +152,10 @@ func (i *ICoreWebView2ContextMenuItem) GetKind() (COREWEBVIEW2_CONTEXT_MENU_ITEM
 // SetIsEnabled 设置菜单项是否启用.
 //   - 此选项仅用于自定义上下文菜单项的情况。其默认值为 TRUE。
 func (i *ICoreWebView2ContextMenuItem) SetIsEnabled(enabled bool) error {
-	r, _, err := i.Vtbl.PutIsEnabled.Call(
+	r, _, _ := i.Vtbl.PutIsEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(enabled),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -192,13 +165,10 @@ func (i *ICoreWebView2ContextMenuItem) SetIsEnabled(enabled bool) error {
 // GetIsEnabled 获取菜单项是否启用.
 func (i *ICoreWebView2ContextMenuItem) GetIsEnabled() (bool, error) {
 	var enabled bool
-	r, _, err := i.Vtbl.GetIsEnabled.Call(
+	r, _, _ := i.Vtbl.GetIsEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&enabled)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -207,13 +177,10 @@ func (i *ICoreWebView2ContextMenuItem) GetIsEnabled() (bool, error) {
 
 // SetIsChecked 设置菜单项是否选中. 仅可用于类型为复选框或单选按钮的自定义上下文菜单项。
 func (i *ICoreWebView2ContextMenuItem) SetIsChecked(checked bool) error {
-	r, _, err := i.Vtbl.PutIsChecked.Call(
+	r, _, _ := i.Vtbl.PutIsChecked.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(checked),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -223,13 +190,10 @@ func (i *ICoreWebView2ContextMenuItem) SetIsChecked(checked bool) error {
 // GetIsChecked 获取菜单项是否选中，在类型为“复选框”或“单选框”时使用。
 func (i *ICoreWebView2ContextMenuItem) GetIsChecked() (bool, error) {
 	var checked bool
-	r, _, err := i.Vtbl.GetIsChecked.Call(
+	r, _, _ := i.Vtbl.GetIsChecked.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&checked)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -239,13 +203,10 @@ func (i *ICoreWebView2ContextMenuItem) GetIsChecked() (bool, error) {
 // GetChildren 获取子菜单项集合, 如果类型为子菜单.
 func (i *ICoreWebView2ContextMenuItem) GetChildren() (*ICoreWebView2ContextMenuItemCollection, error) {
 	var children *ICoreWebView2ContextMenuItemCollection
-	r, _, err := i.Vtbl.GetChildren.Call(
+	r, _, _ := i.Vtbl.GetChildren.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&children)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -261,14 +222,11 @@ func (i *ICoreWebView2ContextMenuItem) Event_CustomItemSelected(w *WebViewEventI
 // AddCustomItemSelected 添加自定义菜单项选中事件处理程序.
 //   - 此事件仅针对最终开发人员创建的上下文菜单项引发。
 func (i *ICoreWebView2ContextMenuItem) AddCustomItemSelected(eventHandler *ICoreWebView2CustomItemSelectedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddCustomItemSelected.Call(
+	r, _, _ := i.Vtbl.AddCustomItemSelected.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -277,13 +235,10 @@ func (i *ICoreWebView2ContextMenuItem) AddCustomItemSelected(eventHandler *ICore
 
 // RemoveCustomItemSelected 移除自定义菜单项选中事件处理程序
 func (i *ICoreWebView2ContextMenuItem) RemoveCustomItemSelected(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveCustomItemSelected.Call(
+	r, _, _ := i.Vtbl.RemoveCustomItemSelected.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

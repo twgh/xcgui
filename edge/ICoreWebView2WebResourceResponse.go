@@ -1,9 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 
@@ -40,10 +37,7 @@ func (i *ICoreWebView2WebResourceResponse) Release() uintptr {
 }
 
 func (i *ICoreWebView2WebResourceResponse) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -53,13 +47,10 @@ func (i *ICoreWebView2WebResourceResponse) QueryInterface(refiid, object unsafe.
 // GetContent 获取请求的内容。
 func (i *ICoreWebView2WebResourceResponse) GetContent() ([]byte, error) {
 	var streamPtr uintptr
-	hr, _, err := i.Vtbl.GetContent.Call(
+	hr, _, _ := i.Vtbl.GetContent.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&streamPtr)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if hr != 0 {
 		return nil, syscall.Errno(hr)
 	}
@@ -76,13 +67,10 @@ func (i *ICoreWebView2WebResourceResponse) GetContent() ([]byte, error) {
 
 // SetContent 设置请求的内容。
 func (i *ICoreWebView2WebResourceResponse) SetContent(content *IStream) error {
-	r, _, err := i.Vtbl.PutContent.Call(
+	r, _, _ := i.Vtbl.PutContent.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(content)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -93,13 +81,10 @@ func (i *ICoreWebView2WebResourceResponse) SetContent(content *IStream) error {
 //
 // statusCode: 要设置的 HTTP 状态码。
 func (i *ICoreWebView2WebResourceResponse) SetStatusCode(statusCode int32) error {
-	r, _, err := i.Vtbl.PutStatusCode.Call(
+	r, _, _ := i.Vtbl.PutStatusCode.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(statusCode),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -109,13 +94,10 @@ func (i *ICoreWebView2WebResourceResponse) SetStatusCode(statusCode int32) error
 // GetStatusCode 获取响应的 HTTP 状态码。
 func (i *ICoreWebView2WebResourceResponse) GetStatusCode() (int32, error) {
 	var statusCode int32
-	r, _, err := i.Vtbl.GetStatusCode.Call(
+	r, _, _ := i.Vtbl.GetStatusCode.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&statusCode)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -130,13 +112,10 @@ func (i *ICoreWebView2WebResourceResponse) SetReasonPhrase(reasonPhrase string) 
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.PutReasonPhrase.Call(
+	r, _, _ := i.Vtbl.PutReasonPhrase.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(ptr)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -146,13 +125,10 @@ func (i *ICoreWebView2WebResourceResponse) SetReasonPhrase(reasonPhrase string) 
 // GetReasonPhrase 获取响应的 HTTP 状态码描述。
 func (i *ICoreWebView2WebResourceResponse) GetReasonPhrase() (string, error) {
 	var _reasonPhrase *uint16
-	r, _, err := i.Vtbl.GetReasonPhrase.Call(
+	r, _, _ := i.Vtbl.GetReasonPhrase.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_reasonPhrase)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -164,13 +140,10 @@ func (i *ICoreWebView2WebResourceResponse) GetReasonPhrase() (string, error) {
 // GetHeaders 获取响应的 HTTP 标头。
 func (i *ICoreWebView2WebResourceResponse) GetHeaders() (*ICoreWebView2HttpResponseHeaders, error) {
 	var headers *ICoreWebView2HttpResponseHeaders
-	r, _, err := i.Vtbl.GetHeaders.Call(
+	r, _, _ := i.Vtbl.GetHeaders.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&headers)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}

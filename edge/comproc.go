@@ -1,8 +1,6 @@
 package edge
 
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -24,10 +22,7 @@ func ComQueryInterface(obj unsafe.Pointer, refiid unsafe.Pointer, object unsafe.
 	// 获取 QueryInterface 函数地址, 在 vtable 中的索引是0
 	queryInterfaceFunc := *(*uintptr)(unsafe.Pointer(vtable))
 	// 调用 QueryInterface 函数 (stdcall约定)
-	r, _, err := syscall.SyscallN(queryInterfaceFunc, uintptr(obj), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := syscall.SyscallN(queryInterfaceFunc, uintptr(obj), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}

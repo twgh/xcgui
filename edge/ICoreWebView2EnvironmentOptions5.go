@@ -1,11 +1,7 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -36,10 +32,7 @@ func (i *ICoreWebView2EnvironmentOptions5) Release() uintptr {
 }
 
 func (i *ICoreWebView2EnvironmentOptions5) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -51,13 +44,10 @@ func (i *ICoreWebView2EnvironmentOptions5) QueryInterface(refiid, object unsafe.
 // 111.0.1661.34
 func (i *ICoreWebView2EnvironmentOptions5) GetEnableTrackingPrevention() (bool, error) {
 	var value bool
-	r, _, err := i.Vtbl.GetEnableTrackingPrevention.Call(
+	r, _, _ := i.Vtbl.GetEnableTrackingPrevention.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -71,13 +61,10 @@ func (i *ICoreWebView2EnvironmentOptions5) GetEnableTrackingPrevention() (bool, 
 //
 // 111.0.1661.34
 func (i *ICoreWebView2EnvironmentOptions5) SetEnableTrackingPrevention(value bool) error {
-	r, _, err := i.Vtbl.PutEnableTrackingPrevention.Call(
+	r, _, _ := i.Vtbl.PutEnableTrackingPrevention.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

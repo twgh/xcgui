@@ -1,9 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"syscall"
@@ -40,10 +37,7 @@ func (i *ICoreWebView2DownloadStartingEventArgs) Release() uintptr {
 }
 
 func (i *ICoreWebView2DownloadStartingEventArgs) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -53,13 +47,10 @@ func (i *ICoreWebView2DownloadStartingEventArgs) QueryInterface(refiid, object u
 // GetDownloadOperation 获取已开始下载的下载操作对象.
 func (i *ICoreWebView2DownloadStartingEventArgs) GetDownloadOperation() (*ICoreWebView2DownloadOperation, error) {
 	var downloadOperation *ICoreWebView2DownloadOperation
-	r, _, err := i.Vtbl.GetDownloadOperation.Call(
+	r, _, _ := i.Vtbl.GetDownloadOperation.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&downloadOperation)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -69,13 +60,10 @@ func (i *ICoreWebView2DownloadStartingEventArgs) GetDownloadOperation() (*ICoreW
 // GetCancel 获取是否取消下载.
 func (i *ICoreWebView2DownloadStartingEventArgs) GetCancel() (bool, error) {
 	var cancel bool
-	r, _, err := i.Vtbl.GetCancel.Call(
+	r, _, _ := i.Vtbl.GetCancel.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&cancel)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -85,13 +73,10 @@ func (i *ICoreWebView2DownloadStartingEventArgs) GetCancel() (bool, error) {
 // SetCancel 设置是否取消下载.
 //   - 如果取消，则无论 Handled 属性如何，都不会显示下载保存对话框。
 func (i *ICoreWebView2DownloadStartingEventArgs) SetCancel(cancel bool) error {
-	r, _, err := i.Vtbl.PutCancel.Call(
+	r, _, _ := i.Vtbl.PutCancel.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(cancel),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -101,13 +86,10 @@ func (i *ICoreWebView2DownloadStartingEventArgs) SetCancel(cancel bool) error {
 // GetResultFilePath 获取结果文件路径.
 func (i *ICoreWebView2DownloadStartingEventArgs) GetResultFilePath() (string, error) {
 	var resultFilePath *uint16
-	r, _, err := i.Vtbl.GetResultFilePath.Call(
+	r, _, _ := i.Vtbl.GetResultFilePath.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&resultFilePath)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -125,13 +107,10 @@ func (i *ICoreWebView2DownloadStartingEventArgs) SetResultFilePath(resultFilePat
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.PutResultFilePath.Call(
+	r, _, _ := i.Vtbl.PutResultFilePath.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_path)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -141,13 +120,10 @@ func (i *ICoreWebView2DownloadStartingEventArgs) SetResultFilePath(resultFilePat
 // GetHandled 获取是否已处理.
 func (i *ICoreWebView2DownloadStartingEventArgs) GetHandled() (bool, error) {
 	var handled bool
-	r, _, err := i.Vtbl.GetHandled.Call(
+	r, _, _ := i.Vtbl.GetHandled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&handled)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -159,13 +135,10 @@ func (i *ICoreWebView2DownloadStartingEventArgs) GetHandled() (bool, error) {
 //   - 如果下载未取消，它将正常进行，只是不会显示默认用户界面。
 //   - 默认情况下，该值为 FALSE，并显示默认下载对话框。
 func (i *ICoreWebView2DownloadStartingEventArgs) SetHandled(handled bool) error {
-	r, _, err := i.Vtbl.PutHandled.Call(
+	r, _, _ := i.Vtbl.PutHandled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(handled),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -176,13 +149,10 @@ func (i *ICoreWebView2DownloadStartingEventArgs) SetHandled(handled bool) error 
 //   - 使用此操作可在稍后时间完成该事件。
 func (i *ICoreWebView2DownloadStartingEventArgs) GetDeferral() (*ICoreWebView2Deferral, error) {
 	var deferral *ICoreWebView2Deferral
-	r, _, err := i.Vtbl.GetDeferral.Call(
+	r, _, _ := i.Vtbl.GetDeferral.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&deferral)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}

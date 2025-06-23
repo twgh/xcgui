@@ -1,9 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"syscall"
@@ -40,10 +37,7 @@ func (i *ICoreWebView2ScriptDialogOpeningEventArgs) Release() uintptr {
 }
 
 func (i *ICoreWebView2ScriptDialogOpeningEventArgs) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -53,13 +47,10 @@ func (i *ICoreWebView2ScriptDialogOpeningEventArgs) QueryInterface(refiid, objec
 // GetUri 获取对话框来源的URI。
 func (i *ICoreWebView2ScriptDialogOpeningEventArgs) GetUri() (string, error) {
 	var _uri *uint16
-	r, _, err := i.Vtbl.GetUri.Call(
+	r, _, _ := i.Vtbl.GetUri.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_uri)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -71,13 +62,10 @@ func (i *ICoreWebView2ScriptDialogOpeningEventArgs) GetUri() (string, error) {
 // GetKind 获取 JavaScript 对话框的类型。alert、confirm、prompt 或 beforeunload。
 func (i *ICoreWebView2ScriptDialogOpeningEventArgs) GetKind() (COREWEBVIEW2_SCRIPT_DIALOG_KIND, error) {
 	var kind COREWEBVIEW2_SCRIPT_DIALOG_KIND
-	r, _, err := i.Vtbl.GetKind.Call(
+	r, _, _ := i.Vtbl.GetKind.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&kind)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return kind, err
-	}
 	if r != 0 {
 		return kind, syscall.Errno(r)
 	}
@@ -88,13 +76,10 @@ func (i *ICoreWebView2ScriptDialogOpeningEventArgs) GetKind() (COREWEBVIEW2_SCRI
 //   - 从 JavaScript 角度来看，这是传递给 alert、confirm 和 prompt 的第一个参数，对于 beforeunload 来说，该参数为空。
 func (i *ICoreWebView2ScriptDialogOpeningEventArgs) GetMessage() (string, error) {
 	var _message *uint16
-	r, _, err := i.Vtbl.GetMessage.Call(
+	r, _, _ := i.Vtbl.GetMessage.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_message)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -108,10 +93,7 @@ func (i *ICoreWebView2ScriptDialogOpeningEventArgs) GetMessage() (string, error)
 //   - 请勿运行此方法以表示取消。在JavaScript中，这意味着如果运行 confirm，则 beforeunload 和 TRUE 函数返回 Accept。
 //   - 对于 ResultText 函数，如果运行 Accept，它将返回 FALSE 的值，否则返回 FALSE。
 func (i *ICoreWebView2ScriptDialogOpeningEventArgs) Accept() error {
-	r, _, err := i.Vtbl.Accept.Call(uintptr(unsafe.Pointer(i)))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.Accept.Call(uintptr(unsafe.Pointer(i)))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -122,13 +104,10 @@ func (i *ICoreWebView2ScriptDialogOpeningEventArgs) Accept() error {
 //   - prompt JavaScript 函数的结果将此值用作默认值。
 func (i *ICoreWebView2ScriptDialogOpeningEventArgs) GetDefaultText() (string, error) {
 	var _defaultText *uint16
-	r, _, err := i.Vtbl.GetDefaultText.Call(
+	r, _, _ := i.Vtbl.GetDefaultText.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_defaultText)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -142,13 +121,10 @@ func (i *ICoreWebView2ScriptDialogOpeningEventArgs) GetDefaultText() (string, er
 //   - 如果未运行 Accept，则此值将被忽略，并且提示将返回 FALSE。
 func (i *ICoreWebView2ScriptDialogOpeningEventArgs) GetResultText() (string, error) {
 	var _resultText *uint16
-	r, _, err := i.Vtbl.GetResultText.Call(
+	r, _, _ := i.Vtbl.GetResultText.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_resultText)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -163,13 +139,10 @@ func (i *ICoreWebView2ScriptDialogOpeningEventArgs) SetResultText(resultText str
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.PutResultText.Call(
+	r, _, _ := i.Vtbl.PutResultText.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_resultText)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -179,13 +152,10 @@ func (i *ICoreWebView2ScriptDialogOpeningEventArgs) SetResultText(resultText str
 // GetDeferral 获取延迟对象 ICoreWebView2Deferral。使用此操作可在稍后完成该事件。
 func (i *ICoreWebView2ScriptDialogOpeningEventArgs) GetDeferral() (*ICoreWebView2Deferral, error) {
 	var deferral *ICoreWebView2Deferral
-	r, _, err := i.Vtbl.GetDeferral.Call(
+	r, _, _ := i.Vtbl.GetDeferral.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&deferral)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}

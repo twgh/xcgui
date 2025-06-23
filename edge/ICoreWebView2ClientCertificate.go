@@ -1,9 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"syscall"
@@ -41,10 +38,7 @@ func (i *ICoreWebView2ClientCertificate) Release() uintptr {
 }
 
 func (i *ICoreWebView2ClientCertificate) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -54,13 +48,10 @@ func (i *ICoreWebView2ClientCertificate) QueryInterface(refiid, object unsafe.Po
 // GetSubject 获取证书主题.
 func (i *ICoreWebView2ClientCertificate) GetSubject() (string, error) {
 	var subject *uint16
-	r, _, err := i.Vtbl.GetSubject.Call(
+	r, _, _ := i.Vtbl.GetSubject.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&subject)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -71,13 +62,10 @@ func (i *ICoreWebView2ClientCertificate) GetSubject() (string, error) {
 // GetIssuer 获取颁发证书的证书颁发机构名称。
 func (i *ICoreWebView2ClientCertificate) GetIssuer() (string, error) {
 	var issuer *uint16
-	r, _, err := i.Vtbl.GetIssuer.Call(
+	r, _, _ := i.Vtbl.GetIssuer.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&issuer)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -88,13 +76,10 @@ func (i *ICoreWebView2ClientCertificate) GetIssuer() (string, error) {
 // GetValidFrom 获取证书的有效起始日期和时间，以自 UNIX 纪元以来的秒数表示。
 func (i *ICoreWebView2ClientCertificate) GetValidFrom() (float64, error) {
 	var validFrom float64
-	r, _, err := i.Vtbl.GetValidFrom.Call(
+	r, _, _ := i.Vtbl.GetValidFrom.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&validFrom)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -104,13 +89,10 @@ func (i *ICoreWebView2ClientCertificate) GetValidFrom() (float64, error) {
 // GetValidTo 获取证书的有效截止日期和时间，以自 UNIX 纪元以来的秒数表示。
 func (i *ICoreWebView2ClientCertificate) GetValidTo() (float64, error) {
 	var validTo float64
-	r, _, err := i.Vtbl.GetValidTo.Call(
+	r, _, _ := i.Vtbl.GetValidTo.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&validTo)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -120,13 +102,10 @@ func (i *ICoreWebView2ClientCertificate) GetValidTo() (float64, error) {
 // GetDerEncodedSerialNumber 获取证书的 DER 编码序列号的 Base64 编码。
 func (i *ICoreWebView2ClientCertificate) GetDerEncodedSerialNumber() (string, error) {
 	var serialNumber *uint16
-	r, _, err := i.Vtbl.GetDerEncodedSerialNumber.Call(
+	r, _, _ := i.Vtbl.GetDerEncodedSerialNumber.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&serialNumber)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -137,13 +116,10 @@ func (i *ICoreWebView2ClientCertificate) GetDerEncodedSerialNumber() (string, er
 // GetDisplayName 获取证书的显示名称.
 func (i *ICoreWebView2ClientCertificate) GetDisplayName() (string, error) {
 	var displayName *uint16
-	r, _, err := i.Vtbl.GetDisplayName.Call(
+	r, _, _ := i.Vtbl.GetDisplayName.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&displayName)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -154,13 +130,10 @@ func (i *ICoreWebView2ClientCertificate) GetDisplayName() (string, error) {
 // ToPemEncoding 将证书转换为 PEM 编码数据。
 func (i *ICoreWebView2ClientCertificate) ToPemEncoding() (string, error) {
 	var pemData *uint16
-	r, _, err := i.Vtbl.ToPemEncoding.Call(
+	r, _, _ := i.Vtbl.ToPemEncoding.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&pemData)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -172,13 +145,10 @@ func (i *ICoreWebView2ClientCertificate) ToPemEncoding() (string, error) {
 //   - 在此集合中，第一个元素是当前证书，后面依次是中间证书1、中间证书2 …… 中间证书N - 1。根证书是集合中的最后一个元素。
 func (i *ICoreWebView2ClientCertificate) GetPemEncodedIssuerCertificateChain() (*ICoreWebView2StringCollection, error) {
 	var collection *ICoreWebView2StringCollection
-	r, _, err := i.Vtbl.GetPemEncodedIssuerCertificateChain.Call(
+	r, _, _ := i.Vtbl.GetPemEncodedIssuerCertificateChain.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&collection)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -188,13 +158,10 @@ func (i *ICoreWebView2ClientCertificate) GetPemEncodedIssuerCertificateChain() (
 // GetKind 获取证书类型.
 func (i *ICoreWebView2ClientCertificate) GetKind() (COREWEBVIEW2_CLIENT_CERTIFICATE_KIND, error) {
 	var kind COREWEBVIEW2_CLIENT_CERTIFICATE_KIND
-	r, _, err := i.Vtbl.GetKind.Call(
+	r, _, _ := i.Vtbl.GetKind.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&kind)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}

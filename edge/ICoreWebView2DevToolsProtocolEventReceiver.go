@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -33,10 +29,7 @@ func (i *ICoreWebView2DevToolsProtocolEventReceiver) Release() uintptr {
 }
 
 func (i *ICoreWebView2DevToolsProtocolEventReceiver) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -51,14 +44,11 @@ func (i *ICoreWebView2DevToolsProtocolEventReceiver) Event_DevToolsProtocolEvent
 
 // AddDevToolsProtocolEventReceived 添加 DevTools 协议事件接收处理程序.
 func (i *ICoreWebView2DevToolsProtocolEventReceiver) AddDevToolsProtocolEventReceived(eventHandler *ICoreWebView2DevToolsProtocolEventReceivedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddDevToolsProtocolEventReceived.Call(
+	r, _, _ := i.Vtbl.AddDevToolsProtocolEventReceived.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -67,13 +57,10 @@ func (i *ICoreWebView2DevToolsProtocolEventReceiver) AddDevToolsProtocolEventRec
 
 // RemoveDevToolsProtocolEventReceived 移除 DevTools 协议事件接收处理程序.
 func (i *ICoreWebView2DevToolsProtocolEventReceiver) RemoveDevToolsProtocolEventReceived(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveDevToolsProtocolEventReceived.Call(
+	r, _, _ := i.Vtbl.RemoveDevToolsProtocolEventReceived.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

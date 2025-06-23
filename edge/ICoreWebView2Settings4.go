@@ -1,11 +1,7 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -36,10 +32,7 @@ func (i *ICoreWebView2Settings4) Release() uintptr {
 }
 
 func (i *ICoreWebView2Settings4) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -49,13 +42,10 @@ func (i *ICoreWebView2Settings4) QueryInterface(refiid, object unsafe.Pointer) e
 // GetIsPasswordAutosaveEnabled 获取是否允许自动保存密码。
 func (i *ICoreWebView2Settings4) GetIsPasswordAutosaveEnabled() (bool, error) {
 	var enabled bool
-	r, _, err := i.Vtbl.GetIsPasswordAutosaveEnabled.Call(
+	r, _, _ := i.Vtbl.GetIsPasswordAutosaveEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&enabled)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -64,13 +54,10 @@ func (i *ICoreWebView2Settings4) GetIsPasswordAutosaveEnabled() (bool, error) {
 
 // SetIsPasswordAutosaveEnabled 设置是否允许自动保存密码。默认值为 false。
 func (i *ICoreWebView2Settings4) SetIsPasswordAutosaveEnabled(enabled bool) error {
-	r, _, err := i.Vtbl.PutIsPasswordAutosaveEnabled.Call(
+	r, _, _ := i.Vtbl.PutIsPasswordAutosaveEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(enabled),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -80,13 +67,10 @@ func (i *ICoreWebView2Settings4) SetIsPasswordAutosaveEnabled(enabled bool) erro
 // GetIsGeneralAutofillEnabled 获取是否允许自动填充表单。
 func (i *ICoreWebView2Settings4) GetIsGeneralAutofillEnabled() (bool, error) {
 	var enabled bool
-	r, _, err := i.Vtbl.GetIsGeneralAutofillEnabled.Call(
+	r, _, _ := i.Vtbl.GetIsGeneralAutofillEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&enabled)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -95,13 +79,10 @@ func (i *ICoreWebView2Settings4) GetIsGeneralAutofillEnabled() (bool, error) {
 
 // SetIsGeneralAutofillEnabled 设置是否允许自动填充表单。默认值为 true。
 func (i *ICoreWebView2Settings4) SetIsGeneralAutofillEnabled(enabled bool) error {
-	r, _, err := i.Vtbl.PutIsGeneralAutofillEnabled.Call(
+	r, _, _ := i.Vtbl.PutIsGeneralAutofillEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(enabled),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

@@ -3,18 +3,24 @@ package edge
 import (
 	"encoding/json"
 	"errors"
-	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
-	"github.com/twgh/xcgui/xc"
-	"github.com/twgh/xcgui/xcc"
 	"strconv"
 	"sync"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
 )
 
 // WebViewOption 选项.
 type WebViewOption struct {
+	// ProfileName 配置文件名称, 可不填。
+	//   - 它的最大长度为64个字符（不包括空字符终止符）。它不区分ASCII大小写。
+	//   - 注意：文本不能以句号“.”或空格“ ”结尾。
+	//   - 此外，虽然允许使用大写字母，但它们会被当作小写字母处理，因为配置文件名称将映射到磁盘上真实的配置文件目录路径，而 Windows 文件系统在处理路径名称时不区分大小写。
+	ProfileName string
 	// webview 宿主窗口标题
 	Title string
 	// webview 宿主窗口类名
@@ -45,6 +51,8 @@ type WebViewOption struct {
 
 	// AutoFocus 将在窗口获得焦点时尝试保持 WebView 的焦点。
 	AutoFocus bool
+	// PrivateMode 是否启用隐私模式。
+	PrivateMode bool
 }
 
 // WebView 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
@@ -162,34 +170,11 @@ func (w *WebView) createWithOptionsByXcgui(hParent int, opt WebViewOption) error
 	w.init()
 	w.WebView2.msgcb_xcgui = w.msgcb_xcgui
 
-	err := w.newWebView2Controller()
+	err := w.newWebView2Controller(opt)
 	if err != nil {
-		// 关闭原生窗口
-		wapi.SendMessageW(w.hwnd, wapi.WM_CLOSE, 0, 0)
+		wapi.SendMessageW(w.hwnd, wapi.WM_CLOSE, 0, 0) // 关闭原生窗口
 		return err
 	}
-
-	// 获取浏览器设置
-	settings, err := w.GetSettings()
-	if err != nil {
-		ReportErrorAtuo(err)
-	} else {
-		// 设置是否可开启开发人员工具
-		err = settings.SetAreDevToolsEnabled(opt.Debug)
-		ReportErrorAtuo(err)
-		// 设置是否启用非客户区域支持
-		s9, err := settings.GetICoreWebView2Settings9()
-		if err != nil {
-			ReportErrorAtuo(err)
-		} else {
-			err = s9.SetIsNonClientRegionSupportEnabled(opt.AppDrag)
-			ReportErrorAtuo(err)
-			s9.Release()
-		}
-		settings.Release()
-	}
-	err = w.Resize()
-	ReportErrorAtuo(err)
 	// ------------------------ 创建 WebView2 控制器 END ------------------------
 
 	// 设置 WebView2 宿主窗口为炫彩父窗口或元素的子窗口

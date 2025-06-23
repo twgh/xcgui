@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -32,10 +28,7 @@ func (i *ICoreWebView2DOMContentLoadedEventArgs) Release() uintptr {
 }
 
 func (i *ICoreWebView2DOMContentLoadedEventArgs) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -45,13 +38,10 @@ func (i *ICoreWebView2DOMContentLoadedEventArgs) QueryInterface(refiid, object u
 // GetNavigationId 获取导航的 ID，与其他导航事件中的其他导航 ID 属性相对应。
 func (i *ICoreWebView2DOMContentLoadedEventArgs) GetNavigationId() (uint64, error) {
 	var id uint64
-	r, _, err := i.Vtbl.GetNavigationId.Call(
+	r, _, _ := i.Vtbl.GetNavigationId.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&id)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return id, err
-	}
 	if r != 0 {
 		return id, syscall.Errno(r)
 	}

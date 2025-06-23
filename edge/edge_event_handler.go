@@ -264,6 +264,32 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				return -1, err
 			}
 			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+		case "BrowserProcessExited":
+			e5, err := impl.Edge.Environment.GetICoreWebView2Environment5()
+			if err != nil {
+				return -1, err
+			}
+			defer e5.Release()
+			eventHandler := NewICoreWebView2BrowserProcessExitedEventHandler(impl)
+			err = e5.AddBrowserProcessExited(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+		case "ProcessInfosChanged":
+			e8, err := impl.Edge.Environment.GetICoreWebView2Environment8()
+			if err != nil {
+				return -1, err
+			}
+			defer e8.Release()
+			eventHandler := NewICoreWebView2ProcessInfosChangedEventHandler(impl)
+			err = e8.AddProcessInfosChanged(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
 		case "RasterizationScaleChanged":
 			c3, err := impl.Controller.GetICoreWebView2Controller3()
 			if err != nil {

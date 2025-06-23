@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -33,10 +29,7 @@ func (i *ICoreWebView2EnvironmentOptions8) Release() uintptr {
 }
 
 func (i *ICoreWebView2EnvironmentOptions8) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -46,13 +39,10 @@ func (i *ICoreWebView2EnvironmentOptions8) QueryInterface(refiid, object unsafe.
 // GetScrollBarStyle 获取滚动条样式.
 func (i *ICoreWebView2EnvironmentOptions8) GetScrollBarStyle() (COREWEBVIEW2_SCROLLBAR_STYLE, error) {
 	var value COREWEBVIEW2_SCROLLBAR_STYLE
-	r, _, err := i.Vtbl.GetScrollBarStyle.Call(
+	r, _, _ := i.Vtbl.GetScrollBarStyle.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -61,13 +51,10 @@ func (i *ICoreWebView2EnvironmentOptions8) GetScrollBarStyle() (COREWEBVIEW2_SCR
 
 // SetScrollBarStyle 设置滚动条样式.
 func (i *ICoreWebView2EnvironmentOptions8) SetScrollBarStyle(value COREWEBVIEW2_SCROLLBAR_STYLE) error {
-	r, _, err := i.Vtbl.PutScrollBarStyle.Call(
+	r, _, _ := i.Vtbl.PutScrollBarStyle.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

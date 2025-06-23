@@ -1,11 +1,7 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -27,13 +23,10 @@ type ICoreWebView2AcceleratorKeyPressedEventArgs2Vtbl struct {
 //   - 浏览器快捷键是用于访问网络浏览器特定功能的按键或按键组合.
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs2) GetIsBrowserAcceleratorKeyEnabled() (bool, error) {
 	var enabled int32
-	r, _, err := i.Vtbl.GetIsBrowserAcceleratorKeyEnabled.Call(
+	r, _, _ := i.Vtbl.GetIsBrowserAcceleratorKeyEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&enabled)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -43,13 +36,10 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs2) GetIsBrowserAcceleratorKe
 // SetIsBrowserAcceleratorKeyEnabled 设置特定浏览器快捷键是否启用.
 //   - 浏览器快捷键是用于访问网络浏览器特定功能的按键或按键组合.
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs2) SetIsBrowserAcceleratorKeyEnabled(enabled bool) error {
-	r, _, err := i.Vtbl.PutIsBrowserAcceleratorKeyEnabled.Call(
+	r, _, _ := i.Vtbl.PutIsBrowserAcceleratorKeyEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(enabled),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

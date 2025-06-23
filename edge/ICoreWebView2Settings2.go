@@ -1,9 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 
@@ -35,10 +32,7 @@ func (i *ICoreWebView2Settings2) Release() uintptr {
 }
 
 func (i *ICoreWebView2Settings2) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -48,13 +42,10 @@ func (i *ICoreWebView2Settings2) QueryInterface(refiid, object unsafe.Pointer) e
 // GetUserAgent 获取 UserAgent。
 func (i *ICoreWebView2Settings2) GetUserAgent() (string, error) {
 	var _userAgent *uint16
-	r, _, err := i.Vtbl.GetUserAgent.Call(
+	r, _, _ := i.Vtbl.GetUserAgent.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_userAgent)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -69,13 +60,10 @@ func (i *ICoreWebView2Settings2) SetUserAgent(userAgent string) error {
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.PutUserAgent.Call(
+	r, _, _ := i.Vtbl.PutUserAgent.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_userAgent)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

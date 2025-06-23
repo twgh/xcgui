@@ -1,9 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 
@@ -38,10 +35,7 @@ func (i *ICoreWebView2HttpResponseHeaders) Release() uintptr {
 }
 
 func (i *ICoreWebView2HttpResponseHeaders) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -62,14 +56,11 @@ func (i *ICoreWebView2HttpResponseHeaders) AppendHeader(name string, value strin
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.AppendHeader.Call(
+	r, _, _ := i.Vtbl.AppendHeader.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_name)),
 		uintptr(unsafe.Pointer(_value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -85,14 +76,11 @@ func (i *ICoreWebView2HttpResponseHeaders) Contains(name string) (bool, error) {
 		return false, err
 	}
 	var contains bool
-	r, _, err := i.Vtbl.Contains.Call(
+	r, _, _ := i.Vtbl.Contains.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_name)),
 		uintptr(unsafe.Pointer(&contains)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -108,14 +96,11 @@ func (i *ICoreWebView2HttpResponseHeaders) GetHeader(name string) (string, error
 		return "", err
 	}
 	var _value *uint16
-	r, _, err := i.Vtbl.GetHeader.Call(
+	r, _, _ := i.Vtbl.GetHeader.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_name)),
 		uintptr(unsafe.Pointer(&_value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -133,14 +118,11 @@ func (i *ICoreWebView2HttpResponseHeaders) GetHeaders(name string) (*ICoreWebVie
 		return nil, err
 	}
 	var iterator *ICoreWebView2HttpHeadersCollectionIterator
-	r, _, err := i.Vtbl.GetHeaders.Call(
+	r, _, _ := i.Vtbl.GetHeaders.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_name)),
 		uintptr(unsafe.Pointer(&iterator)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -150,13 +132,10 @@ func (i *ICoreWebView2HttpResponseHeaders) GetHeaders(name string) (*ICoreWebVie
 // GetIterator 获取集合中所有标头的迭代器。
 func (i *ICoreWebView2HttpResponseHeaders) GetIterator() (*ICoreWebView2HttpHeadersCollectionIterator, error) {
 	var iterator *ICoreWebView2HttpHeadersCollectionIterator
-	r, _, err := i.Vtbl.GetIterator.Call(
+	r, _, _ := i.Vtbl.GetIterator.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&iterator)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}

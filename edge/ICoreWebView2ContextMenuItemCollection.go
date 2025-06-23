@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -35,10 +31,7 @@ func (i *ICoreWebView2ContextMenuItemCollection) Release() uintptr {
 }
 
 func (i *ICoreWebView2ContextMenuItemCollection) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -48,13 +41,10 @@ func (i *ICoreWebView2ContextMenuItemCollection) QueryInterface(refiid, object u
 // GetCount 获取菜单项数量.
 func (i *ICoreWebView2ContextMenuItemCollection) GetCount() (uint32, error) {
 	var count uint32
-	r, _, err := i.Vtbl.GetCount.Call(
+	r, _, _ := i.Vtbl.GetCount.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&count)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -64,14 +54,11 @@ func (i *ICoreWebView2ContextMenuItemCollection) GetCount() (uint32, error) {
 // GetValueAtIndex 获取指定索引处的菜单项.
 func (i *ICoreWebView2ContextMenuItemCollection) GetValueAtIndex(index uint32) (*ICoreWebView2ContextMenuItem, error) {
 	var item *ICoreWebView2ContextMenuItem
-	r, _, err := i.Vtbl.GetValueAtIndex.Call(
+	r, _, _ := i.Vtbl.GetValueAtIndex.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(index),
 		uintptr(unsafe.Pointer(&item)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -80,13 +67,10 @@ func (i *ICoreWebView2ContextMenuItemCollection) GetValueAtIndex(index uint32) (
 
 // RemoveValueAtIndex 移除指定索引处的菜单项.
 func (i *ICoreWebView2ContextMenuItemCollection) RemoveValueAtIndex(index uint32) error {
-	r, _, err := i.Vtbl.RemoveValueAtIndex.Call(
+	r, _, _ := i.Vtbl.RemoveValueAtIndex.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(index),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -95,14 +79,11 @@ func (i *ICoreWebView2ContextMenuItemCollection) RemoveValueAtIndex(index uint32
 
 // InsertValueAtIndex 在指定索引处插入菜单项.
 func (i *ICoreWebView2ContextMenuItemCollection) InsertValueAtIndex(index uint32, item *ICoreWebView2ContextMenuItem) error {
-	r, _, err := i.Vtbl.InsertValueAtIndex.Call(
+	r, _, _ := i.Vtbl.InsertValueAtIndex.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(index),
 		uintptr(unsafe.Pointer(item)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

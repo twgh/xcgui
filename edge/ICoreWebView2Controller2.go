@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -33,10 +29,7 @@ func (i *ICoreWebView2Controller2) Release() uintptr {
 }
 
 func (i *ICoreWebView2Controller2) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -46,13 +39,10 @@ func (i *ICoreWebView2Controller2) QueryInterface(refiid, object unsafe.Pointer)
 // GetDefaultBackgroundColor 获取 WebView2 的默认背景色。
 func (i *ICoreWebView2Controller2) GetDefaultBackgroundColor() (*COREWEBVIEW2_COLOR, error) {
 	var backgroundColor *COREWEBVIEW2_COLOR
-	r, _, err := i.Vtbl.GetDefaultBackgroundColor.Call(
+	r, _, _ := i.Vtbl.GetDefaultBackgroundColor.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&backgroundColor)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -64,13 +54,10 @@ func (i *ICoreWebView2Controller2) SetDefaultBackgroundColor(backgroundColor COR
 	// Cast to a uint32 as that's what the call is expecting
 	col := *(*uint32)(unsafe.Pointer(&backgroundColor))
 
-	r, _, err := i.Vtbl.PutDefaultBackgroundColor.Call(
+	r, _, _ := i.Vtbl.PutDefaultBackgroundColor.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(col),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

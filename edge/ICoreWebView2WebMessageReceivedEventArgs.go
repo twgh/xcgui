@@ -1,9 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 
@@ -36,10 +33,7 @@ func (i *ICoreWebView2WebMessageReceivedEventArgs) Release() uintptr {
 }
 
 func (i *ICoreWebView2WebMessageReceivedEventArgs) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -50,13 +44,10 @@ func (i *ICoreWebView2WebMessageReceivedEventArgs) QueryInterface(refiid, object
 //   - 如果发布的消息是其他类型的 JavaScript 类型，则该方法失败，并返回错误: wapi.E_INVALIDARG。
 func (e *ICoreWebView2WebMessageReceivedEventArgs) TryGetWebMessageAsString() (string, error) {
 	var _message *uint16
-	r, _, err := e.Vtbl.TryGetWebMessageAsString.Call(
+	r, _, _ := e.Vtbl.TryGetWebMessageAsString.Call(
 		uintptr(unsafe.Pointer(e)),
 		uintptr(unsafe.Pointer(&_message)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -68,13 +59,10 @@ func (e *ICoreWebView2WebMessageReceivedEventArgs) TryGetWebMessageAsString() (s
 // GetWebMessageAsJSON 获取 web 消息作为 JSON 字符串。
 func (e *ICoreWebView2WebMessageReceivedEventArgs) GetWebMessageAsJSON() (string, error) {
 	var _json *uint16
-	r, _, err := e.Vtbl.GetWebMessageAsJSON.Call(
+	r, _, _ := e.Vtbl.GetWebMessageAsJSON.Call(
 		uintptr(unsafe.Pointer(e)),
 		uintptr(unsafe.Pointer(&_json)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -86,13 +74,10 @@ func (e *ICoreWebView2WebMessageReceivedEventArgs) GetWebMessageAsJSON() (string
 // GetSource 获取发送此 web 消息的文档的 URI。
 func (e *ICoreWebView2WebMessageReceivedEventArgs) GetSource() (string, error) {
 	var _source *uint16
-	r, _, err := e.Vtbl.GetSource.Call(
+	r, _, _ := e.Vtbl.GetSource.Call(
 		uintptr(unsafe.Pointer(e)),
 		uintptr(unsafe.Pointer(&_source)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}

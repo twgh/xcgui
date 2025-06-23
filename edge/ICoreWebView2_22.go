@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -33,10 +29,7 @@ func (i *ICoreWebView2_22) Release() uintptr {
 }
 
 func (i *ICoreWebView2_22) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -57,16 +50,12 @@ func (i *ICoreWebView2_22) AddWebResourceRequestedFilterWithRequestSourceKinds(u
 	if err != nil {
 		return err
 	}
-
-	r, _, err := i.Vtbl.AddWebResourceRequestedFilterWithRequestSourceKinds.Call(
+	r, _, _ := i.Vtbl.AddWebResourceRequestedFilterWithRequestSourceKinds.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_uri)),
 		uintptr(ResourceContext),
 		uintptr(requestSourceKinds),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -85,16 +74,12 @@ func (i *ICoreWebView2_22) RemoveWebResourceRequestedFilterWithRequestSourceKind
 	if err != nil {
 		return err
 	}
-
-	r, _, err := i.Vtbl.RemoveWebResourceRequestedFilterWithRequestSourceKinds.Call(
+	r, _, _ := i.Vtbl.RemoveWebResourceRequestedFilterWithRequestSourceKinds.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_uri)),
 		uintptr(ResourceContext),
 		uintptr(requestSourceKinds),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

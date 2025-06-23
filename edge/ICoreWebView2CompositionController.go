@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"github.com/twgh/xcgui/xc"
 	"syscall"
 	"unsafe"
@@ -40,10 +36,7 @@ func (i *ICoreWebView2CompositionController) Release() uintptr {
 }
 
 func (i *ICoreWebView2CompositionController) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -56,13 +49,10 @@ func (i *ICoreWebView2CompositionController) QueryInterface(refiid, object unsaf
 //   - 应用需要在其设备上提交设置 RootVisualTarget 属性。 RootVisualTarget 属性支持设置为 nullptr，以断开 WebView 与应用视觉树的连接。
 func (i *ICoreWebView2CompositionController) GetRootVisualTarget() (*IUnknown, error) {
 	var target *IUnknown
-	r, _, err := i.Vtbl.GetRootVisualTarget.Call(
+	r, _, _ := i.Vtbl.GetRootVisualTarget.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&target)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -71,13 +61,10 @@ func (i *ICoreWebView2CompositionController) GetRootVisualTarget() (*IUnknown, e
 
 // SetRootVisualTarget 设置根视觉目标.
 func (i *ICoreWebView2CompositionController) SetRootVisualTarget(target *IUnknown) error {
-	r, _, err := i.Vtbl.PutRootVisualTarget.Call(
+	r, _, _ := i.Vtbl.PutRootVisualTarget.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(target)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -95,16 +82,13 @@ func (i *ICoreWebView2CompositionController) SetRootVisualTarget(target *IUnknow
 //   - 若要跟踪在 WebView 中开始且可能移动到 WebView 和宿主应用程序外部的鼠标事件，建议调用 SetCapture 和 ReleaseCapture。
 //   - 若要关闭悬停弹出窗口，也建议发送 COREWEBVIEW2_MOUSE_EVENT_KIND_LEAVE 消息。
 func (i *ICoreWebView2CompositionController) SendMouseInput(eventKind COREWEBVIEW2_MOUSE_EVENT_KIND, virtualKeys COREWEBVIEW2_MOUSE_EVENT_VIRTUAL_KEYS, mouseData uint32, point xc.POINT) error {
-	r, _, err := i.Vtbl.SendMouseInput.Call(
+	r, _, _ := i.Vtbl.SendMouseInput.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(eventKind),
 		uintptr(virtualKeys),
 		uintptr(mouseData),
 		uintptr(unsafe.Pointer(&point)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -114,14 +98,11 @@ func (i *ICoreWebView2CompositionController) SendMouseInput(eventKind COREWEBVIE
 // SendPointerInput 发送指针输入事件.
 //   - 系统的任何指针输入都必须首先转换为 ICoreWebView2PointerInfo.
 func (i *ICoreWebView2CompositionController) SendPointerInput(eventKind COREWEBVIEW2_POINTER_EVENT_KIND, pointerInfo *ICoreWebView2PointerInfo) error {
-	r, _, err := i.Vtbl.SendPointerInput.Call(
+	r, _, _ := i.Vtbl.SendPointerInput.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(eventKind),
 		uintptr(unsafe.Pointer(pointerInfo)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -131,13 +112,10 @@ func (i *ICoreWebView2CompositionController) SendPointerInput(eventKind COREWEBV
 // GetCursor 获取当前光标句柄.
 func (i *ICoreWebView2CompositionController) GetCursor() (uintptr, error) {
 	var cursor uintptr
-	r, _, err := i.Vtbl.GetCursor.Call(
+	r, _, _ := i.Vtbl.GetCursor.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&cursor)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -150,13 +128,10 @@ func (i *ICoreWebView2CompositionController) GetCursor() (uintptr, error) {
 //   - 要在 LoadCursor 或 LoadImage 中实际使用 systemCursorId，必须首先对其调用 MAKEINTRESOURCE。
 func (i *ICoreWebView2CompositionController) GetSystemCursorID() (uint32, error) {
 	var systemCursorID uint32
-	r, _, err := i.Vtbl.GetSystemCursorID.Call(
+	r, _, _ := i.Vtbl.GetSystemCursorID.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&systemCursorID)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -170,14 +145,11 @@ func (i *ICoreWebView2CompositionController) Event_CursorChanged(w *WebViewEvent
 
 // AddCursorChanged 添加光标改变事件处理程序.
 func (i *ICoreWebView2CompositionController) AddCursorChanged(eventHandler *ICoreWebView2CursorChangedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddCursorChanged.Call(
+	r, _, _ := i.Vtbl.AddCursorChanged.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -186,13 +158,10 @@ func (i *ICoreWebView2CompositionController) AddCursorChanged(eventHandler *ICor
 
 // RemoveCursorChanged 移除光标改变事件处理程序.
 func (i *ICoreWebView2CompositionController) RemoveCursorChanged(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveCursorChanged.Call(
+	r, _, _ := i.Vtbl.RemoveCursorChanged.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

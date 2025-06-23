@@ -4,14 +4,15 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/twgh/xcgui/wapi"
-	"github.com/twgh/xcgui/xc"
-	"github.com/twgh/xcgui/xcc"
 	"reflect"
 	"strings"
 	"sync"
 	"syscall"
 	"time"
+
+	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
 )
 
 var (
@@ -428,7 +429,7 @@ func (w *WebView) BindLog(funcName ...string) error {
 }
 
 // 创建 WebView2 控制器
-func (w *WebView) newWebView2Controller() error {
+func (w *WebView) newWebView2Controller(opt WebViewOption) error {
 	var isDone bool
 	var err2 error
 	// WebView2 控制器创建完成回调
@@ -450,6 +451,28 @@ func (w *WebView) newWebView2Controller() error {
 		}
 		w.CoreWebView.AddRef()
 
+		// 获取浏览器设置
+		settings, err := w.GetSettings()
+		if err != nil {
+			ReportErrorAtuo(err)
+		} else {
+			// 设置是否可开启开发人员工具
+			err = settings.SetAreDevToolsEnabled(opt.Debug)
+			ReportErrorAtuo(err)
+			// 设置是否启用非客户区域支持
+			s9, err := settings.GetICoreWebView2Settings9()
+			if err != nil {
+				ReportErrorAtuo(err)
+			} else {
+				err = s9.SetIsNonClientRegionSupportEnabled(opt.AppDrag)
+				ReportErrorAtuo(err)
+				s9.Release()
+			}
+			settings.Release()
+		}
+		err = w.Resize()
+		ReportErrorAtuo(err)
+
 		// 添加 web 消息接收事件处理程序, 添加空回调, 主要目的是注册一下事件
 		_, err = w.Event_WebMessageReceived(nil, true)
 		ReportErrorAtuo(err)
@@ -468,9 +491,38 @@ func (w *WebView) newWebView2Controller() error {
 	}
 
 	// 创建 WebView2 控制器
-	err := w.Edge.Environment.CreateCoreWebView2Controller(w.hwnd, w.Edge.handlerCreateCoreWebView2ControllerCompleted)
-	if err != nil {
-		return fmt.Errorf("creating WebView2 controller return: %v", err)
+	if opt.ProfileName != "" || opt.PrivateMode {
+		env10, err := w.Edge.Environment.GetICoreWebView2Environment10()
+		if err != nil {
+			return fmt.Errorf("get ICoreWebView2Environment10 failed: %v", err)
+		}
+		defer env10.Release()
+		options, err := env10.CreateCoreWebView2ControllerOptions()
+		if err != nil {
+			return fmt.Errorf("creating ICoreWebView2ControllerOptions failed: %v", err)
+		}
+		defer options.Release()
+		if opt.ProfileName != "" {
+			err = options.SetProfileName(opt.ProfileName)
+			if err != nil {
+				return fmt.Errorf("setting profile name failed: %v", err)
+			}
+		}
+		if opt.PrivateMode {
+			err = options.SetIsInPrivateModeEnabled(true)
+			if err != nil {
+				return fmt.Errorf("setting private mode failed: %v", err)
+			}
+		}
+		err = env10.CreateCoreWebView2ControllerWithOptions(w.hwnd, options, w.Edge.handlerCreateCoreWebView2ControllerCompleted)
+		if err != nil {
+			return fmt.Errorf("creating WebView2 controller with options failed: %v", err)
+		}
+	} else {
+		err := w.Edge.Environment.CreateCoreWebView2Controller(w.hwnd, w.Edge.handlerCreateCoreWebView2ControllerCompleted)
+		if err != nil {
+			return fmt.Errorf("creating WebView2 controller failed: %v", err)
+		}
 	}
 
 	// 等待 webview2 控制器创建完成

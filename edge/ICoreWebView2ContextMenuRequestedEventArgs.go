@@ -1,11 +1,7 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
 	"github.com/twgh/xcgui/xc"
 	"syscall"
 	"unsafe"
@@ -41,10 +37,7 @@ func (i *ICoreWebView2ContextMenuRequestedEventArgs) Release() uintptr {
 }
 
 func (i *ICoreWebView2ContextMenuRequestedEventArgs) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -54,13 +47,10 @@ func (i *ICoreWebView2ContextMenuRequestedEventArgs) QueryInterface(refiid, obje
 // GetMenuItems 获取上下文菜单项集合.
 func (i *ICoreWebView2ContextMenuRequestedEventArgs) GetMenuItems() (*ICoreWebView2ContextMenuItemCollection, error) {
 	var items *ICoreWebView2ContextMenuItemCollection
-	r, _, err := i.Vtbl.GetMenuItems.Call(
+	r, _, _ := i.Vtbl.GetMenuItems.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&items)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -70,13 +60,10 @@ func (i *ICoreWebView2ContextMenuRequestedEventArgs) GetMenuItems() (*ICoreWebVi
 // GetContextMenuTarget 获取与请求的上下文菜单关联的目标信息。
 func (i *ICoreWebView2ContextMenuRequestedEventArgs) GetContextMenuTarget() (*ICoreWebView2ContextMenuTarget, error) {
 	var target *ICoreWebView2ContextMenuTarget
-	r, _, err := i.Vtbl.GetContextMenuTarget.Call(
+	r, _, _ := i.Vtbl.GetContextMenuTarget.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&target)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -86,13 +73,10 @@ func (i *ICoreWebView2ContextMenuRequestedEventArgs) GetContextMenuTarget() (*IC
 // GetLocation 获取上下文菜单请求发生的坐标，该坐标相对于 WebView 边界的左上角。
 func (i *ICoreWebView2ContextMenuRequestedEventArgs) GetLocation() (xc.POINT, error) {
 	var point xc.POINT
-	r, _, err := i.Vtbl.GetLocation.Call(
+	r, _, _ := i.Vtbl.GetLocation.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&point)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return xc.POINT{}, err
-	}
 	if r != 0 {
 		return xc.POINT{}, syscall.Errno(r)
 	}
@@ -103,13 +87,10 @@ func (i *ICoreWebView2ContextMenuRequestedEventArgs) GetLocation() (xc.POINT, er
 //   - 设置此值后， WebView 将执行选定的命令。此值应始终通过选定的 ContextMenuItem 的 CommandId 属性获取。默认值为 -1，表示未进行选择。
 //   - 应用还可以报告自定义上下文菜单项的选定命令 ID，这将导致为自定义项触发 CustomItemSelected 事件，但是，虽然在 ContextMenuRequested 事件期间每个自定义上下文菜单项的命令 ID 是唯一的，但 CoreWebView2 可能会将已删除的自定义 ContextMenuItem 的命令 ID 值重新分配给新对象，并且分配给同一自定义项的命令 ID 在每次应用运行时可能会有所不同。
 func (i *ICoreWebView2ContextMenuRequestedEventArgs) SetSelectedCommandId(id int32) error {
-	r, _, err := i.Vtbl.PutSelectedCommandId.Call(
+	r, _, _ := i.Vtbl.PutSelectedCommandId.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(id),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -119,13 +100,10 @@ func (i *ICoreWebView2ContextMenuRequestedEventArgs) SetSelectedCommandId(id int
 // GetSelectedCommandId 获取选中的命令 ID.
 func (i *ICoreWebView2ContextMenuRequestedEventArgs) GetSelectedCommandId() (int32, error) {
 	var id int32
-	r, _, err := i.Vtbl.GetSelectedCommandId.Call(
+	r, _, _ := i.Vtbl.GetSelectedCommandId.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&id)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -137,13 +115,10 @@ func (i *ICoreWebView2ContextMenuRequestedEventArgs) GetSelectedCommandId() (int
 //   - 如果在事件处理程序或延期完成后， Handled 设置为 FALSE，则 WebView 将根据 MenuItems 属性的内容显示上下文菜单。
 //   - 默认值为 FALSE。
 func (i *ICoreWebView2ContextMenuRequestedEventArgs) SetHandled(handled bool) error {
-	r, _, err := i.Vtbl.PutHandled.Call(
+	r, _, _ := i.Vtbl.PutHandled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(handled),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -153,13 +128,10 @@ func (i *ICoreWebView2ContextMenuRequestedEventArgs) SetHandled(handled bool) er
 // GetHandled 获取是否已处理.
 func (i *ICoreWebView2ContextMenuRequestedEventArgs) GetHandled() (bool, error) {
 	var handled bool
-	r, _, err := i.Vtbl.GetHandled.Call(
+	r, _, _ := i.Vtbl.GetHandled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&handled)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -170,13 +142,10 @@ func (i *ICoreWebView2ContextMenuRequestedEventArgs) GetHandled() (bool, error) 
 //   - 使用此操作可在自定义上下文菜单关闭时完成该事件。
 func (i *ICoreWebView2ContextMenuRequestedEventArgs) GetDeferral() (*ICoreWebView2Deferral, error) {
 	var deferral *ICoreWebView2Deferral
-	r, _, err := i.Vtbl.GetDeferral.Call(
+	r, _, _ := i.Vtbl.GetDeferral.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&deferral)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}

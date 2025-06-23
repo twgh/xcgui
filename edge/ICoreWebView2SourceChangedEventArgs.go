@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -32,10 +28,7 @@ func (i *ICoreWebView2SourceChangedEventArgs) Release() uintptr {
 }
 
 func (i *ICoreWebView2SourceChangedEventArgs) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -45,13 +38,10 @@ func (i *ICoreWebView2SourceChangedEventArgs) QueryInterface(refiid, object unsa
 // GetIsNewDocument 获取导航到的页面是否为一个新文档.
 func (i *ICoreWebView2SourceChangedEventArgs) GetIsNewDocument() (bool, error) {
 	var isNewDocument bool
-	r, _, err := i.Vtbl.GetIsNewDocument.Call(
+	r, _, _ := i.Vtbl.GetIsNewDocument.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isNewDocument)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}

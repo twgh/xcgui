@@ -1,9 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 
@@ -41,10 +38,7 @@ func (i *ICoreWebView2EnvironmentOptions) Release() uintptr {
 }
 
 func (i *ICoreWebView2EnvironmentOptions) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -54,13 +48,10 @@ func (i *ICoreWebView2EnvironmentOptions) QueryInterface(refiid, object unsafe.P
 // GetAdditionalBrowserArguments 获取创建 WebView2 环境时要传递给浏览器进程的其它命令行参数。
 func (i *ICoreWebView2EnvironmentOptions) GetAdditionalBrowserArguments() (string, error) {
 	var value *uint16
-	r, _, err := i.Vtbl.GetAdditionalBrowserArguments.Call(
+	r, _, _ := i.Vtbl.GetAdditionalBrowserArguments.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -78,13 +69,10 @@ func (i *ICoreWebView2EnvironmentOptions) SetAdditionalBrowserArguments(value st
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.PutAdditionalBrowserArguments.Call(
+	r, _, _ := i.Vtbl.PutAdditionalBrowserArguments.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -94,13 +82,10 @@ func (i *ICoreWebView2EnvironmentOptions) SetAdditionalBrowserArguments(value st
 // GetLanguage 获取 WebView2 环境的语言。
 func (i *ICoreWebView2EnvironmentOptions) GetLanguage() (string, error) {
 	var value *uint16
-	r, _, err := i.Vtbl.GetLanguage.Call(
+	r, _, _ := i.Vtbl.GetLanguage.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -118,13 +103,10 @@ func (i *ICoreWebView2EnvironmentOptions) SetLanguage(value string) error {
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.PutLanguage.Call(
+	r, _, _ := i.Vtbl.PutLanguage.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -134,13 +116,10 @@ func (i *ICoreWebView2EnvironmentOptions) SetLanguage(value string) error {
 // GetTargetCompatibleBrowserVersion 获取目标兼容的浏览器版本。
 func (i *ICoreWebView2EnvironmentOptions) GetTargetCompatibleBrowserVersion() (string, error) {
 	var value *uint16
-	r, _, err := i.Vtbl.GetTargetCompatibleBrowserVersion.Call(
+	r, _, _ := i.Vtbl.GetTargetCompatibleBrowserVersion.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -155,13 +134,10 @@ func (i *ICoreWebView2EnvironmentOptions) SetTargetCompatibleBrowserVersion(valu
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.PutTargetCompatibleBrowserVersion.Call(
+	r, _, _ := i.Vtbl.PutTargetCompatibleBrowserVersion.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -171,13 +147,10 @@ func (i *ICoreWebView2EnvironmentOptions) SetTargetCompatibleBrowserVersion(valu
 // GetAllowSingleSignOnUsingOSPrimaryAccount 获取是否允许 Azure Active Directory (AAD) 和个人 Microsoft Account (MSA) 资源的单点登录。
 func (i *ICoreWebView2EnvironmentOptions) GetAllowSingleSignOnUsingOSPrimaryAccount() (bool, error) {
 	var value bool
-	r, _, err := i.Vtbl.GetAllowSingleSignOnUsingOSPrimaryAccount.Call(
+	r, _, _ := i.Vtbl.GetAllowSingleSignOnUsingOSPrimaryAccount.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -186,13 +159,10 @@ func (i *ICoreWebView2EnvironmentOptions) GetAllowSingleSignOnUsingOSPrimaryAcco
 
 // SetAllowSingleSignOnUsingOSPrimaryAccount 设置是否允许 Azure Active Directory (AAD) 和个人 Microsoft Account (MSA) 资源的单点登录。
 func (i *ICoreWebView2EnvironmentOptions) SetAllowSingleSignOnUsingOSPrimaryAccount(value bool) error {
-	r, _, err := i.Vtbl.PutAllowSingleSignOnUsingOSPrimaryAccount.Call(
+	r, _, _ := i.Vtbl.PutAllowSingleSignOnUsingOSPrimaryAccount.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

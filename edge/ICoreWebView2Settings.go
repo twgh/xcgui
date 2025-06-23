@@ -1,9 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"syscall"
@@ -50,10 +47,7 @@ func (i *ICoreWebView2Settings) Release() uintptr {
 }
 
 func (i *ICoreWebView2Settings) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -65,13 +59,10 @@ func (i *ICoreWebView2Settings) QueryInterface(refiid, object unsafe.Pointer) er
 //   - 即使脚本被禁用，用 ExecuteScript 注入的脚本也会运行。
 func (i *ICoreWebView2Settings) GetIsScriptEnabled() (bool, error) {
 	var isScriptEnabled bool
-	r, _, err := i.Vtbl.GetIsScriptEnabled.Call(
+	r, _, _ := i.Vtbl.GetIsScriptEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isScriptEnabled)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -83,13 +74,10 @@ func (i *ICoreWebView2Settings) GetIsScriptEnabled() (bool, error) {
 //   - 即使脚本被禁用，用 ExecuteScript 注入的脚本也会运行。
 //   - 默认值为 true。
 func (i *ICoreWebView2Settings) SetIsScriptEnabled(isScriptEnabled bool) error {
-	r, _, err := i.Vtbl.PutIsScriptEnabled.Call(
+	r, _, _ := i.Vtbl.PutIsScriptEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(isScriptEnabled),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -99,13 +87,10 @@ func (i *ICoreWebView2Settings) SetIsScriptEnabled(isScriptEnabled bool) error {
 // GetIsWebMessageEnabled 获取是否允许 WebView 发送和接收 WebMessage。
 func (i *ICoreWebView2Settings) GetIsWebMessageEnabled() (bool, error) {
 	var isWebMessageEnabled bool
-	r, _, err := i.Vtbl.GetIsWebMessageEnabled.Call(
+	r, _, _ := i.Vtbl.GetIsWebMessageEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isWebMessageEnabled)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -114,13 +99,10 @@ func (i *ICoreWebView2Settings) GetIsWebMessageEnabled() (bool, error) {
 
 // SetIsWebMessageEnabled 设置是否允许 WebView 发送和接收 WebMessage。默认值为 true。
 func (i *ICoreWebView2Settings) SetIsWebMessageEnabled(isWebMessageEnabled bool) error {
-	r, _, err := i.Vtbl.PutIsWebMessageEnabled.Call(
+	r, _, _ := i.Vtbl.PutIsWebMessageEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(isWebMessageEnabled),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -130,13 +112,10 @@ func (i *ICoreWebView2Settings) SetIsWebMessageEnabled(isWebMessageEnabled bool)
 // GetAreDefaultScriptDialogsEnabled 获取是否允许在 WebView 中显示默认的 JavaScript 对话框。
 func (i *ICoreWebView2Settings) GetAreDefaultScriptDialogsEnabled() (bool, error) {
 	var areDefaultScriptDialogsEnabled bool
-	r, _, err := i.Vtbl.GetAreDefaultScriptDialogsEnabled.Call(
+	r, _, _ := i.Vtbl.GetAreDefaultScriptDialogsEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&areDefaultScriptDialogsEnabled)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -145,13 +124,10 @@ func (i *ICoreWebView2Settings) GetAreDefaultScriptDialogsEnabled() (bool, error
 
 // SetAreDefaultScriptDialogsEnabled 设置是否允许在 WebView 中显示默认的 JavaScript 对话框。默认值为 true。
 func (i *ICoreWebView2Settings) SetAreDefaultScriptDialogsEnabled(areDefaultScriptDialogsEnabled bool) error {
-	r, _, err := i.Vtbl.PutAreDefaultScriptDialogsEnabled.Call(
+	r, _, _ := i.Vtbl.PutAreDefaultScriptDialogsEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(areDefaultScriptDialogsEnabled),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -163,13 +139,10 @@ func (i *ICoreWebView2Settings) SetAreDefaultScriptDialogsEnabled(areDefaultScri
 //   - 状态栏 UI 可以通过 web 内容进行更改，不应被视为安全。
 func (i *ICoreWebView2Settings) GetIsStatusBarEnabled() (bool, error) {
 	var isStatusBarEnabled bool
-	r, _, err := i.Vtbl.GetIsStatusBarEnabled.Call(
+	r, _, _ := i.Vtbl.GetIsStatusBarEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isStatusBarEnabled)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -181,13 +154,10 @@ func (i *ICoreWebView2Settings) GetIsStatusBarEnabled() (bool, error) {
 //   - 默认值为 true。
 //   - 状态栏 UI 可以通过 web 内容进行更改，不应被视为安全。
 func (i *ICoreWebView2Settings) SetIsStatusBarEnabled(isStatusBarEnabled bool) error {
-	r, _, err := i.Vtbl.PutIsStatusBarEnabled.Call(
+	r, _, _ := i.Vtbl.PutIsStatusBarEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(isStatusBarEnabled),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -197,13 +167,10 @@ func (i *ICoreWebView2Settings) SetIsStatusBarEnabled(isStatusBarEnabled bool) e
 // GetAreDevToolsEnabled 获取是否允许在 WebView 中显示开发者工具。
 func (i *ICoreWebView2Settings) GetAreDevToolsEnabled() (bool, error) {
 	var areDevToolsEnabled bool
-	r, _, err := i.Vtbl.GetAreDevToolsEnabled.Call(
+	r, _, _ := i.Vtbl.GetAreDevToolsEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&areDevToolsEnabled)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -212,13 +179,10 @@ func (i *ICoreWebView2Settings) GetAreDevToolsEnabled() (bool, error) {
 
 // SetAreDevToolsEnabled 设置是否允许在 WebView 中显示开发者工具。默认值为 true。
 func (i *ICoreWebView2Settings) SetAreDevToolsEnabled(areDevToolsEnabled bool) error {
-	r, _, err := i.Vtbl.PutAreDevToolsEnabled.Call(
+	r, _, _ := i.Vtbl.PutAreDevToolsEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(areDevToolsEnabled),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -228,13 +192,10 @@ func (i *ICoreWebView2Settings) SetAreDevToolsEnabled(areDevToolsEnabled bool) e
 // GetAreDefaultContextMenusEnabled 获取是否允许在 WebView 中显示默认的上下文菜单。
 func (i *ICoreWebView2Settings) GetAreDefaultContextMenusEnabled() (bool, error) {
 	var enabled bool
-	r, _, err := i.Vtbl.GetAreDefaultContextMenusEnabled.Call(
+	r, _, _ := i.Vtbl.GetAreDefaultContextMenusEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&enabled)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -243,13 +204,10 @@ func (i *ICoreWebView2Settings) GetAreDefaultContextMenusEnabled() (bool, error)
 
 // SetAreDefaultContextMenusEnabled 设置是否允许在 WebView 中显示默认的上下文菜单。默认值为 true。
 func (i *ICoreWebView2Settings) SetAreDefaultContextMenusEnabled(enabled bool) error {
-	r, _, err := i.Vtbl.PutAreDefaultContextMenusEnabled.Call(
+	r, _, _ := i.Vtbl.PutAreDefaultContextMenusEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(enabled),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -259,13 +217,10 @@ func (i *ICoreWebView2Settings) SetAreDefaultContextMenusEnabled(enabled bool) e
 // GetAreHostObjectsAllowed 获取是否允许在 WebView 中显示主机对象。
 func (i *ICoreWebView2Settings) GetAreHostObjectsAllowed() (bool, error) {
 	var allowed bool
-	r, _, err := i.Vtbl.GetAreHostObjectsAllowed.Call(
+	r, _, _ := i.Vtbl.GetAreHostObjectsAllowed.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&allowed)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -274,13 +229,10 @@ func (i *ICoreWebView2Settings) GetAreHostObjectsAllowed() (bool, error) {
 
 // SetAreHostObjectsAllowed 设置是否允许在 WebView 中显示主机对象。默认值为 true。
 func (i *ICoreWebView2Settings) SetAreHostObjectsAllowed(allowed bool) error {
-	r, _, err := i.Vtbl.PutAreHostObjectsAllowed.Call(
+	r, _, _ := i.Vtbl.PutAreHostObjectsAllowed.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(allowed),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -290,13 +242,10 @@ func (i *ICoreWebView2Settings) SetAreHostObjectsAllowed(allowed bool) error {
 // GetIsZoomControlEnabled 获取是否允许在 WebView 中显示缩放控件。
 func (i *ICoreWebView2Settings) GetIsZoomControlEnabled() (bool, error) {
 	var enabled bool
-	r, _, err := i.Vtbl.GetIsZoomControlEnabled.Call(
+	r, _, _ := i.Vtbl.GetIsZoomControlEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&enabled)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -305,13 +254,10 @@ func (i *ICoreWebView2Settings) GetIsZoomControlEnabled() (bool, error) {
 
 // SetIsZoomControlEnabled 设置是否允许在 WebView 中显示缩放控件。默认值为 true。
 func (i *ICoreWebView2Settings) SetIsZoomControlEnabled(enabled bool) error {
-	r, _, err := i.Vtbl.PutIsZoomControlEnabled.Call(
+	r, _, _ := i.Vtbl.PutIsZoomControlEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(enabled),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -321,13 +267,10 @@ func (i *ICoreWebView2Settings) SetIsZoomControlEnabled(enabled bool) error {
 // GetIsBuiltInErrorPageEnabled 获取是否显示内置的错误页面。禁用时，当发生相关错误时，会显示一个空白页。
 func (i *ICoreWebView2Settings) GetIsBuiltInErrorPageEnabled() (bool, error) {
 	var enabled bool
-	r, _, err := i.Vtbl.GetIsBuiltInErrorPageEnabled.Call(
+	r, _, _ := i.Vtbl.GetIsBuiltInErrorPageEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&enabled)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -336,13 +279,10 @@ func (i *ICoreWebView2Settings) GetIsBuiltInErrorPageEnabled() (bool, error) {
 
 // SetIsBuiltInErrorPageEnabled 设置是否显示内置的错误页面。默认值为 true。禁用时，当发生相关错误时，会显示一个空白页。
 func (i *ICoreWebView2Settings) SetIsBuiltInErrorPageEnabled(enabled bool) error {
-	r, _, err := i.Vtbl.PutIsBuiltInErrorPageEnabled.Call(
+	r, _, _ := i.Vtbl.PutIsBuiltInErrorPageEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(enabled),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

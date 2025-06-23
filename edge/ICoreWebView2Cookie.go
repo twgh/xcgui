@@ -1,9 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 
@@ -47,10 +44,7 @@ func (i *ICoreWebView2Cookie) Release() uintptr {
 }
 
 func (i *ICoreWebView2Cookie) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -62,13 +56,10 @@ func (i *ICoreWebView2Cookie) QueryInterface(refiid, object unsafe.Pointer) erro
 //   - 请注意，例如: “.bing.com”、“bing.com”和“www.bing.com”被认为是不同的域。
 func (i *ICoreWebView2Cookie) GetDomain() (string, error) {
 	var _domain *uint16
-	r, _, err := i.Vtbl.GetDomain.Call(
+	r, _, _ := i.Vtbl.GetDomain.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_domain)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -80,13 +71,10 @@ func (i *ICoreWebView2Cookie) GetDomain() (string, error) {
 // GetName 获取 Cookie 的名称。
 func (i *ICoreWebView2Cookie) GetName() (string, error) {
 	var _name *uint16
-	r, _, err := i.Vtbl.GetName.Call(
+	r, _, _ := i.Vtbl.GetName.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_name)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -98,13 +86,10 @@ func (i *ICoreWebView2Cookie) GetName() (string, error) {
 // GetValue 获取 Cookie 的值。
 func (i *ICoreWebView2Cookie) GetValue() (string, error) {
 	var _value *uint16
-	r, _, err := i.Vtbl.GetValue.Call(
+	r, _, _ := i.Vtbl.GetValue.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -117,13 +102,10 @@ func (i *ICoreWebView2Cookie) GetValue() (string, error) {
 //   - 默认值为“/”，这意味着此 cookie 将发送到域上的所有页面。
 func (i *ICoreWebView2Cookie) GetPath() (string, error) {
 	var _path *uint16
-	r, _, err := i.Vtbl.GetPath.Call(
+	r, _, _ := i.Vtbl.GetPath.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_path)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -136,13 +118,10 @@ func (i *ICoreWebView2Cookie) GetPath() (string, error) {
 //   - 默认值为 -1.0，这意味着默认情况下 Cookie 是会话 Cookie。
 func (i *ICoreWebView2Cookie) GetExpires() (float64, error) {
 	var expires float64
-	r, _, err := i.Vtbl.GetExpires.Call(
+	r, _, _ := i.Vtbl.GetExpires.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&expires)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -153,13 +132,10 @@ func (i *ICoreWebView2Cookie) GetExpires() (float64, error) {
 //   - 如果页面脚本或其他活动内容无法访问此 cookie，则为 true。默认值为 false。
 func (i *ICoreWebView2Cookie) GetIsHttpOnly() (bool, error) {
 	var isHttpOnly bool
-	r, _, err := i.Vtbl.GetIsHttpOnly.Call(
+	r, _, _ := i.Vtbl.GetIsHttpOnly.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isHttpOnly)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -170,13 +146,10 @@ func (i *ICoreWebView2Cookie) GetIsHttpOnly() (bool, error) {
 //   - 默认为 COREWEBVIEW2_COOKIE_SAME_SITE_KIND_LAX。
 func (i *ICoreWebView2Cookie) GetSameSite() (COREWEBVIEW2_COOKIE_SAME_SITE_KIND, error) {
 	var sameSite COREWEBVIEW2_COOKIE_SAME_SITE_KIND
-	r, _, err := i.Vtbl.GetSameSite.Call(
+	r, _, _ := i.Vtbl.GetSameSite.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&sameSite)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -189,13 +162,10 @@ func (i *ICoreWebView2Cookie) GetSameSite() (COREWEBVIEW2_COOKIE_SAME_SITE_KIND,
 //   - 请注意，请求 COREWEBVIEW2_COOKIE_SAME_SITE_KIND_NONE 但未标记为安全的 cookie 将被拒绝。
 func (i *ICoreWebView2Cookie) GetIsSecure() (bool, error) {
 	var isSecure bool
-	r, _, err := i.Vtbl.GetIsSecure.Call(
+	r, _, _ := i.Vtbl.GetIsSecure.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isSecure)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -205,13 +175,10 @@ func (i *ICoreWebView2Cookie) GetIsSecure() (bool, error) {
 // GetIsSession 获取 Cookie 是否为会话 Cookie, 默认值为false。
 func (i *ICoreWebView2Cookie) GetIsSession() (bool, error) {
 	var isSession bool
-	r, _, err := i.Vtbl.GetIsSession.Call(
+	r, _, _ := i.Vtbl.GetIsSession.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isSession)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -224,13 +191,10 @@ func (i *ICoreWebView2Cookie) SetValue(value string) error {
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.PutValue.Call(
+	r, _, _ := i.Vtbl.PutValue.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -239,13 +203,10 @@ func (i *ICoreWebView2Cookie) SetValue(value string) error {
 
 // SetIsHttpOnly 设置 Cookie 是否为 HttpOnly。
 func (i *ICoreWebView2Cookie) SetIsHttpOnly(isHttpOnly bool) error {
-	r, _, err := i.Vtbl.PutIsHttpOnly.Call(
+	r, _, _ := i.Vtbl.PutIsHttpOnly.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(isHttpOnly),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -254,13 +215,10 @@ func (i *ICoreWebView2Cookie) SetIsHttpOnly(isHttpOnly bool) error {
 
 // SetSameSite 设置 Cookie 的 SameSite。
 func (i *ICoreWebView2Cookie) SetSameSite(sameSite COREWEBVIEW2_COOKIE_SAME_SITE_KIND) error {
-	r, _, err := i.Vtbl.PutSameSite.Call(
+	r, _, _ := i.Vtbl.PutSameSite.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(sameSite),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -271,13 +229,10 @@ func (i *ICoreWebView2Cookie) SetSameSite(sameSite COREWEBVIEW2_COOKIE_SAME_SITE
 //   - Cookie 是会话 Cookie，如果 Expires 设置为 -1.0，则 Cookie 不会持久。
 //   - 不允许 NaN、无穷大和除 -1.0 以外的任何负值集。
 func (i *ICoreWebView2Cookie) SetExpires(expires float64) error {
-	r, _, err := i.Vtbl.PutExpires.Call(
+	r, _, _ := i.Vtbl.PutExpires.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&expires)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -286,13 +241,10 @@ func (i *ICoreWebView2Cookie) SetExpires(expires float64) error {
 
 // SetIsSecure 设置 Cookie 的是否安全属性。
 func (i *ICoreWebView2Cookie) SetIsSecure(isSecure bool) error {
-	r, _, err := i.Vtbl.PutIsSecure.Call(
+	r, _, _ := i.Vtbl.PutIsSecure.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(isSecure),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

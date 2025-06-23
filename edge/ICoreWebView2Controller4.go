@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -25,13 +21,10 @@ type ICoreWebView2Controller4Vtbl struct {
 // GetAllowExternalDrop 获取是否允许外部拖放.
 func (i *ICoreWebView2Controller4) GetAllowExternalDrop() (bool, error) {
 	var value bool
-	r, _, err := i.Vtbl.GetAllowExternalDrop.Call(
+	r, _, _ := i.Vtbl.GetAllowExternalDrop.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -40,13 +33,10 @@ func (i *ICoreWebView2Controller4) GetAllowExternalDrop() (bool, error) {
 
 // SetAllowExternalDrop 设置是否允许外部拖放. 默认值为 true.
 func (i *ICoreWebView2Controller4) SetAllowExternalDrop(value bool) error {
-	r, _, err := i.Vtbl.PutAllowExternalDrop.Call(
+	r, _, _ := i.Vtbl.PutAllowExternalDrop.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

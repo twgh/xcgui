@@ -1,11 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
-
 	"syscall"
 	"unsafe"
 )
@@ -41,10 +36,7 @@ func (i *ICoreWebView2CookieManager) Release() uintptr {
 }
 
 func (i *ICoreWebView2CookieManager) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -79,7 +71,7 @@ func (i *ICoreWebView2CookieManager) CreateCookie(name, value, domain, path stri
 		return nil, err
 	}
 
-	r, _, err := i.Vtbl.CreateCookie.Call(
+	r, _, _ := i.Vtbl.CreateCookie.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_name)),
 		uintptr(unsafe.Pointer(_value)),
@@ -88,9 +80,6 @@ func (i *ICoreWebView2CookieManager) CreateCookie(name, value, domain, path stri
 		uintptr(unsafe.Pointer(&cookie)),
 	)
 
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -100,15 +89,12 @@ func (i *ICoreWebView2CookieManager) CreateCookie(name, value, domain, path stri
 // CopyCookie 创建一个 ICoreWebView2Cookie 对象，该对象是指定 cookie 的副本。
 func (i *ICoreWebView2CookieManager) CopyCookie(cookieParam *ICoreWebView2Cookie) (*ICoreWebView2Cookie, error) {
 	var cookie *ICoreWebView2Cookie
-	r, _, err := i.Vtbl.CopyCookie.Call(
+	r, _, _ := i.Vtbl.CopyCookie.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(cookieParam)),
 		uintptr(unsafe.Pointer(&cookie)),
 	)
 
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -117,14 +103,11 @@ func (i *ICoreWebView2CookieManager) CopyCookie(cookieParam *ICoreWebView2Cookie
 
 // AddOrUpdateCookie 使用给定的 cookie 数据添加或更新 cookie；可以用匹配的名称、域和路径覆盖 Cookie（如果存在）。
 func (i *ICoreWebView2CookieManager) AddOrUpdateCookie(cookie *ICoreWebView2Cookie) error {
-	r, _, err := i.Vtbl.AddOrUpdateCookie.Call(
+	r, _, _ := i.Vtbl.AddOrUpdateCookie.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(cookie)),
 	)
 
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -133,14 +116,11 @@ func (i *ICoreWebView2CookieManager) AddOrUpdateCookie(cookie *ICoreWebView2Cook
 
 // DeleteCookie 删除名称和域/路径对与指定 cookie 的名称和路径对匹配的 cookie。
 func (i *ICoreWebView2CookieManager) DeleteCookie(cookie *ICoreWebView2Cookie) error {
-	r, _, err := i.Vtbl.DeleteCookie.Call(
+	r, _, _ := i.Vtbl.DeleteCookie.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(cookie)),
 	)
 
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -149,13 +129,10 @@ func (i *ICoreWebView2CookieManager) DeleteCookie(cookie *ICoreWebView2Cookie) e
 
 // DeleteAllCookies 删除同一配置文件下的所有 Cookie。
 func (i *ICoreWebView2CookieManager) DeleteAllCookies() error {
-	r, _, err := i.Vtbl.DeleteAllCookies.Call(
+	r, _, _ := i.Vtbl.DeleteAllCookies.Call(
 		uintptr(unsafe.Pointer(i)),
 	)
 
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -186,16 +163,13 @@ func (i *ICoreWebView2CookieManager) DeleteCookiesWithDomainAndPath(name, domain
 		return err
 	}
 
-	r, _, err := i.Vtbl.DeleteCookiesWithDomainAndPath.Call(
+	r, _, _ := i.Vtbl.DeleteCookiesWithDomainAndPath.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_name)),
 		uintptr(unsafe.Pointer(_domain)),
 		uintptr(unsafe.Pointer(_path)),
 	)
 
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -218,15 +192,12 @@ func (i *ICoreWebView2CookieManager) DeleteCookies(name, uri string) error {
 		return err
 	}
 
-	r, _, err := i.Vtbl.DeleteCookies.Call(
+	r, _, _ := i.Vtbl.DeleteCookies.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_name)),
 		uintptr(unsafe.Pointer(_uri)),
 	)
 
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -244,15 +215,12 @@ func (i *ICoreWebView2CookieManager) GetCookies(uri string, handler *ICoreWebVie
 		return err
 	}
 
-	r, _, err := i.Vtbl.GetCookies.Call(
+	r, _, _ := i.Vtbl.GetCookies.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_uri)),
 		uintptr(unsafe.Pointer(handler)),
 	)
 
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

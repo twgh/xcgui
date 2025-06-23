@@ -1,7 +1,6 @@
 package edge
 
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 
@@ -36,10 +35,7 @@ func (i *ICoreWebView2Environment) Release() uintptr {
 }
 
 func (i *ICoreWebView2Environment) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -48,14 +44,11 @@ func (i *ICoreWebView2Environment) QueryInterface(refiid, object unsafe.Pointer)
 
 // CreateCoreWebView2Controller 异步创建新的 WebView。
 func (i *ICoreWebView2Environment) CreateCoreWebView2Controller(parentWindow uintptr, handler *ICoreWebView2CreateCoreWebView2ControllerCompletedHandler) error {
-	r, _, err := i.Vtbl.CreateCoreWebView2Controller.Call(
+	r, _, _ := i.Vtbl.CreateCoreWebView2Controller.Call(
 		uintptr(unsafe.Pointer(i)),
 		parentWindow,
 		uintptr(unsafe.Pointer(handler)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -73,7 +66,7 @@ func (i *ICoreWebView2Environment) CreateWebResourceResponse(content *IStream, s
 		return nil, err
 	}
 	var response *ICoreWebView2WebResourceResponse
-	r, _, err := i.Vtbl.CreateWebResourceResponse.Call(
+	r, _, _ := i.Vtbl.CreateWebResourceResponse.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(content)),
 		uintptr(statusCode),
@@ -81,9 +74,6 @@ func (i *ICoreWebView2Environment) CreateWebResourceResponse(content *IStream, s
 		uintptr(unsafe.Pointer(_headers)),
 		uintptr(unsafe.Pointer(&response)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -93,13 +83,10 @@ func (i *ICoreWebView2Environment) CreateWebResourceResponse(content *IStream, s
 // GetBrowserVersionString 获取当前 ICoreWebView2Environment 的浏览器版本信息，如果不是 WebView2 运行时，则包括通道名称。
 func (i *ICoreWebView2Environment) GetBrowserVersionString() (string, error) {
 	var _version *uint16
-	r, _, err := i.Vtbl.GetBrowserVersionString.Call(
+	r, _, _ := i.Vtbl.GetBrowserVersionString.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_version)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -140,7 +127,6 @@ func (i *ICoreWebView2Environment) GetICoreWebView2Environment4() (*ICoreWebView
 	return result, err
 }
 
-/*
 // GetICoreWebView2Environment5 获取 ICoreWebView2Environment5。
 func (i *ICoreWebView2Environment) GetICoreWebView2Environment5() (*ICoreWebView2Environment5, error) {
 	var result *ICoreWebView2Environment5
@@ -195,6 +181,7 @@ func (i *ICoreWebView2Environment) GetICoreWebView2Environment10() (*ICoreWebVie
 	return result, err
 }
 
+/*
 // GetICoreWebView2Environment11 获取 ICoreWebView2Environment11。
 func (i *ICoreWebView2Environment) GetICoreWebView2Environment11() (*ICoreWebView2Environment11, error) {
 	var result *ICoreWebView2Environment11
@@ -266,7 +253,6 @@ func (i *ICoreWebView2Environment) MustGetICoreWebView2Environment4() *ICoreWebV
 	return result
 }
 
-/*
 // MustGetICoreWebView2Environment5 获取 ICoreWebView2Environment5。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment) MustGetICoreWebView2Environment5() *ICoreWebView2Environment5 {
 	result, err := i.GetICoreWebView2Environment5()
@@ -309,6 +295,7 @@ func (i *ICoreWebView2Environment) MustGetICoreWebView2Environment10() *ICoreWeb
 	return result
 }
 
+/*
 // MustGetICoreWebView2Environment11 获取 ICoreWebView2Environment11。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment) MustGetICoreWebView2Environment11() *ICoreWebView2Environment11 {
 	result, err := i.GetICoreWebView2Environment11()

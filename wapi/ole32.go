@@ -1,6 +1,7 @@
 package wapi
 
 import (
+	"errors"
 	"syscall"
 	"unsafe"
 )
@@ -62,6 +63,20 @@ func CoCreateInstance(rclsid, pUnkOuter unsafe.Pointer, dwClsContext uint32, rii
 func CoInitializeEx(pvReserved uintptr, dwCoInit COINIT_) syscall.Errno {
 	r, _, _ := procCoInitializeEx.Call(pvReserved, uintptr(dwCoInit))
 	return syscall.Errno(r)
+}
+
+// CHECK_FAILURE 检查错误是否为 S_OK.
+//   - 实际就是判断了 errors.Is(err, S_OK)
+func CHECK_FAILURE(err error) bool {
+	return errors.Is(err, S_OK)
+}
+
+// CHECK_FAILURE_PANIC 检查错误是否为 S_OK, 不是就 panic.
+//   - 实际就是判断了 errors.Is(err, S_OK)
+func CHECK_FAILURE_PANIC(err error) {
+	if !errors.Is(err, S_OK) {
+		panic(err)
+	}
 }
 
 // COINIT_ 确定用于对此线程创建的对象的传入调用的并发模型。 此并发模型可以是单元线程模型，也可以是多线程模型。

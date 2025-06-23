@@ -1,11 +1,7 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -36,10 +32,7 @@ func (i *ICoreWebView2EnvironmentOptions2) Release() uintptr {
 }
 
 func (i *ICoreWebView2EnvironmentOptions2) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -49,13 +42,10 @@ func (i *ICoreWebView2EnvironmentOptions2) QueryInterface(refiid, object unsafe.
 // GetExclusiveUserDataFolderAccess 获取其他进程是否可以从使用相同用户数据文件夹创建的 WebView2Environment 创建 WebView2，从而共享同一个 WebView 浏览器进程实例。
 func (i *ICoreWebView2EnvironmentOptions2) GetExclusiveUserDataFolderAccess() (bool, error) {
 	var value bool
-	r, _, err := i.Vtbl.GetExclusiveUserDataFolderAccess.Call(
+	r, _, _ := i.Vtbl.GetExclusiveUserDataFolderAccess.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -64,13 +54,10 @@ func (i *ICoreWebView2EnvironmentOptions2) GetExclusiveUserDataFolderAccess() (b
 
 // SetExclusiveUserDataFolderAccess 设置其他进程是否可以从使用相同用户数据文件夹创建的 WebView2Environment 创建 WebView2，从而共享同一个 WebView 浏览器进程实例。默认为 false。
 func (i *ICoreWebView2EnvironmentOptions2) SetExclusiveUserDataFolderAccess(value bool) error {
-	r, _, err := i.Vtbl.PutExclusiveUserDataFolderAccess.Call(
+	r, _, _ := i.Vtbl.PutExclusiveUserDataFolderAccess.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

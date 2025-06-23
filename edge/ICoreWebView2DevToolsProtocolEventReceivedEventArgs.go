@@ -1,9 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"syscall"
@@ -33,10 +30,7 @@ func (i *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) Release() uintptr 
 }
 
 func (i *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -46,13 +40,10 @@ func (i *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) QueryInterface(ref
 // GetParameterObjectAsJson 获取作为 JSON 字符串的事件参数对象.
 func (i *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) GetParameterObjectAsJson() (string, error) {
 	var _json *uint16
-	r, _, err := i.Vtbl.GetParameterObjectAsJson.Call(
+	r, _, _ := i.Vtbl.GetParameterObjectAsJson.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_json)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}

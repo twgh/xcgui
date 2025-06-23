@@ -1,9 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"syscall"
@@ -38,10 +35,7 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) Release() uintptr {
 }
 
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -51,13 +45,10 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) QueryInterface(refiid, obj
 // GetKeyEventKind 获取键事件类型。
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetKeyEventKind() (COREWEBVIEW2_KEY_EVENT_KIND, error) {
 	var keyEventKind COREWEBVIEW2_KEY_EVENT_KIND
-	r, _, err := i.Vtbl.GetKeyEventKind.Call(
+	r, _, _ := i.Vtbl.GetKeyEventKind.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&keyEventKind)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -67,13 +58,10 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetKeyEventKind() (COREWEB
 // GetVirtualKey 获取按下或释放的虚拟键代码。
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetVirtualKey() (uint, error) {
 	var virtualKey uint
-	r, _, err := i.Vtbl.GetVirtualKey.Call(
+	r, _, _ := i.Vtbl.GetVirtualKey.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&virtualKey)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -95,13 +83,10 @@ type COREWEBVIEW2_PHYSICAL_KEY_STATUS struct {
 // GetPhysicalKeyStatus 获取有关按下或释放的键的物理状态的信息。
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetPhysicalKeyStatus() (COREWEBVIEW2_PHYSICAL_KEY_STATUS, error) {
 	var physicalKeyStatus COREWEBVIEW2_PHYSICAL_KEY_STATUS
-	r, _, err := i.Vtbl.GetPhysicalKeyStatus.Call(
+	r, _, _ := i.Vtbl.GetPhysicalKeyStatus.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&physicalKeyStatus)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return COREWEBVIEW2_PHYSICAL_KEY_STATUS{}, err
-	}
 	if r != 0 {
 		return physicalKeyStatus, syscall.Errno(r)
 	}
@@ -111,13 +96,10 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetPhysicalKeyStatus() (CO
 // SetHandled 设置事件是否已处理。
 //   - 如果 Handled 属性设置为 TRUE，则这会阻止 WebView 对此快捷键执行默认操作。否则，WebView 将执行快捷键的默认操作。
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) SetHandled(handled bool) error {
-	r, _, err := i.Vtbl.PutHandled.Call(
+	r, _, _ := i.Vtbl.PutHandled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(handled),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -127,13 +109,10 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) SetHandled(handled bool) e
 // GetKeyEventLParam 获取键事件的 LPARAM。
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetKeyEventLParam() (int, error) {
 	var lParam int
-	r, _, err := i.Vtbl.GetKeyEventLParam.Call(
+	r, _, _ := i.Vtbl.GetKeyEventLParam.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&lParam)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -143,13 +122,10 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetKeyEventLParam() (int, 
 // GetHandled 获取事件是否已处理。
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetHandled() (bool, error) {
 	var handled int32
-	r, _, err := i.Vtbl.GetHandled.Call(
+	r, _, _ := i.Vtbl.GetHandled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&handled)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}

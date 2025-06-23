@@ -1,7 +1,5 @@
 package edge
 
-// ok
-
 import (
 	"errors"
 	"github.com/twgh/xcgui/common"
@@ -42,10 +40,7 @@ func (i *ICoreWebView2CustomSchemeRegistration) Release() uintptr {
 }
 
 func (i *ICoreWebView2CustomSchemeRegistration) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -55,13 +50,10 @@ func (i *ICoreWebView2CustomSchemeRegistration) QueryInterface(refiid, object un
 // GetSchemeName 获取自定义方案名称。
 func (i *ICoreWebView2CustomSchemeRegistration) GetSchemeName() (string, error) {
 	var value *uint16
-	r, _, err := i.Vtbl.GetSchemeName.Call(
+	r, _, _ := i.Vtbl.GetSchemeName.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -73,13 +65,10 @@ func (i *ICoreWebView2CustomSchemeRegistration) GetSchemeName() (string, error) 
 // GetTreatAsSecure 获取采用此方案的网站是否会像 HTTPS 网站一样被视为安全上下文。
 func (i *ICoreWebView2CustomSchemeRegistration) GetTreatAsSecure() (bool, error) {
 	var value bool
-	r, _, err := i.Vtbl.GetTreatAsSecure.Call(
+	r, _, _ := i.Vtbl.GetTreatAsSecure.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -88,13 +77,10 @@ func (i *ICoreWebView2CustomSchemeRegistration) GetTreatAsSecure() (bool, error)
 
 // SetTreatAsSecure 设置该方案是否将被视为安全上下文。
 func (i *ICoreWebView2CustomSchemeRegistration) SetTreatAsSecure(value bool) error {
-	r, _, err := i.Vtbl.PutTreatAsSecure.Call(
+	r, _, _ := i.Vtbl.PutTreatAsSecure.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -105,14 +91,11 @@ func (i *ICoreWebView2CustomSchemeRegistration) SetTreatAsSecure(value bool) err
 func (i *ICoreWebView2CustomSchemeRegistration) GetAllowedOrigins() ([]string, error) {
 	var count uint32
 	var origins **uint16
-	r, _, err := i.Vtbl.GetAllowedOrigins.Call(
+	r, _, _ := i.Vtbl.GetAllowedOrigins.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&count)),
 		uintptr(unsafe.Pointer(&origins)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -140,14 +123,11 @@ func (i *ICoreWebView2CustomSchemeRegistration) SetAllowedOrigins(origins []stri
 		}
 		_origins[i] = _origin
 	}
-	r, _, err := i.Vtbl.SetAllowedOrigins.Call(
+	r, _, _ := i.Vtbl.SetAllowedOrigins.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(len(origins)),
 		uintptr(unsafe.Pointer(&_origins[0])),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -157,13 +137,10 @@ func (i *ICoreWebView2CustomSchemeRegistration) SetAllowedOrigins(origins []stri
 // GetHasAuthorityComponent 获取此方案是否具有权限组件。
 func (i *ICoreWebView2CustomSchemeRegistration) GetHasAuthorityComponent() (bool, error) {
 	var value bool
-	r, _, err := i.Vtbl.GetHasAuthorityComponent.Call(
+	r, _, _ := i.Vtbl.GetHasAuthorityComponent.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -172,13 +149,10 @@ func (i *ICoreWebView2CustomSchemeRegistration) GetHasAuthorityComponent() (bool
 
 // SetHasAuthorityComponent 设置具有此自定义方案的 URI 是否将包含一个授权组件（自定义方案的主机）。
 func (i *ICoreWebView2CustomSchemeRegistration) SetHasAuthorityComponent(value bool) error {
-	r, _, err := i.Vtbl.PutHasAuthorityComponent.Call(
+	r, _, _ := i.Vtbl.PutHasAuthorityComponent.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

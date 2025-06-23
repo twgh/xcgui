@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -32,10 +28,7 @@ func (i *ICoreWebView2_6) Release() uintptr {
 }
 
 func (i *ICoreWebView2_6) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -44,12 +37,9 @@ func (i *ICoreWebView2_6) QueryInterface(refiid, object unsafe.Pointer) error {
 
 // OpenTaskManagerWindow 打开浏览器任务管理器窗口。
 func (i *ICoreWebView2_6) OpenTaskManagerWindow() error {
-	r, _, err := i.Vtbl.OpenTaskManagerWindow.Call(
+	r, _, _ := i.Vtbl.OpenTaskManagerWindow.Call(
 		uintptr(unsafe.Pointer(i)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

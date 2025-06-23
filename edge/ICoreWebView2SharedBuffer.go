@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -36,10 +32,7 @@ func (i *ICoreWebView2SharedBuffer) Release() uintptr {
 }
 
 func (i *ICoreWebView2SharedBuffer) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -49,13 +42,10 @@ func (i *ICoreWebView2SharedBuffer) QueryInterface(refiid, object unsafe.Pointer
 // GetSize 获取共享缓冲区的大小（以字节为单位）.
 func (i *ICoreWebView2SharedBuffer) GetSize() (uint64, error) {
 	var size uint64
-	r, _, err := i.Vtbl.GetSize.Call(
+	r, _, _ := i.Vtbl.GetSize.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&size)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -65,13 +55,10 @@ func (i *ICoreWebView2SharedBuffer) GetSize() (uint64, error) {
 // GetBuffer 获取共享缓冲区的内存地址.
 func (i *ICoreWebView2SharedBuffer) GetBuffer() (unsafe.Pointer, error) {
 	var buffer unsafe.Pointer
-	r, _, err := i.Vtbl.GetBuffer.Call(
+	r, _, _ := i.Vtbl.GetBuffer.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&buffer)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -81,13 +68,10 @@ func (i *ICoreWebView2SharedBuffer) GetBuffer() (unsafe.Pointer, error) {
 // OpenStream 获取一个可用于访问共享缓冲区的 IStream 对象。
 func (i *ICoreWebView2SharedBuffer) OpenStream() (*IStream, error) {
 	var stream *IStream
-	r, _, err := i.Vtbl.OpenStream.Call(
+	r, _, _ := i.Vtbl.OpenStream.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&stream)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -97,13 +81,10 @@ func (i *ICoreWebView2SharedBuffer) OpenStream() (*IStream, error) {
 // GetFileMappingHandle 返回指向支持此共享缓冲区的文件映射对象的句柄。
 func (i *ICoreWebView2SharedBuffer) GetFileMappingHandle() (uintptr, error) {
 	var handle uintptr
-	r, _, err := i.Vtbl.GetFileMappingHandle.Call(
+	r, _, _ := i.Vtbl.GetFileMappingHandle.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&handle)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -115,12 +96,9 @@ func (i *ICoreWebView2SharedBuffer) GetFileMappingHandle() (uintptr, error) {
 //   - 脚本代码一旦不再需要访问共享缓冲区，就应该以共享缓冲区作为参数调用 chrome.webview.releaseBuffer 来释放底层资源。在调用 chrome.webview.releaseBuffer 后，如果脚本尝试访问该缓冲区，将会抛出 JavaScript TypeError 异常，提示正在访问一个已分离的 ArrayBuffer，这与尝试访问一个已转移的 ArrayBuffer 时抛出的异常相同。
 //   - 在原生端关闭缓冲区对象不会影响脚本对其的访问，而从脚本释放缓冲区也不会影响原生端对该缓冲区的访问。当原生端和脚本端都释放缓冲区时，底层的共享内存将由操作系统释放。
 func (i *ICoreWebView2SharedBuffer) Close() error {
-	r, _, err := i.Vtbl.Close.Call(
+	r, _, _ := i.Vtbl.Close.Call(
 		uintptr(unsafe.Pointer(i)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

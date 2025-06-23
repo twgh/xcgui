@@ -1,9 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"syscall"
@@ -38,10 +35,7 @@ func (i *ICoreWebView2WebResourceResponseView) Release() uintptr {
 }
 
 func (i *ICoreWebView2WebResourceResponseView) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -51,13 +45,10 @@ func (i *ICoreWebView2WebResourceResponseView) QueryInterface(refiid, object uns
 // GetHeaders 获取HTTP响应头。
 func (i *ICoreWebView2WebResourceResponseView) GetHeaders() (*ICoreWebView2HttpResponseHeaders, error) {
 	var headers *ICoreWebView2HttpResponseHeaders
-	r, _, err := i.Vtbl.GetHeaders.Call(
+	r, _, _ := i.Vtbl.GetHeaders.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&headers)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -67,13 +58,10 @@ func (i *ICoreWebView2WebResourceResponseView) GetHeaders() (*ICoreWebView2HttpR
 // GetStatusCode 获取 HTTP 响应状态码。
 func (i *ICoreWebView2WebResourceResponseView) GetStatusCode() (int, error) {
 	var statusCode int
-	r, _, err := i.Vtbl.GetStatusCode.Call(
+	r, _, _ := i.Vtbl.GetStatusCode.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&statusCode)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -83,13 +71,10 @@ func (i *ICoreWebView2WebResourceResponseView) GetStatusCode() (int, error) {
 // GetReasonPhrase 获取 HTTP 响应原因短语。
 func (i *ICoreWebView2WebResourceResponseView) GetReasonPhrase() (string, error) {
 	var reasonPhrase *uint16
-	r, _, err := i.Vtbl.GetReasonPhrase.Call(
+	r, _, _ := i.Vtbl.GetReasonPhrase.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&reasonPhrase)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -103,13 +88,10 @@ func (i *ICoreWebView2WebResourceResponseView) GetReasonPhrase() (string, error)
 //   - 如果在首次调用完成之前再次调用此方法，将在调用先前调用的处理程序的同时调用该处理程序。
 //   - 如果在首次调用完成之后调用此方法，该处理程序将立即被调用。
 func (i *ICoreWebView2WebResourceResponseView) GetContent(handler *ICoreWebView2WebResourceResponseViewGetContentCompletedHandler) error {
-	r, _, err := i.Vtbl.GetContent.Call(
+	r, _, _ := i.Vtbl.GetContent.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(handler)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

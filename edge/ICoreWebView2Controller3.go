@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -39,10 +35,7 @@ func (i *ICoreWebView2Controller3) Release() uintptr {
 }
 
 func (i *ICoreWebView2Controller3) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -52,13 +45,10 @@ func (i *ICoreWebView2Controller3) QueryInterface(refiid, object unsafe.Pointer)
 // GetRasterizationScale 获取当前光栅化缩放比例.
 func (i *ICoreWebView2Controller3) GetRasterizationScale() (float64, error) {
 	var scale float64
-	r, _, err := i.Vtbl.GetRasterizationScale.Call(
+	r, _, _ := i.Vtbl.GetRasterizationScale.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&scale)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -67,13 +57,10 @@ func (i *ICoreWebView2Controller3) GetRasterizationScale() (float64, error) {
 
 // SetRasterizationScale 设置光栅化缩放比例.
 func (i *ICoreWebView2Controller3) SetRasterizationScale(scale float64) error {
-	r, _, err := i.Vtbl.PutRasterizationScale.Call(
+	r, _, _ := i.Vtbl.PutRasterizationScale.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(scale),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -83,13 +70,10 @@ func (i *ICoreWebView2Controller3) SetRasterizationScale(scale float64) error {
 // GetShouldDetectMonitorScaleChanges 获取是否尝试跟踪显示器DPI缩放变化.
 func (i *ICoreWebView2Controller3) GetShouldDetectMonitorScaleChanges() (bool, error) {
 	var value bool
-	r, _, err := i.Vtbl.GetShouldDetectMonitorScaleChanges.Call(
+	r, _, _ := i.Vtbl.GetShouldDetectMonitorScaleChanges.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -98,13 +82,10 @@ func (i *ICoreWebView2Controller3) GetShouldDetectMonitorScaleChanges() (bool, e
 
 // SetShouldDetectMonitorScaleChanges 设置是否尝试跟踪显示器DPI缩放变化.
 func (i *ICoreWebView2Controller3) SetShouldDetectMonitorScaleChanges(value bool) error {
-	r, _, err := i.Vtbl.PutShouldDetectMonitorScaleChanges.Call(
+	r, _, _ := i.Vtbl.PutShouldDetectMonitorScaleChanges.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -115,13 +96,10 @@ func (i *ICoreWebView2Controller3) SetShouldDetectMonitorScaleChanges(value bool
 //   - BoundsMode 会影响 Bounds 和 RasterizationScale 属性的设置方式。
 func (i *ICoreWebView2Controller3) GetBoundsMode() (COREWEBVIEW2_BOUNDS_MODE, error) {
 	var boundsMode COREWEBVIEW2_BOUNDS_MODE
-	r, _, err := i.Vtbl.GetBoundsMode.Call(
+	r, _, _ := i.Vtbl.GetBoundsMode.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&boundsMode)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -131,13 +109,10 @@ func (i *ICoreWebView2Controller3) GetBoundsMode() (COREWEBVIEW2_BOUNDS_MODE, er
 // SetBoundsMode 设置边界模式.
 //   - BoundsMode 会影响 Bounds 和 RasterizationScale 属性的设置方式。
 func (i *ICoreWebView2Controller3) SetBoundsMode(boundsMode COREWEBVIEW2_BOUNDS_MODE) error {
-	r, _, err := i.Vtbl.PutBoundsMode.Call(
+	r, _, _ := i.Vtbl.PutBoundsMode.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(boundsMode),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -147,14 +122,11 @@ func (i *ICoreWebView2Controller3) SetBoundsMode(boundsMode COREWEBVIEW2_BOUNDS_
 // AddRasterizationScaleChanged 添加光栅化缩放比例改变事件处理程序.
 //   - 当 Webview 检测到显示器 DPI 缩放比例已更改、ShouldDetectMonitorScaleChanges 为 true 且 Webview 已更改 RasterizationScale 属性时，将引发此事件。
 func (i *ICoreWebView2Controller3) AddRasterizationScaleChanged(eventHandler *ICoreWebView2RasterizationScaleChangedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddRasterizationScaleChanged.Call(
+	r, _, _ := i.Vtbl.AddRasterizationScaleChanged.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -163,13 +135,10 @@ func (i *ICoreWebView2Controller3) AddRasterizationScaleChanged(eventHandler *IC
 
 // RemoveRasterizationScaleChanged 移除光栅化缩放比例改变事件处理程序.
 func (i *ICoreWebView2Controller3) RemoveRasterizationScaleChanged(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveRasterizationScaleChanged.Call(
+	r, _, _ := i.Vtbl.RemoveRasterizationScaleChanged.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

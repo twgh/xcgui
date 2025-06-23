@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -32,10 +28,7 @@ func (i *ICoreWebView2FrameCreatedEventArgs) Release() uintptr {
 }
 
 func (i *ICoreWebView2FrameCreatedEventArgs) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -45,13 +38,10 @@ func (i *ICoreWebView2FrameCreatedEventArgs) QueryInterface(refiid, object unsaf
 // GetFrame 获取创建的框架。
 func (i *ICoreWebView2FrameCreatedEventArgs) GetFrame() (*ICoreWebView2Frame, error) {
 	var frame *ICoreWebView2Frame
-	r, _, err := i.Vtbl.GetFrame.Call(
+	r, _, _ := i.Vtbl.GetFrame.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&frame)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}

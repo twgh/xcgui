@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -36,10 +32,7 @@ func (i *ICoreWebView2WebResourceRequestedEventArgs) Release() uintptr {
 }
 
 func (i *ICoreWebView2WebResourceRequestedEventArgs) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -50,13 +43,10 @@ func (i *ICoreWebView2WebResourceRequestedEventArgs) QueryInterface(refiid, obje
 //
 // response: 使用 ICoreWebView2Environment.CreateWebResourceResponse 创建一个空的 web 资源响应对象，然后修改它以构造响应。
 func (i *ICoreWebView2WebResourceRequestedEventArgs) SetResponse(response *ICoreWebView2WebResourceResponse) error {
-	r, _, err := i.Vtbl.PutResponse.Call(
+	r, _, _ := i.Vtbl.PutResponse.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(response)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -66,13 +56,10 @@ func (i *ICoreWebView2WebResourceRequestedEventArgs) SetResponse(response *ICore
 // GetRequest 获取请求。
 func (i *ICoreWebView2WebResourceRequestedEventArgs) GetRequest() (*ICoreWebView2WebResourceRequest, error) {
 	var request *ICoreWebView2WebResourceRequest
-	r, _, err := i.Vtbl.GetRequest.Call(
+	r, _, _ := i.Vtbl.GetRequest.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&request)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -82,13 +69,10 @@ func (i *ICoreWebView2WebResourceRequestedEventArgs) GetRequest() (*ICoreWebView
 // GetResponse 获取响应。
 func (i *ICoreWebView2WebResourceRequestedEventArgs) GetResponse() (*ICoreWebView2WebResourceResponse, error) {
 	var response *ICoreWebView2WebResourceResponse
-	r, _, err := i.Vtbl.GetResponse.Call(
+	r, _, _ := i.Vtbl.GetResponse.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&response)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -98,13 +82,10 @@ func (i *ICoreWebView2WebResourceRequestedEventArgs) GetResponse() (*ICoreWebVie
 // GetDeferral 获取 ICoreWebView2Deferral 对象，并将事件置于延迟状态。
 func (i *ICoreWebView2WebResourceRequestedEventArgs) GetDeferral() (*ICoreWebView2Deferral, error) {
 	var deferral *ICoreWebView2Deferral
-	r, _, err := i.Vtbl.GetDeferral.Call(
+	r, _, _ := i.Vtbl.GetDeferral.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&deferral)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -114,13 +95,10 @@ func (i *ICoreWebView2WebResourceRequestedEventArgs) GetDeferral() (*ICoreWebVie
 // GetResourceContext 获取资源上下文。
 func (i *ICoreWebView2WebResourceRequestedEventArgs) GetResourceContext() (COREWEBVIEW2_WEB_RESOURCE_CONTEXT, error) {
 	var context COREWEBVIEW2_WEB_RESOURCE_CONTEXT
-	r, _, err := i.Vtbl.GetResourceContext.Call(
+	r, _, _ := i.Vtbl.GetResourceContext.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&context)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}

@@ -1,9 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"syscall"
@@ -39,10 +36,7 @@ func (i *ICoreWebView2WebResourceRequest) Release() uintptr {
 }
 
 func (i *ICoreWebView2WebResourceRequest) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -52,13 +46,10 @@ func (i *ICoreWebView2WebResourceRequest) QueryInterface(refiid, object unsafe.P
 // GetUri 获取请求URI。
 func (i *ICoreWebView2WebResourceRequest) GetUri() (string, error) {
 	var _uri *uint16
-	r, _, err := i.Vtbl.GetUri.Call(
+	r, _, _ := i.Vtbl.GetUri.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_uri)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -70,13 +61,10 @@ func (i *ICoreWebView2WebResourceRequest) GetUri() (string, error) {
 // GetContent 获取请求的内容。
 func (i *ICoreWebView2WebResourceRequest) GetContent() ([]byte, error) {
 	var streamPtr uintptr
-	hr, _, err := i.Vtbl.GetContent.Call(
+	hr, _, _ := i.Vtbl.GetContent.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&streamPtr)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if hr != 0 {
 		return nil, syscall.Errno(hr)
 	}
@@ -94,13 +82,10 @@ func (i *ICoreWebView2WebResourceRequest) GetContent() ([]byte, error) {
 // GetMethod 获取请求的HTTP方法。
 func (i *ICoreWebView2WebResourceRequest) GetMethod() (string, error) {
 	var _method *uint16
-	r, _, err := i.Vtbl.GetMethod.Call(
+	r, _, _ := i.Vtbl.GetMethod.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_method)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -112,13 +97,10 @@ func (i *ICoreWebView2WebResourceRequest) GetMethod() (string, error) {
 // GetHeaders 获取请求的HTTP标头。
 func (i *ICoreWebView2WebResourceRequest) GetHeaders() (*ICoreWebView2HttpRequestHeaders, error) {
 	var headers *ICoreWebView2HttpRequestHeaders
-	r, _, err := i.Vtbl.GetHeaders.Call(
+	r, _, _ := i.Vtbl.GetHeaders.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&headers)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -131,13 +113,10 @@ func (i *ICoreWebView2WebResourceRequest) SetUri(uri string) error {
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.PutUri.Call(
+	r, _, _ := i.Vtbl.PutUri.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_uri)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -146,13 +125,10 @@ func (i *ICoreWebView2WebResourceRequest) SetUri(uri string) error {
 
 // SetContent 设置请求的内容。
 func (i *ICoreWebView2WebResourceRequest) SetContent(content *IStream) error {
-	r, _, err := i.Vtbl.PutContent.Call(
+	r, _, _ := i.Vtbl.PutContent.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(content)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -165,13 +141,10 @@ func (i *ICoreWebView2WebResourceRequest) SetMethod(method string) error {
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.PutMethod.Call(
+	r, _, _ := i.Vtbl.PutMethod.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_method)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

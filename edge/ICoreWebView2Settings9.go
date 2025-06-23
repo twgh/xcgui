@@ -1,11 +1,7 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -34,10 +30,7 @@ func (i *ICoreWebView2Settings9) Release() uintptr {
 }
 
 func (i *ICoreWebView2Settings9) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -47,13 +40,10 @@ func (i *ICoreWebView2Settings9) QueryInterface(refiid, object unsafe.Pointer) e
 // GetIsNonClientRegionSupportEnabled 获取是否启用非客户区域支持。
 func (i *ICoreWebView2Settings9) GetIsNonClientRegionSupportEnabled() (bool, error) {
 	var enabled bool
-	r, _, err := i.Vtbl.GetIsNonClientRegionSupportEnabled.Call(
+	r, _, _ := i.Vtbl.GetIsNonClientRegionSupportEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&enabled)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -65,13 +55,10 @@ func (i *ICoreWebView2Settings9) GetIsNonClientRegionSupportEnabled() (bool, err
 //   - 设置为拖动时，这些区域将被视为窗口的标题栏，支持拖动整个 WebView 及其宿主应用程序窗口；
 //   - 系统菜单在右键单击时显示，双击将触发最大化/恢复窗口大小。
 func (i *ICoreWebView2Settings9) SetIsNonClientRegionSupportEnabled(enabled bool) error {
-	r, _, err := i.Vtbl.PutIsNonClientRegionSupportEnabled.Call(
+	r, _, _ := i.Vtbl.PutIsNonClientRegionSupportEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(enabled),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

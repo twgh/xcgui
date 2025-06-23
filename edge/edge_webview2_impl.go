@@ -2,12 +2,13 @@ package edge
 
 import (
 	"errors"
-	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
 	"io/fs"
 	"strings"
 	"sync"
 	"syscall"
+
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
 )
 
 // NewWebViewEventImpl 创建一个 WebView 事件接口实现对象.
@@ -601,6 +602,26 @@ func (w *WebViewEventImpl) CursorChanged(sender *ICoreWebView2CompositionControl
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		ret = cbs[i].(func(sender *ICoreWebView2CompositionController, args *IUnknown) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// BrowserProcessExited 当浏览器进程退出时调用。
+func (w *WebViewEventImpl) BrowserProcessExited(sender *ICoreWebView2Environment, args *ICoreWebView2BrowserProcessExitedEventArgs) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "BrowserProcessExited")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2Environment, args *ICoreWebView2BrowserProcessExitedEventArgs) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// ProcessInfosChanged 当 WebView2 环境中的进程信息发生更改时调用。
+func (w *WebViewEventImpl) ProcessInfosChanged(sender *ICoreWebView2Environment, args *IUnknown) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "ProcessInfosChanged")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2Environment, args *IUnknown) uintptr)(sender, args)
 	}
 	return ret
 }

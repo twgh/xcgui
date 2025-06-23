@@ -1,9 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"syscall"
@@ -40,10 +37,7 @@ func (i *ICoreWebView2Frame) Release() uintptr {
 }
 
 func (i *ICoreWebView2Frame) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -55,13 +49,10 @@ func (i *ICoreWebView2Frame) QueryInterface(refiid, object unsafe.Pointer) error
 //   - 即使 iframe 被销毁，你也可以访问此属性。
 func (i *ICoreWebView2Frame) GetName() (string, error) {
 	var name *uint16
-	r, _, err := i.Vtbl.GetName.Call(
+	r, _, _ := i.Vtbl.GetName.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&name)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -85,14 +76,11 @@ func (i *ICoreWebView2Frame) Event_FrameDestroyed(impl *WebViewEventImpl, cb fun
 // AddNameChanged 添加名称改变事件处理程序.
 //   - 当 iframe 更改其 window.name 属性时触发。
 func (i *ICoreWebView2Frame) AddNameChanged(eventHandler *ICoreWebView2FrameNameChangedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddNameChanged.Call(
+	r, _, _ := i.Vtbl.AddNameChanged.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -101,13 +89,10 @@ func (i *ICoreWebView2Frame) AddNameChanged(eventHandler *ICoreWebView2FrameName
 
 // RemoveNameChanged 移除名称改变事件处理程序.
 func (i *ICoreWebView2Frame) RemoveNameChanged(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveNameChanged.Call(
+	r, _, _ := i.Vtbl.RemoveNameChanged.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -136,16 +121,13 @@ func (i *ICoreWebView2Frame) AddHostObjectToScriptWithOrigins(name string, objec
 		}
 	}
 
-	r, _, err := i.Vtbl.AddHostObjectToScriptWithOrigins.Call(
+	r, _, _ := i.Vtbl.AddHostObjectToScriptWithOrigins.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_name)),
 		uintptr(unsafe.Pointer(&object)),
 		uintptr(count),
 		uintptr(unsafe.Pointer(&originsPtr[0])),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -160,13 +142,10 @@ func (i *ICoreWebView2Frame) RemoveHostObjectFromScript(name string) error {
 	if err != nil {
 		return err
 	}
-	r, _, err := i.Vtbl.RemoveHostObjectFromScript.Call(
+	r, _, _ := i.Vtbl.RemoveHostObjectFromScript.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_name)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -176,14 +155,11 @@ func (i *ICoreWebView2Frame) RemoveHostObjectFromScript(name string) error {
 // AddDestroyed 添加框架销毁事件处理程序.
 //   - 当与此 ICoreWebView2Frame 对象对应的 iframe 被移除或包含该 iframe 的文档被销毁时触发。
 func (i *ICoreWebView2Frame) AddDestroyed(eventHandler *ICoreWebView2FrameDestroyedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddDestroyed.Call(
+	r, _, _ := i.Vtbl.AddDestroyed.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(eventHandler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -192,13 +168,10 @@ func (i *ICoreWebView2Frame) AddDestroyed(eventHandler *ICoreWebView2FrameDestro
 
 // RemoveDestroyed 移除框架销毁事件处理程序.
 func (i *ICoreWebView2Frame) RemoveDestroyed(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveDestroyed.Call(
+	r, _, _ := i.Vtbl.RemoveDestroyed.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(token.Value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -208,13 +181,10 @@ func (i *ICoreWebView2Frame) RemoveDestroyed(token EventRegistrationToken) error
 // IsDestroyed 检查框架是否已被销毁. 在销毁事件期间返回 true。
 func (i *ICoreWebView2Frame) IsDestroyed() (bool, error) {
 	var destroyed bool
-	r, _, err := i.Vtbl.IsDestroyed.Call(
+	r, _, _ := i.Vtbl.IsDestroyed.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&destroyed)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}

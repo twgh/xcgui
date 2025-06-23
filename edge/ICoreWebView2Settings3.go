@@ -1,11 +1,7 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -34,10 +30,7 @@ func (i *ICoreWebView2Settings3) Release() uintptr {
 }
 
 func (i *ICoreWebView2Settings3) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -47,13 +40,10 @@ func (i *ICoreWebView2Settings3) QueryInterface(refiid, object unsafe.Pointer) e
 // GetAreBrowserAcceleratorKeysEnabled 获取是否允许浏览器快捷键。
 func (i *ICoreWebView2Settings3) GetAreBrowserAcceleratorKeysEnabled() (bool, error) {
 	var enabled bool
-	r, _, err := i.Vtbl.GetAreBrowserAcceleratorKeysEnabled.Call(
+	r, _, _ := i.Vtbl.GetAreBrowserAcceleratorKeysEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&enabled)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -62,13 +52,10 @@ func (i *ICoreWebView2Settings3) GetAreBrowserAcceleratorKeysEnabled() (bool, er
 
 // SetAreBrowserAcceleratorKeysEnabled 设置是否允许浏览器快捷键。默认值为 true。此设置对 AcceleratorKeyPressed 事件没有影响。
 func (i *ICoreWebView2Settings3) SetAreBrowserAcceleratorKeysEnabled(enabled bool) error {
-	r, _, err := i.Vtbl.PutAreBrowserAcceleratorKeysEnabled.Call(
+	r, _, _ := i.Vtbl.PutAreBrowserAcceleratorKeysEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(enabled),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

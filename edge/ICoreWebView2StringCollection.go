@@ -1,9 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"syscall"
@@ -34,10 +31,7 @@ func (i *ICoreWebView2StringCollection) Release() uintptr {
 }
 
 func (i *ICoreWebView2StringCollection) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -47,13 +41,10 @@ func (i *ICoreWebView2StringCollection) QueryInterface(refiid, object unsafe.Poi
 // GetCount 获取集合中的字符串数量.
 func (i *ICoreWebView2StringCollection) GetCount() (uint32, error) {
 	var count uint32
-	r, _, err := i.Vtbl.GetCount.Call(
+	r, _, _ := i.Vtbl.GetCount.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&count)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -63,14 +54,11 @@ func (i *ICoreWebView2StringCollection) GetCount() (uint32, error) {
 // GetValueAtIndex 获取指定索引处的字符串值.
 func (i *ICoreWebView2StringCollection) GetValueAtIndex(index uint32) (string, error) {
 	var value *uint16
-	r, _, err := i.Vtbl.GetValueAtIndex.Call(
+	r, _, _ := i.Vtbl.GetValueAtIndex.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(index),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}

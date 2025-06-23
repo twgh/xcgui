@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -32,10 +28,7 @@ func (i *ICoreWebView2Environment2) Release() uintptr {
 }
 
 func (i *ICoreWebView2Environment2) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -59,7 +52,7 @@ func (i *ICoreWebView2Environment2) CreateWebResourceRequest(uri string, method 
 	if err != nil {
 		return nil, err
 	}
-	r, _, err := i.Vtbl.CreateWebResourceRequest.Call(
+	r, _, _ := i.Vtbl.CreateWebResourceRequest.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_uri)),
 		uintptr(unsafe.Pointer(_method)),
@@ -67,9 +60,6 @@ func (i *ICoreWebView2Environment2) CreateWebResourceRequest(uri string, method 
 		uintptr(unsafe.Pointer(_headers)),
 		uintptr(unsafe.Pointer(&request)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}

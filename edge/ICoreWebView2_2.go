@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -38,10 +34,7 @@ func (i *ICoreWebView2_2) Release() uintptr {
 }
 
 func (i *ICoreWebView2_2) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -51,13 +44,10 @@ func (i *ICoreWebView2_2) QueryInterface(refiid, object unsafe.Pointer) error {
 // GetEnvironment 获取用于创建此 ICoreWebView2 的 ICoreWebView2Environment.
 func (i *ICoreWebView2_2) GetEnvironment() (*ICoreWebView2Environment, error) {
 	var environment *ICoreWebView2Environment
-	r, _, err := i.Vtbl.GetEnvironment.Call(
+	r, _, _ := i.Vtbl.GetEnvironment.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&environment)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -66,13 +56,10 @@ func (i *ICoreWebView2_2) GetEnvironment() (*ICoreWebView2Environment, error) {
 
 // NavigateWithWebResourceRequest 使用构造的 ICoreWebView2WebResourceRequest 对象进行导航。
 func (i *ICoreWebView2_2) NavigateWithWebResourceRequest(request *ICoreWebView2WebResourceRequest) error {
-	r, _, err := i.Vtbl.NavigateWithWebResourceRequest.Call(
+	r, _, _ := i.Vtbl.NavigateWithWebResourceRequest.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(request)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -82,13 +69,10 @@ func (i *ICoreWebView2_2) NavigateWithWebResourceRequest(request *ICoreWebView2W
 // GetCookieManager 获取与此 ICoreWebView2 关联的 cookie 管理器对象。
 func (i *ICoreWebView2_2) GetCookieManager() (*ICoreWebView2CookieManager, error) {
 	var cookieManager *ICoreWebView2CookieManager
-	r, _, err := i.Vtbl.GetCookieManager.Call(
+	r, _, _ := i.Vtbl.GetCookieManager.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&cookieManager)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -101,14 +85,11 @@ func (i *ICoreWebView2_2) GetCookieManager() (*ICoreWebView2CookieManager, error
 //   - 无法保证 WebView 处理响应的顺序与宿主应用的处理程序运行的顺序。
 //   - 应用的处理程序不会阻止 WebView 处理响应。
 func (i *ICoreWebView2_2) AddWebResourceResponseReceived(handler *ICoreWebView2WebResourceResponseReceivedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddWebResourceResponseReceived.Call(
+	r, _, _ := i.Vtbl.AddWebResourceResponseReceived.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(handler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -117,13 +98,10 @@ func (i *ICoreWebView2_2) AddWebResourceResponseReceived(handler *ICoreWebView2W
 
 // RemoveWebResourceResponseReceived 移除 WebResourceResponseReceived 事件处理程序。
 func (i *ICoreWebView2_2) RemoveWebResourceResponseReceived(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveWebResourceResponseReceived.Call(
+	r, _, _ := i.Vtbl.RemoveWebResourceResponseReceived.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -133,14 +111,11 @@ func (i *ICoreWebView2_2) RemoveWebResourceResponseReceived(token EventRegistrat
 // AddDomContentLoaded 添加 DomContentLoaded 事件处理程序。
 //   - 当初始 HTML 文档解析完成时，会触发 DOMContentLoaded 事件。这与 HTML 中文档的 DOMContentLoaded 事件一致。
 func (i *ICoreWebView2_2) AddDomContentLoaded(handler *ICoreWebView2DOMContentLoadedEventHandler, token *EventRegistrationToken) error {
-	r, _, err := i.Vtbl.AddDomContentLoaded.Call(
+	r, _, _ := i.Vtbl.AddDomContentLoaded.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(handler)),
 		uintptr(unsafe.Pointer(token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -149,13 +124,10 @@ func (i *ICoreWebView2_2) AddDomContentLoaded(handler *ICoreWebView2DOMContentLo
 
 // RemoveDomContentLoaded 移除 DomContentLoaded 事件处理程序。
 func (i *ICoreWebView2_2) RemoveDomContentLoaded(token EventRegistrationToken) error {
-	r, _, err := i.Vtbl.RemoveDomContentLoaded.Call(
+	r, _, _ := i.Vtbl.RemoveDomContentLoaded.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&token)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -33,10 +29,7 @@ func (i *ICoreWebView2WebResourceResponseReceivedEventArgs) Release() uintptr {
 }
 
 func (i *ICoreWebView2WebResourceResponseReceivedEventArgs) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -48,13 +41,10 @@ func (i *ICoreWebView2WebResourceResponseReceivedEventArgs) QueryInterface(refii
 //   - 对此对象的修改对请求的处理方式没有影响，因为请求已被发送。
 func (i *ICoreWebView2WebResourceResponseReceivedEventArgs) GetRequest() (*ICoreWebView2WebResourceRequest, error) {
 	var request *ICoreWebView2WebResourceRequest
-	r, _, err := i.Vtbl.GetRequest.Call(
+	r, _, _ := i.Vtbl.GetRequest.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&request)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -64,13 +54,10 @@ func (i *ICoreWebView2WebResourceResponseReceivedEventArgs) GetRequest() (*ICore
 // GetResponse 获取收到的网络资源响应对象的视图。
 func (i *ICoreWebView2WebResourceResponseReceivedEventArgs) GetResponse() (*ICoreWebView2WebResourceResponseView, error) {
 	var response *ICoreWebView2WebResourceResponseView
-	r, _, err := i.Vtbl.GetResponse.Call(
+	r, _, _ := i.Vtbl.GetResponse.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&response)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}

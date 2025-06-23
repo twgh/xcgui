@@ -1,9 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 
@@ -36,10 +33,7 @@ func (i *ICoreWebView2HttpHeadersCollectionIterator) Release() uintptr {
 }
 
 func (i *ICoreWebView2HttpHeadersCollectionIterator) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -49,14 +43,11 @@ func (i *ICoreWebView2HttpHeadersCollectionIterator) QueryInterface(refiid, obje
 // GetCurrentHeader 获取当前HTTP头的名称和值。
 func (i *ICoreWebView2HttpHeadersCollectionIterator) GetCurrentHeader() (name string, value string, err error) {
 	var _name, _value *uint16
-	r, _, err := i.Vtbl.GetCurrentHeader.Call(
+	r, _, _ := i.Vtbl.GetCurrentHeader.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_name)),
 		uintptr(unsafe.Pointer(&_value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", "", err
-	}
 	if r != 0 {
 		return "", "", syscall.Errno(r)
 	}
@@ -70,13 +61,10 @@ func (i *ICoreWebView2HttpHeadersCollectionIterator) GetCurrentHeader() (name st
 // MoveNext 将迭代器移动到下一个HTTP头。
 func (i *ICoreWebView2HttpHeadersCollectionIterator) MoveNext() (bool, error) {
 	var hasNext int32
-	r, _, err := i.Vtbl.MoveNext.Call(
+	r, _, _ := i.Vtbl.MoveNext.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&hasNext)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -86,13 +74,10 @@ func (i *ICoreWebView2HttpHeadersCollectionIterator) MoveNext() (bool, error) {
 // GetHasCurrentHeader 检查迭代器是否有当前HTTP头。
 func (i *ICoreWebView2HttpHeadersCollectionIterator) GetHasCurrentHeader() (bool, error) {
 	var hasCurrent int32
-	r, _, err := i.Vtbl.GetHasCurrentHeader.Call(
+	r, _, _ := i.Vtbl.GetHasCurrentHeader.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&hasCurrent)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}

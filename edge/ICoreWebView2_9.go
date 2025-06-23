@@ -1,8 +1,6 @@
 package edge
 
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"github.com/twgh/xcgui/xc"
 	"syscall"
 	"unsafe"
@@ -39,10 +37,7 @@ func (i *ICoreWebView2_9) Release() uintptr {
 }
 
 func (i *ICoreWebView2_9) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -54,13 +49,10 @@ func (i *ICoreWebView2_9) QueryInterface(refiid, object unsafe.Pointer) error {
 //   - 隐藏 WebView 会隐式隐藏该对话框，但不会改变此属性的值。
 func (i *ICoreWebView2_9) GetIsDefaultDownloadDialogOpen() (bool, error) {
 	var isOpen bool
-	r, _, err := i.Vtbl.GetIsDefaultDownloadDialogOpen.Call(
+	r, _, _ := i.Vtbl.GetIsDefaultDownloadDialogOpen.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isOpen)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -73,12 +65,9 @@ func (i *ICoreWebView2_9) GetIsDefaultDownloadDialogOpen() (bool, error) {
 //   - 如果对话框处于关闭状态，调用此方法将引发 IsDefaultDownloadDialogOpenChanged 事件。
 //   - 如果对话框已打开，则此方法无效。
 func (i *ICoreWebView2_9) OpenDefaultDownloadDialog() error {
-	r, _, err := i.Vtbl.OpenDefaultDownloadDialog.Call(
+	r, _, _ := i.Vtbl.OpenDefaultDownloadDialog.Call(
 		uintptr(unsafe.Pointer(i)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -89,12 +78,9 @@ func (i *ICoreWebView2_9) OpenDefaultDownloadDialog() error {
 //   - 调用此方法时，如果对话框处于打开状态，将引发 IsDefaultDownloadDialogOpenChanged 事件。
 //   - 如果对话框已关闭，则此方法无效。
 func (i *ICoreWebView2_9) CloseDefaultDownloadDialog() error {
-	r, _, err := i.Vtbl.CloseDefaultDownloadDialog.Call(
+	r, _, _ := i.Vtbl.CloseDefaultDownloadDialog.Call(
 		uintptr(unsafe.Pointer(i)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -104,13 +90,10 @@ func (i *ICoreWebView2_9) CloseDefaultDownloadDialog() error {
 // GetDefaultDownloadDialogCornerAlignment 获取默认下载对话框的边角对齐方式。
 func (i *ICoreWebView2_9) GetDefaultDownloadDialogCornerAlignment() (COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT, error) {
 	var alignment COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT
-	r, _, err := i.Vtbl.GetDefaultDownloadDialogCornerAlignment.Call(
+	r, _, _ := i.Vtbl.GetDefaultDownloadDialogCornerAlignment.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&alignment)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -124,13 +107,10 @@ func (i *ICoreWebView2_9) GetDefaultDownloadDialogCornerAlignment() (COREWEBVIEW
 //   - 使用 PutDefaultDownloadDialogMargin 设置相对于该角的边距。
 //   - 应在初始化期间设置角对齐方式和边距，以确保在首次计算布局时正确应用它们，否则它们将不会生效，直到下次更新 WebView 的位置或大小。
 func (i *ICoreWebView2_9) SetDefaultDownloadDialogCornerAlignment(alignment COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT) error {
-	r, _, err := i.Vtbl.PutDefaultDownloadDialogCornerAlignment.Call(
+	r, _, _ := i.Vtbl.PutDefaultDownloadDialogCornerAlignment.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(alignment),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -140,13 +120,10 @@ func (i *ICoreWebView2_9) SetDefaultDownloadDialogCornerAlignment(alignment CORE
 // GetDefaultDownloadDialogMargin 获取默认下载对话框的边距.
 func (i *ICoreWebView2_9) GetDefaultDownloadDialogMargin() (xc.POINT, error) {
 	var margin xc.POINT
-	r, _, err := i.Vtbl.GetDefaultDownloadDialogMargin.Call(
+	r, _, _ := i.Vtbl.GetDefaultDownloadDialogMargin.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&margin)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return xc.POINT{}, err
-	}
 	if r != 0 {
 		return xc.POINT{}, syscall.Errno(r)
 	}
@@ -159,13 +136,10 @@ func (i *ICoreWebView2_9) GetDefaultDownloadDialogMargin() (xc.POINT, error) {
 //   - 使用(0, 0)可使对话框与 WebView 角对齐且无边距。
 //   - 应在初始化期间设置角对齐方式和边距，以确保在首次计算布局时它们能正确应用，否则它们将不会生效，直到下次 WebView 位置或大小更新。
 func (i *ICoreWebView2_9) SetDefaultDownloadDialogMargin(margin xc.POINT) error {
-	r, _, err := i.Vtbl.PutDefaultDownloadDialogMargin.Call(
+	r, _, _ := i.Vtbl.PutDefaultDownloadDialogMargin.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&margin)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

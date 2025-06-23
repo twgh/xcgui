@@ -1,11 +1,7 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -34,10 +30,7 @@ func (i *ICoreWebView2EnvironmentOptions6) Release() uintptr {
 }
 
 func (i *ICoreWebView2EnvironmentOptions6) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -47,13 +40,10 @@ func (i *ICoreWebView2EnvironmentOptions6) QueryInterface(refiid, object unsafe.
 // GetAreBrowserExtensionsEnabled 获取是否启用浏览器扩展功能.
 func (i *ICoreWebView2EnvironmentOptions6) GetAreBrowserExtensionsEnabled() (bool, error) {
 	var value bool
-	r, _, err := i.Vtbl.GetAreBrowserExtensionsEnabled.Call(
+	r, _, _ := i.Vtbl.GetAreBrowserExtensionsEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -62,13 +52,10 @@ func (i *ICoreWebView2EnvironmentOptions6) GetAreBrowserExtensionsEnabled() (boo
 
 // SetAreBrowserExtensionsEnabled 设置是否启用浏览器扩展功能. 默认为 false.
 func (i *ICoreWebView2EnvironmentOptions6) SetAreBrowserExtensionsEnabled(value bool) error {
-	r, _, err := i.Vtbl.PutAreBrowserExtensionsEnabled.Call(
+	r, _, _ := i.Vtbl.PutAreBrowserExtensionsEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(value),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

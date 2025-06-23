@@ -1,9 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/wapi"
 	"github.com/twgh/xcgui/xc"
 	"syscall"
@@ -88,10 +85,7 @@ func (i *ICoreWebView2PointerInfo) Release() uintptr {
 }
 
 func (i *ICoreWebView2PointerInfo) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -101,13 +95,10 @@ func (i *ICoreWebView2PointerInfo) QueryInterface(refiid, object unsafe.Pointer)
 // GetPointerKind 获取指针类型.
 func (i *ICoreWebView2PointerInfo) GetPointerKind() (wapi.PT_, error) {
 	var kind wapi.PT_
-	r, _, err := i.Vtbl.GetPointerKind.Call(
+	r, _, _ := i.Vtbl.GetPointerKind.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&kind)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -123,13 +114,10 @@ func (i *ICoreWebView2PointerInfo) MustGetPointerKind() wapi.PT_ {
 
 // SetPointerKind 设置指针类型.
 func (i *ICoreWebView2PointerInfo) SetPointerKind(kind wapi.PT_) error {
-	r, _, err := i.Vtbl.PutPointerKind.Call(
+	r, _, _ := i.Vtbl.PutPointerKind.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(kind),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -139,13 +127,10 @@ func (i *ICoreWebView2PointerInfo) SetPointerKind(kind wapi.PT_) error {
 // GetPointerId 获取指针ID.
 func (i *ICoreWebView2PointerInfo) GetPointerId() (uint32, error) {
 	var id uint32
-	r, _, err := i.Vtbl.GetPointerId.Call(
+	r, _, _ := i.Vtbl.GetPointerId.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&id)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -161,13 +146,10 @@ func (i *ICoreWebView2PointerInfo) MustGetPointerId() uint32 {
 
 // SetPointerId 设置指针ID.
 func (i *ICoreWebView2PointerInfo) SetPointerId(id uint32) error {
-	r, _, err := i.Vtbl.PutPointerId.Call(
+	r, _, _ := i.Vtbl.PutPointerId.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(id),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -177,13 +159,10 @@ func (i *ICoreWebView2PointerInfo) SetPointerId(id uint32) error {
 // GetFrameId 获取帧ID.
 func (i *ICoreWebView2PointerInfo) GetFrameId() (uint32, error) {
 	var id uint32
-	r, _, err := i.Vtbl.GetFrameId.Call(
+	r, _, _ := i.Vtbl.GetFrameId.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&id)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -199,13 +178,10 @@ func (i *ICoreWebView2PointerInfo) MustGetFrameId() uint32 {
 
 // SetFrameId 设置帧ID.
 func (i *ICoreWebView2PointerInfo) SetFrameId(id uint32) error {
-	r, _, err := i.Vtbl.PutFrameId.Call(
+	r, _, _ := i.Vtbl.PutFrameId.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(id),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -215,13 +191,10 @@ func (i *ICoreWebView2PointerInfo) SetFrameId(id uint32) error {
 // GetPointerFlags 获取指针标志.
 func (i *ICoreWebView2PointerInfo) GetPointerFlags() (wapi.POINTER_FLAG_, error) {
 	var flags wapi.POINTER_FLAG_
-	r, _, err := i.Vtbl.GetPointerFlags.Call(
+	r, _, _ := i.Vtbl.GetPointerFlags.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&flags)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -237,13 +210,10 @@ func (i *ICoreWebView2PointerInfo) MustGetPointerFlags() wapi.POINTER_FLAG_ {
 
 // SetPointerFlags 设置指针标志.
 func (i *ICoreWebView2PointerInfo) SetPointerFlags(flags wapi.POINTER_FLAG_) error {
-	r, _, err := i.Vtbl.PutPointerFlags.Call(
+	r, _, _ := i.Vtbl.PutPointerFlags.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(flags),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -253,13 +223,10 @@ func (i *ICoreWebView2PointerInfo) SetPointerFlags(flags wapi.POINTER_FLAG_) err
 // GetPointerDeviceRect 获取指针设备矩形区域.
 func (i *ICoreWebView2PointerInfo) GetPointerDeviceRect() (xc.RECT, error) {
 	var rect xc.RECT
-	r, _, err := i.Vtbl.GetPointerDeviceRect.Call(
+	r, _, _ := i.Vtbl.GetPointerDeviceRect.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&rect)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return xc.RECT{}, err
-	}
 	if r != 0 {
 		return xc.RECT{}, syscall.Errno(r)
 	}
@@ -275,13 +242,10 @@ func (i *ICoreWebView2PointerInfo) MustGetPointerDeviceRect() xc.RECT {
 
 // SetPointerDeviceRect 设置指针设备矩形区域.
 func (i *ICoreWebView2PointerInfo) SetPointerDeviceRect(rect xc.RECT) error {
-	r, _, err := i.Vtbl.PutPointerDeviceRect.Call(
+	r, _, _ := i.Vtbl.PutPointerDeviceRect.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&rect)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -291,13 +255,10 @@ func (i *ICoreWebView2PointerInfo) SetPointerDeviceRect(rect xc.RECT) error {
 // GetDisplayRect 获取显示矩形区域.
 func (i *ICoreWebView2PointerInfo) GetDisplayRect() (xc.RECT, error) {
 	var rect xc.RECT
-	r, _, err := i.Vtbl.GetDisplayRect.Call(
+	r, _, _ := i.Vtbl.GetDisplayRect.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&rect)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return xc.RECT{}, err
-	}
 	if r != 0 {
 		return xc.RECT{}, syscall.Errno(r)
 	}
@@ -313,13 +274,10 @@ func (i *ICoreWebView2PointerInfo) MustGetDisplayRect() xc.RECT {
 
 // SetDisplayRect 设置显示矩形区域.
 func (i *ICoreWebView2PointerInfo) SetDisplayRect(rect xc.RECT) error {
-	r, _, err := i.Vtbl.PutDisplayRect.Call(
+	r, _, _ := i.Vtbl.PutDisplayRect.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&rect)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -329,13 +287,10 @@ func (i *ICoreWebView2PointerInfo) SetDisplayRect(rect xc.RECT) error {
 // GetPixelLocation 获取像素位置.
 func (i *ICoreWebView2PointerInfo) GetPixelLocation() (xc.POINT, error) {
 	var point xc.POINT
-	r, _, err := i.Vtbl.GetPixelLocation.Call(
+	r, _, _ := i.Vtbl.GetPixelLocation.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&point)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return xc.POINT{}, err
-	}
 	if r != 0 {
 		return xc.POINT{}, syscall.Errno(r)
 	}
@@ -351,13 +306,10 @@ func (i *ICoreWebView2PointerInfo) MustGetPixelLocation() xc.POINT {
 
 // SetPixelLocation 设置像素位置.
 func (i *ICoreWebView2PointerInfo) SetPixelLocation(point xc.POINT) error {
-	r, _, err := i.Vtbl.PutPixelLocation.Call(
+	r, _, _ := i.Vtbl.PutPixelLocation.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&point)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -367,13 +319,10 @@ func (i *ICoreWebView2PointerInfo) SetPixelLocation(point xc.POINT) error {
 // GetHimetricLocation 获取 HIMETRIC 坐标位置.
 func (i *ICoreWebView2PointerInfo) GetHimetricLocation() (xc.POINT, error) {
 	var point xc.POINT
-	r, _, err := i.Vtbl.GetHimetricLocation.Call(
+	r, _, _ := i.Vtbl.GetHimetricLocation.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&point)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return xc.POINT{}, err
-	}
 	if r != 0 {
 		return xc.POINT{}, syscall.Errno(r)
 	}
@@ -389,13 +338,10 @@ func (i *ICoreWebView2PointerInfo) MustGetHimetricLocation() xc.POINT {
 
 // SetHimetricLocation 设置 HIMETRIC 坐标位置.
 func (i *ICoreWebView2PointerInfo) SetHimetricLocation(point xc.POINT) error {
-	r, _, err := i.Vtbl.PutHimetricLocation.Call(
+	r, _, _ := i.Vtbl.PutHimetricLocation.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&point)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -405,13 +351,10 @@ func (i *ICoreWebView2PointerInfo) SetHimetricLocation(point xc.POINT) error {
 // GetPixelLocationRaw 获取原始像素坐标位置.
 func (i *ICoreWebView2PointerInfo) GetPixelLocationRaw() (xc.POINT, error) {
 	var point xc.POINT
-	r, _, err := i.Vtbl.GetPixelLocationRaw.Call(
+	r, _, _ := i.Vtbl.GetPixelLocationRaw.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&point)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return xc.POINT{}, err
-	}
 	if r != 0 {
 		return xc.POINT{}, syscall.Errno(r)
 	}
@@ -427,13 +370,10 @@ func (i *ICoreWebView2PointerInfo) MustGetPixelLocationRaw() xc.POINT {
 
 // SetPixelLocationRaw 设置原始像素坐标位置.
 func (i *ICoreWebView2PointerInfo) SetPixelLocationRaw(point xc.POINT) error {
-	r, _, err := i.Vtbl.PutPixelLocationRaw.Call(
+	r, _, _ := i.Vtbl.PutPixelLocationRaw.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&point)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -443,13 +383,10 @@ func (i *ICoreWebView2PointerInfo) SetPixelLocationRaw(point xc.POINT) error {
 // GetHimetricLocationRaw 获取原始 HIMETRIC 坐标位置.
 func (i *ICoreWebView2PointerInfo) GetHimetricLocationRaw() (xc.POINT, error) {
 	var point xc.POINT
-	r, _, err := i.Vtbl.GetHimetricLocationRaw.Call(
+	r, _, _ := i.Vtbl.GetHimetricLocationRaw.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&point)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return xc.POINT{}, err
-	}
 	if r != 0 {
 		return xc.POINT{}, syscall.Errno(r)
 	}
@@ -465,13 +402,10 @@ func (i *ICoreWebView2PointerInfo) MustGetHimetricLocationRaw() xc.POINT {
 
 // SetHimetricLocationRaw 设置原始 HIMETRIC 坐标位置.
 func (i *ICoreWebView2PointerInfo) SetHimetricLocationRaw(point xc.POINT) error {
-	r, _, err := i.Vtbl.PutHimetricLocationRaw.Call(
+	r, _, _ := i.Vtbl.PutHimetricLocationRaw.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&point)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -481,13 +415,10 @@ func (i *ICoreWebView2PointerInfo) SetHimetricLocationRaw(point xc.POINT) error 
 // GetTime 获取时间戳.
 func (i *ICoreWebView2PointerInfo) GetTime() (uint32, error) {
 	var time uint32
-	r, _, err := i.Vtbl.GetTime.Call(
+	r, _, _ := i.Vtbl.GetTime.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&time)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -503,13 +434,10 @@ func (i *ICoreWebView2PointerInfo) MustGetTime() uint32 {
 
 // SetTime 设置时间戳.
 func (i *ICoreWebView2PointerInfo) SetTime(time uint32) error {
-	r, _, err := i.Vtbl.PutTime.Call(
+	r, _, _ := i.Vtbl.PutTime.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(time),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -519,13 +447,10 @@ func (i *ICoreWebView2PointerInfo) SetTime(time uint32) error {
 // GetHistoryCount 获取历史记录数量.
 func (i *ICoreWebView2PointerInfo) GetHistoryCount() (uint32, error) {
 	var count uint32
-	r, _, err := i.Vtbl.GetHistoryCount.Call(
+	r, _, _ := i.Vtbl.GetHistoryCount.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&count)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -541,13 +466,10 @@ func (i *ICoreWebView2PointerInfo) MustGetHistoryCount() uint32 {
 
 // SetHistoryCount 设置历史记录数量.
 func (i *ICoreWebView2PointerInfo) SetHistoryCount(count uint32) error {
-	r, _, err := i.Vtbl.PutHistoryCount.Call(
+	r, _, _ := i.Vtbl.PutHistoryCount.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(count),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -557,13 +479,10 @@ func (i *ICoreWebView2PointerInfo) SetHistoryCount(count uint32) error {
 // GetInputData 获取输入数据.
 func (i *ICoreWebView2PointerInfo) GetInputData() (int32, error) {
 	var data int32
-	r, _, err := i.Vtbl.GetInputData.Call(
+	r, _, _ := i.Vtbl.GetInputData.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&data)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -579,13 +498,10 @@ func (i *ICoreWebView2PointerInfo) MustGetInputData() int32 {
 
 // SetInputData 设置输入数据.
 func (i *ICoreWebView2PointerInfo) SetInputData(data int32) error {
-	r, _, err := i.Vtbl.PutInputData.Call(
+	r, _, _ := i.Vtbl.PutInputData.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(data),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -595,13 +511,10 @@ func (i *ICoreWebView2PointerInfo) SetInputData(data int32) error {
 // GetKeyStates 获取按键状态.
 func (i *ICoreWebView2PointerInfo) GetKeyStates() (uint32, error) {
 	var states uint32
-	r, _, err := i.Vtbl.GetKeyStates.Call(
+	r, _, _ := i.Vtbl.GetKeyStates.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&states)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -617,13 +530,10 @@ func (i *ICoreWebView2PointerInfo) MustGetKeyStates() uint32 {
 
 // SetKeyStates 设置按键状态.
 func (i *ICoreWebView2PointerInfo) SetKeyStates(states uint32) error {
-	r, _, err := i.Vtbl.PutKeyStates.Call(
+	r, _, _ := i.Vtbl.PutKeyStates.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(states),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -633,13 +543,10 @@ func (i *ICoreWebView2PointerInfo) SetKeyStates(states uint32) error {
 // GetPerformanceCount 获取性能计数器值.
 func (i *ICoreWebView2PointerInfo) GetPerformanceCount() (uint64, error) {
 	var count uint64
-	r, _, err := i.Vtbl.GetPerformanceCount.Call(
+	r, _, _ := i.Vtbl.GetPerformanceCount.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&count)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -655,13 +562,10 @@ func (i *ICoreWebView2PointerInfo) MustGetPerformanceCount() uint64 {
 
 // SetPerformanceCount 设置性能计数器值.
 func (i *ICoreWebView2PointerInfo) SetPerformanceCount(count uint64) error {
-	r, _, err := i.Vtbl.PutPerformanceCount.Call(
+	r, _, _ := i.Vtbl.PutPerformanceCount.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(count),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -671,13 +575,10 @@ func (i *ICoreWebView2PointerInfo) SetPerformanceCount(count uint64) error {
 // GetButtonChangeKind 获取按钮改变类型.
 func (i *ICoreWebView2PointerInfo) GetButtonChangeKind() (wapi.POINTER_CHANGE_, error) {
 	var kind wapi.POINTER_CHANGE_
-	r, _, err := i.Vtbl.GetButtonChangeKind.Call(
+	r, _, _ := i.Vtbl.GetButtonChangeKind.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&kind)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -693,13 +594,10 @@ func (i *ICoreWebView2PointerInfo) MustGetButtonChangeKind() wapi.POINTER_CHANGE
 
 // SetButtonChangeKind 设置按钮改变类型.
 func (i *ICoreWebView2PointerInfo) SetButtonChangeKind(kind wapi.POINTER_CHANGE_) error {
-	r, _, err := i.Vtbl.PutButtonChangeKind.Call(
+	r, _, _ := i.Vtbl.PutButtonChangeKind.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(kind),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -709,13 +607,10 @@ func (i *ICoreWebView2PointerInfo) SetButtonChangeKind(kind wapi.POINTER_CHANGE_
 // GetPenFlags 获取笔标志.
 func (i *ICoreWebView2PointerInfo) GetPenFlags() (wapi.PEN_FLAG_, error) {
 	var flags wapi.PEN_FLAG_
-	r, _, err := i.Vtbl.GetPenFlags.Call(
+	r, _, _ := i.Vtbl.GetPenFlags.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&flags)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -724,13 +619,10 @@ func (i *ICoreWebView2PointerInfo) GetPenFlags() (wapi.PEN_FLAG_, error) {
 
 // SetPenFlags 设置笔标志.
 func (i *ICoreWebView2PointerInfo) SetPenFlags(flags wapi.PEN_FLAG_) error {
-	r, _, err := i.Vtbl.PutPenFlags.Call(
+	r, _, _ := i.Vtbl.PutPenFlags.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(flags),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -740,13 +632,10 @@ func (i *ICoreWebView2PointerInfo) SetPenFlags(flags wapi.PEN_FLAG_) error {
 // GetPenMask 获取笔掩码.
 func (i *ICoreWebView2PointerInfo) GetPenMask() (wapi.PEN_MASK_, error) {
 	var mask wapi.PEN_MASK_
-	r, _, err := i.Vtbl.GetPenMask.Call(
+	r, _, _ := i.Vtbl.GetPenMask.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&mask)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -762,13 +651,10 @@ func (i *ICoreWebView2PointerInfo) MustGetPenMask() wapi.PEN_MASK_ {
 
 // SetPenMask 设置笔掩码.
 func (i *ICoreWebView2PointerInfo) SetPenMask(mask wapi.PEN_MASK_) error {
-	r, _, err := i.Vtbl.PutPenMask.Call(
+	r, _, _ := i.Vtbl.PutPenMask.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(mask),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -778,13 +664,10 @@ func (i *ICoreWebView2PointerInfo) SetPenMask(mask wapi.PEN_MASK_) error {
 // GetPenPressure 获取笔压力值.
 func (i *ICoreWebView2PointerInfo) GetPenPressure() (uint32, error) {
 	var pressure uint32
-	r, _, err := i.Vtbl.GetPenPressure.Call(
+	r, _, _ := i.Vtbl.GetPenPressure.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&pressure)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -800,13 +683,10 @@ func (i *ICoreWebView2PointerInfo) MustGetPenPressure() uint32 {
 
 // SetPenPressure 设置笔压力值.
 func (i *ICoreWebView2PointerInfo) SetPenPressure(pressure uint32) error {
-	r, _, err := i.Vtbl.PutPenPressure.Call(
+	r, _, _ := i.Vtbl.PutPenPressure.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(pressure),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -816,13 +696,10 @@ func (i *ICoreWebView2PointerInfo) SetPenPressure(pressure uint32) error {
 // GetPenRotation 获取笔旋转角度.
 func (i *ICoreWebView2PointerInfo) GetPenRotation() (uint32, error) {
 	var rotation uint32
-	r, _, err := i.Vtbl.GetPenRotation.Call(
+	r, _, _ := i.Vtbl.GetPenRotation.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&rotation)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -838,13 +715,10 @@ func (i *ICoreWebView2PointerInfo) MustGetPenRotation() uint32 {
 
 // SetPenRotation 设置笔旋转角度.
 func (i *ICoreWebView2PointerInfo) SetPenRotation(rotation uint32) error {
-	r, _, err := i.Vtbl.PutPenRotation.Call(
+	r, _, _ := i.Vtbl.PutPenRotation.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(rotation),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -854,13 +728,10 @@ func (i *ICoreWebView2PointerInfo) SetPenRotation(rotation uint32) error {
 // GetPenTiltX 获取笔的X轴倾斜角度.
 func (i *ICoreWebView2PointerInfo) GetPenTiltX() (int32, error) {
 	var tiltX int32
-	r, _, err := i.Vtbl.GetPenTiltX.Call(
+	r, _, _ := i.Vtbl.GetPenTiltX.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&tiltX)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -876,13 +747,10 @@ func (i *ICoreWebView2PointerInfo) MustGetPenTiltX() int32 {
 
 // SetPenTiltX 设置笔的X轴倾斜角度.
 func (i *ICoreWebView2PointerInfo) SetPenTiltX(tiltX int32) error {
-	r, _, err := i.Vtbl.PutPenTiltX.Call(
+	r, _, _ := i.Vtbl.PutPenTiltX.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(tiltX),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -892,13 +760,10 @@ func (i *ICoreWebView2PointerInfo) SetPenTiltX(tiltX int32) error {
 // GetPenTiltY 获取笔的Y轴倾斜角度.
 func (i *ICoreWebView2PointerInfo) GetPenTiltY() (int32, error) {
 	var tiltY int32
-	r, _, err := i.Vtbl.GetPenTiltY.Call(
+	r, _, _ := i.Vtbl.GetPenTiltY.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&tiltY)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -914,13 +779,10 @@ func (i *ICoreWebView2PointerInfo) MustGetPenTiltY() int32 {
 
 // SetPenTiltY 设置笔的Y轴倾斜角度.
 func (i *ICoreWebView2PointerInfo) SetPenTiltY(tiltY int32) error {
-	r, _, err := i.Vtbl.PutPenTiltY.Call(
+	r, _, _ := i.Vtbl.PutPenTiltY.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(tiltY),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -930,13 +792,10 @@ func (i *ICoreWebView2PointerInfo) SetPenTiltY(tiltY int32) error {
 // GetTouchFlags 获取触摸标志.
 func (i *ICoreWebView2PointerInfo) GetTouchFlags() (uint32, error) {
 	var flags uint32
-	r, _, err := i.Vtbl.GetTouchFlags.Call(
+	r, _, _ := i.Vtbl.GetTouchFlags.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&flags)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -952,13 +811,10 @@ func (i *ICoreWebView2PointerInfo) MustGetTouchFlags() uint32 {
 
 // SetTouchFlags 设置触摸标志.
 func (i *ICoreWebView2PointerInfo) SetTouchFlags(flags uint32) error {
-	r, _, err := i.Vtbl.PutTouchFlags.Call(
+	r, _, _ := i.Vtbl.PutTouchFlags.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(flags),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -968,13 +824,10 @@ func (i *ICoreWebView2PointerInfo) SetTouchFlags(flags uint32) error {
 // GetTouchMask 获取触摸掩码.
 func (i *ICoreWebView2PointerInfo) GetTouchMask() (wapi.TOUCH_MASK_, error) {
 	var mask wapi.TOUCH_MASK_
-	r, _, err := i.Vtbl.GetTouchMask.Call(
+	r, _, _ := i.Vtbl.GetTouchMask.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&mask)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -983,13 +836,10 @@ func (i *ICoreWebView2PointerInfo) GetTouchMask() (wapi.TOUCH_MASK_, error) {
 
 // SetTouchMask 设置触摸掩码.
 func (i *ICoreWebView2PointerInfo) SetTouchMask(mask wapi.TOUCH_MASK_) error {
-	r, _, err := i.Vtbl.PutTouchMask.Call(
+	r, _, _ := i.Vtbl.PutTouchMask.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(mask),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -999,13 +849,10 @@ func (i *ICoreWebView2PointerInfo) SetTouchMask(mask wapi.TOUCH_MASK_) error {
 // GetTouchContact 获取触摸接触区域.
 func (i *ICoreWebView2PointerInfo) GetTouchContact() (xc.RECT, error) {
 	var rect xc.RECT
-	r, _, err := i.Vtbl.GetTouchContact.Call(
+	r, _, _ := i.Vtbl.GetTouchContact.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&rect)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return xc.RECT{}, err
-	}
 	if r != 0 {
 		return xc.RECT{}, syscall.Errno(r)
 	}
@@ -1021,13 +868,10 @@ func (i *ICoreWebView2PointerInfo) MustGetTouchContact() xc.RECT {
 
 // SetTouchContact 设置触摸接触区域.
 func (i *ICoreWebView2PointerInfo) SetTouchContact(rect xc.RECT) error {
-	r, _, err := i.Vtbl.PutTouchContact.Call(
+	r, _, _ := i.Vtbl.PutTouchContact.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&rect)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -1037,13 +881,10 @@ func (i *ICoreWebView2PointerInfo) SetTouchContact(rect xc.RECT) error {
 // GetTouchContactRaw 获取原始触摸接触区域.
 func (i *ICoreWebView2PointerInfo) GetTouchContactRaw() (xc.RECT, error) {
 	var rect xc.RECT
-	r, _, err := i.Vtbl.GetTouchContactRaw.Call(
+	r, _, _ := i.Vtbl.GetTouchContactRaw.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&rect)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return xc.RECT{}, err
-	}
 	if r != 0 {
 		return xc.RECT{}, syscall.Errno(r)
 	}
@@ -1059,13 +900,10 @@ func (i *ICoreWebView2PointerInfo) MustGetTouchContactRaw() xc.RECT {
 
 // SetTouchContactRaw 设置原始触摸接触区域.
 func (i *ICoreWebView2PointerInfo) SetTouchContactRaw(rect xc.RECT) error {
-	r, _, err := i.Vtbl.PutTouchContactRaw.Call(
+	r, _, _ := i.Vtbl.PutTouchContactRaw.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&rect)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -1075,13 +913,10 @@ func (i *ICoreWebView2PointerInfo) SetTouchContactRaw(rect xc.RECT) error {
 // GetTouchOrientation 获取触摸方向.
 func (i *ICoreWebView2PointerInfo) GetTouchOrientation() (uint32, error) {
 	var orientation uint32
-	r, _, err := i.Vtbl.GetTouchOrientation.Call(
+	r, _, _ := i.Vtbl.GetTouchOrientation.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&orientation)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -1097,13 +932,10 @@ func (i *ICoreWebView2PointerInfo) MustGetTouchOrientation() uint32 {
 
 // SetTouchOrientation 设置触摸方向.
 func (i *ICoreWebView2PointerInfo) SetTouchOrientation(orientation uint32) error {
-	r, _, err := i.Vtbl.PutTouchOrientation.Call(
+	r, _, _ := i.Vtbl.PutTouchOrientation.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(orientation),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -1113,13 +945,10 @@ func (i *ICoreWebView2PointerInfo) SetTouchOrientation(orientation uint32) error
 // GetTouchPressure 获取触摸压力值.
 func (i *ICoreWebView2PointerInfo) GetTouchPressure() (uint32, error) {
 	var pressure uint32
-	r, _, err := i.Vtbl.GetTouchPressure.Call(
+	r, _, _ := i.Vtbl.GetTouchPressure.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&pressure)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}
@@ -1135,13 +964,10 @@ func (i *ICoreWebView2PointerInfo) MustGetTouchPressure() uint32 {
 
 // SetTouchPressure 设置触摸压力值.
 func (i *ICoreWebView2PointerInfo) SetTouchPressure(pressure uint32) error {
-	r, _, err := i.Vtbl.PutTouchPressure.Call(
+	r, _, _ := i.Vtbl.PutTouchPressure.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(pressure),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

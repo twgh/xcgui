@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -36,10 +32,7 @@ func (i *ICoreWebView2_3) Release() uintptr {
 }
 
 func (i *ICoreWebView2_3) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -49,13 +42,10 @@ func (i *ICoreWebView2_3) QueryInterface(refiid, object unsafe.Pointer) error {
 // GetIsSuspended 获取 WebView 控件是否已挂起。
 func (i *ICoreWebView2_3) GetIsSuspended() (bool, error) {
 	var result bool
-	r, _, err := i.Vtbl.GetIsSuspended.Call(
+	r, _, _ := i.Vtbl.GetIsSuspended.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&result)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return result, err
-	}
 	if r != 0 {
 		return result, syscall.Errno(r)
 	}
@@ -64,12 +54,9 @@ func (i *ICoreWebView2_3) GetIsSuspended() (bool, error) {
 
 // Resume 恢复 WebView，以便它恢复网页上的活动。
 func (i *ICoreWebView2_3) Resume() error {
-	r, _, err := i.Vtbl.Resume.Call(
+	r, _, _ := i.Vtbl.Resume.Call(
 		uintptr(unsafe.Pointer(i)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -80,13 +67,10 @@ func (i *ICoreWebView2_3) Resume() error {
 //
 // handler: 接收 TrySuspend 方法的结果。
 func (i *ICoreWebView2_3) TrySuspend(handler *ICoreWebView2TrySuspendCompletedHandler) error {
-	r, _, err := i.Vtbl.TrySuspend.Call(
+	r, _, _ := i.Vtbl.TrySuspend.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(handler)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -122,13 +106,10 @@ func (i *ICoreWebView2_3) ClearVirtualHostNameToFolderMapping(hostName string) e
 		return err
 	}
 
-	r, _, err := i.Vtbl.ClearVirtualHostNameToFolderMapping.Call(
+	r, _, _ := i.Vtbl.ClearVirtualHostNameToFolderMapping.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_hostName)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -155,15 +136,12 @@ func (i *ICoreWebView2_3) SetVirtualHostNameToFolderMapping(hostName, folderPath
 		return err
 	}
 
-	r, _, err := i.Vtbl.SetVirtualHostNameToFolderMapping.Call(
+	r, _, _ := i.Vtbl.SetVirtualHostNameToFolderMapping.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_hostName)),
 		uintptr(unsafe.Pointer(_folderPath)),
 		uintptr(accessKind),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}

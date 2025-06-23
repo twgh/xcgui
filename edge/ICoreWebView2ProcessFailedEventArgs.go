@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -24,13 +20,10 @@ type ICoreWebView2ProcessFailedEventArgsVtbl struct {
 // GetProcessFailedKind 获取进程失败类型。
 func (i *ICoreWebView2ProcessFailedEventArgs) GetProcessFailedKind() (COREWEBVIEW2_PROCESS_FAILED_KIND, error) {
 	var kind COREWEBVIEW2_PROCESS_FAILED_KIND
-	r, _, err := i.Vtbl.GetProcessFailedKind.Call(
+	r, _, _ := i.Vtbl.GetProcessFailedKind.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&kind)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return 0, err
-	}
 	if r != 0 {
 		return 0, syscall.Errno(r)
 	}

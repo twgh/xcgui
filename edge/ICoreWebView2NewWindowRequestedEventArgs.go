@@ -1,9 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 
@@ -41,10 +38,7 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) Release() uintptr {
 }
 
 func (i *ICoreWebView2NewWindowRequestedEventArgs) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -54,13 +48,10 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) QueryInterface(refiid, object
 // GetUri 获取新窗口请求的 URI.
 func (i *ICoreWebView2NewWindowRequestedEventArgs) GetUri() (string, error) {
 	var uri *uint16
-	r, _, err := i.Vtbl.GetUri.Call(
+	r, _, _ := i.Vtbl.GetUri.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&uri)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return "", err
-	}
 	if r != 0 {
 		return "", syscall.Errno(r)
 	}
@@ -79,13 +70,10 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetUri() (string, error) {
 //   - 一旦设置了“NewWindow”，此 CoreWebView2 的基础网页内容将被替换，并会针对新窗口进行适当导航。
 //   - 设置新窗口后无法更改，否则将返回错误。
 func (i *ICoreWebView2NewWindowRequestedEventArgs) SetNewWindow(newWindow *ICoreWebView2) error {
-	r, _, err := i.Vtbl.PutNewWindow.Call(
+	r, _, _ := i.Vtbl.PutNewWindow.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(newWindow)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -95,13 +83,10 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) SetNewWindow(newWindow *ICore
 // GetNewWindow 获取新窗口的 ICoreWebView2 实例.
 func (i *ICoreWebView2NewWindowRequestedEventArgs) GetNewWindow() (*ICoreWebView2, error) {
 	var newWindow *ICoreWebView2
-	r, _, err := i.Vtbl.GetNewWindow.Call(
+	r, _, _ := i.Vtbl.GetNewWindow.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&newWindow)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -113,13 +98,10 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetNewWindow() (*ICoreWebView
 //   - 如果设置为 true 且未为 NewWindow 设置 window.open，则打开的 WindowProxy 用于测试窗口对象，且不会加载任何窗口。
 //   - 默认值为 false。
 func (i *ICoreWebView2NewWindowRequestedEventArgs) SetHandled(handled bool) error {
-	r, _, err := i.Vtbl.PutHandled.Call(
+	r, _, _ := i.Vtbl.PutHandled.Call(
 		uintptr(unsafe.Pointer(i)),
 		common.BoolPtr(handled),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -129,13 +111,10 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) SetHandled(handled bool) erro
 // GetHandled 获取是否处理了新窗口请求.
 func (i *ICoreWebView2NewWindowRequestedEventArgs) GetHandled() (bool, error) {
 	var handled bool
-	r, _, err := i.Vtbl.GetHandled.Call(
+	r, _, _ := i.Vtbl.GetHandled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&handled)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -145,13 +124,10 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetHandled() (bool, error) {
 // GetIsUserInitiated 获取新窗口请求是否由用户发起.
 func (i *ICoreWebView2NewWindowRequestedEventArgs) GetIsUserInitiated() (bool, error) {
 	var isUserInitiated bool
-	r, _, err := i.Vtbl.GetIsUserInitiated.Call(
+	r, _, _ := i.Vtbl.GetIsUserInitiated.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isUserInitiated)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return false, err
-	}
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
@@ -161,13 +137,10 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetIsUserInitiated() (bool, e
 // GetDeferral 获取延迟对象，并将事件置于延迟状态。
 func (i *ICoreWebView2NewWindowRequestedEventArgs) GetDeferral() (*ICoreWebView2Deferral, error) {
 	var deferral *ICoreWebView2Deferral
-	r, _, err := i.Vtbl.GetDeferral.Call(
+	r, _, _ := i.Vtbl.GetDeferral.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&deferral)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}
@@ -178,13 +151,10 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetDeferral() (*ICoreWebView2
 //   - 新 Webview 窗口的定位和大小调整应考虑这些特性。
 func (i *ICoreWebView2NewWindowRequestedEventArgs) GetWindowFeatures() (*ICoreWebView2WindowFeatures, error) {
 	var features *ICoreWebView2WindowFeatures
-	r, _, err := i.Vtbl.GetWindowFeatures.Call(
+	r, _, _ := i.Vtbl.GetWindowFeatures.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&features)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return nil, err
-	}
 	if r != 0 {
 		return nil, syscall.Errno(r)
 	}

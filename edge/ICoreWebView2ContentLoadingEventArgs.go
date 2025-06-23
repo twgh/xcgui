@@ -1,10 +1,6 @@
 package edge
 
-// ok
-
 import (
-	"errors"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
 )
@@ -33,10 +29,7 @@ func (i *ICoreWebView2ContentLoadingEventArgs) Release() uintptr {
 }
 
 func (i *ICoreWebView2ContentLoadingEventArgs) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, err := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return err
-	}
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
 	if r != 0 {
 		return syscall.Errno(r)
 	}
@@ -46,13 +39,10 @@ func (i *ICoreWebView2ContentLoadingEventArgs) QueryInterface(refiid, object uns
 // GetIsErrorPage 获取当前导航是否为错误页面。
 func (i *ICoreWebView2ContentLoadingEventArgs) GetIsErrorPage() (bool, error) {
 	var isErrorPage bool
-	r, _, err := i.Vtbl.GetIsErrorPage.Call(
+	r, _, _ := i.Vtbl.GetIsErrorPage.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&isErrorPage)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return isErrorPage, err
-	}
 	if r != 0 {
 		return isErrorPage, syscall.Errno(r)
 	}
@@ -62,13 +52,10 @@ func (i *ICoreWebView2ContentLoadingEventArgs) GetIsErrorPage() (bool, error) {
 // GetNavigationId 获取导航的 ID。
 func (i *ICoreWebView2ContentLoadingEventArgs) GetNavigationId() (uint64, error) {
 	var id uint64
-	r, _, err := i.Vtbl.GetNavigationId.Call(
+	r, _, _ := i.Vtbl.GetNavigationId.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&id)),
 	)
-	if !errors.Is(err, wapi.ERROR_SUCCESS) {
-		return id, err
-	}
 	if r != 0 {
 		return id, syscall.Errno(r)
 	}
