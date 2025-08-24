@@ -9,31 +9,7 @@ import (
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2controller2
 type ICoreWebView2Controller2 struct {
-	Vtbl *ICoreWebView2Controller2Vtbl
-}
-
-type ICoreWebView2Controller2Vtbl struct {
-	ICoreWebView2ControllerVtbl
-	GetDefaultBackgroundColor ComProc
-	PutDefaultBackgroundColor ComProc
-}
-
-func (i *ICoreWebView2Controller2) AddRef() uintptr {
-	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2Controller2) Release() uintptr {
-	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2Controller2) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
+	ICoreWebView2Controller
 }
 
 // GetDefaultBackgroundColor 获取 WebView2 的默认背景色。

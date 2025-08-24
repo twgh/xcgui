@@ -88,7 +88,7 @@ func New(opt Option) (*Edge, error) {
 	// 处理用户数据文件夹路径, 如果为空, 则使用 AppData 环境变量下的当前进程名文件夹
 	dataPath := opt.UserDataFolder
 	if dataPath == "" {
-		currentExeName := common.GetProcessNameNoExt()
+		currentExeName := common.GetProcessNameWithoutExt()
 		if currentExeName == "" {
 			currentExeName = "xcgui_webview"
 		}

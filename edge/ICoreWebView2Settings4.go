@@ -10,33 +10,7 @@ import (
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2settings4
 type ICoreWebView2Settings4 struct {
-	Vtbl *ICoreWebView2Settings4Vtbl
-}
-
-type ICoreWebView2Settings4Vtbl struct {
-	ICoreWebView2Settings3Vtbl
-	GetIsPasswordAutosaveEnabled ComProc
-	PutIsPasswordAutosaveEnabled ComProc
-	GetIsGeneralAutofillEnabled  ComProc
-	PutIsGeneralAutofillEnabled  ComProc
-}
-
-func (i *ICoreWebView2Settings4) AddRef() uintptr {
-	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2Settings4) Release() uintptr {
-	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2Settings4) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
+	ICoreWebView2Settings3
 }
 
 // GetIsPasswordAutosaveEnabled 获取是否允许自动保存密码。

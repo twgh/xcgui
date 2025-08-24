@@ -1,9 +1,10 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 
 	"github.com/twgh/xcgui/wapi"
 )
@@ -75,6 +76,106 @@ type ICoreWebView2Vtbl struct {
 	RemoveWebResourceRequestedFilter       ComProc
 	AddWindowCloseRequested                ComProc
 	RemoveWindowCloseRequested             ComProc
+	// 2
+	AddWebResourceResponseReceived    ComProc
+	RemoveWebResourceResponseReceived ComProc
+	NavigateWithWebResourceRequest    ComProc
+	AddDomContentLoaded               ComProc
+	RemoveDomContentLoaded            ComProc
+	GetCookieManager                  ComProc
+	GetEnvironment                    ComProc
+	// 3
+	TrySuspend                          ComProc
+	Resume                              ComProc
+	GetIsSuspended                      ComProc
+	SetVirtualHostNameToFolderMapping   ComProc
+	ClearVirtualHostNameToFolderMapping ComProc
+	// 4
+	AddFrameCreated        ComProc
+	RemoveFrameCreated     ComProc
+	AddDownloadStarting    ComProc
+	RemoveDownloadStarting ComProc
+	// 5
+	AddClientCertificateRequested    ComProc
+	RemoveClientCertificateRequested ComProc
+	// 6
+	OpenTaskManagerWindow ComProc
+	// 7
+	PrintToPdf ComProc
+	// 8
+	AddIsMutedChanged                   ComProc
+	RemoveIsMutedChanged                ComProc
+	GetIsMuted                          ComProc
+	PutIsMuted                          ComProc
+	AddIsDocumentPlayingAudioChanged    ComProc
+	RemoveIsDocumentPlayingAudioChanged ComProc
+	GetIsDocumentPlayingAudio           ComProc
+	// 9
+	AddIsDefaultDownloadDialogOpenChanged    ComProc
+	RemoveIsDefaultDownloadDialogOpenChanged ComProc
+	GetIsDefaultDownloadDialogOpen           ComProc
+	OpenDefaultDownloadDialog                ComProc
+	CloseDefaultDownloadDialog               ComProc
+	GetDefaultDownloadDialogCornerAlignment  ComProc
+	PutDefaultDownloadDialogCornerAlignment  ComProc
+	GetDefaultDownloadDialogMargin           ComProc
+	PutDefaultDownloadDialogMargin           ComProc
+	// 10
+	AddBasicAuthenticationRequested    ComProc
+	RemoveBasicAuthenticationRequested ComProc
+	// 11
+	CallDevToolsProtocolMethodForSession ComProc
+	AddContextMenuRequested              ComProc
+	RemoveContextMenuRequested           ComProc
+	// 12
+	AddStatusBarTextChanged    ComProc
+	RemoveStatusBarTextChanged ComProc
+	GetStatusBarText           ComProc
+	// 13
+	GetProfile ComProc
+	// 14
+	AddServerCertificateErrorDetected    ComProc
+	RemoveServerCertificateErrorDetected ComProc
+	ClearServerCertificateErrorActions   ComProc
+	// 15
+	AddFaviconChanged    ComProc
+	RemoveFaviconChanged ComProc
+	GetFaviconUri        ComProc
+	GetFavicon           ComProc
+	// 16
+	Print            ComProc
+	ShowPrintUI      ComProc
+	PrintToPdfStream ComProc
+	// 17
+	PostSharedBufferToScript ComProc
+	// 18
+	AddLaunchingExternalUriScheme    ComProc
+	RemoveLaunchingExternalUriScheme ComProc
+	// 19
+	GetMemoryUsageTargetLevel ComProc
+	PutMemoryUsageTargetLevel ComProc
+	// 20
+	GetFrameId ComProc
+	// 21
+	ExecuteScriptWithResult ComProc
+	// 22
+	AddWebResourceRequestedFilterWithRequestSourceKinds    ComProc
+	RemoveWebResourceRequestedFilterWithRequestSourceKinds ComProc
+	// 23
+	PostWebMessageAsJsonWithAdditionalObjects ComProc
+	// 24
+	AddNotificationReceived    ComProc
+	RemoveNotificationReceived ComProc
+	// 25
+	AddSaveAsUIShowing    ComProc
+	RemoveSaveAsUIShowing ComProc
+	ShowSaveAsUI          ComProc
+	// 26
+	AddSaveFileSecurityCheckStarting    ComProc
+	RemoveSaveFileSecurityCheckStarting ComProc
+	// 27
+	AddScreenCaptureStarting    ComProc
+	RemoveScreenCaptureStarting ComProc
 }
 
 func (i *ICoreWebView2) AddRef() uintptr {
@@ -177,7 +278,7 @@ func (i *ICoreWebView2) RemoveNavigationCompleted(token EventRegistrationToken) 
 }
 
 // Navigate 导航 webview 到给定的 URL。
-//   - URL 可能是数据 URI，即 "data:text/text,<html>...</html>"。
+//   - URL 可能是数据 URI，即 "data:text/html,<html>...</html>"。
 //   - 通常不进行适当的 url 编码也是可以的, webview 会为你重新编码。
 func (i *ICoreWebView2) Navigate(uri string) error {
 	_uri, err := syscall.UTF16PtrFromString(uri)

@@ -431,6 +431,9 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 		case "CreateCoreWebView2CompositionControllerCompleted":
 			info.EventToken = nil
 			info.EvnetHandlerPointer = unsafe.Pointer(NewICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler(impl))
+		case "GetProcessExtendedInfosCompleted":
+			info.EventToken = nil
+			info.EvnetHandlerPointer = unsafe.Pointer(NewICoreWebView2GetProcessExtendedInfosCompletedHandler(impl))
 		}
 	}
 

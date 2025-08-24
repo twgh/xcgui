@@ -1541,6 +1541,31 @@ const (
 	WM_MOUSEFIRST      uint32 = 0x0200 // 鼠标消息的第一个值.
 	WM_KEYLAST         uint32 = 0x0109 // 按键消息的最后一个值.
 	WM_MOUSELAST       uint32 = 0x020E // 鼠标消息的最后一个值.
+	WM_SYSCOMMAND      uint32 = 0x0112 // 系统命令消息.
+)
+
+// 系统菜单命令值常量
+const (
+	SC_SIZE         = 0xF000 // 调整窗口大小
+	SC_MOVE         = 0xF010 // 移动窗口
+	SC_MINIMIZE     = 0xF020 // 最小化窗口
+	SC_MAXIMIZE     = 0xF030 // 最大化窗口
+	SC_NEXTWINDOW   = 0xF040 // 切换到下一个窗口
+	SC_PREVWINDOW   = 0xF050 // 切换到上一个窗口
+	SC_CLOSE        = 0xF060 // 关闭窗口
+	SC_VSCROLL      = 0xF070 // 垂直滚动
+	SC_HSCROLL      = 0xF080 // 水平滚动
+	SC_MOUSEMENU    = 0xF090 // 鼠标菜单
+	SC_KEYMENU      = 0xF100 // 键盘菜单
+	SC_ARRANGE      = 0xF110 // 排列窗口
+	SC_RESTORE      = 0xF120 // 恢复窗口
+	SC_TASKLIST     = 0xF130 // 任务列表
+	SC_SCREENSAVE   = 0xF140 // 屏幕保护程序
+	SC_HOTKEY       = 0xF150 // 热键
+	SC_DEFAULT      = 0xF160 // 默认操作
+	SC_MONITORPOWER = 0xF170 // 显示器电源设置
+	SC_CONTEXTHELP  = 0xF180 // 上下文帮助
+	SC_SEPARATOR    = 0xF00F // 分隔符
 )
 
 const (

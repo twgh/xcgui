@@ -7,16 +7,16 @@ import (
 	"unsafe"
 )
 
-type IUnknownVtbl struct {
-	QueryInterface ComProc
-	AddRef         ComProc
-	Release        ComProc
-}
-
 type IUnknownImpl interface {
 	QueryInterface(refiid, object unsafe.Pointer) uintptr
 	AddRef() uintptr
 	Release() uintptr
+}
+
+type IUnknownVtbl struct {
+	QueryInterface ComProc
+	AddRef         ComProc
+	Release        ComProc
 }
 
 // IUnknown 封装了 COM 基础的 IUnknown 接口.

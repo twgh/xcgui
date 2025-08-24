@@ -9,13 +9,7 @@ import (
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2controller4
 type ICoreWebView2Controller4 struct {
-	Vtbl *ICoreWebView2Controller4Vtbl
-}
-
-type ICoreWebView2Controller4Vtbl struct {
-	ICoreWebView2Controller3Vtbl
-	GetAllowExternalDrop ComProc
-	PutAllowExternalDrop ComProc
+	ICoreWebView2Controller3
 }
 
 // GetAllowExternalDrop 获取是否允许外部拖放.

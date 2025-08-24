@@ -22,6 +22,40 @@ type ICoreWebView2EnvironmentVtbl struct {
 	GetBrowserVersionString          ComProc
 	AddNewBrowserVersionAvailable    ComProc
 	RemoveNewBrowserVersionAvailable ComProc
+	// 2
+	CreateWebResourceRequest ComProc
+	// 3
+	CreateCoreWebView2CompositionController ComProc
+	CreateCoreWebView2PointerInfo           ComProc
+	// 4
+	GetAutomationProviderForWindow ComProc
+	// 5
+	AddBrowserProcessExited    ComProc
+	RemoveBrowserProcessExited ComProc
+	// 6
+	CreatePrintSettings ComProc
+	// 7
+	GetUserDataFolder ComProc
+	// 8
+	AddProcessInfosChanged    ComProc
+	RemoveProcessInfosChanged ComProc
+	GetProcessInfos           ComProc
+	// 9
+	CreateContextMenuItem ComProc
+	// 10
+	CreateCoreWebView2ControllerOptions                ComProc
+	CreateCoreWebView2ControllerWithOptions            ComProc
+	CreateCoreWebView2CompositionControllerWithOptions ComProc
+	// 11
+	GetFailureReportFolderPath ComProc
+	// 12
+	CreateSharedBuffer ComProc
+	// 13
+	GetProcessExtendedInfos ComProc
+	// 14
+	CreateWebFileSystemFileHandle      ComProc
+	CreateWebFileSystemDirectoryHandle ComProc
+	CreateObjectCollection             ComProc
 }
 
 func (i *ICoreWebView2Environment) AddRef() uintptr {
@@ -181,7 +215,6 @@ func (i *ICoreWebView2Environment) GetICoreWebView2Environment10() (*ICoreWebVie
 	return result, err
 }
 
-/*
 // GetICoreWebView2Environment11 获取 ICoreWebView2Environment11。
 func (i *ICoreWebView2Environment) GetICoreWebView2Environment11() (*ICoreWebView2Environment11, error) {
 	var result *ICoreWebView2Environment11
@@ -217,7 +250,7 @@ func (i *ICoreWebView2Environment) GetICoreWebView2Environment14() (*ICoreWebVie
 		unsafe.Pointer(&result))
 	return result, err
 }
-*/
+
 // MustCreateWebResourceResponse 创建新的web资源响应对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment) MustCreateWebResourceResponse(content *IStream, statusCode int, reasonPhrase string, headers string) *ICoreWebView2WebResourceResponse {
 	response, err := i.CreateWebResourceResponse(content, statusCode, reasonPhrase, headers)
@@ -295,7 +328,6 @@ func (i *ICoreWebView2Environment) MustGetICoreWebView2Environment10() *ICoreWeb
 	return result
 }
 
-/*
 // MustGetICoreWebView2Environment11 获取 ICoreWebView2Environment11。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment) MustGetICoreWebView2Environment11() *ICoreWebView2Environment11 {
 	result, err := i.GetICoreWebView2Environment11()
@@ -323,4 +355,3 @@ func (i *ICoreWebView2Environment) MustGetICoreWebView2Environment14() *ICoreWeb
 	ReportErrorAtuo(err)
 	return result
 }
-*/

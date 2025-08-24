@@ -9,31 +9,7 @@ import (
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2settings7
 type ICoreWebView2Settings7 struct {
-	Vtbl *ICoreWebView2Settings7Vtbl
-}
-
-type ICoreWebView2Settings7Vtbl struct {
-	ICoreWebView2Settings6Vtbl
-	GetHiddenPdfToolbarItems ComProc
-	PutHiddenPdfToolbarItems ComProc
-}
-
-func (i *ICoreWebView2Settings7) AddRef() uintptr {
-	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2Settings7) Release() uintptr {
-	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2Settings7) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
+	ICoreWebView2Settings6
 }
 
 // GetHiddenPdfToolbarItems 获取隐藏的 PDF 工具栏项目。

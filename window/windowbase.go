@@ -240,13 +240,9 @@ func (w *windowBase) GetHWND() uintptr {
 
 // 窗口_重绘.
 //
-// bImmediate: 是否立即重绘, 通常为false即可.
-func (w *windowBase) Redraw(bImmediate ...bool) *windowBase {
-	b := false
-	if len(bImmediate) > 0 {
-		b = bImmediate[0]
-	}
-	xc.XWnd_Redraw(w.Handle, b)
+// bImmediate: 是否立即重绘, 通常为 false 即可.
+func (w *windowBase) Redraw(bImmediate bool) *windowBase {
+	xc.XWnd_Redraw(w.Handle, bImmediate)
 	return w
 }
 

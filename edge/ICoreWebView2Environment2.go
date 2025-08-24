@@ -9,30 +9,7 @@ import (
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2environment2
 type ICoreWebView2Environment2 struct {
-	Vtbl *ICoreWebView2Environment2Vtbl
-}
-
-type ICoreWebView2Environment2Vtbl struct {
-	ICoreWebView2EnvironmentVtbl
-	CreateWebResourceRequest ComProc
-}
-
-func (i *ICoreWebView2Environment2) AddRef() uintptr {
-	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2Environment2) Release() uintptr {
-	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2Environment2) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
+	ICoreWebView2Environment
 }
 
 // CreateWebResourceRequest 创建一个新的网络资源请求对象。

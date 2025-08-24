@@ -9,31 +9,7 @@ import (
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2environment5
 type ICoreWebView2Environment5 struct {
-	Vtbl *ICoreWebView2Environment5Vtbl
-}
-
-type ICoreWebView2Environment5Vtbl struct {
-	ICoreWebView2Environment4Vtbl
-	AddBrowserProcessExited    ComProc
-	RemoveBrowserProcessExited ComProc
-}
-
-func (i *ICoreWebView2Environment5) AddRef() uintptr {
-	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2Environment5) Release() uintptr {
-	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2Environment5) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
+	ICoreWebView2Environment4
 }
 
 // AddBrowserProcessExited 添加浏览器进程退出事件处理程序。

@@ -10,31 +10,7 @@ import (
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2environmentoptions6
 type ICoreWebView2EnvironmentOptions6 struct {
-	Vtbl *ICoreWebView2EnvironmentOptions6Vtbl
-}
-
-type ICoreWebView2EnvironmentOptions6Vtbl struct {
-	IUnknownVtbl
-	GetAreBrowserExtensionsEnabled ComProc
-	PutAreBrowserExtensionsEnabled ComProc
-}
-
-func (i *ICoreWebView2EnvironmentOptions6) AddRef() uintptr {
-	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2EnvironmentOptions6) Release() uintptr {
-	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2EnvironmentOptions6) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
+	ICoreWebView2EnvironmentOptions5
 }
 
 // GetAreBrowserExtensionsEnabled 获取是否启用浏览器扩展功能.

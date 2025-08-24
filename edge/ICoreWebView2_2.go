@@ -9,36 +9,7 @@ import (
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2_2
 type ICoreWebView2_2 struct {
-	Vtbl *ICoreWebView2_2Vtbl
-}
-
-type ICoreWebView2_2Vtbl struct {
-	ICoreWebView2Vtbl
-	AddWebResourceResponseReceived    ComProc
-	RemoveWebResourceResponseReceived ComProc
-	NavigateWithWebResourceRequest    ComProc
-	AddDomContentLoaded               ComProc
-	RemoveDomContentLoaded            ComProc
-	GetCookieManager                  ComProc
-	GetEnvironment                    ComProc
-}
-
-func (i *ICoreWebView2_2) AddRef() uintptr {
-	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2_2) Release() uintptr {
-	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2_2) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
+	ICoreWebView2
 }
 
 // GetEnvironment 获取用于创建此 ICoreWebView2 的 ICoreWebView2Environment.

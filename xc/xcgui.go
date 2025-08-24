@@ -2,12 +2,13 @@ package xc
 
 import (
 	"errors"
-	"github.com/twgh/xcgui/common"
 	"os"
 	"path/filepath"
 	"runtime"
 	"sync"
 	"syscall"
+
+	"github.com/twgh/xcgui/common"
 )
 
 func init() {
@@ -20,8 +21,7 @@ func GetVer() string {
 }
 
 // xcguiPath 是 xcgui.dll 的完整路径（目录+文件名）, 也可以是相对路径, 默认值为'xcgui.dll'.
-//
-//	如果你想要更改它的位置, 可以在 xc.LoadXCGUI() 之前调用 xc.SetXcguiPath() 更改为其他路径.
+//   - 如果你想要更改它的位置, 可以在 xc.LoadXCGUI() 之前调用 xc.SetXcguiPath() 更改为其他路径.
 var xcguiPath = "xcgui.dll"
 
 // SetXcguiPath 手动设置 xcgui.dll 的路径. 未设置时, 默认值为'xcgui.dll'. 如果出错, 要么你输入的文件不存在, 要么你输入的不是dll文件.
@@ -58,8 +58,7 @@ func GetXcgui() *syscall.LazyDLL {
 }
 
 // WriteDll 把 xcgui.dll 写出到 windows 临时目录中 'xcgui+版本号+_编译时的目标架构' 文件夹里.
-//
-// 使用完本函数后无需再调用 xc.SetXcguiPath(), 内部已自动操作.
+//   - 使用完本函数后无需再调用 xc.SetXcguiPath(), 内部已自动操作.
 func WriteDll(dll []byte) error {
 	tmpDir := os.TempDir()
 	tmpPath := filepath.Join(tmpDir, "xcgui"+GetVer()+"_"+runtime.GOARCH)
@@ -91,8 +90,21 @@ func WriteDllOrExit(dll []byte) {
 	if err != nil {
 		user32 := syscall.NewLazyDLL("user32.dll")
 		user32.NewProc("MessageBoxW").Call(0, common.StrPtr("写出 xcgui.dll 失败: "+err.Error()), common.StrPtr("提示"), uintptr(0x00000010))
-		os.Exit(3)
+		os.Exit(1)
 	}
+}
+
+// Init 写出 xcgui.dll 到 windows 临时目录中 'xcgui+版本号+_编译时的目标架构' 文件夹里.
+//   - 使用完本函数后无需再调用 xc.SetXcguiPath(), 内部已自动操作.
+func Init() error {
+	return WriteDll(DLL)
+}
+
+// InitOrExit 把 xcgui.dll 写出到 windows 临时目录中 'xcgui+版本号+_编译时的目标架构' 文件夹里.
+//   - 使用完本函数后无需再调用 xc.SetXcguiPath(), 内部已自动操作.
+//   - 如果出错, 会弹窗提示错误, 然后退出程序.
+func InitOrExit() {
+	WriteDllOrExit(DLL)
 }
 
 // DelDll 删除 xcguiPath 指向的文件, 其默认值为xcgui.dll.

@@ -1,6 +1,7 @@
 package xc
 
 import (
+	"math"
 	"os"
 	"strconv"
 )
@@ -140,13 +141,24 @@ func Atof(s string) float32 {
 	return float32(f)
 }
 
-// DpiConv 将int32类型的整数根据窗口dpi进行换算.
-//   - 开启自动DPI后, 你可能感觉到一些函数获取的坐标不对了, 因为你在用高分辨率屏幕, 然后系统里会有个缩放的设置, 可能是150%, 这时获取到的坐标应该乘以1.5才是屏幕上显示的真实的坐标.
+// DpiConv 将 int32 类型的整数根据窗口 dpi 进行换算.
+//   - 开启自动 DPI 后, 你可能感觉到一些函数获取的坐标不对了, 因为你在用高分辨率屏幕, 然后系统里会有个缩放的设置, 可能是 150%, 这时获取到的坐标应该乘以 1.5 才是屏幕上显示的真实的坐标.
 //
-// dpi: 使用窗口.GetDPI()函数获取.
+// dpi: 使用窗口.GetDPI() 函数获取.
 //
-// i: int32类型的整数.
+// i: int32 类型的整数.
 func DpiConv(dpi int32, i int32) int32 {
-	rate := float32(dpi) / 96.0
-	return int32(float32(i) * rate)
+	ret := float32(dpi*i) / 96.0
+	return int32(ret)
+}
+
+// DpiConvRound 将 int32 类型的整数根据窗口 dpi 进行换算, 计算结果会四舍五入.
+//   - 开启自动 DPI 后, 你可能感觉到一些函数获取的坐标不对了, 因为你在用高分辨率屏幕, 然后系统里会有个缩放的设置, 可能是 150%, 这时获取到的坐标应该乘以 1.5 才是屏幕上显示的真实的坐标.
+//
+// dpi: 使用窗口.GetDPI() 函数获取.
+//
+// i: int32 类型的整数.
+func DpiConvRound(dpi int32, i int32) int32 {
+	ret := float64(dpi) * float64(i) / 96.0
+	return int32(math.Round(ret))
 }

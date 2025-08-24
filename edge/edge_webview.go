@@ -429,7 +429,7 @@ func (w *WebView) BindLog(funcName ...string) error {
 }
 
 // 创建 WebView2 控制器
-func (w *WebView) newWebView2Controller(opt WebViewOption) error {
+func (w *WebView) newWebView2Controller(opt *WebViewOptions) error {
 	var isDone bool
 	var err2 error
 	// WebView2 控制器创建完成回调
@@ -459,6 +459,7 @@ func (w *WebView) newWebView2Controller(opt WebViewOption) error {
 			// 设置是否可开启开发人员工具
 			err = settings.SetAreDevToolsEnabled(opt.Debug)
 			ReportErrorAtuo(err)
+
 			// 设置是否启用非客户区域支持
 			s9, err := settings.GetICoreWebView2Settings9()
 			if err != nil {
@@ -468,6 +469,35 @@ func (w *WebView) newWebView2Controller(opt WebViewOption) error {
 				ReportErrorAtuo(err)
 				s9.Release()
 			}
+
+			// 是否禁用默认的上下文菜单
+			if !opt.DefaultContextMenus {
+				err = settings.SetAreDefaultContextMenusEnabled(opt.DefaultContextMenus)
+				ReportErrorAtuo(err)
+			}
+			// 是否禁用状态栏
+			if !opt.StatusBar {
+				err = settings.SetIsStatusBarEnabled(opt.StatusBar)
+				ReportErrorAtuo(err)
+			}
+			// 是否禁用缩放控件
+			if !opt.ZoomControl {
+				err = settings.SetIsZoomControlEnabled(opt.ZoomControl)
+				ReportErrorAtuo(err)
+			}
+
+			s3, err := settings.GetICoreWebView2Settings3()
+			if err != nil {
+				ReportErrorAtuo(err)
+			} else {
+				// 是否禁用浏览器快捷键
+				if !opt.BrowserAcceleratorKeys {
+					err = s3.SetAreBrowserAcceleratorKeysEnabled(opt.BrowserAcceleratorKeys)
+					ReportErrorAtuo(err)
+				}
+				s3.Release()
+			}
+
 			settings.Release()
 		}
 		err = w.Resize()

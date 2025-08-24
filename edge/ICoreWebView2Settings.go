@@ -34,6 +34,32 @@ type ICoreWebView2SettingsVtbl struct {
 	PutIsZoomControlEnabled           ComProc
 	GetIsBuiltInErrorPageEnabled      ComProc
 	PutIsBuiltInErrorPageEnabled      ComProc
+	// 2
+	GetUserAgent ComProc
+	PutUserAgent ComProc
+	// 3
+	GetAreBrowserAcceleratorKeysEnabled ComProc
+	PutAreBrowserAcceleratorKeysEnabled ComProc
+	// 4
+	GetIsPasswordAutosaveEnabled ComProc
+	PutIsPasswordAutosaveEnabled ComProc
+	GetIsGeneralAutofillEnabled  ComProc
+	PutIsGeneralAutofillEnabled  ComProc
+	// 5
+	GetIsPinchZoomEnabled ComProc
+	PutIsPinchZoomEnabled ComProc
+	// 6
+	GetIsSwipeNavigationEnabled ComProc
+	PutIsSwipeNavigationEnabled ComProc
+	// 7
+	GetHiddenPdfToolbarItems ComProc
+	PutHiddenPdfToolbarItems ComProc
+	// 8
+	GetIsReputationCheckingRequired ComProc
+	PutIsReputationCheckingRequired ComProc
+	// 9
+	GetIsNonClientRegionSupportEnabled ComProc
+	PutIsNonClientRegionSupportEnabled ComProc
 }
 
 func (i *ICoreWebView2Settings) AddRef() uintptr {

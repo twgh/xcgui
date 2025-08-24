@@ -10,31 +10,7 @@ import (
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2settings5
 type ICoreWebView2Settings5 struct {
-	Vtbl *ICoreWebView2Settings5Vtbl
-}
-
-type ICoreWebView2Settings5Vtbl struct {
-	ICoreWebView2Settings4Vtbl
-	GetIsPinchZoomEnabled ComProc
-	PutIsPinchZoomEnabled ComProc
-}
-
-func (i *ICoreWebView2Settings5) AddRef() uintptr {
-	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2Settings5) Release() uintptr {
-	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2Settings5) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
+	ICoreWebView2Settings4
 }
 
 // GetIsPinchZoomEnabled 获取是否允许缩放。

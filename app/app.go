@@ -5,25 +5,35 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
+// Init 写出 xcgui.dll 到 windows 临时目录中 'xcgui+版本号+_编译时的目标架构' 文件夹里.
+//   - 使用完本函数后无需再调用 xc.SetXcguiPath(), 内部已自动操作.
+func Init() error {
+	return xc.Init()
+}
+
+// InitOrExit 把 xcgui.dll 写出到 windows 临时目录中 'xcgui+版本号+_编译时的目标架构' 文件夹里.
+//   - 使用完本函数后无需再调用 xc.SetXcguiPath(), 内部已自动操作.
+//   - 如果出错, 会弹窗提示错误, 然后退出程序.
+func InitOrExit() {
+	xc.InitOrExit()
+}
+
 // App 程序. 封装了炫彩的全局API.
 type App struct {
 }
 
-// New 炫彩_初始化, 失败返回nil. 默认会在程序运行目录和系统system32目录寻找并加载xcgui.dll. 如果你想要更改xcgui.dll的路径, 那么请在调用本函数之前调用 xc.SetXcguiPath().
+// New 炫彩_初始化, 失败返回 nil.
+//   - 默认会在程序运行目录和系统 system32 目录寻找并加载 xcgui.dll.
+//   - 如果你想要更改 xcgui.dll 的路径, 那么请在调用本函数之前调用 xc.SetXcguiPath().
 //
-// bD2D: 是否启用D2D, 为空则为true.
-func New(bD2D ...bool) *App {
+// bD2D: 是否启用D2D.
+func New(bD2D bool) *App {
 	moudle := xc.LoadXCGUI()
 	if moudle.Handle() == 0 {
 		return nil
 	}
-
 	p := &App{}
-	b := true
-	if len(bD2D) > 0 {
-		b = bD2D[0]
-	}
-	if !xc.XInitXCGUI(b) {
+	if !xc.XInitXCGUI(bD2D) {
 		return nil
 	}
 	return p
@@ -1087,13 +1097,9 @@ func (a *App) NotifyMsg_SetBorderSize(hWindow int, left, top, right, bottom int3
 
 // 炫彩_启用自动DPI. 当启用后, 创建窗口时自动检测DPI调整UI缩放, 处理DPI改变消息; 禁用后,当DPI改变,需要手动设置窗口DPI.
 //
-// bEnabel: 是否启用, 为空则为true.
-func (a *App) EnableAutoDPI(bEnabel ...bool) *App {
-	b := true
-	if len(bEnabel) > 0 {
-		b = bEnabel[0]
-	}
-	xc.XC_EnableAutoDPI(b)
+// bEnabel: 是否启用.
+func (a *App) EnableAutoDPI(bEnabel bool) *App {
+	xc.XC_EnableAutoDPI(bEnabel)
 	return a
 }
 
@@ -1109,18 +1115,14 @@ func (a *App) SetWindowIcon(hImage int) *App {
 //
 // 为go程序启用DPI的几种方式:
 //  1. 调用此函数.
-//  2. 使用程序清单文件, Windows文档里更推荐此方式.
-//  3. 自行调用Windows DPI命令.
+//  2. 使用程序清单文件, Windows 文档里更推荐此方式.
+//  3. 自行调用 Windows DPI 命令.
 //
 // 参考[MSDN](https://learn.microsoft.com/zh-cn/windows/win32/hidpi/setting-the-default-dpi-awareness-for-a-process)
 //
-// bEnabel: 是否启用, 为空则为true.
-func (a *App) EnableDPI(bEnabel ...bool) bool {
-	b := true
-	if len(bEnabel) > 0 {
-		b = bEnabel[0]
-	}
-	return xc.XC_EnableDPI(b)
+// bEnabel: 是否启用.
+func (a *App) EnableDPI(bEnabel bool) bool {
+	return xc.XC_EnableDPI(bEnabel)
 }
 
 // 炫彩_启用自动重绘UI. 当修改UI后将自动调用重绘函数更新UI.

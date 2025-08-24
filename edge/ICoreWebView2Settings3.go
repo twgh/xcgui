@@ -10,31 +10,7 @@ import (
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2settings3
 type ICoreWebView2Settings3 struct {
-	Vtbl *ICoreWebView2Settings3Vtbl
-}
-
-type ICoreWebView2Settings3Vtbl struct {
-	ICoreWebView2Settings2Vtbl
-	GetAreBrowserAcceleratorKeysEnabled ComProc
-	PutAreBrowserAcceleratorKeysEnabled ComProc
-}
-
-func (i *ICoreWebView2Settings3) AddRef() uintptr {
-	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2Settings3) Release() uintptr {
-	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2Settings3) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
+	ICoreWebView2Settings2
 }
 
 // GetAreBrowserAcceleratorKeysEnabled 获取是否允许浏览器快捷键。

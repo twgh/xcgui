@@ -856,13 +856,9 @@ func ShowSvgFrame(bShow bool) {
 
 // 炫彩_启用自动DPI. 当启用后, 创建窗口时自动检测DPI调整UI缩放, 处理DPI改变消息; 禁用后,当DPI改变,需要手动设置窗口DPI.
 //
-// bEnabel: 是否启用, 为空则为true.
-func EnableAutoDPI(bEnabel ...bool) {
-	b := true
-	if len(bEnabel) > 0 {
-		b = bEnabel[0]
-	}
-	xc.XC_EnableAutoDPI(b)
+// bEnabel: 是否启用.
+func EnableAutoDPI(bEnabel bool) {
+	xc.XC_EnableAutoDPI(bEnabel)
 }
 
 // 炫彩_置窗口图标. 全局窗口图标, 所有未设置图标的窗口, 都将使用此默认图标.
@@ -876,18 +872,14 @@ func SetWindowIcon(hImage int) {
 //
 // 为go程序启用DPI的几种方式:
 //  1. 调用此函数.
-//  2. 使用程序清单文件, Windows文档里更推荐此方式.
-//  3. 自行调用Windows DPI命令.
+//  2. 使用程序清单文件, Windows 文档里更推荐此方式.
+//  3. 自行调用 Windows DPI 命令.
 //
 // 参考[MSDN](https://learn.microsoft.com/zh-cn/windows/win32/hidpi/setting-the-default-dpi-awareness-for-a-process)
 //
-// bEnabel: 是否启用, 为空则为true.
-func EnableDPI(bEnabel ...bool) bool {
-	b := true
-	if len(bEnabel) > 0 {
-		b = bEnabel[0]
-	}
-	return xc.XC_EnableDPI(b)
+// bEnabel: 是否启用.
+func EnableDPI(bEnabel bool) bool {
+	return xc.XC_EnableDPI(bEnabel)
 }
 
 // 炫彩_启用自动重绘UI. 当修改UI后将自动调用重绘函数更新UI.

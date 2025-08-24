@@ -40,6 +40,21 @@ type ICoreWebView2ControllerVtbl struct {
 	NotifyParentWindowPositionChanged ComProc
 	Close                             ComProc
 	GetCoreWebView2                   ComProc
+	// 2
+	GetDefaultBackgroundColor ComProc
+	PutDefaultBackgroundColor ComProc
+	// 3
+	GetRasterizationScale              ComProc
+	PutRasterizationScale              ComProc
+	GetShouldDetectMonitorScaleChanges ComProc
+	PutShouldDetectMonitorScaleChanges ComProc
+	AddRasterizationScaleChanged       ComProc
+	RemoveRasterizationScaleChanged    ComProc
+	GetBoundsMode                      ComProc
+	PutBoundsMode                      ComProc
+	// 4
+	GetAllowExternalDrop ComProc
+	PutAllowExternalDrop ComProc
 }
 
 func (i *ICoreWebView2Controller) AddRef() uintptr {

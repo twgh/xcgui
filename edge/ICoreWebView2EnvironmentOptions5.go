@@ -12,31 +12,7 @@ import (
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2environmentoptions5
 type ICoreWebView2EnvironmentOptions5 struct {
-	Vtbl *ICoreWebView2EnvironmentOptions5Vtbl
-}
-
-type ICoreWebView2EnvironmentOptions5Vtbl struct {
-	IUnknownVtbl
-	GetEnableTrackingPrevention ComProc
-	PutEnableTrackingPrevention ComProc
-}
-
-func (i *ICoreWebView2EnvironmentOptions5) AddRef() uintptr {
-	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2EnvironmentOptions5) Release() uintptr {
-	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2EnvironmentOptions5) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
+	ICoreWebView2EnvironmentOptions4
 }
 
 // GetEnableTrackingPrevention 获取是否启用 WebView2 中的跟踪防护功能。

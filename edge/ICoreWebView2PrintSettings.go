@@ -76,14 +76,6 @@ func (i *ICoreWebView2PrintSettings) GetOrientation() (COREWEBVIEW2_PRINT_ORIENT
 	return value, nil
 }
 
-// MustGetOrientation 获取打印方向。
-// 出错时会触发全局错误回调。
-func (i *ICoreWebView2PrintSettings) MustGetOrientation() COREWEBVIEW2_PRINT_ORIENTATION {
-	value, err := i.GetOrientation()
-	ReportErrorAtuo(err)
-	return value
-}
-
 // SetOrientation 设置打印方向。
 func (i *ICoreWebView2PrintSettings) SetOrientation(orientation COREWEBVIEW2_PRINT_ORIENTATION) error {
 	r, _, _ := i.Vtbl.PutOrientation.Call(
@@ -107,14 +99,6 @@ func (i *ICoreWebView2PrintSettings) GetScaleFactor() (float64, error) {
 		return 0, syscall.Errno(r)
 	}
 	return value, nil
-}
-
-// MustGetScaleFactor 获取打印比例因子。
-// 出错时会触发全局错误回调。
-func (i *ICoreWebView2PrintSettings) MustGetScaleFactor() float64 {
-	value, err := i.GetScaleFactor()
-	ReportErrorAtuo(err)
-	return value
 }
 
 // SetScaleFactor 设置打印比例因子。
@@ -144,14 +128,6 @@ func (i *ICoreWebView2PrintSettings) GetPageWidth() (float64, error) {
 	return value, nil
 }
 
-// MustGetPageWidth 获取页面宽度（以英寸为单位）。
-// 出错时会触发全局错误回调。
-func (i *ICoreWebView2PrintSettings) MustGetPageWidth() float64 {
-	value, err := i.GetPageWidth()
-	ReportErrorAtuo(err)
-	return value
-}
-
 // SetPageWidth 设置页面宽度（以英寸为单位）。
 //   - 默认宽度为 8.5 英寸。
 func (i *ICoreWebView2PrintSettings) SetPageWidth(pageWidth float64) error {
@@ -176,14 +152,6 @@ func (i *ICoreWebView2PrintSettings) GetPageHeight() (float64, error) {
 		return 0, syscall.Errno(r)
 	}
 	return value, nil
-}
-
-// MustGetPageHeight 获取页面高度（以英寸为单位）。
-// 出错时会触发全局错误回调。
-func (i *ICoreWebView2PrintSettings) MustGetPageHeight() float64 {
-	value, err := i.GetPageHeight()
-	ReportErrorAtuo(err)
-	return value
 }
 
 // SetPageHeight 设置页面高度（以英寸为单位）。
@@ -213,14 +181,6 @@ func (i *ICoreWebView2PrintSettings) GetMarginTop() (float64, error) {
 	return value, nil
 }
 
-// MustGetMarginTop 获取上边距（以英寸为单位）。
-// 出错时会触发全局错误回调。
-func (i *ICoreWebView2PrintSettings) MustGetMarginTop() float64 {
-	value, err := i.GetMarginTop()
-	ReportErrorAtuo(err)
-	return value
-}
-
 // SetMarginTop 设置上边距（以英寸为单位）。
 //   - 默认值为1厘米，约0.4英寸。
 //   - 边距不能小于零。如果提供的值无效，将返回 wapi.E_INVALIDARG，且当前值不会更改。
@@ -246,14 +206,6 @@ func (i *ICoreWebView2PrintSettings) GetMarginBottom() (float64, error) {
 		return 0, syscall.Errno(r)
 	}
 	return value, nil
-}
-
-// MustGetMarginBottom 获取下边距（以英寸为单位）。
-// 出错时会触发全局错误回调。
-func (i *ICoreWebView2PrintSettings) MustGetMarginBottom() float64 {
-	value, err := i.GetMarginBottom()
-	ReportErrorAtuo(err)
-	return value
 }
 
 // SetMarginBottom 设置下边距（以英寸为单位）。
@@ -283,14 +235,6 @@ func (i *ICoreWebView2PrintSettings) GetMarginLeft() (float64, error) {
 	return value, nil
 }
 
-// MustGetMarginLeft 获取左边距（以英寸为单位）。
-// 出错时会触发全局错误回调。
-func (i *ICoreWebView2PrintSettings) MustGetMarginLeft() float64 {
-	value, err := i.GetMarginLeft()
-	ReportErrorAtuo(err)
-	return value
-}
-
 // SetMarginLeft 设置左边距（以英寸为单位）。
 //   - 默认值为1厘米，即约0.4英寸。
 //   - 边距不能小于零。如果提供的值无效，将返回 wapi.E_INVALIDARG，且当前值不会更改。
@@ -316,14 +260,6 @@ func (i *ICoreWebView2PrintSettings) GetMarginRight() (float64, error) {
 		return 0, syscall.Errno(r)
 	}
 	return value, nil
-}
-
-// MustGetMarginRight 获取右边距（以英寸为单位）。
-// 出错时会触发全局错误回调。
-func (i *ICoreWebView2PrintSettings) MustGetMarginRight() float64 {
-	value, err := i.GetMarginRight()
-	ReportErrorAtuo(err)
-	return value
 }
 
 // SetMarginRight 设置右边距（以英寸为单位）。
@@ -353,14 +289,6 @@ func (i *ICoreWebView2PrintSettings) GetShouldPrintBackgrounds() (bool, error) {
 	return value != 0, nil
 }
 
-// MustGetShouldPrintBackgrounds 获取是否打印背景颜色和图像。
-// 出错时会触发全局错误回调。
-func (i *ICoreWebView2PrintSettings) MustGetShouldPrintBackgrounds() bool {
-	value, err := i.GetShouldPrintBackgrounds()
-	ReportErrorAtuo(err)
-	return value
-}
-
 // SetShouldPrintBackgrounds 设置是否打印背景颜色和图像。
 //   - 默认值为 false。
 func (i *ICoreWebView2PrintSettings) SetShouldPrintBackgrounds(shouldPrintBackgrounds bool) error {
@@ -385,14 +313,6 @@ func (i *ICoreWebView2PrintSettings) GetShouldPrintSelectionOnly() (bool, error)
 		return false, syscall.Errno(r)
 	}
 	return value != 0, nil
-}
-
-// MustGetShouldPrintSelectionOnly 获取是否只打印选中内容。
-// 出错时会触发全局错误回调。
-func (i *ICoreWebView2PrintSettings) MustGetShouldPrintSelectionOnly() bool {
-	value, err := i.GetShouldPrintSelectionOnly()
-	ReportErrorAtuo(err)
-	return value
 }
 
 // SetShouldPrintSelectionOnly 设置是否只打印选中内容。
@@ -421,14 +341,6 @@ func (i *ICoreWebView2PrintSettings) GetShouldPrintHeaderAndFooter() (bool, erro
 	return value != 0, nil
 }
 
-// MustGetShouldPrintHeaderAndFooter 获取是否打印页眉和页脚。
-// 出错时会触发全局错误回调。
-func (i *ICoreWebView2PrintSettings) MustGetShouldPrintHeaderAndFooter() bool {
-	value, err := i.GetShouldPrintHeaderAndFooter()
-	ReportErrorAtuo(err)
-	return value
-}
-
 // SetShouldPrintHeaderAndFooter 设置是否打印页眉和页脚。
 //   - 默认值为 false。
 func (i *ICoreWebView2PrintSettings) SetShouldPrintHeaderAndFooter(shouldPrintHeaderAndFooter bool) error {
@@ -455,14 +367,6 @@ func (i *ICoreWebView2PrintSettings) GetHeaderTitle() (string, error) {
 	title := common.UTF16PtrToString(value)
 	wapi.CoTaskMemFree(unsafe.Pointer(value))
 	return title, nil
-}
-
-// MustGetHeaderTitle 获取页眉标题。
-// 出错时会触发全局错误回调。
-func (i *ICoreWebView2PrintSettings) MustGetHeaderTitle() string {
-	value, err := i.GetHeaderTitle()
-	ReportErrorAtuo(err)
-	return value
 }
 
 // SetHeaderTitle 设置页眉标题。
@@ -497,14 +401,6 @@ func (i *ICoreWebView2PrintSettings) GetFooterUri() (string, error) {
 	return uri, nil
 }
 
-// MustGetFooterUri 获取页脚URI。
-// 出错时会触发全局错误回调。
-func (i *ICoreWebView2PrintSettings) MustGetFooterUri() string {
-	value, err := i.GetFooterUri()
-	ReportErrorAtuo(err)
-	return value
-}
-
 // SetFooterUri 设置页脚URI。
 //   - 如果提供的是空字符串，则页脚中不会显示统一资源标识符（URI）。
 //   - 默认值为当前统一资源标识符。
@@ -521,4 +417,108 @@ func (i *ICoreWebView2PrintSettings) SetFooterUri(footerUri string) error {
 		return syscall.Errno(r)
 	}
 	return nil
+}
+
+// MustGetOrientation 获取打印方向。
+// 出错时会触发全局错误回调。
+func (i *ICoreWebView2PrintSettings) MustGetOrientation() COREWEBVIEW2_PRINT_ORIENTATION {
+	value, err := i.GetOrientation()
+	ReportErrorAtuo(err)
+	return value
+}
+
+// MustGetScaleFactor 获取打印比例因子。
+// 出错时会触发全局错误回调。
+func (i *ICoreWebView2PrintSettings) MustGetScaleFactor() float64 {
+	value, err := i.GetScaleFactor()
+	ReportErrorAtuo(err)
+	return value
+}
+
+// MustGetPageWidth 获取页面宽度（以英寸为单位）。
+// 出错时会触发全局错误回调。
+func (i *ICoreWebView2PrintSettings) MustGetPageWidth() float64 {
+	value, err := i.GetPageWidth()
+	ReportErrorAtuo(err)
+	return value
+}
+
+// MustGetPageHeight 获取页面高度（以英寸为单位）。
+// 出错时会触发全局错误回调。
+func (i *ICoreWebView2PrintSettings) MustGetPageHeight() float64 {
+	value, err := i.GetPageHeight()
+	ReportErrorAtuo(err)
+	return value
+}
+
+// MustGetMarginTop 获取上边距（以英寸为单位）。
+// 出错时会触发全局错误回调。
+func (i *ICoreWebView2PrintSettings) MustGetMarginTop() float64 {
+	value, err := i.GetMarginTop()
+	ReportErrorAtuo(err)
+	return value
+}
+
+// MustGetMarginBottom 获取下边距（以英寸为单位）。
+// 出错时会触发全局错误回调。
+func (i *ICoreWebView2PrintSettings) MustGetMarginBottom() float64 {
+	value, err := i.GetMarginBottom()
+	ReportErrorAtuo(err)
+	return value
+}
+
+// MustGetMarginLeft 获取左边距（以英寸为单位）。
+// 出错时会触发全局错误回调。
+func (i *ICoreWebView2PrintSettings) MustGetMarginLeft() float64 {
+	value, err := i.GetMarginLeft()
+	ReportErrorAtuo(err)
+	return value
+}
+
+// MustGetMarginRight 获取右边距（以英寸为单位）。
+// 出错时会触发全局错误回调。
+func (i *ICoreWebView2PrintSettings) MustGetMarginRight() float64 {
+	value, err := i.GetMarginRight()
+	ReportErrorAtuo(err)
+	return value
+}
+
+// MustGetShouldPrintBackgrounds 获取是否打印背景颜色和图像。
+// 出错时会触发全局错误回调。
+func (i *ICoreWebView2PrintSettings) MustGetShouldPrintBackgrounds() bool {
+	value, err := i.GetShouldPrintBackgrounds()
+	ReportErrorAtuo(err)
+	return value
+}
+
+// MustGetShouldPrintSelectionOnly 获取是否只打印选中内容。
+// 出错时会触发全局错误回调。
+func (i *ICoreWebView2PrintSettings) MustGetShouldPrintSelectionOnly() bool {
+	value, err := i.GetShouldPrintSelectionOnly()
+	ReportErrorAtuo(err)
+	return value
+}
+
+// MustGetShouldPrintHeaderAndFooter 获取是否打印页眉和页脚。
+// 出错时会触发全局错误回调。
+func (i *ICoreWebView2PrintSettings) MustGetShouldPrintHeaderAndFooter() bool {
+	value, err := i.GetShouldPrintHeaderAndFooter()
+	ReportErrorAtuo(err)
+	return value
+}
+
+// MustGetHeaderTitle 获取页眉标题。
+// 出错时会触发全局错误回调。
+func (i *ICoreWebView2PrintSettings) MustGetHeaderTitle() string {
+	value, err := i.GetHeaderTitle()
+	ReportErrorAtuo(err)
+	return value
+}
+
+// MustGetFooterUri 获取页脚URI。
+// 出错时会触发全局错误回调。
+func (i *ICoreWebView2PrintSettings) MustGetFooterUri() string {
+	value, err := i.GetFooterUri()
+	ReportErrorAtuo(err)
+	return value
 }

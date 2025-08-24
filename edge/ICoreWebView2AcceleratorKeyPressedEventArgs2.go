@@ -10,13 +10,7 @@ import (
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2acceleratorkeypressedeventargs2
 type ICoreWebView2AcceleratorKeyPressedEventArgs2 struct {
-	Vtbl *ICoreWebView2AcceleratorKeyPressedEventArgs2Vtbl
-}
-
-type ICoreWebView2AcceleratorKeyPressedEventArgs2Vtbl struct {
-	ICoreWebView2AcceleratorKeyPressedEventArgsVtbl
-	GetIsBrowserAcceleratorKeyEnabled ComProc
-	PutIsBrowserAcceleratorKeyEnabled ComProc
+	ICoreWebView2AcceleratorKeyPressedEventArgs
 }
 
 // GetIsBrowserAcceleratorKeyEnabled 获取特定浏览器快捷键是否启用.

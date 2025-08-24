@@ -9,37 +9,7 @@ import (
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2controller3
 type ICoreWebView2Controller3 struct {
-	Vtbl *ICoreWebView2Controller3Vtbl
-}
-
-type ICoreWebView2Controller3Vtbl struct {
-	ICoreWebView2Controller2Vtbl
-	GetRasterizationScale              ComProc
-	PutRasterizationScale              ComProc
-	GetShouldDetectMonitorScaleChanges ComProc
-	PutShouldDetectMonitorScaleChanges ComProc
-	AddRasterizationScaleChanged       ComProc
-	RemoveRasterizationScaleChanged    ComProc
-	GetBoundsMode                      ComProc
-	PutBoundsMode                      ComProc
-}
-
-func (i *ICoreWebView2Controller3) AddRef() uintptr {
-	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2Controller3) Release() uintptr {
-	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2Controller3) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
+	ICoreWebView2Controller2
 }
 
 // GetRasterizationScale 获取当前光栅化缩放比例.

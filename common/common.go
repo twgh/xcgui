@@ -281,8 +281,8 @@ func GetProcessName() string {
 	return filepath.Base(exePath)
 }
 
-// GetProcessNameNoExt 取当前进程名（不含扩展名）.
-func GetProcessNameNoExt() string {
+// GetProcessNameWithoutExt 取当前进程名（不含扩展名）.
+func GetProcessNameWithoutExt() string {
 	filename := GetProcessName()
 	// 去除扩展名
 	extension := filepath.Ext(filename)
@@ -294,6 +294,23 @@ func BoolToInt(input bool) int {
 		return 1
 	}
 	return 0
+}
+
+// BoolToString 将 bool 类型转换为字符串 true 或 false.
+func BoolToString(input bool) string {
+	if input {
+		return "true"
+	}
+	return "false"
+}
+
+// StringToBool 将字符串转换为 bool 类型.
+//   - true 和 1 字符串都会转换为 true, 'true'字符串不区分大小写, 其他值都转换为 false.
+func StringToBool(input string) bool {
+	if strings.EqualFold(input, "true") || input == "1" {
+		return true
+	}
+	return false
 }
 
 // ErrorToErrno 将错误转换为系统调用错误号.

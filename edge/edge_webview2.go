@@ -3,10 +3,11 @@ package edge
 import (
 	"embed"
 	"errors"
-	"github.com/twgh/xcgui/wapi"
-	"github.com/twgh/xcgui/xc"
 	"io/fs"
 	"syscall"
+
+	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/xc"
 )
 
 type WebView2 struct {
@@ -30,7 +31,7 @@ func (w *WebView2) GetWebViewEventImpl() *WebViewEventImpl {
 }
 
 // Navigate 导航 webview 到给定的 URL。
-//   - URL 可能是数据 URI，即 "data:text/text,<html>...</html>"。
+//   - URL 可能是数据 URI，即 "data:text/html,<html>...</html>"。
 //   - 通常不进行适当的 url 编码也是可以的, webview 会为你重新编码。
 func (w *WebView2) Navigate(url string) error {
 	return w.CoreWebView.Navigate(url)
@@ -63,14 +64,9 @@ func (w *WebView2) Refresh(forceReload ...bool) error {
 	return w.Eval("location.reload(" + b + ");")
 }
 
-// Show 显示 webview。
-func (w *WebView2) Show() error {
-	return w.Controller.SetIsVisible(true)
-}
-
-// Hide 隐藏 webview。
-func (w *WebView2) Hide() error {
-	return w.Controller.SetIsVisible(false)
+// Show 显示或隐藏 webview。
+func (w *WebView2) Show(isShow bool) error {
+	return w.Controller.SetIsVisible(isShow)
 }
 
 // Resize 重新设置 webview 窗口大小和宿主窗口的客户区大小一致.
@@ -101,6 +97,24 @@ func (w *WebView2) AddWebResourceRequestedFilter(filter string, ctx COREWEBVIEW2
 // GetSettings 获取设置。
 func (w *WebView2) GetSettings() (*ICoreWebView2Settings, error) {
 	return w.CoreWebView.GetSettings()
+}
+
+// EnableBrowserAcceleratorKeys 设置是否启用浏览器快捷键。默认是启用的。
+//   - 此设置对 AcceleratorKeyPressed 事件没有影响。
+func (w *WebView2) EnableBrowserAcceleratorKeys(enable bool) error {
+	settings, err := w.GetSettings()
+	if err != nil {
+		return err
+	}
+	defer settings.Release()
+
+	s3, err := settings.GetICoreWebView2Settings3()
+	if err != nil {
+		return err
+	}
+	defer s3.Release()
+
+	return s3.SetAreBrowserAcceleratorKeysEnabled(enable)
 }
 
 // Close 关闭 WebView 并清理底层浏览器实例, 且销毁原生窗口。

@@ -625,3 +625,13 @@ func (w *WebViewEventImpl) ProcessInfosChanged(sender *ICoreWebView2Environment,
 	}
 	return ret
 }
+
+// GetProcessExtendedInfosCompleted 获取进程扩展信息完成时调用。
+func (w *WebViewEventImpl) GetProcessExtendedInfosCompleted(errorCode syscall.Errno, result *ICoreWebView2ProcessExtendedInfoCollection) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "GetProcessExtendedInfosCompleted")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(errorCode syscall.Errno, result *ICoreWebView2ProcessExtendedInfoCollection) uintptr)(errorCode, result)
+	}
+	return ret
+}

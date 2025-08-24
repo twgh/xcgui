@@ -10,31 +10,7 @@ import (
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2settings9
 type ICoreWebView2Settings9 struct {
-	Vtbl *ICoreWebView2Settings9Vtbl
-}
-
-type ICoreWebView2Settings9Vtbl struct {
-	ICoreWebView2Settings8Vtbl
-	GetIsNonClientRegionSupportEnabled ComProc
-	PutIsNonClientRegionSupportEnabled ComProc
-}
-
-func (i *ICoreWebView2Settings9) AddRef() uintptr {
-	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2Settings9) Release() uintptr {
-	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2Settings9) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
+	ICoreWebView2Settings8
 }
 
 // GetIsNonClientRegionSupportEnabled 获取是否启用非客户区域支持。

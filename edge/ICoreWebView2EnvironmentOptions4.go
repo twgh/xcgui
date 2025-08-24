@@ -12,31 +12,7 @@ import (
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2environmentoptions4
 type ICoreWebView2EnvironmentOptions4 struct {
-	Vtbl *ICoreWebView2EnvironmentOptions4Vtbl
-}
-
-type ICoreWebView2EnvironmentOptions4Vtbl struct {
-	IUnknownVtbl
-	GetCustomSchemeRegistrations ComProc
-	SetCustomSchemeRegistrations ComProc
-}
-
-func (i *ICoreWebView2EnvironmentOptions4) AddRef() uintptr {
-	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2EnvironmentOptions4) Release() uintptr {
-	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2EnvironmentOptions4) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
+	ICoreWebView2EnvironmentOptions3
 }
 
 // GetCustomSchemeRegistrations 获取自定义方案注册列表。

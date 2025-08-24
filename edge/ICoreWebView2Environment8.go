@@ -9,32 +9,7 @@ import (
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2environment8
 type ICoreWebView2Environment8 struct {
-	Vtbl *ICoreWebView2Environment8Vtbl
-}
-
-type ICoreWebView2Environment8Vtbl struct {
-	ICoreWebView2Environment7Vtbl
-	AddProcessInfosChanged    ComProc
-	RemoveProcessInfosChanged ComProc
-	GetProcessInfos           ComProc
-}
-
-func (i *ICoreWebView2Environment8) AddRef() uintptr {
-	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2Environment8) Release() uintptr {
-	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2Environment8) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
+	ICoreWebView2Environment7
 }
 
 // AddProcessInfosChanged 添加进程信息变更事件处理程序。

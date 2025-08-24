@@ -9,31 +9,7 @@ import (
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2_22
 type ICoreWebView2_22 struct {
-	Vtbl *ICoreWebView2_22Vtbl
-}
-
-type ICoreWebView2_22Vtbl struct {
-	ICoreWebView2_21Vtbl
-	AddWebResourceRequestedFilterWithRequestSourceKinds    ComProc
-	RemoveWebResourceRequestedFilterWithRequestSourceKinds ComProc
-}
-
-func (i *ICoreWebView2_22) AddRef() uintptr {
-	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2_22) Release() uintptr {
-	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2_22) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
+	ICoreWebView2_21
 }
 
 // AddWebResourceRequestedFilterWithRequestSourceKinds 添加带有请求源类型的 Web 资源请求过滤器.

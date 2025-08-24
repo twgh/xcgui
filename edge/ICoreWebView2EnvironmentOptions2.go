@@ -12,31 +12,7 @@ import (
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2environmentoptions2
 type ICoreWebView2EnvironmentOptions2 struct {
-	Vtbl *ICoreWebView2EnvironmentOptions2Vtbl
-}
-
-type ICoreWebView2EnvironmentOptions2Vtbl struct {
-	IUnknownVtbl
-	GetExclusiveUserDataFolderAccess ComProc
-	PutExclusiveUserDataFolderAccess ComProc
-}
-
-func (i *ICoreWebView2EnvironmentOptions2) AddRef() uintptr {
-	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2EnvironmentOptions2) Release() uintptr {
-	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2EnvironmentOptions2) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
+	ICoreWebView2EnvironmentOptions
 }
 
 // GetExclusiveUserDataFolderAccess 获取其他进程是否可以从使用相同用户数据文件夹创建的 WebView2Environment 创建 WebView2，从而共享同一个 WebView 浏览器进程实例。

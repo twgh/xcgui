@@ -22,6 +22,9 @@ type ICoreWebView2AcceleratorKeyPressedEventArgsVtbl struct {
 	GetPhysicalKeyStatus ComProc
 	GetHandled           ComProc
 	PutHandled           ComProc
+	// 2
+	GetIsBrowserAcceleratorKeyEnabled ComProc
+	PutIsBrowserAcceleratorKeyEnabled ComProc
 }
 
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) AddRef() uintptr {

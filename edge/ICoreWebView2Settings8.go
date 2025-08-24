@@ -10,31 +10,7 @@ import (
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2settings8
 type ICoreWebView2Settings8 struct {
-	Vtbl *ICoreWebView2Settings8Vtbl
-}
-
-type ICoreWebView2Settings8Vtbl struct {
-	ICoreWebView2Settings7Vtbl
-	GetIsReputationCheckingRequired ComProc
-	PutIsReputationCheckingRequired ComProc
-}
-
-func (i *ICoreWebView2Settings8) AddRef() uintptr {
-	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2Settings8) Release() uintptr {
-	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
-	return r
-}
-
-func (i *ICoreWebView2Settings8) QueryInterface(refiid, object unsafe.Pointer) error {
-	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
+	ICoreWebView2Settings7
 }
 
 // GetIsReputationCheckingRequired 获取是否需要进行信誉检查。
