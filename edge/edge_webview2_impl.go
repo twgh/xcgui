@@ -635,3 +635,41 @@ func (w *WebViewEventImpl) GetProcessExtendedInfosCompleted(errorCode syscall.Er
 	}
 	return ret
 }
+
+// FaviconChanged 当网站图标（favicon）的 URL 与之前的 URL 不同时触发。
+//   - 首次导航到新文档时，无论该文档是否在 HTML 中声明了网站图标，只要其图标与之前的图标不同，就会触发 FaviconChanged 事件。
+//   - 如果 HTML 中声明了网站图标或通过脚本设置了网站图标，该事件将再次触发。随后可以通过 GetFavicon 和 GetFaviconUri 方法获取网站图标信息。
+func (w *WebViewEventImpl) FaviconChanged(sender *ICoreWebView2, args *IUnknown) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "FaviconChanged")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2, args *IUnknown) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// GetFaviconCompleted 获取网站图标完成时调用。
+func (w *WebViewEventImpl) GetFaviconCompleted(errorCode syscall.Errno, faviconStream *IStream) uintptr {
+	if faviconStream != nil {
+		defer faviconStream.Release()
+	}
+
+	var bs []byte
+	cbs := WvEventHandler.GetCallBacks(w, "GetFaviconCompleted")
+	n := len(cbs)
+	if n > 0 {
+		if errors.Is(errorCode, wapi.S_OK) && faviconStream != nil {
+			var err error
+			bs, err = faviconStream.GetBytes()
+			if err != nil {
+				ReportErrorAtuo(errors.New("GetFaviconCompleted, GetBytes failed: " + err.Error()))
+			}
+		}
+	}
+
+	var ret uintptr
+	for i := n - 1; i >= 0; i-- {
+		ret = cbs[i].(func(errorCode syscall.Errno, result []byte) uintptr)(errorCode, bs)
+	}
+	return ret
+}

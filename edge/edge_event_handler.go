@@ -17,7 +17,7 @@ type webviewEventHandler struct {
 
 type eventInfo struct {
 	Cbs                 []interface{}
-	EvnetHandlerPointer unsafe.Pointer
+	EventHandlerPointer unsafe.Pointer
 	// EventToken 添加事件时返回的事件令牌, 用于移除事件的参数
 	EventToken *EventRegistrationToken
 }
@@ -67,7 +67,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "CustomItemSelected":
 			menuItem, ok := obj.(*ICoreWebView2ContextMenuItem)
 			if !ok {
@@ -79,7 +79,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "DevToolsProtocolEventReceived":
 			receiver, ok := obj.(*ICoreWebView2DevToolsProtocolEventReceiver)
 			if !ok {
@@ -91,7 +91,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "BytesReceivedChanged":
 			downloadOperation, ok := obj.(*ICoreWebView2DownloadOperation)
 			if !ok {
@@ -103,7 +103,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "FrameNameChanged":
 			frame, ok := obj.(*ICoreWebView2Frame)
 			if !ok {
@@ -115,7 +115,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "FrameDestroyed":
 			frame, ok := obj.(*ICoreWebView2Frame)
 			if !ok {
@@ -127,7 +127,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "AcceleratorKeyPressed":
 			eventHandler := NewICoreWebView2AcceleratorKeyPressedEventHandler(impl)
 			err := impl.Controller.AddAcceleratorKeyPressed(eventHandler, info.EventToken)
@@ -135,7 +135,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "PermissionRequested":
 			eventHandler := NewICoreWebView2PermissionRequestedEventHandler(impl)
 			err := impl.CoreWebView.AddPermissionRequested(eventHandler, info.EventToken)
@@ -143,7 +143,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "WebMessageReceived":
 			eventHandler := NewICoreWebView2WebMessageReceivedEventHandler(impl)
 			err := impl.CoreWebView.AddWebMessageReceived(eventHandler, info.EventToken)
@@ -151,7 +151,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "DocumentTitleChanged":
 			eventHandler := NewICoreWebView2DocumentTitleChangedEventHandler(impl)
 			err := impl.CoreWebView.AddDocumentTitleChanged(eventHandler, info.EventToken)
@@ -159,7 +159,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "WindowCloseRequested":
 			eventHandler := NewICoreWebView2WindowCloseRequestedEventHandler(impl)
 			err := impl.CoreWebView.AddWindowCloseRequested(eventHandler, info.EventToken)
@@ -167,7 +167,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "SourceChanged":
 			eventHandler := NewICoreWebView2SourceChangedEventHandler(impl)
 			err := impl.CoreWebView.AddSourceChanged(eventHandler, info.EventToken)
@@ -175,7 +175,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "NewWindowRequested":
 			eventHandler := NewICoreWebView2NewWindowRequestedEventHandler(impl)
 			err := impl.CoreWebView.AddNewWindowRequested(eventHandler, info.EventToken)
@@ -183,7 +183,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "WebResourceRequested":
 			eventHandler := NewICoreWebView2WebResourceRequestedEventHandler(impl)
 			err := impl.CoreWebView.AddWebResourceRequested(eventHandler, info.EventToken)
@@ -191,7 +191,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "ContentLoading":
 			eventHandler := NewICoreWebView2ContentLoadingEventHandler(impl)
 			err := impl.CoreWebView.AddContentLoading(eventHandler, info.EventToken)
@@ -199,7 +199,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "ContainsFullScreenElementChanged":
 			eventHandler := NewICoreWebView2ContainsFullScreenElementChangedEventHandler(impl)
 			err := impl.CoreWebView.AddContainsFullScreenElementChanged(eventHandler, info.EventToken)
@@ -207,7 +207,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "ProcessFailed":
 			eventHandler := NewICoreWebView2ProcessFailedEventHandler(impl)
 			err := impl.CoreWebView.AddProcessFailed(eventHandler, info.EventToken)
@@ -215,7 +215,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "HistoryChanged":
 			eventHandler := NewICoreWebView2HistoryChangedEventHandler(impl)
 			err := impl.CoreWebView.AddHistoryChanged(eventHandler, info.EventToken)
@@ -223,7 +223,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "ScriptDialogOpening":
 			eventHandler := NewICoreWebView2ScriptDialogOpeningEventHandler(impl)
 			err := impl.CoreWebView.AddScriptDialogOpening(eventHandler, info.EventToken)
@@ -231,7 +231,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "NavigationStarting":
 			eventHandler := NewICoreWebView2NavigationStartingEventHandler(impl)
 			err := impl.CoreWebView.AddNavigationStarting(eventHandler, info.EventToken)
@@ -239,7 +239,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "NavigationCompleted":
 			eventHandler := NewICoreWebView2NavigationCompletedEventHandler(impl)
 			err := impl.CoreWebView.AddNavigationCompleted(eventHandler, info.EventToken)
@@ -247,7 +247,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "Frame_NavigationStarting":
 			eventHandler := NewICoreWebView2_Frame_NavigationStartingEventHandler(impl)
 			err := impl.CoreWebView.AddFrameNavigationStarting(eventHandler, info.EventToken)
@@ -255,7 +255,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "Frame_NavigationCompleted":
 			eventHandler := NewICoreWebView2_Frame_NavigationCompletedEventHandler(impl)
 			err := impl.CoreWebView.AddFrameNavigationCompleted(eventHandler, info.EventToken)
@@ -263,7 +263,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "BrowserProcessExited":
 			e5, err := impl.Edge.Environment.GetICoreWebView2Environment5()
 			if err != nil {
@@ -276,7 +276,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "ProcessInfosChanged":
 			e8, err := impl.Edge.Environment.GetICoreWebView2Environment8()
 			if err != nil {
@@ -289,7 +289,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "RasterizationScaleChanged":
 			c3, err := impl.Controller.GetICoreWebView2Controller3()
 			if err != nil {
@@ -302,7 +302,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "ContextMenuRequested":
 			w2_11, err := impl.CoreWebView.GetICoreWebView2_11()
 			if err != nil {
@@ -315,7 +315,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "DOMContentLoaded":
 			w2_2, err := impl.CoreWebView.GetICoreWebView2_2()
 			if err != nil {
@@ -328,7 +328,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "WebResourceResponseReceived":
 			w2_2, err := impl.CoreWebView.GetICoreWebView2_2()
 			if err != nil {
@@ -341,7 +341,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "DownloadStarting":
 			w2_4, err := impl.CoreWebView.GetICoreWebView2_4()
 			if err != nil {
@@ -354,7 +354,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "FrameCreated":
 			w2_4, err := impl.CoreWebView.GetICoreWebView2_4()
 			if err != nil {
@@ -367,7 +367,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "ClientCertificateRequested":
 			w2_5, err := impl.CoreWebView.GetICoreWebView2_5()
 			if err != nil {
@@ -380,7 +380,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "IsMutedChanged":
 			w2_8, err := impl.CoreWebView.GetICoreWebView2_8()
 			if err != nil {
@@ -393,7 +393,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "DocumentPlayingAudioChanged":
 			w2_8, err := impl.CoreWebView.GetICoreWebView2_8()
 			if err != nil {
@@ -406,34 +406,50 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
-			info.EvnetHandlerPointer = unsafe.Pointer(eventHandler)
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "FaviconChanged":
+			w2_15, err := impl.CoreWebView.GetICoreWebView2_15()
+			if err != nil {
+				return -1, err
+			}
+			defer w2_15.Release()
+			eventHandler := NewICoreWebView2FaviconChangedEventHandler(impl)
+			err = w2_15.AddFaviconChanged(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "GetCookiesCompleted":
 			info.EventToken = nil
-			info.EvnetHandlerPointer = unsafe.Pointer(NewICoreWebView2GetCookiesCompletedHandler(impl))
+			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2GetCookiesCompletedHandler(impl))
 		case "TrySuspendCompleted":
 			info.EventToken = nil
-			info.EvnetHandlerPointer = unsafe.Pointer(NewICoreWebView2TrySuspendCompletedHandler(impl))
+			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2TrySuspendCompletedHandler(impl))
 		case "ExecuteScriptCompleted":
 			info.EventToken = nil
-			info.EvnetHandlerPointer = unsafe.Pointer(NewICoreWebView2ExecuteScriptCompletedHandler(impl))
+			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2ExecuteScriptCompletedHandler(impl))
 		case "AddScriptToExecuteOnDocumentCreatedCompleted":
 			info.EventToken = nil
-			info.EvnetHandlerPointer = unsafe.Pointer(NewICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler(impl))
+			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler(impl))
 		case "CapturePreviewCompleted":
 			info.EventToken = nil
-			info.EvnetHandlerPointer = unsafe.Pointer(NewICoreWebView2CapturePreviewCompletedHandler(impl))
+			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2CapturePreviewCompletedHandler(impl))
 		case "CallDevToolsProtocolMethodCompleted":
 			info.EventToken = nil
-			info.EvnetHandlerPointer = unsafe.Pointer(NewICoreWebView2CallDevToolsProtocolMethodCompletedHandler(impl))
+			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2CallDevToolsProtocolMethodCompletedHandler(impl))
 		case "WebResourceResponseViewGetContentCompleted":
 			info.EventToken = nil
-			info.EvnetHandlerPointer = unsafe.Pointer(NewICoreWebView2WebResourceResponseViewGetContentCompletedHandler(impl))
+			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2WebResourceResponseViewGetContentCompletedHandler(impl))
 		case "CreateCoreWebView2CompositionControllerCompleted":
 			info.EventToken = nil
-			info.EvnetHandlerPointer = unsafe.Pointer(NewICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler(impl))
+			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler(impl))
 		case "GetProcessExtendedInfosCompleted":
 			info.EventToken = nil
-			info.EvnetHandlerPointer = unsafe.Pointer(NewICoreWebView2GetProcessExtendedInfosCompletedHandler(impl))
+			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2GetProcessExtendedInfosCompletedHandler(impl))
+		case "GetFaviconCompleted":
+			info.EventToken = nil
+			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2GetFaviconCompletedHandler(impl))
 		}
 	}
 
@@ -466,7 +482,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 func (h *webviewEventHandler) GetHandler(impl *WebViewEventImpl, eventType string) unsafe.Pointer {
 	h.RLock()
 	defer h.RUnlock()
-	return h.EventInfoMap[impl][eventType].EvnetHandlerPointer
+	return h.EventInfoMap[impl][eventType].EventHandlerPointer
 }
 
 // GetEventToken 获取指定对象指定事件的 EventToken.
@@ -482,8 +498,8 @@ func (h *webviewEventHandler) ReleaseEventHandler(impl *WebViewEventImpl, eventT
 	defer h.Unlock()
 	eventMap := h.EventInfoMap[impl]
 	info := eventMap[eventType]
-	if info.EvnetHandlerPointer != nil {
-		ComRelease(info.EvnetHandlerPointer)
+	if info.EventHandlerPointer != nil {
+		ComRelease(info.EventHandlerPointer)
 	}
 	delete(eventMap, eventType)
 }
@@ -494,8 +510,8 @@ func (h *webviewEventHandler) ReleaseAllEventHandler(impl *WebViewEventImpl) {
 	defer h.Unlock()
 	eventMap := h.EventInfoMap[impl]
 	for _, info := range eventMap {
-		if info.EvnetHandlerPointer != nil {
-			ComRelease(info.EvnetHandlerPointer)
+		if info.EventHandlerPointer != nil {
+			ComRelease(info.EventHandlerPointer)
 		}
 	}
 	delete(h.EventInfoMap, impl)

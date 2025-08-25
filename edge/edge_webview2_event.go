@@ -360,3 +360,17 @@ func (w *WebViewEventImpl) Event_ProcessInfosChanged(cb func(sender *ICoreWebVie
 	}
 	return WvEventHandler.AddCallBack(w, "ProcessInfosChanged", c, nil, allowAddingMultiple...)
 }
+
+// Event_FaviconChanged 网站图标改变事件.
+//   - 当网站图标（favicon）的 URL 与之前的 URL 不同时，会触发 FaviconChanged 事件。
+//   - 首次导航到新文档时，无论该文档是否在 HTML 中声明了网站图标，只要其图标与之前的图标不同，就会触发 FaviconChanged 事件。
+//   - 如果 HTML 中声明了网站图标或通过脚本设置了网站图标，该事件将再次触发。随后可以通过 GetFavicon 和 GetFaviconUri 方法获取网站图标信息。
+func (w *WebViewEventImpl) Event_FaviconChanged(cb func(sender *ICoreWebView2, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
+	}
+	return WvEventHandler.AddCallBack(w, "FaviconChanged", c, nil, allowAddingMultiple...)
+}
