@@ -673,3 +673,109 @@ func (w *WebViewEventImpl) GetFaviconCompleted(errorCode syscall.Errno, faviconS
 	}
 	return ret
 }
+
+// ZoomFactorChanged 当 WebView 的缩放因子改变时调用。
+//   - WebView 会关联每个网站最后使用的缩放比例。导航到不同页面时，缩放比例可能会发生变化。当因导航变化导致缩放比例改变时，ZoomFactorChanged 事件会在 ContentLoading 事件之后立即运行。
+func (w *WebViewEventImpl) ZoomFactorChanged(sender *ICoreWebView2Controller, args *IUnknown) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "ZoomFactorChanged")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2Controller, args *IUnknown) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// MoveFocusRequested 移动焦点请求时调用。
+//   - MoveFocusRequested 在用户尝试按 Tab 键离开 WebView 时运行。此事件运行时，WebView 的焦点尚未改变。
+func (w *WebViewEventImpl) MoveFocusRequested(sender *ICoreWebView2Controller, args *ICoreWebView2MoveFocusRequestedEventArgs) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "MoveFocusRequested")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2Controller, args *ICoreWebView2MoveFocusRequestedEventArgs) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// FocusChanged 焦点变化时调用(当前仅用于 GotFocus 事件)。
+func (w *WebViewEventImpl) FocusChanged(sender *ICoreWebView2Controller, args *IUnknown) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "FocusChanged")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2Controller, args *IUnknown) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// LostFocus 失去焦点时调用。
+func (w *WebViewEventImpl) LostFocus(sender *ICoreWebView2Controller, args *IUnknown) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "LostFocus")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2Controller, args *IUnknown) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// NewBrowserVersionAvailable 当有新版本的 WebView2 运行时可用时调用。
+func (w *WebViewEventImpl) NewBrowserVersionAvailable(sender *ICoreWebView2Environment, args *IUnknown) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "NewBrowserVersionAvailable")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2Environment, args *IUnknown) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// EstimatedEndTimeChanged 当下载的预计结束时间更改时调用。
+func (w *WebViewEventImpl) EstimatedEndTimeChanged(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "EstimatedEndTimeChanged")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// PrintToPdfCompleted 当打印到 PDF 操作完成时调用。
+func (w *WebViewEventImpl) PrintToPdfCompleted(errorCode syscall.Errno, isSuccessful bool) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "PrintToPdfCompleted")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(errorCode syscall.Errno, isSuccessful bool) uintptr)(errorCode, isSuccessful)
+	}
+	return ret
+}
+
+// StateChanged 当下载的状态更改时调用。
+func (w *WebViewEventImpl) StateChanged(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "StateChanged")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// IsDefaultDownloadDialogOpenChanged 当默认下载对话框的打开状态发生变化时调用。
+//   - 此事件在 DownloadStarting 事件之后发生。
+//   - 在 DownloadStartingEventArgs 上设置 Handled 属性会禁用默认下载对话框，并确保此事件永远不会被触发。
+func (w *WebViewEventImpl) IsDefaultDownloadDialogOpenChanged(sender *ICoreWebView2, args *IUnknown) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "IsDefaultDownloadDialogOpenChanged")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2, args *IUnknown) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// BasicAuthenticationRequested 当网页请求基本身份验证时调用。
+//   - 主机可以提供包含身份验证凭据的响应，也可以取消请求。
+//   - 如果主机将 Cancel 属性设置为 false，但未在 Response 属性上提供 UserName 或 Password 属性，那么 WebView2 将向用户显示默认的身份验证质询对话框提示。
+func (w *WebViewEventImpl) BasicAuthenticationRequested(sender *ICoreWebView2, args *ICoreWebView2BasicAuthenticationRequestedEventArgs) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "BasicAuthenticationRequested")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2BasicAuthenticationRequestedEventArgs) uintptr)(sender, args)
+	}
+	return ret
+}

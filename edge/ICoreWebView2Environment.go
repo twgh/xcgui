@@ -129,10 +129,31 @@ func (i *ICoreWebView2Environment) GetBrowserVersionString() (string, error) {
 	return version, nil
 }
 
-/*todo
-AddNewBrowserVersionAvailable
-RemoveNewBrowserVersionAvailable
-*/
+// AddNewBrowserVersionAvailable 添加新浏览器版本可用事件处理程序。
+//   - 当有新版本的 WebView2 运行时可用时触发。
+func (i *ICoreWebView2Environment) AddNewBrowserVersionAvailable(eventHandler *ICoreWebView2NewBrowserVersionAvailableEventHandler, token *EventRegistrationToken) error {
+	r, _, _ := i.Vtbl.AddNewBrowserVersionAvailable.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(eventHandler)),
+		uintptr(unsafe.Pointer(token)),
+	)
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
+// RemoveNewBrowserVersionAvailable 移除新浏览器版本可用事件处理程序。
+func (i *ICoreWebView2Environment) RemoveNewBrowserVersionAvailable(token EventRegistrationToken) error {
+	r, _, _ := i.Vtbl.RemoveNewBrowserVersionAvailable.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(token.Value),
+	)
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
 
 // GetICoreWebView2Environment2 获取 ICoreWebView2Environment2。
 func (i *ICoreWebView2Environment) GetICoreWebView2Environment2() (*ICoreWebView2Environment2, error) {

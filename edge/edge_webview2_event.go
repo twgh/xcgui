@@ -374,3 +374,90 @@ func (w *WebViewEventImpl) Event_FaviconChanged(cb func(sender *ICoreWebView2, a
 	}
 	return WvEventHandler.AddCallBack(w, "FaviconChanged", c, nil, allowAddingMultiple...)
 }
+
+// Event_ZoomFactorChanged 缩放因子改变事件.
+//   - 当 WebView 的 ZoomFactor 属性发生改变时触发。
+//   - WebView 会关联每个网站最后使用的缩放比例。导航到不同页面时，缩放比例可能会发生变化。当因导航变化导致缩放比例改变时，ZoomFactorChanged 事件会在 ContentLoading 事件之后立即运行。
+func (w *WebViewEventImpl) Event_ZoomFactorChanged(cb func(sender *ICoreWebView2Controller, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
+	}
+	return WvEventHandler.AddCallBack(w, "ZoomFactorChanged", c, nil, allowAddingMultiple...)
+}
+
+// Event_MoveFocusRequested 移动焦点请求事件.
+//   - MoveFocusRequested 在用户尝试按 Tab 键离开 WebView 时运行。此事件运行时，WebView 的焦点尚未改变。
+func (w *WebViewEventImpl) Event_MoveFocusRequested(cb func(sender *ICoreWebView2Controller, args *ICoreWebView2MoveFocusRequestedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
+	}
+	return WvEventHandler.AddCallBack(w, "MoveFocusRequested", c, nil, allowAddingMultiple...)
+}
+
+// Event_GotFocus 获得焦点事件.
+//   - 当 WebView 获得焦点时触发。
+func (w *WebViewEventImpl) Event_GotFocus(cb func(sender *ICoreWebView2Controller, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
+	}
+	return WvEventHandler.AddCallBack(w, "FocusChanged", c, nil, allowAddingMultiple...)
+}
+
+// Event_LostFocus 失去焦点事件.
+//   - 当 WebView 失去焦点时触发。
+func (w *WebViewEventImpl) Event_LostFocus(cb func(sender *ICoreWebView2Controller, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
+	}
+	return WvEventHandler.AddCallBack(w, "LostFocus", c, nil, allowAddingMultiple...)
+}
+
+// Event_NewBrowserVersionAvailable 新浏览器版本可用事件.
+//   - 当有新版本的 WebView2 运行时可用时触发。
+func (w *WebViewEventImpl) Event_NewBrowserVersionAvailable(cb func(sender *ICoreWebView2Environment, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
+	}
+	return WvEventHandler.AddCallBack(w, "NewBrowserVersionAvailable", c, nil, allowAddingMultiple...)
+}
+
+// Event_IsDefaultDownloadDialogOpenChanged 默认下载对话框打开状态变化事件.
+//   - 此事件在 DownloadStarting 事件之后发生。
+//   - 在 DownloadStartingEventArgs 上设置 Handled 属性会禁用默认下载对话框，并确保此事件永远不会被触发。
+func (w *WebViewEventImpl) Event_IsDefaultDownloadDialogOpenChanged(cb func(sender *ICoreWebView2, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
+	}
+	return WvEventHandler.AddCallBack(w, "IsDefaultDownloadDialogOpenChanged", c, nil, allowAddingMultiple...)
+}
+
+// Event_BasicAuthenticationRequested 基本身份验证请求事件.
+//   - 主机可以提供包含身份验证凭据的响应，也可以取消请求。
+//   - 如果主机将 Cancel 属性设置为 false，但未在 Response 属性上提供 UserName 或 Password 属性，那么 WebView2 将向用户显示默认的身份验证质询对话框提示。
+func (w *WebViewEventImpl) Event_BasicAuthenticationRequested(cb func(sender *ICoreWebView2, args *ICoreWebView2BasicAuthenticationRequestedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
+	}
+	return WvEventHandler.AddCallBack(w, "BasicAuthenticationRequested", c, nil, allowAddingMultiple...)
+}

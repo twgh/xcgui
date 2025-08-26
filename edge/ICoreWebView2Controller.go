@@ -1,11 +1,12 @@
 package edge
 
 import (
+	"syscall"
+	"unsafe"
+
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"github.com/twgh/xcgui/xc"
-	"syscall"
-	"unsafe"
 )
 
 // ICoreWebView2Controller 是 CoreWebView2 对象的所有者，该对象支持调整大小、显示和隐藏、聚焦以及与窗口和合成相关的其他功能。
@@ -269,19 +270,110 @@ func (i *ICoreWebView2Controller) SetParentWindow(parentWindow uintptr) error {
 	return nil
 }
 
-/* todo
-AddZoomFactorChanged
-RemoveZoomFactorChanged
+// AddZoomFactorChanged 添加缩放因子变化事件处理程序。
+//   - 当 WebView 的 ZoomFactor 属性发生变化时触发。
+//   - WebView 会关联每个网站最后使用的缩放比例。导航到不同页面时，缩放比例可能会发生变化。当因导航变化导致缩放比例改变时，ZoomFactorChanged 事件会在 ContentLoading 事件之后立即运行。
+func (i *ICoreWebView2Controller) AddZoomFactorChanged(eventHandler *ICoreWebView2ZoomFactorChangedEventHandler, token *EventRegistrationToken) error {
+	r, _, _ := i.Vtbl.AddZoomFactorChanged.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(eventHandler)),
+		uintptr(unsafe.Pointer(token)),
+	)
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
 
-AddMoveFocusRequested
-RemoveMoveFocusRequested
+// RemoveZoomFactorChanged 移除缩放因子变化事件处理程序。
+func (i *ICoreWebView2Controller) RemoveZoomFactorChanged(token EventRegistrationToken) error {
+	r, _, _ := i.Vtbl.RemoveZoomFactorChanged.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(token.Value),
+	)
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
 
-AddGotFocus
-RemoveGotFocus
+// AddMoveFocusRequested 添加移动焦点请求事件处理程序。
+//   - MoveFocusRequested 在用户尝试按 Tab 键离开 WebView 时运行。此事件运行时，WebView 的焦点尚未改变。
+func (i *ICoreWebView2Controller) AddMoveFocusRequested(eventHandler *ICoreWebView2MoveFocusRequestedEventHandler, token *EventRegistrationToken) error {
+	r, _, _ := i.Vtbl.AddMoveFocusRequested.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(eventHandler)),
+		uintptr(unsafe.Pointer(token)),
+	)
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
 
-AddLostFocus
-RemoveLostFocus
-*/
+// RemoveMoveFocusRequested 移除移动焦点请求事件处理程序。
+func (i *ICoreWebView2Controller) RemoveMoveFocusRequested(token EventRegistrationToken) error {
+	r, _, _ := i.Vtbl.RemoveMoveFocusRequested.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(token.Value),
+	)
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
+// AddGotFocus 添加获得焦点事件处理程序。
+//   - 当 WebView 获得焦点时触发。
+func (i *ICoreWebView2Controller) AddGotFocus(eventHandler *ICoreWebView2FocusChangedEventHandler, token *EventRegistrationToken) error {
+	r, _, _ := i.Vtbl.AddGotFocus.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(eventHandler)),
+		uintptr(unsafe.Pointer(token)),
+	)
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
+// RemoveGotFocus 移除获得焦点事件处理程序。
+func (i *ICoreWebView2Controller) RemoveGotFocus(token EventRegistrationToken) error {
+	r, _, _ := i.Vtbl.RemoveGotFocus.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(token.Value),
+	)
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
+// AddLostFocus 添加失去焦点事件处理程序。
+//   - 当 WebView 失去焦点时触发。
+func (i *ICoreWebView2Controller) AddLostFocus(eventHandler *ICoreWebView2LostFocusEventHandler, token *EventRegistrationToken) error {
+	r, _, _ := i.Vtbl.AddLostFocus.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(eventHandler)),
+		uintptr(unsafe.Pointer(token)),
+	)
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
+// RemoveLostFocus 移除失去焦点事件处理程序。
+func (i *ICoreWebView2Controller) RemoveLostFocus(token EventRegistrationToken) error {
+	r, _, _ := i.Vtbl.RemoveLostFocus.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(token.Value),
+	)
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
 
 // GetICoreWebView2Controller2 获取 ICoreWebView2Controller2 对象。
 func (i *ICoreWebView2Controller) GetICoreWebView2Controller2() (*ICoreWebView2Controller2, error) {

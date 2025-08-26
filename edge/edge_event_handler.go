@@ -104,6 +104,30 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				return -1, err
 			}
 			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "EstimatedEndTimeChanged":
+			downloadOperation, ok := obj.(*ICoreWebView2DownloadOperation)
+			if !ok {
+				return -1, errors.New("obj is not *ICoreWebView2DownloadOperation")
+			}
+			eventHandler := NewICoreWebView2EstimatedEndTimeChangedEventHandler(impl)
+			err := downloadOperation.AddEstimatedEndTimeChanged(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "StateChanged":
+			downloadOperation, ok := obj.(*ICoreWebView2DownloadOperation)
+			if !ok {
+				return -1, errors.New("obj is not *ICoreWebView2DownloadOperation")
+			}
+			eventHandler := NewICoreWebView2StateChangedEventHandler(impl)
+			err := downloadOperation.AddStateChanged(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "FrameNameChanged":
 			frame, ok := obj.(*ICoreWebView2Frame)
 			if !ok {
@@ -131,6 +155,38 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 		case "AcceleratorKeyPressed":
 			eventHandler := NewICoreWebView2AcceleratorKeyPressedEventHandler(impl)
 			err := impl.Controller.AddAcceleratorKeyPressed(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "ZoomFactorChanged":
+			eventHandler := NewICoreWebView2ZoomFactorChangedEventHandler(impl)
+			err := impl.Controller.AddZoomFactorChanged(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "MoveFocusRequested":
+			eventHandler := NewICoreWebView2MoveFocusRequestedEventHandler(impl)
+			err := impl.Controller.AddMoveFocusRequested(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "FocusChanged": // 给 GotFocus 使用
+			eventHandler := NewICoreWebView2FocusChangedEventHandler(impl)
+			err := impl.Controller.AddGotFocus(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "LostFocus":
+			eventHandler := NewICoreWebView2LostFocusEventHandler(impl)
+			err := impl.Controller.AddLostFocus(eventHandler, info.EventToken)
 			if err != nil {
 				eventHandler.Release()
 				return -1, err
@@ -259,6 +315,14 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 		case "Frame_NavigationCompleted":
 			eventHandler := NewICoreWebView2_Frame_NavigationCompletedEventHandler(impl)
 			err := impl.CoreWebView.AddFrameNavigationCompleted(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "NewBrowserVersionAvailable":
+			eventHandler := NewICoreWebView2NewBrowserVersionAvailableEventHandler(impl)
+			err := impl.Edge.Environment.AddNewBrowserVersionAvailable(eventHandler, info.EventToken)
 			if err != nil {
 				eventHandler.Release()
 				return -1, err
@@ -420,6 +484,32 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				return -1, err
 			}
 			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "IsDefaultDownloadDialogOpenChanged":
+			w2_9, err := impl.CoreWebView.GetICoreWebView2_9()
+			if err != nil {
+				return -1, err
+			}
+			defer w2_9.Release()
+			eventHandler := NewICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler(impl)
+			err = w2_9.AddIsDefaultDownloadDialogOpenChanged(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "BasicAuthenticationRequested":
+			w2_10, err := impl.CoreWebView.GetICoreWebView2_10()
+			if err != nil {
+				return -1, err
+			}
+			defer w2_10.Release()
+			eventHandler := NewICoreWebView2BasicAuthenticationRequestedEventHandler(impl)
+			err = w2_10.AddBasicAuthenticationRequested(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "GetCookiesCompleted":
 			info.EventToken = nil
 			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2GetCookiesCompletedHandler(impl))
@@ -450,6 +540,9 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 		case "GetFaviconCompleted":
 			info.EventToken = nil
 			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2GetFaviconCompletedHandler(impl))
+		case "PrintToPdfCompleted":
+			info.EventToken = nil
+			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2PrintToPdfCompletedHandler(impl))
 		}
 	}
 

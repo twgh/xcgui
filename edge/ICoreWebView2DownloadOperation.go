@@ -1,10 +1,11 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
 )
 
 // ICoreWebView2DownloadOperation 表示下载操作.
@@ -269,12 +270,65 @@ func (i *ICoreWebView2DownloadOperation) GetCanResume() (bool, error) {
 	return canResume, nil
 }
 
-/*TODO:
-AddEstimatedEndTimeChanged
-RemoveEstimatedEndTimeChanged
-AddStateChanged
-RemoveStateChanged
-*/
+// Event_EstimatedEndTimeChanged 预计结束时间改变事件.
+func (i *ICoreWebView2DownloadOperation) Event_EstimatedEndTimeChanged(w *WebViewEventImpl, cb func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
+	return WvEventHandler.AddCallBack(w, "EstimatedEndTimeChanged", cb, i, allowAddingMultiple...)
+}
+
+// AddEstimatedEndTimeChanged 添加预计结束时间改变事件处理程序.
+func (i *ICoreWebView2DownloadOperation) AddEstimatedEndTimeChanged(eventHandler *ICoreWebView2EstimatedEndTimeChangedEventHandler, token *EventRegistrationToken) error {
+	r, _, _ := i.Vtbl.AddEstimatedEndTimeChanged.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(eventHandler)),
+		uintptr(unsafe.Pointer(token)),
+	)
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
+// RemoveEstimatedEndTimeChanged 移除预计结束时间改变事件处理程序.
+func (i *ICoreWebView2DownloadOperation) RemoveEstimatedEndTimeChanged(token EventRegistrationToken) error {
+	r, _, _ := i.Vtbl.RemoveEstimatedEndTimeChanged.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(token.Value),
+	)
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
+// Event_StateChanged 下载状态改变事件.
+func (i *ICoreWebView2DownloadOperation) Event_StateChanged(w *WebViewEventImpl, cb func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
+	return WvEventHandler.AddCallBack(w, "StateChanged", cb, i, allowAddingMultiple...)
+}
+
+// AddStateChanged 添加状态改变事件处理程序.
+func (i *ICoreWebView2DownloadOperation) AddStateChanged(eventHandler *ICoreWebView2StateChangedEventHandler, token *EventRegistrationToken) error {
+	r, _, _ := i.Vtbl.AddStateChanged.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(eventHandler)),
+		uintptr(unsafe.Pointer(token)),
+	)
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
+// RemoveStateChanged 移除状态改变事件处理程序.
+func (i *ICoreWebView2DownloadOperation) RemoveStateChanged(token EventRegistrationToken) error {
+	r, _, _ := i.Vtbl.RemoveStateChanged.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(token.Value),
+	)
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
 
 // MustGetUri 获取下载的 URI。出错时会触发全局错误回调。
 func (i *ICoreWebView2DownloadOperation) MustGetUri() string {

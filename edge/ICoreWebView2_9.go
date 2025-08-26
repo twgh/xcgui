@@ -116,10 +116,32 @@ func (i *ICoreWebView2_9) SetDefaultDownloadDialogMargin(margin xc.POINT) error 
 	return nil
 }
 
-/*TODO:
-AddIsDefaultDownloadDialogOpenChanged
-RemoveIsDefaultDownloadDialogOpenChanged
-*/
+// AddIsDefaultDownloadDialogOpenChanged 添加默认下载对话框打开状态变化事件处理程序。
+//   - 此事件在 DownloadStarting 事件之后发生。
+//   - 在 DownloadStartingEventArgs 上设置 Handled 属性会禁用默认下载对话框，并确保此事件永远不会被触发。
+func (i *ICoreWebView2_9) AddIsDefaultDownloadDialogOpenChanged(handler *ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler, token *EventRegistrationToken) error {
+	r, _, _ := i.Vtbl.AddIsDefaultDownloadDialogOpenChanged.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(handler)),
+		uintptr(unsafe.Pointer(token)),
+	)
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
+// RemoveIsDefaultDownloadDialogOpenChanged 移除默认下载对话框打开状态变化事件处理程序。
+func (i *ICoreWebView2_9) RemoveIsDefaultDownloadDialogOpenChanged(token EventRegistrationToken) error {
+	r, _, _ := i.Vtbl.RemoveIsDefaultDownloadDialogOpenChanged.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(token.Value),
+	)
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
 
 // MustGetIsDefaultDownloadDialogOpen 获取默认下载对话框是否处于打开状态。出错时会触发全局错误回调。
 //   - 此属性的值仅在显式打开或关闭默认下载对话框时才会改变。
