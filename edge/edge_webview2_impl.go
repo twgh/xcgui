@@ -779,3 +779,100 @@ func (w *WebViewEventImpl) BasicAuthenticationRequested(sender *ICoreWebView2, a
 	}
 	return ret
 }
+
+// StatusBarTextChanged 当状态栏文本改变时调用。
+//   - 当 WebView 显示状态消息、URL 或空字符串（表示隐藏状态栏）时触发。
+func (w *WebViewEventImpl) StatusBarTextChanged(sender *ICoreWebView2, args *IUnknown) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "StatusBarTextChanged")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2, args *IUnknown) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// ServerCertificateErrorDetected 当 WebView2 在加载网页时无法验证服务器的数字证书时调用。
+//   - 此事件将针对所有网络资源触发，并紧随 WebResourceRequested 事件之后。
+//   - 如果不处理该事件，WebView2 会在导航时向用户显示默认的 TLS 插页式错误页面，而对于非导航操作，Web 请求会被取消。
+func (w *WebViewEventImpl) ServerCertificateErrorDetected(sender *ICoreWebView2, args *ICoreWebView2ServerCertificateErrorDetectedEventArgs) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "ServerCertificateErrorDetected")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2ServerCertificateErrorDetectedEventArgs) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// ClearServerCertificateErrorActionsCompleted 当清除服务器证书错误操作完成时调用。
+func (w *WebViewEventImpl) ClearServerCertificateErrorActionsCompleted(errorCode syscall.Errno) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "ClearServerCertificateErrorActionsCompleted")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(errorCode syscall.Errno) uintptr)(errorCode)
+	}
+	return ret
+}
+
+// PrintCompleted 当 ICoreWebView2_16.Print 方法执行完成时调用。
+func (w *WebViewEventImpl) PrintCompleted(errorCode syscall.Errno, result COREWEBVIEW2_PRINT_STATUS) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "PrintCompleted")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(errorCode syscall.Errno, result COREWEBVIEW2_PRINT_STATUS) uintptr)(errorCode, result)
+	}
+	return ret
+}
+
+// PrintToPdfStreamCompleted 当 ICoreWebView2_16.PrintToPdfStream 执行完成时调用。
+func (w *WebViewEventImpl) PrintToPdfStreamCompleted(errorCode syscall.Errno, pdfStream *IStream) uintptr {
+	if pdfStream != nil {
+		defer pdfStream.Release()
+	}
+
+	var bs []byte
+	cbs := WvEventHandler.GetCallBacks(w, "PrintToPdfStreamCompleted")
+	n := len(cbs)
+	if n > 0 {
+		if errors.Is(errorCode, wapi.S_OK) && pdfStream != nil {
+			var err error
+			bs, err = pdfStream.GetBytes()
+			if err != nil {
+				ReportErrorAtuo(errors.New("PrintToPdfStreamCompleted, GetBytes failed: " + err.Error()))
+			}
+		}
+	}
+
+	var ret uintptr
+	for i := n - 1; i >= 0; i-- {
+		ret = cbs[i].(func(errorCode syscall.Errno, pdfBytes []byte) uintptr)(errorCode, bs)
+	}
+	return ret
+}
+
+// LaunchingExternalUriScheme 当导航请求指向已在操作系统中注册的 URI 方案时触发。
+//   - 事件处理程序可以抑制默认对话框，或者用自定义对话框替换默认对话框。
+//   - 如果未对事件参数执行延迟操作，外部 URI 方案的启动将被阻止，直到事件处理程序返回。
+//   - 如果执行了延迟操作，外部 URI 方案的启动将被阻止，直到延迟完成。主机还可以选择取消 URI 方案的启动。
+//   - 无论 Cancel 属性设置为 TRUE 还是 FALSE，都会触发 NavigationStarting 和 NavigationCompleted 事件。
+//   - 无论主机是否在 ICoreWebView2LaunchingExternalUriSchemeEventArgs 上设置 Cancel 属性，NavigationCompleted 事件触发时，IsSuccess 属性都将设置为 FALSE，WebErrorStatus 属性都将设置为 ConnectionAborted。
+//   - 对于此次导航到外部 URI 方案，无论 Cancel 属性如何设置，都不会触发 SourceChanged、ContentLoading 和 HistoryChanged 事件。
+//   - LaunchingExternalUriScheme 事件将在 NavigationStarting 事件之后、NavigationCompleted 事件之前触发。
+//   - 导航到外部 URI 方案时，默认的 ICoreWebView2Settings 也会更新。如果 ICoreWebView2Settings 接口上的某个设置已更改，导航到外部 URI 方案将触发 ICoreWebView2Settings 更新。
+func (w *WebViewEventImpl) LaunchingExternalUriScheme(sender *ICoreWebView2, args *ICoreWebView2LaunchingExternalUriSchemeEventArgs) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "LaunchingExternalUriScheme")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2LaunchingExternalUriSchemeEventArgs) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// ExecuteScriptWithResultCompleted 当 ICoreWebView2_21.ExecuteScriptWithResult 方法执行完成时调用。
+func (w *WebViewEventImpl) ExecuteScriptWithResultCompleted(errorCode syscall.Errno, args *ICoreWebView2ExecuteScriptResult) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "ExecuteScriptWithResultCompleted")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(errorCode syscall.Errno, args *ICoreWebView2ExecuteScriptResult) uintptr)(errorCode, args)
+	}
+	return ret
+}

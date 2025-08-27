@@ -461,3 +461,49 @@ func (w *WebViewEventImpl) Event_BasicAuthenticationRequested(cb func(sender *IC
 	}
 	return WvEventHandler.AddCallBack(w, "BasicAuthenticationRequested", c, nil, allowAddingMultiple...)
 }
+
+// Event_StatusBarTextChanged 状态栏文本改变事件.
+//   - 当 WebView 显示状态消息、URL 或空字符串（表示隐藏状态栏）时触发。
+func (w *WebViewEventImpl) Event_StatusBarTextChanged(cb func(sender *ICoreWebView2, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
+	}
+	return WvEventHandler.AddCallBack(w, "StatusBarTextChanged", c, nil, allowAddingMultiple...)
+}
+
+// Event_ServerCertificateErrorDetected 检测到服务器证书错误事件.
+//   - 当 WebView2 在加载网页时无法验证服务器的数字证书时触发。
+//   - 此事件将针对所有网络资源触发，并紧随 WebResourceRequested 事件之后。
+//   - 如果不处理该事件，WebView2 会在导航时向用户显示默认的 TLS 插页式错误页面，而对于非导航操作，Web 请求会被取消。
+func (w *WebViewEventImpl) Event_ServerCertificateErrorDetected(cb func(sender *ICoreWebView2, args *ICoreWebView2ServerCertificateErrorDetectedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
+	}
+	return WvEventHandler.AddCallBack(w, "ServerCertificateErrorDetected", c, nil, allowAddingMultiple...)
+}
+
+// Event_LaunchingExternalUriScheme 启动外部 URI 方案事件。
+//   - 当导航请求指向已在操作系统中注册的 URI 方案时触发。
+//   - 事件处理程序可以抑制默认对话框，或者用自定义对话框替换默认对话框。
+//   - 如果未对事件参数执行延迟操作，外部 URI 方案的启动将被阻止，直到事件处理程序返回。
+//   - 如果执行了延迟操作，外部 URI 方案的启动将被阻止，直到延迟完成。主机还可以选择取消 URI 方案的启动。
+//   - 无论 Cancel 属性设置为 TRUE 还是 FALSE，都会触发 NavigationStarting 和 NavigationCompleted 事件。
+//   - 无论主机是否在 ICoreWebView2LaunchingExternalUriSchemeEventArgs 上设置 Cancel 属性，NavigationCompleted 事件触发时，IsSuccess 属性都将设置为 FALSE，WebErrorStatus 属性都将设置为 ConnectionAborted。
+//   - 对于此次导航到外部 URI 方案，无论 Cancel 属性如何设置，都不会触发 SourceChanged、ContentLoading 和 HistoryChanged 事件。
+//   - LaunchingExternalUriScheme 事件将在 NavigationStarting 事件之后、NavigationCompleted 事件之前触发。
+//   - 导航到外部 URI 方案时，默认的 ICoreWebView2Settings 也会更新。如果 ICoreWebView2Settings 接口上的某个设置已更改，导航到外部 URI 方案将触发 ICoreWebView2Settings 更新。
+func (w *WebViewEventImpl) Event_LaunchingExternalUriScheme(cb func(sender *ICoreWebView2, args *ICoreWebView2LaunchingExternalUriSchemeEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
+	}
+	return WvEventHandler.AddCallBack(w, "LaunchingExternalUriScheme", c, nil, allowAddingMultiple...)
+}

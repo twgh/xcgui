@@ -510,6 +510,45 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				return -1, err
 			}
 			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "StatusBarTextChanged":
+			w2_12, err := impl.CoreWebView.GetICoreWebView2_12()
+			if err != nil {
+				return -1, err
+			}
+			defer w2_12.Release()
+			eventHandler := NewICoreWebView2StatusBarTextChangedEventHandler(impl)
+			err = w2_12.AddStatusBarTextChanged(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "ServerCertificateErrorDetected":
+			w2_14, err := impl.CoreWebView.GetICoreWebView2_14()
+			if err != nil {
+				return -1, err
+			}
+			defer w2_14.Release()
+			eventHandler := NewICoreWebView2ServerCertificateErrorDetectedEventHandler(impl)
+			err = w2_14.AddServerCertificateErrorDetected(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "LaunchingExternalUriScheme":
+			w2_18, err := impl.CoreWebView.GetICoreWebView2_18()
+			if err != nil {
+				return -1, err
+			}
+			defer w2_18.Release()
+			eventHandler := NewICoreWebView2LaunchingExternalUriSchemeEventHandler(impl)
+			err = w2_18.AddLaunchingExternalUriScheme(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "GetCookiesCompleted":
 			info.EventToken = nil
 			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2GetCookiesCompletedHandler(impl))
@@ -543,6 +582,18 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 		case "PrintToPdfCompleted":
 			info.EventToken = nil
 			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2PrintToPdfCompletedHandler(impl))
+		case "ClearServerCertificateErrorActionsCompleted":
+			info.EventToken = nil
+			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2ClearServerCertificateErrorActionsCompletedHandler(impl))
+		case "PrintCompleted":
+			info.EventToken = nil
+			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2PrintCompletedHandler(impl))
+		case "PrintToPdfStreamCompleted":
+			info.EventToken = nil
+			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2PrintToPdfStreamCompletedHandler(impl))
+		case "ExecuteScriptWithResultCompleted":
+			info.EventToken = nil
+			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2ExecuteScriptWithResultCompletedHandler(impl))
 		}
 	}
 
