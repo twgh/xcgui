@@ -12,7 +12,7 @@ import (
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2servercertificateerrordetectedeventargs
 type ICoreWebView2ServerCertificateErrorDetectedEventArgs struct {
-	vtbl *ICoreWebView2ServerCertificateErrorDetectedEventArgsVtbl
+	Vtbl *ICoreWebView2ServerCertificateErrorDetectedEventArgsVtbl
 }
 
 type ICoreWebView2ServerCertificateErrorDetectedEventArgsVtbl struct {
@@ -25,10 +25,28 @@ type ICoreWebView2ServerCertificateErrorDetectedEventArgsVtbl struct {
 	GetDeferral          ComProc
 }
 
+func (i *ICoreWebView2ServerCertificateErrorDetectedEventArgs) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2ServerCertificateErrorDetectedEventArgs) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2ServerCertificateErrorDetectedEventArgs) QueryInterface(refiid, object unsafe.Pointer) error {
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
 // GetErrorStatus 获取无效证书的 TLS 错误代码。
 func (i *ICoreWebView2ServerCertificateErrorDetectedEventArgs) GetErrorStatus() (COREWEBVIEW2_WEB_ERROR_STATUS, error) {
 	var _value COREWEBVIEW2_WEB_ERROR_STATUS
-	r, _, _ := i.vtbl.GetErrorStatus.Call(
+	r, _, _ := i.Vtbl.GetErrorStatus.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_value)),
 	)
@@ -41,7 +59,7 @@ func (i *ICoreWebView2ServerCertificateErrorDetectedEventArgs) GetErrorStatus() 
 // GetRequestUri 获取导致证书错误的请求URI。
 func (i *ICoreWebView2ServerCertificateErrorDetectedEventArgs) GetRequestUri() (string, error) {
 	var _value *uint16
-	r, _, _ := i.vtbl.GetRequestUri.Call(
+	r, _, _ := i.Vtbl.GetRequestUri.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_value)),
 	)
@@ -56,7 +74,7 @@ func (i *ICoreWebView2ServerCertificateErrorDetectedEventArgs) GetRequestUri() (
 // GetServerCertificate 获取有问题的服务器证书。
 func (i *ICoreWebView2ServerCertificateErrorDetectedEventArgs) GetServerCertificate() (*ICoreWebView2Certificate, error) {
 	var _value *ICoreWebView2Certificate
-	r, _, _ := i.vtbl.GetServerCertificate.Call(
+	r, _, _ := i.Vtbl.GetServerCertificate.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_value)),
 	)
@@ -69,7 +87,7 @@ func (i *ICoreWebView2ServerCertificateErrorDetectedEventArgs) GetServerCertific
 // GetAction 获取当前设置的处理证书错误的操作。
 func (i *ICoreWebView2ServerCertificateErrorDetectedEventArgs) GetAction() (COREWEBVIEW2_SERVER_CERTIFICATE_ERROR_ACTION, error) {
 	var _value COREWEBVIEW2_SERVER_CERTIFICATE_ERROR_ACTION
-	r, _, _ := i.vtbl.GetAction.Call(
+	r, _, _ := i.Vtbl.GetAction.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_value)),
 	)
@@ -81,7 +99,7 @@ func (i *ICoreWebView2ServerCertificateErrorDetectedEventArgs) GetAction() (CORE
 
 // SetAction 设置处理证书错误的操作。
 func (i *ICoreWebView2ServerCertificateErrorDetectedEventArgs) SetAction(value COREWEBVIEW2_SERVER_CERTIFICATE_ERROR_ACTION) error {
-	r, _, _ := i.vtbl.PutAction.Call(
+	r, _, _ := i.Vtbl.PutAction.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(value),
 	)
@@ -94,7 +112,7 @@ func (i *ICoreWebView2ServerCertificateErrorDetectedEventArgs) SetAction(value C
 // GetDeferral 获取一个延迟对象，使用此操作可在稍后完成该事件。
 func (i *ICoreWebView2ServerCertificateErrorDetectedEventArgs) GetDeferral() (*ICoreWebView2Deferral, error) {
 	var _deferral *ICoreWebView2Deferral
-	r, _, _ := i.vtbl.GetDeferral.Call(
+	r, _, _ := i.Vtbl.GetDeferral.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_deferral)),
 	)

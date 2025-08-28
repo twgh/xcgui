@@ -24,6 +24,24 @@ type ICoreWebView2ScriptExceptionVtbl struct {
 	GetToJson       ComProc
 }
 
+func (i *ICoreWebView2ScriptException) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2ScriptException) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2ScriptException) QueryInterface(refiid, object unsafe.Pointer) error {
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
 // GetLineNumber 获取发生异常的源代码的行号。
 //   - 在 JSON 中，它是 exceptionDetail.lineNumber。请注意，该位置从 0 开始。
 func (i *ICoreWebView2ScriptException) GetLineNumber() (uint32, error) {

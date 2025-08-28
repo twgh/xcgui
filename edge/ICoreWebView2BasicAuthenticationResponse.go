@@ -23,6 +23,24 @@ type _ICoreWebView2BasicAuthenticationResponseVtbl struct {
 	PutPassword ComProc
 }
 
+func (i *ICoreWebView2BasicAuthenticationResponse) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2BasicAuthenticationResponse) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2BasicAuthenticationResponse) QueryInterface(refiid, object unsafe.Pointer) error {
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
 // GetUserName 获取用于基本身份验证的用户名。
 func (i *ICoreWebView2BasicAuthenticationResponse) GetUserName() (string, error) {
 	var _userName *uint16

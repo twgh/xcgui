@@ -507,3 +507,16 @@ func (w *WebViewEventImpl) Event_LaunchingExternalUriScheme(cb func(sender *ICor
 	}
 	return WvEventHandler.AddCallBack(w, "LaunchingExternalUriScheme", c, nil, allowAddingMultiple...)
 }
+
+// Event_NotificationReceived 通知接收事件。
+//   - 如果未对事件参数执行延迟操作，那么在 DOM 通知创建调用（即 Notification()）之后的后续脚本会被阻塞，直到事件处理程序返回。
+//   - 如果执行了延迟操作，脚本会被阻塞，直到延迟完成。
+func (w *WebViewEventImpl) Event_NotificationReceived(cb func(sender *ICoreWebView2, args *ICoreWebView2NotificationReceivedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
+	}
+	return WvEventHandler.AddCallBack(w, "NotificationReceived", c, nil, allowAddingMultiple...)
+}

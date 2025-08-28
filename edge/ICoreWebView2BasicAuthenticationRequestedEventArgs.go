@@ -25,6 +25,24 @@ type _ICoreWebView2BasicAuthenticationRequestedEventArgsVtbl struct {
 	GetDeferral  ComProc
 }
 
+func (i *ICoreWebView2BasicAuthenticationRequestedEventArgs) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2BasicAuthenticationRequestedEventArgs) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2BasicAuthenticationRequestedEventArgs) QueryInterface(refiid, object unsafe.Pointer) error {
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
 // GetUri 获取需要基本身份验证的URI。
 func (i *ICoreWebView2BasicAuthenticationRequestedEventArgs) GetUri() (string, error) {
 	var _uri *uint16

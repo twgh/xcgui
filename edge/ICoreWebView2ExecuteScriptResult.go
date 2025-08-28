@@ -23,6 +23,24 @@ type ICoreWebView2ExecuteScriptResultVtbl struct {
 	GetException         ComProc
 }
 
+func (i *ICoreWebView2ExecuteScriptResult) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2ExecuteScriptResult) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2ExecuteScriptResult) QueryInterface(refiid, object unsafe.Pointer) error {
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
 // GetSucceeded 如果 ExecuteScriptWithResult 成功执行脚本且没有未处理的异常，并且结果可通过 GetResultAsJson 或 TryGetResultAsString 方法获取，那么返回 true。
 //   - 如果为 false，则脚本执行发生了未处理的异常，可通过 GetException 方法获取该异常。
 func (i *ICoreWebView2ExecuteScriptResult) GetSucceeded() (bool, error) {

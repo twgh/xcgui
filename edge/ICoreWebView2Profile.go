@@ -12,7 +12,7 @@ import (
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2profile
 type ICoreWebView2Profile struct {
-	vtbl *ICoreWebView2ProfileVtbl
+	Vtbl *ICoreWebView2ProfileVtbl
 }
 
 type ICoreWebView2ProfileVtbl struct {
@@ -26,10 +26,28 @@ type ICoreWebView2ProfileVtbl struct {
 	PutPreferredColorScheme      ComProc
 }
 
+func (i *ICoreWebView2Profile) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2Profile) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2Profile) QueryInterface(refiid, object unsafe.Pointer) error {
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
 // GetProfileName 获取配置文件的名称。
 func (i *ICoreWebView2Profile) GetProfileName() (string, error) {
 	var _value *uint16
-	r, _, _ := i.vtbl.GetProfileName.Call(
+	r, _, _ := i.Vtbl.GetProfileName.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_value)),
 	)
@@ -44,7 +62,7 @@ func (i *ICoreWebView2Profile) GetProfileName() (string, error) {
 // GetIsInPrivateModeEnabled 获取配置文件是否启用了隐私模式。
 func (i *ICoreWebView2Profile) GetIsInPrivateModeEnabled() (bool, error) {
 	var _value int32
-	r, _, _ := i.vtbl.GetIsInPrivateModeEnabled.Call(
+	r, _, _ := i.Vtbl.GetIsInPrivateModeEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_value)),
 	)
@@ -57,7 +75,7 @@ func (i *ICoreWebView2Profile) GetIsInPrivateModeEnabled() (bool, error) {
 // GetProfilePath 获取配置文件目录的完整路径。
 func (i *ICoreWebView2Profile) GetProfilePath() (string, error) {
 	var _value *uint16
-	r, _, _ := i.vtbl.GetProfilePath.Call(
+	r, _, _ := i.Vtbl.GetProfilePath.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_value)),
 	)
@@ -72,7 +90,7 @@ func (i *ICoreWebView2Profile) GetProfilePath() (string, error) {
 // GetDefaultDownloadFolderPath 获取默认下载文件夹路径。
 func (i *ICoreWebView2Profile) GetDefaultDownloadFolderPath() (string, error) {
 	var _value *uint16
-	r, _, _ := i.vtbl.GetDefaultDownloadFolderPath.Call(
+	r, _, _ := i.Vtbl.GetDefaultDownloadFolderPath.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_value)),
 	)
@@ -90,7 +108,7 @@ func (i *ICoreWebView2Profile) SetDefaultDownloadFolderPath(value string) error 
 	if err != nil {
 		return err
 	}
-	r, _, _ := i.vtbl.PutDefaultDownloadFolderPath.Call(
+	r, _, _ := i.Vtbl.PutDefaultDownloadFolderPath.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_value)),
 	)
@@ -103,7 +121,7 @@ func (i *ICoreWebView2Profile) SetDefaultDownloadFolderPath(value string) error 
 // GetPreferredColorScheme 获取与此配置文件关联的 WebView2 的整体配色方案。
 func (i *ICoreWebView2Profile) GetPreferredColorScheme() (COREWEBVIEW2_PREFERRED_COLOR_SCHEME, error) {
 	var _value COREWEBVIEW2_PREFERRED_COLOR_SCHEME
-	r, _, _ := i.vtbl.GetPreferredColorScheme.Call(
+	r, _, _ := i.Vtbl.GetPreferredColorScheme.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_value)),
 	)
@@ -115,7 +133,7 @@ func (i *ICoreWebView2Profile) GetPreferredColorScheme() (COREWEBVIEW2_PREFERRED
 
 // SetPreferredColorScheme 设置与此配置文件关联的 WebView2 的整体配色方案。
 func (i *ICoreWebView2Profile) SetPreferredColorScheme(value COREWEBVIEW2_PREFERRED_COLOR_SCHEME) error {
-	r, _, _ := i.vtbl.PutPreferredColorScheme.Call(
+	r, _, _ := i.Vtbl.PutPreferredColorScheme.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(value),
 	)

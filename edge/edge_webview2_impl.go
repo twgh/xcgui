@@ -876,3 +876,26 @@ func (w *WebViewEventImpl) ExecuteScriptWithResultCompleted(errorCode syscall.Er
 	}
 	return ret
 }
+
+// NotificationReceived 当 WebView2 接收到网页通知时调用。
+//   - 如果未对事件参数执行延迟操作，那么在 DOM 通知创建调用（即 Notification()）之后的后续脚本会被阻塞，直到事件处理程序返回。
+//   - 如果执行了延迟操作，脚本会被阻塞，直到延迟完成。
+func (w *WebViewEventImpl) NotificationReceived(sender *ICoreWebView2, args *ICoreWebView2NotificationReceivedEventArgs) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "NotificationReceived")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2NotificationReceivedEventArgs) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// NotificationCloseRequested 当通知被网页代码关闭时（例如通过 notification.close()）触发。
+//   - 由于这是来自网页代码的操作，因此无需调用 ReportClosed。
+func (w *WebViewEventImpl) NotificationCloseRequested(sender *ICoreWebView2Notification, args *IUnknown) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "NotificationCloseRequested")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2Notification, args *IUnknown) uintptr)(sender, args)
+	}
+	return ret
+}

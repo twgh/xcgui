@@ -68,6 +68,17 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				return -1, err
 			}
 			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "NotificationCloseRequested":
+			obj2, ok := obj.(*ICoreWebView2Notification)
+			if !ok {
+				return -1, errors.New("obj is not *ICoreWebView2Notification")
+			}
+			eventHandler := NewICoreWebView2NotificationCloseRequestedEventHandler(impl)
+			err := obj2.AddCloseRequested(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
 		case "CustomItemSelected":
 			menuItem, ok := obj.(*ICoreWebView2ContextMenuItem)
 			if !ok {
@@ -544,6 +555,19 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 			defer w2_18.Release()
 			eventHandler := NewICoreWebView2LaunchingExternalUriSchemeEventHandler(impl)
 			err = w2_18.AddLaunchingExternalUriScheme(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "NotificationReceived":
+			w2_24, err := impl.CoreWebView.GetICoreWebView2_24()
+			if err != nil {
+				return -1, err
+			}
+			defer w2_24.Release()
+			eventHandler := NewICoreWebView2NotificationReceivedEventHandler(impl)
+			err = w2_24.AddNotificationReceived(eventHandler, info.EventToken)
 			if err != nil {
 				eventHandler.Release()
 				return -1, err

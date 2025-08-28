@@ -1,9 +1,10 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 )
 
 // ICoreWebView2MoveFocusRequestedEventArgs 提供有关移动焦点请求事件的信息。
@@ -15,9 +16,27 @@ type ICoreWebView2MoveFocusRequestedEventArgs struct {
 
 type ICoreWebView2MoveFocusRequestedEventArgsVtbl struct {
 	IUnknownVtbl
-	GetReason ComProc
+	GetReason  ComProc
 	GetHandled ComProc
 	PutHandled ComProc
+}
+
+func (i *ICoreWebView2MoveFocusRequestedEventArgs) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2MoveFocusRequestedEventArgs) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2MoveFocusRequestedEventArgs) QueryInterface(refiid, object unsafe.Pointer) error {
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
 }
 
 // GetReason 获取焦点移动的原因。

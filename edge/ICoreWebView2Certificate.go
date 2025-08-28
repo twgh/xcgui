@@ -12,7 +12,7 @@ import (
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2certificate
 type ICoreWebView2Certificate struct {
-	vtbl *ICoreWebView2CertificateVtbl
+	Vtbl *ICoreWebView2CertificateVtbl
 }
 
 type ICoreWebView2CertificateVtbl struct {
@@ -27,10 +27,28 @@ type ICoreWebView2CertificateVtbl struct {
 	GetPemEncodedIssuerCertificateChain ComProc
 }
 
+func (i *ICoreWebView2Certificate) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2Certificate) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2Certificate) QueryInterface(refiid, object unsafe.Pointer) error {
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
+}
+
 // GetSubject 获取证书主题。
 func (i *ICoreWebView2Certificate) GetSubject() (string, error) {
 	var _value *uint16
-	r, _, _ := i.vtbl.GetSubject.Call(
+	r, _, _ := i.Vtbl.GetSubject.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_value)),
 	)
@@ -45,7 +63,7 @@ func (i *ICoreWebView2Certificate) GetSubject() (string, error) {
 // GetIssuer 获取颁发该证书的证书颁发机构的名称。
 func (i *ICoreWebView2Certificate) GetIssuer() (string, error) {
 	var _value *uint16
-	r, _, _ := i.vtbl.GetIssuer.Call(
+	r, _, _ := i.Vtbl.GetIssuer.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_value)),
 	)
@@ -60,7 +78,7 @@ func (i *ICoreWebView2Certificate) GetIssuer() (string, error) {
 // GetValidFrom 获取证书的有效起始日期和时间，以自 UNIX 纪元以来的秒数表示。
 func (i *ICoreWebView2Certificate) GetValidFrom() (float64, error) {
 	var _value float64
-	r, _, _ := i.vtbl.GetValidFrom.Call(
+	r, _, _ := i.Vtbl.GetValidFrom.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_value)),
 	)
@@ -73,7 +91,7 @@ func (i *ICoreWebView2Certificate) GetValidFrom() (float64, error) {
 // GetValidTo 获取证书的有效到期日期和时间，以自UNIX纪元以来的秒数表示。
 func (i *ICoreWebView2Certificate) GetValidTo() (float64, error) {
 	var _value float64
-	r, _, _ := i.vtbl.GetValidTo.Call(
+	r, _, _ := i.Vtbl.GetValidTo.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_value)),
 	)
@@ -86,7 +104,7 @@ func (i *ICoreWebView2Certificate) GetValidTo() (float64, error) {
 // GetDerEncodedSerialNumber 获取证书的 DER 编码序列号的 Base64 编码。
 func (i *ICoreWebView2Certificate) GetDerEncodedSerialNumber() (string, error) {
 	var _value *uint16
-	r, _, _ := i.vtbl.GetDerEncodedSerialNumber.Call(
+	r, _, _ := i.Vtbl.GetDerEncodedSerialNumber.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_value)),
 	)
@@ -101,7 +119,7 @@ func (i *ICoreWebView2Certificate) GetDerEncodedSerialNumber() (string, error) {
 // GetDisplayName 获取证书的显示名称。
 func (i *ICoreWebView2Certificate) GetDisplayName() (string, error) {
 	var _value *uint16
-	r, _, _ := i.vtbl.GetDisplayName.Call(
+	r, _, _ := i.Vtbl.GetDisplayName.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_value)),
 	)
@@ -116,7 +134,7 @@ func (i *ICoreWebView2Certificate) GetDisplayName() (string, error) {
 // ToPemEncoding 将证书转换为 PEM 编码格式, 返回 DER 编码证书的 Base64 编码。
 func (i *ICoreWebView2Certificate) ToPemEncoding() (string, error) {
 	var _pemEncodedData *uint16
-	r, _, _ := i.vtbl.ToPemEncoding.Call(
+	r, _, _ := i.Vtbl.ToPemEncoding.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_pemEncodedData)),
 	)
@@ -132,7 +150,7 @@ func (i *ICoreWebView2Certificate) ToPemEncoding() (string, error) {
 //   - 在此集合中，第一个元素是当前证书，其后是中间证书1、中间证书2……中间证书N-1。根证书是该集合中的最后一个元素。
 func (i *ICoreWebView2Certificate) GetPemEncodedIssuerCertificateChain() (*ICoreWebView2StringCollection, error) {
 	var _value *ICoreWebView2StringCollection
-	r, _, _ := i.vtbl.GetPemEncodedIssuerCertificateChain.Call(
+	r, _, _ := i.Vtbl.GetPemEncodedIssuerCertificateChain.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_value)),
 	)

@@ -1,9 +1,10 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/wapi"
 )
 
 // ICoreWebView2EnvironmentOptions4 提供用于创建管理自定义方案注册的 WebView2 环境的附加选项。。
@@ -32,6 +33,10 @@ func (i *ICoreWebView2EnvironmentOptions4) GetCustomSchemeRegistrations() ([]*IC
 		return nil, syscall.Errno(r)
 	}
 	defer wapi.CoTaskMemFree(unsafe.Pointer(registrations))
+
+	if count == 0 || registrations == nil {
+		return nil, nil
+	}
 
 	result := make([]*ICoreWebView2CustomSchemeRegistration, count)
 	slice := unsafe.Slice(registrations, count)
