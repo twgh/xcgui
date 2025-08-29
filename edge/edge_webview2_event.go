@@ -520,3 +520,38 @@ func (w *WebViewEventImpl) Event_NotificationReceived(cb func(sender *ICoreWebVi
 	}
 	return WvEventHandler.AddCallBack(w, "NotificationReceived", c, nil, allowAddingMultiple...)
 }
+
+// Event_SaveAsUIShowing 另存为界面显示事件。
+//   - 当通过编程方式或手动方式触发“另存为”时触发。
+func (w *WebViewEventImpl) Event_SaveAsUIShowing(cb func(sender *ICoreWebView2, args *ICoreWebView2SaveAsUIShowingEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
+	}
+	return WvEventHandler.AddCallBack(w, "SaveAsUIShowing", c, nil, allowAddingMultiple...)
+}
+
+// Event_SaveFileSecurityCheckStarting 保存文件安全检查开始事件
+//   - 在系统 FileTypePolicy 检查危险文件扩展名列表期间，将触发此事件。
+func (w *WebViewEventImpl) Event_SaveFileSecurityCheckStarting(cb func(sender *ICoreWebView2, args *ICoreWebView2SaveFileSecurityCheckStartingEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
+	}
+	return WvEventHandler.AddCallBack(w, "SaveFileSecurityCheckStarting", c, nil, allowAddingMultiple...)
+}
+
+// Event_ScreenCaptureStarting 屏幕截图开始事件。
+func (w *WebViewEventImpl) Event_ScreenCaptureStarting(cb func(sender *ICoreWebView2, args *ICoreWebView2ScreenCaptureStartingEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
+	}
+	return WvEventHandler.AddCallBack(w, "ScreenCaptureStarting", c, nil, allowAddingMultiple...)
+}

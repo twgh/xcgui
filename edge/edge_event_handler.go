@@ -573,6 +573,45 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				return -1, err
 			}
 			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "SaveAsUIShowing":
+			w2_25, err := impl.CoreWebView.GetICoreWebView2_25()
+			if err != nil {
+				return -1, err
+			}
+			defer w2_25.Release()
+			eventHandler := NewICoreWebView2SaveAsUIShowingEventHandler(impl)
+			err = w2_25.AddSaveAsUIShowing(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "SaveFileSecurityCheckStarting":
+			w2_26, err := impl.CoreWebView.GetICoreWebView2_26()
+			if err != nil {
+				return -1, err
+			}
+			defer w2_26.Release()
+			eventHandler := NewICoreWebView2SaveFileSecurityCheckStartingEventHandler(impl)
+			err = w2_26.AddSaveFileSecurityCheckStarting(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "ScreenCaptureStarting":
+			w2_27, err := impl.CoreWebView.GetICoreWebView2_27()
+			if err != nil {
+				return -1, err
+			}
+			defer w2_27.Release()
+			eventHandler := NewICoreWebView2ScreenCaptureStartingEventHandler(impl)
+			err = w2_27.AddScreenCaptureStarting(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "GetCookiesCompleted":
 			info.EventToken = nil
 			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2GetCookiesCompletedHandler(impl))
@@ -618,6 +657,9 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 		case "ExecuteScriptWithResultCompleted":
 			info.EventToken = nil
 			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2ExecuteScriptWithResultCompletedHandler(impl))
+		case "ShowSaveAsUICompleted":
+			info.EventToken = nil
+			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2ShowSaveAsUICompletedHandler(impl))
 		}
 	}
 

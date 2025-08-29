@@ -899,3 +899,43 @@ func (w *WebViewEventImpl) NotificationCloseRequested(sender *ICoreWebView2Notif
 	}
 	return ret
 }
+
+// SaveAsUIShowing 当通过编程方式或手动方式触发“另存为”时调用。
+func (w *WebViewEventImpl) SaveAsUIShowing(sender *ICoreWebView2, args *ICoreWebView2SaveAsUIShowingEventArgs) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "SaveAsUIShowing")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2SaveAsUIShowingEventArgs) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// ShowSaveAsUICompleted 当"另存为"UI操作完成时调用。
+func (w *WebViewEventImpl) ShowSaveAsUICompleted(errorCode syscall.Errno, result COREWEBVIEW2_SAVE_AS_UI_RESULT) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "ShowSaveAsUICompleted")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(errorCode syscall.Errno, result COREWEBVIEW2_SAVE_AS_UI_RESULT) uintptr)(errorCode, result)
+	}
+	return ret
+}
+
+// SaveFileSecurityCheckStarting 在系统 FileTypePolicy 检查危险文件扩展名列表时触发。
+func (w *WebViewEventImpl) SaveFileSecurityCheckStarting(sender *ICoreWebView2, args *ICoreWebView2SaveFileSecurityCheckStartingEventArgs) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "SaveFileSecurityCheckStarting")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2SaveFileSecurityCheckStartingEventArgs) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// ScreenCaptureStarting 当屏幕截图开始时调用。
+func (w *WebViewEventImpl) ScreenCaptureStarting(sender *ICoreWebView2, args *ICoreWebView2ScreenCaptureStartingEventArgs) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "ScreenCaptureStarting")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2ScreenCaptureStartingEventArgs) uintptr)(sender, args)
+	}
+	return ret
+}
