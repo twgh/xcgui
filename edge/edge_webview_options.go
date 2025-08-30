@@ -112,9 +112,9 @@ func WithScriptLocale(locale string) WebViewOption {
 //   - 通过早期初始化，颜色从一开始就保持一致。
 //   - DefaultBackgroundColor 是在所有网页内容下方渲染的颜色。这意味着当没有加载网页内容时，WebView2 会渲染此颜色。如果 WebView2 中未定义背景色，它会使用 DefaultBackgroundColor 属性来渲染背景。默认情况下，此颜色设置为白色。
 //   - 此 API 仅支持不透明颜色和完全透明。对于 alpha 值不等于 0 或 255 的颜色，它会失效。当 WebView2 设置为完全透明时，它不会渲染背景，从而使其后部窗口的内容可见。
-func WithDefaultBackgroundColor(r, g, b, a uint8) WebViewOption {
+func WithDefaultBackgroundColor(color *COREWEBVIEW2_COLOR) WebViewOption {
 	return func(o *WebViewOptions) {
-		o.DefaultBackgroundColor = &COREWEBVIEW2_COLOR{R: r, G: g, B: b, A: a}
+		o.DefaultBackgroundColor = color
 	}
 }
 

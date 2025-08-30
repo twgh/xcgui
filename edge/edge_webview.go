@@ -521,7 +521,7 @@ func (w *WebView) newWebView2Controller(opt *WebViewOptions) error {
 	}
 
 	// 创建 WebView2 控制器
-	if opt.ProfileName != "" || opt.PrivateMode {
+	if opt.ProfileName != "" || opt.PrivateMode || opt.DefaultBackgroundColor != nil || opt.ScriptLocale != "默认不设置" {
 		env10, err := w.Edge.Environment.GetICoreWebView2Environment10()
 		if err != nil {
 			return fmt.Errorf("get ICoreWebView2Environment10 failed: %v", err)
@@ -567,7 +567,7 @@ func (w *WebView) newWebView2Controller(opt *WebViewOptions) error {
 				ReportErrorAtuo(err)
 			} else {
 				defer opt3.Release()
-				err = opt3.SetDefaultBackgroundColor(*opt.DefaultBackgroundColor)
+				err = opt3.SetDefaultBackgroundColor(opt.DefaultBackgroundColor)
 				ReportErrorAtuo(err) // 出错不直接返回, 因为影响不大
 			}
 		}
