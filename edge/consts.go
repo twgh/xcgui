@@ -37,6 +37,12 @@ const (
 )
 
 const (
+	IID_ICoreWebView2ControllerOptions2 = "{06c991d8-9e7e-11ed-a8fc-0242ac120002}"
+	IID_ICoreWebView2ControllerOptions3 = "{b32b191a-8998-57ca-b7cb-e04617e4ce4a}"
+	IID_ICoreWebView2ControllerOptions4 = "{21eb052f-ad39-555e-824a-c87b091d4d36}"
+)
+
+const (
 	IID_ICoreWebView2Settings2 = "{EE9A0F68-F46C-4E32-AC23-EF8CAC224D2A}"
 	IID_ICoreWebView2Settings3 = "{FDB5AB74-AF33-4854-84F0-0A631DEB5EBA}"
 	IID_ICoreWebView2Settings4 = "{CB56846C-4168-4D53-B04F-03B6D6796FF2}"

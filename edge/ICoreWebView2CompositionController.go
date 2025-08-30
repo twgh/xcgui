@@ -1,9 +1,10 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/xc"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/xc"
 )
 
 // ICoreWebView2CompositionController 用于支持可视化承载 WebView.
@@ -23,7 +24,21 @@ type ICoreWebView2CompositionControllerVtbl struct {
 	GetSystemCursorID   ComProc
 	AddCursorChanged    ComProc
 	RemoveCursorChanged ComProc
+	// 2
+	GetAutomationProvider ComProc
+	// 3
+	DragEnter ComProc
+	DragLeave ComProc
+	DragOver  ComProc
+	Drop      ComProc
+	// 4
+	GetNonClientRegionAtPoint    ComProc
+	QueryNonClientRegion         ComProc
+	AddNonClientRegionChanged    ComProc
+	RemoveNonClientRegionChanged ComProc
 }
+
+// todo: ICoreWebView2CompositionController2-4
 
 func (i *ICoreWebView2CompositionController) AddRef() uintptr {
 	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))

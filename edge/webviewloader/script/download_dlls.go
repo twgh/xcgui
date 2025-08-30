@@ -138,13 +138,14 @@ func downloadFile(url, dest string) error {
 	return err
 }
 
-// 解压并提取 DLL
+// 解压并提取 DLL 和头文件
 func extractDlls(pkgPath string) error {
 	// 创建目标目录
 	baseDir, _ := os.Getwd()
+	sdkDir := filepath.Join(baseDir, "edge/webviewloader/sdk")
 	dirs := map[string]string{
-		"win-x86": filepath.Join(baseDir, "edge/webviewloader/sdk/x86"),
-		"win-x64": filepath.Join(baseDir, "edge/webviewloader/sdk/x64"),
+		"win-x86": filepath.Join(sdkDir, "x86"),
+		"win-x64": filepath.Join(sdkDir, "x64"),
 	}
 
 	// 创建目录
@@ -161,6 +162,11 @@ func extractDlls(pkgPath string) error {
 	}
 	defer r.Close()
 
+	headerFiles := []string{
+		"build/native/include/WebView2EnvironmentOptions.h",
+		"build/native/include/WebView2.h",
+	}
+
 	// 遍历文件
 	for _, f := range r.File {
 		if strings.HasPrefix(f.Name, "runtimes/") {
@@ -169,6 +175,15 @@ func extractDlls(pkgPath string) error {
 				targetPath := fmt.Sprintf("runtimes/%s/native/WebView2Loader.dll", arch)
 				if f.Name == targetPath {
 					if err := extractFile(f, destDir); err != nil {
+						return err
+					}
+				}
+			}
+		} else if strings.HasPrefix(f.Name, "build/native/include/") {
+			//	提取头文件到 sdkDir 目录
+			for _, headerFile := range headerFiles {
+				if f.Name == headerFile {
+					if err := extractFile(f, sdkDir); err != nil {
 						return err
 					}
 				}

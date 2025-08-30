@@ -939,3 +939,23 @@ func (w *WebViewEventImpl) ScreenCaptureStarting(sender *ICoreWebView2, args *IC
 	}
 	return ret
 }
+
+// BrowserExtensionRemoveCompleted 浏览器扩展移除完成时调用。
+func (w *WebViewEventImpl) BrowserExtensionRemoveCompleted(errorCode syscall.Errno) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "BrowserExtensionRemoveCompleted")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(errorCode syscall.Errno) uintptr)(errorCode)
+	}
+	return ret
+}
+
+// BrowserExtensionEnableCompleted 浏览器扩展启用完成时调用。
+func (w *WebViewEventImpl) BrowserExtensionEnableCompleted(errorCode syscall.Errno) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "BrowserExtensionEnableCompleted")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(errorCode syscall.Errno) uintptr)(errorCode)
+	}
+	return ret
+}

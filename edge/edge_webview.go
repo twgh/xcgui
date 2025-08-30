@@ -527,23 +527,51 @@ func (w *WebView) newWebView2Controller(opt *WebViewOptions) error {
 			return fmt.Errorf("get ICoreWebView2Environment10 failed: %v", err)
 		}
 		defer env10.Release()
+
 		options, err := env10.CreateCoreWebView2ControllerOptions()
 		if err != nil {
 			return fmt.Errorf("creating ICoreWebView2ControllerOptions failed: %v", err)
 		}
 		defer options.Release()
+
 		if opt.ProfileName != "" {
 			err = options.SetProfileName(opt.ProfileName)
 			if err != nil {
 				return fmt.Errorf("setting profile name failed: %v", err)
 			}
 		}
+
 		if opt.PrivateMode {
 			err = options.SetIsInPrivateModeEnabled(true)
 			if err != nil {
 				return fmt.Errorf("setting private mode failed: %v", err)
 			}
 		}
+
+		if opt.ScriptLocale != "默认不设置" {
+			opt2, err := options.GetICoreWebView2ControllerOptions2()
+			if err != nil {
+				ReportErrorAtuo(err)
+			} else {
+				defer opt2.Release()
+				err = opt2.SetScriptLocale(opt.ScriptLocale)
+				if err != nil {
+					return fmt.Errorf("setting script locale failed: %v", err)
+				}
+			}
+		}
+
+		if opt.DefaultBackgroundColor != nil {
+			opt3, err := options.GetICoreWebView2ControllerOptions3()
+			if err != nil {
+				ReportErrorAtuo(err)
+			} else {
+				defer opt3.Release()
+				err = opt3.SetDefaultBackgroundColor(*opt.DefaultBackgroundColor)
+				ReportErrorAtuo(err) // 出错不直接返回, 因为影响不大
+			}
+		}
+
 		err = env10.CreateCoreWebView2ControllerWithOptions(w.hwnd, options, w.Edge.handlerCreateCoreWebView2ControllerCompleted)
 		if err != nil {
 			return fmt.Errorf("creating WebView2 controller with options failed: %v", err)

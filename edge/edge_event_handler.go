@@ -660,6 +660,12 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 		case "ShowSaveAsUICompleted":
 			info.EventToken = nil
 			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2ShowSaveAsUICompletedHandler(impl))
+		case "BrowserExtensionRemoveCompleted":
+			info.EventToken = nil
+			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2BrowserExtensionRemoveCompletedHandler(impl))
+		case "BrowserExtensionEnableCompleted":
+			info.EventToken = nil
+			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2BrowserExtensionEnableCompletedHandler(impl))
 		}
 	}
 

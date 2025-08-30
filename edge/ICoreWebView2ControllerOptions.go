@@ -22,6 +22,15 @@ type ICoreWebView2ControllerOptionsVtbl struct {
 	PutProfileName            ComProc
 	GetIsInPrivateModeEnabled ComProc
 	PutIsInPrivateModeEnabled ComProc
+	// 2
+	GetScriptLocale ComProc
+	PutScriptLocale ComProc
+	// 3
+	GetDefaultBackgroundColor ComProc
+	PutDefaultBackgroundColor ComProc
+	// 4
+	GetAllowHostInputProcessing ComProc
+	PutAllowHostInputProcessing ComProc
 }
 
 func (i *ICoreWebView2ControllerOptions) AddRef() uintptr {
@@ -101,6 +110,45 @@ func (i *ICoreWebView2ControllerOptions) SetIsInPrivateModeEnabled(value bool) e
 	return nil
 }
 
+// GetICoreWebView2ControllerOptions2 获取 ICoreWebView2ControllerOptions2 接口。
+func (i *ICoreWebView2ControllerOptions) GetICoreWebView2ControllerOptions2() (*ICoreWebView2ControllerOptions2, error) {
+	var result *ICoreWebView2ControllerOptions2
+	iidICoreWebView2ControllerOptions2 := wapi.NewGUID(IID_ICoreWebView2ControllerOptions2)
+	err := i.QueryInterface(
+		unsafe.Pointer(iidICoreWebView2ControllerOptions2),
+		unsafe.Pointer(&result))
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+// GetICoreWebView2ControllerOptions3 获取 ICoreWebView2ControllerOptions3 接口。
+func (i *ICoreWebView2ControllerOptions) GetICoreWebView2ControllerOptions3() (*ICoreWebView2ControllerOptions3, error) {
+	var result *ICoreWebView2ControllerOptions3
+	iidICoreWebView2ControllerOptions3 := wapi.NewGUID(IID_ICoreWebView2ControllerOptions3)
+	err := i.QueryInterface(
+		unsafe.Pointer(iidICoreWebView2ControllerOptions3),
+		unsafe.Pointer(&result))
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+// GetICoreWebView2ControllerOptions4 获取 ICoreWebView2ControllerOptions4 接口。
+func (i *ICoreWebView2ControllerOptions) GetICoreWebView2ControllerOptions4() (*ICoreWebView2ControllerOptions4, error) {
+	var result *ICoreWebView2ControllerOptions4
+	iidICoreWebView2ControllerOptions4 := wapi.NewGUID(IID_ICoreWebView2ControllerOptions4)
+	err := i.QueryInterface(
+		unsafe.Pointer(iidICoreWebView2ControllerOptions4),
+		unsafe.Pointer(&result))
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
 // MustGetProfileName 获取用于 WebView2 控制器的配置文件名称。出错时会触发全局错误回调。
 //   - 注意：文本不能以句号“.”或空格“ ”结尾。
 //   - 此外，虽然允许使用大写字母，但它们会被当作小写字母处理，因为配置文件名称将映射到磁盘上真实的配置文件目录路径，而 Windows 文件系统在处理路径名称时不区分大小写。
@@ -115,4 +163,25 @@ func (i *ICoreWebView2ControllerOptions) MustGetIsInPrivateModeEnabled() bool {
 	value, err := i.GetIsInPrivateModeEnabled()
 	ReportErrorAtuo(err)
 	return value
+}
+
+// MustGetICoreWebView2ControllerOptions2 获取 ICoreWebView2ControllerOptions2 接口。出错时会触发全局错误回调。
+func (i *ICoreWebView2ControllerOptions) MustGetICoreWebView2ControllerOptions2() *ICoreWebView2ControllerOptions2 {
+	result, err := i.GetICoreWebView2ControllerOptions2()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2ControllerOptions3 获取 ICoreWebView2ControllerOptions3 接口。出错时会触发全局错误回调。
+func (i *ICoreWebView2ControllerOptions) MustGetICoreWebView2ControllerOptions3() *ICoreWebView2ControllerOptions3 {
+	result, err := i.GetICoreWebView2ControllerOptions3()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2ControllerOptions4 获取 ICoreWebView2ControllerOptions4 接口。出错时会触发全局错误回调。
+func (i *ICoreWebView2ControllerOptions) MustGetICoreWebView2ControllerOptions4() *ICoreWebView2ControllerOptions4 {
+	result, err := i.GetICoreWebView2ControllerOptions4()
+	ReportErrorAtuo(err)
+	return result
 }

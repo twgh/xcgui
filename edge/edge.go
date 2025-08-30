@@ -2,18 +2,19 @@ package edge
 
 import (
 	"errors"
-	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
-	"github.com/twgh/xcgui/xcc"
 	"os"
 	"path/filepath"
 	"sync/atomic"
 	"syscall"
+
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/xcc"
 )
 
 // GetVersion 返回本库使用的 WebView2 运行时版本号。更高版本也可用, 是兼容低版本的。
 func GetVersion() string {
-	return "136.0.3240.44"
+	return "139.0.3405.78"
 }
 
 // WebView2DownloadLink 是 WebView2 运行时小型引导程序下载地址.

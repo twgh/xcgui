@@ -5,7 +5,21 @@ type WebViewOption func(*WebViewOptions)
 
 // WebViewOptions 选项.
 type WebViewOptions struct {
-	// ProfileName 配置文件名称, 可不填。
+	// WebView 的默认背景颜色。
+	//   - 此属性允许用户提前初始化 DefaultBackgroundColor，从而防止在 WebView2 加载期间，当背景色设置为白色以外的颜色时可能出现的白色闪烁。
+	//   - 通过早期初始化，颜色从一开始就保持一致。
+	//   - DefaultBackgroundColor 是在所有网页内容下方渲染的颜色。这意味着当没有加载网页内容时，WebView2 会渲染此颜色。如果 WebView2 中未定义背景色，它会使用 DefaultBackgroundColor 属性来渲染背景。默认情况下，此颜色设置为白色。
+	//   - 此 API 仅支持不透明颜色和完全透明。对于 alpha 值不等于 0 或 255 的颜色，它会失效。当 WebView2 设置为完全透明时，它不会渲染背景，从而使其后部窗口的内容可见。
+	DefaultBackgroundColor *COREWEBVIEW2_COLOR
+
+	// 脚本区域设置, 如: zh-CN。
+	//   - 它为所有 Intl JavaScript API 以及依赖于它的其他 JavaScript API 设置默认区域设置，即 Intl.DateTimeFormat()，这会影响字符串格式，例如时间/日期格式。示例：Intl.DateTimeFormat().format(new Date()) 预期的区域设置值采用 BCP 47 语言标记格式。
+	//   - 对此属性的更改适用于更改后创建的渲染器进程。任何现有的渲染器进程将继续使用之前的 ScriptLocale 值。要确保更改应用于所有渲染器进程，请关闭并重新启动 ICoreWebView2Environment 以及所有关联的 WebView2 对象。
+	//   - ScriptLocale 的默认值取决于 WebView2 语言和操作系统区域。如果 WebView2 语言和操作系统区域的语言部分匹配，则会使用操作系统区域。否则，将使用 WebView2 语言。
+	//   - 你可以将 ScriptLocale 设置为空字符串以获取默认的 ScriptLocale 值。
+	ScriptLocale string
+
+	// ProfileName 配置文件名称。
 	//   - 它的最大长度为64个字符（不包括空字符终止符）。它不区分 ASCII 大小写。
 	//   - 注意：文本不能以句号“.”或空格“ ”结尾。
 	//   - 此外，虽然允许使用大写字母，但它们会被当作小写字母处理，因为配置文件名称将映射到磁盘上真实的配置文件目录路径，而 Windows 文件系统在处理路径名称时不区分大小写。
@@ -49,19 +63,20 @@ type WebViewSize struct {
 
 // DefaultEnabledWebViewOption 里的 webview 选项都是默认会开启的.
 type DefaultEnabledWebViewOption struct {
-	// 默认的上下文菜单
+	// 默认的上下文菜单, 默认为 true.
 	DefaultContextMenus bool
-	// 状态栏
+	// 状态栏, 默认为 true.
 	StatusBar bool
-	// 缩放控件, 控制是否可以缩放
+	// 缩放控件, 控制是否可以缩放, 默认为 true.
 	ZoomControl bool
-	// 浏览器快捷键, 是浏览器里面默认的一些快捷键, 组合键
+	// 浏览器快捷键, 是浏览器里面默认的一些快捷键, 组合键, 默认为 true.
 	BrowserAcceleratorKeys bool
 }
 
 // WebView 默认选项
 func defaultWebViewOptions() *WebViewOptions {
 	return &WebViewOptions{
+		ScriptLocale: "默认不设置",
 		DefaultEnabledWebViewOption: DefaultEnabledWebViewOption{
 			DefaultContextMenus:    true,
 			StatusBar:              true,
@@ -78,6 +93,28 @@ func defaultWebViewOptions() *WebViewOptions {
 func WithProfileName(name string) WebViewOption {
 	return func(o *WebViewOptions) {
 		o.ProfileName = name
+	}
+}
+
+// WithScriptLocale 设置脚本区域设置, 如: zh-CN。
+//   - 它为所有 Intl JavaScript API 以及依赖于它的其他 JavaScript API 设置默认区域设置，即 Intl.DateTimeFormat()，这会影响字符串格式，例如时间/日期格式。示例：Intl.DateTimeFormat().format(new Date()) 预期的区域设置值采用 BCP 47 语言标记格式。
+//   - 对此属性的更改适用于更改后创建的渲染器进程。任何现有的渲染器进程将继续使用之前的 ScriptLocale 值。要确保更改应用于所有渲染器进程，请关闭并重新启动 ICoreWebView2Environment 以及所有关联的 WebView2 对象。
+//   - ScriptLocale 的默认值取决于 WebView2 语言和操作系统区域。如果 WebView2 语言和操作系统区域的语言部分匹配，则会使用操作系统区域。否则，将使用 WebView2 语言。
+//   - 你可以将 ScriptLocale 设置为空字符串以获取默认的 ScriptLocale 值。
+func WithScriptLocale(locale string) WebViewOption {
+	return func(o *WebViewOptions) {
+		o.ScriptLocale = locale
+	}
+}
+
+// WithDefaultBackgroundColor 设置 webview 的默认背景颜色.
+//   - 此属性允许用户提前初始化 DefaultBackgroundColor，从而防止在 WebView2 加载期间，当背景色设置为白色以外的颜色时可能出现的白色闪烁。
+//   - 通过早期初始化，颜色从一开始就保持一致。
+//   - DefaultBackgroundColor 是在所有网页内容下方渲染的颜色。这意味着当没有加载网页内容时，WebView2 会渲染此颜色。如果 WebView2 中未定义背景色，它会使用 DefaultBackgroundColor 属性来渲染背景。默认情况下，此颜色设置为白色。
+//   - 此 API 仅支持不透明颜色和完全透明。对于 alpha 值不等于 0 或 255 的颜色，它会失效。当 WebView2 设置为完全透明时，它不会渲染背景，从而使其后部窗口的内容可见。
+func WithDefaultBackgroundColor(r, g, b, a uint8) WebViewOption {
+	return func(o *WebViewOptions) {
+		o.DefaultBackgroundColor = &COREWEBVIEW2_COLOR{R: r, G: g, B: b, A: a}
 	}
 }
 
@@ -152,28 +189,28 @@ func WithPrivateMode(enable bool) WebViewOption {
 	}
 }
 
-// WithDefaultContextMenus 设置是否启用默认的上下文菜单.
+// WithDefaultContextMenus 设置是否启用默认的上下文菜单, 默认为 true..
 func WithDefaultContextMenus(enable bool) WebViewOption {
 	return func(o *WebViewOptions) {
 		o.DefaultContextMenus = enable
 	}
 }
 
-// WithStatusBar 设置是否启用状态栏.
+// WithStatusBar 设置是否启用状态栏, 默认为 true..
 func WithStatusBar(enable bool) WebViewOption {
 	return func(o *WebViewOptions) {
 		o.StatusBar = enable
 	}
 }
 
-// WithZoomControl 设置是否启用缩放控件, 控制是否可以缩放.
+// WithZoomControl 设置是否启用缩放控件, 控制是否可以缩放, 默认为 true..
 func WithZoomControl(enable bool) WebViewOption {
 	return func(o *WebViewOptions) {
 		o.ZoomControl = enable
 	}
 }
 
-// WithBrowserAcceleratorKeys 设置是否启用浏览器快捷键, 是浏览器里面默认的一些快捷键, 组合键.
+// WithBrowserAcceleratorKeys 设置是否启用浏览器快捷键, 是浏览器里面默认的一些快捷键, 组合键, 默认为 true..
 func WithBrowserAcceleratorKeys(enable bool) WebViewOption {
 	return func(o *WebViewOptions) {
 		o.BrowserAcceleratorKeys = enable
