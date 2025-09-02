@@ -80,7 +80,23 @@ const (
 	IID_ICoreWebView2EnvironmentOptions8 = "{7C7ECF51-E918-5CAF-853C-E9A2BCC27775}"
 )
 
-const IID_ICoreWebView2AcceleratorKeyPressedEventArgs2 = "{03b2c8c8-7799-4e34-bd66-ed26aa85f2bf}"
+const (
+	IID_ICoreWebView2Frame2 = "{7a6a5834-d185-4dbf-b63f-4a9bc43107d4}"
+	IID_ICoreWebView2Frame3 = "{b50d82cc-cc28-481d-9614-cb048895e6a0}"
+	IID_ICoreWebView2Frame4 = "{188782dc-92aa-4732-ab3c-fcc59f6f68b9}"
+	IID_ICoreWebView2Frame5 = "{99d199c4-7305-11ee-b962-0242ac120002}"
+	IID_ICoreWebView2Frame6 = "{0de611fd-31e9-5ddc-9d71-95eda26eff32}"
+	IID_ICoreWebView2Frame7 = "{3598cfa2-d85d-5a9f-9228-4dde1f59ec64}"
+)
+
+const (
+	IID_ICoreWebView2FrameInfo2                              = "{56f85cfa-72c4-11ee-b962-0242ac120002}"
+	IID_ICoreWebView2AcceleratorKeyPressedEventArgs2         = "{03b2c8c8-7799-4e34-bd66-ed26aa85f2bf}"
+	IID_ICoreWebView2DevToolsProtocolEventReceivedEventArgs2 = "{2dc4959d-1494-4393-95ba-bea4cb9ebd1b}"
+	IID_ICoreWebView2WebMessageReceivedEventArgs2            = "{06fc7ab7-c90c-4297-9389-33ca01cf6d5e}"
+	IID_ICoreWebView2PermissionRequestedEventArgs2           = "{74d7127f-9de6-4200-8734-42d6fb4ff741}"
+	IID_ICoreWebView2PermissionRequestedEventArgs3           = "{e61670bc-3dce-4177-86d2-c629ae3cb6ac}"
+)
 
 // COREWEBVIEW2_BOUNDS_MODE 定义了边界模式类型
 type COREWEBVIEW2_BOUNDS_MODE uint32

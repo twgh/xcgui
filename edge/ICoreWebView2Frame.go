@@ -1,10 +1,11 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
 )
 
 // ICoreWebView2Frame 提供对 iframe 信息的直接访问。
@@ -24,6 +25,33 @@ type ICoreWebView2FrameVtbl struct {
 	AddDestroyed                     ComProc
 	RemoveDestroyed                  ComProc
 	IsDestroyed                      ComProc
+	// 2
+	AddNavigationStarting     ComProc
+	RemoveNavigationStarting  ComProc
+	AddContentLoading         ComProc
+	RemoveContentLoading      ComProc
+	AddNavigationCompleted    ComProc
+	RemoveNavigationCompleted ComProc
+	AddDOMContentLoaded       ComProc
+	RemoveDOMContentLoaded    ComProc
+	ExecuteScript             ComProc
+	PostWebMessageAsJson      ComProc
+	PostWebMessageAsString    ComProc
+	AddWebMessageReceived     ComProc
+	RemoveWebMessageReceived  ComProc
+	// 3
+	AddPermissionRequested    ComProc
+	RemovePermissionRequested ComProc
+	// 4
+	PostSharedBufferToScript ComProc
+	// 5
+	GetFrameId ComProc
+	// 6
+	AddScreenCaptureStarting    ComProc
+	RemoveScreenCaptureStarting ComProc
+	// 7
+	AddFrameCreated    ComProc
+	RemoveFrameCreated ComProc
 }
 
 func (i *ICoreWebView2Frame) AddRef() uintptr {
@@ -191,6 +219,60 @@ func (i *ICoreWebView2Frame) IsDestroyed() (bool, error) {
 	return destroyed, nil
 }
 
+// GetICoreWebView2Frame2 获取 ICoreWebView2Frame2。
+func (i *ICoreWebView2Frame) GetICoreWebView2Frame2() (*ICoreWebView2Frame2, error) {
+	var result *ICoreWebView2Frame2
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Frame2)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
+// GetICoreWebView2Frame3 获取 ICoreWebView2Frame3。
+func (i *ICoreWebView2Frame) GetICoreWebView2Frame3() (*ICoreWebView2Frame3, error) {
+	var result *ICoreWebView2Frame3
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Frame3)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
+// GetICoreWebView2Frame4 获取 ICoreWebView2Frame4。
+func (i *ICoreWebView2Frame) GetICoreWebView2Frame4() (*ICoreWebView2Frame4, error) {
+	var result *ICoreWebView2Frame4
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Frame4)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
+// GetICoreWebView2Frame5 获取 ICoreWebView2Frame5。
+func (i *ICoreWebView2Frame) GetICoreWebView2Frame5() (*ICoreWebView2Frame5, error) {
+	var result *ICoreWebView2Frame5
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Frame5)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
+// GetICoreWebView2Frame6 获取 ICoreWebView2Frame6。
+func (i *ICoreWebView2Frame) GetICoreWebView2Frame6() (*ICoreWebView2Frame6, error) {
+	var result *ICoreWebView2Frame6
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Frame6)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
+// GetICoreWebView2Frame7 获取 ICoreWebView2Frame7。
+func (i *ICoreWebView2Frame) GetICoreWebView2Frame7() (*ICoreWebView2Frame7, error) {
+	var result *ICoreWebView2Frame7
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Frame7)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
 // MustGetName 获取 iframe 的 window.name 属性的值。出错时会触发全局错误回调。
 func (i *ICoreWebView2Frame) MustGetName() string {
 	name, err := i.GetName()
@@ -201,6 +283,48 @@ func (i *ICoreWebView2Frame) MustGetName() string {
 // MustIsDestroyed 检查框架是否已被销毁。在销毁事件期间返回 true。出错时会触发全局错误回调。
 func (i *ICoreWebView2Frame) MustIsDestroyed() bool {
 	result, err := i.IsDestroyed()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2Frame2 获取 ICoreWebView2Frame2。出错时会触发全局错误回调。
+func (i *ICoreWebView2Frame) MustGetICoreWebView2Frame2() *ICoreWebView2Frame2 {
+	result, err := i.GetICoreWebView2Frame2()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2Frame3 获取 ICoreWebView2Frame3。出错时会触发全局错误回调。
+func (i *ICoreWebView2Frame) MustGetICoreWebView2Frame3() *ICoreWebView2Frame3 {
+	result, err := i.GetICoreWebView2Frame3()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2Frame4 获取 ICoreWebView2Frame4。出错时会触发全局错误回调。
+func (i *ICoreWebView2Frame) MustGetICoreWebView2Frame4() *ICoreWebView2Frame4 {
+	result, err := i.GetICoreWebView2Frame4()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2Frame5 获取 ICoreWebView2Frame5。出错时会触发全局错误回调。
+func (i *ICoreWebView2Frame) MustGetICoreWebView2Frame5() *ICoreWebView2Frame5 {
+	result, err := i.GetICoreWebView2Frame5()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2Frame6 获取 ICoreWebView2Frame6。出错时会触发全局错误回调。
+func (i *ICoreWebView2Frame) MustGetICoreWebView2Frame6() *ICoreWebView2Frame6 {
+	result, err := i.GetICoreWebView2Frame6()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2Frame7 获取 ICoreWebView2Frame7。出错时会触发全局错误回调。
+func (i *ICoreWebView2Frame) MustGetICoreWebView2Frame7() *ICoreWebView2Frame7 {
+	result, err := i.GetICoreWebView2Frame7()
 	ReportErrorAtuo(err)
 	return result
 }

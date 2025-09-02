@@ -8,7 +8,7 @@ import (
 	"unsafe"
 )
 
-// ICoreWebView2WebMessageReceivedEventArgs WebMessageReceived 事件的事件参数.
+// ICoreWebView2WebMessageReceivedEventArgs 是 WebMessageReceived 事件的事件参数.
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2webmessagereceivedeventargs
 type ICoreWebView2WebMessageReceivedEventArgs struct {
@@ -20,6 +20,8 @@ type ICoreWebView2WebMessageReceivedEventArgsVtbl struct {
 	GetSource                ComProc
 	GetWebMessageAsJSON      ComProc
 	TryGetWebMessageAsString ComProc
+	// 2
+	GetAdditionalObjects ComProc
 }
 
 func (i *ICoreWebView2WebMessageReceivedEventArgs) AddRef() uintptr {
@@ -86,6 +88,15 @@ func (e *ICoreWebView2WebMessageReceivedEventArgs) GetSource() (string, error) {
 	return source, nil
 }
 
+// GetICoreWebView2WebMessageReceivedEventArgs2 获取 ICoreWebView2WebMessageReceivedEventArgs2。
+func (i *ICoreWebView2WebMessageReceivedEventArgs) GetICoreWebView2WebMessageReceivedEventArgs2() (*ICoreWebView2WebMessageReceivedEventArgs2, error) {
+	var result *ICoreWebView2WebMessageReceivedEventArgs2
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2WebMessageReceivedEventArgs2)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
 // MustTryGetWebMessageAsString 尝试获取 web 消息作为字符串。出错时会触发全局错误回调。
 func (e *ICoreWebView2WebMessageReceivedEventArgs) MustTryGetWebMessageAsString() string {
 	message, _ := e.TryGetWebMessageAsString()
@@ -102,4 +113,11 @@ func (e *ICoreWebView2WebMessageReceivedEventArgs) MustGetWebMessageAsJSON() str
 func (e *ICoreWebView2WebMessageReceivedEventArgs) MustGetSource() string {
 	source, _ := e.GetSource()
 	return source
+}
+
+// MustGetICoreWebView2WebMessageReceivedEventArgs2 获取 ICoreWebView2WebMessageReceivedEventArgs2。出错时会触发全局错误回调。
+func (i *ICoreWebView2WebMessageReceivedEventArgs) MustGetICoreWebView2WebMessageReceivedEventArgs2() *ICoreWebView2WebMessageReceivedEventArgs2 {
+	result, err := i.GetICoreWebView2WebMessageReceivedEventArgs2()
+	ReportErrorAtuo(err)
+	return result
 }

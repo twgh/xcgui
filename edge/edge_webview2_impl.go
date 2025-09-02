@@ -959,3 +959,83 @@ func (w *WebViewEventImpl) BrowserExtensionEnableCompleted(errorCode syscall.Err
 	}
 	return ret
 }
+
+// FrameNavigationStarting 框架导航开始时调用。
+func (w *WebViewEventImpl) FrameNavigationStarting(sender *ICoreWebView2Frame, args *ICoreWebView2NavigationStartingEventArgs) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "FrameNavigationStarting")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2NavigationStartingEventArgs) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// FrameContentLoading 当框架内容加载时调用。
+func (w *WebViewEventImpl) FrameContentLoading(sender *ICoreWebView2Frame, args *ICoreWebView2ContentLoadingEventArgs) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "FrameContentLoading")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2ContentLoadingEventArgs) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// FrameNavigationCompleted 当框架导航完成时调用。
+func (w *WebViewEventImpl) FrameNavigationCompleted(sender *ICoreWebView2Frame, args *ICoreWebView2NavigationCompletedEventArgs) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "FrameNavigationCompleted")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2NavigationCompletedEventArgs) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// FrameDOMContentLoaded 当框架 DOM 内容加载完成时调用。
+func (w *WebViewEventImpl) FrameDOMContentLoaded(sender *ICoreWebView2Frame, args *ICoreWebView2DOMContentLoadedEventArgs) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "FrameDOMContentLoaded")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2DOMContentLoadedEventArgs) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// FrameWebMessageReceived 当框架接收到 Web 消息时调用
+func (w *WebViewEventImpl) FrameWebMessageReceived(sender *ICoreWebView2Frame, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "FrameWebMessageReceived")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// FramePermissionRequested 当 iframe 及其任何子 iframe 中的内容请求访问特权资源时触发。
+func (w *WebViewEventImpl) FramePermissionRequested(sender *ICoreWebView2Frame, args *ICoreWebView2PermissionRequestedEventArgs2) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "FramePermissionRequested")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2PermissionRequestedEventArgs2) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// FrameScreenCaptureStarting 当 iframe 或其任何子 iframe 中的内容通过 getDisplayMedia() 请求使用屏幕捕获 API 的权限时触发.
+func (w *WebViewEventImpl) FrameScreenCaptureStarting(sender *ICoreWebView2Frame, args *ICoreWebView2ScreenCaptureStartingEventArgs) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "FrameScreenCaptureStarting")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2ScreenCaptureStartingEventArgs) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// FrameChildFrameCreated 当新的直接子级 iframe 创建时触发。
+func (w *WebViewEventImpl) FrameChildFrameCreated(sender *ICoreWebView2Frame, args *ICoreWebView2FrameCreatedEventArgs) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "FrameChildFrameCreated")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2FrameCreatedEventArgs) uintptr)(sender, args)
+	}
+	return ret
+}

@@ -23,6 +23,12 @@ type ICoreWebView2PermissionRequestedEventArgsVtbl struct {
 	GetState           ComProc
 	PutState           ComProc
 	GetDeferral        ComProc
+	// 2
+	GetHandled ComProc
+	PutHandled ComProc
+	// 3
+	GetSavesInProfile ComProc
+	PutSavesInProfile ComProc
 }
 
 func (i *ICoreWebView2PermissionRequestedEventArgs) AddRef() uintptr {
@@ -122,6 +128,24 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) GetDeferral() (*ICoreWebView
 	return deferral, nil
 }
 
+// GetICoreWebView2PermissionRequestedEventArgs2 获取 ICoreWebView2PermissionRequestedEventArgs2。
+func (i *ICoreWebView2PermissionRequestedEventArgs) GetICoreWebView2PermissionRequestedEventArgs2() (*ICoreWebView2PermissionRequestedEventArgs2, error) {
+	var result *ICoreWebView2PermissionRequestedEventArgs2
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2PermissionRequestedEventArgs2)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
+// GetICoreWebView2PermissionRequestedEventArgs3 获取 ICoreWebView2PermissionRequestedEventArgs3。
+func (i *ICoreWebView2PermissionRequestedEventArgs) GetICoreWebView2PermissionRequestedEventArgs3() (*ICoreWebView2PermissionRequestedEventArgs3, error) {
+	var result *ICoreWebView2PermissionRequestedEventArgs3
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2PermissionRequestedEventArgs3)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
 // MustGetUri 获取请求权限的 web 内容的来源。出错时会触发全局错误回调.
 func (i *ICoreWebView2PermissionRequestedEventArgs) MustGetUri() string {
 	uri, err := i.GetUri()
@@ -155,4 +179,18 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) MustGetDeferral() *ICoreWebV
 	deferral, err := i.GetDeferral()
 	ReportErrorAtuo(err)
 	return deferral
+}
+
+// MustGetICoreWebView2PermissionRequestedEventArgs2 获取 ICoreWebView2PermissionRequestedEventArgs2。出错时会触发全局错误回调。
+func (i *ICoreWebView2PermissionRequestedEventArgs) MustGetICoreWebView2PermissionRequestedEventArgs2() *ICoreWebView2PermissionRequestedEventArgs2 {
+	result, err := i.GetICoreWebView2PermissionRequestedEventArgs2()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2PermissionRequestedEventArgs3 获取 ICoreWebView2PermissionRequestedEventArgs3。出错时会触发全局错误回调。
+func (i *ICoreWebView2PermissionRequestedEventArgs) MustGetICoreWebView2PermissionRequestedEventArgs3() *ICoreWebView2PermissionRequestedEventArgs3 {
+	result, err := i.GetICoreWebView2PermissionRequestedEventArgs3()
+	ReportErrorAtuo(err)
+	return result
 }

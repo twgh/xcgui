@@ -32,11 +32,11 @@ func newWebviewEventHandler() *webviewEventHandler {
 //
 // impl: WebViewEventImpl 对象.
 //
-// obj: 额外的对象, 有部分事件需要(不是从 ICoreWebView2, ICoreWebView2Controller 注册的事件). 具体哪些需要, 可以看此方法的源码.
-//
 // eventType: 事件类型, 如: NavigationCompleted.
 //
 // cb: 回调函数. 如果为 nil, 则仅注册事件, 不添加回调函数, 返回回调函数索引为-1.
+//
+// obj: 额外的对象, 有部分事件需要(不是从 ICoreWebView2, ICoreWebView2Controller, ICoreWebView2Environment 注册的事件), 就是要从这个额外的对象来注册事件. 具体哪些需要, 可以看此方法的源码.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 默认为 false.
 //   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
@@ -68,6 +68,102 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				return -1, err
 			}
 			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "FrameNavigationStarting":
+			obj2, ok := obj.(*ICoreWebView2Frame2)
+			if !ok {
+				return -1, errors.New("obj is not *ICoreWebView2Frame2")
+			}
+			eventHandler := NewICoreWebView2FrameNavigationStartingEventHandler(impl)
+			err := obj2.AddNavigationStarting(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "FrameContentLoading":
+			obj2, ok := obj.(*ICoreWebView2Frame2)
+			if !ok {
+				return -1, errors.New("obj is not *ICoreWebView2Frame2")
+			}
+			eventHandler := NewICoreWebView2FrameContentLoadingEventHandler(impl)
+			err := obj2.AddContentLoading(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "FrameNavigationCompleted":
+			obj2, ok := obj.(*ICoreWebView2Frame2)
+			if !ok {
+				return -1, errors.New("obj is not *ICoreWebView2Frame2")
+			}
+			eventHandler := NewICoreWebView2FrameNavigationCompletedEventHandler(impl)
+			err := obj2.AddNavigationCompleted(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "FrameDOMContentLoaded":
+			obj2, ok := obj.(*ICoreWebView2Frame2)
+			if !ok {
+				return -1, errors.New("obj is not *ICoreWebView2Frame2")
+			}
+			eventHandler := NewICoreWebView2FrameDOMContentLoadedEventHandler(impl)
+			err := obj2.AddDOMContentLoaded(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "FrameWebMessageReceived":
+			obj2, ok := obj.(*ICoreWebView2Frame2)
+			if !ok {
+				return -1, errors.New("obj is not *ICoreWebView2Frame2")
+			}
+			eventHandler := NewICoreWebView2FrameWebMessageReceivedEventHandler(impl)
+			err := obj2.AddWebMessageReceived(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "FramePermissionRequested":
+			obj2, ok := obj.(*ICoreWebView2Frame3)
+			if !ok {
+				return -1, errors.New("obj is not *ICoreWebView2Frame3")
+			}
+			eventHandler := NewICoreWebView2FramePermissionRequestedEventHandler(impl)
+			err := obj2.AddPermissionRequested(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "FrameScreenCaptureStarting":
+			obj2, ok := obj.(*ICoreWebView2Frame6)
+			if !ok {
+				return -1, errors.New("obj is not *ICoreWebView2Frame6")
+			}
+			eventHandler := NewICoreWebView2FrameScreenCaptureStartingEventHandler(impl)
+			err := obj2.AddScreenCaptureStarting(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "FrameChildFrameCreated":
+			obj2, ok := obj.(*ICoreWebView2Frame7)
+			if !ok {
+				return -1, errors.New("obj is not *ICoreWebView2Frame7")
+			}
+			eventHandler := NewICoreWebView2FrameChildFrameCreatedEventHandler(impl)
+			err := obj2.AddFrameCreated(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "NotificationCloseRequested":
 			obj2, ok := obj.(*ICoreWebView2Notification)
 			if !ok {
@@ -79,6 +175,7 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				eventHandler.Release()
 				return -1, err
 			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "CustomItemSelected":
 			menuItem, ok := obj.(*ICoreWebView2ContextMenuItem)
 			if !ok {
