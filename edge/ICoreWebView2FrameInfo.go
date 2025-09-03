@@ -20,6 +20,10 @@ type ICoreWebView2FrameInfoVtbl struct {
 	IUnknownVtbl
 	GetName   ComProc
 	GetSource ComProc
+	// 2
+	GetParentFrameInfo ComProc
+	GetFrameId         ComProc
+	GetFrameKind       ComProc
 }
 
 func (i *ICoreWebView2FrameInfo) AddRef() uintptr {
@@ -88,4 +92,20 @@ func (i *ICoreWebView2FrameInfo) MustGetSource() string {
 	value, err := i.GetSource()
 	ReportErrorAtuo(err)
 	return value
+}
+
+// GetICoreWebView2FrameInfo2 获取 ICoreWebView2FrameInfo2。
+func (i *ICoreWebView2FrameInfo) GetICoreWebView2FrameInfo2() (*ICoreWebView2FrameInfo2, error) {
+	var result *ICoreWebView2FrameInfo2
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2FrameInfo2)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
+// MustGetICoreWebView2FrameInfo2 获取 ICoreWebView2FrameInfo2。出错时会触发全局错误回调。
+func (i *ICoreWebView2FrameInfo) MustGetICoreWebView2FrameInfo2() *ICoreWebView2FrameInfo2 {
+	result, err := i.GetICoreWebView2FrameInfo2()
+	ReportErrorAtuo(err)
+	return result
 }

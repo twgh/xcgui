@@ -96,6 +96,9 @@ const (
 	IID_ICoreWebView2WebMessageReceivedEventArgs2            = "{06fc7ab7-c90c-4297-9389-33ca01cf6d5e}"
 	IID_ICoreWebView2PermissionRequestedEventArgs2           = "{74d7127f-9de6-4200-8734-42d6fb4ff741}"
 	IID_ICoreWebView2PermissionRequestedEventArgs3           = "{e61670bc-3dce-4177-86d2-c629ae3cb6ac}"
+	ICoreWebView2NavigationStartingEventArgs2                = "{9086be93-91aa-472d-a7e0-579f2ba006ad}"
+	ICoreWebView2NavigationStartingEventArgs3                = "{ddffe494-4942-4bd2-ab73-35b8ff40e19f}"
+	ICoreWebView2NavigationCompletedEventArgs2               = "{fdf8b738-ee1e-4db2-a329-8d7d7b74d792}"
 )
 
 // COREWEBVIEW2_BOUNDS_MODE 定义了边界模式类型
@@ -838,4 +841,20 @@ const (
 	COREWEBVIEW2_SAVE_AS_KIND_SINGLE_FILE
 	// COREWEBVIEW2_SAVE_AS_KIND_COMPLETE 完整保存(包含所有资源)
 	COREWEBVIEW2_SAVE_AS_KIND_COMPLETE
+)
+
+// COREWEBVIEW2_FRAME_KIND 定义了框架的类型
+type COREWEBVIEW2_FRAME_KIND uint32
+
+const (
+	// COREWEBVIEW2_FRAME_KIND_UNKNOWN 表示未知类型的框架
+	COREWEBVIEW2_FRAME_KIND_UNKNOWN COREWEBVIEW2_FRAME_KIND = iota
+	// COREWEBVIEW2_FRAME_KIND_MAIN_FRAME 表示主框架（CoreWebView2）
+	COREWEBVIEW2_FRAME_KIND_MAIN_FRAME
+	// COREWEBVIEW2_FRAME_KIND_IFRAME 表示iframe框架
+	COREWEBVIEW2_FRAME_KIND_IFRAME
+	// COREWEBVIEW2_FRAME_KIND_EMBED 表示embed元素框架
+	COREWEBVIEW2_FRAME_KIND_EMBED
+	// COREWEBVIEW2_FRAME_KIND_OBJECT 表示object元素框架
+	COREWEBVIEW2_FRAME_KIND_OBJECT
 )
