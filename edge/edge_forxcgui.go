@@ -10,6 +10,7 @@ import (
 
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/wapi/wnd"
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
 )
@@ -30,6 +31,9 @@ type WebView struct {
 	updateWebviewSize func()
 	hWindow           int // 炫彩窗口句柄
 	hParent           int // 原生窗口宿主炫彩窗口或元素句柄
+
+	// 圆角半径
+	roundRadius int32
 
 	// 在窗口获得焦点时尝试保持 webview 的焦点。
 	autofocus bool
@@ -117,6 +121,8 @@ func (w *WebView) createWithOptionsByXcgui(hParent int, opt *WebViewOptions) err
 	}
 	wapi.RegisterClassEx(&wc)
 
+	// 计算圆角半径
+	w.roundRadius = xc.DpiConvRound(dpi, opt.RoundRadius)
 	// 创建宿主窗口
 	w.hwnd = wapi.CreateWindowEx(0, opt.ClassName, opt.Title, xcc.WS_MINIMIZE, xc.DpiConvRound(dpi, opt.Left), xc.DpiConvRound(dpi, opt.Top), xc.DpiConvRound(dpi, opt.Width), xc.DpiConvRound(dpi, opt.Height), 0, 0, hInstance, 0)
 
@@ -150,26 +156,35 @@ func (w *WebView) createWithOptionsByXcgui(hParent int, opt *WebViewOptions) err
 		if !wapi.IsWindow(w.hwnd) {
 			return
 		}
-		var rc xc.RECT
+		var rcClient xc.RECT // 炫彩窗口或元素的客户区矩形
 		if isInWindow {
-			xc.XWnd_GetBodyRect(w.hParent, &rc)
+			xc.XWnd_GetBodyRect(w.hParent, &rcClient)
 		} else {
-			xc.XEle_GetWndClientRect(w.hParent, &rc)
+			xc.XEle_GetWndClientRect(w.hParent, &rcClient)
 		}
+
 		var left, top, width, height int32
 		// 填充父
 		if opt.FillParent {
-			left = xc.DpiConvRound(dpi, rc.Left)
-			top = xc.DpiConvRound(dpi, rc.Top)
-			width = xc.DpiConvRound(dpi, rc.Right-rc.Left)
-			height = xc.DpiConvRound(dpi, rc.Bottom-rc.Top)
+			left = rcClient.Left
+			top = rcClient.Top
+			height = rcClient.Bottom - rcClient.Top
+			if isInWindow {
+				var rcWindow xc.RECT
+				xc.XWnd_GetRect(w.hParent, &rcWindow)
+				// 原本应该只用客户区坐标来计算, 但是发现存在一个问题, 就是客户区坐标的 Right 会莫名奇妙的比窗口创建好时多出 1px, 明明窗口 Rect 没有任何改变, 这导致 webview 的右边超出了炫彩窗口 2px.
+				// 目前采用窗口宽度减去客户区左边的两倍来计算客户区宽度也就是 webview 的宽度, 这等于是假设客户区是左右对称的, 实际上客户区左边和右边可能会有不同的宽度(虽然可能没有这种需求), 但是目前没有更好的办法.
+				width = rcWindow.Right - rcWindow.Left - rcClient.Left*2
+			} else {
+				width = rcClient.Right - rcClient.Left
+			}
 		} else {
-			left = xc.DpiConvRound(dpi, rc.Left+opt.Left)
-			top = xc.DpiConvRound(dpi, rc.Top+opt.Top)
-			width = xc.DpiConvRound(dpi, opt.Width)
-			height = xc.DpiConvRound(dpi, opt.Height)
+			left = rcClient.Left + opt.Left
+			top = rcClient.Top + opt.Top
+			width = opt.Width
+			height = opt.Height
 		}
-		wapi.SetWindowPos(w.hwnd, 0, left, top, width, height, wapi.SWP_NOACTIVATE|wapi.SWP_NOZORDER)
+		wapi.SetWindowPos(w.hwnd, 0, xc.DpiConvRound(dpi, left), xc.DpiConvRound(dpi, top), xc.DpiConvRound(dpi, width), xc.DpiConvRound(dpi, height), wapi.SWP_NOACTIVATE|wapi.SWP_NOZORDER)
 	}
 
 	// 窗口 调整位置和大小
@@ -285,4 +300,20 @@ func (w *WebView) msgcb_xcgui(msg string) {
 //   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
 func (w *WebView) SetTitle(title string) {
 	wapi.SetWindowText(w.hwnd, title)
+}
+
+// SetRoundRadius 设置原生窗口的圆角半径。
+//   - 需注意炫彩窗口的圆角需通过 SetShadowInfo 设置.
+//   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
+func (w *WebView) SetRoundRadius(radius int32) error {
+	if radius < 1 {
+		w.roundRadius = 0
+		return wnd.SetWindowRound(w.hwnd, w.roundRadius)
+	}
+	dpi := int32(96)
+	if xc.XC_IsHWINDOW(w.hWindow) {
+		dpi = xc.XWnd_GetDPI(w.hWindow)
+	}
+	w.roundRadius = xc.DpiConvRound(dpi, radius)
+	return wnd.SetWindowRound(w.hwnd, w.roundRadius)
 }

@@ -1,10 +1,11 @@
 package wapi
 
 import (
-	"github.com/twgh/xcgui/xc"
-	"github.com/twgh/xcgui/xcc"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
 
 	"github.com/twgh/xcgui/common"
 )
@@ -74,7 +75,26 @@ var (
 	procGetAsyncKeyState                       = User32.NewProc("GetAsyncKeyState")
 	procSetCursor                              = User32.NewProc("SetCursor")
 	procGetWindowRect                          = User32.NewProc("GetWindowRect")
+	procSetWindowRgn                           = User32.NewProc("SetWindowRgn")
 )
+
+// SetWindowRgn 设置窗口的窗口区域。窗口区域确定窗口中系统允许绘制的区域。系统不显示窗口区域外部的窗口的任何部分。
+//
+// hWnd: 窗口句柄。
+//
+// hRgn: 区域句柄（HRGN）。函数将窗口的窗口区域设置为此区域。如果 hRgn 为 NULL，则该函数将窗口区域设置为 NULL。
+//
+// bRedraw: 是否重绘窗口。通常，如果窗口可见，请将 bRedraw 设置为 TRUE 。
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-setwindowrgn
+func SetWindowRgn(hWnd uintptr, hRgn uintptr, bRedraw bool) bool {
+	ret, _, _ := procSetWindowRgn.Call(
+		hWnd,
+		hRgn,
+		common.BoolPtr(bRedraw),
+	)
+	return ret != 0
+}
 
 // SetCursor 设置鼠标光标。
 //   - 返回值是上一个游标的句柄（如果有）。

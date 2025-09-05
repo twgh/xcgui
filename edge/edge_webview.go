@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/wapi/wnd"
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
 )
@@ -157,6 +158,9 @@ func wndproc(hwnd uintptr, message uint32, wParam, lParam uintptr) uintptr {
 	case wapi.WM_SIZE:
 		if w := hwndContext.GetWindowContext(hwnd); w != nil {
 			_ = w.Resize()
+			if w.roundRadius > 0 {
+				_ = wnd.SetWindowRound(hwnd, w.roundRadius)
+			}
 			return 0
 		}
 	case wapi.WM_ACTIVATE:

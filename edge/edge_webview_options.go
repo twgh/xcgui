@@ -34,6 +34,10 @@ type WebViewOptions struct {
 	// 资源文件中的图标资源 id, 给原生窗口设置图标, 如果为 0, 则使用默认图标.
 	IconId uint
 
+	// 原生窗口的圆角半径, 单位 px.
+	//   - 需注意炫彩窗口的圆角需通过 SetShadowInfo 设置.
+	RoundRadius int32
+
 	WebViewSize
 
 	// 填充父, 如果为 true, 则 webview 会填充父, WebViewSize 里的固定坐标和尺寸会失效.
@@ -96,6 +100,14 @@ func defaultWebViewOptions() *WebViewOptions {
 func WithProfileName(name string) WebViewOption {
 	return func(o *WebViewOptions) {
 		o.ProfileName = name
+	}
+}
+
+// WithRoundRadius 设置原生窗口的圆角半径, 单位 px.
+//   - 需注意炫彩窗口的圆角需通过 SetShadowInfo 设置.
+func WithRoundRadius(radius int32) WebViewOption {
+	return func(o *WebViewOptions) {
+		o.RoundRadius = radius
 	}
 }
 
