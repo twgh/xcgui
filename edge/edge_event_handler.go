@@ -763,6 +763,15 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 		case "BrowserExtensionEnableCompleted":
 			info.EventToken = nil
 			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2BrowserExtensionEnableCompletedHandler(impl))
+		case "ClearBrowsingDataCompleted":
+			info.EventToken = nil
+			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2ClearBrowsingDataCompletedHandler(impl))
+		case "SetPermissionStateCompleted":
+			info.EventToken = nil
+			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2SetPermissionStateCompletedHandler(impl))
+		case "GetNonDefaultPermissionSettingsCompleted":
+			info.EventToken = nil
+			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler(impl))
 		}
 	}
 

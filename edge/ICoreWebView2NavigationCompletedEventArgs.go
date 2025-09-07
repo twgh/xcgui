@@ -3,9 +3,11 @@ package edge
 import (
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/wapi"
 )
 
-// ICoreWebView2NavigationCompletedEventArgs 是 NavigationCompleted 事件的参数。
+// ICoreWebView2NavigationCompletedEventArgs 是导航完成事件的参数。
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2navigationcompletedeventargs
 type ICoreWebView2NavigationCompletedEventArgs struct {
@@ -17,6 +19,8 @@ type ICoreWebView2NavigationCompletedEventArgsVtbl struct {
 	GetIsSuccess      ComProc
 	GetWebErrorStatus ComProc
 	GetNavigationId   ComProc
+	// 2
+	GetHttpStatusCode ComProc
 }
 
 func (i *ICoreWebView2NavigationCompletedEventArgs) AddRef() uintptr {
@@ -76,6 +80,15 @@ func (i *ICoreWebView2NavigationCompletedEventArgs) GetNavigationId() (uint64, e
 	return navigationId, nil
 }
 
+// GetICoreWebView2NavigationCompletedEventArgs2 获取 ICoreWebView2NavigationCompletedEventArgs2。
+func (i *ICoreWebView2NavigationCompletedEventArgs) GetICoreWebView2NavigationCompletedEventArgs2() (*ICoreWebView2NavigationCompletedEventArgs2, error) {
+	var result *ICoreWebView2NavigationCompletedEventArgs2
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2NavigationCompletedEventArgs2)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
 // MustGetIsSuccess 导航是否成功。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationCompletedEventArgs) MustGetIsSuccess() bool {
 	isSuccess, err := i.GetIsSuccess()
@@ -95,4 +108,11 @@ func (i *ICoreWebView2NavigationCompletedEventArgs) MustGetNavigationId() uint64
 	id, err := i.GetNavigationId()
 	ReportErrorAtuo(err)
 	return id
+}
+
+// MustGetICoreWebView2NavigationCompletedEventArgs2 获取 ICoreWebView2NavigationCompletedEventArgs2。出错时会触发全局错误回调。
+func (i *ICoreWebView2NavigationCompletedEventArgs) MustGetICoreWebView2NavigationCompletedEventArgs2() *ICoreWebView2NavigationCompletedEventArgs2 {
+	result, err := i.GetICoreWebView2NavigationCompletedEventArgs2()
+	ReportErrorAtuo(err)
+	return result
 }

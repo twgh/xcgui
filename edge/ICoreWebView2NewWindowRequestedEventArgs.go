@@ -8,7 +8,7 @@ import (
 	"unsafe"
 )
 
-// 新窗口请求事件的事件参数。
+// ICoreWebView2NewWindowRequestedEventArgs 是新窗口请求事件的事件参数。
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2newwindowrequestedeventargs
 type ICoreWebView2NewWindowRequestedEventArgs struct {
@@ -25,6 +25,10 @@ type ICoreWebView2NewWindowRequestedEventArgsVtbl struct {
 	GetIsUserInitiated ComProc
 	GetDeferral        ComProc
 	GetWindowFeatures  ComProc
+	// 2
+	GetName ComProc
+	// 3
+	GetOriginalSourceFrameInfo ComProc
 }
 
 func (i *ICoreWebView2NewWindowRequestedEventArgs) AddRef() uintptr {
@@ -161,6 +165,24 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetWindowFeatures() (*ICoreWe
 	return features, nil
 }
 
+// GetICoreWebView2NewWindowRequestedEventArgs2 获取 ICoreWebView2NewWindowRequestedEventArgs2。
+func (i *ICoreWebView2NewWindowRequestedEventArgs) GetICoreWebView2NewWindowRequestedEventArgs2() (*ICoreWebView2NewWindowRequestedEventArgs2, error) {
+	var result *ICoreWebView2NewWindowRequestedEventArgs2
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2NewWindowRequestedEventArgs2)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
+// GetICoreWebView2NewWindowRequestedEventArgs3 获取 ICoreWebView2NewWindowRequestedEventArgs3。
+func (i *ICoreWebView2NewWindowRequestedEventArgs) GetICoreWebView2NewWindowRequestedEventArgs3() (*ICoreWebView2NewWindowRequestedEventArgs3, error) {
+	var result *ICoreWebView2NewWindowRequestedEventArgs3
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2NewWindowRequestedEventArgs3)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
 // MustGetUri 获取新窗口请求的 URI. 出错时会触发全局错误回调.
 func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetUri() string {
 	uri, err := i.GetUri()
@@ -194,4 +216,18 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetDeferral() *ICoreWebVi
 	deferral, err := i.GetDeferral()
 	ReportErrorAtuo(err)
 	return deferral
+}
+
+// MustGetICoreWebView2NewWindowRequestedEventArgs2 获取 ICoreWebView2NewWindowRequestedEventArgs2。出错时会触发全局错误回调。
+func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetICoreWebView2NewWindowRequestedEventArgs2() *ICoreWebView2NewWindowRequestedEventArgs2 {
+	result, err := i.GetICoreWebView2NewWindowRequestedEventArgs2()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2NewWindowRequestedEventArgs3 获取 ICoreWebView2NewWindowRequestedEventArgs3。出错时会触发全局错误回调。
+func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetICoreWebView2NewWindowRequestedEventArgs3() *ICoreWebView2NewWindowRequestedEventArgs3 {
+	result, err := i.GetICoreWebView2NewWindowRequestedEventArgs3()
+	ReportErrorAtuo(err)
+	return result
 }

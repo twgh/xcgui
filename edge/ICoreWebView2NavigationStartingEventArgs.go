@@ -8,7 +8,7 @@ import (
 	"unsafe"
 )
 
-// ICoreWebView2NavigationStartingEventArgs 是 NavigationStarting 和 FrameNavigationStarting 事件的事件参数。
+// ICoreWebView2NavigationStartingEventArgs 是导航开始和框架导航开始事件的事件参数。
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2navigationstartingeventargs
 type ICoreWebView2NavigationStartingEventArgs struct {
@@ -24,6 +24,11 @@ type ICoreWebView2NavigationStartingEventArgsVtbl struct {
 	GetCancel          ComProc
 	PutCancel          ComProc
 	GetNavigationId    ComProc
+	// 2
+	GetAdditionalAllowedFrameAncestors ComProc
+	PutAdditionalAllowedFrameAncestors ComProc
+	// 3
+	GetNavigationKind ComProc
 }
 
 func (i *ICoreWebView2NavigationStartingEventArgs) AddRef() uintptr {
@@ -136,6 +141,24 @@ func (i *ICoreWebView2NavigationStartingEventArgs) SetCancel(cancel bool) error 
 	return nil
 }
 
+// GetICoreWebView2NavigationStartingEventArgs2 获取 ICoreWebView2NavigationStartingEventArgs2。
+func (i *ICoreWebView2NavigationStartingEventArgs) GetICoreWebView2NavigationStartingEventArgs2() (*ICoreWebView2NavigationStartingEventArgs2, error) {
+	var result *ICoreWebView2NavigationStartingEventArgs2
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2NavigationStartingEventArgs2)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
+// GetICoreWebView2NavigationStartingEventArgs3 获取 ICoreWebView2NavigationStartingEventArgs3。
+func (i *ICoreWebView2NavigationStartingEventArgs) GetICoreWebView2NavigationStartingEventArgs3() (*ICoreWebView2NavigationStartingEventArgs3, error) {
+	var result *ICoreWebView2NavigationStartingEventArgs3
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2NavigationStartingEventArgs3)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
 // MustGetUri 获取请求的导航的 uri。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationStartingEventArgs) MustGetUri() string {
 	uri, err := i.GetUri()
@@ -176,4 +199,18 @@ func (i *ICoreWebView2NavigationStartingEventArgs) MustGetCancel() bool {
 	cancel, err := i.GetCancel()
 	ReportErrorAtuo(err)
 	return cancel
+}
+
+// MustGetICoreWebView2NavigationStartingEventArgs2 获取 ICoreWebView2NavigationStartingEventArgs2。出错时会触发全局错误回调。
+func (i *ICoreWebView2NavigationStartingEventArgs) MustGetICoreWebView2NavigationStartingEventArgs2() *ICoreWebView2NavigationStartingEventArgs2 {
+	result, err := i.GetICoreWebView2NavigationStartingEventArgs2()
+	ReportErrorAtuo(err)
+	return result
+}
+
+// MustGetICoreWebView2NavigationStartingEventArgs3 获取 ICoreWebView2NavigationStartingEventArgs3。出错时会触发全局错误回调。
+func (i *ICoreWebView2NavigationStartingEventArgs) MustGetICoreWebView2NavigationStartingEventArgs3() *ICoreWebView2NavigationStartingEventArgs3 {
+	result, err := i.GetICoreWebView2NavigationStartingEventArgs3()
+	ReportErrorAtuo(err)
+	return result
 }

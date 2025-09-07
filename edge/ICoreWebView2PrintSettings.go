@@ -43,6 +43,23 @@ type ICoreWebView2PrintSettingsVtbl struct {
 	PutHeaderTitle                ComProc
 	GetFooterUri                  ComProc
 	PutFooterUri                  ComProc
+	// 2
+	GetPageRanges   ComProc
+	PutPageRanges   ComProc
+	GetPagesPerSide ComProc
+	PutPagesPerSide ComProc
+	GetCopies       ComProc
+	PutCopies       ComProc
+	GetCollation    ComProc
+	PutCollation    ComProc
+	GetColorMode    ComProc
+	PutColorMode    ComProc
+	GetDuplex       ComProc
+	PutDuplex       ComProc
+	GetMediaSize    ComProc
+	PutMediaSize    ComProc
+	GetPrinterName  ComProc
+	PutPrinterName  ComProc
 }
 
 func (i *ICoreWebView2PrintSettings) AddRef() uintptr {
@@ -419,6 +436,15 @@ func (i *ICoreWebView2PrintSettings) SetFooterUri(footerUri string) error {
 	return nil
 }
 
+// GetICoreWebView2PrintSettings2 获取 ICoreWebView2PrintSettings2。
+func (i *ICoreWebView2PrintSettings) GetICoreWebView2PrintSettings2() (*ICoreWebView2PrintSettings2, error) {
+	var result *ICoreWebView2PrintSettings2
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2PrintSettings2)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
 // MustGetOrientation 获取打印方向。
 // 出错时会触发全局错误回调。
 func (i *ICoreWebView2PrintSettings) MustGetOrientation() COREWEBVIEW2_PRINT_ORIENTATION {
@@ -521,4 +547,11 @@ func (i *ICoreWebView2PrintSettings) MustGetFooterUri() string {
 	value, err := i.GetFooterUri()
 	ReportErrorAtuo(err)
 	return value
+}
+
+// MustGetICoreWebView2PrintSettings2 获取 ICoreWebView2PrintSettings2。出错时会触发全局错误回调。
+func (i *ICoreWebView2PrintSettings) MustGetICoreWebView2PrintSettings2() *ICoreWebView2PrintSettings2 {
+	result, err := i.GetICoreWebView2PrintSettings2()
+	ReportErrorAtuo(err)
+	return result
 }

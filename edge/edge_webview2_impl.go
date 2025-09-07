@@ -1000,6 +1000,36 @@ func (w *WebViewEventImpl) FrameDOMContentLoaded(sender *ICoreWebView2Frame, arg
 	return ret
 }
 
+// ClearBrowsingDataCompleted 清除浏览数据完成时调用。
+func (w *WebViewEventImpl) ClearBrowsingDataCompleted(errorCode syscall.Errno) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "ClearBrowsingDataCompleted")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(errorCode syscall.Errno) uintptr)(errorCode)
+	}
+	return ret
+}
+
+// SetPermissionStateCompleted 设置权限状态完成时调用。
+func (w *WebViewEventImpl) SetPermissionStateCompleted(errorCode syscall.Errno) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "SetPermissionStateCompleted")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(errorCode syscall.Errno) uintptr)(errorCode)
+	}
+	return ret
+}
+
+// GetNonDefaultPermissionSettingsCompleted 获取非默认权限设置完成时调用。
+func (w *WebViewEventImpl) GetNonDefaultPermissionSettingsCompleted(errorCode syscall.Errno, result *ICoreWebView2PermissionSettingCollectionView) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "GetNonDefaultPermissionSettingsCompleted")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(errorCode syscall.Errno, result *ICoreWebView2PermissionSettingCollectionView) uintptr)(errorCode, result)
+	}
+	return ret
+}
+
 // FrameWebMessageReceived 当框架接收到 Web 消息时调用
 func (w *WebViewEventImpl) FrameWebMessageReceived(sender *ICoreWebView2Frame, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr {
 	cbs := WvEventHandler.GetCallBacks(w, "FrameWebMessageReceived")
