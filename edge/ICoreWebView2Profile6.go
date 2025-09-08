@@ -21,7 +21,7 @@ type ICoreWebView2Profile6 struct {
 //   - 此属性与 ICoreWebView2Settings.IsPasswordAutosaveEnabled 的值相同，更改其中一个会改变另一个。
 //   - 所有具有相同 ICoreWebView2Profile 的 ICoreWebView2 将共享此属性的相同值，因此对于具有相同配置文件的 ICoreWebView2，它们的 ICoreWebView2Settings.IsPasswordAutosaveEnabled 和 ICoreWebView2Profile.IsPasswordAutosaveEnabled 将始终具有相同的值。
 func (i *ICoreWebView2Profile6) GetIsPasswordAutosaveEnabled() (bool, error) {
-	var value int32
+	var value bool
 	r, _, _ := i.Vtbl.GetIsPasswordAutosaveEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
@@ -29,7 +29,7 @@ func (i *ICoreWebView2Profile6) GetIsPasswordAutosaveEnabled() (bool, error) {
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
-	return value != 0, nil
+	return value, nil
 }
 
 // SetIsPasswordAutosaveEnabled 设置是否启用密码自动保存。
@@ -46,7 +46,7 @@ func (i *ICoreWebView2Profile6) SetIsPasswordAutosaveEnabled(value bool) error {
 
 // GetIsGeneralAutofillEnabled 获取是否启用通用自动填充。
 func (i *ICoreWebView2Profile6) GetIsGeneralAutofillEnabled() (bool, error) {
-	var value int32
+	var value bool
 	r, _, _ := i.Vtbl.GetIsGeneralAutofillEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
@@ -54,7 +54,7 @@ func (i *ICoreWebView2Profile6) GetIsGeneralAutofillEnabled() (bool, error) {
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
-	return value != 0, nil
+	return value, nil
 }
 
 // SetIsGeneralAutofillEnabled 设置是否启用通用自动填充。

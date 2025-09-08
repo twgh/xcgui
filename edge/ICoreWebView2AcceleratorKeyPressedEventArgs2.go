@@ -17,7 +17,7 @@ type ICoreWebView2AcceleratorKeyPressedEventArgs2 struct {
 // GetIsBrowserAcceleratorKeyEnabled 获取特定浏览器快捷键是否启用.
 //   - 浏览器快捷键是用于访问网络浏览器特定功能的按键或按键组合.
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs2) GetIsBrowserAcceleratorKeyEnabled() (bool, error) {
-	var enabled int32
+	var enabled bool
 	r, _, _ := i.Vtbl.GetIsBrowserAcceleratorKeyEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&enabled)),
@@ -25,7 +25,7 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs2) GetIsBrowserAcceleratorKe
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
-	return enabled != 0, nil
+	return enabled, nil
 }
 
 // SetIsBrowserAcceleratorKeyEnabled 设置特定浏览器快捷键是否启用.

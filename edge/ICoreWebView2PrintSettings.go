@@ -295,7 +295,7 @@ func (i *ICoreWebView2PrintSettings) SetMarginRight(marginRight float64) error {
 
 // GetShouldPrintBackgrounds 获取是否打印背景颜色和图像。
 func (i *ICoreWebView2PrintSettings) GetShouldPrintBackgrounds() (bool, error) {
-	var value int32
+	var value bool
 	r, _, _ := i.Vtbl.GetShouldPrintBackgrounds.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
@@ -303,7 +303,7 @@ func (i *ICoreWebView2PrintSettings) GetShouldPrintBackgrounds() (bool, error) {
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
-	return value != 0, nil
+	return value, nil
 }
 
 // SetShouldPrintBackgrounds 设置是否打印背景颜色和图像。
@@ -321,7 +321,7 @@ func (i *ICoreWebView2PrintSettings) SetShouldPrintBackgrounds(shouldPrintBackgr
 
 // GetShouldPrintSelectionOnly 获取是否只打印选中内容。
 func (i *ICoreWebView2PrintSettings) GetShouldPrintSelectionOnly() (bool, error) {
-	var value int32
+	var value bool
 	r, _, _ := i.Vtbl.GetShouldPrintSelectionOnly.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
@@ -329,7 +329,7 @@ func (i *ICoreWebView2PrintSettings) GetShouldPrintSelectionOnly() (bool, error)
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
-	return value != 0, nil
+	return value, nil
 }
 
 // SetShouldPrintSelectionOnly 设置是否只打印选中内容。
@@ -347,7 +347,7 @@ func (i *ICoreWebView2PrintSettings) SetShouldPrintSelectionOnly(shouldPrintSele
 
 // GetShouldPrintHeaderAndFooter 获取是否打印页眉和页脚。
 func (i *ICoreWebView2PrintSettings) GetShouldPrintHeaderAndFooter() (bool, error) {
-	var value int32
+	var value bool
 	r, _, _ := i.Vtbl.GetShouldPrintHeaderAndFooter.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&value)),
@@ -355,7 +355,7 @@ func (i *ICoreWebView2PrintSettings) GetShouldPrintHeaderAndFooter() (bool, erro
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
-	return value != 0, nil
+	return value, nil
 }
 
 // SetShouldPrintHeaderAndFooter 设置是否打印页眉和页脚。

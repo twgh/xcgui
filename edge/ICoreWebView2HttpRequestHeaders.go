@@ -75,7 +75,7 @@ func (i *ICoreWebView2HttpRequestHeaders) Contains(name string) (bool, error) {
 		return false, err
 	}
 
-	var contains int32
+	var contains bool
 	r, _, _ := i.Vtbl.Contains.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_name)),
@@ -84,7 +84,7 @@ func (i *ICoreWebView2HttpRequestHeaders) Contains(name string) (bool, error) {
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
-	return contains != 0, nil
+	return contains, nil
 }
 
 // RemoveHeader 删除指定名称的HTTP头。

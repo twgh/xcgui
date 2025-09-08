@@ -85,7 +85,7 @@ func (i *ICoreWebView2Profile) GetProfileName() (string, error) {
 
 // GetIsInPrivateModeEnabled 获取配置文件是否启用了隐私模式。
 func (i *ICoreWebView2Profile) GetIsInPrivateModeEnabled() (bool, error) {
-	var _value int32
+	var _value bool
 	r, _, _ := i.Vtbl.GetIsInPrivateModeEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_value)),
@@ -93,7 +93,7 @@ func (i *ICoreWebView2Profile) GetIsInPrivateModeEnabled() (bool, error) {
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
-	return _value != 0, nil
+	return _value, nil
 }
 
 // GetProfilePath 获取配置文件目录的完整路径。

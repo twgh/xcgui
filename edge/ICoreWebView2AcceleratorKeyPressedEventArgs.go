@@ -125,7 +125,7 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetKeyEventLParam() (int, 
 
 // GetHandled 获取事件是否已处理。
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetHandled() (bool, error) {
-	var handled int32
+	var handled bool
 	r, _, _ := i.Vtbl.GetHandled.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&handled)),
@@ -133,7 +133,7 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetHandled() (bool, error)
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
-	return handled != 0, nil
+	return handled, nil
 }
 
 // GetICoreWebView2AcceleratorKeyPressedEventArgs2 获取 ICoreWebView2AcceleratorKeyPressedEventArgs2。

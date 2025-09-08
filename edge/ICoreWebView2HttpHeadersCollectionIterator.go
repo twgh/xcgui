@@ -60,7 +60,7 @@ func (i *ICoreWebView2HttpHeadersCollectionIterator) GetCurrentHeader() (name st
 
 // MoveNext 将迭代器移动到下一个HTTP头。
 func (i *ICoreWebView2HttpHeadersCollectionIterator) MoveNext() (bool, error) {
-	var hasNext int32
+	var hasNext bool
 	r, _, _ := i.Vtbl.MoveNext.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&hasNext)),
@@ -68,12 +68,12 @@ func (i *ICoreWebView2HttpHeadersCollectionIterator) MoveNext() (bool, error) {
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
-	return hasNext != 0, nil
+	return hasNext, nil
 }
 
 // GetHasCurrentHeader 检查迭代器是否有当前HTTP头。
 func (i *ICoreWebView2HttpHeadersCollectionIterator) GetHasCurrentHeader() (bool, error) {
-	var hasCurrent int32
+	var hasCurrent bool
 	r, _, _ := i.Vtbl.GetHasCurrentHeader.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&hasCurrent)),
@@ -81,7 +81,7 @@ func (i *ICoreWebView2HttpHeadersCollectionIterator) GetHasCurrentHeader() (bool
 	if r != 0 {
 		return false, syscall.Errno(r)
 	}
-	return hasCurrent != 0, nil
+	return hasCurrent, nil
 }
 
 // MustGetCurrentHeader 获取当前HTTP头的名称和值。出错时会触发全局错误回调。
