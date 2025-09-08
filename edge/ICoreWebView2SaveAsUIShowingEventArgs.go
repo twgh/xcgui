@@ -222,48 +222,48 @@ func (i *ICoreWebView2SaveAsUIShowingEventArgs) GetKind() (COREWEBVIEW2_SAVE_AS_
 // MustGetContentMimeType 获取内容的 MIME 类型。出错时会触发全局错误回调。
 func (i *ICoreWebView2SaveAsUIShowingEventArgs) MustGetContentMimeType() string {
 	value, err := i.GetContentMimeType()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetCancel 获取是否取消"另存为"操作。出错时会触发全局错误回调。
 func (i *ICoreWebView2SaveAsUIShowingEventArgs) MustGetCancel() bool {
 	value, err := i.GetCancel()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetSuppressDefaultDialog 获取是否禁止系统默认对话框。出错时会触发全局错误回调。
 func (i *ICoreWebView2SaveAsUIShowingEventArgs) MustGetSuppressDefaultDialog() bool {
 	value, err := i.GetSuppressDefaultDialog()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetDeferral 获取延迟对象，用于异步处理事件。出错时会触发全局错误回调。
 func (i *ICoreWebView2SaveAsUIShowingEventArgs) MustGetDeferral() *ICoreWebView2Deferral {
 	deferral, err := i.GetDeferral()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return deferral
 }
 
 // MustGetSaveAsFilePath 获取保存文件的路径。出错时会触发全局错误回调。
 func (i *ICoreWebView2SaveAsUIShowingEventArgs) MustGetSaveAsFilePath() string {
 	value, err := i.GetSaveAsFilePath()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetAllowReplace 获取是否允许替换现有文件。出错时会触发全局错误回调。
 func (i *ICoreWebView2SaveAsUIShowingEventArgs) MustGetAllowReplace() bool {
 	value, err := i.GetAllowReplace()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetKind 获取"另存为"操作的类型。出错时会触发全局错误回调。
 func (i *ICoreWebView2SaveAsUIShowingEventArgs) MustGetKind() COREWEBVIEW2_SAVE_AS_KIND {
 	value, err := i.GetKind()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

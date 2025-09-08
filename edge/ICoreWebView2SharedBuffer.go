@@ -108,27 +108,27 @@ func (i *ICoreWebView2SharedBuffer) Close() error {
 // MustGetSize 获取共享缓冲区的大小（以字节为单位），出错时会触发全局错误回调。
 func (i *ICoreWebView2SharedBuffer) MustGetSize() uint64 {
 	size, err := i.GetSize()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return size
 }
 
 // MustGetBuffer 获取共享缓冲区的内存地址，出错时会触发全局错误回调。
 func (i *ICoreWebView2SharedBuffer) MustGetBuffer() unsafe.Pointer {
 	buffer, err := i.GetBuffer()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return buffer
 }
 
 // MustOpenStream 获取一个可用于访问共享缓冲区的 IStream 对象，出错时会触发全局错误回调。
 func (i *ICoreWebView2SharedBuffer) MustOpenStream() *IStream {
 	stream, err := i.OpenStream()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return stream
 }
 
 // MustGetFileMappingHandle 返回指向支持此共享缓冲区的文件映射对象的句柄，出错时会触发全局错误回调。
 func (i *ICoreWebView2SharedBuffer) MustGetFileMappingHandle() uintptr {
 	handle, err := i.GetFileMappingHandle()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return handle
 }

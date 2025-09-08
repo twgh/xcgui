@@ -106,13 +106,13 @@ func (i *ICoreWebView2BasicAuthenticationResponse) SetPassword(password string) 
 // MustGetUserName 获取用于基本身份验证的用户名。出错时会触发全局错误回调。
 func (i *ICoreWebView2BasicAuthenticationResponse) MustGetUserName() string {
 	result, err := i.GetUserName()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetPassword 获取用于基本身份验证的密码。出错时会触发全局错误回调。
 func (i *ICoreWebView2BasicAuthenticationResponse) MustGetPassword() string {
 	result, err := i.GetPassword()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

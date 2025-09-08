@@ -1,10 +1,11 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
 )
 
 // ICoreWebView2WebResourceRequest 是与 WebResourceRequested 事件一起使用的HTTP请求。
@@ -191,34 +192,34 @@ func (i *ICoreWebView2WebResourceRequest) GetHeadersMap() (map[string]string, er
 // MustGetUri 获取请求URI。出错时会触发全局错误回调.
 func (i *ICoreWebView2WebResourceRequest) MustGetUri() string {
 	uri, err := i.GetUri()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return uri
 }
 
 // MustGetContent 获取请求的内容。出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceRequest) MustGetContent() []byte {
 	content, err := i.GetContent()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return content
 }
 
 // MustGetMethod 获取请求的HTTP方法。出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceRequest) MustGetMethod() string {
 	method, err := i.GetMethod()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return method
 }
 
 // MustGetHeaders 获取请求的HTTP标头。出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceRequest) MustGetHeaders() *ICoreWebView2HttpRequestHeaders {
 	headers, err := i.GetHeaders()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return headers
 }
 
 // MustGetHeadersMap 获取请求的HTTP标头并转换为map。出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceRequest) MustGetHeadersMap() map[string]string {
 	headers, err := i.GetHeadersMap()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return headers
 }

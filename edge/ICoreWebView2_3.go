@@ -124,6 +124,6 @@ func (i *ICoreWebView2_3) SetVirtualHostNameToFolderMapping(hostName, folderPath
 // MustGetIsSuspended 获取 WebView 控件是否已挂起。出错时会触发全局错误回调。
 func (i *ICoreWebView2_3) MustGetIsSuspended() bool {
 	r, err := i.GetIsSuspended()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return r
 }

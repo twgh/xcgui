@@ -54,6 +54,6 @@ func (i *ICoreWebView2Environment9) CreateContextMenuItem(label string, iconStre
 // kind: 菜单项的类型。
 func (i *ICoreWebView2Environment9) MustCreateContextMenuItem(label string, iconStream *IStream, kind COREWEBVIEW2_CONTEXT_MENU_ITEM_KIND) *ICoreWebView2ContextMenuItem {
 	value, err := i.CreateContextMenuItem(label, iconStream, kind)
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

@@ -128,14 +128,14 @@ func (i *ICoreWebView2BasicAuthenticationRequestedEventArgs) GetDeferral() (*ICo
 // MustGetUri 获取需要基本身份验证的URI。出错时会触发全局错误回调。
 func (i *ICoreWebView2BasicAuthenticationRequestedEventArgs) MustGetUri() string {
 	result, err := i.GetUri()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetChallenge 获取身份验证质询字符串。出错时会触发全局错误回调。
 func (i *ICoreWebView2BasicAuthenticationRequestedEventArgs) MustGetChallenge() string {
 	result, err := i.GetChallenge()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
@@ -143,20 +143,20 @@ func (i *ICoreWebView2BasicAuthenticationRequestedEventArgs) MustGetChallenge() 
 //   - 如果主机希望提供身份验证凭据，此对象将由应用程序填充。
 func (i *ICoreWebView2BasicAuthenticationRequestedEventArgs) MustGetResponse() *ICoreWebView2BasicAuthenticationResponse {
 	result, err := i.GetResponse()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetCancel 获取是否取消基本身份验证请求。出错时会触发全局错误回调。
 func (i *ICoreWebView2BasicAuthenticationRequestedEventArgs) MustGetCancel() bool {
 	result, err := i.GetCancel()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetDeferral 获取延迟对象，用于异步处理基本身份验证请求。出错时会触发全局错误回调。
 func (i *ICoreWebView2BasicAuthenticationRequestedEventArgs) MustGetDeferral() *ICoreWebView2Deferral {
 	result, err := i.GetDeferral()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

@@ -286,13 +286,13 @@ func (w *WebView) msgcb_xcgui(msg string) {
 	id := strconv.Itoa(d.ID)
 	if res, err := w.callbinding(&d); err != nil {
 		err = w.Eval("window._rpc[" + id + "].reject(" + jsString(err.Error()) + "); window._rpc[" + id + "] = undefined")
-		ReportErrorAtuo(err)
+		ReportErrorAuto(err)
 	} else if b, err := json.Marshal(res); err != nil {
 		err = w.Eval("window._rpc[" + id + "].reject(" + jsString(err.Error()) + "); window._rpc[" + id + "] = undefined")
-		ReportErrorAtuo(err)
+		ReportErrorAuto(err)
 	} else {
 		err = w.Eval("window._rpc[" + id + "].resolve(" + string(b) + "); window._rpc[" + id + "] = undefined")
-		ReportErrorAtuo(err)
+		ReportErrorAuto(err)
 	}
 }
 

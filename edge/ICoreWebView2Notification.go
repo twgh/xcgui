@@ -334,14 +334,14 @@ func (i *ICoreWebView2Notification) GetVibrationPattern() ([]uint64, error) {
 // MustGetBody 获取通知的正文内容。出错时会触发全局错误回调。
 func (i *ICoreWebView2Notification) MustGetBody() string {
 	value, err := i.GetBody()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetDirection 获取通知的文本方向。出错时会触发全局错误回调。
 func (i *ICoreWebView2Notification) MustGetDirection() COREWEBVIEW2_TEXT_DIRECTION_KIND {
 	value, err := i.GetDirection()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -349,7 +349,7 @@ func (i *ICoreWebView2Notification) MustGetDirection() COREWEBVIEW2_TEXT_DIRECTI
 //   - 请注意，不会对此属性执行任何验证，它可以是通知发送者指定的任何字符串。这对应于 Notification.lang DOM API。默认值是空字符串。
 func (i *ICoreWebView2Notification) MustGetLanguage() string {
 	value, err := i.GetLanguage()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -357,21 +357,21 @@ func (i *ICoreWebView2Notification) MustGetLanguage() string {
 //   - 这对应于 Notification.tag DOM API。默认值是空字符串。
 func (i *ICoreWebView2Notification) MustGetTag() string {
 	value, err := i.GetTag()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetIconUri 获取通知的图标 URI。出错时会触发全局错误回调。
 func (i *ICoreWebView2Notification) MustGetIconUri() string {
 	value, err := i.GetIconUri()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetTitle 获取通知的标题。出错时会触发全局错误回调。
 func (i *ICoreWebView2Notification) MustGetTitle() string {
 	value, err := i.GetTitle()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -379,14 +379,14 @@ func (i *ICoreWebView2Notification) MustGetTitle() string {
 //   - 当没有足够空间显示通知本身时，一个包含用于表示该通知的图像 URI 的字符串。
 func (i *ICoreWebView2Notification) MustGetBadgeUri() string {
 	value, err := i.GetBadgeUri()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetBodyImageUri 获取通知正文图像的 URI。出错时会触发全局错误回调。
 func (i *ICoreWebView2Notification) MustGetBodyImageUri() string {
 	value, err := i.GetBodyImageUri()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -394,7 +394,7 @@ func (i *ICoreWebView2Notification) MustGetBodyImageUri() string {
 //   - 这对应于 Notification.renotify DOM API。默认值为FALSE。
 func (i *ICoreWebView2Notification) MustGetShouldRenotify() bool {
 	value, err := i.GetShouldRenotify()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -403,7 +403,7 @@ func (i *ICoreWebView2Notification) MustGetShouldRenotify() bool {
 //   - 这对应于 Notification.requireInteraction DOM API。请注意，由于原生API的限制，您可能不一定能够实现这一点。默认值为 FALSE。
 func (i *ICoreWebView2Notification) MustGetRequiresInteraction() bool {
 	value, err := i.GetRequiresInteraction()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -412,14 +412,14 @@ func (i *ICoreWebView2Notification) MustGetRequiresInteraction() bool {
 //   - 这对应于 Notification.silent DOM API。默认值为 FALSE。
 func (i *ICoreWebView2Notification) MustGetIsSilent() bool {
 	value, err := i.GetIsSilent()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetTimestamp 获取通知创建或适用的时间（过去、现在或未来）的时间戳，以自 UNIX 纪元以来的毫秒数计。出错时会触发全局错误回调。
 func (i *ICoreWebView2Notification) MustGetTimestamp() float64 {
 	value, err := i.GetTimestamp()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -427,6 +427,6 @@ func (i *ICoreWebView2Notification) MustGetTimestamp() float64 {
 //   - 这对应于 Notification.vibrate DOM API。如果未指定任何振动模式，则返回一个空数组。
 func (i *ICoreWebView2Notification) MustGetVibrationPattern() []uint64 {
 	value, err := i.GetVibrationPattern()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

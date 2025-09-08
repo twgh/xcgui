@@ -125,34 +125,34 @@ func (i *ICoreWebView2ServerCertificateErrorDetectedEventArgs) GetDeferral() (*I
 // MustGetErrorStatus 获取无效证书的 TLS 错误代码。出错时会触发全局错误回调。
 func (i *ICoreWebView2ServerCertificateErrorDetectedEventArgs) MustGetErrorStatus() COREWEBVIEW2_WEB_ERROR_STATUS {
 	result, err := i.GetErrorStatus()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetRequestUri 获取导致证书错误的请求URI。出错时会触发全局错误回调。
 func (i *ICoreWebView2ServerCertificateErrorDetectedEventArgs) MustGetRequestUri() string {
 	result, err := i.GetRequestUri()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetServerCertificate 获取有问题的服务器证书。出错时会触发全局错误回调。
 func (i *ICoreWebView2ServerCertificateErrorDetectedEventArgs) MustGetServerCertificate() *ICoreWebView2Certificate {
 	result, err := i.GetServerCertificate()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetAction 获取当前设置的处理证书错误的操作。出错时会触发全局错误回调。
 func (i *ICoreWebView2ServerCertificateErrorDetectedEventArgs) MustGetAction() COREWEBVIEW2_SERVER_CERTIFICATE_ERROR_ACTION {
 	result, err := i.GetAction()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetDeferral 获取一个延迟对象，使用此操作可在稍后完成该事件。出错时会触发全局错误回调。
 func (i *ICoreWebView2ServerCertificateErrorDetectedEventArgs) MustGetDeferral() *ICoreWebView2Deferral {
 	result, err := i.GetDeferral()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

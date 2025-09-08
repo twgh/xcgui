@@ -1151,49 +1151,49 @@ func (i *ICoreWebView2) CallDevToolsProtocolMethodEx(impl *WebViewEventImpl, met
 // MustGetSettings 获取 ICoreWebView2Settings 对象, 它包含正在运行的 WebView 的各种可修改设置。出错时会触发全局错误回调.
 func (i *ICoreWebView2) MustGetSettings() *ICoreWebView2Settings {
 	s, err := i.GetSettings()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return s
 }
 
 // MustGetSource 获取当前顶级文档的URI。如果导航正在进行中，则返回即将导航到的URI。出错时会触发全局错误回调.
 func (i *ICoreWebView2) MustGetSource() string {
 	uri, err := i.GetSource()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return uri
 }
 
 // MustGetContainsFullScreenElement 获取 WebView 是否包含全屏元素。出错时会触发全局错误回调。
 func (i *ICoreWebView2) MustGetContainsFullScreenElement() bool {
 	result, err := i.GetContainsFullScreenElement()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetDocumentTitle 获取当前顶级文档的标题。出错时会触发全局错误回调。
 func (i *ICoreWebView2) MustGetDocumentTitle() string {
 	title, err := i.GetDocumentTitle()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return title
 }
 
 // MustGetBrowserProcessID 获取承载 WebView 的浏览器进程的 ID。出错时会触发全局错误回调。
 func (i *ICoreWebView2) MustGetBrowserProcessID() uint32 {
 	pid, err := i.GetBrowserProcessID()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return pid
 }
 
 // MustGetCanGoBack 获取 WebView 是否可以导航到上一页。出错时会触发全局错误回调。
 func (i *ICoreWebView2) MustGetCanGoBack() bool {
 	result, err := i.GetCanGoBack()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetCanGoForward 获取 WebView 是否可以导航到下一页。出错时会触发全局错误回调。
 func (i *ICoreWebView2) MustGetCanGoForward() bool {
 	result, err := i.GetCanGoForward()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
@@ -1202,6 +1202,6 @@ func (i *ICoreWebView2) MustGetCanGoForward() bool {
 // eventName: DevTools 协议事件的完整名称，格式为 {domain}.{event}。
 func (i *ICoreWebView2) MustGetDevToolsProtocolEventReceiver(eventName string) *ICoreWebView2DevToolsProtocolEventReceiver {
 	receiver, err := i.GetDevToolsProtocolEventReceiver(eventName)
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return receiver
 }

@@ -39,6 +39,6 @@ func (i *ICoreWebView2Environment11) GetFailureReportFolderPath() (string, error
 // 出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment11) MustGetFailureReportFolderPath() string {
 	path, err := i.GetFailureReportFolderPath()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return path
 }

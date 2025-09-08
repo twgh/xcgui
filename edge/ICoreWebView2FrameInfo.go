@@ -83,14 +83,14 @@ func (i *ICoreWebView2FrameInfo) GetSource() (string, error) {
 //   - 当框架没有 name 属性且 window.name 没有赋值时，返回的字符串为空。
 func (i *ICoreWebView2FrameInfo) MustGetName() string {
 	value, err := i.GetName()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetSource 获取框架的源URL。出错时会触发全局错误回调。
 func (i *ICoreWebView2FrameInfo) MustGetSource() string {
 	value, err := i.GetSource()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -106,6 +106,6 @@ func (i *ICoreWebView2FrameInfo) GetICoreWebView2FrameInfo2() (*ICoreWebView2Fra
 // MustGetICoreWebView2FrameInfo2 获取 ICoreWebView2FrameInfo2。出错时会触发全局错误回调。
 func (i *ICoreWebView2FrameInfo) MustGetICoreWebView2FrameInfo2() *ICoreWebView2FrameInfo2 {
 	result, err := i.GetICoreWebView2FrameInfo2()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

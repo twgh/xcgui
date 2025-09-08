@@ -37,6 +37,6 @@ func (i *ICoreWebView2Environment12) CreateSharedBuffer(size uint64) (*ICoreWebV
 //   - 目前存在一个限制，即仅支持小于 2GB 的大小。
 func (i *ICoreWebView2Environment12) MustCreateSharedBuffer(size uint64) *ICoreWebView2SharedBuffer {
 	buffer, err := i.CreateSharedBuffer(size)
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return buffer
 }

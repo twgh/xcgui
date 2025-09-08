@@ -66,7 +66,7 @@ func (i *ICoreWebView2BrowserProcessExitedEventArgs) GetBrowserProcessId() (uint
 // 出错时会触发全局错误回调。
 func (i *ICoreWebView2BrowserProcessExitedEventArgs) MustGetBrowserProcessExitKind() COREWEBVIEW2_BROWSER_PROCESS_EXIT_KIND {
 	value, err := i.GetBrowserProcessExitKind()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -74,6 +74,6 @@ func (i *ICoreWebView2BrowserProcessExitedEventArgs) MustGetBrowserProcessExitKi
 // 出错时会触发全局错误回调。
 func (i *ICoreWebView2BrowserProcessExitedEventArgs) MustGetBrowserProcessId() uint32 {
 	value, err := i.GetBrowserProcessId()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

@@ -28,6 +28,6 @@ func (i *ICoreWebView2NavigationCompletedEventArgs2) GetHttpStatusCode() (int32,
 // MustGetHttpStatusCode 获取导航的 HTTP 状态代码 (如果导航涉及 HTTP 请求)。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationCompletedEventArgs2) MustGetHttpStatusCode() int32 {
 	statusCode, err := i.GetHttpStatusCode()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return statusCode
 }

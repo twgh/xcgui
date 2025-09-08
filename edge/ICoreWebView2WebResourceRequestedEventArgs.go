@@ -3,6 +3,8 @@ package edge
 import (
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/wapi"
 )
 
 // ICoreWebView2WebResourceRequestedEventArgs 是 WebResourceRequested 事件的事件参数。
@@ -19,6 +21,8 @@ type ICoreWebView2WebResourceRequestedEventArgsVtbl struct {
 	PutResponse        ComProc
 	GetDeferral        ComProc
 	GetResourceContext ComProc
+	// 2
+	GetRequestedSourceKinds ComProc
 }
 
 func (i *ICoreWebView2WebResourceRequestedEventArgs) AddRef() uintptr {
@@ -105,30 +109,46 @@ func (i *ICoreWebView2WebResourceRequestedEventArgs) GetResourceContext() (COREW
 	return context, nil
 }
 
+// GetICoreWebView2WebResourceRequestedEventArgs2 获取 ICoreWebView2WebResourceRequestedEventArgs2。
+func (i *ICoreWebView2WebResourceRequestedEventArgs) GetICoreWebView2WebResourceRequestedEventArgs2() (*ICoreWebView2WebResourceRequestedEventArgs2, error) {
+	var result *ICoreWebView2WebResourceRequestedEventArgs2
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2WebResourceRequestedEventArgs2)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
 // MustGetRequest 获取请求。出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceRequestedEventArgs) MustGetRequest() *ICoreWebView2WebResourceRequest {
 	request, err := i.GetRequest()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return request
 }
 
 // MustGetResponse 获取响应。出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceRequestedEventArgs) MustGetResponse() *ICoreWebView2WebResourceResponse {
 	response, err := i.GetResponse()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return response
 }
 
 // MustGetDeferral 获取 ICoreWebView2Deferral 对象，并将事件置于延迟状态。出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceRequestedEventArgs) MustGetDeferral() *ICoreWebView2Deferral {
 	deferral, err := i.GetDeferral()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return deferral
 }
 
 // MustGetResourceContext 获取资源上下文。出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceRequestedEventArgs) MustGetResourceContext() COREWEBVIEW2_WEB_RESOURCE_CONTEXT {
 	context, err := i.GetResourceContext()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return context
+}
+
+// MustGetICoreWebView2WebResourceRequestedEventArgs2 获取 ICoreWebView2WebResourceRequestedEventArgs2。出错时会触发全局错误回调。
+func (i *ICoreWebView2WebResourceRequestedEventArgs) MustGetICoreWebView2WebResourceRequestedEventArgs2() *ICoreWebView2WebResourceRequestedEventArgs2 {
+	result, err := i.GetICoreWebView2WebResourceRequestedEventArgs2()
+	ReportErrorAuto(err)
+	return result
 }

@@ -1,10 +1,11 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
 )
 
 // ICoreWebView2ContextMenuTarget 上下文菜单目标的信息。
@@ -234,28 +235,28 @@ func (i *ICoreWebView2ContextMenuTarget) GetSelectionText() (string, error) {
 // MustGetKind 获取用户选择的上下文菜单目标的类型。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuTarget) MustGetKind() COREWEBVIEW2_CONTEXT_MENU_TARGET_KIND {
 	kind, err := i.GetKind()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return kind
 }
 
 // MustGetIsEditable 如果在可编辑组件上请求上下文菜单，则返回 TRUE。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuTarget) MustGetIsEditable() bool {
 	editable, err := i.GetIsEditable()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return editable
 }
 
 // MustGetIsRequestedForMainFrame 如果在主框架上请求上下文菜单，则返回 TRUE；如果在其他框架上调用，则返回 FALSE。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuTarget) MustGetIsRequestedForMainFrame() bool {
 	isMainFrame, err := i.GetIsRequestedForMainFrame()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return isMainFrame
 }
 
 // MustGetPageUri 获取页面的 URI。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuTarget) MustGetPageUri() string {
 	uri, err := i.GetPageUri()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return uri
 }
 
@@ -263,62 +264,62 @@ func (i *ICoreWebView2ContextMenuTarget) MustGetPageUri() string {
 //   - 如果 IsRequestedForMainFrame 为 TRUE，则与 PageUri 匹配。
 func (i *ICoreWebView2ContextMenuTarget) MustGetFrameUri() string {
 	uri, err := i.GetFrameUri()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return uri
 }
 
 // MustGetHasLinkUri 如果在包含锚点标签的 HTML 上请求上下文菜单，则返回 TRUE。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuTarget) MustGetHasLinkUri() bool {
 	hasLink, err := i.GetHasLinkUri()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return hasLink
 }
 
 // MustGetLinkUri 获取链接URI（如果 HasLinkUri 为 TRUE，则返回 URI；否则返回空）。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuTarget) MustGetLinkUri() string {
 	uri, err := i.GetLinkUri()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return uri
 }
 
 // MustGetHasLinkText 如果在包含锚标记的文本元素上请求上下文菜单，则返回 TRUE。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuTarget) MustGetHasLinkText() bool {
 	hasText, err := i.GetHasLinkText()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return hasText
 }
 
 // MustGetLinkText 获取链接文本（如果 HasLinkText 为 TRUE，则获取链接文本；否则返回空）。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuTarget) MustGetLinkText() string {
 	text, err := i.GetLinkText()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return text
 }
 
 // MustGetHasSourceUri 如果在包含源 URI 的 HTML 上请求上下文菜单，则返回 TRUE。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuTarget) MustGetHasSourceUri() bool {
 	hasSource, err := i.GetHasSourceUri()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return hasSource
 }
 
 // MustGetSourceUri 获取元素的活动源 URI（如果 HasSourceUri 为 TRUE，则获取；否则返回空）。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuTarget) MustGetSourceUri() string {
 	uri, err := i.GetSourceUri()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return uri
 }
 
 // MustGetHasSelection 判断是否有选中文本。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuTarget) MustGetHasSelection() bool {
 	hasSelection, err := i.GetHasSelection()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return hasSelection
 }
 
 // MustGetSelectionText 获取所选文本（如果 HasSelection 为 TRUE，则返回所选文本；否则返回空）。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuTarget) MustGetSelectionText() string {
 	text, err := i.GetSelectionText()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return text
 }

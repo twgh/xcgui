@@ -148,20 +148,20 @@ func (i *ICoreWebView2_9) RemoveIsDefaultDownloadDialogOpenChanged(token EventRe
 //   - 隐藏 WebView 会隐式隐藏该对话框，但不会改变此属性的值。
 func (i *ICoreWebView2_9) MustGetIsDefaultDownloadDialogOpen() bool {
 	result, err := i.GetIsDefaultDownloadDialogOpen()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetDefaultDownloadDialogCornerAlignment 获取默认下载对话框的边角对齐方式。出错时会触发全局错误回调。
 func (i *ICoreWebView2_9) MustGetDefaultDownloadDialogCornerAlignment() COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT {
 	alignment, err := i.GetDefaultDownloadDialogCornerAlignment()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return alignment
 }
 
 // MustGetDefaultDownloadDialogMargin 获取默认下载对话框的边距。出错时会触发全局错误回调。
 func (i *ICoreWebView2_9) MustGetDefaultDownloadDialogMargin() xc.POINT {
 	margin, err := i.GetDefaultDownloadDialogMargin()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return margin
 }

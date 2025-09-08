@@ -1,10 +1,11 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/xc"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/xc"
 )
 
 // ICoreWebView2ContextMenuRequestedEventArgs 上下文菜单请求事件的参数.
@@ -155,41 +156,41 @@ func (i *ICoreWebView2ContextMenuRequestedEventArgs) GetDeferral() (*ICoreWebVie
 // MustGetMenuItems 获取上下文菜单项集合。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuRequestedEventArgs) MustGetMenuItems() *ICoreWebView2ContextMenuItemCollection {
 	items, err := i.GetMenuItems()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return items
 }
 
 // MustGetContextMenuTarget 获取与请求的上下文菜单关联的目标信息。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuRequestedEventArgs) MustGetContextMenuTarget() *ICoreWebView2ContextMenuTarget {
 	target, err := i.GetContextMenuTarget()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return target
 }
 
 // MustGetLocation 获取上下文菜单请求发生的坐标，该坐标相对于 WebView 边界的左上角。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuRequestedEventArgs) MustGetLocation() xc.POINT {
 	point, err := i.GetLocation()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return point
 }
 
 // MustGetSelectedCommandId 获取选中的命令 ID。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuRequestedEventArgs) MustGetSelectedCommandId() int32 {
 	id, err := i.GetSelectedCommandId()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return id
 }
 
 // MustGetHandled 获取是否已处理。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuRequestedEventArgs) MustGetHandled() bool {
 	handled, err := i.GetHandled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return handled
 }
 
 // MustGetDeferral 获取延迟对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuRequestedEventArgs) MustGetDeferral() *ICoreWebView2Deferral {
 	deferral, err := i.GetDeferral()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return deferral
 }

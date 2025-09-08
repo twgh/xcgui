@@ -45,6 +45,6 @@ func (i *ICoreWebView2ControllerOptions3) SetDefaultBackgroundColor(value *COREW
 // MustGetDefaultBackgroundColor 获取 WebView 的默认背景颜色。出错时会触发全局错误回调。
 func (i *ICoreWebView2ControllerOptions3) MustGetDefaultBackgroundColor() *COREWEBVIEW2_COLOR {
 	result, err := i.GetDefaultBackgroundColor()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

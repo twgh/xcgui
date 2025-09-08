@@ -449,7 +449,7 @@ func (i *ICoreWebView2PrintSettings) GetICoreWebView2PrintSettings2() (*ICoreWeb
 // 出错时会触发全局错误回调。
 func (i *ICoreWebView2PrintSettings) MustGetOrientation() COREWEBVIEW2_PRINT_ORIENTATION {
 	value, err := i.GetOrientation()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -457,7 +457,7 @@ func (i *ICoreWebView2PrintSettings) MustGetOrientation() COREWEBVIEW2_PRINT_ORI
 // 出错时会触发全局错误回调。
 func (i *ICoreWebView2PrintSettings) MustGetScaleFactor() float64 {
 	value, err := i.GetScaleFactor()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -465,7 +465,7 @@ func (i *ICoreWebView2PrintSettings) MustGetScaleFactor() float64 {
 // 出错时会触发全局错误回调。
 func (i *ICoreWebView2PrintSettings) MustGetPageWidth() float64 {
 	value, err := i.GetPageWidth()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -473,7 +473,7 @@ func (i *ICoreWebView2PrintSettings) MustGetPageWidth() float64 {
 // 出错时会触发全局错误回调。
 func (i *ICoreWebView2PrintSettings) MustGetPageHeight() float64 {
 	value, err := i.GetPageHeight()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -481,7 +481,7 @@ func (i *ICoreWebView2PrintSettings) MustGetPageHeight() float64 {
 // 出错时会触发全局错误回调。
 func (i *ICoreWebView2PrintSettings) MustGetMarginTop() float64 {
 	value, err := i.GetMarginTop()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -489,7 +489,7 @@ func (i *ICoreWebView2PrintSettings) MustGetMarginTop() float64 {
 // 出错时会触发全局错误回调。
 func (i *ICoreWebView2PrintSettings) MustGetMarginBottom() float64 {
 	value, err := i.GetMarginBottom()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -497,7 +497,7 @@ func (i *ICoreWebView2PrintSettings) MustGetMarginBottom() float64 {
 // 出错时会触发全局错误回调。
 func (i *ICoreWebView2PrintSettings) MustGetMarginLeft() float64 {
 	value, err := i.GetMarginLeft()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -505,7 +505,7 @@ func (i *ICoreWebView2PrintSettings) MustGetMarginLeft() float64 {
 // 出错时会触发全局错误回调。
 func (i *ICoreWebView2PrintSettings) MustGetMarginRight() float64 {
 	value, err := i.GetMarginRight()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -513,7 +513,7 @@ func (i *ICoreWebView2PrintSettings) MustGetMarginRight() float64 {
 // 出错时会触发全局错误回调。
 func (i *ICoreWebView2PrintSettings) MustGetShouldPrintBackgrounds() bool {
 	value, err := i.GetShouldPrintBackgrounds()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -521,7 +521,7 @@ func (i *ICoreWebView2PrintSettings) MustGetShouldPrintBackgrounds() bool {
 // 出错时会触发全局错误回调。
 func (i *ICoreWebView2PrintSettings) MustGetShouldPrintSelectionOnly() bool {
 	value, err := i.GetShouldPrintSelectionOnly()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -529,7 +529,7 @@ func (i *ICoreWebView2PrintSettings) MustGetShouldPrintSelectionOnly() bool {
 // 出错时会触发全局错误回调。
 func (i *ICoreWebView2PrintSettings) MustGetShouldPrintHeaderAndFooter() bool {
 	value, err := i.GetShouldPrintHeaderAndFooter()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -537,7 +537,7 @@ func (i *ICoreWebView2PrintSettings) MustGetShouldPrintHeaderAndFooter() bool {
 // 出错时会触发全局错误回调。
 func (i *ICoreWebView2PrintSettings) MustGetHeaderTitle() string {
 	value, err := i.GetHeaderTitle()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -545,13 +545,13 @@ func (i *ICoreWebView2PrintSettings) MustGetHeaderTitle() string {
 // 出错时会触发全局错误回调。
 func (i *ICoreWebView2PrintSettings) MustGetFooterUri() string {
 	value, err := i.GetFooterUri()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetICoreWebView2PrintSettings2 获取 ICoreWebView2PrintSettings2。出错时会触发全局错误回调。
 func (i *ICoreWebView2PrintSettings) MustGetICoreWebView2PrintSettings2() *ICoreWebView2PrintSettings2 {
 	result, err := i.GetICoreWebView2PrintSettings2()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

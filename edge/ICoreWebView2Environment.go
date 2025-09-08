@@ -275,104 +275,104 @@ func (i *ICoreWebView2Environment) GetICoreWebView2Environment14() (*ICoreWebVie
 // MustCreateWebResourceResponse 创建新的web资源响应对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment) MustCreateWebResourceResponse(content *IStream, statusCode int, reasonPhrase string, headers string) *ICoreWebView2WebResourceResponse {
 	response, err := i.CreateWebResourceResponse(content, statusCode, reasonPhrase, headers)
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return response
 }
 
 // MustGetBrowserVersionString 获取当前 ICoreWebView2Environment 的浏览器版本信息，如果不是WebView2运行时，则包括通道名称。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment) MustGetBrowserVersionString() string {
 	version, err := i.GetBrowserVersionString()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return version
 }
 
 // MustGetICoreWebView2Environment2 获取 ICoreWebView2Environment2。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment) MustGetICoreWebView2Environment2() *ICoreWebView2Environment2 {
 	result, err := i.GetICoreWebView2Environment2()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetICoreWebView2Environment3 获取 ICoreWebView2Environment3。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment) MustGetICoreWebView2Environment3() *ICoreWebView2Environment3 {
 	result, err := i.GetICoreWebView2Environment3()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetICoreWebView2Environment4 获取 ICoreWebView2Environment4。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment) MustGetICoreWebView2Environment4() *ICoreWebView2Environment4 {
 	result, err := i.GetICoreWebView2Environment4()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetICoreWebView2Environment5 获取 ICoreWebView2Environment5。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment) MustGetICoreWebView2Environment5() *ICoreWebView2Environment5 {
 	result, err := i.GetICoreWebView2Environment5()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetICoreWebView2Environment6 获取 ICoreWebView2Environment6。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment) MustGetICoreWebView2Environment6() *ICoreWebView2Environment6 {
 	result, err := i.GetICoreWebView2Environment6()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetICoreWebView2Environment7 获取 ICoreWebView2Environment7。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment) MustGetICoreWebView2Environment7() *ICoreWebView2Environment7 {
 	result, err := i.GetICoreWebView2Environment7()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetICoreWebView2Environment8 获取 ICoreWebView2Environment8。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment) MustGetICoreWebView2Environment8() *ICoreWebView2Environment8 {
 	result, err := i.GetICoreWebView2Environment8()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetICoreWebView2Environment9 获取 ICoreWebView2Environment9。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment) MustGetICoreWebView2Environment9() *ICoreWebView2Environment9 {
 	result, err := i.GetICoreWebView2Environment9()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetICoreWebView2Environment10 获取 ICoreWebView2Environment10。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment) MustGetICoreWebView2Environment10() *ICoreWebView2Environment10 {
 	result, err := i.GetICoreWebView2Environment10()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetICoreWebView2Environment11 获取 ICoreWebView2Environment11。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment) MustGetICoreWebView2Environment11() *ICoreWebView2Environment11 {
 	result, err := i.GetICoreWebView2Environment11()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetICoreWebView2Environment12 获取 ICoreWebView2Environment12。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment) MustGetICoreWebView2Environment12() *ICoreWebView2Environment12 {
 	result, err := i.GetICoreWebView2Environment12()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetICoreWebView2Environment13 获取 ICoreWebView2Environment13。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment) MustGetICoreWebView2Environment13() *ICoreWebView2Environment13 {
 	result, err := i.GetICoreWebView2Environment13()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetICoreWebView2Environment14 获取 ICoreWebView2Environment14。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment) MustGetICoreWebView2Environment14() *ICoreWebView2Environment14 {
 	result, err := i.GetICoreWebView2Environment14()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

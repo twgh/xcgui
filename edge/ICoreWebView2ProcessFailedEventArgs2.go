@@ -76,7 +76,7 @@ func (i *ICoreWebView2ProcessFailedEventArgs2) GetFrameInfosForFailedProcess() (
 // MustGetReason 获取进程失败的原因。出错时会触发全局错误回调。
 func (i *ICoreWebView2ProcessFailedEventArgs2) MustGetReason() COREWEBVIEW2_PROCESS_FAILED_REASON {
 	reason, err := i.GetReason()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return reason
 }
 
@@ -84,7 +84,7 @@ func (i *ICoreWebView2ProcessFailedEventArgs2) MustGetReason() COREWEBVIEW2_PROC
 //   - 当 ProcessFailedKind 为 COREWEBVIEW2_PROCESS_FAILED_KIND_RENDER_PROCESS_UNRESPONSIVE 时，退出代码始终为 STILL_ACTIVE（259）。
 func (i *ICoreWebView2ProcessFailedEventArgs2) MustGetExitCode() int32 {
 	exitCode, err := i.GetExitCode()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return exitCode
 }
 
@@ -94,13 +94,13 @@ func (i *ICoreWebView2ProcessFailedEventArgs2) MustGetExitCode() int32 {
 //   - 如果 WebView2 运行时未为进程分配描述，则返回的 processDescription 为空。
 func (i *ICoreWebView2ProcessFailedEventArgs2) MustGetProcessDescription() string {
 	processDescription, err := i.GetProcessDescription()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return processDescription
 }
 
 // MustGetFrameInfosForFailedProcess 获取失败进程正在渲染的 ICoreWebView2 中的框架信息集合。出错时会触发全局错误回调。
 func (i *ICoreWebView2ProcessFailedEventArgs2) MustGetFrameInfosForFailedProcess() *ICoreWebView2FrameInfoCollection {
 	frames, err := i.GetFrameInfosForFailedProcess()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return frames
 }

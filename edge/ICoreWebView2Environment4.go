@@ -29,6 +29,6 @@ func (i *ICoreWebView2Environment4) GetAutomationProviderForWindow(hwnd uintptr)
 // MustGetAutomationProviderForWindow 获取指定窗口的 WebView 的自动化提供程序。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment4) MustGetAutomationProviderForWindow(hwnd uintptr) *IUnknown {
 	provider, err := i.GetAutomationProviderForWindow(hwnd)
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return provider
 }

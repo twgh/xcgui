@@ -154,8 +154,8 @@ func (i *ICoreWebView2CompositionController) GetSystemCursorID() (uint32, error)
 }
 
 // Event_CursorChanged 光标改变事件.
-func (i *ICoreWebView2CompositionController) Event_CursorChanged(w *WebViewEventImpl, cb func(sender *ICoreWebView2CompositionController, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
-	return WvEventHandler.AddCallBack(w, "CursorChanged", cb, i, allowAddingMultiple...)
+func (i *ICoreWebView2CompositionController) Event_CursorChanged(impl *WebViewEventImpl, cb func(sender *ICoreWebView2CompositionController, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
+	return WvEventHandler.AddCallBack(impl, "CursorChanged", cb, i, allowAddingMultiple...)
 }
 
 // AddCursorChanged 添加光标改变事件处理程序.
@@ -189,14 +189,14 @@ func (i *ICoreWebView2CompositionController) RemoveCursorChanged(token EventRegi
 //   - 应用需要在其设备上提交设置 RootVisualTarget 属性。 RootVisualTarget 属性支持设置为 nullptr，以断开 WebView 与应用视觉树的连接。
 func (i *ICoreWebView2CompositionController) MustGetRootVisualTarget() *IUnknown {
 	target, err := i.GetRootVisualTarget()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return target
 }
 
 // MustGetCursor 获取当前光标句柄。出错时会触发全局错误回调。
 func (i *ICoreWebView2CompositionController) MustGetCursor() uintptr {
 	cursor, err := i.GetCursor()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return cursor
 }
 
@@ -206,6 +206,6 @@ func (i *ICoreWebView2CompositionController) MustGetCursor() uintptr {
 //   - 要在 LoadCursor 或 LoadImage 中实际使用 systemCursorId，必须首先对其调用 MAKEINTRESOURCE。
 func (i *ICoreWebView2CompositionController) MustGetSystemCursorID() uint32 {
 	cursorID, err := i.GetSystemCursorID()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return cursorID
 }

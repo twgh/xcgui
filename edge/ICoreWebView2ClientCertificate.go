@@ -1,10 +1,11 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
 )
 
 // ICoreWebView2ClientCertificate 提供对客户端证书元数据的访问权限。
@@ -171,49 +172,49 @@ func (i *ICoreWebView2ClientCertificate) GetKind() (COREWEBVIEW2_CLIENT_CERTIFIC
 // MustGetSubject 获取证书主题. 出错时会触发全局错误回调.
 func (i *ICoreWebView2ClientCertificate) MustGetSubject() string {
 	subject, err := i.GetSubject()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return subject
 }
 
 // MustGetIssuer 获取颁发证书的证书颁发机构名称. 出错时会触发全局错误回调.
 func (i *ICoreWebView2ClientCertificate) MustGetIssuer() string {
 	issuer, err := i.GetIssuer()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return issuer
 }
 
 // MustGetValidFrom 获取证书的有效起始日期和时间，以自 UNIX 纪元以来的秒数表示. 出错时会触发全局错误回调.
 func (i *ICoreWebView2ClientCertificate) MustGetValidFrom() float64 {
 	validFrom, err := i.GetValidFrom()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return validFrom
 }
 
 // MustGetValidTo 获取证书的有效截止日期和时间，以自 UNIX 纪元以来的秒数表示. 出错时会触发全局错误回调.
 func (i *ICoreWebView2ClientCertificate) MustGetValidTo() float64 {
 	validTo, err := i.GetValidTo()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return validTo
 }
 
 // MustGetDerEncodedSerialNumber 获取证书的 DER 编码序列号的 Base64 编码. 出错时会触发全局错误回调.
 func (i *ICoreWebView2ClientCertificate) MustGetDerEncodedSerialNumber() string {
 	serialNumber, err := i.GetDerEncodedSerialNumber()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return serialNumber
 }
 
 // MustGetDisplayName 获取证书的显示名称. 出错时会触发全局错误回调.
 func (i *ICoreWebView2ClientCertificate) MustGetDisplayName() string {
 	displayName, err := i.GetDisplayName()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return displayName
 }
 
 // MustToPemEncoding 将证书转换为 PEM 编码数据. 出错时会触发全局错误回调.
 func (i *ICoreWebView2ClientCertificate) MustToPemEncoding() string {
 	pemData, err := i.ToPemEncoding()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return pemData
 }
 
@@ -221,13 +222,13 @@ func (i *ICoreWebView2ClientCertificate) MustToPemEncoding() string {
 //   - 在此集合中，第一个元素是当前证书，后面依次是中间证书1、中间证书2 …… 中间证书N - 1。根证书是集合中的最后一个元素。
 func (i *ICoreWebView2ClientCertificate) MustGetPemEncodedIssuerCertificateChain() *ICoreWebView2StringCollection {
 	collection, err := i.GetPemEncodedIssuerCertificateChain()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return collection
 }
 
 // MustGetKind 获取证书类型. 出错时会触发全局错误回调.
 func (i *ICoreWebView2ClientCertificate) MustGetKind() COREWEBVIEW2_CLIENT_CERTIFICATE_KIND {
 	kind, err := i.GetKind()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return kind
 }

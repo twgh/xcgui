@@ -9,6 +9,7 @@ const (
 	IID_ICoreWebView2WebMessageReceivedEventArgs2            = "{06fc7ab7-c90c-4297-9389-33ca01cf6d5e}"
 	IID_ICoreWebView2NavigationCompletedEventArgs2           = "{fdf8b738-ee1e-4db2-a329-8d7d7b74d792}"
 	IID_ICoreWebView2PrintSettings2                          = "{CA7F0E1F-3484-41D1-8C1A-65CD44A63F8D}"
+	IID_ICoreWebView2WebResourceRequestedEventArgs2          = "{9c562c24-b219-4d7f-92f6-b187fbbadd56}"
 
 	IID_ICoreWebView2PermissionRequestedEventArgs2 = "{74d7127f-9de6-4200-8734-42d6fb4ff741}"
 	IID_ICoreWebView2PermissionRequestedEventArgs3 = "{e61670bc-3dce-4177-86d2-c629ae3cb6ac}"
@@ -100,6 +101,7 @@ const (
 	IID_ICoreWebView2Environment12 = "{f503db9b-739f-48dd-b151-fdfcf253f54e}"
 	IID_ICoreWebView2Environment13 = "{af641f58-72b2-11ee-b962-0242ac120002}"
 	IID_ICoreWebView2Environment14 = "{a5e9fad9-c875-59da-9bd7-473aa5ca1cef}"
+	IID_ICoreWebView2Environment15 = "{2ac5ebfb-e654-5961-a667-7971885c7b27}"
 )
 
 const (

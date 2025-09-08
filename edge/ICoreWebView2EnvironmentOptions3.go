@@ -1,9 +1,10 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 )
 
 // ICoreWebView2EnvironmentOptions3 提供用于创建 WebView2 环境以管理崩溃报告的附加选项。
@@ -49,6 +50,6 @@ func (i *ICoreWebView2EnvironmentOptions3) SetIsCustomCrashReportingEnabled(valu
 // 109.0.1518.46
 func (i *ICoreWebView2EnvironmentOptions3) MustGetIsCustomCrashReportingEnabled() bool {
 	value, err := i.GetIsCustomCrashReportingEnabled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

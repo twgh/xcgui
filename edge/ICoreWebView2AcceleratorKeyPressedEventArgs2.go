@@ -1,9 +1,10 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 )
 
 // ICoreWebView2AcceleratorKeyPressedEventArgs2 是 ICoreWebView2AcceleratorKeyPressedEventArgs 的延续.
@@ -44,6 +45,6 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs2) SetIsBrowserAcceleratorKe
 //   - 浏览器快捷键是用于访问网络浏览器特定功能的按键或按键组合.
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs2) MustGetIsBrowserAcceleratorKeyEnabled() bool {
 	enabled, err := i.GetIsBrowserAcceleratorKeyEnabled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return enabled
 }

@@ -78,20 +78,20 @@ func (i *ICoreWebView2ProcessFailedEventArgs) GetICoreWebView2ProcessFailedEvent
 // MustGetProcessFailedKind 获取进程失败类型。出错时会触发全局错误回调。
 func (i *ICoreWebView2ProcessFailedEventArgs) MustGetProcessFailedKind() COREWEBVIEW2_PROCESS_FAILED_KIND {
 	kind, err := i.GetProcessFailedKind()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return kind
 }
 
 // MustGetICoreWebView2ProcessFailedEventArgs2 获取 ICoreWebView2ProcessFailedEventArgs2。出错时会触发全局错误回调。
 func (i *ICoreWebView2ProcessFailedEventArgs) MustGetICoreWebView2ProcessFailedEventArgs2() *ICoreWebView2ProcessFailedEventArgs2 {
 	result, err := i.GetICoreWebView2ProcessFailedEventArgs2()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetICoreWebView2ProcessFailedEventArgs3 获取 ICoreWebView2ProcessFailedEventArgs3。出错时会触发全局错误回调。
 func (i *ICoreWebView2ProcessFailedEventArgs) MustGetICoreWebView2ProcessFailedEventArgs3() *ICoreWebView2ProcessFailedEventArgs3 {
 	result, err := i.GetICoreWebView2ProcessFailedEventArgs3()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

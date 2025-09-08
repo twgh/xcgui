@@ -80,6 +80,6 @@ func (i *ICoreWebView2EnvironmentOptions4) SetCustomSchemeRegistrations(registra
 // 110.0.1587.40
 func (i *ICoreWebView2EnvironmentOptions4) MustGetCustomSchemeRegistrations() []*ICoreWebView2CustomSchemeRegistration {
 	registrations, err := i.GetCustomSchemeRegistrations()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return registrations
 }

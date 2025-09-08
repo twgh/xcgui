@@ -49,6 +49,6 @@ func (i *ICoreWebView2NavigationStartingEventArgs2) SetAdditionalAllowedFrameAnc
 // MustGetAdditionalAllowedFrameAncestors 获取额外允许的框架祖先。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationStartingEventArgs2) MustGetAdditionalAllowedFrameAncestors() string {
 	ancestors, err := i.GetAdditionalAllowedFrameAncestors()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return ancestors
 }

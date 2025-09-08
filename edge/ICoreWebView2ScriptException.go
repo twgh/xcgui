@@ -124,7 +124,7 @@ func (i *ICoreWebView2ScriptException) GetToJson() (string, error) {
 //   - 在 JSON 中，它是 exceptionDetail.lineNumber。请注意，该位置从 0 开始。
 func (i *ICoreWebView2ScriptException) MustGetLineNumber() uint32 {
 	value, err := i.GetLineNumber()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -132,7 +132,7 @@ func (i *ICoreWebView2ScriptException) MustGetLineNumber() uint32 {
 //   - 在 JSON 中，它是 exceptionDetail.columnNumber。请注意，此位置从 0 开始。
 func (i *ICoreWebView2ScriptException) MustGetColumnNumber() uint32 {
 	value, err := i.GetColumnNumber()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -141,7 +141,7 @@ func (i *ICoreWebView2ScriptException) MustGetColumnNumber() uint32 {
 //   - 如果异常没有类名，它就是空字符串。如果脚本抛出非 Error 对象（例如 throw "abc";），就会出现这种情况。
 func (i *ICoreWebView2ScriptException) MustGetName() string {
 	value, err := i.GetName()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -150,7 +150,7 @@ func (i *ICoreWebView2ScriptException) MustGetName() string {
 //   - 如果异常没有描述，这就是空字符串。如果脚本抛出非 Error 对象（例如 throw "abc";），就会出现这种情况。
 func (i *ICoreWebView2ScriptException) MustGetMessage() string {
 	value, err := i.GetMessage()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -158,6 +158,6 @@ func (i *ICoreWebView2ScriptException) MustGetMessage() string {
 //   - 如果脚本抛出了非 Error 对象，例如 throw "abc"; 或任何其他非 Error 对象，你可以获取该对象的特定属性。
 func (i *ICoreWebView2ScriptException) MustGetToJson() string {
 	value, err := i.GetToJson()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

@@ -36,6 +36,6 @@ func (i *ICoreWebView2_20) GetFrameId() (uint32, error) {
 //   - 否则，它可能会返回无效的框架 ID: 0。
 func (i *ICoreWebView2_20) MustGetFrameId() uint32 {
 	value, err := i.GetFrameId()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

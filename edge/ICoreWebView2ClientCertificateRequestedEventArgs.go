@@ -1,10 +1,11 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
 )
 
 // ICoreWebView2ClientCertificateRequestedEventArgs 客户端证书请求事件的参数.
@@ -210,14 +211,14 @@ func (i *ICoreWebView2ClientCertificateRequestedEventArgs) GetMutuallyTrustedCer
 // MustGetHost 获取请求客户端证书认证的服务器主机名。出错时会触发全局错误回调。
 func (i *ICoreWebView2ClientCertificateRequestedEventArgs) MustGetHost() string {
 	host, err := i.GetHost()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return host
 }
 
 // MustGetPort 获取请求客户端证书认证的服务器端口。出错时会触发全局错误回调。
 func (i *ICoreWebView2ClientCertificateRequestedEventArgs) MustGetPort() int {
 	port, err := i.GetPort()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return port
 }
 
@@ -225,48 +226,48 @@ func (i *ICoreWebView2ClientCertificateRequestedEventArgs) MustGetPort() int {
 //   - 如果服务器是源服务器，则返回 false。
 func (i *ICoreWebView2ClientCertificateRequestedEventArgs) MustGetIsProxy() bool {
 	isProxy, err := i.GetIsProxy()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return isProxy
 }
 
 // MustGetSelectedCertificate 获取所选证书。出错时会触发全局错误回调。
 func (i *ICoreWebView2ClientCertificateRequestedEventArgs) MustGetSelectedCertificate() *ICoreWebView2ClientCertificate {
 	cert, err := i.GetSelectedCertificate()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return cert
 }
 
 // MustGetCancel 获取是否取消证书选择。出错时会触发全局错误回调。
 func (i *ICoreWebView2ClientCertificateRequestedEventArgs) MustGetCancel() bool {
 	cancel, err := i.GetCancel()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return cancel
 }
 
 // MustGetDeferral 获取延迟对象。使用此操作可在稍后完成该事件。出错时会触发全局错误回调。
 func (i *ICoreWebView2ClientCertificateRequestedEventArgs) MustGetDeferral() *ICoreWebView2Deferral {
 	deferral, err := i.GetDeferral()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return deferral
 }
 
 // MustGetHandled 获取是否已处理此事件。出错时会触发全局错误回调。
 func (i *ICoreWebView2ClientCertificateRequestedEventArgs) MustGetHandled() bool {
 	handled, err := i.GetHandled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return handled
 }
 
 // MustGetAllowedCertificateAuthorities 获取一个集合, 该集合包含服务器允许的证书颁发机构的 DER 编码可分辨名称的 Base64 编码。出错时会触发全局错误回调.
 func (i *ICoreWebView2ClientCertificateRequestedEventArgs) MustGetAllowedCertificateAuthorities() *ICoreWebView2StringCollection {
 	collection, err := i.GetAllowedCertificateAuthorities()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return collection
 }
 
 // MustGetMutuallyTrustedCertificates 获取相互信任的 CA 证书集合. 出错时会触发全局错误回调.
 func (i *ICoreWebView2ClientCertificateRequestedEventArgs) MustGetMutuallyTrustedCertificates() *ICoreWebView2ClientCertificateCollection {
 	collection, err := i.GetMutuallyTrustedCertificates()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return collection
 }

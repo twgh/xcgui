@@ -1,9 +1,10 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 )
 
 // ICoreWebView2Settings3 是 ICoreWebView2Settings2 接口的延续, 支持管理是否启用浏览器快捷键。
@@ -41,6 +42,6 @@ func (i *ICoreWebView2Settings3) SetAreBrowserAcceleratorKeysEnabled(enabled boo
 // MustGetAreBrowserAcceleratorKeysEnabled 获取是否允许浏览器快捷键。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings3) MustGetAreBrowserAcceleratorKeysEnabled() bool {
 	enabled, err := i.GetAreBrowserAcceleratorKeysEnabled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return enabled
 }

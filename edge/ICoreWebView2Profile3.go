@@ -41,6 +41,6 @@ func (i *ICoreWebView2Profile3) SetPreferredTrackingPreventionLevel(value COREWE
 // MustGetPreferredTrackingPreventionLevel 获取首选的跟踪防护级别。出错时会触发全局错误回调。
 func (i *ICoreWebView2Profile3) MustGetPreferredTrackingPreventionLevel() COREWEBVIEW2_TRACKING_PREVENTION_LEVEL {
 	result, err := i.GetPreferredTrackingPreventionLevel()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

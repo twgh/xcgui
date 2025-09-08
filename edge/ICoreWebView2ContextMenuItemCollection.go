@@ -93,13 +93,13 @@ func (i *ICoreWebView2ContextMenuItemCollection) InsertValueAtIndex(index uint32
 // MustGetCount 获取菜单项数量。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuItemCollection) MustGetCount() uint32 {
 	count, err := i.GetCount()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return count
 }
 
 // MustGetValueAtIndex 获取指定索引处的菜单项。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuItemCollection) MustGetValueAtIndex(index uint32) *ICoreWebView2ContextMenuItem {
 	item, err := i.GetValueAtIndex(index)
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return item
 }

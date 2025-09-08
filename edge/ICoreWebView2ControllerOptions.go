@@ -154,34 +154,34 @@ func (i *ICoreWebView2ControllerOptions) GetICoreWebView2ControllerOptions4() (*
 //   - 此外，虽然允许使用大写字母，但它们会被当作小写字母处理，因为配置文件名称将映射到磁盘上真实的配置文件目录路径，而 Windows 文件系统在处理路径名称时不区分大小写。
 func (i *ICoreWebView2ControllerOptions) MustGetProfileName() string {
 	value, err := i.GetProfileName()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetIsInPrivateModeEnabled 获取是否启用隐私模式。出错时会触发全局错误回调。
 func (i *ICoreWebView2ControllerOptions) MustGetIsInPrivateModeEnabled() bool {
 	value, err := i.GetIsInPrivateModeEnabled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetICoreWebView2ControllerOptions2 获取 ICoreWebView2ControllerOptions2 接口。出错时会触发全局错误回调。
 func (i *ICoreWebView2ControllerOptions) MustGetICoreWebView2ControllerOptions2() *ICoreWebView2ControllerOptions2 {
 	result, err := i.GetICoreWebView2ControllerOptions2()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetICoreWebView2ControllerOptions3 获取 ICoreWebView2ControllerOptions3 接口。出错时会触发全局错误回调。
 func (i *ICoreWebView2ControllerOptions) MustGetICoreWebView2ControllerOptions3() *ICoreWebView2ControllerOptions3 {
 	result, err := i.GetICoreWebView2ControllerOptions3()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetICoreWebView2ControllerOptions4 获取 ICoreWebView2ControllerOptions4 接口。出错时会触发全局错误回调。
 func (i *ICoreWebView2ControllerOptions) MustGetICoreWebView2ControllerOptions4() *ICoreWebView2ControllerOptions4 {
 	result, err := i.GetICoreWebView2ControllerOptions4()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

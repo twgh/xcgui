@@ -168,7 +168,7 @@ func (i *ICoreWebView2HttpRequestHeaders) GetHeaders(name string) (*ICoreWebView
 // name: 标头名称。
 func (i *ICoreWebView2HttpRequestHeaders) MustGetHeader(name string) string {
 	value, err := i.GetHeader(name)
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -181,7 +181,7 @@ func (i *ICoreWebView2HttpRequestHeaders) MustContains(name string) bool {
 // MustGetIterator 获取一个迭代器来枚举所有HTTP头。出错时会触发全局错误回调。
 func (i *ICoreWebView2HttpRequestHeaders) MustGetIterator() *ICoreWebView2HttpHeadersCollectionIterator {
 	iterator, err := i.GetIterator()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return iterator
 }
 
@@ -190,6 +190,6 @@ func (i *ICoreWebView2HttpRequestHeaders) MustGetIterator() *ICoreWebView2HttpHe
 // name: 标头名称。
 func (i *ICoreWebView2HttpRequestHeaders) MustGetHeaders(name string) *ICoreWebView2HttpHeadersCollectionIterator {
 	iterator, err := i.GetHeaders(name)
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return iterator
 }

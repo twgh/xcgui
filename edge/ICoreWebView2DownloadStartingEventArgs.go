@@ -1,10 +1,11 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
 )
 
 // ICoreWebView2DownloadStartingEventArgs 是下载开始事件的参数.
@@ -162,34 +163,34 @@ func (i *ICoreWebView2DownloadStartingEventArgs) GetDeferral() (*ICoreWebView2De
 // MustGetDownloadOperation 获取已开始下载的下载操作对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2DownloadStartingEventArgs) MustGetDownloadOperation() *ICoreWebView2DownloadOperation {
 	result, err := i.GetDownloadOperation()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetCancel 获取是否取消下载。出错时会触发全局错误回调。
 func (i *ICoreWebView2DownloadStartingEventArgs) MustGetCancel() bool {
 	result, err := i.GetCancel()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetResultFilePath 获取结果文件路径。出错时会触发全局错误回调。
 func (i *ICoreWebView2DownloadStartingEventArgs) MustGetResultFilePath() string {
 	result, err := i.GetResultFilePath()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetHandled 获取是否已处理。出错时会触发全局错误回调。
 func (i *ICoreWebView2DownloadStartingEventArgs) MustGetHandled() bool {
 	result, err := i.GetHandled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetDeferral 获取延迟对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2DownloadStartingEventArgs) MustGetDeferral() *ICoreWebView2Deferral {
 	result, err := i.GetDeferral()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

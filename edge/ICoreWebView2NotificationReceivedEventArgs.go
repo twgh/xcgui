@@ -112,7 +112,7 @@ func (i *ICoreWebView2NotificationReceivedEventArgs) GetDeferral() (*ICoreWebVie
 // MustGetSenderOrigin 获取发送通知的网页内容的来源，例如 https://example.com/ 或 https://www.example.com/。出错时会触发全局错误回调。
 func (i *ICoreWebView2NotificationReceivedEventArgs) MustGetSenderOrigin() string {
 	value, err := i.GetSenderOrigin()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -120,20 +120,20 @@ func (i *ICoreWebView2NotificationReceivedEventArgs) MustGetSenderOrigin() strin
 //   - 你可以访问 Notification 对象的属性来显示自己的通知。
 func (i *ICoreWebView2NotificationReceivedEventArgs) MustGetNotification() *ICoreWebView2Notification {
 	notification, err := i.GetNotification()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return notification
 }
 
 // MustGetHandled 获取通知是否已被处理。出错时会触发全局错误回调。
 func (i *ICoreWebView2NotificationReceivedEventArgs) MustGetHandled() bool {
 	value, err := i.GetHandled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetDeferral 获取延迟对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2NotificationReceivedEventArgs) MustGetDeferral() *ICoreWebView2Deferral {
 	deferral, err := i.GetDeferral()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return deferral
 }

@@ -67,7 +67,7 @@ func (i *ICoreWebView2ProcessExtendedInfo) GetAssociatedFrameInfos() (*ICoreWebV
 // MustGetProcessInfo 获取当前进程的进程信息。出错时会触发全局错误回调。
 func (i *ICoreWebView2ProcessExtendedInfo) MustGetProcessInfo() *ICoreWebView2ProcessInfo {
 	processInfo, err := i.GetProcessInfo()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return processInfo
 }
 
@@ -76,6 +76,6 @@ func (i *ICoreWebView2ProcessExtendedInfo) MustGetProcessInfo() *ICoreWebView2Pr
 //   - 非呈现器进程的 AssociatedFrameInfos 将始终为空。对于没有活动帧的呈现器进程， AssociatedFrameInfos 也可能为空。
 func (i *ICoreWebView2ProcessExtendedInfo) MustGetAssociatedFrameInfos() *ICoreWebView2FrameInfoCollection {
 	frames, err := i.GetAssociatedFrameInfos()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return frames
 }

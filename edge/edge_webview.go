@@ -173,7 +173,7 @@ func wndproc(hwnd uintptr, message uint32, wParam, lParam uintptr) uintptr {
 		}
 	case wapi.WM_CLOSE:
 		if w := hwndContext.GetWindowContext(hwnd); w != nil {
-			ReportErrorAtuo(w.Close())
+			ReportErrorAuto(w.Close())
 			wapi.DestroyWindow(hwnd)
 			return 0
 		}
@@ -458,46 +458,46 @@ func (w *WebView) newWebView2Controller(opt *WebViewOptions) error {
 		// 获取浏览器设置
 		settings, err := w.GetSettings()
 		if err != nil {
-			ReportErrorAtuo(err)
+			ReportErrorAuto(err)
 		} else {
 			// 设置是否可开启开发人员工具
 			err = settings.SetAreDevToolsEnabled(opt.Debug)
-			ReportErrorAtuo(err)
+			ReportErrorAuto(err)
 
 			// 设置是否启用非客户区域支持
 			s9, err := settings.GetICoreWebView2Settings9()
 			if err != nil {
-				ReportErrorAtuo(err)
+				ReportErrorAuto(err)
 			} else {
 				err = s9.SetIsNonClientRegionSupportEnabled(opt.AppDrag)
-				ReportErrorAtuo(err)
+				ReportErrorAuto(err)
 				s9.Release()
 			}
 
 			// 是否禁用默认的上下文菜单
 			if !opt.DefaultContextMenus {
 				err = settings.SetAreDefaultContextMenusEnabled(opt.DefaultContextMenus)
-				ReportErrorAtuo(err)
+				ReportErrorAuto(err)
 			}
 			// 是否禁用状态栏
 			if !opt.StatusBar {
 				err = settings.SetIsStatusBarEnabled(opt.StatusBar)
-				ReportErrorAtuo(err)
+				ReportErrorAuto(err)
 			}
 			// 是否禁用缩放控件
 			if !opt.ZoomControl {
 				err = settings.SetIsZoomControlEnabled(opt.ZoomControl)
-				ReportErrorAtuo(err)
+				ReportErrorAuto(err)
 			}
 
 			s3, err := settings.GetICoreWebView2Settings3()
 			if err != nil {
-				ReportErrorAtuo(err)
+				ReportErrorAuto(err)
 			} else {
 				// 是否禁用浏览器快捷键
 				if !opt.BrowserAcceleratorKeys {
 					err = s3.SetAreBrowserAcceleratorKeysEnabled(opt.BrowserAcceleratorKeys)
-					ReportErrorAtuo(err)
+					ReportErrorAuto(err)
 				}
 				s3.Release()
 			}
@@ -505,21 +505,21 @@ func (w *WebView) newWebView2Controller(opt *WebViewOptions) error {
 			settings.Release()
 		}
 		err = w.Resize()
-		ReportErrorAtuo(err)
+		ReportErrorAuto(err)
 
 		// 添加 web 消息接收事件处理程序, 添加空回调, 主要目的是注册一下事件
 		_, err = w.Event_WebMessageReceived(nil, true)
-		ReportErrorAtuo(err)
+		ReportErrorAuto(err)
 		// 添加权限请求事件处理程序, 添加空回调, 主要目的是注册一下事件
 		_, err = w.Event_PermissionRequested(nil, true)
-		ReportErrorAtuo(err)
+		ReportErrorAuto(err)
 		// 添加在创建文档时要执行的脚本
 		err = w.CoreWebView.AddScriptToExecuteOnDocumentCreated("window.external={invoke:s=>window.chrome.webview.postMessage(s)}", nil)
-		ReportErrorAtuo(err)
+		ReportErrorAuto(err)
 
 		if w.focusOnInit {
 			err = w.Focus()
-			ReportErrorAtuo(err)
+			ReportErrorAuto(err)
 		}
 		isDone = true
 	}
@@ -555,7 +555,7 @@ func (w *WebView) newWebView2Controller(opt *WebViewOptions) error {
 		if opt.ScriptLocale != "默认不设置" {
 			opt2, err := options.GetICoreWebView2ControllerOptions2()
 			if err != nil {
-				ReportErrorAtuo(err)
+				ReportErrorAuto(err)
 			} else {
 				defer opt2.Release()
 				err = opt2.SetScriptLocale(opt.ScriptLocale)
@@ -568,11 +568,11 @@ func (w *WebView) newWebView2Controller(opt *WebViewOptions) error {
 		if opt.DefaultBackgroundColor != nil {
 			opt3, err := options.GetICoreWebView2ControllerOptions3()
 			if err != nil {
-				ReportErrorAtuo(err)
+				ReportErrorAuto(err)
 			} else {
 				defer opt3.Release()
 				err = opt3.SetDefaultBackgroundColor(opt.DefaultBackgroundColor)
-				ReportErrorAtuo(err) // 出错不直接返回, 因为影响不大
+				ReportErrorAuto(err) // 出错不直接返回, 因为影响不大
 			}
 		}
 

@@ -1,9 +1,10 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 )
 
 // ICoreWebView2EnvironmentOptions2 提供用于创建 WebView2 环境的额外配置选项。
@@ -43,6 +44,6 @@ func (i *ICoreWebView2EnvironmentOptions2) SetExclusiveUserDataFolderAccess(valu
 // MustGetExclusiveUserDataFolderAccess 获取其他进程是否可以从使用相同用户数据文件夹创建的 WebView2Environment 创建 WebView2，从而共享同一个 WebView 浏览器进程实例。出错时会触发全局错误回调。
 func (i *ICoreWebView2EnvironmentOptions2) MustGetExclusiveUserDataFolderAccess() bool {
 	value, err := i.GetExclusiveUserDataFolderAccess()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

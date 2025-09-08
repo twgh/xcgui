@@ -64,13 +64,13 @@ func (i *ICoreWebView2BrowserExtensionList) GetValueAtIndex(index uint32) (*ICor
 // MustGetCount 获取列表中包含的浏览器扩展数量。出错时会触发全局错误回调。
 func (i *ICoreWebView2BrowserExtensionList) MustGetCount() uint32 {
 	result, err := i.GetCount()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetValueAtIndex 获取指定索引处的浏览器扩展。出错时会触发全局错误回调。
 func (i *ICoreWebView2BrowserExtensionList) MustGetValueAtIndex(index uint32) *ICoreWebView2BrowserExtension {
 	result, err := i.GetValueAtIndex(index)
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

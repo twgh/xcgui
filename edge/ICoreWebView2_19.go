@@ -43,6 +43,6 @@ func (i *ICoreWebView2_19) SetMemoryUsageTargetLevel(value COREWEBVIEW2_MEMORY_U
 // MustGetMemoryUsageTargetLevel 获取 WebView2 的内存使用目标级别。出错时会触发全局错误回调。
 func (i *ICoreWebView2_19) MustGetMemoryUsageTargetLevel() COREWEBVIEW2_MEMORY_USAGE_TARGET_LEVEL {
 	value, err := i.GetMemoryUsageTargetLevel()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

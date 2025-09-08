@@ -34,6 +34,20 @@ type ICoreWebView2ProfileVtbl struct {
 	// 4
 	SetPermissionState              ComProc
 	GetNonDefaultPermissionSettings ComProc
+	// 5
+	GetCookieManager ComProc
+	// 6
+	GetIsPasswordAutosaveEnabled ComProc
+	PutIsPasswordAutosaveEnabled ComProc
+	GetIsGeneralAutofillEnabled  ComProc
+	PutIsGeneralAutofillEnabled  ComProc
+	// 7
+	AddBrowserExtension  ComProc
+	GetBrowserExtensions ComProc
+	// 8
+	Delete        ComProc
+	AddDeleted    ComProc
+	RemoveDeleted ComProc
 }
 
 func (i *ICoreWebView2Profile) AddRef() uintptr {
@@ -180,63 +194,6 @@ func (i *ICoreWebView2Profile) GetICoreWebView2Profile4() (*ICoreWebView2Profile
 	return result, err
 }
 
-// MustGetProfileName 获取配置文件的名称。出错时会触发全局错误回调。
-func (i *ICoreWebView2Profile) MustGetProfileName() string {
-	result, err := i.GetProfileName()
-	ReportErrorAtuo(err)
-	return result
-}
-
-// MustGetIsInPrivateModeEnabled 获取配置文件是否启用了隐私模式。出错时会触发全局错误回调。
-func (i *ICoreWebView2Profile) MustGetIsInPrivateModeEnabled() bool {
-	result, err := i.GetIsInPrivateModeEnabled()
-	ReportErrorAtuo(err)
-	return result
-}
-
-// MustGetProfilePath 获取配置文件目录的完整路径。出错时会触发全局错误回调。
-func (i *ICoreWebView2Profile) MustGetProfilePath() string {
-	result, err := i.GetProfilePath()
-	ReportErrorAtuo(err)
-	return result
-}
-
-// MustGetDefaultDownloadFolderPath 获取默认下载文件夹路径。出错时会触发全局错误回调。
-func (i *ICoreWebView2Profile) MustGetDefaultDownloadFolderPath() string {
-	result, err := i.GetDefaultDownloadFolderPath()
-	ReportErrorAtuo(err)
-	return result
-}
-
-// MustGetPreferredColorScheme 获取与此配置文件关联的 WebView2 的整体配色方案。出错时会触发全局错误回调。
-func (i *ICoreWebView2Profile) MustGetPreferredColorScheme() COREWEBVIEW2_PREFERRED_COLOR_SCHEME {
-	result, err := i.GetPreferredColorScheme()
-	ReportErrorAtuo(err)
-	return result
-}
-
-// MustGetICoreWebView2Profile2 获取 ICoreWebView2Profile2。出错时会触发全局错误回调。
-func (i *ICoreWebView2Profile) MustGetICoreWebView2Profile2() *ICoreWebView2Profile2 {
-	result, err := i.GetICoreWebView2Profile2()
-	ReportErrorAtuo(err)
-	return result
-}
-
-// MustGetICoreWebView2Profile3 获取 ICoreWebView2Profile3。出错时会触发全局错误回调。
-func (i *ICoreWebView2Profile) MustGetICoreWebView2Profile3() *ICoreWebView2Profile3 {
-	result, err := i.GetICoreWebView2Profile3()
-	ReportErrorAtuo(err)
-	return result
-}
-
-// MustGetICoreWebView2Profile4 获取 ICoreWebView2Profile4。出错时会触发全局错误回调。
-func (i *ICoreWebView2Profile) MustGetICoreWebView2Profile4() *ICoreWebView2Profile4 {
-	result, err := i.GetICoreWebView2Profile4()
-	ReportErrorAtuo(err)
-	return result
-}
-
-/*
 // GetICoreWebView2Profile5 获取 ICoreWebView2Profile5。
 func (i *ICoreWebView2Profile) GetICoreWebView2Profile5() (*ICoreWebView2Profile5, error) {
 	var result *ICoreWebView2Profile5
@@ -244,13 +201,6 @@ func (i *ICoreWebView2Profile) GetICoreWebView2Profile5() (*ICoreWebView2Profile
 		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Profile5)),
 		unsafe.Pointer(&result))
 	return result, err
-}
-
-// MustGetICoreWebView2Profile5 获取 ICoreWebView2Profile5。出错时会触发全局错误回调。
-func (i *ICoreWebView2Profile) MustGetICoreWebView2Profile5() *ICoreWebView2Profile5 {
-	result, err := i.GetICoreWebView2Profile5()
-	ReportErrorAtuo(err)
-	return result
 }
 
 // GetICoreWebView2Profile6 获取 ICoreWebView2Profile6。
@@ -262,13 +212,6 @@ func (i *ICoreWebView2Profile) GetICoreWebView2Profile6() (*ICoreWebView2Profile
 	return result, err
 }
 
-// MustGetICoreWebView2Profile6 获取 ICoreWebView2Profile6。出错时会触发全局错误回调。
-func (i *ICoreWebView2Profile) MustGetICoreWebView2Profile6() *ICoreWebView2Profile6 {
-	result, err := i.GetICoreWebView2Profile6()
-	ReportErrorAtuo(err)
-	return result
-}
-
 // GetICoreWebView2Profile7 获取 ICoreWebView2Profile7。
 func (i *ICoreWebView2Profile) GetICoreWebView2Profile7() (*ICoreWebView2Profile7, error) {
 	var result *ICoreWebView2Profile7
@@ -276,13 +219,6 @@ func (i *ICoreWebView2Profile) GetICoreWebView2Profile7() (*ICoreWebView2Profile
 		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Profile7)),
 		unsafe.Pointer(&result))
 	return result, err
-}
-
-// MustGetICoreWebView2Profile7 获取 ICoreWebView2Profile7。出错时会触发全局错误回调。
-func (i *ICoreWebView2Profile) MustGetICoreWebView2Profile7() *ICoreWebView2Profile7 {
-	result, err := i.GetICoreWebView2Profile7()
-	ReportErrorAtuo(err)
-	return result
 }
 
 // GetICoreWebView2Profile8 获取 ICoreWebView2Profile8。
@@ -294,10 +230,86 @@ func (i *ICoreWebView2Profile) GetICoreWebView2Profile8() (*ICoreWebView2Profile
 	return result, err
 }
 
+// MustGetProfileName 获取配置文件的名称。出错时会触发全局错误回调。
+func (i *ICoreWebView2Profile) MustGetProfileName() string {
+	result, err := i.GetProfileName()
+	ReportErrorAuto(err)
+	return result
+}
+
+// MustGetIsInPrivateModeEnabled 获取配置文件是否启用了隐私模式。出错时会触发全局错误回调。
+func (i *ICoreWebView2Profile) MustGetIsInPrivateModeEnabled() bool {
+	result, err := i.GetIsInPrivateModeEnabled()
+	ReportErrorAuto(err)
+	return result
+}
+
+// MustGetProfilePath 获取配置文件目录的完整路径。出错时会触发全局错误回调。
+func (i *ICoreWebView2Profile) MustGetProfilePath() string {
+	result, err := i.GetProfilePath()
+	ReportErrorAuto(err)
+	return result
+}
+
+// MustGetDefaultDownloadFolderPath 获取默认下载文件夹路径。出错时会触发全局错误回调。
+func (i *ICoreWebView2Profile) MustGetDefaultDownloadFolderPath() string {
+	result, err := i.GetDefaultDownloadFolderPath()
+	ReportErrorAuto(err)
+	return result
+}
+
+// MustGetPreferredColorScheme 获取与此配置文件关联的 WebView2 的整体配色方案。出错时会触发全局错误回调。
+func (i *ICoreWebView2Profile) MustGetPreferredColorScheme() COREWEBVIEW2_PREFERRED_COLOR_SCHEME {
+	result, err := i.GetPreferredColorScheme()
+	ReportErrorAuto(err)
+	return result
+}
+
+// MustGetICoreWebView2Profile2 获取 ICoreWebView2Profile2。出错时会触发全局错误回调。
+func (i *ICoreWebView2Profile) MustGetICoreWebView2Profile2() *ICoreWebView2Profile2 {
+	result, err := i.GetICoreWebView2Profile2()
+	ReportErrorAuto(err)
+	return result
+}
+
+// MustGetICoreWebView2Profile3 获取 ICoreWebView2Profile3。出错时会触发全局错误回调。
+func (i *ICoreWebView2Profile) MustGetICoreWebView2Profile3() *ICoreWebView2Profile3 {
+	result, err := i.GetICoreWebView2Profile3()
+	ReportErrorAuto(err)
+	return result
+}
+
+// MustGetICoreWebView2Profile4 获取 ICoreWebView2Profile4。出错时会触发全局错误回调。
+func (i *ICoreWebView2Profile) MustGetICoreWebView2Profile4() *ICoreWebView2Profile4 {
+	result, err := i.GetICoreWebView2Profile4()
+	ReportErrorAuto(err)
+	return result
+}
+
+// MustGetICoreWebView2Profile5 获取 ICoreWebView2Profile5。出错时会触发全局错误回调。
+func (i *ICoreWebView2Profile) MustGetICoreWebView2Profile5() *ICoreWebView2Profile5 {
+	result, err := i.GetICoreWebView2Profile5()
+	ReportErrorAuto(err)
+	return result
+}
+
+// MustGetICoreWebView2Profile6 获取 ICoreWebView2Profile6。出错时会触发全局错误回调。
+func (i *ICoreWebView2Profile) MustGetICoreWebView2Profile6() *ICoreWebView2Profile6 {
+	result, err := i.GetICoreWebView2Profile6()
+	ReportErrorAuto(err)
+	return result
+}
+
+// MustGetICoreWebView2Profile7 获取 ICoreWebView2Profile7。出错时会触发全局错误回调。
+func (i *ICoreWebView2Profile) MustGetICoreWebView2Profile7() *ICoreWebView2Profile7 {
+	result, err := i.GetICoreWebView2Profile7()
+	ReportErrorAuto(err)
+	return result
+}
+
 // MustGetICoreWebView2Profile8 获取 ICoreWebView2Profile8。出错时会触发全局错误回调。
 func (i *ICoreWebView2Profile) MustGetICoreWebView2Profile8() *ICoreWebView2Profile8 {
 	result, err := i.GetICoreWebView2Profile8()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
-*/

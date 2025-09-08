@@ -1,9 +1,10 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 )
 
 // ICoreWebView2Settings6 是 ICoreWebView2Settings5 接口的延续, 支持管理是否启用滑动导航功能。
@@ -41,6 +42,6 @@ func (i *ICoreWebView2Settings6) SetIsSwipeNavigationEnabled(enabled bool) error
 // MustGetIsSwipeNavigationEnabled 获取是否允许滑动导航。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings6) MustGetIsSwipeNavigationEnabled() bool {
 	enabled, err := i.GetIsSwipeNavigationEnabled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return enabled
 }

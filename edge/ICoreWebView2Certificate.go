@@ -163,49 +163,49 @@ func (i *ICoreWebView2Certificate) GetPemEncodedIssuerCertificateChain() (*ICore
 // MustGetSubject 获取证书主题。出错时会触发全局错误回调。
 func (i *ICoreWebView2Certificate) MustGetSubject() string {
 	result, err := i.GetSubject()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetIssuer 获取颁发该证书的证书颁发机构的名称。出错时会触发全局错误回调。
 func (i *ICoreWebView2Certificate) MustGetIssuer() string {
 	result, err := i.GetIssuer()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetValidFrom 获取证书的有效起始日期和时间，以自 UNIX 纪元以来的秒数表示。出错时会触发全局错误回调。
 func (i *ICoreWebView2Certificate) MustGetValidFrom() float64 {
 	result, err := i.GetValidFrom()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetValidTo 获取证书的有效到期日期和时间，以自 UNIX 纪元以来的秒数表示。出错时会触发全局错误回调。
 func (i *ICoreWebView2Certificate) MustGetValidTo() float64 {
 	result, err := i.GetValidTo()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetDerEncodedSerialNumber 获取证书的 DER 编码序列号的 Base64 编码。出错时会触发全局错误回调。
 func (i *ICoreWebView2Certificate) MustGetDerEncodedSerialNumber() string {
 	result, err := i.GetDerEncodedSerialNumber()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetDisplayName 获取证书的显示名称。出错时会触发全局错误回调。
 func (i *ICoreWebView2Certificate) MustGetDisplayName() string {
 	result, err := i.GetDisplayName()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustToPemEncoding 将证书转换为 PEM 编码格式, 返回 DER 编码证书的 Base64 编码。出错时会触发全局错误回调。
 func (i *ICoreWebView2Certificate) MustToPemEncoding() string {
 	result, err := i.ToPemEncoding()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
@@ -213,6 +213,6 @@ func (i *ICoreWebView2Certificate) MustToPemEncoding() string {
 //   - 在此集合中，第一个元素是当前证书，其后是中间证书1、中间证书2……中间证书N-1。根证书是该集合中的最后一个元素。
 func (i *ICoreWebView2Certificate) MustGetPemEncodedIssuerCertificateChain() *ICoreWebView2StringCollection {
 	result, err := i.GetPemEncodedIssuerCertificateChain()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

@@ -40,6 +40,6 @@ func (i *ICoreWebView2Controller4) SetAllowExternalDrop(value bool) error {
 // MustGetAllowExternalDrop 获取是否允许外部拖放. 出错时会触发全局错误回调。
 func (i *ICoreWebView2Controller4) MustGetAllowExternalDrop() bool {
 	value, err := i.GetAllowExternalDrop()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

@@ -66,13 +66,13 @@ func (i *ICoreWebView2PermissionSettingCollectionView) GetCount() (uint32, error
 // MustGetValueAtIndex 获取集合中指定索引处的权限设置。出错时会触发全局错误回调。
 func (i *ICoreWebView2PermissionSettingCollectionView) MustGetValueAtIndex(index uint32) *ICoreWebView2PermissionSetting {
 	permissionSetting, err := i.GetValueAtIndex(index)
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return permissionSetting
 }
 
 // MustGetCount 获取集合中权限设置的数量。出错时会触发全局错误回调。
 func (i *ICoreWebView2PermissionSettingCollectionView) MustGetCount() uint32 {
 	value, err := i.GetCount()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

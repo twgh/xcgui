@@ -84,20 +84,20 @@ func (i *ICoreWebView2PermissionSetting) GetPermissionState() (COREWEBVIEW2_PERM
 // MustGetPermissionKind 获取权限的类型。出错时会触发全局错误回调。
 func (i *ICoreWebView2PermissionSetting) MustGetPermissionKind() COREWEBVIEW2_PERMISSION_KIND {
 	value, err := i.GetPermissionKind()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetPermissionOrigin 获取权限的源URL。出错时会触发全局错误回调。
 func (i *ICoreWebView2PermissionSetting) MustGetPermissionOrigin() string {
 	value, err := i.GetPermissionOrigin()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetPermissionState 获取权限的状态。出错时会触发全局错误回调。
 func (i *ICoreWebView2PermissionSetting) MustGetPermissionState() COREWEBVIEW2_PERMISSION_STATE {
 	value, err := i.GetPermissionState()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

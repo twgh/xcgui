@@ -67,7 +67,7 @@ func (i *ICoreWebView2ProcessInfoCollection) GetValueAtIndex(index uint32) (*ICo
 // 出错时会触发全局错误回调。
 func (i *ICoreWebView2ProcessInfoCollection) MustGetCount() uint32 {
 	value, err := i.GetCount()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -75,6 +75,6 @@ func (i *ICoreWebView2ProcessInfoCollection) MustGetCount() uint32 {
 // 出错时会触发全局错误回调。
 func (i *ICoreWebView2ProcessInfoCollection) MustGetValueAtIndex(index uint32) *ICoreWebView2ProcessInfo {
 	value, err := i.GetValueAtIndex(index)
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

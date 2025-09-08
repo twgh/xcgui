@@ -1,9 +1,10 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 )
 
 // ICoreWebView2Settings8 是 ICoreWebView2Settings7 接口的延续, 支持管理是否需要信誉检查。
@@ -41,6 +42,6 @@ func (i *ICoreWebView2Settings8) SetIsReputationCheckingRequired(required bool) 
 // MustGetIsReputationCheckingRequired 获取是否需要进行信誉检查。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings8) MustGetIsReputationCheckingRequired() bool {
 	required, err := i.GetIsReputationCheckingRequired()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return required
 }

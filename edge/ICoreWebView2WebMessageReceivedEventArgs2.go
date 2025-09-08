@@ -36,6 +36,6 @@ func (i *ICoreWebView2WebMessageReceivedEventArgs2) GetAdditionalObjects() (*ICo
 //   - 如果传入了 null 或 undefined，集合中的条目可能为 nullptr。
 func (i *ICoreWebView2WebMessageReceivedEventArgs2) MustGetAdditionalObjects() *ICoreWebView2ObjectCollectionView {
 	value, err := i.GetAdditionalObjects()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

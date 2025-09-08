@@ -80,13 +80,13 @@ func (i *ICoreWebView2MoveFocusRequestedEventArgs) SetHandled(value bool) error 
 // MustGetReason 获取焦点移动的原因。出错时会触发全局错误回调。
 func (i *ICoreWebView2MoveFocusRequestedEventArgs) MustGetReason() COREWEBVIEW2_MOVE_FOCUS_REASON {
 	reason, err := i.GetReason()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return reason
 }
 
 // MustGetHandled 获取事件是否已被处理。出错时会触发全局错误回调。
 func (i *ICoreWebView2MoveFocusRequestedEventArgs) MustGetHandled() bool {
 	value, err := i.GetHandled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

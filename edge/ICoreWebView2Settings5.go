@@ -1,9 +1,10 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 )
 
 // ICoreWebView2Settings5 是 ICoreWebView2Settings4 接口的延续, 支持管理是否启用捏合缩放功能。
@@ -41,6 +42,6 @@ func (i *ICoreWebView2Settings5) SetIsPinchZoomEnabled(enabled bool) error {
 // MustGetIsPinchZoomEnabled 获取是否允许缩放。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings5) MustGetIsPinchZoomEnabled() bool {
 	enabled, err := i.GetIsPinchZoomEnabled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return enabled
 }

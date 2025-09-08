@@ -118,6 +118,6 @@ func (e *ICoreWebView2WebMessageReceivedEventArgs) MustGetSource() string {
 // MustGetICoreWebView2WebMessageReceivedEventArgs2 获取 ICoreWebView2WebMessageReceivedEventArgs2。出错时会触发全局错误回调。
 func (i *ICoreWebView2WebMessageReceivedEventArgs) MustGetICoreWebView2WebMessageReceivedEventArgs2() *ICoreWebView2WebMessageReceivedEventArgs2 {
 	result, err := i.GetICoreWebView2WebMessageReceivedEventArgs2()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

@@ -44,6 +44,6 @@ func (i *ICoreWebView2PermissionRequestedEventArgs3) SetSavesInProfile(value boo
 // MustGetSavesInProfile 获取 SavesInProfile 属性。出错时会触发全局错误回调。
 func (i *ICoreWebView2PermissionRequestedEventArgs3) MustGetSavesInProfile() bool {
 	value, err := i.GetSavesInProfile()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

@@ -69,6 +69,6 @@ func (i *ICoreWebView2Environment3) CreateCoreWebView2PointerInfo() (*ICoreWebVi
 // MustCreateCoreWebView2PointerInfo 创建一个空的 ICoreWebView2PointerInfo. 出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment3) MustCreateCoreWebView2PointerInfo() *ICoreWebView2PointerInfo {
 	pointerInfo, err := i.CreateCoreWebView2PointerInfo()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return pointerInfo
 }

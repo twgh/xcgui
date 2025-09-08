@@ -32,6 +32,6 @@ func (i *ICoreWebView2_13) GetProfile() (*ICoreWebView2Profile, error) {
 //   - 否则，如果此 ICoreWebView2 是在没有 ICoreWebView2ControllerOptions 的情况下创建的，那么它将是相应 ICoreWebView2Environment 的默认 ICoreWebView2Profile。
 func (i *ICoreWebView2_13) MustGetProfile() *ICoreWebView2Profile {
 	result, err := i.GetProfile()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

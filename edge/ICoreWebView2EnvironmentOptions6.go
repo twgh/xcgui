@@ -1,9 +1,10 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 )
 
 // ICoreWebView2EnvironmentOptions6 提供用于创建 WebView2 环境以管理浏览器扩展的其他选项。
@@ -41,6 +42,6 @@ func (i *ICoreWebView2EnvironmentOptions6) SetAreBrowserExtensionsEnabled(value 
 // MustGetAreBrowserExtensionsEnabled 获取是否启用浏览器扩展功能.
 func (i *ICoreWebView2EnvironmentOptions6) MustGetAreBrowserExtensionsEnabled() bool {
 	value, err := i.GetAreBrowserExtensionsEnabled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

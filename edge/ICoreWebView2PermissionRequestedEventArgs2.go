@@ -45,6 +45,6 @@ func (i *ICoreWebView2PermissionRequestedEventArgs2) SetHandled(value bool) erro
 // MustGetHandled 获取 Handled 属性。出错时会触发全局错误回调。
 func (i *ICoreWebView2PermissionRequestedEventArgs2) MustGetHandled() bool {
 	value, err := i.GetHandled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

@@ -276,55 +276,55 @@ func (i *ICoreWebView2Frame) GetICoreWebView2Frame7() (*ICoreWebView2Frame7, err
 // MustGetName 获取 iframe 的 window.name 属性的值。出错时会触发全局错误回调。
 func (i *ICoreWebView2Frame) MustGetName() string {
 	name, err := i.GetName()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return name
 }
 
 // MustIsDestroyed 检查框架是否已被销毁。在销毁事件期间返回 true。出错时会触发全局错误回调。
 func (i *ICoreWebView2Frame) MustIsDestroyed() bool {
 	result, err := i.IsDestroyed()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetICoreWebView2Frame2 获取 ICoreWebView2Frame2。出错时会触发全局错误回调。
 func (i *ICoreWebView2Frame) MustGetICoreWebView2Frame2() *ICoreWebView2Frame2 {
 	result, err := i.GetICoreWebView2Frame2()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetICoreWebView2Frame3 获取 ICoreWebView2Frame3。出错时会触发全局错误回调。
 func (i *ICoreWebView2Frame) MustGetICoreWebView2Frame3() *ICoreWebView2Frame3 {
 	result, err := i.GetICoreWebView2Frame3()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetICoreWebView2Frame4 获取 ICoreWebView2Frame4。出错时会触发全局错误回调。
 func (i *ICoreWebView2Frame) MustGetICoreWebView2Frame4() *ICoreWebView2Frame4 {
 	result, err := i.GetICoreWebView2Frame4()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetICoreWebView2Frame5 获取 ICoreWebView2Frame5。出错时会触发全局错误回调。
 func (i *ICoreWebView2Frame) MustGetICoreWebView2Frame5() *ICoreWebView2Frame5 {
 	result, err := i.GetICoreWebView2Frame5()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetICoreWebView2Frame6 获取 ICoreWebView2Frame6。出错时会触发全局错误回调。
 func (i *ICoreWebView2Frame) MustGetICoreWebView2Frame6() *ICoreWebView2Frame6 {
 	result, err := i.GetICoreWebView2Frame6()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetICoreWebView2Frame7 获取 ICoreWebView2Frame7。出错时会触发全局错误回调。
 func (i *ICoreWebView2Frame) MustGetICoreWebView2Frame7() *ICoreWebView2Frame7 {
 	result, err := i.GetICoreWebView2Frame7()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

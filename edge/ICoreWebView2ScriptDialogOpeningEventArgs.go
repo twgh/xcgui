@@ -1,10 +1,11 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
 )
 
 // ICoreWebView2ScriptDialogOpeningEventArgs 表示脚本对话框打开事件参数。
@@ -165,14 +166,14 @@ func (i *ICoreWebView2ScriptDialogOpeningEventArgs) GetDeferral() (*ICoreWebView
 // MustGetUri 获取对话框来源的URI。出错时会触发全局错误回调。
 func (i *ICoreWebView2ScriptDialogOpeningEventArgs) MustGetUri() string {
 	uri, err := i.GetUri()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return uri
 }
 
 // MustGetKind 获取 JavaScript 对话框的类型。alert、confirm、prompt 或 beforeunload。出错时会触发全局错误回调。
 func (i *ICoreWebView2ScriptDialogOpeningEventArgs) MustGetKind() COREWEBVIEW2_SCRIPT_DIALOG_KIND {
 	kind, err := i.GetKind()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return kind
 }
 
@@ -180,7 +181,7 @@ func (i *ICoreWebView2ScriptDialogOpeningEventArgs) MustGetKind() COREWEBVIEW2_S
 //   - 从 JavaScript 角度来看，这是传递给 alert、confirm 和 prompt 的第一个参数，对于 beforeunload 来说，该参数为空。
 func (i *ICoreWebView2ScriptDialogOpeningEventArgs) MustGetMessage() string {
 	message, err := i.GetMessage()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return message
 }
 
@@ -188,7 +189,7 @@ func (i *ICoreWebView2ScriptDialogOpeningEventArgs) MustGetMessage() string {
 //   - prompt JavaScript 函数的结果将此值用作默认值。
 func (i *ICoreWebView2ScriptDialogOpeningEventArgs) MustGetDefaultText() string {
 	defaultText, err := i.GetDefaultText()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return defaultText
 }
 
@@ -197,6 +198,6 @@ func (i *ICoreWebView2ScriptDialogOpeningEventArgs) MustGetDefaultText() string 
 //   - 如果未运行 Accept，则此值将被忽略，并且提示将返回 FALSE。
 func (i *ICoreWebView2ScriptDialogOpeningEventArgs) MustGetResultText() string {
 	resultText, err := i.GetResultText()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return resultText
 }

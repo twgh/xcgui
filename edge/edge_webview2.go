@@ -323,7 +323,7 @@ func (w *WebView2) SetVirtualHostNameToEmbedFSMapping(hostName string, embedFS e
 	}
 	if !once { // 只创建一次
 		w.firstResponse, err = w.Edge.Environment.CreateWebResourceResponse(nil, 200, "OK", "")
-		ReportErrorAtuo(err)
+		ReportErrorAuto(err)
 	}
 	w.hostName = "http://" + hostName + "/"
 	w.embedFS = subFS

@@ -1,10 +1,11 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
 )
 
 // ICoreWebView2WebResourceResponseView 网页资源响应的 HTTP 表示形式视图。
@@ -124,20 +125,20 @@ func (i *ICoreWebView2WebResourceResponseView) GetContentEx(impl *WebViewEventIm
 // MustGetHeaders 获取 HTTP 响应头，出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceResponseView) MustGetHeaders() *ICoreWebView2HttpResponseHeaders {
 	headers, err := i.GetHeaders()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return headers
 }
 
 // MustGetStatusCode 获取 HTTP 响应状态码，出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceResponseView) MustGetStatusCode() int {
 	statusCode, err := i.GetStatusCode()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return statusCode
 }
 
 // MustGetReasonPhrase 获取 HTTP 响应原因短语，出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceResponseView) MustGetReasonPhrase() string {
 	phrase, err := i.GetReasonPhrase()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return phrase
 }

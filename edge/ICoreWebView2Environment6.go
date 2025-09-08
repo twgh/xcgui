@@ -29,6 +29,6 @@ func (i *ICoreWebView2Environment6) CreatePrintSettings() (*ICoreWebView2PrintSe
 // 出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment6) MustCreatePrintSettings() *ICoreWebView2PrintSettings {
 	value, err := i.CreatePrintSettings()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

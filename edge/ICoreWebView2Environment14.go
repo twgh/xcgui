@@ -78,20 +78,20 @@ func (i *ICoreWebView2Environment14) CreateObjectCollection(items []*IUnknown) (
 // MustCreateWebFileSystemFileHandle 根据表示 Web FileSystemFileHandle 的路径创建一个 ICoreWebView2FileSystemHandle 对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment14) MustCreateWebFileSystemFileHandle(path string, permission COREWEBVIEW2_FILE_SYSTEM_HANDLE_PERMISSION) *ICoreWebView2FileSystemHandle {
 	value, err := i.CreateWebFileSystemFileHandle(path, permission)
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustCreateWebFileSystemDirectoryHandle 根据表示 Web FileSystemDirectoryHandle 的路径创建 ICoreWebView2FileSystemHandle 对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment14) MustCreateWebFileSystemDirectoryHandle(path string, permission COREWEBVIEW2_FILE_SYSTEM_HANDLE_PERMISSION) *ICoreWebView2FileSystemHandle {
 	value, err := i.CreateWebFileSystemDirectoryHandle(path, permission)
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustCreateObjectCollection 创建一个通用对象集合。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment14) MustCreateObjectCollection(items []*IUnknown) *ICoreWebView2ObjectCollection {
 	value, err := i.CreateObjectCollection(items)
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

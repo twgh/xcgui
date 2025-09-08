@@ -333,21 +333,21 @@ func (i *ICoreWebView2DownloadOperation) RemoveStateChanged(token EventRegistrat
 // MustGetUri 获取下载的 URI。出错时会触发全局错误回调。
 func (i *ICoreWebView2DownloadOperation) MustGetUri() string {
 	uri, err := i.GetUri()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return uri
 }
 
 // MustGetContentDisposition 获取下载的HTTP响应中的 Content-Disposition 标头值。出错时会触发全局错误回调。
 func (i *ICoreWebView2DownloadOperation) MustGetContentDisposition() string {
 	contentDisposition, err := i.GetContentDisposition()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return contentDisposition
 }
 
 // MustGetMimeType 获取下载内容的 MIME 类型。出错时会触发全局错误回调。
 func (i *ICoreWebView2DownloadOperation) MustGetMimeType() string {
 	mimeType, err := i.GetMimeType()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return mimeType
 }
 
@@ -355,21 +355,21 @@ func (i *ICoreWebView2DownloadOperation) MustGetMimeType() string {
 //   - 如果大小未知，则返回 -1。
 func (i *ICoreWebView2DownloadOperation) MustGetTotalBytesToReceive() int64 {
 	totalBytes, err := i.GetTotalBytesToReceive()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return totalBytes
 }
 
 // MustGetBytesReceived 获取已写入下载文件的字节数。出错时会触发全局错误回调。
 func (i *ICoreWebView2DownloadOperation) MustGetBytesReceived() int64 {
 	bytesReceived, err := i.GetBytesReceived()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return bytesReceived
 }
 
 // MustGetEstimatedEndTime 获取预计结束时间，采用 ISO 8601 日期和时间格式。出错时会触发全局错误回调。
 func (i *ICoreWebView2DownloadOperation) MustGetEstimatedEndTime() string {
 	estimatedEndTime, err := i.GetEstimatedEndTime()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return estimatedEndTime
 }
 
@@ -377,21 +377,21 @@ func (i *ICoreWebView2DownloadOperation) MustGetEstimatedEndTime() string {
 //   - 宿主可以从 ICoreWebView2DownloadStartingEventArgs 更改此设置。
 func (i *ICoreWebView2DownloadOperation) MustGetResultFilePath() string {
 	resultFilePath, err := i.GetResultFilePath()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return resultFilePath
 }
 
 // MustGetState 获取下载状态。出错时会触发全局错误回调.
 func (i *ICoreWebView2DownloadOperation) MustGetState() COREWEBVIEW2_DOWNLOAD_STATE {
 	state, err := i.GetState()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return state
 }
 
 // MustGetInterruptReason 获取下载中断的原因。出错时会触发全局错误回调.
 func (i *ICoreWebView2DownloadOperation) MustGetInterruptReason() COREWEBVIEW2_DOWNLOAD_INTERRUPT_REASON {
 	reason, err := i.GetInterruptReason()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return reason
 }
 
@@ -399,6 +399,6 @@ func (i *ICoreWebView2DownloadOperation) MustGetInterruptReason() COREWEBVIEW2_D
 //   - 以下中断原因导致的下载可能无需你调用任何方法即可自动恢复: COREWEBVIEW2_DOWNLOAD_INTERRUPT_REASON_SERVER_NO_RANGE、 COREWEBVIEW2_DOWNLOAD_INTERRUPT_REASON_FILE_HASH_MISMATCH、 COREWEBVIEW2_DOWNLOAD_INTERRUPT_REASON_FILE_TOO_SHORT。在这些情况下，下载进度可能会重新开始，且 BytesReceived 将重置为0。
 func (i *ICoreWebView2DownloadOperation) MustGetCanResume() bool {
 	canResume, err := i.GetCanResume()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return canResume
 }

@@ -72,6 +72,6 @@ func (i *ICoreWebView2Environment10) CreateCoreWebView2CompositionControllerWith
 //   - 此外，配置文件名称可以重复使用。
 func (i *ICoreWebView2Environment10) MustCreateCoreWebView2ControllerOptions() *ICoreWebView2ControllerOptions {
 	value, err := i.CreateCoreWebView2ControllerOptions()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

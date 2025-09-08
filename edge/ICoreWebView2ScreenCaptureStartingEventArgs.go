@@ -125,27 +125,27 @@ func (i *ICoreWebView2ScreenCaptureStartingEventArgs) GetDeferral() (*ICoreWebVi
 // MustGetCancel 获取是否取消屏幕截图。出错时会触发全局错误回调。
 func (i *ICoreWebView2ScreenCaptureStartingEventArgs) MustGetCancel() bool {
 	result, err := i.GetCancel()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetHandled 获取是否已处理屏幕截图事件。出错时会触发全局错误回调。
 func (i *ICoreWebView2ScreenCaptureStartingEventArgs) MustGetHandled() bool {
 	result, err := i.GetHandled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetOriginalSourceFrameInfo 获取请求屏幕捕获权限的相关框架信息。出错时会触发全局错误回调。
 func (i *ICoreWebView2ScreenCaptureStartingEventArgs) MustGetOriginalSourceFrameInfo() *ICoreWebView2FrameInfo {
 	result, err := i.GetOriginalSourceFrameInfo()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetDeferral 获取延迟对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2ScreenCaptureStartingEventArgs) MustGetDeferral() *ICoreWebView2Deferral {
 	result, err := i.GetDeferral()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

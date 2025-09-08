@@ -162,55 +162,55 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetICoreWebView2NavigationSta
 // MustGetUri 获取请求的导航的 uri。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationStartingEventArgs) MustGetUri() string {
 	uri, err := i.GetUri()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return uri
 }
 
 // MustGetNavigationId 获取导航的 ID。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationStartingEventArgs) MustGetNavigationId() uint64 {
 	id, err := i.GetNavigationId()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return id
 }
 
 // MustGetIsUserInitiated 获取导航是否由用户发起。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationStartingEventArgs) MustGetIsUserInitiated() bool {
 	isUserInitiated, err := i.GetIsUserInitiated()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return isUserInitiated
 }
 
 // MustGetIsRedirected 获取导航是否是重定向的结果。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationStartingEventArgs) MustGetIsRedirected() bool {
 	isRedirected, err := i.GetIsRedirected()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return isRedirected
 }
 
 // MustGetRequestHeaders 获取导航请求的 HTTP 请求头。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationStartingEventArgs) MustGetRequestHeaders() *ICoreWebView2HttpRequestHeaders {
 	headers, err := i.GetRequestHeaders()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return headers
 }
 
 // MustGetCancel 获取是否取消导航。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationStartingEventArgs) MustGetCancel() bool {
 	cancel, err := i.GetCancel()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return cancel
 }
 
 // MustGetICoreWebView2NavigationStartingEventArgs2 获取 ICoreWebView2NavigationStartingEventArgs2。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationStartingEventArgs) MustGetICoreWebView2NavigationStartingEventArgs2() *ICoreWebView2NavigationStartingEventArgs2 {
 	result, err := i.GetICoreWebView2NavigationStartingEventArgs2()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetICoreWebView2NavigationStartingEventArgs3 获取 ICoreWebView2NavigationStartingEventArgs3。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationStartingEventArgs) MustGetICoreWebView2NavigationStartingEventArgs3() *ICoreWebView2NavigationStartingEventArgs3 {
 	result, err := i.GetICoreWebView2NavigationStartingEventArgs3()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

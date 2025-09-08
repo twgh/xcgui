@@ -40,6 +40,6 @@ func (i *ICoreWebView2EnvironmentOptions8) SetScrollBarStyle(value COREWEBVIEW2_
 // MustGetScrollBarStyle 获取滚动条样式.
 func (i *ICoreWebView2EnvironmentOptions8) MustGetScrollBarStyle() COREWEBVIEW2_SCROLLBAR_STYLE {
 	value, err := i.GetScrollBarStyle()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

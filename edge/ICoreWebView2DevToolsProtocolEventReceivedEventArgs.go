@@ -67,13 +67,13 @@ func (i *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) GetICoreWebView2De
 // MustGetParameterObjectAsJson 获取作为 JSON 字符串的事件参数对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) MustGetParameterObjectAsJson() string {
 	jsonStr, err := i.GetParameterObjectAsJson()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return jsonStr
 }
 
 // MustGetICoreWebView2DevToolsProtocolEventReceivedEventArgs2 获取 ICoreWebView2DevToolsProtocolEventReceivedEventArgs2。
 func (i *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) MustGetICoreWebView2DevToolsProtocolEventReceivedEventArgs2() *ICoreWebView2DevToolsProtocolEventReceivedEventArgs2 {
 	result, err := i.GetICoreWebView2DevToolsProtocolEventReceivedEventArgs2()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

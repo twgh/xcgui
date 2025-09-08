@@ -93,13 +93,13 @@ func (i *ICoreWebView2ObjectCollection) InsertValueAtIndex(index uint32, value *
 // MustGetCount 获取集合中的对象数量。出错时会触发全局错误回调。
 func (i *ICoreWebView2ObjectCollection) MustGetCount() uint32 {
 	value, err := i.GetCount()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetValueAtIndex 获取指定索引位置的对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2ObjectCollection) MustGetValueAtIndex(index uint32) *IUnknown {
 	value, err := i.GetValueAtIndex(index)
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

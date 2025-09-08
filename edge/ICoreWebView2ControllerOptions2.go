@@ -47,6 +47,6 @@ func (i *ICoreWebView2ControllerOptions2) SetScriptLocale(value string) error {
 // MustGetScriptLocale 获取脚本区域设置。出错时会触发全局错误回调。
 func (i *ICoreWebView2ControllerOptions2) MustGetScriptLocale() string {
 	result, err := i.GetScriptLocale()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

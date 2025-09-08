@@ -68,13 +68,13 @@ func (i *ICoreWebView2ProcessExtendedInfoCollection) GetValueAtIndex(index uint3
 // MustGetCount 获取集合中的项目数。出错时会触发全局错误回调。
 func (i *ICoreWebView2ProcessExtendedInfoCollection) MustGetCount() uint32 {
 	value, err := i.GetCount()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetValueAtIndex 获取指定索引处的进程扩展信息。出错时会触发全局错误回调。
 func (i *ICoreWebView2ProcessExtendedInfoCollection) MustGetValueAtIndex(index uint32) *ICoreWebView2ProcessExtendedInfo {
 	value, err := i.GetValueAtIndex(index)
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

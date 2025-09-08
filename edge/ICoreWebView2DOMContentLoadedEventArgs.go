@@ -51,6 +51,6 @@ func (i *ICoreWebView2DOMContentLoadedEventArgs) GetNavigationId() (uint64, erro
 // MustGetNavigationId 获取导航的 ID，与其他导航事件中的其他导航 ID 属性相对应。出错时会触发全局错误回调。
 func (i *ICoreWebView2DOMContentLoadedEventArgs) MustGetNavigationId() uint64 {
 	id, err := i.GetNavigationId()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return id
 }

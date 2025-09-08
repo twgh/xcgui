@@ -1,10 +1,11 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
 )
 
 // ICoreWebView2AcceleratorKeyPressedEventArgs 是 AcceleratorKeyPressed 事件的事件参数。
@@ -147,41 +148,41 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetICoreWebView2Accelerato
 // MustGetKeyEventKind 获取键事件类型。出错时会触发全局错误回调.
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) MustGetKeyEventKind() COREWEBVIEW2_KEY_EVENT_KIND {
 	keyEventKind, err := i.GetKeyEventKind()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return keyEventKind
 }
 
 // MustGetVirtualKey 获取按下或释放的虚拟键代码。出错时会触发全局错误回调.
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) MustGetVirtualKey() uint {
 	virtualKey, err := i.GetVirtualKey()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return virtualKey
 }
 
 // MustGetPhysicalKeyStatus 获取有关按下或释放的键的物理状态的信息。出错时会触发全局错误回调.
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) MustGetPhysicalKeyStatus() COREWEBVIEW2_PHYSICAL_KEY_STATUS {
 	physicalKeyStatus, err := i.GetPhysicalKeyStatus()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return physicalKeyStatus
 }
 
 // MustGetKeyEventLParam 获取键事件的 LPARAM。出错时会触发全局错误回调。
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) MustGetKeyEventLParam() int {
 	lParam, err := i.GetKeyEventLParam()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return lParam
 }
 
 // MustGetHandled 获取事件是否已处理。出错时会触发全局错误回调。
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) MustGetHandled() bool {
 	handled, err := i.GetHandled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return handled
 }
 
 // MustGetICoreWebView2AcceleratorKeyPressedEventArgs2 获取 ICoreWebView2AcceleratorKeyPressedEventArgs2。出错时会触发全局错误回调。
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) MustGetICoreWebView2AcceleratorKeyPressedEventArgs2() *ICoreWebView2AcceleratorKeyPressedEventArgs2 {
 	result, err := i.GetICoreWebView2AcceleratorKeyPressedEventArgs2()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

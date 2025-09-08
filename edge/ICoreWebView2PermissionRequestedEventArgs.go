@@ -149,48 +149,48 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) GetICoreWebView2PermissionRe
 // MustGetUri 获取请求权限的 web 内容的来源。出错时会触发全局错误回调.
 func (i *ICoreWebView2PermissionRequestedEventArgs) MustGetUri() string {
 	uri, err := i.GetUri()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return uri
 }
 
 // MustGetPermissionKind 获取请求的权限类型。出错时会触发全局错误回调。
 func (i *ICoreWebView2PermissionRequestedEventArgs) MustGetPermissionKind() COREWEBVIEW2_PERMISSION_KIND {
 	kind, err := i.GetPermissionKind()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return kind
 }
 
 // MustGetIsUserInitiated 获取权限请求是否由用户发起。出错时会触发全局错误回调。
 func (i *ICoreWebView2PermissionRequestedEventArgs) MustGetIsUserInitiated() bool {
 	isUserInitiated, err := i.GetIsUserInitiated()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return isUserInitiated
 }
 
 // MustGetState 获取权限请求的状态。默认值为 COREWEBVIEW2_PERMISSION_STATE_DEFAULT。出错时会触发全局错误回调。
 func (i *ICoreWebView2PermissionRequestedEventArgs) MustGetState() COREWEBVIEW2_PERMISSION_STATE {
 	state, err := i.GetState()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return state
 }
 
 // MustGetDeferral 获取权限请求的延迟对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2PermissionRequestedEventArgs) MustGetDeferral() *ICoreWebView2Deferral {
 	deferral, err := i.GetDeferral()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return deferral
 }
 
 // MustGetICoreWebView2PermissionRequestedEventArgs2 获取 ICoreWebView2PermissionRequestedEventArgs2。出错时会触发全局错误回调。
 func (i *ICoreWebView2PermissionRequestedEventArgs) MustGetICoreWebView2PermissionRequestedEventArgs2() *ICoreWebView2PermissionRequestedEventArgs2 {
 	result, err := i.GetICoreWebView2PermissionRequestedEventArgs2()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetICoreWebView2PermissionRequestedEventArgs3 获取 ICoreWebView2PermissionRequestedEventArgs3。出错时会触发全局错误回调。
 func (i *ICoreWebView2PermissionRequestedEventArgs) MustGetICoreWebView2PermissionRequestedEventArgs3() *ICoreWebView2PermissionRequestedEventArgs3 {
 	result, err := i.GetICoreWebView2PermissionRequestedEventArgs3()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

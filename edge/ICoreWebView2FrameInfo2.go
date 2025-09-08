@@ -69,7 +69,7 @@ func (i *ICoreWebView2FrameInfo2) GetFrameKind() (COREWEBVIEW2_FRAME_KIND, error
 //   - 请注意，此 ParentFrameInfo 可能已过时，因为它是一个快照。
 func (i *ICoreWebView2FrameInfo2) MustGetParentFrameInfo() *ICoreWebView2FrameInfo {
 	value, err := i.GetParentFrameInfo()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -80,7 +80,7 @@ func (i *ICoreWebView2FrameInfo2) MustGetParentFrameInfo() *ICoreWebView2FrameIn
 //   - 请注意，此 FrameId 可能已过时，因为它是一个快照。如果在异步调用 ICoreWebView2Environment.GetProcessExtendedInfos 启动后创建或销毁了 WebView2 或发生 FrameCreated/FrameDestroyed 事件，您可能需要再次调用异步方法以获取更新的 FrameInfo。
 func (i *ICoreWebView2FrameInfo2) MustGetFrameId() uint32 {
 	value, err := i.GetFrameId()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -90,6 +90,6 @@ func (i *ICoreWebView2FrameInfo2) MustGetFrameId() uint32 {
 //   - 请注意，此 FrameKind 可能已过时，因为它是一个快照。
 func (i *ICoreWebView2FrameInfo2) MustGetFrameKind() COREWEBVIEW2_FRAME_KIND {
 	value, err := i.GetFrameKind()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

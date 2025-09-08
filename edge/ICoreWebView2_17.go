@@ -33,5 +33,5 @@ func (i *ICoreWebView2_17) PostSharedBufferToScript(sharedBuffer *ICoreWebView2S
 // MustPostSharedBufferToScript 在 WebView 中与主框架的脚本共享一个共享缓冲区对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2_17) MustPostSharedBufferToScript(sharedBuffer *ICoreWebView2SharedBuffer, access COREWEBVIEW2_SHARED_BUFFER_ACCESS, additionalDataAsJson string) {
 	err := i.PostSharedBufferToScript(sharedBuffer, access, additionalDataAsJson)
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 }

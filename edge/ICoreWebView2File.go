@@ -57,6 +57,6 @@ func (i *ICoreWebView2File) GetPath() (string, error) {
 // MustGetPath 获取文件的完整路径。出错时会触发全局错误回调。
 func (i *ICoreWebView2File) MustGetPath() string {
 	path, err := i.GetPath()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return path
 }

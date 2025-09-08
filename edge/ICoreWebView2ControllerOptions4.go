@@ -43,6 +43,6 @@ func (i *ICoreWebView2ControllerOptions4) SetAllowHostInputProcessing(value bool
 // MustGetAllowHostInputProcessing 获取是否启用输入在传递到 WebView2 之前通过应用程序。出错时会触发全局错误回调。
 func (i *ICoreWebView2ControllerOptions4) MustGetAllowHostInputProcessing() bool {
 	result, err := i.GetAllowHostInputProcessing()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

@@ -35,6 +35,6 @@ func (i *ICoreWebView2DevToolsProtocolEventReceivedEventArgs2) GetSessionId() (s
 //   - 如果事件来自顶级页面的默认会话，则会返回空字符串作为 sessionId。
 func (i *ICoreWebView2DevToolsProtocolEventReceivedEventArgs2) MustGetSessionId() string {
 	value, err := i.GetSessionId()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

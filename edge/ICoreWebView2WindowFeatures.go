@@ -177,69 +177,69 @@ func (i *ICoreWebView2WindowFeatures) GetShouldDisplayScrollBars() (bool, error)
 // MustGetHasPosition 获取窗口是否指定了位置. 出错时会触发全局错误回调.
 func (i *ICoreWebView2WindowFeatures) MustGetHasPosition() bool {
 	value, err := i.GetHasPosition()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetHasSize 获取窗口是否指定了大小. 出错时会触发全局错误回调.
 func (i *ICoreWebView2WindowFeatures) MustGetHasSize() bool {
 	value, err := i.GetHasSize()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetLeft 获取窗口顶部位置. 出错时会触发全局错误回调.
 func (i *ICoreWebView2WindowFeatures) MustGetLeft() uint32 {
 	value, err := i.GetLeft()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetTop 获取窗口顶部位置. 出错时会触发全局错误回调.
 func (i *ICoreWebView2WindowFeatures) MustGetTop() uint32 {
 	value, err := i.GetTop()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetHeight 获取窗口高度. 出错时会触发全局错误回调.
 func (i *ICoreWebView2WindowFeatures) MustGetHeight() uint32 {
 	value, err := i.GetHeight()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetWidth 获取窗口宽度. 出错时会触发全局错误回调.
 func (i *ICoreWebView2WindowFeatures) MustGetWidth() uint32 {
 	value, err := i.GetWidth()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetShouldDisplayMenuBar 获取是否显示菜单栏. 出错时会触发全局错误回调.
 func (i *ICoreWebView2WindowFeatures) MustGetShouldDisplayMenuBar() bool {
 	value, err := i.GetShouldDisplayMenuBar()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetShouldDisplayStatus 获取是否显示状态栏. 出错时会触发全局错误回调.
 func (i *ICoreWebView2WindowFeatures) MustGetShouldDisplayStatus() bool {
 	value, err := i.GetShouldDisplayStatus()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetShouldDisplayToolbar 获取是否显示工具栏. 出错时会触发全局错误回调.
 func (i *ICoreWebView2WindowFeatures) MustGetShouldDisplayToolbar() bool {
 	value, err := i.GetShouldDisplayToolbar()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetShouldDisplayScrollBars 获取是否显示滚动条. 出错时会触发全局错误回调.
 func (i *ICoreWebView2WindowFeatures) MustGetShouldDisplayScrollBars() bool {
 	value, err := i.GetShouldDisplayScrollBars()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

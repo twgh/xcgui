@@ -186,48 +186,48 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) GetICoreWebView2NewWindowRequ
 // MustGetUri 获取新窗口请求的 URI. 出错时会触发全局错误回调.
 func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetUri() string {
 	uri, err := i.GetUri()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return uri
 }
 
 // MustGetNewWindow 获取新窗口的 ICoreWebView2 实例. 出错时会触发全局错误回调.
 func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetNewWindow() *ICoreWebView2 {
 	newWindow, err := i.GetNewWindow()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return newWindow
 }
 
 // MustGetHandled 获取是否处理了新窗口请求. 出错时会触发全局错误回调.
 func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetHandled() bool {
 	handled, err := i.GetHandled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return handled
 }
 
 // MustGetIsUserInitiated 获取新窗口请求是否由用户发起. 出错时会触发全局错误回调.
 func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetIsUserInitiated() bool {
 	isUserInitiated, err := i.GetIsUserInitiated()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return isUserInitiated
 }
 
 // MustGetDeferral 获取延迟对象，并将事件置于延迟状态. 出错时会触发全局错误回调.
 func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetDeferral() *ICoreWebView2Deferral {
 	deferral, err := i.GetDeferral()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return deferral
 }
 
 // MustGetICoreWebView2NewWindowRequestedEventArgs2 获取 ICoreWebView2NewWindowRequestedEventArgs2。出错时会触发全局错误回调。
 func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetICoreWebView2NewWindowRequestedEventArgs2() *ICoreWebView2NewWindowRequestedEventArgs2 {
 	result, err := i.GetICoreWebView2NewWindowRequestedEventArgs2()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetICoreWebView2NewWindowRequestedEventArgs3 获取 ICoreWebView2NewWindowRequestedEventArgs3。出错时会触发全局错误回调。
 func (i *ICoreWebView2NewWindowRequestedEventArgs) MustGetICoreWebView2NewWindowRequestedEventArgs3() *ICoreWebView2NewWindowRequestedEventArgs3 {
 	result, err := i.GetICoreWebView2NewWindowRequestedEventArgs3()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

@@ -106,6 +106,6 @@ func (i *ICoreWebView2_15) GetFaviconEx(impl *WebViewEventImpl, format COREWEBVI
 // MustGetFaviconUri 获取当前网站图标(Favicon)的URI。出错时会触发全局错误回调。
 func (i *ICoreWebView2_15) MustGetFaviconUri() string {
 	value, err := i.GetFaviconUri()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

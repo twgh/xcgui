@@ -30,6 +30,6 @@ func (i *ICoreWebView2Frame5) GetFrameId() (uint32, error) {
 //   - 它与 FrameId 在 ICoreWebView2 中以及通过 ICoreWebView2FrameInfo 所使用的是同一种类型的 ID。
 func (i *ICoreWebView2Frame5) MustGetFrameId() uint32 {
 	r, err := i.GetFrameId()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return r
 }

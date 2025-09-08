@@ -59,6 +59,6 @@ func (i *ICoreWebView2_12) GetStatusBarText() (string, error) {
 // MustGetStatusBarText 获取当前状态栏文本。出错时会触发全局错误回调。
 func (i *ICoreWebView2_12) MustGetStatusBarText() string {
 	result, err := i.GetStatusBarText()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

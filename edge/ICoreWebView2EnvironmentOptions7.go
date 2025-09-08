@@ -71,13 +71,13 @@ func (i *ICoreWebView2EnvironmentOptions7) SetReleaseChannels(value COREWEBVIEW2
 // MustGetChannelSearchKind 获取频道搜索类型.
 func (i *ICoreWebView2EnvironmentOptions7) MustGetChannelSearchKind() COREWEBVIEW2_CHANNEL_SEARCH_KIND {
 	value, err := i.GetChannelSearchKind()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetReleaseChannels 获取发布频道.
 func (i *ICoreWebView2EnvironmentOptions7) MustGetReleaseChannels() COREWEBVIEW2_RELEASE_CHANNELS {
 	value, err := i.GetReleaseChannels()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

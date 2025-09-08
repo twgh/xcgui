@@ -99,6 +99,6 @@ func (i *ICoreWebView2HttpHeadersCollectionIterator) MustMoveNext() bool {
 // MustGetHasCurrentHeader 检查迭代器是否有当前HTTP头。出错时会触发全局错误回调。
 func (i *ICoreWebView2HttpHeadersCollectionIterator) MustGetHasCurrentHeader() bool {
 	hasCurrent, err := i.GetHasCurrentHeader()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return hasCurrent
 }

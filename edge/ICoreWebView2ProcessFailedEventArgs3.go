@@ -33,6 +33,6 @@ func (i *ICoreWebView2ProcessFailedEventArgs3) GetFailureSourceModulePath() (str
 // MustGetFailureSourceModulePath 获取导致失败的模块路径。出错时会触发全局错误回调。
 func (i *ICoreWebView2ProcessFailedEventArgs3) MustGetFailureSourceModulePath() string {
 	value, err := i.GetFailureSourceModulePath()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

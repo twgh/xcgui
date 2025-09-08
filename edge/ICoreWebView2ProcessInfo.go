@@ -66,7 +66,7 @@ func (i *ICoreWebView2ProcessInfo) GetKind() (COREWEBVIEW2_PROCESS_KIND, error) 
 // 出错时会触发全局错误回调。
 func (i *ICoreWebView2ProcessInfo) MustGetProcessId() int32 {
 	value, err := i.GetProcessId()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -74,6 +74,6 @@ func (i *ICoreWebView2ProcessInfo) MustGetProcessId() int32 {
 // 出错时会触发全局错误回调。
 func (i *ICoreWebView2ProcessInfo) MustGetKind() COREWEBVIEW2_PROCESS_KIND {
 	value, err := i.GetKind()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

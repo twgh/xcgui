@@ -55,6 +55,6 @@ func (i *ICoreWebView2Environment8) GetProcessInfos() (*ICoreWebView2ProcessInfo
 // 出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment8) MustGetProcessInfos() *ICoreWebView2ProcessInfoCollection {
 	value, err := i.GetProcessInfos()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

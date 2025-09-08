@@ -1,9 +1,10 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 )
 
 // ICoreWebView2Settings9 是 ICoreWebView2Settings8 接口的延续, 支持管理是否启用非客户端区域支持。
@@ -44,6 +45,6 @@ func (i *ICoreWebView2Settings9) SetIsNonClientRegionSupportEnabled(enabled bool
 // MustGetIsNonClientRegionSupportEnabled 获取是否启用非客户区域支持。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings9) MustGetIsNonClientRegionSupportEnabled() bool {
 	enabled, err := i.GetIsNonClientRegionSupportEnabled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return enabled
 }

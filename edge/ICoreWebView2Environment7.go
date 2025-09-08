@@ -36,6 +36,6 @@ func (i *ICoreWebView2Environment7) GetUserDataFolder() (string, error) {
 //   - 这可能是开发人员在创建环境对象时传入的值，也可能是默认处理时计算得出的值。它始终是一个绝对路径。
 func (i *ICoreWebView2Environment7) MustGetUserDataFolder() string {
 	value, err := i.GetUserDataFolder()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

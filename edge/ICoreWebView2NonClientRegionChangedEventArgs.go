@@ -51,6 +51,6 @@ func (i *ICoreWebView2NonClientRegionChangedEventArgs) GetRegionKind() (COREWEBV
 // MustGetRegionKind 获取区域更改事件所对应的非客户区的区域类型。出错时会触发全局错误回调。
 func (i *ICoreWebView2NonClientRegionChangedEventArgs) MustGetRegionKind() COREWEBVIEW2_NON_CLIENT_REGION_KIND {
 	value, err := i.GetRegionKind()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

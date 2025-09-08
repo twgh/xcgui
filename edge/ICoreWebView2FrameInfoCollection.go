@@ -51,6 +51,6 @@ func (i *ICoreWebView2FrameInfoCollection) GetIterator() (*ICoreWebView2FrameInf
 // MustGetIterator 获取框架信息集合的迭代器。出错时会触发全局错误回调。
 func (i *ICoreWebView2FrameInfoCollection) MustGetIterator() *ICoreWebView2FrameInfoCollectionIterator {
 	value, err := i.GetIterator()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

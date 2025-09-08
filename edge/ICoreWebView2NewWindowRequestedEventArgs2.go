@@ -43,6 +43,6 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs2) GetName() (string, error) {
 //   - 通过按住 ctrl 并点击链接的方式打开窗口，会导致 Name 属性被设置为空字符串。
 func (i *ICoreWebView2NewWindowRequestedEventArgs2) MustGetName() string {
 	name, err := i.GetName()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return name
 }

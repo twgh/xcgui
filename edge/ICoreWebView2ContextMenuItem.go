@@ -1,10 +1,11 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
 )
 
 // ICoreWebView2ContextMenuItem 一个 WebView2 上下文菜单项.
@@ -251,14 +252,14 @@ func (i *ICoreWebView2ContextMenuItem) RemoveCustomItemSelected(token EventRegis
 //   - 还有: copyImage, openLinkInNewWindow, cut, copy, paste等.
 func (i *ICoreWebView2ContextMenuItem) MustGetName() string {
 	name, err := i.GetName()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return name
 }
 
 // MustGetLabel 获取菜单项显示的标签. 将包含用作键盘快捷键的字符的 & 号。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuItem) MustGetLabel() string {
 	label, err := i.GetLabel()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return label
 }
 
@@ -266,7 +267,7 @@ func (i *ICoreWebView2ContextMenuItem) MustGetLabel() string {
 //   - 使用此方法在 ContextMenuRequested 事件中报告 SelectedCommandId。
 func (i *ICoreWebView2ContextMenuItem) MustGetCommandId() int32 {
 	commandId, err := i.GetCommandId()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return commandId
 }
 
@@ -275,7 +276,7 @@ func (i *ICoreWebView2ContextMenuItem) MustGetCommandId() int32 {
 //   - 此文本旨在向最终用户显示键盘快捷键。例如，“检查”菜单项的此属性为 Ctrl+Shift+I。
 func (i *ICoreWebView2ContextMenuItem) MustGetShortcutKeyDescription() string {
 	desc, err := i.GetShortcutKeyDescription()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return desc
 }
 
@@ -284,34 +285,34 @@ func (i *ICoreWebView2ContextMenuItem) MustGetShortcutKeyDescription() string {
 //   - 获取后要释放 IStream.
 func (i *ICoreWebView2ContextMenuItem) MustGetIcon() []byte {
 	icon, err := i.GetIcon()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return icon
 }
 
 // MustGetKind 获取菜单项类型。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuItem) MustGetKind() COREWEBVIEW2_CONTEXT_MENU_ITEM_KIND {
 	kind, err := i.GetKind()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return kind
 }
 
 // MustGetIsEnabled 获取菜单项是否启用。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuItem) MustGetIsEnabled() bool {
 	enabled, err := i.GetIsEnabled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return enabled
 }
 
 // MustGetIsChecked 获取菜单项是否选中，在类型为“复选框”或“单选框”时使用。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuItem) MustGetIsChecked() bool {
 	checked, err := i.GetIsChecked()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return checked
 }
 
 // MustGetChildren 获取子菜单项集合, 如果类型为子菜单。出错时会触发全局错误回调。
 func (i *ICoreWebView2ContextMenuItem) MustGetChildren() *ICoreWebView2ContextMenuItemCollection {
 	children, err := i.GetChildren()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return children
 }

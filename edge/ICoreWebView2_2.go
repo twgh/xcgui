@@ -108,13 +108,13 @@ func (i *ICoreWebView2_2) RemoveDomContentLoaded(token EventRegistrationToken) e
 // MustGetEnvironment 获取用于创建此 ICoreWebView2 的 ICoreWebView2Environment. 出错时会触发全局错误回调.
 func (i *ICoreWebView2_2) MustGetEnvironment() *ICoreWebView2Environment {
 	environment, err := i.GetEnvironment()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return environment
 }
 
 // MustGetCookieManager 获取与此 ICoreWebView2 关联的 cookie 管理器对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2_2) MustGetCookieManager() *ICoreWebView2CookieManager {
 	cookieManager, err := i.GetCookieManager()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return cookieManager
 }

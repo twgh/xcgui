@@ -1,9 +1,10 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 )
 
 // ICoreWebView2Settings4 是 ICoreWebView2Settings3 接口的延续, 支持管理密码自动保存和通用自动填充功能。
@@ -66,13 +67,13 @@ func (i *ICoreWebView2Settings4) SetIsGeneralAutofillEnabled(enabled bool) error
 // MustGetIsPasswordAutosaveEnabled 获取是否允许自动保存密码。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings4) MustGetIsPasswordAutosaveEnabled() bool {
 	enabled, err := i.GetIsPasswordAutosaveEnabled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return enabled
 }
 
 // MustGetIsGeneralAutofillEnabled 获取是否允许自动填充表单。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings4) MustGetIsGeneralAutofillEnabled() bool {
 	enabled, err := i.GetIsGeneralAutofillEnabled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return enabled
 }

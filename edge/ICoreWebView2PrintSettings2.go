@@ -241,55 +241,55 @@ func (i *ICoreWebView2PrintSettings2) SetPrinterName(printerName string) error {
 // MustGetPageRanges 获取要打印的页面范围。出错时会触发全局错误回调。
 func (i *ICoreWebView2PrintSettings2) MustGetPageRanges() string {
 	value, err := i.GetPageRanges()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetPagesPerSide 获取每张纸上的页面数量。出错时会触发全局错误回调。
 func (i *ICoreWebView2PrintSettings2) MustGetPagesPerSide() int32 {
 	value, err := i.GetPagesPerSide()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetCopies 获取打印的副本数量。出错时会触发全局错误回调。
 func (i *ICoreWebView2PrintSettings2) MustGetCopies() int32 {
 	value, err := i.GetCopies()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetCollation 获取打印排序模式。出错时会触发全局错误回调。
 func (i *ICoreWebView2PrintSettings2) MustGetCollation() COREWEBVIEW2_PRINT_COLLATION {
 	value, err := i.GetCollation()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetColorMode 获取打印颜色模式。出错时会触发全局错误回调。
 func (i *ICoreWebView2PrintSettings2) MustGetColorMode() COREWEBVIEW2_PRINT_COLOR_MODE {
 	value, err := i.GetColorMode()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetDuplex 获取双面打印模式。出错时会触发全局错误回调。
 func (i *ICoreWebView2PrintSettings2) MustGetDuplex() COREWEBVIEW2_PRINT_DUPLEX {
 	value, err := i.GetDuplex()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetMediaSize 获取打印纸张大小。出错时会触发全局错误回调。
 func (i *ICoreWebView2PrintSettings2) MustGetMediaSize() COREWEBVIEW2_PRINT_MEDIA_SIZE {
 	value, err := i.GetMediaSize()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetPrinterName 获取打印机名称。出错时会触发全局错误回调。
 func (i *ICoreWebView2PrintSettings2) MustGetPrinterName() string {
 	value, err := i.GetPrinterName()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

@@ -127,34 +127,34 @@ func (i *ICoreWebView2LaunchingExternalUriSchemeEventArgs) GetDeferral() (*ICore
 // MustGetUri 获取要启动的 URI。出错时会触发全局错误回调。
 func (i *ICoreWebView2LaunchingExternalUriSchemeEventArgs) MustGetUri() string {
 	uri, err := i.GetUri()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return uri
 }
 
 // MustGetInitiatingOrigin 获取发起导航到 URI 的源。出错时会触发全局错误回调。
 func (i *ICoreWebView2LaunchingExternalUriSchemeEventArgs) MustGetInitiatingOrigin() string {
 	origin, err := i.GetInitiatingOrigin()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return origin
 }
 
 // MustGetIsUserInitiated 获取外部 URI 方案请求是否通过用户操作发起。出错时会触发全局错误回调。
 func (i *ICoreWebView2LaunchingExternalUriSchemeEventArgs) MustGetIsUserInitiated() bool {
 	result, err := i.GetIsUserInitiated()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetCancel 获取是否取消启动外部 URI 方案。出错时会触发全局错误回调。
 func (i *ICoreWebView2LaunchingExternalUriSchemeEventArgs) MustGetCancel() bool {
 	result, err := i.GetCancel()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetDeferral 获取延迟对象，使用此操作可在稍后完成该事件。出错时会触发全局错误回调。
 func (i *ICoreWebView2LaunchingExternalUriSchemeEventArgs) MustGetDeferral() *ICoreWebView2Deferral {
 	deferral, err := i.GetDeferral()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return deferral
 }

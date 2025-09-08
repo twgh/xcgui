@@ -84,20 +84,20 @@ func (i *ICoreWebView2FileSystemHandle) GetPermission() (COREWEBVIEW2_FILE_SYSTE
 // MustGetKind 获取文件系统句柄的类型。出错时会触发全局错误回调。
 func (i *ICoreWebView2FileSystemHandle) MustGetKind() COREWEBVIEW2_FILE_SYSTEM_HANDLE_KIND {
 	value, err := i.GetKind()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetPath 获取文件系统句柄的路径。出错时会触发全局错误回调。
 func (i *ICoreWebView2FileSystemHandle) MustGetPath() string {
 	value, err := i.GetPath()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustGetPermission 获取文件系统句柄的权限。出错时会触发全局错误回调。
 func (i *ICoreWebView2FileSystemHandle) MustGetPermission() COREWEBVIEW2_FILE_SYSTEM_HANDLE_PERMISSION {
 	value, err := i.GetPermission()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

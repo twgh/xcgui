@@ -51,6 +51,6 @@ func (i *ICoreWebView2FrameCreatedEventArgs) GetFrame() (*ICoreWebView2Frame, er
 // MustGetFrame 获取创建的框架。出错时会触发全局错误回调。
 func (i *ICoreWebView2FrameCreatedEventArgs) MustGetFrame() *ICoreWebView2Frame {
 	frame, err := i.GetFrame()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return frame
 }

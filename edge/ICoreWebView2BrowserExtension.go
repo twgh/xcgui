@@ -173,7 +173,7 @@ func (i *ICoreWebView2BrowserExtension) EnableEx(impl *WebViewEventImpl, isEnabl
 //   - 扩展被移除后，调用 Id 将返回被移除的扩展的 ID。
 func (i *ICoreWebView2BrowserExtension) MustGetId() string {
 	result, err := i.GetId()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
@@ -183,7 +183,7 @@ func (i *ICoreWebView2BrowserExtension) MustGetId() string {
 //   - 扩展被移除后，调用 Name 将返回已移除扩展的名称。
 func (i *ICoreWebView2BrowserExtension) MustGetName() string {
 	result, err := i.GetName()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
@@ -193,6 +193,6 @@ func (i *ICoreWebView2BrowserExtension) MustGetName() string {
 //   - 扩展程序被移除后，调用 isEnabled 将返回其被移除时的值。
 func (i *ICoreWebView2BrowserExtension) MustGetIsEnabled() bool {
 	result, err := i.GetIsEnabled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

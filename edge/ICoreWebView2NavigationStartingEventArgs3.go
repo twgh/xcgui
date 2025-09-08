@@ -28,6 +28,6 @@ func (i *ICoreWebView2NavigationStartingEventArgs3) GetNavigationKind() (COREWEB
 // MustGetNavigationKind 获取导航的导航类型。出错时会触发全局错误回调。
 func (i *ICoreWebView2NavigationStartingEventArgs3) MustGetNavigationKind() COREWEBVIEW2_NAVIGATION_KIND {
 	kind, err := i.GetNavigationKind()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return kind
 }

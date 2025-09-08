@@ -109,7 +109,7 @@ func (i *ICoreWebView2ExecuteScriptResult) GetException() (*ICoreWebView2ScriptE
 //   - 如果为 false，则脚本执行发生了未处理的异常，可通过 GetException 方法获取该异常。
 func (i *ICoreWebView2ExecuteScriptResult) MustGetSucceeded() bool {
 	value, err := i.GetSucceeded()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -119,14 +119,14 @@ func (i *ICoreWebView2ExecuteScriptResult) MustGetSucceeded() bool {
 //   - 如果在 ContentLoading 之前运行该方法，脚本将不会执行，并且会返回字符串“null”。
 func (i *ICoreWebView2ExecuteScriptResult) MustGetResultAsJson() string {
 	jsonResult, err := i.GetResultAsJson()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return jsonResult
 }
 
 // MustGetException 获取脚本执行过程中发生的异常信息。出错时会触发全局错误回调。
 func (i *ICoreWebView2ExecuteScriptResult) MustGetException() *ICoreWebView2ScriptException {
 	exception, err := i.GetException()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return exception
 }
 
@@ -135,6 +135,6 @@ func (i *ICoreWebView2ExecuteScriptResult) MustGetException() *ICoreWebView2Scri
 //   - 当 js 结果不是字符串类型时，我们将得到 false 变量值。
 func (i *ICoreWebView2ExecuteScriptResult) MustTryGetResultAsString() (string, bool) {
 	stringResult, ok, err := i.TryGetResultAsString()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return stringResult, ok
 }

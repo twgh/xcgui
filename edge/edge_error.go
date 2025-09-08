@@ -21,8 +21,8 @@ func ReportError(method string, err error) {
 	}
 }
 
-// ReportErrorAtuo 报告错误到全局错误回调, 自动获取调用者信息.
-func ReportErrorAtuo(err error) {
+// ReportErrorAuto 报告错误到全局错误回调, 自动获取调用者信息.
+func ReportErrorAuto(err error) {
 	if err != nil && webviewErrorCallBack != nil {
 		webviewErrorCallBack(NewWebViewErrorWithSkip(err, 2))
 	}

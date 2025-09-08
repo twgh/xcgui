@@ -1,10 +1,11 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
 )
 
 // ICoreWebView2StringCollection 字符串集合.
@@ -69,13 +70,13 @@ func (i *ICoreWebView2StringCollection) GetValueAtIndex(index uint32) (string, e
 // MustGetCount 获取集合中的字符串数量. 出错时会触发全局错误回调.
 func (i *ICoreWebView2StringCollection) MustGetCount() uint32 {
 	count, err := i.GetCount()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return count
 }
 
 // MustGetValueAtIndex 获取指定索引处的字符串值. 出错时会触发全局错误回调.
 func (i *ICoreWebView2StringCollection) MustGetValueAtIndex(index uint32) string {
 	value, err := i.GetValueAtIndex(index)
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

@@ -68,6 +68,18 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				return -1, err
 			}
 			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "ProfileDeleted":
+			obj2, ok := obj.(*ICoreWebView2Profile8)
+			if !ok {
+				return -1, errors.New("obj is not *ICoreWebView2Profile8")
+			}
+			eventHandler := NewICoreWebView2ProfileDeletedEventHandler(impl)
+			err := obj2.AddDeleted(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "FrameNavigationStarting":
 			obj2, ok := obj.(*ICoreWebView2Frame2)
 			if !ok {
@@ -772,6 +784,12 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 		case "GetNonDefaultPermissionSettingsCompleted":
 			info.EventToken = nil
 			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler(impl))
+		case "ProfileAddBrowserExtensionCompleted":
+			info.EventToken = nil
+			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2ProfileAddBrowserExtensionCompletedHandler(impl))
+		case "ProfileGetBrowserExtensionsCompleted":
+			info.EventToken = nil
+			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2ProfileGetBrowserExtensionsCompletedHandler(impl))
 		}
 	}
 

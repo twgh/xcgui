@@ -69,13 +69,13 @@ func (i *ICoreWebView2WebResourceResponseReceivedEventArgs) GetResponse() (*ICor
 //   - 对此对象的修改对请求的处理方式没有影响，因为请求已被发送。
 func (i *ICoreWebView2WebResourceResponseReceivedEventArgs) MustGetRequest() *ICoreWebView2WebResourceRequest {
 	request, err := i.GetRequest()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return request
 }
 
 // MustGetResponse 获取收到的网络资源响应对象的视图。出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceResponseReceivedEventArgs) MustGetResponse() *ICoreWebView2WebResourceResponseView {
 	response, err := i.GetResponse()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return response
 }

@@ -1,10 +1,11 @@
 package edge
 
 import (
-	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
 )
 
 // ICoreWebView2Settings 是 WebView2 的设置。
@@ -400,21 +401,21 @@ func (i *ICoreWebView2Settings) GetICoreWebView2Settings9() (*ICoreWebView2Setti
 //   - 即使脚本被禁用，用 ExecuteScript 注入的脚本也会运行。
 func (i *ICoreWebView2Settings) MustGetIsScriptEnabled() bool {
 	enabled, err := i.GetIsScriptEnabled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return enabled
 }
 
 // MustGetIsWebMessageEnabled 获取是否允许 WebView 发送和接收 WebMessage。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetIsWebMessageEnabled() bool {
 	enabled, err := i.GetIsWebMessageEnabled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return enabled
 }
 
 // MustGetAreDefaultScriptDialogsEnabled 获取是否允许在 WebView 中显示默认的 JavaScript 对话框。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetAreDefaultScriptDialogsEnabled() bool {
 	enabled, err := i.GetAreDefaultScriptDialogsEnabled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return enabled
 }
 
@@ -423,97 +424,97 @@ func (i *ICoreWebView2Settings) MustGetAreDefaultScriptDialogsEnabled() bool {
 //   - 状态栏 UI 可以通过 web 内容进行更改，不应被视为安全。
 func (i *ICoreWebView2Settings) MustGetIsStatusBarEnabled() bool {
 	enabled, err := i.GetIsStatusBarEnabled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return enabled
 }
 
 // MustGetAreDevToolsEnabled 获取是否允许在 WebView 中显示开发者工具。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetAreDevToolsEnabled() bool {
 	enabled, err := i.GetAreDevToolsEnabled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return enabled
 }
 
 // MustGetAreDefaultContextMenusEnabled 获取是否允许在 WebView 中显示默认的上下文菜单。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetAreDefaultContextMenusEnabled() bool {
 	enabled, err := i.GetAreDefaultContextMenusEnabled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return enabled
 }
 
 // MustGetAreHostObjectsAllowed 获取是否允许在 WebView 中显示主机对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetAreHostObjectsAllowed() bool {
 	allowed, err := i.GetAreHostObjectsAllowed()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return allowed
 }
 
 // MustGetIsZoomControlEnabled 获取是否允许在 WebView 中显示缩放控件。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetIsZoomControlEnabled() bool {
 	enabled, err := i.GetIsZoomControlEnabled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return enabled
 }
 
 // MustGetIsBuiltInErrorPageEnabled 获取是否显示内置的错误页面。禁用时，当发生相关错误时，会显示一个空白页。
 func (i *ICoreWebView2Settings) MustGetIsBuiltInErrorPageEnabled() bool {
 	enabled, err := i.GetIsBuiltInErrorPageEnabled()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return enabled
 }
 
 // MustGetICoreWebView2Settings2 获取 ICoreWebView2Settings2 对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetICoreWebView2Settings2() *ICoreWebView2Settings2 {
 	c, err := i.GetICoreWebView2Settings2()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return c
 }
 
 // MustGetICoreWebView2Settings3 获取 ICoreWebView2Settings3 对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetICoreWebView2Settings3() *ICoreWebView2Settings3 {
 	c, err := i.GetICoreWebView2Settings3()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return c
 }
 
 // MustGetICoreWebView2Settings4 获取 ICoreWebView2Settings4 对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetICoreWebView2Settings4() *ICoreWebView2Settings4 {
 	c, err := i.GetICoreWebView2Settings4()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return c
 }
 
 // MustGetICoreWebView2Settings5 获取 ICoreWebView2Settings5 对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetICoreWebView2Settings5() *ICoreWebView2Settings5 {
 	c, err := i.GetICoreWebView2Settings5()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return c
 }
 
 // MustGetICoreWebView2Settings6 获取 ICoreWebView2Settings6 对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetICoreWebView2Settings6() *ICoreWebView2Settings6 {
 	c, err := i.GetICoreWebView2Settings6()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return c
 }
 
 // MustGetICoreWebView2Settings7 获取 ICoreWebView2Settings7 对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetICoreWebView2Settings7() *ICoreWebView2Settings7 {
 	c, err := i.GetICoreWebView2Settings7()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return c
 }
 
 // MustGetICoreWebView2Settings8 获取 ICoreWebView2Settings8 对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetICoreWebView2Settings8() *ICoreWebView2Settings8 {
 	c, err := i.GetICoreWebView2Settings8()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return c
 }
 
 // MustGetICoreWebView2Settings9 获取 ICoreWebView2Settings9 对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Settings) MustGetICoreWebView2Settings9() *ICoreWebView2Settings9 {
 	c, err := i.GetICoreWebView2Settings9()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return c
 }

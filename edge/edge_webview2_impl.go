@@ -154,7 +154,7 @@ func (w *WebViewEventImpl) WebResourceResponseViewGetContentCompleted(errorCode 
 			var err error
 			bs, err = result.GetBytes()
 			if err != nil {
-				ReportErrorAtuo(errors.New("WebResourceResponseViewGetContentCompleted, GetBytes failed: " + err.Error()))
+				ReportErrorAuto(errors.New("WebResourceResponseViewGetContentCompleted, GetBytes failed: " + err.Error()))
 			}
 		}
 	}
@@ -229,7 +229,7 @@ func (w *WebViewEventImpl) PermissionRequested(sender *ICoreWebView2, args *ICor
 			result = COREWEBVIEW2_PERMISSION_STATE_DEFAULT
 		}
 		err := args.SetState(result)
-		ReportErrorAtuo(err)
+		ReportErrorAuto(err)
 	}
 
 	cbs := WvEventHandler.GetCallBacks(w, "PermissionRequested")
@@ -274,7 +274,7 @@ func (w *WebViewEventImpl) WebResourceRequested(sender *ICoreWebView2, args *ICo
 	if w.hostName != "" { // 使用嵌入的文件系统映射
 		request, err := args.GetRequest()
 		if err != nil {
-			ReportErrorAtuo(errors.New("webResourceRequested, GetRequest failed: " + err.Error()))
+			ReportErrorAuto(errors.New("webResourceRequested, GetRequest failed: " + err.Error()))
 			return 0
 		}
 
@@ -295,16 +295,16 @@ func (w *WebViewEventImpl) WebResourceRequested(sender *ICoreWebView2, args *ICo
 		data, err := fs.ReadFile(w.embedFS, embedPath)
 		if err != nil {
 			// 固定会有一个对 favicon.ico 的请求, 没有这个文件的话, 这里肯定会触发一次, 没啥影响
-			ReportErrorAtuo(errors.New("webResourceRequested, ReadFile failed1: " + err.Error()))
+			ReportErrorAuto(errors.New("webResourceRequested, ReadFile failed1: " + err.Error()))
 			// 返回 404
 			res, err := w.Edge.Environment.CreateWebResourceResponse(nil, 404, "Not Found", "")
 			if err != nil {
-				ReportErrorAtuo(errors.New("webResourceRequested, CreateWebResourceResponse failed1: " + err.Error()))
+				ReportErrorAuto(errors.New("webResourceRequested, CreateWebResourceResponse failed1: " + err.Error()))
 				return 0
 			}
 			err = args.SetResponse(res)
 			if err != nil {
-				ReportErrorAtuo(errors.New("webResourceRequested, SetResponse failed1: " + err.Error()))
+				ReportErrorAuto(errors.New("webResourceRequested, SetResponse failed1: " + err.Error()))
 				return 0
 			}
 			return 0
@@ -315,13 +315,13 @@ func (w *WebViewEventImpl) WebResourceRequested(sender *ICoreWebView2, args *ICo
 			once = true
 			stream, err := NewStreamMem(data)
 			if err != nil {
-				ReportErrorAtuo(errors.New("webResourceRequested, create stream failed: " + err.Error()))
+				ReportErrorAuto(errors.New("webResourceRequested, create stream failed: " + err.Error()))
 			} else {
 				defer stream.Release()
 			}
 			err = w.firstResponse.SetContent(stream)
 			if err != nil {
-				ReportErrorAtuo(errors.New("webResourceRequested, SetContent failed: " + err.Error()))
+				ReportErrorAuto(errors.New("webResourceRequested, SetContent failed: " + err.Error()))
 			}
 			res = w.firstResponse
 			defer func() {
@@ -332,20 +332,20 @@ func (w *WebViewEventImpl) WebResourceRequested(sender *ICoreWebView2, args *ICo
 			// 创建响应流
 			stream, err := NewStreamMem(data)
 			if err != nil {
-				ReportErrorAtuo(errors.New("webResourceRequested, create stream failed2: " + err.Error()))
+				ReportErrorAuto(errors.New("webResourceRequested, create stream failed2: " + err.Error()))
 			} else {
 				defer stream.Release()
 			}
 			res, err = w.Edge.Environment.CreateWebResourceResponse(stream, 200, "OK", "")
 			if err != nil {
-				ReportErrorAtuo(errors.New("webResourceRequested, CreateWebResourceResponse failed2: " + err.Error()))
+				ReportErrorAuto(errors.New("webResourceRequested, CreateWebResourceResponse failed2: " + err.Error()))
 				return 0
 			}
 		}
 
 		err = args.SetResponse(res)
 		if err != nil {
-			ReportErrorAtuo(errors.New("webResourceRequested, SetResponse failed2: " + err.Error()))
+			ReportErrorAuto(errors.New("webResourceRequested, SetResponse failed2: " + err.Error()))
 			return 0
 		}
 	}
@@ -662,7 +662,7 @@ func (w *WebViewEventImpl) GetFaviconCompleted(errorCode syscall.Errno, faviconS
 			var err error
 			bs, err = faviconStream.GetBytes()
 			if err != nil {
-				ReportErrorAtuo(errors.New("GetFaviconCompleted, GetBytes failed: " + err.Error()))
+				ReportErrorAuto(errors.New("GetFaviconCompleted, GetBytes failed: " + err.Error()))
 			}
 		}
 	}
@@ -837,7 +837,7 @@ func (w *WebViewEventImpl) PrintToPdfStreamCompleted(errorCode syscall.Errno, pd
 			var err error
 			bs, err = pdfStream.GetBytes()
 			if err != nil {
-				ReportErrorAtuo(errors.New("PrintToPdfStreamCompleted, GetBytes failed: " + err.Error()))
+				ReportErrorAuto(errors.New("PrintToPdfStreamCompleted, GetBytes failed: " + err.Error()))
 			}
 		}
 	}
@@ -976,6 +976,36 @@ func (w *WebViewEventImpl) FrameContentLoading(sender *ICoreWebView2Frame, args 
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		ret = cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2ContentLoadingEventArgs) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// ProfileAddBrowserExtensionCompleted 添加浏览器扩展完成时调用。
+func (w *WebViewEventImpl) ProfileAddBrowserExtensionCompleted(errorCode syscall.Errno, result *ICoreWebView2BrowserExtension) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "ProfileAddBrowserExtensionCompleted")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(errorCode syscall.Errno, result *ICoreWebView2BrowserExtension) uintptr)(errorCode, result)
+	}
+	return ret
+}
+
+// ProfileGetBrowserExtensionsCompleted 获取浏览器扩展列表完成时调用。
+func (w *WebViewEventImpl) ProfileGetBrowserExtensionsCompleted(errorCode syscall.Errno, result *ICoreWebView2BrowserExtensionList) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "ProfileGetBrowserExtensionsCompleted")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(errorCode syscall.Errno, result *ICoreWebView2BrowserExtensionList) uintptr)(errorCode, result)
+	}
+	return ret
+}
+
+// ProfileDeleted 当配置文件被标记为删除时调用。
+func (w *WebViewEventImpl) ProfileDeleted(sender *ICoreWebView2Profile, args *IUnknown) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "ProfileDeleted")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2Profile, args *IUnknown) uintptr)(sender, args)
 	}
 	return ret
 }

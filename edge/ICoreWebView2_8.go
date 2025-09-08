@@ -106,7 +106,7 @@ func (i *ICoreWebView2_8) RemoveIsDocumentPlayingAudioChanged(token EventRegistr
 // MustGetIsMuted 获取 WebView 是否静音。出错时会触发全局错误回调。
 func (i *ICoreWebView2_8) MustGetIsMuted() bool {
 	result, err := i.GetIsMuted()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
@@ -114,6 +114,6 @@ func (i *ICoreWebView2_8) MustGetIsMuted() bool {
 //   - 如果音频正在播放，即使是静音状态，此属性也将为真。
 func (i *ICoreWebView2_8) MustGetIsDocumentPlayingAudio() bool {
 	result, err := i.GetIsDocumentPlayingAudio()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

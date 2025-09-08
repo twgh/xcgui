@@ -28,6 +28,6 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs3) GetOriginalSourceFrameInfo()
 // MustGetOriginalSourceFrameInfo 获取新窗口请求发起所在框架的框架信息快照。出错时会触发全局错误回调。
 func (i *ICoreWebView2NewWindowRequestedEventArgs3) MustGetOriginalSourceFrameInfo() *ICoreWebView2FrameInfo {
 	value, err := i.GetOriginalSourceFrameInfo()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }

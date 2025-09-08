@@ -160,14 +160,14 @@ func (i *ICoreWebView2SaveFileSecurityCheckStartingEventArgs) GetDeferral() (*IC
 // MustGetCancelSave 获取是否取消即将进行的保存/下载。出错时会触发全局错误回调。
 func (i *ICoreWebView2SaveFileSecurityCheckStartingEventArgs) MustGetCancelSave() bool {
 	result, err := i.GetCancelSave()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetDocumentOriginUri 获取发起保存操作的文档的源 URI。出错时会触发全局错误回调。
 func (i *ICoreWebView2SaveFileSecurityCheckStartingEventArgs) MustGetDocumentOriginUri() string {
 	result, err := i.GetDocumentOriginUri()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
@@ -175,7 +175,7 @@ func (i *ICoreWebView2SaveFileSecurityCheckStartingEventArgs) MustGetDocumentOri
 //   - 仅提供带句点“.”的最终扩展名。例如，“*.tar.gz”是双重扩展名，其中“.gz”是其最终扩展名。
 func (i *ICoreWebView2SaveFileSecurityCheckStartingEventArgs) MustGetFileExtension() string {
 	result, err := i.GetFileExtension()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
@@ -183,20 +183,20 @@ func (i *ICoreWebView2SaveFileSecurityCheckStartingEventArgs) MustGetFileExtensi
 //   - 此方法不提供路径验证，返回的字符串可能长于 MAX_PATH。
 func (i *ICoreWebView2SaveFileSecurityCheckStartingEventArgs) MustGetFilePath() string {
 	result, err := i.GetFilePath()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetSuppressDefaultPolicy 获取是否禁用默认的策略检查和安全警告。出错时会触发全局错误回调。
 func (i *ICoreWebView2SaveFileSecurityCheckStartingEventArgs) MustGetSuppressDefaultPolicy() bool {
 	result, err := i.GetSuppressDefaultPolicy()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }
 
 // MustGetDeferral 获取一个延迟对象，用于在异步操作完成后通知 WebView2。出错时会触发全局错误回调。
 func (i *ICoreWebView2SaveFileSecurityCheckStartingEventArgs) MustGetDeferral() *ICoreWebView2Deferral {
 	result, err := i.GetDeferral()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return result
 }

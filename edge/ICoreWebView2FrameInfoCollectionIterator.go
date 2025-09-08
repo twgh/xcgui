@@ -82,7 +82,7 @@ func (i *ICoreWebView2FrameInfoCollectionIterator) MoveNext() (bool, error) {
 //   - 如果迭代器正在迭代的集合为空，或者迭代器已超过集合的末尾，则此值为 FALSE。
 func (i *ICoreWebView2FrameInfoCollectionIterator) MustGetHasCurrent() bool {
 	value, err := i.GetHasCurrent()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
@@ -90,13 +90,13 @@ func (i *ICoreWebView2FrameInfoCollectionIterator) MustGetHasCurrent() bool {
 //   - 如果 GetHasCurrent 为 FALSE，则返回 wapi.ERROR_INVALID_INDEX.
 func (i *ICoreWebView2FrameInfoCollectionIterator) MustGetCurrent() *ICoreWebView2FrameInfo {
 	value, err := i.GetCurrent()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
 
 // MustMoveNext 将迭代器移动到下一项。出错时会触发全局错误回调。
 func (i *ICoreWebView2FrameInfoCollectionIterator) MustMoveNext() bool {
 	value, err := i.MoveNext()
-	ReportErrorAtuo(err)
+	ReportErrorAuto(err)
 	return value
 }
