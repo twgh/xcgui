@@ -176,6 +176,8 @@ type ICoreWebView2Vtbl struct {
 	// 27
 	AddScreenCaptureStarting    ComProc
 	RemoveScreenCaptureStarting ComProc
+	// 28
+	GetFind ComProc
 }
 
 func (i *ICoreWebView2) AddRef() uintptr {

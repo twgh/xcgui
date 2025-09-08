@@ -1099,3 +1099,33 @@ func (w *WebViewEventImpl) FrameChildFrameCreated(sender *ICoreWebView2Frame, ar
 	}
 	return ret
 }
+
+// FindActiveMatchIndexChanged 查找活动匹配项索引更改时调用。
+func (w *WebViewEventImpl) FindActiveMatchIndexChanged(sender *ICoreWebView2Find, args *IUnknown) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "FindActiveMatchIndexChanged")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2Find, args *IUnknown) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// FindMatchCountChanged 查找匹配项数量更改时调用。
+func (w *WebViewEventImpl) FindMatchCountChanged(sender *ICoreWebView2Find, args *IUnknown) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "FindMatchCountChanged")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(sender *ICoreWebView2Find, args *IUnknown) uintptr)(sender, args)
+	}
+	return ret
+}
+
+// FindStartCompleted 查找开始完成时调用。
+func (w *WebViewEventImpl) FindStartCompleted(errorCode syscall.Errno) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "FindStartCompleted")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		ret = cbs[i].(func(errorCode syscall.Errno) uintptr)(errorCode)
+	}
+	return ret
+}

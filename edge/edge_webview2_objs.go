@@ -6,7 +6,7 @@ import (
 	"github.com/twgh/xcgui/wapi"
 )
 
-// WebView2_Objs 中声明了 WebView2_2 - WebView2_27,
+// WebView2_Objs 中声明了 WebView2_2 - WebView2_28,
 // 默认值为 nil, 使用前需赋值.
 //   - 可调用 InitWebView2_Objs 进行统一赋值.
 //   - 在 WebView 关闭时会自动调用 ReleaseWebView2_Objs, 自己额外创建的 WebView2_Objs 得自己手动释放.
@@ -37,12 +37,13 @@ type WebView2_Objs struct {
 	WebView2_25 *ICoreWebView2_25 // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
 	WebView2_26 *ICoreWebView2_26 // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
 	WebView2_27 *ICoreWebView2_27 // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
+	WebView2_28 *ICoreWebView2_28 // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
 }
 
 // InitWebView2_Objs 初始化所有的 WebView2_ 系列对象.
-//   - 从 2 到 27 按顺序获取, 出错时返回出错序号.
+//   - 从 2 到 28 按顺序获取, 出错时返回出错序号.
 //   - 比如获取 WebView2_2 时失败返回 2, 获取 WebView2_3 时失败返回 3, 以此类推.
-//   - 如果返回0, 代表成功获取到了 WebView2_2 到 WebView2_27.
+//   - 如果返回0, 代表成功获取到了 WebView2_2 到 WebView2_28.
 //   - 这些对象, 只要运行时版本支持, 基本是不会获取出错的.
 func (w *WebView2_Objs) InitWebView2_Objs(CoreWebView *ICoreWebView2) int {
 	var err error
@@ -202,6 +203,12 @@ func (w *WebView2_Objs) InitWebView2_Objs(CoreWebView *ICoreWebView2) int {
 			return 27
 		}
 	}
+	if w.WebView2_28 == nil {
+		w.WebView2_28, err = CoreWebView.GetICoreWebView2_28()
+		if err != nil {
+			return 28
+		}
+	}
 	return 0
 }
 
@@ -310,6 +317,10 @@ func (w *WebView2_Objs) ReleaseWebView2_Objs() {
 	if w.WebView2_27 != nil {
 		w.WebView2_27.Release()
 		w.WebView2_27 = nil
+	}
+	if w.WebView2_28 != nil {
+		w.WebView2_28.Release()
+		w.WebView2_28 = nil
 	}
 }
 
@@ -573,6 +584,16 @@ func (i *ICoreWebView2) GetICoreWebView2_27() (*ICoreWebView2_27, error) {
 	return result, err
 }
 
+// GetICoreWebView2_28 获取 ICoreWebView2_28。
+func (i *ICoreWebView2) GetICoreWebView2_28() (*ICoreWebView2_28, error) {
+	var result *ICoreWebView2_28
+	iidICoreWebView2_28 := wapi.NewGUID(IID_ICoreWebView2_28)
+	err := i.QueryInterface(
+		unsafe.Pointer(iidICoreWebView2_28),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
 // MustGetICoreWebView2_2 获取 ICoreWebView2_2。出错时会触发全局错误回调。
 func (i *ICoreWebView2) MustGetICoreWebView2_2() *ICoreWebView2_2 {
 	result, err := i.GetICoreWebView2_2()
@@ -751,6 +772,13 @@ func (i *ICoreWebView2) MustGetICoreWebView2_26() *ICoreWebView2_26 {
 // MustGetICoreWebView2_27 获取 ICoreWebView2_27。出错时会触发全局错误回调。
 func (i *ICoreWebView2) MustGetICoreWebView2_27() *ICoreWebView2_27 {
 	result, err := i.GetICoreWebView2_27()
+	ReportErrorAuto(err)
+	return result
+}
+
+// MustGetICoreWebView2_28 获取 ICoreWebView2_28。出错时会触发全局错误回调。
+func (i *ICoreWebView2) MustGetICoreWebView2_28() *ICoreWebView2_28 {
+	result, err := i.GetICoreWebView2_28()
 	ReportErrorAuto(err)
 	return result
 }

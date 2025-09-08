@@ -56,6 +56,8 @@ type ICoreWebView2EnvironmentVtbl struct {
 	CreateWebFileSystemFileHandle      ComProc
 	CreateWebFileSystemDirectoryHandle ComProc
 	CreateObjectCollection             ComProc
+	// 15
+	CreateFindOptions ComProc
 }
 
 func (i *ICoreWebView2Environment) AddRef() uintptr {
@@ -272,6 +274,15 @@ func (i *ICoreWebView2Environment) GetICoreWebView2Environment14() (*ICoreWebVie
 	return result, err
 }
 
+// GetICoreWebView2Environment15 获取 ICoreWebView2Environment15。
+func (i *ICoreWebView2Environment) GetICoreWebView2Environment15() (*ICoreWebView2Environment15, error) {
+	var result *ICoreWebView2Environment15
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Environment15)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
 // MustCreateWebResourceResponse 创建新的web资源响应对象。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment) MustCreateWebResourceResponse(content *IStream, statusCode int, reasonPhrase string, headers string) *ICoreWebView2WebResourceResponse {
 	response, err := i.CreateWebResourceResponse(content, statusCode, reasonPhrase, headers)
@@ -373,6 +384,13 @@ func (i *ICoreWebView2Environment) MustGetICoreWebView2Environment13() *ICoreWeb
 // MustGetICoreWebView2Environment14 获取 ICoreWebView2Environment14。出错时会触发全局错误回调。
 func (i *ICoreWebView2Environment) MustGetICoreWebView2Environment14() *ICoreWebView2Environment14 {
 	result, err := i.GetICoreWebView2Environment14()
+	ReportErrorAuto(err)
+	return result
+}
+
+// MustGetICoreWebView2Environment15 获取 ICoreWebView2Environment15。出错时会触发全局错误回调。
+func (i *ICoreWebView2Environment) MustGetICoreWebView2Environment15() *ICoreWebView2Environment15 {
+	result, err := i.GetICoreWebView2Environment15()
 	ReportErrorAuto(err)
 	return result
 }

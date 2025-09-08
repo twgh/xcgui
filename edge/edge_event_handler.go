@@ -68,6 +68,30 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				return -1, err
 			}
 			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "FindActiveMatchIndexChanged":
+			obj2, ok := obj.(*ICoreWebView2Find)
+			if !ok {
+				return -1, errors.New("obj is not *ICoreWebView2Find")
+			}
+			eventHandler := NewICoreWebView2FindActiveMatchIndexChangedEventHandler(impl)
+			err := obj2.AddActiveMatchIndexChangedEventHandler(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "FindMatchCountChanged":
+			obj2, ok := obj.(*ICoreWebView2Find)
+			if !ok {
+				return -1, errors.New("obj is not *ICoreWebView2Find")
+			}
+			eventHandler := NewICoreWebView2FindMatchCountChangedEventHandler(impl)
+			err := obj2.AddMatchCountChangedEventHandler(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "ProfileDeleted":
 			obj2, ok := obj.(*ICoreWebView2Profile8)
 			if !ok {
@@ -790,6 +814,9 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 		case "ProfileGetBrowserExtensionsCompleted":
 			info.EventToken = nil
 			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2ProfileGetBrowserExtensionsCompletedHandler(impl))
+		case "FindStartCompleted":
+			info.EventToken = nil
+			info.EventHandlerPointer = unsafe.Pointer(NewICoreWebView2FindStartCompletedHandler(impl))
 		}
 	}
 
