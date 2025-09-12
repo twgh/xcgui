@@ -1,29 +1,17 @@
 <h1 align="center">XCGUI</h1>
 <p align="center">
-    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.394-blue" alt="release"></a>
+    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.395-blue" alt="release"></a>
     <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-3.3.9.1-blue" alt="XCGUI"></a>
-   <a href="https://golang.org"> <img src="https://img.shields.io/badge/golang-≥1.16-blue" alt="golang"></a>
+   <a href="https://golang.org"> <img src="https://img.shields.io/badge/golang-≥1.18-blue" alt="golang"></a>
     <a href="https://pkg.go.dev/github.com/twgh/xcgui"><img src="https://img.shields.io/badge/go.dev-reference-brightgreen" alt="GoDoc"></a>
     <a href="https://raw.githubusercontent.com/twgh/xcgui/refs/heads/main/xcgui%20license.txt"><img src="https://img.shields.io/badge/License-MIT-brightgreen" alt="License"></a>
     <br><br>
+    <a href="https://mcn1fno5w69l.feishu.cn/wiki/space/7489022357177139219?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home">Usage Guide</a>&nbsp;&nbsp;
     <a href="https://github.com/twgh/xcgui-example">Examples</a>&nbsp;&nbsp;
 	<a href="https://pkg.go.dev/github.com/twgh/xcgui">Project Doc</a>&nbsp;&nbsp;
     <a href="http://www.xcgui.com/doc-ui/">Official Doc</a>&nbsp;&nbsp;
 	<a href="http://mall.xcgui.com">Official Resource</a>
 </p>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## Introduction
 
@@ -34,12 +22,12 @@ English | [简体中文](./README.md)
 - DirectUI design idea: there is no sub-window in the window, the interface elements are all logical areas (no HWND handle, safe, flexible), all UI elements are developed independently (not restricted by the system), more flexible to achieve various Program interface to meet the needs of different users.
 - Has a free UI designer tool: rapid development tools, what you see is what you get, a highly customizable system (DIY), making UI development easier.
 - Support Direct2D, hardware acceleration, can make full use of hardware features to create high-performance, high-quality 2D graphics.
-- [WIKI](https://github.com/twgh/xcgui/wiki) There is a simple introductory tutorial, you can take a look when you have time.
-- Other related projects：[XWebView](https://github.com/twgh/xwebview) ，[xc-elementui](https://github.com/twgh/xc-elementui)
+- [Usage Guide](https://mcn1fno5w69l.feishu.cn/wiki/space/7489022357177139219?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home) There are introductory tutorials and common questions in it, you can take a look and avoid detours.
+- Other related projects：[xcgui-example](https://github.com/twgh/xcgui-example)，[xc-elementui](https://github.com/twgh/xc-elementui)
 
 ## Get
 
-```
+```bash
 go get -u github.com/twgh/xcgui
 ```
 
@@ -65,9 +53,9 @@ import (
 var qqmusic []byte
 
 func main() {
+    app.Init()
 	a := app.New(true)
-	a.EnableDPI(true)
-	a.EnableAutoDPI(true)
+	a.EnableAutoDPI(true).EnableDPI(true)
 	// Load resource files from memory zip
 	a.LoadResourceZipMem(qqmusic, "resource.res", "")
 	// Load layout file from memory zip, Create window object
@@ -76,7 +64,7 @@ func main() {
 	// SongTitle is the value of the name property set for the song name (shapeText component) in main.xml.
 	// Through GetObjectByName, you can get the handle to the component with the name property set in the layout file..
 	// Can be simplified to: widget.NewShapeTextByName("songTitle").
-	song := widget.NewShapeTextByHandle(a.GetObjectByName("songTitle"))
+	song := widget.NewShapeTextByHandle(app.GetObjectByName("songTitle"))
 	println(song.GetText()) // output: 两只老虎爱跳舞
     
 	// Adjust the layout
@@ -88,56 +76,13 @@ func main() {
 }
 ```
 
-## Dynamic link library download
+## Related resource download
 
-When the program is running, you need to put `xcgui.dll` in the program running directory.
-
-It is best to put it in the `C:\Windows\System32` directory during development, so that there is no need to frequently put the dll in the running directory of different programs.
-
-#### （1）Link to download
-
-| 64 bit | [download](https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui.dll?version=latest) |
-| ------ | ------------------------------------------------------------ |
-| 32 bit | [download](https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui-32.dll?version=latest) |
-
-#### （2）Command line download
-
-64bit
-
-```bash
-iwr https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui.dll?version=latest -OutFile xcgui.dll
-```
-
-32bit
-
-```bash
-iwr https://pkggo-generic.pkg.coding.net/xcgui/file/xcgui-32.dll?version=latest -OutFile xcgui.dll
-```
-
-#### （3）Download using the getxcgui tool
-
-> Please ensure that `%GOPATH%\bin` is in the environment variable `path`
-
-```bash
-go install github.com/twgh/getxcgui@latest
-getxcgui
-```
-
-If you want to download the dll directly to the `C:\Windows\System32` directory, please use the following command:
-
-```bash
-getxcgui -o %windir%\system32\xcgui.dll
-```
-
-The source code of this tool is [here](https://github.com/twgh/getxcgui). For more flags, you can click [go in](https://github.com/twgh/getxcgui#flags) to view
-
-#### （4）Network disk download
-
-The network disk also contains `Interface Designer` and `chm help documentation`
+The network disk contains `Interface Designer` and `chm help documentation`
 
 | NetDisc      | Link                                                         |
 | ------------ | ------------------------------------------------------------ |
-| LanzouYun | [download](https://wwi.lanzoup.com/b0cqd6nkb) |
+| Lanzou | [download](https://wwi.lanzoup.com/b0cqd6nkb) |
 | BaiduPan     | [download](https://pan.baidu.com/s/1rC3unQGaxnRUCMm8z8qzvA?pwd=1111) |
 
 ## Simple window(Pure code)
@@ -157,9 +102,9 @@ import (
 
 func main() {
 	// 1.Initialize XCGUI
+    app.Init()
 	a := app.New(true)
-	a.EnableDPI(true)
-	a.EnableAutoDPI(true)
+	a.EnableAutoDPI(true).EnableDPI(true)
 	// 2.Create window
 	w := window.New(0, 0, 430, 300, "xcgui window", 0, xcc.Window_Style_Default|xcc.Window_Style_Drag_Window)
     
@@ -175,8 +120,8 @@ func main() {
     // Create a button
 	btn := widget.NewButton(165, 135, 100, 30, "Button", w.Handle)
 	// Registration button clicked event
-	btn.Event_BnClick(func(pbHandled *bool) int {
-		a.MessageBox("tip", btn.GetText(), xcc.MessageBox_Flag_Ok|xcc.MessageBox_Flag_Icon_Info, w.GetHWND(), xcc.Window_Style_Modal)
+	btn.AddEvent_BnClick(func(hEle int,pbHandled *bool) int {
+		w.MessageBox("tip", btn.GetText(), xcc.MessageBox_Flag_Ok|xcc.MessageBox_Flag_Icon_Info, xcc.Window_Style_Modal)
 		return 0
 	})
     
@@ -207,13 +152,11 @@ All the structures of xcgui are also in the xc package.
 
 ## Event
 
-All events of Dazzling have been defined, all start with Event, and events ending with 1 are the handles of the elements that will be passed in.
+In XCGUI, a single event type can have multiple callback handler functions registered. The execution order is that the last registered callback function is executed first, and the first registered callback function is executed last. If you want to intercept the current event or prevent it from being passed further, simply set the parameter *pbHandled=true in the callback function.
 
-Try not to use anonymous functions for callback functions. Using anonymous functions means that you are creating a new callback every time. Eventually you will encounter an error that the program crashes due to creating too many callbacks.
+All events in XCGUI are predefined within various classes and come in two forms, distinguished by their prefixes: AddEvent or Event. Generally, using functions of the AddEvent type is sufficient.
 
-[![xc-event.png](https://z3.ax1x.com/2021/11/23/opdyh6.png)](https://z3.ax1x.com/2021/11/23/opdyh6.png)
-
-Multiple processing functions can be registered for an event. The execution order is to execute the last registered function first, and finally execute the first registered function. When you want to intercept the current event or don’t want to pass it backward, you only need to parameter *pbHandled=true. 
+The difference is as follows: Since the event callback functions are created using syscall.NewCallBack, this method has a limitation of creating only about 2000 callback functions. Exceeding this limit will cause a panic. When using Event-type functions to register events and the callback function is an anonymous function, a new callback function is created each time. Without proper control, this could exceed the 2000-function limit. In contrast, AddEvent-type functions reuse already created callback functions, allowing you to freely use anonymous functions as event callbacks without worrying about exceeding the 2000-function limit.
 
 ## About version numbers
 
@@ -235,6 +178,9 @@ These classes are encapsulated based on more than a thousand functions in the xc
 | window       | Window           | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/window#Window) |
 | window       | FrameWindow      | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/window#FrameWindow) |
 | window       | ModalWindow      | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/window#ModalWindow) |
+| window       | TrayIcon         | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/window#TrayIcon) |
+| edge         | Edge             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/edge#Edge)    |
+| edge         | WebView          | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/webview#WebView) |
 | widget       | Shape            | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#Shape) |
 | widget       | ShapeEllipse     | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapeEllipse) |
 | widget       | ShapeGif         | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapeGif) |
@@ -267,6 +213,7 @@ These classes are encapsulated based on more than a thousand functions in the xc
 | widget       | Tree             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#Tree)  |
 | widget       | DateTime         | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#DateTime) |
 | widget       | MonthCal         | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#MonthCal) |
+| widget       | GifPlayer        | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#GifPlayer) |
 | adapter      | AdapterListView  | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/adapter#AdapterListView) |
 | adapter      | AdapterMap       | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/adapter#AdapterMap) |
 | adapter      | AdapterTable     | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/adapter#AdapterTable) |

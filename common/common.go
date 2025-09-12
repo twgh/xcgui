@@ -289,6 +289,8 @@ func GetProcessNameWithoutExt() string {
 	return strings.TrimSuffix(filename, extension)
 }
 
+// BoolToInt 将 bool 类型转换为 int 类型.
+//   - true 返回 1, false 返回 0.
 func BoolToInt(input bool) int {
 	if input {
 		return 1

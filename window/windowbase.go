@@ -779,10 +779,10 @@ func (w *windowBase) GetRectDPI() xc.RECT {
 	rc := xc.RECT{}
 	xc.XWnd_GetRect(w.Handle, &rc)
 	dpi := xc.XWnd_GetDPI(w.Handle)
-	rc.Left = xc.DpiConv(dpi, rc.Left)
-	rc.Top = xc.DpiConv(dpi, rc.Top)
-	rc.Right = xc.DpiConv(dpi, rc.Right)
-	rc.Bottom = xc.DpiConv(dpi, rc.Bottom)
+	rc.Left = xc.DpiConvRound(dpi, rc.Left)
+	rc.Top = xc.DpiConvRound(dpi, rc.Top)
+	rc.Right = xc.DpiConvRound(dpi, rc.Right)
+	rc.Bottom = xc.DpiConvRound(dpi, rc.Bottom)
 	return rc
 }
 
@@ -1435,12 +1435,20 @@ func (w *windowBase) SetSpaceRow(nSpace int32) *windowBase {
 	return w
 }
 
-// DpiConv 将int32类型的整数根据窗口dpi进行换算.
-//   - 开启自动DPI后, 你可能感觉到一些函数获取的坐标不对了, 因为你在用高分辨率屏幕, 然后系统里会有个缩放的设置, 可能是150%, 这时获取到的坐标应该乘以1.5才是屏幕上显示的真实的坐标.
+// DpiConv 将 int32 类型的整数根据窗口 dpi 进行换算.
+//   - 开启自动 DPI 后, 你可能感觉到一些函数获取的坐标不对了, 因为你在用高分辨率屏幕, 然后系统里会有个缩放的设置, 可能是 150%, 这时获取到的坐标应该乘以 1.5 才是屏幕上显示的真实的坐标.
 //
-// i: int32类型的整数.
+// i: int32 类型的整数.
 func (w *windowBase) DpiConv(i int32) int32 {
 	return xc.DpiConv(w.GetDPI(), i)
+}
+
+// DpiConvRound 将 int32 类型的整数根据窗口 dpi 进行换算, 计算结果会四舍五入.
+//   - 开启自动 DPI 后, 你可能感觉到一些函数获取的坐标不对了, 因为你在用高分辨率屏幕, 然后系统里会有个缩放的设置, 可能是 150%, 这时获取到的坐标应该乘以 1.5 才是屏幕上显示的真实的坐标.
+//
+// i: int32 类型的整数.
+func (w *windowBase) DpiConvRound(i int32) int32 {
+	return xc.DpiConvRound(w.GetDPI(), i)
 }
 
 // ------------------------- AddEvent ------------------------- //
