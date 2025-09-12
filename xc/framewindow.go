@@ -1,8 +1,9 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/common"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 
 	"github.com/twgh/xcgui/xcc"
 )
@@ -200,4 +201,14 @@ func XFrameWnd_GetPaneSplitBarWidth(hWindow int) int32 {
 // bottom: 底边间隔.
 func XFrameWnd_SetLayoutMargin(hWindow int, left, top, right, bottom int32) {
 	xFrameWnd_SetLayoutMargin.Call(uintptr(hWindow), uintptr(left), uintptr(top), uintptr(right), uintptr(bottom))
+}
+
+// 框架窗口_取码头元素. 返回元素句柄.
+//
+// hWindow: 窗口句柄.
+//
+// number: .
+func XFrameWnd_GetDock(hWindow int, number int32) int {
+	r, _, _ := xFrameWnd_GetDock.Call(uintptr(hWindow), uintptr(number))
+	return int(r)
 }

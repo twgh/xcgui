@@ -246,6 +246,12 @@ func (b *Button) EnableHotkeyPrefix(bEnable bool) *Button {
 	return b
 }
 
+// 按钮_清除动画.
+func (b *Button) ClearAnimation() *Button {
+	xc.XBtn_ClearAnimation(b.Handle)
+	return b
+}
+
 // ------------------------- AddEvent ------------------------- //
 
 // AddEvent_BnClick 添加按钮点击事件.

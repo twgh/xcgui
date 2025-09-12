@@ -218,3 +218,10 @@ func (fw *FrameWindow) SetLayoutMargin(left, top, right, bottom int32) *FrameWin
 	xc.XFrameWnd_SetLayoutMargin(fw.Handle, left, top, right, bottom)
 	return fw
 }
+
+// 框架窗口_取码头元素. 返回元素句柄.
+//
+// number: .
+func (fw *FrameWindow) GetDock(number int32) int {
+	return xc.XFrameWnd_GetDock(fw.Handle, number)
+}

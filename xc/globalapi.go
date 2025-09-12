@@ -1,10 +1,11 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/xcc"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/xcc"
 )
 
 var (
@@ -26,10 +27,15 @@ func IsUiThread() bool {
 	return ThreadId == getCurrentThreadId()
 }
 
-// XInitXCGUI 炫彩_初始化. 在调用本函数之前请先调用 xc.LoadXCGUI().
+// XInitXCGUI 炫彩_初始化.
 //
 // bD2D: 是否启用D2D.
 func XInitXCGUI(bD2D bool) bool {
+	moudle := LoadXCGUI()
+	if moudle.Handle() == 0 {
+		return false
+	}
+
 	r, _, _ := xInitXCGUI.Call(common.BoolPtr(bD2D))
 	if r != 0 {
 		ThreadId = getCurrentThreadId()

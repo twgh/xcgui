@@ -159,6 +159,11 @@ func (l *ListItemTemplate) List_GetCount() int32 {
 	return xc.XTemp_List_GetCount(l.Handle)
 }
 
+// 模板_获取内置模板, 返回模板句柄.
+func (l *ListItemTemplate) Get(nType xcc.ListItemTemp_Type_) int {
+	return xc.XTemp_Get(nType)
+}
+
 // 项模板_列表_移动列, 将指定列移动到目标位置.
 //
 // iColSrc: 源列索引.

@@ -241,3 +241,10 @@ func XBtn_EnableAnimation(hEle int, bEnable bool, bLoopPlay bool) {
 func XBtn_EnableHotkeyPrefix(hEle int, bEnable bool) {
 	xBtn_EnableHotkeyPrefix.Call(uintptr(hEle), common.BoolPtr(bEnable))
 }
+
+// 按钮_清除动画.
+//
+// hEle: 元素句柄.
+func XBtn_ClearAnimation(hEle int) {
+	xBtn_ClearAnimation.Call(uintptr(hEle))
+}

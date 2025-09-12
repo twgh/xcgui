@@ -147,3 +147,8 @@ func (s *ShapeGroupBox) EnableRoundAngle(bEnable bool) *ShapeGroupBox {
 	xc.XShapeGroupBox_EnableRoundAngle(s.Handle, bEnable)
 	return s
 }
+
+// 形状组框_取文本.
+func (s *ShapeGroupBox) GetText() string {
+	return xc.XShapeGroupBox_GetText(s.Handle)
+}

@@ -829,18 +829,18 @@ func AnsiToUnicode(pIn uintptr, inLen int32, pOut *string, outLen int32) int32 {
 	return xc.XC_AnsiToUnicode(pIn, inLen, pOut, outLen)
 }
 
-// 炫彩_取D2D工厂, 开启D2D有效, 返回 ID2D1Factory* .
-func GetD2dFactory() int {
+// 炫彩_取D2D工厂, 开启D2D有效, 返回 *ID2D1Factory.
+func GetD2dFactory() uintptr {
 	return xc.XC_GetD2dFactory()
 }
 
-// 炫彩_取DWrite工厂, 开启D2D有效, 返回 IDWriteFactory* .
-func GetDWriteFactory() int {
+// 炫彩_取DWrite工厂, 开启D2D有效, 返回 *IDWriteFactory.
+func GetDWriteFactory() uintptr {
 	return xc.XC_GetDWriteFactory()
 }
 
-// 炫彩_取WIC工厂, 开启D2D有效, 返回 IWICImagingFactory* .
-func GetWicFactory() int {
+// 炫彩_取WIC工厂, 开启D2D有效, 返回 *IWICImagingFactory.
+func GetWicFactory() uintptr {
 	return xc.XC_GetWicFactory()
 }
 

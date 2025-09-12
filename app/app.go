@@ -5,13 +5,15 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// Init 写出 xcgui.dll 到 windows 临时目录中 'xcgui+版本号+_编译时的目标架构' 文件夹里.
+// Init 写出 xcgui.dll 到 windows 临时目录中 'xcgui+版本号+_编译时的目标架构+_CRC32' 文件夹里.
+//   - 如果 dll 已存在就不会写出了.
 //   - 使用完本函数后无需再调用 xc.SetXcguiPath(), 内部已自动操作.
 func Init() error {
 	return xc.Init()
 }
 
-// InitOrExit 把 xcgui.dll 写出到 windows 临时目录中 'xcgui+版本号+_编译时的目标架构' 文件夹里.
+// InitOrExit 把 xcgui.dll 写出到 windows 临时目录中 'xcgui+版本号+_编译时的目标架构+_CRC32' 文件夹里.
+//   - 如果 dll 已存在就不会写出了.
 //   - 使用完本函数后无需再调用 xc.SetXcguiPath(), 内部已自动操作.
 //   - 如果出错, 会弹窗提示错误, 然后退出程序.
 func InitOrExit() {
@@ -28,15 +30,10 @@ type App struct {
 //
 // bD2D: 是否启用D2D.
 func New(bD2D bool) *App {
-	moudle := xc.LoadXCGUI()
-	if moudle.Handle() == 0 {
-		return nil
-	}
-	p := &App{}
 	if !xc.XInitXCGUI(bD2D) {
 		return nil
 	}
-	return p
+	return &App{}
 }
 
 // Run 炫彩_运行. 运行消息循环, 当炫彩窗口数量为0时退出.
@@ -940,18 +937,18 @@ func (a *App) LoadStyleFromString(pFileName string, pString string) bool {
 	return xc.XC_LoadStyleFromString(pFileName, pString)
 } */
 
-// 炫彩_取D2D工厂, 开启D2D有效, 返回 ID2D1Factory* .
-func (a *App) GetD2dFactory() int {
+// 炫彩_取D2D工厂, 开启D2D有效, 返回 *ID2D1Factory.
+func (a *App) GetD2dFactory() uintptr {
 	return xc.XC_GetD2dFactory()
 }
 
-// 炫彩_取DWrite工厂, 开启D2D有效, 返回 IDWriteFactory* .
-func (a *App) GetDWriteFactory() int {
+// 炫彩_取DWrite工厂, 开启D2D有效, 返回 *IDWriteFactory.
+func (a *App) GetDWriteFactory() uintptr {
 	return xc.XC_GetDWriteFactory()
 }
 
-// 炫彩_取WIC工厂, 开启D2D有效, 返回 IWICImagingFactory* .
-func (a *App) GetWicFactory() int {
+// 炫彩_取WIC工厂, 开启D2D有效, 返回 *IWICImagingFactory.
+func (a *App) GetWicFactory() uintptr {
 	return xc.XC_GetWicFactory()
 }
 

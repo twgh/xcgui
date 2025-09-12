@@ -1,8 +1,9 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/common"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 
 	"github.com/twgh/xcgui/xcc"
 )
@@ -162,4 +163,39 @@ func XPane_SetSelect(hEle int) bool {
 func XPane_IsGroupActivate(hEle int) bool {
 	r, _, _ := xPane_IsGroupActivate.Call(uintptr(hEle))
 	return r != 0
+}
+
+// 窗格_取TabBar. 返回 TabBar 句柄.
+//
+// hEle: 元素句柄.
+func XPane_GetTabBar(hEle int) int {
+	r, _, _ := xPane_GetTabBar.Call(uintptr(hEle))
+	return int(r)
+}
+
+// 窗格_取SplitBar. 返回 SplitBar 句柄.
+//
+// hEle: 元素句柄.
+func XPane_GetSplitBar(hEle int) int {
+	r, _, _ := xPane_GetSplitBar.Call(uintptr(hEle))
+	return int(r)
+}
+
+// 窗格_取标题栏按钮. 返回按钮句柄.
+//
+// hEle: 元素句柄.
+//
+// number: .
+func XPane_GetButton(hEle int, number int32) int {
+	r, _, _ := xPane_GetButton.Call(uintptr(hEle), uintptr(number))
+	return int(r)
+}
+
+// 窗格_显示控制按钮. 显示或隐藏窗格上的控制按钮.
+//
+// hEle: 元素句柄.
+//
+// bShow: 是否显示.
+func XPane_ShowButton(hEle int, bShow bool) {
+	xPane_ShowButton.Call(uintptr(hEle), common.BoolPtr(bShow))
 }

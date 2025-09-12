@@ -178,3 +178,28 @@ func (p *Pane) SetSelect() bool {
 func (p *Pane) IsGroupActivate() bool {
 	return xc.XPane_IsGroupActivate(p.Handle)
 }
+
+// 窗格_取TabBar. 返回 TabBar 句柄.
+func (p *Pane) GetTabBar() int {
+	return xc.XPane_GetTabBar(p.Handle)
+}
+
+// 窗格_取SplitBar. 返回 SplitBar 句柄.
+func (p *Pane) GetSplitBar() int {
+	return xc.XPane_GetSplitBar(p.Handle)
+}
+
+// 窗格_取标题栏按钮. 返回按钮句柄.
+//
+// number: .
+func (p *Pane) GetButton(number int32) int {
+	return xc.XPane_GetButton(p.Handle, number)
+}
+
+// 窗格_显示控制按钮. 显示或隐藏窗格上的控制按钮.
+//
+// bShow: 是否显示.
+func (p *Pane) ShowButton(bShow bool) *Pane {
+	xc.XPane_ShowButton(p.Handle, bShow)
+	return p
+}

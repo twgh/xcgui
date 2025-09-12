@@ -737,7 +737,7 @@ func (d *Draw) GDI_SetPixel(X, Y int32, crColor int) int {
 }
 
 // 绘制_取D2D渲染目标, 返回 *ID2D1RenderTarget.
-func (d *Draw) XDraw_GetD2dRenderTarget() int {
+func (d *Draw) XDraw_GetD2dRenderTarget() uintptr {
 	return xc.XDraw_GetD2dRenderTarget(d.Handle)
 }
 
@@ -1245,4 +1245,9 @@ func (d *Draw) ImageMaskEllipse(hImageFrame int, pRect *xc.RECT, pRcMask *xc.REC
 // 绘制_取字体, 返回字体句柄.
 func (d *Draw) GetFont() int {
 	return xc.XDraw_GetFont(d.Handle)
+}
+
+// 绘制_取D2D位图, 返回 *ID2D1Bitmap.
+func (d *Draw) GetD2dBitmap() uintptr {
+	return xc.XDraw_GetD2dBitmap(d.Handle)
 }

@@ -24,11 +24,11 @@ func GetVer() string {
 //   - 如果你想要更改它的位置, 可以在 xc.LoadXCGUI() 之前调用 xc.SetXcguiPath() 更改为其他路径.
 var xcguiPath = "xcgui.dll"
 
-// SetXcguiPath 手动设置 xcgui.dll 的路径. 未设置时, 默认值为'xcgui.dll'. 如果出错, 要么你输入的文件不存在, 要么你输入的不是dll文件.
+// SetXcguiPath 手动设置 xcgui.dll 的路径. 未设置时, 默认值为'xcgui.dll'. 如果出错, 要么你输入的文件不存在, 要么你输入的不是 dll 文件.
 //
 // XcguiPath: dll 完整路径（目录+文件名）, 也可以是相对路径.
 func SetXcguiPath(XcguiPath string) error {
-	// 判断是否为dll文件
+	// 判断是否为 dll 文件
 	if len(XcguiPath) < 5 {
 		return errors.New("XcguiPath 必须是一个dll文件")
 	}
@@ -46,22 +46,23 @@ func SetXcguiPath(XcguiPath string) error {
 	return nil
 }
 
-// GetXcguiPath 获取设置的xcgui.dll的路径.
+// GetXcguiPath 获取设置的 xcgui.dll 的路径.
 func GetXcguiPath() string {
 	return xcguiPath
 }
 
-// GetXcgui 获取加载的炫彩dll.
-//   - 你可以用这个来调用dll中的函数.
+// GetXcgui 获取加载的炫彩 dll 模块.
+//   - 你可以用这个来调用 dll 中的函数.
 func GetXcgui() *syscall.LazyDLL {
 	return xcgui
 }
 
-// WriteDll 把 xcgui.dll 写出到 windows 临时目录中 'xcgui+版本号+_编译时的目标架构' 文件夹里.
+// WriteDll 把 xcgui.dll 写出到 windows 临时目录中 'xcgui+版本号+_编译时的目标架构+_CRC32' 文件夹里.
+//   - 如果 dll 已存在就不会写出了.
 //   - 使用完本函数后无需再调用 xc.SetXcguiPath(), 内部已自动操作.
 func WriteDll(dll []byte) error {
 	tmpDir := os.TempDir()
-	tmpPath := filepath.Join(tmpDir, "xcgui"+GetVer()+"_"+runtime.GOARCH)
+	tmpPath := filepath.Join(tmpDir, "xcgui"+GetVer()+"_"+runtime.GOARCH+"_"+CRC32)
 	dllPath := filepath.Join(tmpPath, "xcgui.dll")
 	if PathExists2(dllPath) { // 已存在就不写出了
 		xcguiPath = dllPath
@@ -82,7 +83,8 @@ func WriteDll(dll []byte) error {
 	return nil
 }
 
-// WriteDllOrExit 把 xcgui.dll 写出到 windows 临时目录中 'xcgui+版本号+_编译时的目标架构' 文件夹里.
+// WriteDllOrExit 把 xcgui.dll 写出到 windows 临时目录中 'xcgui+版本号+_编译时的目标架构+_CRC32' 文件夹里.
+//   - 如果 dll 已存在就不会写出了.
 //   - 使用完本函数后无需再调用 xc.SetXcguiPath(), 内部已自动操作.
 //   - 如果出错, 会弹窗提示错误, 然后退出程序.
 func WriteDllOrExit(dll []byte) {
@@ -94,22 +96,24 @@ func WriteDllOrExit(dll []byte) {
 	}
 }
 
-// Init 写出 xcgui.dll 到 windows 临时目录中 'xcgui+版本号+_编译时的目标架构' 文件夹里.
+// Init 写出 xcgui.dll 到 windows 临时目录中 'xcgui+版本号+_编译时的目标架构+_CRC32' 文件夹里.
+//   - 如果 dll 已存在就不会写出了.
 //   - 使用完本函数后无需再调用 xc.SetXcguiPath(), 内部已自动操作.
 func Init() error {
 	return WriteDll(DLL)
 }
 
-// InitOrExit 把 xcgui.dll 写出到 windows 临时目录中 'xcgui+版本号+_编译时的目标架构' 文件夹里.
+// InitOrExit 把 xcgui.dll 写出到 windows 临时目录中 'xcgui+版本号+_编译时的目标架构+_CRC32' 文件夹里.
+//   - 如果 dll 已存在就不会写出了.
 //   - 使用完本函数后无需再调用 xc.SetXcguiPath(), 内部已自动操作.
 //   - 如果出错, 会弹窗提示错误, 然后退出程序.
 func InitOrExit() {
 	WriteDllOrExit(DLL)
 }
 
-// DelDll 删除 xcguiPath 指向的文件, 其默认值为xcgui.dll.
+// DelDll 删除 xcguiPath 指向的文件, 其默认值为 xcgui.dll.
 func DelDll() error {
-	return os.RemoveAll(xcguiPath)
+	return os.Remove(xcguiPath)
 }
 
 var (
@@ -409,6 +413,7 @@ var (
 	xBtn_AddAnimationFrame  *syscall.LazyProc
 	xBtn_EnableAnimation    *syscall.LazyProc
 	xBtn_EnableHotkeyPrefix *syscall.LazyProc
+	xBtn_ClearAnimation     *syscall.LazyProc
 
 	// Element.
 	xEle_Create                     *syscall.LazyProc
@@ -542,6 +547,7 @@ var (
 	xFrameWnd_SetPaneSplitBarWidth   *syscall.LazyProc
 	xFrameWnd_GetPaneSplitBarWidth   *syscall.LazyProc
 	xFrameWnd_SetLayoutMargin        *syscall.LazyProc
+	xFrameWnd_GetDock                *syscall.LazyProc
 
 	// Menu.
 	xMenu_Create               *syscall.LazyProc
@@ -1004,6 +1010,7 @@ var (
 	xShapeGroupBox_GetTextOffset    *syscall.LazyProc
 	xShapeGroupBox_GetRoundAngle    *syscall.LazyProc
 	xShapeGroupBox_EnableRoundAngle *syscall.LazyProc
+	xShapeGroupBox_GetText          *syscall.LazyProc
 
 	// ShapeLine.
 	xShapeLine_Create      *syscall.LazyProc
@@ -1159,6 +1166,7 @@ var (
 	xDraw_ImageMaskRect           *syscall.LazyProc
 	xDraw_ImageMaskEllipse        *syscall.LazyProc
 	xDraw_GetFont                 *syscall.LazyProc
+	xDraw_GetD2dBitmap            *syscall.LazyProc
 
 	// Ease.
 	xEase_Linear  *syscall.LazyProc
@@ -1308,6 +1316,7 @@ var (
 	xTemp_LoadFromMemEx      *syscall.LazyProc
 	xTemp_LoadZipRes         *syscall.LazyProc
 	xTemp_LoadZipResEx       *syscall.LazyProc
+	xTemp_Get                *syscall.LazyProc
 
 	// Resource.
 	xRes_EnableDelayLoad     *syscall.LazyProc
@@ -1617,6 +1626,10 @@ var (
 	xPane_DrawPane         *syscall.LazyProc
 	xPane_SetSelect        *syscall.LazyProc
 	xPane_IsGroupActivate  *syscall.LazyProc
+	xPane_GetTabBar        *syscall.LazyProc
+	xPane_GetSplitBar      *syscall.LazyProc
+	xPane_GetButton        *syscall.LazyProc
+	xPane_ShowButton       *syscall.LazyProc
 
 	// ScrollBar.
 	xSBar_Create             *syscall.LazyProc
@@ -1918,14 +1931,12 @@ var (
 // 保证 LoadXCGUI 只运行一次.
 var once = sync.Once{}
 
-// LoadXCGUI 将从 xcguiPath 加载xcgui.dll. xcguiPath 的默认值是'xcgui.dll'.
-//
-//	本函数在进程运行期间只需调用一次, 而且也只会被调用一次.
-//
-//	如果你想要更改xcgui.dll的路径, 那么请在调用本函数之前调用 xc.SetXcguiPath().
-//
-//	注意: app.New() 函数内部会自动调用 xc.LoadXCGUI().
-//	所以一般是不需要手动调用的, 除非你没有使用 app.New() 函数, 而是使用了 xc.XInitXCGUI(), 那么你需要在 xc.XInitXCGUI() 之前调用 xc.LoadXCGUI().
+// LoadXCGUI 将从 xcguiPath 加载 xcgui.dll.
+//   - xcguiPath 的默认值是'xcgui.dll'
+//   - 本函数在进程运行期间只需调用一次, 而且也只会被调用一次.
+//   - 如果你想要更改 xcgui.dll 的路径, 那么请在调用本函数之前调用 xc.SetXcguiPath().
+//   - 注意: app.New() 和 xc.XInitXCGUI() 函数内部会自动调用 xc.LoadXCGUI(), 是不需要手动调用的.
+//   - 所以这个函数其实已经不需要公开了, 但为了兼容以前的代码还是保留公开状态.
 func LoadXCGUI() *syscall.LazyDLL {
 	once.Do(_loadXCGUI)
 	return xcgui
@@ -2228,6 +2239,7 @@ func _loadXCGUI() {
 	xBtn_AddAnimationFrame = xcgui.NewProc("XBtn_AddAnimationFrame")
 	xBtn_EnableAnimation = xcgui.NewProc("XBtn_EnableAnimation")
 	xBtn_EnableHotkeyPrefix = xcgui.NewProc("XBtn_EnableHotkeyPrefix")
+	xBtn_ClearAnimation = xcgui.NewProc("XBtn_ClearAnimation")
 
 	// Element.
 	xEle_Create = xcgui.NewProc("XEle_Create")
@@ -2361,6 +2373,7 @@ func _loadXCGUI() {
 	xFrameWnd_SetPaneSplitBarWidth = xcgui.NewProc("XFrameWnd_SetPaneSplitBarWidth")
 	xFrameWnd_GetPaneSplitBarWidth = xcgui.NewProc("XFrameWnd_GetPaneSplitBarWidth")
 	xFrameWnd_SetLayoutMargin = xcgui.NewProc("XFrameWnd_SetLayoutMargin")
+	xFrameWnd_GetDock = xcgui.NewProc("XFrameWnd_GetDock")
 
 	// Menu.
 	xMenu_Create = xcgui.NewProc("XMenu_Create")
@@ -2822,6 +2835,7 @@ func _loadXCGUI() {
 	xShapeGroupBox_GetTextOffset = xcgui.NewProc("XShapeGroupBox_GetTextOffset")
 	xShapeGroupBox_GetRoundAngle = xcgui.NewProc("XShapeGroupBox_GetRoundAngle")
 	xShapeGroupBox_EnableRoundAngle = xcgui.NewProc("XShapeGroupBox_EnableRoundAngle")
+	xShapeGroupBox_GetText = xcgui.NewProc("XShapeGroupBox_GetText")
 
 	// ShapeLine.
 	xShapeLine_Create = xcgui.NewProc("XShapeLine_Create")
@@ -2977,6 +2991,7 @@ func _loadXCGUI() {
 	xDraw_ImageMaskRect = xcgui.NewProc("XDraw_ImageMaskRect")
 	xDraw_ImageMaskEllipse = xcgui.NewProc("XDraw_ImageMaskEllipse")
 	xDraw_GetFont = xcgui.NewProc("XDraw_GetFont")
+	xDraw_GetD2dBitmap = xcgui.NewProc("XDraw_GetD2dBitmap")
 
 	// Ease.
 	xEase_Linear = xcgui.NewProc("XEase_Linear")
@@ -3126,6 +3141,7 @@ func _loadXCGUI() {
 	xTemp_LoadFromMemEx = xcgui.NewProc("XTemp_LoadFromMemEx")
 	xTemp_LoadZipRes = xcgui.NewProc("XTemp_LoadZipRes")
 	xTemp_LoadZipResEx = xcgui.NewProc("XTemp_LoadZipResEx")
+	xTemp_Get = xcgui.NewProc("XTemp_Get")
 
 	// Resource.
 	xRes_EnableDelayLoad = xcgui.NewProc("XRes_EnableDelayLoad")
@@ -3435,6 +3451,10 @@ func _loadXCGUI() {
 	xPane_DrawPane = xcgui.NewProc("XPane_DrawPane")
 	xPane_SetSelect = xcgui.NewProc("XPane_SetSelect")
 	xPane_IsGroupActivate = xcgui.NewProc("XPane_IsGroupActivate")
+	xPane_GetTabBar = xcgui.NewProc("XPane_GetTabBar")
+	xPane_GetSplitBar = xcgui.NewProc("XPane_GetSplitBar")
+	xPane_GetButton = xcgui.NewProc("XPane_GetButton")
+	xPane_ShowButton = xcgui.NewProc("XPane_ShowButton")
 
 	// ScrollBar.
 	xSBar_Create = xcgui.NewProc("XSBar_Create")

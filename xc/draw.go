@@ -811,9 +811,9 @@ func XDraw_GDI_SetPixel(hDraw int, X, Y int32, crColor int) int {
 // 绘制_取D2D渲染目标, 返回 *ID2D1RenderTarget.
 //
 // hDraw: 图形绘制句柄.
-func XDraw_GetD2dRenderTarget(hDraw int) int {
+func XDraw_GetD2dRenderTarget(hDraw int) uintptr {
 	r, _, _ := xDraw_GetD2dRenderTarget.Call(uintptr(hDraw))
-	return int(r)
+	return r
 }
 
 // 绘制_图标, 绘制图标, DrawIconEx()参见MSDN.
@@ -1380,4 +1380,12 @@ func XDraw_D2D_Clear(hDraw int, color int) {
 func XDraw_GetFont(hDraw int) int {
 	r, _, _ := xDraw_GetFont.Call(uintptr(hDraw))
 	return int(r)
+}
+
+// 绘制_取D2D位图, 返回 *ID2D1Bitmap.
+//
+// hDraw: 图形绘制句柄.
+func XDraw_GetD2dBitmap(hDraw int) uintptr {
+	r, _, _ := xDraw_GetD2dBitmap.Call(uintptr(hDraw))
+	return r
 }

@@ -335,3 +335,9 @@ func XTemp_List_MoveColumn(hTemp int, iColSrc, iColDest int32) bool {
 	r, _, _ := xTemp_List_MoveColumn.Call(uintptr(hTemp), uintptr(iColSrc), uintptr(iColDest))
 	return r != 0
 }
+
+// 模板_获取内置模板, 返回模板句柄.
+func XTemp_Get(nType xcc.ListItemTemp_Type_) int {
+	r, _, _ := xTemp_Get.Call(uintptr(nType))
+	return int(r)
+}

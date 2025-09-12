@@ -1,8 +1,9 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/common"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 )
 
 // 形状组框_创建, 创建组框形状对象, 返回句柄.
@@ -110,4 +111,12 @@ func XShapeGroupBox_GetRoundAngle(hShape int, pWidth *int32, pHeight *int32) {
 // bEnable: 是否启用.
 func XShapeGroupBox_EnableRoundAngle(hShape int, bEnable bool) {
 	xShapeGroupBox_EnableRoundAngle.Call(uintptr(hShape), common.BoolPtr(bEnable))
+}
+
+// 形状组框_取文本.
+//
+// hShape: 形状对象句柄.
+func XShapeGroupBox_GetText(hShape int) string {
+	r, _, _ := xShapeGroupBox_GetText.Call(uintptr(hShape))
+	return common.UintPtrToString(r)
 }
