@@ -465,6 +465,9 @@ func (i *ICoreWebView2) RemovePermissionRequested(token EventRegistrationToken) 
 }
 
 // PostWebMessageAsString 将指定的 webMessage 发布到此 WebView 中的顶级文档。
+//   - 其行为方式与 PostWebMessageAsJson 完全相同.
+//   - 但 window.chrome.webview 消息的事件参数的 data 属性是一个字符串，其值与 webMessageAsString 相同。
+//   - 如果希望使用简单字符串而非 JSON 对象进行通信，请使用此方法代替 PostWebMessageAsJson。
 //
 // webMessageAsString: JavaScript 对象的简单字符串，而不是 JSON 字符串表示。
 func (i *ICoreWebView2) PostWebMessageAsString(webMessageAsString string) error {
@@ -483,6 +486,12 @@ func (i *ICoreWebView2) PostWebMessageAsString(webMessageAsString string) error 
 }
 
 // PostWebMessageAsJSON 将指定的 webMessage 发布到此 WebView 中的顶级文档。
+//   - 通过订阅页面文档的 message 事件（属于window.chrome.webview）来接收消息。
+//   - window.chrome.webview.addEventListener('message', handler)
+//   - 事件参数是 MessageEvent 的实例。
+//   - 事件参数的 data 属性是将 webMessage 字符串参数解析为 JSON 字符串后得到的 JavaScript 对象。
+//   - 事件参数的 source 属性是对 window.chrome.webview 对象的引用。
+//   - 消息以异步方式传递。如果在消息发布到页面之前发生导航，该消息将被丢弃。
 //
 // webMessageAsJSON: JavaScript 对象的 JSON 字符串.
 func (i *ICoreWebView2) PostWebMessageAsJSON(webMessageAsJSON string) error {

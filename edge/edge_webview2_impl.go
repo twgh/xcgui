@@ -38,12 +38,10 @@ type WebViewEventImpl struct {
 	// 权限map
 	permissions map[COREWEBVIEW2_PERMISSION_KIND]COREWEBVIEW2_PERMISSION_STATE
 
-	// 主机名
-	hostName string
-	// 嵌入的文件系统
-	embedFS fs.FS
 	// 第一次加载时使用的
 	firstResponse *ICoreWebView2WebResourceResponse
+	// 是否启用虚拟主机名和嵌入文件系统之间的映射
+	enableVirtualHostNameToEmbedFSMapping bool
 }
 
 // CreateNewWebViewEventImpl 获取一个新的 WebView 事件接口实现对象.
@@ -55,6 +53,13 @@ func (w *WebViewEventImpl) CreateNewWebViewEventImpl() *WebViewEventImpl {
 		Controller:  w.Controller,
 		Edge:        w.Edge,
 	}
+}
+
+// SetPermission 设置权限。设置后如果网页请求该权限, 会根据设置的 state 来允许或拒绝请求。
+func (w *WebViewEventImpl) SetPermission(kind COREWEBVIEW2_PERMISSION_KIND, state COREWEBVIEW2_PERMISSION_STATE) {
+	w.rwxPermissions.Lock()
+	w.permissions[kind] = state
+	w.rwxPermissions.Unlock()
 }
 
 // --------------------------- 回调实现 ---------------------------
@@ -271,28 +276,22 @@ func (w *WebViewEventImpl) WebResourceRequested(sender *ICoreWebView2, args *ICo
 		}
 	}()
 
-	if w.hostName != "" { // 使用嵌入的文件系统映射
+	if w.enableVirtualHostNameToEmbedFSMapping { // 使用嵌入的文件系统映射
 		request, err := args.GetRequest()
 		if err != nil {
 			ReportErrorAuto(errors.New("webResourceRequested, GetRequest failed: " + err.Error()))
 			return 0
 		}
-
 		// 获取请求uri
 		uri := request.MustGetUri()
-		// 判断请求路径是否以 hostName 开头
-		if !strings.HasPrefix(uri, w.hostName) {
-			return 0
-		}
 
-		// 去除 hostName
-		embedPath := strings.TrimPrefix(uri, w.hostName)
-		if embedPath == "" {
+		embedPath, embedFS := EmbedFSMapping.Match(uri)
+		if embedPath == "" || embedFS == nil {
 			return 0
 		}
 
 		// 从嵌入文件系统读取内容
-		data, err := fs.ReadFile(w.embedFS, embedPath)
+		data, err := fs.ReadFile(embedFS, embedPath)
 		if err != nil {
 			// 固定会有一个对 favicon.ico 的请求, 没有这个文件的话, 这里肯定会触发一次, 没啥影响
 			ReportErrorAuto(errors.New("webResourceRequested, ReadFile failed1: " + err.Error()))

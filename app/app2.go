@@ -120,6 +120,24 @@ func CallUTAny(f func(data ...interface{}) int, data ...interface{}) int {
 	return xc.CallUTAny(f, data...)
 }
 
+// Auto 用于在UI线程操作UI.
+//   - 会自动判断当前是否在UI线程, 如果在UI线程则直接执行, 如果不在UI线程则会调用 CallUT.
+func Auto(f func()) {
+	xc.Auto(f)
+}
+
+// AutoInt 用于在UI线程操作UI.
+//   - 会自动判断当前是否在UI线程, 如果在UI线程则直接执行, 如果不在UI线程则会调用 CallUiThreadEx.
+func AutoInt(f func(data int) int, data int) int {
+	return xc.AutoInt(f, data)
+}
+
+// AutoAny 用于在UI线程操作UI.
+//   - 会自动判断当前是否在UI线程, 如果在UI线程则直接执行, 如果不在UI线程则会调用 CallUTAny.
+func AutoAny(f func(data ...interface{}) int, data ...interface{}) int {
+	return xc.AutoAny(f, data...)
+}
+
 // CallUiThreader 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
 //   - 与 CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数.
 //

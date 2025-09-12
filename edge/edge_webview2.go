@@ -1,9 +1,7 @@
 package edge
 
 import (
-	"embed"
 	"errors"
-	"io/fs"
 	"syscall"
 
 	"github.com/twgh/xcgui/wapi"
@@ -53,7 +51,35 @@ func (w *WebView2) Eval(script string) error {
 	return w.CoreWebView.ExecuteScript(script, nil)
 }
 
-// Refresh 网页_刷新, 调用js代码刷新(location.reload). 必须在 UI 线程执行.
+// PostWebMessageAsString 将指定的 webMessage 发布到此 WebView 中的顶级文档。
+//   - 其行为方式与 PostWebMessageAsJson 完全相同.
+//   - 但 window.chrome.webview 消息的事件参数的 data 属性是一个字符串，其值与 webMessageAsString 相同。
+//   - 如果希望使用简单字符串而非 JSON 对象进行通信，请使用此方法代替 PostWebMessageAsJson。
+//
+// webMessageAsString: JavaScript 对象的简单字符串，而不是 JSON 字符串表示。
+func (i *WebView2) PostWebMessageAsString(webMessageAsString string) error {
+	return i.CoreWebView.PostWebMessageAsString(webMessageAsString)
+}
+
+// PostWebMessageAsJSON 将指定的 webMessage 发布到此 WebView 中的顶级文档。
+//   - 通过订阅页面文档的 message 事件（属于window.chrome.webview）来接收消息。
+//   - window.chrome.webview.addEventListener('message', handler)
+//   - 事件参数是 MessageEvent 的实例。
+//   - 事件参数的 data 属性是将 webMessage 字符串参数解析为 JSON 字符串后得到的 JavaScript 对象。
+//   - 事件参数的 source 属性是对 window.chrome.webview 对象的引用。
+//   - 消息以异步方式传递。如果在消息发布到页面之前发生导航，该消息将被丢弃。
+//
+// webMessageAsJSON: JavaScript 对象的 JSON 字符串.
+func (i *WebView2) PostWebMessageAsJSON(webMessageAsJSON string) error {
+	return i.CoreWebView.PostWebMessageAsJSON(webMessageAsJSON)
+}
+
+// GetSource 获取当前顶级文档的URI。如果导航正在进行中，则返回即将导航到的URI。
+func (i *WebView2) GetSource() string {
+	return i.CoreWebView.MustGetSource()
+}
+
+// Refresh 网页_刷新, 调用 js 代码刷新(location.reload). 必须在 UI 线程执行.
 //
 // forceReload: 是否强制刷新, 默认为false. 为 true 时，浏览器会强制重新加载页面，忽略缓存。这意味着无论页面是否已经在本地缓存中，都会从服务器重新获取资源。
 func (w *WebView2) Refresh(forceReload ...bool) error {
@@ -62,6 +88,31 @@ func (w *WebView2) Refresh(forceReload ...bool) error {
 		b = "true"
 	}
 	return w.Eval("location.reload(" + b + ");")
+}
+
+// Reload 重新加载当前页面。
+func (w *WebView2) Reload() error {
+	return w.CoreWebView.Reload()
+}
+
+// GoBack 将 WebView 导航到导航历史记录中的上一页。
+func (w *WebView2) GoBack() error {
+	return w.CoreWebView.GoBack()
+}
+
+// GoForward 将 WebView 导航到导航历史记录中的下一页。
+func (w *WebView2) GoForward() error {
+	return w.CoreWebView.GoForward()
+}
+
+// Stop 停止所有导航和挂起的资源获取。不停止脚本。
+func (w *WebView2) Stop() error {
+	return w.CoreWebView.Stop()
+}
+
+// GetDocumentTitle 获取当前顶级文档的标题。
+func (w *WebView2) GetDocumentTitle() string {
+	return w.CoreWebView.MustGetDocumentTitle()
 }
 
 // Show 显示或隐藏 webview。
@@ -77,13 +128,6 @@ func (w *WebView2) Resize() error {
 	var bounds xc.RECT
 	wapi.GetClientRect(w.hwnd, &bounds)
 	return w.Controller.SetBounds(bounds)
-}
-
-// SetPermission 设置权限。设置后如果网页请求该权限, 会根据设置的 state 来允许或拒绝请求。
-func (w *WebView2) SetPermission(kind COREWEBVIEW2_PERMISSION_KIND, state COREWEBVIEW2_PERMISSION_STATE) {
-	w.rwxPermissions.Lock()
-	w.permissions[kind] = state
-	w.rwxPermissions.Unlock()
 }
 
 // AddWebResourceRequestedFilter 添加web资源请求过滤器。[已过时]
@@ -274,58 +318,48 @@ func (w *WebView2) SetVirtualHostNameToFolderMapping(hostName string, folderPath
 	return w.WebView2_3.SetVirtualHostNameToFolderMapping(hostName, folderPath, accessKind)
 }
 
-// 设置虚拟主机名和嵌入文件系统之间的映射，以便通过该主机名对网站可用.
-//
-// hostName: 要映射的主机名。
-//
-// embedFS: 要映射的文件系统。
-//
-// dir: 上面嵌入的目录名。例如: "assets". 不填则自动获取.
-func (w *WebView2) SetVirtualHostNameToEmbedFSMapping(hostName string, embedFS embed.FS, dir ...string) error {
-	var dirName string
+// EnableVirtualHostNameToEmbedFSMapping 启用虚拟主机名和嵌入文件系统之间的映射。
+//   - 启用后, 该 WebView 可使用全局的虚拟主机名和嵌入文件系统之间的映射来处理请求。
+func (w *WebView2) EnableVirtualHostNameToEmbedFSMapping(enable bool) error {
+	var err error
+	filter := "http*://*"
 
-	if len(dir) > 0 { // 使用指定的目录名
-		dirName = dir[0]
-	} else {
-		// 自动检测目录名
-		entries, err := embedFS.ReadDir(".")
+	if enable {
+		if w.WebView2_22 == nil {
+			w.WebView2_22, err = w.CoreWebView.GetICoreWebView2_22()
+			if err == nil {
+				err = w.WebView2_22.AddWebResourceRequestedFilterWithRequestSourceKinds(filter, COREWEBVIEW2_WEB_RESOURCE_CONTEXT_ALL, COREWEBVIEW2_WEB_RESOURCE_REQUEST_SOURCE_KINDS_ALL)
+			} else {
+				err = w.AddWebResourceRequestedFilter(filter, COREWEBVIEW2_WEB_RESOURCE_CONTEXT_ALL)
+			}
+		}
 		if err != nil {
-			return errors.New("error reported when automatically obtaining directory name: " + err.Error())
+			return err
 		}
-		if len(entries) != 1 || !entries[0].IsDir() {
-			return errors.New("automatic retrieval of directory name failed")
+
+		// 添加网页资源请求事件, 添加空回调, 主要目的是注册一下事件
+		_, err = w.Event_WebResourceRequested(nil, true)
+		if err != nil {
+			return err
 		}
-		dirName = entries[0].Name()
+		if !once { // 只创建一次
+			w.firstResponse, err = w.Edge.Environment.CreateWebResourceResponse(nil, 200, "OK", "")
+			ReportErrorAuto(err)
+		}
+	} else {
+		if w.WebView2_22 == nil {
+			w.WebView2_22, err = w.CoreWebView.GetICoreWebView2_22()
+			if err == nil {
+				err = w.WebView2_22.RemoveWebResourceRequestedFilterWithRequestSourceKinds(filter, COREWEBVIEW2_WEB_RESOURCE_CONTEXT_ALL, COREWEBVIEW2_WEB_RESOURCE_REQUEST_SOURCE_KINDS_ALL)
+			} else {
+				err = w.CoreWebView.RemoveWebResourceRequestedFilter(filter, COREWEBVIEW2_WEB_RESOURCE_CONTEXT_ALL)
+			}
+		}
+		if err != nil {
+			return err
+		}
 	}
 
-	subFS, err := fs.Sub(embedFS, dirName)
-	if err != nil {
-		return errors.New("failed to create sub file system: " + err.Error())
-	}
-
-	filter := "*://" + hostName + "/*"
-	if w.WebView2_22 == nil {
-		w.WebView2_22, err = w.CoreWebView.GetICoreWebView2_22()
-		if err == nil {
-			err = w.WebView2_22.AddWebResourceRequestedFilterWithRequestSourceKinds(filter, COREWEBVIEW2_WEB_RESOURCE_CONTEXT_ALL, COREWEBVIEW2_WEB_RESOURCE_REQUEST_SOURCE_KINDS_ALL)
-		} else {
-			err = w.AddWebResourceRequestedFilter(filter, COREWEBVIEW2_WEB_RESOURCE_CONTEXT_ALL)
-		}
-	}
-	if err != nil {
-		return err
-	}
-
-	// 添加网页资源请求事件, 添加空回调, 主要目的是注册一下事件
-	_, err = w.Event_WebResourceRequested(nil, true)
-	if err != nil {
-		return err
-	}
-	if !once { // 只创建一次
-		w.firstResponse, err = w.Edge.Environment.CreateWebResourceResponse(nil, 200, "OK", "")
-		ReportErrorAuto(err)
-	}
-	w.hostName = "http://" + hostName + "/"
-	w.embedFS = subFS
+	w.enableVirtualHostNameToEmbedFSMapping = enable
 	return nil
 }
