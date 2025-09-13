@@ -186,7 +186,7 @@ xc 包里包含 xcgui.dll 里所有的 API，有近 2000 个函数，不习惯�
 | 模态窗口            | window     | ModalWindow     | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/window#ModalWindow)      |
 | 托盘图标            | window     | TrayIcon        | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/window#TrayIcon)         |
 | WebView 环境 | edge | Edge | √ | [文档](https://pkg.go.dev/github.com/twgh/xcgui/edge#Edge) |
-| WebView        | edge    | WebView         | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/webview#WebView)         |
+| WebView        | edge    | WebView         | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/edge#WebView)     |
 | 形状对象            | widget     | Shape           | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#Shape)            |
 | 圆形形状对象          | widget     | ShapeEllipse    | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapeEllipse)     |
 | 形状对象GIF         | widget     | ShapeGif        | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapeGif)         |

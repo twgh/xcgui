@@ -181,7 +181,7 @@ These classes are encapsulated based on more than a thousand functions in the xc
 | window       | ModalWindow      | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/window#ModalWindow) |
 | window       | TrayIcon         | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/window#TrayIcon) |
 | edge         | Edge             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/edge#Edge)    |
-| edge         | WebView          | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/webview#WebView) |
+| edge         | WebView          | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/edge#WebView) |
 | widget       | Shape            | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#Shape) |
 | widget       | ShapeEllipse     | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapeEllipse) |
 | widget       | ShapeGif         | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/widget#ShapeGif) |
