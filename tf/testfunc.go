@@ -1,10 +1,11 @@
 package tf
 
 import (
+	"runtime"
+
 	"github.com/twgh/xcgui/app"
 	"github.com/twgh/xcgui/window"
 	"github.com/twgh/xcgui/xcc"
-	"runtime"
 )
 
 // TFunc 测试用程序. 测试时使用的函数.
@@ -13,6 +14,7 @@ import (
 func TFunc(f func(a *app.App, w *window.Window)) {
 	runtime.LockOSThread()
 	defer runtime.UnlockOSThread()
+	app.InitOrExit()
 	a := app.New(true)
 	a.EnableDPI(true)
 	a.EnableAutoDPI(true)

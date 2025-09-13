@@ -2,9 +2,6 @@ package webviewloader
 
 import (
 	"errors"
-	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
-	"github.com/twgh/xcgui/xc"
 	"log"
 	"os"
 	"path/filepath"
@@ -12,6 +9,10 @@ import (
 	"sync"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/xc"
 )
 
 func init() {
@@ -33,7 +34,7 @@ var dllPath = "WebView2Loader.dll"
 
 // GetVersion 返回内置的 WebView2Loader.dll 的版本号。
 func GetVersion() string {
-	return "1.0.3240.44"
+	return "1.0.3485.44"
 }
 
 // writeDll 把 WebView2Loader.dll 写出到 windows 临时目录中 'WebView2Loader+版本号+_编译时的目标架构' 文件夹里.

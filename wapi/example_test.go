@@ -39,7 +39,9 @@ func ExampleFindWindowExW() {
 }
 
 func ExampleClientToScreen() {
+	app.InitOrExit()
 	a := app.New(true)
+	a.EnableAutoDPI(true).EnableDPI(true)
 	w := window.New(0, 0, 300, 300, "", 0, xcc.Window_Style_Default)
 
 	pt := wapi.POINT{X: 0, Y: 0}
