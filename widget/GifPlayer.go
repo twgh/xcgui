@@ -2,12 +2,13 @@ package widget
 
 import (
 	"errors"
-	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/xc"
-	"github.com/twgh/xcgui/xcc"
 	"io"
 	"sync"
 	"time"
+
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
 )
 
 // GifPlayer Gif 播放器.
@@ -72,7 +73,7 @@ func (p *GifPlayer) Play(hEle int, fullEle bool, loopCount int, onFrame ...func(
 			xc.XDraw_Image(hDraw, p.HImages[gph.GetCurrentFrame()], 0, 0)
 		}
 		return 0
-	})
+	}, true)
 
 	// 帧事件
 	if len(onFrame) > 0 {

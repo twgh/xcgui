@@ -36,7 +36,7 @@ func XTemp_LoadZip(nType xcc.ListItemTemp_Type_, pZipFile string, pFileName stri
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
-// data: 模板文件数据.
+// data: 内存块数据.
 //
 // pFileName: 文件名.
 //
@@ -64,7 +64,7 @@ func XTemp_LoadEx(nType xcc.ListItemTemp_Type_, pFileName string, pOutTemp1 *int
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
-// data: 模板文件数据.
+// data: 内存块数据.
 func XTemp_LoadFromMem(nType xcc.ListItemTemp_Type_, data []byte) int {
 	r, _, _ := xTemp_LoadFromMem.Call(uintptr(nType), common.ByteSliceDataPtr(&data), uintptr(len(data)))
 	return int(r)
@@ -74,7 +74,7 @@ func XTemp_LoadFromMem(nType xcc.ListItemTemp_Type_, data []byte) int {
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
-// data: 模板文件数据.
+// data: 内存块数据.
 //
 // pOutTemp1: 返回模板句柄1, 项模板.
 //
@@ -142,7 +142,7 @@ func XTemp_LoadZipEx(nType xcc.ListItemTemp_Type_, pZipFile string, pFileName st
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
-// data: 模板文件数据.
+// data: 内存块数据.
 //
 // pFileName: 文件名.
 //

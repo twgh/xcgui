@@ -146,11 +146,10 @@ const (
 	MonthCal_State_Flag_Item_Select    CombinedState = 0x0400 // 项-选择
 	MonthCal_State_Flag_Item_Select_No CombinedState = 0x0800 // 项-未选择
 
-	MonthCal_State_Flag_Item_Today      CombinedState = 0x1000  // 项-今天
-	MonthCal_State_Flag_Item_Other      CombinedState = 0x2000  // 项-上月及下月
-	MonthCal_State_Flag_Item_Last_Month CombinedState = 0x4000  // 项-上月
-	MonthCal_State_Flag_Item_Cur_Month  CombinedState = 0x8000  // 项-当月
-	MonthCal_State_Flag_Item_Next_Month CombinedState = 0x10000 // 项-下月
+	MonthCal_State_Flag_Item_Today      CombinedState = 0x1000 // 项-今天
+	MonthCal_State_Flag_Item_Last_Month CombinedState = 0x2000 // 项-上月
+	MonthCal_State_Flag_Item_Cur_Month  CombinedState = 0x4000 // 项-当月
+	MonthCal_State_Flag_Item_Next_Month CombinedState = 0x8000 // 项-下月
 )
 
 // 组合状态

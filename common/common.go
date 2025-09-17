@@ -298,6 +298,12 @@ func BoolToInt(input bool) int {
 	return 0
 }
 
+// IntToBool 将 int 类型转换为 bool 类型.
+//   - 0 返回 false, 其他值返回 true.
+func IntToBool(input int) bool {
+	return input != 0
+}
+
 // BoolToString 将 bool 类型转换为字符串 true 或 false.
 func BoolToString(input bool) string {
 	if input {
@@ -328,4 +334,27 @@ func ErrorToErrno(err error) (syscall.Errno, bool) {
 		return errno, true
 	}
 	return 0, false
+}
+
+// Choose 根据条件选择返回两个值中的一个.
+//
+// b: 选择条件.
+//
+// v1: 当 b 为 true 时返回的值.
+//
+// v2: 当 b 为 false 时返回的值.
+func Choose[T interface{}](b bool, v1, v2 T) T {
+	if b {
+		return v1
+	}
+	return v2
+}
+
+// ChooseValue 根据索引从参数列表中选择并返回一个值。如果索引值小于 0 或者大于最大可选择项，将会painc。
+//
+// i: 索引.
+//
+// value: 参数列表。
+func ChooseValue[T interface{}](i int, value ...T) T {
+	return value[i]
 }

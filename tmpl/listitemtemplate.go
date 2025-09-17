@@ -74,7 +74,7 @@ func NewByZipRes(nType xcc.ListItemTemp_Type_, id int32, pFileName string, pPass
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
-// data: 模板文件数据.
+// data: 内存块数据.
 //
 // pFileName: 文件名.
 //
@@ -89,7 +89,7 @@ func NewByZipMem(nType xcc.ListItemTemp_Type_, data []byte, pFileName string, pP
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
-// data: 模板文件数据.
+// data: 内存块数据.
 func NewByXmlMem(nType xcc.ListItemTemp_Type_, data []byte) *ListItemTemplate {
 	p := &ListItemTemplate{}
 	p.SetHandle(xc.XTemp_LoadFromMem(nType, data))
@@ -207,7 +207,7 @@ func LoadZipEx(nType xcc.ListItemTemp_Type_, pZipFile string, pFileName string, 
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
-// data: 模板文件数据.
+// data: 内存块数据.
 //
 // pFileName: 文件名.
 //
@@ -237,7 +237,7 @@ func LoadFromStringEx(nType xcc.ListItemTemp_Type_, pStringXML string, pOutTemp1
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
-// data: 模板文件数据.
+// data: 内存块数据.
 //
 // pOutTemp1: 返回模板句柄1, 项模板.
 //
