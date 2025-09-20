@@ -1,8 +1,9 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/common"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 
 	"github.com/twgh/xcgui/xcc"
 )
@@ -86,8 +87,8 @@ func XTable_SetRowHeight(hShape int, iRow, height int32) {
 //
 // hShape: 形状对象句柄.
 //
-// color: 颜色.
-func XTable_SetBorderColor(hShape int, color int) {
+// color: xc.RGBA 颜色.
+func XTable_SetBorderColor(hShape int, color uint32) {
 	xTable_SetBorderColor.Call(uintptr(hShape), uintptr(color))
 }
 
@@ -95,8 +96,8 @@ func XTable_SetBorderColor(hShape int, color int) {
 //
 // hShape: 形状对象句柄.
 //
-// color: 颜色.
-func XTable_SetTextColor(hShape int, color int) {
+// color: xc.RGBA 颜色.
+func XTable_SetTextColor(hShape int, color uint32) {
 	xTable_SetTextColor.Call(uintptr(hShape), uintptr(color))
 }
 
@@ -171,10 +172,10 @@ func XTable_SetItemTextAlign(hShape int, iRow, iCol int32, nAlign xcc.TextFormat
 //
 // iCol: 列索引.
 //
-// color: 颜色.
+// color: xc.RGBA 颜色.
 //
 // bColor: 是否使用.
-func XTable_SetItemTextColor(hShape int, iRow, iCol int32, color int, bColor bool) {
+func XTable_SetItemTextColor(hShape int, iRow, iCol int32, color uint32, bColor bool) {
 	xTable_SetItemTextColor.Call(uintptr(hShape), uintptr(iRow), uintptr(iCol), uintptr(color), common.BoolPtr(bColor))
 }
 
@@ -186,10 +187,10 @@ func XTable_SetItemTextColor(hShape int, iRow, iCol int32, color int, bColor boo
 //
 // iCol: 列索引.
 //
-// color: 颜色.
+// color: xc.RGBA 颜色.
 //
 // bColor: 是否使用.
-func XTable_SetItemBkColor(hShape int, iRow, iCol int32, color int, bColor bool) {
+func XTable_SetItemBkColor(hShape int, iRow, iCol int32, color uint32, bColor bool) {
 	xTable_SetItemBkColor.Call(uintptr(hShape), uintptr(iRow), uintptr(iCol), uintptr(color), common.BoolPtr(bColor))
 }
 
@@ -207,8 +208,8 @@ func XTable_SetItemBkColor(hShape int, iRow, iCol int32, color int, bColor bool)
 //
 // nFlag: 标识, Table_Line_Flag_, 暂时没有, 填0.
 //
-// color: 颜色.
-func XTable_SetItemLine(hShape int, iRow1, iCol1, iRow2, iCol2 int32, nFlag int32, color int) {
+// color: xc.RGBA 颜色.
+func XTable_SetItemLine(hShape int, iRow1, iCol1, iRow2, iCol2 int32, nFlag int32, color uint32) {
 	xTable_SetItemLine.Call(uintptr(hShape), uintptr(iRow1), uintptr(iCol1), uintptr(iRow2), uintptr(iCol2), uintptr(nFlag), uintptr(color))
 }
 
@@ -274,6 +275,6 @@ func XTable_GetColCount(hShape int) int32 {
 // bBkColor: 是否使用背景颜色.
 //
 // hFont: 炫彩字体句柄, 可为0.
-func XTable_SetItemTextEx(hShape int, iRow, iCol int32, pText string, textColor, bkColor int, bTextColor, bBkColor bool, hFont int) {
+func XTable_SetItemTextEx(hShape int, iRow, iCol int32, pText string, textColor, bkColor uint32, bTextColor, bBkColor bool, hFont int) {
 	xTable_SetItemTextEx.Call(uintptr(hShape), uintptr(iRow), uintptr(iCol), common.StrPtr(pText), uintptr(textColor), uintptr(bkColor), common.BoolPtr(bTextColor), common.BoolPtr(bBkColor), uintptr(hFont))
 }

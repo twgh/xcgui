@@ -96,14 +96,14 @@ func (d *DateTime) GetButton(nType int32) int {
 }
 
 // 日期_取选择日期背景颜色, 获取被选择文字的背景颜色.
-func (d *DateTime) GetSelBkColor() int {
+func (d *DateTime) GetSelBkColor() uint32 {
 	return xc.XDateTime_GetSelBkColor(d.Handle)
 }
 
 // 日期_置选择日期背景颜色, 设置被选择文字的背景颜色.
 //
 // crSelectBk: 文字被选中背景色, xc.RGBA 颜色.
-func (d *DateTime) SetSelBkColor(crSelectBk int) *DateTime {
+func (d *DateTime) SetSelBkColor(crSelectBk uint32) *DateTime {
 	xc.XDateTime_SetSelBkColor(d.Handle, crSelectBk)
 	return d
 }

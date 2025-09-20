@@ -123,7 +123,7 @@ func (t *Tree) EnableTemplateReuse(bEnable bool) *Tree {
 // 列表树_置连接线颜色.
 //
 // color: xc.RGBA 颜色.
-func (t *Tree) SetConnectLineColor(color int) *Tree {
+func (t *Tree) SetConnectLineColor(color uint32) *Tree {
 	xc.XTree_SetConnectLineColor(t.Handle, color)
 	return t
 }
@@ -149,7 +149,7 @@ func (t *Tree) SetConnectLineLength(nLength int32) *Tree {
 // 列表树_置拖动项插入位置颜色, 设置拖动项插入位置颜色提示.
 //
 // color: xc.RGBA 颜色.
-func (t *Tree) SetDragInsertPositionColor(color int) *Tree {
+func (t *Tree) SetDragInsertPositionColor(color uint32) *Tree {
 	xc.XTree_SetDragInsertPositionColor(t.Handle, color)
 	return t
 }
@@ -603,7 +603,7 @@ func (t *Tree) DeleteColumnAll() *Tree {
 // 列表树_置分割线颜色.
 //
 // color: xc.RGBA 颜色值.
-func (t *Tree) SetSplitLineColor(color int) *Tree {
+func (t *Tree) SetSplitLineColor(color uint32) *Tree {
 	xc.XTree_SetSplitLineColor(t.Handle, color)
 	return t
 }

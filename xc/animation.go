@@ -1,9 +1,10 @@
 package xc
 
 import (
+	"syscall"
+
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/xcc"
-	"syscall"
 )
 
 // 动画_运行, 并且增加引用计数.
@@ -89,6 +90,32 @@ func XAnima_MoveEx(hSequence int, duration uint32, from_x float32, from_y float3
 	return int(r)
 }
 
+// 动画_移动扩展T, 从指定位置移动到目标位置, 默认以UI对象中心点为操作方式, 避免出现坐标错位, 返回动画项句柄.
+//
+// hSequence: 动画序列句柄.
+//
+// duration: 持续时间.
+//
+// from_x: 起点位置X(对象左上角坐标).
+//
+// from_y: 起点位置Y(对象左上角坐标).
+//
+// to_x: 终点位置X(对象左上角坐标).
+//
+// to_y: 终点位置Y(对象左上角坐标).
+//
+// nLoopCount: 动画循环次数, 0:无限循环.
+//
+// ease_flag: 缓动标识, Ease_Flag_.
+//
+// bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
+//
+// bFrom: 是否从起点开始.
+func XAnima_MoveExT(hSequence int, duration uint32, from_x float32, from_y float32, to_x float32, to_y float32, nLoopCount int32, ease_flag xcc.Ease_Flag_, bGoBack, bFrom bool) int {
+	r, _, _ := xAnima_MoveExT.Call(uintptr(hSequence), uintptr(duration), common.Float32Ptr(from_x), common.Float32Ptr(from_y), common.Float32Ptr(to_x), common.Float32Ptr(to_y), uintptr(nLoopCount), uintptr(ease_flag), common.BoolPtr(bGoBack), common.BoolPtr(bFrom))
+	return int(r)
+}
+
 // 动画_旋转, 旋转角度支持负数值, 因为负数可以控制反向旋转, 返回动画旋转项句柄.
 //
 // hSequence: 动画序列句柄.
@@ -124,6 +151,28 @@ func XAnima_Rotate(hSequence int, duration uint32, angle float32, nLoopCount int
 // bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
 func XAnima_RotateEx(hSequence int, duration uint32, from float32, to float32, nLoopCount int32, ease_flag xcc.Ease_Flag_, bGoBack bool) int {
 	r, _, _ := xAnima_RotateEx.Call(uintptr(hSequence), uintptr(duration), common.Float32Ptr(from), common.Float32Ptr(to), uintptr(nLoopCount), uintptr(ease_flag), common.BoolPtr(bGoBack))
+	return int(r)
+}
+
+// 动画_旋转扩展T, 指定起点和终点, 返回动画旋转项句柄.
+//
+// hSequence: 动画序列句柄.
+//
+// duration: 持续时间.
+//
+// from: 起点角度.
+//
+// to: 终点角度.
+//
+// nLoopCount: 动画循环次数, 0: 无限循环.
+//
+// ease_flag: 缓动标识, Ease_Flag_.
+//
+// bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
+//
+// bFrom: 是否从起点开始.
+func XAnima_RotateExT(hSequence int, duration uint32, from float32, to float32, nLoopCount int32, ease_flag xcc.Ease_Flag_, bGoBack, bFrom bool) int {
+	r, _, _ := xAnima_RotateExT.Call(uintptr(hSequence), uintptr(duration), common.Float32Ptr(from), common.Float32Ptr(to), uintptr(nLoopCount), uintptr(ease_flag), common.BoolPtr(bGoBack), common.BoolPtr(bFrom))
 	return int(r)
 }
 
@@ -205,6 +254,28 @@ func XAnima_AlphaEx(hSequence int, duration uint32, from_alpha byte, to_alpha by
 	return int(r)
 }
 
+// 动画_透明度扩展T, 从指定透明度到目标透明度, 返回动画项句柄.
+//
+// hSequence: 动画序列句柄.
+//
+// duration: 持续时间.
+//
+// from_alpha: 起始透明度.
+//
+// to_alpha: 终止透明度.
+//
+// nLoopCount: 动画循环次数, 0: 无限循环.
+//
+// ease_flag: 缓动标识, Ease_Flag_.
+//
+// bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
+//
+// bFrom: 是否从起点开始.
+func XAnima_AlphaExT(hSequence int, duration uint32, from_alpha byte, to_alpha byte, nLoopCount int32, ease_flag xcc.Ease_Flag_, bGoBack, bFrom bool) int {
+	r, _, _ := xAnima_AlphaExT.Call(uintptr(hSequence), uintptr(duration), uintptr(from_alpha), uintptr(to_alpha), uintptr(nLoopCount), uintptr(ease_flag), common.BoolPtr(bGoBack), common.BoolPtr(bFrom))
+	return int(r)
+}
+
 // 动画_颜色, 返回动画项句柄.
 //
 // hSequence: 动画序列句柄.
@@ -218,7 +289,7 @@ func XAnima_AlphaEx(hSequence int, duration uint32, from_alpha byte, to_alpha by
 // ease_flag: 缓动标识, Ease_Flag_.
 //
 // bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
-func XAnima_Color(hSequence int, duration uint32, color int, nLoopCount int32, ease_flag xcc.Ease_Flag_, bGoBack bool) int {
+func XAnima_Color(hSequence int, duration uint32, color uint32, nLoopCount int32, ease_flag xcc.Ease_Flag_, bGoBack bool) int {
 	r, _, _ := xAnima_Color.Call(uintptr(hSequence), uintptr(duration), uintptr(color), uintptr(nLoopCount), uintptr(ease_flag), common.BoolPtr(bGoBack))
 	return int(r)
 }
@@ -238,8 +309,30 @@ func XAnima_Color(hSequence int, duration uint32, color int, nLoopCount int32, e
 // ease_flag: 缓动标识, Ease_Flag_.
 //
 // bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
-func XAnima_ColorEx(hSequence int, duration uint32, from int, to int, nLoopCount int32, ease_flag xcc.Ease_Flag_, bGoBack bool) int {
+func XAnima_ColorEx(hSequence int, duration uint32, from uint32, to uint32, nLoopCount int32, ease_flag xcc.Ease_Flag_, bGoBack bool) int {
 	r, _, _ := xAnima_ColorEx.Call(uintptr(hSequence), uintptr(duration), uintptr(from), uintptr(to), uintptr(nLoopCount), uintptr(ease_flag), common.BoolPtr(bGoBack))
+	return int(r)
+}
+
+// 动画_颜色扩展T, 从指定颜色到目标颜色, 返回动画项句柄.
+//
+// hSequence: 动画序列句柄.
+//
+// duration: 持续时间.
+//
+// from: 起点颜色, xc.RGBA 颜色.
+//
+// to: 终点颜色, xc.RGBA 颜色.
+//
+// nLoopCount: 动画循环次数, 0: 无限循环.
+//
+// ease_flag: 缓动标识, Ease_Flag_.
+//
+// bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
+//
+// bFrom: 是否从起点开始.
+func XAnima_ColorExT(hSequence int, duration uint32, from uint32, to uint32, nLoopCount int32, ease_flag xcc.Ease_Flag_, bGoBack, bFrom bool) int {
+	r, _, _ := xAnima_ColorExT.Call(uintptr(hSequence), uintptr(duration), uintptr(from), uintptr(to), uintptr(nLoopCount), uintptr(ease_flag), common.BoolPtr(bGoBack), common.BoolPtr(bFrom))
 	return int(r)
 }
 

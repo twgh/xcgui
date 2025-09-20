@@ -3,7 +3,9 @@ package xc
 import (
 	"math"
 	"os"
-	"strconv"
+	"syscall"
+
+	"github.com/twgh/xcgui/common"
 )
 
 // PathExists 判断文件或文件夹是否存在. 如果出错, 则不确定是否存在.
@@ -28,7 +30,7 @@ func PathExists2(path string) bool {
 	return err == nil
 }
 
-// RGBA 根据r, g, b, a组合成炫彩使用的颜色.
+// RGBA 根据 r, g, b, a 组合成炫彩使用的颜色.
 //
 // r: 红色分量.
 //
@@ -37,8 +39,8 @@ func PathExists2(path string) bool {
 // b: 蓝色分量.
 //
 // a: 透明度.
-func RGBA(r, g, b, a byte) int {
-	return int(uint32(a)<<24 | uint32(r) | uint32(g)<<8 | uint32(b)<<16)
+func RGBA(r, g, b, a byte) uint32 {
+	return uint32(a)<<24 | uint32(r) | uint32(g)<<8 | uint32(b)<<16
 }
 
 // RGBA2 根据 RGB, a组合成炫彩使用的颜色.
@@ -46,19 +48,19 @@ func RGBA(r, g, b, a byte) int {
 // rgb: RGB 颜色.
 //
 // a: 透明度.
-func RGBA2(rgb int, a byte) int {
-	return int((uint32(rgb) & 16777215) | uint32(a)<<24)
+func RGBA2(rgb uint32, a byte) uint32 {
+	return (uint32(rgb) & 16777215) | uint32(a)<<24
 }
 
-// RGB 根据r, g, b组合成炫彩以前使用的颜色. 现在已经不用这个了.
+// RGB 根据 r, g, b 组合成 RGB 颜色.
 //
 // r: 红色分量.
 //
 // g: 绿色分量.
 //
 // b: 蓝色分量.
-func RGB(r, g, b byte) int {
-	return int(uint32(r) | uint32(g)<<8 | uint32(b)<<16)
+func RGB(r, g, b byte) uint32 {
+	return uint32(r) | uint32(g)<<8 | uint32(b)<<16
 }
 
 // RGB2RGBA 将 RGB 颜色转换到炫彩使用的颜色.
@@ -66,7 +68,7 @@ func RGB(r, g, b byte) int {
 // rgb: RGB 颜色.
 //
 // a: 透明度.
-func RGB2RGBA(rgb int, a byte) int {
+func RGB2RGBA(rgb uint32, a byte) uint32 {
 	r := byte(rgb & 255)
 	g := byte((rgb >> 8) & 255)
 	b := byte((rgb >> 16) & 255)
@@ -76,7 +78,7 @@ func RGB2RGBA(rgb int, a byte) int {
 // HexRGB2RGB 将十六进制 RGB 颜色转换到十进制 RGB 颜色.
 //
 // str: 十六进制 RGB 颜色, 开头有没有#都可以.
-func HexRGB2RGB(str string) int {
+func HexRGB2RGB(str string) uint32 {
 	if len(str) > 0 && str[0] == '#' {
 		str = str[1:]
 	}
@@ -94,7 +96,7 @@ func HexRGB2RGB(str string) int {
 // str: 十六进制 RGB 颜色, 开头有没有#都可以.
 //
 // a: 透明度.
-func HexRGB2RGBA(str string, a byte) int {
+func HexRGB2RGBA(str string, a byte) uint32 {
 	return RGBA2(HexRGB2RGB(str), a)
 }
 
@@ -121,24 +123,22 @@ func hexToNibble(c byte) byte {
 
 // Itoa 将 int32 转换到 string.
 func Itoa(i32 int32) string {
-	return strconv.FormatInt(int64(i32), 10)
+	return common.Itoa(i32)
 }
 
 // Atoi 将 string 转换到 int32.
 func Atoi(s string) int32 {
-	i, _ := strconv.Atoi(s)
-	return int32(i)
+	return common.Atoi(s)
 }
 
 // Ftoa 将 float32 转换到 string.
 func Ftoa(f float32) string {
-	return strconv.FormatFloat(float64(f), 'f', -1, 32)
+	return common.Ftoa(f)
 }
 
 // Atof 将 string 转换到 float32.
 func Atof(s string) float32 {
-	f, _ := strconv.ParseFloat(s, 32)
-	return float32(f)
+	return common.Atof(s)
 }
 
 // DpiConv 将 int32 类型的整数根据窗口 dpi 进行换算.
@@ -161,4 +161,36 @@ func DpiConv(dpi int32, i int32) int32 {
 func DpiConvRound(dpi int32, i int32) int32 {
 	ret := float64(dpi) * float64(i) / 96.0
 	return int32(math.Round(ret))
+}
+
+// OffsetRect 传入 RECT, 返回偏移后的新的 RECT.
+func OffsetRect(rc RECT, left, top, right, bottom int32) RECT {
+	var rc2 RECT
+	rc2.Left = rc.Left + left
+	rc2.Top = rc.Top + top
+	rc2.Right = rc.Right + right
+	rc2.Bottom = rc.Bottom + bottom
+	return rc2
+}
+
+// Font_Info_Name 将 [32]uint16 转换到 string.
+//
+// arr: [32]uint16.
+func Font_Info_Name(arr [32]uint16) string {
+	return syscall.UTF16ToString(arr[0:])
+}
+
+// Rect2RectF 将 RECT 转换到 RECTF.
+func Rect2RectF(rc RECT) RECTF {
+	return RECTF{
+		Left:   float32(rc.Left),
+		Right:  float32(rc.Right),
+		Top:    float32(rc.Top),
+		Bottom: float32(rc.Bottom),
+	}
+}
+
+// PointInRect 判断一个点是否在矩形范围内.
+func PointInRect(pt POINT, rc RECT) bool {
+	return pt.X <= rc.Right && pt.X >= rc.Left && pt.Y <= rc.Bottom && pt.Y >= rc.Top
 }

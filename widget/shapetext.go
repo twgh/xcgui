@@ -103,13 +103,13 @@ func (s *ShapeText) GetFont() int {
 // 形状文本_置文本颜色, 设置文本颜色.
 //
 // color: xc.RGBA 颜色值.
-func (s *ShapeText) SetTextColor(color int) *ShapeText {
+func (s *ShapeText) SetTextColor(color uint32) *ShapeText {
 	xc.XShapeText_SetTextColor(s.Handle, color)
 	return s
 }
 
 // 形状文本_取文本颜色.
-func (s *ShapeText) GetTextColor() int {
+func (s *ShapeText) GetTextColor() uint32 {
 	return xc.XShapeText_GetTextColor(s.Handle)
 }
 

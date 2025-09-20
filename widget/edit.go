@@ -207,7 +207,7 @@ func (e *Edit) SetDefaultText(pString string) *Edit {
 // 编辑框_置默认文本颜色.
 //
 // color: xc.RGBA 颜色值.
-func (e *Edit) SetDefaultTextColor(color int) *Edit {
+func (e *Edit) SetDefaultTextColor(color uint32) *Edit {
 	xc.XEdit_SetDefaultTextColor(e.Handle, color)
 	return e
 }
@@ -373,10 +373,10 @@ func (e *Edit) AddByStyle(iStyle int32) *Edit {
 //
 // hFont_image_Obj: 字体.
 //
-// color: 颜色.
+// color: xc.RGBA 颜色.
 //
 // bColor: 是否使用颜色.
-func (e *Edit) AddStyle(hFont_image_Obj int, color int, bColor bool) int32 {
+func (e *Edit) AddStyle(hFont_image_Obj int, color uint32, bColor bool) int32 {
 	return xc.XEdit_AddStyle(e.Handle, hFont_image_Obj, color, bColor)
 }
 
@@ -388,10 +388,10 @@ func (e *Edit) AddStyle(hFont_image_Obj int, color int, bColor bool) int32 {
 //
 // fontStyle: 字体样式, FontStyle_.
 //
-// color: 颜色.
+// color: xc.RGBA 颜色.
 //
 // bColor: 是否使用颜色.
-func (e *Edit) AddStyleEx(fontName string, fontSize int32, fontStyle xcc.FontStyle_, color int, bColor bool) int32 {
+func (e *Edit) AddStyleEx(fontName string, fontSize int32, fontStyle xcc.FontStyle_, color uint32, bColor bool) int32 {
 	return xc.XEdit_AddStyleEx(e.Handle, fontName, fontSize, fontStyle, color, bColor)
 }
 
@@ -414,8 +414,8 @@ func (e *Edit) SetCurStyle(iStyle int32) *Edit {
 
 // 编辑框_置插入符颜色.
 //
-// color: 颜色.
-func (e *Edit) SetCaretColor(color int) *Edit {
+// color: xc.RGBA 颜色.
+func (e *Edit) SetCaretColor(color uint32) *Edit {
 	xc.XEdit_SetCaretColor(e.Handle, color)
 	return e
 }
@@ -431,7 +431,7 @@ func (e *Edit) SetCaretWidth(nWidth int32) *Edit {
 // 编辑框_置选择背景颜色.
 //
 // color: xc.RGBA 颜色.
-func (e *Edit) SetSelectBkColor(color int) *Edit {
+func (e *Edit) SetSelectBkColor(color uint32) *Edit {
 	xc.XEdit_SetSelectBkColor(e.Handle, color)
 	return e
 }
@@ -717,7 +717,7 @@ func (e *Edit) ReleaseStyle(iStyle int32) bool {
 // color: xc.RGBA 颜色.
 //
 // bColor: 是否使用颜色.
-func (e *Edit) ModifyStyle(iStyle int32, hFont int, color int, bColor bool) bool {
+func (e *Edit) ModifyStyle(iStyle int32, hFont int, color uint32, bColor bool) bool {
 	return xc.XEdit_ModifyStyle(e.Handle, iStyle, hFont, color, bColor)
 }
 
@@ -1022,7 +1022,7 @@ func (e *Edit) AddEvent_Edit_Color_Change(pFun XE_EDIT_COLOR_CHANGE1, allowAddin
 }
 
 // onXE_EDIT_COLOR_CHANGE 编辑框颜色被改变事件.
-func onXE_EDIT_COLOR_CHANGE(hEle int, color int, pbHandled *bool) int {
+func onXE_EDIT_COLOR_CHANGE(hEle int, color uint32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDIT_COLOR_CHANGE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
@@ -1063,8 +1063,8 @@ type XE_EDIT_ROW_CHANGED func(iRow int32, nChangeRows int32, pbHandled *bool) in
 type XE_EDIT_ROW_CHANGED1 func(hEle int, iRow int32, nChangeRows int32, pbHandled *bool) int
 type XE_EDIT_SWAPROW func(iRow, bArrowUp int32, pbHandled *bool) int            // 元素事件_交换行
 type XE_EDIT_SWAPROW1 func(hEle int, iRow, bArrowUp int32, pbHandled *bool) int // 元素事件_交换行
-type XE_EDIT_COLOR_CHANGE func(color int, pbHandled *bool) int                  // 编辑框_颜色被改变
-type XE_EDIT_COLOR_CHANGE1 func(hEle int, color int, pbHandled *bool) int       // 编辑框_颜色被改变
+type XE_EDIT_COLOR_CHANGE func(color uint32, pbHandled *bool) int               // 编辑框_颜色被改变
+type XE_EDIT_COLOR_CHANGE1 func(hEle int, color uint32, pbHandled *bool) int    // 编辑框_颜色被改变
 
 // 编辑框_颜色被改变.
 func (e *Edit) Event_EDIT_COLOR_CHANGE(pFun XE_EDIT_COLOR_CHANGE) bool {

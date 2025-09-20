@@ -59,7 +59,7 @@ func (b *BkManager) AddInfo(pText string) int32 {
 // width: 线宽.
 //
 // id: 背景对象ID, 可忽略(填0).
-func (b *BkManager) AddBorder(nState xcc.CombinedState, color int, width, id int32) *BkManager {
+func (b *BkManager) AddBorder(nState xcc.CombinedState, color uint32, width, id int32) *BkManager {
 	xc.XBkM_AddBorder(b.Handle, nState, color, width, id)
 	return b
 }
@@ -71,7 +71,7 @@ func (b *BkManager) AddBorder(nState xcc.CombinedState, color int, width, id int
 // color: xc.RGBA 颜色.
 //
 // id: 背景对象ID, 可忽略(填0).
-func (b *BkManager) AddFill(nState xcc.CombinedState, color int, id int32) *BkManager {
+func (b *BkManager) AddFill(nState xcc.CombinedState, color uint32, id int32) *BkManager {
 	xc.XBkM_AddFill(b.Handle, nState, color, id)
 	return b
 }
@@ -162,7 +162,7 @@ func (b *BkManager) SetInfo(pText string) int32 {
 // nState: 组合状态.
 //
 // color: 接收返回的 xc.RGBA 颜色.
-func (b *BkManager) GetStateTextColor(nState xcc.CombinedState, color *int) bool {
+func (b *BkManager) GetStateTextColor(nState xcc.CombinedState, color *uint32) bool {
 	return xc.XBkM_GetStateTextColor(b.Handle, nState, color)
 }
 

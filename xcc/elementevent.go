@@ -4,60 +4,29 @@ package xcc
 type XE_ uint32
 
 const (
-	// XE_ELEPROCE 元素处理过程事件.
-	//	func onEleProce(nEvent uint32, wParam, lParam uintptr, pbHandled *bool) int {
-	//		return 0
-	//	}
-	XE_ELEPROCE XE_ = 1
-
-	/*元素绘制事件.
-	func onElePaint(hDraw int, pbHandled *bool) int{
-		return 0
-	}*/
-	XE_PAINT XE_ = 2
-
-	/*该元素及子元素绘制完成事件. 启用该功能需要调用 xc.XEle_EnableEvent_XE_PAINT_END.
-	func onPaintEnd(hDraw int, pbHandled *bool) int {
-		return 0
-	}*/
-	XE_PAINT_END XE_ = 3
-
-	/*滚动视图绘制事件.
-	func onPaintScrollview(hDraw int, pbHandled *bool) int {
-		return 0
-	}*/
-	XE_PAINT_SCROLLVIEW XE_ = 4
-
-	/*元素鼠标移动事件.
-	func onMouseMove(nFlags int, pPt *xc.POINT, pbHandled *bool) int {
-	   	return 0
-	}*/
-	XE_MOUSEMOVE XE_ = 5
-
-	XE_MOUSESTAY        XE_ = 6  // 元素鼠标进入事件.
-	XE_MOUSEHOVER       XE_ = 7  // 元素鼠标悬停事件.
-	XE_MOUSELEAVE       XE_ = 8  // 元素鼠标离开事件.
-	XE_MOUSEWHEEL       XE_ = 9  // 元素鼠标滚轮滚动事件. 如果非滚动视图需要调用 xc.XEle_EnableEvent_XE_MOUSEWHEEL
-	XE_LBUTTONDOWN      XE_ = 10 // 鼠标左键按下事件.
-	XE_LBUTTONUP        XE_ = 11 // 鼠标左键弹起事件.
-	XE_RBUTTONDOWN      XE_ = 12 // 鼠标右键按下事件.
-	XE_RBUTTONUP        XE_ = 13 // 鼠标右键弹起事件.
-	XE_LBUTTONDBCLICK   XE_ = 14 // 鼠标左键双击事件.
-	XE_XC_TIMER         XE_ = 16 // 炫彩定时器,非系统定时器,定时器消息 XM_TIMER.
-	XE_ADJUSTLAYOUT     XE_ = 17 // 调整布局事件. 暂停使用
-	XE_ADJUSTLAYOUT_END XE_ = 18 // 调整布局完成事件.
-	XE_TOOLTIP_POPUP    XE_ = 19 // 元素工具提示弹出事件.
-	XE_SETFOCUS         XE_ = 31 // 元素获得焦点事件.
-	XE_KILLFOCUS        XE_ = 32 // 元素失去焦点事件.
-	XE_DESTROY          XE_ = 33 // 元素即将销毁事件. 在销毁子对象之前触发
-	XE_DESTROY_END      XE_ = 42 // 元素销毁完成事件. 在销毁子对象之后触发
-
-	/*按钮点击事件.
-	func onBnClick(pbHandled *bool) int {
-		return 0
-	}*/
-	XE_BNCLICK XE_ = 34
-
+	XE_ELEPROCE                           XE_ = 1   // 元素处理过程事件.
+	XE_PAINT                              XE_ = 2   // 元素绘制事件.
+	XE_PAINT_END                          XE_ = 3   // 该元素及子元素绘制完成事件. 启用该功能需要调用 xc.XEle_EnableEvent_XE_PAINT_END.
+	XE_PAINT_SCROLLVIEW                   XE_ = 4   // 滚动视图绘制事件.
+	XE_MOUSEMOVE                          XE_ = 5   // 元素鼠标移动事件.
+	XE_MOUSESTAY                          XE_ = 6   // 元素鼠标进入事件.
+	XE_MOUSEHOVER                         XE_ = 7   // 元素鼠标悬停事件.
+	XE_MOUSELEAVE                         XE_ = 8   // 元素鼠标离开事件.
+	XE_MOUSEWHEEL                         XE_ = 9   // 元素鼠标滚轮滚动事件. 如果非滚动视图需要调用 xc.XEle_EnableEvent_XE_MOUSEWHEEL
+	XE_LBUTTONDOWN                        XE_ = 10  // 鼠标左键按下事件.
+	XE_LBUTTONUP                          XE_ = 11  // 鼠标左键弹起事件.
+	XE_RBUTTONDOWN                        XE_ = 12  // 鼠标右键按下事件.
+	XE_RBUTTONUP                          XE_ = 13  // 鼠标右键弹起事件.
+	XE_LBUTTONDBCLICK                     XE_ = 14  // 鼠标左键双击事件.
+	XE_XC_TIMER                           XE_ = 16  // 炫彩定时器,非系统定时器,定时器消息 XM_TIMER.
+	XE_ADJUSTLAYOUT                       XE_ = 17  // 调整布局事件. 暂停使用
+	XE_ADJUSTLAYOUT_END                   XE_ = 18  // 调整布局完成事件.
+	XE_TOOLTIP_POPUP                      XE_ = 19  // 元素工具提示弹出事件.
+	XE_SETFOCUS                           XE_ = 31  // 元素获得焦点事件.
+	XE_KILLFOCUS                          XE_ = 32  // 元素失去焦点事件.
+	XE_DESTROY                            XE_ = 33  // 元素即将销毁事件. 在销毁子对象之前触发
+	XE_DESTROY_END                        XE_ = 42  // 元素销毁完成事件. 在销毁子对象之后触发
+	XE_BNCLICK                            XE_ = 34  // 按钮点击事件
 	XE_BUTTON_CHECK                       XE_ = 35  // 按钮选中事件.
 	XE_SIZE                               XE_ = 36  // 元素大小改变事件.
 	XE_SHOW                               XE_ = 37  // 元素显示隐藏事件.

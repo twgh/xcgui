@@ -79,7 +79,7 @@ func XFrameWnd_SetView(hWindow int, hEle int) int {
 // hWindow: 窗口句柄.
 //
 // color: xc.RGBA 颜色值.
-func XFrameWnd_SetPaneSplitBarColor(hWindow int, color int) int {
+func XFrameWnd_SetPaneSplitBarColor(hWindow int, color uint32) int {
 	r, _, _ := xFrameWnd_SetPaneSplitBarColor.Call(uintptr(hWindow), uintptr(color))
 	return int(r)
 }

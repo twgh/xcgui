@@ -387,7 +387,7 @@ func (i *Image) SetDrawTypeAdaptive(leftSize, topSize, rightSize, bottomSize int
 // 图片_置透明色, 指定图片透明颜色.
 //
 // color: xc.RGBA 颜色.
-func (i *Image) SetTranColor(color int) *Image {
+func (i *Image) SetTranColor(color uint32) *Image {
 	xc.XImage_SetTranColor(i.Handle, color)
 	return i
 }
@@ -397,7 +397,7 @@ func (i *Image) SetTranColor(color int) *Image {
 // color: xc.RGBA 颜色.
 //
 // tranColor: 透明色的透明度.
-func (i *Image) SetTranColorEx(color int, tranColor byte) *Image {
+func (i *Image) SetTranColorEx(color uint32, tranColor byte) *Image {
 	xc.XImage_SetTranColorEx(i.Handle, color, tranColor)
 	return i
 }

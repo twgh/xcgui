@@ -368,7 +368,7 @@ func XC_EnableResMonitor(bEnable bool) {
 // 炫彩_置布局边界颜色.
 //
 // color: xc.RGBA 颜色值.
-func XC_SetLayoutFrameColor(color int) {
+func XC_SetLayoutFrameColor(color uint32) {
 	xC_SetLayoutFrameColor.Call(uintptr(color))
 }
 

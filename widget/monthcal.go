@@ -129,7 +129,7 @@ func (m *MonthCal) GetSelDateEx() (year int32, month int32, day int32) {
 // nFlag: 1:周六, 周日文字颜色, 2:日期文字的颜色; 其它周文字颜色, 使用元素自身颜色.
 //
 // color: xc.RGBA 颜色值.
-func (m *MonthCal) SetTextColor(nFlag int32, color int) *MonthCal {
+func (m *MonthCal) SetTextColor(nFlag int32, color uint32) *MonthCal {
 	xc.XMonthCal_SetTextColor(m.Handle, nFlag, color)
 	return m
 }

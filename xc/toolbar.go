@@ -37,7 +37,7 @@ func XToolBar_InsertEle(hEle int, hNewEle int, index int32) int32 {
 // index: 插入位置索引, (-1)插入末尾.
 //
 // color: xc.RGBA 颜色. 可填 xc.RGBA(128, 128, 128, 255).
-func XToolBar_InsertSeparator(hEle int, index int32, color int) int32 {
+func XToolBar_InsertSeparator(hEle int, index int32, color uint32) int32 {
 	r, _, _ := xToolBar_InsertSeparator.Call(uintptr(hEle), uintptr(index), uintptr(color))
 	return int32(r)
 }

@@ -648,7 +648,7 @@ func (l *ListBox) GetCountColumn_AD() int32 {
 // 列表框_置分割线颜色.
 //
 // color: xc.RGBA 颜色值.
-func (l *ListBox) SetSplitLineColor(color int) *ListBox {
+func (l *ListBox) SetSplitLineColor(color uint32) *ListBox {
 	xc.XListBox_SetSplitLineColor(l.Handle, color)
 	return l
 }
@@ -658,7 +658,7 @@ func (l *ListBox) SetSplitLineColor(color int) *ListBox {
 // color: xc.RGBA 颜色值.
 //
 // width: 线宽度.
-func (l *ListBox) SetDragRectColor(color int, width int32) *ListBox {
+func (l *ListBox) SetDragRectColor(color uint32, width int32) *ListBox {
 	xc.XListBox_SetDragRectColor(l.Handle, color, width)
 	return l
 }

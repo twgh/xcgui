@@ -1840,14 +1840,18 @@ var (
 	xAnima_Create                    *syscall.LazyProc
 	xAnima_Move                      *syscall.LazyProc
 	xAnima_MoveEx                    *syscall.LazyProc
+	xAnima_MoveExT                   *syscall.LazyProc
 	xAnima_Rotate                    *syscall.LazyProc
 	xAnima_RotateEx                  *syscall.LazyProc
+	xAnima_RotateExT                 *syscall.LazyProc
 	xAnima_Scale                     *syscall.LazyProc
 	xAnima_ScaleSize                 *syscall.LazyProc
 	xAnima_Alpha                     *syscall.LazyProc
 	xAnima_AlphaEx                   *syscall.LazyProc
+	xAnima_AlphaExT                  *syscall.LazyProc
 	xAnima_Color                     *syscall.LazyProc
 	xAnima_ColorEx                   *syscall.LazyProc
+	xAnima_ColorExT                  *syscall.LazyProc
 	xAnima_LayoutWidth               *syscall.LazyProc
 	xAnima_LayoutHeight              *syscall.LazyProc
 	xAnima_LayoutSize                *syscall.LazyProc
@@ -3665,14 +3669,18 @@ func _loadXCGUI() {
 	xAnima_Create = xcgui.NewProc("XAnima_Create")
 	xAnima_Move = xcgui.NewProc("XAnima_Move")
 	xAnima_MoveEx = xcgui.NewProc("XAnima_MoveEx")
+	xAnima_MoveExT = xcgui.NewProc("XAnima_MoveExT")
 	xAnima_Rotate = xcgui.NewProc("XAnima_Rotate")
 	xAnima_RotateEx = xcgui.NewProc("XAnima_RotateEx")
+	xAnima_RotateExT = xcgui.NewProc("XAnima_RotateExT")
 	xAnima_Scale = xcgui.NewProc("XAnima_Scale")
 	xAnima_ScaleSize = xcgui.NewProc("XAnima_ScaleSize")
 	xAnima_Alpha = xcgui.NewProc("XAnima_Alpha")
 	xAnima_AlphaEx = xcgui.NewProc("XAnima_AlphaEx")
+	xAnima_AlphaExT = xcgui.NewProc("XAnima_AlphaExT")
 	xAnima_Color = xcgui.NewProc("XAnima_Color")
 	xAnima_ColorEx = xcgui.NewProc("XAnima_ColorEx")
+	xAnima_ColorExT = xcgui.NewProc("XAnima_ColorExT")
 	xAnima_LayoutWidth = xcgui.NewProc("XAnima_LayoutWidth")
 	xAnima_LayoutHeight = xcgui.NewProc("XAnima_LayoutHeight")
 	xAnima_LayoutSize = xcgui.NewProc("XAnima_LayoutSize")

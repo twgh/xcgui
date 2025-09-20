@@ -899,7 +899,7 @@ func XListView_Item_GetImage(hEle int, iGroup, iItem, iColumn int32) int {
 // color: xc.RGBA 颜色.
 //
 // width: 线宽度.
-func XListView_SetDragRectColor(hEle int, color int, width int32) {
+func XListView_SetDragRectColor(hEle int, color uint32, width int32) {
 	xListView_SetDragRectColor.Call(uintptr(hEle), uintptr(color), uintptr(width))
 }
 

@@ -44,10 +44,10 @@ func (i *ICoreWebView2WebMessageReceivedEventArgs) QueryInterface(refiid, object
 
 // TryGetWebMessageAsString 尝试获取 web 消息作为字符串。
 //   - 如果发布的消息是其他类型的 JavaScript 类型，则该方法失败，并返回错误: wapi.E_INVALIDARG。
-func (e *ICoreWebView2WebMessageReceivedEventArgs) TryGetWebMessageAsString() (string, error) {
+func (i *ICoreWebView2WebMessageReceivedEventArgs) TryGetWebMessageAsString() (string, error) {
 	var _message *uint16
-	r, _, _ := e.Vtbl.TryGetWebMessageAsString.Call(
-		uintptr(unsafe.Pointer(e)),
+	r, _, _ := i.Vtbl.TryGetWebMessageAsString.Call(
+		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_message)),
 	)
 	if r != 0 {
@@ -59,10 +59,10 @@ func (e *ICoreWebView2WebMessageReceivedEventArgs) TryGetWebMessageAsString() (s
 }
 
 // GetWebMessageAsJSON 获取 web 消息作为 JSON 字符串。
-func (e *ICoreWebView2WebMessageReceivedEventArgs) GetWebMessageAsJSON() (string, error) {
+func (i *ICoreWebView2WebMessageReceivedEventArgs) GetWebMessageAsJSON() (string, error) {
 	var _json *uint16
-	r, _, _ := e.Vtbl.GetWebMessageAsJSON.Call(
-		uintptr(unsafe.Pointer(e)),
+	r, _, _ := i.Vtbl.GetWebMessageAsJSON.Call(
+		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_json)),
 	)
 	if r != 0 {
@@ -74,10 +74,10 @@ func (e *ICoreWebView2WebMessageReceivedEventArgs) GetWebMessageAsJSON() (string
 }
 
 // GetSource 获取发送此 web 消息的文档的 URI。
-func (e *ICoreWebView2WebMessageReceivedEventArgs) GetSource() (string, error) {
+func (i *ICoreWebView2WebMessageReceivedEventArgs) GetSource() (string, error) {
 	var _source *uint16
-	r, _, _ := e.Vtbl.GetSource.Call(
-		uintptr(unsafe.Pointer(e)),
+	r, _, _ := i.Vtbl.GetSource.Call(
+		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&_source)),
 	)
 	if r != 0 {
@@ -98,20 +98,20 @@ func (i *ICoreWebView2WebMessageReceivedEventArgs) GetICoreWebView2WebMessageRec
 }
 
 // MustTryGetWebMessageAsString 尝试获取 web 消息作为字符串。出错时会触发全局错误回调。
-func (e *ICoreWebView2WebMessageReceivedEventArgs) MustTryGetWebMessageAsString() string {
-	message, _ := e.TryGetWebMessageAsString()
+func (i *ICoreWebView2WebMessageReceivedEventArgs) MustTryGetWebMessageAsString() string {
+	message, _ := i.TryGetWebMessageAsString()
 	return message
 }
 
 // MustGetWebMessageAsJSON 获取 web 消息作为 JSON 字符串。出错时会触发全局错误回调。
-func (e *ICoreWebView2WebMessageReceivedEventArgs) MustGetWebMessageAsJSON() string {
-	json, _ := e.GetWebMessageAsJSON()
+func (i *ICoreWebView2WebMessageReceivedEventArgs) MustGetWebMessageAsJSON() string {
+	json, _ := i.GetWebMessageAsJSON()
 	return json
 }
 
 // MustGetSource 获取发送此 web 消息的文档的 URI。出错时会触发全局错误回调。
-func (e *ICoreWebView2WebMessageReceivedEventArgs) MustGetSource() string {
-	source, _ := e.GetSource()
+func (i *ICoreWebView2WebMessageReceivedEventArgs) MustGetSource() string {
+	source, _ := i.GetSource()
 	return source
 }
 

@@ -763,7 +763,7 @@ func (l *ListView) Item_GetImage(iGroup int32, iItem int32, iColumn int32) int {
 // color: xc.RGBA 颜色.
 //
 // width: 线宽度.
-func (l *ListView) SetDragRectColor(color int, width int32) *ListView {
+func (l *ListView) SetDragRectColor(color uint32, width int32) *ListView {
 	xc.XListView_SetDragRectColor(l.Handle, color, width)
 	return l
 }

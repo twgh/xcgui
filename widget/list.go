@@ -846,7 +846,7 @@ func (l *List) GetCountColumn_AD() int32 {
 // 列表_置分割线颜色.
 //
 // color: xc.RGBA 颜色值.
-func (l *List) SetSplitLineColor(color int) *List {
+func (l *List) SetSplitLineColor(color uint32) *List {
 	xc.XList_SetSplitLineColor(l.Handle, color)
 	return l
 }
@@ -880,7 +880,7 @@ func (l *List) GetRowHeight(iRow int32, pHeight, pSelHeight *int32) *List {
 // color: xc.RGBA 颜色值.
 //
 // width: 线宽度.
-func (l *List) SetDragRectColor(color int, width int32) *List {
+func (l *List) SetDragRectColor(color uint32, width int32) *List {
 	xc.XList_SetDragRectColor(l.Handle, color, width)
 	return l
 }

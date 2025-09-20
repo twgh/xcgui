@@ -734,31 +734,31 @@ func (e *Element) SetLockScroll(bHorizon bool, bVertical bool) *Element {
 // 元素_置文本颜色.
 //
 // color: xc.RGBA 颜色值.
-func (e *Element) SetTextColor(color int) *Element {
+func (e *Element) SetTextColor(color uint32) *Element {
 	xc.XEle_SetTextColor(e.Handle, color)
 	return e
 }
 
 // 元素_取文本颜色.
-func (e *Element) GetTextColor() int {
+func (e *Element) GetTextColor() uint32 {
 	return xc.XEle_GetTextColor(e.Handle)
 }
 
 // 元素_取文本颜色扩展, 获取文本颜色, 优先从资源中获取.
-func (e *Element) GetTextColorEx() int {
+func (e *Element) GetTextColorEx() uint32 {
 	return xc.XEle_GetTextColorEx(e.Handle)
 }
 
 // 元素_置焦点边框颜色.
 //
 // color: xc.RGBA 颜色值.
-func (e *Element) SetFocusBorderColor(color int) *Element {
+func (e *Element) SetFocusBorderColor(color uint32) *Element {
 	xc.XEle_SetFocusBorderColor(e.Handle, color)
 	return e
 }
 
 // 元素_取焦点边框颜色.
-func (e *Element) GetFocusBorderColor() int {
+func (e *Element) GetFocusBorderColor() uint32 {
 	return xc.XEle_GetFocusBorderColor(e.Handle)
 }
 
@@ -799,7 +799,7 @@ func (e *Element) Destroy() *Element {
 // color: xc.RGBA 颜色.
 //
 // width: 线宽.
-func (e *Element) AddBkBorder(nState xcc.CombinedState, color int, width int32) *Element {
+func (e *Element) AddBkBorder(nState xcc.CombinedState, color uint32, width int32) *Element {
 	xc.XEle_AddBkBorder(e.Handle, nState, color, width)
 	return e
 }
@@ -809,7 +809,7 @@ func (e *Element) AddBkBorder(nState xcc.CombinedState, color int, width int32) 
 // nState: 组合状态.
 //
 // color: xc.RGBA 颜色.
-func (e *Element) AddBkFill(nState xcc.CombinedState, color int) *Element {
+func (e *Element) AddBkFill(nState xcc.CombinedState, color uint32) *Element {
 	xc.XEle_AddBkFill(e.Handle, nState, color)
 	return e
 }

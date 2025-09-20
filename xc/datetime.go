@@ -1,8 +1,9 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/common"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 )
 
 // 日期_创建, 创建日期时间元素, 返回元素句柄.
@@ -60,9 +61,9 @@ func XDateTime_GetButton(hEle int, nType int32) int {
 // 日期_取选择日期背景颜色, 获取被选择文字的背景颜色.
 //
 // hEle: 元素句柄.
-func XDateTime_GetSelBkColor(hEle int) int {
+func XDateTime_GetSelBkColor(hEle int) uint32 {
 	r, _, _ := xDateTime_GetSelBkColor.Call(uintptr(hEle))
-	return int(r)
+	return uint32(r)
 }
 
 // 日期_置选择日期背景颜色, 设置被选择文字的背景颜色.
@@ -70,7 +71,7 @@ func XDateTime_GetSelBkColor(hEle int) int {
 // hEle: 元素句柄.
 //
 // crSelectBk: 文字被选中背景色, xc.RGBA 颜色.
-func XDateTime_SetSelBkColor(hEle int, crSelectBk int) {
+func XDateTime_SetSelBkColor(hEle int, crSelectBk uint32) {
 	xDateTime_SetSelBkColor.Call(uintptr(hEle), uintptr(crSelectBk))
 }
 

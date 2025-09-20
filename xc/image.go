@@ -292,7 +292,7 @@ func XImage_SetDrawTypeAdaptive(hImage int, leftSize, topSize, rightSize, bottom
 // hImage: 图片句柄.
 //
 // color: xc.RGBA 颜色.
-func XImage_SetTranColor(hImage int, color int) {
+func XImage_SetTranColor(hImage int, color uint32) {
 	xImage_SetTranColor.Call(uintptr(hImage), uintptr(color))
 }
 
@@ -303,7 +303,7 @@ func XImage_SetTranColor(hImage int, color int) {
 // color: xc.RGBA 颜色.
 //
 // tranColor: 透明色的透明度.
-func XImage_SetTranColorEx(hImage int, color int, tranColor byte) {
+func XImage_SetTranColorEx(hImage int, color uint32, tranColor byte) {
 	xImage_SetTranColorEx.Call(uintptr(hImage), uintptr(color), uintptr(tranColor))
 }
 

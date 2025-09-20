@@ -42,7 +42,7 @@ func GetImageEx(pFileName string, pName string) int {
 // 资源_取颜色, 从资源中查找颜色.
 //
 // pName: 资源名称.
-func GetColor(pName string) int {
+func GetColor(pName string) uint32 {
 	return xc.XRes_GetColor(pName)
 }
 

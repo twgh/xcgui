@@ -1,10 +1,11 @@
 package window
 
 import (
-	"github.com/twgh/xcgui/xc"
-	"github.com/twgh/xcgui/xcc"
 	"math/rand"
 	"time"
+
+	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/xcc"
 )
 
 // TrayIcon 封装且简化了对托盘图标的操作. 更多操作可使用 xc.XTrayIcon_ 系列函数.
@@ -129,14 +130,14 @@ func (t *TrayIcon) Reset() *TrayIcon {
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *TrayIcon) AddEvent_TrayIcon(hWindow int, fun XWM_TRAYICON, allowAddingMultiple ...bool) int {
+func (t *TrayIcon) AddEvent_TrayIcon(hWindow int, fun XWM_TRAYICON, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(hWindow, xcc.XWM_TRAYICON, onXWM_TRAYICON, fun, allowAddingMultiple...)
 }
 
 // 托盘图标事件.
 //
 // hWindow: 炫彩窗口句柄.
-func (w *TrayIcon) Event_TRAYICON(hWindow int, fun XWM_TRAYICON) bool {
+func (t *TrayIcon) Event_TRAYICON(hWindow int, fun XWM_TRAYICON) bool {
 	return xc.XWnd_RegEventC(hWindow, xcc.XWM_TRAYICON, fun)
 }
 

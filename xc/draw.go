@@ -239,7 +239,7 @@ func XDraw_GetHDC(hDraw int) uintptr {
 // hDraw: 图形绘制句柄.
 //
 // color: xc.RGBA 颜色值.
-func XDraw_SetBrushColor(hDraw int, color int) {
+func XDraw_SetBrushColor(hDraw int, color uint32) {
 	xDraw_SetBrushColor.Call(uintptr(hDraw), uintptr(color))
 }
 
@@ -345,8 +345,8 @@ func XDraw_EnableWndTransparent(hDraw int, bTransparent bool) {
 //
 // hDraw: 图形绘制句柄.
 //
-// crColor: 画刷颜色, RGB 颜色.
-func XDraw_GDI_CreateSolidBrush(hDraw int, crColor int) uintptr {
+// crColor: 画刷颜色, xc.RGB 颜色.
+func XDraw_GDI_CreateSolidBrush(hDraw int, crColor uint32) uintptr {
 	r, _, _ := xDraw_GDI_CreateSolidBrush.Call(uintptr(hDraw), uintptr(crColor))
 	return r
 }
@@ -360,7 +360,7 @@ func XDraw_GDI_CreateSolidBrush(hDraw int, crColor int) uintptr {
 // nWidth: 画笔宽度.
 //
 // crColor: RGB 颜色.
-func XDraw_GDI_CreatePen(hDraw int, fnPenStyle, nWidth int32, crColor int) uintptr {
+func XDraw_GDI_CreatePen(hDraw int, fnPenStyle, nWidth int32, crColor uint32) uintptr {
 	r, _, _ := xDraw_GDI_CreatePen.Call(uintptr(hDraw), uintptr(fnPenStyle), uintptr(nWidth), uintptr(crColor))
 	return r
 }
@@ -464,7 +464,7 @@ func XDraw_FillRectF(hDraw int, pRect *RECTF) {
 // pRect: 矩形区域.
 //
 // color: xc.RGBA 颜色.
-func XDraw_FillRectColor(hDraw int, pRect *RECT, color int) {
+func XDraw_FillRectColor(hDraw int, pRect *RECT, color uint32) {
 	xDraw_FillRectColor.Call(uintptr(hDraw), uintptr(unsafe.Pointer(pRect)), uintptr(color))
 }
 
@@ -475,7 +475,7 @@ func XDraw_FillRectColor(hDraw int, pRect *RECT, color int) {
 // pRect: 矩形区域.
 //
 // color: xc.RGBA 颜色.
-func XDraw_FillRectColorF(hDraw int, pRect *RECTF, color int) {
+func XDraw_FillRectColorF(hDraw int, pRect *RECTF, color uint32) {
 	xDraw_FillRectColorF.Call(uintptr(hDraw), uintptr(unsafe.Pointer(pRect)), uintptr(color))
 }
 
@@ -665,7 +665,7 @@ func XDraw_GDI_Rectangle(hDraw int, nLeftRect, nTopRect, nRightRect, nBottomRect
 // color2: 结束颜色, xc.RGBA 颜色.
 //
 // mode: 模式, GRADIENT_FILL_.
-func XDraw_GradientFill2(hDraw int, pRect *RECT, color1 int, color2 int, mode xcc.GRADIENT_FILL_) {
+func XDraw_GradientFill2(hDraw int, pRect *RECT, color1, color2 uint32, mode xcc.GRADIENT_FILL_) {
 	xDraw_GradientFill2.Call(uintptr(hDraw), uintptr(unsafe.Pointer(pRect)), uintptr(color1), uintptr(color2), uintptr(mode))
 }
 
@@ -680,7 +680,7 @@ func XDraw_GradientFill2(hDraw int, pRect *RECT, color1 int, color2 int, mode xc
 // color2: 结束颜色, xc.RGBA 颜色.
 //
 // mode: 模式, GRADIENT_FILL_.
-func XDraw_GradientFill2F(hDraw int, pRect *RECTF, color1 int, color2 int, mode xcc.GRADIENT_FILL_) {
+func XDraw_GradientFill2F(hDraw int, pRect *RECTF, color1, color2 uint32, mode xcc.GRADIENT_FILL_) {
 	xDraw_GradientFill2F.Call(uintptr(hDraw), uintptr(unsafe.Pointer(pRect)), uintptr(color1), uintptr(color2), uintptr(mode))
 }
 
@@ -699,7 +699,7 @@ func XDraw_GradientFill2F(hDraw int, pRect *RECTF, color1 int, color2 int, mode 
 // color4: 结束颜色, xc.RGBA 颜色.
 //
 // mode: 模式, GRADIENT_FILL_.
-func XDraw_GradientFill4(hDraw int, pRect *RECT, color1 int, color2 int, color3 int, color4 int, mode xcc.GRADIENT_FILL_) {
+func XDraw_GradientFill4(hDraw int, pRect *RECT, color1, color2, color3, color4 uint32, mode xcc.GRADIENT_FILL_) {
 	xDraw_GradientFill4.Call(uintptr(hDraw), uintptr(unsafe.Pointer(pRect)), uintptr(color1), uintptr(color2), uintptr(color3), uintptr(color4), uintptr(mode))
 }
 
@@ -718,7 +718,7 @@ func XDraw_GradientFill4(hDraw int, pRect *RECT, color1 int, color2 int, color3 
 // color4: 结束颜色, xc.RGBA 颜色.
 //
 // mode: 模式, GRADIENT_FILL_.
-func XDraw_GradientFill4F(hDraw int, pRect *RECTF, color1 int, color2 int, color3 int, color4 int, mode xcc.GRADIENT_FILL_) {
+func XDraw_GradientFill4F(hDraw int, pRect *RECTF, color1, color2, color3, color4 uint32, mode xcc.GRADIENT_FILL_) {
 	xDraw_GradientFill4F.Call(uintptr(hDraw), uintptr(unsafe.Pointer(pRect)), uintptr(color1), uintptr(color2), uintptr(color3), uintptr(color4), uintptr(mode))
 }
 
@@ -803,9 +803,9 @@ func XDraw_GDI_Polyline(hDraw int, pArrayPt []POINT, arrayPtSize int32) bool {
 // Y: 坐标.
 //
 // crColor: RGB颜色值.
-func XDraw_GDI_SetPixel(hDraw int, X, Y int32, crColor int) int {
+func XDraw_GDI_SetPixel(hDraw int, X, Y int32, crColor uint32) uint32 {
 	r, _, _ := xDraw_GDI_SetPixel.Call(uintptr(hDraw), uintptr(X), uintptr(Y), uintptr(crColor))
-	return int(r)
+	return uint32(r)
 }
 
 // 绘制_取D2D渲染目标, 返回 *ID2D1RenderTarget.
@@ -1205,7 +1205,7 @@ func XDraw_DrawTextF(hDraw int, lpString string, lpRect *RECTF) {
 // lpRect: 坐标.
 //
 // colorLine: 下划线颜色, xc.RGBA 颜色.
-func XDraw_DrawTextUnderline(hDraw int, lpString string, lpRect *RECT, colorLine int) {
+func XDraw_DrawTextUnderline(hDraw int, lpString string, lpRect *RECT, colorLine uint32) {
 	xDraw_DrawTextUnderline.Call(uintptr(hDraw), common.StrPtr(lpString), uintptr(int32(len([]rune(lpString)))), uintptr(unsafe.Pointer(lpRect)), uintptr(colorLine))
 }
 
@@ -1218,7 +1218,7 @@ func XDraw_DrawTextUnderline(hDraw int, lpString string, lpRect *RECT, colorLine
 // lpRect: 坐标.
 //
 // colorLine: 下划线颜色, xc.RGBA 颜色.
-func XDraw_DrawTextUnderlineF(hDraw int, lpString string, lpRect *RECTF, colorLine int) {
+func XDraw_DrawTextUnderlineF(hDraw int, lpString string, lpRect *RECTF, colorLine uint32) {
 	xDraw_DrawTextUnderlineF.Call(uintptr(hDraw), common.StrPtr(lpString), uintptr(int32(len([]rune(lpString)))), uintptr(unsafe.Pointer(lpRect)), uintptr(colorLine))
 }
 
@@ -1370,7 +1370,7 @@ func XDraw_DrawSvgSize(hDraw int, hSvg int, nWidth, nHeight int32) {
 // hDraw: 图形绘制句柄.
 //
 // color: xc.RGBA 颜色值.
-func XDraw_D2D_Clear(hDraw int, color int) {
+func XDraw_D2D_Clear(hDraw int, color uint32) {
 	xDraw_D2D_Clear.Call(uintptr(hDraw), uintptr(color))
 }
 

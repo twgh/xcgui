@@ -117,7 +117,7 @@ func (fw *FrameWindow) SetView(hEle int) *FrameWindow {
 // 框架窗口_置窗格分隔条颜色.
 //
 // color: xc.RGBA 颜色值.
-func (fw *FrameWindow) SetPaneSplitBarColor(color int) *FrameWindow {
+func (fw *FrameWindow) SetPaneSplitBarColor(color uint32) *FrameWindow {
 	xc.XFrameWnd_SetPaneSplitBarColor(fw.Handle, color)
 	return fw
 }

@@ -323,7 +323,7 @@ func EnableResMonitor(bEnable bool) {
 // 炫彩_置布局边界颜色.
 //
 // color: xc.RGBA 颜色值.
-func SetLayoutFrameColor(color int) {
+func SetLayoutFrameColor(color uint32) {
 	xc.XC_SetLayoutFrameColor(color)
 }
 

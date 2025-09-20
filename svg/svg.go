@@ -227,7 +227,7 @@ func (s *Svg) GetAlpha() byte {
 // color: xc.RGBA 颜色.
 //
 // bEnable: 是否有效.
-func (s *Svg) SetUserFillColor(color int, bEnable bool) *Svg {
+func (s *Svg) SetUserFillColor(color uint32, bEnable bool) *Svg {
 	xc.XSvg_SetUserFillColor(s.Handle, color, bEnable)
 	return s
 }
@@ -239,7 +239,7 @@ func (s *Svg) SetUserFillColor(color int, bEnable bool) *Svg {
 // strokeWidth: 笔触宽度.
 //
 // bEnable: 是否有效.
-func (s *Svg) SetUserStrokeColor(color int, strokeWidth float32, bEnable bool) *Svg {
+func (s *Svg) SetUserStrokeColor(color uint32, strokeWidth float32, bEnable bool) *Svg {
 	xc.XSvg_SetUserStrokeColor(s.Handle, color, strokeWidth, bEnable)
 	return s
 }
@@ -247,7 +247,7 @@ func (s *Svg) SetUserStrokeColor(color int, strokeWidth float32, bEnable bool) *
 // SVG_取用户填充颜色.
 //
 // pColor: 返回颜色值.
-func (s *Svg) GetUserFillColor(pColor *int) bool {
+func (s *Svg) GetUserFillColor(pColor *uint32) bool {
 	return xc.XSvg_GetUserFillColor(s.Handle, pColor)
 }
 
@@ -256,7 +256,7 @@ func (s *Svg) GetUserFillColor(pColor *int) bool {
 // pColor: 返回颜色值.
 //
 // pStrokeWidth: .
-func (s *Svg) GetUserStrokeColor(pColor *int, pStrokeWidth *float32) bool {
+func (s *Svg) GetUserStrokeColor(pColor *uint32, pStrokeWidth *float32) bool {
 	return xc.XSvg_GetUserStrokeColor(s.Handle, pColor, pStrokeWidth)
 }
 

@@ -1024,52 +1024,55 @@ const (
 // 炫彩使用的颜色
 
 const (
-	COLOR_BLUE    = 0xFFFF0000 // 蓝色
-	COLOR_GREEN   = 0xFF00FF00 // 绿色
-	COLOR_RED     = 0xFF0000FF // 红色
-	COLOR_CYAN    = 0xFFFFFF00 // 青色
-	COLOR_MAGENTA = 0xFFFF00FF // 洋红色
-	COLOR_YELLOW  = 0xFF00FFFF // 黄色
+	COLOR_BLUE    uint32 = 0xFFFF0000 // 蓝色
+	COLOR_GREEN   uint32 = 0xFF00FF00 // 绿色
+	COLOR_RED     uint32 = 0xFF0000FF // 红色
+	COLOR_CYAN    uint32 = 0xFFFFFF00 // 青色
+	COLOR_MAGENTA uint32 = 0xFFFF00FF // 洋红色
+	COLOR_YELLOW  uint32 = 0xFF00FFFF // 黄色
 
-	COLOR_BLUE_LIGHT    = 0xFFFF8080 // 浅蓝色
-	COLOR_GREEN_LIGHT   = 0xFF80FF80 // 浅绿色
-	COLOR_RED_LIGHT     = 0xFF8080FF // 浅红色
-	COLOR_CYAN_LIGHT    = 0xFFFFFF80 // 浅青色
-	COLOR_MAGENTA_LIGHT = 0xFFFF80FF // 浅洋红色
-	COLOR_YELLOW_LIGHT  = 0xFF80FFFF // 浅黄色
+	COLOR_BLUE_LIGHT          uint32 = 0xFFFF8080 // 浅蓝色
+	COLOR_GREEN_LIGHT         uint32 = 0xFF80FF80 // 浅绿色
+	COLOR_RED_LIGHT           uint32 = 0xFF8080FF // 浅红色
+	COLOR_CYAN_LIGHT          uint32 = 0xFFFFFF80 // 浅青色
+	COLOR_MAGENTA_LIGHTuint32        = 0xFFFF80FF // 浅洋红色
+	COLOR_YELLOW_LIGHT        uint32 = 0xFF80FFFF // 浅黄色
 
-	COLOR_BLUE_DARK    = 0xFF800000 // 深蓝色
-	COLOR_GREEN_DARK   = 0xFF008000 // 深绿色
-	COLOR_RED_DARK     = 0xFF000080 // 深红色
-	COLOR_CYAN_DARK    = 0xFF808000 // 深青色
-	COLOR_MAGENTA_DARK = 0xFF800080 // 深洋红色
-	COLOR_YELLOW_DARK  = 0xFF008080 // 深黄色
+	COLOR_BLUE_DARK    uint32 = 0xFF800000 // 深蓝色
+	COLOR_GREEN_DARK   uint32 = 0xFF008000 // 深绿色
+	COLOR_RED_DARK     uint32 = 0xFF000080 // 深红色
+	COLOR_CYAN_DARK    uint32 = 0xFF808000 // 深青色
+	COLOR_MAGENTA_DARK uint32 = 0xFF800080 // 深洋红色
+	COLOR_YELLOW_DARK  uint32 = 0xFF008080 // 深黄色
 
-	COLOR_WHITE       = 0xFFFFFFFF // 白色
-	COLOR_LIGHTGRAY   = 0xFFD3D3D3 // 浅灰色
-	COLOR_GRAY        = 0xFF808080 // 灰色
-	COLOR_DARKGRAY    = 0xFF404040 // 深灰色
-	COLOR_BLACK       = 0xFF000000 // 黑色
-	COLOR_BROWN       = 0xFF2A2AA5 // 棕色
-	COLOR_ORANGE      = 0xFF00A5FF // 橙色
-	COLOR_TRANSPARENT = 0xFF000000 // 透明
+	COLOR_WHITE       uint32 = 0xFFFFFFFF // 白色
+	COLOR_LIGHTGRAY   uint32 = 0xFFD3D3D3 // 浅灰色
+	COLOR_GRAY        uint32 = 0xFF808080 // 灰色
+	COLOR_DARKGRAY    uint32 = 0xFF404040 // 深灰色
+	COLOR_BLACK       uint32 = 0xFF000000 // 黑色
+	COLOR_BROWN       uint32 = 0xFF2A2AA5 // 棕色
+	COLOR_ORANGE      uint32 = 0xFF00A5FF // 橙色
+	COLOR_TRANSPARENT uint32 = 0xFF000000 // 透明
 
-	COLOR_GRAY_3F = 0xFF3F3F3F // 灰色值
-	COLOR_GRAY_50 = 0xFF505050 // 灰色值
-	COLOR_GRAY_55 = 0xFF555555 // 灰色值
-	COLOR_GRAY_60 = 0xFF606060 // 灰色值
-	COLOR_GRAY_7C = 0xFF7C7C7C // 灰色值
-	COLOR_GRAY_9A = 0xFF9A9A9A // 灰色值
-	COLOR_GRAY_AA = 0xFFAAAAAA // 灰色值
-	COLOR_GRAY_C0 = 0xFFC0C0C0 // 灰色值
-	COLOR_GRAY_C8 = 0xFFC8C8C8 // 灰色值
-	COLOR_GRAY_D0 = 0xFFD0D0D0 // 灰色值
-	COLOR_GRAY_E7 = 0xFFE7E7E7 // 灰色值
+	COLOR_GRAY_3F uint32 = 0xFF3F3F3F // 灰色值
+	COLOR_GRAY_50 uint32 = 0xFF505050 // 灰色值
+	COLOR_GRAY_55 uint32 = 0xFF555555 // 灰色值
+	COLOR_GRAY_60 uint32 = 0xFF606060 // 灰色值
+	COLOR_GRAY_7C uint32 = 0xFF7C7C7C // 灰色值
+	COLOR_GRAY_9A uint32 = 0xFF9A9A9A // 灰色值
+	COLOR_GRAY_AA uint32 = 0xFFAAAAAA // 灰色值
+	COLOR_GRAY_C0 uint32 = 0xFFC0C0C0 // 灰色值
+	COLOR_GRAY_C8 uint32 = 0xFFC8C8C8 // 灰色值
+	COLOR_GRAY_D0 uint32 = 0xFFD0D0D0 // 灰色值
+	COLOR_GRAY_E7 uint32 = 0xFFE7E7E7 // 灰色值
 
-	COLOR_BLUE_98 = 0xFF980000 // 蓝色值
+	COLOR_BLUE_98 uint32 = 0xFF980000 // 蓝色值
 )
 
 const (
 	ICON_BIG   = 1 // 大图标
 	ICON_SMALL = 0 // 小图标
 )
+
+// TextRenderingHintAntiAliasGridFit 抗锯齿+网格拟合
+const TextRenderingHintAntiAliasGridFit int32 = 3

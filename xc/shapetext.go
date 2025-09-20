@@ -70,16 +70,16 @@ func XShapeText_GetFont(hTextBlock int) int {
 // hTextBlock: 形状对象文本句柄.
 //
 // color: xc.RGBA 颜色值.
-func XShapeText_SetTextColor(hTextBlock int, color int) {
+func XShapeText_SetTextColor(hTextBlock int, color uint32) {
 	xShapeText_SetTextColor.Call(uintptr(hTextBlock), uintptr(color))
 }
 
 // 形状文本_取文本颜色.
 //
 // hTextBlock: 形状对象文本句柄.
-func XShapeText_GetTextColor(hTextBlock int) int {
+func XShapeText_GetTextColor(hTextBlock int) uint32 {
 	r, _, _ := xShapeText_GetTextColor.Call(uintptr(hTextBlock))
-	return int(r)
+	return uint32(r)
 }
 
 // 形状文本_置文本对齐.

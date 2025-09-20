@@ -269,7 +269,7 @@ func (m *Menu) GetItemHeight() int32 {
 // 菜单_置边框颜色, 设置菜单边框颜色.
 //
 // crColor: xc.RGBA 颜色.
-func (m *Menu) SetBorderColor(crColor int) *Menu {
+func (m *Menu) SetBorderColor(crColor uint32) *Menu {
 	xc.XMenu_SetBorderColor(m.Handle, crColor)
 	return m
 }

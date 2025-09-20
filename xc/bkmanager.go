@@ -1,8 +1,9 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/common"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 
 	"github.com/twgh/xcgui/xcc"
 )
@@ -41,7 +42,7 @@ func XBkM_AddInfo(hBkInfoM int, pText string) int32 {
 // width: 线宽.
 //
 // id: 背景对象ID, 可忽略(填0).
-func XBkM_AddBorder(hBkInfoM int, nState xcc.CombinedState, color int, width, id int32) {
+func XBkM_AddBorder(hBkInfoM int, nState xcc.CombinedState, color uint32, width, id int32) {
 	xBkM_AddBorder.Call(uintptr(hBkInfoM), uintptr(nState), uintptr(color), uintptr(width), uintptr(id))
 }
 
@@ -54,7 +55,7 @@ func XBkM_AddBorder(hBkInfoM int, nState xcc.CombinedState, color int, width, id
 // color: xc.RGBA 颜色.
 //
 // id: 背景对象ID, 可忽略(填0).
-func XBkM_AddFill(hBkInfoM int, nState xcc.CombinedState, color int, id int32) {
+func XBkM_AddFill(hBkInfoM int, nState xcc.CombinedState, color uint32, id int32) {
 	xBkM_AddFill.Call(uintptr(hBkInfoM), uintptr(nState), uintptr(color), uintptr(id))
 }
 
@@ -166,7 +167,7 @@ func XBkM_SetInfo(hBkInfoM int, pText string) int32 {
 // nState: 组合状态.
 //
 // color: 接收返回的 xc.RGBA 颜色.
-func XBkM_GetStateTextColor(hBkInfoM int, nState xcc.CombinedState, color *int) bool {
+func XBkM_GetStateTextColor(hBkInfoM int, nState xcc.CombinedState, color *uint32) bool {
 	r, _, _ := xBkM_GetStateTextColor.Call(uintptr(hBkInfoM), uintptr(nState), uintptr(unsafe.Pointer(color)))
 	return r != 0
 }

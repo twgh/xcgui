@@ -85,7 +85,7 @@ func XTree_EnableTemplateReuse(hEle int, bEnable bool) {
 // hEle: 元素句柄.
 //
 // color: xc.RGBA 颜色.
-func XTree_SetConnectLineColor(hEle int, color int) {
+func XTree_SetConnectLineColor(hEle int, color uint32) {
 	xTree_SetConnectLineColor.Call(uintptr(hEle), uintptr(color))
 }
 
@@ -114,7 +114,7 @@ func XTree_SetConnectLineLength(hEle int, nLength int32) {
 // hEle: 元素句柄.
 //
 // color: xc.RGBA 颜色.
-func XTree_SetDragInsertPositionColor(hEle int, color int) {
+func XTree_SetDragInsertPositionColor(hEle int, color uint32) {
 	xTree_SetDragInsertPositionColor.Call(uintptr(hEle), uintptr(color))
 }
 
@@ -708,7 +708,7 @@ func XTree_DeleteColumnAll(hEle int) {
 // hEle: 元素句柄.
 //
 // color: xc.RGBA 颜色值.
-func XTree_SetSplitLineColor(hEle int, color int) {
+func XTree_SetSplitLineColor(hEle int, color uint32) {
 	xTree_SetSplitLineColor.Call(uintptr(hEle), uintptr(color))
 }
 

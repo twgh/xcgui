@@ -10,6 +10,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"syscall"
 	"time"
@@ -17,14 +18,14 @@ import (
 	"unsafe"
 )
 
-// Bytes2String 转换[]byte到string.
+// Bytes2String 转换 []byte 到 string.
 //
 // b: []byte.
 func Bytes2String(b []byte) string {
 	return *(*string)(unsafe.Pointer(&b))
 }
 
-// String2Bytes 转换string到[]byte.
+// String2Bytes 转换 string 到 []byte.
 //
 // s: 文本.
 func String2Bytes(s string) []byte {
@@ -321,6 +322,39 @@ func StringToBool(input string) bool {
 	return false
 }
 
+// AtoUint32 将 string 转换成 uint32.
+func AtoUint32(s string) uint32 {
+	i, _ := strconv.Atoi(s)
+	return uint32(i)
+}
+
+// Uint32ToA 将 uint32 转换成 string.
+func Uint32ToA(i uint32) string {
+	return strconv.Itoa(int(i))
+}
+
+// Itoa 将 int32 转换到 string.
+func Itoa(i32 int32) string {
+	return strconv.FormatInt(int64(i32), 10)
+}
+
+// Atoi 将 string 转换到 int32.
+func Atoi(s string) int32 {
+	i, _ := strconv.Atoi(s)
+	return int32(i)
+}
+
+// Ftoa 将 float32 转换到 string.
+func Ftoa(f float32) string {
+	return strconv.FormatFloat(float64(f), 'f', -1, 32)
+}
+
+// Atof 将 string 转换到 float32.
+func Atof(s string) float32 {
+	f, _ := strconv.ParseFloat(s, 32)
+	return float32(f)
+}
+
 // ErrorToErrno 将错误转换为系统调用错误号.
 //
 // err: 需要转换的错误对象
@@ -350,11 +384,21 @@ func Choose[T interface{}](b bool, v1, v2 T) T {
 	return v2
 }
 
-// ChooseValue 根据索引从参数列表中选择并返回一个值。如果索引值小于 0 或者大于最大可选择项，将会painc。
+// ChooseValue 根据索引从参数列表中选择并返回一个值。
 //
-// i: 索引.
+// i: 索引. 如果小于 0 或者大于最大可选择项，将会 painc。
 //
 // value: 参数列表。
 func ChooseValue[T interface{}](i int, value ...T) T {
 	return value[i]
+}
+
+// SliceIndexOf 获取元素在 slice 中第一个找到的索引, 找不到则返回 -1.
+func SliceIndexOf[T comparable](slice []T, target T) int {
+	for i, v := range slice {
+		if v == target {
+			return i
+		}
+	}
+	return -1
 }

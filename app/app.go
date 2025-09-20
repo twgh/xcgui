@@ -375,7 +375,7 @@ func (a *App) EnableResMonitor(bEnable bool) *App {
 // 炫彩_置布局边界颜色.
 //
 // color: xc.RGBA 颜色值.
-func (a *App) SetLayoutFrameColor(color int) *App {
+func (a *App) SetLayoutFrameColor(color uint32) *App {
 	xc.XC_SetLayoutFrameColor(color)
 	return a
 }

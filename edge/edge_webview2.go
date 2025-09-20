@@ -57,8 +57,8 @@ func (w *WebView2) Eval(script string) error {
 //   - 如果希望使用简单字符串而非 JSON 对象进行通信，请使用此方法代替 PostWebMessageAsJson。
 //
 // webMessageAsString: JavaScript 对象的简单字符串，而不是 JSON 字符串表示。
-func (i *WebView2) PostWebMessageAsString(webMessageAsString string) error {
-	return i.CoreWebView.PostWebMessageAsString(webMessageAsString)
+func (w *WebView2) PostWebMessageAsString(webMessageAsString string) error {
+	return w.CoreWebView.PostWebMessageAsString(webMessageAsString)
 }
 
 // PostWebMessageAsJSON 将指定的 webMessage 发布到此 WebView 中的顶级文档。
@@ -70,13 +70,13 @@ func (i *WebView2) PostWebMessageAsString(webMessageAsString string) error {
 //   - 消息以异步方式传递。如果在消息发布到页面之前发生导航，该消息将被丢弃。
 //
 // webMessageAsJSON: JavaScript 对象的 JSON 字符串.
-func (i *WebView2) PostWebMessageAsJSON(webMessageAsJSON string) error {
-	return i.CoreWebView.PostWebMessageAsJSON(webMessageAsJSON)
+func (w *WebView2) PostWebMessageAsJSON(webMessageAsJSON string) error {
+	return w.CoreWebView.PostWebMessageAsJSON(webMessageAsJSON)
 }
 
 // GetSource 获取当前顶级文档的URI。如果导航正在进行中，则返回即将导航到的URI。
-func (i *WebView2) GetSource() string {
-	return i.CoreWebView.MustGetSource()
+func (w *WebView2) GetSource() string {
+	return w.CoreWebView.MustGetSource()
 }
 
 // Refresh 网页_刷新, 调用 js 代码刷新(location.reload). 必须在 UI 线程执行.

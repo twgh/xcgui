@@ -123,16 +123,16 @@ func (t *Table) SetRowHeight(iRow, height int32) *Table {
 
 // 表格_置边颜色.
 //
-// color: 颜色.
-func (t *Table) SetBorderColor(color int) *Table {
+// color: xc.RGBA 颜色.
+func (t *Table) SetBorderColor(color uint32) *Table {
 	xc.XTable_SetBorderColor(t.Handle, color)
 	return t
 }
 
 // 表格_置文本颜色.
 //
-// color: 颜色.
-func (t *Table) SetTextColor(color int) *Table {
+// color: xc.RGBA 颜色.
+func (t *Table) SetTextColor(color uint32) *Table {
 	xc.XTable_SetTextColor(t.Handle, color)
 	return t
 }
@@ -201,10 +201,10 @@ func (t *Table) SetItemTextAlign(iRow, iCol int32, nAlign xcc.TextFormatFlag_) *
 //
 // iCol: 列索引.
 //
-// color: 颜色.
+// color: xc.RGBA 颜色.
 //
 // bColor: 是否使用.
-func (t *Table) SetItemTextColor(iRow, iCol int32, color int, bColor bool) *Table {
+func (t *Table) SetItemTextColor(iRow, iCol int32, color uint32, bColor bool) *Table {
 	xc.XTable_SetItemTextColor(t.Handle, iRow, iCol, color, bColor)
 	return t
 }
@@ -215,10 +215,10 @@ func (t *Table) SetItemTextColor(iRow, iCol int32, color int, bColor bool) *Tabl
 //
 // iCol: 列索引.
 //
-// color: 颜色.
+// color: xc.RGBA 颜色.
 //
 // bColor: 是否使用.
-func (t *Table) SetItemBkColor(iRow, iCol int32, color int, bColor bool) *Table {
+func (t *Table) SetItemBkColor(iRow, iCol int32, color uint32, bColor bool) *Table {
 	xc.XTable_SetItemBkColor(t.Handle, iRow, iCol, color, bColor)
 	return t
 }
@@ -235,8 +235,8 @@ func (t *Table) SetItemBkColor(iRow, iCol int32, color int, bColor bool) *Table 
 //
 // nFlag: 标识, Table_Line_Flag_, 暂时没有, 填0.
 //
-// color: 颜色.
-func (t *Table) SetItemLine(iRow1, iCol1, iRow2, iCol2 int32, nFlag int32, color int) *Table {
+// color: xc.RGBA 颜色.
+func (t *Table) SetItemLine(iRow1, iCol1, iRow2, iCol2 int32, nFlag int32, color uint32) *Table {
 	xc.XTable_SetItemLine(t.Handle, iRow1, iCol1, iRow2, iCol2, nFlag, color)
 	return t
 }
@@ -291,7 +291,7 @@ func (t *Table) GetColCount() int32 {
 // bBkColor: 是否使用背景颜色.
 //
 // hFont: 炫彩字体句柄, 可为0.
-func (t *Table) SetItemTextEx(iRow, iCol int32, pText string, textColor, bkColor int, bTextColor, bBkColor bool, hFont int) *Table {
+func (t *Table) SetItemTextEx(iRow, iCol int32, pText string, textColor, bkColor uint32, bTextColor, bBkColor bool, hFont int) *Table {
 	xc.XTable_SetItemTextEx(t.Handle, iRow, iCol, pText, textColor, bkColor, bTextColor, bBkColor, hFont)
 	return t
 }

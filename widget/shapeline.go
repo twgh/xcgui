@@ -83,7 +83,7 @@ func (s *ShapeLine) SetPosition(x1, y1, x2, y2 int32) *ShapeLine {
 // 形状线_置颜色, 设置直线颜色.
 //
 // color: xc.RGBA 颜色值.
-func (s *ShapeLine) SetColor(color int) *ShapeLine {
+func (s *ShapeLine) SetColor(color uint32) *ShapeLine {
 	xc.XShapeLine_SetColor(s.Handle, color)
 	return s
 }

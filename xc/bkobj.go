@@ -1,8 +1,9 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/common"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 
 	"github.com/twgh/xcgui/xcc"
 )
@@ -54,7 +55,7 @@ func XBkObj_SetRotate(hObj int, angle float32) {
 // hObj: 背景对象句柄.
 //
 // color: xc.RGBA 颜色值.
-func XBkObj_SetFillColor(hObj int, color int) {
+func XBkObj_SetFillColor(hObj int, color uint32) {
 	xBkObj_SetFillColor.Call(uintptr(hObj), uintptr(color))
 }
 
@@ -72,7 +73,7 @@ func XBkObj_SetBorderWidth(hObj int, width int32) {
 // hObj: 背景对象句柄.
 //
 // color: xc.RGBA 颜色值.
-func XBkObj_SetBorderColor(hObj int, color int) {
+func XBkObj_SetBorderColor(hObj int, color uint32) {
 	xBkObj_SetBorderColor.Call(uintptr(hObj), uintptr(color))
 }
 
@@ -169,20 +170,20 @@ func XBkObj_GetRotate(hObj int) int32 {
 	return int32(r)
 }
 
-// 背景对象_取填充色, 返回 RGBA 填充色.
+// 背景对象_取填充色, 返回 xc.RGBA 填充色.
 //
 // hObj: 背景对象句柄.
-func XBkObj_GetFillColor(hObj int) int {
+func XBkObj_GetFillColor(hObj int) uint32 {
 	r, _, _ := xBkObj_GetFillColor.Call(uintptr(hObj))
-	return int(r)
+	return uint32(r)
 }
 
-// 背景对象_取边框色, 返回 RGBA 边框色.
+// 背景对象_取边框色, 返回 xc.RGBA 边框色.
 //
 // hObj: 背景对象句柄.
-func XBkObj_GetBorderColor(hObj int) int {
+func XBkObj_GetBorderColor(hObj int) uint32 {
 	r, _, _ := xBkObj_GetBorderColor.Call(uintptr(hObj))
-	return int(r)
+	return uint32(r)
 }
 
 // 背景对象_取边框宽度, 返回边框宽度.

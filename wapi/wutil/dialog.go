@@ -1,13 +1,14 @@
 package wutil
 
 import (
-	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
-	"github.com/twgh/xcgui/xc"
 	"path/filepath"
 	"strings"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/xc"
 )
 
 // OpenDir 打开文件夹. 返回选择的文件夹完整路径.
@@ -312,7 +313,7 @@ func SaveFileEx(opt OpenFileOption) string {
 // ChooseColor 选择颜色. 返回rgb颜色.
 //
 // hParent: 父炫彩窗口句柄, 可为0.
-func ChooseColor(hParent int) int {
+func ChooseColor(hParent int) uint32 {
 	var hwnd uintptr
 	if hParent > 0 {
 		hwnd = xc.XWnd_GetHWND(hParent)
@@ -333,5 +334,5 @@ func ChooseColor(hParent int) int {
 	if !wapi.ChooseColorW(&cc) {
 		return 0
 	}
-	return int(cc.RgbResult)
+	return cc.RgbResult
 }

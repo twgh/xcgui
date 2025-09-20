@@ -1,8 +1,9 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/common"
 	"syscall"
+
+	"github.com/twgh/xcgui/common"
 )
 
 // 资源_启用延迟加载, 启用延迟加载; 图片文件, 列表项模板文件.
@@ -48,9 +49,9 @@ func XRes_GetImageEx(pFileName string, pName string) int {
 // 资源_取颜色, 从资源中查找颜色.
 //
 // pName: 资源名称.
-func XRes_GetColor(pName string) int {
+func XRes_GetColor(pName string) uint32 {
 	r, _, _ := xRes_GetColor.Call(common.StrPtr(pName))
-	return int(r)
+	return uint32(r)
 }
 
 // 资源_取字体, 从资源中查找字体.

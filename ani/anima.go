@@ -63,6 +63,31 @@ func (a *Anima) MoveEx(duration uint32, from_x float32, from_y float32, to_x flo
 	return p
 }
 
+// 动画_移动扩展T, 从指定位置移动到目标位置, 默认以UI对象中心点为操作方式, 避免出现坐标错位, 返回动画项对象.
+//
+// duration: 持续时间.
+//
+// from_x: 起点位置X(对象左上角坐标).
+//
+// from_y: 起点位置Y(对象左上角坐标).
+//
+// to_x: 终点位置X(对象左上角坐标).
+//
+// to_y: 终点位置Y(对象左上角坐标).
+//
+// nLoopCount: 动画循环次数, 0:无限循环.
+//
+// ease_flag: 缓动标识, Ease_Flag_.
+//
+// bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
+//
+// bFrom: 是否从起点开始.
+func (a *Anima) MoveExT(duration uint32, from_x float32, from_y float32, to_x float32, to_y float32, nLoopCount int32, ease_flag xcc.Ease_Flag_, bGoBack, bFrom bool) *AnimaItem {
+	p := &AnimaItem{}
+	p.SetHandle(xc.XAnima_MoveExT(a.Handle, duration, from_x, from_y, to_x, to_y, nLoopCount, ease_flag, bGoBack, bFrom))
+	return p
+}
+
 // 动画_旋转, 旋转角度支持负数值, 因为负数可以控制反向旋转, 返回动画旋转项对象.
 //
 // duration: 持续时间.
@@ -96,6 +121,27 @@ func (a *Anima) Rotate(duration uint32, angle float32, nLoopCount int32, ease_fl
 func (a *Anima) RotateEx(duration uint32, from float32, to float32, nLoopCount int32, ease_flag xcc.Ease_Flag_, bGoBack bool) *AnimaRotate {
 	p := &AnimaRotate{}
 	p.SetHandle(xc.XAnima_RotateEx(a.Handle, duration, from, to, nLoopCount, ease_flag, bGoBack))
+	return p
+}
+
+// 动画_旋转扩展T, 指定起点和终点, 返回动画旋转项对象.
+//
+// duration: 持续时间.
+//
+// from: 起点角度.
+//
+// to: 终点角度.
+//
+// nLoopCount: 动画循环次数, 0: 无限循环.
+//
+// ease_flag: 缓动标识, Ease_Flag_.
+//
+// bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
+//
+// bFrom: 是否从起点开始.
+func (a *Anima) RotateExT(duration uint32, from float32, to float32, nLoopCount int32, ease_flag xcc.Ease_Flag_, bGoBack, bFrom bool) *AnimaRotate {
+	p := &AnimaRotate{}
+	p.SetHandle(xc.XAnima_RotateExT(a.Handle, duration, from, to, nLoopCount, ease_flag, bGoBack, bFrom))
 	return p
 }
 
@@ -173,6 +219,27 @@ func (a *Anima) AlphaEx(duration uint32, from_alpha uint8, to_alpha uint8, nLoop
 	return p
 }
 
+// 动画_透明度扩展T, 从指定透明度到目标透明度, 返回动画项对象.
+//
+// duration: 持续时间.
+//
+// from_alpha: 起始透明度.
+//
+// to_alpha: 终止透明度.
+//
+// nLoopCount: 动画循环次数, 0: 无限循环.
+//
+// ease_flag: 缓动标识, Ease_Flag_.
+//
+// bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
+//
+// bFrom: 是否从起点开始.
+func (a *Anima) AlphaExT(duration uint32, from_alpha uint8, to_alpha uint8, nLoopCount int32, ease_flag xcc.Ease_Flag_, bGoBack, bFrom bool) *AnimaItem {
+	p := &AnimaItem{}
+	p.SetHandle(xc.XAnima_AlphaExT(a.Handle, duration, from_alpha, to_alpha, nLoopCount, ease_flag, bGoBack, bFrom))
+	return p
+}
+
 // 动画_颜色, 返回动画项对象.
 //
 // duration: 持续时间.
@@ -184,7 +251,7 @@ func (a *Anima) AlphaEx(duration uint32, from_alpha uint8, to_alpha uint8, nLoop
 // ease_flag: 缓动标识, Ease_Flag_.
 //
 // bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
-func (a *Anima) Color(duration uint32, color int, nLoopCount int32, ease_flag xcc.Ease_Flag_, bGoBack bool) *AnimaItem {
+func (a *Anima) Color(duration uint32, color uint32, nLoopCount int32, ease_flag xcc.Ease_Flag_, bGoBack bool) *AnimaItem {
 	p := &AnimaItem{}
 	p.SetHandle(xc.XAnima_Color(a.Handle, duration, color, nLoopCount, ease_flag, bGoBack))
 	return p
@@ -203,9 +270,30 @@ func (a *Anima) Color(duration uint32, color int, nLoopCount int32, ease_flag xc
 // ease_flag: 缓动标识, Ease_Flag_.
 //
 // bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
-func (a *Anima) ColorEx(duration uint32, from int, to int, nLoopCount int32, ease_flag xcc.Ease_Flag_, bGoBack bool) *AnimaItem {
+func (a *Anima) ColorEx(duration uint32, from uint32, to uint32, nLoopCount int32, ease_flag xcc.Ease_Flag_, bGoBack bool) *AnimaItem {
 	p := &AnimaItem{}
 	p.SetHandle(xc.XAnima_ColorEx(a.Handle, duration, from, to, nLoopCount, ease_flag, bGoBack))
+	return p
+}
+
+// 动画_颜色扩展T, 从指定颜色到目标颜色, 返回动画项对象.
+//
+// duration: 持续时间.
+//
+// from: 起点颜色, xc.RGBA 颜色.
+//
+// to: 终点颜色, xc.RGBA 颜色.
+//
+// nLoopCount: 动画循环次数, 0: 无限循环.
+//
+// ease_flag: 缓动标识, Ease_Flag_.
+//
+// bGoBack: 是否返回. 当启用后: 往返到起点, 起点->终点->起点.
+//
+// bFrom: 是否从起点开始.
+func (a *Anima) ColorExT(duration uint32, from uint32, to uint32, nLoopCount int32, ease_flag xcc.Ease_Flag_, bGoBack, bFrom bool) *AnimaItem {
+	p := &AnimaItem{}
+	p.SetHandle(xc.XAnima_ColorExT(a.Handle, duration, from, to, nLoopCount, ease_flag, bGoBack, bFrom))
 	return p
 }
 

@@ -139,19 +139,54 @@ type LOGFONTW struct {
 	LfClipPrecision  byte       // 剪辑精度
 	LfQuality        byte       // 输出质量
 	LfPitchAndFamily byte       // 字符间距
-	LfFaceName       [32]uint16 // 字体名称, 使用xc.Font_Info_Name()函数转换为string.
+	LfFaceName       [32]uint16 // 字体名称, 使用 xc.Font_Info_Name()函数转换为string.
 }
 
 // Editor 颜色信息
 type Editor_Color_ struct {
-	ClrMargin1         int32 // 背景色1, xc.RGBA 颜色
-	ClrMargin2         int32 // 背景色2, xc.RGBA 颜色
-	ClrMarginText      int32 // 文本色, xc.RGBA 颜色
-	ClrBreakpoint      int32 // 断点色, xc.RGBA 颜色
-	ClrBreakpointArrow int32 // 断点箭头色, xc.RGBA 颜色
-	ClrRun             int32 // 当前执行位置指示色, xc.RGBA 颜色
-	ClrCurRow          int32 // 突出显示当前行颜色, xc.RGBA 颜色
-	ClrMatch           int32 // 设置匹配文本背景色, xc.RGBA 颜色
+	AlignLineArrow            bool   // 对齐线 - 是否显示箭头
+	AlignLineBtnIndent        bool   // 展开收缩按钮, 是否缩进
+	TabFillColor              bool   // 填充缩进 TAB 背景
+	AlignLineColor7           bool   // 是否使用彩虹线
+	ClrMargin1                uint32 // 侧边栏 - 背景色1, 显示断点, xc.RGBA 颜色
+	ClrMargin2                uint32 // 侧边栏 - 背景色2, 显示行号, xc.RGBA 颜色
+	ClrMarginText             uint32 // 侧边栏 - 文本色 - 行号颜色, xc.RGBA 颜色
+	ClrMarginBreakpoint       uint32 // 侧边栏 - 断点色, xc.RGBA 颜色
+	ClrMarginBreakPointBorder uint32 // 侧边栏 - 断点描边色, xc.RGBA 颜色
+	ClrMarginRunRowArrow      uint32 // 侧边栏 - 调试位置箭头, xc.RGBA 颜色
+	ClrMarginCurRow           uint32 // 侧边栏 - 当前行指示色,光标所在行, xc.RGBA 颜色
+	ClrMarginError            uint32 // 侧边栏 - 错误指示色, xc.RGBA 颜色
+
+	ClrCurRowFull uint32    // 突出显示当前行颜色, xc.RGBA 颜色
+	ClrMatchSel   uint32    // 匹配选择文本背景色, xc.RGBA 颜色
+	ClrAlignLines [7]uint32 // 彩虹线, xc.RGBA 颜色
+
+	ClrAlignLineSel uint32 // 对齐线 - 选择内容块, xc.RGBA 颜色
+	ClrFunSplitLine uint32 // 函数分割线颜色 new, xc.RGBA 颜色
+
+	ClrIndentTab   uint32 // 缩进TAB, xc.RGBA 颜色
+	ClrIndentSpace uint32 // 缩进遇到空格, xc.RGBA 颜色
+
+	ClrTipsDlg       uint32 // 弹出提示窗口背景色, xc.RGBA 颜色
+	ClrTipsDlgBorder uint32 // 弹出提示窗口描边色, xc.RGBA 颜色
+
+	FunSplitLineMode int32 // 函数分割线-填充模式: 0:无, 1:线, 2:填充
+	CodeIndent       int32 // 代码缩进模式(TAB)  自由缩进  固定缩进
+
+	// 选择文本背景 通过API设置
+	// 插入符颜色   通过API设置
+
+	StyleSys         int32 // 系统关键字  return, break, for
+	StyleFunction    int32 // 函数
+	StyleVar         int32 // 变量
+	StyleDataType    int32 // 基础数据类型  int, byte, char
+	StyleClass       int32 // 类  class
+	StyleMacro       int32 // 宏
+	StyleEnum        int32 // 枚举   new
+	StyleNumber      int32 // 数字
+	StyleString      int32 // 字符串
+	StyleComment     int32 // 注释
+	StylePunctuation int32 // 标点符号  new
 }
 
 // Edit 数据复制
@@ -167,15 +202,15 @@ type Edit_Style_Info_ struct {
 	Type            xcc.Edit_Style_Type_ // 样式类型: Edit_Style_Type_
 	NRef            uint16               // 引用计数
 	HFont_image_obj int                  // 字体,图片,UI对象句柄
-	Color           int32                // 颜色
+	Color           uint32               // 颜色
 	BColor          bool                 // 是否使用颜色
 }
 
 // Edit 数据复制-样式
 type Edit_Data_Copy_Style_ struct {
-	HFont_image_obj int   // 字体,图片,UI对象句柄
-	Color           int32 // 颜色
-	BColor          bool  // 是否使用颜色
+	HFont_image_obj int    // 字体,图片,UI对象句柄
+	Color           uint32 // 颜色
+	BColor          bool   // 是否使用颜色
 }
 
 // Position_ 位置点
@@ -188,7 +223,7 @@ type Position_ struct {
 type Font_Info_ struct {
 	NSize  int32          // 字体大小, 单位(pt,磅).
 	NStyle xcc.FontStyle_ // 字体样式: FontStyle_
-	Name   [32]uint16     // 字体名称, 使用xc.Font_Info_Name()函数转换为string.
+	Name   [32]uint16     // 字体名称, 使用 xc.Font_Info_Name()函数转换为string.
 }
 
 // ListBox 列表框项信息2

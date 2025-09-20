@@ -1,8 +1,9 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/common"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 )
 
 // SVG_加载从文件, 返回SVG句柄.
@@ -212,7 +213,7 @@ func XSvg_GetAlpha(hSvg int) byte {
 // color: xc.RGBA 颜色.
 //
 // bEnable: 是否有效.
-func XSvg_SetUserFillColor(hSvg int, color int, bEnable bool) {
+func XSvg_SetUserFillColor(hSvg int, color uint32, bEnable bool) {
 	xSvg_SetUserFillColor.Call(uintptr(hSvg), uintptr(color), common.BoolPtr(bEnable))
 }
 
@@ -225,7 +226,7 @@ func XSvg_SetUserFillColor(hSvg int, color int, bEnable bool) {
 // strokeWidth: 笔触宽度.
 //
 // bEnable: 是否有效.
-func XSvg_SetUserStrokeColor(hSvg int, color int, strokeWidth float32, bEnable bool) {
+func XSvg_SetUserStrokeColor(hSvg int, color uint32, strokeWidth float32, bEnable bool) {
 	xSvg_SetUserStrokeColor.Call(uintptr(hSvg), uintptr(color), common.Float32Ptr(strokeWidth), common.BoolPtr(bEnable))
 }
 
@@ -234,7 +235,7 @@ func XSvg_SetUserStrokeColor(hSvg int, color int, strokeWidth float32, bEnable b
 // hSvg: SVG句柄.
 //
 // pColor: 返回颜色值.
-func XSvg_GetUserFillColor(hSvg int, pColor *int) bool {
+func XSvg_GetUserFillColor(hSvg int, pColor *uint32) bool {
 	r, _, _ := xSvg_GetUserFillColor.Call(uintptr(hSvg), uintptr(unsafe.Pointer(pColor)))
 	return r != 0
 }
@@ -246,7 +247,7 @@ func XSvg_GetUserFillColor(hSvg int, pColor *int) bool {
 // pColor: 返回颜色值.
 //
 // pStrokeWidth: .
-func XSvg_GetUserStrokeColor(hSvg int, pColor *int, pStrokeWidth *float32) bool {
+func XSvg_GetUserStrokeColor(hSvg int, pColor *uint32, pStrokeWidth *float32) bool {
 	r, _, _ := xSvg_GetUserStrokeColor.Call(uintptr(hSvg), uintptr(unsafe.Pointer(pColor)), uintptr(unsafe.Pointer(pStrokeWidth)))
 	return r != 0
 }

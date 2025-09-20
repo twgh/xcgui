@@ -1,9 +1,10 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/common"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 
 	"github.com/twgh/xcgui/xcc"
 )
@@ -434,24 +435,24 @@ func XWnd_SetFont(hWindow, hFontx int) {
 // hWindow: 窗口句柄.
 //
 // color: xc.RGBA 颜色值.
-func XWnd_SetTextColor(hWindow, color int) {
+func XWnd_SetTextColor(hWindow int, color uint32) {
 	xWnd_SetTextColor.Call(uintptr(hWindow), uintptr(color))
 }
 
-// 窗口_取文本颜色.
+// 窗口_取文本颜色, 返回 xc.RGBA 颜色.
 //
 // hWindow: 窗口句柄.
-func XWnd_GetTextColor(hWindow int) int {
+func XWnd_GetTextColor(hWindow int) uint32 {
 	r, _, _ := xWnd_GetTextColor.Call(uintptr(hWindow))
-	return int(r)
+	return uint32(r)
 }
 
-// 窗口_取文本颜色扩展.
+// 窗口_取文本颜色扩展, 返回 xc.RGBA 颜色.
 //
 // hWindow: 窗口句柄.
-func XWnd_GetTextColorEx(hWindow int) int {
+func XWnd_GetTextColorEx(hWindow int) uint32 {
 	r, _, _ := xWnd_GetTextColorEx.Call(uintptr(hWindow))
-	return int(r)
+	return uint32(r)
 }
 
 // 窗口_置ID.
@@ -681,7 +682,7 @@ func XWnd_SetCaretPos(hWindow int, x, y, width, height int32, bUpdate bool) {
 // hWindow: 窗口句柄.
 //
 // color: 颜色值.
-func XWnd_SetCaretColor(hWindow, color int) {
+func XWnd_SetCaretColor(hWindow int, color uint32) {
 	xWnd_SetCaretColor.Call(uintptr(hWindow), uintptr(color))
 }
 
@@ -857,8 +858,8 @@ func XWnd_SetTransparentAlpha(hWindow int, alpha byte) {
 //
 // hWindow: 窗口句柄.
 //
-// color: 窗口透明色.
-func XWnd_SetTransparentColor(hWindow, color int) {
+// color: 窗口透明色, xc.RGBA 颜色.
+func XWnd_SetTransparentColor(hWindow int, color uint32) {
 	xWnd_SetTransparentColor.Call(uintptr(hWindow), uintptr(color))
 }
 
@@ -874,8 +875,8 @@ func XWnd_SetTransparentColor(hWindow, color int) {
 //
 // bRightAngle: 是否强制直角.
 //
-// color: 阴影颜色.
-func XWnd_SetShadowInfo(hWindow int, nSize int32, nDepth int32, nAngeleSize int32, bRightAngle bool, color int) {
+// color: 阴影颜色, xc.RGBA 颜色.
+func XWnd_SetShadowInfo(hWindow int, nSize int32, nDepth int32, nAngeleSize int32, bRightAngle bool, color uint32) {
 	xWnd_SetShadowInfo.Call(uintptr(hWindow), uintptr(nSize), uintptr(nDepth), uintptr(nAngeleSize), common.BoolPtr(bRightAngle), uintptr(color))
 }
 
@@ -891,8 +892,8 @@ func XWnd_SetShadowInfo(hWindow int, nSize int32, nDepth int32, nAngeleSize int3
 //
 // pbRightAngle: 是否强制直角.
 //
-// pColor: 阴影颜色.
-func XWnd_GetShadowInfo(hWindow int, pnSize, pnDepth, pnAngeleSize *int32, pbRightAngle *bool, pColor *int) {
+// pColor: 阴影颜色, xc.RGBA 颜色.
+func XWnd_GetShadowInfo(hWindow int, pnSize, pnDepth, pnAngeleSize *int32, pbRightAngle *bool, pColor *uint32) {
 	xWnd_GetShadowInfo.Call(uintptr(hWindow), uintptr(unsafe.Pointer(pnSize)), uintptr(unsafe.Pointer(pnDepth)), uintptr(unsafe.Pointer(pnAngeleSize)), uintptr(unsafe.Pointer(pbRightAngle)), uintptr(unsafe.Pointer(pColor)))
 }
 
@@ -972,7 +973,7 @@ func XWnd_SetTitle(hWindow int, pTitle string) {
 // hWindow: 窗口句柄.
 //
 // color: xc.RGBA 颜色.
-func XWnd_SetTitleColor(hWindow, color int) {
+func XWnd_SetTitleColor(hWindow int, color uint32) {
 	xWnd_SetTitleColor.Call(uintptr(hWindow), uintptr(color))
 }
 
@@ -1005,9 +1006,9 @@ func XWnd_GetTitle(hWindow int) string {
 // 窗口_取标题颜色, 返回 xc.RGBA 颜色.
 //
 // hWindow: 窗口句柄.
-func XWnd_GetTitleColor(hWindow int) int {
+func XWnd_GetTitleColor(hWindow int) uint32 {
 	r, _, _ := xWnd_GetTitleColor.Call(uintptr(hWindow))
-	return int(r)
+	return uint32(r)
 }
 
 // 窗口_添加背景边框.
@@ -1019,7 +1020,7 @@ func XWnd_GetTitleColor(hWindow int) int {
 // color: xc.RGBA 颜色.
 //
 // width: 线宽.
-func XWnd_AddBkBorder(hWindow int, nState xcc.Window_State_Flag_, color int, width int32) {
+func XWnd_AddBkBorder(hWindow int, nState xcc.Window_State_Flag_, color uint32, width int32) {
 	xWnd_AddBkBorder.Call(uintptr(hWindow), uintptr(nState), uintptr(color), uintptr(width))
 }
 
@@ -1030,7 +1031,7 @@ func XWnd_AddBkBorder(hWindow int, nState xcc.Window_State_Flag_, color int, wid
 // nState: 组合状态.
 //
 // color: xc.RGBA 颜色.
-func XWnd_AddBkFill(hWindow int, nState xcc.Window_State_Flag_, color int) {
+func XWnd_AddBkFill(hWindow int, nState xcc.Window_State_Flag_, color uint32) {
 	xWnd_AddBkFill.Call(uintptr(hWindow), uintptr(nState), uintptr(color))
 }
 

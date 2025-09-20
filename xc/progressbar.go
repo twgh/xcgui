@@ -93,6 +93,6 @@ func XProgBar_EnableShowText(hEle int, bShow bool) {
 // hEle: 元素句柄.
 //
 // color: xc.RGBA 颜色.
-func XProgBar_SetColorLoad(hEle int, color int) {
+func XProgBar_SetColorLoad(hEle int, color uint32) {
 	xProgBar_SetColorLoad.Call(uintptr(hEle), uintptr(color))
 }

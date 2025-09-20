@@ -199,7 +199,7 @@ func XEdit_SetDefaultText(hEle int, pString string) {
 // hEle: 元素句柄.
 //
 // color: xc.RGBA 颜色值.
-func XEdit_SetDefaultTextColor(hEle int, color int) {
+func XEdit_SetDefaultTextColor(hEle int, color uint32) {
 	xEdit_SetDefaultTextColor.Call(uintptr(hEle), uintptr(color))
 }
 
@@ -375,10 +375,10 @@ func XEdit_AddByStyle(hEle int, iStyle int32) {
 //
 // hFont_image_Obj: 字体.
 //
-// color: 颜色.
+// color: xc.RGBA 颜色.
 //
 // bColor: 是否使用颜色.
-func XEdit_AddStyle(hEle int, hFont_image_Obj int, color int, bColor bool) int32 {
+func XEdit_AddStyle(hEle int, hFont_image_Obj int, color uint32, bColor bool) int32 {
 	r, _, _ := xEdit_AddStyle.Call(uintptr(hEle), uintptr(hFont_image_Obj), uintptr(color), common.BoolPtr(bColor))
 	return int32(r)
 }
@@ -393,10 +393,10 @@ func XEdit_AddStyle(hEle int, hFont_image_Obj int, color int, bColor bool) int32
 //
 // fontStyle: 字体样式, FontStyle_.
 //
-// color: 颜色.
+// color: xc.RGBA 颜色.
 //
 // bColor: 是否使用颜色.
-func XEdit_AddStyleEx(hEle int, fontName string, fontSize int32, fontStyle xcc.FontStyle_, color int, bColor bool) int32 {
+func XEdit_AddStyleEx(hEle int, fontName string, fontSize int32, fontStyle xcc.FontStyle_, color uint32, bColor bool) int32 {
 	r, _, _ := xEdit_AddStyleEx.Call(uintptr(hEle), common.StrPtr(fontName), uintptr(fontSize), uintptr(fontStyle), uintptr(color), common.BoolPtr(bColor))
 	return int32(r)
 }
@@ -426,8 +426,8 @@ func XEdit_SetCurStyle(hEle int, iStyle int32) {
 //
 // hEle: 元素句柄.
 //
-// color: 颜色.
-func XEdit_SetCaretColor(hEle int, color int) {
+// color: xc.RGBA 颜色.
+func XEdit_SetCaretColor(hEle int, color uint32) {
 	xEdit_SetCaretColor.Call(uintptr(hEle), uintptr(color))
 }
 
@@ -445,7 +445,7 @@ func XEdit_SetCaretWidth(hEle int, nWidth int32) {
 // hEle: 元素句柄.
 //
 // color: xc.RGBA 颜色.
-func XEdit_SetSelectBkColor(hEle int, color int) {
+func XEdit_SetSelectBkColor(hEle int, color uint32) {
 	xEdit_SetSelectBkColor.Call(uintptr(hEle), uintptr(color))
 }
 
@@ -799,7 +799,7 @@ func XEdit_ReleaseStyle(hEle int, iStyle int32) bool {
 // color: xc.RGBA 颜色.
 //
 // bColor: 是否使用颜色.
-func XEdit_ModifyStyle(hEle int, iStyle int32, hFont int, color int, bColor bool) bool {
+func XEdit_ModifyStyle(hEle int, iStyle int32, hFont int, color uint32, bColor bool) bool {
 	r, _, _ := xEdit_ModifyStyle.Call(uintptr(hEle), uintptr(iStyle), uintptr(hFont), uintptr(color), common.BoolPtr(bColor))
 	return r != 0
 }

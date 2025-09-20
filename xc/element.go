@@ -1,9 +1,10 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/common"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 
 	"github.com/twgh/xcgui/xcc"
 )
@@ -779,24 +780,24 @@ func XEle_SetLockScroll(hEle int, bHorizon bool, bVertical bool) {
 // hEle: 元素句柄.
 //
 // color: xc.RGBA 颜色值.
-func XEle_SetTextColor(hEle int, color int) {
+func XEle_SetTextColor(hEle int, color uint32) {
 	xEle_SetTextColor.Call(uintptr(hEle), uintptr(color))
 }
 
 // 元素_取文本颜色.
 //
 // hEle: 元素句柄.
-func XEle_GetTextColor(hEle int) int {
+func XEle_GetTextColor(hEle int) uint32 {
 	r, _, _ := xEle_GetTextColor.Call(uintptr(hEle))
-	return int(r)
+	return uint32(r)
 }
 
 // 元素_取文本颜色扩展, 获取文本颜色, 优先从资源中获取.
 //
 // hEle: 元素句柄.
-func XEle_GetTextColorEx(hEle int) int {
+func XEle_GetTextColorEx(hEle int) uint32 {
 	r, _, _ := xEle_GetTextColorEx.Call(uintptr(hEle))
-	return int(r)
+	return uint32(r)
 }
 
 // 元素_置焦点边框颜色.
@@ -804,16 +805,16 @@ func XEle_GetTextColorEx(hEle int) int {
 // hEle: 元素句柄.
 //
 // color: xc.RGBA 颜色值.
-func XEle_SetFocusBorderColor(hEle int, color int) {
+func XEle_SetFocusBorderColor(hEle int, color uint32) {
 	xEle_SetFocusBorderColor.Call(uintptr(hEle), uintptr(color))
 }
 
 // 元素_取焦点边框颜色.
 //
 // hEle: 元素句柄.
-func XEle_GetFocusBorderColor(hEle int) int {
+func XEle_GetFocusBorderColor(hEle int) uint32 {
 	r, _, _ := xEle_GetFocusBorderColor.Call(uintptr(hEle))
-	return int(r)
+	return uint32(r)
 }
 
 // 元素_置字体.
@@ -864,7 +865,7 @@ func XEle_Destroy(hEle int) {
 // color: xc.RGBA 颜色.
 //
 // width: 线宽.
-func XEle_AddBkBorder(hEle int, nState xcc.CombinedState, color int, width int32) {
+func XEle_AddBkBorder(hEle int, nState xcc.CombinedState, color uint32, width int32) {
 	xEle_AddBkBorder.Call(uintptr(hEle), uintptr(nState), uintptr(color), uintptr(width))
 }
 
@@ -875,7 +876,7 @@ func XEle_AddBkBorder(hEle int, nState xcc.CombinedState, color int, width int32
 // nState: 组合状态.
 //
 // color: xc.RGBA 颜色.
-func XEle_AddBkFill(hEle int, nState xcc.CombinedState, color int) {
+func XEle_AddBkFill(hEle int, nState xcc.CombinedState, color uint32) {
 	xEle_AddBkFill.Call(uintptr(hEle), uintptr(nState), uintptr(color))
 }
 

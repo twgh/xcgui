@@ -69,7 +69,7 @@ func NewShapeRectByUIDName(name string) *ShapeRect {
 // 形状矩形_置边框色, 设置边框颜色.
 //
 // color: xc.RGBA 颜色值.
-func (s *ShapeRect) SetBorderColor(color int) *ShapeRect {
+func (s *ShapeRect) SetBorderColor(color uint32) *ShapeRect {
 	xc.XShapeRect_SetBorderColor(s.Handle, color)
 	return s
 }
@@ -77,7 +77,7 @@ func (s *ShapeRect) SetBorderColor(color int) *ShapeRect {
 // 形状矩形_置填充色, 设置填充颜色.
 //
 // color: xc.RGBA 颜色值.
-func (s *ShapeRect) SetFillColor(color int) *ShapeRect {
+func (s *ShapeRect) SetFillColor(color uint32) *ShapeRect {
 	xc.XShapeRect_SetFillColor(s.Handle, color)
 	return s
 }

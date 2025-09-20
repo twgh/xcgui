@@ -43,7 +43,7 @@ func XTextLink_EnableUnderlineStay(hEle int, bEnable bool) {
 // hEle: 元素句柄.
 //
 // color: xc.RGBA 颜色值.
-func XTextLink_SetTextColorStay(hEle int, color int) {
+func XTextLink_SetTextColorStay(hEle int, color uint32) {
 	xTextLink_SetTextColorStay.Call(uintptr(hEle), uintptr(color))
 }
 
@@ -52,7 +52,7 @@ func XTextLink_SetTextColorStay(hEle int, color int) {
 // hEle: 元素句柄.
 //
 // color: xc.RGBA 颜色值.
-func XTextLink_SetUnderlineColorLeave(hEle int, color int) {
+func XTextLink_SetUnderlineColorLeave(hEle int, color uint32) {
 	xTextLink_SetUnderlineColorLeave.Call(uintptr(hEle), uintptr(color))
 }
 
@@ -61,6 +61,6 @@ func XTextLink_SetUnderlineColorLeave(hEle int, color int) {
 // hEle: 元素句柄.
 //
 // color: xc.RGBA 颜色值.
-func XTextLink_SetUnderlineColorStay(hEle int, color int) {
+func XTextLink_SetUnderlineColorStay(hEle int, color uint32) {
 	xTextLink_SetUnderlineColorStay.Call(uintptr(hEle), uintptr(color))
 }
