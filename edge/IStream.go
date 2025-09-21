@@ -2,6 +2,7 @@ package edge
 
 import (
 	"errors"
+
 	"github.com/twgh/xcgui/wapi"
 
 	"syscall"
@@ -19,12 +20,33 @@ type IStream struct {
 //
 // data: 用于设置内存流的初始内容, 如果此参数为 nil，则返回的内存流没有任何初始内容。
 func NewStreamMem(data []byte) (*IStream, error) {
-	streamPtr, err := wapi.SHCreateMemStream(data)
+	streamPtr := wapi.SHCreateMemStream(data)
+	if streamPtr == 0 {
+		return nil, errors.New("createMemStream failed")
+	}
+	return NewIStreamByPtr(streamPtr), nil
+}
+
+// NewStreamOnFileEx 打开或创建文件，并检索要读取或写入该文件的流。
+//
+// pszFile: 指定文件名。
+//
+// grfMode: 用于指定文件访问模式以及如何创建和删除公开流的对象的一个或多个 wapi.STGM 值。
+//
+// dwAttributes: 一个或多个标志值，用于在创建新文件时指定文件属性。wapi.FILE_ATTRIBUTE_, wapi.FILE_FLAG_ .
+//
+// fCreate: 可帮助与 grfMode 一起指定在创建流时应如何处理现有文件。
+//
+// pstmTemplate: 保留参数.
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/shlwapi/nf-shlwapi-shcreatestreamonfileex
+func NewStreamOnFileEx(pszFile string, grfMode wapi.STGM, dwAttributes uint32, fCreate bool, pstmTemplate ...uintptr) (*IStream, error) {
+	streamPtr, err := wapi.SHCreateStreamOnFileEx(pszFile, grfMode, dwAttributes, fCreate, pstmTemplate...)
 	if err != nil {
 		return nil, err
 	}
 	if streamPtr == 0 {
-		return nil, errors.New("createMemStream failed")
+		return nil, errors.New("createStreamOnFileEx failed")
 	}
 	return NewIStreamByPtr(streamPtr), nil
 }
@@ -309,8 +331,8 @@ type STATSTG struct {
 	// 最后访问时间，FILETIME 格式存储
 	Atime syscall.Filetime
 
-	// 访问模式标志，对应 STGM 常量组合
-	GrfMode STGM
+	// 访问模式标志，对应 wapi.STGM 常量组合
+	GrfMode wapi.STGM
 
 	// 支持的锁类型，对应 LOCK 位掩码
 	GrfLocksSupported LOCK
@@ -324,64 +346,6 @@ type STATSTG struct {
 	// 保留字段，必须初始化为0
 	Reserved uint32
 }
-
-// STGM 是指示创建和删除对象的条件以及对象的访问模式的标志。
-//
-// https://learn.microsoft.com/zh-cn/windows/win32/stg/stgm-constants
-type STGM uint32
-
-const (
-	// STGM_READ 只读访问模式
-	STGM_READ STGM = 0x00000000
-
-	// STGM_WRITE 只写访问模式
-	STGM_WRITE STGM = 0x00000001
-
-	// STGM_READWRITE 读写访问模式
-	STGM_READWRITE STGM = 0x00000002
-
-	// STGM_SHARE_DENY_NONE 允许其他进程以任何模式打开
-	STGM_SHARE_DENY_NONE STGM = 0x00000040
-
-	// STGM_SHARE_DENY_READ 禁止其他进程读取访问
-	STGM_SHARE_DENY_READ STGM = 0x00000030
-
-	// STGM_SHARE_DENY_WRITE 禁止其他进程写入访问
-	STGM_SHARE_DENY_WRITE STGM = 0x00000020
-
-	// STGM_SHARE_EXCLUSIVE 独占访问，禁止其他进程访问
-	STGM_SHARE_EXCLUSIVE STGM = 0x00000010
-
-	// STGM_CREATE 如果不存在则创建新的存储对象
-	STGM_CREATE STGM = 0x00001000
-
-	// STGM_CONVERT 转换存储格式
-	STGM_CONVERT STGM = 0x00020000
-
-	// STGM_FAILIFTHERE 如果已存在则失败
-	STGM_FAILIFTHERE STGM = 0x00000000
-
-	// STGM_DIRECT 直接访问模式，绕过缓冲
-	STGM_DIRECT STGM = 0x00000000
-
-	// STGM_TRANSACTED 事务访问模式
-	STGM_TRANSACTED STGM = 0x00010000
-
-	// STGM_NOSCRATCH 不使用临时文件
-	STGM_NOSCRATCH STGM = 0x00100000
-
-	// STGM_NOSNAPSHOT 不创建快照
-	STGM_NOSNAPSHOT STGM = 0x00200000
-
-	// STGM_SIMPLE 简单访问模式
-	STGM_SIMPLE STGM = 0x08000000
-
-	// STGM_DIRECT_SWMR 直接单写多读模式
-	STGM_DIRECT_SWMR STGM = 0x00400000
-
-	// STGM_DELETEONRELEASE 释放时删除
-	STGM_DELETEONRELEASE STGM = 0x04000000
-)
 
 // STATFLAG 控制统计信息获取方式的枚举，决定返回数据的详细程度和操作行为.
 //

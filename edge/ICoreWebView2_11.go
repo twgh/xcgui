@@ -59,17 +59,14 @@ func (i *ICoreWebView2_11) CallDevToolsProtocolMethodForSession(sessionId string
 //
 // handler: 执行完成后的回调处理程序，接收返回的 JSON 结果。
 func (i *ICoreWebView2_11) CallDevToolsProtocolMethodForSessionEx(impl *WebViewEventImpl, sessionId, methodName, parametersAsJson string, cb func(errorCode syscall.Errno, result string) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "CallDevToolsProtocolMethodCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "CallDevToolsProtocolMethodCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "CallDevToolsProtocolMethodCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "CallDevToolsProtocolMethodCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "CallDevToolsProtocolMethodCompleted")
 	return i.CallDevToolsProtocolMethodForSession(sessionId, methodName, parametersAsJson, (*ICoreWebView2CallDevToolsProtocolMethodCompletedHandler)(handler))
 }
 

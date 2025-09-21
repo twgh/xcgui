@@ -66,17 +66,14 @@ func (i *ICoreWebView2Profile2) ClearBrowsingDataAll(handler *ICoreWebView2Clear
 //
 // cb: 清除完成后的回调处理程序，可以为 nil。
 func (i *ICoreWebView2Profile2) ClearBrowsingDataEx(impl *WebViewEventImpl, dataKinds COREWEBVIEW2_BROWSING_DATA_KINDS, cb func(errorCode syscall.Errno) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "ClearBrowsingDataCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "ClearBrowsingDataCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "ClearBrowsingDataCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "ClearBrowsingDataCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "ClearBrowsingDataCompleted")
 	return i.ClearBrowsingData(dataKinds, (*ICoreWebView2ClearBrowsingDataCompletedHandler)(handler))
 }
 
@@ -90,17 +87,14 @@ func (i *ICoreWebView2Profile2) ClearBrowsingDataEx(impl *WebViewEventImpl, data
 //
 // cb: 清除完成后的回调处理程序，可以为 nil。
 func (i *ICoreWebView2Profile2) ClearBrowsingDataInTimeRangeEx(impl *WebViewEventImpl, dataKinds COREWEBVIEW2_BROWSING_DATA_KINDS, startTime, endTime int64, cb func(errorCode syscall.Errno) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "ClearBrowsingDataCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "ClearBrowsingDataCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "ClearBrowsingDataCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "ClearBrowsingDataCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "ClearBrowsingDataCompleted")
 	return i.ClearBrowsingDataInTimeRange(dataKinds, startTime, endTime, (*ICoreWebView2ClearBrowsingDataCompletedHandler)(handler))
 }
 
@@ -110,16 +104,13 @@ func (i *ICoreWebView2Profile2) ClearBrowsingDataInTimeRangeEx(impl *WebViewEven
 //
 // cb: 清除完成后的回调处理程序，可以为 nil。
 func (i *ICoreWebView2Profile2) ClearBrowsingDataAllEx(impl *WebViewEventImpl, cb func(errorCode syscall.Errno) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "ClearBrowsingDataCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "ClearBrowsingDataCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "ClearBrowsingDataCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "ClearBrowsingDataCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "ClearBrowsingDataCompleted")
 	return i.ClearBrowsingDataAll((*ICoreWebView2ClearBrowsingDataCompletedHandler)(handler))
 }

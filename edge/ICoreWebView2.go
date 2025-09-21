@@ -582,17 +582,14 @@ func (i *ICoreWebView2) ExecuteScript(javaScript string, handler *ICoreWebView2E
 //
 // cb: 执行完成后的回调处理程序，可以为 nil。如果 JavaScript 返回值，将通过 cb 返回。
 func (i *ICoreWebView2) ExecuteScriptEx(impl *WebViewEventImpl, javaScript string, cb func(errorCode syscall.Errno, result string) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "ExecuteScriptCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "ExecuteScriptCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "ExecuteScriptCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "ExecuteScriptCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "ExecuteScriptCompleted")
 	return i.ExecuteScript(javaScript, (*ICoreWebView2ExecuteScriptCompletedHandler)(handler))
 }
 
@@ -703,17 +700,14 @@ func (i *ICoreWebView2) AddScriptToExecuteOnDocumentCreated(javaScript string, h
 //
 // cb: 添加脚本完成后的回调处理程序。
 func (i *ICoreWebView2) AddScriptToExecuteOnDocumentCreatedEx(impl *WebViewEventImpl, javaScript string, cb func(errorCode syscall.Errno, id string) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "AddScriptToExecuteOnDocumentCreatedCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "AddScriptToExecuteOnDocumentCreatedCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "AddScriptToExecuteOnDocumentCreatedCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "AddScriptToExecuteOnDocumentCreatedCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "AddScriptToExecuteOnDocumentCreatedCompleted")
 	return i.AddScriptToExecuteOnDocumentCreated(javaScript, (*ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler)(handler))
 }
 
@@ -968,17 +962,14 @@ func (i *ICoreWebView2) CapturePreview(imageFormat COREWEBVIEW2_CAPTURE_PREVIEW_
 //
 // cb: 捕获完成后的回调处理程序. 写入流完毕后触发.
 func (i *ICoreWebView2) CapturePreviewEx(impl *WebViewEventImpl, imageFormat COREWEBVIEW2_CAPTURE_PREVIEW_IMAGE_FORMAT, imageStream *IStream, cb func(errorCode syscall.Errno) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "CapturePreviewCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "CapturePreviewCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "CapturePreviewCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "CapturePreviewCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "CapturePreviewCompleted")
 	return i.CapturePreview(imageFormat, imageStream, (*ICoreWebView2CapturePreviewCompletedHandler)(handler))
 }
 
@@ -1145,17 +1136,14 @@ func (i *ICoreWebView2) CallDevToolsProtocolMethod(methodName string, parameters
 //
 // cb: 执行完成后的回调处理程序，接收返回的 JSON 结果。
 func (i *ICoreWebView2) CallDevToolsProtocolMethodEx(impl *WebViewEventImpl, methodName string, parametersAsJson string, cb func(errorCode syscall.Errno, result string) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "CallDevToolsProtocolMethodCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "CallDevToolsProtocolMethodCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "CallDevToolsProtocolMethodCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "CallDevToolsProtocolMethodCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "CallDevToolsProtocolMethodCompleted")
 	return i.CallDevToolsProtocolMethod(methodName, parametersAsJson, (*ICoreWebView2CallDevToolsProtocolMethodCompletedHandler)(handler))
 }
 

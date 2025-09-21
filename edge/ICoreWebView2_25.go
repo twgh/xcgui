@@ -57,16 +57,13 @@ func (i *ICoreWebView2_25) ShowSaveAsUI(handler *ICoreWebView2ShowSaveAsUIComple
 //
 // cb: 执行完成后的回调处理程序，接收操作结果。
 func (i *ICoreWebView2_25) ShowSaveAsUIEx(impl *WebViewEventImpl, cb func(errorCode syscall.Errno, result COREWEBVIEW2_SAVE_AS_UI_RESULT) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "ShowSaveAsUICompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "ShowSaveAsUICompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "ShowSaveAsUICompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "ShowSaveAsUICompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "ShowSaveAsUICompleted")
 	return i.ShowSaveAsUI((*ICoreWebView2ShowSaveAsUICompletedHandler)(handler))
 }

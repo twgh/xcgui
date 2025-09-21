@@ -108,17 +108,14 @@ func (i *ICoreWebView2WebResourceResponseView) GetContent(handler *ICoreWebView2
 //
 // cb: 执行完成后的回调处理程序，接收返回结果。
 func (i *ICoreWebView2WebResourceResponseView) GetContentEx(impl *WebViewEventImpl, cb func(errorCode syscall.Errno, content []byte) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "WebResourceResponseViewGetContentCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "WebResourceResponseViewGetContentCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "WebResourceResponseViewGetContentCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "WebResourceResponseViewGetContentCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "WebResourceResponseViewGetContentCompleted")
 	return i.GetContent((*ICoreWebView2WebResourceResponseViewGetContentCompletedHandler)(handler))
 }
 

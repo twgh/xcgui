@@ -531,22 +531,22 @@ const (
 )
 
 const (
-	CS_BYTEALIGNCLIENT = 0x1000     // 将窗口的工作区与 x 方向的字节边界对齐. 此样式会影响窗口的宽度及其在显示器上的水平位置。
-	CS_BYTEALIGNWINDOW = 0x2000     // 使窗口在字节边界 (沿 x 方向) 对齐. 此样式会影响窗口的宽度及其在显示器上的水平位置。
-	CS_CLASSDC         = 0x0040     // 分配一个设备上下文，以便类中的所有窗口共享. 由于窗口类特定于进程，因此应用程序的多个线程可以创建同一类的窗口。 线程还可以尝试同时使用设备上下文。 发生这种情况时，系统仅允许一个线程成功完成其绘制操作。
-	CS_DBLCLKS         = 0x0008     // 当用户在光标位于属于类的窗口中时双击鼠标时，将双击消息发送到窗口过程
-	CS_DROPSHADOW      = 0x00020000 // 在窗口上启用投影效果. 通过 SPI_SETDROPSHADOW 打开和关闭效果。 通常，对于小型、生存期较短的窗口（如菜单）启用此功能，以强调其与其他窗口的 Z 顺序关系。 从具有此样式的类创建的 Windows 必须是顶级窗口;它们可能不是子窗口。
-	CS_GLOBALCLASS     = 0x4000     // 指示窗口类是应用程序全局类
-	CS_HREDRAW         = 0x0002     // 如果移动或大小调整更改了工作区的宽度，则重绘整个窗口
-	CS_NOCLOSE         = 0x0200     // 在窗口菜单上禁用“关闭”
-	CS_OWNDC           = 0x0020     // 为类中的每个窗口分配唯一的设备上下文
-	CS_PARENTDC        = 0x0080     // 将子窗口的剪裁矩形设置为父窗口的剪裁矩形，以便子窗口可以在父窗口上绘制. 具有 CS_PARENTDC 样式位的窗口从系统的设备上下文缓存接收常规设备上下文。 它不会为子级提供父级的设备上下文或设备上下文设置。 指定 CS_PARENTDC 可增强应用程序的性能。
+	CS_BYTEALIGNCLIENT uint32 = 0x1000     // 将窗口的工作区与 x 方向的字节边界对齐. 此样式会影响窗口的宽度及其在显示器上的水平位置。
+	CS_BYTEALIGNWINDOW uint32 = 0x2000     // 使窗口在字节边界 (沿 x 方向) 对齐. 此样式会影响窗口的宽度及其在显示器上的水平位置。
+	CS_CLASSDC         uint32 = 0x0040     // 分配一个设备上下文，以便类中的所有窗口共享. 由于窗口类特定于进程，因此应用程序的多个线程可以创建同一类的窗口。 线程还可以尝试同时使用设备上下文。 发生这种情况时，系统仅允许一个线程成功完成其绘制操作。
+	CS_DBLCLKS         uint32 = 0x0008     // 当用户在光标位于属于类的窗口中时双击鼠标时，将双击消息发送到窗口过程
+	CS_DROPSHADOW      uint32 = 0x00020000 // 在窗口上启用投影效果. 通过 SPI_SETDROPSHADOW 打开和关闭效果。 通常，对于小型、生存期较短的窗口（如菜单）启用此功能，以强调其与其他窗口的 Z 顺序关系。 从具有此样式的类创建的 Windows 必须是顶级窗口;它们可能不是子窗口。
+	CS_GLOBALCLASS     uint32 = 0x4000     // 指示窗口类是应用程序全局类
+	CS_HREDRAW         uint32 = 0x0002     // 如果移动或大小调整更改了工作区的宽度，则重绘整个窗口
+	CS_NOCLOSE         uint32 = 0x0200     // 在窗口菜单上禁用“关闭”
+	CS_OWNDC           uint32 = 0x0020     // 为类中的每个窗口分配唯一的设备上下文
+	CS_PARENTDC        uint32 = 0x0080     // 将子窗口的剪裁矩形设置为父窗口的剪裁矩形，以便子窗口可以在父窗口上绘制. 具有 CS_PARENTDC 样式位的窗口从系统的设备上下文缓存接收常规设备上下文。 它不会为子级提供父级的设备上下文或设备上下文设置。 指定 CS_PARENTDC 可增强应用程序的性能。
 
 	// 保存此类窗口遮盖的屏幕图像部分作为位图。 删除窗口时，系统会使用保存的位图还原屏幕图像，包括被遮盖的其他窗口。 因此，如果位图使用的内存尚未丢弃，并且其他屏幕操作未使存储的图像失效，则系统不会将 WM_PAINT 消息发送到被遮盖的窗口。
 	//
 	// 此样式适用于小型窗口 (例如菜单或对话框) ，这些菜单或对话框在发生其他屏幕活动之前会短暂显示，然后删除。 此样式会增加显示窗口所需的时间，因为系统必须先分配内存来存储位图。
-	CS_SAVEBITS = 0x0800
-	CS_VREDRAW  = 0x0001 // 如果移动或大小调整更改了工作区的高度，则重新绘制整个窗口
+	CS_SAVEBITS uint32 = 0x0800
+	CS_VREDRAW  uint32 = 0x0001 // 如果移动或大小调整更改了工作区的高度，则重新绘制整个窗口
 )
 
 // GetParent 检索指定窗口的父级或所有者的句柄。若要检索指定上级的句柄，请使用 GetAncestor 函数。
@@ -1536,26 +1536,26 @@ const (
 
 // 系统菜单命令值常量
 const (
-	SC_SIZE         = 0xF000 // 调整窗口大小
-	SC_MOVE         = 0xF010 // 移动窗口
-	SC_MINIMIZE     = 0xF020 // 最小化窗口
-	SC_MAXIMIZE     = 0xF030 // 最大化窗口
-	SC_NEXTWINDOW   = 0xF040 // 切换到下一个窗口
-	SC_PREVWINDOW   = 0xF050 // 切换到上一个窗口
-	SC_CLOSE        = 0xF060 // 关闭窗口
-	SC_VSCROLL      = 0xF070 // 垂直滚动
-	SC_HSCROLL      = 0xF080 // 水平滚动
-	SC_MOUSEMENU    = 0xF090 // 鼠标菜单
-	SC_KEYMENU      = 0xF100 // 键盘菜单
-	SC_ARRANGE      = 0xF110 // 排列窗口
-	SC_RESTORE      = 0xF120 // 恢复窗口
-	SC_TASKLIST     = 0xF130 // 任务列表
-	SC_SCREENSAVE   = 0xF140 // 屏幕保护程序
-	SC_HOTKEY       = 0xF150 // 热键
-	SC_DEFAULT      = 0xF160 // 默认操作
-	SC_MONITORPOWER = 0xF170 // 显示器电源设置
-	SC_CONTEXTHELP  = 0xF180 // 上下文帮助
-	SC_SEPARATOR    = 0xF00F // 分隔符
+	SC_SIZE               = 0xF000 // 调整窗口大小
+	SC_MOVE               = 0xF010 // 移动窗口
+	SC_MINIMIZE           = 0xF020 // 最小化窗口
+	SC_MAXIMIZE           = 0xF030 // 最大化窗口
+	SC_NEXTWINDOW         = 0xF040 // 切换到下一个窗口
+	SC_PREVWINDOW         = 0xF050 // 切换到上一个窗口
+	SC_CLOSE              = 0xF060 // 关闭窗口
+	SC_VSCROLL            = 0xF070 // 垂直滚动
+	SC_HSCROLL            = 0xF080 // 水平滚动
+	SC_MOUSEMENU          = 0xF090 // 鼠标菜单
+	SC_KEYMENU            = 0xF100 // 键盘菜单
+	SC_ARRANGE            = 0xF110 // 排列窗口
+	SC_RESTORE            = 0xF120 // 恢复窗口
+	SC_TASKLIST           = 0xF130 // 任务列表
+	SC_SCREENSAVE         = 0xF140 // 屏幕保护程序
+	SC_HOTKEY             = 0xF150 // 热键
+	SC_DEFAULT            = 0xF160 // 默认操作
+	SC_MONITORPOWERuint32 = 0xF170 // 显示器电源设置
+	SC_CONTEXTHELP        = 0xF180 // 上下文帮助
+	SC_SEPARATOR          = 0xF00F // 分隔符
 )
 
 const (

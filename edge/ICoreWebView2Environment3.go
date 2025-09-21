@@ -38,17 +38,14 @@ func (i *ICoreWebView2Environment3) CreateCoreWebView2CompositionController(pare
 //
 // cb: 创建完成执行后的回调函数。
 func (i *ICoreWebView2Environment3) CreateCoreWebView2CompositionControllerEx(impl *WebViewEventImpl, parentWindow uintptr, cb func(errorCode syscall.Errno, controller *ICoreWebView2CompositionController) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "CreateCoreWebView2CompositionControllerCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "CreateCoreWebView2CompositionControllerCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "CreateCoreWebView2CompositionControllerCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "CreateCoreWebView2CompositionControllerCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "CreateCoreWebView2CompositionControllerCompleted")
 	return i.CreateCoreWebView2CompositionController(parentWindow, (*ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler)(handler))
 }
 

@@ -203,17 +203,14 @@ func (i *ICoreWebView2Frame2) ExecuteScript(javaScript string, handler *ICoreWeb
 //
 // cb: 执行完成后的回调处理程序，可以为 nil。如果 JavaScript 返回值，将通过 cb 返回。
 func (i *ICoreWebView2Frame2) ExecuteScriptEx(impl *WebViewEventImpl, javaScript string, cb func(errorCode syscall.Errno, result string) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "ExecuteScriptCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "ExecuteScriptCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "ExecuteScriptCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "ExecuteScriptCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "ExecuteScriptCompleted")
 	return i.ExecuteScript(javaScript, (*ICoreWebView2ExecuteScriptCompletedHandler)(handler))
 }
 

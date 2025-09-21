@@ -69,17 +69,14 @@ func (i *ICoreWebView2Profile7) GetBrowserExtensions(handler *ICoreWebView2Profi
 //
 // cb: 添加完成后的回调处理程序，可以为 nil。
 func (i *ICoreWebView2Profile7) AddBrowserExtensionEx(impl *WebViewEventImpl, extensionFolderPath string, cb func(errorCode syscall.Errno, result *ICoreWebView2BrowserExtension) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "ProfileAddBrowserExtensionCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "ProfileAddBrowserExtensionCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "ProfileAddBrowserExtensionCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "ProfileAddBrowserExtensionCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "ProfileAddBrowserExtensionCompleted")
 	return i.AddBrowserExtension(extensionFolderPath, (*ICoreWebView2ProfileAddBrowserExtensionCompletedHandler)(handler))
 }
 
@@ -91,16 +88,13 @@ func (i *ICoreWebView2Profile7) AddBrowserExtensionEx(impl *WebViewEventImpl, ex
 //
 // cb: 获取完成后的回调处理程序，可以为 nil。如果获取成功，将通过 cb 返回扩展列表。
 func (i *ICoreWebView2Profile7) GetBrowserExtensionsEx(impl *WebViewEventImpl, cb func(errorCode syscall.Errno, result *ICoreWebView2BrowserExtensionList) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "ProfileGetBrowserExtensionsCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "ProfileGetBrowserExtensionsCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "ProfileGetBrowserExtensionsCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "ProfileGetBrowserExtensionsCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "ProfileGetBrowserExtensionsCompleted")
 	return i.GetBrowserExtensions((*ICoreWebView2ProfileGetBrowserExtensionsCompletedHandler)(handler))
 }

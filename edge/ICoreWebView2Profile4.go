@@ -62,17 +62,14 @@ func (i *ICoreWebView2Profile4) GetNonDefaultPermissionSettings(handler *ICoreWe
 //
 // cb: 设置完成后的回调处理程序，可以为 nil。
 func (i *ICoreWebView2Profile4) SetPermissionStateEx(impl *WebViewEventImpl, permissionKind COREWEBVIEW2_PERMISSION_KIND, origin string, state COREWEBVIEW2_PERMISSION_STATE, cb func(errorCode syscall.Errno) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "SetPermissionStateCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "SetPermissionStateCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "SetPermissionStateCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "SetPermissionStateCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "SetPermissionStateCompleted")
 	return i.SetPermissionState(permissionKind, origin, state, (*ICoreWebView2SetPermissionStateCompletedHandler)(handler))
 }
 
@@ -82,16 +79,13 @@ func (i *ICoreWebView2Profile4) SetPermissionStateEx(impl *WebViewEventImpl, per
 //
 // cb: 获取完成后的回调处理程序，可以为 nil。如果获取成功，将通过 cb 返回权限设置集合。
 func (i *ICoreWebView2Profile4) GetNonDefaultPermissionSettingsEx(impl *WebViewEventImpl, cb func(errorCode syscall.Errno, result *ICoreWebView2PermissionSettingCollectionView) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "GetNonDefaultPermissionSettingsCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "GetNonDefaultPermissionSettingsCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "GetNonDefaultPermissionSettingsCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "GetNonDefaultPermissionSettingsCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "GetNonDefaultPermissionSettingsCompleted")
 	return i.GetNonDefaultPermissionSettings((*ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler)(handler))
 }

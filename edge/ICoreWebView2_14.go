@@ -58,16 +58,13 @@ func (i *ICoreWebView2_14) ClearServerCertificateErrorActions(handler *ICoreWebV
 //
 // cb: 清除操作完成后的回调处理程序，可以为 nil。
 func (i *ICoreWebView2_14) ClearServerCertificateErrorActionsEx(impl *WebViewEventImpl, cb func(errorCode syscall.Errno) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "ClearServerCertificateErrorActionsCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "ClearServerCertificateErrorActionsCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "ClearServerCertificateErrorActionsCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "ClearServerCertificateErrorActionsCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "ClearServerCertificateErrorActionsCompleted")
 	return i.ClearServerCertificateErrorActions((*ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler)(handler))
 }

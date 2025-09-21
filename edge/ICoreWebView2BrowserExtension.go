@@ -99,17 +99,14 @@ func (i *ICoreWebView2BrowserExtension) Remove(handler *ICoreWebView2BrowserExte
 //
 // cb: 完成回调函数，接收错误码。
 func (i *ICoreWebView2BrowserExtension) RemoveEx(impl *WebViewEventImpl, cb func(errorCode syscall.Errno) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "BrowserExtensionRemoveCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "BrowserExtensionRemoveCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "BrowserExtensionRemoveCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "BrowserExtensionRemoveCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "BrowserExtensionRemoveCompleted")
 	return i.Remove((*ICoreWebView2BrowserExtensionRemoveCompletedHandler)(handler))
 }
 
@@ -154,17 +151,14 @@ func (i *ICoreWebView2BrowserExtension) Enable(isEnabled bool, handler *ICoreWeb
 //
 // cb: 完成回调函数，接收错误码。
 func (i *ICoreWebView2BrowserExtension) EnableEx(impl *WebViewEventImpl, isEnabled bool, cb func(errorCode syscall.Errno) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "BrowserExtensionEnableCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "BrowserExtensionEnableCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "BrowserExtensionEnableCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "BrowserExtensionEnableCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "BrowserExtensionEnableCompleted")
 	return i.Enable(isEnabled, (*ICoreWebView2BrowserExtensionEnableCompletedHandler)(handler))
 }
 

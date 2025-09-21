@@ -56,17 +56,14 @@ func (i *ICoreWebView2_3) TrySuspend(handler *ICoreWebView2TrySuspendCompletedHa
 //
 // cb: 接收 TrySuspend 方法的结果。
 func (i *ICoreWebView2_3) TrySuspendEx(impl *WebViewEventImpl, cb func(errorCode syscall.Errno, isSuccessful bool) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "TrySuspendCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "TrySuspendCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "TrySuspendCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "TrySuspendCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "TrySuspendCompleted")
 	return i.TrySuspend((*ICoreWebView2TrySuspendCompletedHandler)(handler))
 }
 

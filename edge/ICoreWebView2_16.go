@@ -38,17 +38,14 @@ func (i *ICoreWebView2_16) Print(printSettings *ICoreWebView2PrintSettings, hand
 //
 // cb: 打印操作完成后的回调函数，可以为 nil。
 func (i *ICoreWebView2_16) PrintEx(impl *WebViewEventImpl, printSettings *ICoreWebView2PrintSettings, cb func(errorCode syscall.Errno, result COREWEBVIEW2_PRINT_STATUS) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "PrintCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "PrintCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "PrintCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "PrintCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "PrintCompleted")
 	return i.Print(printSettings, (*ICoreWebView2PrintCompletedHandler)(handler))
 }
 
@@ -93,16 +90,13 @@ func (i *ICoreWebView2_16) PrintToPdfStream(printSettings *ICoreWebView2PrintSet
 //
 // cb: 操作完成后的回调函数，接收返回结果。
 func (i *ICoreWebView2_16) PrintToPdfStreamEx(impl *WebViewEventImpl, printSettings *ICoreWebView2PrintSettings, cb func(errorCode syscall.Errno, pdfBytes []byte) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "PrintToPdfStreamCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "PrintToPdfStreamCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "PrintToPdfStreamCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "PrintToPdfStreamCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "PrintToPdfStreamCompleted")
 	return i.PrintToPdfStream(printSettings, (*ICoreWebView2PrintToPdfStreamCompletedHandler)(handler))
 }

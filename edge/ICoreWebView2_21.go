@@ -41,16 +41,13 @@ func (i *ICoreWebView2_21) ExecuteScriptWithResult(javaScript string, handler *I
 //
 // cb: 执行完成后的回调处理程序，接收执行结果或错误信息。
 func (i *ICoreWebView2_21) ExecuteScriptWithResultEx(impl *WebViewEventImpl, javaScript string, cb func(errorCode syscall.Errno, result *ICoreWebView2ExecuteScriptResult) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "ExecuteScriptWithResultCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "ExecuteScriptWithResultCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "ExecuteScriptWithResultCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "ExecuteScriptWithResultCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "ExecuteScriptWithResultCompleted")
 	return i.ExecuteScriptWithResult(javaScript, (*ICoreWebView2ExecuteScriptWithResultCompletedHandler)(handler))
 }

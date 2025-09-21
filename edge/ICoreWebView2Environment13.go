@@ -30,16 +30,13 @@ func (i *ICoreWebView2Environment13) GetProcessExtendedInfos(handler *ICoreWebVi
 // GetProcessExtendedInfosEx 获取与该 CoreWebView2Environment 关联的所有当前正在运行的进程（不包括崩溃报告进程）对应的 ProcessExtendedInfo 的快照集合。
 //   - 这提供了与 ProcessInfo 中相同的 GetProcessInfos 列表，但另外还提供了渲染器进程中正在主动运行（显示或隐藏用户界面元素）的相关 FrameInfo 列表。有关更多信息，请参阅 AssociatedFrameInfos。
 func (i *ICoreWebView2Environment13) GetProcessExtendedInfosEx(impl *WebViewEventImpl, cb func(errorCode syscall.Errno, result *ICoreWebView2ProcessExtendedInfoCollection) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "GetProcessExtendedInfosCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "GetProcessExtendedInfosCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "GetProcessExtendedInfosCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "GetProcessExtendedInfosCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "GetProcessExtendedInfosCompleted")
 	return i.GetProcessExtendedInfos((*ICoreWebView2GetProcessExtendedInfosCompletedHandler)(handler))
 }

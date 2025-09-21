@@ -89,17 +89,14 @@ func (i *ICoreWebView2_15) GetFavicon(format COREWEBVIEW2_FAVICON_IMAGE_FORMAT, 
 //
 // cb: 获取完成后的回调处理程序。
 func (i *ICoreWebView2_15) GetFaviconEx(impl *WebViewEventImpl, format COREWEBVIEW2_FAVICON_IMAGE_FORMAT, cb func(errorCode syscall.Errno, favicon []byte) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "GetFaviconCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "GetFaviconCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "GetFaviconCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "GetFaviconCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "GetFaviconCompleted")
 	return i.GetFavicon(format, (*ICoreWebView2GetFaviconCompletedHandler)(handler))
 }
 

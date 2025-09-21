@@ -46,16 +46,13 @@ func (i *ICoreWebView2_7) PrintToPdf(resultFilePath string, printSettings *ICore
 //
 // cb: 打印完成后的回调函数。
 func (i *ICoreWebView2_7) PrintToPdfEx(impl *WebViewEventImpl, resultFilePath string, printSettings *ICoreWebView2PrintSettings, cb func(errorCode syscall.Errno, isSuccessful bool) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "PrintToPdfCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "PrintToPdfCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "PrintToPdfCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "PrintToPdfCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "PrintToPdfCompleted")
 	return i.PrintToPdf(resultFilePath, printSettings, (*ICoreWebView2PrintToPdfCompletedHandler)(handler))
 }

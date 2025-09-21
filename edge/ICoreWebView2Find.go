@@ -169,17 +169,14 @@ func (i *ICoreWebView2Find) Start(options *ICoreWebView2FindOptions, handler *IC
 //   - 要启动新的查找会话（从第一个匹配项开始搜索），请在调用 Start 之前调用 Stop。
 //   - 如果在不调用 Stop 的情况下，连续使用相同的选项调用 Start，查找会话将从现有会话的当前位置继续。在不更改参数的情况下调用 Start，其行为将类似于 FindNext 或 FindPrevious，具体取决于最近执行的搜索操作。如果两者都未被调用，Start 默认向前查找。但是，在正在进行的查找会话期间再次调用 Start 不会从当前活动匹配项的位置继续。例如，对于文本“1 1 A 1 1”，先启动查找“A”的会话，然后启动另一个查找“1”的会话，它会从文档开头开始搜索，无论之前的活动匹配项在哪里。此行为表明，更改查找查询会启动一个全新的查找会话，而不是从之前的匹配索引继续。
 func (i *ICoreWebView2Find) StartEx(impl *WebViewEventImpl, options *ICoreWebView2FindOptions, cb func(errorCode syscall.Errno) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "FindStartCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "FindStartCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "FindStartCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "FindStartCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "FindStartCompleted")
 	return i.Start(options, (*ICoreWebView2FindStartCompletedHandler)(handler))
 }
 

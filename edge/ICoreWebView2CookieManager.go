@@ -237,17 +237,14 @@ func (i *ICoreWebView2CookieManager) GetCookies(uri string, handler *ICoreWebVie
 //
 // cb: 接收结果的回调函数.
 func (i *ICoreWebView2CookieManager) GetCookiesEx(impl *WebViewEventImpl, uri string, cb func(errorCode syscall.Errno, cookies *ICoreWebView2CookieList) uintptr) error {
-	handler := WvEventHandler.GetHandler(impl, "GetCookiesCompleted")
-	if handler == nil {
-		var c interface{}
-		if cb == nil {
-			c = nil
-		} else {
-			c = cb
-		}
-		_, _ = WvEventHandler.AddCallBack(impl, "GetCookiesCompleted", c, nil)
-		handler = WvEventHandler.GetHandler(impl, "GetCookiesCompleted")
+	var c interface{}
+	if cb == nil {
+		c = nil
+	} else {
+		c = cb
 	}
+	_, _ = WvEventHandler.AddCallBack(impl, "GetCookiesCompleted", c, nil)
+	handler := WvEventHandler.GetHandler(impl, "GetCookiesCompleted")
 	return i.GetCookies(uri, (*ICoreWebView2GetCookiesCompletedHandler)(handler))
 }
 
