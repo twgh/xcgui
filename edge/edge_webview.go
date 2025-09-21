@@ -5,11 +5,13 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
+	"strconv"
 	"strings"
 	"sync"
 	"syscall"
 	"time"
 
+	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"github.com/twgh/xcgui/wapi/wnd"
 	"github.com/twgh/xcgui/xc"
@@ -72,7 +74,7 @@ type rpcMessage struct {
 
 func jsString(v interface{}) string { b, _ := json.Marshal(v); return string(b) }
 
-func (w *WebView) callbinding(d *rpcMessage) (interface{}, error) {
+func callbinding(w *WebView, d *rpcMessage) (interface{}, error) {
 	w.rwxBindings.RLock()
 	f, ok := w.bindings[d.Method]
 	w.rwxBindings.RUnlock()
@@ -432,8 +434,14 @@ func (w *WebView) BindLog(funcName ...string) error {
 	})
 }
 
+// SetTitle 更新原生窗口的标题。
+//   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
+func (w *WebView) SetTitle(title string) {
+	wapi.SetWindowText(w.hwnd, title)
+}
+
 // 创建 WebView2 控制器
-func (w *WebView) newWebView2Controller(opt *WebViewOptions) error {
+func newWebView2Controller(w *WebView, opt *WebViewOptions) error {
 	var isDone bool
 	var err2 error
 	// WebView2 控制器创建完成回调
@@ -597,4 +605,23 @@ func (w *WebView) newWebView2Controller(opt *WebViewOptions) error {
 		wapi.DispatchMessage(&msg)
 	}
 	return err2
+}
+
+func (w *WebView) msgcb_xcgui(msg string) {
+	d := rpcMessage{}
+	if err := json.Unmarshal(common.String2Bytes(msg), &d); err != nil {
+		return
+	}
+
+	id := strconv.Itoa(d.ID)
+	if res, err := callbinding(w, &d); err != nil {
+		err = w.Eval("window._rpc[" + id + "].reject(" + jsString(err.Error()) + "); window._rpc[" + id + "] = undefined")
+		ReportErrorAuto(err)
+	} else if b, err := json.Marshal(res); err != nil {
+		err = w.Eval("window._rpc[" + id + "].reject(" + jsString(err.Error()) + "); window._rpc[" + id + "] = undefined")
+		ReportErrorAuto(err)
+	} else {
+		err = w.Eval("window._rpc[" + id + "].resolve(" + string(b) + "); window._rpc[" + id + "] = undefined")
+		ReportErrorAuto(err)
+	}
 }

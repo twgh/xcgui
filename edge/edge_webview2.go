@@ -20,10 +20,6 @@ type WebView2 struct {
 	focusOnInit bool
 }
 
-func (w *WebView2) init() {
-	w.permissions = make(map[COREWEBVIEW2_PERMISSION_KIND]COREWEBVIEW2_PERMISSION_STATE)
-}
-
 func (w *WebView2) GetWebViewEventImpl() *WebViewEventImpl {
 	return &w.WebViewEventImpl
 }
@@ -342,7 +338,7 @@ func (w *WebView2) EnableVirtualHostNameToEmbedFSMapping(enable bool) error {
 		if err != nil {
 			return err
 		}
-		if !once { // 只创建一次
+		if firstCreateWebResourceResponse { // 只创建一次
 			w.firstResponse, err = w.Edge.Environment.CreateWebResourceResponse(nil, 200, "OK", "")
 			ReportErrorAuto(err)
 		}
@@ -362,4 +358,9 @@ func (w *WebView2) EnableVirtualHostNameToEmbedFSMapping(enable bool) error {
 
 	w.enableVirtualHostNameToEmbedFSMapping = enable
 	return nil
+}
+
+// GetBrowserProcessID 获取承载 WebView 的浏览器进程的 ID。
+func (w *WebView2) GetBrowserProcessID() uint32 {
+	return w.CoreWebView.MustGetBrowserProcessID()
 }

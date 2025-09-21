@@ -41,17 +41,17 @@ func (e *WebViewError) Error() string {
 	return e.Err.Error()
 }
 
-// 例: Reload report error: xxx
+// ErrorWithMethod 返回例: Reload report error: xxx
 func (e *WebViewError) ErrorWithMethod() string {
 	return fmt.Sprintf("%s report error: %v", e.Method, e.Err)
 }
 
-// 例: github.com/twgh/xcgui/edge.(*ICoreWebView2).Reload report error: xxx
+// ErrorWithFullName 返回例: github.com/twgh/xcgui/edge.(*ICoreWebView2).Reload report error: xxx
 func (e *WebViewError) ErrorWithFullName() string {
 	return fmt.Sprintf("%s report error: %v", e.FullName, e.Err)
 }
 
-// 例: D:/GOProject/src/github.com/twgh/xcgui/edge/ICoreWebView2.go:480, github.com/twgh/xcgui/edge.(*ICoreWebView2).Reload report error: xxx
+// ErrorWithFile 返回例: D:/GOProject/src/github.com/twgh/xcgui/edge/ICoreWebView2.go:480, github.com/twgh/xcgui/edge.(*ICoreWebView2).Reload report error: xxx
 func (e *WebViewError) ErrorWithFile() string {
 	return fmt.Sprintf("%s:%d, %s report error: %v", e.File, e.Line, e.FullName, e.Err)
 }

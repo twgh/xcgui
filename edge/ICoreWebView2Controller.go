@@ -89,20 +89,6 @@ func (i *ICoreWebView2Controller) GetBounds() (xc.RECT, error) {
 	return bounds, nil
 }
 
-// SetBounds 设置 WebView 的边界。
-//
-// bounds: WebView 的边界矩形。
-func (i *ICoreWebView2Controller) SetBounds(bounds xc.RECT) error {
-	r, _, _ := i.Vtbl.PutBounds.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&bounds)),
-	)
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
-}
-
 // AddAcceleratorKeyPressed 添加键盘快捷键事件处理程序.
 //   - AcceleratorKeyPressed 在 Webview 获得焦点时，当按下或释放快捷键或组合键时运行。
 func (i *ICoreWebView2Controller) AddAcceleratorKeyPressed(eventHandler *ICoreWebView2AcceleratorKeyPressedEventHandler, token *EventRegistrationToken) error {
@@ -203,35 +189,6 @@ func (i *ICoreWebView2Controller) GetZoomFactor() (float64, error) {
 		return zoomFactor, syscall.Errno(r)
 	}
 	return zoomFactor, nil
-}
-
-// SetZoomFactor 设置 WebView 的缩放系数。
-func (i *ICoreWebView2Controller) SetZoomFactor(zoomFactor float64) error {
-	r, _, _ := i.Vtbl.PutZoomFactor.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&zoomFactor)),
-	)
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
-}
-
-// SetBoundsAndZoomFactor 设置 WebView 的边界和缩放系数。
-//
-// bounds: WebView 的边界矩形
-//
-// zoomFactor: 缩放系数
-func (i *ICoreWebView2Controller) SetBoundsAndZoomFactor(bounds xc.RECT, zoomFactor float64) error {
-	r, _, _ := i.Vtbl.SetBoundsAndZoomFactor.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&bounds)),
-		uintptr(unsafe.Pointer(&zoomFactor)),
-	)
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
 }
 
 // Close 关闭 WebView 并清理底层浏览器实例。

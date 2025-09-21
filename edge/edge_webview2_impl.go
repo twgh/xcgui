@@ -13,12 +13,13 @@ import (
 
 // NewWebViewEventImpl 创建一个 WebView 事件接口实现对象.
 //   - 此种方法是高度封装的版本, 你也可以用更原生的方法来添加事件处理函数, 自行创建新的 EventHandler.
-//   - 需要注意的是你自己创建的这个对象不能让它被 GC 回收, 也就是不能创建为局部变量. 或可使用 runtime.Pinner.
+//   - 需要注意的是你自己创建的这个对象不能让它被 GC 回收, 也就是不能创建为局部变量. 或可使用 runtime.Pinner [没有尝试过].
 func NewWebViewEventImpl(wv *WebView) *WebViewEventImpl {
 	return &WebViewEventImpl{
 		CoreWebView: wv.CoreWebView,
 		Controller:  wv.Controller,
 		Edge:        wv.Edge,
+		permissions: make(map[COREWEBVIEW2_PERMISSION_KIND]COREWEBVIEW2_PERMISSION_STATE),
 	}
 }
 
@@ -44,15 +45,8 @@ type WebViewEventImpl struct {
 	enableVirtualHostNameToEmbedFSMapping bool
 }
 
-// CreateNewWebViewEventImpl 获取一个新的 WebView 事件接口实现对象.
-//   - 此种方法是高度封装的版本, 你也可以用更原生的方法来添加事件处理函数, 自行创建新的 EventHandler.
-//   - 需要注意的是你自己创建的这个对象不能让它被 GC 回收, 也就是不能创建为局部变量. 或可使用 runtime.Pinner.
-func (w *WebViewEventImpl) CreateNewWebViewEventImpl() *WebViewEventImpl {
-	return &WebViewEventImpl{
-		CoreWebView: w.CoreWebView,
-		Controller:  w.Controller,
-		Edge:        w.Edge,
-	}
+func initWebViewEventImpl(w *WebViewEventImpl) {
+	w.permissions = make(map[COREWEBVIEW2_PERMISSION_KIND]COREWEBVIEW2_PERMISSION_STATE)
 }
 
 // SetPermission 设置权限。设置后如果网页请求该权限, 会根据设置的 state 来允许或拒绝请求。
@@ -264,7 +258,7 @@ func (w *WebViewEventImpl) WebMessageReceived(sender *ICoreWebView2, args *ICore
 	return ret
 }
 
-var once bool
+var firstCreateWebResourceResponse bool
 
 // WebResourceRequested 当收到资源请求时调用。
 func (w *WebViewEventImpl) WebResourceRequested(sender *ICoreWebView2, args *ICoreWebView2WebResourceRequestedEventArgs) uintptr {
@@ -310,8 +304,8 @@ func (w *WebViewEventImpl) WebResourceRequested(sender *ICoreWebView2, args *ICo
 		}
 
 		var res *ICoreWebView2WebResourceResponse
-		if !once && w.firstResponse != nil { // 仅第一次时这样
-			once = true
+		if firstCreateWebResourceResponse && w.firstResponse != nil { // 仅第一次时这样
+			firstCreateWebResourceResponse = false
 			stream, err := NewStreamMem(data)
 			if err != nil {
 				ReportErrorAuto(errors.New("webResourceRequested, create stream failed: " + err.Error()))

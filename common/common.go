@@ -324,13 +324,13 @@ func StringToBool(input string) bool {
 
 // AtoUint32 将 string 转换成 uint32.
 func AtoUint32(s string) uint32 {
-	i, _ := strconv.Atoi(s)
+	i, _ := strconv.ParseUint(s, 10, 32)
 	return uint32(i)
 }
 
 // Uint32ToA 将 uint32 转换成 string.
 func Uint32ToA(i uint32) string {
-	return strconv.Itoa(int(i))
+	return strconv.FormatUint(uint64(i), 10)
 }
 
 // Itoa 将 int32 转换到 string.

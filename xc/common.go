@@ -30,6 +30,23 @@ func PathExists2(path string) bool {
 	return err == nil
 }
 
+// ParseRGBA 将 RGBA 生成的颜色还原回 r, g, b, a.
+func ParseRGBA(color uint32) (r, g, b, a byte) {
+	r = byte(color & 0xFF)
+	g = byte((color >> 8) & 0xFF)
+	b = byte((color >> 16) & 0xFF)
+	a = byte((color >> 24) & 0xFF)
+	return
+}
+
+// ParseRGB 将 RGB 生成的颜色还原回 r, g, b.
+func ParseRGB(color uint32) (r, g, b byte) {
+	r = byte(color & 0xFF)
+	g = byte((color >> 8) & 0xFF)
+	b = byte((color >> 16) & 0xFF)
+	return
+}
+
 // RGBA 根据 r, g, b, a 组合成炫彩使用的颜色.
 //
 // r: 红色分量.

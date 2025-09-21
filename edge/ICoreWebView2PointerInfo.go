@@ -106,13 +106,6 @@ func (i *ICoreWebView2PointerInfo) GetPointerKind() (wapi.PT_, error) {
 	return kind, nil
 }
 
-// MustGetPointerKind 获取指针类型。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetPointerKind() wapi.PT_ {
-	kind, err := i.GetPointerKind()
-	ReportErrorAuto(err)
-	return kind
-}
-
 // SetPointerKind 设置指针类型.
 func (i *ICoreWebView2PointerInfo) SetPointerKind(kind wapi.PT_) error {
 	r, _, _ := i.Vtbl.PutPointerKind.Call(
@@ -136,13 +129,6 @@ func (i *ICoreWebView2PointerInfo) GetPointerId() (uint32, error) {
 		return 0, syscall.Errno(r)
 	}
 	return id, nil
-}
-
-// MustGetPointerId 获取指针ID。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetPointerId() uint32 {
-	id, err := i.GetPointerId()
-	ReportErrorAuto(err)
-	return id
 }
 
 // SetPointerId 设置指针ID.
@@ -170,13 +156,6 @@ func (i *ICoreWebView2PointerInfo) GetFrameId() (uint32, error) {
 	return id, nil
 }
 
-// MustGetFrameId 获取帧ID。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetFrameId() uint32 {
-	id, err := i.GetFrameId()
-	ReportErrorAuto(err)
-	return id
-}
-
 // SetFrameId 设置帧ID.
 func (i *ICoreWebView2PointerInfo) SetFrameId(id uint32) error {
 	r, _, _ := i.Vtbl.PutFrameId.Call(
@@ -200,13 +179,6 @@ func (i *ICoreWebView2PointerInfo) GetPointerFlags() (wapi.POINTER_FLAG_, error)
 		return 0, syscall.Errno(r)
 	}
 	return flags, nil
-}
-
-// MustGetPointerFlags 获取指针标志。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetPointerFlags() wapi.POINTER_FLAG_ {
-	flags, err := i.GetPointerFlags()
-	ReportErrorAuto(err)
-	return flags
 }
 
 // SetPointerFlags 设置指针标志.
@@ -234,25 +206,6 @@ func (i *ICoreWebView2PointerInfo) GetPointerDeviceRect() (xc.RECT, error) {
 	return rect, nil
 }
 
-// MustGetPointerDeviceRect 获取指针设备矩形区域。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetPointerDeviceRect() xc.RECT {
-	rect, err := i.GetPointerDeviceRect()
-	ReportErrorAuto(err)
-	return rect
-}
-
-// SetPointerDeviceRect 设置指针设备矩形区域.
-func (i *ICoreWebView2PointerInfo) SetPointerDeviceRect(rect xc.RECT) error {
-	r, _, _ := i.Vtbl.PutPointerDeviceRect.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&rect)),
-	)
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
-}
-
 // GetDisplayRect 获取显示矩形区域.
 func (i *ICoreWebView2PointerInfo) GetDisplayRect() (xc.RECT, error) {
 	var rect xc.RECT
@@ -264,25 +217,6 @@ func (i *ICoreWebView2PointerInfo) GetDisplayRect() (xc.RECT, error) {
 		return xc.RECT{}, syscall.Errno(r)
 	}
 	return rect, nil
-}
-
-// MustGetDisplayRect 获取显示矩形区域。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetDisplayRect() xc.RECT {
-	rect, err := i.GetDisplayRect()
-	ReportErrorAuto(err)
-	return rect
-}
-
-// SetDisplayRect 设置显示矩形区域.
-func (i *ICoreWebView2PointerInfo) SetDisplayRect(rect xc.RECT) error {
-	r, _, _ := i.Vtbl.PutDisplayRect.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&rect)),
-	)
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
 }
 
 // GetPixelLocation 获取像素位置.
@@ -298,25 +232,6 @@ func (i *ICoreWebView2PointerInfo) GetPixelLocation() (xc.POINT, error) {
 	return point, nil
 }
 
-// MustGetPixelLocation 获取像素位置。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetPixelLocation() xc.POINT {
-	point, err := i.GetPixelLocation()
-	ReportErrorAuto(err)
-	return point
-}
-
-// SetPixelLocation 设置像素位置.
-func (i *ICoreWebView2PointerInfo) SetPixelLocation(point xc.POINT) error {
-	r, _, _ := i.Vtbl.PutPixelLocation.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&point)),
-	)
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
-}
-
 // GetHimetricLocation 获取 HIMETRIC 坐标位置.
 func (i *ICoreWebView2PointerInfo) GetHimetricLocation() (xc.POINT, error) {
 	var point xc.POINT
@@ -328,25 +243,6 @@ func (i *ICoreWebView2PointerInfo) GetHimetricLocation() (xc.POINT, error) {
 		return xc.POINT{}, syscall.Errno(r)
 	}
 	return point, nil
-}
-
-// MustGetHimetricLocation 获取 HIMETRIC 坐标位置。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetHimetricLocation() xc.POINT {
-	point, err := i.GetHimetricLocation()
-	ReportErrorAuto(err)
-	return point
-}
-
-// SetHimetricLocation 设置 HIMETRIC 坐标位置.
-func (i *ICoreWebView2PointerInfo) SetHimetricLocation(point xc.POINT) error {
-	r, _, _ := i.Vtbl.PutHimetricLocation.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&point)),
-	)
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
 }
 
 // GetPixelLocationRaw 获取原始像素坐标位置.
@@ -362,25 +258,6 @@ func (i *ICoreWebView2PointerInfo) GetPixelLocationRaw() (xc.POINT, error) {
 	return point, nil
 }
 
-// MustGetPixelLocationRaw 获取原始像素坐标位置。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetPixelLocationRaw() xc.POINT {
-	point, err := i.GetPixelLocationRaw()
-	ReportErrorAuto(err)
-	return point
-}
-
-// SetPixelLocationRaw 设置原始像素坐标位置.
-func (i *ICoreWebView2PointerInfo) SetPixelLocationRaw(point xc.POINT) error {
-	r, _, _ := i.Vtbl.PutPixelLocationRaw.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&point)),
-	)
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
-}
-
 // GetHimetricLocationRaw 获取原始 HIMETRIC 坐标位置.
 func (i *ICoreWebView2PointerInfo) GetHimetricLocationRaw() (xc.POINT, error) {
 	var point xc.POINT
@@ -394,25 +271,6 @@ func (i *ICoreWebView2PointerInfo) GetHimetricLocationRaw() (xc.POINT, error) {
 	return point, nil
 }
 
-// MustGetHimetricLocationRaw 获取原始 HIMETRIC 坐标位置。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetHimetricLocationRaw() xc.POINT {
-	point, err := i.GetHimetricLocationRaw()
-	ReportErrorAuto(err)
-	return point
-}
-
-// SetHimetricLocationRaw 设置原始 HIMETRIC 坐标位置.
-func (i *ICoreWebView2PointerInfo) SetHimetricLocationRaw(point xc.POINT) error {
-	r, _, _ := i.Vtbl.PutHimetricLocationRaw.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&point)),
-	)
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
-}
-
 // GetTime 获取时间戳.
 func (i *ICoreWebView2PointerInfo) GetTime() (uint32, error) {
 	var time uint32
@@ -424,13 +282,6 @@ func (i *ICoreWebView2PointerInfo) GetTime() (uint32, error) {
 		return 0, syscall.Errno(r)
 	}
 	return time, nil
-}
-
-// MustGetTime 获取时间戳。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetTime() uint32 {
-	time, err := i.GetTime()
-	ReportErrorAuto(err)
-	return time
 }
 
 // SetTime 设置时间戳.
@@ -458,13 +309,6 @@ func (i *ICoreWebView2PointerInfo) GetHistoryCount() (uint32, error) {
 	return count, nil
 }
 
-// MustGetHistoryCount 获取历史记录数量。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetHistoryCount() uint32 {
-	count, err := i.GetHistoryCount()
-	ReportErrorAuto(err)
-	return count
-}
-
 // SetHistoryCount 设置历史记录数量.
 func (i *ICoreWebView2PointerInfo) SetHistoryCount(count uint32) error {
 	r, _, _ := i.Vtbl.PutHistoryCount.Call(
@@ -488,13 +332,6 @@ func (i *ICoreWebView2PointerInfo) GetInputData() (int32, error) {
 		return 0, syscall.Errno(r)
 	}
 	return data, nil
-}
-
-// MustGetInputData 获取输入数据。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetInputData() int32 {
-	data, err := i.GetInputData()
-	ReportErrorAuto(err)
-	return data
 }
 
 // SetInputData 设置输入数据.
@@ -522,13 +359,6 @@ func (i *ICoreWebView2PointerInfo) GetKeyStates() (uint32, error) {
 	return states, nil
 }
 
-// MustGetKeyStates 获取按键状态。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetKeyStates() uint32 {
-	states, err := i.GetKeyStates()
-	ReportErrorAuto(err)
-	return states
-}
-
 // SetKeyStates 设置按键状态.
 func (i *ICoreWebView2PointerInfo) SetKeyStates(states uint32) error {
 	r, _, _ := i.Vtbl.PutKeyStates.Call(
@@ -554,13 +384,6 @@ func (i *ICoreWebView2PointerInfo) GetPerformanceCount() (uint64, error) {
 	return count, nil
 }
 
-// MustGetPerformanceCount 获取性能计数器值。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetPerformanceCount() uint64 {
-	count, err := i.GetPerformanceCount()
-	ReportErrorAuto(err)
-	return count
-}
-
 // SetPerformanceCount 设置性能计数器值.
 func (i *ICoreWebView2PointerInfo) SetPerformanceCount(count uint64) error {
 	r, _, _ := i.Vtbl.PutPerformanceCount.Call(
@@ -584,13 +407,6 @@ func (i *ICoreWebView2PointerInfo) GetButtonChangeKind() (wapi.POINTER_CHANGE_, 
 		return 0, syscall.Errno(r)
 	}
 	return kind, nil
-}
-
-// MustGetButtonChangeKind 获取按钮改变类型。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetButtonChangeKind() wapi.POINTER_CHANGE_ {
-	kind, err := i.GetButtonChangeKind()
-	ReportErrorAuto(err)
-	return kind
 }
 
 // SetButtonChangeKind 设置按钮改变类型.
@@ -643,13 +459,6 @@ func (i *ICoreWebView2PointerInfo) GetPenMask() (wapi.PEN_MASK_, error) {
 	return mask, nil
 }
 
-// MustGetPenMask 获取笔掩码。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetPenMask() wapi.PEN_MASK_ {
-	mask, err := i.GetPenMask()
-	ReportErrorAuto(err)
-	return mask
-}
-
 // SetPenMask 设置笔掩码.
 func (i *ICoreWebView2PointerInfo) SetPenMask(mask wapi.PEN_MASK_) error {
 	r, _, _ := i.Vtbl.PutPenMask.Call(
@@ -673,13 +482,6 @@ func (i *ICoreWebView2PointerInfo) GetPenPressure() (uint32, error) {
 		return 0, syscall.Errno(r)
 	}
 	return pressure, nil
-}
-
-// MustGetPenPressure 获取笔压力值。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetPenPressure() uint32 {
-	pressure, err := i.GetPenPressure()
-	ReportErrorAuto(err)
-	return pressure
 }
 
 // SetPenPressure 设置笔压力值.
@@ -707,13 +509,6 @@ func (i *ICoreWebView2PointerInfo) GetPenRotation() (uint32, error) {
 	return rotation, nil
 }
 
-// MustGetPenRotation 获取笔旋转角度。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetPenRotation() uint32 {
-	rotation, err := i.GetPenRotation()
-	ReportErrorAuto(err)
-	return rotation
-}
-
 // SetPenRotation 设置笔旋转角度.
 func (i *ICoreWebView2PointerInfo) SetPenRotation(rotation uint32) error {
 	r, _, _ := i.Vtbl.PutPenRotation.Call(
@@ -737,13 +532,6 @@ func (i *ICoreWebView2PointerInfo) GetPenTiltX() (int32, error) {
 		return 0, syscall.Errno(r)
 	}
 	return tiltX, nil
-}
-
-// MustGetPenTiltX 获取笔的X轴倾斜角度。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetPenTiltX() int32 {
-	tiltX, err := i.GetPenTiltX()
-	ReportErrorAuto(err)
-	return tiltX
 }
 
 // SetPenTiltX 设置笔的X轴倾斜角度.
@@ -771,13 +559,6 @@ func (i *ICoreWebView2PointerInfo) GetPenTiltY() (int32, error) {
 	return tiltY, nil
 }
 
-// MustGetPenTiltY 获取笔的Y轴倾斜角度。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetPenTiltY() int32 {
-	tiltY, err := i.GetPenTiltY()
-	ReportErrorAuto(err)
-	return tiltY
-}
-
 // SetPenTiltY 设置笔的Y轴倾斜角度.
 func (i *ICoreWebView2PointerInfo) SetPenTiltY(tiltY int32) error {
 	r, _, _ := i.Vtbl.PutPenTiltY.Call(
@@ -801,13 +582,6 @@ func (i *ICoreWebView2PointerInfo) GetTouchFlags() (uint32, error) {
 		return 0, syscall.Errno(r)
 	}
 	return flags, nil
-}
-
-// MustGetTouchFlags 获取触摸标志。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetTouchFlags() uint32 {
-	flags, err := i.GetTouchFlags()
-	ReportErrorAuto(err)
-	return flags
 }
 
 // SetTouchFlags 设置触摸标志.
@@ -860,25 +634,6 @@ func (i *ICoreWebView2PointerInfo) GetTouchContact() (xc.RECT, error) {
 	return rect, nil
 }
 
-// MustGetTouchContact 获取触摸接触区域。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetTouchContact() xc.RECT {
-	rect, err := i.GetTouchContact()
-	ReportErrorAuto(err)
-	return rect
-}
-
-// SetTouchContact 设置触摸接触区域.
-func (i *ICoreWebView2PointerInfo) SetTouchContact(rect xc.RECT) error {
-	r, _, _ := i.Vtbl.PutTouchContact.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&rect)),
-	)
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
-}
-
 // GetTouchContactRaw 获取原始触摸接触区域.
 func (i *ICoreWebView2PointerInfo) GetTouchContactRaw() (xc.RECT, error) {
 	var rect xc.RECT
@@ -892,25 +647,6 @@ func (i *ICoreWebView2PointerInfo) GetTouchContactRaw() (xc.RECT, error) {
 	return rect, nil
 }
 
-// MustGetTouchContactRaw 获取原始触摸接触区域。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetTouchContactRaw() xc.RECT {
-	rect, err := i.GetTouchContactRaw()
-	ReportErrorAuto(err)
-	return rect
-}
-
-// SetTouchContactRaw 设置原始触摸接触区域.
-func (i *ICoreWebView2PointerInfo) SetTouchContactRaw(rect xc.RECT) error {
-	r, _, _ := i.Vtbl.PutTouchContactRaw.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&rect)),
-	)
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
-}
-
 // GetTouchOrientation 获取触摸方向.
 func (i *ICoreWebView2PointerInfo) GetTouchOrientation() (uint32, error) {
 	var orientation uint32
@@ -922,13 +658,6 @@ func (i *ICoreWebView2PointerInfo) GetTouchOrientation() (uint32, error) {
 		return 0, syscall.Errno(r)
 	}
 	return orientation, nil
-}
-
-// MustGetTouchOrientation 获取触摸方向。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetTouchOrientation() uint32 {
-	orientation, err := i.GetTouchOrientation()
-	ReportErrorAuto(err)
-	return orientation
 }
 
 // SetTouchOrientation 设置触摸方向.
@@ -956,13 +685,6 @@ func (i *ICoreWebView2PointerInfo) GetTouchPressure() (uint32, error) {
 	return pressure, nil
 }
 
-// MustGetTouchPressure 获取触摸压力值。出错时会触发全局错误回调。
-func (i *ICoreWebView2PointerInfo) MustGetTouchPressure() uint32 {
-	pressure, err := i.GetTouchPressure()
-	ReportErrorAuto(err)
-	return pressure
-}
-
 // SetTouchPressure 设置触摸压力值.
 func (i *ICoreWebView2PointerInfo) SetTouchPressure(pressure uint32) error {
 	r, _, _ := i.Vtbl.PutTouchPressure.Call(
@@ -973,4 +695,186 @@ func (i *ICoreWebView2PointerInfo) SetTouchPressure(pressure uint32) error {
 		return syscall.Errno(r)
 	}
 	return nil
+}
+
+// MustGetPointerKind 获取指针类型。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetPointerKind() wapi.PT_ {
+	kind, err := i.GetPointerKind()
+	ReportErrorAuto(err)
+	return kind
+}
+
+// MustGetPointerId 获取指针ID。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetPointerId() uint32 {
+	id, err := i.GetPointerId()
+	ReportErrorAuto(err)
+	return id
+}
+
+// MustGetFrameId 获取帧ID。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetFrameId() uint32 {
+	id, err := i.GetFrameId()
+	ReportErrorAuto(err)
+	return id
+}
+
+// MustGetPointerFlags 获取指针标志。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetPointerFlags() wapi.POINTER_FLAG_ {
+	flags, err := i.GetPointerFlags()
+	ReportErrorAuto(err)
+	return flags
+}
+
+// MustGetPointerDeviceRect 获取指针设备矩形区域。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetPointerDeviceRect() xc.RECT {
+	rect, err := i.GetPointerDeviceRect()
+	ReportErrorAuto(err)
+	return rect
+}
+
+// MustGetDisplayRect 获取显示矩形区域。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetDisplayRect() xc.RECT {
+	rect, err := i.GetDisplayRect()
+	ReportErrorAuto(err)
+	return rect
+}
+
+// MustGetPixelLocation 获取像素位置。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetPixelLocation() xc.POINT {
+	point, err := i.GetPixelLocation()
+	ReportErrorAuto(err)
+	return point
+}
+
+// MustGetHimetricLocation 获取 HIMETRIC 坐标位置。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetHimetricLocation() xc.POINT {
+	point, err := i.GetHimetricLocation()
+	ReportErrorAuto(err)
+	return point
+}
+
+// MustGetPixelLocationRaw 获取原始像素坐标位置。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetPixelLocationRaw() xc.POINT {
+	point, err := i.GetPixelLocationRaw()
+	ReportErrorAuto(err)
+	return point
+}
+
+// MustGetHimetricLocationRaw 获取原始 HIMETRIC 坐标位置。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetHimetricLocationRaw() xc.POINT {
+	point, err := i.GetHimetricLocationRaw()
+	ReportErrorAuto(err)
+	return point
+}
+
+// MustGetTime 获取时间戳。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetTime() uint32 {
+	time, err := i.GetTime()
+	ReportErrorAuto(err)
+	return time
+}
+
+// MustGetHistoryCount 获取历史记录数量。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetHistoryCount() uint32 {
+	count, err := i.GetHistoryCount()
+	ReportErrorAuto(err)
+	return count
+}
+
+// MustGetInputData 获取输入数据。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetInputData() int32 {
+	data, err := i.GetInputData()
+	ReportErrorAuto(err)
+	return data
+}
+
+// MustGetKeyStates 获取按键状态。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetKeyStates() uint32 {
+	states, err := i.GetKeyStates()
+	ReportErrorAuto(err)
+	return states
+}
+
+// MustGetPerformanceCount 获取性能计数器值。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetPerformanceCount() uint64 {
+	count, err := i.GetPerformanceCount()
+	ReportErrorAuto(err)
+	return count
+}
+
+// MustGetButtonChangeKind 获取按钮改变类型。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetButtonChangeKind() wapi.POINTER_CHANGE_ {
+	kind, err := i.GetButtonChangeKind()
+	ReportErrorAuto(err)
+	return kind
+}
+
+// MustGetPenMask 获取笔掩码。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetPenMask() wapi.PEN_MASK_ {
+	mask, err := i.GetPenMask()
+	ReportErrorAuto(err)
+	return mask
+}
+
+// MustGetPenPressure 获取笔压力值。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetPenPressure() uint32 {
+	pressure, err := i.GetPenPressure()
+	ReportErrorAuto(err)
+	return pressure
+}
+
+// MustGetPenRotation 获取笔旋转角度。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetPenRotation() uint32 {
+	rotation, err := i.GetPenRotation()
+	ReportErrorAuto(err)
+	return rotation
+}
+
+// MustGetPenTiltX 获取笔的X轴倾斜角度。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetPenTiltX() int32 {
+	tiltX, err := i.GetPenTiltX()
+	ReportErrorAuto(err)
+	return tiltX
+}
+
+// MustGetPenTiltY 获取笔的Y轴倾斜角度。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetPenTiltY() int32 {
+	tiltY, err := i.GetPenTiltY()
+	ReportErrorAuto(err)
+	return tiltY
+}
+
+// MustGetTouchFlags 获取触摸标志。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetTouchFlags() uint32 {
+	flags, err := i.GetTouchFlags()
+	ReportErrorAuto(err)
+	return flags
+}
+
+// MustGetTouchContact 获取触摸接触区域。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetTouchContact() xc.RECT {
+	rect, err := i.GetTouchContact()
+	ReportErrorAuto(err)
+	return rect
+}
+
+// MustGetTouchContactRaw 获取原始触摸接触区域。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetTouchContactRaw() xc.RECT {
+	rect, err := i.GetTouchContactRaw()
+	ReportErrorAuto(err)
+	return rect
+}
+
+// MustGetTouchOrientation 获取触摸方向。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetTouchOrientation() uint32 {
+	orientation, err := i.GetTouchOrientation()
+	ReportErrorAuto(err)
+	return orientation
+}
+
+// MustGetTouchPressure 获取触摸压力值。出错时会触发全局错误回调。
+func (i *ICoreWebView2PointerInfo) MustGetTouchPressure() uint32 {
+	pressure, err := i.GetTouchPressure()
+	ReportErrorAuto(err)
+	return pressure
 }

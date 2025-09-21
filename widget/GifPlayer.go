@@ -45,6 +45,7 @@ func NewGifPlayer(gifReader io.Reader) (*GifPlayer, error) {
 
 // Play 播放 Gif, 返回 GifPlayerHandler.
 //   - 如果你想改变 Gif 的宽高, 可改变 hEle 的宽高然后启用 fullEle, 或者操作 GifPlayer.HImages.
+//   - 内部注册了元素绘制事件.
 //
 // hEle: 元素句柄. 会给元素添加绘制事件, 可在不需要时调用 GifPlayerHandler.Destroy.
 //

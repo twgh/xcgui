@@ -2,12 +2,13 @@ package xc_test
 
 import (
 	"fmt"
+	"testing"
+
 	"github.com/twgh/xcgui/app"
 	"github.com/twgh/xcgui/tf"
 	"github.com/twgh/xcgui/widget"
 	"github.com/twgh/xcgui/window"
 	"github.com/twgh/xcgui/xc"
-	"testing"
 )
 
 func TestSetBnClicks(t *testing.T) {
@@ -44,4 +45,9 @@ func TestHexRGB2RGB(t *testing.T) {
 func TestHexRGB2RGBA(t *testing.T) {
 	fmt.Println(xc.HexRGB2RGBA("#ffc964", 255))
 	fmt.Println(xc.HexRGB2RGBA("ffc964", 255))
+}
+
+func TestParseRGBA(t *testing.T) {
+	fmt.Println(xc.ParseRGBA(xc.RGBA(200, 200, 200, 200)))
+	fmt.Println(xc.ParseRGB(xc.RGB(200, 200, 200)))
 }

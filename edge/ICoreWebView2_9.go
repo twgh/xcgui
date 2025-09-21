@@ -100,22 +100,6 @@ func (i *ICoreWebView2_9) GetDefaultDownloadDialogMargin() (xc.POINT, error) {
 	return margin, nil
 }
 
-// SetDefaultDownloadDialogMargin 设置默认下载对话框的边距.
-//   - 边距是一个点，用于描述所选 WebView 角与距离它最近的默认下载对话框角之间的垂直和水平距离。
-//   - 正值会使对话框从所选 WebView 角向 WebView 中心移动，负值则会使对话框远离该角。
-//   - 使用(0, 0)可使对话框与 WebView 角对齐且无边距。
-//   - 应在初始化期间设置角对齐方式和边距，以确保在首次计算布局时它们能正确应用，否则它们将不会生效，直到下次 WebView 位置或大小更新。
-func (i *ICoreWebView2_9) SetDefaultDownloadDialogMargin(margin xc.POINT) error {
-	r, _, _ := i.Vtbl.PutDefaultDownloadDialogMargin.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&margin)),
-	)
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
-}
-
 // AddIsDefaultDownloadDialogOpenChanged 添加默认下载对话框打开状态变化事件处理程序。
 //   - 此事件在 DownloadStarting 事件之后发生。
 //   - 在 DownloadStartingEventArgs 上设置 Handled 属性会禁用默认下载对话框，并确保此事件永远不会被触发。

@@ -3,8 +3,6 @@ package edge
 import (
 	"syscall"
 	"unsafe"
-
-	"github.com/twgh/xcgui/xc"
 )
 
 // ICoreWebView2CompositionController 用于支持可视化承载 WebView.
@@ -79,30 +77,6 @@ func (i *ICoreWebView2CompositionController) SetRootVisualTarget(target *IUnknow
 	r, _, _ := i.Vtbl.PutRootVisualTarget.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(target)),
-	)
-	if r != 0 {
-		return syscall.Errno(r)
-	}
-	return nil
-}
-
-// SendMouseInput 发送鼠标输入事件.
-//
-// mouseData: 指定鼠标事件的数据。
-//   - 如果 eventKind 为 COREWEBVIEW2_MOUSE_EVENT_KIND_HORIZONTAL_WHEEL 或 COREWEBVIEW2_MOUSE_EVENT_KIND_WHEEL，则 mouseData 指定滚轮移动量。正值表示滚轮向前旋转，远离用户；负值表示滚轮向后旋转，朝向用户。一次滚轮点击定义为 WHEEL_DELTA，即 120。
-//   - 如果 eventKind 为 COREWEBVIEW2_MOUSE_EVENT_KIND_X_BUTTON_DOUBLE_CLICK、COREWEBVIEW2_MOUSE_EVENT_KIND_X_BUTTON_DOWN 或 COREWEBVIEW2_MOUSE_EVENT_KIND_X_BUTTON_UP，则 mouseData 指定哪些 X 按钮被按下或释放。如果第一个 X 按钮被按下/释放，此值应为 1；如果第二个 X 按钮被按下/释放，此值应为 2。
-//   - 如果 eventKind 为 COREWEBVIEW2_MOUSE_EVENT_KIND_LEAVE，则 virtualKeys、mouseData 和 point 都应为零。
-//   - 如果 eventKind 为任何其他值，则 mouseData 应为零。
-//   - point 应位于 WebView 的客户端坐标空间中。
-//   - 若要跟踪在 WebView 中开始且可能移动到 WebView 和宿主应用程序外部的鼠标事件，建议调用 SetCapture 和 ReleaseCapture。
-//   - 若要关闭悬停弹出窗口，也建议发送 COREWEBVIEW2_MOUSE_EVENT_KIND_LEAVE 消息。
-func (i *ICoreWebView2CompositionController) SendMouseInput(eventKind COREWEBVIEW2_MOUSE_EVENT_KIND, virtualKeys COREWEBVIEW2_MOUSE_EVENT_VIRTUAL_KEYS, mouseData uint32, point xc.POINT) error {
-	r, _, _ := i.Vtbl.SendMouseInput.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(eventKind),
-		uintptr(virtualKeys),
-		uintptr(mouseData),
-		uintptr(unsafe.Pointer(&point)),
 	)
 	if r != 0 {
 		return syscall.Errno(r)

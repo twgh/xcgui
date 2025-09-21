@@ -1,9 +1,7 @@
 package edge
 
 import (
-	"encoding/json"
 	"errors"
-	"strconv"
 	"sync"
 	"syscall"
 	"unsafe"
@@ -62,7 +60,7 @@ func (e *Edge) NewWebView(hParent int, opts ...WebViewOption) (*WebView, error) 
 	w.autofocus = options.AutoFocus
 	w.Edge = e
 
-	err := w.createWithOptionsByXcgui(hParent, options)
+	err := createWebViewWithOptionsByXcgui(w, hParent, options)
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +68,7 @@ func (e *Edge) NewWebView(hParent int, opts ...WebViewOption) (*WebView, error) 
 }
 
 // 创建 webview 宿主窗口.
-func (w *WebView) createWithOptionsByXcgui(hParent int, opt *WebViewOptions) error {
+func createWebViewWithOptionsByXcgui(w *WebView, hParent int, opt *WebViewOptions) error {
 	w.hParent = hParent
 	// 获取父窗口或元素的HWND, 其实是一个, 就是父窗口的HWND, 炫彩元素没有自己的HWND
 	var hWndXC uintptr
@@ -136,10 +134,10 @@ func (w *WebView) createWithOptionsByXcgui(hParent int, opt *WebViewOptions) err
 	wapi.SetFocus(w.hwnd)
 
 	// ------------------------ 创建 WebView2 控制器 ------------------------
-	w.init()
+	initWebViewEventImpl(w.GetWebViewEventImpl())
 	w.WebView2.msgcb_xcgui = w.msgcb_xcgui
 
-	err := w.newWebView2Controller(opt)
+	err := newWebView2Controller(w, opt)
 	if err != nil {
 		wapi.SendMessageW(w.hwnd, wapi.WM_CLOSE, 0, 0) // 关闭原生窗口
 		return err
@@ -275,31 +273,6 @@ func onWndProc(hWindow int, message uint32, wParam, lParam uintptr, pbHandled *b
 		}
 	}
 	return 0
-}
-
-func (w *WebView) msgcb_xcgui(msg string) {
-	d := rpcMessage{}
-	if err := json.Unmarshal(common.String2Bytes(msg), &d); err != nil {
-		return
-	}
-
-	id := strconv.Itoa(d.ID)
-	if res, err := w.callbinding(&d); err != nil {
-		err = w.Eval("window._rpc[" + id + "].reject(" + jsString(err.Error()) + "); window._rpc[" + id + "] = undefined")
-		ReportErrorAuto(err)
-	} else if b, err := json.Marshal(res); err != nil {
-		err = w.Eval("window._rpc[" + id + "].reject(" + jsString(err.Error()) + "); window._rpc[" + id + "] = undefined")
-		ReportErrorAuto(err)
-	} else {
-		err = w.Eval("window._rpc[" + id + "].resolve(" + string(b) + "); window._rpc[" + id + "] = undefined")
-		ReportErrorAuto(err)
-	}
-}
-
-// SetTitle 更新原生窗口的标题。
-//   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
-func (w *WebView) SetTitle(title string) {
-	wapi.SetWindowText(w.hwnd, title)
 }
 
 // SetRoundRadius 设置原生窗口的圆角半径。

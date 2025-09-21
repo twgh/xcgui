@@ -27,27 +27,12 @@ func (i *ICoreWebView2Controller2) GetDefaultBackgroundColor() (*COREWEBVIEW2_CO
 
 // SetDefaultBackgroundColor 设置 WebView2 的默认背景色。
 func (i *ICoreWebView2Controller2) SetDefaultBackgroundColor(backgroundColor *COREWEBVIEW2_COLOR) error {
-	// Cast to a uint32 as that's what the call is expecting
-	col := *(*uint32)(unsafe.Pointer(backgroundColor))
-
 	r, _, _ := i.Vtbl.PutDefaultBackgroundColor.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(col),
+		uintptr(backgroundColor.ToUint32()),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
 	}
 	return nil
-}
-
-// COREWEBVIEW2_COLOR 表示 WebView2 的 RGBA 颜色值。
-type COREWEBVIEW2_COLOR struct {
-	A uint8
-	R uint8
-	G uint8
-	B uint8
-}
-
-func NewColor(r, g, b, a uint8) *COREWEBVIEW2_COLOR {
-	return &COREWEBVIEW2_COLOR{R: r, G: g, B: b, A: a}
 }
