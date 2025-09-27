@@ -45,6 +45,8 @@ type Option struct {
 	UserDataFolder string
 
 	// 创建 WebView2 环境的配置选项。为 nil 则使用默认配置。
+	//
+	// 使用 edge.CreateEnvironmentOptions()创建.
 	EnvironmentOptions *ICoreWebView2EnvironmentOptions
 
 	// 环境创建完成回调函数

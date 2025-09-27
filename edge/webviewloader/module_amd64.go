@@ -3,4 +3,7 @@ package webviewloader
 import _ "embed"
 
 //go:embed sdk/x64/WebView2Loader.dll
-var Dll []byte
+var WebView2Loader_Dll []byte
+
+//go:embed sdk/x64/WebView2Helper.dll
+var WebView2Helper_Dll []byte

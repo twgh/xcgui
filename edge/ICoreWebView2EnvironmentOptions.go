@@ -25,29 +25,6 @@ type ICoreWebView2EnvironmentOptionsVtbl struct {
 	PutTargetCompatibleBrowserVersion         ComProc
 	GetAllowSingleSignOnUsingOSPrimaryAccount ComProc
 	PutAllowSingleSignOnUsingOSPrimaryAccount ComProc
-	// 2
-	GetExclusiveUserDataFolderAccess ComProc
-	PutExclusiveUserDataFolderAccess ComProc
-	// 3
-	GetIsCustomCrashReportingEnabled ComProc
-	PutIsCustomCrashReportingEnabled ComProc
-	// 4
-	GetCustomSchemeRegistrations ComProc
-	SetCustomSchemeRegistrations ComProc
-	// 5
-	GetEnableTrackingPrevention ComProc
-	PutEnableTrackingPrevention ComProc
-	// 6
-	GetAreBrowserExtensionsEnabled ComProc
-	PutAreBrowserExtensionsEnabled ComProc
-	// 7
-	GetChannelSearchKind ComProc
-	PutChannelSearchKind ComProc
-	GetReleaseChannels   ComProc
-	PutReleaseChannels   ComProc
-	// 8
-	GetScrollBarStyle ComProc
-	PutScrollBarStyle ComProc
 }
 
 func (i *ICoreWebView2EnvironmentOptions) AddRef() uintptr {
@@ -253,6 +230,13 @@ func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions8() 
 		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2EnvironmentOptions8)),
 		unsafe.Pointer(&result))
 	return result, err
+}
+
+// MustGetLanguage 获取 WebView2 环境的语言。出错时会触发全局错误回调。
+func (i *ICoreWebView2EnvironmentOptions) MustGetLanguage() string {
+	value, err := i.GetLanguage()
+	ReportErrorAuto(err)
+	return value
 }
 
 // MustGetAdditionalBrowserArguments 获取创建 WebView2 环境时要传递给浏览器进程的其它命令行参数。出错时会触发全局错误回调。

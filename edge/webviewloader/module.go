@@ -16,10 +16,17 @@ import (
 )
 
 func init() {
+	// 程序运行目录没有时才写出
 	if !xc.PathExists2("WebView2Loader.dll") {
-		err := writeDll(Dll)
+		err := writeDll(WebView2Loader_Dll, "WebView2Loader")
 		if err != nil {
 			log.Println("写出 WebView2Loader.dll 时报错:", err.Error())
+		}
+	}
+	if !xc.PathExists2("WebView2Helper.dll") {
+		err := writeDll(WebView2Helper_Dll, "WebView2Helper")
+		if err != nil {
+			log.Println("写出 WebView2Helper.dll 时报错:", err.Error())
 		}
 	}
 	loadDll()
@@ -30,22 +37,31 @@ func init() {
 	}
 }
 
-var dllPath = "WebView2Loader.dll"
+var (
+	dllPath_WebView2Loader = "WebView2Loader.dll"
+	dllPath_WebView2Helper = "WebView2Helper.dll"
+)
 
 // GetVersion 返回内置的 WebView2Loader.dll 的版本号。
 func GetVersion() string {
 	return "1.0.3485.44"
 }
 
-// writeDll 把 WebView2Loader.dll 写出到 windows 临时目录中 'WebView2Loader+版本号+_编译时的目标架构' 文件夹里.
+// writeDll 把 WebView2Loader.dll 或 WebView2Helper.dll 写出到 windows 临时目录中 'WebView2Loader+版本号+_编译时的目标架构' 文件夹里.
 //
-// 使用完本函数后无需再调用 SetDllPath(), 内部已自动操作.
-func writeDll(dll []byte) error {
+// dll: 数据.
+//
+// name: dll文件名, 只能填 WebView2Loader 或 WebView2Helper。
+func writeDll(dll []byte, name string) error {
 	tmpDir := os.TempDir()
 	tmpPath := filepath.Join(tmpDir, "WebView2Loader"+GetVersion()+"_"+runtime.GOARCH)
-	DllPath := filepath.Join(tmpPath, "WebView2Loader.dll")
-	if xc.PathExists2(DllPath) { // 已存在就不写出了
-		dllPath = DllPath
+	dllPath := filepath.Join(tmpPath, name+".dll")
+	if xc.PathExists2(dllPath) { // 已存在就不写出了
+		if name == "WebView2Loader" {
+			dllPath_WebView2Loader = dllPath
+		} else if name == "WebView2Helper" {
+			dllPath_WebView2Helper = dllPath
+		}
 		return nil
 	}
 
@@ -54,12 +70,16 @@ func writeDll(dll []byte) error {
 		return err
 	}
 
-	err = os.WriteFile(DllPath, dll, 0777)
+	err = os.WriteFile(dllPath, dll, 0777)
 	if err != nil {
 		return err
 	}
 
-	dllPath = DllPath
+	if name == "WebView2Loader" {
+		dllPath_WebView2Loader = dllPath
+	} else if name == "WebView2Helper" {
+		dllPath_WebView2Helper = dllPath
+	}
 	return nil
 }
 
@@ -68,26 +88,37 @@ var (
 	once = sync.Once{}
 
 	// dll
-	dllModule *syscall.LazyDLL
+	moduleWebView2Loader *syscall.LazyDLL
+	moduleWebView2Helper *syscall.LazyDLL
 
 	// func
 	procCreateCoreWebView2EnvironmentWithOptions                *syscall.LazyProc
 	procCompareBrowserVersions                                  *syscall.LazyProc
 	procGetAvailableCoreWebView2BrowserVersionString            *syscall.LazyProc
 	procGetAvailableCoreWebView2BrowserVersionStringWithOptions *syscall.LazyProc
+
+	procCreateEnvironmentOptions       *syscall.LazyProc
+	procCreateCustomSchemeRegistration *syscall.LazyProc
 )
 
 func loadDll() {
 	once.Do(func() {
-		dllModule = syscall.NewLazyDLL(dllPath)
-		if dllModule.Handle() == 0 {
-			log.Println("载入 WebView2Loader.dll 失败:", dllPath)
+		moduleWebView2Loader = syscall.NewLazyDLL(dllPath_WebView2Loader)
+		if moduleWebView2Loader.Handle() == 0 {
+			log.Println("载入 WebView2Loader.dll 失败:", dllPath_WebView2Loader)
+		}
+		moduleWebView2Helper = syscall.NewLazyDLL(dllPath_WebView2Helper)
+		if moduleWebView2Helper.Handle() == 0 {
+			log.Println("载入 WebView2Helper.dll 失败:", dllPath_WebView2Helper)
 		}
 
-		procCreateCoreWebView2EnvironmentWithOptions = dllModule.NewProc("CreateCoreWebView2EnvironmentWithOptions")
-		procCompareBrowserVersions = dllModule.NewProc("CompareBrowserVersions")
-		procGetAvailableCoreWebView2BrowserVersionString = dllModule.NewProc("GetAvailableCoreWebView2BrowserVersionString")
-		procGetAvailableCoreWebView2BrowserVersionStringWithOptions = dllModule.NewProc("GetAvailableCoreWebView2BrowserVersionStringWithOptions")
+		procCreateCoreWebView2EnvironmentWithOptions = moduleWebView2Loader.NewProc("CreateCoreWebView2EnvironmentWithOptions")
+		procCompareBrowserVersions = moduleWebView2Loader.NewProc("CompareBrowserVersions")
+		procGetAvailableCoreWebView2BrowserVersionString = moduleWebView2Loader.NewProc("GetAvailableCoreWebView2BrowserVersionString")
+		procGetAvailableCoreWebView2BrowserVersionStringWithOptions = moduleWebView2Loader.NewProc("GetAvailableCoreWebView2BrowserVersionStringWithOptions")
+
+		procCreateEnvironmentOptions = moduleWebView2Helper.NewProc("CreateEnvironmentOptions")
+		procCreateCustomSchemeRegistration = moduleWebView2Helper.NewProc("CreateCustomSchemeRegistration")
 	})
 }
 
@@ -174,6 +205,24 @@ func CreateCoreWebView2EnvironmentWithOptions(browserExecutableFolder, userDataF
 	)
 	if r != 0 {
 		return syscall.Errno(r)
+	}
+	return nil
+}
+
+// CreateEnvironmentOptions 创建 WebView2 环境选项.
+func CreateEnvironmentOptions(opts unsafe.Pointer) error {
+	hr, _, _ := procCreateEnvironmentOptions.Call(uintptr(opts))
+	if hr != 0 {
+		return syscall.Errno(hr)
+	}
+	return nil
+}
+
+// CreateCustomSchemeRegistration 创建自定义方案对象。
+func CreateCustomSchemeRegistration(schemeName string, reg unsafe.Pointer) error {
+	hr, _, _ := procCreateCustomSchemeRegistration.Call(common.StrPtr(schemeName), uintptr(reg))
+	if hr != 0 {
+		return syscall.Errno(hr)
 	}
 	return nil
 }

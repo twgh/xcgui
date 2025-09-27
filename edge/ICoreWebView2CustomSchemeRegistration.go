@@ -12,6 +12,8 @@ import (
 
 // ICoreWebView2CustomSchemeRegistration 表示向 ICoreWebView2Environment 注册自定义方案。
 //
+// 可使用 edge.CreateCustomSchemeRegistration() 创建。
+//
 // 110.0.1587.40
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2customschemeregistration

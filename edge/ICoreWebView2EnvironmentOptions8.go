@@ -9,7 +9,31 @@ import (
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2environmentoptions8
 type ICoreWebView2EnvironmentOptions8 struct {
-	ICoreWebView2EnvironmentOptions7
+	Vtbl *ICoreWebView2EnvironmentOptions8Vtbl
+}
+
+type ICoreWebView2EnvironmentOptions8Vtbl struct {
+	IUnknownVtbl
+	GetScrollBarStyle ComProc
+	PutScrollBarStyle ComProc
+}
+
+func (i *ICoreWebView2EnvironmentOptions8) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2EnvironmentOptions8) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2EnvironmentOptions8) QueryInterface(refiid, object unsafe.Pointer) error {
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
 }
 
 // GetScrollBarStyle 获取滚动条样式.

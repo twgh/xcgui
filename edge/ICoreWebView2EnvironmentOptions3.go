@@ -13,7 +13,31 @@ import (
 //
 // https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/reference/win32/icorewebview2environmentoptions3
 type ICoreWebView2EnvironmentOptions3 struct {
-	ICoreWebView2EnvironmentOptions2
+	Vtbl *ICoreWebView2EnvironmentOptions3Vtbl
+}
+
+type ICoreWebView2EnvironmentOptions3Vtbl struct {
+	IUnknownVtbl
+	GetIsCustomCrashReportingEnabled ComProc
+	PutIsCustomCrashReportingEnabled ComProc
+}
+
+func (i *ICoreWebView2EnvironmentOptions3) AddRef() uintptr {
+	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2EnvironmentOptions3) Release() uintptr {
+	r, _, _ := i.Vtbl.Release.Call(uintptr(unsafe.Pointer(i)))
+	return r
+}
+
+func (i *ICoreWebView2EnvironmentOptions3) QueryInterface(refiid, object unsafe.Pointer) error {
+	r, _, _ := i.Vtbl.QueryInterface.Call(uintptr(unsafe.Pointer(i)), uintptr(refiid), uintptr(object))
+	if r != 0 {
+		return syscall.Errno(r)
+	}
+	return nil
 }
 
 // GetIsCustomCrashReportingEnabled 获取 Windows 是否会将崩溃数据发送到 Microsoft 端点。
