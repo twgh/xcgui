@@ -113,7 +113,7 @@ func (i *ICoreWebView2PointerInfo) SetTouchContactRaw(rect xc.RECT) error {
 func (i *ICoreWebView2_9) SetDefaultDownloadDialogMargin(margin xc.POINT) error {
 	r, _, _ := i.Vtbl.PutDefaultDownloadDialogMargin.Call(
 		uintptr(unsafe.Pointer(i)),
-		PointToUintptr(margin),
+		xc.PointToUintptr(margin),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -125,7 +125,7 @@ func (i *ICoreWebView2_9) SetDefaultDownloadDialogMargin(margin xc.POINT) error 
 func (i *ICoreWebView2PointerInfo) SetPixelLocation(point xc.POINT) error {
 	r, _, _ := i.Vtbl.PutPixelLocation.Call(
 		uintptr(unsafe.Pointer(i)),
-		PointToUintptr(point),
+		xc.PointToUintptr(point),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -137,7 +137,7 @@ func (i *ICoreWebView2PointerInfo) SetPixelLocation(point xc.POINT) error {
 func (i *ICoreWebView2PointerInfo) SetHimetricLocation(point xc.POINT) error {
 	r, _, _ := i.Vtbl.PutHimetricLocation.Call(
 		uintptr(unsafe.Pointer(i)),
-		PointToUintptr(point),
+		xc.PointToUintptr(point),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -149,7 +149,7 @@ func (i *ICoreWebView2PointerInfo) SetHimetricLocation(point xc.POINT) error {
 func (i *ICoreWebView2PointerInfo) SetPixelLocationRaw(point xc.POINT) error {
 	r, _, _ := i.Vtbl.PutPixelLocationRaw.Call(
 		uintptr(unsafe.Pointer(i)),
-		PointToUintptr(point),
+		xc.PointToUintptr(point),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -161,7 +161,7 @@ func (i *ICoreWebView2PointerInfo) SetPixelLocationRaw(point xc.POINT) error {
 func (i *ICoreWebView2PointerInfo) SetHimetricLocationRaw(point xc.POINT) error {
 	r, _, _ := i.Vtbl.PutHimetricLocationRaw.Call(
 		uintptr(unsafe.Pointer(i)),
-		PointToUintptr(point),
+		xc.PointToUintptr(point),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -185,7 +185,7 @@ func (i *ICoreWebView2CompositionController) SendMouseInput(eventKind COREWEBVIE
 		uintptr(eventKind),
 		uintptr(virtualKeys),
 		uintptr(mouseData),
-		PointToUintptr(point),
+		xc.PointToUintptr(point),
 	)
 	if r != 0 {
 		return syscall.Errno(r)

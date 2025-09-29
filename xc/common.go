@@ -4,6 +4,7 @@ import (
 	"math"
 	"os"
 	"syscall"
+	"unsafe"
 
 	"github.com/twgh/xcgui/common"
 )
@@ -210,4 +211,9 @@ func Rect2RectF(rc RECT) RECTF {
 // PointInRect 判断一个点是否在矩形范围内.
 func PointInRect(pt POINT, rc RECT) bool {
 	return pt.X <= rc.Right && pt.X >= rc.Left && pt.Y <= rc.Bottom && pt.Y >= rc.Top
+}
+
+// PointToUintptr 将一个 POINT 结构强制转换为 uintptr。用于传递 POINT 结构给 COM 方法。
+func PointToUintptr(pt POINT) uintptr {
+	return *(*uintptr)(unsafe.Pointer(&pt))
 }

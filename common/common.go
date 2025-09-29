@@ -8,6 +8,7 @@ import (
 	"image/gif"
 	"image/png"
 	"io"
+	"math"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -401,4 +402,14 @@ func SliceIndexOf[T comparable](slice []T, target T) int {
 		}
 	}
 	return -1
+}
+
+// Float64ToUint32Pair 将一个 64 位浮点数转换为两个 32 位整数。用于传递 float64 给 COM 方法。
+func Float64ToUint32Pair(f float64) (low, high uint32) {
+	// 将浮点数转换为 uint64（保持位模式）
+	bits := math.Float64bits(f)
+	// 在 32 位下，浮点数被拆分为两个 32 位整数
+	low = uint32(bits)        // 浮点数的低32位
+	high = uint32(bits >> 32) // 浮点数的高32位
+	return
 }

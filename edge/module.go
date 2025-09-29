@@ -1,4 +1,4 @@
-package webviewloader
+package edge
 
 import (
 	"errors"
@@ -42,8 +42,8 @@ var (
 	dllPath_WebView2Helper = "WebView2Helper.dll"
 )
 
-// GetVersion 返回内置的 WebView2Loader.dll 的版本号。
-func GetVersion() string {
+// 返回内置的 WebView2Loader.dll 的版本号。
+func getWebView2LoaderVersion() string {
 	return "1.0.3485.44"
 }
 
@@ -54,7 +54,7 @@ func GetVersion() string {
 // name: dll文件名, 只能填 WebView2Loader 或 WebView2Helper。
 func writeDll(dll []byte, name string) error {
 	tmpDir := os.TempDir()
-	tmpPath := filepath.Join(tmpDir, "WebView2Loader"+GetVersion()+"_"+runtime.GOARCH)
+	tmpPath := filepath.Join(tmpDir, "WebView2Loader"+getWebView2LoaderVersion()+"_"+runtime.GOARCH)
 	dllPath := filepath.Join(tmpPath, name+".dll")
 	if xc.PathExists2(dllPath) { // 已存在就不写出了
 		if name == "WebView2Loader" {
@@ -168,12 +168,12 @@ func GetAvailableBrowserVersion(browserExecutableFolder ...string) (string, erro
 //
 // browserExecutableFolder: webview2 可执行文件的文件夹路径, 为空则获取本机安装的。
 //
-// environmentOptions: 包含 WebView2 环境选项的 ICoreWebView2EnvironmentOptions 对象指针。
-func GetAvailableBrowserVersionWithOptions(browserExecutableFolder string, environmentOptions unsafe.Pointer) (string, error) {
+// environmentOptions:  WebView2 环境的配置选项。
+func GetAvailableBrowserVersionWithOptions(browserExecutableFolder string, environmentOptions *ICoreWebView2EnvironmentOptions) (string, error) {
 	var result *uint16
 	r, _, _ := procGetAvailableCoreWebView2BrowserVersionStringWithOptions.Call(
 		common.StrPtr(browserExecutableFolder),
-		uintptr(environmentOptions),
+		uintptr(unsafe.Pointer(environmentOptions)),
 		uintptr(unsafe.Pointer(&result)))
 	if r != 0 {
 		// HRESULT 的低16位（错误代码本身）是 ERROR_FILE_NOT_FOUND，这意味着无可匹配版本
@@ -193,15 +193,15 @@ func GetAvailableBrowserVersionWithOptions(browserExecutableFolder string, envir
 //
 // userDataFolder: 用户数据文件夹路径。
 //
-// environmentOptions: WebView2 环境选项的 ICoreWebView2EnvironmentOptions 对象指针。
+// environmentOptions: WebView2 环境选项。
 //
-// environmentCompletedHandler: 一个回调指针，当 WebView2 环境创建完成时调用。
-func CreateCoreWebView2EnvironmentWithOptions(browserExecutableFolder, userDataFolder string, environmentOptions, environmentCompletedHandler unsafe.Pointer) error {
+// environmentCompletedHandler: 当 WebView2 环境创建完成时调用。
+func CreateCoreWebView2EnvironmentWithOptions(browserExecutableFolder, userDataFolder string, environmentOptions *ICoreWebView2EnvironmentOptions, environmentCompletedHandler *ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler) error {
 	r, _, _ := procCreateCoreWebView2EnvironmentWithOptions.Call(
 		common.StrPtr(browserExecutableFolder),
 		common.StrPtr(userDataFolder),
-		uintptr(environmentOptions),
-		uintptr(environmentCompletedHandler),
+		uintptr(unsafe.Pointer(environmentOptions)),
+		uintptr(unsafe.Pointer(environmentCompletedHandler)),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -210,19 +210,21 @@ func CreateCoreWebView2EnvironmentWithOptions(browserExecutableFolder, userDataF
 }
 
 // CreateEnvironmentOptions 创建 WebView2 环境选项.
-func CreateEnvironmentOptions(opts unsafe.Pointer) error {
-	hr, _, _ := procCreateEnvironmentOptions.Call(uintptr(opts))
+func CreateEnvironmentOptions() (*ICoreWebView2EnvironmentOptions, error) {
+	var opts *ICoreWebView2EnvironmentOptions
+	hr, _, _ := procCreateEnvironmentOptions.Call(uintptr(unsafe.Pointer(&opts)))
 	if hr != 0 {
-		return syscall.Errno(hr)
+		return nil, syscall.Errno(hr)
 	}
-	return nil
+	return opts, nil
 }
 
 // CreateCustomSchemeRegistration 创建自定义方案对象。
-func CreateCustomSchemeRegistration(schemeName string, reg unsafe.Pointer) error {
-	hr, _, _ := procCreateCustomSchemeRegistration.Call(common.StrPtr(schemeName), uintptr(reg))
+func CreateCustomSchemeRegistration(schemeName string) (*ICoreWebView2CustomSchemeRegistration, error) {
+	var reg *ICoreWebView2CustomSchemeRegistration
+	hr, _, _ := procCreateCustomSchemeRegistration.Call(common.StrPtr(schemeName), uintptr(unsafe.Pointer(&reg)))
 	if hr != 0 {
-		return syscall.Errno(hr)
+		return nil, syscall.Errno(hr)
 	}
-	return nil
+	return reg, nil
 }

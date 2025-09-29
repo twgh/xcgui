@@ -6,6 +6,7 @@ import (
 	"syscall"
 	"unsafe"
 
+	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/xc"
 )
 
@@ -28,7 +29,7 @@ func (i *ICoreWebView2Controller) SetBounds(bounds xc.RECT) error {
 
 // SetZoomFactor 设置 WebView 的缩放系数。
 func (i *ICoreWebView2Controller) SetZoomFactor(zoomFactor float64) error {
-	low, high := Float64ToUint32Pair(zoomFactor)
+	low, high := common.Float64ToUint32Pair(zoomFactor)
 	r, _, _ := i.Vtbl.PutZoomFactor.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(low),
@@ -46,7 +47,7 @@ func (i *ICoreWebView2Controller) SetZoomFactor(zoomFactor float64) error {
 //
 // zoomFactor: 缩放系数.
 func (i *ICoreWebView2Controller) SetBoundsAndZoomFactor(bounds xc.RECT, zoomFactor float64) error {
-	low, high := Float64ToUint32Pair(zoomFactor)
+	low, high := common.Float64ToUint32Pair(zoomFactor)
 	r, _, _ := i.Vtbl.SetBoundsAndZoomFactor.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(bounds.Left),
