@@ -63,7 +63,9 @@ func (w *WebViewEventImpl) TrySuspendCompleted(errorCode syscall.Errno, isSucces
 	cbs := WvEventHandler.GetCallBacks(w, "TrySuspendCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(errorCode syscall.Errno, isSuccessful bool) uintptr)(errorCode, isSuccessful)
+		if cb, ok := cbs[i].(func(errorCode syscall.Errno, isSuccessful bool) uintptr); ok {
+			ret = cb(errorCode, isSuccessful)
+		}
 	}
 	return ret
 }
@@ -80,7 +82,9 @@ func (w *WebViewEventImpl) ExecuteScriptCompleted(errorCode syscall.Errno, resul
 	}
 	var ret uintptr
 	for i := n - 1; i >= 0; i-- {
-		ret = cbs[i].(func(errorCode syscall.Errno, result string) uintptr)(errorCode, str)
+		if cb, ok := cbs[i].(func(errorCode syscall.Errno, result string) uintptr); ok {
+			ret = cb(errorCode, str)
+		}
 	}
 	return ret
 }
@@ -97,7 +101,9 @@ func (w *WebViewEventImpl) CallDevToolsProtocolMethodCompleted(errorCode syscall
 	}
 	var ret uintptr
 	for i := n - 1; i >= 0; i-- {
-		ret = cbs[i].(func(errorCode syscall.Errno, id string) uintptr)(errorCode, str)
+		if cb, ok := cbs[i].(func(errorCode syscall.Errno, id string) uintptr); ok {
+			ret = cb(errorCode, str)
+		}
 	}
 	return ret
 }
@@ -114,7 +120,9 @@ func (w *WebViewEventImpl) AddScriptToExecuteOnDocumentCreatedCompleted(errorCod
 	}
 	var ret uintptr
 	for i := n - 1; i >= 0; i-- {
-		ret = cbs[i].(func(errorCode syscall.Errno, id string) uintptr)(errorCode, str)
+		if cb, ok := cbs[i].(func(errorCode syscall.Errno, id string) uintptr); ok {
+			ret = cb(errorCode, str)
+		}
 	}
 	return ret
 }
@@ -124,7 +132,9 @@ func (w *WebViewEventImpl) GetCookiesCompleted(errorCode syscall.Errno, cookies 
 	cbs := WvEventHandler.GetCallBacks(w, "GetCookiesCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(errorCode syscall.Errno, cookies *ICoreWebView2CookieList) uintptr)(errorCode, cookies)
+		if cb, ok := cbs[i].(func(errorCode syscall.Errno, cookies *ICoreWebView2CookieList) uintptr); ok {
+			ret = cb(errorCode, cookies)
+		}
 	}
 	return ret
 }
@@ -134,7 +144,9 @@ func (w *WebViewEventImpl) CapturePreviewCompleted(errorCode syscall.Errno) uint
 	cbs := WvEventHandler.GetCallBacks(w, "CapturePreviewCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(errorCode syscall.Errno) uintptr)(errorCode)
+		if cb, ok := cbs[i].(func(errorCode syscall.Errno) uintptr); ok {
+			ret = cb(errorCode)
+		}
 	}
 	return ret
 }
@@ -160,7 +172,9 @@ func (w *WebViewEventImpl) WebResourceResponseViewGetContentCompleted(errorCode 
 
 	var ret uintptr
 	for i := n - 1; i >= 0; i-- {
-		ret = cbs[i].(func(errorCode syscall.Errno, result []byte) uintptr)(errorCode, bs)
+		if cb, ok := cbs[i].(func(errorCode syscall.Errno, result []byte) uintptr); ok {
+			ret = cb(errorCode, bs)
+		}
 	}
 	return ret
 }
@@ -172,7 +186,9 @@ func (w *WebViewEventImpl) DocumentTitleChanged(sender *ICoreWebView2, args *IUn
 	cbs := WvEventHandler.GetCallBacks(w, "DocumentTitleChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -182,7 +198,9 @@ func (w *WebViewEventImpl) RasterizationScaleChanged(sender *ICoreWebView2Contro
 	cbs := WvEventHandler.GetCallBacks(w, "RasterizationScaleChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2Controller, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2Controller, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -192,7 +210,9 @@ func (w *WebViewEventImpl) WindowCloseRequested(sender *ICoreWebView2, args *IUn
 	cbs := WvEventHandler.GetCallBacks(w, "WindowCloseRequested")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -202,7 +222,9 @@ func (w *WebViewEventImpl) SourceChanged(sender *ICoreWebView2, args *ICoreWebVi
 	cbs := WvEventHandler.GetCallBacks(w, "SourceChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2SourceChangedEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2SourceChangedEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -212,7 +234,9 @@ func (w *WebViewEventImpl) NewWindowRequested(sender *ICoreWebView2, args *ICore
 	cbs := WvEventHandler.GetCallBacks(w, "NewWindowRequested")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2NewWindowRequestedEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2NewWindowRequestedEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -234,7 +258,9 @@ func (w *WebViewEventImpl) PermissionRequested(sender *ICoreWebView2, args *ICor
 	cbs := WvEventHandler.GetCallBacks(w, "PermissionRequested")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2PermissionRequestedEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2PermissionRequestedEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -253,7 +279,9 @@ func (w *WebViewEventImpl) WebMessageReceived(sender *ICoreWebView2, args *ICore
 	cbs := WvEventHandler.GetCallBacks(w, "WebMessageReceived")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -266,7 +294,9 @@ func (w *WebViewEventImpl) WebResourceRequested(sender *ICoreWebView2, args *ICo
 	defer func() {
 		cbs := WvEventHandler.GetCallBacks(w, "WebResourceRequested")
 		for i := len(cbs) - 1; i >= 0; i-- {
-			ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2WebResourceRequestedEventArgs) uintptr)(sender, args)
+			if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2WebResourceRequestedEventArgs) uintptr); ok {
+				ret = cb(sender, args)
+			}
 		}
 	}()
 
@@ -350,7 +380,9 @@ func (w *WebViewEventImpl) NavigationCompleted(sender *ICoreWebView2, args *ICor
 	cbs := WvEventHandler.GetCallBacks(w, "NavigationCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -360,7 +392,9 @@ func (w *WebViewEventImpl) Frame_NavigationCompleted(sender *ICoreWebView2, args
 	cbs := WvEventHandler.GetCallBacks(w, "Frame_NavigationCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -370,7 +404,9 @@ func (w *WebViewEventImpl) Frame_NavigationStarting(sender *ICoreWebView2, args 
 	cbs := WvEventHandler.GetCallBacks(w, "Frame_NavigationStarting")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2NavigationStartingEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2NavigationStartingEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -380,7 +416,9 @@ func (w *WebViewEventImpl) NavigationStarting(sender *ICoreWebView2, args *ICore
 	cbs := WvEventHandler.GetCallBacks(w, "NavigationStarting")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2NavigationStartingEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2NavigationStartingEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -390,7 +428,9 @@ func (w *WebViewEventImpl) AcceleratorKeyPressed(sender *ICoreWebView2Controller
 	cbs := WvEventHandler.GetCallBacks(w, "AcceleratorKeyPressed")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2Controller, args *ICoreWebView2AcceleratorKeyPressedEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2Controller, args *ICoreWebView2AcceleratorKeyPressedEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -400,7 +440,9 @@ func (w *WebViewEventImpl) ContentLoading(sender *ICoreWebView2, args *ICoreWebV
 	cbs := WvEventHandler.GetCallBacks(w, "ContentLoading")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2ContentLoadingEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2ContentLoadingEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -410,7 +452,9 @@ func (w *WebViewEventImpl) ContainsFullScreenElementChanged(sender *ICoreWebView
 	cbs := WvEventHandler.GetCallBacks(w, "ContainsFullScreenElementChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -420,7 +464,9 @@ func (w *WebViewEventImpl) ProcessFailed(sender *ICoreWebView2, args *ICoreWebVi
 	cbs := WvEventHandler.GetCallBacks(w, "ProcessFailed")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2ProcessFailedEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2ProcessFailedEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -430,7 +476,9 @@ func (w *WebViewEventImpl) HistoryChanged(sender *ICoreWebView2, args *IUnknown)
 	cbs := WvEventHandler.GetCallBacks(w, "HistoryChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -440,7 +488,9 @@ func (w *WebViewEventImpl) ScriptDialogOpening(sender *ICoreWebView2, args *ICor
 	cbs := WvEventHandler.GetCallBacks(w, "ScriptDialogOpening")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2ScriptDialogOpeningEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2ScriptDialogOpeningEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -450,7 +500,9 @@ func (w *WebViewEventImpl) DevToolsProtocolEventReceived(sender *ICoreWebView2, 
 	cbs := WvEventHandler.GetCallBacks(w, "DevToolsProtocolEventReceived")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -464,7 +516,9 @@ func (w *WebViewEventImpl) WebResourceResponseReceived(sender *ICoreWebView2, ar
 	cbs := WvEventHandler.GetCallBacks(w, "WebResourceResponseReceived")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2WebResourceResponseReceivedEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2WebResourceResponseReceivedEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -474,7 +528,9 @@ func (w *WebViewEventImpl) DOMContentLoaded(sender *ICoreWebView2, args *ICoreWe
 	cbs := WvEventHandler.GetCallBacks(w, "DOMContentLoaded")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2DOMContentLoadedEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2DOMContentLoadedEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -484,7 +540,9 @@ func (w *WebViewEventImpl) FrameCreated(sender *ICoreWebView2, args *ICoreWebVie
 	cbs := WvEventHandler.GetCallBacks(w, "FrameCreated")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2FrameCreatedEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2FrameCreatedEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -494,7 +552,9 @@ func (w *WebViewEventImpl) FrameNameChanged(sender *ICoreWebView2Frame, args *IU
 	cbs := WvEventHandler.GetCallBacks(w, "FrameNameChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2Frame, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2Frame, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -504,7 +564,9 @@ func (w *WebViewEventImpl) FrameDestroyed(sender *ICoreWebView2Frame, args *IUnk
 	cbs := WvEventHandler.GetCallBacks(w, "FrameDestroyed")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2Frame, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2Frame, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -514,7 +576,9 @@ func (w *WebViewEventImpl) DownloadStarting(sender *ICoreWebView2, args *ICoreWe
 	cbs := WvEventHandler.GetCallBacks(w, "DownloadStarting")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2DownloadStartingEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2DownloadStartingEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -524,7 +588,9 @@ func (w *WebViewEventImpl) BytesReceivedChanged(sender *ICoreWebView2DownloadOpe
 	cbs := WvEventHandler.GetCallBacks(w, "BytesReceivedChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -534,7 +600,9 @@ func (w *WebViewEventImpl) ClientCertificateRequested(sender *ICoreWebView2, arg
 	cbs := WvEventHandler.GetCallBacks(w, "ClientCertificateRequested")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2ClientCertificateRequestedEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2ClientCertificateRequestedEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -544,7 +612,9 @@ func (w *WebViewEventImpl) IsMutedChanged(sender *ICoreWebView2, args *IUnknown)
 	cbs := WvEventHandler.GetCallBacks(w, "IsMutedChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -554,7 +624,9 @@ func (w *WebViewEventImpl) DocumentPlayingAudioChanged(sender *ICoreWebView2, ar
 	cbs := WvEventHandler.GetCallBacks(w, "DocumentPlayingAudioChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -564,7 +636,9 @@ func (w *WebViewEventImpl) ContextMenuRequested(sender *ICoreWebView2, args *ICo
 	cbs := WvEventHandler.GetCallBacks(w, "ContextMenuRequested")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2ContextMenuRequestedEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2ContextMenuRequestedEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -574,7 +648,9 @@ func (w *WebViewEventImpl) CustomItemSelected(sender *ICoreWebView2ContextMenuIt
 	cbs := WvEventHandler.GetCallBacks(w, "CustomItemSelected")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2ContextMenuItem, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2ContextMenuItem, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -584,7 +660,9 @@ func (w *WebViewEventImpl) CreateCoreWebView2CompositionControllerCompleted(erro
 	cbs := WvEventHandler.GetCallBacks(w, "CreateCoreWebView2CompositionControllerCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(errorCode syscall.Errno, result *ICoreWebView2CompositionController) uintptr)(errorCode, result)
+		if cb, ok := cbs[i].(func(errorCode syscall.Errno, result *ICoreWebView2CompositionController) uintptr); ok {
+			ret = cb(errorCode, result)
+		}
 	}
 	return ret
 }
@@ -594,7 +672,9 @@ func (w *WebViewEventImpl) CursorChanged(sender *ICoreWebView2CompositionControl
 	cbs := WvEventHandler.GetCallBacks(w, "CursorChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2CompositionController, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2CompositionController, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -604,7 +684,9 @@ func (w *WebViewEventImpl) BrowserProcessExited(sender *ICoreWebView2Environment
 	cbs := WvEventHandler.GetCallBacks(w, "BrowserProcessExited")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2Environment, args *ICoreWebView2BrowserProcessExitedEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2Environment, args *ICoreWebView2BrowserProcessExitedEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -614,7 +696,9 @@ func (w *WebViewEventImpl) ProcessInfosChanged(sender *ICoreWebView2Environment,
 	cbs := WvEventHandler.GetCallBacks(w, "ProcessInfosChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2Environment, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2Environment, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -624,7 +708,9 @@ func (w *WebViewEventImpl) GetProcessExtendedInfosCompleted(errorCode syscall.Er
 	cbs := WvEventHandler.GetCallBacks(w, "GetProcessExtendedInfosCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(errorCode syscall.Errno, result *ICoreWebView2ProcessExtendedInfoCollection) uintptr)(errorCode, result)
+		if cb, ok := cbs[i].(func(errorCode syscall.Errno, result *ICoreWebView2ProcessExtendedInfoCollection) uintptr); ok {
+			ret = cb(errorCode, result)
+		}
 	}
 	return ret
 }
@@ -636,7 +722,9 @@ func (w *WebViewEventImpl) FaviconChanged(sender *ICoreWebView2, args *IUnknown)
 	cbs := WvEventHandler.GetCallBacks(w, "FaviconChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -662,7 +750,9 @@ func (w *WebViewEventImpl) GetFaviconCompleted(errorCode syscall.Errno, faviconS
 
 	var ret uintptr
 	for i := n - 1; i >= 0; i-- {
-		ret = cbs[i].(func(errorCode syscall.Errno, result []byte) uintptr)(errorCode, bs)
+		if cb, ok := cbs[i].(func(errorCode syscall.Errno, result []byte) uintptr); ok {
+			ret = cb(errorCode, bs)
+		}
 	}
 	return ret
 }
@@ -673,7 +763,9 @@ func (w *WebViewEventImpl) ZoomFactorChanged(sender *ICoreWebView2Controller, ar
 	cbs := WvEventHandler.GetCallBacks(w, "ZoomFactorChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2Controller, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2Controller, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -684,7 +776,9 @@ func (w *WebViewEventImpl) MoveFocusRequested(sender *ICoreWebView2Controller, a
 	cbs := WvEventHandler.GetCallBacks(w, "MoveFocusRequested")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2Controller, args *ICoreWebView2MoveFocusRequestedEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2Controller, args *ICoreWebView2MoveFocusRequestedEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -694,7 +788,9 @@ func (w *WebViewEventImpl) FocusChanged(sender *ICoreWebView2Controller, args *I
 	cbs := WvEventHandler.GetCallBacks(w, "FocusChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2Controller, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2Controller, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -704,7 +800,9 @@ func (w *WebViewEventImpl) LostFocus(sender *ICoreWebView2Controller, args *IUnk
 	cbs := WvEventHandler.GetCallBacks(w, "LostFocus")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2Controller, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2Controller, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -714,7 +812,9 @@ func (w *WebViewEventImpl) NewBrowserVersionAvailable(sender *ICoreWebView2Envir
 	cbs := WvEventHandler.GetCallBacks(w, "NewBrowserVersionAvailable")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2Environment, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2Environment, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -724,7 +824,9 @@ func (w *WebViewEventImpl) EstimatedEndTimeChanged(sender *ICoreWebView2Download
 	cbs := WvEventHandler.GetCallBacks(w, "EstimatedEndTimeChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -734,7 +836,9 @@ func (w *WebViewEventImpl) PrintToPdfCompleted(errorCode syscall.Errno, isSucces
 	cbs := WvEventHandler.GetCallBacks(w, "PrintToPdfCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(errorCode syscall.Errno, isSuccessful bool) uintptr)(errorCode, isSuccessful)
+		if cb, ok := cbs[i].(func(errorCode syscall.Errno, isSuccessful bool) uintptr); ok {
+			ret = cb(errorCode, isSuccessful)
+		}
 	}
 	return ret
 }
@@ -744,7 +848,9 @@ func (w *WebViewEventImpl) StateChanged(sender *ICoreWebView2DownloadOperation, 
 	cbs := WvEventHandler.GetCallBacks(w, "StateChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -756,7 +862,9 @@ func (w *WebViewEventImpl) IsDefaultDownloadDialogOpenChanged(sender *ICoreWebVi
 	cbs := WvEventHandler.GetCallBacks(w, "IsDefaultDownloadDialogOpenChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -768,7 +876,9 @@ func (w *WebViewEventImpl) BasicAuthenticationRequested(sender *ICoreWebView2, a
 	cbs := WvEventHandler.GetCallBacks(w, "BasicAuthenticationRequested")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2BasicAuthenticationRequestedEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2BasicAuthenticationRequestedEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -779,7 +889,9 @@ func (w *WebViewEventImpl) StatusBarTextChanged(sender *ICoreWebView2, args *IUn
 	cbs := WvEventHandler.GetCallBacks(w, "StatusBarTextChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -791,7 +903,9 @@ func (w *WebViewEventImpl) ServerCertificateErrorDetected(sender *ICoreWebView2,
 	cbs := WvEventHandler.GetCallBacks(w, "ServerCertificateErrorDetected")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2ServerCertificateErrorDetectedEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2ServerCertificateErrorDetectedEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -801,7 +915,9 @@ func (w *WebViewEventImpl) ClearServerCertificateErrorActionsCompleted(errorCode
 	cbs := WvEventHandler.GetCallBacks(w, "ClearServerCertificateErrorActionsCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(errorCode syscall.Errno) uintptr)(errorCode)
+		if cb, ok := cbs[i].(func(errorCode syscall.Errno) uintptr); ok {
+			ret = cb(errorCode)
+		}
 	}
 	return ret
 }
@@ -811,7 +927,9 @@ func (w *WebViewEventImpl) PrintCompleted(errorCode syscall.Errno, result COREWE
 	cbs := WvEventHandler.GetCallBacks(w, "PrintCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(errorCode syscall.Errno, result COREWEBVIEW2_PRINT_STATUS) uintptr)(errorCode, result)
+		if cb, ok := cbs[i].(func(errorCode syscall.Errno, result COREWEBVIEW2_PRINT_STATUS) uintptr); ok {
+			ret = cb(errorCode, result)
+		}
 	}
 	return ret
 }
@@ -837,7 +955,9 @@ func (w *WebViewEventImpl) PrintToPdfStreamCompleted(errorCode syscall.Errno, pd
 
 	var ret uintptr
 	for i := n - 1; i >= 0; i-- {
-		ret = cbs[i].(func(errorCode syscall.Errno, pdfBytes []byte) uintptr)(errorCode, bs)
+		if cb, ok := cbs[i].(func(errorCode syscall.Errno, pdfBytes []byte) uintptr); ok {
+			ret = cb(errorCode, bs)
+		}
 	}
 	return ret
 }
@@ -855,7 +975,9 @@ func (w *WebViewEventImpl) LaunchingExternalUriScheme(sender *ICoreWebView2, arg
 	cbs := WvEventHandler.GetCallBacks(w, "LaunchingExternalUriScheme")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2LaunchingExternalUriSchemeEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2LaunchingExternalUriSchemeEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -865,7 +987,9 @@ func (w *WebViewEventImpl) ExecuteScriptWithResultCompleted(errorCode syscall.Er
 	cbs := WvEventHandler.GetCallBacks(w, "ExecuteScriptWithResultCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(errorCode syscall.Errno, args *ICoreWebView2ExecuteScriptResult) uintptr)(errorCode, args)
+		if cb, ok := cbs[i].(func(errorCode syscall.Errno, args *ICoreWebView2ExecuteScriptResult) uintptr); ok {
+			ret = cb(errorCode, args)
+		}
 	}
 	return ret
 }
@@ -877,7 +1001,9 @@ func (w *WebViewEventImpl) NotificationReceived(sender *ICoreWebView2, args *ICo
 	cbs := WvEventHandler.GetCallBacks(w, "NotificationReceived")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2NotificationReceivedEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2NotificationReceivedEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -888,7 +1014,9 @@ func (w *WebViewEventImpl) NotificationCloseRequested(sender *ICoreWebView2Notif
 	cbs := WvEventHandler.GetCallBacks(w, "NotificationCloseRequested")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2Notification, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2Notification, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -898,7 +1026,9 @@ func (w *WebViewEventImpl) SaveAsUIShowing(sender *ICoreWebView2, args *ICoreWeb
 	cbs := WvEventHandler.GetCallBacks(w, "SaveAsUIShowing")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2SaveAsUIShowingEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2SaveAsUIShowingEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -908,7 +1038,9 @@ func (w *WebViewEventImpl) ShowSaveAsUICompleted(errorCode syscall.Errno, result
 	cbs := WvEventHandler.GetCallBacks(w, "ShowSaveAsUICompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(errorCode syscall.Errno, result COREWEBVIEW2_SAVE_AS_UI_RESULT) uintptr)(errorCode, result)
+		if cb, ok := cbs[i].(func(errorCode syscall.Errno, result COREWEBVIEW2_SAVE_AS_UI_RESULT) uintptr); ok {
+			ret = cb(errorCode, result)
+		}
 	}
 	return ret
 }
@@ -918,7 +1050,9 @@ func (w *WebViewEventImpl) SaveFileSecurityCheckStarting(sender *ICoreWebView2, 
 	cbs := WvEventHandler.GetCallBacks(w, "SaveFileSecurityCheckStarting")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2SaveFileSecurityCheckStartingEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2SaveFileSecurityCheckStartingEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -928,7 +1062,9 @@ func (w *WebViewEventImpl) ScreenCaptureStarting(sender *ICoreWebView2, args *IC
 	cbs := WvEventHandler.GetCallBacks(w, "ScreenCaptureStarting")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2ScreenCaptureStartingEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2, args *ICoreWebView2ScreenCaptureStartingEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -938,7 +1074,9 @@ func (w *WebViewEventImpl) BrowserExtensionRemoveCompleted(errorCode syscall.Err
 	cbs := WvEventHandler.GetCallBacks(w, "BrowserExtensionRemoveCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(errorCode syscall.Errno) uintptr)(errorCode)
+		if cb, ok := cbs[i].(func(errorCode syscall.Errno) uintptr); ok {
+			ret = cb(errorCode)
+		}
 	}
 	return ret
 }
@@ -948,7 +1086,9 @@ func (w *WebViewEventImpl) BrowserExtensionEnableCompleted(errorCode syscall.Err
 	cbs := WvEventHandler.GetCallBacks(w, "BrowserExtensionEnableCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(errorCode syscall.Errno) uintptr)(errorCode)
+		if cb, ok := cbs[i].(func(errorCode syscall.Errno) uintptr); ok {
+			ret = cb(errorCode)
+		}
 	}
 	return ret
 }
@@ -958,7 +1098,9 @@ func (w *WebViewEventImpl) FrameNavigationStarting(sender *ICoreWebView2Frame, a
 	cbs := WvEventHandler.GetCallBacks(w, "FrameNavigationStarting")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2NavigationStartingEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2NavigationStartingEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -968,7 +1110,9 @@ func (w *WebViewEventImpl) FrameContentLoading(sender *ICoreWebView2Frame, args 
 	cbs := WvEventHandler.GetCallBacks(w, "FrameContentLoading")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2ContentLoadingEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2ContentLoadingEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -978,7 +1122,9 @@ func (w *WebViewEventImpl) ProfileAddBrowserExtensionCompleted(errorCode syscall
 	cbs := WvEventHandler.GetCallBacks(w, "ProfileAddBrowserExtensionCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(errorCode syscall.Errno, result *ICoreWebView2BrowserExtension) uintptr)(errorCode, result)
+		if cb, ok := cbs[i].(func(errorCode syscall.Errno, result *ICoreWebView2BrowserExtension) uintptr); ok {
+			ret = cb(errorCode, result)
+		}
 	}
 	return ret
 }
@@ -988,7 +1134,9 @@ func (w *WebViewEventImpl) ProfileGetBrowserExtensionsCompleted(errorCode syscal
 	cbs := WvEventHandler.GetCallBacks(w, "ProfileGetBrowserExtensionsCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(errorCode syscall.Errno, result *ICoreWebView2BrowserExtensionList) uintptr)(errorCode, result)
+		if cb, ok := cbs[i].(func(errorCode syscall.Errno, result *ICoreWebView2BrowserExtensionList) uintptr); ok {
+			ret = cb(errorCode, result)
+		}
 	}
 	return ret
 }
@@ -998,7 +1146,9 @@ func (w *WebViewEventImpl) ProfileDeleted(sender *ICoreWebView2Profile, args *IU
 	cbs := WvEventHandler.GetCallBacks(w, "ProfileDeleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2Profile, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2Profile, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -1008,7 +1158,9 @@ func (w *WebViewEventImpl) FrameNavigationCompleted(sender *ICoreWebView2Frame, 
 	cbs := WvEventHandler.GetCallBacks(w, "FrameNavigationCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2NavigationCompletedEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2NavigationCompletedEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -1018,7 +1170,9 @@ func (w *WebViewEventImpl) FrameDOMContentLoaded(sender *ICoreWebView2Frame, arg
 	cbs := WvEventHandler.GetCallBacks(w, "FrameDOMContentLoaded")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2DOMContentLoadedEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2DOMContentLoadedEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -1028,7 +1182,9 @@ func (w *WebViewEventImpl) ClearBrowsingDataCompleted(errorCode syscall.Errno) u
 	cbs := WvEventHandler.GetCallBacks(w, "ClearBrowsingDataCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(errorCode syscall.Errno) uintptr)(errorCode)
+		if cb, ok := cbs[i].(func(errorCode syscall.Errno) uintptr); ok {
+			ret = cb(errorCode)
+		}
 	}
 	return ret
 }
@@ -1038,7 +1194,9 @@ func (w *WebViewEventImpl) SetPermissionStateCompleted(errorCode syscall.Errno) 
 	cbs := WvEventHandler.GetCallBacks(w, "SetPermissionStateCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(errorCode syscall.Errno) uintptr)(errorCode)
+		if cb, ok := cbs[i].(func(errorCode syscall.Errno) uintptr); ok {
+			ret = cb(errorCode)
+		}
 	}
 	return ret
 }
@@ -1048,7 +1206,9 @@ func (w *WebViewEventImpl) GetNonDefaultPermissionSettingsCompleted(errorCode sy
 	cbs := WvEventHandler.GetCallBacks(w, "GetNonDefaultPermissionSettingsCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(errorCode syscall.Errno, result *ICoreWebView2PermissionSettingCollectionView) uintptr)(errorCode, result)
+		if cb, ok := cbs[i].(func(errorCode syscall.Errno, result *ICoreWebView2PermissionSettingCollectionView) uintptr); ok {
+			ret = cb(errorCode, result)
+		}
 	}
 	return ret
 }
@@ -1058,7 +1218,9 @@ func (w *WebViewEventImpl) FrameWebMessageReceived(sender *ICoreWebView2Frame, a
 	cbs := WvEventHandler.GetCallBacks(w, "FrameWebMessageReceived")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -1068,7 +1230,9 @@ func (w *WebViewEventImpl) FramePermissionRequested(sender *ICoreWebView2Frame, 
 	cbs := WvEventHandler.GetCallBacks(w, "FramePermissionRequested")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2PermissionRequestedEventArgs2) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2PermissionRequestedEventArgs2) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -1078,7 +1242,9 @@ func (w *WebViewEventImpl) FrameScreenCaptureStarting(sender *ICoreWebView2Frame
 	cbs := WvEventHandler.GetCallBacks(w, "FrameScreenCaptureStarting")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2ScreenCaptureStartingEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2ScreenCaptureStartingEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -1088,7 +1254,9 @@ func (w *WebViewEventImpl) FrameChildFrameCreated(sender *ICoreWebView2Frame, ar
 	cbs := WvEventHandler.GetCallBacks(w, "FrameChildFrameCreated")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2FrameCreatedEventArgs) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2Frame, args *ICoreWebView2FrameCreatedEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -1098,7 +1266,9 @@ func (w *WebViewEventImpl) FindActiveMatchIndexChanged(sender *ICoreWebView2Find
 	cbs := WvEventHandler.GetCallBacks(w, "FindActiveMatchIndexChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2Find, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2Find, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -1108,7 +1278,9 @@ func (w *WebViewEventImpl) FindMatchCountChanged(sender *ICoreWebView2Find, args
 	cbs := WvEventHandler.GetCallBacks(w, "FindMatchCountChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(sender *ICoreWebView2Find, args *IUnknown) uintptr)(sender, args)
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2Find, args *IUnknown) uintptr); ok {
+			ret = cb(sender, args)
+		}
 	}
 	return ret
 }
@@ -1118,7 +1290,9 @@ func (w *WebViewEventImpl) FindStartCompleted(errorCode syscall.Errno) uintptr {
 	cbs := WvEventHandler.GetCallBacks(w, "FindStartCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(errorCode syscall.Errno) uintptr)(errorCode)
+		if cb, ok := cbs[i].(func(errorCode syscall.Errno) uintptr); ok {
+			ret = cb(errorCode)
+		}
 	}
 	return ret
 }

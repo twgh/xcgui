@@ -149,7 +149,9 @@ func onXE_PROGRESSBAR_CHANGE(hEle int, pos int32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_PROGRESSBAR_CHANGE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_PROGRESSBAR_CHANGE1)(hEle, pos, pbHandled)
+		if cb, ok := cbs[i].(XE_PROGRESSBAR_CHANGE1); ok {
+			ret = cb(hEle, pos, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}

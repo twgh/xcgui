@@ -1,9 +1,10 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/xcc"
 	"sync"
 	"syscall"
+
+	"github.com/twgh/xcgui/xcc"
 )
 
 var WndEventHandler = newWndEventHandler()
@@ -82,7 +83,7 @@ func (h *wndEventHandler) GetCallBacks(hWindow int, eventType xcc.WM_) []interfa
 	return h.EventInfoMap[hWindow][eventType].Cbs
 }
 
-// RemoveAllCallBack 从 map 里移除指定窗口的所有事件以及CallBack.
+// RemoveAllCallBack 从 map 里移除指定窗口的所有事件以及 CallBack.
 func (h *wndEventHandler) RemoveAllCallBack(hWindow int) {
 	h.Lock()
 	delete(h.EventInfoMap, hWindow)
@@ -90,6 +91,7 @@ func (h *wndEventHandler) RemoveAllCallBack(hWindow int) {
 }
 
 // RemoveCallBack 从 map 里移除指定窗口指定事件的指定索引的 CallBack.
+//   - 当只是想让一个 CallBack 失效时, 使用 SetCallBack 把该 CallBack 设置为 nil 更好, 因为你移除一个 CallBack, 会导致后面的 CallBack 的索引往前移动一位, 那你添加 CallBack 时记录的索引就没法用了.
 func (h *wndEventHandler) RemoveCallBack(hWindow int, eventType xcc.WM_, index int) bool {
 	h.Lock()
 	defer h.Unlock()
@@ -102,6 +104,24 @@ func (h *wndEventHandler) RemoveCallBack(hWindow int, eventType xcc.WM_, index i
 		return false
 	}
 	info.Cbs = append(info.Cbs[:index], info.Cbs[index+1:]...)
+	h.EventInfoMap[hWindow][eventType] = info
+	return true
+}
+
+// SetCallBack 设置指定窗口指定事件的指定索引的 CallBack.
+//   - 当只是想让一个 CallBack 失效时, 直接把该 CallBack 设置为 nil 比使用 RemoveCallBack 更好, 因为你移除一个 CallBack, 会导致后面的 CallBack 的索引往前移动一位, 那你添加 CallBack 时记录的索引就没法用了.
+func (h *wndEventHandler) SetCallBack(hWindow int, eventType xcc.WM_, index int, cb interface{}) bool {
+	h.Lock()
+	defer h.Unlock()
+	info := h.EventInfoMap[hWindow][eventType]
+	l := len(info.Cbs)
+	if l == 0 { // 空
+		return false
+	}
+	if index >= l { // 越界
+		return false
+	}
+	info.Cbs[index] = cb
 	h.EventInfoMap[hWindow][eventType] = info
 	return true
 }
@@ -139,7 +159,9 @@ func OnWM_NCDESTROY(hWindow int, pbHandled *bool) int {
 	cbs := WndEventHandler.GetCallBacks(hWindow, xcc.WM_NCDESTROY)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(hWindow int, pbHandled *bool) int)(hWindow, pbHandled)
+		if cb, ok := cbs[i].(func(hWindow int, pbHandled *bool) int); ok {
+			ret = cb(hWindow, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -156,7 +178,9 @@ func OnXWM_MENU_POPUP(hWindow int, hMenu int, pbHandled *bool) int {
 	cbs := WndEventHandler.GetCallBacks(hWindow, xcc.XWM_MENU_POPUP)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(hWindow int, hMenu int, pbHandled *bool) int)(hWindow, hMenu, pbHandled)
+		if cb, ok := cbs[i].(func(hWindow int, hMenu int, pbHandled *bool) int); ok {
+			ret = cb(hWindow, hMenu, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -171,7 +195,9 @@ func OnXWM_MENU_POPUP_WND(hWindow int, hMenu int, pInfo *Menu_PopupWnd_, pbHandl
 	cbs := WndEventHandler.GetCallBacks(hWindow, xcc.XWM_MENU_POPUP_WND)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(hWindow int, hMenu int, pInfo *Menu_PopupWnd_, pbHandled *bool) int)(hWindow, hMenu, pInfo, pbHandled)
+		if cb, ok := cbs[i].(func(hWindow int, hMenu int, pInfo *Menu_PopupWnd_, pbHandled *bool) int); ok {
+			ret = cb(hWindow, hMenu, pInfo, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -186,7 +212,9 @@ func OnXWM_MENU_SELECT(hWindow int, nID int32, pbHandled *bool) int {
 	cbs := WndEventHandler.GetCallBacks(hWindow, xcc.XWM_MENU_SELECT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(hWindow int, nID int32, pbHandled *bool) int)(hWindow, nID, pbHandled)
+		if cb, ok := cbs[i].(func(hWindow int, nID int32, pbHandled *bool) int); ok {
+			ret = cb(hWindow, nID, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -201,7 +229,9 @@ func OnXWM_MENU_EXIT(hWindow int, pbHandled *bool) int {
 	cbs := WndEventHandler.GetCallBacks(hWindow, xcc.XWM_MENU_EXIT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(hWindow int, pbHandled *bool) int)(hWindow, pbHandled)
+		if cb, ok := cbs[i].(func(hWindow int, pbHandled *bool) int); ok {
+			ret = cb(hWindow, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -216,7 +246,9 @@ func OnXWM_MENU_DRAW_BACKGROUND(hWindow int, hDraw int, pInfo *Menu_DrawBackgrou
 	cbs := WndEventHandler.GetCallBacks(hWindow, xcc.XWM_MENU_DRAW_BACKGROUND)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(hWindow int, hDraw int, pInfo *Menu_DrawBackground_, pbHandled *bool) int)(hWindow, hDraw, pInfo, pbHandled)
+		if cb, ok := cbs[i].(func(hWindow int, hDraw int, pInfo *Menu_DrawBackground_, pbHandled *bool) int); ok {
+			ret = cb(hWindow, hDraw, pInfo, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -231,7 +263,9 @@ func OnXWM_MENU_DRAWITEM(hWindow int, hDraw int, pInfo *Menu_DrawItem_, pbHandle
 	cbs := WndEventHandler.GetCallBacks(hWindow, xcc.XWM_MENU_DRAWITEM)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(hWindow int, hDraw int, pInfo *Menu_DrawItem_, pbHandled *bool) int)(hWindow, hDraw, pInfo, pbHandled)
+		if cb, ok := cbs[i].(func(hWindow int, hDraw int, pInfo *Menu_DrawItem_, pbHandled *bool) int); ok {
+			ret = cb(hWindow, hDraw, pInfo, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}

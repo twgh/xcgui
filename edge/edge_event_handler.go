@@ -899,6 +899,7 @@ func (h *webviewEventHandler) RemoveAllCallBack(impl *WebViewEventImpl) {
 }
 
 // RemoveCallBack 从 map 里移除指定对象指定事件的指定索引的 CallBack.
+//   - 当只是想让一个 CallBack 失效时, 使用 SetCallBack 把该 CallBack 设置为 nil 更好, 因为你移除一个 CallBack, 会导致后面的 CallBack 的索引往前移动一位, 那你添加 CallBack 时记录的索引就没法用了.
 func (h *webviewEventHandler) RemoveCallBack(impl *WebViewEventImpl, eventType string, index int) bool {
 	h.Lock()
 	defer h.Unlock()
@@ -911,6 +912,24 @@ func (h *webviewEventHandler) RemoveCallBack(impl *WebViewEventImpl, eventType s
 		return false
 	}
 	info.Cbs = append(info.Cbs[:index], info.Cbs[index+1:]...)
+	h.EventInfoMap[impl][eventType] = info
+	return true
+}
+
+// SetCallBack 设置指定对象指定事件的指定索引的 CallBack.
+//   - 当只是想让一个 CallBack 失效时, 直接把该 CallBack 设置为 nil 比使用 RemoveCallBack 更好, 因为你移除一个 CallBack, 会导致后面的 CallBack 的索引往前移动一位, 那你添加 CallBack 时记录的索引就没法用了.
+func (h *webviewEventHandler) SetCallBack(impl *WebViewEventImpl, eventType string, index int, cb interface{}) bool {
+	h.Lock()
+	defer h.Unlock()
+	info := h.EventInfoMap[impl][eventType]
+	l := len(info.Cbs)
+	if l == 0 { // 空
+		return false
+	}
+	if index >= l { // 超出范围
+		return false
+	}
+	info.Cbs[index] = cb
 	h.EventInfoMap[impl][eventType] = info
 	return true
 }

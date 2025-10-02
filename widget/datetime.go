@@ -192,7 +192,9 @@ func onXE_DATETIME_CHANGE(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_DATETIME_CHANGE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_DATETIME_CHANGE1)(hEle, pbHandled)
+		if cb, ok := cbs[i].(XE_DATETIME_CHANGE1); ok {
+			ret = cb(hEle, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -214,7 +216,9 @@ func onXE_DATETIME_POPUP_MONTHCAL(hEle int, hMonthCalWnd int, hMonthCal int, pbH
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_DATETIME_POPUP_MONTHCAL)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_DATETIME_POPUP_MONTHCAL1)(hEle, hMonthCalWnd, hMonthCal, pbHandled)
+		if cb, ok := cbs[i].(XE_DATETIME_POPUP_MONTHCAL1); ok {
+			ret = cb(hEle, hMonthCalWnd, hMonthCal, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -236,7 +240,9 @@ func onXE_DATETIME_EXIT_MONTHCAL(hEle int, hMonthCalWnd int, hMonthCal int, pbHa
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_DATETIME_EXIT_MONTHCAL)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_DATETIME_EXIT_MONTHCAL1)(hEle, hMonthCalWnd, hMonthCal, pbHandled)
+		if cb, ok := cbs[i].(XE_DATETIME_EXIT_MONTHCAL1); ok {
+			ret = cb(hEle, hMonthCalWnd, hMonthCal, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}

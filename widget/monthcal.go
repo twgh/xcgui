@@ -150,7 +150,9 @@ func onXE_MONTHCAL_CHANGE(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_MONTHCAL_CHANGE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_MONTHCAL_CHANGE1)(hEle, pbHandled)
+		if cb, ok := cbs[i].(XE_MONTHCAL_CHANGE1); ok {
+			ret = cb(hEle, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}

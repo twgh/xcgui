@@ -1476,7 +1476,9 @@ func onXWM_DOCK_POPUP(hWindow int, hWindowDock, hPane int, pbHandled *bool) int 
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.XWM_DOCK_POPUP)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XWM_DOCK_POPUP1)(hWindow, hWindowDock, hPane, pbHandled)
+		if cb, ok := cbs[i].(XWM_DOCK_POPUP1); ok {
+			ret = cb(hWindow, hWindowDock, hPane, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1498,7 +1500,9 @@ func onXWM_WINDPROC(hWindow int, message uint32, wParam, lParam uintptr, pbHandl
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.XWM_WINDPROC)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XWM_WINDPROC1)(hWindow, message, wParam, lParam, pbHandled)
+		if cb, ok := cbs[i].(XWM_WINDPROC1); ok {
+			ret = cb(hWindow, message, wParam, lParam, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1520,7 +1524,9 @@ func onXWM_XC_TIMER(hWindow int, nIDEvent uint, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.XWM_XC_TIMER)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XWM_XC_TIMER1)(hWindow, nIDEvent, pbHandled)
+		if cb, ok := cbs[i].(XWM_XC_TIMER1); ok {
+			ret = cb(hWindow, nIDEvent, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1542,7 +1548,9 @@ func onXWM_SETFOCUS_ELE(hWindow int, hEle int, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.XWM_SETFOCUS_ELE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XWM_SETFOCUS_ELE1)(hWindow, hEle, pbHandled)
+		if cb, ok := cbs[i].(XWM_SETFOCUS_ELE1); ok {
+			ret = cb(hWindow, hEle, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1564,7 +1572,9 @@ func onXWM_FLOAT_PANE(hWindow int, hFloatWnd int, hPane int, pbHandled *bool) in
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.XWM_FLOAT_PANE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XWM_FLOAT_PANE1)(hWindow, hFloatWnd, hPane, pbHandled)
+		if cb, ok := cbs[i].(XWM_FLOAT_PANE1); ok {
+			ret = cb(hWindow, hFloatWnd, hPane, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1586,7 +1596,9 @@ func onXWM_PAINT_END(hWindow int, hDraw int, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.XWM_PAINT_END)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XWM_PAINT_END1)(hWindow, hDraw, pbHandled)
+		if cb, ok := cbs[i].(XWM_PAINT_END1); ok {
+			ret = cb(hWindow, hDraw, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1608,7 +1620,9 @@ func onXWM_PAINT_DISPLAY(hWindow int, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.XWM_PAINT_DISPLAY)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XWM_PAINT_DISPLAY1)(hWindow, pbHandled)
+		if cb, ok := cbs[i].(XWM_PAINT_DISPLAY1); ok {
+			ret = cb(hWindow, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1630,7 +1644,9 @@ func onXWM_BODYVIEW_RECT(hWindow int, width, height int32, pbHandled *bool) int 
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.XWM_BODYVIEW_RECT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XWM_BODYVIEW_RECT1)(hWindow, width, height, pbHandled)
+		if cb, ok := cbs[i].(XWM_BODYVIEW_RECT1); ok {
+			ret = cb(hWindow, width, height, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1653,7 +1669,9 @@ func onXWM_FLOATWND_DRAG(hWindow int, hFloatWnd int, hArray *[6]int, pbHandled *
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.XWM_FLOATWND_DRAG)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XWM_FLOATWND_DRAG1)(hWindow, hFloatWnd, hArray, pbHandled)
+		if cb, ok := cbs[i].(XWM_FLOATWND_DRAG1); ok {
+			ret = cb(hWindow, hFloatWnd, hArray, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1675,7 +1693,9 @@ func onWM_PAINT(hWindow int, hDraw int, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_PAINT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(WM_PAINT1)(hWindow, hDraw, pbHandled)
+		if cb, ok := cbs[i].(WM_PAINT1); ok {
+			ret = cb(hWindow, hDraw, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1697,7 +1717,9 @@ func onWM_CLOSE(hWindow int, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_CLOSE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(WM_CLOSE1)(hWindow, pbHandled)
+		if cb, ok := cbs[i].(WM_CLOSE1); ok {
+			ret = cb(hWindow, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1719,7 +1741,9 @@ func onWM_DESTROY(hWindow int, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_DESTROY)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(WM_DESTROY1)(hWindow, pbHandled)
+		if cb, ok := cbs[i].(WM_DESTROY1); ok {
+			ret = cb(hWindow, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1741,7 +1765,9 @@ func onWM_MOUSEMOVE(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) in
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_MOUSEMOVE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(WM_MOUSEMOVE1)(hWindow, nFlags, pPt, pbHandled)
+		if cb, ok := cbs[i].(WM_MOUSEMOVE1); ok {
+			ret = cb(hWindow, nFlags, pPt, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1763,7 +1789,9 @@ func onWM_LBUTTONDOWN(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) 
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_LBUTTONDOWN)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(WM_LBUTTONDOWN1)(hWindow, nFlags, pPt, pbHandled)
+		if cb, ok := cbs[i].(WM_LBUTTONDOWN1); ok {
+			ret = cb(hWindow, nFlags, pPt, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1785,7 +1813,9 @@ func onWM_LBUTTONUP(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) in
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_LBUTTONUP)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(WM_LBUTTONUP1)(hWindow, nFlags, pPt, pbHandled)
+		if cb, ok := cbs[i].(WM_LBUTTONUP1); ok {
+			ret = cb(hWindow, nFlags, pPt, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1807,7 +1837,9 @@ func onWM_RBUTTONDOWN(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) 
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_RBUTTONDOWN)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(WM_RBUTTONDOWN1)(hWindow, nFlags, pPt, pbHandled)
+		if cb, ok := cbs[i].(WM_RBUTTONDOWN1); ok {
+			ret = cb(hWindow, nFlags, pPt, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1829,7 +1861,9 @@ func onWM_RBUTTONUP(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) in
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_RBUTTONUP)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(WM_RBUTTONUP1)(hWindow, nFlags, pPt, pbHandled)
+		if cb, ok := cbs[i].(WM_RBUTTONUP1); ok {
+			ret = cb(hWindow, nFlags, pPt, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1851,7 +1885,9 @@ func onWM_LBUTTONDBLCLK(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_LBUTTONDBLCLK)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(WM_LBUTTONDBLCLK1)(hWindow, nFlags, pPt, pbHandled)
+		if cb, ok := cbs[i].(WM_LBUTTONDBLCLK1); ok {
+			ret = cb(hWindow, nFlags, pPt, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1873,7 +1909,9 @@ func onWM_RBUTTONDBLCLK(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_RBUTTONDBLCLK)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(WM_RBUTTONDBLCLK1)(hWindow, nFlags, pPt, pbHandled)
+		if cb, ok := cbs[i].(WM_RBUTTONDBLCLK1); ok {
+			ret = cb(hWindow, nFlags, pPt, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1895,7 +1933,9 @@ func onWM_MOUSEWHEEL(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) i
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_MOUSEWHEEL)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(WM_MOUSEWHEEL1)(hWindow, nFlags, pPt, pbHandled)
+		if cb, ok := cbs[i].(WM_MOUSEWHEEL1); ok {
+			ret = cb(hWindow, nFlags, pPt, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1917,7 +1957,9 @@ func onWM_EXITSIZEMOVE(hWindow int, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_EXITSIZEMOVE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(WM_EXITSIZEMOVE1)(hWindow, pbHandled)
+		if cb, ok := cbs[i].(WM_EXITSIZEMOVE1); ok {
+			ret = cb(hWindow, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1939,7 +1981,9 @@ func onWM_MOUSEHOVER(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) i
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_MOUSEHOVER)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(WM_MOUSEHOVER1)(hWindow, nFlags, pPt, pbHandled)
+		if cb, ok := cbs[i].(WM_MOUSEHOVER1); ok {
+			ret = cb(hWindow, nFlags, pPt, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1961,7 +2005,9 @@ func onWM_MOUSELEAVE(hWindow int, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_MOUSELEAVE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(WM_MOUSELEAVE1)(hWindow, pbHandled)
+		if cb, ok := cbs[i].(WM_MOUSELEAVE1); ok {
+			ret = cb(hWindow, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1983,7 +2029,9 @@ func onWM_SIZE(hWindow int, nFlags uint, pPt *xc.SIZE, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_SIZE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(WM_SIZE1)(hWindow, nFlags, pPt, pbHandled)
+		if cb, ok := cbs[i].(WM_SIZE1); ok {
+			ret = cb(hWindow, nFlags, pPt, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -2005,7 +2053,9 @@ func onWM_TIMER(hWindow int, nIDEvent uint, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_TIMER)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(WM_TIMER1)(hWindow, nIDEvent, pbHandled)
+		if cb, ok := cbs[i].(WM_TIMER1); ok {
+			ret = cb(hWindow, nIDEvent, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -2027,7 +2077,9 @@ func onWM_SETFOCUS(hWindow int, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_SETFOCUS)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(WM_SETFOCUS1)(hWindow, pbHandled)
+		if cb, ok := cbs[i].(WM_SETFOCUS1); ok {
+			ret = cb(hWindow, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -2049,7 +2101,9 @@ func onWM_KILLFOCUS(hWindow int, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_KILLFOCUS)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(WM_KILLFOCUS1)(hWindow, pbHandled)
+		if cb, ok := cbs[i].(WM_KILLFOCUS1); ok {
+			ret = cb(hWindow, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -2071,7 +2125,9 @@ func onWM_KEYDOWN(hWindow int, wParam, lParam uintptr, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_KEYDOWN)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(WM_KEYDOWN1)(hWindow, wParam, lParam, pbHandled)
+		if cb, ok := cbs[i].(WM_KEYDOWN1); ok {
+			ret = cb(hWindow, wParam, lParam, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -2093,7 +2149,9 @@ func onWM_CAPTURECHANGED(hWindow int, hWnd uintptr, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_CAPTURECHANGED)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(WM_CAPTURECHANGED1)(hWindow, hWnd, pbHandled)
+		if cb, ok := cbs[i].(WM_CAPTURECHANGED1); ok {
+			ret = cb(hWindow, hWnd, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -2115,7 +2173,9 @@ func onWM_SETCURSOR(hWindow int, wParam, lParam uintptr, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_SETCURSOR)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(WM_SETCURSOR1)(hWindow, wParam, lParam, pbHandled)
+		if cb, ok := cbs[i].(WM_SETCURSOR1); ok {
+			ret = cb(hWindow, wParam, lParam, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -2137,7 +2197,9 @@ func onWM_CHAR(hWindow int, wParam, lParam uintptr, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_CHAR)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(WM_CHAR1)(hWindow, wParam, lParam, pbHandled)
+		if cb, ok := cbs[i].(WM_CHAR1); ok {
+			ret = cb(hWindow, wParam, lParam, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -2159,7 +2221,9 @@ func onWM_DROPFILES(hWindow int, hDropInfo uintptr, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_DROPFILES)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(WM_DROPFILES1)(hWindow, hDropInfo, pbHandled)
+		if cb, ok := cbs[i].(WM_DROPFILES1); ok {
+			ret = cb(hWindow, hDropInfo, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -2181,7 +2245,9 @@ func onXWM_TRAYICON(hWindow int, wParam, lParam uintptr, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.XWM_TRAYICON)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XWM_TRAYICON)(wParam, lParam, pbHandled)
+		if cb, ok := cbs[i].(XWM_TRAYICON); ok {
+			ret = cb(wParam, lParam, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}

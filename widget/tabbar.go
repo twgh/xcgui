@@ -274,7 +274,9 @@ func onXE_TABBAR_SELECT(hEle int, iItem int32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_TABBAR_SELECT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_TABBAR_SELECT1)(hEle, iItem, pbHandled)
+		if cb, ok := cbs[i].(XE_TABBAR_SELECT1); ok {
+			ret = cb(hEle, iItem, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -297,7 +299,9 @@ func onXE_TABBAR_DELETE(hEle int, iItem int32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_TABBAR_DELETE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_TABBAR_DELETE1)(hEle, iItem, pbHandled)
+		if cb, ok := cbs[i].(XE_TABBAR_DELETE1); ok {
+			ret = cb(hEle, iItem, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}

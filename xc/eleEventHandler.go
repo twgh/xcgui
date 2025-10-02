@@ -1,9 +1,10 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/xcc"
 	"sync"
 	"syscall"
+
+	"github.com/twgh/xcgui/xcc"
 )
 
 var EleEventHandler = newEleEventHandler()
@@ -95,6 +96,7 @@ func (h *eleEventHandler) RemoveAllCallBack(hEle int) {
 }
 
 // RemoveCallBack 从 map 里移除指定元素指定事件的指定索引的 CallBack.
+//   - 当只是想让一个 CallBack 失效时, 使用 SetCallBack 把该 CallBack 设置为 nil 更好, 因为你移除一个 CallBack, 会导致后面的 CallBack 的索引往前移动一位, 那你添加 CallBack 时记录的索引就没法用了.
 func (h *eleEventHandler) RemoveCallBack(hEle int, eventType xcc.XE_, index int) bool {
 	h.Lock()
 	defer h.Unlock()
@@ -107,6 +109,24 @@ func (h *eleEventHandler) RemoveCallBack(hEle int, eventType xcc.XE_, index int)
 		return false
 	}
 	info.Cbs = append(info.Cbs[:index], info.Cbs[index+1:]...)
+	h.EventInfoMap[hEle][eventType] = info
+	return true
+}
+
+// SetCallBack 设置指定元素指定事件的指定索引的回调函数.
+//   - 当只是想让一个 CallBack 失效时, 直接把该 CallBack 设置为 nil 比使用 RemoveCallBack 更好, 因为你移除一个 CallBack, 会导致后面的 CallBack 的索引往前移动一位, 那你添加 CallBack 时记录的索引就没法用了.
+func (h *eleEventHandler) SetCallBack(hEle int, eventType xcc.XE_, index int, cb interface{}) bool {
+	h.Lock()
+	defer h.Unlock()
+	info := h.EventInfoMap[hEle][eventType]
+	l := len(info.Cbs)
+	if l == 0 { // 空
+		return false
+	}
+	if index >= l { // 越界
+		return false
+	}
+	info.Cbs[index] = cb
 	h.EventInfoMap[hEle][eventType] = info
 	return true
 }
@@ -144,7 +164,9 @@ func OnXE_DESTROY_END(hEle int, pbHandled *bool) int {
 	cbs := EleEventHandler.GetCallBacks(hEle, xcc.XE_DESTROY_END)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(func(hEle int, pbHandled *bool) int)(hEle, pbHandled)
+		if cb, ok := cbs[i].(func(hEle int, pbHandled *bool) int); ok {
+			ret = cb(hEle, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}

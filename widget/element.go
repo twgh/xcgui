@@ -1178,7 +1178,9 @@ func onXE_ELEPROCE(hEle int, nEvent uint32, wParam, lParam uintptr, pbHandled *b
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_ELEPROCE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_ELEPROCE1)(hEle, nEvent, wParam, lParam, pbHandled)
+		if cb, ok := cbs[i].(XE_ELEPROCE1); ok {
+			ret = cb(hEle, nEvent, wParam, lParam, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1200,7 +1202,9 @@ func onXE_PAINT(hEle int, hDraw int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_PAINT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_PAINT1)(hEle, hDraw, pbHandled)
+		if cb, ok := cbs[i].(XE_PAINT1); ok {
+			ret = cb(hEle, hDraw, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1222,7 +1226,9 @@ func onXE_PAINT_END(hEle int, hDraw int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_PAINT_END)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_PAINT_END1)(hEle, hDraw, pbHandled)
+		if cb, ok := cbs[i].(XE_PAINT_END1); ok {
+			ret = cb(hEle, hDraw, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1244,7 +1250,9 @@ func onXE_PAINT_SCROLLVIEW(hEle int, hDraw int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_PAINT_SCROLLVIEW)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_PAINT_SCROLLVIEW1)(hEle, hDraw, pbHandled)
+		if cb, ok := cbs[i].(XE_PAINT_SCROLLVIEW1); ok {
+			ret = cb(hEle, hDraw, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1266,7 +1274,9 @@ func onXE_MOUSEMOVE(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_MOUSEMOVE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_MOUSEMOVE1)(hEle, nFlags, pPt, pbHandled)
+		if cb, ok := cbs[i].(XE_MOUSEMOVE1); ok {
+			ret = cb(hEle, nFlags, pPt, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1288,7 +1298,9 @@ func onXE_MOUSESTAY(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_MOUSESTAY)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_MOUSESTAY1)(hEle, pbHandled)
+		if cb, ok := cbs[i].(XE_MOUSESTAY1); ok {
+			ret = cb(hEle, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1310,7 +1322,9 @@ func onXE_MOUSEHOVER(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_MOUSEHOVER)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_MOUSEHOVER1)(hEle, nFlags, pPt, pbHandled)
+		if cb, ok := cbs[i].(XE_MOUSEHOVER1); ok {
+			ret = cb(hEle, nFlags, pPt, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1332,7 +1346,9 @@ func onXE_MOUSELEAVE(hEle int, hEleStay int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_MOUSELEAVE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_MOUSELEAVE1)(hEle, hEleStay, pbHandled)
+		if cb, ok := cbs[i].(XE_MOUSELEAVE1); ok {
+			ret = cb(hEle, hEleStay, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1354,7 +1370,9 @@ func onXE_MOUSEWHEEL(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_MOUSEWHEEL)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_MOUSEWHEEL1)(hEle, nFlags, pPt, pbHandled)
+		if cb, ok := cbs[i].(XE_MOUSEWHEEL1); ok {
+			ret = cb(hEle, nFlags, pPt, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1376,7 +1394,9 @@ func onXE_LBUTTONDOWN(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int 
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LBUTTONDOWN)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_LBUTTONDOWN1)(hEle, nFlags, pPt, pbHandled)
+		if cb, ok := cbs[i].(XE_LBUTTONDOWN1); ok {
+			ret = cb(hEle, nFlags, pPt, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1398,7 +1418,9 @@ func onXE_LBUTTONUP(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LBUTTONUP)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_LBUTTONUP1)(hEle, nFlags, pPt, pbHandled)
+		if cb, ok := cbs[i].(XE_LBUTTONUP1); ok {
+			ret = cb(hEle, nFlags, pPt, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1420,7 +1442,9 @@ func onXE_RBUTTONDOWN(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int 
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_RBUTTONDOWN)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_RBUTTONDOWN1)(hEle, nFlags, pPt, pbHandled)
+		if cb, ok := cbs[i].(XE_RBUTTONDOWN1); ok {
+			ret = cb(hEle, nFlags, pPt, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1442,7 +1466,9 @@ func onXE_RBUTTONUP(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_RBUTTONUP)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_RBUTTONUP1)(hEle, nFlags, pPt, pbHandled)
+		if cb, ok := cbs[i].(XE_RBUTTONUP1); ok {
+			ret = cb(hEle, nFlags, pPt, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1464,7 +1490,9 @@ func onXE_LBUTTONDBCLICK(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) i
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LBUTTONDBCLICK)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_LBUTTONDBCLICK1)(hEle, nFlags, pPt, pbHandled)
+		if cb, ok := cbs[i].(XE_LBUTTONDBCLICK1); ok {
+			ret = cb(hEle, nFlags, pPt, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1486,7 +1514,9 @@ func onXE_XC_TIMER(hEle int, nTimerID int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_XC_TIMER)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_XC_TIMER1)(hEle, nTimerID, pbHandled)
+		if cb, ok := cbs[i].(XE_XC_TIMER1); ok {
+			ret = cb(hEle, nTimerID, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1508,7 +1538,9 @@ func onXE_ADJUSTLAYOUT(hEle int, nFlags int32, nAdjustNo uint32, pbHandled *bool
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_ADJUSTLAYOUT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_ADJUSTLAYOUT1)(hEle, nFlags, nAdjustNo, pbHandled)
+		if cb, ok := cbs[i].(XE_ADJUSTLAYOUT1); ok {
+			ret = cb(hEle, nFlags, nAdjustNo, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1530,7 +1562,9 @@ func onXE_TOOLTIP_POPUP(hEle int, hWindow int, pText uintptr, pbHandled *bool) i
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_TOOLTIP_POPUP)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_TOOLTIP_POPUP1)(hEle, hWindow, pText, pbHandled)
+		if cb, ok := cbs[i].(XE_TOOLTIP_POPUP1); ok {
+			ret = cb(hEle, hWindow, pText, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1552,7 +1586,9 @@ func onXE_ADJUSTLAYOUT_END(hEle int, nFlags xcc.AdjustLayout_, nAdjustNo uint32,
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_ADJUSTLAYOUT_END)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_ADJUSTLAYOUT_END1)(hEle, nFlags, nAdjustNo, pbHandled)
+		if cb, ok := cbs[i].(XE_ADJUSTLAYOUT_END1); ok {
+			ret = cb(hEle, nFlags, nAdjustNo, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1574,7 +1610,9 @@ func onXE_SETFOCUS(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_SETFOCUS)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_SETFOCUS1)(hEle, pbHandled)
+		if cb, ok := cbs[i].(XE_SETFOCUS1); ok {
+			ret = cb(hEle, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1596,7 +1634,9 @@ func onXE_KILLFOCUS(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_KILLFOCUS)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_KILLFOCUS1)(hEle, pbHandled)
+		if cb, ok := cbs[i].(XE_KILLFOCUS1); ok {
+			ret = cb(hEle, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1618,7 +1658,9 @@ func onXE_DESTROY(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_DESTROY)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_DESTROY1)(hEle, pbHandled)
+		if cb, ok := cbs[i].(XE_DESTROY1); ok {
+			ret = cb(hEle, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1640,7 +1682,9 @@ func onXE_SIZE(hEle int, nFlags xcc.AdjustLayout_, nAdjustNo uint32, pbHandled *
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_SIZE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_SIZE1)(hEle, nFlags, nAdjustNo, pbHandled)
+		if cb, ok := cbs[i].(XE_SIZE1); ok {
+			ret = cb(hEle, nFlags, nAdjustNo, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1662,7 +1706,9 @@ func onXE_SHOW(hEle int, bShow bool, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_SHOW)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_SHOW1)(hEle, bShow, pbHandled)
+		if cb, ok := cbs[i].(XE_SHOW1); ok {
+			ret = cb(hEle, bShow, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1684,7 +1730,9 @@ func onXE_SETFONT(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_SETFONT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_SETFONT1)(hEle, pbHandled)
+		if cb, ok := cbs[i].(XE_SETFONT1); ok {
+			ret = cb(hEle, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1706,7 +1754,9 @@ func onXE_KEYDOWN(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_KEYDOWN)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_KEYDOWN1)(hEle, wParam, lParam, pbHandled)
+		if cb, ok := cbs[i].(XE_KEYDOWN1); ok {
+			ret = cb(hEle, wParam, lParam, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1728,7 +1778,9 @@ func onXE_KEYUP(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_KEYUP)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_KEYUP1)(hEle, wParam, lParam, pbHandled)
+		if cb, ok := cbs[i].(XE_KEYUP1); ok {
+			ret = cb(hEle, wParam, lParam, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1750,7 +1802,9 @@ func onXE_SYSKEYDOWN(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_SYSKEYDOWN)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_SYSKEYDOWN1)(hEle, wParam, lParam, pbHandled)
+		if cb, ok := cbs[i].(XE_SYSKEYDOWN1); ok {
+			ret = cb(hEle, wParam, lParam, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1772,7 +1826,9 @@ func onXE_SYSKEYUP(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_SYSKEYUP)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_SYSKEYUP1)(hEle, wParam, lParam, pbHandled)
+		if cb, ok := cbs[i].(XE_SYSKEYUP1); ok {
+			ret = cb(hEle, wParam, lParam, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1794,7 +1850,9 @@ func onXE_CHAR(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_CHAR)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_CHAR1)(hEle, wParam, lParam, pbHandled)
+		if cb, ok := cbs[i].(XE_CHAR1); ok {
+			ret = cb(hEle, wParam, lParam, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1816,7 +1874,9 @@ func onXE_SETCAPTURE(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_SETCAPTURE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_SETCAPTURE1)(hEle, pbHandled)
+		if cb, ok := cbs[i].(XE_SETCAPTURE1); ok {
+			ret = cb(hEle, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1838,7 +1898,9 @@ func onXE_KILLCAPTURE(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_KILLCAPTURE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_KILLCAPTURE1)(hEle, pbHandled)
+		if cb, ok := cbs[i].(XE_KILLCAPTURE1); ok {
+			ret = cb(hEle, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1860,7 +1922,9 @@ func onXE_SETCURSOR(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_SETCURSOR)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_SETCURSOR1)(hEle, wParam, lParam, pbHandled)
+		if cb, ok := cbs[i].(XE_SETCURSOR1); ok {
+			ret = cb(hEle, wParam, lParam, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1882,7 +1946,9 @@ func onXE_DROPFILES(hEle int, hDropInfo uintptr, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_DROPFILES)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_DROPFILES1)(hEle, hDropInfo, pbHandled)
+		if cb, ok := cbs[i].(XE_DROPFILES1); ok {
+			ret = cb(hEle, hDropInfo, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1904,7 +1970,9 @@ func onXE_MENU_SELECT(hEle int, nID int32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_MENU_SELECT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_MENU_SELECT1)(hEle, nID, pbHandled)
+		if cb, ok := cbs[i].(XE_MENU_SELECT1); ok {
+			ret = cb(hEle, nID, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1926,7 +1994,9 @@ func onXE_MENU_POPUP(hEle int, HMENUX int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_MENU_POPUP)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_MENU_POPUP1)(hEle, HMENUX, pbHandled)
+		if cb, ok := cbs[i].(XE_MENU_POPUP1); ok {
+			ret = cb(hEle, HMENUX, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1948,7 +2018,9 @@ func onXE_MENU_EXIT(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_MENU_EXIT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_MENU_EXIT1)(hEle, pbHandled)
+		if cb, ok := cbs[i].(XE_MENU_EXIT1); ok {
+			ret = cb(hEle, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1970,7 +2042,9 @@ func onXE_MENU_POPUP_WND(hEle int, hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandle
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_MENU_POPUP_WND)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_MENU_POPUP_WND1)(hEle, hMenu, pInfo, pbHandled)
+		if cb, ok := cbs[i].(XE_MENU_POPUP_WND1); ok {
+			ret = cb(hEle, hMenu, pInfo, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -1992,7 +2066,9 @@ func onXE_MENU_DRAW_BACKGROUND(hEle int, hDraw int, pInfo *xc.Menu_DrawBackgroun
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_MENU_DRAW_BACKGROUND)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_MENU_DRAW_BACKGROUND1)(hEle, hDraw, pInfo, pbHandled)
+		if cb, ok := cbs[i].(XE_MENU_DRAW_BACKGROUND1); ok {
+			ret = cb(hEle, hDraw, pInfo, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -2014,7 +2090,9 @@ func onXE_MENU_DRAWITEM(hEle int, hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_MENU_DRAWITEM)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_MENU_DRAWITEM1)(hEle, hDraw, pInfo, pbHandled)
+		if cb, ok := cbs[i].(XE_MENU_DRAWITEM1); ok {
+			ret = cb(hEle, hDraw, pInfo, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}

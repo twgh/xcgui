@@ -729,7 +729,9 @@ func onXE_LISTBOX_TEMP_CREATE(hEle int, pItem *xc.ListBox_Item_, nFlag int32, pb
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTBOX_TEMP_CREATE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_LISTBOX_TEMP_CREATE1)(hEle, pItem, nFlag, pbHandled)
+		if cb, ok := cbs[i].(XE_LISTBOX_TEMP_CREATE1); ok {
+			ret = cb(hEle, pItem, nFlag, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -752,7 +754,9 @@ func onXE_LISTBOX_TEMP_CREATE_END(hEle int, pItem *xc.ListBox_Item_, nFlag int32
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTBOX_TEMP_CREATE_END)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_LISTBOX_TEMP_CREATE_END1)(hEle, pItem, nFlag, pbHandled)
+		if cb, ok := cbs[i].(XE_LISTBOX_TEMP_CREATE_END1); ok {
+			ret = cb(hEle, pItem, nFlag, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -775,7 +779,9 @@ func onXE_LISTBOX_TEMP_DESTROY(hEle int, pItem *xc.ListBox_Item_, nFlag int, pbH
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTBOX_TEMP_DESTROY)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_LISTBOX_TEMP_DESTROY1)(hEle, pItem, nFlag, pbHandled)
+		if cb, ok := cbs[i].(XE_LISTBOX_TEMP_DESTROY1); ok {
+			ret = cb(hEle, pItem, nFlag, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -797,7 +803,9 @@ func onXE_LISTBOX_TEMP_ADJUST_COORDINATE(hEle int, pItem *xc.ListBox_Item_, pbHa
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTBOX_TEMP_ADJUST_COORDINATE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_LISTBOX_TEMP_ADJUST_COORDINATE1)(hEle, pItem, pbHandled)
+		if cb, ok := cbs[i].(XE_LISTBOX_TEMP_ADJUST_COORDINATE1); ok {
+			ret = cb(hEle, pItem, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -819,7 +827,9 @@ func onXE_LISTBOX_DRAWITEM(hEle int, hDraw int, pItem *xc.ListBox_Item_, pbHandl
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTBOX_DRAWITEM)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_LISTBOX_DRAWITEM1)(hEle, hDraw, pItem, pbHandled)
+		if cb, ok := cbs[i].(XE_LISTBOX_DRAWITEM1); ok {
+			ret = cb(hEle, hDraw, pItem, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -841,7 +851,9 @@ func onXE_LISTBOX_SELECT(hEle int, iItem int32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTBOX_SELECT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_LISTBOX_SELECT1)(hEle, iItem, pbHandled)
+		if cb, ok := cbs[i].(XE_LISTBOX_SELECT1); ok {
+			ret = cb(hEle, iItem, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}

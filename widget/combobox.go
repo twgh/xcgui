@@ -511,7 +511,9 @@ func onXE_COMBOBOX_SELECT_END(hEle int, iItem int32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_COMBOBOX_SELECT_END)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_COMBOBOX_SELECT_END1)(hEle, iItem, pbHandled)
+		if cb, ok := cbs[i].(XE_COMBOBOX_SELECT_END1); ok {
+			ret = cb(hEle, iItem, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -533,7 +535,9 @@ func onXE_COMBOBOX_SELECT(hEle int, iItem int32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_COMBOBOX_SELECT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_COMBOBOX_SELECT1)(hEle, iItem, pbHandled)
+		if cb, ok := cbs[i].(XE_COMBOBOX_SELECT1); ok {
+			ret = cb(hEle, iItem, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -555,7 +559,9 @@ func onXE_COMBOBOX_POPUP_LIST(hEle int, hWindow int, hListBox int, pbHandled *bo
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_COMBOBOX_POPUP_LIST)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_COMBOBOX_POPUP_LIST1)(hEle, hWindow, hListBox, pbHandled)
+		if cb, ok := cbs[i].(XE_COMBOBOX_POPUP_LIST1); ok {
+			ret = cb(hEle, hWindow, hListBox, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
@@ -577,7 +583,9 @@ func onXE_COMBOBOX_EXIT_LIST(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_COMBOBOX_EXIT_LIST)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		ret = cbs[i].(XE_COMBOBOX_EXIT_LIST1)(hEle, pbHandled)
+		if cb, ok := cbs[i].(XE_COMBOBOX_EXIT_LIST1); ok {
+			ret = cb(hEle, pbHandled)
+		}
 		if *pbHandled {
 			break
 		}
