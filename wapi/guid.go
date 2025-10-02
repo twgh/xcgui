@@ -1,5 +1,7 @@
 package wapi
 
+import "unsafe"
+
 // This code has been adapted from: https://github.com/go-ole/go-ole
 
 /*
@@ -92,6 +94,10 @@ func NewGUID(guid string) *GUID {
 		return &g
 	}
 	return nil
+}
+
+func NewGUIDPointer(guid string) unsafe.Pointer {
+	return unsafe.Pointer(NewGUID(guid))
 }
 
 func decodeHexUint32(src []byte) (value uint32, ok bool) {

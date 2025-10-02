@@ -1,3 +1,4 @@
+// 下载最新正式版本的 webviewloader.dll 和头文件
 package main
 
 import (
