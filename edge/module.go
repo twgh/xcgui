@@ -57,9 +57,10 @@ func writeDll(dll []byte, name string) error {
 	tmpPath := filepath.Join(tmpDir, "WebView2Loader"+getWebView2LoaderVersion()+"_"+runtime.GOARCH)
 	dllPath := filepath.Join(tmpPath, name+".dll")
 	if xc.PathExists2(dllPath) { // 已存在就不写出了
-		if name == "WebView2Loader" {
+		switch name {
+		case "WebView2Loader":
 			dllPath_WebView2Loader = dllPath
-		} else if name == "WebView2Helper" {
+		case "WebView2Helper":
 			dllPath_WebView2Helper = dllPath
 		}
 		return nil
@@ -75,9 +76,10 @@ func writeDll(dll []byte, name string) error {
 		return err
 	}
 
-	if name == "WebView2Loader" {
+	switch name {
+	case "WebView2Loader":
 		dllPath_WebView2Loader = dllPath
-	} else if name == "WebView2Helper" {
+	case "WebView2Helper":
 		dllPath_WebView2Helper = dllPath
 	}
 	return nil

@@ -61,13 +61,7 @@ func (i *ICoreWebView2EnvironmentOptions4) GetCustomSchemeRegistrations() ([]*IC
 	if count == 0 || registrations == nil {
 		return nil, nil
 	}
-
-	result := make([]*ICoreWebView2CustomSchemeRegistration, count)
-	slice := unsafe.Slice(registrations, count)
-	for i := range slice {
-		result[i] = slice[i]
-	}
-	return result, nil
+	return unsafe.Slice(registrations, count), nil
 }
 
 // ReleaseCustomSchemeRegistrations 释放不再使用的 *ICoreWebView2CustomSchemeRegistration.

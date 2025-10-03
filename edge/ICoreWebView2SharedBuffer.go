@@ -65,6 +65,22 @@ func (i *ICoreWebView2SharedBuffer) GetBuffer() (unsafe.Pointer, error) {
 	return buffer, nil
 }
 
+// GetBufferAsBytes 获取共享缓冲区的内存地址和大小后, 将内存区域转换到 []byte.
+func (i *ICoreWebView2SharedBuffer) GetBufferAsBytes() ([]byte, error) {
+	buffer, err := i.GetBuffer()
+	if err != nil {
+		return nil, err
+	}
+
+	size, err := i.GetSize()
+	if err != nil {
+		return nil, err
+	}
+
+	// 使用 unsafe.Slice 将内存区域转换为 []byte
+	return unsafe.Slice((*byte)(buffer), size), nil
+}
+
 // OpenStream 获取一个可用于访问共享缓冲区的 IStream 对象。
 func (i *ICoreWebView2SharedBuffer) OpenStream() (*IStream, error) {
 	var stream *IStream
