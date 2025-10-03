@@ -48,6 +48,11 @@ func (a *App) Exit() *App {
 	return a
 }
 
+// IsUiThread 判断当前线程是否是 UI 线程.
+func (a *App) IsUiThread() bool {
+	return xc.IsUiThread()
+}
+
 // ShowAndRun 显示窗口并调用炫彩_运行.
 //
 // hWindow: 炫彩窗口句柄.

@@ -925,3 +925,8 @@ func SetD2dTextAntialiasMode(mode int32) {
 func IsInit() bool {
 	return xc.XC_IsInit()
 }
+
+// IsUiThread 判断当前线程是否是 UI 线程.
+func IsUiThread() bool {
+	return xc.IsUiThread()
+}
