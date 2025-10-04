@@ -129,6 +129,31 @@ func (i *IStream) Write(buffer []byte) (int, error) {
 	return int(bytesWritten), nil
 }
 
+// Clear 清空流对象中的所有数据, 全部填充为0, 查找指针将返回到流的开头。
+func (i *IStream) Clear() error {
+	info, err := i.Stat(STATFLAG_NONAME)
+	if err != nil {
+		return err
+	}
+	// 设置查找指针到流的开头
+	_, err = i.Seek(0, STREAM_SEEK_SET)
+	if err != nil {
+		return err
+	}
+	// 写入空数据
+	zeroData := make([]byte, info.CbSize)
+	_, err = i.Write(zeroData)
+	if err != nil {
+		return err
+	}
+	// 设置查找指针到流的开头
+	_, err = i.Seek(0, STREAM_SEEK_SET)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 // STREAM_SEEK 表示流式数据中的定位方式
 //
 // https://learn.microsoft.com/zh-cn/windows/win32/api/objidl/ne-objidl-stream_seek
@@ -142,10 +167,10 @@ const (
 
 // Seek 将查找指针更改为新位置。 新位置相对于流的开头、流的结束或当前查找指针。
 //
-// dlibMove: 相对于 whence 的偏移量
+// dlibMove: 要添加到 dwOrigin 参数指示的位置的位移。 如果 dwOrigin 是 STREAM_SEEK_SET，则会将其解释为无符号值，而不是有符号值。
 //
-// dwOrigin: STREAM_SEEK 常量.
-func (i *IStream) Seek(dlibMove int64, dwOrigin STREAM_SEEK) error {
+// dwOrigin: dlibMove 中指定的位移的原点. STREAM_SEEK 常量.
+func (i *IStream) Seek(dlibMove int64, dwOrigin STREAM_SEEK) (uint64, error) {
 	var newPosition uint64
 	hr, _, _ := i.Vtbl.Seek.Call(
 		uintptr(unsafe.Pointer(i)),
@@ -154,18 +179,24 @@ func (i *IStream) Seek(dlibMove int64, dwOrigin STREAM_SEEK) error {
 		uintptr(unsafe.Pointer(&newPosition)),
 	)
 	if hr != 0 {
-		return syscall.Errno(hr)
+		return 0, syscall.Errno(hr)
 	}
-	return nil
+	return newPosition, nil
 }
 
 // SetSize 更改流对象的大小。
+//   - 调用此方法可预分配流的空间。
+//   - 如果 libNewSize 参数大于当前流大小，则流将扩展到指示的大小，方法是使用未定义值的字节填充中间空间。
+//   - 如果查找指针超过流的当前末尾，则此操作类似于 ISequentialStream：：Write 方法。
+//   - 如果 libNewSize 参数小于当前流，则流将被截断为指示的大小。
+//   - 搜寻指针不受流大小更改的影响。
+//   - 调用 IStream：：SetSize 是获取大块连续空间的有效方法。
 //
-// size: 新大小.
-func (i *IStream) SetSize(size uint64) error {
+// libNewSize: 新大小.
+func (i *IStream) SetSize(libNewSize uint64) error {
 	hr, _, _ := i.Vtbl.SetSize.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(size),
+		uintptr(libNewSize),
 	)
 	if hr != 0 {
 		return syscall.Errno(hr)
@@ -173,7 +204,7 @@ func (i *IStream) SetSize(size uint64) error {
 	return nil
 }
 
-// CopyTo 将指定的字节数从流中的当前搜索指针复制到其他流中的当前搜索指针。
+// CopyTo 将指定数量的字节从流中的当前搜寻指针复制到另一个流中的当前查找指针。
 //
 // pstm: 指向目标流的指针。 pstm 指向的流可以是新流或源流的克隆。
 //
@@ -219,13 +250,14 @@ const (
 	STGC_CONSOLIDATE STGC = 8
 )
 
-// Commit 提交流中的更改。
+// Commit 方法可确保对在事务处理模式下打开的流对象所做的任何更改都反映在父存储中。
+//   - 如果流对象在直接模式下打开， 则 Commit 除了将所有内存缓冲区刷新到下一级存储对象之外，没有其他效果。流的 COM 复合文件实现不支持在事务处理模式下打开流。
 //
-// flags: 控制提交对流对象的更改的方式: STGC 常量.
-func (i *IStream) Commit(flags STGC) error {
+// grfCommitFlags: 控制提交对流对象的更改的方式: STGC 常量.
+func (i *IStream) Commit(grfCommitFlags STGC) error {
 	hr, _, _ := i.Vtbl.Commit.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(flags),
+		uintptr(grfCommitFlags),
 	)
 	if hr != 0 {
 		return syscall.Errno(hr)
@@ -234,6 +266,7 @@ func (i *IStream) Commit(flags STGC) error {
 }
 
 // Revert 撤销自上次 Commit 以来的更改。
+//   - 在直接模式下打开的流和使用 Revert 的 COM 复合文件实现的流上，此方法不起作用。
 func (i *IStream) Revert() error {
 	hr, _, _ := i.Vtbl.Revert.Call(
 		uintptr(unsafe.Pointer(i)),
@@ -263,13 +296,14 @@ const (
 	LOCK_ONLYONCE LOCK = 4
 )
 
-// LockRegion 限制对流中指定字节范围的访问。
+// LockRegion 限制对流中指定字节范围的访问。 支持此功能是可选的，因为某些文件系统不提供此功能。
+//   - 必须先解锁该区域，然后才能释放流。
 //
-// offset: 要锁定的流的字节偏移量。
+// offset: 指定范围开头的字节偏移量的整数。
 //
-// count: 要锁定的字节数。
+// count: 指定要限制的范围长度的整数（以字节为单位）。
 //
-// lockType: 锁定类型: LOCK 常量。
+// lockType: 指定请求访问范围的限制, LOCK 常量。
 func (i *IStream) LockRegion(offset uint64, count uint64, lockType LOCK) error {
 	hr, _, _ := i.Vtbl.LockRegion.Call(
 		uintptr(unsafe.Pointer(i)),
@@ -284,10 +318,13 @@ func (i *IStream) LockRegion(offset uint64, count uint64, lockType LOCK) error {
 }
 
 // UnlockRegion 删除对以前使用 IStream.LockRegion 限制的字节范围的访问限制。
+//   - 和之前锁定时的参数必须完全一致.
+//   - 必须先解锁该区域，然后才能释放流。
+//   - 无法单独锁定两个相邻区域，然后通过单个解锁调用解锁。
 //
-// offset: 要解锁的流的字节偏移量。
+// offset: 指定范围开头的字节偏移量。
 //
-// count: 要解锁的字节数。
+// count: 指定要限制的范围长度（以字节为单位）。
 //
 // lockType: 以前对范围施加的访问限制类型: LOCK 常量。
 func (i *IStream) UnlockRegion(offset uint64, count uint64, lockType LOCK) error {
@@ -402,13 +439,13 @@ const (
 
 // Stat 获取流的统计信息。
 //
-// statFlag: 控制统计信息获取方式，决定返回数据的详细程度和操作行为. STATFLAG 常量.
-func (i *IStream) Stat(statFlag STATFLAG) (*STATSTG, error) {
+// grfStatFlag: 控制统计信息获取方式，决定返回数据的详细程度和操作行为. STATFLAG 常量.
+func (i *IStream) Stat(grfStatFlag STATFLAG) (*STATSTG, error) {
 	var stat STATSTG
 	hr, _, _ := i.Vtbl.Stat.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&stat)),
-		uintptr(statFlag),
+		uintptr(grfStatFlag),
 	)
 	if hr != 0 {
 		return nil, syscall.Errno(hr)
@@ -416,7 +453,11 @@ func (i *IStream) Stat(statFlag STATFLAG) (*STATSTG, error) {
 	return &stat, nil
 }
 
-// Clone 创建流的副本。
+// Clone 使用自己的 seek 指针创建新的流对象，该对象引用与原始流相同的字节。
+//   - 创建一个新的流对象，用于访问相同的字节，但使用单独的查找指针。
+//   - 新的流对象将看到与源流对象相同的数据。
+//   - 写入一个对象的更改会立即显示在另一个对象中。 范围锁定在流对象之间共享。
+//   - 克隆流实例中搜寻指针的初始设置与克隆操作时原始流中搜寻指针的当前设置相同。
 func (i *IStream) Clone() (*IStream, error) {
 	var clone *IStream
 	hr, _, _ := i.Vtbl.Clone.Call(
