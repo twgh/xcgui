@@ -47,14 +47,27 @@ func getWebView2LoaderVersion() string {
 	return "1.0.3485.44"
 }
 
-// writeDll 把 WebView2Loader.dll 或 WebView2Helper.dll 写出到 windows 临时目录中 'WebView2Loader+版本号+_编译时的目标架构' 文件夹里.
+// 返回内置的 WebView2Helper.dll 的版本号。
+func getWebView2HelperVersion() string {
+	return "1.0.0.0"
+}
+
+// writeDll 把 WebView2Loader.dll 或 WebView2Helper.dll 写出到 windows 临时目录中 'dll名+版本号+_编译时的目标架构' 文件夹里.
 //
 // dll: 数据.
 //
 // name: dll文件名, 只能填 WebView2Loader 或 WebView2Helper。
 func writeDll(dll []byte, name string) error {
+	version := ""
+	switch name {
+	case "WebView2Loader":
+		version = getWebView2LoaderVersion()
+	case "WebView2Helper":
+		version = getWebView2HelperVersion()
+	}
+
 	tmpDir := os.TempDir()
-	tmpPath := filepath.Join(tmpDir, "WebView2Loader"+getWebView2LoaderVersion()+"_"+runtime.GOARCH)
+	tmpPath := filepath.Join(tmpDir, name+version+"_"+runtime.GOARCH)
 	dllPath := filepath.Join(tmpPath, name+".dll")
 	if xc.PathExists2(dllPath) { // 已存在就不写出了
 		switch name {
