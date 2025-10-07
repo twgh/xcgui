@@ -15,6 +15,16 @@ import (
 	"github.com/twgh/xcgui/xc"
 )
 
+// 返回内置的 WebView2Loader.dll 的版本号。
+func getWebView2LoaderVersion() string {
+	return "1.0.3537.50"
+}
+
+// 返回内置的 WebView2Helper.dll 的版本号。
+func getWebView2HelperVersion() string {
+	return "1.0.0.0"
+}
+
 func init() {
 	// 程序运行目录没有时才写出
 	if !xc.PathExists2("WebView2Loader.dll") {
@@ -41,16 +51,6 @@ var (
 	dllPath_WebView2Loader = "WebView2Loader.dll"
 	dllPath_WebView2Helper = "WebView2Helper.dll"
 )
-
-// 返回内置的 WebView2Loader.dll 的版本号。
-func getWebView2LoaderVersion() string {
-	return "1.0.3485.44"
-}
-
-// 返回内置的 WebView2Helper.dll 的版本号。
-func getWebView2HelperVersion() string {
-	return "1.0.0.0"
-}
 
 // writeDll 把 WebView2Loader.dll 或 WebView2Helper.dll 写出到 windows 临时目录中 'dll名+版本号+_编译时的目标架构' 文件夹里.
 //
