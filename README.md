@@ -39,9 +39,9 @@ go get -u github.com/twgh/xcgui
 
 使用 UI 设计器可以快速设计界面，节省大量代码。
 
-[![uidesigner](https://z3.ax1x.com/2021/09/15/4Vmh9S.png)](https://github.com/twgh/xcgui-example/tree/main/uidesigner)
+[![uidesigner](https://z3.ax1x.com/2021/09/15/4Vmh9S.png)](https://github.com/twgh/xcgui-example/tree/main/Basic/uidesigner)
 
-[设计器使用例子](https://github.com/twgh/xcgui-example/tree/main/uidesigner)，只有这么多代码：
+[设计器使用例子](https://github.com/twgh/xcgui-example/tree/main/Basic/uidesigner)，只有这么多代码：
 
 ```go
 package main
@@ -88,7 +88,7 @@ func main() {
 
 ## 简单窗口（纯代码）
 
-[![SimpleWindow](https://s1.ax1x.com/2022/11/22/z14kAs.jpg)](https://github.com/twgh/xcgui-example/blob/main/SimpleWindow)
+[![SimpleWindow](https://s1.ax1x.com/2022/11/22/z14kAs.jpg)](https://github.com/twgh/xcgui-example/tree/main/Basic/SimpleWindow)
 
 ```go
 package main

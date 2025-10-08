@@ -38,9 +38,9 @@ go get -u github.com/twgh/xcgui
 
 Using the UI designer can quickly design the interface and save a lot of code.
 
-[![uidesigner](https://z3.ax1x.com/2021/09/15/4Vmh9S.png)](https://github.com/twgh/xcgui-example/tree/main/uidesigner)
+[![uidesigner](https://z3.ax1x.com/2021/09/15/4Vmh9S.png)](https://github.com/twgh/xcgui-example/tree/main/Basic/uidesigner)
 
-[UI Designer usage example](https://github.com/twgh/xcgui-example/tree/main/uidesigner), Only so much code：
+[UI Designer usage example](https://github.com/twgh/xcgui-example/tree/main/Basic/uidesigner), Only so much code：
 
 ```go
 package main
@@ -90,7 +90,7 @@ The network disk contains `Interface Designer` and `chm help documentation`
 
 ## Simple window(Pure code)
 
-[![SimpleWindow](https://s1.ax1x.com/2022/11/22/z14kAs.jpg)](https://github.com/twgh/xcgui-example/blob/main/SimpleWindow)
+[![SimpleWindow](https://s1.ax1x.com/2022/11/22/z14kAs.jpg)](https://github.com/twgh/xcgui-example/tree/main/Basic/SimpleWindow)
 
 ```go
 package main
