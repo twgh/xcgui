@@ -1296,3 +1296,16 @@ func (w *WebViewEventImpl) FindStartCompleted(errorCode syscall.Errno) uintptr {
 	}
 	return ret
 }
+
+// NonClientRegionChanged 当应用 HTML 中标记为非客户端的区域发生变化时触发.
+//   - 这种变化包括新区域被标记、区域被取消标记，或者区域类型被改为其他类型。
+func (w *WebViewEventImpl) NonClientRegionChanged(sender *ICoreWebView2CompositionController, args *ICoreWebView2NonClientRegionChangedEventArgs) uintptr {
+	cbs := WvEventHandler.GetCallBacks(w, "NonClientRegionChanged")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cb, ok := cbs[i].(func(sender *ICoreWebView2CompositionController, args *ICoreWebView2NonClientRegionChangedEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
+	}
+	return ret
+}

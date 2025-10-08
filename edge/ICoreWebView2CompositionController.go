@@ -3,6 +3,8 @@ package edge
 import (
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/wapi"
 )
 
 // ICoreWebView2CompositionController 用于支持可视化承载 WebView.
@@ -35,8 +37,6 @@ type ICoreWebView2CompositionControllerVtbl struct {
 	AddNonClientRegionChanged    ComProc
 	RemoveNonClientRegionChanged ComProc
 }
-
-// todo: ICoreWebView2CompositionController2-4
 
 func (i *ICoreWebView2CompositionController) AddRef() uintptr {
 	r, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
@@ -157,6 +157,33 @@ func (i *ICoreWebView2CompositionController) RemoveCursorChanged(token EventRegi
 	return nil
 }
 
+// GetICoreWebView2CompositionController2 获取 ICoreWebView2CompositionController2。
+func (i *ICoreWebView2CompositionController) GetICoreWebView2CompositionController2() (*ICoreWebView2CompositionController2, error) {
+	var result *ICoreWebView2CompositionController2
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2CompositionController2)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
+// GetICoreWebView2CompositionController3 获取 ICoreWebView2CompositionController3。
+func (i *ICoreWebView2CompositionController) GetICoreWebView2CompositionController3() (*ICoreWebView2CompositionController3, error) {
+	var result *ICoreWebView2CompositionController3
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2CompositionController3)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
+// GetICoreWebView2CompositionController4 获取 ICoreWebView2CompositionController4。
+func (i *ICoreWebView2CompositionController) GetICoreWebView2CompositionController4() (*ICoreWebView2CompositionController4, error) {
+	var result *ICoreWebView2CompositionController4
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2CompositionController4)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
 // MustGetRootVisualTarget 获取根视觉目标。RootVisualTarget 是宿主应用程序可视化树中的一个可视化对象。出错时会触发全局错误回调。
 //   - 此视觉对象是 WebView 将连接其视觉树的位置。应用使用此视觉对象在应用内定位 WebView。应用仍需要使用 Bounds 属性来调整 WebView 的大小。
 //   - RootVisualTarget 属性可以是 IDCompositionVisual 或 Windows::UI::Composition::ContainerVisual。 WebView 将在从属性设置器返回之前，将其视觉树连接到提供的视觉对象。
@@ -182,4 +209,25 @@ func (i *ICoreWebView2CompositionController) MustGetSystemCursorID() uint32 {
 	cursorID, err := i.GetSystemCursorID()
 	ReportErrorAuto(err)
 	return cursorID
+}
+
+// MustGetICoreWebView2CompositionController2 获取 ICoreWebView2CompositionController2。出错时会触发全局错误回调。
+func (i *ICoreWebView2CompositionController) MustGetICoreWebView2CompositionController2() *ICoreWebView2CompositionController2 {
+	result, err := i.GetICoreWebView2CompositionController2()
+	ReportErrorAuto(err)
+	return result
+}
+
+// MustGetICoreWebView2CompositionController3 获取 ICoreWebView2CompositionController3。出错时会触发全局错误回调。
+func (i *ICoreWebView2CompositionController) MustGetICoreWebView2CompositionController3() *ICoreWebView2CompositionController3 {
+	result, err := i.GetICoreWebView2CompositionController3()
+	ReportErrorAuto(err)
+	return result
+}
+
+// MustGetICoreWebView2CompositionController4 获取 ICoreWebView2CompositionController4。出错时会触发全局错误回调。
+func (i *ICoreWebView2CompositionController) MustGetICoreWebView2CompositionController4() *ICoreWebView2CompositionController4 {
+	result, err := i.GetICoreWebView2CompositionController4()
+	ReportErrorAuto(err)
+	return result
 }

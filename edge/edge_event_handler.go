@@ -68,6 +68,18 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 				return -1, err
 			}
 			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "NonClientRegionChanged":
+			obj2, ok := obj.(*ICoreWebView2CompositionController4)
+			if !ok {
+				return -1, errors.New("obj is not *ICoreWebView2CompositionController4")
+			}
+			eventHandler := NewICoreWebView2NonClientRegionChangedEventHandler(impl)
+			err := obj2.AddNonClientRegionChanged(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "FindActiveMatchIndexChanged":
 			obj2, ok := obj.(*ICoreWebView2Find)
 			if !ok {

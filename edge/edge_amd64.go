@@ -192,3 +192,98 @@ func (i *ICoreWebView2CompositionController) SendMouseInput(eventKind COREWEBVIE
 	}
 	return nil
 }
+
+// DragEnter 处理拖拽进入事件。
+//   - 此函数对应于 IDropTarget::DragEnter.
+//   - 此函数依赖于 ICoreWebView2Controller 的 AllowExternalDrop 属性，如果 AllowExternalDrop 属性设置为 false，会向调用方返回 E_FAIL 以表明不允许此操作。
+//   - 宿主应用程序必须注册为 IDropTarget，并实现 DragEnter 调用并将其转发给此函数。
+//
+// dataObject: 包含拖拽数据的 IDataObject 接口。
+//
+// keyState: 指示在拖拽操作期间按键的状态。
+//
+// point: 指定当前光标坐标。
+//
+// 返回值: 指示目标将对拖拽操作执行的操作。
+func (i *ICoreWebView2CompositionController3) DragEnter(dataObject unsafe.Pointer, keyState uint32, point xc.POINT) (uint32, error) {
+	var effect uint32
+	r, _, _ := i.Vtbl.DragEnter.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(dataObject),
+		uintptr(keyState),
+		xc.PointToUintptr(point),
+		uintptr(unsafe.Pointer(&effect)),
+	)
+	if r != 0 {
+		return 0, syscall.Errno(r)
+	}
+	return effect, nil
+}
+
+// DragOver 处理拖拽悬停事件。
+//   - 此函数对应于 IDropTarget::DragOver.
+//   - 此函数依赖于 ICoreWebView2Controller 的 AllowExternalDrop 属性，如果 AllowExternalDrop 属性设置为 false，会向调用方返回 E_FAIL 以表明不允许此操作。
+//   - 宿主应用程序必须注册为 IDropTarget，并实现 DragOver 调用并将其转发给此函数。
+//
+// keyState: 指示在拖拽操作期间按键的状态。
+//
+// point: 指定当前光标坐标。
+//
+// 返回值: 指示目标将对拖拽操作执行的操作。
+func (i *ICoreWebView2CompositionController3) DragOver(keyState uint32, point xc.POINT) (uint32, error) {
+	var effect uint32
+	r, _, _ := i.Vtbl.DragOver.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(keyState),
+		xc.PointToUintptr(point),
+		uintptr(unsafe.Pointer(&effect)),
+	)
+	if r != 0 {
+		return 0, syscall.Errno(r)
+	}
+	return effect, nil
+}
+
+// Drop 处理拖拽放置事件。
+//   - 此函数对应于 IDropTarget::Drop.
+//   - 此函数依赖于 ICoreWebView2Controller 的 AllowExternalDrop 属性，如果 AllowExternalDrop 属性设置为 false，会向调用方返回 E_FAIL 以表明不允许此操作。
+//   - 宿主应用程序必须注册为 IDropTarget，并实现拖放调用并将其转发给此函数。
+//
+// dataObject: 包含拖拽数据的 IDataObject 接口。
+//
+// keyState: 指示在拖拽操作期间按键的状态。
+//
+// point: 指定当前光标坐标。
+//
+// 返回值: 指示目标将对拖拽操作执行的操作。
+func (i *ICoreWebView2CompositionController3) Drop(dataObject unsafe.Pointer, keyState uint32, point xc.POINT) (uint32, error) {
+	var effect uint32
+	r, _, _ := i.Vtbl.Drop.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(dataObject),
+		uintptr(keyState),
+		xc.PointToUintptr(point),
+		uintptr(unsafe.Pointer(&effect)),
+	)
+	if r != 0 {
+		return 0, syscall.Errno(r)
+	}
+	return effect, nil
+}
+
+// GetNonClientRegionAtPoint 获取指定点的非客户端区域类型。
+//   - 如果您使用 ICoreWebView2CompositionController 托管 WebView2，可以在 Win32 窗口过程（WndProc）中调用此方法，以确定鼠标是否正在移动到 WebView2 网页内容上或在其上点击，而这些内容应被视为非客户区的一部分。
+//
+// point: 指定要检查的点坐标。
+func (i *ICoreWebView2CompositionController4) GetNonClientRegionAtPoint(point xc.POINT) (COREWEBVIEW2_NON_CLIENT_REGION_KIND, error) {
+	var value COREWEBVIEW2_NON_CLIENT_REGION_KIND
+	r, _, _ := i.Vtbl.GetNonClientRegionAtPoint.Call(
+		uintptr(unsafe.Pointer(i)),
+		xc.PointToUintptr(point),
+		uintptr(unsafe.Pointer(&value)),
+	)
+	if r != 0 {
+		return 0, syscall.Errno(r)
+	}
+	return value, nil
+}
