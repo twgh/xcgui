@@ -133,8 +133,10 @@ func (i *ICoreWebView2Frame) RemoveNameChanged(token EventRegistrationToken) err
 //   - 如果列表中包含格式错误的源，调用将失败。
 //   - 该方法可以连续多次调用，而无需针对同一对象名称调用 RemoveHostObjectFromScript。它将用新对象和新的源列表替换先前的对象。
 //
+// object: 要添加的对象指针, VARIANT *object.
+//
 // todo: 这个对象的格式在 go 中还没测试明白. 需结合 go-ole 库, 在对象中嵌入 ole.IDispatch, 并实现其方法.
-func (i *ICoreWebView2Frame) AddHostObjectToScriptWithOrigins(name string, object interface{}, origins []string) error {
+func (i *ICoreWebView2Frame) AddHostObjectToScriptWithOrigins(name string, object unsafe.Pointer, origins []string) error {
 	_name, err := syscall.UTF16PtrFromString(name)
 	if err != nil {
 		return err
@@ -152,7 +154,7 @@ func (i *ICoreWebView2Frame) AddHostObjectToScriptWithOrigins(name string, objec
 	r, _, _ := i.Vtbl.AddHostObjectToScriptWithOrigins.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_name)),
-		uintptr(unsafe.Pointer(&object)),
+		uintptr(object),
 		uintptr(count),
 		uintptr(unsafe.Pointer(&originsPtr[0])),
 	)

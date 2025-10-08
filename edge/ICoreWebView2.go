@@ -870,9 +870,10 @@ func (i *ICoreWebView2) RemoveWindowCloseRequested(token EventRegistrationToken)
 //
 // name: 对象名称，将在 JavaScript 中作为 window.chrome.webview.hostObjects.sync.name 或 window.chrome.webview.hostObjects.name 访问。
 //
-// object: 要添加的对象指针。
+// object: 要添加的对象指针, VARIANT *object.
+//
 // todo: 这个对象的格式在 go 中还没测试明白. 需结合 go-ole 库, 在对象中嵌入 ole.IDispatch, 并实现其方法.
-func (i *ICoreWebView2) AddHostObjectToScript(name string, object interface{}) error {
+func (i *ICoreWebView2) AddHostObjectToScript(name string, object unsafe.Pointer) error {
 	_name, err := syscall.UTF16PtrFromString(name)
 	if err != nil {
 		return err
@@ -880,7 +881,7 @@ func (i *ICoreWebView2) AddHostObjectToScript(name string, object interface{}) e
 	r, _, _ := i.Vtbl.AddHostObjectToScript.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_name)),
-		uintptr(unsafe.Pointer(&object)),
+		uintptr(object),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
