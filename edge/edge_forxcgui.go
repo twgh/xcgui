@@ -19,16 +19,19 @@ import (
 type WebView struct {
 	WebView2
 
-	// 读写锁bindings
-	rwxBindings sync.RWMutex
+	cbDestroy         func(wv *WebView) // 原生窗口销毁时调用
+	cbNCDestroy       func(wv *WebView) // 原生窗口非客户区销毁时调用
+	updateWebviewSize func()
+
 	// 绑定go函数: name : func
 	bindings map[string]interface{}
 	// 绑定id: name : id
 	bindingsid map[string]string
+	// 读写锁bindings
+	rwxBindings sync.RWMutex
 
-	updateWebviewSize func()
-	hWindow           int // 炫彩窗口句柄
-	hParent           int // 原生窗口宿主炫彩窗口或元素句柄
+	hWindow int // 炫彩窗口句柄
+	hParent int // 原生窗口宿主炫彩窗口或元素句柄
 
 	// 圆角半径
 	roundRadius int32
@@ -139,7 +142,7 @@ func createWebViewWithOptionsByXcgui(w *WebView, hParent int, opt *WebViewOption
 
 	err := newWebView2Controller(w, opt)
 	if err != nil {
-		wapi.SendMessageW(w.hwnd, wapi.WM_CLOSE, 0, 0) // 关闭原生窗口
+		wapi.DestroyWindow(w.hwnd) // 销毁原生窗口
 		return err
 	}
 	// ------------------------ 创建 WebView2 控制器 END ------------------------
@@ -212,7 +215,7 @@ func onEleDestroy(hEle int, pbHandled *bool) int {
 	handle := uintptr(hEle)
 	if w := xcContext.GetWindowContext(handle); w != nil {
 		if wapi.IsWindow(w.hwnd) {
-			wapi.SendMessageW(w.hwnd, wapi.WM_CLOSE, 0, 0)
+			wapi.DestroyWindow(w.hwnd)
 		}
 		xcContext.DeleteWindowContext(handle)
 	}
@@ -257,19 +260,12 @@ func onWndProc(hWindow int, message uint32, wParam, lParam uintptr, pbHandled *b
 				}
 			}
 		}
-	case wapi.WM_CLOSE:
+	case wapi.WM_DESTROY:
 		handle := uintptr(hWindow)
 		if w := xcContext.GetWindowContext(handle); w != nil { // 原生窗口宿主是炫彩窗口
-			xc.XWnd_Show(hWindow, false) // 当窗口有透明通道时, 关闭的时候会漏出炫彩窗口, 导致闪烁一下, 所以先隐藏炫彩窗口
-			if wapi.IsWindow(w.hwnd) {
-				wapi.SendMessageW(w.hwnd, wapi.WM_CLOSE, 0, 0)
-			}
+			// 当窗口有透明通道时, 关闭的时候会漏出炫彩窗口, 导致闪烁一下, 所以先隐藏炫彩窗口
+			xc.XWnd_Show(hWindow, false)
 			xcContext.DeleteWindowContext(handle)
-		} else { // 触发元素销毁事件
-			hEles := xcContext.GetHEles(hWindow)
-			for i := 0; i < len(hEles); i++ {
-				xc.XEle_SendEvent(hEles[i], xcc.XE_DESTROY, 0, 0)
-			}
 		}
 	}
 	return 0

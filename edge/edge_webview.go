@@ -173,14 +173,20 @@ func wndproc(hwnd uintptr, message uint32, wParam, lParam uintptr) uintptr {
 			_ = w.Focus()
 			return 0
 		}
-	case wapi.WM_CLOSE:
+	case wapi.WM_DESTROY:
 		if w := hwndContext.GetWindowContext(hwnd); w != nil {
+			if w.cbDestroy != nil {
+				w.cbDestroy(w)
+			}
+			w.isClose = true
 			ReportErrorAuto(w.Close())
-			wapi.DestroyWindow(hwnd)
 			return 0
 		}
 	case wapi.WM_NCDESTROY: // 窗口非客户区销毁, 在 WM_DESTROY 之后
 		if w := hwndContext.GetWindowContext(hwnd); w != nil {
+			if w.cbNCDestroy != nil {
+				w.cbNCDestroy(w)
+			}
 			// 移除事件
 			if xc.XC_IsHWINDOW(w.hParent) { // 原生窗口宿主是炫彩窗口
 				xc.XWnd_RemoveEventC(w.hParent, xcc.XWM_WINDPROC, onWndProc)
@@ -438,6 +444,19 @@ func (w *WebView) BindLog(funcName ...string) error {
 //   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
 func (w *WebView) SetTitle(title string) {
 	wapi.SetWindowText(w.hwnd, title)
+}
+
+// Event_Destroy 宿主原生窗口销毁事件.
+//   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
+func (w *WebView) Event_Destroy(cb func(wv *WebView)) {
+	w.cbDestroy = cb
+}
+
+// Event_NCDestroy 宿主原生窗口非客户区销毁事件.
+//   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
+//   - 执行顺序在 Event_Destroy 之后, 这个时候原生窗口句柄已无效.
+func (w *WebView) Event_NCDestroy(cb func(wv *WebView)) {
+	w.cbNCDestroy = cb
 }
 
 // 创建 WebView2 控制器

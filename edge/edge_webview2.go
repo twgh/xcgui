@@ -18,6 +18,8 @@ type WebView2 struct {
 	hwnd uintptr
 	// WebView2 控制器创建完成后是否自动获取焦点
 	focusOnInit bool
+	// 已经执行了 Close()
+	isClose bool
 }
 
 func (w *WebView2) GetWebViewEventImpl() *WebViewEventImpl {
@@ -161,20 +163,25 @@ func (w *WebView2) EnableBrowserAcceleratorKeys(enable bool) error {
 //   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
 func (w *WebView2) Close() error {
 	var err error
+
+	WvEventHandler.ReleaseAllEventHandler(&w.WebViewEventImpl)
+	w.ReleaseWebView2_Objs()
+
 	if w.Controller != nil {
 		err = w.Controller.Close()
 		w.Controller.Release()
 		w.Controller = nil
 	}
 
-	WvEventHandler.ReleaseAllEventHandler(&w.WebViewEventImpl)
-	w.ReleaseWebView2_Objs()
-
 	if w.CoreWebView != nil {
 		w.CoreWebView.Release()
 		w.CoreWebView = nil
 	}
-	wapi.DestroyWindow(w.hwnd)
+
+	if !w.isClose && wapi.IsWindow(w.hwnd) {
+		w.isClose = true
+		wapi.DestroyWindow(w.hwnd)
+	}
 	return err
 }
 
