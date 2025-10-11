@@ -1160,7 +1160,7 @@ func (e *Element) SetTop(y int32, bRedraw bool) bool {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_Destroy_End(pFun XE_DESTROY_END1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_Destroy_End(pFun xc.XE_DESTROY_END1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_DESTROY_END, xc.OnXE_DESTROY_END, pFun, allowAddingMultiple...)
 }
 
@@ -1169,7 +1169,7 @@ func (e *Element) AddEvent_Destroy_End(pFun XE_DESTROY_END1, allowAddingMultiple
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_EleProce(pFun XE_ELEPROCE1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_EleProce(pFun xc.XE_ELEPROCE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_ELEPROCE, onXE_ELEPROCE, pFun, allowAddingMultiple...)
 }
 
@@ -1178,7 +1178,7 @@ func onXE_ELEPROCE(hEle int, nEvent uint32, wParam, lParam uintptr, pbHandled *b
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_ELEPROCE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_ELEPROCE1); ok {
+		if cb, ok := cbs[i].(xc.XE_ELEPROCE1); ok {
 			ret = cb(hEle, nEvent, wParam, lParam, pbHandled)
 		}
 		if *pbHandled {
@@ -1193,7 +1193,7 @@ func onXE_ELEPROCE(hEle int, nEvent uint32, wParam, lParam uintptr, pbHandled *b
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_Paint(pFun XE_PAINT1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_Paint(pFun xc.XE_PAINT1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_PAINT, onXE_PAINT, pFun, allowAddingMultiple...)
 }
 
@@ -1202,7 +1202,7 @@ func onXE_PAINT(hEle int, hDraw int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_PAINT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_PAINT1); ok {
+		if cb, ok := cbs[i].(xc.XE_PAINT1); ok {
 			ret = cb(hEle, hDraw, pbHandled)
 		}
 		if *pbHandled {
@@ -1217,7 +1217,7 @@ func onXE_PAINT(hEle int, hDraw int, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_Paint_End(pFun XE_PAINT_END1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_Paint_End(pFun xc.XE_PAINT_END1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_PAINT_END, onXE_PAINT_END, pFun, allowAddingMultiple...)
 }
 
@@ -1226,7 +1226,7 @@ func onXE_PAINT_END(hEle int, hDraw int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_PAINT_END)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_PAINT_END1); ok {
+		if cb, ok := cbs[i].(xc.XE_PAINT_END1); ok {
 			ret = cb(hEle, hDraw, pbHandled)
 		}
 		if *pbHandled {
@@ -1241,7 +1241,7 @@ func onXE_PAINT_END(hEle int, hDraw int, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_Paint_Scrollview(pFun XE_PAINT_SCROLLVIEW1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_Paint_Scrollview(pFun xc.XE_PAINT_SCROLLVIEW1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_PAINT_SCROLLVIEW, onXE_PAINT_SCROLLVIEW, pFun, allowAddingMultiple...)
 }
 
@@ -1250,7 +1250,7 @@ func onXE_PAINT_SCROLLVIEW(hEle int, hDraw int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_PAINT_SCROLLVIEW)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_PAINT_SCROLLVIEW1); ok {
+		if cb, ok := cbs[i].(xc.XE_PAINT_SCROLLVIEW1); ok {
 			ret = cb(hEle, hDraw, pbHandled)
 		}
 		if *pbHandled {
@@ -1265,7 +1265,7 @@ func onXE_PAINT_SCROLLVIEW(hEle int, hDraw int, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_MouseMove(pFun XE_MOUSEMOVE1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_MouseMove(pFun xc.XE_MOUSEMOVE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_MOUSEMOVE, onXE_MOUSEMOVE, pFun, allowAddingMultiple...)
 }
 
@@ -1274,7 +1274,7 @@ func onXE_MOUSEMOVE(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_MOUSEMOVE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_MOUSEMOVE1); ok {
+		if cb, ok := cbs[i].(xc.XE_MOUSEMOVE1); ok {
 			ret = cb(hEle, nFlags, pPt, pbHandled)
 		}
 		if *pbHandled {
@@ -1289,7 +1289,7 @@ func onXE_MOUSEMOVE(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_MouseStay(pFun XE_MOUSESTAY1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_MouseStay(pFun xc.XE_MOUSESTAY1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_MOUSESTAY, onXE_MOUSESTAY, pFun, allowAddingMultiple...)
 }
 
@@ -1298,7 +1298,7 @@ func onXE_MOUSESTAY(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_MOUSESTAY)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_MOUSESTAY1); ok {
+		if cb, ok := cbs[i].(xc.XE_MOUSESTAY1); ok {
 			ret = cb(hEle, pbHandled)
 		}
 		if *pbHandled {
@@ -1313,7 +1313,7 @@ func onXE_MOUSESTAY(hEle int, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_MouseHover(pFun XE_MOUSEHOVER1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_MouseHover(pFun xc.XE_MOUSEHOVER1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_MOUSEHOVER, onXE_MOUSEHOVER, pFun, allowAddingMultiple...)
 }
 
@@ -1322,7 +1322,7 @@ func onXE_MOUSEHOVER(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_MOUSEHOVER)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_MOUSEHOVER1); ok {
+		if cb, ok := cbs[i].(xc.XE_MOUSEHOVER1); ok {
 			ret = cb(hEle, nFlags, pPt, pbHandled)
 		}
 		if *pbHandled {
@@ -1337,7 +1337,7 @@ func onXE_MOUSEHOVER(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_MouseLeave(pFun XE_MOUSELEAVE1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_MouseLeave(pFun xc.XE_MOUSELEAVE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_MOUSELEAVE, onXE_MOUSELEAVE, pFun, allowAddingMultiple...)
 }
 
@@ -1346,7 +1346,7 @@ func onXE_MOUSELEAVE(hEle int, hEleStay int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_MOUSELEAVE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_MOUSELEAVE1); ok {
+		if cb, ok := cbs[i].(xc.XE_MOUSELEAVE1); ok {
 			ret = cb(hEle, hEleStay, pbHandled)
 		}
 		if *pbHandled {
@@ -1361,7 +1361,7 @@ func onXE_MOUSELEAVE(hEle int, hEleStay int, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_MouseWheel(pFun XE_MOUSEWHEEL1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_MouseWheel(pFun xc.XE_MOUSEWHEEL1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_MOUSEWHEEL, onXE_MOUSEWHEEL, pFun, allowAddingMultiple...)
 }
 
@@ -1370,7 +1370,7 @@ func onXE_MOUSEWHEEL(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_MOUSEWHEEL)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_MOUSEWHEEL1); ok {
+		if cb, ok := cbs[i].(xc.XE_MOUSEWHEEL1); ok {
 			ret = cb(hEle, nFlags, pPt, pbHandled)
 		}
 		if *pbHandled {
@@ -1385,7 +1385,7 @@ func onXE_MOUSEWHEEL(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_LButtonDown(pFun XE_LBUTTONDOWN1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_LButtonDown(pFun xc.XE_LBUTTONDOWN1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_LBUTTONDOWN, onXE_LBUTTONDOWN, pFun, allowAddingMultiple...)
 }
 
@@ -1394,7 +1394,7 @@ func onXE_LBUTTONDOWN(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int 
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LBUTTONDOWN)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_LBUTTONDOWN1); ok {
+		if cb, ok := cbs[i].(xc.XE_LBUTTONDOWN1); ok {
 			ret = cb(hEle, nFlags, pPt, pbHandled)
 		}
 		if *pbHandled {
@@ -1409,7 +1409,7 @@ func onXE_LBUTTONDOWN(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int 
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_LButtonUp(pFun XE_LBUTTONUP1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_LButtonUp(pFun xc.XE_LBUTTONUP1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_LBUTTONUP, onXE_LBUTTONUP, pFun, allowAddingMultiple...)
 }
 
@@ -1418,7 +1418,7 @@ func onXE_LBUTTONUP(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LBUTTONUP)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_LBUTTONUP1); ok {
+		if cb, ok := cbs[i].(xc.XE_LBUTTONUP1); ok {
 			ret = cb(hEle, nFlags, pPt, pbHandled)
 		}
 		if *pbHandled {
@@ -1433,7 +1433,7 @@ func onXE_LBUTTONUP(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_RButtonDown(pFun XE_RBUTTONDOWN1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_RButtonDown(pFun xc.XE_RBUTTONDOWN1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_RBUTTONDOWN, onXE_RBUTTONDOWN, pFun, allowAddingMultiple...)
 }
 
@@ -1442,7 +1442,7 @@ func onXE_RBUTTONDOWN(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int 
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_RBUTTONDOWN)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_RBUTTONDOWN1); ok {
+		if cb, ok := cbs[i].(xc.XE_RBUTTONDOWN1); ok {
 			ret = cb(hEle, nFlags, pPt, pbHandled)
 		}
 		if *pbHandled {
@@ -1457,7 +1457,7 @@ func onXE_RBUTTONDOWN(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int 
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_RButtonUp(pFun XE_RBUTTONUP1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_RButtonUp(pFun xc.XE_RBUTTONUP1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_RBUTTONUP, onXE_RBUTTONUP, pFun, allowAddingMultiple...)
 }
 
@@ -1466,7 +1466,7 @@ func onXE_RBUTTONUP(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_RBUTTONUP)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_RBUTTONUP1); ok {
+		if cb, ok := cbs[i].(xc.XE_RBUTTONUP1); ok {
 			ret = cb(hEle, nFlags, pPt, pbHandled)
 		}
 		if *pbHandled {
@@ -1481,7 +1481,7 @@ func onXE_RBUTTONUP(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_LButtonDBClick(pFun XE_LBUTTONDBCLICK1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_LButtonDBClick(pFun xc.XE_LBUTTONDBCLICK1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_LBUTTONDBCLICK, onXE_LBUTTONDBCLICK, pFun, allowAddingMultiple...)
 }
 
@@ -1490,7 +1490,7 @@ func onXE_LBUTTONDBCLICK(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) i
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LBUTTONDBCLICK)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_LBUTTONDBCLICK1); ok {
+		if cb, ok := cbs[i].(xc.XE_LBUTTONDBCLICK1); ok {
 			ret = cb(hEle, nFlags, pPt, pbHandled)
 		}
 		if *pbHandled {
@@ -1505,7 +1505,7 @@ func onXE_LBUTTONDBCLICK(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) i
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_XC_Timer(pFun XE_XC_TIMER1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_XC_Timer(pFun xc.XE_XC_TIMER1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_XC_TIMER, onXE_XC_TIMER, pFun, allowAddingMultiple...)
 }
 
@@ -1514,7 +1514,7 @@ func onXE_XC_TIMER(hEle int, nTimerID int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_XC_TIMER)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_XC_TIMER1); ok {
+		if cb, ok := cbs[i].(xc.XE_XC_TIMER1); ok {
 			ret = cb(hEle, nTimerID, pbHandled)
 		}
 		if *pbHandled {
@@ -1529,7 +1529,7 @@ func onXE_XC_TIMER(hEle int, nTimerID int, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_AdjustLayout(pFun XE_ADJUSTLAYOUT1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_AdjustLayout(pFun xc.XE_ADJUSTLAYOUT1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_ADJUSTLAYOUT, onXE_ADJUSTLAYOUT, pFun, allowAddingMultiple...)
 }
 
@@ -1538,7 +1538,7 @@ func onXE_ADJUSTLAYOUT(hEle int, nFlags int32, nAdjustNo uint32, pbHandled *bool
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_ADJUSTLAYOUT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_ADJUSTLAYOUT1); ok {
+		if cb, ok := cbs[i].(xc.XE_ADJUSTLAYOUT1); ok {
 			ret = cb(hEle, nFlags, nAdjustNo, pbHandled)
 		}
 		if *pbHandled {
@@ -1553,7 +1553,7 @@ func onXE_ADJUSTLAYOUT(hEle int, nFlags int32, nAdjustNo uint32, pbHandled *bool
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_ToolTip_Popup(pFun XE_TOOLTIP_POPUP1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_ToolTip_Popup(pFun xc.XE_TOOLTIP_POPUP1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_TOOLTIP_POPUP, onXE_TOOLTIP_POPUP, pFun, allowAddingMultiple...)
 }
 
@@ -1562,7 +1562,7 @@ func onXE_TOOLTIP_POPUP(hEle int, hWindow int, pText uintptr, pbHandled *bool) i
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_TOOLTIP_POPUP)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_TOOLTIP_POPUP1); ok {
+		if cb, ok := cbs[i].(xc.XE_TOOLTIP_POPUP1); ok {
 			ret = cb(hEle, hWindow, pText, pbHandled)
 		}
 		if *pbHandled {
@@ -1577,7 +1577,7 @@ func onXE_TOOLTIP_POPUP(hEle int, hWindow int, pText uintptr, pbHandled *bool) i
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_AdjustLayout_End(pFun XE_ADJUSTLAYOUT_END1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_AdjustLayout_End(pFun xc.XE_ADJUSTLAYOUT_END1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_ADJUSTLAYOUT_END, onXE_ADJUSTLAYOUT_END, pFun, allowAddingMultiple...)
 }
 
@@ -1586,7 +1586,7 @@ func onXE_ADJUSTLAYOUT_END(hEle int, nFlags xcc.AdjustLayout_, nAdjustNo uint32,
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_ADJUSTLAYOUT_END)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_ADJUSTLAYOUT_END1); ok {
+		if cb, ok := cbs[i].(xc.XE_ADJUSTLAYOUT_END1); ok {
 			ret = cb(hEle, nFlags, nAdjustNo, pbHandled)
 		}
 		if *pbHandled {
@@ -1601,7 +1601,7 @@ func onXE_ADJUSTLAYOUT_END(hEle int, nFlags xcc.AdjustLayout_, nAdjustNo uint32,
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_SetFocus(pFun XE_SETFOCUS1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_SetFocus(pFun xc.XE_SETFOCUS1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_SETFOCUS, onXE_SETFOCUS, pFun, allowAddingMultiple...)
 }
 
@@ -1610,7 +1610,7 @@ func onXE_SETFOCUS(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_SETFOCUS)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_SETFOCUS1); ok {
+		if cb, ok := cbs[i].(xc.XE_SETFOCUS1); ok {
 			ret = cb(hEle, pbHandled)
 		}
 		if *pbHandled {
@@ -1625,7 +1625,7 @@ func onXE_SETFOCUS(hEle int, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_KillFocus(pFun XE_KILLFOCUS1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_KillFocus(pFun xc.XE_KILLFOCUS1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_KILLFOCUS, onXE_KILLFOCUS, pFun, allowAddingMultiple...)
 }
 
@@ -1634,7 +1634,7 @@ func onXE_KILLFOCUS(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_KILLFOCUS)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_KILLFOCUS1); ok {
+		if cb, ok := cbs[i].(xc.XE_KILLFOCUS1); ok {
 			ret = cb(hEle, pbHandled)
 		}
 		if *pbHandled {
@@ -1649,7 +1649,7 @@ func onXE_KILLFOCUS(hEle int, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_Destroy(pFun XE_DESTROY1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_Destroy(pFun xc.XE_DESTROY1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_DESTROY, onXE_DESTROY, pFun, allowAddingMultiple...)
 }
 
@@ -1658,7 +1658,7 @@ func onXE_DESTROY(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_DESTROY)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_DESTROY1); ok {
+		if cb, ok := cbs[i].(xc.XE_DESTROY1); ok {
 			ret = cb(hEle, pbHandled)
 		}
 		if *pbHandled {
@@ -1673,7 +1673,7 @@ func onXE_DESTROY(hEle int, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_Size(pFun XE_SIZE1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_Size(pFun xc.XE_SIZE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_SIZE, onXE_SIZE, pFun, allowAddingMultiple...)
 }
 
@@ -1682,7 +1682,7 @@ func onXE_SIZE(hEle int, nFlags xcc.AdjustLayout_, nAdjustNo uint32, pbHandled *
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_SIZE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_SIZE1); ok {
+		if cb, ok := cbs[i].(xc.XE_SIZE1); ok {
 			ret = cb(hEle, nFlags, nAdjustNo, pbHandled)
 		}
 		if *pbHandled {
@@ -1697,7 +1697,7 @@ func onXE_SIZE(hEle int, nFlags xcc.AdjustLayout_, nAdjustNo uint32, pbHandled *
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_Show(pFun XE_SHOW1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_Show(pFun xc.XE_SHOW1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_SHOW, onXE_SHOW, pFun, allowAddingMultiple...)
 }
 
@@ -1706,7 +1706,7 @@ func onXE_SHOW(hEle int, bShow bool, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_SHOW)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_SHOW1); ok {
+		if cb, ok := cbs[i].(xc.XE_SHOW1); ok {
 			ret = cb(hEle, bShow, pbHandled)
 		}
 		if *pbHandled {
@@ -1721,7 +1721,7 @@ func onXE_SHOW(hEle int, bShow bool, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_SetFont(pFun XE_SETFONT1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_SetFont(pFun xc.XE_SETFONT1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_SETFONT, onXE_SETFONT, pFun, allowAddingMultiple...)
 }
 
@@ -1730,7 +1730,7 @@ func onXE_SETFONT(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_SETFONT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_SETFONT1); ok {
+		if cb, ok := cbs[i].(xc.XE_SETFONT1); ok {
 			ret = cb(hEle, pbHandled)
 		}
 		if *pbHandled {
@@ -1745,7 +1745,7 @@ func onXE_SETFONT(hEle int, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_KeyDown(pFun XE_KEYDOWN1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_KeyDown(pFun xc.XE_KEYDOWN1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_KEYDOWN, onXE_KEYDOWN, pFun, allowAddingMultiple...)
 }
 
@@ -1754,7 +1754,7 @@ func onXE_KEYDOWN(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_KEYDOWN)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_KEYDOWN1); ok {
+		if cb, ok := cbs[i].(xc.XE_KEYDOWN1); ok {
 			ret = cb(hEle, wParam, lParam, pbHandled)
 		}
 		if *pbHandled {
@@ -1769,7 +1769,7 @@ func onXE_KEYDOWN(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_KeyUp(pFun XE_KEYUP1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_KeyUp(pFun xc.XE_KEYUP1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_KEYUP, onXE_KEYUP, pFun, allowAddingMultiple...)
 }
 
@@ -1778,7 +1778,7 @@ func onXE_KEYUP(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_KEYUP)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_KEYUP1); ok {
+		if cb, ok := cbs[i].(xc.XE_KEYUP1); ok {
 			ret = cb(hEle, wParam, lParam, pbHandled)
 		}
 		if *pbHandled {
@@ -1793,7 +1793,7 @@ func onXE_KEYUP(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_SysKeyDown(pFun XE_SYSKEYDOWN1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_SysKeyDown(pFun xc.XE_SYSKEYDOWN1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_SYSKEYDOWN, onXE_SYSKEYDOWN, pFun, allowAddingMultiple...)
 }
 
@@ -1802,7 +1802,7 @@ func onXE_SYSKEYDOWN(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_SYSKEYDOWN)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_SYSKEYDOWN1); ok {
+		if cb, ok := cbs[i].(xc.XE_SYSKEYDOWN1); ok {
 			ret = cb(hEle, wParam, lParam, pbHandled)
 		}
 		if *pbHandled {
@@ -1817,7 +1817,7 @@ func onXE_SYSKEYDOWN(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_SysKeyUp(pFun XE_SYSKEYUP1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_SysKeyUp(pFun xc.XE_SYSKEYUP1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_SYSKEYUP, onXE_SYSKEYUP, pFun, allowAddingMultiple...)
 }
 
@@ -1826,7 +1826,7 @@ func onXE_SYSKEYUP(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_SYSKEYUP)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_SYSKEYUP1); ok {
+		if cb, ok := cbs[i].(xc.XE_SYSKEYUP1); ok {
 			ret = cb(hEle, wParam, lParam, pbHandled)
 		}
 		if *pbHandled {
@@ -1841,7 +1841,7 @@ func onXE_SYSKEYUP(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_Char(pFun XE_CHAR1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_Char(pFun xc.XE_CHAR1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_CHAR, onXE_CHAR, pFun, allowAddingMultiple...)
 }
 
@@ -1850,7 +1850,7 @@ func onXE_CHAR(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_CHAR)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_CHAR1); ok {
+		if cb, ok := cbs[i].(xc.XE_CHAR1); ok {
 			ret = cb(hEle, wParam, lParam, pbHandled)
 		}
 		if *pbHandled {
@@ -1865,7 +1865,7 @@ func onXE_CHAR(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_SetCapture(pFun XE_SETCAPTURE1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_SetCapture(pFun xc.XE_SETCAPTURE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_SETCAPTURE, onXE_SETCAPTURE, pFun, allowAddingMultiple...)
 }
 
@@ -1874,7 +1874,7 @@ func onXE_SETCAPTURE(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_SETCAPTURE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_SETCAPTURE1); ok {
+		if cb, ok := cbs[i].(xc.XE_SETCAPTURE1); ok {
 			ret = cb(hEle, pbHandled)
 		}
 		if *pbHandled {
@@ -1889,7 +1889,7 @@ func onXE_SETCAPTURE(hEle int, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_KillCapture(pFun XE_KILLCAPTURE1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_KillCapture(pFun xc.XE_KILLCAPTURE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_KILLCAPTURE, onXE_KILLCAPTURE, pFun, allowAddingMultiple...)
 }
 
@@ -1898,7 +1898,7 @@ func onXE_KILLCAPTURE(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_KILLCAPTURE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_KILLCAPTURE1); ok {
+		if cb, ok := cbs[i].(xc.XE_KILLCAPTURE1); ok {
 			ret = cb(hEle, pbHandled)
 		}
 		if *pbHandled {
@@ -1913,7 +1913,7 @@ func onXE_KILLCAPTURE(hEle int, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_SetCursor(pFun XE_SETCURSOR1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_SetCursor(pFun xc.XE_SETCURSOR1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_SETCURSOR, onXE_SETCURSOR, pFun, allowAddingMultiple...)
 }
 
@@ -1922,7 +1922,7 @@ func onXE_SETCURSOR(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_SETCURSOR)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_SETCURSOR1); ok {
+		if cb, ok := cbs[i].(xc.XE_SETCURSOR1); ok {
 			ret = cb(hEle, wParam, lParam, pbHandled)
 		}
 		if *pbHandled {
@@ -1937,7 +1937,7 @@ func onXE_SETCURSOR(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_DropFiles(pFun XE_DROPFILES1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_DropFiles(pFun xc.XE_DROPFILES1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_DROPFILES, onXE_DROPFILES, pFun, allowAddingMultiple...)
 }
 
@@ -1946,7 +1946,7 @@ func onXE_DROPFILES(hEle int, hDropInfo uintptr, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_DROPFILES)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_DROPFILES1); ok {
+		if cb, ok := cbs[i].(xc.XE_DROPFILES1); ok {
 			ret = cb(hEle, hDropInfo, pbHandled)
 		}
 		if *pbHandled {
@@ -1961,7 +1961,7 @@ func onXE_DROPFILES(hEle int, hDropInfo uintptr, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_Menu_Select(pFun XE_MENU_SELECT1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_Menu_Select(pFun func(hEle int, nID int32, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_MENU_SELECT, onXE_MENU_SELECT, pFun, allowAddingMultiple...)
 }
 
@@ -1970,7 +1970,7 @@ func onXE_MENU_SELECT(hEle int, nID int32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_MENU_SELECT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_MENU_SELECT1); ok {
+		if cb, ok := cbs[i].(func(hEle int, nID int32, pbHandled *bool) int); ok {
 			ret = cb(hEle, nID, pbHandled)
 		}
 		if *pbHandled {
@@ -1985,7 +1985,7 @@ func onXE_MENU_SELECT(hEle int, nID int32, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_Menu_Popup(pFun XE_MENU_POPUP1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_Menu_Popup(pFun func(hEle int, HMENUX int, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_MENU_POPUP, onXE_MENU_POPUP, pFun, allowAddingMultiple...)
 }
 
@@ -1994,7 +1994,7 @@ func onXE_MENU_POPUP(hEle int, HMENUX int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_MENU_POPUP)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_MENU_POPUP1); ok {
+		if cb, ok := cbs[i].(func(hEle int, HMENUX int, pbHandled *bool) int); ok {
 			ret = cb(hEle, HMENUX, pbHandled)
 		}
 		if *pbHandled {
@@ -2009,7 +2009,7 @@ func onXE_MENU_POPUP(hEle int, HMENUX int, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_Menu_Exit(pFun XE_MENU_EXIT1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_Menu_Exit(pFun func(hEle int, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_MENU_EXIT, onXE_MENU_EXIT, pFun, allowAddingMultiple...)
 }
 
@@ -2018,7 +2018,7 @@ func onXE_MENU_EXIT(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_MENU_EXIT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_MENU_EXIT1); ok {
+		if cb, ok := cbs[i].(func(hEle int, pbHandled *bool) int); ok {
 			ret = cb(hEle, pbHandled)
 		}
 		if *pbHandled {
@@ -2033,7 +2033,7 @@ func onXE_MENU_EXIT(hEle int, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_Menu_Popup_Wnd(pFun XE_MENU_POPUP_WND1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_Menu_Popup_Wnd(pFun func(hEle int, hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_MENU_POPUP_WND, onXE_MENU_POPUP_WND, pFun, allowAddingMultiple...)
 }
 
@@ -2042,7 +2042,7 @@ func onXE_MENU_POPUP_WND(hEle int, hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandle
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_MENU_POPUP_WND)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_MENU_POPUP_WND1); ok {
+		if cb, ok := cbs[i].(func(hEle int, hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int); ok {
 			ret = cb(hEle, hMenu, pInfo, pbHandled)
 		}
 		if *pbHandled {
@@ -2057,7 +2057,7 @@ func onXE_MENU_POPUP_WND(hEle int, hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandle
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_Menu_Draw_Background(pFun XE_MENU_DRAW_BACKGROUND1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_Menu_Draw_Background(pFun func(hEle int, hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_MENU_DRAW_BACKGROUND, onXE_MENU_DRAW_BACKGROUND, pFun, allowAddingMultiple...)
 }
 
@@ -2066,7 +2066,7 @@ func onXE_MENU_DRAW_BACKGROUND(hEle int, hDraw int, pInfo *xc.Menu_DrawBackgroun
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_MENU_DRAW_BACKGROUND)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_MENU_DRAW_BACKGROUND1); ok {
+		if cb, ok := cbs[i].(func(hEle int, hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int); ok {
 			ret = cb(hEle, hDraw, pInfo, pbHandled)
 		}
 		if *pbHandled {
@@ -2081,7 +2081,7 @@ func onXE_MENU_DRAW_BACKGROUND(hEle int, hDraw int, pInfo *xc.Menu_DrawBackgroun
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Element) AddEvent_Menu_DrawItem(pFun XE_MENU_DRAWITEM1, allowAddingMultiple ...bool) int {
+func (e *Element) AddEvent_Menu_DrawItem(pFun func(hEle int, hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_MENU_DRAWITEM, onXE_MENU_DRAWITEM, pFun, allowAddingMultiple...)
 }
 
@@ -2090,7 +2090,7 @@ func onXE_MENU_DRAWITEM(hEle int, hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_MENU_DRAWITEM)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_MENU_DRAWITEM1); ok {
+		if cb, ok := cbs[i].(func(hEle int, hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int); ok {
 			ret = cb(hEle, hDraw, pInfo, pbHandled)
 		}
 		if *pbHandled {
@@ -2102,504 +2102,392 @@ func onXE_MENU_DRAWITEM(hEle int, hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled
 
 // ------------------------- 事件 ------------------------- //
 
-type XE_ELEPROCE func(nEvent uint32, wParam, lParam uintptr, pbHandled *bool) int            // 元素处理过程事件.
-type XE_ELEPROCE1 func(hEle int, nEvent uint32, wParam, lParam uintptr, pbHandled *bool) int // 元素处理过程事件.
-type XE_PAINT func(hDraw int, pbHandled *bool) int                                           // 元素绘制事件.
-type XE_PAINT1 func(hEle int, hDraw int, pbHandled *bool) int                                // 元素绘制事件.
-type XE_PAINT_END func(hDraw int, pbHandled *bool) int                                       // 该元素及子元素绘制完成事件.启用该功能需要调用 xc.XEle_EnableEvent_XE_PAINT_END.
-type XE_PAINT_END1 func(hEle int, hDraw int, pbHandled *bool) int                            // 该元素及子元素绘制完成事件.启用该功能需要调用 xc.XEle_EnableEvent_XE_PAINT_END.
-type XE_PAINT_SCROLLVIEW func(hDraw int, pbHandled *bool) int                                // 滚动视图绘制事件.
-type XE_PAINT_SCROLLVIEW1 func(hEle int, hDraw int, pbHandled *bool) int                     // 滚动视图绘制事件.
-type XE_MOUSEMOVE func(nFlags int, pPt *xc.POINT, pbHandled *bool) int                       // 元素鼠标移动事件.
-type XE_MOUSEMOVE1 func(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int            // 元素鼠标移动事件.
-type XE_MOUSESTAY func(pbHandled *bool) int                                                  // 元素鼠标进入事件.
-type XE_MOUSESTAY1 func(hEle int, pbHandled *bool) int                                       // 元素鼠标进入事件.
-type XE_MOUSEHOVER func(nFlags int, pPt *xc.POINT, pbHandled *bool) int                      // 元素鼠标悬停事件.
-type XE_MOUSEHOVER1 func(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int           // 元素鼠标悬停事件.
-type XE_MOUSELEAVE func(hEleStay int, pbHandled *bool) int                                   // 元素鼠标离开事件.
-type XE_MOUSELEAVE1 func(hEle int, hEleStay int, pbHandled *bool) int                        // 元素鼠标离开事件.
-type XE_MOUSEWHEEL func(nFlags int, pPt *xc.POINT, pbHandled *bool) int                      // 元素鼠标滚轮滚动事件. 如果非滚动视图需要调用 xc.XEle_EnableEvent_XE_MOUSEWHEEL. flags: 见MSDN中 WM_MOUSEWHEEL 消息 wParam 参数说明.
-type XE_MOUSEWHEEL1 func(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int           // 元素鼠标滚轮滚动事件. 如果非滚动视图需要调用 xc.XEle_EnableEvent_XE_MOUSEWHEEL. flags: 见MSDN中 WM_MOUSEWHEEL 消息 wParam 参数说明.
-type XE_LBUTTONDOWN func(nFlags int, pPt *xc.POINT, pbHandled *bool) int                     // 鼠标左键按下事件.
-type XE_LBUTTONDOWN1 func(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int          // 鼠标左键按下事件.
-type XE_LBUTTONUP func(nFlags int, pPt *xc.POINT, pbHandled *bool) int                       // 鼠标左键弹起事件.
-type XE_LBUTTONUP1 func(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int            // 鼠标左键弹起事件.
-type XE_RBUTTONDOWN func(nFlags int, pPt *xc.POINT, pbHandled *bool) int                     // 鼠标右键按下事件.
-type XE_RBUTTONDOWN1 func(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int          // 鼠标右键按下事件.
-type XE_RBUTTONUP func(nFlags int, pPt *xc.POINT, pbHandled *bool) int                       // 鼠标右键弹起事件.
-type XE_RBUTTONUP1 func(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int            // 鼠标右键弹起事件.
-type XE_LBUTTONDBCLICK func(nFlags int, pPt *xc.POINT, pbHandled *bool) int                  // 鼠标左键双击事件.
-type XE_LBUTTONDBCLICK1 func(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int       // 鼠标左键双击事件.
-type XE_XC_TIMER func(nTimerID int, pbHandled *bool) int                                     // 炫彩定时器,非系统定时器,定时器消息 XM_TIMER.
-type XE_XC_TIMER1 func(hEle int, nTimerID int, pbHandled *bool) int                          // 炫彩定时器,非系统定时器,定时器消息 XM_TIMER.
-type XE_ADJUSTLAYOUT func(nFlags int32, nAdjustNo uint32, pbHandled *bool) int               // 调整布局事件. 暂停使用.
-type XE_ADJUSTLAYOUT1 func(hEle int, nFlags int32, nAdjustNo uint32, pbHandled *bool) int    // 调整布局事件. 暂停使用.
-type XE_TOOLTIP_POPUP func(hWindow int, pText uintptr, pbHandled *bool) int                  // 元素工具提示弹出事件.
-type XE_TOOLTIP_POPUP1 func(hEle int, hWindow int, pText uintptr, pbHandled *bool) int       // 元素工具提示弹出事件1.
-
-// 调整布局完成事件.
-//
-// nFlags: 调整布局标识位: xcc.AdjustLayout_.
-//
-// nAdjustNo: 调整布局流水号.
-type XE_ADJUSTLAYOUT_END func(nFlags xcc.AdjustLayout_, nAdjustNo uint32, pbHandled *bool) int
-
-// 调整布局完成事件.
-//
-// hEle: 元素句柄.
-//
-// nFlags: 调整布局标识位: xcc.AdjustLayout_.
-//
-// nAdjustNo: 调整布局流水号.
-type XE_ADJUSTLAYOUT_END1 func(hEle int, nFlags xcc.AdjustLayout_, nAdjustNo uint32, pbHandled *bool) int
-
-type XE_SETFOCUS func(pbHandled *bool) int               // 元素获得焦点事件.
-type XE_SETFOCUS1 func(hEle int, pbHandled *bool) int    // 元素获得焦点事件.
-type XE_KILLFOCUS func(pbHandled *bool) int              // 元素失去焦点事件.
-type XE_KILLFOCUS1 func(hEle int, pbHandled *bool) int   // 元素失去焦点事件.
-type XE_DESTROY func(pbHandled *bool) int                // 元素即将销毁事件. 在销毁子对象之前触发.
-type XE_DESTROY1 func(hEle int, pbHandled *bool) int     // 元素即将销毁事件. 在销毁子对象之前触发.
-type XE_DESTROY_END func(pbHandled *bool) int            // 元素销毁完成事件. 在销毁子对象之后触发.
-type XE_DESTROY_END1 func(hEle int, pbHandled *bool) int // 元素销毁完成事件. 在销毁子对象之后触发.
-
-// 元素大小改变事件.
-//
-// nFlags: 调整布局标识位: xcc.AdjustLayout_.
-//
-// nAdjustNo: 调整布局流水号.
-type XE_SIZE func(nFlags xcc.AdjustLayout_, nAdjustNo uint32, pbHandled *bool) int
-
-// 元素大小改变事件1.
-//
-// hEle: 元素句柄.
-//
-// nFlags: 调整布局标识位: xcc.AdjustLayout_.
-//
-// nAdjustNo: 调整布局流水号.
-type XE_SIZE1 func(hEle int, nFlags xcc.AdjustLayout_, nAdjustNo uint32, pbHandled *bool) int
-
-type XE_SHOW func(bShow bool, pbHandled *bool) int                              // 元素显示隐藏事件.
-type XE_SHOW1 func(hEle int, bShow bool, pbHandled *bool) int                   // 元素显示隐藏事件.
-type XE_SETFONT func(pbHandled *bool) int                                       // 元素设置字体事件.
-type XE_SETFONT1 func(hEle int, pbHandled *bool) int                            // 元素设置字体事件.
-type XE_KEYDOWN func(wParam, lParam uintptr, pbHandled *bool) int               // 元素按键按下事件.
-type XE_KEYDOWN1 func(hEle int, wParam, lParam uintptr, pbHandled *bool) int    // 元素按键按下事件.
-type XE_KEYUP func(wParam, lParam uintptr, pbHandled *bool) int                 // 元素按键弹起事件.
-type XE_KEYUP1 func(hEle int, wParam, lParam uintptr, pbHandled *bool) int      // 元素按键弹起事件.
-type XE_SYSKEYDOWN1 func(hEle int, wParam, lParam uintptr, pbHandled *bool) int // 元素系统按键按下事件.
-type XE_SYSKEYUP1 func(hEle int, wParam, lParam uintptr, pbHandled *bool) int   // 元素系统按键弹起事件
-
-type XE_CHAR func(wParam, lParam uintptr, pbHandled *bool) int                 // 通过TranslateMessage函数翻译的字符事件.
-type XE_CHAR1 func(hEle int, wParam, lParam uintptr, pbHandled *bool) int      // 通过TranslateMessage函数翻译的字符事件.
-type XE_SETCAPTURE func(pbHandled *bool) int                                   // 元素设置鼠标捕获.
-type XE_SETCAPTURE1 func(hEle int, pbHandled *bool) int                        // 元素设置鼠标捕获.
-type XE_KILLCAPTURE func(pbHandled *bool) int                                  // 元素失去鼠标捕获.
-type XE_KILLCAPTURE1 func(hEle int, pbHandled *bool) int                       // 元素失去鼠标捕获.
-type XE_SETCURSOR func(wParam, lParam uintptr, pbHandled *bool) int            // 设置鼠标光标.
-type XE_SETCURSOR1 func(hEle int, wParam, lParam uintptr, pbHandled *bool) int // 设置鼠标光标.
-type XE_DROPFILES func(hDropInfo uintptr, pbHandled *bool) int                 // 文件拖放事件, 需先启用: xc.XWnd_EnableDragFiles.
-type XE_DROPFILES1 func(hEle int, hDropInfo uintptr, pbHandled *bool) int      // 文件拖放事件, 需先启用: xc.XWnd_EnableDragFiles.
-
 // 元素处理过程事件.
-func (e *Element) Event_ELEPROCE(pFun XE_ELEPROCE) bool {
+func (e *Element) Event_ELEPROCE(pFun xc.XE_ELEPROCE) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_ELEPROCE, pFun)
 }
 
 // 元素处理过程事件.
-func (e *Element) Event_ELEPROCE1(pFun XE_ELEPROCE1) bool {
+func (e *Element) Event_ELEPROCE1(pFun xc.XE_ELEPROCE1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_ELEPROCE, pFun)
 }
 
 // 元素绘制事件.
-func (e *Element) Event_PAINT(pFun XE_PAINT) bool {
+func (e *Element) Event_PAINT(pFun xc.XE_PAINT) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_PAINT, pFun)
 }
 
 // 元素绘制事件.
-func (e *Element) Event_PAINT1(pFun XE_PAINT1) bool {
+func (e *Element) Event_PAINT1(pFun xc.XE_PAINT1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_PAINT, pFun)
 }
 
 // 该元素及子元素绘制完成事件.启用该功能需要调用 xc.XEle_EnableEvent_XE_PAINT_END.
-func (e *Element) Event_PAINT_END(pFun XE_PAINT_END) bool {
+func (e *Element) Event_PAINT_END(pFun xc.XE_PAINT_END) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_PAINT_END, pFun)
 }
 
 // 该元素及子元素绘制完成事件.启用该功能需要调用 xc.XEle_EnableEvent_XE_PAINT_END.
-func (e *Element) Event_PAINT_END1(pFun XE_PAINT_END1) bool {
+func (e *Element) Event_PAINT_END1(pFun xc.XE_PAINT_END1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_PAINT_END, pFun)
 }
 
 // 滚动视图绘制事件.
-func (e *Element) Event_PAINT_SCROLLVIEW(pFun XE_PAINT_SCROLLVIEW) bool {
+func (e *Element) Event_PAINT_SCROLLVIEW(pFun xc.XE_PAINT_SCROLLVIEW) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_PAINT_SCROLLVIEW, pFun)
 }
 
 // 滚动视图绘制事件.
-func (e *Element) Event_PAINT_SCROLLVIEW1(pFun XE_PAINT_SCROLLVIEW1) bool {
+func (e *Element) Event_PAINT_SCROLLVIEW1(pFun xc.XE_PAINT_SCROLLVIEW1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_PAINT_SCROLLVIEW, pFun)
 }
 
 // 元素鼠标移动事件.
-func (e *Element) Event_MOUSEMOVE(pFun XE_MOUSEMOVE) bool {
+func (e *Element) Event_MOUSEMOVE(pFun xc.XE_MOUSEMOVE) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_MOUSEMOVE, pFun)
 }
 
 // 元素鼠标移动事件.
-func (e *Element) Event_MOUSEMOVE1(pFun XE_MOUSEMOVE1) bool {
+func (e *Element) Event_MOUSEMOVE1(pFun xc.XE_MOUSEMOVE1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_MOUSEMOVE, pFun)
 }
 
 // 元素鼠标进入事件.
-func (e *Element) Event_MOUSESTAY(pFun XE_MOUSESTAY) bool {
+func (e *Element) Event_MOUSESTAY(pFun xc.XE_MOUSESTAY) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_MOUSESTAY, pFun)
 }
 
 // 元素鼠标进入事件.
-func (e *Element) Event_MOUSESTAY1(pFun XE_MOUSESTAY1) bool {
+func (e *Element) Event_MOUSESTAY1(pFun xc.XE_MOUSESTAY1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_MOUSESTAY, pFun)
 }
 
 // 元素鼠标悬停事件.
-func (e *Element) Event_MOUSEHOVER(pFun XE_MOUSEHOVER) bool {
+func (e *Element) Event_MOUSEHOVER(pFun xc.XE_MOUSEHOVER) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_MOUSEHOVER, pFun)
 }
 
 // 元素鼠标悬停事件.
-func (e *Element) Event_MOUSEHOVER1(pFun XE_MOUSEHOVER1) bool {
+func (e *Element) Event_MOUSEHOVER1(pFun xc.XE_MOUSEHOVER1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_MOUSEHOVER, pFun)
 }
 
 // 元素鼠标离开事件.
-func (e *Element) Event_MOUSELEAVE(pFun XE_MOUSELEAVE) bool {
+func (e *Element) Event_MOUSELEAVE(pFun xc.XE_MOUSELEAVE) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_MOUSELEAVE, pFun)
 }
 
 // 元素鼠标离开事件.
-func (e *Element) Event_MOUSELEAVE1(pFun XE_MOUSELEAVE1) bool {
+func (e *Element) Event_MOUSELEAVE1(pFun xc.XE_MOUSELEAVE1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_MOUSELEAVE, pFun)
 }
 
 // 元素鼠标滚轮滚动事件. 如果非滚动视图需要调用 xc.XEle_EnableEvent_XE_MOUSEWHEEL.
-func (e *Element) Event_MOUSEWHEEL(pFun XE_MOUSEWHEEL) bool {
+func (e *Element) Event_MOUSEWHEEL(pFun xc.XE_MOUSEWHEEL) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_MOUSEWHEEL, pFun)
 }
 
 // 元素鼠标滚轮滚动事件. 如果非滚动视图需要调用 xc.XEle_EnableEvent_XE_MOUSEWHEEL.
-func (e *Element) Event_MOUSEWHEEL1(pFun XE_MOUSEWHEEL1) bool {
+func (e *Element) Event_MOUSEWHEEL1(pFun xc.XE_MOUSEWHEEL1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_MOUSEWHEEL, pFun)
 }
 
 // 鼠标左键按下事件.
-func (e *Element) Event_LBUTTONDOWN(pFun XE_LBUTTONDOWN) bool {
+func (e *Element) Event_LBUTTONDOWN(pFun xc.XE_LBUTTONDOWN) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_LBUTTONDOWN, pFun)
 }
 
 // 鼠标左键按下事件.
-func (e *Element) Event_LBUTTONDOWN1(pFun XE_LBUTTONDOWN1) bool {
+func (e *Element) Event_LBUTTONDOWN1(pFun xc.XE_LBUTTONDOWN1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_LBUTTONDOWN, pFun)
 }
 
 // 鼠标左键弹起事件.
-func (e *Element) Event_LBUTTONUP(pFun XE_LBUTTONUP) bool {
+func (e *Element) Event_LBUTTONUP(pFun xc.XE_LBUTTONUP) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_LBUTTONUP, pFun)
 }
 
 // 鼠标左键弹起事件.
-func (e *Element) Event_LBUTTONUP1(pFun XE_LBUTTONUP1) bool {
+func (e *Element) Event_LBUTTONUP1(pFun xc.XE_LBUTTONUP1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_LBUTTONUP, pFun)
 }
 
 // 鼠标右键按下事件.
-func (e *Element) Event_RBUTTONDOWN(pFun XE_RBUTTONDOWN) bool {
+func (e *Element) Event_RBUTTONDOWN(pFun xc.XE_RBUTTONDOWN) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_RBUTTONDOWN, pFun)
 }
 
 // 鼠标右键按下事件.
-func (e *Element) Event_RBUTTONDOWN1(pFun XE_RBUTTONDOWN1) bool {
+func (e *Element) Event_RBUTTONDOWN1(pFun xc.XE_RBUTTONDOWN1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_RBUTTONDOWN, pFun)
 }
 
 // 鼠标右键弹起事件.
-func (e *Element) Event_RBUTTONUP(pFun XE_RBUTTONUP) bool {
+func (e *Element) Event_RBUTTONUP(pFun xc.XE_RBUTTONUP) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_RBUTTONUP, pFun)
 }
 
 // 鼠标右键弹起事件.
-func (e *Element) Event_RBUTTONUP1(pFun XE_RBUTTONUP1) bool {
+func (e *Element) Event_RBUTTONUP1(pFun xc.XE_RBUTTONUP1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_RBUTTONUP, pFun)
 }
 
 // 鼠标左键双击事件.
-func (e *Element) Event_LBUTTONDBCLICK(pFun XE_LBUTTONDBCLICK) bool {
+func (e *Element) Event_LBUTTONDBCLICK(pFun xc.XE_LBUTTONDBCLICK) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_LBUTTONDBCLICK, pFun)
 }
 
 // 鼠标左键双击事件.
-func (e *Element) Event_LBUTTONDBCLICK1(pFun XE_LBUTTONDBCLICK1) bool {
+func (e *Element) Event_LBUTTONDBCLICK1(pFun xc.XE_LBUTTONDBCLICK1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_LBUTTONDBCLICK, pFun)
 }
 
 // 炫彩定时器,非系统定时器,定时器消息 XM_TIMER.
-func (e *Element) Event_XC_TIMER(pFun XE_XC_TIMER) bool {
+func (e *Element) Event_XC_TIMER(pFun xc.XE_XC_TIMER) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_XC_TIMER, pFun)
 }
 
 // 炫彩定时器,非系统定时器,定时器消息 XM_TIMER.
-func (e *Element) Event_XC_TIMER1(pFun XE_XC_TIMER1) bool {
+func (e *Element) Event_XC_TIMER1(pFun xc.XE_XC_TIMER1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_XC_TIMER, pFun)
 }
 
 // 调整布局事件. 暂停使用.
-func (e *Element) Event_ADJUSTLAYOUT(pFun XE_ADJUSTLAYOUT) bool {
+func (e *Element) Event_ADJUSTLAYOUT(pFun xc.XE_ADJUSTLAYOUT) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_ADJUSTLAYOUT, pFun)
 }
 
 // 调整布局事件. 暂停使用.
-func (e *Element) Event_ADJUSTLAYOUT1(pFun XE_ADJUSTLAYOUT1) bool {
+func (e *Element) Event_ADJUSTLAYOUT1(pFun xc.XE_ADJUSTLAYOUT1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_ADJUSTLAYOUT, pFun)
 }
 
 // 调整布局完成事件.
-func (e *Element) Event_ADJUSTLAYOUT_END(pFun XE_ADJUSTLAYOUT_END) bool {
+func (e *Element) Event_ADJUSTLAYOUT_END(pFun xc.XE_ADJUSTLAYOUT_END) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_ADJUSTLAYOUT_END, pFun)
 }
 
 // 调整布局完成事件.
-func (e *Element) Event_ADJUSTLAYOUT_END1(pFun XE_ADJUSTLAYOUT_END1) bool {
+func (e *Element) Event_ADJUSTLAYOUT_END1(pFun xc.XE_ADJUSTLAYOUT_END1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_ADJUSTLAYOUT_END, pFun)
 }
 
 // 元素获得焦点事件.
-func (e *Element) Event_SETFOCUS(pFun XE_SETFOCUS) bool {
+func (e *Element) Event_SETFOCUS(pFun xc.XE_SETFOCUS) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_SETFOCUS, pFun)
 }
 
 // 元素获得焦点事件.
-func (e *Element) Event_SETFOCUS1(pFun XE_SETFOCUS1) bool {
+func (e *Element) Event_SETFOCUS1(pFun xc.XE_SETFOCUS1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_SETFOCUS, pFun)
 }
 
 // 元素失去焦点事件.
-func (e *Element) Event_KILLFOCUS(pFun XE_KILLFOCUS) bool {
+func (e *Element) Event_KILLFOCUS(pFun xc.XE_KILLFOCUS) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_KILLFOCUS, pFun)
 }
 
 // 元素失去焦点事件.
-func (e *Element) Event_KILLFOCUS1(pFun XE_KILLFOCUS1) bool {
+func (e *Element) Event_KILLFOCUS1(pFun xc.XE_KILLFOCUS1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_KILLFOCUS, pFun)
 }
 
 // 元素即将销毁事件. 在销毁子对象之前触发.
-func (e *Element) Event_DESTROY(pFun XE_DESTROY) bool {
+func (e *Element) Event_DESTROY(pFun xc.XE_DESTROY) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_DESTROY, pFun)
 }
 
 // 元素即将销毁事件. 在销毁子对象之前触发.
-func (e *Element) Event_DESTROY1(pFun XE_DESTROY1) bool {
+func (e *Element) Event_DESTROY1(pFun xc.XE_DESTROY1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_DESTROY, pFun)
 }
 
 // 元素销毁完成事件. 在销毁子对象之后触发.
-func (e *Element) Event_DESTROY_END(pFun XE_DESTROY_END) bool {
+func (e *Element) Event_DESTROY_END(pFun xc.XE_DESTROY_END) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_DESTROY_END, pFun)
 }
 
 // 元素销毁完成事件. 在销毁子对象之后触发.
-func (e *Element) Event_DESTROY_END1(pFun XE_DESTROY_END1) bool {
+func (e *Element) Event_DESTROY_END1(pFun xc.XE_DESTROY_END1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_DESTROY_END, pFun)
 }
 
 // 元素大小改变事件.
-func (e *Element) Event_SIZE(pFun XE_SIZE) bool {
+func (e *Element) Event_SIZE(pFun xc.XE_SIZE) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_SIZE, pFun)
 }
 
 // 元素大小改变事件.
-func (e *Element) Event_SIZE1(pFun XE_SIZE1) bool {
+func (e *Element) Event_SIZE1(pFun xc.XE_SIZE1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_SIZE, pFun)
 }
 
 // 元素显示隐藏事件.
-func (e *Element) Event_SHOW(pFun XE_SHOW) bool {
+func (e *Element) Event_SHOW(pFun xc.XE_SHOW) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_SHOW, pFun)
 }
 
 // 元素显示隐藏事件.
-func (e *Element) Event_SHOW1(pFun XE_SHOW1) bool {
+func (e *Element) Event_SHOW1(pFun xc.XE_SHOW1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_SHOW, pFun)
 }
 
 // 元素设置字体事件.
-func (e *Element) Event_SETFONT(pFun XE_SETFONT) bool {
+func (e *Element) Event_SETFONT(pFun xc.XE_SETFONT) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_SETFONT, pFun)
 }
 
 // 元素设置字体事件.
-func (e *Element) Event_SETFONT1(pFun XE_SETFONT1) bool {
+func (e *Element) Event_SETFONT1(pFun xc.XE_SETFONT1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_SETFONT, pFun)
 }
 
 // 元素按键按下事件.
-func (e *Element) Event_KEYDOWN(pFun XE_KEYDOWN) bool {
+func (e *Element) Event_KEYDOWN(pFun xc.XE_KEYDOWN) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_KEYDOWN, pFun)
 }
 
 // 元素按键按下事件.
-func (e *Element) Event_KEYDOWN1(pFun XE_KEYDOWN1) bool {
+func (e *Element) Event_KEYDOWN1(pFun xc.XE_KEYDOWN1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_KEYDOWN, pFun)
 }
 
 // 元素按键弹起事件.
-func (e *Element) Event_KEYUP(pFun XE_KEYUP) bool {
+func (e *Element) Event_KEYUP(pFun xc.XE_KEYUP) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_KEYUP, pFun)
 }
 
 // 元素按键弹起事件.
-func (e *Element) Event_KEYUP1(pFun XE_KEYUP1) bool {
+func (e *Element) Event_KEYUP1(pFun xc.XE_KEYUP1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_KEYUP, pFun)
 }
 
 // 元素系统按键按下事件.
-func (e *Element) Event_SYSKEYDOWN1(pFun XE_SYSKEYDOWN1) bool {
+func (e *Element) Event_SYSKEYDOWN1(pFun xc.XE_SYSKEYDOWN1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_SYSKEYDOWN, pFun)
 }
 
 // 元素系统按键弹起事件.
-func (e *Element) Event_SYSKEYUP1(pFun XE_SYSKEYUP1) bool {
+func (e *Element) Event_SYSKEYUP1(pFun xc.XE_SYSKEYUP1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_SYSKEYUP, pFun)
 }
 
 // 通过 TranslateMessage 函数翻译的字符事件.
-func (e *Element) Event_CHAR(pFun XE_CHAR) bool {
+func (e *Element) Event_CHAR(pFun xc.XE_CHAR) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_CHAR, pFun)
 }
 
 // 通过TranslateMessage函数翻译的字符事件.
-func (e *Element) Event_CHAR1(pFun XE_CHAR1) bool {
+func (e *Element) Event_CHAR1(pFun xc.XE_CHAR1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_CHAR, pFun)
 }
 
 // 元素设置鼠标捕获.
-func (e *Element) Event_SETCAPTURE(pFun XE_SETCAPTURE) bool {
+func (e *Element) Event_SETCAPTURE(pFun xc.XE_SETCAPTURE) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_SETCAPTURE, pFun)
 }
 
 // 元素设置鼠标捕获.
-func (e *Element) Event_SETCAPTURE1(pFun XE_SETCAPTURE1) bool {
+func (e *Element) Event_SETCAPTURE1(pFun xc.XE_SETCAPTURE1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_SETCAPTURE, pFun)
 }
 
 // 元素失去鼠标捕获.
-func (e *Element) Event_KILLCAPTURE(pFun XE_KILLCAPTURE) bool {
+func (e *Element) Event_KILLCAPTURE(pFun xc.XE_KILLCAPTURE) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_KILLCAPTURE, pFun)
 }
 
 // 元素失去鼠标捕获.
-func (e *Element) Event_KILLCAPTURE1(pFun XE_KILLCAPTURE1) bool {
+func (e *Element) Event_KILLCAPTURE1(pFun xc.XE_KILLCAPTURE1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_KILLCAPTURE, pFun)
 }
 
 // 设置鼠标光标.
-func (e *Element) Event_SETCURSOR(pFun XE_SETCURSOR) bool {
+func (e *Element) Event_SETCURSOR(pFun xc.XE_SETCURSOR) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_SETCURSOR, pFun)
 }
 
 // 设置鼠标光标.
-func (e *Element) Event_SETCURSOR1(pFun XE_SETCURSOR1) bool {
+func (e *Element) Event_SETCURSOR1(pFun xc.XE_SETCURSOR1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_SETCURSOR, pFun)
 }
 
 // 文件拖放事件, 需先启用: xc.XWnd_EnableDragFiles.
-func (e *Element) Event_DROPFILES(pFun XE_DROPFILES) bool {
+func (e *Element) Event_DROPFILES(pFun xc.XE_DROPFILES) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_DROPFILES, pFun)
 }
 
 // 文件拖放事件, 需先启用: xc.XWnd_EnableDragFiles.
-func (e *Element) Event_DROPFILES1(pFun XE_DROPFILES1) bool {
+func (e *Element) Event_DROPFILES1(pFun xc.XE_DROPFILES1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_DROPFILES, pFun)
 }
 
 // 事件_元素工具提示弹出, 可使用 common.UintPtrToString 把uintptr转换到文本.
-func (e *Element) Event_TOOLTIP_POPUP(pFun XE_TOOLTIP_POPUP) bool {
+func (e *Element) Event_TOOLTIP_POPUP(pFun xc.XE_TOOLTIP_POPUP) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_TOOLTIP_POPUP, pFun)
 }
 
 // 事件_元素工具提示弹出1, 可使用 common.UintPtrToString 把uintptr转换到文本.
-func (e *Element) Event_TOOLTIP_POPUP1(pFun XE_TOOLTIP_POPUP1) bool {
+func (e *Element) Event_TOOLTIP_POPUP1(pFun xc.XE_TOOLTIP_POPUP1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_TOOLTIP_POPUP, pFun)
 }
 
-type XE_MENU_SELECT func(nID int32, pbHandled *bool) int                                          // 弹出菜单项选择事件.
-type XE_MENU_POPUP func(HMENUX int, pbHandled *bool) int                                          // 菜单弹出.
-type XE_MENU_EXIT func(pbHandled *bool) int                                                       // 弹出菜单退出事件.
-type XE_MENU_POPUP_WND func(hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int             // 菜单弹出窗口.
-type XE_MENU_DRAW_BACKGROUND func(hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int // 绘制菜单背景, 启用该功能需要调用 xc.XMenu_EnableDrawBackground.
-type XE_MENU_DRAWITEM func(hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int              // 绘制菜单项事件, 启用该功能需要调用 xc.XMenu_EnableDrawItem.
-
 // 事件_弹出菜单项被选择.
-func (e *Element) Event_MENU_SELECT(pFun XE_MENU_SELECT) bool {
+func (e *Element) Event_MENU_SELECT(pFun xc.XE_MENU_SELECT) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_SELECT, pFun)
 }
 
 // 事件_菜单弹出.
-func (e *Element) Event_MENU_POPUP(pFun XE_MENU_POPUP) bool {
+func (e *Element) Event_MENU_POPUP(pFun xc.XE_MENU_POPUP) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_POPUP, pFun)
 }
 
 // 事件_菜单退出.
-func (e *Element) Event_MENU_EXIT(pFun XE_MENU_EXIT) bool {
+func (e *Element) Event_MENU_EXIT(pFun xc.XE_MENU_EXIT) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_EXIT, pFun)
 }
 
 // 菜单弹出窗口.
-func (e *Element) Event_MENU_POPUP_WND(pFun XE_MENU_POPUP_WND) bool {
+func (e *Element) Event_MENU_POPUP_WND(pFun xc.XE_MENU_POPUP_WND) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_POPUP_WND, pFun)
 }
 
 // 绘制菜单背景, 启用该功能需要调用 xc.XMenu_EnableDrawBackground.
-func (e *Element) Event_MENU_DRAW_BACKGROUND(pFun XE_MENU_DRAW_BACKGROUND) bool {
+func (e *Element) Event_MENU_DRAW_BACKGROUND(pFun xc.XE_MENU_DRAW_BACKGROUND) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_DRAW_BACKGROUND, pFun)
 }
 
 // 绘制菜单项事件, 启用该功能需要调用 xc.XMenu_EnableDrawItem.
-func (e *Element) Event_MENU_DRAWITEM(pFun XE_MENU_DRAWITEM) bool {
+func (e *Element) Event_MENU_DRAWITEM(pFun xc.XE_MENU_DRAWITEM) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_MENU_DRAWITEM, pFun)
 }
 
-type XE_MENU_SELECT1 func(hEle int, nID int32, pbHandled *bool) int                                          // 弹出菜单项选择事件.
-type XE_MENU_POPUP1 func(hEle int, HMENUX int, pbHandled *bool) int                                          // 菜单弹出.
-type XE_MENU_EXIT1 func(hEle int, pbHandled *bool) int                                                       // 弹出菜单退出事件.
-type XE_MENU_POPUP_WND1 func(hEle int, hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int             // 菜单弹出窗口.
-type XE_MENU_DRAW_BACKGROUND1 func(hEle int, hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int // 绘制菜单背景, 启用该功能需要调用 xc.XMenu_EnableDrawBackground.
-type XE_MENU_DRAWITEM1 func(hEle int, hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int              // 绘制菜单项事件, 启用该功能需要调用 xc.XMenu_EnableDrawItem.
-
 // 事件_弹出菜单项被选择.
-func (e *Element) Event_MENU_SELECT1(pFun XE_MENU_SELECT1) bool {
+func (e *Element) Event_MENU_SELECT1(pFun xc.XE_MENU_SELECT1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_MENU_SELECT, pFun)
 }
 
 // 事件_菜单弹出.
-func (e *Element) Event_MENU_POPUP1(pFun XE_MENU_POPUP1) bool {
+func (e *Element) Event_MENU_POPUP1(pFun xc.XE_MENU_POPUP1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_MENU_POPUP, pFun)
 }
 
 // 事件_菜单退出.
-func (e *Element) Event_MENU_EXIT1(pFun XE_MENU_EXIT1) bool {
+func (e *Element) Event_MENU_EXIT1(pFun xc.XE_MENU_EXIT1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_MENU_EXIT, pFun)
 }
 
 // 菜单弹出窗口.
-func (e *Element) Event_MENU_POPUP_WND1(pFun XE_MENU_POPUP_WND1) bool {
+func (e *Element) Event_MENU_POPUP_WND1(pFun xc.XE_MENU_POPUP_WND1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_MENU_POPUP_WND, pFun)
 }
 
 // 绘制菜单背景, 启用该功能需要调用 xc.XMenu_EnableDrawBackground.
-func (e *Element) Event_MENU_DRAW_BACKGROUND1(pFun XE_MENU_DRAW_BACKGROUND1) bool {
+func (e *Element) Event_MENU_DRAW_BACKGROUND1(pFun xc.XE_MENU_DRAW_BACKGROUND1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_MENU_DRAW_BACKGROUND, pFun)
 }
 
 // 绘制菜单项事件, 启用该功能需要调用 xc.XMenu_EnableDrawItem.
-func (e *Element) Event_MENU_DRAWITEM1(pFun XE_MENU_DRAWITEM1) bool {
+func (e *Element) Event_MENU_DRAWITEM1(pFun xc.XE_MENU_DRAWITEM1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_MENU_DRAWITEM, pFun)
 }

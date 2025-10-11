@@ -42,6 +42,11 @@ func (h *eleEventHandler) AddCallBack(hEle int, eventType xcc.XE_, eventFunc int
 	h.Lock()
 	defer h.Unlock()
 
+	// 注册元素销毁完成事件. 在这里移除元素的所有事件.
+	if !h.regEleDestroyEnd(hEle) {
+		return -1
+	}
+
 	// 获取元素的事件回调函数map
 	eventMap := h.EventInfoMap[hEle]
 	if eventMap == nil {
@@ -51,10 +56,6 @@ func (h *eleEventHandler) AddCallBack(hEle int, eventType xcc.XE_, eventFunc int
 	info, ok := eventMap[eventType]
 	// 判断没有注册过这个类型的事件, 就注册
 	if !ok {
-		// 注册元素销毁完成事件. 在这里移除元素的所有事件.
-		if !h.regEleDestroyEnd(hEle) {
-			return -1
-		}
 		// 不是元素销毁完成事件, 才注册
 		if eventType != xcc.XE_DESTROY_END {
 			cbPtr := syscall.NewCallback(eventFunc)
@@ -164,7 +165,7 @@ func OnXE_DESTROY_END(hEle int, pbHandled *bool) int {
 	cbs := EleEventHandler.GetCallBacks(hEle, xcc.XE_DESTROY_END)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(func(hEle int, pbHandled *bool) int); ok {
+		if cb, ok := cbs[i].(XE_DESTROY_END1); ok {
 			ret = cb(hEle, pbHandled)
 		}
 		if *pbHandled {

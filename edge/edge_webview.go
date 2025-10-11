@@ -178,8 +178,7 @@ func wndproc(hwnd uintptr, message uint32, wParam, lParam uintptr) uintptr {
 			if w.cbDestroy != nil {
 				w.cbDestroy(w)
 			}
-			w.isClose = true
-			ReportErrorAuto(w.Close())
+			ReportErrorAuto(clearWebView2(w))
 			return 0
 		}
 	case wapi.WM_NCDESTROY: // 窗口非客户区销毁, 在 WM_DESTROY 之后
@@ -202,6 +201,28 @@ func wndproc(hwnd uintptr, message uint32, wParam, lParam uintptr) uintptr {
 		}
 	}
 	return wapi.DefWindowProc(hwnd, message, wParam, lParam)
+}
+
+// 清理 WebView2 相关资源.
+//   - 释放 WebView2 所有事件的 Handler.
+//   - 释放 WebView2_ 系列对象.
+//   - 释放 Controller 和 CoreWebView.
+func clearWebView2(w *WebView) error {
+	WvEventHandler.ReleaseAllEventHandler(&w.WebViewEventImpl)
+	w.ReleaseWebView2_Objs()
+
+	var err error
+	if w.Controller != nil {
+		err = w.Controller.Close()
+		w.Controller.Release()
+		w.Controller = nil
+	}
+
+	if w.CoreWebView != nil {
+		w.CoreWebView.Release()
+		w.CoreWebView = nil
+	}
+	return err
 }
 
 /*// SetSize 更新原生窗口大小。
@@ -442,8 +463,23 @@ func (w *WebView) BindLog(funcName ...string) error {
 
 // SetTitle 更新原生窗口的标题。
 //   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
-func (w *WebView) SetTitle(title string) {
-	wapi.SetWindowText(w.hwnd, title)
+func (w *WebView) SetTitle(title string) error {
+	if !wapi.SetWindowText(w.hwnd, title) {
+		return errors.New("SetWindowText failed")
+	}
+	return nil
+}
+
+// Close 销毁 WebView 所在的原生窗口.
+//   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的。
+//   - 在原生窗口被销毁时会清理底层浏览器实例并释放该 WebView 相关的 Com 对象。
+func (w *WebView) Close() error {
+	if wapi.IsWindow(w.hwnd) {
+		if !wapi.DestroyWindow(w.hwnd) {
+			return errors.New("DestroyWindow failed")
+		}
+	}
+	return nil
 }
 
 // Event_Destroy 宿主原生窗口销毁事件.

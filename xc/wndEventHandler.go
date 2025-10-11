@@ -37,6 +37,11 @@ func (h *wndEventHandler) AddCallBack(hWindow int, eventType xcc.WM_, eventFunc 
 	h.Lock()
 	defer h.Unlock()
 
+	// 注册窗口非客户区销毁事件. 在这里移除窗口的所有事件.
+	if !h.regWndNCDestroy(hWindow) {
+		return -1
+	}
+
 	// 获取窗口的事件回调函数map
 	eventMap := h.EventInfoMap[hWindow]
 	if eventMap == nil {
@@ -46,10 +51,6 @@ func (h *wndEventHandler) AddCallBack(hWindow int, eventType xcc.WM_, eventFunc 
 	info, ok := eventMap[eventType]
 	// 判断没有注册过这个类型的事件, 就注册
 	if !ok {
-		// 注册窗口非客户区销毁事件. 在这里移除窗口的所有事件.
-		if !h.regWndNCDestroy(hWindow) {
-			return -1
-		}
 		// 不是窗口非客户区销毁事件, 才注册
 		if eventType != xcc.WM_NCDESTROY {
 			cbPtr := syscall.NewCallback(eventFunc)
@@ -159,7 +160,7 @@ func OnWM_NCDESTROY(hWindow int, pbHandled *bool) int {
 	cbs := WndEventHandler.GetCallBacks(hWindow, xcc.WM_NCDESTROY)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(func(hWindow int, pbHandled *bool) int); ok {
+		if cb, ok := cbs[i].(WM_NCDESTROY1); ok {
 			ret = cb(hWindow, pbHandled)
 		}
 		if *pbHandled {

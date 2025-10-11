@@ -720,7 +720,7 @@ func (l *ListBox) GetItemHeight(iItem int32, pHeight, pSelHeight *int32) *ListBo
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (l *ListBox) AddEvent_ListBox_Temp_Create(pFun XE_LISTBOX_TEMP_CREATE1, allowAddingMultiple ...bool) int {
+func (l *ListBox) AddEvent_ListBox_Temp_Create(pFun xc.XE_LISTBOX_TEMP_CREATE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LISTBOX_TEMP_CREATE, onXE_LISTBOX_TEMP_CREATE, pFun, allowAddingMultiple...)
 }
 
@@ -729,7 +729,7 @@ func onXE_LISTBOX_TEMP_CREATE(hEle int, pItem *xc.ListBox_Item_, nFlag int32, pb
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTBOX_TEMP_CREATE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_LISTBOX_TEMP_CREATE1); ok {
+		if cb, ok := cbs[i].(xc.XE_LISTBOX_TEMP_CREATE1); ok {
 			ret = cb(hEle, pItem, nFlag, pbHandled)
 		}
 		if *pbHandled {
@@ -745,7 +745,7 @@ func onXE_LISTBOX_TEMP_CREATE(hEle int, pItem *xc.ListBox_Item_, nFlag int32, pb
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (l *ListBox) AddEvent_ListBox_Temp_Create_End(pFun XE_LISTBOX_TEMP_CREATE_END1, allowAddingMultiple ...bool) int {
+func (l *ListBox) AddEvent_ListBox_Temp_Create_End(pFun xc.XE_LISTBOX_TEMP_CREATE_END1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LISTBOX_TEMP_CREATE_END, onXE_LISTBOX_TEMP_CREATE_END, pFun, allowAddingMultiple...)
 }
 
@@ -754,7 +754,7 @@ func onXE_LISTBOX_TEMP_CREATE_END(hEle int, pItem *xc.ListBox_Item_, nFlag int32
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTBOX_TEMP_CREATE_END)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_LISTBOX_TEMP_CREATE_END1); ok {
+		if cb, ok := cbs[i].(xc.XE_LISTBOX_TEMP_CREATE_END1); ok {
 			ret = cb(hEle, pItem, nFlag, pbHandled)
 		}
 		if *pbHandled {
@@ -770,7 +770,7 @@ func onXE_LISTBOX_TEMP_CREATE_END(hEle int, pItem *xc.ListBox_Item_, nFlag int32
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (l *ListBox) AddEvent_ListBox_Temp_Destroy(pFun XE_LISTBOX_TEMP_DESTROY1, allowAddingMultiple ...bool) int {
+func (l *ListBox) AddEvent_ListBox_Temp_Destroy(pFun xc.XE_LISTBOX_TEMP_DESTROY1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LISTBOX_TEMP_DESTROY, onXE_LISTBOX_TEMP_DESTROY, pFun, allowAddingMultiple...)
 }
 
@@ -779,7 +779,7 @@ func onXE_LISTBOX_TEMP_DESTROY(hEle int, pItem *xc.ListBox_Item_, nFlag int, pbH
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTBOX_TEMP_DESTROY)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_LISTBOX_TEMP_DESTROY1); ok {
+		if cb, ok := cbs[i].(xc.XE_LISTBOX_TEMP_DESTROY1); ok {
 			ret = cb(hEle, pItem, nFlag, pbHandled)
 		}
 		if *pbHandled {
@@ -794,7 +794,7 @@ func onXE_LISTBOX_TEMP_DESTROY(hEle int, pItem *xc.ListBox_Item_, nFlag int, pbH
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (l *ListBox) AddEvent_ListBox_Temp_Adjust_Coordinate(pFun XE_LISTBOX_TEMP_ADJUST_COORDINATE1, allowAddingMultiple ...bool) int {
+func (l *ListBox) AddEvent_ListBox_Temp_Adjust_Coordinate(pFun xc.XE_LISTBOX_TEMP_ADJUST_COORDINATE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LISTBOX_TEMP_ADJUST_COORDINATE, onXE_LISTBOX_TEMP_ADJUST_COORDINATE, pFun, allowAddingMultiple...)
 }
 
@@ -803,7 +803,7 @@ func onXE_LISTBOX_TEMP_ADJUST_COORDINATE(hEle int, pItem *xc.ListBox_Item_, pbHa
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTBOX_TEMP_ADJUST_COORDINATE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_LISTBOX_TEMP_ADJUST_COORDINATE1); ok {
+		if cb, ok := cbs[i].(xc.XE_LISTBOX_TEMP_ADJUST_COORDINATE1); ok {
 			ret = cb(hEle, pItem, pbHandled)
 		}
 		if *pbHandled {
@@ -818,7 +818,7 @@ func onXE_LISTBOX_TEMP_ADJUST_COORDINATE(hEle int, pItem *xc.ListBox_Item_, pbHa
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (l *ListBox) AddEvent_ListBox_DrawItem(pFun XE_LISTBOX_DRAWITEM1, allowAddingMultiple ...bool) int {
+func (l *ListBox) AddEvent_ListBox_DrawItem(pFun xc.XE_LISTBOX_DRAWITEM1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LISTBOX_DRAWITEM, onXE_LISTBOX_DRAWITEM, pFun, allowAddingMultiple...)
 }
 
@@ -827,7 +827,7 @@ func onXE_LISTBOX_DRAWITEM(hEle int, hDraw int, pItem *xc.ListBox_Item_, pbHandl
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTBOX_DRAWITEM)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_LISTBOX_DRAWITEM1); ok {
+		if cb, ok := cbs[i].(xc.XE_LISTBOX_DRAWITEM1); ok {
 			ret = cb(hEle, hDraw, pItem, pbHandled)
 		}
 		if *pbHandled {
@@ -842,7 +842,7 @@ func onXE_LISTBOX_DRAWITEM(hEle int, hDraw int, pItem *xc.ListBox_Item_, pbHandl
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (l *ListBox) AddEvent_ListBox_Select(pFun XE_LISTBOX_SELECT1, allowAddingMultiple ...bool) int {
+func (l *ListBox) AddEvent_ListBox_Select(pFun xc.XE_LISTBOX_SELECT1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LISTBOX_SELECT, onXE_LISTBOX_SELECT, pFun, allowAddingMultiple...)
 }
 
@@ -851,7 +851,7 @@ func onXE_LISTBOX_SELECT(hEle int, iItem int32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LISTBOX_SELECT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_LISTBOX_SELECT1); ok {
+		if cb, ok := cbs[i].(xc.XE_LISTBOX_SELECT1); ok {
 			ret = cb(hEle, iItem, pbHandled)
 		}
 		if *pbHandled {
@@ -866,107 +866,71 @@ func onXE_LISTBOX_SELECT(hEle int, iItem int32, pbHandled *bool) int {
 // 列表框元素-项模板创建事件, 模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复
 //
 // nFlag  0:状态改变; 1:新模板实例; 2:旧模板复用
-type XE_LISTBOX_TEMP_CREATE func(pItem *xc.ListBox_Item_, nFlag int32, pbHandled *bool) int
-
-// 列表框元素-项模板创建事件, 模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复
-//
-// nFlag  0:状态改变; 1:新模板实例; 2:旧模板复用
-type XE_LISTBOX_TEMP_CREATE1 func(hEle int, pItem *xc.ListBox_Item_, nFlag int32, pbHandled *bool) int
-
-// 列表框元素-项模板创建完成事件,模板复用机制需先启用;不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册.
-//
-// nFlag  0:状态改变(复用); 1:新模板实例; 2:旧模板复用
-type XE_LISTBOX_TEMP_CREATE_END func(pItem *xc.ListBox_Item_, nFlag int32, pbHandled *bool) int
-
-// 列表框元素-项模板创建完成事件,模板复用机制需先启用;不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册.
-//
-// nFlag  0:状态改变(复用); 1:新模板实例; 2:旧模板复用
-type XE_LISTBOX_TEMP_CREATE_END1 func(hEle int, pItem *xc.ListBox_Item_, nFlag int32, pbHandled *bool) int
-
-// 列表框元素,项模板销毁.
-//
-// nFlag   0:正常销毁;  1:移动到缓存(不会被销毁,临时缓存备用,当需要时被复用)
-type XE_LISTBOX_TEMP_DESTROY func(pItem *xc.ListBox_Item_, nFlag int, pbHandled *bool) int
-
-// 列表框元素,项模板销毁.
-//
-// nFlag   0:正常销毁;  1:移动到缓存(不会被销毁,临时缓存备用,当需要时被复用)
-type XE_LISTBOX_TEMP_DESTROY1 func(hEle int, pItem *xc.ListBox_Item_, nFlag int, pbHandled *bool) int
-type XE_LISTBOX_TEMP_ADJUST_COORDINATE func(pItem *xc.ListBox_Item_, pbHandled *bool) int            // 列表框元素,项模板调整坐标. 已停用.
-type XE_LISTBOX_TEMP_ADJUST_COORDINATE1 func(hEle int, pItem *xc.ListBox_Item_, pbHandled *bool) int // 列表框元素,项模板调整坐标. 已停用.
-type XE_LISTBOX_DRAWITEM func(hDraw int, pItem *xc.ListBox_Item_, pbHandled *bool) int               // 列表框元素,项绘制事件.
-type XE_LISTBOX_DRAWITEM1 func(hEle int, hDraw int, pItem *xc.ListBox_Item_, pbHandled *bool) int    // 列表框元素,项绘制事件.
-type XE_LISTBOX_SELECT func(iItem int32, pbHandled *bool) int                                        // 列表框元素,项选择事件.
-type XE_LISTBOX_SELECT1 func(hEle int, iItem int32, pbHandled *bool) int                             // 列表框元素,项选择事件.
-
-// 列表框元素-项模板创建事件, 模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复
-//
-// nFlag  0:状态改变; 1:新模板实例; 2:旧模板复用
-func (l *ListBox) Event_LISTBOX_TEMP_CREATE(pFun XE_LISTBOX_TEMP_CREATE) bool {
+func (l *ListBox) Event_LISTBOX_TEMP_CREATE(pFun xc.XE_LISTBOX_TEMP_CREATE) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LISTBOX_TEMP_CREATE, pFun)
 }
 
 // 列表框元素-项模板创建事件, 模板复用机制需先启用; 替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复
 //
 // nFlag  0:状态改变; 1:新模板实例; 2:旧模板复用
-func (l *ListBox) Event_LISTBOX_TEMP_CREATE1(pFun XE_LISTBOX_TEMP_CREATE1) bool {
+func (l *ListBox) Event_LISTBOX_TEMP_CREATE1(pFun xc.XE_LISTBOX_TEMP_CREATE1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LISTBOX_TEMP_CREATE, pFun)
 }
 
 // 列表框元素-项模板创建完成事件,模板复用机制需先启用;不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册.
 //
 // nFlag  0:状态改变(复用); 1:新模板实例; 2:旧模板复用
-func (l *ListBox) Event_LISTBOX_TEMP_CREATE_END(pFun XE_LISTBOX_TEMP_CREATE_END) bool {
+func (l *ListBox) Event_LISTBOX_TEMP_CREATE_END(pFun xc.XE_LISTBOX_TEMP_CREATE_END) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LISTBOX_TEMP_CREATE_END, pFun)
 }
 
 // 列表框元素-项模板创建完成事件,模板复用机制需先启用;不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册.
 //
 // nFlag  0:状态改变(复用); 1:新模板实例; 2:旧模板复用
-func (l *ListBox) Event_LISTBOX_TEMP_CREATE_END1(pFun XE_LISTBOX_TEMP_CREATE_END1) bool {
+func (l *ListBox) Event_LISTBOX_TEMP_CREATE_END1(pFun xc.XE_LISTBOX_TEMP_CREATE_END1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LISTBOX_TEMP_CREATE_END, pFun)
 }
 
 // 列表框元素,项模板销毁.
 //
 // nFlag   0:正常销毁;  1:移动到缓存(不会被销毁,临时缓存备用,当需要时被复用)
-func (l *ListBox) Event_LISTBOX_TEMP_DESTROY(pFun XE_LISTBOX_TEMP_DESTROY) bool {
+func (l *ListBox) Event_LISTBOX_TEMP_DESTROY(pFun xc.XE_LISTBOX_TEMP_DESTROY) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LISTBOX_TEMP_DESTROY, pFun)
 }
 
 // 列表框元素,项模板销毁.
 //
 // nFlag   0:正常销毁;  1:移动到缓存(不会被销毁,临时缓存备用,当需要时被复用)
-func (l *ListBox) Event_LISTBOX_TEMP_DESTROY1(pFun XE_LISTBOX_TEMP_DESTROY1) bool {
+func (l *ListBox) Event_LISTBOX_TEMP_DESTROY1(pFun xc.XE_LISTBOX_TEMP_DESTROY1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LISTBOX_TEMP_DESTROY, pFun)
 }
 
 // 列表框元素,项模板调整坐标. 已停用.
-func (l *ListBox) Event_LISTBOX_TEMP_ADJUST_COORDINATE(pFun XE_LISTBOX_TEMP_ADJUST_COORDINATE) bool {
+func (l *ListBox) Event_LISTBOX_TEMP_ADJUST_COORDINATE(pFun xc.XE_LISTBOX_TEMP_ADJUST_COORDINATE) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LISTBOX_TEMP_ADJUST_COORDINATE, pFun)
 }
 
 // 列表框元素,项模板调整坐标. 已停用.
-func (l *ListBox) Event_LISTBOX_TEMP_ADJUST_COORDINATE1(pFun XE_LISTBOX_TEMP_ADJUST_COORDINATE1) bool {
+func (l *ListBox) Event_LISTBOX_TEMP_ADJUST_COORDINATE1(pFun xc.XE_LISTBOX_TEMP_ADJUST_COORDINATE1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LISTBOX_TEMP_ADJUST_COORDINATE, pFun)
 }
 
 // 列表框元素,项绘制事件.
-func (l *ListBox) Event_LISTBOX_DRAWITEM(pFun XE_LISTBOX_DRAWITEM) bool {
+func (l *ListBox) Event_LISTBOX_DRAWITEM(pFun xc.XE_LISTBOX_DRAWITEM) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LISTBOX_DRAWITEM, pFun)
 }
 
 // 列表框元素,项绘制事件.
-func (l *ListBox) Event_LISTBOX_DRAWITEM1(pFun XE_LISTBOX_DRAWITEM1) bool {
+func (l *ListBox) Event_LISTBOX_DRAWITEM1(pFun xc.XE_LISTBOX_DRAWITEM1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LISTBOX_DRAWITEM, pFun)
 }
 
 // 列表框元素,项选择事件.
-func (l *ListBox) Event_LISTBOX_SELECT(pFun XE_LISTBOX_SELECT) bool {
+func (l *ListBox) Event_LISTBOX_SELECT(pFun xc.XE_LISTBOX_SELECT) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LISTBOX_SELECT, pFun)
 }
 
 // 列表框元素,项选择事件.
-func (l *ListBox) Event_LISTBOX_SELECT1(pFun XE_LISTBOX_SELECT1) bool {
+func (l *ListBox) Event_LISTBOX_SELECT1(pFun xc.XE_LISTBOX_SELECT1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LISTBOX_SELECT, pFun)
 }

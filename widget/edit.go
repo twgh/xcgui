@@ -839,7 +839,7 @@ func (e *Edit) ClipboardCopyAll() bool {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Edit) AddEvent_Edit_Set(pFun XE_EDIT_SET1, allowAddingMultiple ...bool) int {
+func (e *Edit) AddEvent_Edit_Set(pFun xc.XE_EDIT_SET1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_EDIT_SET, onXE_EDIT_SET, pFun, allowAddingMultiple...)
 }
 
@@ -848,7 +848,7 @@ func onXE_EDIT_SET(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDIT_SET)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_EDIT_SET1); ok {
+		if cb, ok := cbs[i].(xc.XE_EDIT_SET1); ok {
 			ret = cb(hEle, pbHandled)
 		}
 		if *pbHandled {
@@ -863,7 +863,7 @@ func onXE_EDIT_SET(hEle int, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Edit) AddEvent_Edit_DrawRow(pFun XE_EDIT_DRAWROW1, allowAddingMultiple ...bool) int {
+func (e *Edit) AddEvent_Edit_DrawRow(pFun xc.XE_EDIT_DRAWROW1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_EDIT_DRAWROW, onXE_EDIT_DRAWROW, pFun, allowAddingMultiple...)
 }
 
@@ -872,7 +872,7 @@ func onXE_EDIT_DRAWROW(hEle int, hDraw int, iRow int32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDIT_DRAWROW)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_EDIT_DRAWROW1); ok {
+		if cb, ok := cbs[i].(xc.XE_EDIT_DRAWROW1); ok {
 			ret = cb(hEle, hDraw, iRow, pbHandled)
 		}
 		if *pbHandled {
@@ -887,7 +887,7 @@ func onXE_EDIT_DRAWROW(hEle int, hDraw int, iRow int32, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Edit) AddEvent_Edit_Changed(pFun XE_EDIT_CHANGED1, allowAddingMultiple ...bool) int {
+func (e *Edit) AddEvent_Edit_Changed(pFun xc.XE_EDIT_CHANGED1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_EDIT_CHANGED, onXE_EDIT_CHANGED, pFun, allowAddingMultiple...)
 }
 
@@ -896,7 +896,7 @@ func onXE_EDIT_CHANGED(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDIT_CHANGED)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_EDIT_CHANGED1); ok {
+		if cb, ok := cbs[i].(xc.XE_EDIT_CHANGED1); ok {
 			ret = cb(hEle, pbHandled)
 		}
 		if *pbHandled {
@@ -911,7 +911,7 @@ func onXE_EDIT_CHANGED(hEle int, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Edit) AddEvent_Edit_Pos_Changed(pFun XE_EDIT_POS_CHANGED1, allowAddingMultiple ...bool) int {
+func (e *Edit) AddEvent_Edit_Pos_Changed(pFun xc.XE_EDIT_POS_CHANGED1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_EDIT_POS_CHANGED, onXE_EDIT_POS_CHANGED, pFun, allowAddingMultiple...)
 }
 
@@ -920,7 +920,7 @@ func onXE_EDIT_POS_CHANGED(hEle int, iPos int32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDIT_POS_CHANGED)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_EDIT_POS_CHANGED1); ok {
+		if cb, ok := cbs[i].(xc.XE_EDIT_POS_CHANGED1); ok {
 			ret = cb(hEle, iPos, pbHandled)
 		}
 		if *pbHandled {
@@ -935,7 +935,7 @@ func onXE_EDIT_POS_CHANGED(hEle int, iPos int32, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Edit) AddEvent_Edit_Style_Changed(pFun XE_EDIT_STYLE_CHANGED1, allowAddingMultiple ...bool) int {
+func (e *Edit) AddEvent_Edit_Style_Changed(pFun xc.XE_EDIT_STYLE_CHANGED1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_EDIT_STYLE_CHANGED, onXE_EDIT_STYLE_CHANGED, pFun, allowAddingMultiple...)
 }
 
@@ -944,7 +944,7 @@ func onXE_EDIT_STYLE_CHANGED(hEle int, iStyle int32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDIT_STYLE_CHANGED)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_EDIT_STYLE_CHANGED1); ok {
+		if cb, ok := cbs[i].(xc.XE_EDIT_STYLE_CHANGED1); ok {
 			ret = cb(hEle, iStyle, pbHandled)
 		}
 		if *pbHandled {
@@ -959,7 +959,7 @@ func onXE_EDIT_STYLE_CHANGED(hEle int, iStyle int32, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Edit) AddEvent_Edit_Enter_Get_TabAlign(pFun XE_EDIT_ENTER_GET_TABALIGN1, allowAddingMultiple ...bool) int {
+func (e *Edit) AddEvent_Edit_Enter_Get_TabAlign(pFun xc.XE_EDIT_ENTER_GET_TABALIGN1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_EDIT_ENTER_GET_TABALIGN, onXE_EDIT_ENTER_GET_TABALIGN, pFun, allowAddingMultiple...)
 }
 
@@ -968,7 +968,7 @@ func onXE_EDIT_ENTER_GET_TABALIGN(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDIT_ENTER_GET_TABALIGN)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_EDIT_ENTER_GET_TABALIGN1); ok {
+		if cb, ok := cbs[i].(xc.XE_EDIT_ENTER_GET_TABALIGN1); ok {
 			ret = cb(hEle, pbHandled)
 		}
 		if *pbHandled {
@@ -985,7 +985,7 @@ func onXE_EDIT_ENTER_GET_TABALIGN(hEle int, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Edit) AddEvent_Edit_Row_Changed(pFun XE_EDIT_ROW_CHANGED1, allowAddingMultiple ...bool) int {
+func (e *Edit) AddEvent_Edit_Row_Changed(pFun xc.XE_EDIT_ROW_CHANGED1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_EDIT_ROW_CHANGED, onXE_EDIT_ROW_CHANGED, pFun, allowAddingMultiple...)
 }
 
@@ -994,7 +994,7 @@ func onXE_EDIT_ROW_CHANGED(hEle int, iRow int32, nChangeRows int32, pbHandled *b
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDIT_ROW_CHANGED)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_EDIT_ROW_CHANGED1); ok {
+		if cb, ok := cbs[i].(xc.XE_EDIT_ROW_CHANGED1); ok {
 			ret = cb(hEle, iRow, nChangeRows, pbHandled)
 		}
 		if *pbHandled {
@@ -1009,7 +1009,7 @@ func onXE_EDIT_ROW_CHANGED(hEle int, iRow int32, nChangeRows int32, pbHandled *b
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Edit) AddEvent_Edit_SwapRow(pFun XE_EDIT_SWAPROW1, allowAddingMultiple ...bool) int {
+func (e *Edit) AddEvent_Edit_SwapRow(pFun xc.XE_EDIT_SWAPROW1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_EDIT_SWAPROW, onXE_EDIT_SWAPROW, pFun, allowAddingMultiple...)
 }
 
@@ -1018,7 +1018,7 @@ func onXE_EDIT_SWAPROW(hEle int, iRow int32, bArrowUp int32, pbHandled *bool) in
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDIT_SWAPROW)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_EDIT_SWAPROW1); ok {
+		if cb, ok := cbs[i].(xc.XE_EDIT_SWAPROW1); ok {
 			ret = cb(hEle, iRow, bArrowUp, pbHandled)
 		}
 		if *pbHandled {
@@ -1033,7 +1033,7 @@ func onXE_EDIT_SWAPROW(hEle int, iRow int32, bArrowUp int32, pbHandled *bool) in
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Edit) AddEvent_Edit_Color_Change(pFun XE_EDIT_COLOR_CHANGE1, allowAddingMultiple ...bool) int {
+func (e *Edit) AddEvent_Edit_Color_Change(pFun xc.XE_EDIT_COLOR_CHANGE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_EDIT_COLOR_CHANGE, onXE_EDIT_COLOR_CHANGE, pFun, allowAddingMultiple...)
 }
 
@@ -1042,7 +1042,7 @@ func onXE_EDIT_COLOR_CHANGE(hEle int, color uint32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDIT_COLOR_CHANGE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_EDIT_COLOR_CHANGE1); ok {
+		if cb, ok := cbs[i].(xc.XE_EDIT_COLOR_CHANGE1); ok {
 			ret = cb(hEle, color, pbHandled)
 		}
 		if *pbHandled {
@@ -1054,113 +1054,83 @@ func onXE_EDIT_COLOR_CHANGE(hEle int, color uint32, pbHandled *bool) int {
 
 // ------------------------- 事件 ------------------------- //
 
-type XE_EDIT_SET func(pbHandled *bool) int                                       // 元素事件_编辑框设置.
-type XE_EDIT_SET1 func(hEle int, pbHandled *bool) int                            // 元素事件_编辑框设置.
-type XE_EDIT_DRAWROW func(hDraw int, iRow int32, pbHandled *bool) int            // 暂未使用.
-type XE_EDIT_DRAWROW1 func(hEle int, hDraw int, iRow int32, pbHandled *bool) int // 暂未使用.
-type XE_EDIT_CHANGED func(pbHandled *bool) int                                   // 编辑框_内容被改变.
-type XE_EDIT_CHANGED1 func(hEle int, pbHandled *bool) int                        // 编辑框_内容被改变.
-type XE_EDIT_POS_CHANGED func(iPos int32, pbHandled *bool) int                   // 编辑框_光标位置_被改变.
-type XE_EDIT_POS_CHANGED1 func(hEle int, iPos int32, pbHandled *bool) int        // 编辑框_光标位置_被改变.
-type XE_EDIT_STYLE_CHANGED func(iStyle int32, pbHandled *bool) int               // 编辑框_样式_被改变.
-type XE_EDIT_STYLE_CHANGED1 func(hEle int, iStyle int32, pbHandled *bool) int    // 编辑框_样式_被改变.
-type XE_EDIT_ENTER_GET_TABALIGN func(pbHandled *bool) int                        // 回车TAB对齐,返回需要TAB数量.
-type XE_EDIT_ENTER_GET_TABALIGN1 func(hEle int, pbHandled *bool) int             // 回车TAB对齐,返回需要TAB数量.
-// 编辑框_行_被改变.
-//
-// iRow: 更改行开始位置索引,  if(nChangeRows>0) iEnd= iRow + nChangeRows
-//
-// nChangeRows: 改变行数, 正数添加行, 负数删除行
-type XE_EDIT_ROW_CHANGED func(iRow int32, nChangeRows int32, pbHandled *bool) int
-
-// 编辑框_行_被改变.
-//
-// iRow: 更改行开始位置索引,  if(nChangeRows>0) iEnd= iRow + nChangeRows
-//
-// nChangeRows: 改变行数, 正数添加行, 负数删除行
-type XE_EDIT_ROW_CHANGED1 func(hEle int, iRow int32, nChangeRows int32, pbHandled *bool) int
-type XE_EDIT_SWAPROW func(iRow, bArrowUp int32, pbHandled *bool) int            // 元素事件_交换行
-type XE_EDIT_SWAPROW1 func(hEle int, iRow, bArrowUp int32, pbHandled *bool) int // 元素事件_交换行
-type XE_EDIT_COLOR_CHANGE func(color uint32, pbHandled *bool) int               // 编辑框_颜色被改变
-type XE_EDIT_COLOR_CHANGE1 func(hEle int, color uint32, pbHandled *bool) int    // 编辑框_颜色被改变
-
 // 编辑框_颜色被改变.
-func (e *Edit) Event_EDIT_COLOR_CHANGE(pFun XE_EDIT_COLOR_CHANGE) bool {
+func (e *Edit) Event_EDIT_COLOR_CHANGE(pFun xc.XE_EDIT_COLOR_CHANGE) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDIT_COLOR_CHANGE, pFun)
 }
 
 // 编辑框_颜色被改变.
-func (e *Edit) Event_EDIT_COLOR_CHANGE1(pFun XE_EDIT_COLOR_CHANGE1) bool {
+func (e *Edit) Event_EDIT_COLOR_CHANGE1(pFun xc.XE_EDIT_COLOR_CHANGE1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_COLOR_CHANGE, pFun)
 }
 
 // 元素事件_交换行.
-func (e *Edit) Event_EDIT_SWAPROW(pFun XE_EDIT_SWAPROW) bool {
+func (e *Edit) Event_EDIT_SWAPROW(pFun xc.XE_EDIT_SWAPROW) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDIT_SWAPROW, pFun)
 }
 
 // 元素事件_交换行.
-func (e *Edit) Event_EDIT_SWAPROW1(pFun XE_EDIT_SWAPROW1) bool {
+func (e *Edit) Event_EDIT_SWAPROW1(pFun xc.XE_EDIT_SWAPROW1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_SWAPROW, pFun)
 }
 
 // 元素事件_编辑框设置.
-func (e *Edit) Event_EDIT_SET(pFun XE_EDIT_SET) bool {
+func (e *Edit) Event_EDIT_SET(pFun xc.XE_EDIT_SET) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDIT_SET, pFun)
 }
 
 // 元素事件_编辑框设置.
-func (e *Edit) Event_EDIT_SET1(pFun XE_EDIT_SET1) bool {
+func (e *Edit) Event_EDIT_SET1(pFun xc.XE_EDIT_SET1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_SET, pFun)
 }
 
 // 暂未使用.
-func (e *Edit) Event_EDIT_DRAWROW(pFun XE_EDIT_DRAWROW) bool {
+func (e *Edit) Event_EDIT_DRAWROW(pFun xc.XE_EDIT_DRAWROW) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDIT_DRAWROW, pFun)
 }
 
 // 暂未使用.
-func (e *Edit) Event_EDIT_DRAWROW1(pFun XE_EDIT_DRAWROW1) bool {
+func (e *Edit) Event_EDIT_DRAWROW1(pFun xc.XE_EDIT_DRAWROW1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_DRAWROW, pFun)
 }
 
 // 编辑框_内容被改变.
-func (e *Edit) Event_EDIT_CHANGED(pFun XE_EDIT_CHANGED) bool {
+func (e *Edit) Event_EDIT_CHANGED(pFun xc.XE_EDIT_CHANGED) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDIT_CHANGED, pFun)
 }
 
 // 编辑框_内容被改变.
-func (e *Edit) Event_EDIT_CHANGED1(pFun XE_EDIT_CHANGED1) bool {
+func (e *Edit) Event_EDIT_CHANGED1(pFun xc.XE_EDIT_CHANGED1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_CHANGED, pFun)
 }
 
 // 编辑框_光标位置_被改变.
-func (e *Edit) Event_EDIT_POS_CHANGED(pFun XE_EDIT_POS_CHANGED) bool {
+func (e *Edit) Event_EDIT_POS_CHANGED(pFun xc.XE_EDIT_POS_CHANGED) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDIT_POS_CHANGED, pFun)
 }
 
 // 编辑框_光标位置_被改变.
-func (e *Edit) Event_EDIT_POS_CHANGED1(pFun XE_EDIT_POS_CHANGED1) bool {
+func (e *Edit) Event_EDIT_POS_CHANGED1(pFun xc.XE_EDIT_POS_CHANGED1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_POS_CHANGED, pFun)
 }
 
 // 编辑框_样式_被改变.
-func (e *Edit) Event_EDIT_STYLE_CHANGED(pFun XE_EDIT_STYLE_CHANGED) bool {
+func (e *Edit) Event_EDIT_STYLE_CHANGED(pFun xc.XE_EDIT_STYLE_CHANGED) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDIT_STYLE_CHANGED, pFun)
 }
 
 // 编辑框_样式_被改变.
-func (e *Edit) Event_EDIT_STYLE_CHANGED1(pFun XE_EDIT_STYLE_CHANGED1) bool {
+func (e *Edit) Event_EDIT_STYLE_CHANGED1(pFun xc.XE_EDIT_STYLE_CHANGED1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_STYLE_CHANGED, pFun)
 }
 
 // 回车TAB对齐,返回需要TAB数量.
-func (e *Edit) Event_EDIT_ENTER_GET_TABALIGN(pFun XE_EDIT_ENTER_GET_TABALIGN) bool {
+func (e *Edit) Event_EDIT_ENTER_GET_TABALIGN(pFun xc.XE_EDIT_ENTER_GET_TABALIGN) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDIT_ENTER_GET_TABALIGN, pFun)
 }
 
 // 回车TAB对齐,返回需要TAB数量.
-func (e *Edit) Event_EDIT_ENTER_GET_TABALIGN1(pFun XE_EDIT_ENTER_GET_TABALIGN1) bool {
+func (e *Edit) Event_EDIT_ENTER_GET_TABALIGN1(pFun xc.XE_EDIT_ENTER_GET_TABALIGN1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_ENTER_GET_TABALIGN, pFun)
 }
 
@@ -1169,7 +1139,7 @@ func (e *Edit) Event_EDIT_ENTER_GET_TABALIGN1(pFun XE_EDIT_ENTER_GET_TABALIGN1) 
 // iRow: 更改行开始位置索引,  if(nChangeRows>0) iEnd= iRow + nChangeRows
 //
 // nChangeRows: 改变行数, 正数添加行, 负数删除行
-func (e *Edit) Event_EDIT_ROW_CHANGED(pFun XE_EDIT_ROW_CHANGED) bool {
+func (e *Edit) Event_EDIT_ROW_CHANGED(pFun xc.XE_EDIT_ROW_CHANGED) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDIT_ROW_CHANGED, pFun)
 }
 
@@ -1178,6 +1148,6 @@ func (e *Edit) Event_EDIT_ROW_CHANGED(pFun XE_EDIT_ROW_CHANGED) bool {
 // iRow: 更改行开始位置索引,  if(nChangeRows>0) iEnd= iRow + nChangeRows
 //
 // nChangeRows: 改变行数, 正数添加行, 负数删除行
-func (e *Edit) Event_EDIT_ROW_CHANGED1(pFun XE_EDIT_ROW_CHANGED1) bool {
+func (e *Edit) Event_EDIT_ROW_CHANGED1(pFun xc.XE_EDIT_ROW_CHANGED1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDIT_ROW_CHANGED, pFun)
 }

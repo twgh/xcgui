@@ -259,7 +259,7 @@ func (b *Button) ClearAnimation() *Button {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (b *Button) AddEvent_BnClick(pFun XE_BNCLICK1, allowAddingMultiple ...bool) int {
+func (b *Button) AddEvent_BnClick(pFun xc.XE_BNCLICK1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(b.Handle, xcc.XE_BNCLICK, onXE_BNCLICK, pFun, allowAddingMultiple...)
 }
 
@@ -268,7 +268,7 @@ func onXE_BNCLICK(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_BNCLICK)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_BNCLICK1); ok {
+		if cb, ok := cbs[i].(xc.XE_BNCLICK1); ok {
 			ret = cb(hEle, pbHandled)
 		}
 		if *pbHandled {
@@ -283,7 +283,7 @@ func onXE_BNCLICK(hEle int, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (b *Button) AddEvent_Button_Check(pFun XE_BUTTON_CHECK1, allowAddingMultiple ...bool) int {
+func (b *Button) AddEvent_Button_Check(pFun xc.XE_BUTTON_CHECK1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(b.Handle, xcc.XE_BUTTON_CHECK, onXE_BUTTON_CHECK, pFun, allowAddingMultiple...)
 }
 
@@ -292,7 +292,7 @@ func onXE_BUTTON_CHECK(hEle int, bCheck bool, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_BUTTON_CHECK)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_BUTTON_CHECK1); ok {
+		if cb, ok := cbs[i].(xc.XE_BUTTON_CHECK1); ok {
 			ret = cb(hEle, bCheck, pbHandled)
 		}
 		if *pbHandled {
@@ -304,27 +304,22 @@ func onXE_BUTTON_CHECK(hEle int, bCheck bool, pbHandled *bool) int {
 
 // ------------------------- 事件 ------------------------- //
 
-type XE_BNCLICK func(pbHandled *bool) int                              // 按钮点击事件.
-type XE_BNCLICK1 func(hEle int, pbHandled *bool) int                   // 按钮点击事件.
-type XE_BUTTON_CHECK func(bCheck bool, pbHandled *bool) int            // 按钮选中事件.
-type XE_BUTTON_CHECK1 func(hEle int, bCheck bool, pbHandled *bool) int // 按钮选中事件.
-
 // 事件_按钮被单击.
-func (b *Button) Event_BnClick(pFun XE_BNCLICK) bool {
+func (b *Button) Event_BnClick(pFun xc.XE_BNCLICK) bool {
 	return xc.XEle_RegEventC(b.Handle, xcc.XE_BNCLICK, pFun)
 }
 
 // 事件_按钮被单击1.
-func (b *Button) Event_BnClick1(pFun XE_BNCLICK1) bool {
+func (b *Button) Event_BnClick1(pFun xc.XE_BNCLICK1) bool {
 	return xc.XEle_RegEventC1(b.Handle, xcc.XE_BNCLICK, pFun)
 }
 
 // 按钮选中事件.
-func (b *Button) Event_BUTTON_CHECK(pFun XE_BUTTON_CHECK) bool {
+func (b *Button) Event_BUTTON_CHECK(pFun xc.XE_BUTTON_CHECK) bool {
 	return xc.XEle_RegEventC(b.Handle, xcc.XE_BUTTON_CHECK, pFun)
 }
 
 // 按钮选中事件.
-func (b *Button) Event_BUTTON_CHECK1(pFun XE_BUTTON_CHECK1) bool {
+func (b *Button) Event_BUTTON_CHECK1(pFun xc.XE_BUTTON_CHECK1) bool {
 	return xc.XEle_RegEventC1(b.Handle, xcc.XE_BUTTON_CHECK, pFun)
 }

@@ -137,7 +137,7 @@ func (s *SliderBar) EnableHorizon(bHorizon bool) *SliderBar {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (s *SliderBar) AddEvent_SliderBar_Change(pFun XE_SLIDERBAR_CHANGE1, allowAddingMultiple ...bool) int {
+func (s *SliderBar) AddEvent_SliderBar_Change(pFun xc.XE_SLIDERBAR_CHANGE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(s.Handle, xcc.XE_SLIDERBAR_CHANGE, onXE_SLIDERBAR_CHANGE, pFun, allowAddingMultiple...)
 }
 
@@ -146,7 +146,7 @@ func onXE_SLIDERBAR_CHANGE(hEle int, pos int32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_SLIDERBAR_CHANGE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_SLIDERBAR_CHANGE1); ok {
+		if cb, ok := cbs[i].(xc.XE_SLIDERBAR_CHANGE1); ok {
 			ret = cb(hEle, pos, pbHandled)
 		}
 		if *pbHandled {
@@ -158,15 +158,12 @@ func onXE_SLIDERBAR_CHANGE(hEle int, pos int32, pbHandled *bool) int {
 
 // ------------------------- 事件 ------------------------- //
 
-type XE_SLIDERBAR_CHANGE func(pos int32, pbHandled *bool) int            // 滑动条元素,滑块位置改变事件.
-type XE_SLIDERBAR_CHANGE1 func(hEle int, pos int32, pbHandled *bool) int // 滑动条元素,滑块位置改变事件.
-
 // 滑动条元素,滑块位置改变事件.
-func (s *SliderBar) Event_SLIDERBAR_CHANGE(pFun XE_SLIDERBAR_CHANGE) bool {
+func (s *SliderBar) Event_SLIDERBAR_CHANGE(pFun xc.XE_SLIDERBAR_CHANGE) bool {
 	return xc.XEle_RegEventC(s.Handle, xcc.XE_SLIDERBAR_CHANGE, pFun)
 }
 
 // 滑动条元素,滑块位置改变事件.
-func (s *SliderBar) Event_SLIDERBAR_CHANGE1(pFun XE_SLIDERBAR_CHANGE1) bool {
+func (s *SliderBar) Event_SLIDERBAR_CHANGE1(pFun xc.XE_SLIDERBAR_CHANGE1) bool {
 	return xc.XEle_RegEventC1(s.Handle, xcc.XE_SLIDERBAR_CHANGE, pFun)
 }

@@ -954,7 +954,7 @@ func (l *List) CreateAdapters(col_extend_count int32) bool {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (l *List) AddEvent_List_Temp_Create(pFun XE_LIST_TEMP_CREATE1, allowAddingMultiple ...bool) int {
+func (l *List) AddEvent_List_Temp_Create(pFun xc.XE_LIST_TEMP_CREATE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LIST_TEMP_CREATE, onXE_LIST_TEMP_CREATE, pFun, allowAddingMultiple...)
 }
 
@@ -963,7 +963,7 @@ func onXE_LIST_TEMP_CREATE(hEle int, pItem *xc.List_Item_, nFlag int32, pbHandle
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_TEMP_CREATE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_LIST_TEMP_CREATE1); ok {
+		if cb, ok := cbs[i].(xc.XE_LIST_TEMP_CREATE1); ok {
 			ret = cb(hEle, pItem, nFlag, pbHandled)
 		}
 		if *pbHandled {
@@ -979,7 +979,7 @@ func onXE_LIST_TEMP_CREATE(hEle int, pItem *xc.List_Item_, nFlag int32, pbHandle
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (l *List) AddEvent_List_Temp_Create_End(pFun XE_LIST_TEMP_CREATE_END1, allowAddingMultiple ...bool) int {
+func (l *List) AddEvent_List_Temp_Create_End(pFun xc.XE_LIST_TEMP_CREATE_END1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LIST_TEMP_CREATE_END, onXE_LIST_TEMP_CREATE_END, pFun, allowAddingMultiple...)
 }
 
@@ -988,7 +988,7 @@ func onXE_LIST_TEMP_CREATE_END(hEle int, pItem *xc.List_Item_, nFlag int32, pbHa
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_TEMP_CREATE_END)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_LIST_TEMP_CREATE_END1); ok {
+		if cb, ok := cbs[i].(xc.XE_LIST_TEMP_CREATE_END1); ok {
 			ret = cb(hEle, pItem, nFlag, pbHandled)
 		}
 		if *pbHandled {
@@ -1004,7 +1004,7 @@ func onXE_LIST_TEMP_CREATE_END(hEle int, pItem *xc.List_Item_, nFlag int32, pbHa
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (l *List) AddEvent_List_Temp_Destroy(pFun XE_LIST_TEMP_DESTROY1, allowAddingMultiple ...bool) int {
+func (l *List) AddEvent_List_Temp_Destroy(pFun xc.XE_LIST_TEMP_DESTROY1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LIST_TEMP_DESTROY, onXE_LIST_TEMP_DESTROY, pFun, allowAddingMultiple...)
 }
 
@@ -1013,7 +1013,7 @@ func onXE_LIST_TEMP_DESTROY(hEle int, pItem *xc.List_Item_, nFlag int32, pbHandl
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_TEMP_DESTROY)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_LIST_TEMP_DESTROY1); ok {
+		if cb, ok := cbs[i].(xc.XE_LIST_TEMP_DESTROY1); ok {
 			ret = cb(hEle, pItem, nFlag, pbHandled)
 		}
 		if *pbHandled {
@@ -1028,7 +1028,7 @@ func onXE_LIST_TEMP_DESTROY(hEle int, pItem *xc.List_Item_, nFlag int32, pbHandl
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (l *List) AddEvent_List_Temp_Adjust_Coordinate(pFun XE_LIST_TEMP_ADJUST_COORDINATE1, allowAddingMultiple ...bool) int {
+func (l *List) AddEvent_List_Temp_Adjust_Coordinate(pFun xc.XE_LIST_TEMP_ADJUST_COORDINATE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LIST_TEMP_ADJUST_COORDINATE, onXE_LIST_TEMP_ADJUST_COORDINATE, pFun, allowAddingMultiple...)
 }
 
@@ -1037,7 +1037,7 @@ func onXE_LIST_TEMP_ADJUST_COORDINATE(hEle int, pItem *xc.List_Item_, pbHandled 
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_TEMP_ADJUST_COORDINATE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_LIST_TEMP_ADJUST_COORDINATE1); ok {
+		if cb, ok := cbs[i].(xc.XE_LIST_TEMP_ADJUST_COORDINATE1); ok {
 			ret = cb(hEle, pItem, pbHandled)
 		}
 		if *pbHandled {
@@ -1052,7 +1052,7 @@ func onXE_LIST_TEMP_ADJUST_COORDINATE(hEle int, pItem *xc.List_Item_, pbHandled 
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (l *List) AddEvent_List_DrawItem(pFun XE_LIST_DRAWITEM1, allowAddingMultiple ...bool) int {
+func (l *List) AddEvent_List_DrawItem(pFun xc.XE_LIST_DRAWITEM1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LIST_DRAWITEM, onXE_LIST_DRAWITEM, pFun, allowAddingMultiple...)
 }
 
@@ -1061,7 +1061,7 @@ func onXE_LIST_DRAWITEM(hEle int, hDraw int, pItem *xc.List_Item_, pbHandled *bo
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_DRAWITEM)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_LIST_DRAWITEM1); ok {
+		if cb, ok := cbs[i].(xc.XE_LIST_DRAWITEM1); ok {
 			ret = cb(hEle, hDraw, pItem, pbHandled)
 		}
 		if *pbHandled {
@@ -1076,7 +1076,7 @@ func onXE_LIST_DRAWITEM(hEle int, hDraw int, pItem *xc.List_Item_, pbHandled *bo
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (l *List) AddEvent_List_Select(pFun XE_LIST_SELECT1, allowAddingMultiple ...bool) int {
+func (l *List) AddEvent_List_Select(pFun xc.XE_LIST_SELECT1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LIST_SELECT, onXE_LIST_SELECT, pFun, allowAddingMultiple...)
 }
 
@@ -1085,7 +1085,7 @@ func onXE_LIST_SELECT(hEle int, iItem int32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_SELECT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_LIST_SELECT1); ok {
+		if cb, ok := cbs[i].(xc.XE_LIST_SELECT1); ok {
 			ret = cb(hEle, iItem, pbHandled)
 		}
 		if *pbHandled {
@@ -1100,7 +1100,7 @@ func onXE_LIST_SELECT(hEle int, iItem int32, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (l *List) AddEvent_List_Header_DrawItem(pFun XE_LIST_HEADER_DRAWITEM1, allowAddingMultiple ...bool) int {
+func (l *List) AddEvent_List_Header_DrawItem(pFun xc.XE_LIST_HEADER_DRAWITEM1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LIST_HEADER_DRAWITEM, onXE_LIST_HEADER_DRAWITEM, pFun, allowAddingMultiple...)
 }
 
@@ -1109,7 +1109,7 @@ func onXE_LIST_HEADER_DRAWITEM(hEle int, hDraw int, pItem *xc.List_Header_Item_,
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_HEADER_DRAWITEM)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_LIST_HEADER_DRAWITEM1); ok {
+		if cb, ok := cbs[i].(xc.XE_LIST_HEADER_DRAWITEM1); ok {
 			ret = cb(hEle, hDraw, pItem, pbHandled)
 		}
 		if *pbHandled {
@@ -1124,7 +1124,7 @@ func onXE_LIST_HEADER_DRAWITEM(hEle int, hDraw int, pItem *xc.List_Header_Item_,
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (l *List) AddEvent_List_Header_Click(pFun XE_LIST_HEADER_CLICK1, allowAddingMultiple ...bool) int {
+func (l *List) AddEvent_List_Header_Click(pFun xc.XE_LIST_HEADER_CLICK1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LIST_HEADER_CLICK, onXE_LIST_HEADER_CLICK, pFun, allowAddingMultiple...)
 }
 
@@ -1133,7 +1133,7 @@ func onXE_LIST_HEADER_CLICK(hEle int, iItem int32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_HEADER_CLICK)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_LIST_HEADER_CLICK1); ok {
+		if cb, ok := cbs[i].(xc.XE_LIST_HEADER_CLICK1); ok {
 			ret = cb(hEle, iItem, pbHandled)
 		}
 		if *pbHandled {
@@ -1148,7 +1148,7 @@ func onXE_LIST_HEADER_CLICK(hEle int, iItem int32, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (l *List) AddEvent_List_Header_Width_Change(pFun XE_LIST_HEADER_WIDTH_CHANGE1, allowAddingMultiple ...bool) int {
+func (l *List) AddEvent_List_Header_Width_Change(pFun xc.XE_LIST_HEADER_WIDTH_CHANGE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LIST_HEADER_WIDTH_CHANGE, onXE_LIST_HEADER_WIDTH_CHANGE, pFun, allowAddingMultiple...)
 }
 
@@ -1157,7 +1157,7 @@ func onXE_LIST_HEADER_WIDTH_CHANGE(hEle int, iItem int32, nWidth int32, pbHandle
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_HEADER_WIDTH_CHANGE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_LIST_HEADER_WIDTH_CHANGE1); ok {
+		if cb, ok := cbs[i].(xc.XE_LIST_HEADER_WIDTH_CHANGE1); ok {
 			ret = cb(hEle, iItem, nWidth, pbHandled)
 		}
 		if *pbHandled {
@@ -1172,7 +1172,7 @@ func onXE_LIST_HEADER_WIDTH_CHANGE(hEle int, iItem int32, nWidth int32, pbHandle
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (l *List) AddEvent_List_Header_Temp_Create(pFun XE_LIST_HEADER_TEMP_CREATE1, allowAddingMultiple ...bool) int {
+func (l *List) AddEvent_List_Header_Temp_Create(pFun xc.XE_LIST_HEADER_TEMP_CREATE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LIST_HEADER_TEMP_CREATE, onXE_LIST_HEADER_TEMP_CREATE, pFun, allowAddingMultiple...)
 }
 
@@ -1181,7 +1181,7 @@ func onXE_LIST_HEADER_TEMP_CREATE(hEle int, pItem *xc.List_Header_Item_, pbHandl
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_HEADER_TEMP_CREATE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_LIST_HEADER_TEMP_CREATE1); ok {
+		if cb, ok := cbs[i].(xc.XE_LIST_HEADER_TEMP_CREATE1); ok {
 			ret = cb(hEle, pItem, pbHandled)
 		}
 		if *pbHandled {
@@ -1196,7 +1196,7 @@ func onXE_LIST_HEADER_TEMP_CREATE(hEle int, pItem *xc.List_Header_Item_, pbHandl
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (l *List) AddEvent_List_Header_Temp_Create_End(pFun XE_LIST_HEADER_TEMP_CREATE_END1, allowAddingMultiple ...bool) int {
+func (l *List) AddEvent_List_Header_Temp_Create_End(pFun xc.XE_LIST_HEADER_TEMP_CREATE_END1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LIST_HEADER_TEMP_CREATE_END, onXE_LIST_HEADER_TEMP_CREATE_END, pFun, allowAddingMultiple...)
 }
 
@@ -1205,7 +1205,7 @@ func onXE_LIST_HEADER_TEMP_CREATE_END(hEle int, pItem *xc.List_Header_Item_, pbH
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_HEADER_TEMP_CREATE_END)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_LIST_HEADER_TEMP_CREATE_END1); ok {
+		if cb, ok := cbs[i].(xc.XE_LIST_HEADER_TEMP_CREATE_END1); ok {
 			ret = cb(hEle, pItem, pbHandled)
 		}
 		if *pbHandled {
@@ -1220,7 +1220,7 @@ func onXE_LIST_HEADER_TEMP_CREATE_END(hEle int, pItem *xc.List_Header_Item_, pbH
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (l *List) AddEvent_List_Header_Temp_Destroy(pFun XE_LIST_HEADER_TEMP_DESTROY1, allowAddingMultiple ...bool) int {
+func (l *List) AddEvent_List_Header_Temp_Destroy(pFun xc.XE_LIST_HEADER_TEMP_DESTROY1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LIST_HEADER_TEMP_DESTROY, onXE_LIST_HEADER_TEMP_DESTROY, pFun, allowAddingMultiple...)
 }
 
@@ -1229,7 +1229,7 @@ func onXE_LIST_HEADER_TEMP_DESTROY(hEle int, pItem *xc.List_Header_Item_, pbHand
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_HEADER_TEMP_DESTROY)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_LIST_HEADER_TEMP_DESTROY1); ok {
+		if cb, ok := cbs[i].(xc.XE_LIST_HEADER_TEMP_DESTROY1); ok {
 			ret = cb(hEle, pItem, pbHandled)
 		}
 		if *pbHandled {
@@ -1244,7 +1244,7 @@ func onXE_LIST_HEADER_TEMP_DESTROY(hEle int, pItem *xc.List_Header_Item_, pbHand
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (l *List) AddEvent_List_Header_Temp_Adjust_Coordinate(pFun XE_LIST_HEADER_TEMP_ADJUST_COORDINATE1, allowAddingMultiple ...bool) int {
+func (l *List) AddEvent_List_Header_Temp_Adjust_Coordinate(pFun xc.XE_LIST_HEADER_TEMP_ADJUST_COORDINATE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(l.Handle, xcc.XE_LIST_HEADER_TEMP_ADJUST_COORDINATE, onXE_LIST_HEADER_TEMP_ADJUST_COORDINATE, pFun, allowAddingMultiple...)
 }
 
@@ -1253,7 +1253,7 @@ func onXE_LIST_HEADER_TEMP_ADJUST_COORDINATE(hEle int, pItem *xc.List_Header_Ite
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_LIST_HEADER_TEMP_ADJUST_COORDINATE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_LIST_HEADER_TEMP_ADJUST_COORDINATE1); ok {
+		if cb, ok := cbs[i].(xc.XE_LIST_HEADER_TEMP_ADJUST_COORDINATE1); ok {
 			ret = cb(hEle, pItem, pbHandled)
 		}
 		if *pbHandled {
@@ -1268,191 +1268,141 @@ func onXE_LIST_HEADER_TEMP_ADJUST_COORDINATE(hEle int, pItem *xc.List_Header_Ite
 // 列表元素-项模板创建事件,模板复用机制需先启用;替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复.
 //
 // nFlag  0:状态改变; 1:新模板实例; 2:旧模板复用
-type XE_LIST_TEMP_CREATE func(pItem *xc.List_Item_, nFlag int32, pbHandled *bool) int
-
-// 列表元素-项模板创建事件,模板复用机制需先启用;替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复.
-//
-// nFlag  0:状态改变; 1:新模板实例; 2:旧模板复用
-type XE_LIST_TEMP_CREATE1 func(hEle int, pItem *xc.List_Item_, nFlag int32, pbHandled *bool) int
-
-// 列表元素-项模板创建完成事件,模板复用机制需先启用;不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册.
-//
-// nFlag  0:状态改变(复用); 1:新模板实例; 2:旧模板复用
-type XE_LIST_TEMP_CREATE_END func(pItem *xc.List_Item_, nFlag int32, pbHandled *bool) int
-
-// 列表元素-项模板创建完成事件,模板复用机制需先启用;不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册.
-//
-// nFlag  0:状态改变(复用); 1:新模板实例; 2:旧模板复用
-type XE_LIST_TEMP_CREATE_END1 func(hEle int, pItem *xc.List_Item_, nFlag int32, pbHandled *bool) int
-
-// 列表元素,项模板销毁.
-//
-// nFlag   0:正常销毁;  1:移动到缓存(不会被销毁,临时缓存备用,当需要时被复用)
-type XE_LIST_TEMP_DESTROY func(pItem *xc.List_Item_, nFlag int32, pbHandled *bool) int
-
-// 列表元素,项模板销毁.
-//
-// nFlag   0:正常销毁;  1:移动到缓存(不会被销毁,临时缓存备用,当需要时被复用)
-type XE_LIST_TEMP_DESTROY1 func(hEle int, pItem *xc.List_Item_, nFlag int32, pbHandled *bool) int
-type XE_LIST_TEMP_ADJUST_COORDINATE func(pItem *xc.List_Item_, pbHandled *bool) int                          // 列表元素,项模板调整坐标. 已停用.
-type XE_LIST_TEMP_ADJUST_COORDINATE1 func(hEle int, pItem *xc.List_Item_, pbHandled *bool) int               // 列表元素,项模板调整坐标. 已停用.
-type XE_LIST_DRAWITEM func(hDraw int, pItem *xc.List_Item_, pbHandled *bool) int                             // 列表元素,绘制项.
-type XE_LIST_DRAWITEM1 func(hEle int, hDraw int, pItem *xc.List_Item_, pbHandled *bool) int                  // 列表元素,绘制项.
-type XE_LIST_SELECT func(iItem int32, pbHandled *bool) int                                                   // 列表元素,项选择事件.
-type XE_LIST_SELECT1 func(hEle int, iItem int32, pbHandled *bool) int                                        // 列表元素,项选择事件.
-type XE_LIST_HEADER_DRAWITEM func(hDraw int, pItem *xc.List_Header_Item_, pbHandled *bool) int               // 列表元素绘制列表头项.
-type XE_LIST_HEADER_DRAWITEM1 func(hEle int, hDraw int, pItem *xc.List_Header_Item_, pbHandled *bool) int    // 列表元素绘制列表头项.
-type XE_LIST_HEADER_CLICK func(iItem int32, pbHandled *bool) int                                             // 列表元素,列表头项点击事件.
-type XE_LIST_HEADER_CLICK1 func(hEle int, iItem int32, pbHandled *bool) int                                  // 列表元素,列表头项点击事件.
-type XE_LIST_HEADER_WIDTH_CHANGE func(iItem int32, nWidth int32, pbHandled *bool) int                        // 列表元素,列表头项宽度改变事件.
-type XE_LIST_HEADER_WIDTH_CHANGE1 func(hEle int, iItem int32, nWidth int32, pbHandled *bool) int             // 列表元素,列表头项宽度改变事件.
-type XE_LIST_HEADER_TEMP_CREATE func(pItem *xc.List_Header_Item_, pbHandled *bool) int                       // 列表元素,列表头项模板创建.
-type XE_LIST_HEADER_TEMP_CREATE1 func(hEle int, pItem *xc.List_Header_Item_, pbHandled *bool) int            // 列表元素,列表头项模板创建.
-type XE_LIST_HEADER_TEMP_CREATE_END func(pItem *xc.List_Header_Item_, pbHandled *bool) int                   // 列表元素,列表头项模板创建完成事件.
-type XE_LIST_HEADER_TEMP_CREATE_END1 func(hEle int, pItem *xc.List_Header_Item_, pbHandled *bool) int        // 列表元素,列表头项模板创建完成事件.
-type XE_LIST_HEADER_TEMP_DESTROY func(pItem *xc.List_Header_Item_, pbHandled *bool) int                      // 列表元素,列表头项模板销毁.
-type XE_LIST_HEADER_TEMP_DESTROY1 func(hEle int, pItem *xc.List_Header_Item_, pbHandled *bool) int           // 列表元素,列表头项模板销毁.
-type XE_LIST_HEADER_TEMP_ADJUST_COORDINATE func(pItem *xc.List_Header_Item_, pbHandled *bool) int            // 列表元素,列表头项模板调整坐标. 已停用.
-type XE_LIST_HEADER_TEMP_ADJUST_COORDINATE1 func(hEle int, pItem *xc.List_Header_Item_, pbHandled *bool) int // 列表元素,列表头项模板调整坐标. 已停用.
-
-// 列表元素-项模板创建事件,模板复用机制需先启用;替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复.
-//
-// nFlag  0:状态改变; 1:新模板实例; 2:旧模板复用
-func (l *List) Event_LIST_TEMP_CREATE(pFun XE_LIST_TEMP_CREATE) bool {
+func (l *List) Event_LIST_TEMP_CREATE(pFun xc.XE_LIST_TEMP_CREATE) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LIST_TEMP_CREATE, pFun)
 }
 
 // 列表元素-项模板创建事件,模板复用机制需先启用;替换模板无效判断nFlag,因为内部会检查模板是否改变,不用担心重复.
 //
 // nFlag  0:状态改变; 1:新模板实例; 2:旧模板复用
-func (l *List) Event_LIST_TEMP_CREATE1(pFun XE_LIST_TEMP_CREATE1) bool {
+func (l *List) Event_LIST_TEMP_CREATE1(pFun xc.XE_LIST_TEMP_CREATE1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LIST_TEMP_CREATE, pFun)
 }
 
 // 列表元素-项模板创建完成事件,模板复用机制需先启用;不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册.
 //
 // nFlag  0:状态改变(复用); 1:新模板实例; 2:旧模板复用
-func (l *List) Event_LIST_TEMP_CREATE_END(pFun XE_LIST_TEMP_CREATE_END) bool {
+func (l *List) Event_LIST_TEMP_CREATE_END(pFun xc.XE_LIST_TEMP_CREATE_END) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LIST_TEMP_CREATE_END, pFun)
 }
 
 // 列表元素-项模板创建完成事件,模板复用机制需先启用;不管是新建还是复用,都需要更新数据, 当为复用时不要注册事件以免重复注册.
 //
 // nFlag  0:状态改变(复用); 1:新模板实例; 2:旧模板复用
-func (l *List) Event_LIST_TEMP_CREATE_END1(pFun XE_LIST_TEMP_CREATE_END1) bool {
+func (l *List) Event_LIST_TEMP_CREATE_END1(pFun xc.XE_LIST_TEMP_CREATE_END1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LIST_TEMP_CREATE_END, pFun)
 }
 
 // 列表元素,项模板销毁.
 //
 // nFlag   0:正常销毁;  1:移动到缓存(不会被销毁,临时缓存备用,当需要时被复用)
-func (l *List) Event_LIST_TEMP_DESTROY(pFun XE_LIST_TEMP_DESTROY) bool {
+func (l *List) Event_LIST_TEMP_DESTROY(pFun xc.XE_LIST_TEMP_DESTROY) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LIST_TEMP_DESTROY, pFun)
 }
 
 // 列表元素,项模板销毁.
 //
 // nFlag   0:正常销毁;  1:移动到缓存(不会被销毁,临时缓存备用,当需要时被复用)
-func (l *List) Event_LIST_TEMP_DESTROY1(pFun XE_LIST_TEMP_DESTROY1) bool {
+func (l *List) Event_LIST_TEMP_DESTROY1(pFun xc.XE_LIST_TEMP_DESTROY1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LIST_TEMP_DESTROY, pFun)
 }
 
 // 列表元素,项模板调整坐标. 已停用.
-func (l *List) Event_LIST_TEMP_ADJUST_COORDINATE(pFun XE_LIST_TEMP_ADJUST_COORDINATE) bool {
+func (l *List) Event_LIST_TEMP_ADJUST_COORDINATE(pFun xc.XE_LIST_TEMP_ADJUST_COORDINATE) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LIST_TEMP_ADJUST_COORDINATE, pFun)
 }
 
 // 列表元素,项模板调整坐标. 已停用.
-func (l *List) Event_LIST_TEMP_ADJUST_COORDINATE1(pFun XE_LIST_TEMP_ADJUST_COORDINATE1) bool {
+func (l *List) Event_LIST_TEMP_ADJUST_COORDINATE1(pFun xc.XE_LIST_TEMP_ADJUST_COORDINATE1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LIST_TEMP_ADJUST_COORDINATE, pFun)
 }
 
 // 列表元素,绘制项.
-func (l *List) Event_LIST_DRAWITEM(pFun XE_LIST_DRAWITEM) bool {
+func (l *List) Event_LIST_DRAWITEM(pFun xc.XE_LIST_DRAWITEM) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LIST_DRAWITEM, pFun)
 }
 
 // 列表元素,绘制项.
-func (l *List) Event_LIST_DRAWITEM1(pFun XE_LIST_DRAWITEM1) bool {
+func (l *List) Event_LIST_DRAWITEM1(pFun xc.XE_LIST_DRAWITEM1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LIST_DRAWITEM, pFun)
 }
 
 // 列表元素,项选择事件.
-func (l *List) Event_LIST_SELECT(pFun XE_LIST_SELECT) bool {
+func (l *List) Event_LIST_SELECT(pFun xc.XE_LIST_SELECT) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LIST_SELECT, pFun)
 }
 
 // 列表元素,项选择事件.
-func (l *List) Event_LIST_SELECT1(pFun XE_LIST_SELECT1) bool {
+func (l *List) Event_LIST_SELECT1(pFun xc.XE_LIST_SELECT1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LIST_SELECT, pFun)
 }
 
 // 列表元素绘制列表头项.
-func (l *List) Event_LIST_HEADER_DRAWITEM(pFun XE_LIST_HEADER_DRAWITEM) bool {
+func (l *List) Event_LIST_HEADER_DRAWITEM(pFun xc.XE_LIST_HEADER_DRAWITEM) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LIST_HEADER_DRAWITEM, pFun)
 }
 
 // 列表元素绘制列表头项.
-func (l *List) Event_LIST_HEADER_DRAWITEM1(pFun XE_LIST_HEADER_DRAWITEM1) bool {
+func (l *List) Event_LIST_HEADER_DRAWITEM1(pFun xc.XE_LIST_HEADER_DRAWITEM1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LIST_HEADER_DRAWITEM, pFun)
 }
 
 // 列表元素,列表头项点击事件.
-func (l *List) Event_LIST_HEADER_CLICK(pFun XE_LIST_HEADER_CLICK) bool {
+func (l *List) Event_LIST_HEADER_CLICK(pFun xc.XE_LIST_HEADER_CLICK) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LIST_HEADER_CLICK, pFun)
 }
 
 // 列表元素,列表头项点击事件.
-func (l *List) Event_LIST_HEADER_CLICK1(pFun XE_LIST_HEADER_CLICK1) bool {
+func (l *List) Event_LIST_HEADER_CLICK1(pFun xc.XE_LIST_HEADER_CLICK1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LIST_HEADER_CLICK, pFun)
 }
 
 // 列表元素,列表头项宽度改变事件.
-func (l *List) Event_LIST_HEADER_WIDTH_CHANGE(pFun XE_LIST_HEADER_WIDTH_CHANGE) bool {
+func (l *List) Event_LIST_HEADER_WIDTH_CHANGE(pFun xc.XE_LIST_HEADER_WIDTH_CHANGE) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LIST_HEADER_WIDTH_CHANGE, pFun)
 }
 
 // 列表元素,列表头项宽度改变事件.
-func (l *List) Event_LIST_HEADER_WIDTH_CHANGE1(pFun XE_LIST_HEADER_WIDTH_CHANGE1) bool {
+func (l *List) Event_LIST_HEADER_WIDTH_CHANGE1(pFun xc.XE_LIST_HEADER_WIDTH_CHANGE1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LIST_HEADER_WIDTH_CHANGE, pFun)
 }
 
 // 列表元素,列表头项模板创建.
-func (l *List) Event_LIST_HEADER_TEMP_CREATE(pFun XE_LIST_HEADER_TEMP_CREATE) bool {
+func (l *List) Event_LIST_HEADER_TEMP_CREATE(pFun xc.XE_LIST_HEADER_TEMP_CREATE) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LIST_HEADER_TEMP_CREATE, pFun)
 }
 
 // 列表元素,列表头项模板创建.
-func (l *List) Event_LIST_HEADER_TEMP_CREATE1(pFun XE_LIST_HEADER_TEMP_CREATE1) bool {
+func (l *List) Event_LIST_HEADER_TEMP_CREATE1(pFun xc.XE_LIST_HEADER_TEMP_CREATE1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LIST_HEADER_TEMP_CREATE, pFun)
 }
 
 // 列表元素,列表头项模板创建完成事件.
-func (l *List) Event_LIST_HEADER_TEMP_CREATE_END(pFun XE_LIST_HEADER_TEMP_CREATE_END) bool {
+func (l *List) Event_LIST_HEADER_TEMP_CREATE_END(pFun xc.XE_LIST_HEADER_TEMP_CREATE_END) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LIST_HEADER_TEMP_CREATE_END, pFun)
 }
 
 // 列表元素,列表头项模板创建完成事件.
-func (l *List) Event_LIST_HEADER_TEMP_CREATE_END1(pFun XE_LIST_HEADER_TEMP_CREATE_END1) bool {
+func (l *List) Event_LIST_HEADER_TEMP_CREATE_END1(pFun xc.XE_LIST_HEADER_TEMP_CREATE_END1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LIST_HEADER_TEMP_CREATE_END, pFun)
 }
 
 // 列表元素,列表头项模板销毁.
-func (l *List) Event_LIST_HEADER_TEMP_DESTROY(pFun XE_LIST_HEADER_TEMP_DESTROY) bool {
+func (l *List) Event_LIST_HEADER_TEMP_DESTROY(pFun xc.XE_LIST_HEADER_TEMP_DESTROY) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LIST_HEADER_TEMP_DESTROY, pFun)
 }
 
 // 列表元素,列表头项模板销毁.
-func (l *List) Event_LIST_HEADER_TEMP_DESTROY1(pFun XE_LIST_HEADER_TEMP_DESTROY1) bool {
+func (l *List) Event_LIST_HEADER_TEMP_DESTROY1(pFun xc.XE_LIST_HEADER_TEMP_DESTROY1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LIST_HEADER_TEMP_DESTROY, pFun)
 }
 
 // 列表元素,列表头项模板调整坐标. 已停用.
-func (l *List) Event_LIST_HEADER_TEMP_ADJUST_COORDINATE(pFun XE_LIST_HEADER_TEMP_ADJUST_COORDINATE) bool {
+func (l *List) Event_LIST_HEADER_TEMP_ADJUST_COORDINATE(pFun xc.XE_LIST_HEADER_TEMP_ADJUST_COORDINATE) bool {
 	return xc.XEle_RegEventC(l.Handle, xcc.XE_LIST_HEADER_TEMP_ADJUST_COORDINATE, pFun)
 }
 
 // 列表元素,列表头项模板调整坐标. 已停用.
-func (l *List) Event_LIST_HEADER_TEMP_ADJUST_COORDINATE1(pFun XE_LIST_HEADER_TEMP_ADJUST_COORDINATE1) bool {
+func (l *List) Event_LIST_HEADER_TEMP_ADJUST_COORDINATE1(pFun xc.XE_LIST_HEADER_TEMP_ADJUST_COORDINATE1) bool {
 	return xc.XEle_RegEventC1(l.Handle, xcc.XE_LIST_HEADER_TEMP_ADJUST_COORDINATE, pFun)
 }

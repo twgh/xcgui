@@ -1458,7 +1458,7 @@ func (w *windowBase) DpiConvRound(i int32) int32 {
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_NCDestroy(fun WM_NCDESTROY1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_NCDestroy(fun xc.WM_NCDESTROY1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.WM_NCDESTROY, xc.OnWM_NCDESTROY, fun, allowAddingMultiple...)
 }
 
@@ -1467,7 +1467,7 @@ func (w *windowBase) AddEvent_NCDestroy(fun WM_NCDESTROY1, allowAddingMultiple .
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_DockPopup(fun XWM_DOCK_POPUP1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_DockPopup(fun xc.XWM_DOCK_POPUP1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.XWM_DOCK_POPUP, onXWM_DOCK_POPUP, fun, allowAddingMultiple...)
 }
 
@@ -1476,7 +1476,7 @@ func onXWM_DOCK_POPUP(hWindow int, hWindowDock, hPane int, pbHandled *bool) int 
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.XWM_DOCK_POPUP)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XWM_DOCK_POPUP1); ok {
+		if cb, ok := cbs[i].(xc.XWM_DOCK_POPUP1); ok {
 			ret = cb(hWindow, hWindowDock, hPane, pbHandled)
 		}
 		if *pbHandled {
@@ -1491,7 +1491,7 @@ func onXWM_DOCK_POPUP(hWindow int, hWindowDock, hPane int, pbHandled *bool) int 
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_WindProc(fun XWM_WINDPROC1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_WindProc(fun xc.XWM_WINDPROC1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.XWM_WINDPROC, onXWM_WINDPROC, fun, allowAddingMultiple...)
 }
 
@@ -1500,7 +1500,7 @@ func onXWM_WINDPROC(hWindow int, message uint32, wParam, lParam uintptr, pbHandl
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.XWM_WINDPROC)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XWM_WINDPROC1); ok {
+		if cb, ok := cbs[i].(xc.XWM_WINDPROC1); ok {
 			ret = cb(hWindow, message, wParam, lParam, pbHandled)
 		}
 		if *pbHandled {
@@ -1515,7 +1515,7 @@ func onXWM_WINDPROC(hWindow int, message uint32, wParam, lParam uintptr, pbHandl
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_XC_Timer(fun XWM_XC_TIMER1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_XC_Timer(fun xc.XWM_XC_TIMER1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.XWM_XC_TIMER, onXWM_XC_TIMER, fun, allowAddingMultiple...)
 }
 
@@ -1524,7 +1524,7 @@ func onXWM_XC_TIMER(hWindow int, nIDEvent uint, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.XWM_XC_TIMER)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XWM_XC_TIMER1); ok {
+		if cb, ok := cbs[i].(xc.XWM_XC_TIMER1); ok {
 			ret = cb(hWindow, nIDEvent, pbHandled)
 		}
 		if *pbHandled {
@@ -1539,7 +1539,7 @@ func onXWM_XC_TIMER(hWindow int, nIDEvent uint, pbHandled *bool) int {
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_SetFocus_Ele(fun XWM_SETFOCUS_ELE1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_SetFocus_Ele(fun xc.XWM_SETFOCUS_ELE1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.XWM_SETFOCUS_ELE, onXWM_SETFOCUS_ELE, fun, allowAddingMultiple...)
 }
 
@@ -1548,7 +1548,7 @@ func onXWM_SETFOCUS_ELE(hWindow int, hEle int, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.XWM_SETFOCUS_ELE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XWM_SETFOCUS_ELE1); ok {
+		if cb, ok := cbs[i].(xc.XWM_SETFOCUS_ELE1); ok {
 			ret = cb(hWindow, hEle, pbHandled)
 		}
 		if *pbHandled {
@@ -1563,7 +1563,7 @@ func onXWM_SETFOCUS_ELE(hWindow int, hEle int, pbHandled *bool) int {
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_Float_Pane(fun XWM_FLOAT_PANE1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_Float_Pane(fun xc.XWM_FLOAT_PANE1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.XWM_FLOAT_PANE, onXWM_FLOAT_PANE, fun, allowAddingMultiple...)
 }
 
@@ -1572,7 +1572,7 @@ func onXWM_FLOAT_PANE(hWindow int, hFloatWnd int, hPane int, pbHandled *bool) in
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.XWM_FLOAT_PANE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XWM_FLOAT_PANE1); ok {
+		if cb, ok := cbs[i].(xc.XWM_FLOAT_PANE1); ok {
 			ret = cb(hWindow, hFloatWnd, hPane, pbHandled)
 		}
 		if *pbHandled {
@@ -1587,7 +1587,7 @@ func onXWM_FLOAT_PANE(hWindow int, hFloatWnd int, hPane int, pbHandled *bool) in
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_Paint_End(fun XWM_PAINT_END1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_Paint_End(fun xc.XWM_PAINT_END1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.XWM_PAINT_END, onXWM_PAINT_END, fun, allowAddingMultiple...)
 }
 
@@ -1596,7 +1596,7 @@ func onXWM_PAINT_END(hWindow int, hDraw int, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.XWM_PAINT_END)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XWM_PAINT_END1); ok {
+		if cb, ok := cbs[i].(xc.XWM_PAINT_END1); ok {
 			ret = cb(hWindow, hDraw, pbHandled)
 		}
 		if *pbHandled {
@@ -1611,7 +1611,7 @@ func onXWM_PAINT_END(hWindow int, hDraw int, pbHandled *bool) int {
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_Paint_Display(fun XWM_PAINT_DISPLAY1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_Paint_Display(fun xc.XWM_PAINT_DISPLAY1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.XWM_PAINT_DISPLAY, onXWM_PAINT_DISPLAY, fun, allowAddingMultiple...)
 }
 
@@ -1620,7 +1620,7 @@ func onXWM_PAINT_DISPLAY(hWindow int, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.XWM_PAINT_DISPLAY)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XWM_PAINT_DISPLAY1); ok {
+		if cb, ok := cbs[i].(xc.XWM_PAINT_DISPLAY1); ok {
 			ret = cb(hWindow, pbHandled)
 		}
 		if *pbHandled {
@@ -1635,7 +1635,7 @@ func onXWM_PAINT_DISPLAY(hWindow int, pbHandled *bool) int {
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_BodyView_Rect(fun XWM_BODYVIEW_RECT1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_BodyView_Rect(fun xc.XWM_BODYVIEW_RECT1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.XWM_BODYVIEW_RECT, onXWM_BODYVIEW_RECT, fun, allowAddingMultiple...)
 }
 
@@ -1644,7 +1644,7 @@ func onXWM_BODYVIEW_RECT(hWindow int, width, height int32, pbHandled *bool) int 
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.XWM_BODYVIEW_RECT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XWM_BODYVIEW_RECT1); ok {
+		if cb, ok := cbs[i].(xc.XWM_BODYVIEW_RECT1); ok {
 			ret = cb(hWindow, width, height, pbHandled)
 		}
 		if *pbHandled {
@@ -1660,7 +1660,7 @@ func onXWM_BODYVIEW_RECT(hWindow int, width, height int32, pbHandled *bool) int 
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_FloatWnd_Drag(fun XWM_FLOATWND_DRAG1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_FloatWnd_Drag(fun xc.XWM_FLOATWND_DRAG1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.XWM_FLOATWND_DRAG, onXWM_FLOATWND_DRAG, fun, allowAddingMultiple...)
 }
 
@@ -1669,7 +1669,7 @@ func onXWM_FLOATWND_DRAG(hWindow int, hFloatWnd int, hArray *[6]int, pbHandled *
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.XWM_FLOATWND_DRAG)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XWM_FLOATWND_DRAG1); ok {
+		if cb, ok := cbs[i].(xc.XWM_FLOATWND_DRAG1); ok {
 			ret = cb(hWindow, hFloatWnd, hArray, pbHandled)
 		}
 		if *pbHandled {
@@ -1684,7 +1684,7 @@ func onXWM_FLOATWND_DRAG(hWindow int, hFloatWnd int, hArray *[6]int, pbHandled *
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_Paint(fun WM_PAINT1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_Paint(fun xc.WM_PAINT1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.WM_PAINT, onWM_PAINT, fun, allowAddingMultiple...)
 }
 
@@ -1693,7 +1693,7 @@ func onWM_PAINT(hWindow int, hDraw int, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_PAINT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(WM_PAINT1); ok {
+		if cb, ok := cbs[i].(xc.WM_PAINT1); ok {
 			ret = cb(hWindow, hDraw, pbHandled)
 		}
 		if *pbHandled {
@@ -1708,7 +1708,7 @@ func onWM_PAINT(hWindow int, hDraw int, pbHandled *bool) int {
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_Close(fun WM_CLOSE1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_Close(fun xc.WM_CLOSE1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.WM_CLOSE, onWM_CLOSE, fun, allowAddingMultiple...)
 }
 
@@ -1717,7 +1717,7 @@ func onWM_CLOSE(hWindow int, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_CLOSE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(WM_CLOSE1); ok {
+		if cb, ok := cbs[i].(xc.WM_CLOSE1); ok {
 			ret = cb(hWindow, pbHandled)
 		}
 		if *pbHandled {
@@ -1732,7 +1732,7 @@ func onWM_CLOSE(hWindow int, pbHandled *bool) int {
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_Destroy(fun WM_DESTROY1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_Destroy(fun xc.WM_DESTROY1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.WM_DESTROY, onWM_DESTROY, fun, allowAddingMultiple...)
 }
 
@@ -1741,7 +1741,7 @@ func onWM_DESTROY(hWindow int, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_DESTROY)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(WM_DESTROY1); ok {
+		if cb, ok := cbs[i].(xc.WM_DESTROY1); ok {
 			ret = cb(hWindow, pbHandled)
 		}
 		if *pbHandled {
@@ -1756,7 +1756,7 @@ func onWM_DESTROY(hWindow int, pbHandled *bool) int {
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_MouseMove(fun WM_MOUSEMOVE1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_MouseMove(fun xc.WM_MOUSEMOVE1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.WM_MOUSEMOVE, onWM_MOUSEMOVE, fun, allowAddingMultiple...)
 }
 
@@ -1765,7 +1765,7 @@ func onWM_MOUSEMOVE(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) in
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_MOUSEMOVE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(WM_MOUSEMOVE1); ok {
+		if cb, ok := cbs[i].(xc.WM_MOUSEMOVE1); ok {
 			ret = cb(hWindow, nFlags, pPt, pbHandled)
 		}
 		if *pbHandled {
@@ -1780,7 +1780,7 @@ func onWM_MOUSEMOVE(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) in
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_LButtonDown(fun WM_LBUTTONDOWN1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_LButtonDown(fun xc.WM_LBUTTONDOWN1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.WM_LBUTTONDOWN, onWM_LBUTTONDOWN, fun, allowAddingMultiple...)
 }
 
@@ -1789,7 +1789,7 @@ func onWM_LBUTTONDOWN(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) 
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_LBUTTONDOWN)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(WM_LBUTTONDOWN1); ok {
+		if cb, ok := cbs[i].(xc.WM_LBUTTONDOWN1); ok {
 			ret = cb(hWindow, nFlags, pPt, pbHandled)
 		}
 		if *pbHandled {
@@ -1804,7 +1804,7 @@ func onWM_LBUTTONDOWN(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) 
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_LButtonUp(fun WM_LBUTTONUP1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_LButtonUp(fun xc.WM_LBUTTONUP1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.WM_LBUTTONUP, onWM_LBUTTONUP, fun, allowAddingMultiple...)
 }
 
@@ -1813,7 +1813,7 @@ func onWM_LBUTTONUP(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) in
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_LBUTTONUP)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(WM_LBUTTONUP1); ok {
+		if cb, ok := cbs[i].(xc.WM_LBUTTONUP1); ok {
 			ret = cb(hWindow, nFlags, pPt, pbHandled)
 		}
 		if *pbHandled {
@@ -1828,7 +1828,7 @@ func onWM_LBUTTONUP(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) in
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_RButtonDown(fun WM_RBUTTONDOWN1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_RButtonDown(fun xc.WM_RBUTTONDOWN1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.WM_RBUTTONDOWN, onWM_RBUTTONDOWN, fun, allowAddingMultiple...)
 }
 
@@ -1837,7 +1837,7 @@ func onWM_RBUTTONDOWN(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) 
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_RBUTTONDOWN)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(WM_RBUTTONDOWN1); ok {
+		if cb, ok := cbs[i].(xc.WM_RBUTTONDOWN1); ok {
 			ret = cb(hWindow, nFlags, pPt, pbHandled)
 		}
 		if *pbHandled {
@@ -1852,7 +1852,7 @@ func onWM_RBUTTONDOWN(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) 
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_RButtonUp(fun WM_RBUTTONUP1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_RButtonUp(fun xc.WM_RBUTTONUP1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.WM_RBUTTONUP, onWM_RBUTTONUP, fun, allowAddingMultiple...)
 }
 
@@ -1861,7 +1861,7 @@ func onWM_RBUTTONUP(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) in
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_RBUTTONUP)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(WM_RBUTTONUP1); ok {
+		if cb, ok := cbs[i].(xc.WM_RBUTTONUP1); ok {
 			ret = cb(hWindow, nFlags, pPt, pbHandled)
 		}
 		if *pbHandled {
@@ -1876,7 +1876,7 @@ func onWM_RBUTTONUP(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) in
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_LButtonDBClick(fun WM_LBUTTONDBLCLK1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_LButtonDBClick(fun xc.WM_LBUTTONDBLCLK1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.WM_LBUTTONDBLCLK, onWM_LBUTTONDBLCLK, fun, allowAddingMultiple...)
 }
 
@@ -1885,7 +1885,7 @@ func onWM_LBUTTONDBLCLK(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_LBUTTONDBLCLK)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(WM_LBUTTONDBLCLK1); ok {
+		if cb, ok := cbs[i].(xc.WM_LBUTTONDBLCLK1); ok {
 			ret = cb(hWindow, nFlags, pPt, pbHandled)
 		}
 		if *pbHandled {
@@ -1900,7 +1900,7 @@ func onWM_LBUTTONDBLCLK(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_RButtonDBClick(fun WM_RBUTTONDBLCLK1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_RButtonDBClick(fun xc.WM_RBUTTONDBLCLK1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.WM_RBUTTONDBLCLK, onWM_RBUTTONDBLCLK, fun, allowAddingMultiple...)
 }
 
@@ -1909,7 +1909,7 @@ func onWM_RBUTTONDBLCLK(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_RBUTTONDBLCLK)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(WM_RBUTTONDBLCLK1); ok {
+		if cb, ok := cbs[i].(xc.WM_RBUTTONDBLCLK1); ok {
 			ret = cb(hWindow, nFlags, pPt, pbHandled)
 		}
 		if *pbHandled {
@@ -1924,7 +1924,7 @@ func onWM_RBUTTONDBLCLK(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_MouseWheel(fun WM_MOUSEWHEEL1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_MouseWheel(fun xc.WM_MOUSEWHEEL1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.WM_MOUSEWHEEL, onWM_MOUSEWHEEL, fun, allowAddingMultiple...)
 }
 
@@ -1933,7 +1933,7 @@ func onWM_MOUSEWHEEL(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) i
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_MOUSEWHEEL)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(WM_MOUSEWHEEL1); ok {
+		if cb, ok := cbs[i].(xc.WM_MOUSEWHEEL1); ok {
 			ret = cb(hWindow, nFlags, pPt, pbHandled)
 		}
 		if *pbHandled {
@@ -1948,7 +1948,7 @@ func onWM_MOUSEWHEEL(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) i
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_ExitSizeMove(fun WM_EXITSIZEMOVE1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_ExitSizeMove(fun xc.WM_EXITSIZEMOVE1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.WM_EXITSIZEMOVE, onWM_EXITSIZEMOVE, fun, allowAddingMultiple...)
 }
 
@@ -1957,7 +1957,7 @@ func onWM_EXITSIZEMOVE(hWindow int, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_EXITSIZEMOVE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(WM_EXITSIZEMOVE1); ok {
+		if cb, ok := cbs[i].(xc.WM_EXITSIZEMOVE1); ok {
 			ret = cb(hWindow, pbHandled)
 		}
 		if *pbHandled {
@@ -1972,7 +1972,7 @@ func onWM_EXITSIZEMOVE(hWindow int, pbHandled *bool) int {
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_MouseHover(fun WM_MOUSEHOVER1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_MouseHover(fun xc.WM_MOUSEHOVER1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.WM_MOUSEHOVER, onWM_MOUSEHOVER, fun, allowAddingMultiple...)
 }
 
@@ -1981,7 +1981,7 @@ func onWM_MOUSEHOVER(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) i
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_MOUSEHOVER)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(WM_MOUSEHOVER1); ok {
+		if cb, ok := cbs[i].(xc.WM_MOUSEHOVER1); ok {
 			ret = cb(hWindow, nFlags, pPt, pbHandled)
 		}
 		if *pbHandled {
@@ -1996,7 +1996,7 @@ func onWM_MOUSEHOVER(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) i
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_MouseLeave(fun WM_MOUSELEAVE1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_MouseLeave(fun xc.WM_MOUSELEAVE1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.WM_MOUSELEAVE, onWM_MOUSELEAVE, fun, allowAddingMultiple...)
 }
 
@@ -2005,7 +2005,7 @@ func onWM_MOUSELEAVE(hWindow int, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_MOUSELEAVE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(WM_MOUSELEAVE1); ok {
+		if cb, ok := cbs[i].(xc.WM_MOUSELEAVE1); ok {
 			ret = cb(hWindow, pbHandled)
 		}
 		if *pbHandled {
@@ -2020,7 +2020,7 @@ func onWM_MOUSELEAVE(hWindow int, pbHandled *bool) int {
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_Size(fun WM_SIZE1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_Size(fun xc.WM_SIZE1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.WM_SIZE, onWM_SIZE, fun, allowAddingMultiple...)
 }
 
@@ -2029,7 +2029,7 @@ func onWM_SIZE(hWindow int, nFlags uint, pPt *xc.SIZE, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_SIZE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(WM_SIZE1); ok {
+		if cb, ok := cbs[i].(xc.WM_SIZE1); ok {
 			ret = cb(hWindow, nFlags, pPt, pbHandled)
 		}
 		if *pbHandled {
@@ -2044,7 +2044,7 @@ func onWM_SIZE(hWindow int, nFlags uint, pPt *xc.SIZE, pbHandled *bool) int {
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_Timer(fun WM_TIMER1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_Timer(fun xc.WM_TIMER1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.WM_TIMER, onWM_TIMER, fun, allowAddingMultiple...)
 }
 
@@ -2053,7 +2053,7 @@ func onWM_TIMER(hWindow int, nIDEvent uint, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_TIMER)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(WM_TIMER1); ok {
+		if cb, ok := cbs[i].(xc.WM_TIMER1); ok {
 			ret = cb(hWindow, nIDEvent, pbHandled)
 		}
 		if *pbHandled {
@@ -2068,7 +2068,7 @@ func onWM_TIMER(hWindow int, nIDEvent uint, pbHandled *bool) int {
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_SetFocus(fun WM_SETFOCUS1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_SetFocus(fun xc.WM_SETFOCUS1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.WM_SETFOCUS, onWM_SETFOCUS, fun, allowAddingMultiple...)
 }
 
@@ -2077,7 +2077,7 @@ func onWM_SETFOCUS(hWindow int, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_SETFOCUS)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(WM_SETFOCUS1); ok {
+		if cb, ok := cbs[i].(xc.WM_SETFOCUS1); ok {
 			ret = cb(hWindow, pbHandled)
 		}
 		if *pbHandled {
@@ -2092,7 +2092,7 @@ func onWM_SETFOCUS(hWindow int, pbHandled *bool) int {
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_KillFocus(fun WM_KILLFOCUS1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_KillFocus(fun xc.WM_KILLFOCUS1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.WM_KILLFOCUS, onWM_KILLFOCUS, fun, allowAddingMultiple...)
 }
 
@@ -2101,7 +2101,7 @@ func onWM_KILLFOCUS(hWindow int, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_KILLFOCUS)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(WM_KILLFOCUS1); ok {
+		if cb, ok := cbs[i].(xc.WM_KILLFOCUS1); ok {
 			ret = cb(hWindow, pbHandled)
 		}
 		if *pbHandled {
@@ -2116,7 +2116,7 @@ func onWM_KILLFOCUS(hWindow int, pbHandled *bool) int {
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_KeyDown(fun WM_KEYDOWN1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_KeyDown(fun xc.WM_KEYDOWN1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.WM_KEYDOWN, onWM_KEYDOWN, fun, allowAddingMultiple...)
 }
 
@@ -2125,7 +2125,7 @@ func onWM_KEYDOWN(hWindow int, wParam, lParam uintptr, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_KEYDOWN)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(WM_KEYDOWN1); ok {
+		if cb, ok := cbs[i].(xc.WM_KEYDOWN1); ok {
 			ret = cb(hWindow, wParam, lParam, pbHandled)
 		}
 		if *pbHandled {
@@ -2140,7 +2140,7 @@ func onWM_KEYDOWN(hWindow int, wParam, lParam uintptr, pbHandled *bool) int {
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_CaptureChanged(fun WM_CAPTURECHANGED1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_CaptureChanged(fun xc.WM_CAPTURECHANGED1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.WM_CAPTURECHANGED, onWM_CAPTURECHANGED, fun, allowAddingMultiple...)
 }
 
@@ -2149,7 +2149,7 @@ func onWM_CAPTURECHANGED(hWindow int, hWnd uintptr, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_CAPTURECHANGED)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(WM_CAPTURECHANGED1); ok {
+		if cb, ok := cbs[i].(xc.WM_CAPTURECHANGED1); ok {
 			ret = cb(hWindow, hWnd, pbHandled)
 		}
 		if *pbHandled {
@@ -2164,7 +2164,7 @@ func onWM_CAPTURECHANGED(hWindow int, hWnd uintptr, pbHandled *bool) int {
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_SetCursor(fun WM_SETCURSOR1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_SetCursor(fun xc.WM_SETCURSOR1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.WM_SETCURSOR, onWM_SETCURSOR, fun, allowAddingMultiple...)
 }
 
@@ -2173,7 +2173,7 @@ func onWM_SETCURSOR(hWindow int, wParam, lParam uintptr, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_SETCURSOR)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(WM_SETCURSOR1); ok {
+		if cb, ok := cbs[i].(xc.WM_SETCURSOR1); ok {
 			ret = cb(hWindow, wParam, lParam, pbHandled)
 		}
 		if *pbHandled {
@@ -2188,7 +2188,7 @@ func onWM_SETCURSOR(hWindow int, wParam, lParam uintptr, pbHandled *bool) int {
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_Char(fun WM_CHAR1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_Char(fun xc.WM_CHAR1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.WM_CHAR, onWM_CHAR, fun, allowAddingMultiple...)
 }
 
@@ -2197,7 +2197,7 @@ func onWM_CHAR(hWindow int, wParam, lParam uintptr, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_CHAR)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(WM_CHAR1); ok {
+		if cb, ok := cbs[i].(xc.WM_CHAR1); ok {
 			ret = cb(hWindow, wParam, lParam, pbHandled)
 		}
 		if *pbHandled {
@@ -2212,7 +2212,7 @@ func onWM_CHAR(hWindow int, wParam, lParam uintptr, pbHandled *bool) int {
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_DropFiles(fun WM_DROPFILES1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_DropFiles(fun xc.WM_DROPFILES1, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.WM_DROPFILES, onWM_DROPFILES, fun, allowAddingMultiple...)
 }
 
@@ -2221,7 +2221,7 @@ func onWM_DROPFILES(hWindow int, hDropInfo uintptr, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.WM_DROPFILES)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(WM_DROPFILES1); ok {
+		if cb, ok := cbs[i].(xc.WM_DROPFILES1); ok {
 			ret = cb(hWindow, hDropInfo, pbHandled)
 		}
 		if *pbHandled {
@@ -2236,7 +2236,7 @@ func onWM_DROPFILES(hWindow int, hDropInfo uintptr, pbHandled *bool) int {
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_TrayIcon(fun XWM_TRAYICON, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_TrayIcon(fun xc.XWM_TRAYICON, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.XWM_TRAYICON, onXWM_TRAYICON, fun, allowAddingMultiple...)
 }
 
@@ -2245,7 +2245,7 @@ func onXWM_TRAYICON(hWindow int, wParam, lParam uintptr, pbHandled *bool) int {
 	cbs := xc.WndEventHandler.GetCallBacks(hWindow, xcc.XWM_TRAYICON)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XWM_TRAYICON); ok {
+		if cb, ok := cbs[i].(xc.XWM_TRAYICON); ok {
 			ret = cb(wParam, lParam, pbHandled)
 		}
 		if *pbHandled {
@@ -2262,203 +2262,119 @@ func onXWM_TRAYICON(hWindow int, wParam, lParam uintptr, pbHandled *bool) int {
 // fun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (w *windowBase) AddEvent_Menu_Popup(fun XWM_MENU_POPUP1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_Menu_Popup(fun func(hWindow int, hMenu int, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.XWM_MENU_POPUP, xc.OnXWM_MENU_POPUP, fun, allowAddingMultiple...)
 }
 
 // 菜单弹出窗口事件.
-func (w *windowBase) AddEvent_Menu_PopupWnd(fun XWM_MENU_POPUP_WND1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_Menu_PopupWnd(fun func(hWindow int, hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.XWM_MENU_POPUP_WND, xc.OnXWM_MENU_POPUP_WND, fun, allowAddingMultiple...)
 }
 
 // 菜单选择事件.
-func (w *windowBase) AddEvent_Menu_Select(fun XWM_MENU_SELECT1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_Menu_Select(fun func(hWindow int, nID int32, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.XWM_MENU_SELECT, xc.OnXWM_MENU_SELECT, fun, allowAddingMultiple...)
 }
 
 // 菜单退出事件.
-func (w *windowBase) AddEvent_Menu_Exit(fun XWM_MENU_EXIT1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_Menu_Exit(fun func(hWindow int, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.XWM_MENU_EXIT, xc.OnXWM_MENU_EXIT, fun, allowAddingMultiple...)
 }
 
 // 绘制菜单背景事件.
-func (w *windowBase) AddEvent_Menu_DrawBackground(fun XWM_MENU_DRAW_BACKGROUND1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_Menu_DrawBackground(fun func(hWindow int, hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.XWM_MENU_DRAW_BACKGROUND, xc.OnXWM_MENU_DRAW_BACKGROUND, fun, allowAddingMultiple...)
 }
 
 // 绘制菜单项事件.
-func (w *windowBase) AddEvent_Menu_DrawItem(fun XWM_MENU_DRAWITEM1, allowAddingMultiple ...bool) int {
+func (w *windowBase) AddEvent_Menu_DrawItem(fun func(hWindow int, hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	return xc.WndEventHandler.AddCallBack(w.Handle, xcc.XWM_MENU_DRAWITEM, xc.OnXWM_MENU_DRAWITEM, fun, allowAddingMultiple...)
 }
 
 // ------------------------- 事件 ------------------------- //
 
-type XWM_TRAYICON func(wParam, lParam uintptr, pbHandled *bool) int // 托盘图标事件.
-
-type XWM_WINDPROC func(message uint32, wParam, lParam uintptr, pbHandled *bool) int               // 窗口消息过程.
-type XWM_WINDPROC1 func(hWindow int, message uint32, wParam, lParam uintptr, pbHandled *bool) int // 窗口消息过程.
-type XWM_XC_TIMER func(nTimerID uint, pbHandled *bool) int                                        // 炫彩定时器, 非系统定时器, 注册消息XWM_TIMER接收.
-type XWM_XC_TIMER1 func(hWindow int, nTimerID uint, pbHandled *bool) int                          // 炫彩定时器, 非系统定时器, 注册消息XWM_TIMER接收.
-type XWM_SETFOCUS_ELE func(hEle int, pbHandled *bool) int                                         // 窗口事件_置焦点元素. 指定元素获得焦点
-type XWM_SETFOCUS_ELE1 func(hWindow int, hEle int, pbHandled *bool) int                           // 窗口事件_置焦点元素. 指定元素获得焦点
-type XWM_FLOAT_PANE func(hFloatWnd int, hPane int, pbHandled *bool) int                           // 浮动窗格.
-type XWM_FLOAT_PANE1 func(hWindow int, hFloatWnd int, hPane int, pbHandled *bool) int             // 浮动窗格.
-type XWM_PAINT_END func(hDraw int, pbHandled *bool) int                                           // 窗口绘制完成消息.
-type XWM_PAINT_END1 func(hWindow int, hDraw int, pbHandled *bool) int                             // 窗口绘制完成消息.
-type XWM_PAINT_DISPLAY func(pbHandled *bool) int                                                  // 窗口绘制完成并且已经显示到屏幕.
-type XWM_PAINT_DISPLAY1 func(hWindow int, pbHandled *bool) int                                    // 窗口绘制完成并且已经显示到屏幕.
-type XWM_DOCK_POPUP func(hWindowDock, hPane int, pbHandled *bool) int                             // 框架窗口码头弹出窗格, 当用户点击码头上的按钮时, 显示对应的窗格, 当失去焦点时自动隐藏窗格.
-type XWM_DOCK_POPUP1 func(hWindow int, hWindowDock, hPane int, pbHandled *bool) int               // 框架窗口码头弹出窗格, 当用户点击码头上的按钮时, 显示对应的窗格, 当失去焦点时自动隐藏窗格.
-type XWM_BODYVIEW_RECT func(width, height int32, pbHandled *bool) int                             // 框架窗口主视图坐标改变, 如果主视图没有绑定元素, 那么当坐标改变时触发此事件
-type XWM_BODYVIEW_RECT1 func(hWindow int, width, height int32, pbHandled *bool) int               // 框架窗口主视图坐标改变, 如果主视图没有绑定元素, 那么当坐标改变时触发此事件
-
-// 浮动窗口拖动, 用户拖动浮动窗口移动, 显示停靠提示.
-//
-// hFloatWnd: 拖动的浮动窗口句柄.
-//
-// hArray: HWINDOW array[6], 窗格停靠提示窗口句柄数组, 有6个成员, 分别为:[0]中间十字, [1]左侧, [2]顶部, [3]右侧, [4]底部, [5]停靠位置预览.
-type XWM_FLOATWND_DRAG func(hFloatWnd int, hArray *[6]int, pbHandled *bool) int
-
-// 浮动窗口拖动, 用户拖动浮动窗口移动, 显示停靠提示.
-//
-// hWindow: 传入的窗口资源句柄.
-//
-// hFloatWnd: 拖动的浮动窗口句柄.
-//
-// hArray: HWINDOW array[6], 窗格停靠提示窗口句柄数组, 有6个成员, 分别为:[0]中间十字, [1]左侧, [2]顶部, [3]右侧, [4]底部, [5]停靠位置预览.
-type XWM_FLOATWND_DRAG1 func(hWindow int, hFloatWnd int, hArray *[6]int, pbHandled *bool) int
-
-type WM_PAINT func(hDraw int, pbHandled *bool) int                                        // 窗口绘制消息.
-type WM_PAINT1 func(hWindow int, hDraw int, pbHandled *bool) int                          // 窗口绘制消息.
-type WM_CLOSE func(pbHandled *bool) int                                                   // 窗口关闭消息.
-type WM_CLOSE1 func(hWindow int, pbHandled *bool) int                                     // 窗口关闭消息.
-type WM_DESTROY func(pbHandled *bool) int                                                 // 窗口销毁消息.
-type WM_DESTROY1 func(hWindow int, pbHandled *bool) int                                   // 窗口销毁消息.
-type WM_NCDESTROY func(pbHandled *bool) int                                               // 窗口非客户区销毁消息.
-type WM_NCDESTROY1 func(hWindow int, pbHandled *bool) int                                 // 窗口非客户区销毁消息.
-type WM_MOUSEMOVE func(nFlags uint, pPt *xc.POINT, pbHandled *bool) int                   // 窗口鼠标移动消息.
-type WM_MOUSEMOVE1 func(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int     // 窗口鼠标移动消息.
-type WM_LBUTTONDOWN func(nFlags uint, pPt *xc.POINT, pbHandled *bool) int                 // 窗口鼠标左键按下消息.
-type WM_LBUTTONDOWN1 func(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int   // 窗口鼠标左键按下消息.
-type WM_LBUTTONUP func(nFlags uint, pPt *xc.POINT, pbHandled *bool) int                   // 窗口鼠标左键弹起消息.
-type WM_LBUTTONUP1 func(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int     // 窗口鼠标左键弹起消息.
-type WM_RBUTTONDOWN func(nFlags uint, pPt *xc.POINT, pbHandled *bool) int                 // 窗口鼠标右键按下消息.
-type WM_RBUTTONDOWN1 func(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int   // 窗口鼠标右键按下消息.
-type WM_RBUTTONUP func(nFlags uint, pPt *xc.POINT, pbHandled *bool) int                   // 窗口鼠标右键弹起消息.
-type WM_RBUTTONUP1 func(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int     // 窗口鼠标右键弹起消息.
-type WM_LBUTTONDBLCLK func(nFlags uint, pPt *xc.POINT, pbHandled *bool) int               // 窗口鼠标左键双击消息.
-type WM_LBUTTONDBLCLK1 func(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int // 窗口鼠标左键双击消息.
-type WM_RBUTTONDBLCLK func(nFlags uint, pPt *xc.POINT, pbHandled *bool) int               // 窗口鼠标右键双击消息.
-type WM_RBUTTONDBLCLK1 func(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int // 窗口鼠标右键双击消息.
-type WM_MOUSEWHEEL func(nFlags uint, pPt *xc.POINT, pbHandled *bool) int                  // 窗口鼠标滚轮滚动消息.
-type WM_MOUSEWHEEL1 func(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int    // 窗口鼠标滚轮滚动消息.
-type WM_EXITSIZEMOVE func(pbHandled *bool) int                                            // 窗口退出移动或调整大小模式循环改，详情参见MSDN.
-type WM_EXITSIZEMOVE1 func(hWindow int, pbHandled *bool) int                              // 窗口退出移动或调整大小模式循环改，详情参见MSDN.
-type WM_MOUSEHOVER func(nFlags uint, pPt *xc.POINT, pbHandled *bool) int                  // 窗口鼠标进入消息.
-type WM_MOUSEHOVER1 func(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int    // 窗口鼠标进入消息.
-type WM_MOUSELEAVE func(pbHandled *bool) int                                              // 窗口鼠标离开消息.
-type WM_MOUSELEAVE1 func(hWindow int, pbHandled *bool) int                                // 窗口鼠标离开消息.
-type WM_SIZE func(nFlags uint, pPt *xc.SIZE, pbHandled *bool) int                         // 窗口大小改变消息.
-type WM_SIZE1 func(hWindow int, nFlags uint, pPt *xc.SIZE, pbHandled *bool) int           // 窗口大小改变消息.
-type WM_TIMER func(nIDEvent uint, pbHandled *bool) int                                    // 窗口定时器消息.
-type WM_TIMER1 func(hWindow int, nIDEvent uint, pbHandled *bool) int                      // 窗口定时器消息.
-type WM_SETFOCUS func(pbHandled *bool) int                                                // 窗口获得焦点.
-type WM_SETFOCUS1 func(hWindow int, pbHandled *bool) int                                  // 窗口获得焦点.
-type WM_KILLFOCUS func(pbHandled *bool) int                                               // 窗口失去焦点.
-type WM_KILLFOCUS1 func(hWindow int, pbHandled *bool) int                                 // 窗口失去焦点.
-type WM_KEYDOWN func(wParam, lParam uintptr, pbHandled *bool) int                         // 窗口键盘按键消息.
-type WM_KEYDOWN1 func(hWindow int, wParam, lParam uintptr, pbHandled *bool) int           // 窗口键盘按键消息.
-type WM_CAPTURECHANGED func(hWnd uintptr, pbHandled *bool) int                            // 窗口鼠标捕获改变消息.
-type WM_CAPTURECHANGED1 func(hWindow int, hWnd uintptr, pbHandled *bool) int              // 窗口鼠标捕获改变消息.
-type WM_SETCURSOR func(wParam, lParam uintptr, pbHandled *bool) int                       // 窗口设置鼠标光标.
-type WM_SETCURSOR1 func(hWindow int, wParam, lParam uintptr, pbHandled *bool) int         // 窗口设置鼠标光标.
-type WM_CHAR func(wParam, lParam uintptr, pbHandled *bool) int                            // 窗口字符消息.
-type WM_CHAR1 func(hWindow int, wParam, lParam uintptr, pbHandled *bool) int              // 窗口字符消息.
-type WM_DROPFILES func(hDropInfo uintptr, pbHandled *bool) int                            // 拖动文件到窗口.
-type WM_DROPFILES1 func(hWindow int, hDropInfo uintptr, pbHandled *bool) int              // 拖动文件到窗口.
-
 // 托盘图标事件.
-func (w *windowBase) Event_TRAYICON(pFun XWM_TRAYICON) bool {
+func (w *windowBase) Event_TRAYICON(pFun xc.XWM_TRAYICON) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_TRAYICON, pFun)
 }
 
 // 窗口消息过程.
-func (w *windowBase) Event_WINDPROC(pFun XWM_WINDPROC) bool {
+func (w *windowBase) Event_WINDPROC(pFun xc.XWM_WINDPROC) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_WINDPROC, pFun)
 }
 
 // 窗口消息过程.
-func (w *windowBase) Event_WINDPROC1(pFun XWM_WINDPROC1) bool {
+func (w *windowBase) Event_WINDPROC1(pFun xc.XWM_WINDPROC1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_WINDPROC, pFun)
 }
 
 // 炫彩定时器, 非系统定时器, 注册消息XWM_TIMER接收.
-func (w *windowBase) Event_XC_TIMER(pFun XWM_XC_TIMER) bool {
+func (w *windowBase) Event_XC_TIMER(pFun xc.XWM_XC_TIMER) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_XC_TIMER, pFun)
 }
 
 // 炫彩定时器, 非系统定时器, 注册消息XWM_TIMER接收.
-func (w *windowBase) Event_XC_TIMER1(pFun XWM_XC_TIMER1) bool {
+func (w *windowBase) Event_XC_TIMER1(pFun xc.XWM_XC_TIMER1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_XC_TIMER, pFun)
 }
 
 // 窗口事件_置焦点元素. 指定元素获得焦点.
-func (w *windowBase) Event_SETFOCUS_ELE(pFun XWM_SETFOCUS_ELE) bool {
+func (w *windowBase) Event_SETFOCUS_ELE(pFun xc.XWM_SETFOCUS_ELE) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_SETFOCUS_ELE, pFun)
 }
 
 // 窗口事件_置焦点元素. 指定元素获得焦点.
-func (w *windowBase) Event_SETFOCUS_ELE1(pFun XWM_SETFOCUS_ELE1) bool {
+func (w *windowBase) Event_SETFOCUS_ELE1(pFun xc.XWM_SETFOCUS_ELE1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_SETFOCUS_ELE, pFun)
 }
 
 // 浮动窗格.
-func (w *windowBase) Event_FLOAT_PANE(pFun XWM_FLOAT_PANE) bool {
+func (w *windowBase) Event_FLOAT_PANE(pFun xc.XWM_FLOAT_PANE) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_FLOAT_PANE, pFun)
 }
 
 // 浮动窗格.
-func (w *windowBase) Event_FLOAT_PANE1(pFun XWM_FLOAT_PANE1) bool {
+func (w *windowBase) Event_FLOAT_PANE1(pFun xc.XWM_FLOAT_PANE1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_FLOAT_PANE, pFun)
 }
 
 // 窗口绘制完成消息.
-func (w *windowBase) Event_PAINT_END(pFun XWM_PAINT_END) bool {
+func (w *windowBase) Event_PAINT_END(pFun xc.XWM_PAINT_END) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_PAINT_END, pFun)
 }
 
 // 窗口绘制完成消息.
-func (w *windowBase) Event_PAINT_END1(pFun XWM_PAINT_END1) bool {
+func (w *windowBase) Event_PAINT_END1(pFun xc.XWM_PAINT_END1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_PAINT_END, pFun)
 }
 
 // 窗口绘制完成并且已经显示到屏幕.
-func (w *windowBase) Event_PAINT_DISPLAY(pFun XWM_PAINT_DISPLAY) bool {
+func (w *windowBase) Event_PAINT_DISPLAY(pFun xc.XWM_PAINT_DISPLAY) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_PAINT_DISPLAY, pFun)
 }
 
 // 窗口绘制完成并且已经显示到屏幕.
-func (w *windowBase) Event_PAINT_DISPLAY1(pFun XWM_PAINT_DISPLAY1) bool {
+func (w *windowBase) Event_PAINT_DISPLAY1(pFun xc.XWM_PAINT_DISPLAY1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_PAINT_DISPLAY, pFun)
 }
 
 // 框架窗口码头弹出窗格, 当用户点击码头上的按钮时, 显示对应的窗格, 当失去焦点时自动隐藏窗格.
-func (w *windowBase) Event_DOCK_POPUP(pFun XWM_DOCK_POPUP) bool {
+func (w *windowBase) Event_DOCK_POPUP(pFun xc.XWM_DOCK_POPUP) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_DOCK_POPUP, pFun)
 }
 
 // 框架窗口码头弹出窗格, 当用户点击码头上的按钮时, 显示对应的窗格, 当失去焦点时自动隐藏窗格.
-func (w *windowBase) Event_DOCK_POPUP1(pFun XWM_DOCK_POPUP1) bool {
+func (w *windowBase) Event_DOCK_POPUP1(pFun xc.XWM_DOCK_POPUP1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_DOCK_POPUP, pFun)
 }
 
 // 框架窗口主视图坐标改变, 如果主视图没有绑定元素, 那么当坐标改变时触发此事件.
-func (w *windowBase) Event_BODYVIEW_RECT(pFun XWM_BODYVIEW_RECT) bool {
+func (w *windowBase) Event_BODYVIEW_RECT(pFun xc.XWM_BODYVIEW_RECT) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_BODYVIEW_RECT, pFun)
 }
 
 // 框架窗口主视图坐标改变, 如果主视图没有绑定元素, 那么当坐标改变时触发此事件.
-func (w *windowBase) Event_BODYVIEW_RECT1(pFun XWM_BODYVIEW_RECT) bool {
+func (w *windowBase) Event_BODYVIEW_RECT1(pFun xc.XWM_BODYVIEW_RECT) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_BODYVIEW_RECT, pFun)
 }
 
@@ -2467,7 +2383,7 @@ func (w *windowBase) Event_BODYVIEW_RECT1(pFun XWM_BODYVIEW_RECT) bool {
 // hFloatWnd: 拖动的浮动窗口句柄.
 //
 // hArray: HWINDOW array[6], 窗格停靠提示窗口句柄数组, 有6个成员, 分别为:[0]中间十字, [1]左侧, [2]顶部, [3]右侧, [4]底部, [5]停靠位置预览.
-func (w *windowBase) Event_FLOATWND_DRAG(pFun XWM_FLOATWND_DRAG) bool {
+func (w *windowBase) Event_FLOATWND_DRAG(pFun xc.XWM_FLOATWND_DRAG) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_FLOATWND_DRAG, pFun)
 }
 
@@ -2478,319 +2394,306 @@ func (w *windowBase) Event_FLOATWND_DRAG(pFun XWM_FLOATWND_DRAG) bool {
 // hFloatWnd: 拖动的浮动窗口句柄.
 //
 // hArray: HWINDOW array[6], 窗格停靠提示窗口句柄数组, 有6个成员, 分别为:[0]中间十字, [1]左侧, [2]顶部, [3]右侧, [4]底部, [5]停靠位置预览.
-func (w *windowBase) Event_FLOATWND_DRAG1(pFun XWM_FLOATWND_DRAG1) bool {
+func (w *windowBase) Event_FLOATWND_DRAG1(pFun xc.XWM_FLOATWND_DRAG1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_FLOATWND_DRAG, pFun)
 }
 
 // 窗口绘制消息.
-func (w *windowBase) Event_PAINT(pFun WM_PAINT) bool {
+func (w *windowBase) Event_PAINT(pFun xc.WM_PAINT) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.WM_PAINT, pFun)
 }
 
 // 窗口绘制消息.
-func (w *windowBase) Event_PAINT1(pFun WM_PAINT1) bool {
+func (w *windowBase) Event_PAINT1(pFun xc.WM_PAINT1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_PAINT, pFun)
 }
 
 // 窗口关闭消息.
-func (w *windowBase) Event_CLOSE(pFun WM_CLOSE) bool {
+func (w *windowBase) Event_CLOSE(pFun xc.WM_CLOSE) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.WM_CLOSE, pFun)
 }
 
 // 窗口关闭消息.
-func (w *windowBase) Event_CLOSE1(pFun WM_CLOSE1) bool {
+func (w *windowBase) Event_CLOSE1(pFun xc.WM_CLOSE1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_CLOSE, pFun)
 }
 
 // 窗口销毁消息.
-func (w *windowBase) Event_DESTROY(pFun WM_DESTROY) bool {
+func (w *windowBase) Event_DESTROY(pFun xc.WM_DESTROY) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.WM_DESTROY, pFun)
 }
 
 // 窗口销毁消息.
-func (w *windowBase) Event_DESTROY1(pFun WM_DESTROY1) bool {
+func (w *windowBase) Event_DESTROY1(pFun xc.WM_DESTROY1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_DESTROY, pFun)
 }
 
 // 窗口非客户区销毁消息.
-func (w *windowBase) Event_NCDESTROY(pFun WM_NCDESTROY) bool {
+func (w *windowBase) Event_NCDESTROY(pFun xc.WM_NCDESTROY) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.WM_NCDESTROY, pFun)
 }
 
 // 窗口非客户区销毁消息.
-func (w *windowBase) Event_NCDESTROY1(pFun WM_NCDESTROY1) bool {
+func (w *windowBase) Event_NCDESTROY1(pFun xc.WM_NCDESTROY1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_NCDESTROY, pFun)
 }
 
 // 窗口鼠标移动消息.
-func (w *windowBase) Event_MOUSEMOVE(pFun WM_MOUSEMOVE) bool {
+func (w *windowBase) Event_MOUSEMOVE(pFun xc.WM_MOUSEMOVE) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.WM_MOUSEMOVE, pFun)
 }
 
 // 窗口鼠标移动消息.
-func (w *windowBase) Event_MOUSEMOVE1(pFun WM_MOUSEMOVE1) bool {
+func (w *windowBase) Event_MOUSEMOVE1(pFun xc.WM_MOUSEMOVE1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_MOUSEMOVE, pFun)
 }
 
 // 窗口鼠标左键按下消息.
-func (w *windowBase) Event_LBUTTONDOWN(pFun WM_LBUTTONDOWN) bool {
+func (w *windowBase) Event_LBUTTONDOWN(pFun xc.WM_LBUTTONDOWN) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.WM_LBUTTONDOWN, pFun)
 }
 
 // 窗口鼠标左键按下消息.
-func (w *windowBase) Event_LBUTTONDOWN1(pFun WM_LBUTTONDOWN1) bool {
+func (w *windowBase) Event_LBUTTONDOWN1(pFun xc.WM_LBUTTONDOWN1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_LBUTTONDOWN, pFun)
 }
 
 // 窗口鼠标左键弹起消息.
-func (w *windowBase) Event_LBUTTONUP(pFun WM_LBUTTONUP) bool {
+func (w *windowBase) Event_LBUTTONUP(pFun xc.WM_LBUTTONUP) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.WM_LBUTTONUP, pFun)
 }
 
 // 窗口鼠标左键弹起消息.
-func (w *windowBase) Event_LBUTTONUP1(pFun WM_LBUTTONUP1) bool {
+func (w *windowBase) Event_LBUTTONUP1(pFun xc.WM_LBUTTONUP1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_LBUTTONUP, pFun)
 }
 
 // 窗口鼠标右键按下消息.
-func (w *windowBase) Event_RBUTTONDOWN(pFun WM_RBUTTONDOWN) bool {
+func (w *windowBase) Event_RBUTTONDOWN(pFun xc.WM_RBUTTONDOWN) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.WM_RBUTTONDOWN, pFun)
 }
 
 // 窗口鼠标右键按下消息.
-func (w *windowBase) Event_RBUTTONDOWN1(pFun WM_RBUTTONDOWN1) bool {
+func (w *windowBase) Event_RBUTTONDOWN1(pFun xc.WM_RBUTTONDOWN1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_RBUTTONDOWN, pFun)
 }
 
 // 窗口鼠标右键弹起消息.
-func (w *windowBase) Event_RBUTTONUP(pFun WM_RBUTTONUP) bool {
+func (w *windowBase) Event_RBUTTONUP(pFun xc.WM_RBUTTONUP) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.WM_RBUTTONUP, pFun)
 }
 
 // 窗口鼠标右键弹起消息.
-func (w *windowBase) Event_RBUTTONUP1(pFun WM_RBUTTONUP1) bool {
+func (w *windowBase) Event_RBUTTONUP1(pFun xc.WM_RBUTTONUP1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_RBUTTONUP, pFun)
 }
 
 // 窗口鼠标左键双击消息.
-func (w *windowBase) Event_LBUTTONDBLCLK(pFun WM_LBUTTONDBLCLK) bool {
+func (w *windowBase) Event_LBUTTONDBLCLK(pFun xc.WM_LBUTTONDBLCLK) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.WM_LBUTTONDBLCLK, pFun)
 }
 
 // 窗口鼠标左键双击消息.
-func (w *windowBase) Event_LBUTTONDBLCLK1(pFun WM_LBUTTONDBLCLK1) bool {
+func (w *windowBase) Event_LBUTTONDBLCLK1(pFun xc.WM_LBUTTONDBLCLK1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_LBUTTONDBLCLK, pFun)
 }
 
 // 窗口鼠标右键双击消息.
-func (w *windowBase) Event_RBUTTONDBLCLK(pFun WM_RBUTTONDBLCLK) bool {
+func (w *windowBase) Event_RBUTTONDBLCLK(pFun xc.WM_RBUTTONDBLCLK) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.WM_RBUTTONDBLCLK, pFun)
 }
 
 // 窗口鼠标右键双击消息.
-func (w *windowBase) Event_RBUTTONDBLCLK1(pFun WM_RBUTTONDBLCLK1) bool {
+func (w *windowBase) Event_RBUTTONDBLCLK1(pFun xc.WM_RBUTTONDBLCLK1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_RBUTTONDBLCLK, pFun)
 }
 
 // 窗口鼠标滚轮滚动消息.
-func (w *windowBase) Event_MOUSEWHEEL(pFun WM_MOUSEWHEEL) bool {
+func (w *windowBase) Event_MOUSEWHEEL(pFun xc.WM_MOUSEWHEEL) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.WM_MOUSEWHEEL, pFun)
 }
 
 // 窗口鼠标滚轮滚动消息.
-func (w *windowBase) Event_MOUSEWHEEL1(pFun WM_MOUSEWHEEL1) bool {
+func (w *windowBase) Event_MOUSEWHEEL1(pFun xc.WM_MOUSEWHEEL1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_MOUSEWHEEL, pFun)
 }
 
 // 窗口退出移动或调整大小模式循环改，详情参见MSDN.
-func (w *windowBase) Event_EXITSIZEMOVE(pFun WM_EXITSIZEMOVE) bool {
+func (w *windowBase) Event_EXITSIZEMOVE(pFun xc.WM_EXITSIZEMOVE) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.WM_EXITSIZEMOVE, pFun)
 }
 
 // 窗口退出移动或调整大小模式循环改，详情参见MSDN.
-func (w *windowBase) Event_EXITSIZEMOVE1(pFun WM_EXITSIZEMOVE1) bool {
+func (w *windowBase) Event_EXITSIZEMOVE1(pFun xc.WM_EXITSIZEMOVE1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_EXITSIZEMOVE, pFun)
 }
 
 // 窗口鼠标进入消息.
-func (w *windowBase) Event_MOUSEHOVER(pFun WM_MOUSEHOVER) bool {
+func (w *windowBase) Event_MOUSEHOVER(pFun xc.WM_MOUSEHOVER) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.WM_MOUSEHOVER, pFun)
 }
 
 // 窗口鼠标进入消息.
-func (w *windowBase) Event_MOUSEHOVER1(pFun WM_MOUSEHOVER1) bool {
+func (w *windowBase) Event_MOUSEHOVER1(pFun xc.WM_MOUSEHOVER1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_MOUSEHOVER, pFun)
 }
 
 // 窗口鼠标离开消息.
-func (w *windowBase) Event_MOUSELEAVE(pFun WM_MOUSELEAVE) bool {
+func (w *windowBase) Event_MOUSELEAVE(pFun xc.WM_MOUSELEAVE) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.WM_MOUSELEAVE, pFun)
 }
 
 // 窗口鼠标离开消息.
-func (w *windowBase) Event_MOUSELEAVE1(pFun WM_MOUSELEAVE1) bool {
+func (w *windowBase) Event_MOUSELEAVE1(pFun xc.WM_MOUSELEAVE1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_MOUSELEAVE, pFun)
 }
 
 // 窗口大小改变消息.
-func (w *windowBase) Event_SIZE(pFun WM_SIZE) bool {
+func (w *windowBase) Event_SIZE(pFun xc.WM_SIZE) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.WM_SIZE, pFun)
 }
 
 // 窗口大小改变消息.
-func (w *windowBase) Event_SIZE1(pFun WM_SIZE1) bool {
+func (w *windowBase) Event_SIZE1(pFun xc.WM_SIZE1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_SIZE, pFun)
 }
 
 // 窗口定时器消息.
-func (w *windowBase) Event_TIMER(pFun WM_TIMER) bool {
+func (w *windowBase) Event_TIMER(pFun xc.WM_TIMER) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.WM_TIMER, pFun)
 }
 
 // 窗口定时器消息.
-func (w *windowBase) Event_TIMER1(pFun WM_TIMER1) bool {
+func (w *windowBase) Event_TIMER1(pFun xc.WM_TIMER1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_TIMER, pFun)
 }
 
 // 窗口获得焦点.
-func (w *windowBase) Event_SETFOCUS(pFun WM_SETFOCUS) bool {
+func (w *windowBase) Event_SETFOCUS(pFun xc.WM_SETFOCUS) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.WM_SETFOCUS, pFun)
 }
 
 // 窗口获得焦点.
-func (w *windowBase) Event_SETFOCUS1(pFun WM_SETFOCUS1) bool {
+func (w *windowBase) Event_SETFOCUS1(pFun xc.WM_SETFOCUS1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_SETFOCUS, pFun)
 }
 
 // 窗口失去焦点.
-func (w *windowBase) Event_KILLFOCUS(pFun WM_KILLFOCUS) bool {
+func (w *windowBase) Event_KILLFOCUS(pFun xc.WM_KILLFOCUS) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.WM_KILLFOCUS, pFun)
 }
 
 // 窗口失去焦点.
-func (w *windowBase) Event_KILLFOCUS1(pFun WM_KILLFOCUS1) bool {
+func (w *windowBase) Event_KILLFOCUS1(pFun xc.WM_KILLFOCUS1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_KILLFOCUS, pFun)
 }
 
 // 窗口键盘按键消息.
-func (w *windowBase) Event_KEYDOWN(pFun WM_KEYDOWN) bool {
+func (w *windowBase) Event_KEYDOWN(pFun xc.WM_KEYDOWN) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.WM_KEYDOWN, pFun)
 }
 
 // 窗口键盘按键消息.
-func (w *windowBase) Event_KEYDOWN1(pFun WM_KEYDOWN1) bool {
+func (w *windowBase) Event_KEYDOWN1(pFun xc.WM_KEYDOWN1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_KEYDOWN, pFun)
 }
 
 // 窗口鼠标捕获改变消息.
-func (w *windowBase) Event_CAPTURECHANGED(pFun WM_CAPTURECHANGED) bool {
+func (w *windowBase) Event_CAPTURECHANGED(pFun xc.WM_CAPTURECHANGED) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.WM_CAPTURECHANGED, pFun)
 }
 
 // 窗口鼠标捕获改变消息.
-func (w *windowBase) Event_CAPTURECHANGED1(pFun WM_CAPTURECHANGED1) bool {
+func (w *windowBase) Event_CAPTURECHANGED1(pFun xc.WM_CAPTURECHANGED1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_CAPTURECHANGED, pFun)
 }
 
 // 窗口设置鼠标光标.
-func (w *windowBase) Event_SETCURSOR(pFun WM_SETCURSOR) bool {
+func (w *windowBase) Event_SETCURSOR(pFun xc.WM_SETCURSOR) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.WM_SETCURSOR, pFun)
 }
 
 // 窗口设置鼠标光标.
-func (w *windowBase) Event_SETCURSOR1(pFun WM_SETCURSOR1) bool {
+func (w *windowBase) Event_SETCURSOR1(pFun xc.WM_SETCURSOR1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_SETCURSOR, pFun)
 }
 
 // 窗口字符消息.
-func (w *windowBase) Event_CHAR(pFun WM_CHAR) bool {
+func (w *windowBase) Event_CHAR(pFun xc.WM_CHAR) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.WM_CHAR, pFun)
 }
 
 // 窗口字符消息.
-func (w *windowBase) Event_CHAR1(pFun WM_CHAR1) bool {
+func (w *windowBase) Event_CHAR1(pFun xc.WM_CHAR1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_CHAR, pFun)
 }
 
 // 拖动文件到窗口.
-func (w *windowBase) Event_DROPFILES(pFun WM_DROPFILES) bool {
+func (w *windowBase) Event_DROPFILES(pFun xc.WM_DROPFILES) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.WM_DROPFILES, pFun)
 }
 
 // 拖动文件到窗口.
-func (w *windowBase) Event_DROPFILES1(pFun WM_DROPFILES1) bool {
+func (w *windowBase) Event_DROPFILES1(pFun xc.WM_DROPFILES1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.WM_DROPFILES, pFun)
 }
 
-type XWM_MENU_POPUP func(hMenu int, pbHandled *bool) int                                                         // 菜单弹出.
-type XWM_MENU_POPUP1 func(hWindow int, hMenu int, pbHandled *bool) int                                           // 菜单弹出.
-type XWM_MENU_POPUP_WND func(hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int                           // 菜单弹出窗口.
-type XWM_MENU_POPUP_WND1 func(hWindow int, hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int             // 菜单弹出窗口.
-type XWM_MENU_SELECT func(nID int32, pbHandled *bool) int                                                        // 菜单选择.
-type XWM_MENU_SELECT1 func(hWindow int, nID int32, pbHandled *bool) int                                          // 菜单选择.
-type XWM_MENU_EXIT func(pbHandled *bool) int                                                                     // 菜单退出.
-type XWM_MENU_EXIT1 func(hWindow int, pbHandled *bool) int                                                       // 菜单退出.
-type XWM_MENU_DRAW_BACKGROUND func(hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int               // 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
-type XWM_MENU_DRAW_BACKGROUND1 func(hWindow int, hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int // 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
-type XWM_MENU_DRAWITEM func(hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int                            // 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
-type XWM_MENU_DRAWITEM1 func(hWindow int, hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int              // 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
-
 // 菜单弹出.
-func (w *windowBase) Event_MENU_POPUP(pFun XWM_MENU_POPUP) bool {
+func (w *windowBase) Event_MENU_POPUP(pFun xc.XWM_MENU_POPUP) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_POPUP, pFun)
 }
 
 // 菜单弹出.
-func (w *windowBase) Event_MENU_POPUP1(pFun XWM_MENU_POPUP1) bool {
+func (w *windowBase) Event_MENU_POPUP1(pFun xc.XWM_MENU_POPUP1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_POPUP, pFun)
 }
 
 // 菜单弹出窗口.
-func (w *windowBase) Event_MENU_POPUP_WND(pFun XWM_MENU_POPUP_WND) bool {
+func (w *windowBase) Event_MENU_POPUP_WND(pFun xc.XWM_MENU_POPUP_WND) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_POPUP_WND, pFun)
 }
 
 // 菜单弹出窗口.
-func (w *windowBase) Event_MENU_POPUP_WND1(pFun XWM_MENU_POPUP_WND1) bool {
+func (w *windowBase) Event_MENU_POPUP_WND1(pFun xc.XWM_MENU_POPUP_WND1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_POPUP_WND, pFun)
 }
 
 // 菜单选择.
-func (w *windowBase) Event_MENU_SELECT(pFun XWM_MENU_SELECT) bool {
+func (w *windowBase) Event_MENU_SELECT(pFun xc.XWM_MENU_SELECT) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_SELECT, pFun)
 }
 
 // 菜单选择.
-func (w *windowBase) Event_MENU_SELECT1(pFun XWM_MENU_SELECT1) bool {
+func (w *windowBase) Event_MENU_SELECT1(pFun xc.XWM_MENU_SELECT1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_SELECT, pFun)
 }
 
 // 菜单退出.
-func (w *windowBase) Event_MENU_EXIT(pFun XWM_MENU_EXIT) bool {
+func (w *windowBase) Event_MENU_EXIT(pFun xc.XWM_MENU_EXIT) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_EXIT, pFun)
 }
 
 // 菜单退出.
-func (w *windowBase) Event_MENU_EXIT1(pFun XWM_MENU_EXIT1) bool {
+func (w *windowBase) Event_MENU_EXIT1(pFun xc.XWM_MENU_EXIT1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_EXIT, pFun)
 }
 
 // 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
-func (w *windowBase) Event_MENU_DRAW_BACKGROUND(pFun XWM_MENU_DRAW_BACKGROUND) bool {
+func (w *windowBase) Event_MENU_DRAW_BACKGROUND(pFun xc.XWM_MENU_DRAW_BACKGROUND) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_DRAW_BACKGROUND, pFun)
 }
 
 // 绘制菜单背景, 启用该功能需要调用XMenu_EnableDrawBackground().
-func (w *windowBase) Event_MENU_DRAW_BACKGROUND1(pFun XWM_MENU_DRAW_BACKGROUND1) bool {
+func (w *windowBase) Event_MENU_DRAW_BACKGROUND1(pFun xc.XWM_MENU_DRAW_BACKGROUND1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_DRAW_BACKGROUND, pFun)
 }
 
 // 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
-func (w *windowBase) Event_MENU_DRAWITEM(pFun XWM_MENU_DRAWITEM) bool {
+func (w *windowBase) Event_MENU_DRAWITEM(pFun xc.XWM_MENU_DRAWITEM) bool {
 	return xc.XWnd_RegEventC(w.Handle, xcc.XWM_MENU_DRAWITEM, pFun)
 }
 
 // 绘制菜单项事件, 启用该功能需要调用XMenu_EnableDrawItem().
-func (w *windowBase) Event_MENU_DRAWITEM1(pFun XWM_MENU_DRAWITEM1) bool {
+func (w *windowBase) Event_MENU_DRAWITEM1(pFun xc.XWM_MENU_DRAWITEM1) bool {
 	return xc.XWnd_RegEventC1(w.Handle, xcc.XWM_MENU_DRAWITEM, pFun)
 }

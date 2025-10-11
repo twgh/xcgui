@@ -326,7 +326,7 @@ func (e *Editor) SetAutoMatchMode(mode int32) *Editor {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Editor) AddEvent_Editor_Modify_Rows(pFun XE_EDITOR_MODIFY_ROWS1, allowAddingMultiple ...bool) int {
+func (e *Editor) AddEvent_Editor_Modify_Rows(pFun xc.XE_EDITOR_MODIFY_ROWS1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_EDITOR_MODIFY_ROWS, onXE_EDITOR_MODIFY_ROWS, pFun, allowAddingMultiple...)
 }
 
@@ -335,7 +335,7 @@ func onXE_EDITOR_MODIFY_ROWS(hEle int, iRow int32, nRows int32, pbHandled *bool)
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDITOR_MODIFY_ROWS)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_EDITOR_MODIFY_ROWS1); ok {
+		if cb, ok := cbs[i].(xc.XE_EDITOR_MODIFY_ROWS1); ok {
 			ret = cb(hEle, iRow, nRows, pbHandled)
 		}
 		if *pbHandled {
@@ -350,7 +350,7 @@ func onXE_EDITOR_MODIFY_ROWS(hEle int, iRow int32, nRows int32, pbHandled *bool)
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Editor) AddEvent_Editor_SetBreakPoint(pFun XE_EDITOR_SETBREAKPOINT1, allowAddingMultiple ...bool) int {
+func (e *Editor) AddEvent_Editor_SetBreakPoint(pFun xc.XE_EDITOR_SETBREAKPOINT1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_EDITOR_SETBREAKPOINT, onXE_EDITOR_SETBREAKPOINT, pFun, allowAddingMultiple...)
 }
 
@@ -359,7 +359,7 @@ func onXE_EDITOR_SETBREAKPOINT(hEle int, iRow int32, bCheck bool, pbHandled *boo
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDITOR_SETBREAKPOINT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_EDITOR_SETBREAKPOINT1); ok {
+		if cb, ok := cbs[i].(xc.XE_EDITOR_SETBREAKPOINT1); ok {
 			ret = cb(hEle, iRow, bCheck, pbHandled)
 		}
 		if *pbHandled {
@@ -374,7 +374,7 @@ func onXE_EDITOR_SETBREAKPOINT(hEle int, iRow int32, bCheck bool, pbHandled *boo
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Editor) AddEvent_Editor_RemoveBreakPoint(pFun XE_EDITOR_REMOVEBREAKPOINT1, allowAddingMultiple ...bool) int {
+func (e *Editor) AddEvent_Editor_RemoveBreakPoint(pFun xc.XE_EDITOR_REMOVEBREAKPOINT1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_EDITOR_REMOVEBREAKPOINT, onXE_EDITOR_REMOVEBREAKPOINT, pFun, allowAddingMultiple...)
 }
 
@@ -383,7 +383,7 @@ func onXE_EDITOR_REMOVEBREAKPOINT(hEle int, iRow int32, pbHandled *bool) int {
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDITOR_REMOVEBREAKPOINT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_EDITOR_REMOVEBREAKPOINT1); ok {
+		if cb, ok := cbs[i].(xc.XE_EDITOR_REMOVEBREAKPOINT1); ok {
 			ret = cb(hEle, iRow, pbHandled)
 		}
 		if *pbHandled {
@@ -398,7 +398,7 @@ func onXE_EDITOR_REMOVEBREAKPOINT(hEle int, iRow int32, pbHandled *bool) int {
 // pFun: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Editor) AddEvent_Editor_AutoMatch_Select(pFun XE_EDITOR_AUTOMATCH_SELECT1, allowAddingMultiple ...bool) int {
+func (e *Editor) AddEvent_Editor_AutoMatch_Select(pFun xc.XE_EDITOR_AUTOMATCH_SELECT1, allowAddingMultiple ...bool) int {
 	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_EDITOR_AUTOMATCH_SELECT, onXE_EDITOR_AUTOMATCH_SELECT, pFun, allowAddingMultiple...)
 }
 
@@ -407,7 +407,7 @@ func onXE_EDITOR_AUTOMATCH_SELECT(hEle int, iRow int32, nRows int32, pbHandled *
 	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_EDITOR_AUTOMATCH_SELECT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_EDITOR_AUTOMATCH_SELECT1); ok {
+		if cb, ok := cbs[i].(xc.XE_EDITOR_AUTOMATCH_SELECT1); ok {
 			ret = cb(hEle, iRow, nRows, pbHandled)
 		}
 		if *pbHandled {
@@ -419,51 +419,42 @@ func onXE_EDITOR_AUTOMATCH_SELECT(hEle int, iRow int32, nRows int32, pbHandled *
 
 // ------------------------- 事件 ------------------------- //
 
-type XE_EDITOR_MODIFY_ROWS func(iRow int32, nRows int32, pbHandled *bool) int                 // 多行内容改变事件 例如:区块注释操作, 区块缩进操作, 代码格式化. iRow: 开始行. nRows: 改变行数量.
-type XE_EDITOR_MODIFY_ROWS1 func(hEle int, iRow int32, nRows int32, pbHandled *bool) int      // 多行内容改变事件 例如:区块注释操作, 区块缩进操作, 代码格式化. iRow: 开始行. nRows: 改变行数量.
-type XE_EDITOR_SETBREAKPOINT func(iRow int32, bCheck bool, pbHandled *bool) int               // 代码编辑框_设置断点.
-type XE_EDITOR_SETBREAKPOINT1 func(hEle int, iRow int32, bCheck bool, pbHandled *bool) int    // 代码编辑框_设置断点.
-type XE_EDITOR_REMOVEBREAKPOINT func(iRow int32, pbHandled *bool) int                         // 代码编辑框_移除断点.
-type XE_EDITOR_REMOVEBREAKPOINT1 func(hEle int, iRow int32, pbHandled *bool) int              // 代码编辑框_移除断点.
-type XE_EDITOR_AUTOMATCH_SELECT func(iRow int32, nRows int32, pbHandled *bool) int            // 代码编辑框_自动匹配选择.
-type XE_EDITOR_AUTOMATCH_SELECT1 func(hEle int, iRow int32, nRows int32, pbHandled *bool) int // 代码编辑框_自动匹配选择.
-
 // 多行内容改变事件 例如:区块注释操作, 区块缩进操作, 代码格式化.
-func (e *Editor) Event_EDITOR_MODIFY_ROWS(pFun XE_EDITOR_MODIFY_ROWS) bool {
+func (e *Editor) Event_EDITOR_MODIFY_ROWS(pFun xc.XE_EDITOR_MODIFY_ROWS) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDITOR_MODIFY_ROWS, pFun)
 }
 
 // 多行内容改变事件 例如:区块注释操作, 区块缩进操作, 代码格式化.
-func (e *Editor) Event_EDITOR_MODIFY_ROWS1(pFun XE_EDITOR_MODIFY_ROWS1) bool {
+func (e *Editor) Event_EDITOR_MODIFY_ROWS1(pFun xc.XE_EDITOR_MODIFY_ROWS1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDITOR_MODIFY_ROWS, pFun)
 }
 
 // 代码编辑框_设置断点.
-func (e *Editor) Event_EDITOR_SETBREAKPOINT(pFun XE_EDITOR_SETBREAKPOINT) bool {
+func (e *Editor) Event_EDITOR_SETBREAKPOINT(pFun xc.XE_EDITOR_SETBREAKPOINT) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDITOR_SETBREAKPOINT, pFun)
 }
 
 // 代码编辑框_设置断点.
-func (e *Editor) Event_EDITOR_SETBREAKPOINT1(pFun XE_EDITOR_SETBREAKPOINT1) bool {
+func (e *Editor) Event_EDITOR_SETBREAKPOINT1(pFun xc.XE_EDITOR_SETBREAKPOINT1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDITOR_SETBREAKPOINT, pFun)
 }
 
 // 代码编辑框_移除断点.
-func (e *Editor) Event_EDITOR_REMOVEBREAKPOINT(pFun XE_EDITOR_REMOVEBREAKPOINT) bool {
+func (e *Editor) Event_EDITOR_REMOVEBREAKPOINT(pFun xc.XE_EDITOR_REMOVEBREAKPOINT) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDITOR_REMOVEBREAKPOINT, pFun)
 }
 
 // 代码编辑框_移除断点.
-func (e *Editor) Event_EDITOR_REMOVEBREAKPOINT1(pFun XE_EDITOR_REMOVEBREAKPOINT1) bool {
+func (e *Editor) Event_EDITOR_REMOVEBREAKPOINT1(pFun xc.XE_EDITOR_REMOVEBREAKPOINT1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDITOR_REMOVEBREAKPOINT, pFun)
 }
 
 // 代码编辑框_自动匹配选择.
-func (e *Editor) Event_EDITOR_AUTOMATCH_SELECT(pFun XE_EDITOR_AUTOMATCH_SELECT) bool {
+func (e *Editor) Event_EDITOR_AUTOMATCH_SELECT(pFun xc.XE_EDITOR_AUTOMATCH_SELECT) bool {
 	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDITOR_AUTOMATCH_SELECT, pFun)
 }
 
 // 代码编辑框_自动匹配选择.
-func (e *Editor) Event_EDITOR_AUTOMATCH_SELECT1(pFun XE_EDITOR_AUTOMATCH_SELECT1) bool {
+func (e *Editor) Event_EDITOR_AUTOMATCH_SELECT1(pFun xc.XE_EDITOR_AUTOMATCH_SELECT1) bool {
 	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDITOR_AUTOMATCH_SELECT, pFun)
 }
