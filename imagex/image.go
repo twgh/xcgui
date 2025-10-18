@@ -280,7 +280,7 @@ func NewBySvgFile(pFileName string) *Image {
 	return p
 }
 
-// 图片_加载从SVG字符串.
+// 图片_加载从SVG字符串. 等同于 NewBySvgStringW.
 //
 // pString: 字符串.
 func NewBySvgString(pString string) *Image {
@@ -295,15 +295,6 @@ func NewBySvgString(pString string) *Image {
 func NewBySvgStringW(pString string) *Image {
 	p := &Image{}
 	p.SetHandle(xc.XImage_LoadSvgStringW(pString))
-	return p
-}
-
-// 图片_加载从SVG字符串UTF8, 更推荐使用 imagex.NewBySvgStringW.
-//
-// pString: 字符串.
-func NewBySvgStringUtf8(pString string) *Image {
-	p := &Image{}
-	p.SetHandle(xc.XImage_LoadSvgStringUtf8(pString))
 	return p
 }
 

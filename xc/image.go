@@ -237,6 +237,38 @@ func XImage_LoadFromHBITMAP(hBitmap uintptr) int {
 	return int(r)
 }
 
+// 图片_加载从SVG, 返回炫彩图片句柄.
+//
+// hSvg: SVG句柄.
+func XImage_LoadSvg(hSvg int) int {
+	r, _, _ := xImage_LoadSvg.Call(uintptr(hSvg))
+	return int(r)
+}
+
+// 图片_加载从SVG文件, 返回炫彩图片句柄.
+//
+// pFileName: 文件名.
+func XImage_LoadSvgFile(pFileName string) int {
+	r, _, _ := xImage_LoadSvgFile.Call(common.StrPtr(pFileName))
+	return int(r)
+}
+
+// 图片_加载从SVG字符串, 返回炫彩图片句柄. 等同于 XImage_LoadSvgStringW.
+//
+// pString: 字符串.
+func XImage_LoadSvgString(pString string) int {
+	r, _, _ := xImage_LoadSvgStringW.Call(common.StrPtr(pString))
+	return int(r)
+}
+
+// 图片_加载从SVG字符串W, 返回炫彩图片句柄.
+//
+// pString: 字符串.
+func XImage_LoadSvgStringW(pString string) int {
+	r, _, _ := xImage_LoadSvgStringW.Call(common.StrPtr(pString))
+	return int(r)
+}
+
 // 图片_判断缩放, 是否为拉伸图片句柄.
 //
 // hImage: 图片句柄.
@@ -424,51 +456,11 @@ func XImage_Destroy(hImage int) {
 	xImage_Destroy.Call(uintptr(hImage))
 }
 
-// 图片_加载从SVG.
-//
-// hSvg: SVG句柄.
-func XImage_LoadSvg(hSvg int) int {
-	r, _, _ := xImage_LoadSvg.Call(uintptr(hSvg))
-	return int(r)
-}
-
-// 图片_加载从SVG文件.
-//
-// pFileName: 文件名.
-func XImage_LoadSvgFile(pFileName string) int {
-	r, _, _ := xImage_LoadSvgFile.Call(common.StrPtr(pFileName))
-	return int(r)
-}
-
-// 图片_加载从SVG字符串.
-//
-// pString: 字符串.
-func XImage_LoadSvgString(pString string) int {
-	r, _, _ := xImage_LoadSvgString.Call(XC_wtoa(pString))
-	return int(r)
-}
-
 // 图片_取SVG, 返回SVG句柄.
 //
 // hImage: 图片句柄.
 func XImage_GetSvg(hImage int) int {
 	r, _, _ := xImage_GetSvg.Call(uintptr(hImage))
-	return int(r)
-}
-
-// 图片_加载从SVG字符串W.
-//
-// pString: 字符串.
-func XImage_LoadSvgStringW(pString string) int {
-	r, _, _ := xImage_LoadSvgStringW.Call(common.StrPtr(pString))
-	return int(r)
-}
-
-// 图片_加载从SVG字符串UTF8, 更推荐使用 xc.XImage_LoadSvgStringW.
-//
-// pString: 字符串.
-func XImage_LoadSvgStringUtf8(pString string) int {
-	r, _, _ := xImage_LoadSvgStringUtf8.Call(XC_wtoutf8(pString))
 	return int(r)
 }
 

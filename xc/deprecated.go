@@ -10,6 +10,20 @@ import (
 
 // Deprecated
 //
+// !这是旧版函数, 请使用 xc.XImage_LoadSvgString
+func XImage_LoadSvgStringUtf8(pString string) int {
+	return XImage_LoadSvgString(pString)
+}
+
+// Deprecated
+//
+// !这是旧版函数, 请使用 xc.XSvg_LoadString
+func XSvg_LoadStringUtf8(pString string) int {
+	return XSvg_LoadString(pString)
+}
+
+// Deprecated
+//
 // !这是旧版函数, 请使用 xc.RGBA
 func ARGB(r, g, b, a byte) uint32 {
 	return RGBA(r, g, b, a)

@@ -37,15 +37,6 @@ func NewByStringW(pString string) *Svg {
 	return p
 }
 
-// NewByStringUtf8 SVG_加载从字符串UTF8.
-//
-// pString: 字符串.
-func NewByStringUtf8(pString string) *Svg {
-	p := &Svg{}
-	p.SetHandle(xc.XSvg_LoadStringUtf8(pString))
-	return p
-}
-
 // NewByZip SVG_加载从ZIP, 返回Svg对象.
 //
 // pZipFileName: zip文件名.

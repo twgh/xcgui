@@ -1245,16 +1245,16 @@ var (
 	xImage_Destroy             *syscall.LazyProc
 	xImage_LoadSvg             *syscall.LazyProc
 	xImage_LoadSvgFile         *syscall.LazyProc
-	xImage_LoadSvgString       *syscall.LazyProc
-	xImage_GetSvg              *syscall.LazyProc
-	xImage_LoadSvgStringW      *syscall.LazyProc
-	xImage_LoadSvgStringUtf8   *syscall.LazyProc
-	xImage_SetScaleSize        *syscall.LazyProc
-	xImage_LoadZipRes          *syscall.LazyProc
+	// xImage_LoadSvgString       *syscall.LazyProc
+	xImage_GetSvg         *syscall.LazyProc
+	xImage_LoadSvgStringW *syscall.LazyProc
+	// xImage_LoadSvgStringUtf8 *syscall.LazyProc
+	xImage_SetScaleSize *syscall.LazyProc
+	xImage_LoadZipRes   *syscall.LazyProc
 
 	// Svg.
-	xSvg_LoadFile           *syscall.LazyProc
-	xSvg_LoadString         *syscall.LazyProc
+	xSvg_LoadFile *syscall.LazyProc
+	// xSvg_LoadString         *syscall.LazyProc
 	xSvg_LoadZip            *syscall.LazyProc
 	xSvg_LoadRes            *syscall.LazyProc
 	xSvg_SetSize            *syscall.LazyProc
@@ -1283,9 +1283,9 @@ var (
 	xSvg_GetRotate          *syscall.LazyProc
 	xSvg_Show               *syscall.LazyProc
 	xSvg_LoadStringW        *syscall.LazyProc
-	xSvg_LoadStringUtf8     *syscall.LazyProc
-	xSvg_LoadZipMem         *syscall.LazyProc
-	xSvg_LoadZipRes         *syscall.LazyProc
+	// xSvg_LoadStringUtf8     *syscall.LazyProc
+	xSvg_LoadZipMem *syscall.LazyProc
+	xSvg_LoadZipRes *syscall.LazyProc
 
 	// ListItemTemplate.
 	xTemp_Load               *syscall.LazyProc
@@ -3074,16 +3074,16 @@ func _loadXCGUI() {
 	xImage_Destroy = xcgui.NewProc("XImage_Destroy")
 	xImage_LoadSvg = xcgui.NewProc("XImage_LoadSvg")
 	xImage_LoadSvgFile = xcgui.NewProc("XImage_LoadSvgFile")
-	xImage_LoadSvgString = xcgui.NewProc("XImage_LoadSvgString")
+	// xImage_LoadSvgString = xcgui.NewProc("XImage_LoadSvgString")
 	xImage_GetSvg = xcgui.NewProc("XImage_GetSvg")
 	xImage_LoadSvgStringW = xcgui.NewProc("XImage_LoadSvgStringW")
-	xImage_LoadSvgStringUtf8 = xcgui.NewProc("XImage_LoadSvgStringUtf8")
+	// xImage_LoadSvgStringUtf8 = xcgui.NewProc("XImage_LoadSvgStringUtf8")
 	xImage_SetScaleSize = xcgui.NewProc("XImage_SetScaleSize")
 	xImage_LoadZipRes = xcgui.NewProc("XImage_LoadZipRes")
 
 	// Svg.
 	xSvg_LoadFile = xcgui.NewProc("XSvg_LoadFile")
-	xSvg_LoadString = xcgui.NewProc("XSvg_LoadString")
+	// xSvg_LoadString = xcgui.NewProc("XSvg_LoadString")
 	xSvg_LoadZip = xcgui.NewProc("XSvg_LoadZip")
 	xSvg_LoadRes = xcgui.NewProc("XSvg_LoadRes")
 	xSvg_SetSize = xcgui.NewProc("XSvg_SetSize")
@@ -3112,7 +3112,7 @@ func _loadXCGUI() {
 	xSvg_GetRotate = xcgui.NewProc("XSvg_GetRotate")
 	xSvg_Show = xcgui.NewProc("XSvg_Show")
 	xSvg_LoadStringW = xcgui.NewProc("XSvg_LoadStringW")
-	xSvg_LoadStringUtf8 = xcgui.NewProc("XSvg_LoadStringUtf8")
+	// xSvg_LoadStringUtf8 = xcgui.NewProc("XSvg_LoadStringUtf8")
 	xSvg_LoadZipMem = xcgui.NewProc("XSvg_LoadZipMem")
 	xSvg_LoadZipRes = xcgui.NewProc("XSvg_LoadZipRes")
 

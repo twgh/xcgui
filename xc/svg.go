@@ -14,11 +14,31 @@ func XSvg_LoadFile(pFileName string) int {
 	return int(r)
 }
 
-// SVG_加载从字符串, 返回SVG句柄.
+// SVG_加载从字符串, 返回SVG句柄. 等同于 XSvg_LoadStringW.
 //
 // pString: 字符串.
 func XSvg_LoadString(pString string) int {
-	r, _, _ := xSvg_LoadString.Call(XC_wtoa(pString))
+	r, _, _ := xSvg_LoadStringW.Call(common.StrPtr(pString))
+	return int(r)
+}
+
+// SVG_加载从字符串W, 返回SVG句柄.
+//
+// pString: 字符串.
+func XSvg_LoadStringW(pString string) int {
+	r, _, _ := xSvg_LoadStringW.Call(common.StrPtr(pString))
+	return int(r)
+}
+
+// SVG_加载从内存ZIP, 返回SVG句柄.
+//
+// data: zip数据.
+//
+// pFileName: svg文件名.
+//
+// pPassword: zip密码.
+func XSvg_LoadZipMem(data []byte, pFileName, pPassword string) int {
+	r, _, _ := xSvg_LoadZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(pFileName), common.StrPtr(pPassword))
 	return int(r)
 }
 
@@ -306,32 +326,4 @@ func XSvg_GetRotate(hSvg int, pAngle *float32, pX *float32, pY *float32, pbOffse
 // bShow: 是否显示.
 func XSvg_Show(hSvg int, bShow bool) {
 	xSvg_Show.Call(uintptr(hSvg), common.BoolPtr(bShow))
-}
-
-// SVG_加载从字符串W.
-//
-// pString: 字符串.
-func XSvg_LoadStringW(pString string) int {
-	r, _, _ := xSvg_LoadStringW.Call(common.StrPtr(pString))
-	return int(r)
-}
-
-// SVG_加载从字符串UTF8.
-//
-// pString: 字符串.
-func XSvg_LoadStringUtf8(pString string) int {
-	r, _, _ := xSvg_LoadStringUtf8.Call(XC_wtoutf8(pString))
-	return int(r)
-}
-
-// SVG_加载从内存ZIP.
-//
-// data: zip数据.
-//
-// pFileName: svg文件名.
-//
-// pPassword: zip密码.
-func XSvg_LoadZipMem(data []byte, pFileName, pPassword string) int {
-	r, _, _ := xSvg_LoadZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(pFileName), common.StrPtr(pPassword))
-	return int(r)
 }

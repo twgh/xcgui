@@ -25,13 +25,6 @@ func NewSvgByStringW(pString string) *svg.Svg {
 	return svg.NewByStringW(pString)
 }
 
-// NewSvgByStringUtf8 SVG_加载从字符串UTF8.
-//
-// pString: 字符串.
-func NewSvgByStringUtf8(pString string) *svg.Svg {
-	return svg.NewByStringUtf8(pString)
-}
-
 // NewSvgByZip SVG_加载从ZIP, 返回Svg对象.
 //
 // pZipFileName: zip文件名.

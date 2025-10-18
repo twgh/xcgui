@@ -232,7 +232,7 @@ func NewImageBySvgFile(pFileName string) *imagex.Image {
 	return imagex.NewBySvgFile(pFileName)
 }
 
-// 图片_加载从SVG字符串.
+// 图片_加载从SVG字符串. 等同于 NewImageBySvgStringW.
 //
 // pString: 字符串.
 func NewImageBySvgString(pString string) *imagex.Image {
@@ -244,13 +244,6 @@ func NewImageBySvgString(pString string) *imagex.Image {
 // pString: 字符串.
 func NewImageBySvgStringW(pString string) *imagex.Image {
 	return imagex.NewBySvgStringW(pString)
-}
-
-// 图片_加载从SVG字符串UTF8, 更推荐使用 imagex.NewBySvgStringW.
-//
-// pString: 字符串.
-func NewImageBySvgStringUtf8(pString string) *imagex.Image {
-	return imagex.NewBySvgStringUtf8(pString)
 }
 
 // 从句柄创建对象.
