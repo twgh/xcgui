@@ -413,3 +413,13 @@ func Float64ToUint32Pair(f float64) (low, high uint32) {
 	high = uint32(bits >> 32) // 浮点数的高32位
 	return
 }
+
+// GetLowWord 获取低 16 位.
+func GetLowWord(dwValue uint32) uint16 {
+	return uint16(dwValue & 0xFFFF)
+}
+
+// GetHighWord 获取高 16 位.
+func GetHighWord(dwValue uint32) uint16 {
+	return uint16((dwValue >> 16) & 0xFFFF)
+}

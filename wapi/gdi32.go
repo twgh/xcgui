@@ -3,7 +3,7 @@ package wapi
 import "syscall"
 
 var (
-	// Library.
+	// Gdi32 是 Windows 操作系统中的核心图形接口，负责所有图形和字体的屏幕显示与打印输出。
 	Gdi32 = syscall.NewLazyDLL("gdi32.dll")
 
 	// Functions.

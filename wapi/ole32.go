@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	// Library.
+	// Ole32 是 Windows 系统中实现对象链接与嵌入、COM 和 ActiveX 技术的核心组件，用于支持应用程序间的数据交换与复合文档处理。
 	Ole32 = syscall.NewLazyDLL("ole32.dll")
 
 	// Functions.

@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	// Library.
+	// Comdlg32 提供标准对话框功能，例如“打开文件”、“保存文件”、“选择字体”和“选择颜色”等公共对话框。
 	Comdlg32 = syscall.NewLazyDLL("comdlg32.dll")
 
 	// Functions.

@@ -1,16 +1,17 @@
 package wapi
 
 import (
-	"github.com/twgh/xcgui/common"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
 )
 
 var (
-	// Library.
+	// Shell32 负责提供图形用户界面（尤其是桌面、文件资源管理器等“Shell”外壳）的绝大部分功能、常用系统对话框以及大量系统 API 函数。
 	Shell32 = syscall.NewLazyDLL("shell32.dll")
 
 	// Functions.

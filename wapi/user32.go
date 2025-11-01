@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	// Library.
+	// User32 负责管理用户界面相关的基本功能，如窗口的创建、显示、消息处理和用户输入（鼠标、键盘）的响应。
 	User32 = syscall.NewLazyDLL("user32.dll")
 
 	// Functions.

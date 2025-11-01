@@ -1,13 +1,14 @@
 package wapi
 
 import (
-	"github.com/twgh/xcgui/common"
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 )
 
 var (
-	// Library.
+	// Kernel32 为应用程序提供最基础的操作系统功能，如内存管理、进程/线程控制、文件输入输出等底层系统服务。
 	Kernel32 = syscall.NewLazyDLL("kernel32.dll")
 
 	// Functions.

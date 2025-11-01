@@ -13,9 +13,6 @@
 	<a href="http://mall.xcgui.com">Official Resource</a>
 </p>
 
-
-
-
 ## Introduction
 
 English | [简体中文](./README.md)

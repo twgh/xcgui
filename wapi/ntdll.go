@@ -3,7 +3,7 @@ package wapi
 import "syscall"
 
 var (
-	// Library.
+	// Ntdll 是为运行在用户模式的应用程序提供访问操作系统内核（执行系统调用）和底层系统服务的接口。
 	Ntdll = syscall.NewLazyDLL("ntdll.dll")
 
 	// Functions.

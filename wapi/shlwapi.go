@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	// Library.
+	// Shlwapi 是 Windows 操作系统中提供 Shell 轻量级 API 的动态链接库，主要用于处理字符串、文件路径和注册表操作等基础功能.
 	Shlwapi = syscall.NewLazyDLL("shlwapi")
 
 	// Functions.
