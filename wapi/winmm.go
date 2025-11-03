@@ -139,3 +139,14 @@ func MciGetErrorString(fdwError uint32) string {
 	}
 	return ""
 }
+
+// MM_MCINOTIFY MCI 设备通知消息
+const MM_MCINOTIFY uint32 = 0x3B9
+
+// MCI 设备通知状态, 在 wParam 参数中
+const (
+	MCI_NOTIFY_SUCCESSFUL uint32 = 0x0001 // 命令成功完成
+	MCI_NOTIFY_SUPERSEDED uint32 = 0x0002 // 命令被另一个命令取代
+	MCI_NOTIFY_ABORTED    uint32 = 0x0004 // 命令被用户中止
+	MCI_NOTIFY_FAILURE    uint32 = 0x0008 // 命令失败
+)

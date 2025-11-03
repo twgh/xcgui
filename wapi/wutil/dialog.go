@@ -48,7 +48,7 @@ func OpenDir(hParent int) string {
 //
 // hParent: 父炫彩窗口句柄, 可为0.
 //
-// filters: 过滤器数组, 两个成员为一个过滤器, 前面是过滤器描述, 后面是过滤器类型. 填nil则不显示任何过滤器. 例: []string{"Text Files(*txt)", "*.txt", "All Files(*.*)", "*.*"}.
+// filters: 过滤器数组, 两个成员为一个过滤器, 前面是过滤器描述, 后面是过滤器类型. 填nil则不显示任何过滤器. 例: []string{"Text Files(*.txt)", "*.txt", "All Files(*.*)", "*.*"}.
 //
 // defaultDir: 初始目录, 即默认打开的目录.
 func OpenFile(hParent int, filters []string, defaultDir string) string {
@@ -103,7 +103,7 @@ func OpenFile(hParent int, filters []string, defaultDir string) string {
 //
 // hParent: 父炫彩窗口句柄, 可为0.
 //
-// filters: 过滤器数组, 两个成员为一个过滤器, 前面是过滤器描述, 后面是过滤器类型. 填nil则不显示任何过滤器. 例: []string{"Text Files(*txt)", "*.txt", "All Files(*.*)", "*.*"}.
+// filters: 过滤器数组, 两个成员为一个过滤器, 前面是过滤器描述, 后面是过滤器类型. 填nil则不显示任何过滤器. 例: []string{"Text Files(*.txt)", "*.txt", "All Files(*.*)", "*.*"}.
 //
 // defaultDir: 初始目录, 即默认打开的目录.
 func OpenFiles(hParent int, filters []string, defaultDir string) []string {
@@ -131,7 +131,7 @@ type OpenFileOption struct {
 	DefFileName string
 	// 默认扩展名, 如果用户没有输入文件扩展名, 则默认使用这个.
 	DefExt string
-	// 过滤器数组, 两个成员为一个过滤器, 前面是过滤器描述, 后面是过滤器类型. 不填则不显示任何过滤器. 例: []string{"Text Files(*txt)", "*.txt", "All Files(*.*)", "*.*"}.
+	// 过滤器数组, 两个成员为一个过滤器, 前面是过滤器描述, 后面是过滤器类型. 不填则不显示任何过滤器. 例: []string{"Text Files(*.txt)", "*.txt", "All Files(*.*)", "*.*"}.
 	Filters []string
 	// 最多打开的文件数量. 打开多个文件时可用.
 	//   - 只是为了分配合适的缓冲区大小, 并不能真的限制用户选择多少个文件, 如果用户的选择超过数量, 只返回 maxOpenFiles 个.
@@ -229,7 +229,7 @@ func OpenFileEx(opt OpenFileOption) []string {
 //
 // hParent: 父炫彩窗口句柄, 可为0.
 //
-// filters: 过滤器数组, 每两个成员为一个过滤器, 前面是过滤器描述, 后面是过滤器类型. 填nil则不显示任何过滤器. 例: []string{"Text Files(*txt)", "*.txt", "All Files(*.*)", "*.*"}.
+// filters: 过滤器数组, 每两个成员为一个过滤器, 前面是过滤器描述, 后面是过滤器类型. 填nil则不显示任何过滤器. 例: []string{"Text Files(*.txt)", "*.txt", "All Files(*.*)", "*.*"}.
 //
 // defaultDir: 初始目录, 即默认打开的目录.
 //

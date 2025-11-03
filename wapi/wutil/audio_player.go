@@ -6,27 +6,32 @@ import (
 	"errors"
 	"fmt"
 	"strings"
-	"time"
 
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 )
 
 // AudioPlayer 音频播放器.
+//   - 注意: 尽量在调用 Open() 的线程调用其它方法.
+//   - 尽可能统一在 UI 线程调用, 否则可能调用失败.
 type AudioPlayer struct {
-	alias string // 音频别名
+	// Alias 音频别名.
+	//   - 这是在 Open() 时内部指定的.
+	//   - 可用于自行调用 MCI 命令.
+	Alias string
 }
 
-// NewAudioPlayer 创建新的音频播放器
+// NewAudioPlayer 创建音频播放器.
 func NewAudioPlayer() *AudioPlayer {
 	return &AudioPlayer{}
 }
 
 // Open 打开音频文件.
+//   - 不再使用时需调用 Close() 以释放系统资源.
 //
 // fileName: 文件路径.
 func (ap *AudioPlayer) Open(fileName string) error {
-	if ap.alias != "" {
+	if ap.Alias != "" {
 		return nil
 	}
 
@@ -38,118 +43,166 @@ func (ap *AudioPlayer) Open(fileName string) error {
 		return err
 	}
 
-	ap.alias = alias
+	ap.Alias = alias
 	return nil
 }
 
+// PlayOptions 播放选项.
+type PlayOptions struct {
+	// Volume 音量 (0-1000), 不支持某些音频格式.
+	Volume *int
+	// Wait 是否等待播放完成.
+	Wait bool
+	// Repeat 是否重复播放, 不支持 wav 格式.
+	Repeat bool
+	// Notify 是否在播放完成时发送通知消息 wapi.MM_MCINOTIFY 到窗口消息过程.
+	Notify bool
+	// SeekToStart 是否从开头开始播放.
+	SeekToStart bool
+}
+
 // Play 播放音频文件.
-//   - 最后必须调用 Close() 以释放系统资源.
+//   - 注意: 它是在当前位置开始播放.
+//   - 已经播放完的音频, 位置是在结尾. 想回到开头, 请先使用 SeekToStart(), 或者将 PlayOptions.SeekToStart 设置为 true, 每次都从头播放.
 //
-// sync: 是否同步播放, 为空默认为 false, 异步播放.
-func (ap *AudioPlayer) Play(sync ...bool) error {
-	if ap.alias == "" {
+// opts: 播放选项.
+func (ap *AudioPlayer) Play(opts ...PlayOptions) error {
+	if ap.Alias == "" {
 		return fmt.Errorf("must open the audio first")
 	}
 
-	// 先停止当前播放
-	_ = ap.Stop()
-
-	// 确定播放方式
-	isSync := false
-	if len(sync) > 0 {
-		isSync = sync[0]
+	if ap.IsPlaying() {
+		// 先停止当前播放
+		_ = ap.Stop()
 	}
 
+	opt := PlayOptions{}
+	if len(opts) > 0 {
+		opt = opts[0]
+	}
+
+	// 是否从开头开始播放
+	if opt.SeekToStart {
+		err := ap.SeekToStart()
+		if err != nil {
+			return err
+		}
+	}
+
+	// 设置音量
+	if opt.Volume != nil {
+		err := ap.SetVolume(*opt.Volume)
+		if err != nil {
+			return err
+		}
+	}
+
+	// 是否等待播放完成
 	wait := ""
-	if isSync {
+	if opt.Wait {
 		wait = " wait"
 	}
 
+	// 是否重复播放
+	repeat := ""
+	if opt.Repeat {
+		repeat = " repeat"
+	}
+
+	// 是否在播放完成时发送通知消息
+	notify := ""
+	if opt.Notify {
+		notify = " notify"
+	}
+
 	// 开始播放
-	cmd := fmt.Sprintf("play %s%s", ap.alias, wait)
+	cmd := fmt.Sprintf("play %s%s%s%s", ap.Alias, repeat, notify, wait)
 	return _MciSendString(cmd)
 }
 
 // Pause 暂停播放.
 //   - 暂停后可以调用 Resume() 恢复播放.
 func (ap *AudioPlayer) Pause() error {
-	if ap.alias == "" {
+	if ap.Alias == "" {
 		return nil
 	}
 
-	cmd := fmt.Sprintf("pause %s", ap.alias)
+	cmd := fmt.Sprintf("pause %s", ap.Alias)
 	return _MciSendString(cmd)
 }
 
 // Resume 恢复播放.
 func (ap *AudioPlayer) Resume() error {
-	if ap.alias == "" {
+	if ap.Alias == "" {
 		return fmt.Errorf("must open the audio first")
 	}
 
-	cmd := fmt.Sprintf("resume %s", ap.alias)
+	cmd := fmt.Sprintf("resume %s", ap.Alias)
 	return _MciSendString(cmd)
 }
 
 // Stop 停止播放.
 func (ap *AudioPlayer) Stop() error {
-	if ap.alias == "" {
+	if ap.Alias == "" {
 		return nil
 	}
 
-	cmd := fmt.Sprintf("stop %s", ap.alias)
+	cmd := fmt.Sprintf("stop %s", ap.Alias)
 	return _MciSendString(cmd)
 }
 
 // Close 关闭音频设备.
-//   - 关闭前最好先 Stop().
 func (ap *AudioPlayer) Close() error {
-	if ap.alias == "" {
+	if ap.Alias == "" {
 		return nil
 	}
 
-	cmd := fmt.Sprintf("close %s", ap.alias)
+	cmd := fmt.Sprintf("close %s", ap.Alias)
 	err := _MciSendString(cmd)
 	if err != nil {
 		return err
 	}
 
-	ap.alias = ""
+	ap.Alias = ""
 	return nil
 }
 
-// SetVolume 设置音量 (0-100).
+// SetVolume 设置音量, 不支持某些音频格式.
 //
-// volume: 音量范围, 0-100.
+// volume: 音量范围, 0-1000.
 func (ap *AudioPlayer) SetVolume(volume int) error {
-	if ap.alias == "" {
+	if ap.Alias == "" {
 		return fmt.Errorf("must open the audio first")
 	}
 
-	if volume < 0 || volume > 100 {
-		return fmt.Errorf("the volume must be between 0 and 100")
+	if volume < 0 {
+		volume = 0
+	}
+	if volume > 1000 {
+		volume = 1000
 	}
 
-	// 先尝试 0-100 范围
-	cmd := fmt.Sprintf("setaudio %s volume to %d", ap.alias, volume)
+	// 先尝试 0-1000 范围
+	cmd := fmt.Sprintf("setaudio %s volume to %d", ap.Alias, volume)
 	err := _MciSendString(cmd)
 	if err == nil {
 		return nil
 	}
 
-	// 如果失败，尝试 0-1000 范围
-	volume *= 10
-	if volume > 1000 {
-		volume = 1000
+	// 如果失败，尝试 0-100 范围
+	if volume >= 10 {
+		volume /= 10
+	} else {
+		volume = 1
 	}
 
-	cmd = fmt.Sprintf("setaudio %s volume to %d", ap.alias, volume)
+	cmd = fmt.Sprintf("setaudio %s volume to %d", ap.Alias, volume)
 	return _MciSendString(cmd)
 }
 
-// GetVolume 获取音量 (0-100).
+// GetVolume 获取音量.
 func (ap *AudioPlayer) GetVolume() (int, error) {
-	if ap.alias == "" {
+	if ap.Alias == "" {
 		return 0, fmt.Errorf("must open the audio first")
 	}
 
@@ -157,11 +210,6 @@ func (ap *AudioPlayer) GetVolume() (int, error) {
 	volume, err := ap.getStatus("volume")
 	if err != nil {
 		return 0, err
-	}
-
-	// MCI 音量范围可能是 0-1000，转换为 0-100
-	if volume > 100 {
-		volume = volume / 10
 	}
 	return volume, nil
 }
@@ -188,7 +236,7 @@ func (ap *AudioPlayer) Seek(positionMs int) error {
 	originalMode, _ := ap.GetPlaybackMode()
 
 	// 执行跳转
-	cmd := fmt.Sprintf("seek %s to %d", ap.alias, positionMs)
+	cmd := fmt.Sprintf("seek %s to %d", ap.Alias, positionMs)
 	if err := _MciSendString(cmd); err != nil {
 		return err
 	}
@@ -278,7 +326,7 @@ func (ap *AudioPlayer) SeekPercent(percent float64) error {
 
 // GetPosition 获取当前播放位置 (毫秒).
 func (ap *AudioPlayer) GetPosition() (int, error) {
-	if ap.alias == "" {
+	if ap.Alias == "" {
 		return 0, fmt.Errorf("must open the audio first")
 	}
 	return ap.getStatus("position")
@@ -286,7 +334,7 @@ func (ap *AudioPlayer) GetPosition() (int, error) {
 
 // GetLength 获取音频长度 (毫秒).
 func (ap *AudioPlayer) GetLength() (int, error) {
-	if ap.alias == "" {
+	if ap.Alias == "" {
 		return 0, fmt.Errorf("must open the audio first")
 	}
 	return ap.getStatus("length")
@@ -296,11 +344,11 @@ func (ap *AudioPlayer) GetLength() (int, error) {
 //
 // 返回值: 播放模式字符串, 对应 Mode 开头的常量, 如: ModePlaying.
 func (ap *AudioPlayer) GetPlaybackMode() (string, error) {
-	if ap.alias == "" {
+	if ap.Alias == "" {
 		return "", fmt.Errorf("must open the audio first")
 	}
 
-	cmd := fmt.Sprintf("status %s mode", ap.alias)
+	cmd := fmt.Sprintf("status %s mode", ap.Alias)
 
 	var resultStr string
 	ret := wapi.MciSendString(cmd, &resultStr, 256, 0)
@@ -363,35 +411,9 @@ func (ap *AudioPlayer) CanPlay() bool {
 	return mode == ModeStopped || mode == ModePaused || mode == ModeOpen || mode == ModeReady
 }
 
-// WaitForPlaybackComplete 等待播放完成.
-//
-// timeout: 超时时间.
-func (ap *AudioPlayer) WaitForPlaybackComplete(timeout time.Duration) error {
-	deadline := time.Now().Add(timeout)
-
-	for time.Now().Before(deadline) {
-		mode, err := ap.GetPlaybackMode()
-		if err != nil {
-			return err
-		}
-
-		if mode == ModeStopped || mode == ModeOpen {
-			return nil // 播放完成
-		}
-
-		if !ap.IsPlaying() && !ap.IsPaused() {
-			return fmt.Errorf("playback terminated abnormally")
-		}
-
-		time.Sleep(100 * time.Millisecond) // 每 100 ms 检查一次
-	}
-
-	return fmt.Errorf("waiting for playback to complete timeout")
-}
-
 // getStatus 通用的状态查询方法.
 func (ap *AudioPlayer) getStatus(statusType string) (int, error) {
-	cmd := fmt.Sprintf("status %s %s", ap.alias, statusType)
+	cmd := fmt.Sprintf("status %s %s", ap.Alias, statusType)
 
 	var resultStr string
 	ret := wapi.MciSendString(cmd, &resultStr, 256, 0)
