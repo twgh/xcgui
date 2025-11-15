@@ -1,12 +1,13 @@
 package xc_test
 
 import (
+	"testing"
+
 	"github.com/twgh/xcgui/app"
 	"github.com/twgh/xcgui/tf"
 	"github.com/twgh/xcgui/widget"
 	"github.com/twgh/xcgui/window"
 	"github.com/twgh/xcgui/xc"
-	"testing"
 )
 
 func TestCallUTWithAny(t *testing.T) {
@@ -22,19 +23,29 @@ func TestCallUTWithAny(t *testing.T) {
 		btn.AddEvent_BnClick(func(hEle int, pbHandled *bool) int {
 			go func() {
 				xc.CallUTAny(func(data ...interface{}) int {
-					t.Log("可变参数:", data)
-					return 0
-				}, data1, "男", "北京")
-
-				xc.AutoAny(func(data ...interface{}) int {
-					t.Log("可变参数:", data)
-					return 0
-				}, data2, "女", "上海")
-
-				xc.CallUTAny(func(data ...interface{}) int {
 					t.Log("不传参数:", data)
 					return 0
 				})
+
+				xc.CallUTAny(func(data ...interface{}) int {
+					t.Log("1个参数:", data)
+					return 0
+				}, data1)
+
+				xc.AutoAny(func(data ...interface{}) int {
+					t.Log("2个参数:", data)
+					return 0
+				}, data2, "女")
+
+				xc.CallUTAny(func(data ...interface{}) int {
+					t.Log("3个参数:", data)
+					return 0
+				}, data1, "女", "上海")
+
+				xc.A(func(data ...interface{}) int {
+					t.Log("更多参数:", data)
+					return 0
+				}, data1, data2, "女", "上海", 100, 3.14)
 			}()
 			return 0
 		})

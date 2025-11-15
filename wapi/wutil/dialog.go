@@ -20,7 +20,7 @@ func OpenDir(hParent int) string {
 		hwnd = xc.XWnd_GetHWND(hParent)
 	}
 
-	displayNameBuffer := make([]uint16, 260)
+	displayNameBuffer := make([]uint16, syscall.MAX_PATH)
 	lpszTitle, _ := syscall.UTF16PtrFromString("请选择目录")
 
 	bi := wapi.BrowseInfoW{
@@ -63,7 +63,7 @@ func OpenFile(hParent int, filters []string, defaultDir string) string {
 		lpstrFilter = common.StringToUint16Ptr(strings.Join(filters, wapi.NullStr) + wapi.NullStr2)
 	}
 
-	lpstrFile := make([]uint16, 260)
+	lpstrFile := make([]uint16, syscall.MAX_PATH)
 	lpstrTitle, _ := syscall.UTF16PtrFromString("打开文件")
 	if defaultDir != "" {
 		lpstrInitialDir, _ = syscall.UTF16PtrFromString(defaultDir)
@@ -254,7 +254,7 @@ func SaveFileEx(opt OpenFileOption) string {
 		lpstrFilter = common.StringToUint16Ptr(strings.Join(opt.Filters, wapi.NullStr) + wapi.NullStr2)
 	}
 
-	fileNameBuffer := make([]uint16, 260)
+	fileNameBuffer := make([]uint16, syscall.MAX_PATH)
 	if opt.DefFileName != "" {
 		fromString, err := syscall.UTF16FromString(opt.DefFileName)
 		if err == nil {

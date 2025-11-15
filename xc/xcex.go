@@ -49,6 +49,25 @@ func XC_CallUT(f func()) {
 	xC_CallUiThread.Call(uiThreadCallBackPtr, uintptr(0))
 }
 
+// U 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
+//   - 是 XC_CallUT 的简写.
+//
+// f: 回调函数, 没有参数也没有返回值, 可以直接使用匿名函数.
+func U(f func()) {
+	XC_CallUT(f)
+}
+
+// A 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
+//   - 是 CallUTAny 的简写.
+//   - 可以传入任意参数.
+//
+// f: 回调函数.
+//
+// data: 传进回调函数的用户自定义数据.
+func A(f func(data ...interface{}) int, data ...interface{}) int {
+	return CallUTAny(f, data...)
+}
+
 // CallUTAny 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
 //   - 与 XC_CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数.
 //   - 可以传入任意参数.
@@ -61,13 +80,22 @@ func CallUTAny(f func(data ...interface{}) int, data ...interface{}) int {
 	defer utLock.Unlock()
 
 	uiThreadCallBackFunc = func(args int) int {
-		s := common.UintPtrToSlice(uintptr(args))
+		s := common.UintPtrToSliceWithCap(uintptr(args))
 		return f(s...)
 	}
 
 	var dataPtr uintptr
-	if len(data) > 0 {
-		dataPtr = uintptr(unsafe.Pointer(&data[0]))
+	dataLen := len(data)
+	if dataLen > 0 {
+		// 创建新切片, 第0个元素是切片长度, 后面是参数数据
+		dataCopy := make([]interface{}, dataLen+1)
+		dataCopy[0] = dataLen + 1
+
+		for i := 1; i < dataLen+1; i++ {
+			dataCopy[i] = data[i-1]
+		}
+
+		dataPtr = uintptr(unsafe.Pointer(&dataCopy[0]))
 	}
 	r, _, _ := xC_CallUiThread.Call(uiThreadCallBackPtr, dataPtr)
 	return int(r)
