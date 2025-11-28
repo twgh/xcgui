@@ -2,8 +2,9 @@ package wapi_test
 
 import (
 	"fmt"
-	"github.com/twgh/xcgui/tf"
 	"testing"
+
+	"github.com/twgh/xcgui/tf"
 
 	"github.com/twgh/xcgui/app"
 	"github.com/twgh/xcgui/wapi"
@@ -98,6 +99,17 @@ func TestSetForegroundWindow(t *testing.T) {
 			return 0
 		})
 	})
+}
+
+func TestGetClassName(t *testing.T) {
+	hWnd := wapi.GetDesktopWindow()
+	fmt.Println("DesktopWindow hWnd:", hWnd)
+	var className string
+	if wapi.GetClassName(hWnd, &className, 256) == 0 {
+		fmt.Println("GetClassName 失败")
+		return
+	}
+	fmt.Println(className, len(className))
 }
 
 func TestGetSystemMetrics(t *testing.T) {

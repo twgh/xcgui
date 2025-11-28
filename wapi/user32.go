@@ -579,10 +579,20 @@ func IsWindowVisible(hWnd uintptr) bool {
 // 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetClassName.
 //
 // hWnd: 窗口的句柄，以及窗口所属的类的间接句柄。
-func GetClassName(hWnd uintptr) string {
-	buf := make([]uint16, 256)
-	ret, _, _ := procGetClassName.Call(hWnd, uintptr(unsafe.Pointer(&buf[0])), uintptr(256))
-	return common.UintPtrToString(ret)
+//
+// lpClassName: 类名字符串。
+//
+// nMaxCount: lpClassName 缓冲区的长度（以字符为单位）。
+//   - 缓冲区必须足够大，才能包含终止 null 字符; 否则，类名字符串将被截断为 nMaxCount-1 字符。
+//
+// 返回值:
+//   - 如果函数成功，则返回值是复制到缓冲区的字符数，不包括终止 null 字符。
+//   - 如果函数失败，则返回值为零。
+func GetClassName(hWnd uintptr, lpClassName *string, nMaxCount int) int {
+	buf := make([]uint16, nMaxCount)
+	ret, _, _ := procGetClassName.Call(hWnd, uintptr(unsafe.Pointer(&buf[0])), uintptr(nMaxCount))
+	*lpClassName = syscall.UTF16ToString(buf[:])
+	return int(ret)
 }
 
 // EnumWindows 通过将句柄传递到每个窗口，进而将传递给应用程序定义的回调函数，枚举屏幕上的所有顶级窗口。
@@ -1316,11 +1326,13 @@ func GetWindowTextLengthW(hWnd uintptr) int {
 //
 // nMaxCount: 复制到缓冲区的最大字符数，包括空字符。如果文本超出此限制，则将其截断.
 //
-// 返回值: 如果函数成功，则返回值是复制字符串的长度（以字符为单位），不包括终止空字符。如果窗口没有标题栏或文本，如果标题栏为空，或者窗口或控制句柄无效，则返回值为零.
+// 返回值:
+//   - 如果函数成功，则返回值是复制字符串的长度（以字符为单位），不包括终止空字符。
+//   - 如果窗口没有标题栏或文本，如果标题栏为空，或者窗口或控制句柄无效，则返回值为零.
 func GetWindowTextW(hWnd uintptr, lpString *string, nMaxCount int) int {
 	buf := make([]uint16, nMaxCount)
 	r, _, _ := getWindowTextW.Call(hWnd, common.Uint16SliceDataPtr(&buf), uintptr(nMaxCount))
-	*lpString = syscall.UTF16ToString(buf[0:])
+	*lpString = syscall.UTF16ToString(buf[:])
 	return int(r)
 }
 
