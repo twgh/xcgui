@@ -150,7 +150,7 @@ func (i *ICoreWebView2WebResourceResponse) GetHeaders() (*ICoreWebView2HttpRespo
 	return headers, nil
 }
 
-// GetHeadersMap 获取请求的HTTP标头并转换为map。
+// GetHeadersMap 获取请求的 HTTP 标头并转换为 map。
 func (i *ICoreWebView2WebResourceResponse) GetHeadersMap() (map[string]string, error) {
 	headers, err := i.GetHeaders()
 	if err != nil {
@@ -208,9 +208,16 @@ func (i *ICoreWebView2WebResourceResponse) MustGetHeaders() *ICoreWebView2HttpRe
 	return headers
 }
 
-// MustGetHeadersMap 获取请求的HTTP标头并转换为map。出错时会触发全局错误回调。
+// MustGetHeadersMap 获取请求的 HTTP 标头并转换为 map。出错时会触发全局错误回调。
 func (i *ICoreWebView2WebResourceResponse) MustGetHeadersMap() map[string]string {
 	headers, err := i.GetHeadersMap()
 	ReportErrorAuto(err)
 	return headers
+}
+
+// MustGetContent 获取请求的内容。出错时会触发全局错误回调。
+func (i *ICoreWebView2WebResourceResponse) MustGetContent() []byte {
+	content, err := i.GetContent()
+	ReportErrorAuto(err)
+	return content
 }
