@@ -16,22 +16,20 @@ type WebView2 struct {
 
 	// 宿主窗口句柄
 	hwnd uintptr
-	// WebView2 控制器创建完成后是否自动获取焦点
-	focusOnInit bool
 }
 
 func (w *WebView2) GetWebViewEventImpl() *WebViewEventImpl {
 	return &w.WebViewEventImpl
 }
 
-// Navigate 导航 webview 到给定的 URL。
+// Navigate 导航WebView 到给定的 URL。
 //   - URL 可能是数据 URI，即 "data:text/html,<html>...</html>"。
-//   - 通常不进行适当的 url 编码也是可以的, webview 会为你重新编码。
+//   - 通常不进行适当的 url 编码也是可以的,WebView 会为你重新编码。
 func (w *WebView2) Navigate(url string) error {
 	return w.CoreWebView.Navigate(url)
 }
 
-// NavigateToString 直接设置 webview 的 HTML。
+// NavigateToString 直接设置WebView 的 HTML。
 // 页面的来源是 `about:blank`。
 //
 // htmlContent: 参数的总大小不能大于2 MB（2*1024*1024字节）.
@@ -111,12 +109,12 @@ func (w *WebView2) GetDocumentTitle() string {
 	return w.CoreWebView.MustGetDocumentTitle()
 }
 
-// Show 显示或隐藏 webview。
+// Show 显示或隐藏WebView。
 func (w *WebView2) Show(isShow bool) error {
 	return w.Controller.SetIsVisible(isShow)
 }
 
-// Resize 重新设置 webview 窗口大小和宿主窗口的客户区大小一致.
+// Resize 重新设置WebView 窗口大小和宿主窗口的客户区大小一致.
 func (w *WebView2) Resize() error {
 	if w.Controller == nil {
 		return errors.New("ICoreWebView2Controller is nil")
@@ -168,7 +166,6 @@ func (w *WebView2) NotifyParentWindowPositionChanged() error {
 // Focus 设置焦点。
 func (w *WebView2) Focus() error {
 	if w.Controller == nil {
-		w.focusOnInit = true
 		return errors.New("controller is nil")
 	}
 	return w.Controller.MoveFocus(COREWEBVIEW2_MOVE_FOCUS_REASON_PROGRAMMATIC)

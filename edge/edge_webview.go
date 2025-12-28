@@ -169,7 +169,7 @@ func wndproc(hwnd uintptr, message uint32, wParam, lParam uintptr) uintptr {
 		if wParam == wapi.WA_INACTIVE {
 			break
 		}
-		if w := hwndContext.GetWindowContext(hwnd); w != nil && w.autofocus {
+		if w := hwndContext.GetWindowContext(hwnd); w != nil && w.autoFocus {
 			_ = w.Focus()
 			return 0
 		}
@@ -226,7 +226,7 @@ func clearWebView2(w *WebView) error {
 }
 
 /*// SetSize 更新原生窗口大小。
-//   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
+//   - WebView 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
 func (w *WebView) SetSize(width, height int32) {
 	wapi.SetWindowPos(w.hwnd, 0, 0, 0, width, height, wapi.SWP_NOMOVE|wapi.SWP_NOZORDER|wapi.SWP_NOACTIVATE)
 }*/
@@ -361,20 +361,20 @@ func (w *WebView) UnbindAll() {
 	w.rwxBindings.Unlock()
 }
 
-// GetHWND 返回 webview 所在的原生窗口句柄.
-//   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
+// GetHWND 返回 WebView 所在的原生窗口句柄.
+//   - WebView 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
 func (w *WebView) GetHWND() uintptr {
 	return w.hwnd
 }
 
-// GetHWindow 返回 webview 所在的炫彩窗口句柄.
-//   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
+// GetHWindow 返回 WebView 所在的炫彩窗口句柄.
+//   - WebView 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
 func (w *WebView) GetHWindow() int {
 	return w.hWindow
 }
 
-// GetHParernt 返回 webview 所在的炫彩元素或窗口句柄.
-//   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
+// GetHParernt 返回 WebView 所在的炫彩元素或窗口句柄.
+//   - WebView 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
 func (w *WebView) GetHParent() int {
 	return w.hParent
 }
@@ -462,7 +462,7 @@ func (w *WebView) BindLog(funcName ...string) error {
 }
 
 // SetTitle 更新原生窗口的标题。
-//   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
+//   - WebView 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
 func (w *WebView) SetTitle(title string) error {
 	if !wapi.SetWindowText(w.hwnd, title) {
 		return errors.New("SetWindowText failed")
@@ -471,7 +471,7 @@ func (w *WebView) SetTitle(title string) error {
 }
 
 // Close 销毁 WebView 所在的原生窗口.
-//   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的。
+//   - WebView 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的。
 //   - 在原生窗口被销毁时会清理底层浏览器实例并释放该 WebView 相关的 Com 对象。
 func (w *WebView) Close() error {
 	if wapi.IsWindow(w.hwnd) {
@@ -483,13 +483,13 @@ func (w *WebView) Close() error {
 }
 
 // Event_Destroy 宿主原生窗口销毁事件.
-//   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
+//   - WebView 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
 func (w *WebView) Event_Destroy(cb func(wv *WebView)) {
 	w.cbDestroy = cb
 }
 
 // Event_NCDestroy 宿主原生窗口非客户区销毁事件.
-//   - webview 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
+//   - WebView 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
 //   - 执行顺序在 Event_Destroy 之后, 这个时候原生窗口句柄已无效.
 func (w *WebView) Event_NCDestroy(cb func(wv *WebView)) {
 	w.cbNCDestroy = cb
@@ -580,10 +580,6 @@ func newWebView2Controller(w *WebView, opt *WebViewOptions) error {
 		err = w.CoreWebView.AddScriptToExecuteOnDocumentCreated("window.external={invoke:s=>window.chrome.webview.postMessage(s)}", nil)
 		ReportErrorAuto(err)
 
-		if w.focusOnInit {
-			err = w.Focus()
-			ReportErrorAuto(err)
-		}
 		isDone = true
 	}
 
