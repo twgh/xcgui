@@ -11,33 +11,33 @@ import (
 //   - 可调用 InitWebView2_Objs 进行统一赋值.
 //   - 在 WebView 关闭时会自动调用 ReleaseWebView2_Objs, 自己额外创建的 WebView2_Objs 得自己手动释放.
 type WebView2_Objs struct {
-	WebView2_2  *ICoreWebView2_2  // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_3  *ICoreWebView2_3  // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_4  *ICoreWebView2_4  // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_5  *ICoreWebView2_5  // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_6  *ICoreWebView2_6  // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_7  *ICoreWebView2_7  // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_8  *ICoreWebView2_8  // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_9  *ICoreWebView2_9  // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_10 *ICoreWebView2_10 // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_11 *ICoreWebView2_11 // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_12 *ICoreWebView2_12 // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_13 *ICoreWebView2_13 // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_14 *ICoreWebView2_14 // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_15 *ICoreWebView2_15 // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_16 *ICoreWebView2_16 // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_17 *ICoreWebView2_17 // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_18 *ICoreWebView2_18 // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_19 *ICoreWebView2_19 // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_20 *ICoreWebView2_20 // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_21 *ICoreWebView2_21 // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_22 *ICoreWebView2_22 // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_23 *ICoreWebView2_23 // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_24 *ICoreWebView2_24 // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_25 *ICoreWebView2_25 // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_26 *ICoreWebView2_26 // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_27 *ICoreWebView2_27 // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
-	WebView2_28 *ICoreWebView2_28 // 默认值为 nil, 使用前需赋值, 会在 webview 关闭时自动释放
+	WebView2_2  *ICoreWebView2_2  // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_3  *ICoreWebView2_3  // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_4  *ICoreWebView2_4  // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_5  *ICoreWebView2_5  // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_6  *ICoreWebView2_6  // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_7  *ICoreWebView2_7  // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_8  *ICoreWebView2_8  // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_9  *ICoreWebView2_9  // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_10 *ICoreWebView2_10 // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_11 *ICoreWebView2_11 // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_12 *ICoreWebView2_12 // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_13 *ICoreWebView2_13 // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_14 *ICoreWebView2_14 // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_15 *ICoreWebView2_15 // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_16 *ICoreWebView2_16 // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_17 *ICoreWebView2_17 // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_18 *ICoreWebView2_18 // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_19 *ICoreWebView2_19 // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_20 *ICoreWebView2_20 // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_21 *ICoreWebView2_21 // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_22 *ICoreWebView2_22 // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_23 *ICoreWebView2_23 // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_24 *ICoreWebView2_24 // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_25 *ICoreWebView2_25 // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_26 *ICoreWebView2_26 // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_27 *ICoreWebView2_27 // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
+	WebView2_28 *ICoreWebView2_28 // 默认值为 nil, 使用前需赋值, 会在 WebView 关闭时自动释放
 }
 
 // InitWebView2_Objs 初始化所有的 WebView2_ 系列对象.

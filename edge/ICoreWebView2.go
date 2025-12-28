@@ -279,9 +279,9 @@ func (i *ICoreWebView2) RemoveNavigationCompleted(token EventRegistrationToken) 
 	return nil
 }
 
-// Navigate 导航 webview 到给定的 URL。
+// Navigate 导航 WebView 到给定的 URL。
 //   - URL 可能是数据 URI，即 "data:text/html,<html>...</html>"。
-//   - 通常不进行适当的 url 编码也是可以的, webview 会为你重新编码。
+//   - 通常不进行适当的 url 编码也是可以的, WebView 会为你重新编码。
 func (i *ICoreWebView2) Navigate(uri string) error {
 	_uri, err := syscall.UTF16PtrFromString(uri)
 	if err != nil {
@@ -297,7 +297,7 @@ func (i *ICoreWebView2) Navigate(uri string) error {
 	return nil
 }
 
-// NavigateToString 直接设置 webview 的 HTML。
+// NavigateToString 直接设置 WebView 的 HTML。
 // 页面的来源是 `about:blank`。
 //
 // htmlContent: 参数的总大小不能大于2 MB（2*1024*1024字节）.

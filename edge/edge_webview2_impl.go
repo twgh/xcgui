@@ -58,7 +58,7 @@ func (w *WebViewEventImpl) SetPermission(kind COREWEBVIEW2_PERMISSION_KIND, stat
 
 // --------------------------- 回调实现 ---------------------------
 
-// TrySuspendCompleted 尝试挂起 webview 后调用, 以获取执行结果.
+// TrySuspendCompleted 尝试挂起 WebView 后调用, 以获取执行结果.
 func (w *WebViewEventImpl) TrySuspendCompleted(errorCode syscall.Errno, isSuccessful bool) uintptr {
 	cbs := WvEventHandler.GetCallBacks(w, "TrySuspendCompleted")
 	var ret uintptr
@@ -265,7 +265,7 @@ func (w *WebViewEventImpl) PermissionRequested(sender *ICoreWebView2, args *ICor
 	return ret
 }
 
-// WebMessageReceived 当从 webview 收到消息时调用。
+// WebMessageReceived 当从 WebView 收到消息时调用。
 func (w *WebViewEventImpl) WebMessageReceived(sender *ICoreWebView2, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr {
 	if w.msgcb_xcgui != nil {
 		message, err := args.TryGetWebMessageAsString()

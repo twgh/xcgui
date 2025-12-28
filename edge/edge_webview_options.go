@@ -1,6 +1,6 @@
 package edge
 
-// webview 选项函数类型
+// WebView 选项函数类型
 type WebViewOption func(*WebViewOptions)
 
 // WebViewOptions 选项.
@@ -26,9 +26,9 @@ type WebViewOptions struct {
 	//   - 注意：文本不能以句号“.”或空格“ ”结尾。
 	//   - 此外，虽然允许使用大写字母，但它们会被当作小写字母处理，因为配置文件名称将映射到磁盘上真实的配置文件目录路径，而 Windows 文件系统在处理路径名称时不区分大小写。
 	ProfileName string
-	// webview 宿主窗口标题
+	// WebView 宿主窗口标题
 	Title string
-	// webview 宿主窗口类名
+	// WebView 宿主窗口类名
 	ClassName string
 
 	// 资源文件中的图标资源 id, 给原生窗口设置图标, 如果为 0, 则使用默认图标.
@@ -40,14 +40,14 @@ type WebViewOptions struct {
 
 	WebViewSize
 
-	// 填充父, 如果为 true, 则 webview 会填充父, WebViewSize 里的固定坐标和尺寸会失效.
+	// 填充父, 如果为 true, 则 WebView 会填充父, WebViewSize 里的固定坐标和尺寸会失效.
 	FillParent bool
 
 	// Debug 是否可打开开发者工具.
 	Debug bool
 	// AppDrag 是否启用非客户区域支持。
 	//   - 当此属性为 true 时，将启用所有非客户端区域功能：将启用可拖动区域，它们是网页上用 CSS 属性 app-region:drag/no-drag 标记的区域。
-	//   - 设置为拖动时，这些区域将被视为窗口的标题栏，支持拖动整个 webview 及其宿主应用程序窗口；
+	//   - 设置为拖动时，这些区域将被视为窗口的标题栏，支持拖动整个 WebView 及其宿主应用程序窗口；
 	//   - 系统菜单在右键单击时显示，双击将触发最大化/恢复窗口大小。
 	//   - ≥ 123.0.2420.47
 	AppDrag bool
@@ -60,7 +60,7 @@ type WebViewOptions struct {
 	DefaultEnabledWebViewOption
 }
 
-// WebViewSize 是 webview 的固定位置与大小.
+// WebViewSize 是 WebView 的固定位置与大小.
 type WebViewSize struct {
 	Left   int32
 	Top    int32
@@ -68,7 +68,7 @@ type WebViewSize struct {
 	Height int32
 }
 
-// DefaultEnabledWebViewOption 里的 webview 选项都是默认会开启的.
+// DefaultEnabledWebViewOption 里的 WebView 选项都是默认会开启的.
 type DefaultEnabledWebViewOption struct {
 	// 默认的上下文菜单, 默认为 true.
 	DefaultContextMenus bool
@@ -123,7 +123,7 @@ func WithScriptLocale(locale string) WebViewOption {
 	}
 }
 
-// WithDefaultBackgroundColor 设置 webview 的默认背景颜色.
+// WithDefaultBackgroundColor 设置 WebView 的默认背景颜色.
 //   - 此属性允许用户提前初始化 DefaultBackgroundColor，从而防止在 WebView2 加载期间，当背景色设置为白色以外的颜色时可能出现的白色闪烁。
 //   - 通过早期初始化，颜色从一开始就保持一致。
 //   - DefaultBackgroundColor 是在所有网页内容下方渲染的颜色。这意味着当没有加载网页内容时，WebView2 会渲染此颜色。如果 WebView2 中未定义背景色，它会使用 DefaultBackgroundColor 属性来渲染背景。默认情况下，此颜色设置为白色。
@@ -135,14 +135,14 @@ func WithDefaultBackgroundColor(color *COREWEBVIEW2_COLOR) WebViewOption {
 	}
 }
 
-// WithTitle 设置 webview 宿主窗口标题
+// WithTitle 设置 WebView 宿主窗口标题
 func WithTitle(title string) WebViewOption {
 	return func(o *WebViewOptions) {
 		o.Title = title
 	}
 }
 
-// WithClassName 设置 webview 宿主窗口类名
+// WithClassName 设置 WebView 宿主窗口类名
 func WithClassName(className string) WebViewOption {
 	return func(o *WebViewOptions) {
 		o.ClassName = className
@@ -156,7 +156,7 @@ func WithIconId(id uint) WebViewOption {
 	}
 }
 
-// WithWebViewSize 设置 webview 固定位置与大小.
+// WithWebViewSize 设置 WebView 固定位置与大小.
 func WithWebViewSize(left, top, width, height int32) WebViewOption {
 	return func(o *WebViewOptions) {
 		o.WebViewSize = WebViewSize{
@@ -168,7 +168,7 @@ func WithWebViewSize(left, top, width, height int32) WebViewOption {
 	}
 }
 
-// WithFillParent 设置是否填充父, 如果为 true, 则 webview 会填充父,  WebViewSize 里的固定坐标和尺寸会失效.
+// WithFillParent 设置是否填充父, 如果为 true, 则 WebView 会填充父,  WebViewSize 里的固定坐标和尺寸会失效.
 func WithFillParent(enable bool) WebViewOption {
 	return func(o *WebViewOptions) {
 		o.FillParent = enable
@@ -184,7 +184,7 @@ func WithDebug(enable bool) WebViewOption {
 
 // WithAppDrag 设置是否启用非客户区域支持。
 //   - 当此属性为 true 时，将启用所有非客户端区域功能：将启用可拖动区域，它们是网页上用 CSS 属性 app-region:drag/no-drag 标记的区域。
-//   - 设置为拖动时，这些区域将被视为窗口的标题栏，支持拖动整个 webview 及其宿主应用程序窗口；
+//   - 设置为拖动时，这些区域将被视为窗口的标题栏，支持拖动整个 WebView 及其宿主应用程序窗口；
 //   - 系统菜单在右键单击时显示，双击将触发最大化/恢复窗口大小。
 //   - ≥ 123.0.2420.47
 func WithAppDrag(enable bool) WebViewOption {
