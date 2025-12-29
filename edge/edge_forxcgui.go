@@ -2,6 +2,8 @@ package edge
 
 import (
 	"errors"
+	"fmt"
+	"strings"
 	"sync"
 	"syscall"
 	"unsafe"
@@ -9,6 +11,7 @@ import (
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"github.com/twgh/xcgui/wapi/wnd"
+	"github.com/twgh/xcgui/window"
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
 )
@@ -50,11 +53,9 @@ type WebView struct {
 // hParent: 炫彩窗口或元素句柄.
 //
 // opts: WebView 选项, 使用 edge.WithXXX 系列函数.
+//   - 可查看 WebViewOptions.
+//   - 默认会启用的 WebView 选项可查看 DefaultEnabledWebViewOptions.
 func (e *Edge) NewWebView(hParent int, opts ...WebViewOption) (*WebView, error) {
-	if !xc.XC_IsHELE(hParent) && !xc.XC_IsHWINDOW(hParent) {
-		return nil, errors.New("hParent is not a xcgui window or element")
-	}
-
 	// 获取默认 WebView 配置
 	options := defaultWebViewOptions()
 	// 应用所有选项
@@ -62,15 +63,75 @@ func (e *Edge) NewWebView(hParent int, opts ...WebViewOption) (*WebView, error) 
 		opt(options)
 	}
 
+	return newWebView(e, hParent, options)
+}
+
+// NewWebViewWithWindow 创建 WebView 到炫彩窗口.
+//   - 内部会使用 XML 创建炫彩窗口.
+//   - 可在 opts 参数中使用 edge.WithXmlWindowXXX 系列函数设置窗口属性. 可查看 XmlWindowOptions.
+//
+// opts: WebView 选项, 使用 edge.WithXXX 系列函数.
+//   - 可查看 WebViewOptions.
+//   - 默认会启用的 WebView 选项可查看 DefaultEnabledWebViewOptions.
+func (e *Edge) NewWebViewWithWindow(opts ...WebViewOption) (*window.Window, *WebView, error) {
+	// 获取默认 WebView 配置
+	options := defaultWebViewOptions()
+	// 应用所有选项
+	for _, opt := range opts {
+		opt(options)
+	}
+
+	xmlStr := options.XmlWindowOpts.XmlStr
+	if xmlStr == "" {
+		xmlStr = xcc.XmlTransparentWindow
+		if options.XmlWindowOpts.ShadowAngleSize > 0 {
+			xmlStr = strings.Replace(xmlStr, `content=""`, `content="" shadowRightAngle="false" shadowAngleSize="`+xc.Itoa(options.XmlWindowOpts.ShadowAngleSize)+`"`, 1)
+		}
+		xmlStr = strings.Replace(xmlStr, `className=""`, `className="`+options.XmlWindowOpts.ClassName+`"`, 1)
+		xmlStr = strings.Replace(xmlStr, `content=""`, `content="`+options.XmlWindowOpts.Title+`"`, 1)
+		xmlStr = strings.Replace(xmlStr, `rect="20,20,500,500"`, fmt.Sprintf(`rect="20,20,%d,%d"`, options.XmlWindowOpts.Width, options.XmlWindowOpts.Height), 1)
+		xmlStr = strings.Replace(xmlStr, `shadowColor="#80000000"`, `shadowColor="#`+xc.HexRGBA(xc.ParseRGBA(options.XmlWindowOpts.ShadowColor))+`"`, 1)
+		xmlStr = strings.Replace(xmlStr, `shadowDepth="128"`, `shadowDepth="`+xc.Itoa(options.XmlWindowOpts.ShadowDepth)+`"`, 1)
+		xmlStr = strings.Replace(xmlStr, `shadowSize="8"`, `shadowSize="`+xc.Itoa(options.XmlWindowOpts.ShadowSize)+`"`, 1)
+		xmlStr = strings.Replace(xmlStr, `transparentAlpha="255"`, `transparentAlpha="`+xc.Itoa(int32(options.XmlWindowOpts.TransparentAlpha))+`"`, 1)
+	}
+
+	// 创建窗口从xml
+	w := window.NewByLayoutStringW(xmlStr, options.XmlWindowOpts.HParent, 0)
+	if w == nil {
+		return nil, nil, errors.New("窗口创建失败")
+	}
+
+	// 创建 WebView
+	wv, err := newWebView(e, w.Handle, options)
+	if err != nil {
+		w.CloseWindow()
+		return nil, nil, err
+	}
+
+	w.AdjustLayout()
+	return w, wv, nil
+}
+
+// 创建 WebView 到炫彩窗口或元素.
+//
+// hParent: 炫彩窗口或元素句柄.
+//
+// opts: *WebViewOptions.
+func newWebView(e *Edge, hParent int, opts *WebViewOptions) (*WebView, error) {
+	if !xc.XC_IsHELE(hParent) && !xc.XC_IsHWINDOW(hParent) {
+		return nil, errors.New("hParent is not a xcgui window or element")
+	}
+
 	w := &WebView{}
 	w.bindings = map[string]interface{}{}
 	w.bindingsid = map[string]string{}
-	w.autoFocus = options.AutoFocus
-	w.size = options.WebViewSize
-	w.fillParent = options.FillParent
+	w.autoFocus = opts.AutoFocus
+	w.size = opts.WebViewSize
+	w.fillParent = opts.FillParent
 	w.Edge = e
 
-	err := createWebViewWithOptionsByXcgui(w, hParent, options)
+	err := createWebViewWithOptionsByXcgui(w, hParent, opts)
 	if err != nil {
 		return nil, err
 	}

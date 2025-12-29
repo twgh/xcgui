@@ -1,5 +1,7 @@
 package edge
 
+import "github.com/twgh/xcgui/xc"
+
 // WebView 选项函数类型
 type WebViewOption func(*WebViewOptions)
 
@@ -26,10 +28,16 @@ type WebViewOptions struct {
 	//   - 注意：文本不能以句号“.”或空格“ ”结尾。
 	//   - 此外，虽然允许使用大写字母，但它们会被当作小写字母处理，因为配置文件名称将映射到磁盘上真实的配置文件目录路径，而 Windows 文件系统在处理路径名称时不区分大小写。
 	ProfileName string
-	// WebView 宿主窗口标题
+	// WebView 宿主原生窗口的标题
 	Title string
-	// WebView 宿主窗口类名
+	// WebView 宿主原生窗口的类名
 	ClassName string
+
+	// 炫彩 XML 窗口选项.
+	// 在 Edge.NewWebViewWithWindow 函数中生效.
+	XmlWindowOpts XmlWindowOptions
+
+	WebViewSize
 
 	// 资源文件中的图标资源 id, 给原生窗口设置图标, 如果为 0, 则使用默认图标.
 	IconId uint
@@ -37,8 +45,6 @@ type WebViewOptions struct {
 	// 原生窗口的圆角半径, 单位 px.
 	//   - 需注意炫彩窗口的圆角需通过 SetShadowInfo 设置.
 	RoundRadius int32
-
-	WebViewSize
 
 	// 填充父, 如果为 true, 则 WebView 会填充父, WebViewSize 里的固定坐标和尺寸会失效.
 	FillParent bool
@@ -57,10 +63,11 @@ type WebViewOptions struct {
 	// PrivateMode 是否启用隐私模式。
 	PrivateMode bool
 
-	DefaultEnabledWebViewOption
+	DefaultEnabledWebViewOptions
 }
 
 // WebViewSize 是 WebView 的固定位置与大小.
+//   - 当 WebViewOptions.FillParent 为 true 时, 此选项会失效.
 type WebViewSize struct {
 	Left   int32
 	Top    int32
@@ -68,8 +75,8 @@ type WebViewSize struct {
 	Height int32
 }
 
-// DefaultEnabledWebViewOption 里的 WebView 选项都是默认会开启的.
-type DefaultEnabledWebViewOption struct {
+// DefaultEnabledWebViewOptions 里的 WebView 选项都是默认会开启的.
+type DefaultEnabledWebViewOptions struct {
 	// 默认的上下文菜单, 默认为 true.
 	DefaultContextMenus bool
 	// 状态栏, 默认为 true.
@@ -84,11 +91,19 @@ type DefaultEnabledWebViewOption struct {
 func defaultWebViewOptions() *WebViewOptions {
 	return &WebViewOptions{
 		ScriptLocale: "默认不设置",
-		DefaultEnabledWebViewOption: DefaultEnabledWebViewOption{
+		DefaultEnabledWebViewOptions: DefaultEnabledWebViewOptions{
 			DefaultContextMenus:    true,
 			StatusBar:              true,
 			ZoomControl:            true,
 			BrowserAcceleratorKeys: true,
+		},
+		XmlWindowOpts: XmlWindowOptions{
+			Width:            500,
+			Height:           500,
+			ShadowSize:       8,
+			ShadowDepth:      128,
+			TransparentAlpha: 255,
+			ShadowColor:      xc.RGBA(0, 0, 0, 128),
 		},
 	}
 }
@@ -135,14 +150,14 @@ func WithDefaultBackgroundColor(color *COREWEBVIEW2_COLOR) WebViewOption {
 	}
 }
 
-// WithTitle 设置 WebView 宿主窗口标题
+// WithTitle 设置 WebView 宿主原生窗口的标题
 func WithTitle(title string) WebViewOption {
 	return func(o *WebViewOptions) {
 		o.Title = title
 	}
 }
 
-// WithClassName 设置 WebView 宿主窗口类名
+// WithClassName 设置 WebView 宿主原生窗口的类名
 func WithClassName(className string) WebViewOption {
 	return func(o *WebViewOptions) {
 		o.ClassName = className
@@ -232,5 +247,108 @@ func WithZoomControl(enable bool) WebViewOption {
 func WithBrowserAcceleratorKeys(enable bool) WebViewOption {
 	return func(o *WebViewOptions) {
 		o.BrowserAcceleratorKeys = enable
+	}
+}
+
+// XmlWindowOptions 炫彩 XML 窗口选项.
+//   - 在 Edge.NewWebViewWithWindow 函数中生效.
+type XmlWindowOptions struct {
+	// 炫彩窗口 XML, 为空则使用 xcc.XmlTransparentWindow.
+	//    - 如果你设置了这个 XML, 那么 XmlWindowOptions 中的其他选项将失效, 以你的 XML 为准.
+	XmlStr string
+	// 窗口标题
+	Title string
+	// 窗口类名
+	ClassName string
+	// 父对象句柄
+	HParent int
+
+	// 窗口宽度, 默认为 500
+	Width int32
+	// 窗口高度, 默认为 500
+	Height int32
+
+	// 窗口阴影大小, 默认为 8
+	ShadowSize int32
+	// 窗口阴影深度, 默认为 128
+	ShadowDepth int32
+	// 窗口阴影颜色, 默认为 xc.RGBA(0, 0, 0, 128)
+	ShadowColor uint32
+	// 窗口阴影圆角大小, 设置后会使窗口变为圆角
+	ShadowAngleSize int32
+
+	// 窗口透明度, 默认为 255
+	TransparentAlpha byte
+}
+
+// WithXmlWindowXmlStr 设置炫彩窗口 XML, 为空则使用 xcc.XmlTransparentWindow.
+//   - 如果你设置了这个 XML, 那么 XmlWindowOptions 中的其他选项将失效, 以你的 XML 为准.
+func WithXmlWindowXmlStr(xmlStr string) WebViewOption {
+	return func(o *WebViewOptions) {
+		o.XmlWindowOpts.XmlStr = xmlStr
+	}
+}
+
+// WithXmlWindowTitle 设置炫彩 XML 窗口标题.
+func WithXmlWindowTitle(title string) WebViewOption {
+	return func(o *WebViewOptions) {
+		o.XmlWindowOpts.Title = title
+	}
+}
+
+// WithXmlWindowClassName 设置炫彩 XML 窗口类名.
+func WithXmlWindowClassName(className string) WebViewOption {
+	return func(o *WebViewOptions) {
+		o.XmlWindowOpts.ClassName = className
+	}
+}
+
+// WithXmlWindowHParent 设置炫彩 XML 窗口父对象句柄.
+func WithXmlWindowHParent(hParent int) WebViewOption {
+	return func(o *WebViewOptions) {
+		o.XmlWindowOpts.HParent = hParent
+	}
+}
+
+// WithXmlWindowSize 设置炫彩 XML 窗口大小.
+func WithXmlWindowSize(width, height int32) WebViewOption {
+	return func(o *WebViewOptions) {
+		o.XmlWindowOpts.Width = width
+		o.XmlWindowOpts.Height = height
+	}
+}
+
+// WithXmlWindowShadowSize 设置炫彩 XML 窗口阴影大小.
+func WithXmlWindowShadowSize(size int32) WebViewOption {
+	return func(o *WebViewOptions) {
+		o.XmlWindowOpts.ShadowSize = size
+	}
+}
+
+// WithXmlWindowShadowDepth 设置炫彩 XML 窗口阴影深度.
+func WithXmlWindowShadowDepth(depth int32) WebViewOption {
+	return func(o *WebViewOptions) {
+		o.XmlWindowOpts.ShadowDepth = depth
+	}
+}
+
+// WithXmlWindowShadowColor 设置炫彩 XML 窗口阴影颜色.
+func WithXmlWindowShadowColor(color uint32) WebViewOption {
+	return func(o *WebViewOptions) {
+		o.XmlWindowOpts.ShadowColor = color
+	}
+}
+
+// WithXmlWindowTransparentAlpha 设置炫彩 XML 窗口透明度.
+func WithXmlWindowTransparentAlpha(alpha byte) WebViewOption {
+	return func(o *WebViewOptions) {
+		o.XmlWindowOpts.TransparentAlpha = alpha
+	}
+}
+
+// WithXmlWindowShadowAngleSize 设置炫彩 XML 窗口阴影圆角大小, 设置后会使窗口变为圆角.
+func WithXmlWindowShadowAngleSize(size int32) WebViewOption {
+	return func(o *WebViewOptions) {
+		o.XmlWindowOpts.ShadowAngleSize = size
 	}
 }

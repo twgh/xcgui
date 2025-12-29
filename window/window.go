@@ -141,7 +141,7 @@ func NewByLayoutZipMem(data []byte, pFileName string, pPassword string, hParent 
 //
 // pStringXML: 字符串.
 //
-// hParent: 父对象.
+// hParent: 父对象句柄.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func NewByLayoutStringW(pStringXML string, hParent int, hAttachWnd uintptr) *Window {
