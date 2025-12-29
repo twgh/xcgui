@@ -31,7 +31,6 @@ func TestSetBnClicks(t *testing.T) {
 
 func TestRGBA(t *testing.T) {
 	fmt.Println(xc.RGBA(255, 201, 100, 255))
-	fmt.Println(xc.RGBA2(xc.RGB(255, 201, 100), 255))
 	fmt.Println(xc.RGB(255, 201, 100))
 	fmt.Println(xc.HexRGB2RGB("ffc964"))
 	fmt.Println(xc.RGB2RGBA(xc.HexRGB2RGB("ffc964"), 255))

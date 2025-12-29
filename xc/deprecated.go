@@ -10,6 +10,13 @@ import (
 
 // Deprecated
 //
+// !这是旧版函数, 请使用 xc.RGB2RGBA
+func RGBA2(rgb uint32, a byte) uint32 {
+	return RGB2RGBA(rgb, a)
+}
+
+// Deprecated
+//
 // !这是旧版函数, 请使用 xc.XImage_LoadSvgString
 func XImage_LoadSvgStringUtf8(pString string) int {
 	return XImage_LoadSvgString(pString)
@@ -31,9 +38,9 @@ func ARGB(r, g, b, a byte) uint32 {
 
 // Deprecated
 //
-// !这是旧版函数, 请使用 xc.RGBA2
+// !这是旧版函数, 请使用 xc.RGB2RGBA
 func ARGB2(rgb uint32, a byte) uint32 {
-	return RGBA2(rgb, a)
+	return RGB2RGBA(rgb, a)
 }
 
 // Deprecated
@@ -59,9 +66,9 @@ func ABGR(r, g, b, a byte) uint32 {
 
 // Deprecated
 //
-// !这是旧版函数, 请使用 xc.RGBA2
+// !这是旧版函数, 请使用 xc.RGB2RGBA
 func ABGR2(rgb uint32, a byte) uint32 {
-	return RGBA2(rgb, a)
+	return RGB2RGBA(rgb, a)
 }
 
 // Deprecated

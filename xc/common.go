@@ -1,6 +1,7 @@
 package xc
 
 import (
+	"bytes"
 	"math"
 	"os"
 	"syscall"
@@ -61,15 +62,6 @@ func RGBA(r, g, b, a byte) uint32 {
 	return uint32(a)<<24 | uint32(r) | uint32(g)<<8 | uint32(b)<<16
 }
 
-// RGBA2 根据 RGB, a组合成炫彩使用的颜色.
-//
-// rgb: RGB 颜色.
-//
-// a: 透明度.
-func RGBA2(rgb uint32, a byte) uint32 {
-	return (uint32(rgb) & 16777215) | uint32(a)<<24
-}
-
 // RGB 根据 r, g, b 组合成 RGB 颜色.
 //
 // r: 红色分量.
@@ -115,7 +107,7 @@ func HexRGB2RGB(str string) uint32 {
 //
 // a: 透明度.
 func HexRGB2RGBA(str string, a byte) uint32 {
-	return RGBA2(HexRGB2RGB(str), a)
+	return RGB2RGBA(HexRGB2RGB(str), a)
 }
 
 func hexToByte(s string) byte {
@@ -137,6 +129,33 @@ func hexToNibble(c byte) byte {
 	} else {
 		return 0 // 返回一个默认值或错误
 	}
+}
+
+// HexRGBA 根据 r, g, b, a 颜色分量组合成十六进制字符串, 如 FF000000.
+//
+// r, g, b, a: 颜色分量。
+//
+// addPrefix: 是否带 # 前缀, 默认为 false.
+func HexRGBA(r, g, b, a byte, addPrefix ...bool) string {
+	var buffer bytes.Buffer
+
+	if len(addPrefix) > 0 && addPrefix[0] {
+		buffer.WriteString("#")
+	}
+
+	// 拼接成 AARRGGBB 格式
+	buffer.WriteString(intToHex(a))
+	buffer.WriteString(intToHex(r))
+	buffer.WriteString(intToHex(g))
+	buffer.WriteString(intToHex(b))
+
+	return buffer.String()
+}
+
+// intToHex 将 0-255 范围内的整数转换为其两位十六进制表示。
+func intToHex(i byte) string {
+	const hexDigits = "0123456789ABCDEF"
+	return string([]byte{hexDigits[i>>4], hexDigits[i&0xF]})
 }
 
 // Itoa 将 int32 转换到 string.
