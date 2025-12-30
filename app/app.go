@@ -182,6 +182,14 @@ func (a *App) CallUT(f func()) {
 	xc.XC_CallUT(f)
 }
 
+// UI 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
+//   - 是 CallUT 的简写.
+//
+// f: 回调函数, 没有参数也没有返回值, 可以直接使用匿名函数.
+func (a *App) UI(f func()) {
+	xc.XC_CallUT(f)
+}
+
 // CallUiThreader 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI. 与 CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数.
 //
 // u: xc.UiThreader.

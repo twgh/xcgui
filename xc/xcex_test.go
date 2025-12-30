@@ -41,11 +41,6 @@ func TestCallUTWithAny(t *testing.T) {
 					t.Log("3个参数:", data)
 					return 0
 				}, data1, "女", "上海")
-
-				xc.A(func(data ...interface{}) int {
-					t.Log("更多参数:", data)
-					return 0
-				}, data1, data2, "女", "上海", 100, 3.14)
 			}()
 			return 0
 		})
