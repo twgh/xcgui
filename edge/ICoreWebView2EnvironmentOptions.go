@@ -158,6 +158,10 @@ func (i *ICoreWebView2EnvironmentOptions) GetAllowSingleSignOnUsingOSPrimaryAcco
 }
 
 // SetAllowSingleSignOnUsingOSPrimaryAccount 设置是否允许 Azure Active Directory (AAD) 和个人 Microsoft Account (MSA) 资源的单点登录。
+//   - 所有与 Windows 关联并供所有应用程序共享的 AAD 账户均受支持。
+//   - 对于 MSA，单点登录 (SSO) 仅对用于 Windows 账户登录的账户启用（如果存在）。
+//   - 默认情况下为禁用状态。
+//   - 通用 Windows 平台应用还必须声明 enterpriseCloudSSORestricted 功能，单点登录 (SSO) 才能正常工作。
 func (i *ICoreWebView2EnvironmentOptions) SetAllowSingleSignOnUsingOSPrimaryAccount(value bool) error {
 	r, _, _ := i.Vtbl.PutAllowSingleSignOnUsingOSPrimaryAccount.Call(
 		uintptr(unsafe.Pointer(i)),
