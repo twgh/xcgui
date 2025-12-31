@@ -262,6 +262,11 @@ func (e *Edit) GetText(pOut *string, nOutlen int32) int32 {
 }
 
 // 编辑框_取文本Ex, 不包含非文本内容, 返回文本.
+func (e *Edit) Text() string {
+	return e.GetTextEx()
+}
+
+// 编辑框_取文本Ex, 不包含非文本内容, 返回文本.
 func (e *Edit) GetTextEx() string {
 	var s string
 	xc.XEdit_GetText(e.Handle, &s, xc.XEdit_GetLength(e.Handle)+1)
