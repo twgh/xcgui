@@ -104,6 +104,7 @@ func defaultWebViewOptions() *WebViewOptions {
 			ShadowDepth:      128,
 			TransparentAlpha: 255,
 			ShadowColor:      xc.RGBA(0, 0, 0, 128),
+			TitleBarBgColor:  xc.RGBA(0, 162, 232, 255),
 		},
 	}
 }
@@ -254,7 +255,7 @@ func WithBrowserAcceleratorKeys(enable bool) WebViewOption {
 //   - 在 Edge.NewWebViewWithWindow 函数中生效.
 type XmlWindowOptions struct {
 	// 炫彩窗口 XML, 为空则使用 xcc.XmlTransparentWindow.
-	//    - 如果你设置了这个 XML, 那么 XmlWindowOptions 中的其他选项将失效, 以你的 XML 为准.
+	//    - 如果你设置了这个 XML, 那么 XmlWindowOptions 中除了 HParent 外的其它选项将失效, 以你的 XML 为准.
 	XmlStr string
 	// 窗口标题
 	Title string
@@ -268,21 +269,25 @@ type XmlWindowOptions struct {
 	// 窗口高度, 默认为 500
 	Height int32
 
+	// 窗口阴影圆角大小, 设置后会使窗口变为圆角
+	ShadowAngleSize int32
 	// 窗口阴影大小, 默认为 8
 	ShadowSize int32
 	// 窗口阴影深度, 默认为 128
 	ShadowDepth int32
 	// 窗口阴影颜色, 默认为 xc.RGBA(0, 0, 0, 128)
 	ShadowColor uint32
-	// 窗口阴影圆角大小, 设置后会使窗口变为圆角
-	ShadowAngleSize int32
 
+	// 窗口标题背景颜色, 默认为 xc.RGBA(0, 162, 232, 255)
+	TitleBarBgColor uint32
 	// 窗口透明度, 默认为 255
 	TransparentAlpha byte
+	// 是否启用窗口标题栏
+	TitleBar bool
 }
 
 // WithXmlWindowXmlStr 设置炫彩窗口 XML, 为空则使用 xcc.XmlTransparentWindow.
-//   - 如果你设置了这个 XML, 那么 XmlWindowOptions 中的其他选项将失效, 以你的 XML 为准.
+//   - 如果你设置了这个 XML, 那么 XmlWindowOptions 中除了 HParent 外的其它选项将失效, 以你的 XML 为准.
 func WithXmlWindowXmlStr(xmlStr string) WebViewOption {
 	return func(o *WebViewOptions) {
 		o.XmlWindowOpts.XmlStr = xmlStr
@@ -350,5 +355,19 @@ func WithXmlWindowTransparentAlpha(alpha byte) WebViewOption {
 func WithXmlWindowShadowAngleSize(size int32) WebViewOption {
 	return func(o *WebViewOptions) {
 		o.XmlWindowOpts.ShadowAngleSize = size
+	}
+}
+
+// WithXmlWindowTitleBar 设置炫彩 XML 窗口是否启用标题栏.
+func WithXmlWindowTitleBar(enable bool) WebViewOption {
+	return func(o *WebViewOptions) {
+		o.XmlWindowOpts.TitleBar = enable
+	}
+}
+
+// WithXmlWindowTitleBarBgColor 设置炫彩 XML 窗口标题栏背景颜色.
+func WithXmlWindowTitleBarBgColor(color uint32) WebViewOption {
+	return func(o *WebViewOptions) {
+		o.XmlWindowOpts.TitleBarBgColor = color
 	}
 }

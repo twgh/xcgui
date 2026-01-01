@@ -74,6 +74,7 @@ func (i *ICoreWebView2EnvironmentOptions4) ReleaseCustomSchemeRegistrations(regi
 }
 
 // SetCustomSchemeRegistrations 设置自定义方案注册列表。
+//   - *ICoreWebView2CustomSchemeRegistration 可使用 edge.CreateCustomSchemeRegistration() 创建。
 //
 // 110.0.1587.40
 func (i *ICoreWebView2EnvironmentOptions4) SetCustomSchemeRegistrations(registrations []*ICoreWebView2CustomSchemeRegistration) error {

@@ -89,6 +89,7 @@ type EnvOptions struct {
 	IsCustomCrashReportingEnabled bool
 
 	// 自定义方案注册列表。
+	//   - *ICoreWebView2CustomSchemeRegistration 可使用 edge.CreateCustomSchemeRegistration() 创建。
 	CustomSchemeRegistrations []*ICoreWebView2CustomSchemeRegistration
 
 	// 是否禁用 WebView2 中的跟踪防护功能。默认为 false。
@@ -107,19 +108,20 @@ type EnvOptions struct {
 	ChannelSearchKind COREWEBVIEW2_CHANNEL_SEARCH_KIND
 
 	// 发布频道。
-	//   - 指示环境创建应搜索哪些频道。
+	//   - 一个或多个 COREWEBVIEW2_RELEASE_CHANNELS 的组合，指示环境创建应搜索哪些频道。
 	//   - 默认值是所有通道的组合.
-	ReleaseChannels *ReleaseChannels
+	ReleaseChannels *COREWEBVIEW2_RELEASE_CHANNELS
 
 	// 滚动条样式。
 	ScrollBarStyle COREWEBVIEW2_SCROLLBAR_STYLE
 }
 
-type ReleaseChannels struct {
-	// 发布频道。
-	//   - 一个或多个 COREWEBVIEW2_RELEASE_CHANNELS 的组合，指示环境创建应搜索哪些频道。
-	//   - 默认值是所有通道的组合.
-	ReleaseChannels COREWEBVIEW2_RELEASE_CHANNELS
+// NewReleaseChannels 生成 *COREWEBVIEW2_RELEASE_CHANNELS
+//
+// releaseChannels: 发布频道.
+//   - 一个或多个 COREWEBVIEW2_RELEASE_CHANNELS 的组合，指示环境创建应搜索哪些频道。
+func NewReleaseChannels(releaseChannels COREWEBVIEW2_RELEASE_CHANNELS) *COREWEBVIEW2_RELEASE_CHANNELS {
+	return &releaseChannels
 }
 
 // Edge WebView2 环境.
@@ -255,7 +257,7 @@ func createEnvOptions(opts *EnvOptions) (*ICoreWebView2EnvironmentOptions, error
 		}
 
 		if opts.ReleaseChannels != nil {
-			if err = envOpts7.SetReleaseChannels(opts.ReleaseChannels.ReleaseChannels); err != nil {
+			if err = envOpts7.SetReleaseChannels(*opts.ReleaseChannels); err != nil {
 				return nil, err
 			}
 		}

@@ -54,7 +54,7 @@ type WebView struct {
 //
 // opts: WebView 选项, 使用 edge.WithXXX 系列函数.
 //   - 可查看 WebViewOptions.
-//   - 默认会启用的 WebView 选项可查看 DefaultEnabledWebViewOptions.
+//   - 其中默认启用的 WebView 选项可查看 DefaultEnabledWebViewOptions.
 func (e *Edge) NewWebView(hParent int, opts ...WebViewOption) (*WebView, error) {
 	// 获取默认 WebView 配置
 	options := defaultWebViewOptions()
@@ -69,10 +69,12 @@ func (e *Edge) NewWebView(hParent int, opts ...WebViewOption) (*WebView, error) 
 // NewWebViewWithWindow 创建 WebView 到炫彩窗口.
 //   - 内部会使用 XML 创建炫彩窗口.
 //   - 可在 opts 参数中使用 edge.WithXmlWindowXXX 系列函数设置窗口属性. 可查看 XmlWindowOptions.
+//   - 需注意默认 XML 中的炫彩窗口是没有标题栏的, 也就是你要完全用 HTML 来做界面.
+//   - 如果需要标题栏, 请在 opts 参数中使用 edge.WithXmlWindowTitleBar(true).
 //
 // opts: WebView 选项, 使用 edge.WithXXX 系列函数.
 //   - 可查看 WebViewOptions.
-//   - 默认会启用的 WebView 选项可查看 DefaultEnabledWebViewOptions.
+//   - 其中默认启用的 WebView 选项可查看 DefaultEnabledWebViewOptions.
 func (e *Edge) NewWebViewWithWindow(opts ...WebViewOption) (*window.Window, *WebView, error) {
 	// 获取默认 WebView 配置
 	options := defaultWebViewOptions()
@@ -84,15 +86,34 @@ func (e *Edge) NewWebViewWithWindow(opts ...WebViewOption) (*window.Window, *Web
 	xmlStr := options.XmlWindowOpts.XmlStr
 	if xmlStr == "" {
 		xmlStr = xcc.XmlTransparentWindow
+		// 启用窗口标题栏
+		if options.XmlWindowOpts.TitleBar {
+			// 窗口 Style
+			xmlStr = strings.Replace(xmlStr, `windowStyle="46"`, `windowStyle="2031" captionMargin="4,0,0,0"`, 1)
+			// 窗口背景信息
+			xmlStr = strings.Replace(xmlStr, `bkInfoM="{99:1.9.9;98:1(0);5:2(15)20(1)21(3)26(1)22(33554431)23(1);}"`, `bkInfoM="{99:1.9.9;98:1(0)4(1);5:2(15)20(1)21(3)26(1)22(33554431)23(1);5:2(15)20(1)21(3)26(1)22(-1531392)23(255);}"`, 1)
+			// 窗口 bkInfoM_nameT
+			xmlStr = strings.Replace(xmlStr, `bkInfoM_nameT="0(矩形)"`, `bkInfoM_nameT="0(矩形)1(矩形)"`, 1)
+			// 窗口边框大小
+			xmlStr = strings.Replace(xmlStr, `border="0,0,0,0"`, `border="0,32,0,0"`, 1)
+		}
+		// 窗口阴影圆角大小
 		if options.XmlWindowOpts.ShadowAngleSize > 0 {
 			xmlStr = strings.Replace(xmlStr, `content=""`, `content="" shadowRightAngle="false" shadowAngleSize="`+xc.Itoa(options.XmlWindowOpts.ShadowAngleSize)+`"`, 1)
 		}
+		// 窗口类名
 		xmlStr = strings.Replace(xmlStr, `className=""`, `className="`+options.XmlWindowOpts.ClassName+`"`, 1)
+		// 窗口标题
 		xmlStr = strings.Replace(xmlStr, `content=""`, `content="`+options.XmlWindowOpts.Title+`"`, 1)
+		// 窗口大小
 		xmlStr = strings.Replace(xmlStr, `rect="20,20,500,500"`, fmt.Sprintf(`rect="20,20,%d,%d"`, options.XmlWindowOpts.Width, options.XmlWindowOpts.Height), 1)
+		// 窗口阴影颜色
 		xmlStr = strings.Replace(xmlStr, `shadowColor="#80000000"`, `shadowColor="#`+xc.HexRGBA(xc.ParseRGBA(options.XmlWindowOpts.ShadowColor))+`"`, 1)
+		// 窗口阴影深度
 		xmlStr = strings.Replace(xmlStr, `shadowDepth="128"`, `shadowDepth="`+xc.Itoa(options.XmlWindowOpts.ShadowDepth)+`"`, 1)
+		// 窗口阴影大小
 		xmlStr = strings.Replace(xmlStr, `shadowSize="8"`, `shadowSize="`+xc.Itoa(options.XmlWindowOpts.ShadowSize)+`"`, 1)
+		// 窗口透明度
 		xmlStr = strings.Replace(xmlStr, `transparentAlpha="255"`, `transparentAlpha="`+xc.Itoa(int32(options.XmlWindowOpts.TransparentAlpha))+`"`, 1)
 	}
 
@@ -100,6 +121,16 @@ func (e *Edge) NewWebViewWithWindow(opts ...WebViewOption) (*window.Window, *Web
 	w := window.NewByLayoutStringW(xmlStr, options.XmlWindowOpts.HParent, 0)
 	if w == nil {
 		return nil, nil, errors.New("窗口创建失败")
+	}
+
+	// 设置窗口标题栏背景色
+	if options.XmlWindowOpts.XmlStr == "" && options.XmlWindowOpts.TitleBarBgColor != xc.RGBA(0, 162, 232, 255) {
+		bkm := w.GetBkManagerObj()
+		if bkm != nil {
+			bkm.Clear()
+			bkm.AddFill(xcc.CombinedState(xcc.Window_State_Flag_Leave), xc.RGBA(255, 255, 255, 1), 0)
+			bkm.AddFill(xcc.CombinedState(xcc.Window_State_Flag_Top_Leave), options.XmlWindowOpts.TitleBarBgColor, 0)
+		}
 	}
 
 	// 创建 WebView
@@ -111,6 +142,22 @@ func (e *Edge) NewWebViewWithWindow(opts ...WebViewOption) (*window.Window, *Web
 
 	w.AdjustLayout()
 	return w, wv, nil
+}
+
+// SetXmlWindowTitleBarBgColor 设置炫彩 XML 窗口标题栏背景颜色.
+//   - 仅在此 WebView 是使用 NewWebViewWithWindow 创建的且创建时在选项里使用 edge.WithXmlWindowTitleBar(true) 启用了标题栏才能调用此方法.
+func (w *WebView) SetXmlWindowTitleBarBgColor(color uint32) {
+	if !xc.XC_IsHWINDOW(w.hWindow) {
+		return
+	}
+
+	win := window.NewByHandle(w.hWindow)
+	bkm := win.GetBkManagerObj()
+	if bkm != nil {
+		bkm.Clear()
+		bkm.AddFill(xcc.CombinedState(xcc.Window_State_Flag_Leave), xc.RGBA(255, 255, 255, 1), 0)
+		bkm.AddFill(xcc.CombinedState(xcc.Window_State_Flag_Top_Leave), color, 0)
+	}
 }
 
 // 创建 WebView 到炫彩窗口或元素.

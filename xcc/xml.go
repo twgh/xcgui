@@ -8,5 +8,5 @@ const (
 	XmlTransparentWindow = `<?xml version="1.0" encoding="UTF-8"?>
 <!--炫彩界面库-窗口布局文件-->
 <head />
-<windowUI bkInfoM="{99:1.9.9;98:1(4);5:2(15)20(1)21(3)26(1)22(16711680)23(0);5:2(15)20(1)21(3)26(1)22(33554431)23(1);5:2(15)20(1)21(3)26(1)22(-65536)23(255);5:2(15)20(1)21(3)26(1)22(1682227710)23(100);5:2(15)20(1)21(3)26(1)22(33554431)23(1);}" bkInfoM_nameT="0(矩形)1(矩形)2(矩形)3(矩形)4(矩形)" border="0,0,0,0" center="true" className="" content="" rect="20,20,500,500" shadowColor="#80000000" shadowDepth="128" shadowSize="8" showT="true" transparentAlpha="255" transparentFlag="shadow" windowStyle="46"></windowUI>`
+<windowUI bkInfoM="{99:1.9.9;98:1(0);5:2(15)20(1)21(3)26(1)22(33554431)23(1);}" bkInfoM_nameT="0(矩形)" border="0,0,0,0" center="true" className="" content="" rect="20,20,500,500" shadowColor="#80000000" shadowDepth="128" shadowSize="8" showT="true" transparentAlpha="255" transparentFlag="shadow" windowStyle="46"></windowUI>`
 )
