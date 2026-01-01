@@ -1,6 +1,8 @@
 package window
 
 import (
+	"github.com/twgh/xcgui/bkmanager"
+	"github.com/twgh/xcgui/imagex"
 	"github.com/twgh/xcgui/objectbase"
 	"github.com/twgh/xcgui/wapi/wnd"
 	"github.com/twgh/xcgui/xc"
@@ -836,6 +838,16 @@ func (w *windowBase) GetBkManagerEx() int {
 	return xc.XWnd_GetBkManagerEx(w.Handle)
 }
 
+// 窗口_取背景管理器对象.
+func (w *windowBase) GetBkManagerObj() *bkmanager.BkManager {
+	return bkmanager.NewByHandle(xc.XWnd_GetBkManager(w.Handle))
+}
+
+// 窗口_取背景管理器对象扩展.
+func (w *windowBase) GetBkManagerObjEx() *bkmanager.BkManager {
+	return bkmanager.NewByHandle(xc.XWnd_GetBkManagerEx(w.Handle))
+}
+
 // 窗口_置背景管理器.
 //
 // hBkInfoM: 背景管理器.
@@ -970,6 +982,11 @@ func (w *windowBase) GetButton(nFlag xcc.Window_Style_) int {
 // 窗口_取图标, 返回图标句柄.
 func (w *windowBase) GetIcon() int {
 	return xc.XWnd_GetIcon(w.Handle)
+}
+
+// 窗口_取图标对象, 返回图片对象.
+func (w *windowBase) GetIconObj() *imagex.Image {
+	return imagex.NewByHandle(w.GetIcon())
 }
 
 // 窗口_取标题, 返回标题文本.

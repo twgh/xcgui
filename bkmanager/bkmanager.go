@@ -1,6 +1,7 @@
 package bkmanager
 
 import (
+	"github.com/twgh/xcgui/bkobj"
 	"github.com/twgh/xcgui/objectbase"
 	"github.com/twgh/xcgui/res"
 	"github.com/twgh/xcgui/xc"
@@ -166,9 +167,16 @@ func (b *BkManager) GetStateTextColor(nState xcc.CombinedState, color *uint32) b
 	return xc.XBkM_GetStateTextColor(b.Handle, nState, color)
 }
 
-// 背景_取背景对象, 返回BkObj对象句柄.
+// 背景_取背景对象, 返回 bkobj.BkObj 对象句柄.
 //
 // id: 背景对象ID.
 func (b *BkManager) GetObject(id int32) int {
 	return xc.XBkM_GetObject(b.Handle, id)
+}
+
+// 背景_取背景对象, 返回 bkobj.BkObj 对象.
+//
+// id: 背景对象ID.
+func (b *BkManager) GetObjectObj(id int32) *bkobj.BkObj {
+	return bkobj.NewByHandle(xc.XBkM_GetObject(b.Handle, id))
 }

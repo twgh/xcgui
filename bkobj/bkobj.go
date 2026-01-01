@@ -1,7 +1,8 @@
 package bkobj
 
 import (
-	"github.com/twgh/xcgui/bkmanager"
+	"github.com/twgh/xcgui/font"
+	"github.com/twgh/xcgui/imagex"
 	"github.com/twgh/xcgui/objectbase"
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
@@ -12,29 +13,14 @@ type BkObj struct {
 	objectbase.ObjectBase
 }
 
-// NewByHandle 从BkObj句柄创建BkObj对象.
+// NewByHandle 从 BkObj 句柄创建 BkObj 对象.
 func NewByHandle(handle int) *BkObj {
 	p := &BkObj{}
 	p.SetHandle(handle)
 	return p
 }
 
-// NewByBkm 从BkManager对象创建BkObj对象, 失败返回nil.
-//
-// bkm: 背景管理器对象.
-//
-// id: 背景对象ID.
-func NewByBkm(bkm *bkmanager.BkManager, id int32) *BkObj {
-	handle := bkm.GetObject(id)
-	if handle == 0 {
-		return nil
-	}
-	p := &BkObj{}
-	p.SetHandle(handle)
-	return p
-}
-
-// NewByBkmHandle 从BkManager句柄创建BkObj对象, 失败返回nil.
+// NewByBkmHandle 从 bkmanager.BkManager 句柄创建 BkObj 对象, 失败返回 nil.
 //
 // hBkm: 背景管理器句柄.
 //
@@ -183,6 +169,11 @@ func (b *BkObj) GetImage() int {
 	return xc.XBkObj_GetImage(b.Handle)
 }
 
+// 背景对象_取图片对象, 返回图片对象.
+func (b *BkObj) GetImageObj() *imagex.Image {
+	return imagex.NewByHandle(xc.XBkObj_GetImage(b.Handle))
+}
+
 // 背景对象_取旋转角度, 返回旋转角度.
 func (b *BkObj) GetRotate() *BkObj {
 	xc.XBkObj_GetRotate(b.Handle)
@@ -231,6 +222,11 @@ func (b *BkObj) GetText() string {
 // 背景对象_取字体, 返回字体句柄.
 func (b *BkObj) GetFont() int {
 	return xc.XBkObj_GetFont(b.Handle)
+}
+
+// 背景对象_取字体对象, 返回字体对象.
+func (b *BkObj) GetFontObj() *font.Font {
+	return font.NewByHandle(xc.XBkObj_GetFont(b.Handle))
 }
 
 // 背景对象_取文本对齐, 返回文本对齐方式: xcc.TextFormatFlag_.
