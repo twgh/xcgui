@@ -1,6 +1,8 @@
 package widget
 
 import (
+	"github.com/twgh/xcgui/adapter"
+	"github.com/twgh/xcgui/tmpl"
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
 )
@@ -10,7 +12,7 @@ type Tree struct {
 	ScrollView
 }
 
-// 列表树_创建, 创建树元素.
+// 列表树_创建, 创建树元素, 失败返回 nil.
 //
 // x: 元素x坐标.
 //
@@ -27,7 +29,7 @@ func NewTree(x, y, cx, cy int32, hParent int) *Tree {
 	return p
 }
 
-// 列表树_创建Ex, 创建树元素, 使用内置项模板, 自动创建数据适配器.
+// 列表树_创建Ex, 创建树元素, 使用内置项模板, 自动创建数据适配器, 失败返回 nil.
 //
 // x: 元素x坐标.
 //
@@ -41,49 +43,32 @@ func NewTree(x, y, cx, cy int32, hParent int) *Tree {
 //
 // col_extend_count: 列数量. 例如: 内置模板是1列, 如果数据有5列, 那么此参数填5.
 func NewTreeEx(x, y, cx, cy int32, hParent, col_extend_count int32) *Tree {
-	p := &Tree{}
-	p.SetHandle(xc.XTree_CreateEx(x, y, cx, cy, hParent, col_extend_count))
-	return p
+	return NewTreeByHandle(xc.XTree_CreateEx(x, y, cx, cy, hParent, col_extend_count))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewTreeByHandle(handle int) *Tree {
+	if handle <= 0 {
+		return nil
+	}
 	p := &Tree{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从name创建对象, 失败返回 nil.
 func NewTreeByName(name string) *Tree {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &Tree{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewTreeByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从UID创建对象, 失败返回 nil.
 func NewTreeByUID(nUID int32) *Tree {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &Tree{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewTreeByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从UID名称创建对象, 失败返回 nil.
 func NewTreeByUIDName(name string) *Tree {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &Tree{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewTreeByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 列表树_启用拖动项, 启用拖动项功能.
@@ -330,6 +315,11 @@ func (t *Tree) BindAdapter(hAdapter int) *Tree {
 // 列表树_取数据适配器, 返回数据适配器句柄.
 func (t *Tree) GetAdapter() int {
 	return xc.XTree_GetAdapter(t.Handle)
+}
+
+// 列表树_取数据适配器, 返回数据适配器对象, 失败返回 nil.
+func (t *Tree) GetAdapterObj() *adapter.AdapterTree {
+	return adapter.NewAdapterTreeByHandle(xc.XTree_GetAdapter(t.Handle))
 }
 
 // 列表树_刷新数据, 刷新所有项模板, 以便更新UI.
@@ -631,6 +621,11 @@ func (t *Tree) SetItemTemplateXMLFromZipRes(id int32, pFileName string, pPasswor
 // 列表树_取项模板, 返回项模板句柄.
 func (t *Tree) GetItemTemplate() int {
 	return xc.XTree_GetItemTemplate(t.Handle)
+}
+
+// 列表树_取项模板, 返回项模板对象, 失败返回 nil.
+func (t *Tree) GetItemTemplateObj() *tmpl.ListItemTemplate {
+	return tmpl.NewByHandle(xc.XTree_GetItemTemplate(t.Handle))
 }
 
 // ------------------------- AddEvent ------------------------- //

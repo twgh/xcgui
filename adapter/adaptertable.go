@@ -10,15 +10,16 @@ type AdapterTable struct {
 	adapter
 }
 
-// 数据适配器表_创建, 创建列表框元素数据适配器.
+// 数据适配器表_创建, 创建列表框元素数据适配器, 失败返回 nil.
 func NewAdapterTable() *AdapterTable {
-	p := &AdapterTable{}
-	p.SetHandle(xc.XAdTable_Create())
-	return p
+	return NewAdapterTableByHandle(xc.XAdTable_Create())
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewAdapterTableByHandle(handle int) *AdapterTable {
+	if handle <= 0 {
+		return nil
+	}
 	p := &AdapterTable{}
 	p.SetHandle(handle)
 	return p
@@ -26,7 +27,7 @@ func NewAdapterTableByHandle(handle int) *AdapterTable {
 
 // 数据适配器表_排序, 对内容进行排序.
 //
-// iColumn: 要排序的列索引。.
+// iColumn: 要排序的列索引。
 //
 // bAscending: 是否按照升序方式排序.
 func (a *AdapterTable) Sort(iColumn int32, bAscending bool) *AdapterTable {

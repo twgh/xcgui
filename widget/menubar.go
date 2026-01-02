@@ -7,7 +7,7 @@ type MenuBar struct {
 	Element
 }
 
-// 菜单条_创建, 创建菜单条元素; 如果指定了父为窗口, 默认调用XWnd_AddMenuBar()函数, 将菜单条添加到窗口非客户区.
+// 菜单条_创建, 创建菜单条元素; 如果指定了父为窗口, 默认调用 XWnd_AddMenuBar 函数, 将菜单条添加到窗口非客户区, 失败返回 nil.
 //
 // x: 元素x坐标.
 //
@@ -19,49 +19,32 @@ type MenuBar struct {
 //
 // hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
 func NewMenuBar(x int32, y int32, cx int32, cy int32, hParent int) *MenuBar {
-	p := &MenuBar{}
-	p.SetHandle(xc.XMenuBar_Create(x, y, cx, cy, hParent))
-	return p
+	return NewMenuBarByHandle(xc.XMenuBar_Create(x, y, cx, cy, hParent))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewMenuBarByHandle(handle int) *MenuBar {
+	if handle <= 0 {
+		return nil
+	}
 	p := &MenuBar{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从name创建对象, 失败返回 nil.
 func NewMenuBarByName(name string) *MenuBar {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &MenuBar{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewMenuBarByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从UID创建对象, 失败返回 nil.
 func NewMenuBarByUID(nUID int32) *MenuBar {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &MenuBar{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewMenuBarByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从UID名称创建对象, 失败返回 nil.
 func NewMenuBarByUIDName(name string) *MenuBar {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &MenuBar{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewMenuBarByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 菜单条_添加按钮, 添加弹出菜单按钮, 返回菜单按钮索引.

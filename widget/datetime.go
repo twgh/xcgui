@@ -10,7 +10,7 @@ type DateTime struct {
 	Element
 }
 
-// 日期_创建, 创建日期时间元素.
+// 日期_创建, 创建日期时间元素, 失败返回 nil.
 //
 // x: x坐标.
 //
@@ -22,49 +22,32 @@ type DateTime struct {
 //
 // hParent: 父为窗口句柄或元素句柄.
 func NewDateTime(x, y, cx, cy int32, hParent int) *DateTime {
-	p := &DateTime{}
-	p.SetHandle(xc.XDateTime_Create(x, y, cx, cy, hParent))
-	return p
+	return NewDateTimeByHandle(xc.XDateTime_Create(x, y, cx, cy, hParent))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewDateTimeByHandle(handle int) *DateTime {
+	if handle <= 0 {
+		return nil
+	}
 	p := &DateTime{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从 name 创建对象, 失败返回 nil.
 func NewDateTimeByName(name string) *DateTime {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &DateTime{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewDateTimeByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从 UID 创建对象, 失败返回 nil.
 func NewDateTimeByUID(nUID int32) *DateTime {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &DateTime{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewDateTimeByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从 UID 名称创建对象, 失败返回 nil.
 func NewDateTimeByUIDName(name string) *DateTime {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &DateTime{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewDateTimeByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 日期_置样式, 设置样式.

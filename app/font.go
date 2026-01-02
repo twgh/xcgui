@@ -6,14 +6,14 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// NewFont 字体_创建, 创建炫彩字体. 当字体句柄与元素关联后, 会自动释放.
+// NewFont 字体_创建, 创建炫彩字体. 当字体句柄与元素关联后, 会自动释放, 失败返回 nil.
 //
 // size: 字体大小,单位(pt, 磅).
 func NewFont(size int32) *font.Font {
 	return font.New(size)
 }
 
-// NewFontEX 字体_创建扩展. 创建炫彩字体.
+// NewFontEX 字体_创建扩展. 创建炫彩字体, 失败返回 nil.
 //
 // pName: 字体名称.
 //
@@ -24,28 +24,28 @@ func NewFontEX(pName string, size int32, style xcc.FontStyle_) *font.Font {
 	return font.NewEX(pName, size, style)
 }
 
-// NewFontByLOGFONTW 字体_创建从LOGFONT. 创建炫彩字体.
+// NewFontByLOGFONTW 字体_创建从LOGFONT. 创建炫彩字体, 失败返回 nil.
 //
 // pFontInfo: 字体信息.
 func NewFontByLOGFONTW(pFontInfo *xc.LOGFONTW) *font.Font {
 	return font.NewByLOGFONTW(pFontInfo)
 }
 
-// NewFontByHFONT 字体_创建从HFONT. 创建炫彩字体从现有HFONT字体.
+// NewFontByHFONT 字体_创建从HFONT. 创建炫彩字体从现有HFONT字体, 失败返回 nil.
 //
 // hFont: 字体句柄.
 func NewFontByHFONT(hFont uintptr) *font.Font {
 	return font.NewByHFONT(hFont)
 }
 
-// NewFontByFont 字体_创建从Font. 创建炫彩字体从GDI+字体.
+// NewFontByFont 字体_创建从Font. 创建炫彩字体从GDI+字体, 失败返回 nil.
 //
 // pFont: GDI+ 字体指针.
 func NewFontByFont(pFont uintptr) *font.Font {
 	return font.NewByFont(pFont)
 }
 
-// NewFontByFile 字体_创建从文件. 创建字体从文件.
+// NewFontByFile 字体_创建从文件. 创建字体从文件, 失败返回 nil.
 //
 // pFontFile: 字体文件名.
 //
@@ -56,7 +56,7 @@ func NewFontByFile(pFontFile string, size int32, style xcc.FontStyle_) *font.Fon
 	return font.NewByFile(pFontFile, size, style)
 }
 
-// NewFontByZip 字体_创建从ZIP.
+// NewFontByZip 字体_创建从ZIP, 失败返回 nil.
 //
 // pZipFileName: zip文件名.
 //
@@ -71,7 +71,7 @@ func NewFontByZip(pZipFileName, pFileName, pPassword string, fontSize int32, sty
 	return font.NewByZip(pZipFileName, pFileName, pPassword, fontSize, style)
 }
 
-// NewFontByZipMem 字体_创建从内存ZIP.
+// NewFontByZipMem 字体_创建从内存ZIP, 失败返回 nil.
 //
 // data: zip数据.
 //
@@ -86,7 +86,7 @@ func NewFontByZipMem(data []byte, pFileName, pPassword string, fontSize int32, s
 	return font.NewByZipMem(data, pFileName, pPassword, fontSize, style)
 }
 
-// NewFontByMem 字体_创建从内存. 创建炫彩字体从内存.
+// NewFontByMem 字体_创建从内存. 创建炫彩字体从内存, 失败返回 nil.
 //
 // data: 字体文件数据.
 //
@@ -97,7 +97,7 @@ func NewFontByMem(data []byte, fontSize int32, style xcc.FontStyle_) *font.Font 
 	return font.NewByMem(data, fontSize, style)
 }
 
-// NewFontByRes 字体_创建从资源. 创建字体从资源.
+// NewFontByRes 字体_创建从资源. 创建字体从资源, 失败返回 nil.
 //
 // id: xx.
 //
@@ -112,14 +112,14 @@ func NewFontByRes(id int32, pType string, fontSize int32, style xcc.FontStyle_, 
 	return font.NewByRes(id, pType, fontSize, style, hModule)
 }
 
-// NewFontByHandle 从句柄创建对象.
+// NewFontByHandle 从句柄创建对象, 失败返回 nil.
 //
 // handle: 炫彩字体句柄.
 func NewFontByHandle(handle int) *font.Font {
 	return font.NewByHandle(handle)
 }
 
-// NewFontByName 根据资源文件中的name创建对象, 失败返回nil.
+// NewFontByName 根据资源文件中的 name 创建对象, 失败返回 nil.
 //
 // name: name名称.
 func NewFontByName(name string) *font.Font {

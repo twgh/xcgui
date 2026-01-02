@@ -10,7 +10,7 @@ type ScrollView struct {
 	Element
 }
 
-// 滚动视_创建, 创建滚动视图元素, 返回元素句柄.
+// 滚动视_创建, 创建滚动视图元素, 失败返回 nil.
 //
 // x: 元素x坐标.
 //
@@ -22,49 +22,32 @@ type ScrollView struct {
 //
 // hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
 func NewScrollView(x, y, cx, cy int32, hParent int) *ScrollView {
-	p := &ScrollView{}
-	p.SetHandle(xc.XSView_Create(x, y, cx, cy, hParent))
-	return p
+	return NewScrollViewByHandle(xc.XSView_Create(x, y, cx, cy, hParent))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewScrollViewByHandle(handle int) *ScrollView {
+	if handle <= 0 {
+		return nil
+	}
 	p := &ScrollView{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从name创建对象, 失败返回 nil.
 func NewScrollViewByName(name string) *ScrollView {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &ScrollView{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewScrollViewByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从UID创建对象, 失败返回 nil.
 func NewScrollViewByUID(nUID int32) *ScrollView {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &ScrollView{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewScrollViewByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从UID名称创建对象, 失败返回 nil.
 func NewScrollViewByUIDName(name string) *ScrollView {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &ScrollView{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewScrollViewByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 滚动视_置视图大小, 设置内容大小, 如果内容改变返回TRUE否则返回FALSE.
@@ -142,9 +125,19 @@ func (s *ScrollView) GetScrollBarH() int {
 	return xc.XSView_GetScrollBarH(s.Handle)
 }
 
+// 滚动视_取水平滚动条, 返回滚动条对象, 失败返回 nil.
+func (s *ScrollView) GetScrollBarHObj() *ScrollBar {
+	return NewScrollBarByHandle(xc.XSView_GetScrollBarH(s.Handle))
+}
+
 // 滚动视_取垂直滚动条, 返回滚动条句柄.
 func (s *ScrollView) GetScrollBarV() int {
 	return xc.XSView_GetScrollBarV(s.Handle)
+}
+
+// 滚动视_取垂直滚动条, 返回滚动条对象, 失败返回 nil.
+func (s *ScrollView) GetScrollBarVObj() *ScrollBar {
+	return NewScrollBarByHandle(xc.XSView_GetScrollBarV(s.Handle))
 }
 
 // 滚动视_水平滚动, 水平滚动条, 滚动到指定位置点.

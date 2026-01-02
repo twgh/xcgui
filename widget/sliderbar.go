@@ -10,7 +10,7 @@ type SliderBar struct {
 	Element
 }
 
-// 滑动条_创建, 创建滑动条元素.
+// 滑动条_创建, 创建滑动条元素, 失败返回 nil.
 //
 // x: 元素x坐标.
 //
@@ -22,49 +22,32 @@ type SliderBar struct {
 //
 // hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
 func NewSliderBar(x, y, cx, cy int32, hParent int) *SliderBar {
-	p := &SliderBar{}
-	p.SetHandle(xc.XSliderBar_Create(x, y, cx, cy, hParent))
-	return p
+	return NewSliderBarByHandle(xc.XSliderBar_Create(x, y, cx, cy, hParent))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewSliderBarByHandle(handle int) *SliderBar {
+	if handle <= 0 {
+		return nil
+	}
 	p := &SliderBar{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从name创建对象, 失败返回 nil.
 func NewSliderBarByName(name string) *SliderBar {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &SliderBar{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewSliderBarByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从UID创建对象, 失败返回 nil.
 func NewSliderBarByUID(nUID int32) *SliderBar {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &SliderBar{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewSliderBarByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从UID名称创建对象, 失败返回 nil.
 func NewSliderBarByUIDName(name string) *SliderBar {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &SliderBar{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewSliderBarByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 滑动条_置范围, 设置滑动范围.
@@ -120,6 +103,11 @@ func (s *SliderBar) GetPos() int32 {
 // 滑动条_取滑块, 返回滑块按钮句柄.
 func (s *SliderBar) GetButton() int {
 	return xc.XSliderBar_GetButton(s.Handle)
+}
+
+// 滑动条_取滑块, 返回滑块按钮对象, 失败返回 nil.
+func (s *SliderBar) GetButtonObj() *Button {
+	return NewButtonByHandle(xc.XSliderBar_GetButton(s.Handle))
 }
 
 // 滑动条_置水平, 设置水平或垂直.

@@ -1,6 +1,8 @@
 package widget
 
 import (
+	"github.com/twgh/xcgui/adapter"
+	"github.com/twgh/xcgui/tmpl"
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
 )
@@ -10,7 +12,7 @@ type ListBox struct {
 	ScrollView
 }
 
-// 列表框_创建, 创建列表框元素.
+// 列表框_创建, 创建列表框元素, 失败返回 nil.
 //
 // x: 元素x坐标.
 //
@@ -22,12 +24,10 @@ type ListBox struct {
 //
 // hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
 func NewListBox(x, y, cx, cy int32, hParent int) *ListBox {
-	p := &ListBox{}
-	p.SetHandle(xc.XListBox_Create(x, y, cx, cy, hParent))
-	return p
+	return NewListBoxByHandle(xc.XListBox_Create(x, y, cx, cy, hParent))
 }
 
-// 列表框_创建Ex, 创建列表框元素, 使用内置项模板, 自动创建数据适配器.
+// 列表框_创建Ex, 创建列表框元素, 使用内置项模板, 自动创建数据适配器, 失败返回 nil.
 //
 // x: 元素x坐标.
 //
@@ -41,49 +41,32 @@ func NewListBox(x, y, cx, cy int32, hParent int) *ListBox {
 //
 // col_extend_count: 列数量. 例如: 内置模板是1列, 如果数据有5列, 那么此参数填5.
 func NewListBoxEx(x, y, cx, cy int32, hParent, col_extend_count int32) *ListBox {
-	p := &ListBox{}
-	p.SetHandle(xc.XListBox_CreateEx(x, y, cx, cy, hParent, col_extend_count))
-	return p
+	return NewListBoxByHandle(xc.XListBox_CreateEx(x, y, cx, cy, hParent, col_extend_count))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewListBoxByHandle(handle int) *ListBox {
+	if handle <= 0 {
+		return nil
+	}
 	p := &ListBox{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从name创建对象, 失败返回 nil.
 func NewListBoxByName(name string) *ListBox {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &ListBox{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewListBoxByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从UID创建对象, 失败返回 nil.
 func NewListBoxByUID(nUID int32) *ListBox {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &ListBox{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewListBoxByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从UID名称创建对象, 失败返回 nil.
 func NewListBoxByUIDName(name string) *ListBox {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &ListBox{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewListBoxByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 列表框_启用固定行高.
@@ -341,6 +324,11 @@ func (l *ListBox) BindAdapter(hAdapter int) *ListBox {
 // 列表框_取数据适配器, 获取绑定的数据适配器, 返回数据适配器句柄.
 func (l *ListBox) GetAdapter() int {
 	return xc.XListBox_GetAdapter(l.Handle)
+}
+
+// 列表框_取数据适配器, 获取绑定的数据适配器, 返回数据适配器对象, 失败返回 nil.
+func (l *ListBox) GetAdapterObj() *adapter.AdapterTable {
+	return adapter.NewAdapterTableByHandle(xc.XListBox_GetAdapter(l.Handle))
 }
 
 // 列表框_排序.
@@ -686,6 +674,11 @@ func (l *ListBox) SetItemTemplateXMLFromZipRes(id int32, pFileName string, pPass
 // 列表框_取项模板. 获取列表项模板, 返回项模板句柄.
 func (l *ListBox) GetItemTemplate() int {
 	return xc.XListBox_GetItemTemplate(l.Handle)
+}
+
+// 列表框_取项模板. 获取列表项模板, 返回项模板对象, 失败返回 nil.
+func (l *ListBox) GetItemTemplateObj() *tmpl.ListItemTemplate {
+	return tmpl.NewByHandle(xc.XListBox_GetItemTemplate(l.Handle))
 }
 
 // 列表框_置项高度. 注意:为了提高性能, 默认使用列表框的全局项高度, 如果需要指定项单独高度, 需要关闭固定行高: xc.XListBox_EnableFixedRowHeight

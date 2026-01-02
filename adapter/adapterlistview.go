@@ -9,15 +9,16 @@ type AdapterListView struct {
 	adapter
 }
 
-// 数据适配器列表视_创建, 创建列表视元素数据适配器.
+// 数据适配器列表视_创建, 创建列表视元素数据适配器, 失败返回 nil.
 func NewAdapterListView() *AdapterListView {
-	p := &AdapterListView{}
-	p.SetHandle(xc.XAdListView_Create())
-	return p
+	return NewAdapterListViewByHandle(xc.XAdListView_Create())
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewAdapterListViewByHandle(handle int) *AdapterListView {
+	if handle <= 0 {
+		return nil
+	}
 	p := &AdapterListView{}
 	p.SetHandle(handle)
 	return p

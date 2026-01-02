@@ -14,6 +14,7 @@ import (
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 	"github.com/twgh/xcgui/wapi/wnd"
+	"github.com/twgh/xcgui/window"
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
 )
@@ -361,19 +362,25 @@ func (w *WebView) UnbindAll() {
 	w.rwxBindings.Unlock()
 }
 
-// GetHWND 返回 WebView 所在的原生窗口句柄.
+// GetHWND 获取 WebView 所在的原生窗口句柄.
 //   - WebView 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
 func (w *WebView) GetHWND() uintptr {
 	return w.hwnd
 }
 
-// GetHWindow 返回 WebView 所在的炫彩窗口句柄.
+// GetHWindow 获取 WebView 所在的炫彩窗口句柄.
 //   - WebView 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
 func (w *WebView) GetHWindow() int {
 	return w.hWindow
 }
 
-// GetHParernt 返回 WebView 所在的炫彩元素或窗口句柄.
+// GetWindow 获取 WebView 所在的炫彩窗口对象.
+//   - WebView 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
+func (w *WebView) GetWindow() *window.Window {
+	return window.NewByHandle(w.hWindow)
+}
+
+// GetHParernt 获取 WebView 所在的炫彩元素或窗口句柄.
 //   - WebView 是创建在一个用 wapi 创建的原生窗口里的, 然后原生窗口是被嵌入到炫彩窗口或元素里的.
 func (w *WebView) GetHParent() int {
 	return w.hParent

@@ -10,7 +10,7 @@ type LayoutFrame struct {
 	ScrollView
 }
 
-// NewLayoutFrame 布局框架_创建.
+// NewLayoutFrame 布局框架_创建, 失败返回 nil.
 //
 // x: 元素x坐标.
 //
@@ -22,57 +22,40 @@ type LayoutFrame struct {
 //
 // hParent: 父为窗口句柄或元素句柄.
 func NewLayoutFrame(x, y, cx, cy int32, hParent int) *LayoutFrame {
-	p := &LayoutFrame{}
-	p.SetHandle(xc.XLayoutFrame_Create(x, y, cx, cy, hParent))
-	return p
+	return NewLayoutFrameByHandle(xc.XLayoutFrame_Create(x, y, cx, cy, hParent))
 }
 
-// NewLayoutFrameByHandle 从句柄创建对象.
+// NewLayoutFrameByHandle 从句柄创建对象, 失败返回 nil.
 //
 // handle: 布局框架句柄.
 func NewLayoutFrameByHandle(handle int) *LayoutFrame {
+	if handle <= 0 {
+		return nil
+	}
 	p := &LayoutFrame{}
 	p.SetHandle(handle)
 	return p
 }
 
-// NewLayoutFrameByName 从name创建对象, 失败返回nil.
+// NewLayoutFrameByName 从name创建对象, 失败返回 nil.
 //
 // name: name名称.
 func NewLayoutFrameByName(name string) *LayoutFrame {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &LayoutFrame{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewLayoutFrameByHandle(xc.XC_GetObjectByName(name))
 }
 
-// NewLayoutFrameByUID 从UID创建对象, 失败返回nil.
+// NewLayoutFrameByUID 从UID创建对象, 失败返回 nil.
 //
 // nUID: ID值.
 func NewLayoutFrameByUID(nUID int32) *LayoutFrame {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &LayoutFrame{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewLayoutFrameByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// NewLayoutFrameByUIDName 从UID名称创建对象, 失败返回nil.
+// NewLayoutFrameByUIDName 从UID名称创建对象, 失败返回 nil.
 //
 // name: name名称.
 func NewLayoutFrameByUIDName(name string) *LayoutFrame {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &LayoutFrame{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewLayoutFrameByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // ShowLayoutFrame 布局框架_显示布局边界.

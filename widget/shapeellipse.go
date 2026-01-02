@@ -4,12 +4,12 @@ import (
 	"github.com/twgh/xcgui/xc"
 )
 
-// 圆形(形状对象).
+// ShapeEllipse 圆形(形状对象).
 type ShapeEllipse struct {
 	Shape
 }
 
-// 形状圆_创建, 创建圆形形状对象.
+// 形状圆_创建, 创建圆形形状对象, 失败返回 nil.
 //
 // x: X坐标.
 //
@@ -21,49 +21,32 @@ type ShapeEllipse struct {
 //
 // hParent: 父对象句柄.
 func NewShapeEllipse(x, y, cx, cy int32, hParent int) *ShapeEllipse {
-	p := &ShapeEllipse{}
-	p.SetHandle(xc.XShapeEllipse_Create(x, y, cx, cy, hParent))
-	return p
+	return NewShapeEllipseByHandle(xc.XShapeEllipse_Create(x, y, cx, cy, hParent))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewShapeEllipseByHandle(handle int) *ShapeEllipse {
+	if handle <= 0 {
+		return nil
+	}
 	p := &ShapeEllipse{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从name创建对象, 失败返回 nil.
 func NewShapeEllipseByName(name string) *ShapeEllipse {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &ShapeEllipse{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewShapeEllipseByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从UID创建对象, 失败返回 nil.
 func NewShapeEllipseByUID(nUID int32) *ShapeEllipse {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &ShapeEllipse{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewShapeEllipseByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从UID名称创建对象, 失败返回 nil.
 func NewShapeEllipseByUIDName(name string) *ShapeEllipse {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &ShapeEllipse{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewShapeEllipseByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 形状圆_置边框色.

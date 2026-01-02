@@ -7,7 +7,7 @@ type ToolBar struct {
 	Element
 }
 
-// 工具条_创建, 创建工具条元素; 如果指定了父为窗口, 默认调用 XWnd_AddToolBar 函数, 将工具条添加到窗口非客户区.
+// 工具条_创建, 创建工具条元素; 如果指定了父为窗口, 默认调用 XWnd_AddToolBar 函数, 将工具条添加到窗口非客户区, 失败返回 nil.
 //
 // x: 元素x坐标.
 //
@@ -19,49 +19,32 @@ type ToolBar struct {
 //
 // hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
 func NewToolBar(x, y, cx, cy int32, hParent int) *ToolBar {
-	p := &ToolBar{}
-	p.SetHandle(xc.XToolBar_Create(x, y, cx, cy, hParent))
-	return p
+	return NewToolBarByHandle(xc.XToolBar_Create(x, y, cx, cy, hParent))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewToolBarByHandle(handle int) *ToolBar {
+	if handle <= 0 {
+		return nil
+	}
 	p := &ToolBar{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从name创建对象, 失败返回 nil.
 func NewToolBarByName(name string) *ToolBar {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &ToolBar{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewToolBarByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从UID创建对象, 失败返回 nil.
 func NewToolBarByUID(nUID int32) *ToolBar {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &ToolBar{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewToolBarByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从UID名称创建对象, 失败返回 nil.
 func NewToolBarByUIDName(name string) *ToolBar {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &ToolBar{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewToolBarByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 工具条_插入元素, 插入元素到工具条, 返回插入位置索引.
@@ -102,14 +85,29 @@ func (t *ToolBar) GetButtonLeft() int {
 	return xc.XToolBar_GetButtonLeft(t.Handle)
 }
 
+// 工具条_取左滚动按钮, 获取左滚动按钮对象, 失败返回 nil.
+func (t *ToolBar) GetButtonLeftObj() *Button {
+	return NewButtonByHandle(xc.XToolBar_GetButtonLeft(t.Handle))
+}
+
 // 工具条_取右滚动按钮, 获取右滚动按钮句柄.
 func (t *ToolBar) GetButtonRight() int {
 	return xc.XToolBar_GetButtonRight(t.Handle)
 }
 
+// 工具条_取右滚动按钮, 获取右滚动按钮对象, 失败返回 nil.
+func (t *ToolBar) GetButtonRightObj() *Button {
+	return NewButtonByHandle(xc.XToolBar_GetButtonRight(t.Handle))
+}
+
 // 工具条_取菜单按钮, 获取菜单按钮句柄.
 func (t *ToolBar) GetButtonMenu() int {
 	return xc.XToolBar_GetButtonMenu(t.Handle)
+}
+
+// 工具条_取菜单按钮, 获取菜单按钮对象, 失败返回 nil.
+func (t *ToolBar) GetButtonMenuObj() *Button {
+	return NewButtonByHandle(xc.XToolBar_GetButtonMenu(t.Handle))
 }
 
 // 工具条_置间距, 设置对象之间的间距.

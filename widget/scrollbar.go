@@ -10,7 +10,7 @@ type ScrollBar struct {
 	Element
 }
 
-// 滚动条_创建, 创建滚动条元素, 返回元素句柄.
+// 滚动条_创建, 创建滚动条元素, 失败返回 nil.
 //
 // x: 元素x坐标.
 //
@@ -22,49 +22,32 @@ type ScrollBar struct {
 //
 // hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
 func NewScrollBar(x, y, cx, cy int32, hParent int) *ScrollBar {
-	p := &ScrollBar{}
-	p.SetHandle(xc.XSBar_Create(x, y, cx, cy, hParent))
-	return p
+	return NewScrollBarByHandle(xc.XSBar_Create(x, y, cx, cy, hParent))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewScrollBarByHandle(handle int) *ScrollBar {
+	if handle <= 0 {
+		return nil
+	}
 	p := &ScrollBar{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从name创建对象, 失败返回 nil.
 func NewScrollBarByName(name string) *ScrollBar {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &ScrollBar{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewScrollBarByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从UID创建对象, 失败返回 nil.
 func NewScrollBarByUID(nUID int32) *ScrollBar {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &ScrollBar{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewScrollBarByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从UID名称创建对象, 失败返回 nil.
 func NewScrollBarByUIDName(name string) *ScrollBar {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &ScrollBar{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewScrollBarByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 滚动条_置范围, 设置滚动范围.
@@ -156,14 +139,29 @@ func (s *ScrollBar) GetButtonUp() int {
 	return xc.XSBar_GetButtonUp(s.Handle)
 }
 
+// 滚动条_取上按钮, 获取上按钮, 返回按钮对象, 失败返回 nil.
+func (s *ScrollBar) GetButtonUpObj() *Button {
+	return NewButtonByHandle(xc.XSBar_GetButtonUp(s.Handle))
+}
+
 // 滚动条_取下按钮, 获取下按钮, 返回按钮句柄.
 func (s *ScrollBar) GetButtonDown() int {
 	return xc.XSBar_GetButtonDown(s.Handle)
 }
 
+// 滚动条_取下按钮, 获取下按钮, 返回按钮对象, 失败返回 nil.
+func (s *ScrollBar) GetButtonDownObj() *Button {
+	return NewButtonByHandle(xc.XSBar_GetButtonDown(s.Handle))
+}
+
 // 滚动条_取滑块, 获取滑动按钮, 返回按钮句柄.
 func (s *ScrollBar) GetButtonSlider() int {
 	return xc.XSBar_GetButtonSlider(s.Handle)
+}
+
+// 滚动条_取滑块, 获取滑动按钮, 返回按钮对象, 失败返回 nil.
+func (s *ScrollBar) GetButtonSliderObj() *Button {
+	return NewButtonByHandle(xc.XSBar_GetButtonSlider(s.Handle))
 }
 
 // ------------------------- AddEvent ------------------------- //

@@ -4,12 +4,12 @@ import (
 	"github.com/twgh/xcgui/xc"
 )
 
-// 组框(形状对象).
+// ShapeGroupBox 组框(形状对象).
 type ShapeGroupBox struct {
 	Shape
 }
 
-// 形状组框_创建, 创建组框形状对象.
+// 形状组框_创建, 创建组框形状对象, 失败返回 nil.
 //
 // x: X坐标.
 //
@@ -23,49 +23,32 @@ type ShapeGroupBox struct {
 //
 // hParent: 父对象句柄.
 func NewShapeGroupBox(x, y, cx, cy int32, pName string, hParent int) *ShapeGroupBox {
-	p := &ShapeGroupBox{}
-	p.SetHandle(xc.XShapeGroupBox_Create(x, y, cx, cy, pName, hParent))
-	return p
+	return NewShapeGroupBoxByHandle(xc.XShapeGroupBox_Create(x, y, cx, cy, pName, hParent))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewShapeGroupBoxByHandle(handle int) *ShapeGroupBox {
+	if handle <= 0 {
+		return nil
+	}
 	p := &ShapeGroupBox{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从name创建对象, 失败返回 nil.
 func NewShapeGroupBoxByName(name string) *ShapeGroupBox {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &ShapeGroupBox{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewShapeGroupBoxByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从UID创建对象, 失败返回 nil.
 func NewShapeGroupBoxByUID(nUID int32) *ShapeGroupBox {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &ShapeGroupBox{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewShapeGroupBoxByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从UID名称创建对象, 失败返回 nil.
 func NewShapeGroupBoxByUIDName(name string) *ShapeGroupBox {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &ShapeGroupBox{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewShapeGroupBoxByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 形状组框_置边框颜色.

@@ -12,11 +12,21 @@ type Node struct {
 
 // 模板_创建节点.
 //
-// nType: 对象类型: xcc.XC_OBJECT_TYPE : xcc.XC_.
+// nType: 对象类型: xcc.XC_.
 func NewNode(nType xcc.XC_OBJECT_TYPE) *Node {
 	p := &Node{
 		Handle: xc.XTemp_CreateNode(nType),
 	}
+	return p
+}
+
+// NewNodeByHandle 从句柄创建对象, 失败返回 nil.
+func NewNodeByHandle(handle int) *Node {
+	if handle <= 0 {
+		return nil
+	}
+	p := &Node{}
+	p.SetHandle(handle)
 	return p
 }
 

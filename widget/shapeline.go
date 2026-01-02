@@ -9,7 +9,7 @@ type ShapeLine struct {
 	Shape
 }
 
-// 形状线_创建.
+// 形状线_创建, 失败返回 nil.
 //
 // x1: 坐标.
 //
@@ -21,49 +21,32 @@ type ShapeLine struct {
 //
 // hParent: 父对象句柄.
 func NewShapeLine(x1, y1, x2, y2 int32, hParent int) *ShapeLine {
-	p := &ShapeLine{}
-	p.SetHandle(xc.XShapeLine_Create(x1, y1, x2, y2, hParent))
-	return p
+	return NewShapeLineByHandle(xc.XShapeLine_Create(x1, y1, x2, y2, hParent))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewShapeLineByHandle(handle int) *ShapeLine {
+	if handle <= 0 {
+		return nil
+	}
 	p := &ShapeLine{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从name创建对象, 失败返回 nil.
 func NewShapeLineByName(name string) *ShapeLine {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &ShapeLine{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewShapeLineByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从UID创建对象, 失败返回 nil.
 func NewShapeLineByUID(nUID int32) *ShapeLine {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &ShapeLine{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewShapeLineByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从UID名称创建对象, 失败返回 nil.
 func NewShapeLineByUIDName(name string) *ShapeLine {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &ShapeLine{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewShapeLineByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 形状线_置位置.

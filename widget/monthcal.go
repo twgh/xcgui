@@ -10,7 +10,7 @@ type MonthCal struct {
 	Element
 }
 
-// 月历_创建, 创建日期时间元素.
+// 月历_创建, 创建日期时间元素, 失败返回 nil.
 //
 // x: x坐标.
 //
@@ -22,49 +22,32 @@ type MonthCal struct {
 //
 // hParent: 父为窗口句柄或元素句柄.
 func NewMonthCal(x, y, cx, cy int32, hParent int) *MonthCal {
-	p := &MonthCal{}
-	p.SetHandle(xc.XMonthCal_Create(x, y, cx, cy, hParent))
-	return p
+	return NewMonthCalByHandle(xc.XMonthCal_Create(x, y, cx, cy, hParent))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewMonthCalByHandle(handle int) *MonthCal {
+	if handle <= 0 {
+		return nil
+	}
 	p := &MonthCal{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从name创建对象, 失败返回 nil.
 func NewMonthCalByName(name string) *MonthCal {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &MonthCal{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewMonthCalByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从UID创建对象, 失败返回 nil.
 func NewMonthCalByUID(nUID int32) *MonthCal {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &MonthCal{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewMonthCalByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从UID名称创建对象, 失败返回 nil.
 func NewMonthCalByUIDName(name string) *MonthCal {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &MonthCal{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewMonthCalByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 月历_取内部按钮, 获取内部按钮元素.

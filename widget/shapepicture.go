@@ -1,6 +1,7 @@
 package widget
 
 import (
+	"github.com/twgh/xcgui/imagex"
 	"github.com/twgh/xcgui/xc"
 )
 
@@ -9,7 +10,7 @@ type ShapePicture struct {
 	Shape
 }
 
-// NewShapePicture 形状图片_创建, 创建形状对象-图片.
+// NewShapePicture 形状图片_创建, 创建形状对象-图片, 失败返回 nil.
 //
 // x: x坐标.
 //
@@ -21,49 +22,32 @@ type ShapePicture struct {
 //
 // hParent: 父对象句柄.
 func NewShapePicture(x, y, cx, cy int32, hParent int) *ShapePicture {
-	p := &ShapePicture{}
-	p.SetHandle(xc.XShapePic_Create(x, y, cx, cy, hParent))
-	return p
+	return NewShapePictureByHandle(xc.XShapePic_Create(x, y, cx, cy, hParent))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewShapePictureByHandle(handle int) *ShapePicture {
+	if handle <= 0 {
+		return nil
+	}
 	p := &ShapePicture{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从name创建对象, 失败返回 nil.
 func NewShapePictureByName(name string) *ShapePicture {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &ShapePicture{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewShapePictureByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从UID创建对象, 失败返回 nil.
 func NewShapePictureByUID(nUID int32) *ShapePicture {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &ShapePicture{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewShapePictureByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从UID名称创建对象, 失败返回 nil.
 func NewShapePictureByUIDName(name string) *ShapePicture {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &ShapePicture{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewShapePictureByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 形状图片_置图片, 设置图片.
@@ -77,4 +61,9 @@ func (s *ShapePicture) SetImage(hImage int) *ShapePicture {
 // 形状图片_取图片, 获取图片句柄.
 func (s *ShapePicture) GetImage() int {
 	return xc.XShapePic_GetImage(s.Handle)
+}
+
+// 形状图片_取图片, 获取图片对象, 失败返回 nil.
+func (s *ShapePicture) GetImageObj() *imagex.Image {
+	return imagex.NewByHandle(xc.XShapePic_GetImage(s.Handle))
 }

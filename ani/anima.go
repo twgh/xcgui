@@ -10,14 +10,22 @@ type Anima struct {
 	animaBase
 }
 
-// 动画_创建动画序列, 按顺序执行的动画列表, 返回动画序列对象.
+// 动画_创建动画序列, 按顺序执行的动画列表, 返回动画序列对象, 失败返回 nil.
 //
 // hObjectUI: 绑定的UI对象. UI对象句柄: 窗口句柄, 元素句柄, 形状句柄, SVG句柄.
 //
 // nLoopCount: 动画循环次数, 0: 无限循环.
 func NewAnima(hObjectUI int, nLoopCount int32) *Anima {
+	return NewAnimaByHandle(xc.XAnima_Create(hObjectUI, nLoopCount))
+}
+
+// NewAnimaByHandle 从句柄创建动画序列对象, 失败返回 nil.
+func NewAnimaByHandle(handle int) *Anima {
+	if handle <= 0 {
+		return nil
+	}
 	p := &Anima{}
-	p.SetHandle(xc.XAnima_Create(hObjectUI, nLoopCount))
+	p.SetHandle(handle)
 	return p
 }
 

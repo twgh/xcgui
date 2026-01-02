@@ -10,7 +10,7 @@ type Table struct {
 	Shape
 }
 
-// 表格_创建.
+// 表格_创建, 失败返回 nil.
 //
 // x: 按钮x坐标.
 //
@@ -22,49 +22,32 @@ type Table struct {
 //
 // hParent: 父为窗口句柄或元素句柄.
 func NewTable(x, y, cx, cy int32, hParent int) *Table {
-	p := &Table{}
-	p.SetHandle(xc.XTable_Create(x, y, cx, cy, hParent))
-	return p
+	return NewTableByHandle(xc.XTable_Create(x, y, cx, cy, hParent))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewTableByHandle(handle int) *Table {
+	if handle <= 0 {
+		return nil
+	}
 	p := &Table{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从name创建对象, 失败返回 nil.
 func NewTableByName(name string) *Table {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &Table{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewTableByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从UID创建对象, 失败返回 nil.
 func NewTableByUID(nUID int32) *Table {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &Table{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewTableByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从UID名称创建对象, 失败返回 nil.
 func NewTableByUIDName(name string) *Table {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &Table{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewTableByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 表格_重置.

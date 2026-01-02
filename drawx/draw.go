@@ -1,6 +1,7 @@
 package drawx
 
 import (
+	"github.com/twgh/xcgui/font"
 	"github.com/twgh/xcgui/objectbase"
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
@@ -11,31 +12,30 @@ type Draw struct {
 	objectbase.ObjectBase
 }
 
-// New 绘制_创建, 创建图形绘制模块实例, 返回句柄.
+// New 绘制_创建, 创建图形绘制模块实例, 失败返回 nil.
 //
 // hWindow: 窗口句柄.
 func New(hWindow int) *Draw {
-	p := &Draw{}
-	p.SetHandle(xc.XDraw_Create(hWindow))
-	return p
+	return NewByHandle(xc.XDraw_Create(hWindow))
 }
 
-// NewGDI 绘制_创建GDI, 创建图形绘制模块实例, 返回图形绘制模块实例句柄.
+// NewGDI 绘制_创建GDI, 创建图形绘制模块实例, 失败返回 nil.
 //
 // hWindow: 窗口句柄.
 //
-// hdc: hdc句柄.
+// hdc: hdc 句柄.
 func NewGDI(hWindow int, hdc uintptr) *Draw {
-	p := &Draw{}
-	p.SetHandle(xc.XDraw_CreateGDI(hWindow, hdc))
-	return p
+	return NewByHandle(xc.XDraw_CreateGDI(hWindow, hdc))
 }
 
-// NewByHandle 从图形绘制模块实例句柄创建对象.
+// NewByHandle 从图形绘制模块实例句柄创建对象, 失败返回 nil.
 func NewByHandle(handle int) *Draw {
-	p := &Draw{}
-	p.SetHandle(handle)
-	return p
+	if handle > 0 {
+		p := &Draw{}
+		p.SetHandle(handle)
+		return p
+	}
+	return nil
 }
 
 // 绘制_销毁, 销毁图形绘制模块实例句柄.
@@ -1245,6 +1245,11 @@ func (d *Draw) ImageMaskEllipse(hImageFrame int, pRect *xc.RECT, pRcMask *xc.REC
 // 绘制_取字体, 返回字体句柄.
 func (d *Draw) GetFont() int {
 	return xc.XDraw_GetFont(d.Handle)
+}
+
+// 绘制_取字体对象, 返回字体对象, 失败返回 nil.
+func (d *Draw) GetFontObj() *font.Font {
+	return font.NewByHandle(xc.XDraw_GetFont(d.Handle))
 }
 
 // 绘制_取D2D位图, 返回 *ID2D1Bitmap.

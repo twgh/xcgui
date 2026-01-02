@@ -1,6 +1,8 @@
 package widget
 
 import (
+	"github.com/twgh/xcgui/adapter"
+	"github.com/twgh/xcgui/tmpl"
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
 )
@@ -10,7 +12,7 @@ type ListView struct {
 	ScrollView
 }
 
-// 列表视_创建.
+// 列表视_创建, 失败返回 nil.
 //
 // x: 元素x坐标.
 //
@@ -22,12 +24,10 @@ type ListView struct {
 //
 // hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
 func NewListView(x, y, cx, cy int32, hParent int) *ListView {
-	p := &ListView{}
-	p.SetHandle(xc.XListView_Create(x, y, cx, cy, hParent))
-	return p
+	return NewListViewByHandle(xc.XListView_Create(x, y, cx, cy, hParent))
 }
 
-// 列表视_创建Ex. 创建列表视图元素, 使用内置项模板, 自动创建数据适配器.
+// 列表视_创建Ex. 创建列表视图元素, 使用内置项模板, 自动创建数据适配器, 失败返回 nil.
 //
 // x: 元素x坐标.
 //
@@ -41,49 +41,32 @@ func NewListView(x, y, cx, cy int32, hParent int) *ListView {
 //
 // col_extend_count: 列数量. 例如: 内置模板是1列, 如果数据有5列, 那么此参数填5.
 func NewListViewEx(x, y, cx, cy int32, hParent, col_extend_count int32) *ListView {
-	p := &ListView{}
-	p.SetHandle(xc.XListView_CreateEx(x, y, cx, cy, hParent, col_extend_count))
-	return p
+	return NewListViewByHandle(xc.XListView_CreateEx(x, y, cx, cy, hParent, col_extend_count))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewListViewByHandle(handle int) *ListView {
+	if handle <= 0 {
+		return nil
+	}
 	p := &ListView{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从name创建对象, 失败返回 nil.
 func NewListViewByName(name string) *ListView {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &ListView{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewListViewByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从UID创建对象, 失败返回 nil.
 func NewListViewByUID(nUID int32) *ListView {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &ListView{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewListViewByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从UID名称创建对象, 失败返回 nil.
 func NewListViewByUIDName(name string) *ListView {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &ListView{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewListViewByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 列表视_创建数据适配器, 创建数据适配器，根据绑定的项模板初始化数据适配器的列, 返回适配器句柄.
@@ -102,6 +85,11 @@ func (l *ListView) BindAdapter(hAdapter int) *ListView {
 // 列表视_取数据适配器, 返回数据适配器句柄.
 func (l *ListView) GetAdapter() int {
 	return xc.XListView_GetAdapter(l.Handle)
+}
+
+// 列表视_取数据适配器, 返回数据适配器对象, 失败返回 nil.
+func (l *ListView) GetAdapterObj() *adapter.AdapterListView {
+	return adapter.NewAdapterListViewByHandle(xc.XListView_GetAdapter(l.Handle))
 }
 
 // 列表视_置项模板文件.
@@ -793,9 +781,19 @@ func (l *ListView) GetItemTemplate() int {
 	return xc.XListView_GetItemTemplate(l.Handle)
 }
 
+// 列表视_取项模板, 返回项模板对象, 失败返回 nil.
+func (l *ListView) GetItemTemplateObj() *tmpl.ListItemTemplate {
+	return tmpl.NewByHandle(xc.XListView_GetItemTemplate(l.Handle))
+}
+
 // 列表视_取项模板组, 返回项模板组句柄.
 func (l *ListView) GetItemTemplateGroup() int {
 	return xc.XListView_GetItemTemplateGroup(l.Handle)
+}
+
+// 列表视_取项模板组, 返回项模板组对象, 失败返回 nil.
+func (l *ListView) GetItemTemplateGroupObj() *tmpl.ListItemTemplate {
+	return tmpl.NewByHandle(xc.XListView_GetItemTemplateGroup(l.Handle))
 }
 
 // ------------------------- AddEvent ------------------------- //

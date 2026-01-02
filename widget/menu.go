@@ -11,51 +11,34 @@ type Menu struct {
 	objectbase.ObjectBase
 }
 
-// 菜单_创建, 创建菜单, 默认弹出菜单窗口关闭后自动销毁.
+// 菜单_创建, 创建菜单, 默认弹出菜单窗口关闭后自动销毁, 失败返回 nil.
 func NewMenu() *Menu {
-	p := &Menu{}
-	p.SetHandle(xc.XMenu_Create())
-	return p
+	return NewMenuByHandle(xc.XMenu_Create())
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewMenuByHandle(handle int) *Menu {
+	if handle <= 0 {
+		return nil
+	}
 	p := &Menu{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从name创建对象, 失败返回 nil.
 func NewMenuByName(name string) *Menu {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &Menu{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewMenuByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从UID创建对象, 失败返回 nil.
 func NewMenuByUID(nUID int32) *Menu {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &Menu{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewMenuByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从UID名称创建对象, 失败返回 nil.
 func NewMenuByUIDName(name string) *Menu {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &Menu{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewMenuByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 菜单_添加项, 添加菜单项.
@@ -331,6 +314,11 @@ func (m *Menu) SetItemWidth(nID, nWidth int32) bool {
 // 菜单_取菜单条, 返回菜单条句柄.
 func (m *Menu) GetMenuBar() int {
 	return xc.XMenu_GetMenuBar(m.Handle)
+}
+
+// 菜单_取菜单条, 返回菜单条对象, 失败返回 nil.
+func (m *Menu) GetMenuBarobj() *MenuBar {
+	return NewMenuBarByHandle(xc.XMenu_GetMenuBar(m.Handle))
 }
 
 // ------------------------- AddEvent ------------------------- //

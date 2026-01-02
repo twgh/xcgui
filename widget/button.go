@@ -10,7 +10,7 @@ type Button struct {
 	Element
 }
 
-// 按钮_创建.
+// 按钮_创建, 失败返回 nil.
 //
 // x: 按钮x坐标.
 //
@@ -24,49 +24,32 @@ type Button struct {
 //
 // hParent: 父为窗口句柄或元素句柄.
 func NewButton(x, y, cx, cy int32, pName string, hParent int) *Button {
-	p := &Button{}
-	p.SetHandle(xc.XBtn_Create(x, y, cx, cy, pName, hParent))
-	return p
+	return NewButtonByHandle(xc.XBtn_Create(x, y, cx, cy, pName, hParent))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewButtonByHandle(handle int) *Button {
+	if handle <= 0 {
+		return nil
+	}
 	p := &Button{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从 name 创建对象, 失败返回 nil.
 func NewButtonByName(name string) *Button {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &Button{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewButtonByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从 UID 创建对象, 失败返回 nil.
 func NewButtonByUID(nUID int32) *Button {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &Button{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewButtonByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从 UID 名称创建对象, 失败返回 nil.
 func NewButtonByUIDName(name string) *Button {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &Button{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewButtonByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 按钮_判断选中, 是否选中状态.

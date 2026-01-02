@@ -9,7 +9,7 @@ type ShapeRect struct {
 	Shape
 }
 
-// 形状矩形_创建, 创建矩形形状对象.
+// 形状矩形_创建, 创建矩形形状对象, 失败返回 nil.
 //
 // x: X坐标.
 //
@@ -21,49 +21,32 @@ type ShapeRect struct {
 //
 // hParent: 父对象句柄.
 func NewShapeRect(x, y, cx, cy int32, hParent int) *ShapeRect {
-	p := &ShapeRect{}
-	p.SetHandle(xc.XShapeRect_Create(x, y, cx, cy, hParent))
-	return p
+	return NewShapeRectByHandle(xc.XShapeRect_Create(x, y, cx, cy, hParent))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewShapeRectByHandle(handle int) *ShapeRect {
+	if handle <= 0 {
+		return nil
+	}
 	p := &ShapeRect{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从name创建对象, 失败返回 nil.
 func NewShapeRectByName(name string) *ShapeRect {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &ShapeRect{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewShapeRectByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从UID创建对象, 失败返回 nil.
 func NewShapeRectByUID(nUID int32) *ShapeRect {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &ShapeRect{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewShapeRectByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从UID名称创建对象, 失败返回 nil.
 func NewShapeRectByUIDName(name string) *ShapeRect {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &ShapeRect{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewShapeRectByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 形状矩形_置边框色, 设置边框颜色.

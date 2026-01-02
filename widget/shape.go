@@ -10,44 +10,29 @@ type Shape struct {
 	objectbase.Widget
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewShapeByHandle(handle int) *Shape {
+	if handle <= 0 {
+		return nil
+	}
 	p := &Shape{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从name创建对象, 失败返回 nil.
 func NewShapeByName(name string) *Shape {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &Shape{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewShapeByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从UID创建对象, 失败返回 nil.
 func NewShapeByUID(nUID int32) *Shape {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &Shape{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewShapeByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从UID名称创建对象, 失败返回 nil.
 func NewShapeByUIDName(name string) *Shape {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &Shape{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewShapeByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 形状_移除, 从父UI元素或窗口,和父布局对象中移除.

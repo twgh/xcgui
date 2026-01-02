@@ -9,15 +9,16 @@ type AdapterTree struct {
 	adapter
 }
 
-// 数据适配器树_创建, 创建树元素数据适配器.
+// 数据适配器树_创建, 创建树元素数据适配器, 失败返回 nil.
 func NewAdapterTree() *AdapterTree {
-	p := &AdapterTree{}
-	p.SetHandle(xc.XAdTree_Create())
-	return p
+	return NewAdapterTreeByHandle(xc.XAdTree_Create())
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewAdapterTreeByHandle(handle int) *AdapterTree {
+	if handle <= 0 {
+		return nil
+	}
 	p := &AdapterTree{}
 	p.SetHandle(handle)
 	return p

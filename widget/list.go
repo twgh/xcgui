@@ -1,16 +1,18 @@
 package widget
 
 import (
+	"github.com/twgh/xcgui/adapter"
+	"github.com/twgh/xcgui/tmpl"
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
 )
 
-// 列表.
+// List 列表.
 type List struct {
 	ScrollView
 }
 
-// 列表_创建, 创建列表元素.
+// 列表_创建, 创建列表元素, 失败返回 nil.
 //
 // x: 元素x坐标.
 //
@@ -22,12 +24,10 @@ type List struct {
 //
 // hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
 func NewList(x, y, cx, cy int32, hParent int) *List {
-	p := &List{}
-	p.SetHandle(xc.XList_Create(x, y, cx, cy, hParent))
-	return p
+	return NewListByHandle(xc.XList_Create(x, y, cx, cy, hParent))
 }
 
-// 列表_创建Ex, 创建列表元素, 使用内置项模板, 自动创建数据适配器.
+// 列表_创建Ex, 创建列表元素, 使用内置项模板, 自动创建数据适配器, 失败返回 nil.
 //
 // x: 元素x坐标.
 //
@@ -41,49 +41,32 @@ func NewList(x, y, cx, cy int32, hParent int) *List {
 //
 // col_extend_count: 列数量. 例如: 内置模板是1列, 如果数据有5列, 那么此参数填5.
 func NewListEx(x, y, cx, cy int32, hParent, col_extend_count int32) *List {
-	p := &List{}
-	p.SetHandle(xc.XList_CreateEx(x, y, cx, cy, hParent, col_extend_count))
-	return p
+	return NewListByHandle(xc.XList_CreateEx(x, y, cx, cy, hParent, col_extend_count))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewListByHandle(handle int) *List {
+	if handle <= 0 {
+		return nil
+	}
 	p := &List{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从 name 创建对象, 失败返回 nil.
 func NewListByName(name string) *List {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &List{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewListByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从 UID 创建对象, 失败返回 nil.
 func NewListByUID(nUID int32) *List {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &List{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewListByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从 UID 名称创建对象, 失败返回 nil.
 func NewListByUIDName(name string) *List {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &List{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewListByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 列表_增加列, 返回位置索引.
@@ -359,9 +342,19 @@ func (l *List) GetAdapter() int {
 	return xc.XList_GetAdapter(l.Handle)
 }
 
+// 列表_取数据适配器, 返回数据适配器对象, 失败返回 nil.
+func (l *List) GetAdapterObj() *adapter.AdapterTable {
+	return adapter.NewAdapterTableByHandle(xc.XList_GetAdapter(l.Handle))
+}
+
 // 列表_列表头获取数据适配器, 获取列表头数据适配器句柄.
 func (l *List) GetAdapterHeader() int {
 	return xc.XList_GetAdapterHeader(l.Handle)
+}
+
+// 列表_列表头获取数据适配器, 获取列表头数据适配器对象, 失败返回 nil.
+func (l *List) GetAdapterHeaderObj() *adapter.AdapterMap {
+	return adapter.NewAdapterMapByHandle(xc.XList_GetAdapterHeader(l.Handle))
 }
 
 // 列表_置项模板文件, 设置项布局模板文件.
@@ -890,9 +883,19 @@ func (l *List) GetItemTemplate() int {
 	return xc.XList_GetItemTemplate(l.Handle)
 }
 
+// 列表_取项模板. 返回列表项模板对象, 失败返回 nil.
+func (l *List) GetItemTemplateObj() *tmpl.ListItemTemplate {
+	return tmpl.NewByHandle(xc.XList_GetItemTemplate(l.Handle))
+}
+
 // 列表_取项模板列表头. 返回列表头项模板句柄.
 func (l *List) GetItemTemplateHeader() int {
 	return xc.XList_GetItemTemplateHeader(l.Handle)
+}
+
+// 列表_取项模板列表头. 返回列表头项模板对象, 失败返回 nil.
+func (l *List) GetItemTemplateHeaderObj() *tmpl.ListItemTemplate {
+	return tmpl.NewByHandle(xc.XList_GetItemTemplateHeader(l.Handle))
 }
 
 // 列表_刷新项数据列表头.

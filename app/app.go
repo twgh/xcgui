@@ -1,6 +1,7 @@
 package app
 
 import (
+	"github.com/twgh/xcgui/font"
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
 )
@@ -78,6 +79,11 @@ func (a *App) SetActivateTopWindow() bool {
 // GetDefaultFont 炫彩_取默认字体. 返回字体句柄.
 func (a *App) GetDefaultFont() int {
 	return xc.XC_GetDefaultFont()
+}
+
+// GetDefaultFontObj 炫彩_取默认字体对象. 返回字体对象, 失败返回 nil.
+func (a *App) GetDefaultFontObj() *font.Font {
+	return font.NewByHandle(xc.XC_GetDefaultFont())
 }
 
 // MessageBox 炫彩_消息框. 返回值如下: xcc.MessageBox_Flag_Ok: 点击确定按钮退出. xcc.MessageBox_Flag_Cancel: 点击取消按钮退出. xcc.MessageBox_Flag_Other: 其他方式退出.

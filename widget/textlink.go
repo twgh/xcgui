@@ -9,7 +9,7 @@ type TextLink struct {
 	Button
 }
 
-// 文本链接_创建, 创建静态文本链接元素.
+// 文本链接_创建, 创建静态文本链接元素, 失败返回 nil.
 //
 // x: 元素x坐标.
 //
@@ -23,49 +23,32 @@ type TextLink struct {
 //
 // hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
 func NewTextLink(x, y, cx, cy int32, pName string, hParent int) *TextLink {
-	p := &TextLink{}
-	p.SetHandle(xc.XTextLink_Create(x, y, cx, cy, pName, hParent))
-	return p
+	return NewTextLinkByHandle(xc.XTextLink_Create(x, y, cx, cy, pName, hParent))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewTextLinkByHandle(handle int) *TextLink {
+	if handle <= 0 {
+		return nil
+	}
 	p := &TextLink{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从name创建对象, 失败返回 nil.
 func NewTextLinkByName(name string) *TextLink {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &TextLink{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewTextLinkByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从UID创建对象, 失败返回 nil.
 func NewTextLinkByUID(nUID int32) *TextLink {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &TextLink{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewTextLinkByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从UID名称创建对象, 失败返回 nil.
 func NewTextLinkByUIDName(name string) *TextLink {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &TextLink{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewTextLinkByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 文本链接_启用离开状态下划线, 启用下划线, 鼠标离开状态.

@@ -9,15 +9,16 @@ type AdapterMap struct {
 	adapter
 }
 
-// 数据适配器MAP_创建, 创建数据适配器, 单列数据.
+// 数据适配器MAP_创建, 创建数据适配器, 单列数据, 失败返回 nil.
 func NewAdapterMap() *AdapterMap {
-	p := &AdapterMap{}
-	p.SetHandle(xc.XAdMap_Create())
-	return p
+	return NewAdapterMapByHandle(xc.XAdMap_Create())
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewAdapterMapByHandle(handle int) *AdapterMap {
+	if handle <= 0 {
+		return nil
+	}
 	p := &AdapterMap{}
 	p.SetHandle(handle)
 	return p

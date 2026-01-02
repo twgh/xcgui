@@ -14,18 +14,10 @@ func XSvg_LoadFile(pFileName string) int {
 	return int(r)
 }
 
-// SVG_加载从字符串, 返回SVG句柄. 等同于 XSvg_LoadStringW.
+// SVG_加载从字符串, 返回SVG句柄.
 //
 // pString: 字符串.
 func XSvg_LoadString(pString string) int {
-	r, _, _ := xSvg_LoadStringW.Call(common.StrPtr(pString))
-	return int(r)
-}
-
-// SVG_加载从字符串W, 返回SVG句柄.
-//
-// pString: 字符串.
-func XSvg_LoadStringW(pString string) int {
 	r, _, _ := xSvg_LoadStringW.Call(common.StrPtr(pString))
 	return int(r)
 }

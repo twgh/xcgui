@@ -10,7 +10,7 @@ type LayoutEle struct {
 	Element
 }
 
-// NewLayoutEle 布局_创建, 创建布局元素.
+// NewLayoutEle 布局_创建, 创建布局元素, 失败返回 nil.
 //
 // x: 元素x坐标.
 //
@@ -22,30 +22,29 @@ type LayoutEle struct {
 //
 // hParent: 父为窗口句柄或元素句柄.
 func NewLayoutEle(x, y, cx, cy int32, hParent int) *LayoutEle {
-	p := &LayoutEle{}
-	p.SetHandle(xc.XLayout_Create(x, y, cx, cy, hParent))
-	return p
+	return NewLayoutEleByHandle(xc.XLayout_Create(x, y, cx, cy, hParent))
 }
 
-// NewLayoutEleEx 布局_创建扩展, 创建布局元素.
+// NewLayoutEleEx 布局_创建扩展, 创建布局元素, 失败返回 nil.
 //
 // hParent: 父为窗口句柄或元素句柄.
 func NewLayoutEleEx(hParent int) *LayoutEle {
-	p := &LayoutEle{}
-	p.SetHandle(xc.XLayout_CreateEx(hParent))
-	return p
+	return NewLayoutEleByHandle(xc.XLayout_CreateEx(hParent))
 }
 
-// NewLayoutEleByHandle 从句柄创建对象.
+// NewLayoutEleByHandle 从句柄创建对象, 失败返回 nil.
 //
 // handle: 布局元素句柄.
 func NewLayoutEleByHandle(handle int) *LayoutEle {
+	if handle <= 0 {
+		return nil
+	}
 	p := &LayoutEle{}
 	p.SetHandle(handle)
 	return p
 }
 
-// NewLayoutEleByLayout 从布局文件创建对象, 失败返回nil.
+// NewLayoutEleByLayout 从布局文件创建对象, 失败返回 nil.
 //
 // pFileName: 布局文件名.
 //
@@ -53,16 +52,10 @@ func NewLayoutEleByHandle(handle int) *LayoutEle {
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func NewLayoutEleByLayout(pFileName string, hParent int, hAttachWnd uintptr) *LayoutEle {
-	handle := xc.XC_LoadLayout(pFileName, hParent, hAttachWnd)
-	if handle > 0 {
-		p := &LayoutEle{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewLayoutEleByHandle(xc.XC_LoadLayout(pFileName, hParent, hAttachWnd))
 }
 
-// NewLayoutEleByLayoutZip 从压缩包中的布局文件创建对象, 失败返回nil.
+// NewLayoutEleByLayoutZip 从压缩包中的布局文件创建对象, 失败返回 nil.
 //
 // pZipFileName: zip文件名.
 //
@@ -74,16 +67,10 @@ func NewLayoutEleByLayout(pFileName string, hParent int, hAttachWnd uintptr) *La
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func NewLayoutEleByLayoutZip(pZipFileName string, pFileName string, pPassword string, hParent int, hAttachWnd uintptr) *LayoutEle {
-	handle := xc.XC_LoadLayoutZip(pZipFileName, pFileName, pPassword, hParent, hAttachWnd)
-	if handle > 0 {
-		p := &LayoutEle{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewLayoutEleByHandle(xc.XC_LoadLayoutZip(pZipFileName, pFileName, pPassword, hParent, hAttachWnd))
 }
 
-// NewLayoutEleByLayoutZipResEx 从RC资源zip压缩包中的布局文件创建对象, 失败返回nil.
+// NewLayoutEleByLayoutZipResEx 从RC资源zip压缩包中的布局文件创建对象, 失败返回 nil.
 //
 // id: RC资源ID.
 //
@@ -101,16 +88,10 @@ func NewLayoutEleByLayoutZip(pZipFileName string, pFileName string, pPassword st
 //
 // hModule: 模块句柄, 可填0.
 func NewLayoutEleByLayoutZipResEx(id int32, pFileName, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd, hModule uintptr) *LayoutEle {
-	handle := xc.XC_LoadLayoutZipResEx(id, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd, hModule)
-	if handle > 0 {
-		p := &LayoutEle{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewLayoutEleByHandle(xc.XC_LoadLayoutZipResEx(id, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd, hModule))
 }
 
-// NewLayoutEleByLayoutZipMem 从内存压缩包中的布局文件创建对象, 失败返回nil.
+// NewLayoutEleByLayoutZipMem 从内存压缩包中的布局文件创建对象, 失败返回 nil.
 //
 // data: 布局文件数据.
 //
@@ -122,16 +103,10 @@ func NewLayoutEleByLayoutZipResEx(id int32, pFileName, pPassword, pPrefixName st
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func NewLayoutEleByLayoutZipMem(data []byte, pFileName string, pPassword string, hParent int, hAttachWnd uintptr) *LayoutEle {
-	handle := xc.XC_LoadLayoutZipMem(data, pFileName, pPassword, hParent, hAttachWnd)
-	if handle > 0 {
-		p := &LayoutEle{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewLayoutEleByHandle(xc.XC_LoadLayoutZipMem(data, pFileName, pPassword, hParent, hAttachWnd))
 }
 
-// NewLayoutEleByStringW 从布局文件字符串W创建对象, 失败返回nil.
+// NewLayoutEleByStringW 从布局文件字符串W创建对象, 失败返回 nil.
 //
 // pStringXML: 字符串.
 //
@@ -139,16 +114,10 @@ func NewLayoutEleByLayoutZipMem(data []byte, pFileName string, pPassword string,
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func NewLayoutEleByStringW(pStringXML string, hParent int, hAttachWnd uintptr) *LayoutEle {
-	handle := xc.XC_LoadLayoutFromStringW(pStringXML, hParent, hAttachWnd)
-	if handle > 0 {
-		p := &LayoutEle{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewLayoutEleByHandle(xc.XC_LoadLayoutFromStringW(pStringXML, hParent, hAttachWnd))
 }
 
-// NewLayoutEleByLayoutEx 从布局文件创建对象, 失败返回nil.
+// NewLayoutEleByLayoutEx 从布局文件创建对象, 失败返回 nil.
 //
 // pFileName: 布局文件名.
 //
@@ -160,16 +129,10 @@ func NewLayoutEleByStringW(pStringXML string, hParent int, hAttachWnd uintptr) *
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func NewLayoutEleByLayoutEx(pFileName, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) *LayoutEle {
-	handle := xc.XC_LoadLayoutEx(pFileName, pPrefixName, hParent, hParentWnd, hAttachWnd)
-	if handle > 0 {
-		p := &LayoutEle{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewLayoutEleByHandle(xc.XC_LoadLayoutEx(pFileName, pPrefixName, hParent, hParentWnd, hAttachWnd))
 }
 
-// NewLayoutEleByLayoutZipEx 从压缩包中的布局文件创建对象, 失败返回nil.
+// NewLayoutEleByLayoutZipEx 从压缩包中的布局文件创建对象, 失败返回 nil.
 //
 // pZipFileName: zip文件名.
 //
@@ -185,16 +148,10 @@ func NewLayoutEleByLayoutEx(pFileName, pPrefixName string, hParent int, hParentW
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func NewLayoutEleByLayoutZipEx(pZipFileName string, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) *LayoutEle {
-	handle := xc.XC_LoadLayoutZipEx(pZipFileName, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd)
-	if handle > 0 {
-		p := &LayoutEle{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewLayoutEleByHandle(xc.XC_LoadLayoutZipEx(pZipFileName, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd))
 }
 
-// NewLayoutEleByLayoutZipMemEx 从内存压缩包中的布局文件创建对象, 失败返回nil.
+// NewLayoutEleByLayoutZipMemEx 从内存压缩包中的布局文件创建对象, 失败返回 nil.
 //
 // data: 布局文件数据.
 //
@@ -210,16 +167,10 @@ func NewLayoutEleByLayoutZipEx(pZipFileName string, pFileName string, pPassword,
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func NewLayoutEleByLayoutZipMemEx(data []byte, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) *LayoutEle {
-	handle := xc.XC_LoadLayoutZipMemEx(data, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd)
-	if handle > 0 {
-		p := &LayoutEle{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewLayoutEleByHandle(xc.XC_LoadLayoutZipMemEx(data, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd))
 }
 
-// NewLayoutEleByStringWEx 从布局文件字符串W创建对象, 失败返回nil.
+// NewLayoutEleByStringWEx 从布局文件字符串W创建对象, 失败返回 nil.
 //
 // pStringXML: 字符串.
 //
@@ -231,82 +182,46 @@ func NewLayoutEleByLayoutZipMemEx(data []byte, pFileName string, pPassword, pPre
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func NewLayoutEleByStringWEx(pStringXML, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) *LayoutEle {
-	handle := xc.XC_LoadLayoutFromStringWEx(pStringXML, pPrefixName, hParent, hParentWnd, hAttachWnd)
-	if handle > 0 {
-		p := &LayoutEle{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewLayoutEleByHandle(xc.XC_LoadLayoutFromStringWEx(pStringXML, pPrefixName, hParent, hParentWnd, hAttachWnd))
 }
 
-// NewLayoutEleByName 从name创建对象, 失败返回nil.
+// NewLayoutEleByName 从name创建对象, 失败返回 nil.
 //
 // name: name名称.
 func NewLayoutEleByName(name string) *LayoutEle {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &LayoutEle{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewLayoutEleByHandle(xc.XC_GetObjectByName(name))
 }
 
-// NewLayoutEleByID 从ID创建对象, 失败返回nil.
+// NewLayoutEleByID 从ID创建对象, 失败返回 nil.
 //
 // hWindow: 父窗口句柄.
 //
 // nID: ID值.
 func NewLayoutEleByID(hWindow int, nID int32) *LayoutEle {
-	handle := xc.XC_GetObjectByID(hWindow, nID)
-	if handle > 0 {
-		p := &LayoutEle{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewLayoutEleByHandle(xc.XC_GetObjectByID(hWindow, nID))
 }
 
-// NewLayoutEleByIDName 从ID名称创建对象, 失败返回nil.
+// NewLayoutEleByIDName 从ID名称创建对象, 失败返回 nil.
 //
 // hWindow: 父窗口句柄.
 //
 // name: name名称.
 func NewLayoutEleByIDName(hWindow int, name string) *LayoutEle {
-	handle := xc.XC_GetObjectByIDName(hWindow, name)
-	if handle > 0 {
-		p := &LayoutEle{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewLayoutEleByHandle(xc.XC_GetObjectByIDName(hWindow, name))
 }
 
-// NewLayoutEleByUID 从UID创建对象, 失败返回nil.
+// NewLayoutEleByUID 从UID创建对象, 失败返回 nil.
 //
 // nUID: ID值.
 func NewLayoutEleByUID(nUID int32) *LayoutEle {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &LayoutEle{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewLayoutEleByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// NewLayoutEleByUIDName 从UID名称创建对象, 失败返回nil.
+// NewLayoutEleByUIDName 从UID名称创建对象, 失败返回 nil.
 //
 // name: name名称.
 func NewLayoutEleByUIDName(name string) *LayoutEle {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &LayoutEle{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewLayoutEleByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // IsEnableLayout 布局_判断启用, 是否已经启用布局功能.

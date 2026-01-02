@@ -1,6 +1,7 @@
 package widget
 
 import (
+	"github.com/twgh/xcgui/font"
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
 )
@@ -10,7 +11,7 @@ type ShapeText struct {
 	Shape
 }
 
-// 形状文本_创建, 创建形状对象文本.
+// 形状文本_创建, 创建形状对象文本, 失败返回 nil.
 //
 // x: X坐标.
 //
@@ -24,49 +25,32 @@ type ShapeText struct {
 //
 // hParent: 父对象句柄.
 func NewShapeText(x, y, cx, cy int32, pName string, hParent int) *ShapeText {
-	p := &ShapeText{}
-	p.SetHandle(xc.XShapeText_Create(x, y, cx, cy, pName, hParent))
-	return p
+	return NewShapeTextByHandle(xc.XShapeText_Create(x, y, cx, cy, pName, hParent))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewShapeTextByHandle(handle int) *ShapeText {
+	if handle <= 0 {
+		return nil
+	}
 	p := &ShapeText{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从name创建对象, 失败返回 nil.
 func NewShapeTextByName(name string) *ShapeText {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &ShapeText{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewShapeTextByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从UID创建对象, 失败返回 nil.
 func NewShapeTextByUID(nUID int32) *ShapeText {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &ShapeText{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewShapeTextByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从UID名称创建对象, 失败返回 nil.
 func NewShapeTextByUIDName(name string) *ShapeText {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &ShapeText{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewShapeTextByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 形状文本_置文本, 设置文本内容.
@@ -98,6 +82,11 @@ func (s *ShapeText) SetFont(hFontx int) *ShapeText {
 // 形状文本_取字体, 返回字体句柄.
 func (s *ShapeText) GetFont() int {
 	return xc.XShapeText_GetFont(s.Handle)
+}
+
+// 形状文本_取字体, 返回字体对象, 失败返回 nil.
+func (s *ShapeText) GetFontObj() *font.Font {
+	return font.NewByHandle(xc.XShapeText_GetFont(s.Handle))
 }
 
 // 形状文本_置文本颜色, 设置文本颜色.

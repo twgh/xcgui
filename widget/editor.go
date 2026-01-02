@@ -5,12 +5,12 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// 代码编辑框.
+// Editor 代码编辑框.
 type Editor struct {
 	Edit
 }
 
-// 代码编辑框_创建.
+// 代码编辑框_创建, 失败返回 nil.
 //
 // x: 元素x坐标.
 //
@@ -22,49 +22,32 @@ type Editor struct {
 //
 // hParent: 父为窗口句柄或元素句柄.
 func NewEditor(x, y, cx, cy int32, hParent int) *Editor {
-	p := &Editor{}
-	p.SetHandle(xc.XEditor_Create(x, y, cx, cy, hParent))
-	return p
+	return NewEditorByHandle(xc.XEditor_Create(x, y, cx, cy, hParent))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewEditorByHandle(handle int) *Editor {
+	if handle <= 0 {
+		return nil
+	}
 	p := &Editor{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从 name 创建对象, 失败返回 nil.
 func NewEditorByName(name string) *Editor {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &Editor{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewEditorByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从 UID 创建对象, 失败返回 nil.
 func NewEditorByUID(nUID int32) *Editor {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &Editor{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewEditorByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从 UID 名称创建对象, 失败返回 nil.
 func NewEditorByUIDName(name string) *Editor {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &Editor{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewEditorByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 /*// 代码编辑框_启用空格选择自动匹配项.

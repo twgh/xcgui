@@ -10,84 +10,75 @@ type Svg struct {
 	objectbase.ObjectBase
 }
 
-// NewByFile SVG_加载从文件, 返回Svg对象.
+// NewByFile SVG_加载从文件, 返回 Svg 对象, 失败返回 nil.
 //
 // pFileName: 文件名.
 func NewByFile(pFileName string) *Svg {
-	p := &Svg{}
-	p.SetHandle(xc.XSvg_LoadFile(pFileName))
-	return p
+	return NewByHandle(xc.XSvg_LoadFile(pFileName))
 }
 
-// NewByString SVG_加载从字符串, 返回Svg对象.
+// NewByString SVG_加载从字符串, 返回 Svg 对象, 失败返回 nil.
 //
 // pString: 字符串.
 func NewByString(pString string) *Svg {
-	p := &Svg{}
-	p.SetHandle(xc.XSvg_LoadString(pString))
-	return p
+	return NewByHandle(xc.XSvg_LoadString(pString))
 }
 
-// NewByStringW SVG_加载从字符串W.
+// NewByZip SVG_加载从ZIP, 返回 Svg 对象, 失败返回 nil.
 //
-// pString: 字符串.
-func NewByStringW(pString string) *Svg {
-	p := &Svg{}
-	p.SetHandle(xc.XSvg_LoadStringW(pString))
-	return p
-}
-
-// NewByZip SVG_加载从ZIP, 返回Svg对象.
+// pZipFileName: zip 文件名.
 //
-// pZipFileName: zip文件名.
+// pFileName: svg 文件名.
 //
-// pFileName: svg文件名.
-//
-// pPassword: zip密码.
+// pPassword: zip 密码.
 func NewByZip(pZipFileName, pFileName, pPassword string) *Svg {
-	p := &Svg{}
-	p.SetHandle(xc.XSvg_LoadZip(pZipFileName, pFileName, pPassword))
-	return p
+	return NewByHandle(xc.XSvg_LoadZip(pZipFileName, pFileName, pPassword))
 }
 
-// NewByZipRes SVG_加载从资源ZIP, 返回SVG对象.
+// NewByZipRes SVG_加载从资源ZIP, 返回 SVG 对象, 失败返回 nil.
 //
-// id: 资源ID.
+// id: 资源 ID.
 //
-// pFileName: svg文件名.
+// pFileName: svg 文件名.
 //
-// pPassword: zip密码.
+// pPassword: zip 密码.
 //
 // hModule: 模块句柄, 可填0.
 func NewByZipRes(id int32, pFileName, pPassword string, hModule uintptr) *Svg {
-	p := &Svg{}
-	p.SetHandle(xc.XSvg_LoadZipRes(id, pFileName, pPassword, hModule))
-	return p
+	return NewByHandle(xc.XSvg_LoadZipRes(id, pFileName, pPassword, hModule))
 }
 
-// NewByZipMem SVG_加载从内存ZIP, 返回Svg对象.
+// NewByZipMem SVG_加载从内存ZIP, 返回 Svg 对象, 失败返回 nil.
 //
-// data: zip数据.
+// data: zip 数据.
 //
-// pFileName: svg文件名.
+// pFileName: svg 文件名.
 //
-// pPassword: zip密码.
+// pPassword: zip 密码.
 func NewByZipMem(data []byte, pFileName, pPassword string) *Svg {
-	p := &Svg{}
-	p.SetHandle(xc.XSvg_LoadZipMem(data, pFileName, pPassword))
-	return p
+	return NewByHandle(xc.XSvg_LoadZipMem(data, pFileName, pPassword))
 }
 
-// NewByRes SVG_加载从资源, 返回Svg对象.
+// NewByRes SVG_加载从资源, 返回 Svg 对象, 失败返回 nil.
 //
-// id: 资源ID.
+// id: 资源 ID.
 //
-// pType: 资源类型.在rc资源文件中.
+// pType: 资源类型. 在 rc 资源文件中.
 //
 // hModule: 从指定模块加载.
 func NewByRes(id int32, pType string, hModule uintptr) *Svg {
+	return NewByHandle(xc.XSvg_LoadRes(id, pType, hModule))
+}
+
+// NewByHandle 从句柄创建 Svg 对象, 失败返回 nil.
+//
+// handle: Svg 句柄.
+func NewByHandle(handle int) *Svg {
+	if handle < 1 {
+		return nil
+	}
 	p := &Svg{}
-	p.SetHandle(xc.XSvg_LoadRes(id, pType, hModule))
+	p.SetHandle(handle)
 	return p
 }
 

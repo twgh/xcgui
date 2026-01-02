@@ -10,7 +10,7 @@ type FrameWindow struct {
 	windowBase
 }
 
-// 框架窗口_创建.
+// 框架窗口_创建, 失败返回 nil.
 //
 // x: 窗口左上角x坐标.
 //
@@ -26,12 +26,10 @@ type FrameWindow struct {
 //
 // XCStyle: GUI库窗口样式: Window_Style_.
 func NewFrameWindow(x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) *FrameWindow {
-	p := &FrameWindow{}
-	p.SetHandle(xc.XFrameWnd_Create(x, y, cx, cy, pTitle, hWndParent, XCStyle))
-	return p
+	return NewFrameWindowByHandle(xc.XFrameWnd_Create(x, y, cx, cy, pTitle, hWndParent, XCStyle))
 }
 
-// 框架窗口_创建扩展.
+// 框架窗口_创建扩展, 失败返回 nil.
 //
 // dwExStyle: 窗口扩展样式.
 //
@@ -53,49 +51,32 @@ func NewFrameWindow(x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCSty
 //
 // XCStyle: GUI库窗口样式: Window_Style_.
 func NewFrameWindowEx(dwExStyle, dwStyle uint32, lpClassName string, x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) *FrameWindow {
-	p := &FrameWindow{}
-	p.SetHandle(xc.XFrameWnd_CreateEx(dwExStyle, dwStyle, lpClassName, x, y, cx, cy, pTitle, hWndParent, XCStyle))
-	return p
+	return NewFrameWindowByHandle(xc.XFrameWnd_CreateEx(dwExStyle, dwStyle, lpClassName, x, y, cx, cy, pTitle, hWndParent, XCStyle))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewFrameWindowByHandle(handle int) *FrameWindow {
+	if handle <= 0 {
+		return nil
+	}
 	p := &FrameWindow{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从name创建对象, 失败返回 nil.
 func NewFrameWindowByName(name string) *FrameWindow {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &FrameWindow{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewFrameWindowByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从UID创建对象, 失败返回 nil.
 func NewFrameWindowByUID(nUID int32) *FrameWindow {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &FrameWindow{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewFrameWindowByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从UID名称创建对象, 失败返回 nil.
 func NewFrameWindowByUIDName(name string) *FrameWindow {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &FrameWindow{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewFrameWindowByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 框架窗口_取布局区域坐标, 用来布局窗格的区域坐标, 不包含码头.

@@ -13,26 +13,14 @@ type BkObj struct {
 	objectbase.ObjectBase
 }
 
-// NewByHandle 从 BkObj 句柄创建 BkObj 对象.
+// NewByHandle 从 BkObj 句柄创建 BkObj 对象, 失败返回 nil.
 func NewByHandle(handle int) *BkObj {
-	p := &BkObj{}
-	p.SetHandle(handle)
-	return p
-}
-
-// NewByBkmHandle 从 bkmanager.BkManager 句柄创建 BkObj 对象, 失败返回 nil.
-//
-// hBkm: 背景管理器句柄.
-//
-// id: 背景对象ID.
-func NewByBkmHandle(hBkm int, id int32) *BkObj {
-	handle := xc.XBkM_GetObject(hBkm, id)
-	if handle == 0 {
-		return nil
+	if handle > 0 {
+		p := &BkObj{}
+		p.SetHandle(handle)
+		return p
 	}
-	p := &BkObj{}
-	p.SetHandle(handle)
-	return p
+	return nil
 }
 
 // 背景对象_置外间距, 外间距与对齐标识(BkObject_Align_Flag_)互相依赖.
@@ -169,7 +157,7 @@ func (b *BkObj) GetImage() int {
 	return xc.XBkObj_GetImage(b.Handle)
 }
 
-// 背景对象_取图片对象, 返回图片对象.
+// 背景对象_取图片对象, 返回图片对象, 失败返回 nil.
 func (b *BkObj) GetImageObj() *imagex.Image {
 	return imagex.NewByHandle(xc.XBkObj_GetImage(b.Handle))
 }
@@ -224,7 +212,7 @@ func (b *BkObj) GetFont() int {
 	return xc.XBkObj_GetFont(b.Handle)
 }
 
-// 背景对象_取字体对象, 返回字体对象.
+// 背景对象_取字体对象, 返回字体对象, 失败返回 nil.
 func (b *BkObj) GetFontObj() *font.Font {
 	return font.NewByHandle(xc.XBkObj_GetFont(b.Handle))
 }

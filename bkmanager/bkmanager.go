@@ -3,7 +3,6 @@ package bkmanager
 import (
 	"github.com/twgh/xcgui/bkobj"
 	"github.com/twgh/xcgui/objectbase"
-	"github.com/twgh/xcgui/res"
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
 )
@@ -13,29 +12,24 @@ type BkManager struct {
 	objectbase.ObjectBase
 }
 
-// New 背景_创建, 创建背景管理器.
+// New 背景_创建, 创建背景管理器, 失败返回 nil.
 func New() *BkManager {
-	p := &BkManager{}
-	p.SetHandle(xc.XBkM_Create())
-	return p
+	return NewByHandle(xc.XBkM_Create())
 }
 
-// NewByHandle 从句柄创建背景管理器对象.
+// NewByHandle 从句柄创建背景管理器对象, 失败返回 nil.
 func NewByHandle(handle int) *BkManager {
-	p := &BkManager{}
-	p.SetHandle(handle)
-	return p
-}
-
-// NewByName 从name创建背景管理器对象, 失败返回nil.
-func NewByName(name string) *BkManager {
-	handle := res.GetBkM(name)
 	if handle > 0 {
 		p := &BkManager{}
 		p.SetHandle(handle)
 		return p
 	}
 	return nil
+}
+
+// NewByName 从 name 创建背景管理器对象, 失败返回 nil.
+func NewByName(name string) *BkManager {
+	return NewByHandle(xc.XRes_GetBkM(name))
 }
 
 // 背景_销毁.
@@ -174,7 +168,7 @@ func (b *BkManager) GetObject(id int32) int {
 	return xc.XBkM_GetObject(b.Handle, id)
 }
 
-// 背景_取背景对象, 返回 bkobj.BkObj 对象.
+// 背景_取背景对象, 返回 bkobj.BkObj 对象, 失败返回 nil.
 //
 // id: 背景对象ID.
 func (b *BkManager) GetObjectObj(id int32) *bkobj.BkObj {

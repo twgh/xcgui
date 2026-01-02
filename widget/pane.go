@@ -10,7 +10,7 @@ type Pane struct {
 	Element
 }
 
-// 窗格_创建, 创建窗格元素, 返回元素句柄.
+// 窗格_创建, 创建窗格元素, 失败返回 nil.
 //
 // pName: 窗格标题.
 //
@@ -20,49 +20,32 @@ type Pane struct {
 //
 // hFrameWnd: 框架窗口.
 func NewPane(pName string, nWidth, nHeight int32, hFrameWnd int) *Pane {
-	p := &Pane{}
-	p.SetHandle(xc.XPane_Create(pName, nWidth, nHeight, hFrameWnd))
-	return p
+	return NewPaneByHandle(xc.XPane_Create(pName, nWidth, nHeight, hFrameWnd))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewPaneByHandle(handle int) *Pane {
+	if handle <= 0 {
+		return nil
+	}
 	p := &Pane{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从name创建对象, 失败返回 nil.
 func NewPaneByName(name string) *Pane {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &Pane{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewPaneByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从UID创建对象, 失败返回 nil.
 func NewPaneByUID(nUID int32) *Pane {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &Pane{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewPaneByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从UID名称创建对象, 失败返回 nil.
 func NewPaneByUIDName(name string) *Pane {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &Pane{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewPaneByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 窗格_置视图, 设置窗格视图元素.
@@ -182,6 +165,11 @@ func (p *Pane) IsGroupActivate() bool {
 // 窗格_取TabBar. 返回 TabBar 句柄.
 func (p *Pane) GetTabBar() int {
 	return xc.XPane_GetTabBar(p.Handle)
+}
+
+// 窗格_取TabBar. 返回 TabBar 对象, 失败返回 nil.
+func (p *Pane) GetTabBarObj() *TabBar {
+	return NewTabBarByHandle(xc.XPane_GetTabBar(p.Handle))
 }
 
 // 窗格_取SplitBar. 返回 SplitBar 句柄.

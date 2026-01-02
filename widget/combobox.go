@@ -1,6 +1,8 @@
 package widget
 
 import (
+	"github.com/twgh/xcgui/adapter"
+	"github.com/twgh/xcgui/tmpl"
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
 )
@@ -10,7 +12,7 @@ type ComboBox struct {
 	Edit
 }
 
-// 组合框_创建.
+// 组合框_创建, 失败返回 nil.
 //
 // x: 元素x坐标.
 //
@@ -20,51 +22,34 @@ type ComboBox struct {
 //
 // cy: 高度.
 //
-// hParent: 父是窗口资源句柄或UI元素资源句柄.如果是窗口资源句柄将被添加到窗口.
+// hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口.
 func NewComboBox(x, y, cx, cy int32, hParent int) *ComboBox {
-	p := &ComboBox{}
-	p.SetHandle(xc.XComboBox_Create(x, y, cx, cy, hParent))
-	return p
+	return NewComboBoxByHandle(xc.XComboBox_Create(x, y, cx, cy, hParent))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewComboBoxByHandle(handle int) *ComboBox {
+	if handle <= 0 {
+		return nil
+	}
 	p := &ComboBox{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从 name 创建对象, 失败返回 nil.
 func NewComboBoxByName(name string) *ComboBox {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &ComboBox{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewComboBoxByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从 UID 创建对象, 失败返回 nil.
 func NewComboBoxByUID(nUID int32) *ComboBox {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &ComboBox{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewComboBoxByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从 UID 名称创建对象, 失败返回 nil.
 func NewComboBoxByUIDName(name string) *ComboBox {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &ComboBox{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewComboBoxByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 组合框_置选择项.
@@ -90,6 +75,11 @@ func (c *ComboBox) BindAdapter(hAdapter int) *ComboBox {
 // 组合框_取数据适配器, 获取绑定的数据适配器.
 func (c *ComboBox) GetAdapter() int {
 	return xc.XComboBox_GetAdapter(c.Handle)
+}
+
+// 组合框_取数据适配器对象, 获取绑定的数据适配器对象, 失败返回 nil.
+func (c *ComboBox) GetAdapterObj() *adapter.AdapterTable {
+	return adapter.NewAdapterTableByHandle(xc.XComboBox_GetAdapter(c.Handle))
 }
 
 // 组合框_置绑定名称.
@@ -493,6 +483,11 @@ func (c *ComboBox) SetItemTemplateXMLFromZipRes(id int32, pFileName string, pPas
 // 组合框_取项模板, 返回项模板句柄.
 func (c *ComboBox) GetItemTemplate() int {
 	return xc.XComboBox_GetItemTemplate(c.Handle)
+}
+
+// 组合框_取项模板, 返回项模板对象, 失败返回 nil.
+func (c *ComboBox) GetItemTemplateObj() *tmpl.ListItemTemplate {
+	return tmpl.NewByHandle(xc.XComboBox_GetItemTemplate(c.Handle))
 }
 
 // ------------------------- AddEvent ------------------------- //

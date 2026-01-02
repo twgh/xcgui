@@ -1,6 +1,8 @@
 package widget
 
 import (
+	"github.com/twgh/xcgui/bkmanager"
+	"github.com/twgh/xcgui/font"
 	"github.com/twgh/xcgui/objectbase"
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
@@ -11,7 +13,7 @@ type Element struct {
 	objectbase.Widget
 }
 
-// 元素_创建, 创建基础元素.
+// 元素_创建, 创建基础元素, 失败返回 nil.
 //
 // y: 元素y坐标.
 //
@@ -21,49 +23,32 @@ type Element struct {
 //
 // hParent: 父为窗口句柄或元素句柄.
 func NewElement(x, y, cx, cy int32, hParent int) *Element {
-	p := &Element{}
-	p.SetHandle(xc.XEle_Create(x, y, cx, cy, hParent))
-	return p
+	return NewElementByHandle(xc.XEle_Create(x, y, cx, cy, hParent))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewElementByHandle(handle int) *Element {
+	if handle <= 0 {
+		return nil
+	}
 	p := &Element{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从 name 创建对象, 失败返回 nil.
 func NewElementByName(name string) *Element {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &Element{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewElementByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从 UID 创建对象, 失败返回 nil.
 func NewElementByUID(nUID int32) *Element {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &Element{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewElementByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从 UID 名称创建对象, 失败返回 nil.
 func NewElementByUIDName(name string) *Element {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &Element{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewElementByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 元素_注册事件C, 注册事件C方式, 省略2参数.
@@ -775,9 +760,19 @@ func (e *Element) GetFont() int {
 	return xc.XEle_GetFont(e.Handle)
 }
 
+// 元素_取字体, 返回炫彩字体对象, 失败返回 nil.
+func (e *Element) GetFontObj() *font.Font {
+	return font.NewByHandle(xc.XEle_GetFont(e.Handle))
+}
+
 // 元素_取字体扩展, 获取元素字体, 优先从资源中获取.
 func (e *Element) GetFontEx() int {
 	return xc.XEle_GetFontEx(e.Handle)
+}
+
+// 元素_取字体扩展, 获取元素字体对象, 优先从资源中获取, 失败返回 nil.
+func (e *Element) GetFontObjEx() *font.Font {
+	return font.NewByHandle(xc.XEle_GetFontEx(e.Handle))
 }
 
 // 元素_置透明度.
@@ -840,9 +835,19 @@ func (e *Element) GetBkManager() int {
 	return xc.XEle_GetBkManager(e.Handle)
 }
 
+// 元素_取背景管理器, 获取元素背景管理器对象, 失败返回 nil.
+func (e *Element) GetBkManagerObj() *bkmanager.BkManager {
+	return bkmanager.NewByHandle(xc.XEle_GetBkManager(e.Handle))
+}
+
 // 元素_取背景管理器扩展, 获取元素背景管理器, 优先从资源中获取.
 func (e *Element) GetBkManagerEx() int {
 	return xc.XEle_GetBkManagerEx(e.Handle)
+}
+
+// 元素_取背景管理器扩展, 获取元素背景管理器对象, 优先从资源中获取, 失败返回 nil.
+func (e *Element) GetBkManagerObjEx() *bkmanager.BkManager {
+	return bkmanager.NewByHandle(xc.XEle_GetBkManagerEx(e.Handle))
 }
 
 // 元素_置背景管理器.

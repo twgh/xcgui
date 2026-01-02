@@ -10,7 +10,7 @@ type Edit struct {
 	ScrollView
 }
 
-// 编辑框_创建.
+// 编辑框_创建, 失败返回 nil.
 //
 // x: 元素x坐标.
 //
@@ -22,12 +22,10 @@ type Edit struct {
 //
 // hParent: 父为窗口句柄或元素句柄.
 func NewEdit(x, y, cx, cy int32, hParent int) *Edit {
-	p := &Edit{}
-	p.SetHandle(xc.XEdit_Create(x, y, cx, cy, hParent))
-	return p
+	return NewEditByHandle(xc.XEdit_Create(x, y, cx, cy, hParent))
 }
 
-// 编辑框_创建扩展.
+// 编辑框_创建扩展, 失败返回 nil.
 //
 // x: 元素x坐标.
 //
@@ -41,49 +39,32 @@ func NewEdit(x, y, cx, cy int32, hParent int) *Edit {
 //
 // hParent: 父为窗口句柄或元素句柄.
 func NewEditEx(x, y, cx, cy int32, nType xcc.Edit_Type_, hParent int) *Edit {
-	p := &Edit{}
-	p.Handle = xc.XEdit_CreateEx(x, y, cx, cy, nType, hParent)
-	return p
+	return NewEditByHandle(xc.XEdit_CreateEx(x, y, cx, cy, nType, hParent))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewEditByHandle(handle int) *Edit {
+	if handle <= 0 {
+		return nil
+	}
 	p := &Edit{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从 name 创建对象, 失败返回 nil.
 func NewEditByName(name string) *Edit {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &Edit{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewEditByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从 UID 创建对象, 失败返回 nil.
 func NewEditByUID(nUID int32) *Edit {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &Edit{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewEditByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从 UID 名称创建对象, 失败返回 nil.
 func NewEditByUIDName(name string) *Edit {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &Edit{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewEditByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 编辑框_启用自动换行.

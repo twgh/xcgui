@@ -10,7 +10,7 @@ type ProgressBar struct {
 	Element
 }
 
-// 进度条_创建, 创建进度条元素.
+// 进度条_创建, 创建进度条元素, 失败返回 nil.
 //
 // x: 元素x坐标.
 //
@@ -22,49 +22,32 @@ type ProgressBar struct {
 //
 // hParent: 父是窗口资源句柄或UI元素资源句柄.如果是窗口资源句柄将被添加到窗口.
 func NewProgressBar(x, y, cx, cy int32, hParent int) *ProgressBar {
-	p := &ProgressBar{}
-	p.SetHandle(xc.XProgBar_Create(x, y, cx, cy, hParent))
-	return p
+	return NewProgressBarByHandle(xc.XProgBar_Create(x, y, cx, cy, hParent))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewProgressBarByHandle(handle int) *ProgressBar {
+	if handle <= 0 {
+		return nil
+	}
 	p := &ProgressBar{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从name创建对象, 失败返回 nil.
 func NewProgressBarByName(name string) *ProgressBar {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &ProgressBar{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewProgressBarByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从UID创建对象, 失败返回 nil.
 func NewProgressBarByUID(nUID int32) *ProgressBar {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &ProgressBar{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewProgressBarByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从UID名称创建对象, 失败返回 nil.
 func NewProgressBarByUIDName(name string) *ProgressBar {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &ProgressBar{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewProgressBarByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // 进度条_置范围, 设置范围.

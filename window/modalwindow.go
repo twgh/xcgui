@@ -10,7 +10,7 @@ type ModalWindow struct {
 	windowBase
 }
 
-// 模态窗口_创建, 创建模态窗口; 当模态窗口关闭时, 会自动销毁模态窗口资源句柄.
+// 模态窗口_创建, 创建模态窗口; 当模态窗口关闭时, 会自动销毁模态窗口资源句柄, 失败返回 nil.
 //
 // nWidth: 宽度.
 //
@@ -22,12 +22,10 @@ type ModalWindow struct {
 //
 // XCStyle: 炫彩窗口样式: xcc.Window_Style_.
 func NewModalWindow(nWidth, nHeight int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) *ModalWindow {
-	p := &ModalWindow{}
-	p.SetHandle(xc.XModalWnd_Create(nWidth, nHeight, pTitle, hWndParent, XCStyle))
-	return p
+	return NewModalWindowByHandle(xc.XModalWnd_Create(nWidth, nHeight, pTitle, hWndParent, XCStyle))
 }
 
-// 模态窗口_创建扩展, 创建模态窗口, 增强功能.
+// 模态窗口_创建扩展, 创建模态窗口, 增强功能, 失败返回 nil.
 //
 // dwExStyle: 窗口扩展样式.
 //
@@ -49,12 +47,10 @@ func NewModalWindow(nWidth, nHeight int32, pTitle string, hWndParent uintptr, XC
 //
 // XCStyle: GUI库窗口样式: xcc.Window_Style_.
 func NewModalWindowEx(dwExStyle, dwStyle uint32, lpClassName string, x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) *ModalWindow {
-	p := &ModalWindow{}
-	p.SetHandle(xc.XModalWnd_CreateEx(dwExStyle, dwStyle, pTitle, x, y, cx, cy, lpClassName, hWndParent, XCStyle))
-	return p
+	return NewModalWindowByHandle(xc.XModalWnd_CreateEx(dwExStyle, dwStyle, pTitle, x, y, cx, cy, lpClassName, hWndParent, XCStyle))
 }
 
-// NewModalWindowByLayout 从布局文件创建对象, 失败返回nil.
+// NewModalWindowByLayout 从布局文件创建对象, 失败返回 nil.
 //
 // pFileName: 布局文件名.
 //
@@ -62,16 +58,10 @@ func NewModalWindowEx(dwExStyle, dwStyle uint32, lpClassName string, x, y, cx, c
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func NewModalWindowByLayout(pFileName string, hParent int, hAttachWnd uintptr) *ModalWindow {
-	handle := xc.XC_LoadLayout(pFileName, hParent, hAttachWnd)
-	if handle > 0 {
-		p := &ModalWindow{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewModalWindowByHandle(xc.XC_LoadLayout(pFileName, hParent, hAttachWnd))
 }
 
-// NewModalWindowByLayoutZip 从压缩包中的布局文件创建对象, 失败返回nil.
+// NewModalWindowByLayoutZip 从压缩包中的布局文件创建对象, 失败返回 nil.
 //
 // pZipFileName: zip文件名.
 //
@@ -83,16 +73,10 @@ func NewModalWindowByLayout(pFileName string, hParent int, hAttachWnd uintptr) *
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func NewModalWindowByLayoutZip(pZipFileName string, pFileName string, pPassword string, hParent int, hAttachWnd uintptr) *ModalWindow {
-	handle := xc.XC_LoadLayoutZip(pZipFileName, pFileName, pPassword, hParent, hAttachWnd)
-	if handle > 0 {
-		p := &ModalWindow{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewModalWindowByHandle(xc.XC_LoadLayoutZip(pZipFileName, pFileName, pPassword, hParent, hAttachWnd))
 }
 
-// NewModalWindowByLayoutZipMem 从内存压缩包中的布局文件创建对象, 失败返回nil.
+// NewModalWindowByLayoutZipMem 从内存压缩包中的布局文件创建对象, 失败返回 nil.
 //
 // data: 布局文件数据.
 //
@@ -104,16 +88,10 @@ func NewModalWindowByLayoutZip(pZipFileName string, pFileName string, pPassword 
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func NewModalWindowByLayoutZipMem(data []byte, pFileName string, pPassword string, hParent int, hAttachWnd uintptr) *ModalWindow {
-	handle := xc.XC_LoadLayoutZipMem(data, pFileName, pPassword, hParent, hAttachWnd)
-	if handle > 0 {
-		p := &ModalWindow{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewModalWindowByHandle(xc.XC_LoadLayoutZipMem(data, pFileName, pPassword, hParent, hAttachWnd))
 }
 
-// NewModalWindowByLayoutStringW 从布局文件字符串W创建对象, 失败返回nil.
+// NewModalWindowByLayoutStringW 从布局文件字符串W创建对象, 失败返回 nil.
 //
 // pStringXML: 字符串.
 //
@@ -121,16 +99,10 @@ func NewModalWindowByLayoutZipMem(data []byte, pFileName string, pPassword strin
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func NewModalWindowByLayoutStringW(pStringXML string, hParent int, hAttachWnd uintptr) *ModalWindow {
-	handle := xc.XC_LoadLayoutFromStringW(pStringXML, hParent, hAttachWnd)
-	if handle > 0 {
-		p := &ModalWindow{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewModalWindowByHandle(xc.XC_LoadLayoutFromStringW(pStringXML, hParent, hAttachWnd))
 }
 
-// NewModalWindowByLayoutEx 从布局文件创建对象, 失败返回nil.
+// NewModalWindowByLayoutEx 从布局文件创建对象, 失败返回 nil.
 //
 // pFileName: 布局文件名.
 //
@@ -142,16 +114,10 @@ func NewModalWindowByLayoutStringW(pStringXML string, hParent int, hAttachWnd ui
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func NewModalWindowByLayoutEx(pFileName, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) *ModalWindow {
-	handle := xc.XC_LoadLayoutEx(pFileName, pPrefixName, hParent, hParentWnd, hAttachWnd)
-	if handle > 0 {
-		p := &ModalWindow{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewModalWindowByHandle(xc.XC_LoadLayoutEx(pFileName, pPrefixName, hParent, hParentWnd, hAttachWnd))
 }
 
-// NewModalWindowByLayoutZipResEx 从RC资源zip压缩包中的布局文件创建对象, 失败返回nil.
+// NewModalWindowByLayoutZipResEx 从RC资源zip压缩包中的布局文件创建对象, 失败返回 nil.
 //
 // id: RC资源ID.
 //
@@ -169,16 +135,10 @@ func NewModalWindowByLayoutEx(pFileName, pPrefixName string, hParent int, hParen
 //
 // hModule: 模块句柄, 可填0.
 func NewModalWindowByLayoutZipResEx(id int32, pFileName, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd, hModule uintptr) *ModalWindow {
-	handle := xc.XC_LoadLayoutZipResEx(id, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd, hModule)
-	if handle > 0 {
-		p := &ModalWindow{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewModalWindowByHandle(xc.XC_LoadLayoutZipResEx(id, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd, hModule))
 }
 
-// NewModalWindowByLayoutZipEx 从压缩包中的布局文件创建对象, 失败返回nil.
+// NewModalWindowByLayoutZipEx 从压缩包中的布局文件创建对象, 失败返回 nil.
 //
 // pZipFileName: zip文件名.
 //
@@ -194,16 +154,10 @@ func NewModalWindowByLayoutZipResEx(id int32, pFileName, pPassword, pPrefixName 
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func NewModalWindowByLayoutZipEx(pZipFileName string, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) *ModalWindow {
-	handle := xc.XC_LoadLayoutZipEx(pZipFileName, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd)
-	if handle > 0 {
-		p := &ModalWindow{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewModalWindowByHandle(xc.XC_LoadLayoutZipEx(pZipFileName, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd))
 }
 
-// NewModalWindowByLayoutZipMemEx 从内存压缩包中的布局文件创建对象, 失败返回nil.
+// NewModalWindowByLayoutZipMemEx 从内存压缩包中的布局文件创建对象, 失败返回 nil.
 //
 // data: 布局文件数据.
 //
@@ -219,16 +173,10 @@ func NewModalWindowByLayoutZipEx(pZipFileName string, pFileName string, pPasswor
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func NewModalWindowByLayoutZipMemEx(data []byte, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) *ModalWindow {
-	handle := xc.XC_LoadLayoutZipMemEx(data, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd)
-	if handle > 0 {
-		p := &ModalWindow{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewModalWindowByHandle(xc.XC_LoadLayoutZipMemEx(data, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd))
 }
 
-// NewModalWindowByLayoutStringWEx 从布局文件字符串W创建对象, 失败返回nil.
+// NewModalWindowByLayoutStringWEx 从布局文件字符串W创建对象, 失败返回 nil.
 //
 // pStringXML: 字符串.
 //
@@ -240,62 +188,39 @@ func NewModalWindowByLayoutZipMemEx(data []byte, pFileName string, pPassword, pP
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 func NewModalWindowByLayoutStringWEx(pStringXML, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) *ModalWindow {
-	handle := xc.XC_LoadLayoutFromStringWEx(pStringXML, pPrefixName, hParent, hParentWnd, hAttachWnd)
-	if handle > 0 {
-		p := &ModalWindow{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewModalWindowByHandle(xc.XC_LoadLayoutFromStringWEx(pStringXML, pPrefixName, hParent, hParentWnd, hAttachWnd))
 }
 
-// 模态窗口_附加窗口, 返回窗口对象.
+// 模态窗口_附加窗口, 返回窗口对象, 失败返回 nil.
 //
 // hWnd: 要附加的外部窗口句柄.
 //
 // XCStyle: 炫彩窗口样式: xcc.Window_Style_.
 func ModalWnd_Attach(hWnd uintptr, XCStyle xcc.Window_Style_) *Window {
-	p := &Window{}
-	p.SetHandle(xc.XModalWnd_Attach(hWnd, XCStyle))
-	return p
+	return NewByHandle(xc.XModalWnd_Attach(hWnd, XCStyle))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewModalWindowByHandle(handle int) *ModalWindow {
+	if handle <= 0 {
+		return nil
+	}
 	p := &ModalWindow{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从name创建对象, 失败返回 nil.
 func NewModalWindowByName(name string) *ModalWindow {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &ModalWindow{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewModalWindowByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从UID创建对象, 失败返回 nil.
 func NewModalWindowByUID(nUID int32) *ModalWindow {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &ModalWindow{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewModalWindowByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从UID名称创建对象, 失败返回 nil.
 func NewModalWindowByUIDName(name string) *ModalWindow {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &ModalWindow{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewModalWindowByHandle(xc.XC_GetObjectByUIDName(name))
 }

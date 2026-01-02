@@ -10,7 +10,7 @@ type TabBar struct {
 	Element
 }
 
-// TAB条_创建, 创建 TabBar 元素.
+// TAB条_创建, 创建 TabBar 元素, 失败返回 nil.
 //
 // x: 元素x坐标.
 //
@@ -22,49 +22,32 @@ type TabBar struct {
 //
 // hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
 func NewTabBar(x, y, cx, cy int32, hParent int) *TabBar {
-	p := &TabBar{}
-	p.SetHandle(xc.XTabBar_Create(x, y, cx, cy, hParent))
-	return p
+	return NewTabBarByHandle(xc.XTabBar_Create(x, y, cx, cy, hParent))
 }
 
-// 从句柄创建对象.
+// 从句柄创建对象, 失败返回 nil.
 func NewTabBarByHandle(handle int) *TabBar {
+	if handle <= 0 {
+		return nil
+	}
 	p := &TabBar{}
 	p.SetHandle(handle)
 	return p
 }
 
-// 从name创建对象, 失败返回nil.
+// 从name创建对象, 失败返回 nil.
 func NewTabBarByName(name string) *TabBar {
-	handle := xc.XC_GetObjectByName(name)
-	if handle > 0 {
-		p := &TabBar{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewTabBarByHandle(xc.XC_GetObjectByName(name))
 }
 
-// 从UID创建对象, 失败返回nil.
+// 从UID创建对象, 失败返回 nil.
 func NewTabBarByUID(nUID int32) *TabBar {
-	handle := xc.XC_GetObjectByUID(nUID)
-	if handle > 0 {
-		p := &TabBar{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewTabBarByHandle(xc.XC_GetObjectByUID(nUID))
 }
 
-// 从UID名称创建对象, 失败返回nil.
+// 从UID名称创建对象, 失败返回 nil.
 func NewTabBarByUIDName(name string) *TabBar {
-	handle := xc.XC_GetObjectByUIDName(name)
-	if handle > 0 {
-		p := &TabBar{}
-		p.SetHandle(handle)
-		return p
-	}
-	return nil
+	return NewTabBarByHandle(xc.XC_GetObjectByUIDName(name))
 }
 
 // TAB条_添加标签, 添加一个标签, 返回标签索引.
@@ -124,14 +107,29 @@ func (t *TabBar) GetButtonLeft() int {
 	return xc.XTabBar_GetButtonLeft(t.Handle)
 }
 
+// TAB条_取左滚动按钮, 获取左滚动按钮对象, 失败返回 nil.
+func (t *TabBar) GetButtonLeftObj() *Button {
+	return NewButtonByHandle(xc.XTabBar_GetButtonLeft(t.Handle))
+}
+
 // TAB条_取右滚动按钮, 获取右滚动按钮句柄.
 func (t *TabBar) GetButtonRight() int {
 	return xc.XTabBar_GetButtonRight(t.Handle)
 }
 
+// TAB条_取右滚动按钮, 获取右滚动按钮对象, 失败返回 nil.
+func (t *TabBar) GetButtonRightObj() *Button {
+	return NewButtonByHandle(xc.XTabBar_GetButtonRight(t.Handle))
+}
+
 // TAB条_取下拉菜单按钮句柄.
 func (t *TabBar) GetButtonDropMenu() int {
 	return xc.XTabBar_GetButtonDropMenu(t.Handle)
+}
+
+// TAB条_取下拉菜单按钮对象, 失败返回 nil.
+func (t *TabBar) GetButtonDropMenuObj() *Button {
+	return NewButtonByHandle(xc.XTabBar_GetButtonDropMenu(t.Handle))
 }
 
 // TAB条_取当前选择, 获取选择的标签索引.
