@@ -21,11 +21,11 @@ type ShapeText struct {
 //
 // cy: 高度.
 //
-// pName: 文本内容.
+// name: 文本内容.
 //
 // hParent: 父对象句柄.
-func NewShapeText(x, y, cx, cy int32, pName string, hParent int) *ShapeText {
-	return NewShapeTextByHandle(xc.XShapeText_Create(x, y, cx, cy, pName, hParent))
+func NewShapeText(x, y, cx, cy int32, name string, hParent int) *ShapeText {
+	return NewShapeTextByHandle(xc.XShapeText_Create(x, y, cx, cy, name, hParent))
 }
 
 // 从句柄创建对象, 失败返回 nil.
@@ -55,9 +55,9 @@ func NewShapeTextByUIDName(name string) *ShapeText {
 
 // 形状文本_置文本, 设置文本内容.
 //
-// pName: 文本内容.
-func (s *ShapeText) SetText(pName string) *ShapeText {
-	xc.XShapeText_SetText(s.Handle, pName)
+// name: 文本内容.
+func (s *ShapeText) SetText(name string) *ShapeText {
+	xc.XShapeText_SetText(s.Handle, name)
 	return s
 }
 

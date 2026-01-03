@@ -22,9 +22,9 @@ func XMenuBar_Create(x, y, cx, cy int32, hParent int) int {
 //
 // hEle: 元素句柄.
 //
-// pText: 文本内容.
-func XMenuBar_AddButton(hEle int, pText string) int32 {
-	r, _, _ := xMenuBar_AddButton.Call(uintptr(hEle), common.StrPtr(pText))
+// text: 文本内容.
+func XMenuBar_AddButton(hEle int, text string) int32 {
+	r, _, _ := xMenuBar_AddButton.Call(uintptr(hEle), common.StrPtr(text))
 	return int32(r)
 }
 

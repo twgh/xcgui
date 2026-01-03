@@ -65,20 +65,20 @@ func (n *Node) AddNode(pNode int) bool {
 
 // 模板_置节点属性.
 //
-// pName: 属性名.
+// name: 属性名.
 //
 // pAttr: 属性值.
-func (n *Node) SetNodeAttribute(pName string, pAttr string) bool {
-	return xc.XTemp_SetNodeAttribute(n.Handle, pName, pAttr)
+func (n *Node) SetNodeAttribute(name string, pAttr string) bool {
+	return xc.XTemp_SetNodeAttribute(n.Handle, name, pAttr)
 }
 
 // 模板_置节点属性扩展.
 //
 // itemID: 模板项ID.
 //
-// pName: 属性名.
+// name: 属性名.
 //
 // pAttr: 属性值.
-func (n *Node) SetNodeAttributeEx(itemID int32, pName string, pAttr string) bool {
-	return xc.XTemp_SetNodeAttributeEx(n.Handle, itemID, pName, pAttr)
+func (n *Node) SetNodeAttributeEx(itemID int32, name string, pAttr string) bool {
+	return xc.XTemp_SetNodeAttributeEx(n.Handle, itemID, name, pAttr)
 }

@@ -61,13 +61,13 @@ func XTrayIcon_SetCallbackMessage(user_message uint32) {
 
 // 托盘图标_置弹出气泡. 设置弹出气泡信息.
 //
-// pTitle: 弹出气泡标题.
+// title: 弹出气泡标题.
 //
-// pText: 弹出气泡内容.
+// text: 弹出气泡内容.
 //
 // hBalloonIcon: 气泡图标. 可填0.
 //
 // flags: 标识, 可设置默认图标类型, 禁用声音等: xcc.TrayIcon_Flag_
-func XTrayIcon_SetPopupBalloon(pTitle, pText string, hBalloonIcon uintptr, flags xcc.TrayIcon_Flag_) {
-	xTrayIcon_SetPopupBalloon.Call(common.StrPtr(pTitle), common.StrPtr(pText), hBalloonIcon, uintptr(flags))
+func XTrayIcon_SetPopupBalloon(title, text string, hBalloonIcon uintptr, flags xcc.TrayIcon_Flag_) {
+	xTrayIcon_SetPopupBalloon.Call(common.StrPtr(title), common.StrPtr(text), hBalloonIcon, uintptr(flags))
 }

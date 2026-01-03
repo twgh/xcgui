@@ -10,15 +10,15 @@ import (
 
 // 窗格_创建, 创建窗格元素, 返回元素句柄.
 //
-// pName: 窗格标题.
+// name: 窗格标题.
 //
 // nWidth: 宽度.
 //
 // nHeight: 高度.
 //
 // hFrameWnd: 框架窗口.
-func XPane_Create(pName string, nWidth, nHeight int32, hFrameWnd int) int {
-	r, _, _ := xPane_Create.Call(common.StrPtr(pName), uintptr(nWidth), uintptr(nHeight), uintptr(hFrameWnd))
+func XPane_Create(name string, nWidth, nHeight int32, hFrameWnd int) int {
+	r, _, _ := xPane_Create.Call(common.StrPtr(name), uintptr(nWidth), uintptr(nHeight), uintptr(hFrameWnd))
 	return int(r)
 }
 
@@ -35,9 +35,9 @@ func XPane_SetView(hEle int, hView int) {
 //
 // hEle: 元素句柄.
 //
-// pTitle: 文本内容.
-func XPane_SetTitle(hEle int, pTitle string) {
-	xPane_SetTitle.Call(uintptr(hEle), common.StrPtr(pTitle))
+// title: 文本内容.
+func XPane_SetTitle(hEle int, title string) {
+	xPane_SetTitle.Call(uintptr(hEle), common.StrPtr(title))
 }
 
 // 窗格_取标题, 获取标题文本.

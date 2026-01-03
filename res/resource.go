@@ -18,44 +18,44 @@ func SetLoadFileCallback(pFun xc.FunLoadFile) {
 
 // 资源_取ID值, 获取资源ID整型值.
 //
-// pName: 资源ID名称.
-func GetIDValue(pName string) int32 {
-	return xc.XRes_GetIDValue(pName)
+// name: 资源ID名称.
+func GetIDValue(name string) int32 {
+	return xc.XRes_GetIDValue(name)
 }
 
 // 资源_取图片, 查找资源图片.
 //
-// pName: 资源名称.
-func GetImage(pName string) int {
-	return xc.XRes_GetImage(pName)
+// name: 资源名称.
+func GetImage(name string) int {
+	return xc.XRes_GetImage(name)
 }
 
 // 资源_取图片扩展, 从指定的资源文件中查找图片.
 //
 // pFileName: 资源文件名.
 //
-// pName: 资源名称.
-func GetImageEx(pFileName string, pName string) int {
-	return xc.XRes_GetImageEx(pFileName, pName)
+// name: 资源名称.
+func GetImageEx(pFileName string, name string) int {
+	return xc.XRes_GetImageEx(pFileName, name)
 }
 
 // 资源_取颜色, 从资源中查找颜色.
 //
-// pName: 资源名称.
-func GetColor(pName string) uint32 {
-	return xc.XRes_GetColor(pName)
+// name: 资源名称.
+func GetColor(name string) uint32 {
+	return xc.XRes_GetColor(name)
 }
 
 // 资源_取字体, 从资源中查找字体.
 //
-// pName: 资源名称.
-func GetFont(pName string) int {
-	return xc.XRes_GetFont(pName)
+// name: 资源名称.
+func GetFont(name string) int {
+	return xc.XRes_GetFont(name)
 }
 
 // 资源_取背景管理器, 从资源中查找背景.
 //
-// pName: 资源名称.
-func GetBkM(pName string) int {
-	return xc.XRes_GetBkM(pName)
+// name: 资源名称.
+func GetBkM(name string) int {
+	return xc.XRes_GetBkM(name)
 }

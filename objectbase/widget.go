@@ -184,9 +184,9 @@ func (w *Widget) SetUID(nUID int32) *Widget {
 
 // 窗口组件_置名称 设置元素name.
 //
-// pName: name值.
-func (w *Widget) SetName(pName string) *Widget {
-	xc.XWidget_SetName(w.Handle, pName)
+// name: name值.
+func (w *Widget) SetName(name string) *Widget {
+	xc.XWidget_SetName(w.Handle, name)
 	return w
 }
 

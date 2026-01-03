@@ -25,9 +25,9 @@ func XBkM_Destroy(hBkInfoM int) {
 //
 // hBkInfoM: 背景管理器句柄.
 //
-// pText: 背景内容字符串.
-func XBkM_AddInfo(hBkInfoM int, pText string) int32 {
-	r, _, _ := xBkM_AddInfo.Call(uintptr(hBkInfoM), common.StrPtr(pText))
+// text: 背景内容字符串.
+func XBkM_AddInfo(hBkInfoM int, text string) int32 {
+	r, _, _ := xBkM_AddInfo.Call(uintptr(hBkInfoM), common.StrPtr(text))
 	return int32(r)
 }
 
@@ -154,9 +154,9 @@ func XBkM_GetRefCount(hBkInfoM int) int32 {
 //
 // hBkInfoM: 背景管理器句柄.
 //
-// pText: 背景内容字符串.
-func XBkM_SetInfo(hBkInfoM int, pText string) int32 {
-	r, _, _ := xBkM_SetInfo.Call(uintptr(hBkInfoM), common.StrPtr(pText))
+// text: 背景内容字符串.
+func XBkM_SetInfo(hBkInfoM int, text string) int32 {
+	r, _, _ := xBkM_SetInfo.Call(uintptr(hBkInfoM), common.StrPtr(text))
 	return int32(r)
 }
 

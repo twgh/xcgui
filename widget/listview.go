@@ -400,9 +400,9 @@ func (l *ListView) ExpandGroup(iGroup int32, bExpand bool) bool {
 
 // 列表视_组添加列, 返回列索引.
 //
-// pName: 字段称.
-func (l *ListView) Group_AddColumn(pName string) int32 {
-	return xc.XListView_Group_AddColumn(l.Handle, pName)
+// name: 字段称.
+func (l *ListView) Group_AddColumn(name string) int32 {
+	return xc.XListView_Group_AddColumn(l.Handle, name)
 }
 
 // 列表视_组添加项文本, 返回组索引.
@@ -416,13 +416,13 @@ func (l *ListView) Group_AddItemText(pValue string, iPos int32) int32 {
 
 // 列表视_组添加项文本扩展, 返回组索引.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // pValue: 值.
 //
 // iPos: 插入位置.
-func (l *ListView) Group_AddItemTextEx(pName string, pValue string, iPos int32) int32 {
-	return xc.XListView_Group_AddItemTextEx(l.Handle, pName, pValue, iPos)
+func (l *ListView) Group_AddItemTextEx(name string, pValue string, iPos int32) int32 {
+	return xc.XListView_Group_AddItemTextEx(l.Handle, name, pValue, iPos)
 }
 
 // 列表视_组添加项图片, 返回组索引.
@@ -436,13 +436,13 @@ func (l *ListView) Group_AddItemImage(hImage int, iPos int32) int32 {
 
 // 列表视_组添加项图片扩展, 返回组索引.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // hImage: 图片句柄.
 //
 // iPos: 插入位置.
-func (l *ListView) Group_AddItemImageEx(pName string, hImage int, iPos int32) int32 {
-	return xc.XListView_Group_AddItemImageEx(l.Handle, pName, hImage, iPos)
+func (l *ListView) Group_AddItemImageEx(name string, hImage int, iPos int32) int32 {
+	return xc.XListView_Group_AddItemImageEx(l.Handle, name, hImage, iPos)
 }
 
 // 列表视_组置文本.
@@ -460,11 +460,11 @@ func (l *ListView) Group_SetText(iGroup int32, iColumn int32, pValue string) boo
 //
 // iGroup: 组索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // pValue: 值.
-func (l *ListView) Group_SetTextEx(iGroup int32, pName string, pValue string) bool {
-	return xc.XListView_Group_SetTextEx(l.Handle, iGroup, pName, pValue)
+func (l *ListView) Group_SetTextEx(iGroup int32, name string, pValue string) bool {
+	return xc.XListView_Group_SetTextEx(l.Handle, iGroup, name, pValue)
 }
 
 // 列表视_组置图片.
@@ -482,11 +482,11 @@ func (l *ListView) Group_SetImage(iGroup int32, iColumn int32, hImage int) bool 
 //
 // iGroup: 组索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // hImage: 图片句柄.
-func (l *ListView) Group_SetImageEx(iGroup int32, pName string, hImage int) bool {
-	return xc.XListView_Group_SetImageEx(l.Handle, iGroup, pName, hImage)
+func (l *ListView) Group_SetImageEx(iGroup int32, name string, hImage int) bool {
+	return xc.XListView_Group_SetImageEx(l.Handle, iGroup, name, hImage)
 }
 
 // 列表视_组获取数量, 返回组数量.
@@ -503,9 +503,9 @@ func (l *ListView) Item_GetCount(iGroup int32) int32 {
 
 // 列表视_项添加列, 返回列索引.
 //
-// pName: 字段名.
-func (l *ListView) Item_AddColumn(pName string) int32 {
-	return xc.XListView_Item_AddColumn(l.Handle, pName)
+// name: 字段名.
+func (l *ListView) Item_AddColumn(name string) int32 {
+	return xc.XListView_Item_AddColumn(l.Handle, name)
 }
 
 // 列表视_项添加文本, 返回项索引.
@@ -523,13 +523,13 @@ func (l *ListView) Item_AddItemText(iGroup int32, pValue string, iPos int32) int
 //
 // iGroup: 组索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // pValue: 值.
 //
 // iPos: 插入位置, -1添加到末尾.
-func (l *ListView) Item_AddItemTextEx(iGroup int32, pName string, pValue string, iPos int32) int32 {
-	return xc.XListView_Item_AddItemTextEx(l.Handle, iGroup, pName, pValue, iPos)
+func (l *ListView) Item_AddItemTextEx(iGroup int32, name string, pValue string, iPos int32) int32 {
+	return xc.XListView_Item_AddItemTextEx(l.Handle, iGroup, name, pValue, iPos)
 }
 
 // 列表视_项添加图片, 返回项索引.
@@ -547,13 +547,13 @@ func (l *ListView) Item_AddItemImage(iGroup int32, hImage int, iPos int32) int32
 //
 // iGroup: 组索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // hImage: 图片句柄.
 //
 // iPos: 插入位置, -1添加到末尾.
-func (l *ListView) Item_AddItemImageEx(iGroup int32, pName string, hImage int, iPos int32) int32 {
-	return xc.XListView_Item_AddItemImageEx(l.Handle, iGroup, pName, hImage, iPos)
+func (l *ListView) Item_AddItemImageEx(iGroup int32, name string, hImage int, iPos int32) int32 {
+	return xc.XListView_Item_AddItemImageEx(l.Handle, iGroup, name, hImage, iPos)
 }
 
 // 列表视_项置文本.
@@ -575,11 +575,11 @@ func (l *ListView) Item_SetText(iGroup int32, iItem int32, iColumn int32, pValue
 //
 // iItem: 项索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // pValue: 值.
-func (l *ListView) Item_SetTextEx(iGroup int32, iItem int32, pName string, pValue string) bool {
-	return xc.XListView_Item_SetTextEx(l.Handle, iGroup, iItem, pName, pValue)
+func (l *ListView) Item_SetTextEx(iGroup int32, iItem int32, name string, pValue string) bool {
+	return xc.XListView_Item_SetTextEx(l.Handle, iGroup, iItem, name, pValue)
 }
 
 // 列表视_项置图片.
@@ -601,11 +601,11 @@ func (l *ListView) Item_SetImage(iGroup int32, iItem int32, iColumn int32, hImag
 //
 // iItem: 项索引.
 //
-// pName: 列名称.
+// name: 列名称.
 //
 // hImage: 图片句柄.
-func (l *ListView) Item_SetImageEx(iGroup int32, iItem int32, pName string, hImage int) bool {
-	return xc.XListView_Item_SetImageEx(l.Handle, iGroup, iItem, pName, hImage)
+func (l *ListView) Item_SetImageEx(iGroup int32, iItem int32, name string, hImage int) bool {
+	return xc.XListView_Item_SetImageEx(l.Handle, iGroup, iItem, name, hImage)
 }
 
 // 列表视_组删除项.
@@ -672,9 +672,9 @@ func (l *ListView) DeleteColumnItem(iColumn int32) *ListView {
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
-func (l *ListView) Item_GetTextEx(iGroup int32, iItem int32, pName string) string {
-	return xc.XListView_Item_GetTextEx(l.Handle, iGroup, iItem, pName)
+// name: 字段称.
+func (l *ListView) Item_GetTextEx(iGroup int32, iItem int32, name string) string {
+	return xc.XListView_Item_GetTextEx(l.Handle, iGroup, iItem, name)
 }
 
 // 列表视_项获取图片扩展, 返回图片句柄.
@@ -683,9 +683,9 @@ func (l *ListView) Item_GetTextEx(iGroup int32, iItem int32, pName string) strin
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
-func (l *ListView) Item_GetImageEx(iGroup int32, iItem int32, pName string) int {
-	return xc.XListView_Item_GetImageEx(l.Handle, iGroup, iItem, pName)
+// name: 字段称.
+func (l *ListView) Item_GetImageEx(iGroup int32, iItem int32, name string) int {
+	return xc.XListView_Item_GetImageEx(l.Handle, iGroup, iItem, name)
 }
 
 // 列表视_组取文本, 返回文本内容.
@@ -701,9 +701,9 @@ func (l *ListView) Group_GetText(iGroup int32, iColumn int32) string {
 //
 // iGroup: 组索引.
 //
-// pName: 字段名称.
-func (l *ListView) Group_GetTextEx(iGroup int32, pName string) string {
-	return xc.XListView_Group_GetTextEx(l.Handle, iGroup, pName)
+// name: 字段名称.
+func (l *ListView) Group_GetTextEx(iGroup int32, name string) string {
+	return xc.XListView_Group_GetTextEx(l.Handle, iGroup, name)
 }
 
 // 列表视_组取图片, 返回图片句柄.
@@ -719,9 +719,9 @@ func (l *ListView) Group_GetImage(iGroup int32, iColumn int32) int {
 //
 // iGroup: 组索引.
 //
-// pName: 字段名称.
-func (l *ListView) Group_GetImageEx(iGroup int32, pName string) int {
-	return xc.XListView_Group_GetImageEx(l.Handle, iGroup, pName)
+// name: 字段名称.
+func (l *ListView) Group_GetImageEx(iGroup int32, name string) int {
+	return xc.XListView_Group_GetImageEx(l.Handle, iGroup, name)
 }
 
 // 列表视_项取文本, 返回文本内容.

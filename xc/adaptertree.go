@@ -12,9 +12,9 @@ func XAdTree_Create() int {
 //
 // hAdapter: 数据适配器句柄.
 //
-// pName: 字段称.
-func XAdTree_AddColumn(hAdapter int, pName string) int32 {
-	r, _, _ := xAdTree_AddColumn.Call(uintptr(hAdapter), common.StrPtr(pName))
+// name: 字段称.
+func XAdTree_AddColumn(hAdapter int, name string) int32 {
+	r, _, _ := xAdTree_AddColumn.Call(uintptr(hAdapter), common.StrPtr(name))
 	return int32(r)
 }
 
@@ -46,15 +46,15 @@ func XAdTree_InsertItemText(hAdapter int, pValue string, nParentID, insertID int
 //
 // hAdapter: 数据适配器句柄.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // pValue: 值.
 //
 // nParentID: 父ID.
 //
 // insertID: 插入位置ID.
-func XAdTree_InsertItemTextEx(hAdapter int, pName string, pValue string, nParentID, insertID int32) int32 {
-	r, _, _ := xAdTree_InsertItemTextEx.Call(uintptr(hAdapter), common.StrPtr(pName), common.StrPtr(pValue), uintptr(nParentID), uintptr(insertID))
+func XAdTree_InsertItemTextEx(hAdapter int, name string, pValue string, nParentID, insertID int32) int32 {
+	r, _, _ := xAdTree_InsertItemTextEx.Call(uintptr(hAdapter), common.StrPtr(name), common.StrPtr(pValue), uintptr(nParentID), uintptr(insertID))
 	return int32(r)
 }
 
@@ -76,15 +76,15 @@ func XAdTree_InsertItemImage(hAdapter int, hImage int, nParentID, insertID int32
 //
 // hAdapter: 数据适配器句柄.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // hImage: 图片句柄.
 //
 // nParentID: 父ID.
 //
 // insertID: 插入位置ID.
-func XAdTree_InsertItemImageEx(hAdapter int, pName string, hImage int, nParentID, insertID int32) int32 {
-	r, _, _ := xAdTree_InsertItemImageEx.Call(uintptr(hAdapter), common.StrPtr(pName), uintptr(hImage), uintptr(nParentID), uintptr(insertID))
+func XAdTree_InsertItemImageEx(hAdapter int, name string, hImage int, nParentID, insertID int32) int32 {
+	r, _, _ := xAdTree_InsertItemImageEx.Call(uintptr(hAdapter), common.StrPtr(name), uintptr(hImage), uintptr(nParentID), uintptr(insertID))
 	return int32(r)
 }
 
@@ -124,11 +124,11 @@ func XAdTree_SetItemText(hAdapter int, nID, iColumn int32, pValue string) bool {
 //
 // nID: 项ID.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // pValue: 值.
-func XAdTree_SetItemTextEx(hAdapter int, nID int32, pName string, pValue string) bool {
-	r, _, _ := xAdTree_SetItemTextEx.Call(uintptr(hAdapter), uintptr(nID), common.StrPtr(pName), common.StrPtr(pValue))
+func XAdTree_SetItemTextEx(hAdapter int, nID int32, name string, pValue string) bool {
+	r, _, _ := xAdTree_SetItemTextEx.Call(uintptr(hAdapter), uintptr(nID), common.StrPtr(name), common.StrPtr(pValue))
 	return r != 0
 }
 
@@ -152,11 +152,11 @@ func XAdTree_SetItemImage(hAdapter int, nID, iColumn int32, hImage int) bool {
 //
 // nID: 项ID.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // hImage: 图片句柄.
-func XAdTree_SetItemImageEx(hAdapter int, nID int32, pName string, hImage int) bool {
-	r, _, _ := xAdTree_SetItemImageEx.Call(uintptr(hAdapter), uintptr(nID), common.StrPtr(pName), uintptr(hImage))
+func XAdTree_SetItemImageEx(hAdapter int, nID int32, name string, hImage int) bool {
+	r, _, _ := xAdTree_SetItemImageEx.Call(uintptr(hAdapter), uintptr(nID), common.StrPtr(name), uintptr(hImage))
 	return r != 0
 }
 
@@ -178,9 +178,9 @@ func XAdTree_GetItemText(hAdapter int, nID, iColumn int32) string {
 //
 // nID: 项ID.
 //
-// pName: 字段称.
-func XAdTree_GetItemTextEx(hAdapter int, nID int32, pName string) string {
-	r, _, _ := xAdTree_GetItemTextEx.Call(uintptr(hAdapter), uintptr(nID), common.StrPtr(pName))
+// name: 字段称.
+func XAdTree_GetItemTextEx(hAdapter int, nID int32, name string) string {
+	r, _, _ := xAdTree_GetItemTextEx.Call(uintptr(hAdapter), uintptr(nID), common.StrPtr(name))
 	return common.UintPtrToString(r)
 }
 
@@ -202,9 +202,9 @@ func XAdTree_GetItemImage(hAdapter int, nID, iColumn int32) int {
 //
 // nID: 项ID.
 //
-// pName: 字段称.
-func XAdTree_GetItemImageEx(hAdapter int, nID int32, pName string) int {
-	r, _, _ := xAdTree_GetItemImageEx.Call(uintptr(hAdapter), uintptr(nID), common.StrPtr(pName))
+// name: 字段称.
+func XAdTree_GetItemImageEx(hAdapter int, nID int32, name string) int {
+	r, _, _ := xAdTree_GetItemImageEx.Call(uintptr(hAdapter), uintptr(nID), common.StrPtr(name))
 	return int(r)
 }
 

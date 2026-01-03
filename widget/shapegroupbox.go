@@ -19,11 +19,11 @@ type ShapeGroupBox struct {
 //
 // cy: 高度.
 //
-// pName: 名称.
+// name: 名称.
 //
 // hParent: 父对象句柄.
-func NewShapeGroupBox(x, y, cx, cy int32, pName string, hParent int) *ShapeGroupBox {
-	return NewShapeGroupBoxByHandle(xc.XShapeGroupBox_Create(x, y, cx, cy, pName, hParent))
+func NewShapeGroupBox(x, y, cx, cy int32, name string, hParent int) *ShapeGroupBox {
+	return NewShapeGroupBoxByHandle(xc.XShapeGroupBox_Create(x, y, cx, cy, name, hParent))
 }
 
 // 从句柄创建对象, 失败返回 nil.
@@ -97,9 +97,9 @@ func (s *ShapeGroupBox) SetRoundAngle(nWidth int32, nHeight int32) *ShapeGroupBo
 
 // 形状组框_置文本.
 //
-// pText: 文本内容.
-func (s *ShapeGroupBox) SetText(pText string) *ShapeGroupBox {
-	xc.XShapeGroupBox_SetText(s.Handle, pText)
+// text: 文本内容.
+func (s *ShapeGroupBox) SetText(text string) *ShapeGroupBox {
+	xc.XShapeGroupBox_SetText(s.Handle, text)
 	return s
 }
 

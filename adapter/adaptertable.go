@@ -48,16 +48,16 @@ func (a *AdapterTable) GetItemDataType(iItem, iColumn int32) xcc.Adapter_Date_Ty
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
-func (a *AdapterTable) GetItemDataTypeEx(iItem int32, pName string) xcc.Adapter_Date_Type_ {
-	return xc.XAdTable_GetItemDataTypeEx(a.Handle, iItem, pName)
+// name: 字段称.
+func (a *AdapterTable) GetItemDataTypeEx(iItem int32, name string) xcc.Adapter_Date_Type_ {
+	return xc.XAdTable_GetItemDataTypeEx(a.Handle, iItem, name)
 }
 
 // 数据适配器表_添加列, 添加数据列.
 //
-// pName: 字段称.
-func (a *AdapterTable) AddColumn(pName string) int32 {
-	return xc.XAdTable_AddColumn(a.Handle, pName)
+// name: 字段称.
+func (a *AdapterTable) AddColumn(name string) int32 {
+	return xc.XAdTable_AddColumn(a.Handle, name)
 }
 
 // 数据适配器表_置列, 设置列, 返回列数量.
@@ -76,11 +76,11 @@ func (a *AdapterTable) AddRowText(pValue string) int32 {
 
 // 数据适配器表_添加行文本扩展, 添加数据行, 填充指定列数据, 返回行索引.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // pValue: 值.
-func (a *AdapterTable) AddRowTextEx(pName string, pValue string) int32 {
-	return xc.XAdTable_AddRowTextEx(a.Handle, pName, pValue)
+func (a *AdapterTable) AddRowTextEx(name string, pValue string) int32 {
+	return xc.XAdTable_AddRowTextEx(a.Handle, name, pValue)
 }
 
 // 数据适配器表_添加行图片, 添加数据行, 默认值放到第一列, 返回行索引值.
@@ -92,11 +92,11 @@ func (a *AdapterTable) AddRowImage(hImage int) int32 {
 
 // 数据适配器表_添加行图片扩展, 添加数据行, 并填充指定列数据.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // hImage: 图片句柄.
-func (a *AdapterTable) AddRowImageEx(pName string, hImage int) int32 {
-	return xc.XAdTable_AddRowImageEx(a.Handle, pName, hImage)
+func (a *AdapterTable) AddRowImageEx(name string, hImage int) int32 {
+	return xc.XAdTable_AddRowImageEx(a.Handle, name, hImage)
 }
 
 // 数据适配器表_插入行文本, 插入数据行, 填充第一列数据, 返回行索引.
@@ -112,11 +112,11 @@ func (a *AdapterTable) InsertRowText(iRow int32, pValue string) int32 {
 //
 // iRow: 插入位置索引.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // pValue: 值.
-func (a *AdapterTable) InsertRowTextEx(iRow int32, pName string, pValue string) int32 {
-	return xc.XAdTable_InsertRowTextEx(a.Handle, iRow, pName, pValue)
+func (a *AdapterTable) InsertRowTextEx(iRow int32, name string, pValue string) int32 {
+	return xc.XAdTable_InsertRowTextEx(a.Handle, iRow, name, pValue)
 }
 
 // 数据适配器表_插入行图片, 插入数据行, 填充第一列数据, 返回行索引.
@@ -132,11 +132,11 @@ func (a *AdapterTable) InsertRowImage(iRow int32, hImage int) int32 {
 //
 // iRow: 插入位置索引.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // hImage: 图片句柄.
-func (a *AdapterTable) InsertRowImageEx(iRow int32, pName string, hImage int) int32 {
-	return xc.XAdTable_InsertRowImageEx(a.Handle, iRow, pName, hImage)
+func (a *AdapterTable) InsertRowImageEx(iRow int32, name string, hImage int) int32 {
+	return xc.XAdTable_InsertRowImageEx(a.Handle, iRow, name, hImage)
 }
 
 // 数据适配器表_置项文本, 设置项数据.
@@ -154,11 +154,11 @@ func (a *AdapterTable) SetItemText(iItem, iColumn int32, pValue string) bool {
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // pValue: 值.
-func (a *AdapterTable) SetItemTextEx(iItem int32, pName string, pValue string) bool {
-	return xc.XAdTable_SetItemTextEx(a.Handle, iItem, pName, pValue)
+func (a *AdapterTable) SetItemTextEx(iItem int32, name string, pValue string) bool {
+	return xc.XAdTable_SetItemTextEx(a.Handle, iItem, name, pValue)
 }
 
 // 数据适配器表_置项整数值, 设置项数据.
@@ -176,11 +176,11 @@ func (a *AdapterTable) SetItemInt(iItem, iColumn int32, nValue int32) bool {
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // nValue: 值.
-func (a *AdapterTable) SetItemIntEx(iItem int32, pName string, nValue int32) bool {
-	return xc.XAdTable_SetItemIntEx(a.Handle, iItem, pName, nValue)
+func (a *AdapterTable) SetItemIntEx(iItem int32, name string, nValue int32) bool {
+	return xc.XAdTable_SetItemIntEx(a.Handle, iItem, name, nValue)
 }
 
 // 数据适配器表_置项浮点值, 设置项数据.
@@ -198,11 +198,11 @@ func (a *AdapterTable) SetItemFloat(iItem, iColumn int32, fValue float32) bool {
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // fValue: 值.
-func (a *AdapterTable) SetItemFloatEx(iItem int32, pName string, fValue float32) bool {
-	return xc.XAdTable_SetItemFloatEx(a.Handle, iItem, pName, fValue)
+func (a *AdapterTable) SetItemFloatEx(iItem int32, name string, fValue float32) bool {
+	return xc.XAdTable_SetItemFloatEx(a.Handle, iItem, name, fValue)
 }
 
 // 数据适配器表_置项图片, 设置项数据.
@@ -220,11 +220,11 @@ func (a *AdapterTable) SetItemImage(iItem, iColumn int32, hImage int) bool {
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // hImage: 图片句柄.
-func (a *AdapterTable) SetItemImageEx(iItem int32, pName string, hImage int) bool {
-	return xc.XAdTable_SetItemImageEx(a.Handle, iItem, pName, hImage)
+func (a *AdapterTable) SetItemImageEx(iItem int32, name string, hImage int) bool {
+	return xc.XAdTable_SetItemImageEx(a.Handle, iItem, name, hImage)
 }
 
 // 数据适配器表_删除行.
@@ -273,9 +273,9 @@ func (a *AdapterTable) GetItemText(iItem, iColumn int32) string {
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
-func (a *AdapterTable) GetItemTextEx(iItem int32, pName string) string {
-	return xc.XAdTable_GetItemTextEx(a.Handle, iItem, pName)
+// name: 字段称.
+func (a *AdapterTable) GetItemTextEx(iItem int32, name string) string {
+	return xc.XAdTable_GetItemTextEx(a.Handle, iItem, name)
 }
 
 // 数据适配器表_取项图片, 获取项图片句柄.
@@ -291,9 +291,9 @@ func (a *AdapterTable) GetItemImage(iItem, iColumn int32) int {
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
-func (a *AdapterTable) GetItemImageEx(iItem int32, pName string) int {
-	return xc.XAdTable_GetItemImageEx(a.Handle, iItem, pName)
+// name: 字段称.
+func (a *AdapterTable) GetItemImageEx(iItem int32, name string) int {
+	return xc.XAdTable_GetItemImageEx(a.Handle, iItem, name)
 }
 
 // 数据适配器表_取项整数值, 获取项值.
@@ -311,11 +311,11 @@ func (a *AdapterTable) GetItemInt(iItem, iColumn int32, pOutValue *int32) bool {
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // pOutValue: 接收返还值.
-func (a *AdapterTable) GetItemIntEx(iItem int32, pName string, pOutValue *int32) bool {
-	return xc.XAdTable_GetItemIntEx(a.Handle, iItem, pName, pOutValue)
+func (a *AdapterTable) GetItemIntEx(iItem int32, name string, pOutValue *int32) bool {
+	return xc.XAdTable_GetItemIntEx(a.Handle, iItem, name, pOutValue)
 }
 
 // 数据适配器表_取项浮点值, 获取项值.
@@ -333,11 +333,11 @@ func (a *AdapterTable) GetItemFloat(iItem, iColumn int32, pOutValue *float32) bo
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // pOutValue: 接收返还值.
-func (a *AdapterTable) GetItemFloatEx(iItem int32, pName string, pOutValue *float32) bool {
-	return xc.XAdTable_GetItemFloatEx(a.Handle, iItem, pName, pOutValue)
+func (a *AdapterTable) GetItemFloatEx(iItem int32, name string, pOutValue *float32) bool {
+	return xc.XAdTable_GetItemFloatEx(a.Handle, iItem, name, pOutValue)
 }
 
 // 数据适配器表_取行数量, 获取行数量.

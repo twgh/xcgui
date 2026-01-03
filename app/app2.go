@@ -15,18 +15,18 @@ func EnableDebugFile(bEnable bool) {
 
 // DebugToFileInfo 炫彩_输出调试信息到文件, 打印调试信息到文件xcgui_debug.txt.
 //
-// pInfo: 文本.
-func DebugToFileInfo(pInfo string) {
-	xc.XC_DebugToFileInfo(pInfo)
+// info: 文本.
+func DebugToFileInfo(info string) {
+	xc.XC_DebugToFileInfo(info)
 }
 
 // 炫彩_打印调试信息, 打印调试信息到文件xcgui_debug.txt.
 //
 // level: 级别.
 //
-// pInfo: 信息.
-func Print(level int32, pInfo string) {
-	xc.XDebug_Print(level, pInfo)
+// info: 信息.
+func Print(level int32, info string) {
+	xc.XDebug_Print(level, info)
 }
 
 // SetActivateTopWindow 炫彩_激活窗口, 激活当前进程最上层窗口.
@@ -46,17 +46,17 @@ func GetDefaultFontObj() *font.Font {
 
 // MessageBox 炫彩_消息框. 返回值如下: xcc.MessageBox_Flag_Ok: 点击确定按钮退出. xcc.MessageBox_Flag_Cancel: 点击取消按钮退出. xcc.MessageBox_Flag_Other: 其他方式退出.
 //
-// pTitle: 标题.
+// title: 标题.
 //
-// pText: 内容文本.
+// text: 内容文本.
 //
 // nFlags: 标识: xcc.MessageBox_Flag_.
 //
 // hWndParent: 父窗口句柄(真实的窗口句柄).
 //
 // XCStyle: xcc.Window_Style_.
-func MessageBox(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent uintptr, XCStyle xcc.Window_Style_) xcc.MessageBox_Flag_ {
-	return xc.XC_MessageBox(pTitle, pText, nFlags, hWndParent, XCStyle)
+func MessageBox(title, text string, nFlags xcc.MessageBox_Flag_, hWndParent uintptr, XCStyle xcc.Window_Style_) xcc.MessageBox_Flag_ {
+	return xc.XC_MessageBox(title, text, nFlags, hWndParent, XCStyle)
 }
 
 // 炫彩_发送窗口消息.
@@ -203,27 +203,27 @@ func HWindowFromHWnd(hWnd uintptr) int {
 //
 // hXCGUI: 对象句柄.
 //
-// pName: 属性名.
+// name: 属性名.
 //
-// pValue: 属性值.
-func SetProperty(hXCGUI int, pName string, pValue string) bool {
-	return xc.XC_SetProperty(hXCGUI, pName, pValue)
+// value: 属性值.
+func SetProperty(hXCGUI int, name string, value string) bool {
+	return xc.XC_SetProperty(hXCGUI, name, value)
 }
 
 // 炫彩_取属性, 获取对象属性, 返回属性值.
 //
 // hXCGUI: 对象句柄.
 //
-// pName: 属性名.
-func GetProperty(hXCGUI int, pName string) string {
-	return xc.XC_GetProperty(hXCGUI, pName)
+// name: 属性名.
+func GetProperty(hXCGUI int, name string) string {
+	return xc.XC_GetProperty(hXCGUI, name)
 }
 
 // 炫彩_注册窗口类名, 如果是在DLL中使用, 那么DLL卸载时需要注销窗口类名, 否则DLL卸载后, 类名所指向的窗口过程地址失效.
 //
-// pClassName: 类名.
-func RegisterWindowClassName(pClassName string) bool {
-	return xc.XC_RegisterWindowClassName(pClassName)
+// className: 类名.
+func RegisterWindowClassName(className string) bool {
+	return xc.XC_RegisterWindowClassName(className)
 }
 
 // 炫彩_判断滚动视图扩展元素, 判断元素是否从滚动视图元素扩展的新元素, 包含滚动视图元素.
@@ -253,9 +253,9 @@ func GetObjectByID(hWindow int, nID int32) int {
 //
 // hWindow: 所属窗口句柄.
 //
-// pName: ID名称.
-func GetObjectByIDName(hWindow int, pName string) int {
-	return xc.XC_GetObjectByIDName(hWindow, pName)
+// name: ID名称.
+func GetObjectByIDName(hWindow int, name string) int {
+	return xc.XC_GetObjectByIDName(hWindow, name)
 }
 
 // 炫彩_取对象从UID, 通过UID获取对象句柄, 不包括窗口对象.
@@ -267,16 +267,16 @@ func GetObjectByUID(nUID int32) int {
 
 // 炫彩_取对象从UID名称, 通过UID名称获取对象句柄.
 //
-// pName: UID名称.
-func GetObjectByUIDName(pName string) int {
-	return xc.XC_GetObjectByUIDName(pName)
+// name: UID名称.
+func GetObjectByUIDName(name string) int {
+	return xc.XC_GetObjectByUIDName(name)
 }
 
 // 炫彩_取对象从名称, 通过name获取对象句柄.
 //
-// pName: name名称.
-func GetObjectByName(pName string) int {
-	return xc.XC_GetObjectByName(pName)
+// name: name名称.
+func GetObjectByName(name string) int {
+	return xc.XC_GetObjectByName(name)
 }
 
 // 炫彩_置绘制频率, 设置UI的最小重绘频率.
@@ -357,33 +357,33 @@ func EnableAutoExitApp(bEnabel bool) {
 
 // 炫彩_取文本绘制大小.
 //
-// pString: 字符串.
+// str: 字符串.
 //
 // length: 字符串长度.
 //
 // hFontX: 字体.
 //
 // pOutSize: 接收返回大小.
-func GetTextSize(pString string, length int32, hFontX int, pOutSize *xc.SIZE) {
-	xc.XC_GetTextSize(pString, length, hFontX, pOutSize)
+func GetTextSize(str string, length int32, hFontX int, pOutSize *xc.SIZE) {
+	xc.XC_GetTextSize(str, length, hFontX, pOutSize)
 }
 
 // 炫彩_取文本显示大小.
 //
-// pString: 字符串.
+// str: 字符串.
 //
 // length: 字符串长度.
 //
 // hFontX: 字体.
 //
 // pOutSize: 接收返回大小.
-func GetTextShowSize(pString string, length int32, hFontX int, pOutSize *xc.SIZE) {
-	xc.XC_GetTextShowSize(pString, length, hFontX, pOutSize)
+func GetTextShowSize(str string, length int32, hFontX int, pOutSize *xc.SIZE) {
+	xc.XC_GetTextShowSize(str, length, hFontX, pOutSize)
 }
 
 // 炫彩_取文本显示大小扩展.
 //
-// pString: 字符串.
+// str: 字符串.
 //
 // length: 字符串长度.
 //
@@ -392,13 +392,13 @@ func GetTextShowSize(pString string, length int32, hFontX int, pOutSize *xc.SIZE
 // nTextAlign: 文本对齐方式, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
 //
 // pOutSize: 接收返回大小.
-func GetTextShowSizeEx(pString string, length int32, hFontX int, nTextAlign xcc.TextFormatFlag_, pOutSize *xc.SIZE) {
-	xc.XC_GetTextShowSizeEx(pString, length, hFontX, nTextAlign, pOutSize)
+func GetTextShowSizeEx(str string, length int32, hFontX int, nTextAlign xcc.TextFormatFlag_, pOutSize *xc.SIZE) {
+	xc.XC_GetTextShowSizeEx(str, length, hFontX, nTextAlign, pOutSize)
 }
 
 // GetTextShowRect 炫彩_取文本显示矩形.
 //
-// pString: 字符串.
+// str: 字符串.
 //
 // length: 字符串长度.
 //
@@ -409,8 +409,8 @@ func GetTextShowSizeEx(pString string, length int32, hFontX int, nTextAlign xcc.
 // width: 最大宽度.
 //
 // pOutSize: 接收返回大小.
-func GetTextShowRect(pString string, length int32, hFontX int, nTextAlign xcc.TextFormatFlag_, width int32, pOutSize *xc.SIZE) {
-	xc.XC_GetTextShowRect(pString, length, hFontX, nTextAlign, width, pOutSize)
+func GetTextShowRect(str string, length int32, hFontX int, nTextAlign xcc.TextFormatFlag_, width int32, pOutSize *xc.SIZE) {
+	xc.XC_GetTextShowRect(str, length, hFontX, nTextAlign, width, pOutSize)
 }
 
 // 炫彩_置默认字体.
@@ -422,16 +422,16 @@ func SetDefaultFont(hFontX int) {
 
 // 炫彩_添加搜索路径, 添加文件搜索路径, 默认路径为exe目录和程序当前运行目录.
 //
-// pPath: 文件夹.
-func AddFileSearchPath(pPath string) {
-	xc.XC_AddFileSearchPath(pPath)
+// path: 文件夹.
+func AddFileSearchPath(path string) {
+	xc.XC_AddFileSearchPath(path)
 }
 
 // 炫彩_初始化字体, 初始化LOGFONTW结构体.
 //
 // pFont: LOGFONTW结构体指针.
 //
-// pName: 字体名称.
+// name: 字体名称.
 //
 // size: 字体大小.
 //
@@ -442,8 +442,8 @@ func AddFileSearchPath(pPath string) {
 // bUnderline: 是否有下划线.
 //
 // bStrikeOut: 是否有删除线.
-func InitFont(pFont *xc.LOGFONTW, pName string, size int32, bBold bool, bItalic bool, bUnderline bool, bStrikeOut bool) {
-	xc.XC_InitFont(pFont, pName, size, bBold, bItalic, bUnderline, bStrikeOut)
+func InitFont(pFont *xc.LOGFONTW, name string, size int32, bBold bool, bItalic bool, bUnderline bool, bStrikeOut bool) {
+	xc.XC_InitFont(pFont, name, size, bBold, bItalic, bUnderline, bStrikeOut)
 }
 
 // 炫彩_分配内存, 在UI库中申请内存, 返回: 内存首地址.
@@ -462,44 +462,44 @@ func Free(p uintptr) {
 
 // 炫彩_弹框, 弹出提示框.
 //
-// pTitle: 提示框标题.
+// title: 提示框标题.
 //
-// pText: 提示内容.
-func Alert(pTitle string, pText string) {
-	xc.XC_Alert(pTitle, pText)
+// text: 提示内容.
+func Alert(title string, text string) {
+	xc.XC_Alert(title, text)
 }
 
 // 对指定文件执行操作. 如果函数成功，则返回大于 32 的值。如果函数失败，则返回指示失败原因的错误值.
 //
 // hwnd: 用于显示 UI 或错误消息的父窗口的句柄。如果操作与窗口无关，则此值可以为0.
 //
-// lpOperation: 填“open”则打开lpFlie文档. 其它操作详见: https://docs.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shellexecutew.
+// operation: 填“open”则打开 filePath 文档. 其它操作详见: https://docs.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shellexecutew.
 //
-// lpFile: 想用关联的程序打印或打开的一个程序名或文件名.
+// filePath: 想用关联的程序打印或打开的一个程序名或文件名.
 //
-// lpParameters: 如果lpFile是一个可执行文件，则这个字串包含了传递给执行程序的参数.
+// parameters: 如果 filePath 是一个可执行文件，则这个字串包含了传递给执行程序的参数.
 //
-// lpDirectory: 想使用的默认路径完整路径.
+// directory: 想使用的默认路径完整路径.
 //
 // nShowCmd: 定义了如何显示启动程序的常数值: xcc.SW_.
-func Sys_ShellExecute(hwnd uintptr, lpOperation string, lpFile string, lpParameters string, lpDirectory string, nShowCmd xcc.SW_) uintptr {
-	return xc.XC_Sys_ShellExecute(hwnd, lpOperation, lpFile, lpParameters, lpDirectory, nShowCmd)
+func Sys_ShellExecute(hwnd uintptr, operation string, filePath string, parameters string, directory string, nShowCmd xcc.SW_) uintptr {
+	return xc.XC_Sys_ShellExecute(hwnd, operation, filePath, parameters, directory, nShowCmd)
 }
 
 // 炫彩_载入动态库, 系统API LoadLibrary, 返回动态库模块句柄.
 //
-// lpFileName: 文件名.
-func LoadLibrary(lpFileName string) uintptr {
-	return xc.XC_LoadLibrary(lpFileName)
+// fileName: 文件名.
+func LoadLibrary(fileName string) uintptr {
+	return xc.XC_LoadLibrary(fileName)
 }
 
 // 炫彩_取动态库中函数地址, 系统API GetProcAddress, 返回函数地址.
 //
 // hModule: 动态库模块句柄.
 //
-// lpProcName: 函数名.
-func GetProcAddress(hModule uintptr, lpProcName string) uintptr {
-	return xc.XC_GetProcAddress(hModule, lpProcName)
+// procName: 函数名.
+func GetProcAddress(hModule uintptr, procName string) uintptr {
+	return xc.XC_GetProcAddress(hModule, procName)
 }
 
 // 炫彩_释放动态库, 系统API FreeLibrary.
@@ -511,9 +511,9 @@ func FreeLibrary(hModule uintptr) bool {
 
 // 炫彩_加载DLL, 返回DLL模块句柄. 加载指定DLL, 并且调用DLL中函数LoadDll(), DLL中导出函数格式: int32 WINAPI LoadDll().
 //
-// pDllFileName: DLL文件名.
-func LoadDll(pDllFileName string) uintptr {
-	return xc.XC_LoadDll(pDllFileName)
+// dllFileName: DLL文件名.
+func LoadDll(dllFileName string) uintptr {
+	return xc.XC_LoadDll(dllFileName)
 }
 
 // 炫彩_PostQuitMessage, 发送WM_QUIT消息退出消息循环.
@@ -525,54 +525,54 @@ func PostQuitMessage(nExitCode int32) {
 
 // 炫彩_加载布局文件, 返回窗口句柄或布局句柄或元素句柄.
 //
-// pFileName: 布局文件名.
+// fileName: 布局文件名.
 //
 // hParent: 父对象句柄.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func LoadLayout(pFileName string, hParent int, hAttachWnd uintptr) int {
-	return xc.XC_LoadLayout(pFileName, hParent, hAttachWnd)
+func LoadLayout(fileName string, hParent int, hAttachWnd uintptr) int {
+	return xc.XC_LoadLayout(fileName, hParent, hAttachWnd)
 }
 
 // 炫彩_加载布局文件ZIP, 加载布局文件从zip压缩包中, 返回窗口句柄或布局句柄或元素句柄.
 //
-// pZipFileName: zip文件名.
+// zipFileName: zip文件名.
 //
-// pFileName: 布局文件名.
+// fileName: 布局文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
 // hParent: 父对象句柄.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func LoadLayoutZip(pZipFileName string, pFileName string, pPassword string, hParent int, hAttachWnd uintptr) int {
-	return xc.XC_LoadLayoutZip(pZipFileName, pFileName, pPassword, hParent, hAttachWnd)
+func LoadLayoutZip(zipFileName string, fileName string, password string, hParent int, hAttachWnd uintptr) int {
+	return xc.XC_LoadLayoutZip(zipFileName, fileName, password, hParent, hAttachWnd)
 }
 
 // 炫彩_加载布局文件内存ZIP, 加载布局文件从zip压缩包中, 返回窗口句柄或布局句柄或元素句柄.
 //
 // data: 内存块指针.
 //
-// pFileName: 布局文件名.
+// fileName: 布局文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
 // hParent: 父对象句柄.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func LoadLayoutZipMem(data []byte, pFileName string, pPassword string, hParent int, hAttachWnd uintptr) int {
-	return xc.XC_LoadLayoutZipMem(data, pFileName, pPassword, hParent, hAttachWnd)
+func LoadLayoutZipMem(data []byte, fileName string, password string, hParent int, hAttachWnd uintptr) int {
+	return xc.XC_LoadLayoutZipMem(data, fileName, password, hParent, hAttachWnd)
 }
 
 // 炫彩_加载布局文件资源ZIP扩展. 加载布局文件从RC资源zip压缩包中, 返回窗口句柄或元素句柄.
 //
 // id: RC资源ID.
 //
-// pFileName: 布局文件名.
+// fileName: 布局文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
-// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+// prefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
 //
 // hParent: 父对象句柄, 窗口句柄或UI元素句柄, 可填0.
 //
@@ -581,194 +581,194 @@ func LoadLayoutZipMem(data []byte, pFileName string, pPassword string, hParent i
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 //
 // hModule: 模块句柄, 可填0.
-func LoadLayoutZipResEx(id int32, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd, hModule uintptr) int {
-	return xc.XC_LoadLayoutZipResEx(id, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd, hModule)
+func LoadLayoutZipResEx(id int32, fileName string, password, prefixName string, hParent int, hParentWnd, hAttachWnd, hModule uintptr) int {
+	return xc.XC_LoadLayoutZipResEx(id, fileName, password, prefixName, hParent, hParentWnd, hAttachWnd, hModule)
 }
 
 // 炫彩_加载资源文件资源ZIP. 加载资源文件从RC资源zip压缩包中.
 //
 // id: RC资源ID.
 //
-// pFileName: 资源文件名.
+// fileName: 资源文件名.
 //
-// pPassword: zip压缩包密码.
+// password: zip压缩包密码.
 //
 // hModule: 模块句柄, 可填0.
-func LoadResourceZipRes(id int32, pFileName string, pPassword string, hModule uintptr) bool {
-	return xc.XC_LoadResourceZipRes(id, pFileName, pPassword, hModule)
+func LoadResourceZipRes(id int32, fileName string, password string, hModule uintptr) bool {
+	return xc.XC_LoadResourceZipRes(id, fileName, password, hModule)
 }
 
 // 炫彩_加载样式文件从资源ZIP. 从RC资源中的ZIP包中, 加载样式文件.
 //
 // id: RC资源ID.
 //
-// pFileName: 文件名.
+// fileName: 文件名.
 //
-// pPassword: 密码.
+// password: 密码.
 //
 // hModule: 模块句柄, 可填0.
-func LoadStyleZipRes(id int32, pFileName string, pPassword string, hModule uintptr) bool {
-	return xc.XC_LoadStyleZipRes(id, pFileName, pPassword, hModule)
+func LoadStyleZipRes(id int32, fileName string, password string, hModule uintptr) bool {
+	return xc.XC_LoadStyleZipRes(id, fileName, password, hModule)
 }
 
 // 炫彩_加载布局文件从字符串W, 加载布局文件从内存字符串, 返回窗口句柄或布局句柄或元素句柄.
 //
-// pStringXML: 字符串.
+// xmlStr: 字符串.
 //
 // hParent: 父对象.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func LoadLayoutFromStringW(pStringXML string, hParent int, hAttachWnd uintptr) int {
-	return xc.XC_LoadLayoutFromStringW(pStringXML, hParent, hAttachWnd)
+func LoadLayoutFromStringW(xmlStr string, hParent int, hAttachWnd uintptr) int {
+	return xc.XC_LoadLayoutFromStringW(xmlStr, hParent, hAttachWnd)
 }
 
 // 炫彩_加载布局文件Ex, 返回窗口句柄或布局句柄或元素句柄.
 //
-// pFileName: 布局文件名.
+// fileName: 布局文件名.
 //
-// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+// prefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
 //
 // hParent: 父对象句柄, 窗口句柄或UI元素句柄.
 //
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func LoadLayoutEx(pFileName, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
-	return xc.XC_LoadLayoutEx(pFileName, pPrefixName, hParent, hParentWnd, hAttachWnd)
+func LoadLayoutEx(fileName, prefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
+	return xc.XC_LoadLayoutEx(fileName, prefixName, hParent, hParentWnd, hAttachWnd)
 }
 
 // 炫彩_加载布局文件ZIPEx, 加载布局文件从zip压缩包中, 返回窗口句柄或布局句柄或元素句柄.
 //
-// pZipFileName: zip文件名.
+// zipFileName: zip文件名.
 //
-// pFileName: 布局文件名.
+// fileName: 布局文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
-// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+// prefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
 //
 // hParent: 父对象句柄, 窗口句柄或UI元素句柄.
 //
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func LoadLayoutZipEx(pZipFileName string, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
-	return xc.XC_LoadLayoutZipEx(pZipFileName, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd)
+func LoadLayoutZipEx(zipFileName string, fileName string, password, prefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
+	return xc.XC_LoadLayoutZipEx(zipFileName, fileName, password, prefixName, hParent, hParentWnd, hAttachWnd)
 }
 
 // 炫彩_加载布局文件内存ZIPEx, 加载布局文件从zip压缩包中, 返回窗口句柄或布局句柄或元素句柄.
 //
 // data: 布局文件数据.
 //
-// pFileName: 布局文件名.
+// fileName: 布局文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
-// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+// prefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
 //
 // hParent: 父对象句柄, 窗口句柄或UI元素句柄.
 //
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func LoadLayoutZipMemEx(data []byte, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
-	return xc.XC_LoadLayoutZipMemEx(data, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd)
+func LoadLayoutZipMemEx(data []byte, fileName string, password, prefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
+	return xc.XC_LoadLayoutZipMemEx(data, fileName, password, prefixName, hParent, hParentWnd, hAttachWnd)
 }
 
 // 炫彩_加载布局文件从字符串WEx, 加载布局文件从内存字符串, 返回窗口句柄或布局句柄或元素句柄.
 //
-// pStringXML: 字符串.
+// xmlStr: 字符串.
 //
-// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+// prefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
 //
 // hParent: 父对象句柄, 窗口句柄或UI元素句柄.
 //
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func LoadLayoutFromStringWEx(pStringXML, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
-	return xc.XC_LoadLayoutFromStringWEx(pStringXML, pPrefixName, hParent, hParentWnd, hAttachWnd)
+func LoadLayoutFromStringWEx(xmlStr, prefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
+	return xc.XC_LoadLayoutFromStringWEx(xmlStr, prefixName, hParent, hParentWnd, hAttachWnd)
 }
 
 // 炫彩_加载样式文件.
 //
-// pFileName: 样式文件名称.
-func LoadStyle(pFileName string) bool {
-	return xc.XC_LoadStyle(pFileName)
+// fileName: 样式文件名称.
+func LoadStyle(fileName string) bool {
+	return xc.XC_LoadStyle(fileName)
 }
 
 // 炫彩_加载样式文件ZIP.
 //
-// pZipFile: ZIP文件名.
+// zipFile: ZIP文件名.
 //
-// pFileName: 文件名.
+// fileName: 文件名.
 //
-// pPassword: 密码.
-func LoadStyleZip(pZipFile string, pFileName string, pPassword string) bool {
-	return xc.XC_LoadStyleZip(pZipFile, pFileName, pPassword)
+// password: 密码.
+func LoadStyleZip(zipFile string, fileName string, password string) bool {
+	return xc.XC_LoadStyleZip(zipFile, fileName, password)
 }
 
 // 炫彩_加载样式文件从内存ZIP.
 //
 // data: 样式文件数据.
 //
-// pFileName: 文件名.
+// fileName: 文件名.
 //
-// pPassword: 密码.
-func LoadStyleZipMem(data []byte, pFileName string, pPassword string) bool {
-	return xc.XC_LoadStyleZipMem(data, pFileName, pPassword)
+// password: 密码.
+func LoadStyleZipMem(data []byte, fileName string, password string) bool {
+	return xc.XC_LoadStyleZipMem(data, fileName, password)
 }
 
 // 炫彩_加载资源文件.
 //
-// pFileName: 资源文件名.
-func LoadResource(pFileName string) bool {
-	return xc.XC_LoadResource(pFileName)
+// fileName: 资源文件名.
+func LoadResource(fileName string) bool {
+	return xc.XC_LoadResource(fileName)
 }
 
 // 炫彩_加载资源文件ZIP.
 //
-// pZipFileName: zip文件名.
+// zipFileName: zip文件名.
 //
-// pFileName: 资源文件名.
+// fileName: 资源文件名.
 //
-// pPassword: zip压缩包密码.
-func LoadResourceZip(pZipFileName string, pFileName string, pPassword string) bool {
-	return xc.XC_LoadResourceZip(pZipFileName, pFileName, pPassword)
+// password: zip压缩包密码.
+func LoadResourceZip(zipFileName string, fileName string, password string) bool {
+	return xc.XC_LoadResourceZip(zipFileName, fileName, password)
 }
 
 // 炫彩_加载资源文件内存ZIP.
 //
 // data: 资源文件数据.
 //
-// pFileName: 资源文件名.
+// fileName: 资源文件名.
 //
-// pPassword: zip压缩包密码.
-func LoadResourceZipMem(data []byte, pFileName string, pPassword string) bool {
-	return xc.XC_LoadResourceZipMem(data, pFileName, pPassword)
+// password: zip压缩包密码.
+func LoadResourceZipMem(data []byte, fileName string, password string) bool {
+	return xc.XC_LoadResourceZipMem(data, fileName, password)
 }
 
 // 炫彩_加载资源文件从字符串W.
 //
-// pStringXML: 字符串.
+// xmlStr: 字符串.
 //
-// pFileName: 资源文件名.
-func LoadResourceFromStringW(pStringXML string, pFileName string) bool {
-	return xc.XC_LoadResourceFromStringW(pStringXML, pFileName)
+// fileName: 资源文件名.
+func LoadResourceFromStringW(xmlStr string, fileName string) bool {
+	return xc.XC_LoadResourceFromStringW(xmlStr, fileName)
 }
 
 // 炫彩_W2A.
 //
-// pValue: 参数.
-func WtoA(pValue string) uintptr {
-	return xc.XC_wtoa(pValue)
+// value: 参数.
+func WtoA(value string) uintptr {
+	return xc.XC_wtoa(value)
 }
 
 // 炫彩_A2W.
 //
-// pValue: 参数.
-func AtoW(pValue uintptr) string {
-	return xc.XC_atow(pValue)
+// value: 参数.
+func AtoW(value uintptr) string {
+	return xc.XC_atow(value)
 }
 
 // 炫彩_UTF8到文本W.
@@ -796,38 +796,38 @@ func Utf8toA(pUtf8 uintptr) uintptr {
 
 // 炫彩_文本A到UTF8.
 //
-// pValue: 参数.
-func AtoUtf8(pValue uintptr) uintptr {
-	return xc.XC_atoutf8(pValue)
+// value: 参数.
+func AtoUtf8(value uintptr) uintptr {
+	return xc.XC_atoutf8(value)
 }
 
 // 炫彩_文本W到UTF8.
 //
-// pValue: 字符串.
-func WtoUtf8(pValue string) uintptr {
-	return xc.XC_wtoutf8(pValue)
+// value: 字符串.
+func WtoUtf8(value string) uintptr {
+	return xc.XC_wtoutf8(value)
 }
 
 // 炫彩_文本W到UTF8扩展.
 //
-// pValue: 字符串.
+// value: 字符串.
 //
 // length: 字符串长度.
-func WtoUtf8Ex(pValue string, length int32) uintptr {
-	return xc.XC_wtoutf8Ex(pValue, length)
+func WtoUtf8Ex(value string, length int32) uintptr {
+	return xc.XC_wtoutf8Ex(value, length)
 }
 
 // 炫彩_U2A, 返回写入接收缓冲区字节数量.
 //
-// pIn: 待转换的Unicode字符串.
+// in: 待转换的Unicode字符串.
 //
-// inLen: pIn字符数量.
+// inLen: in字符数量.
 //
 // pOut: 指向接收转换后的Ansi字符串缓冲区指针.
 //
 // outLen: pOut缓冲区大小, 字节单位.
-func UnicodeToAnsi(pIn string, inLen int32, pOut uintptr, outLen int32) int32 {
-	return xc.XC_UnicodeToAnsi(pIn, inLen, pOut, outLen)
+func UnicodeToAnsi(in string, inLen int32, pOut uintptr, outLen int32) int32 {
+	return xc.XC_UnicodeToAnsi(in, inLen, pOut, outLen)
 }
 
 // 炫彩_A2U, 返回写入接收缓冲区字符数量.
@@ -872,11 +872,11 @@ func IsEnableD2D() bool {
 
 // 炫彩_加载样式文件从字符串W.
 //
-// pFileName: 样式文件名.
+// fileName: 样式文件名.
 //
-// pString: 字符串.
-func LoadStyleFromStringW(pFileName string, pString string) bool {
-	return xc.XC_LoadStyleFromStringW(pFileName, pString)
+// str: 字符串.
+func LoadStyleFromStringW(fileName string, str string) bool {
+	return xc.XC_LoadStyleFromStringW(fileName, str)
 }
 
 // 炫彩_显示边界.

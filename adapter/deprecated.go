@@ -14,8 +14,8 @@ func (a *AdapterTable) AddItemText(pValue string) int32 {
 // Deprecated
 //
 // !这是旧版函数, 请使用 AddRowTextEx
-func (a *AdapterTable) AddItemTextEx(pName string, pValue string) int32 {
-	return a.AddRowTextEx(pName, pValue)
+func (a *AdapterTable) AddItemTextEx(name string, pValue string) int32 {
+	return a.AddRowTextEx(name, pValue)
 }
 
 // Deprecated
@@ -28,8 +28,8 @@ func (a *AdapterTable) AddItemImage(hImage int) int32 {
 // Deprecated
 //
 // !这是旧版函数, 请使用 AddRowImageEx
-func (a *AdapterTable) AddItemImageEx(pName string, hImage int) int32 {
-	return a.AddRowImageEx(pName, hImage)
+func (a *AdapterTable) AddItemImageEx(name string, hImage int) int32 {
+	return a.AddRowImageEx(name, hImage)
 }
 
 // Deprecated
@@ -42,8 +42,8 @@ func (a *AdapterTable) InsertItemText(iItem int32, pValue string) int32 {
 // Deprecated
 //
 // !这是旧版函数, 请使用 InsertRowTextEx
-func (a *AdapterTable) InsertItemTextEx(iItem int32, pName string, pValue string) int32 {
-	return a.InsertRowTextEx(iItem, pName, pValue)
+func (a *AdapterTable) InsertItemTextEx(iItem int32, name string, pValue string) int32 {
+	return a.InsertRowTextEx(iItem, name, pValue)
 }
 
 // Deprecated
@@ -56,8 +56,8 @@ func (a *AdapterTable) InsertItemImage(iItem int32, hImage int) int32 {
 // Deprecated
 //
 // !这是旧版函数, 请使用 InsertRowImageEx
-func (a *AdapterTable) InsertItemImageEx(iItem int32, pName string, hImage int) int32 {
-	return a.InsertRowImageEx(iItem, pName, hImage)
+func (a *AdapterTable) InsertItemImageEx(iItem int32, name string, hImage int) int32 {
+	return a.InsertRowImageEx(iItem, name, hImage)
 }
 
 // Deprecated

@@ -18,29 +18,29 @@ func RGBA2(rgb uint32, a byte) uint32 {
 // Deprecated
 //
 // !这是旧版函数, 请使用 xc.XImage_LoadSvgString
-func XImage_LoadSvgStringW(pString string) int {
-	return XImage_LoadSvgString(pString)
+func XImage_LoadSvgStringW(str string) int {
+	return XImage_LoadSvgString(str)
 }
 
 // Deprecated
 //
 // !这是旧版函数, 请使用 xc.XImage_LoadSvgString
-func XImage_LoadSvgStringUtf8(pString string) int {
-	return XImage_LoadSvgString(pString)
+func XImage_LoadSvgStringUtf8(str string) int {
+	return XImage_LoadSvgString(str)
 }
 
 // Deprecated
 //
 // !这是旧版函数, 请使用 xc.XSvg_LoadString
-func XSvg_LoadStringW(pString string) int {
-	return XSvg_LoadString(pString)
+func XSvg_LoadStringW(str string) int {
+	return XSvg_LoadString(str)
 }
 
 // Deprecated
 //
 // !这是旧版函数, 请使用 xc.XSvg_LoadString
-func XSvg_LoadStringUtf8(pString string) int {
-	return XSvg_LoadString(pString)
+func XSvg_LoadStringUtf8(str string) int {
+	return XSvg_LoadString(str)
 }
 
 // Deprecated
@@ -109,15 +109,15 @@ func ClientToScreen(hWindow int, pPoint *POINT) {
 // Deprecated
 //
 // !这是旧版函数, 请使用 XList_AddRowText
-func XList_AddItemText(hEle int, pText string) int32 {
-	return XList_AddRowText(hEle, pText)
+func XList_AddItemText(hEle int, text string) int32 {
+	return XList_AddRowText(hEle, text)
 }
 
 // Deprecated
 //
 // !这是旧版函数, 请使用 XList_AddRowTextEx
-func XList_AddItemTextEx(hEle int, pName string, pText string) int32 {
-	return XList_AddRowTextEx(hEle, pName, pText)
+func XList_AddItemTextEx(hEle int, name string, text string) int32 {
+	return XList_AddRowTextEx(hEle, name, text)
 }
 
 // Deprecated
@@ -130,8 +130,8 @@ func XList_AddItemImage(hEle int, hImage int) int32 {
 // Deprecated
 //
 // !这是旧版函数, 请使用 XList_AddRowImageEx
-func XList_AddItemImageEx(hEle int, pName string, hImage int) int32 {
-	return XList_AddRowImageEx(hEle, pName, hImage)
+func XList_AddItemImageEx(hEle int, name string, hImage int) int32 {
+	return XList_AddRowImageEx(hEle, name, hImage)
 }
 
 // Deprecated
@@ -144,8 +144,8 @@ func XList_InsertItemText(hEle int, iItem int32, pValue string) int32 {
 // Deprecated
 //
 // !这是旧版函数, 请使用 XList_InsertRowTextEx
-func XList_InsertItemTextEx(hEle int, iItem int32, pName string, pValue string) int32 {
-	return XList_InsertRowTextEx(hEle, iItem, pName, pValue)
+func XList_InsertItemTextEx(hEle int, iItem int32, name string, pValue string) int32 {
+	return XList_InsertRowTextEx(hEle, iItem, name, pValue)
 }
 
 // Deprecated
@@ -158,8 +158,8 @@ func XList_InsertItemImage(hEle int, iItem int32, hImage int) int32 {
 // Deprecated
 //
 // !这是旧版函数, 请使用 XList_InsertRowImageEx
-func XList_InsertItemImageEx(hEle int, iItem int32, pName string, hImage int) int32 {
-	return XList_InsertRowImageEx(hEle, iItem, pName, hImage)
+func XList_InsertItemImageEx(hEle int, iItem int32, name string, hImage int) int32 {
+	return XList_InsertRowImageEx(hEle, iItem, name, hImage)
 }
 
 // Deprecated
@@ -298,8 +298,8 @@ func XAdTable_AddItemText(hAdapter int, pValue string) int32 {
 // Deprecated
 //
 // !这是旧版函数, 请使用 XAdTable_AddRowTextEx
-func XAdTable_AddItemTextEx(hAdapter int, pName string, pValue string) int32 {
-	return XAdTable_AddRowTextEx(hAdapter, pName, pValue)
+func XAdTable_AddItemTextEx(hAdapter int, name string, pValue string) int32 {
+	return XAdTable_AddRowTextEx(hAdapter, name, pValue)
 }
 
 // Deprecated
@@ -312,8 +312,8 @@ func XAdTable_AddItemImage(hAdapter int, hImage int) int32 {
 // Deprecated
 //
 // !这是旧版函数, 请使用 XAdTable_AddRowImageEx
-func XAdTable_AddItemImageEx(hAdapter int, pName string, hImage int) int32 {
-	return XAdTable_AddRowImageEx(hAdapter, pName, hImage)
+func XAdTable_AddItemImageEx(hAdapter int, name string, hImage int) int32 {
+	return XAdTable_AddRowImageEx(hAdapter, name, hImage)
 }
 
 // Deprecated
@@ -326,8 +326,8 @@ func XAdTable_InsertItemText(hAdapter int, iRow int32, pValue string) int32 {
 // Deprecated
 //
 // !这是旧版函数, 请使用 XAdTable_InsertRowTextEx
-func XAdTable_InsertItemTextEx(hAdapter int, iRow int32, pName string, pValue string) int32 {
-	return XAdTable_InsertRowTextEx(hAdapter, iRow, pName, pValue)
+func XAdTable_InsertItemTextEx(hAdapter int, iRow int32, name string, pValue string) int32 {
+	return XAdTable_InsertRowTextEx(hAdapter, iRow, name, pValue)
 }
 
 // Deprecated
@@ -340,8 +340,8 @@ func XAdTable_InsertItemImage(hAdapter int, iRow int32, hImage int) int32 {
 // Deprecated
 //
 // !这是旧版函数, 请使用 XAdTable_InsertRowImageEx
-func XAdTable_InsertItemImageEx(hAdapter int, iRow int32, pName string, hImage int) int32 {
-	return XAdTable_InsertRowImageEx(hAdapter, iRow, pName, hImage)
+func XAdTable_InsertItemImageEx(hAdapter int, iRow int32, name string, hImage int) int32 {
+	return XAdTable_InsertRowImageEx(hAdapter, iRow, name, hImage)
 }
 
 // Deprecated
@@ -375,6 +375,6 @@ func XAdTable_DeleteItemAll(hAdapter int) {
 // Deprecated
 //
 // !这是旧版函数, 请使用 XBkM_SetInfo
-func XBkM_SetBkInfo(hBkInfoM int, pText string) int32 {
-	return XBkM_SetInfo(hBkInfoM, pText)
+func XBkM_SetBkInfo(hBkInfoM int, text string) int32 {
+	return XBkM_SetInfo(hBkInfoM, text)
 }

@@ -626,11 +626,11 @@ func XList_RefreshRow(hEle int, iRow int32) {
 //
 // nWidth: 列宽.
 //
-// pName: 模板里绑定的name名. 在List内部存在有默认模板, name名是从name1到namen.
+// name: 模板里绑定的name名. 在List内部存在有默认模板, name名是从name1到namen.
 //
-// pText: 文本.
-func XList_AddColumnText(hEle int, nWidth int32, pName string, pText string) int32 {
-	r, _, _ := xList_AddColumnText.Call(uintptr(hEle), uintptr(nWidth), common.StrPtr(pName), common.StrPtr(pText))
+// text: 文本.
+func XList_AddColumnText(hEle int, nWidth int32, name string, text string) int32 {
+	r, _, _ := xList_AddColumnText.Call(uintptr(hEle), uintptr(nWidth), common.StrPtr(name), common.StrPtr(text))
 	return int32(r)
 }
 
@@ -640,11 +640,11 @@ func XList_AddColumnText(hEle int, nWidth int32, pName string, pText string) int
 //
 // nWidth: 列宽.
 //
-// pName: 模板里绑定的name名. 在List内部存在有默认模板, name名是从name1到namen.
+// name: 模板里绑定的name名. 在List内部存在有默认模板, name名是从name1到namen.
 //
 // hImage: 图片句柄.
-func XList_AddColumnImage(hEle int, nWidth int32, pName string, hImage int) int32 {
-	r, _, _ := xList_AddColumnImage.Call(uintptr(hEle), uintptr(nWidth), common.StrPtr(pName), uintptr(hImage))
+func XList_AddColumnImage(hEle int, nWidth int32, name string, hImage int) int32 {
+	r, _, _ := xList_AddColumnImage.Call(uintptr(hEle), uintptr(nWidth), common.StrPtr(name), uintptr(hImage))
 	return int32(r)
 }
 
@@ -652,9 +652,9 @@ func XList_AddColumnImage(hEle int, nWidth int32, pName string, hImage int) int3
 //
 // hEle:.
 //
-// pText:.
-func XList_AddRowText(hEle int, pText string) int32 {
-	r, _, _ := xList_AddRowText.Call(uintptr(hEle), common.StrPtr(pText))
+// text:.
+func XList_AddRowText(hEle int, text string) int32 {
+	r, _, _ := xList_AddRowText.Call(uintptr(hEle), common.StrPtr(text))
 	return int32(r)
 }
 
@@ -662,11 +662,11 @@ func XList_AddRowText(hEle int, pText string) int32 {
 //
 // hEle:.
 //
-// pName:.
+// name:.
 //
-// pText:.
-func XList_AddRowTextEx(hEle int, pName string, pText string) int32 {
-	r, _, _ := xList_AddRowTextEx.Call(uintptr(hEle), common.StrPtr(pName), common.StrPtr(pText))
+// text:.
+func XList_AddRowTextEx(hEle int, name string, text string) int32 {
+	r, _, _ := xList_AddRowTextEx.Call(uintptr(hEle), common.StrPtr(name), common.StrPtr(text))
 	return int32(r)
 }
 
@@ -684,11 +684,11 @@ func XList_AddRowImage(hEle int, hImage int) int32 {
 //
 // hEle:.
 //
-// pName:.
+// name:.
 //
 // hImage:.
-func XList_AddRowImageEx(hEle int, pName string, hImage int) int32 {
-	r, _, _ := xList_AddRowImageEx.Call(uintptr(hEle), common.StrPtr(pName), uintptr(hImage))
+func XList_AddRowImageEx(hEle int, name string, hImage int) int32 {
+	r, _, _ := xList_AddRowImageEx.Call(uintptr(hEle), common.StrPtr(name), uintptr(hImage))
 	return int32(r)
 }
 
@@ -710,11 +710,11 @@ func XList_InsertRowText(hEle int, iRow int32, pValue string) int32 {
 //
 // iRow:.
 //
-// pName:.
+// name:.
 //
 // pValue:.
-func XList_InsertRowTextEx(hEle int, iRow int32, pName string, pValue string) int32 {
-	r, _, _ := xList_InsertRowTextEx.Call(uintptr(hEle), uintptr(iRow), common.StrPtr(pName), common.StrPtr(pValue))
+func XList_InsertRowTextEx(hEle int, iRow int32, name string, pValue string) int32 {
+	r, _, _ := xList_InsertRowTextEx.Call(uintptr(hEle), uintptr(iRow), common.StrPtr(name), common.StrPtr(pValue))
 	return int32(r)
 }
 
@@ -736,11 +736,11 @@ func XList_InsertRowImage(hEle int, iRow int32, hImage int) int32 {
 //
 // iRow:.
 //
-// pName:.
+// name:.
 //
 // hImage:.
-func XList_InsertRowImageEx(hEle int, iRow int32, pName string, hImage int) int32 {
-	r, _, _ := xList_InsertRowImageEx.Call(uintptr(hEle), uintptr(iRow), common.StrPtr(pName), uintptr(hImage))
+func XList_InsertRowImageEx(hEle int, iRow int32, name string, hImage int) int32 {
+	r, _, _ := xList_InsertRowImageEx.Call(uintptr(hEle), uintptr(iRow), common.StrPtr(name), uintptr(hImage))
 	return int32(r)
 }
 
@@ -752,9 +752,9 @@ func XList_InsertRowImageEx(hEle int, iRow int32, pName string, hImage int) int3
 //
 // iColumn:.
 //
-// pText:.
-func XList_SetItemText(hEle int, iItem, iColumn int32, pText string) bool {
-	r, _, _ := xList_SetItemText.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), common.StrPtr(pText))
+// text:.
+func XList_SetItemText(hEle int, iItem, iColumn int32, text string) bool {
+	r, _, _ := xList_SetItemText.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), common.StrPtr(text))
 	return r != 0
 }
 
@@ -764,11 +764,11 @@ func XList_SetItemText(hEle int, iItem, iColumn int32, pText string) bool {
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
-// pText:.
-func XList_SetItemTextEx(hEle int, iItem int32, pName string, pText string) bool {
-	r, _, _ := xList_SetItemTextEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), common.StrPtr(pText))
+// text:.
+func XList_SetItemTextEx(hEle int, iItem int32, name string, text string) bool {
+	r, _, _ := xList_SetItemTextEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name), common.StrPtr(text))
 	return r != 0
 }
 
@@ -792,11 +792,11 @@ func XList_SetItemImage(hEle int, iItem, iColumn int32, hImage int) bool {
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
 // hImage:.
-func XList_SetItemImageEx(hEle int, iItem int32, pName string, hImage int) bool {
-	r, _, _ := xList_SetItemImageEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(hImage))
+func XList_SetItemImageEx(hEle int, iItem int32, name string, hImage int) bool {
+	r, _, _ := xList_SetItemImageEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name), uintptr(hImage))
 	return r != 0
 }
 
@@ -820,11 +820,11 @@ func XList_SetItemInt(hEle int, iItem, iColumn int32, nValue int32) bool {
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
 // nValue:.
-func XList_SetItemIntEx(hEle int, iItem int32, pName string, nValue int32) bool {
-	r, _, _ := xList_SetItemIntEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(nValue))
+func XList_SetItemIntEx(hEle int, iItem int32, name string, nValue int32) bool {
+	r, _, _ := xList_SetItemIntEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name), uintptr(nValue))
 	return r != 0
 }
 
@@ -848,11 +848,11 @@ func XList_SetItemFloat(hEle int, iItem, iColumn int32, fFloat float32) bool {
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
 // fFloat:.
-func XList_SetItemFloatEx(hEle int, iItem int32, pName string, fFloat float32) bool {
-	r, _, _ := xList_SetItemFloatEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), common.Float32Ptr(fFloat))
+func XList_SetItemFloatEx(hEle int, iItem int32, name string, fFloat float32) bool {
+	r, _, _ := xList_SetItemFloatEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name), common.Float32Ptr(fFloat))
 	return r != 0
 }
 
@@ -874,9 +874,9 @@ func XList_GetItemText(hEle int, iItem, iColumn int32) string {
 //
 // iItem:.
 //
-// pName:.
-func XList_GetItemTextEx(hEle int, iItem int32, pName string) string {
-	r, _, _ := xList_GetItemTextEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName))
+// name:.
+func XList_GetItemTextEx(hEle int, iItem int32, name string) string {
+	r, _, _ := xList_GetItemTextEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name))
 	return common.UintPtrToString(r)
 }
 
@@ -898,9 +898,9 @@ func XList_GetItemImage(hEle int, iItem, iColumn int32) int {
 //
 // iItem:.
 //
-// pName:.
-func XList_GetItemImageEx(hEle int, iItem int32, pName string) int {
-	r, _, _ := xList_GetItemImageEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName))
+// name:.
+func XList_GetItemImageEx(hEle int, iItem int32, name string) int {
+	r, _, _ := xList_GetItemImageEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name))
 	return int(r)
 }
 
@@ -924,11 +924,11 @@ func XList_GetItemInt(hEle int, iItem int32, iColumn int32, pOutValue *int32) bo
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
 // pOutValue:.
-func XList_GetItemIntEx(hEle int, iItem int32, pName string, pOutValue *int32) bool {
-	r, _, _ := xList_GetItemIntEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
+func XList_GetItemIntEx(hEle int, iItem int32, name string, pOutValue *int32) bool {
+	r, _, _ := xList_GetItemIntEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name), uintptr(unsafe.Pointer(pOutValue)))
 	return r != 0
 }
 
@@ -952,11 +952,11 @@ func XList_GetItemFloat(hEle int, iItem, iColumn int32, pOutValue *float32) bool
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
 // pOutValue:.
-func XList_GetItemFloatEx(hEle int, iItem int32, pName string, pOutValue *float32) bool {
-	r, _, _ := xList_GetItemFloatEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
+func XList_GetItemFloatEx(hEle int, iItem int32, name string, pOutValue *float32) bool {
+	r, _, _ := xList_GetItemFloatEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name), uintptr(unsafe.Pointer(pOutValue)))
 	return r != 0
 }
 
@@ -1113,9 +1113,9 @@ func XList_SetItemTemplateXMLFromZipRes(hEle int, id int32, pFileName string, pP
 //
 // nWidth: 列宽度.
 //
-// pText: 标题文本.
-func XList_AddColumnText2(hEle int, nWidth int32, pText string) int32 {
-	r, _, _ := xList_AddColumnText2.Call(uintptr(hEle), uintptr(nWidth), common.StrPtr(pText))
+// text: 标题文本.
+func XList_AddColumnText2(hEle int, nWidth int32, text string) int32 {
+	r, _, _ := xList_AddColumnText2.Call(uintptr(hEle), uintptr(nWidth), common.StrPtr(text))
 	return int32(r)
 }
 

@@ -20,13 +20,13 @@ type FrameWindow struct {
 //
 // cy: 窗口高度.
 //
-// pTitle: 窗口标题.
+// title: 窗口标题.
 //
 // hWndParent: 父窗口真实句柄.
 //
 // XCStyle: GUI库窗口样式: Window_Style_.
-func NewFrameWindow(x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) *FrameWindow {
-	return NewFrameWindowByHandle(xc.XFrameWnd_Create(x, y, cx, cy, pTitle, hWndParent, XCStyle))
+func NewFrameWindow(x, y, cx, cy int32, title string, hWndParent uintptr, XCStyle xcc.Window_Style_) *FrameWindow {
+	return NewFrameWindowByHandle(xc.XFrameWnd_Create(x, y, cx, cy, title, hWndParent, XCStyle))
 }
 
 // 框架窗口_创建扩展, 失败返回 nil.
@@ -45,13 +45,13 @@ func NewFrameWindow(x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCSty
 //
 // cy: 窗口高度.
 //
-// pTitle: 窗口名.
+// title: 窗口名.
 //
 // hWndParent: 父窗口.
 //
 // XCStyle: GUI库窗口样式: Window_Style_.
-func NewFrameWindowEx(dwExStyle, dwStyle uint32, lpClassName string, x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) *FrameWindow {
-	return NewFrameWindowByHandle(xc.XFrameWnd_CreateEx(dwExStyle, dwStyle, lpClassName, x, y, cx, cy, pTitle, hWndParent, XCStyle))
+func NewFrameWindowEx(dwExStyle, dwStyle uint32, lpClassName string, x, y, cx, cy int32, title string, hWndParent uintptr, XCStyle xcc.Window_Style_) *FrameWindow {
+	return NewFrameWindowByHandle(xc.XFrameWnd_CreateEx(dwExStyle, dwStyle, lpClassName, x, y, cx, cy, title, hWndParent, XCStyle))
 }
 
 // 从句柄创建对象, 失败返回 nil.

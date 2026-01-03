@@ -452,9 +452,9 @@ func XListView_ExpandGroup(hEle int, iGroup int32, bExpand bool) bool {
 //
 // hEle: 元素句柄.
 //
-// pName: 字段称.
-func XListView_Group_AddColumn(hEle int, pName string) int32 {
-	r, _, _ := xListView_Group_AddColumn.Call(uintptr(hEle), common.StrPtr(pName))
+// name: 字段称.
+func XListView_Group_AddColumn(hEle int, name string) int32 {
+	r, _, _ := xListView_Group_AddColumn.Call(uintptr(hEle), common.StrPtr(name))
 	return int32(r)
 }
 
@@ -474,13 +474,13 @@ func XListView_Group_AddItemText(hEle int, pValue string, iPos int32) int32 {
 //
 // hEle: 元素句柄.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // pValue: 值.
 //
 // iPos: 插入位置.
-func XListView_Group_AddItemTextEx(hEle int, pName string, pValue string, iPos int32) int32 {
-	r, _, _ := xListView_Group_AddItemTextEx.Call(uintptr(hEle), common.StrPtr(pName), common.StrPtr(pValue), uintptr(iPos))
+func XListView_Group_AddItemTextEx(hEle int, name string, pValue string, iPos int32) int32 {
+	r, _, _ := xListView_Group_AddItemTextEx.Call(uintptr(hEle), common.StrPtr(name), common.StrPtr(pValue), uintptr(iPos))
 	return int32(r)
 }
 
@@ -500,13 +500,13 @@ func XListView_Group_AddItemImage(hEle int, hImage int, iPos int32) int32 {
 //
 // hEle: 元素句柄.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // hImage: 图片句柄.
 //
 // iPos: 插入位置.
-func XListView_Group_AddItemImageEx(hEle int, pName string, hImage int, iPos int32) int32 {
-	r, _, _ := xListView_Group_AddItemImageEx.Call(uintptr(hEle), common.StrPtr(pName), uintptr(hImage), uintptr(iPos))
+func XListView_Group_AddItemImageEx(hEle int, name string, hImage int, iPos int32) int32 {
+	r, _, _ := xListView_Group_AddItemImageEx.Call(uintptr(hEle), common.StrPtr(name), uintptr(hImage), uintptr(iPos))
 	return int32(r)
 }
 
@@ -530,11 +530,11 @@ func XListView_Group_SetText(hEle int, iGroup, iColumn int32, pValue string) boo
 //
 // iGroup: 组索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // pValue: 值.
-func XListView_Group_SetTextEx(hEle int, iGroup int32, pName string, pValue string) bool {
-	r, _, _ := xListView_Group_SetTextEx.Call(uintptr(hEle), uintptr(iGroup), common.StrPtr(pName), common.StrPtr(pValue))
+func XListView_Group_SetTextEx(hEle int, iGroup int32, name string, pValue string) bool {
+	r, _, _ := xListView_Group_SetTextEx.Call(uintptr(hEle), uintptr(iGroup), common.StrPtr(name), common.StrPtr(pValue))
 	return r != 0
 }
 
@@ -558,11 +558,11 @@ func XListView_Group_SetImage(hEle int, iGroup, iColumn int32, hImage int) bool 
 //
 // iGroup: 组索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // hImage: 图片句柄.
-func XListView_Group_SetImageEx(hEle int, iGroup int32, pName string, hImage int) bool {
-	r, _, _ := xListView_Group_SetImageEx.Call(uintptr(hEle), uintptr(iGroup), common.StrPtr(pName), uintptr(hImage))
+func XListView_Group_SetImageEx(hEle int, iGroup int32, name string, hImage int) bool {
+	r, _, _ := xListView_Group_SetImageEx.Call(uintptr(hEle), uintptr(iGroup), common.StrPtr(name), uintptr(hImage))
 	return r != 0
 }
 
@@ -588,9 +588,9 @@ func XListView_Item_GetCount(hEle int, iGroup int32) int32 {
 //
 // hEle: 元素句柄.
 //
-// pName: 字段名.
-func XListView_Item_AddColumn(hEle int, pName string) int32 {
-	r, _, _ := xListView_Item_AddColumn.Call(uintptr(hEle), common.StrPtr(pName))
+// name: 字段名.
+func XListView_Item_AddColumn(hEle int, name string) int32 {
+	r, _, _ := xListView_Item_AddColumn.Call(uintptr(hEle), common.StrPtr(name))
 	return int32(r)
 }
 
@@ -614,13 +614,13 @@ func XListView_Item_AddItemText(hEle int, iGroup int32, pValue string, iPos int3
 //
 // iGroup: 组索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // pValue: 值.
 //
 // iPos: 插入位置, -1添加到末尾.
-func XListView_Item_AddItemTextEx(hEle int, iGroup int32, pName string, pValue string, iPos int32) int32 {
-	r, _, _ := xListView_Item_AddItemTextEx.Call(uintptr(hEle), uintptr(iGroup), common.StrPtr(pName), common.StrPtr(pValue), uintptr(iPos))
+func XListView_Item_AddItemTextEx(hEle int, iGroup int32, name string, pValue string, iPos int32) int32 {
+	r, _, _ := xListView_Item_AddItemTextEx.Call(uintptr(hEle), uintptr(iGroup), common.StrPtr(name), common.StrPtr(pValue), uintptr(iPos))
 	return int32(r)
 }
 
@@ -644,13 +644,13 @@ func XListView_Item_AddItemImage(hEle int, iGroup int32, hImage int, iPos int32)
 //
 // iGroup: 组索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // hImage: 图片句柄.
 //
 // iPos: 插入位置, -1添加到末尾.
-func XListView_Item_AddItemImageEx(hEle int, iGroup int32, pName string, hImage int, iPos int32) int32 {
-	r, _, _ := xListView_Item_AddItemImageEx.Call(uintptr(hEle), uintptr(iGroup), common.StrPtr(pName), uintptr(hImage), uintptr(iPos))
+func XListView_Item_AddItemImageEx(hEle int, iGroup int32, name string, hImage int, iPos int32) int32 {
+	r, _, _ := xListView_Item_AddItemImageEx.Call(uintptr(hEle), uintptr(iGroup), common.StrPtr(name), uintptr(hImage), uintptr(iPos))
 	return int32(r)
 }
 
@@ -678,11 +678,11 @@ func XListView_Item_SetText(hEle int, iGroup, iItem, iColumn int32, pValue strin
 //
 // iItem: 项索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // pValue: 值.
-func XListView_Item_SetTextEx(hEle int, iGroup, iItem int32, pName string, pValue string) bool {
-	r, _, _ := xListView_Item_SetTextEx.Call(uintptr(hEle), uintptr(iGroup), uintptr(iItem), common.StrPtr(pName), common.StrPtr(pValue))
+func XListView_Item_SetTextEx(hEle int, iGroup, iItem int32, name string, pValue string) bool {
+	r, _, _ := xListView_Item_SetTextEx.Call(uintptr(hEle), uintptr(iGroup), uintptr(iItem), common.StrPtr(name), common.StrPtr(pValue))
 	return r != 0
 }
 
@@ -710,11 +710,11 @@ func XListView_Item_SetImage(hEle int, iGroup, iItem, iColumn int32, hImage int)
 //
 // iItem: 项索引.
 //
-// pName: 列名称.
+// name: 列名称.
 //
 // hImage: 图片句柄.
-func XListView_Item_SetImageEx(hEle int, iGroup, iItem int32, pName string, hImage int) bool {
-	r, _, _ := xListView_Item_SetImageEx.Call(uintptr(hEle), uintptr(iGroup), uintptr(iItem), common.StrPtr(pName), uintptr(hImage))
+func XListView_Item_SetImageEx(hEle int, iGroup, iItem int32, name string, hImage int) bool {
+	r, _, _ := xListView_Item_SetImageEx.Call(uintptr(hEle), uintptr(iGroup), uintptr(iItem), common.StrPtr(name), uintptr(hImage))
 	return r != 0
 }
 
@@ -796,9 +796,9 @@ func XListView_DeleteColumnItem(hEle int, iColumn int32) {
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
-func XListView_Item_GetTextEx(hEle int, iGroup, iItem int32, pName string) string {
-	r, _, _ := xListView_Item_GetTextEx.Call(uintptr(hEle), uintptr(iGroup), uintptr(iItem), common.StrPtr(pName))
+// name: 字段称.
+func XListView_Item_GetTextEx(hEle int, iGroup, iItem int32, name string) string {
+	r, _, _ := xListView_Item_GetTextEx.Call(uintptr(hEle), uintptr(iGroup), uintptr(iItem), common.StrPtr(name))
 	return common.UintPtrToString(r)
 }
 
@@ -810,9 +810,9 @@ func XListView_Item_GetTextEx(hEle int, iGroup, iItem int32, pName string) strin
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
-func XListView_Item_GetImageEx(hEle int, iGroup, iItem int32, pName string) int {
-	r, _, _ := xListView_Item_GetImageEx.Call(uintptr(hEle), uintptr(iGroup), uintptr(iItem), common.StrPtr(pName))
+// name: 字段称.
+func XListView_Item_GetImageEx(hEle int, iGroup, iItem int32, name string) int {
+	r, _, _ := xListView_Item_GetImageEx.Call(uintptr(hEle), uintptr(iGroup), uintptr(iItem), common.StrPtr(name))
 	return int(r)
 }
 
@@ -834,9 +834,9 @@ func XListView_Group_GetText(hEle int, iGroup, iColumn int32) string {
 //
 // iGroup: 组索引.
 //
-// pName: 字段名称.
-func XListView_Group_GetTextEx(hEle int, iGroup int32, pName string) string {
-	r, _, _ := xListView_Group_GetTextEx.Call(uintptr(hEle), uintptr(iGroup), common.StrPtr(pName))
+// name: 字段名称.
+func XListView_Group_GetTextEx(hEle int, iGroup int32, name string) string {
+	r, _, _ := xListView_Group_GetTextEx.Call(uintptr(hEle), uintptr(iGroup), common.StrPtr(name))
 	return common.UintPtrToString(r)
 }
 
@@ -858,9 +858,9 @@ func XListView_Group_GetImage(hEle int, iGroup, iColumn int32) int {
 //
 // iGroup: 组索引.
 //
-// pName: 字段名称.
-func XListView_Group_GetImageEx(hEle int, iGroup int32, pName string) int {
-	r, _, _ := xListView_Group_GetImageEx.Call(uintptr(hEle), uintptr(iGroup), common.StrPtr(pName))
+// name: 字段名称.
+func XListView_Group_GetImageEx(hEle int, iGroup int32, name string) int {
+	r, _, _ := xListView_Group_GetImageEx.Call(uintptr(hEle), uintptr(iGroup), common.StrPtr(name))
 	return int(r)
 }
 

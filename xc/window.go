@@ -19,13 +19,13 @@ import (
 //
 // cy: 窗口高度.
 //
-// pTitle: 窗口标题.
+// title: 窗口标题.
 //
 // hWndParent: 父窗口.
 //
 // XCStyle: GUI库窗口样式, Window_Style_.
-func XWnd_Create(x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xWnd_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pTitle), hWndParent, uintptr(XCStyle))
+func XWnd_Create(x, y, cx, cy int32, title string, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
+	r, _, _ := xWnd_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(title), hWndParent, uintptr(XCStyle))
 	return int(r)
 }
 
@@ -45,13 +45,13 @@ func XWnd_Create(x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle 
 //
 // cy: 窗口高度.
 //
-// pTitle: 窗口名.
+// title: 窗口名.
 //
 // hWndParent: 父窗口.
 //
 // XCStyle: GUI库窗口样式, Window_Style_.
-func XWnd_CreateEx(dwExStyle xcc.WS_EX_, dwStyle xcc.WS_, lpClassName string, x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xWnd_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pTitle), hWndParent, uintptr(XCStyle))
+func XWnd_CreateEx(dwExStyle xcc.WS_EX_, dwStyle xcc.WS_, lpClassName string, x, y, cx, cy int32, title string, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
+	r, _, _ := xWnd_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(title), hWndParent, uintptr(XCStyle))
 	return int(r)
 }
 
@@ -476,9 +476,9 @@ func XWnd_GetID(hWindow int) int32 {
 //
 // hWindow: 窗口句柄.
 //
-// pName: name值, 字符串.
-func XWnd_SetName(hWindow int, pName string) {
-	xWnd_SetName.Call(uintptr(hWindow), common.StrPtr(pName))
+// name: name值, 字符串.
+func XWnd_SetName(hWindow int, name string) {
+	xWnd_SetName.Call(uintptr(hWindow), common.StrPtr(name))
 }
 
 // 窗口_取名称.
@@ -963,9 +963,9 @@ func XWnd_SetIcon(hWindow, hImage int) {
 //
 // hWindow: 窗口句柄.
 //
-// pTitle: 标题文本.
-func XWnd_SetTitle(hWindow int, pTitle string) {
-	xWnd_SetTitle.Call(uintptr(hWindow), common.StrPtr(pTitle))
+// title: 标题文本.
+func XWnd_SetTitle(hWindow int, title string) {
+	xWnd_SetTitle.Call(uintptr(hWindow), common.StrPtr(title))
 }
 
 // 窗口_置标题颜色.
@@ -1065,9 +1065,9 @@ func XWnd_ClearBkInfo(hWindow int) {
 //
 // hWindow: 窗口句柄.
 //
-// pText: 背景内容字符串.
-func XWnd_SetBkInfo(hWindow int, pText string) int32 {
-	r, _, _ := xWnd_SetBkInfo.Call(uintptr(hWindow), common.StrPtr(pText))
+// text: 背景内容字符串.
+func XWnd_SetBkInfo(hWindow int, text string) int32 {
+	r, _, _ := xWnd_SetBkInfo.Call(uintptr(hWindow), common.StrPtr(text))
 	return int32(r)
 }
 

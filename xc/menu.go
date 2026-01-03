@@ -17,13 +17,13 @@ func XMenu_Create() int {
 //
 // nID: 项ID.
 //
-// pText: 文本内容.
+// text: 文本内容.
 //
 // nParentID: 父项ID.
 //
 // nFlags: 标识, Menu_Item_Flag_.
-func XMenu_AddItem(hMenu int, nID int32, pText string, nParentID int32, nFlags xcc.Menu_Item_Flag_) {
-	xMenu_AddItem.Call(uintptr(hMenu), uintptr(nID), common.StrPtr(pText), uintptr(nParentID), uintptr(nFlags))
+func XMenu_AddItem(hMenu int, nID int32, text string, nParentID int32, nFlags xcc.Menu_Item_Flag_) {
+	xMenu_AddItem.Call(uintptr(hMenu), uintptr(nID), common.StrPtr(text), uintptr(nParentID), uintptr(nFlags))
 }
 
 // 菜单_添加项图标.
@@ -32,15 +32,15 @@ func XMenu_AddItem(hMenu int, nID int32, pText string, nParentID int32, nFlags x
 //
 // nID: 项ID.
 //
-// pText: 文本内容.
+// text: 文本内容.
 //
 // nParentID: 父项ID.
 //
 // hIcon: 菜单项图标句柄.
 //
 // nFlags: 标识, Menu_Item_Flag_.
-func XMenu_AddItemIcon(hMenu int, nID int32, pText string, nParentID int32, hIcon int, nFlags xcc.Menu_Item_Flag_) {
-	xMenu_AddItemIcon.Call(uintptr(hMenu), uintptr(nID), common.StrPtr(pText), uintptr(nParentID), uintptr(hIcon), uintptr(nFlags))
+func XMenu_AddItemIcon(hMenu int, nID int32, text string, nParentID int32, hIcon int, nFlags xcc.Menu_Item_Flag_) {
+	xMenu_AddItemIcon.Call(uintptr(hMenu), uintptr(nID), common.StrPtr(text), uintptr(nParentID), uintptr(hIcon), uintptr(nFlags))
 }
 
 // 菜单_插入项.
@@ -49,13 +49,13 @@ func XMenu_AddItemIcon(hMenu int, nID int32, pText string, nParentID int32, hIco
 //
 // nID: 项ID.
 //
-// pText: 文本内容.
+// text: 文本内容.
 //
 // nFlags: 标识, Menu_Item_Flag_.
 //
 // insertID: 插入位置ID.
-func XMenu_InsertItem(hMenu int, nID int32, pText string, nFlags xcc.Menu_Item_Flag_, insertID int32) {
-	xMenu_InsertItem.Call(uintptr(hMenu), uintptr(nID), common.StrPtr(pText), uintptr(nFlags), uintptr(insertID))
+func XMenu_InsertItem(hMenu int, nID int32, text string, nFlags xcc.Menu_Item_Flag_, insertID int32) {
+	xMenu_InsertItem.Call(uintptr(hMenu), uintptr(nID), common.StrPtr(text), uintptr(nFlags), uintptr(insertID))
 }
 
 // 菜单_插入项图标.
@@ -64,15 +64,15 @@ func XMenu_InsertItem(hMenu int, nID int32, pText string, nFlags xcc.Menu_Item_F
 //
 // nID: 项ID.
 //
-// pText: 文本内容.
+// text: 文本内容.
 //
 // hIcon: 菜单项图标句柄.
 //
 // nFlags: 标识, Menu_Item_Flag_.
 //
 // insertID: 插入位置ID.
-func XMenu_InsertItemIcon(hMenu int, nID int32, pText string, hIcon int, nFlags xcc.Menu_Item_Flag_, insertID int32) {
-	xMenu_InsertItemIcon.Call(uintptr(hMenu), uintptr(nID), common.StrPtr(pText), uintptr(hIcon), uintptr(nFlags), uintptr(insertID))
+func XMenu_InsertItemIcon(hMenu int, nID int32, text string, hIcon int, nFlags xcc.Menu_Item_Flag_, insertID int32) {
+	xMenu_InsertItemIcon.Call(uintptr(hMenu), uintptr(nID), common.StrPtr(text), uintptr(hIcon), uintptr(nFlags), uintptr(insertID))
 }
 
 // 菜单_取第一个子项, 返回项ID.
@@ -199,9 +199,9 @@ func XMenu_SetBkImage(hMenu int, hImage int) {
 //
 // nID: 项ID.
 //
-// pText: 文本内容.
-func XMenu_SetItemText(hMenu int, nID int32, pText string) bool {
-	r, _, _ := xMenu_SetItemText.Call(uintptr(hMenu), uintptr(nID), common.StrPtr(pText))
+// text: 文本内容.
+func XMenu_SetItemText(hMenu int, nID int32, text string) bool {
+	r, _, _ := xMenu_SetItemText.Call(uintptr(hMenu), uintptr(nID), common.StrPtr(text))
 	return r != 0
 }
 

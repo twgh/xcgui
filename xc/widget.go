@@ -217,9 +217,9 @@ func XWidget_SetUID(hXCGUI int, nUID int32) {
 //
 // hXCGUI: UI对象句柄.
 //
-// pName: name值.
-func XWidget_SetName(hXCGUI int, pName string) {
-	xWidget_SetName.Call(uintptr(hXCGUI), common.StrPtr(pName))
+// name: name值.
+func XWidget_SetName(hXCGUI int, name string) {
+	xWidget_SetName.Call(uintptr(hXCGUI), common.StrPtr(name))
 }
 
 // 窗口组件_取ID, 获取元素ID.

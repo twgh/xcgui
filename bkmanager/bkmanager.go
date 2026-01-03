@@ -40,9 +40,9 @@ func (b *BkManager) Destroy() *BkManager {
 
 // 背景_添加内容, 添加背景内容, 返回添加的背景对象数量.
 //
-// pText: 背景内容字符串.
-func (b *BkManager) AddInfo(pText string) int32 {
-	return xc.XBkM_AddInfo(b.Handle, pText)
+// text: 背景内容字符串.
+func (b *BkManager) AddInfo(text string) int32 {
+	return xc.XBkM_AddInfo(b.Handle, text)
 }
 
 // 背景_添加边框, 添加背景内容边框.
@@ -147,9 +147,9 @@ func (b *BkManager) GetRefCount() int32 {
 
 // 背景_取引用计数, 设置背景内容, 返回设置的背景对象数量.
 //
-// pText: 背景内容字符串.
-func (b *BkManager) SetInfo(pText string) int32 {
-	return xc.XBkM_SetInfo(b.Handle, pText)
+// text: 背景内容字符串.
+func (b *BkManager) SetInfo(text string) int32 {
+	return xc.XBkM_SetInfo(b.Handle, text)
 }
 
 // 背景_取指定状态文本颜色.

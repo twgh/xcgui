@@ -45,13 +45,13 @@ func NewMenuByUIDName(name string) *Menu {
 //
 // nID: 项ID.
 //
-// pText: 文本内容.
+// text: 文本内容.
 //
 // nParentID: 父项ID.
 //
 // nFlags: 标识, Menu_Item_Flag_.
-func (m *Menu) AddItem(nID int32, pText string, nParentID int32, nFlags xcc.Menu_Item_Flag_) *Menu {
-	xc.XMenu_AddItem(m.Handle, nID, pText, nParentID, nFlags)
+func (m *Menu) AddItem(nID int32, text string, nParentID int32, nFlags xcc.Menu_Item_Flag_) *Menu {
+	xc.XMenu_AddItem(m.Handle, nID, text, nParentID, nFlags)
 	return m
 }
 
@@ -59,15 +59,15 @@ func (m *Menu) AddItem(nID int32, pText string, nParentID int32, nFlags xcc.Menu
 //
 // nID: 项ID.
 //
-// pText: 文本内容.
+// text: 文本内容.
 //
 // nParentID: 父项ID.
 //
 // hIcon: 菜单项图标句柄.
 //
 // nFlags: 标识, Menu_Item_Flag_.
-func (m *Menu) AddItemIcon(nID int32, pText string, nParentID int32, hIcon int, nFlags xcc.Menu_Item_Flag_) *Menu {
-	xc.XMenu_AddItemIcon(m.Handle, nID, pText, nParentID, hIcon, nFlags)
+func (m *Menu) AddItemIcon(nID int32, text string, nParentID int32, hIcon int, nFlags xcc.Menu_Item_Flag_) *Menu {
+	xc.XMenu_AddItemIcon(m.Handle, nID, text, nParentID, hIcon, nFlags)
 	return m
 }
 
@@ -75,13 +75,13 @@ func (m *Menu) AddItemIcon(nID int32, pText string, nParentID int32, hIcon int, 
 //
 // nID: 项ID.
 //
-// pText: 文本内容.
+// text: 文本内容.
 //
 // nFlags: 标识, Menu_Item_Flag_.
 //
 // insertID: 插入位置ID.
-func (m *Menu) InsertItem(nID int32, pText string, nFlags xcc.Menu_Item_Flag_, insertID int32) *Menu {
-	xc.XMenu_InsertItem(m.Handle, nID, pText, nFlags, insertID)
+func (m *Menu) InsertItem(nID int32, text string, nFlags xcc.Menu_Item_Flag_, insertID int32) *Menu {
+	xc.XMenu_InsertItem(m.Handle, nID, text, nFlags, insertID)
 	return m
 }
 
@@ -89,15 +89,15 @@ func (m *Menu) InsertItem(nID int32, pText string, nFlags xcc.Menu_Item_Flag_, i
 //
 // nID: 项ID.
 //
-// pText: 文本内容.
+// text: 文本内容.
 //
 // hIcon: 菜单项图标句柄.
 //
 // nFlags: 标识, Menu_Item_Flag_.
 //
 // insertID: 插入位置ID.
-func (m *Menu) InsertItemIcon(nID int32, pText string, hIcon int, nFlags xcc.Menu_Item_Flag_, insertID int32) *Menu {
-	xc.XMenu_InsertItemIcon(m.Handle, nID, pText, hIcon, nFlags, insertID)
+func (m *Menu) InsertItemIcon(nID int32, text string, hIcon int, nFlags xcc.Menu_Item_Flag_, insertID int32) *Menu {
+	xc.XMenu_InsertItemIcon(m.Handle, nID, text, hIcon, nFlags, insertID)
 	return m
 }
 
@@ -199,9 +199,9 @@ func (m *Menu) SetBkImage(hImage int) *Menu {
 //
 // nID: 项ID.
 //
-// pText: 文本内容.
-func (m *Menu) SetItemText(nID int32, pText string) bool {
-	return xc.XMenu_SetItemText(m.Handle, nID, pText)
+// text: 文本内容.
+func (m *Menu) SetItemText(nID int32, text string) bool {
+	return xc.XMenu_SetItemText(m.Handle, nID, text)
 }
 
 // 菜单_取项文本.

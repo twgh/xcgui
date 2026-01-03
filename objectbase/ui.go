@@ -41,9 +41,9 @@ func (u *UI) EnableCssEx(bEnable bool) *UI {
 
 // SetCssName 可视对象_置CSS名称, 设置CSS[套用样式]名称.
 //
-// pName: 套用样式名称.
-func (u *UI) SetCssName(pName string) *UI {
-	xc.XUI_SetCssName(u.Handle, pName)
+// name: 套用样式名称.
+func (u *UI) SetCssName(name string) *UI {
+	xc.XUI_SetCssName(u.Handle, name)
 	return u
 }
 

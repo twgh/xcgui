@@ -11,15 +11,15 @@ import (
 // Deprecated
 //
 // !这是旧版函数, 请使用 AddRowText
-func (l *List) AddItemText(pText string) int32 {
-	return l.AddRowText(pText)
+func (l *List) AddItemText(text string) int32 {
+	return l.AddRowText(text)
 }
 
 // Deprecated
 //
 // !这是旧版函数, 请使用 AddRowTextEx
-func (l *List) AddItemTextEx(pName string, pText string) int32 {
-	return l.AddRowTextEx(pName, pText)
+func (l *List) AddItemTextEx(name string, text string) int32 {
+	return l.AddRowTextEx(name, text)
 }
 
 // Deprecated
@@ -32,8 +32,8 @@ func (l *List) AddItemImage(hImage int) int32 {
 // Deprecated
 //
 // !这是旧版函数, 请使用 AddRowImageEx
-func (l *List) AddItemImageEx(pName string, hImage int) int32 {
-	return l.AddRowImageEx(pName, hImage)
+func (l *List) AddItemImageEx(name string, hImage int) int32 {
+	return l.AddRowImageEx(name, hImage)
 }
 
 // Deprecated
@@ -46,8 +46,8 @@ func (l *List) InsertItemText(iItem int32, pValue string) int32 {
 // Deprecated
 //
 // !这是旧版函数, 请使用 InsertRowTextEx
-func (l *List) InsertItemTextEx(iItem int32, pName string, pValue string) int32 {
-	return l.InsertRowTextEx(iItem, pName, pValue)
+func (l *List) InsertItemTextEx(iItem int32, name string, pValue string) int32 {
+	return l.InsertRowTextEx(iItem, name, pValue)
 }
 
 // Deprecated
@@ -60,8 +60,8 @@ func (l *List) InsertItemImage(iItem int32, hImage int) int32 {
 // Deprecated
 //
 // !这是旧版函数, 请使用 InsertRowImageEx
-func (l *List) InsertItemImageEx(iItem int32, pName string, hImage int) int32 {
-	return l.InsertRowImageEx(iItem, pName, hImage)
+func (l *List) InsertItemImageEx(iItem int32, name string, hImage int) int32 {
+	return l.InsertRowImageEx(iItem, name, hImage)
 }
 
 // Deprecated

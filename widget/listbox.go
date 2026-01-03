@@ -357,18 +357,18 @@ func (l *ListBox) RefreshItem(iItem int32) *ListBox {
 
 // 列表框_添加项文本, XAdTable_AddRowText, 返回项索引.
 //
-// pText:.
-func (l *ListBox) AddItemText(pText string) int32 {
-	return xc.XListBox_AddItemText(l.Handle, pText)
+// text:.
+func (l *ListBox) AddItemText(text string) int32 {
+	return xc.XListBox_AddItemText(l.Handle, text)
 }
 
 // 列表框_添加项文本扩展, XAdTable_AddRowTextEx.
 //
-// pName:.
+// name:.
 //
-// pText:.
-func (l *ListBox) AddItemTextEx(pName string, pText string) int32 {
-	return xc.XListBox_AddItemTextEx(l.Handle, pName, pText)
+// text:.
+func (l *ListBox) AddItemTextEx(name string, text string) int32 {
+	return xc.XListBox_AddItemTextEx(l.Handle, name, text)
 }
 
 // 列表框_添加项图片, XAdTable_AddRowImage.
@@ -380,11 +380,11 @@ func (l *ListBox) AddItemImage(hImage int) int32 {
 
 // 列表框_添加项图片扩展, XAdTable_AddRowImageEx.
 //
-// pName:.
+// name:.
 //
 // hImage:.
-func (l *ListBox) AddItemImageEx(pName string, hImage int) int32 {
-	return xc.XListBox_AddItemImageEx(l.Handle, pName, hImage)
+func (l *ListBox) AddItemImageEx(name string, hImage int) int32 {
+	return xc.XListBox_AddItemImageEx(l.Handle, name, hImage)
 }
 
 // 列表框_插入项文本.
@@ -400,11 +400,11 @@ func (l *ListBox) InsertItemText(iItem int32, pValue string) int32 {
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
 // pValue:.
-func (l *ListBox) InsertItemTextEx(iItem int32, pName string, pValue string) int32 {
-	return xc.XListBox_InsertItemTextEx(l.Handle, iItem, pName, pValue)
+func (l *ListBox) InsertItemTextEx(iItem int32, name string, pValue string) int32 {
+	return xc.XListBox_InsertItemTextEx(l.Handle, iItem, name, pValue)
 }
 
 // 列表框_插入项图片.
@@ -420,11 +420,11 @@ func (l *ListBox) InsertItemImage(iItem int32, hImage int) int32 {
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
 // hImage:.
-func (l *ListBox) InsertItemImageEx(iItem int32, pName string, hImage int) int32 {
-	return xc.XListBox_InsertItemImageEx(l.Handle, iItem, pName, hImage)
+func (l *ListBox) InsertItemImageEx(iItem int32, name string, hImage int) int32 {
+	return xc.XListBox_InsertItemImageEx(l.Handle, iItem, name, hImage)
 }
 
 // 列表框_置项文本.
@@ -433,20 +433,20 @@ func (l *ListBox) InsertItemImageEx(iItem int32, pName string, hImage int) int32
 //
 // iColumn:.
 //
-// pText:.
-func (l *ListBox) SetItemText(iItem, iColumn int32, pText string) bool {
-	return xc.XListBox_SetItemText(l.Handle, iItem, iColumn, pText)
+// text:.
+func (l *ListBox) SetItemText(iItem, iColumn int32, text string) bool {
+	return xc.XListBox_SetItemText(l.Handle, iItem, iColumn, text)
 }
 
 // 列表框_置项文本扩展.
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
-// pText:.
-func (l *ListBox) SetItemTextEx(iItem int32, pName string, pText string) bool {
-	return xc.XListBox_SetItemTextEx(l.Handle, iItem, pName, pText)
+// text:.
+func (l *ListBox) SetItemTextEx(iItem int32, name string, text string) bool {
+	return xc.XListBox_SetItemTextEx(l.Handle, iItem, name, text)
 }
 
 // 列表框_置项图片.
@@ -464,11 +464,11 @@ func (l *ListBox) SetItemImage(iItem, iColumn int32, hImage int) bool {
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
 // hImage:.
-func (l *ListBox) SetItemImageEx(iItem int32, pName string, hImage int) bool {
-	return xc.XListBox_SetItemImageEx(l.Handle, iItem, pName, hImage)
+func (l *ListBox) SetItemImageEx(iItem int32, name string, hImage int) bool {
+	return xc.XListBox_SetItemImageEx(l.Handle, iItem, name, hImage)
 }
 
 // 列表框_置项整数值.
@@ -486,11 +486,11 @@ func (l *ListBox) SetItemInt(iItem, iColumn int32, nValue int32) bool {
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
 // nValue:.
-func (l *ListBox) SetItemIntEx(iItem int32, pName string, nValue int32) bool {
-	return xc.XListBox_SetItemIntEx(l.Handle, iItem, pName, nValue)
+func (l *ListBox) SetItemIntEx(iItem int32, name string, nValue int32) bool {
+	return xc.XListBox_SetItemIntEx(l.Handle, iItem, name, nValue)
 }
 
 // 列表框_置项浮点值.
@@ -508,11 +508,11 @@ func (l *ListBox) SetItemFloat(iItem, iColumn int32, fFloat float32) bool {
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
 // fFloat:.
-func (l *ListBox) SetItemFloatEx(iItem int32, pName string, fFloat float32) bool {
-	return xc.XListBox_SetItemFloatEx(l.Handle, iItem, pName, fFloat)
+func (l *ListBox) SetItemFloatEx(iItem int32, name string, fFloat float32) bool {
+	return xc.XListBox_SetItemFloatEx(l.Handle, iItem, name, fFloat)
 }
 
 // 列表框_取项文本.
@@ -528,9 +528,9 @@ func (l *ListBox) GetItemText(iItem, iColumn int32) string {
 //
 // iItem:.
 //
-// pName:.
-func (l *ListBox) GetItemTextEx(iItem int32, pName string) string {
-	return xc.XListBox_GetItemTextEx(l.Handle, iItem, pName)
+// name:.
+func (l *ListBox) GetItemTextEx(iItem int32, name string) string {
+	return xc.XListBox_GetItemTextEx(l.Handle, iItem, name)
 }
 
 // 列表框_取项图片. 返回图片句柄.
@@ -546,9 +546,9 @@ func (l *ListBox) GetItemImage(iItem, iColumn int32) int {
 //
 // iItem:.
 //
-// pName:.
-func (l *ListBox) GetItemImageEx(iItem int32, pName string) int {
-	return xc.XListBox_GetItemImageEx(l.Handle, iItem, pName)
+// name:.
+func (l *ListBox) GetItemImageEx(iItem int32, name string) int {
+	return xc.XListBox_GetItemImageEx(l.Handle, iItem, name)
 }
 
 // 列表框_取项整数值.
@@ -566,11 +566,11 @@ func (l *ListBox) GetItemInt(iItem, iColumn int32, pOutValue *int32) bool {
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
 // pOutValue:.
-func (l *ListBox) GetItemIntEx(iItem int32, pName string, pOutValue *int32) bool {
-	return xc.XListBox_GetItemIntEx(l.Handle, iItem, pName, pOutValue)
+func (l *ListBox) GetItemIntEx(iItem int32, name string, pOutValue *int32) bool {
+	return xc.XListBox_GetItemIntEx(l.Handle, iItem, name, pOutValue)
 }
 
 // 列表框_取项浮点值.
@@ -588,11 +588,11 @@ func (l *ListBox) GetItemFloat(iItem, iColumn int32, pOutValue *float32) bool {
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
 // pOutValue:.
-func (l *ListBox) GetItemFloatEx(iItem int32, pName string, pOutValue *float32) bool {
-	return xc.XListBox_GetItemFloatEx(l.Handle, iItem, pName, pOutValue)
+func (l *ListBox) GetItemFloatEx(iItem int32, name string, pOutValue *float32) bool {
+	return xc.XListBox_GetItemFloatEx(l.Handle, iItem, name, pOutValue)
 }
 
 // 列表框_删除项.

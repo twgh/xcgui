@@ -25,9 +25,9 @@ func XTabBar_Create(x, y, cx, cy int32, hParent int) int {
 //
 // hEle: 元素句柄.
 //
-// pName: 标签文本内容.
-func XTabBar_AddLabel(hEle int, pName string) int32 {
-	r, _, _ := xTabBar_AddLabel.Call(uintptr(hEle), common.StrPtr(pName))
+// name: 标签文本内容.
+func XTabBar_AddLabel(hEle int, name string) int32 {
+	r, _, _ := xTabBar_AddLabel.Call(uintptr(hEle), common.StrPtr(name))
 	return int32(r)
 }
 
@@ -37,9 +37,9 @@ func XTabBar_AddLabel(hEle int, pName string) int32 {
 //
 // index: 插入位置.
 //
-// pName: 标签文本内容.
-func XTabBar_InsertLabel(hEle int, index int32, pName string) int32 {
-	r, _, _ := xTabBar_InsertLabel.Call(uintptr(hEle), uintptr(index), common.StrPtr(pName))
+// name: 标签文本内容.
+func XTabBar_InsertLabel(hEle int, index int32, name string) int32 {
+	r, _, _ := xTabBar_InsertLabel.Call(uintptr(hEle), uintptr(index), common.StrPtr(name))
 	return int32(r)
 }
 

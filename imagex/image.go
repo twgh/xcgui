@@ -242,9 +242,9 @@ func NewBySvgFile(pFileName string) *Image {
 
 // 图片_加载从SVG字符串, 失败返回 nil.
 //
-// pString: 字符串.
-func NewBySvgString(pString string) *Image {
-	return NewByHandle(xc.XImage_LoadSvgString(pString))
+// str: 字符串.
+func NewBySvgString(str string) *Image {
+	return NewByHandle(xc.XImage_LoadSvgString(str))
 }
 
 // NewByHandle 从句柄创建对象, 失败返回 nil.
@@ -261,7 +261,7 @@ func NewByHandle(handle int) *Image {
 
 // NewByName 根据资源文件中的 name 创建对象, 失败返回 nil.
 //
-// pName: 资源名称.
+// name: 资源名称.
 func NewByName(name string) *Image {
 	return NewByHandle(xc.XRes_GetImage(name))
 }
@@ -270,7 +270,7 @@ func NewByName(name string) *Image {
 //
 // pFileName: 资源文件名.
 //
-// pName: 资源名称.
+// name: 资源名称.
 func NewByNameEx(fileName, name string) *Image {
 	return NewByHandle(xc.XRes_GetImageEx(fileName, name))
 }

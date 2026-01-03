@@ -415,9 +415,9 @@ func XListBox_RefreshItem(hEle int, iItem int32) {
 //
 // hEle:.
 //
-// pText:.
-func XListBox_AddItemText(hEle int, pText string) int32 {
-	r, _, _ := xListBox_AddItemText.Call(uintptr(hEle), common.StrPtr(pText))
+// text:.
+func XListBox_AddItemText(hEle int, text string) int32 {
+	r, _, _ := xListBox_AddItemText.Call(uintptr(hEle), common.StrPtr(text))
 	return int32(r)
 }
 
@@ -425,11 +425,11 @@ func XListBox_AddItemText(hEle int, pText string) int32 {
 //
 // hEle:.
 //
-// pName:.
+// name:.
 //
-// pText:.
-func XListBox_AddItemTextEx(hEle int, pName string, pText string) int32 {
-	r, _, _ := xListBox_AddItemTextEx.Call(uintptr(hEle), common.StrPtr(pName), common.StrPtr(pText))
+// text:.
+func XListBox_AddItemTextEx(hEle int, name string, text string) int32 {
+	r, _, _ := xListBox_AddItemTextEx.Call(uintptr(hEle), common.StrPtr(name), common.StrPtr(text))
 	return int32(r)
 }
 
@@ -447,11 +447,11 @@ func XListBox_AddItemImage(hEle int, hImage int) int32 {
 //
 // hEle:.
 //
-// pName:.
+// name:.
 //
 // hImage:.
-func XListBox_AddItemImageEx(hEle int, pName string, hImage int) int32 {
-	r, _, _ := xListBox_AddItemImageEx.Call(uintptr(hEle), common.StrPtr(pName), uintptr(hImage))
+func XListBox_AddItemImageEx(hEle int, name string, hImage int) int32 {
+	r, _, _ := xListBox_AddItemImageEx.Call(uintptr(hEle), common.StrPtr(name), uintptr(hImage))
 	return int32(r)
 }
 
@@ -473,11 +473,11 @@ func XListBox_InsertItemText(hEle int, iItem int32, pValue string) int32 {
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
 // pValue:.
-func XListBox_InsertItemTextEx(hEle int, iItem int32, pName string, pValue string) int32 {
-	r, _, _ := xListBox_InsertItemTextEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), common.StrPtr(pValue))
+func XListBox_InsertItemTextEx(hEle int, iItem int32, name string, pValue string) int32 {
+	r, _, _ := xListBox_InsertItemTextEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name), common.StrPtr(pValue))
 	return int32(r)
 }
 
@@ -499,11 +499,11 @@ func XListBox_InsertItemImage(hEle int, iItem int32, hImage int) int32 {
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
 // hImage:.
-func XListBox_InsertItemImageEx(hEle int, iItem int32, pName string, hImage int) int32 {
-	r, _, _ := xListBox_InsertItemImageEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(hImage))
+func XListBox_InsertItemImageEx(hEle int, iItem int32, name string, hImage int) int32 {
+	r, _, _ := xListBox_InsertItemImageEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name), uintptr(hImage))
 	return int32(r)
 }
 
@@ -515,9 +515,9 @@ func XListBox_InsertItemImageEx(hEle int, iItem int32, pName string, hImage int)
 //
 // iColumn:.
 //
-// pText:.
-func XListBox_SetItemText(hEle int, iItem, iColumn int32, pText string) bool {
-	r, _, _ := xListBox_SetItemText.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), common.StrPtr(pText))
+// text:.
+func XListBox_SetItemText(hEle int, iItem, iColumn int32, text string) bool {
+	r, _, _ := xListBox_SetItemText.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), common.StrPtr(text))
 	return r != 0
 }
 
@@ -527,11 +527,11 @@ func XListBox_SetItemText(hEle int, iItem, iColumn int32, pText string) bool {
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
-// pText:.
-func XListBox_SetItemTextEx(hEle int, iItem int32, pName string, pText string) bool {
-	r, _, _ := xListBox_SetItemTextEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), common.StrPtr(pText))
+// text:.
+func XListBox_SetItemTextEx(hEle int, iItem int32, name string, text string) bool {
+	r, _, _ := xListBox_SetItemTextEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name), common.StrPtr(text))
 	return r != 0
 }
 
@@ -555,11 +555,11 @@ func XListBox_SetItemImage(hEle int, iItem, iColumn int32, hImage int) bool {
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
 // hImage:.
-func XListBox_SetItemImageEx(hEle int, iItem int32, pName string, hImage int) bool {
-	r, _, _ := xListBox_SetItemImageEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(hImage))
+func XListBox_SetItemImageEx(hEle int, iItem int32, name string, hImage int) bool {
+	r, _, _ := xListBox_SetItemImageEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name), uintptr(hImage))
 	return r != 0
 }
 
@@ -583,11 +583,11 @@ func XListBox_SetItemInt(hEle int, iItem, iColumn int32, nValue int32) bool {
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
 // nValue:.
-func XListBox_SetItemIntEx(hEle int, iItem int32, pName string, nValue int32) bool {
-	r, _, _ := xListBox_SetItemIntEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(nValue))
+func XListBox_SetItemIntEx(hEle int, iItem int32, name string, nValue int32) bool {
+	r, _, _ := xListBox_SetItemIntEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name), uintptr(nValue))
 	return r != 0
 }
 
@@ -611,11 +611,11 @@ func XListBox_SetItemFloat(hEle int, iItem, iColumn int32, fFloat float32) bool 
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
 // fFloat:.
-func XListBox_SetItemFloatEx(hEle int, iItem int32, pName string, fFloat float32) bool {
-	r, _, _ := xListBox_SetItemFloatEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), common.Float32Ptr(fFloat))
+func XListBox_SetItemFloatEx(hEle int, iItem int32, name string, fFloat float32) bool {
+	r, _, _ := xListBox_SetItemFloatEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name), common.Float32Ptr(fFloat))
 	return r != 0
 }
 
@@ -637,9 +637,9 @@ func XListBox_GetItemText(hEle int, iItem, iColumn int32) string {
 //
 // iItem:.
 //
-// pName:.
-func XListBox_GetItemTextEx(hEle int, iItem int32, pName string) string {
-	r, _, _ := xListBox_GetItemTextEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName))
+// name:.
+func XListBox_GetItemTextEx(hEle int, iItem int32, name string) string {
+	r, _, _ := xListBox_GetItemTextEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name))
 	return common.UintPtrToString(r)
 }
 
@@ -661,9 +661,9 @@ func XListBox_GetItemImage(hEle int, iItem, iColumn int32) int {
 //
 // iItem:.
 //
-// pName:.
-func XListBox_GetItemImageEx(hEle int, iItem int32, pName string) int {
-	r, _, _ := xListBox_GetItemImageEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName))
+// name:.
+func XListBox_GetItemImageEx(hEle int, iItem int32, name string) int {
+	r, _, _ := xListBox_GetItemImageEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name))
 	return int(r)
 }
 
@@ -687,11 +687,11 @@ func XListBox_GetItemInt(hEle int, iItem, iColumn int32, pOutValue *int32) bool 
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
 // pOutValue:.
-func XListBox_GetItemIntEx(hEle int, iItem int32, pName string, pOutValue *int32) bool {
-	r, _, _ := xListBox_GetItemIntEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
+func XListBox_GetItemIntEx(hEle int, iItem int32, name string, pOutValue *int32) bool {
+	r, _, _ := xListBox_GetItemIntEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name), uintptr(unsafe.Pointer(pOutValue)))
 	return r != 0
 }
 
@@ -715,11 +715,11 @@ func XListBox_GetItemFloat(hEle int, iItem, iColumn int32, pOutValue *float32) b
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
 // pOutValue:.
-func XListBox_GetItemFloatEx(hEle int, iItem int32, pName string, pOutValue *float32) bool {
-	r, _, _ := xListBox_GetItemFloatEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
+func XListBox_GetItemFloatEx(hEle int, iItem int32, name string, pOutValue *float32) bool {
+	r, _, _ := xListBox_GetItemFloatEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name), uintptr(unsafe.Pointer(pOutValue)))
 	return r != 0
 }
 

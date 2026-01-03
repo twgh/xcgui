@@ -114,9 +114,9 @@ func XBkObj_EnableBorder(hObj int, bEnable bool) {
 //
 // hObj: 背景对象句柄.
 //
-// pText: 文本字符串.
-func XBkObj_SetText(hObj int, pText string) {
-	xBkObj_SetText.Call(uintptr(hObj), common.StrPtr(pText))
+// text: 文本字符串.
+func XBkObj_SetText(hObj int, text string) {
+	xBkObj_SetText.Call(uintptr(hObj), common.StrPtr(text))
 }
 
 // 背景对象_置字体.

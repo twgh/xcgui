@@ -26,9 +26,9 @@ func NewAdapterListViewByHandle(handle int) *AdapterListView {
 
 // 数据适配器列表视_组添加列, 组操作, 添加数据列, 返回列索引.
 //
-// pName: 字段称.
-func (a *AdapterListView) Group_AddColumn(pName string) int32 {
-	return xc.XAdListView_Group_AddColumn(a.Handle, pName)
+// name: 字段称.
+func (a *AdapterListView) Group_AddColumn(name string) int32 {
+	return xc.XAdListView_Group_AddColumn(a.Handle, name)
 }
 
 // 数据适配器列表视_添加组文本, 组操作, 添加组, 数据默认填充到第一列, 返回组索引.
@@ -42,13 +42,13 @@ func (a *AdapterListView) Group_AddItemText(pValue string, iPos int32) int32 {
 
 // 数据适配器列表视_添加组文本扩展, 组操作, 添加组, 数据填充指定列, 返回组索引.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // pValue: 值.
 //
 // iPos: 插入位置, 可为-1.
-func (a *AdapterListView) Group_AddItemTextEx(pName string, pValue string, iPos int32) int32 {
-	return xc.XAdListView_Group_AddItemTextEx(a.Handle, pName, pValue, iPos)
+func (a *AdapterListView) Group_AddItemTextEx(name string, pValue string, iPos int32) int32 {
+	return xc.XAdListView_Group_AddItemTextEx(a.Handle, name, pValue, iPos)
 }
 
 // 数据适配器列表视_添加组图片, 组操作, 添加组, 数据默认填充第一列.
@@ -62,13 +62,13 @@ func (a *AdapterListView) Group_AddItemImage(hImage int, iPos int32) int32 {
 
 // 数据适配器列表视_添加组图片扩展, 组操作, 添加组, 数据填充指定列.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // hImage: 图片句柄.
 //
 // iPos: 插入位置, 可为-1.
-func (a *AdapterListView) Group_AddItemImageEx(pName string, hImage int, iPos int32) int32 {
-	return xc.XAdListView_Group_AddItemImageEx(a.Handle, pName, hImage, iPos)
+func (a *AdapterListView) Group_AddItemImageEx(name string, hImage int, iPos int32) int32 {
+	return xc.XAdListView_Group_AddItemImageEx(a.Handle, name, hImage, iPos)
 }
 
 // 数据适配器列表视_组设置文本, 组操作, 设置指定项数据.
@@ -86,11 +86,11 @@ func (a *AdapterListView) Group_SetText(iGroup, iColumn int32, pValue string) bo
 //
 // iGroup: 组索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // pValue: 值.
-func (a *AdapterListView) Group_SetTextEx(iGroup int32, pName string, pValue string) bool {
-	return xc.XAdListView_Group_SetTextEx(a.Handle, iGroup, pName, pValue)
+func (a *AdapterListView) Group_SetTextEx(iGroup int32, name string, pValue string) bool {
+	return xc.XAdListView_Group_SetTextEx(a.Handle, iGroup, name, pValue)
 }
 
 // 数据适配器列表视_组设置图片, 组操作, 设置指定项数据.
@@ -108,18 +108,18 @@ func (a *AdapterListView) Group_SetImage(iGroup, iColumn int32, hImage int) bool
 //
 // iGroup: 组索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // hImage: 图片句柄.
-func (a *AdapterListView) Group_SetImageEx(iGroup int32, pName string, hImage int) bool {
-	return xc.XAdListView_Group_SetImageEx(a.Handle, iGroup, pName, hImage)
+func (a *AdapterListView) Group_SetImageEx(iGroup int32, name string, hImage int) bool {
+	return xc.XAdListView_Group_SetImageEx(a.Handle, iGroup, name, hImage)
 }
 
 // 数据适配器列表视_项添加列, 项操作, 添加列.
 //
-// pName: 字段称.
-func (a *AdapterListView) Item_AddColumn(pName string) int32 {
-	return xc.XAdListView_Item_AddColumn(a.Handle, pName)
+// name: 字段称.
+func (a *AdapterListView) Item_AddColumn(name string) int32 {
+	return xc.XAdListView_Item_AddColumn(a.Handle, name)
 }
 
 // 数据适配器列表视_取组数量, 组操作, 获取组数量.
@@ -149,13 +149,13 @@ func (a *AdapterListView) Item_AddItemText(iGroup int32, pValue string, iPos int
 //
 // iGroup: 组索引.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // pValue: 值.
 //
 // iPos: 插入位置, 可为-1.
-func (a *AdapterListView) Item_AddItemTextEx(iGroup int32, pName string, pValue string, iPos int32) int32 {
-	return xc.XAdListView_Item_AddItemTextEx(a.Handle, iGroup, pName, pValue, iPos)
+func (a *AdapterListView) Item_AddItemTextEx(iGroup int32, name string, pValue string, iPos int32) int32 {
+	return xc.XAdListView_Item_AddItemTextEx(a.Handle, iGroup, name, pValue, iPos)
 }
 
 // 数据适配器列表视_添加项图片, 项操作, 添加项.
@@ -173,13 +173,13 @@ func (a *AdapterListView) Item_AddItemImage(iGroup int32, hImage int, iPos int32
 //
 // iGroup: 组索引.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // hImage: 图片句柄.
 //
 // iPos: 插入位置, 可为-1.
-func (a *AdapterListView) Item_AddItemImageEx(iGroup int32, pName string, hImage int, iPos int32) int32 {
-	return xc.XAdListView_Item_AddItemImageEx(a.Handle, iGroup, pName, hImage, iPos)
+func (a *AdapterListView) Item_AddItemImageEx(iGroup int32, name string, hImage int, iPos int32) int32 {
+	return xc.XAdListView_Item_AddItemImageEx(a.Handle, iGroup, name, hImage, iPos)
 }
 
 // 数据适配器列表视_组删除项, 删除组, 自动删除子项.
@@ -246,9 +246,9 @@ func (a *AdapterListView) DeleteColumnItem(iColumn int32) *AdapterListView {
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
-func (a *AdapterListView) Item_GetTextEx(iGroup, iItem int32, pName string) string {
-	return xc.XAdListView_Item_GetTextEx(a.Handle, iGroup, iItem, pName)
+// name: 字段称.
+func (a *AdapterListView) Item_GetTextEx(iGroup, iItem int32, name string) string {
+	return xc.XAdListView_Item_GetTextEx(a.Handle, iGroup, iItem, name)
 }
 
 // 数据适配器列表视_项获取图片扩展, 项操作, 获取项图片句柄.
@@ -257,9 +257,9 @@ func (a *AdapterListView) Item_GetTextEx(iGroup, iItem int32, pName string) stri
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
-func (a *AdapterListView) Item_GetImageEx(iGroup, iItem int32, pName string) int {
-	return xc.XAdListView_Item_GetImageEx(a.Handle, iGroup, iItem, pName)
+// name: 字段称.
+func (a *AdapterListView) Item_GetImageEx(iGroup, iItem int32, name string) int {
+	return xc.XAdListView_Item_GetImageEx(a.Handle, iGroup, iItem, name)
 }
 
 // 数据适配器列表视_项置文本, 项操作, 数据填充指定列.
@@ -281,11 +281,11 @@ func (a *AdapterListView) Item_SetText(iGroup, iItem, iColumn int32, pValue stri
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // pValue: 值.
-func (a *AdapterListView) Item_SetTextEx(iGroup, iItem int32, pName string, pValue string) bool {
-	return xc.XAdListView_Item_SetTextEx(a.Handle, iGroup, iItem, pName, pValue)
+func (a *AdapterListView) Item_SetTextEx(iGroup, iItem int32, name string, pValue string) bool {
+	return xc.XAdListView_Item_SetTextEx(a.Handle, iGroup, iItem, name, pValue)
 }
 
 // 数据适配器列表视_项置图片, 项操作, 数据填充指定列.
@@ -307,11 +307,11 @@ func (a *AdapterListView) Item_SetImage(iGroup, iItem, iColumn int32, hImage int
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // hImage: 图片句柄.
-func (a *AdapterListView) Item_SetImageEx(iGroup, iItem int32, pName string, hImage int) bool {
-	return xc.XAdListView_Item_SetImageEx(a.Handle, iGroup, iItem, pName, hImage)
+func (a *AdapterListView) Item_SetImageEx(iGroup, iItem int32, name string, hImage int) bool {
+	return xc.XAdListView_Item_SetImageEx(a.Handle, iGroup, iItem, name, hImage)
 }
 
 // 数据适配器列表视_组取文本, 返回文本内容.
@@ -327,9 +327,9 @@ func (a *AdapterListView) Group_GetText(iGroup, iColumn int32) string {
 //
 // iGroup: 组索引.
 //
-// pName: 字段名称.
-func (a *AdapterListView) Group_GetTextEx(iGroup int32, pName string) string {
-	return xc.XAdListView_Group_GetTextEx(a.Handle, iGroup, pName)
+// name: 字段名称.
+func (a *AdapterListView) Group_GetTextEx(iGroup int32, name string) string {
+	return xc.XAdListView_Group_GetTextEx(a.Handle, iGroup, name)
 }
 
 // 数据适配器列表视_组取图片, 返回图片句柄.
@@ -345,9 +345,9 @@ func (a *AdapterListView) Group_GetImage(iGroup, iColumn int32) int {
 //
 // iGroup: 组索引.
 //
-// pName: 字段名称.
-func (a *AdapterListView) Group_GetImageEx(iGroup int32, pName string) int {
-	return xc.XAdListView_Group_GetImageEx(a.Handle, iGroup, pName)
+// name: 字段名称.
+func (a *AdapterListView) Group_GetImageEx(iGroup int32, name string) int {
+	return xc.XAdListView_Group_GetImageEx(a.Handle, iGroup, name)
 }
 
 // 数据适配器列表视_项取文本. 项操作, 返回项文本内容.
@@ -367,7 +367,7 @@ func (a *AdapterListView) Item_GetText(iGroup, iItem, iColumn int32) string {
 //
 // iItem: 项索引.
 //
-// pName: 字段名称.
-func (a *AdapterListView) Item_GetImage(iGroup, iItem int32, pName string) int {
-	return xc.XAdListView_Item_GetImage(a.Handle, iGroup, iItem, pName)
+// name: 字段名称.
+func (a *AdapterListView) Item_GetImage(iGroup, iItem int32, name string) int {
+	return xc.XAdListView_Item_GetImage(a.Handle, iGroup, iItem, name)
 }

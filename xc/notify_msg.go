@@ -9,15 +9,15 @@ import (
 //
 // position: 位置, Position_Flag_.
 //
-// pTitle: 标题.
+// title: 标题.
 //
-// pText: 内容.
+// text: 内容.
 //
 // hIcon: 炫彩图片句柄.
 //
 // skin: 外观类型, NotifyMsg_Skin_.
-func XNotifyMsg_Popup(position xcc.Position_Flag_, pTitle, pText string, hIcon int, skin xcc.NotifyMsg_Skin_) int {
-	r, _, _ := xNotifyMsg_Popup.Call(uintptr(position), common.StrPtr(pTitle), common.StrPtr(pText), uintptr(hIcon), uintptr(skin))
+func XNotifyMsg_Popup(position xcc.Position_Flag_, title, text string, hIcon int, skin xcc.NotifyMsg_Skin_) int {
+	r, _, _ := xNotifyMsg_Popup.Call(uintptr(position), common.StrPtr(title), common.StrPtr(text), uintptr(hIcon), uintptr(skin))
 	return int(r)
 }
 
@@ -25,9 +25,9 @@ func XNotifyMsg_Popup(position xcc.Position_Flag_, pTitle, pText string, hIcon i
 //
 // position: 位置, Position_Flag_.
 //
-// pTitle: 标题.
+// title: 标题.
 //
-// pText: 内容.
+// text: 内容.
 //
 // hIcon: 炫彩图片句柄.
 //
@@ -40,8 +40,8 @@ func XNotifyMsg_Popup(position xcc.Position_Flag_, pTitle, pText string, hIcon i
 // nWidth: 自定义宽度, -1(使用默认值).
 //
 // nHeight: 自定义高度, -1(使用默认值).
-func XNotifyMsg_PopupEx(position xcc.Position_Flag_, pTitle, pText string, hIcon int, skin xcc.NotifyMsg_Skin_, bBtnClose, bAutoClose bool, nWidth, nHeight int32) int {
-	r, _, _ := xNotifyMsg_PopupEx.Call(uintptr(position), common.StrPtr(pTitle), common.StrPtr(pText), uintptr(hIcon), uintptr(skin), common.BoolPtr(bBtnClose), common.BoolPtr(bAutoClose), uintptr(nWidth), uintptr(nHeight))
+func XNotifyMsg_PopupEx(position xcc.Position_Flag_, title, text string, hIcon int, skin xcc.NotifyMsg_Skin_, bBtnClose, bAutoClose bool, nWidth, nHeight int32) int {
+	r, _, _ := xNotifyMsg_PopupEx.Call(uintptr(position), common.StrPtr(title), common.StrPtr(text), uintptr(hIcon), uintptr(skin), common.BoolPtr(bBtnClose), common.BoolPtr(bAutoClose), uintptr(nWidth), uintptr(nHeight))
 	return int(r)
 }
 
@@ -51,15 +51,15 @@ func XNotifyMsg_PopupEx(position xcc.Position_Flag_, pTitle, pText string, hIcon
 //
 // position: 位置, Position_Flag_.
 //
-// pTitle: 标题.
+// title: 标题.
 //
-// pText: 内容.
+// text: 内容.
 //
 // hIcon: 炫彩图片句柄.
 //
 // skin: 外观类型, NotifyMsg_Skin_.
-func XNotifyMsg_WindowPopup(hWindow int, position xcc.Position_Flag_, pTitle, pText string, hIcon int, skin xcc.NotifyMsg_Skin_) int {
-	r, _, _ := xNotifyMsg_WindowPopup.Call(uintptr(hWindow), uintptr(position), common.StrPtr(pTitle), common.StrPtr(pText), uintptr(hIcon), uintptr(skin))
+func XNotifyMsg_WindowPopup(hWindow int, position xcc.Position_Flag_, title, text string, hIcon int, skin xcc.NotifyMsg_Skin_) int {
+	r, _, _ := xNotifyMsg_WindowPopup.Call(uintptr(hWindow), uintptr(position), common.StrPtr(title), common.StrPtr(text), uintptr(hIcon), uintptr(skin))
 	return int(r)
 }
 
@@ -69,9 +69,9 @@ func XNotifyMsg_WindowPopup(hWindow int, position xcc.Position_Flag_, pTitle, pT
 //
 // position: 位置, Position_Flag_.
 //
-// pTitle: 标题.
+// title: 标题.
 //
-// pText: 内容.
+// text: 内容.
 //
 // hIcon: 炫彩图片句柄.
 //
@@ -84,8 +84,8 @@ func XNotifyMsg_WindowPopup(hWindow int, position xcc.Position_Flag_, pTitle, pT
 // nWidth: 自定义宽度, -1(使用默认值).
 //
 // nHeight: 自定义高度, -1(使用默认值).
-func XNotifyMsg_WindowPopupEx(hWindow int, position xcc.Position_Flag_, pTitle, pText string, hIcon int, skin xcc.NotifyMsg_Skin_, bBtnClose, bAutoClose bool, nWidth, nHeight int) int {
-	r, _, _ := xNotifyMsg_WindowPopupEx.Call(uintptr(hWindow), uintptr(position), common.StrPtr(pTitle), common.StrPtr(pText), uintptr(hIcon), uintptr(skin), common.BoolPtr(bBtnClose), common.BoolPtr(bAutoClose), uintptr(nWidth), uintptr(nHeight))
+func XNotifyMsg_WindowPopupEx(hWindow int, position xcc.Position_Flag_, title, text string, hIcon int, skin xcc.NotifyMsg_Skin_, bBtnClose, bAutoClose bool, nWidth, nHeight int) int {
+	r, _, _ := xNotifyMsg_WindowPopupEx.Call(uintptr(hWindow), uintptr(position), common.StrPtr(title), common.StrPtr(text), uintptr(hIcon), uintptr(skin), common.BoolPtr(bBtnClose), common.BoolPtr(bAutoClose), uintptr(nWidth), uintptr(nHeight))
 	return int(r)
 }
 

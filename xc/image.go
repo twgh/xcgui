@@ -255,9 +255,9 @@ func XImage_LoadSvgFile(pFileName string) int {
 
 // 图片_加载从SVG字符串, 返回炫彩图片句柄.
 //
-// pString: 字符串.
-func XImage_LoadSvgString(pString string) int {
-	r, _, _ := xImage_LoadSvgStringW.Call(common.StrPtr(pString))
+// str: 字符串.
+func XImage_LoadSvgString(str string) int {
+	r, _, _ := xImage_LoadSvgStringW.Call(common.StrPtr(str))
 	return int(r)
 }
 

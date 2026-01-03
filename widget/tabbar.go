@@ -52,18 +52,18 @@ func NewTabBarByUIDName(name string) *TabBar {
 
 // TAB条_添加标签, 添加一个标签, 返回标签索引.
 //
-// pName: 标签文本内容.
-func (t *TabBar) AddLabel(pName string) int32 {
-	return xc.XTabBar_AddLabel(t.Handle, pName)
+// name: 标签文本内容.
+func (t *TabBar) AddLabel(name string) int32 {
+	return xc.XTabBar_AddLabel(t.Handle, name)
 }
 
 // TAB条插入_标签, 插入一个标签, 返回标签索引.
 //
 // index: 插入位置.
 //
-// pName: 标签文本内容.
-func (t *TabBar) InsertLabel(index int32, pName string) int32 {
-	return xc.XTabBar_InsertLabel(t.Handle, index, pName)
+// name: 标签文本内容.
+func (t *TabBar) InsertLabel(index int32, name string) int32 {
+	return xc.XTabBar_InsertLabel(t.Handle, index, name)
 }
 
 // TAB条_移动标签.

@@ -16,13 +16,13 @@ type ModalWindow struct {
 //
 // nHeight: 高度.
 //
-// pTitle: 窗口标题内容.
+// title: 窗口标题内容.
 //
 // hWndParent: 父窗口句柄.
 //
 // XCStyle: 炫彩窗口样式: xcc.Window_Style_.
-func NewModalWindow(nWidth, nHeight int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) *ModalWindow {
-	return NewModalWindowByHandle(xc.XModalWnd_Create(nWidth, nHeight, pTitle, hWndParent, XCStyle))
+func NewModalWindow(nWidth, nHeight int32, title string, hWndParent uintptr, XCStyle xcc.Window_Style_) *ModalWindow {
+	return NewModalWindowByHandle(xc.XModalWnd_Create(nWidth, nHeight, title, hWndParent, XCStyle))
 }
 
 // 模态窗口_创建扩展, 创建模态窗口, 增强功能, 失败返回 nil.
@@ -41,13 +41,13 @@ func NewModalWindow(nWidth, nHeight int32, pTitle string, hWndParent uintptr, XC
 //
 // cy: 窗口高度.
 //
-// pTitle: 窗口名.
+// title: 窗口名.
 //
 // hWndParent: 父窗口.
 //
 // XCStyle: GUI库窗口样式: xcc.Window_Style_.
-func NewModalWindowEx(dwExStyle, dwStyle uint32, lpClassName string, x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) *ModalWindow {
-	return NewModalWindowByHandle(xc.XModalWnd_CreateEx(dwExStyle, dwStyle, pTitle, x, y, cx, cy, lpClassName, hWndParent, XCStyle))
+func NewModalWindowEx(dwExStyle, dwStyle uint32, lpClassName string, x, y, cx, cy int32, title string, hWndParent uintptr, XCStyle xcc.Window_Style_) *ModalWindow {
+	return NewModalWindowByHandle(xc.XModalWnd_CreateEx(dwExStyle, dwStyle, title, x, y, cx, cy, lpClassName, hWndParent, XCStyle))
 }
 
 // NewModalWindowByLayout 从布局文件创建对象, 失败返回 nil.

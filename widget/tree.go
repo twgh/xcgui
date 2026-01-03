@@ -446,15 +446,15 @@ func (t *Tree) InsertItemText(pValue string, nParentID, insertID int32) int32 {
 
 // 列表树_插入项文本扩展.
 //
-// pName:.
+// name:.
 //
 // pValue:.
 //
 // nParentID:.
 //
 // insertID:.
-func (t *Tree) InsertItemTextEx(pName string, pValue string, nParentID, insertID int32) int32 {
-	return xc.XTree_InsertItemTextEx(t.Handle, pName, pValue, nParentID, insertID)
+func (t *Tree) InsertItemTextEx(name string, pValue string, nParentID, insertID int32) int32 {
+	return xc.XTree_InsertItemTextEx(t.Handle, name, pValue, nParentID, insertID)
 }
 
 // 列表树_插入项图片.
@@ -470,15 +470,15 @@ func (t *Tree) InsertItemImage(hImage int, nParentID, insertID int32) int32 {
 
 // 列表树_插入项图片扩展.
 //
-// pName:.
+// name:.
 //
 // hImage:.
 //
 // nParentID:.
 //
 // insertID:.
-func (t *Tree) InsertItemImageEx(pName string, hImage int, nParentID, insertID int32) int32 {
-	return xc.XTree_InsertItemImageEx(t.Handle, pName, hImage, nParentID, insertID)
+func (t *Tree) InsertItemImageEx(name string, hImage int, nParentID, insertID int32) int32 {
+	return xc.XTree_InsertItemImageEx(t.Handle, name, hImage, nParentID, insertID)
 }
 
 // 列表树_取项数量.
@@ -506,11 +506,11 @@ func (t *Tree) SetItemText(nID, iColumn int32, pValue string) bool {
 //
 // nID:.
 //
-// pName:.
+// name:.
 //
 // pValue:.
-func (t *Tree) SetItemTextEx(nID int32, pName string, pValue string) bool {
-	return xc.XTree_SetItemTextEx(t.Handle, nID, pName, pValue)
+func (t *Tree) SetItemTextEx(nID int32, name string, pValue string) bool {
+	return xc.XTree_SetItemTextEx(t.Handle, nID, name, pValue)
 }
 
 // 列表树_置项图片.
@@ -528,11 +528,11 @@ func (t *Tree) SetItemImage(nID, iColumn int32, hImage int) bool {
 //
 // nID:.
 //
-// pName:.
+// name:.
 //
 // hImage:.
-func (t *Tree) SetItemImageEx(nID int32, pName string, hImage int) bool {
-	return xc.XTree_SetItemImageEx(t.Handle, nID, pName, hImage)
+func (t *Tree) SetItemImageEx(nID int32, name string, hImage int) bool {
+	return xc.XTree_SetItemImageEx(t.Handle, nID, name, hImage)
 }
 
 // 列表树_取项文本.
@@ -548,9 +548,9 @@ func (t *Tree) GetItemText(nID, iColumn int32) string {
 //
 // nID:.
 //
-// pName:.
-func (t *Tree) GetItemTextEx(nID int32, pName string) string {
-	return xc.XTree_GetItemTextEx(t.Handle, nID, pName)
+// name:.
+func (t *Tree) GetItemTextEx(nID int32, name string) string {
+	return xc.XTree_GetItemTextEx(t.Handle, nID, name)
 }
 
 // 列表树_取项图片.
@@ -566,9 +566,9 @@ func (t *Tree) GetItemImage(nID, iColumn int32) int {
 //
 // nID:.
 //
-// pName:.
-func (t *Tree) GetItemImageEx(nID int32, pName string) int {
-	return xc.XTree_GetItemImageEx(t.Handle, nID, pName)
+// name:.
+func (t *Tree) GetItemImageEx(nID int32, name string) int {
+	return xc.XTree_GetItemImageEx(t.Handle, nID, name)
 }
 
 // 列表树_删除项.

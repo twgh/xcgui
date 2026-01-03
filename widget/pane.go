@@ -12,15 +12,15 @@ type Pane struct {
 
 // 窗格_创建, 创建窗格元素, 失败返回 nil.
 //
-// pName: 窗格标题.
+// name: 窗格标题.
 //
 // nWidth: 宽度.
 //
 // nHeight: 高度.
 //
 // hFrameWnd: 框架窗口.
-func NewPane(pName string, nWidth, nHeight int32, hFrameWnd int) *Pane {
-	return NewPaneByHandle(xc.XPane_Create(pName, nWidth, nHeight, hFrameWnd))
+func NewPane(name string, nWidth, nHeight int32, hFrameWnd int) *Pane {
+	return NewPaneByHandle(xc.XPane_Create(name, nWidth, nHeight, hFrameWnd))
 }
 
 // 从句柄创建对象, 失败返回 nil.
@@ -58,9 +58,9 @@ func (p *Pane) SetView(hView int) *Pane {
 
 // 窗格_置标题, 设置标题文本.
 //
-// pTitle: 文本内容.
-func (p *Pane) SetTitle(pTitle string) *Pane {
-	xc.XPane_SetTitle(p.Handle, pTitle)
+// title: 文本内容.
+func (p *Pane) SetTitle(title string) *Pane {
+	xc.XPane_SetTitle(p.Handle, title)
 	return p
 }
 

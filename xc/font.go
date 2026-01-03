@@ -17,13 +17,13 @@ func XFont_Create(size int32) int {
 
 // XFont_CreateEx 字体_创建扩展. 创建炫彩字体. 返回炫彩字体句柄.
 //
-// pName: 字体名称.
+// name: 字体名称.
 //
 // size: 字体大小, 单位(pt, 磅).
 //
 // style: 字体样式, xcc.FontStyle_ .
-func XFont_CreateEx(pName string, size int32, style xcc.FontStyle_) int {
-	r, _, _ := xFont_CreateEx.Call(common.StrPtr(pName), uintptr(size), uintptr(style))
+func XFont_CreateEx(name string, size int32, style xcc.FontStyle_) int {
+	r, _, _ := xFont_CreateEx.Call(common.StrPtr(name), uintptr(size), uintptr(style))
 	return int(r)
 }
 

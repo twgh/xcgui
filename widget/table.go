@@ -148,9 +148,9 @@ func (t *Table) SetItemPadding(leftSize, topSize, rightSize, bottomSize int32) *
 //
 // iCol: 列索引.
 //
-// pText: 文本.
-func (t *Table) SetItemText(iRow, iCol int32, pText string) *Table {
-	xc.XTable_SetItemText(t.Handle, iRow, iCol, pText)
+// text: 文本.
+func (t *Table) SetItemText(iRow, iCol int32, text string) *Table {
+	xc.XTable_SetItemText(t.Handle, iRow, iCol, text)
 	return t
 }
 
@@ -263,7 +263,7 @@ func (t *Table) GetColCount() int32 {
 //
 // iCol: 列索引.
 //
-// pText: 文本.
+// text: 文本.
 //
 // textColor: 文本颜色, xc.RGBA 颜色.
 //
@@ -274,7 +274,7 @@ func (t *Table) GetColCount() int32 {
 // bBkColor: 是否使用背景颜色.
 //
 // hFont: 炫彩字体句柄, 可为0.
-func (t *Table) SetItemTextEx(iRow, iCol int32, pText string, textColor, bkColor uint32, bTextColor, bBkColor bool, hFont int) *Table {
-	xc.XTable_SetItemTextEx(t.Handle, iRow, iCol, pText, textColor, bkColor, bTextColor, bBkColor, hFont)
+func (t *Table) SetItemTextEx(iRow, iCol int32, text string, textColor, bkColor uint32, bTextColor, bBkColor bool, hFont int) *Table {
+	xc.XTable_SetItemTextEx(t.Handle, iRow, iCol, text, textColor, bkColor, bTextColor, bBkColor, hFont)
 	return t
 }

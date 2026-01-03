@@ -49,9 +49,9 @@ func NewMenuBarByUIDName(name string) *MenuBar {
 
 // 菜单条_添加按钮, 添加弹出菜单按钮, 返回菜单按钮索引.
 //
-// pText: 文本内容.
-func (m *MenuBar) AddButton(pText string) int32 {
-	return xc.XMenuBar_AddButton(m.Handle, pText)
+// text: 文本内容.
+func (m *MenuBar) AddButton(text string) int32 {
+	return xc.XMenuBar_AddButton(m.Handle, text)
 }
 
 // 菜单条_置按钮高度, 根据内容自动调整宽度.

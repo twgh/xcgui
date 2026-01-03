@@ -540,38 +540,38 @@ func (l *List) RefreshRow(iRow int32) *List {
 //
 // nWidth: 列宽.
 //
-// pName: 模板里绑定的name名. 在List内部存在有默认模板, name名是从name1到namen.
+// name: 模板里绑定的name名. 在List内部存在有默认模板, name名是从name1到namen.
 //
-// pText: 文本.
-func (l *List) AddColumnText(nWidth int32, pName string, pText string) int32 {
-	return xc.XList_AddColumnText(l.Handle, nWidth, pName, pText)
+// text: 文本.
+func (l *List) AddColumnText(nWidth int32, name string, text string) int32 {
+	return xc.XList_AddColumnText(l.Handle, nWidth, name, text)
 }
 
 // 列表_添加列图片.
 //
 // nWidth: 列宽.
 //
-// pName: 模板里绑定的name名. 在List内部存在有默认模板, name名是从name1到namen.
+// name: 模板里绑定的name名. 在List内部存在有默认模板, name名是从name1到namen.
 //
 // hImage: 图片句柄.
-func (l *List) AddColumnImage(nWidth int32, pName string, hImage int) int32 {
-	return xc.XList_AddColumnImage(l.Handle, nWidth, pName, hImage)
+func (l *List) AddColumnImage(nWidth int32, name string, hImage int) int32 {
+	return xc.XList_AddColumnImage(l.Handle, nWidth, name, hImage)
 }
 
 // 列表_添加行文本.
 //
-// pText:.
-func (l *List) AddRowText(pText string) int32 {
-	return xc.XList_AddRowText(l.Handle, pText)
+// text:.
+func (l *List) AddRowText(text string) int32 {
+	return xc.XList_AddRowText(l.Handle, text)
 }
 
 // 列表_添加行文本扩展.
 //
-// pName:.
+// name:.
 //
-// pText:.
-func (l *List) AddRowTextEx(pName string, pText string) int32 {
-	return xc.XList_AddRowTextEx(l.Handle, pName, pText)
+// text:.
+func (l *List) AddRowTextEx(name string, text string) int32 {
+	return xc.XList_AddRowTextEx(l.Handle, name, text)
 }
 
 // 列表_添加行图片.
@@ -583,11 +583,11 @@ func (l *List) AddRowImage(hImage int) int32 {
 
 // 列表_添加行图片扩展.
 //
-// pName:.
+// name:.
 //
 // hImage:.
-func (l *List) AddRowImageEx(pName string, hImage int) int32 {
-	return xc.XList_AddRowImageEx(l.Handle, pName, hImage)
+func (l *List) AddRowImageEx(name string, hImage int) int32 {
+	return xc.XList_AddRowImageEx(l.Handle, name, hImage)
 }
 
 // 列表_插入行文本.
@@ -603,11 +603,11 @@ func (l *List) InsertRowText(iRow int32, pValue string) int32 {
 //
 // iRow:.
 //
-// pName:.
+// name:.
 //
 // pValue:.
-func (l *List) InsertRowTextEx(iRow int32, pName string, pValue string) int32 {
-	return xc.XList_InsertRowTextEx(l.Handle, iRow, pName, pValue)
+func (l *List) InsertRowTextEx(iRow int32, name string, pValue string) int32 {
+	return xc.XList_InsertRowTextEx(l.Handle, iRow, name, pValue)
 }
 
 // 列表_插入行图片.
@@ -623,11 +623,11 @@ func (l *List) InsertRowImage(iRow int32, hImage int) int32 {
 //
 // iRow:.
 //
-// pName:.
+// name:.
 //
 // hImage:.
-func (l *List) InsertRowImageEx(iRow int32, pName string, hImage int) int32 {
-	return xc.XList_InsertRowImageEx(l.Handle, iRow, pName, hImage)
+func (l *List) InsertRowImageEx(iRow int32, name string, hImage int) int32 {
+	return xc.XList_InsertRowImageEx(l.Handle, iRow, name, hImage)
 }
 
 // 列表_置项文本.
@@ -636,20 +636,20 @@ func (l *List) InsertRowImageEx(iRow int32, pName string, hImage int) int32 {
 //
 // iColumn:.
 //
-// pText:.
-func (l *List) SetItemText(iItem, iColumn int32, pText string) bool {
-	return xc.XList_SetItemText(l.Handle, iItem, iColumn, pText)
+// text:.
+func (l *List) SetItemText(iItem, iColumn int32, text string) bool {
+	return xc.XList_SetItemText(l.Handle, iItem, iColumn, text)
 }
 
 // 列表_置项文本扩展.
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
-// pText:.
-func (l *List) SetItemTextEx(iItem int32, pName string, pText string) bool {
-	return xc.XList_SetItemTextEx(l.Handle, iItem, pName, pText)
+// text:.
+func (l *List) SetItemTextEx(iItem int32, name string, text string) bool {
+	return xc.XList_SetItemTextEx(l.Handle, iItem, name, text)
 }
 
 // 列表_置项图片.
@@ -667,11 +667,11 @@ func (l *List) SetItemImage(iItem, iColumn int32, hImage int) bool {
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
 // hImage:.
-func (l *List) SetItemImageEx(iItem int32, pName string, hImage int) bool {
-	return xc.XList_SetItemImageEx(l.Handle, iItem, pName, hImage)
+func (l *List) SetItemImageEx(iItem int32, name string, hImage int) bool {
+	return xc.XList_SetItemImageEx(l.Handle, iItem, name, hImage)
 }
 
 // 列表_置项指数值.
@@ -689,11 +689,11 @@ func (l *List) SetItemInt(iItem, iColumn int32, nValue int32) bool {
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
 // nValue:.
-func (l *List) SetItemIntEx(iItem int32, pName string, nValue int32) bool {
-	return xc.XList_SetItemIntEx(l.Handle, iItem, pName, nValue)
+func (l *List) SetItemIntEx(iItem int32, name string, nValue int32) bool {
+	return xc.XList_SetItemIntEx(l.Handle, iItem, name, nValue)
 }
 
 // 列表_置项浮点值.
@@ -711,11 +711,11 @@ func (l *List) SetItemFloat(iItem int32, iColumn int32, fFloat float32) bool {
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
 // fFloat:.
-func (l *List) SetItemFloatEx(iItem int32, pName string, fFloat float32) bool {
-	return xc.XList_SetItemFloatEx(l.Handle, iItem, pName, fFloat)
+func (l *List) SetItemFloatEx(iItem int32, name string, fFloat float32) bool {
+	return xc.XList_SetItemFloatEx(l.Handle, iItem, name, fFloat)
 }
 
 // 列表_取项文本.
@@ -731,9 +731,9 @@ func (l *List) GetItemText(iItem int32, iColumn int32) string {
 //
 // iItem:.
 //
-// pName:.
-func (l *List) GetItemTextEx(iItem int32, pName string) string {
-	return xc.XList_GetItemTextEx(l.Handle, iItem, pName)
+// name:.
+func (l *List) GetItemTextEx(iItem int32, name string) string {
+	return xc.XList_GetItemTextEx(l.Handle, iItem, name)
 }
 
 // 列表_取项图片. 返回图片句柄.
@@ -749,9 +749,9 @@ func (l *List) GetItemImage(iItem int32, iColumn int32) int {
 //
 // iItem:.
 //
-// pName:.
-func (l *List) GetItemImageEx(iItem int32, pName string) int {
-	return xc.XList_GetItemImageEx(l.Handle, iItem, pName)
+// name:.
+func (l *List) GetItemImageEx(iItem int32, name string) int {
+	return xc.XList_GetItemImageEx(l.Handle, iItem, name)
 }
 
 // 列表_取项整数值.
@@ -769,11 +769,11 @@ func (l *List) GetItemInt(iItem, iColumn int32, pOutValue *int32) bool {
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
 // pOutValue:.
-func (l *List) GetItemIntEx(iItem int32, pName string, pOutValue *int32) bool {
-	return xc.XList_GetItemIntEx(l.Handle, iItem, pName, pOutValue)
+func (l *List) GetItemIntEx(iItem int32, name string, pOutValue *int32) bool {
+	return xc.XList_GetItemIntEx(l.Handle, iItem, name, pOutValue)
 }
 
 // 列表_取项浮点值.
@@ -791,11 +791,11 @@ func (l *List) GetItemFloat(iItem, iColumn int32, pOutValue *float32) bool {
 //
 // iItem:.
 //
-// pName:.
+// name:.
 //
 // pOutValue:.
-func (l *List) GetItemFloatEx(iItem int32, pName string, pOutValue *float32) bool {
-	return xc.XList_GetItemFloatEx(l.Handle, iItem, pName, pOutValue)
+func (l *List) GetItemFloatEx(iItem int32, name string, pOutValue *float32) bool {
+	return xc.XList_GetItemFloatEx(l.Handle, iItem, name, pOutValue)
 }
 
 // 列表_删除行.
@@ -928,9 +928,9 @@ func (l *List) SetItemTemplateXMLFromZipRes(id int32, pFileName string, pPasswor
 //
 // nWidth: 列宽度.
 //
-// pText: 标题文本.
-func (l *List) AddColumnText2(nWidth int32, pText string) int32 {
-	return xc.XList_AddColumnText2(l.Handle, nWidth, pText)
+// text: 标题文本.
+func (l *List) AddColumnText2(nWidth int32, text string) int32 {
+	return xc.XList_AddColumnText2(l.Handle, nWidth, text)
 }
 
 // 列表_添加列图片2, 返回列索引. 简化版本.

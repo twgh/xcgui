@@ -12,11 +12,11 @@ import "github.com/twgh/xcgui/common"
 //
 // cy: 高度.
 //
-// pName: 文本内容.
+// name: 文本内容.
 //
 // hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
-func XTextLink_Create(x, y, cx, cy int32, pName string, hParent int) int {
-	r, _, _ := xTextLink_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pName), uintptr(hParent))
+func XTextLink_Create(x, y, cx, cy int32, name string, hParent int) int {
+	r, _, _ := xTextLink_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(name), uintptr(hParent))
 	return int(r)
 }
 

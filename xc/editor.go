@@ -320,9 +320,9 @@ func XEditor_GetExpandState(hEle int) string {
 //
 // hEle: 元素句柄.
 //
-// pString: .
-func XEditor_SetExpandState(hEle int, pString string) bool {
-	r, _, _ := xEditor_SetExpandState.Call(uintptr(hEle), XC_wtoa(pString))
+// str: .
+func XEditor_SetExpandState(hEle int, str string) bool {
+	r, _, _ := xEditor_SetExpandState.Call(uintptr(hEle), XC_wtoa(str))
 	return r != 0
 }
 

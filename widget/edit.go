@@ -179,9 +179,9 @@ func (e *Edit) FreeData(pData *xc.Edit_Data_Copy_) *Edit {
 
 // 编辑框_置默认文本, 当内容为空时, 显示默认文本.
 //
-// pString: 文本内容.
-func (e *Edit) SetDefaultText(pString string) *Edit {
-	xc.XEdit_SetDefaultText(e.Handle, pString)
+// str: 文本内容.
+func (e *Edit) SetDefaultText(str string) *Edit {
+	xc.XEdit_SetDefaultText(e.Handle, str)
 	return e
 }
 
@@ -219,9 +219,9 @@ func (e *Edit) SetTabSpace(nSpace int32) *Edit {
 
 // 编辑框_置文本.
 //
-// pString: 字符串.
-func (e *Edit) SetText(pString string) *Edit {
-	xc.XEdit_SetText(e.Handle, pString)
+// str: 字符串.
+func (e *Edit) SetText(str string) *Edit {
+	xc.XEdit_SetText(e.Handle, str)
 	return e
 }
 
@@ -308,35 +308,35 @@ func (e *Edit) GetAt(iRow, iCol int32) rune {
 //
 // iCol: 列索引.
 //
-// pString: 字符串.
-func (e *Edit) InsertText(iRow, iCol int32, pString string) *Edit {
-	xc.XEdit_InsertText(e.Handle, iRow, iCol, pString)
+// str: 字符串.
+func (e *Edit) InsertText(iRow, iCol int32, str string) *Edit {
+	xc.XEdit_InsertText(e.Handle, iRow, iCol, str)
 	return e
 }
 
 // AddTextUser 编辑框_插入文本模拟用户操作, 自动刷新UI, 支持撤销/恢复.
 //
-// pString: 字符串.
-func (e *Edit) AddTextUser(pString string) *Edit {
-	xc.XEdit_AddTextUser(e.Handle, pString)
+// str: 字符串.
+func (e *Edit) AddTextUser(str string) *Edit {
+	xc.XEdit_AddTextUser(e.Handle, str)
 	return e
 }
 
 // 编辑框_添加文本.
 //
-// pString: 字符串.
-func (e *Edit) AddText(pString string) *Edit {
-	xc.XEdit_AddText(e.Handle, pString)
+// str: 字符串.
+func (e *Edit) AddText(str string) *Edit {
+	xc.XEdit_AddText(e.Handle, str)
 	return e
 }
 
 // 编辑框_添加文本扩展.
 //
-// pString: 字符串.
+// str: 字符串.
 //
 // iStyle: 样式索引.
-func (e *Edit) AddTextEx(pString string, iStyle int32) *Edit {
-	xc.XEdit_AddTextEx(e.Handle, pString, iStyle)
+func (e *Edit) AddTextEx(str string, iStyle int32) *Edit {
+	xc.XEdit_AddTextEx(e.Handle, str, iStyle)
 	return e
 }
 
@@ -780,11 +780,11 @@ func (e *Edit) GetChatFlags(iRow int32) xcc.Chat_Flag_ {
 //
 // iCol: 列索引.
 //
-// pString: 字符串.
+// str: 字符串.
 //
 // iStyle: 样式.
-func (e *Edit) InsertTextEx(iRow, iCol int32, pString string, iStyle int32) *Edit {
-	xc.XEdit_InsertTextEx(e.Handle, iRow, iCol, pString, iStyle)
+func (e *Edit) InsertTextEx(iRow, iCol int32, str string, iStyle int32) *Edit {
+	xc.XEdit_InsertTextEx(e.Handle, iRow, iCol, str, iStyle)
 	return e
 }
 

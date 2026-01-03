@@ -19,9 +19,9 @@ func NewByFile(pFileName string) *Svg {
 
 // NewByString SVG_加载从字符串, 返回 Svg 对象, 失败返回 nil.
 //
-// pString: 字符串.
-func NewByString(pString string) *Svg {
-	return NewByHandle(xc.XSvg_LoadString(pString))
+// str: 字符串.
+func NewByString(str string) *Svg {
+	return NewByHandle(xc.XSvg_LoadString(str))
 }
 
 // NewByZip SVG_加载从ZIP, 返回 Svg 对象, 失败返回 nil.

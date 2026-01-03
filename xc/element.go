@@ -1036,20 +1036,20 @@ func XEle_KillXCTimer(hEle int, nIDEvent uint32) bool {
 //
 // hEle: 元素句柄.
 //
-// pText: 工具提示内容.
-func XEle_SetToolTip(hEle int, pText string) {
-	xEle_SetToolTip.Call(uintptr(hEle), common.StrPtr(pText))
+// text: 工具提示内容.
+func XEle_SetToolTip(hEle int, text string) {
+	xEle_SetToolTip.Call(uintptr(hEle), common.StrPtr(text))
 }
 
 // 元素_置工具提示扩展, 设置工具提示内容.
 //
 // hEle: 元素句柄.
 //
-// pText: 工具提示内容.
+// text: 工具提示内容.
 //
 // nTextAlign: 文本对齐方式, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
-func XEle_SetToolTipEx(hEle int, pText string, nTextAlign xcc.TextFormatFlag_) {
-	xEle_SetToolTipEx.Call(uintptr(hEle), common.StrPtr(pText), uintptr(nTextAlign))
+func XEle_SetToolTipEx(hEle int, text string, nTextAlign xcc.TextFormatFlag_) {
+	xEle_SetToolTipEx.Call(uintptr(hEle), common.StrPtr(text), uintptr(nTextAlign))
 }
 
 // 元素_取工具提示, 获取工具提示内容.
@@ -1143,9 +1143,9 @@ func XEle_GetSize(hEle int, pOutWidth, pOutHeight *int32) {
 //
 // hEle: 元素句柄.
 //
-// pText: 背景内容字符串.
-func XEle_SetBkInfo(hEle int, pText string) int32 {
-	r, _, _ := xEle_SetBkInfo.Call(uintptr(hEle), common.StrPtr(pText))
+// text: 背景内容字符串.
+func XEle_SetBkInfo(hEle int, text string) int32 {
+	r, _, _ := xEle_SetBkInfo.Call(uintptr(hEle), common.StrPtr(text))
 	return int32(r)
 }
 

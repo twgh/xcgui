@@ -45,9 +45,9 @@ func XUI_EnableCssEx(hXCGUI int, bEnable bool) {
 //
 // hXCGUI: 对象句柄.
 //
-// pName: 套用样式名称.
-func XUI_SetCssName(hXCGUI int, pName string) int {
-	r, _, _ := xUI_SetCssName.Call(uintptr(hXCGUI), common.StrPtr(pName))
+// name: 套用样式名称.
+func XUI_SetCssName(hXCGUI int, name string) int {
+	r, _, _ := xUI_SetCssName.Call(uintptr(hXCGUI), common.StrPtr(name))
 	return int(r)
 }
 

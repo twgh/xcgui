@@ -16,9 +16,9 @@ func XSvg_LoadFile(pFileName string) int {
 
 // SVG_加载从字符串, 返回SVG句柄.
 //
-// pString: 字符串.
-func XSvg_LoadString(pString string) int {
-	r, _, _ := xSvg_LoadStringW.Call(common.StrPtr(pString))
+// str: 字符串.
+func XSvg_LoadString(str string) int {
+	r, _, _ := xSvg_LoadStringW.Call(common.StrPtr(str))
 	return int(r)
 }
 

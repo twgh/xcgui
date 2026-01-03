@@ -42,9 +42,9 @@ func XAdTable_GetItemDataType(hAdapter int, iItem, iColumn int32) xcc.Adapter_Da
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
-func XAdTable_GetItemDataTypeEx(hAdapter int, iItem int32, pName string) xcc.Adapter_Date_Type_ {
-	r, _, _ := xAdTable_GetItemDataTypeEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(pName))
+// name: 字段称.
+func XAdTable_GetItemDataTypeEx(hAdapter int, iItem int32, name string) xcc.Adapter_Date_Type_ {
+	r, _, _ := xAdTable_GetItemDataTypeEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(name))
 	return xcc.Adapter_Date_Type_(r)
 }
 
@@ -52,9 +52,9 @@ func XAdTable_GetItemDataTypeEx(hAdapter int, iItem int32, pName string) xcc.Ada
 //
 // hAdapter: 数据适配器句柄.
 //
-// pName: 字段称.
-func XAdTable_AddColumn(hAdapter int, pName string) int32 {
-	r, _, _ := xAdTable_AddColumn.Call(uintptr(hAdapter), common.StrPtr(pName))
+// name: 字段称.
+func XAdTable_AddColumn(hAdapter int, name string) int32 {
+	r, _, _ := xAdTable_AddColumn.Call(uintptr(hAdapter), common.StrPtr(name))
 	return int32(r)
 }
 
@@ -82,11 +82,11 @@ func XAdTable_AddRowText(hAdapter int, pValue string) int32 {
 //
 // hAdapter: 数据适配器句柄.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // pValue: 值.
-func XAdTable_AddRowTextEx(hAdapter int, pName string, pValue string) int32 {
-	r, _, _ := xAdTable_AddRowTextEx.Call(uintptr(hAdapter), common.StrPtr(pName), common.StrPtr(pValue))
+func XAdTable_AddRowTextEx(hAdapter int, name string, pValue string) int32 {
+	r, _, _ := xAdTable_AddRowTextEx.Call(uintptr(hAdapter), common.StrPtr(name), common.StrPtr(pValue))
 	return int32(r)
 }
 
@@ -104,11 +104,11 @@ func XAdTable_AddRowImage(hAdapter int, hImage int) int32 {
 //
 // hAdapter: 数据适配器句柄.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // hImage: 图片句柄.
-func XAdTable_AddRowImageEx(hAdapter int, pName string, hImage int) int32 {
-	r, _, _ := xAdTable_AddRowImageEx.Call(uintptr(hAdapter), common.StrPtr(pName), uintptr(hImage))
+func XAdTable_AddRowImageEx(hAdapter int, name string, hImage int) int32 {
+	r, _, _ := xAdTable_AddRowImageEx.Call(uintptr(hAdapter), common.StrPtr(name), uintptr(hImage))
 	return int32(r)
 }
 
@@ -130,11 +130,11 @@ func XAdTable_InsertRowText(hAdapter int, iRow int32, pValue string) int32 {
 //
 // iRow: 插入位置索引.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // pValue: 值.
-func XAdTable_InsertRowTextEx(hAdapter int, iRow int32, pName string, pValue string) int32 {
-	r, _, _ := xAdTable_InsertRowTextEx.Call(uintptr(hAdapter), uintptr(iRow), common.StrPtr(pName), common.StrPtr(pValue))
+func XAdTable_InsertRowTextEx(hAdapter int, iRow int32, name string, pValue string) int32 {
+	r, _, _ := xAdTable_InsertRowTextEx.Call(uintptr(hAdapter), uintptr(iRow), common.StrPtr(name), common.StrPtr(pValue))
 	return int32(r)
 }
 
@@ -156,11 +156,11 @@ func XAdTable_InsertRowImage(hAdapter int, iRow int32, hImage int) int32 {
 //
 // iRow: 插入位置索引.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // hImage: 图片句柄.
-func XAdTable_InsertRowImageEx(hAdapter int, iRow int32, pName string, hImage int) int32 {
-	r, _, _ := xAdTable_InsertRowImageEx.Call(uintptr(hAdapter), uintptr(iRow), common.StrPtr(pName), uintptr(hImage))
+func XAdTable_InsertRowImageEx(hAdapter int, iRow int32, name string, hImage int) int32 {
+	r, _, _ := xAdTable_InsertRowImageEx.Call(uintptr(hAdapter), uintptr(iRow), common.StrPtr(name), uintptr(hImage))
 	return int32(r)
 }
 
@@ -184,11 +184,11 @@ func XAdTable_SetItemText(hAdapter int, iItem, iColumn int32, pValue string) boo
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // pValue: 值.
-func XAdTable_SetItemTextEx(hAdapter int, iItem int32, pName string, pValue string) bool {
-	r, _, _ := xAdTable_SetItemTextEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(pName), common.StrPtr(pValue))
+func XAdTable_SetItemTextEx(hAdapter int, iItem int32, name string, pValue string) bool {
+	r, _, _ := xAdTable_SetItemTextEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(name), common.StrPtr(pValue))
 	return r != 0
 }
 
@@ -212,11 +212,11 @@ func XAdTable_SetItemInt(hAdapter int, iItem, iColumn int32, nValue int32) bool 
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // nValue: 值.
-func XAdTable_SetItemIntEx(hAdapter int, iItem int32, pName string, nValue int32) bool {
-	r, _, _ := xAdTable_SetItemIntEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(pName), uintptr(nValue))
+func XAdTable_SetItemIntEx(hAdapter int, iItem int32, name string, nValue int32) bool {
+	r, _, _ := xAdTable_SetItemIntEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(name), uintptr(nValue))
 	return r != 0
 }
 
@@ -240,11 +240,11 @@ func XAdTable_SetItemFloat(hAdapter int, iItem, iColumn int32, fValue float32) b
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // fValue: 值.
-func XAdTable_SetItemFloatEx(hAdapter int, iItem int32, pName string, fValue float32) bool {
-	r, _, _ := xAdTable_SetItemFloatEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(pName), common.Float32Ptr(fValue))
+func XAdTable_SetItemFloatEx(hAdapter int, iItem int32, name string, fValue float32) bool {
+	r, _, _ := xAdTable_SetItemFloatEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(name), common.Float32Ptr(fValue))
 	return r != 0
 }
 
@@ -268,11 +268,11 @@ func XAdTable_SetItemImage(hAdapter int, iItem, iColumn int32, hImage int) bool 
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // hImage: 图片句柄.
-func XAdTable_SetItemImageEx(hAdapter int, iItem int32, pName string, hImage int) bool {
-	r, _, _ := xAdTable_SetItemImageEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(pName), uintptr(hImage))
+func XAdTable_SetItemImageEx(hAdapter int, iItem int32, name string, hImage int) bool {
+	r, _, _ := xAdTable_SetItemImageEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(name), uintptr(hImage))
 	return r != 0
 }
 
@@ -338,9 +338,9 @@ func XAdTable_GetItemText(hAdapter int, iItem, iColumn int32) string {
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
-func XAdTable_GetItemTextEx(hAdapter int, iItem int32, pName string) string {
-	r, _, _ := xAdTable_GetItemTextEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(pName))
+// name: 字段称.
+func XAdTable_GetItemTextEx(hAdapter int, iItem int32, name string) string {
+	r, _, _ := xAdTable_GetItemTextEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(name))
 	return common.UintPtrToString(r)
 }
 
@@ -362,9 +362,9 @@ func XAdTable_GetItemImage(hAdapter int, iItem, iColumn int32) int {
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
-func XAdTable_GetItemImageEx(hAdapter int, iItem int32, pName string) int {
-	r, _, _ := xAdTable_GetItemImageEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(pName))
+// name: 字段称.
+func XAdTable_GetItemImageEx(hAdapter int, iItem int32, name string) int {
+	r, _, _ := xAdTable_GetItemImageEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(name))
 	return int(r)
 }
 
@@ -388,11 +388,11 @@ func XAdTable_GetItemInt(hAdapter int, iItem, iColumn int32, pOutValue *int32) b
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // pOutValue: 接收返还值.
-func XAdTable_GetItemIntEx(hAdapter int, iItem int32, pName string, pOutValue *int32) bool {
-	r, _, _ := xAdTable_GetItemIntEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
+func XAdTable_GetItemIntEx(hAdapter int, iItem int32, name string, pOutValue *int32) bool {
+	r, _, _ := xAdTable_GetItemIntEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(name), uintptr(unsafe.Pointer(pOutValue)))
 	return r != 0
 }
 
@@ -416,11 +416,11 @@ func XAdTable_GetItemFloat(hAdapter int, iItem, iColumn int32, pOutValue *float3
 //
 // iItem: 项索引.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // pOutValue: 接收返还值.
-func XAdTable_GetItemFloatEx(hAdapter int, iItem int32, pName string, pOutValue *float32) bool {
-	r, _, _ := xAdTable_GetItemFloatEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
+func XAdTable_GetItemFloatEx(hAdapter int, iItem int32, name string, pOutValue *float32) bool {
+	r, _, _ := xAdTable_GetItemFloatEx.Call(uintptr(hAdapter), uintptr(iItem), common.StrPtr(name), uintptr(unsafe.Pointer(pOutValue)))
 	return r != 0
 }
 

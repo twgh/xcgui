@@ -84,9 +84,9 @@ func (c *ComboBox) GetAdapterObj() *adapter.AdapterTable {
 
 // 组合框_置绑定名称.
 //
-// pName: 字段名.
-func (c *ComboBox) SetBindName(pName string) *ComboBox {
-	xc.XComboBox_SetBindName(c.Handle, pName)
+// name: 字段名.
+func (c *ComboBox) SetBindName(name string) *ComboBox {
+	xc.XComboBox_SetBindName(c.Handle, name)
 	return c
 }
 
@@ -171,18 +171,18 @@ func (c *ComboBox) GetState() xcc.ComboBox_State_ {
 
 // 组合框_添加项文本, 返回项索引.
 //
-// pText:.
-func (c *ComboBox) AddItemText(pText string) int32 {
-	return xc.XComboBox_AddItemText(c.Handle, pText)
+// text:.
+func (c *ComboBox) AddItemText(text string) int32 {
+	return xc.XComboBox_AddItemText(c.Handle, text)
 }
 
 // 组合框_添加项文本扩展, 返回项索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
-// pText: 文本.
-func (c *ComboBox) AddItemTextEx(pName string, pText string) int32 {
-	return xc.XComboBox_AddItemTextEx(c.Handle, pName, pText)
+// text: 文本.
+func (c *ComboBox) AddItemTextEx(name string, text string) int32 {
+	return xc.XComboBox_AddItemTextEx(c.Handle, name, text)
 }
 
 // 组合框_添加项图片, 返回项索引.
@@ -194,31 +194,31 @@ func (c *ComboBox) AddItemImage(hImage int) int32 {
 
 // 组合框_添加项图片扩展, 返回项索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // hImage: 图片句柄.
-func (c *ComboBox) AddItemImageEx(pName string, hImage int) int32 {
-	return xc.XComboBox_AddItemImageEx(c.Handle, pName, hImage)
+func (c *ComboBox) AddItemImageEx(name string, hImage int) int32 {
+	return xc.XComboBox_AddItemImageEx(c.Handle, name, hImage)
 }
 
 // 组合框_插入项文本, 返回项索引.
 //
 // iItem: 项索引.
 //
-// pText: 文本.
-func (c *ComboBox) InsertItemText(iItem int32, pText string) int32 {
-	return xc.XComboBox_InsertItemText(c.Handle, iItem, pText)
+// text: 文本.
+func (c *ComboBox) InsertItemText(iItem int32, text string) int32 {
+	return xc.XComboBox_InsertItemText(c.Handle, iItem, text)
 }
 
 // 组合框_插入项文本扩展, 返回项索引.
 //
 // iItem: 项索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
-// pText: 文本.
-func (c *ComboBox) InsertItemTextEx(iItem int32, pName string, pText string) int32 {
-	return xc.XComboBox_InsertItemTextEx(c.Handle, iItem, pName, pText)
+// text: 文本.
+func (c *ComboBox) InsertItemTextEx(iItem int32, name string, text string) int32 {
+	return xc.XComboBox_InsertItemTextEx(c.Handle, iItem, name, text)
 }
 
 // 组合框_插入项图片, 返回项索引.
@@ -234,11 +234,11 @@ func (c *ComboBox) InsertItemImage(iItem int32, hImage int) int32 {
 //
 // iItem: 项索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // hImage: 图片句柄.
-func (c *ComboBox) InsertItemImageEx(iItem int32, pName string, hImage int) int32 {
-	return xc.XComboBox_InsertItemImageEx(c.Handle, iItem, pName, hImage)
+func (c *ComboBox) InsertItemImageEx(iItem int32, name string, hImage int) int32 {
+	return xc.XComboBox_InsertItemImageEx(c.Handle, iItem, name, hImage)
 }
 
 // 组合框_置项文本.
@@ -247,20 +247,20 @@ func (c *ComboBox) InsertItemImageEx(iItem int32, pName string, hImage int) int3
 //
 // iColumn: 列索引.
 //
-// pText: 文本.
-func (c *ComboBox) SetItemText(iItem, iColumn int32, pText string) bool {
-	return xc.XComboBox_SetItemText(c.Handle, iItem, iColumn, pText)
+// text: 文本.
+func (c *ComboBox) SetItemText(iItem, iColumn int32, text string) bool {
+	return xc.XComboBox_SetItemText(c.Handle, iItem, iColumn, text)
 }
 
 // 组合框_置项文本扩展.
 //
 // iItem: 项索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
-// pText: 文本.
-func (c *ComboBox) SetItemTextEx(iItem int32, pName string, pText string) bool {
-	return xc.XComboBox_SetItemTextEx(c.Handle, iItem, pName, pText)
+// text: 文本.
+func (c *ComboBox) SetItemTextEx(iItem int32, name string, text string) bool {
+	return xc.XComboBox_SetItemTextEx(c.Handle, iItem, name, text)
 }
 
 // 组合框_置项图片.
@@ -278,11 +278,11 @@ func (c *ComboBox) SetItemImage(iItem, iColumn int32, hImage int) bool {
 //
 // iItem: 项索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // hImage: 图片句柄.
-func (c *ComboBox) SetItemImageEx(iItem int32, pName string, hImage int) bool {
-	return xc.XComboBox_SetItemImageEx(c.Handle, iItem, pName, hImage)
+func (c *ComboBox) SetItemImageEx(iItem int32, name string, hImage int) bool {
+	return xc.XComboBox_SetItemImageEx(c.Handle, iItem, name, hImage)
 }
 
 // 组合框_置项整数值.
@@ -300,11 +300,11 @@ func (c *ComboBox) SetItemInt(iItem, iColumn int32, nValue int32) bool {
 //
 // iItem: 项索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // nValue: 整数值.
-func (c *ComboBox) SetItemIntEx(iItem int32, pName string, nValue int32) bool {
-	return xc.XComboBox_SetItemIntEx(c.Handle, iItem, pName, nValue)
+func (c *ComboBox) SetItemIntEx(iItem int32, name string, nValue int32) bool {
+	return xc.XComboBox_SetItemIntEx(c.Handle, iItem, name, nValue)
 }
 
 // 组合框_置项浮点值.
@@ -322,11 +322,11 @@ func (c *ComboBox) SetItemFloat(iItem, iColumn int32, fFloat float32) bool {
 //
 // iItem: 项索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // fFloat: 浮点数.
-func (c *ComboBox) SetItemFloatEx(iItem int32, pName string, fFloat float32) bool {
-	return xc.XComboBox_SetItemFloatEx(c.Handle, iItem, pName, fFloat)
+func (c *ComboBox) SetItemFloatEx(iItem int32, name string, fFloat float32) bool {
+	return xc.XComboBox_SetItemFloatEx(c.Handle, iItem, name, fFloat)
 }
 
 // 组合框_取项文本.
@@ -342,9 +342,9 @@ func (c *ComboBox) GetItemText(iItem int32, iColumn int32) string {
 //
 // iItem: 项索引.
 //
-// pName: 字段名.
-func (c *ComboBox) GetItemTextEx(iItem int32, pName string) string {
-	return xc.XComboBox_GetItemTextEx(c.Handle, iItem, pName)
+// name: 字段名.
+func (c *ComboBox) GetItemTextEx(iItem int32, name string) string {
+	return xc.XComboBox_GetItemTextEx(c.Handle, iItem, name)
 }
 
 // 组合框_取项图片.
@@ -360,9 +360,9 @@ func (c *ComboBox) GetItemImage(iItem, iColumn int32) int {
 //
 // iItem: 项索引.
 //
-// pName: 字段名.
-func (c *ComboBox) GetItemImageEx(iItem int32, pName string) int {
-	return xc.XComboBox_GetItemImageEx(c.Handle, iItem, pName)
+// name: 字段名.
+func (c *ComboBox) GetItemImageEx(iItem int32, name string) int {
+	return xc.XComboBox_GetItemImageEx(c.Handle, iItem, name)
 }
 
 // 组合框_取项整数值.
@@ -380,11 +380,11 @@ func (c *ComboBox) GetItemInt(iItem, iColumn int32, pOutValue *int32) bool {
 //
 // iItem: 项索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // pOutValue: 接收返回整数值.
-func (c *ComboBox) GetItemIntEx(iItem int32, pName string, pOutValue *int32) bool {
-	return xc.XComboBox_GetItemIntEx(c.Handle, iItem, pName, pOutValue)
+func (c *ComboBox) GetItemIntEx(iItem int32, name string, pOutValue *int32) bool {
+	return xc.XComboBox_GetItemIntEx(c.Handle, iItem, name, pOutValue)
 }
 
 // 组合框_取项浮点值.
@@ -402,11 +402,11 @@ func (c *ComboBox) GetItemFloat(iItem, iColumn int32, pOutValue *float32) bool {
 //
 // iItem: 项索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // pOutValue: 接收返回浮点值.
-func (c *ComboBox) GetItemFloatEx(iItem int32, pName string, pOutValue *float32) bool {
-	return xc.XComboBox_GetItemFloatEx(c.Handle, iItem, pName, pOutValue)
+func (c *ComboBox) GetItemFloatEx(iItem int32, name string, pOutValue *float32) bool {
+	return xc.XComboBox_GetItemFloatEx(c.Handle, iItem, name, pOutValue)
 }
 
 // 组合框_删除项.

@@ -941,19 +941,19 @@ func (e *Element) KillXCTimer(nIDEvent uint32) bool {
 
 // 元素_置工具提示, 设置工具提示内容.
 //
-// pText: 工具提示内容.
-func (e *Element) SetToolTip(pText string) *Element {
-	xc.XEle_SetToolTip(e.Handle, pText)
+// text: 工具提示内容.
+func (e *Element) SetToolTip(text string) *Element {
+	xc.XEle_SetToolTip(e.Handle, text)
 	return e
 }
 
 // 元素_置工具提示扩展, 设置工具提示内容.
 //
-// pText: 工具提示内容.
+// text: 工具提示内容.
 //
 // nTextAlign: 文本对齐方式, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
-func (e *Element) SetToolTipEx(pText string, nTextAlign xcc.TextFormatFlag_) *Element {
-	xc.XEle_SetToolTipEx(e.Handle, pText, nTextAlign)
+func (e *Element) SetToolTipEx(text string, nTextAlign xcc.TextFormatFlag_) *Element {
+	xc.XEle_SetToolTipEx(e.Handle, text, nTextAlign)
 	return e
 }
 
@@ -1046,9 +1046,9 @@ func (e *Element) GetSizeEx() xc.POINT {
 
 // 元素_置背景, 设置背景内容, 返回设置的背景对象数量.
 //
-// pText: 背景内容字符串.
-func (e *Element) SetBkInfo(pText string) int32 {
-	return xc.XEle_SetBkInfo(e.Handle, pText)
+// text: 背景内容字符串.
+func (e *Element) SetBkInfo(text string) int32 {
+	return xc.XEle_SetBkInfo(e.Handle, text)
 }
 
 // 元素_取窗口客户区坐标DPI. 基于DPI缩放后的坐标.

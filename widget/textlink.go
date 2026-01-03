@@ -19,11 +19,11 @@ type TextLink struct {
 //
 // cy: 高度.
 //
-// pName: 文本内容.
+// name: 文本内容.
 //
 // hParent: 父是窗口资源句柄或UI元素资源句柄. 如果是窗口资源句柄将被添加到窗口, 如果是元素资源句柄将被添加到元素.
-func NewTextLink(x, y, cx, cy int32, pName string, hParent int) *TextLink {
-	return NewTextLinkByHandle(xc.XTextLink_Create(x, y, cx, cy, pName, hParent))
+func NewTextLink(x, y, cx, cy int32, name string, hParent int) *TextLink {
+	return NewTextLinkByHandle(xc.XTextLink_Create(x, y, cx, cy, name, hParent))
 }
 
 // 从句柄创建对象, 失败返回 nil.

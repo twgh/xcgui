@@ -78,33 +78,33 @@ func XC_GetDefaultFont() int {
 //   - xcc.MessageBox_Flag_Cancel: 点击取消按钮退出.
 //   - xcc.MessageBox_Flag_Other: 其他方式退出.
 //
-// pTitle: 标题.
+// title: 标题.
 //
-// pText: 内容文本.
+// text: 内容文本.
 //
 // nFlags: 标识: xcc.MessageBox_Flag_.
 //
 // hWndParent: 父窗口句柄(真实的窗口句柄).
 //
 // XCStyle: xcc.Window_Style_.
-func XC_MessageBox(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent uintptr, XCStyle xcc.Window_Style_) xcc.MessageBox_Flag_ {
-	r, _, _ := xC_MessageBox.Call(common.StrPtr(pTitle), common.StrPtr(pText), uintptr(nFlags), hWndParent, uintptr(XCStyle))
+func XC_MessageBox(title, text string, nFlags xcc.MessageBox_Flag_, hWndParent uintptr, XCStyle xcc.Window_Style_) xcc.MessageBox_Flag_ {
+	r, _, _ := xC_MessageBox.Call(common.StrPtr(title), common.StrPtr(text), uintptr(nFlags), hWndParent, uintptr(XCStyle))
 	return xcc.MessageBox_Flag_(r)
 }
 
 // XMsg_Create 消息框_创建, 返回消息框窗口句柄.
 //
-// pTitle: 标题.
+// title: 标题.
 //
-// pText: 内容文本.
+// text: 内容文本.
 //
 // nFlags: 标识: xcc.MessageBox_Flag_.
 //
 // hWndParent: 父窗口句柄(真实的窗口句柄).
 //
 // XCStyle: xcc.Window_Style_.
-func XMsg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xMsg_Create.Call(common.StrPtr(pTitle), common.StrPtr(pText), uintptr(nFlags), hWndParent, uintptr(XCStyle))
+func XMsg_Create(title, text string, nFlags xcc.MessageBox_Flag_, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
+	r, _, _ := xMsg_Create.Call(common.StrPtr(title), common.StrPtr(text), uintptr(nFlags), hWndParent, uintptr(XCStyle))
 	return int(r)
 }
 
@@ -116,17 +116,17 @@ func XMsg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent u
 //
 // lpClassName: 窗口类名.
 //
-// pTitle: 标题.
+// title: 标题.
 //
-// pText: 内容文本.
+// text: 内容文本.
 //
 // nFlags: 标识: xcc.MessageBox_Flag_.
 //
 // hWndParent: 父窗口句柄(真实的窗口句柄).
 //
 // XCStyle: xcc.Window_Style_.
-func XMsg_CreateEx(dwExStyle xcc.WS_EX_, dwStyle xcc.WS_, lpClassName, pTitle, pText string, nFlags xcc.MessageBox_Flag_, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xMsg_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), common.StrPtr(pTitle), common.StrPtr(pText), uintptr(nFlags), hWndParent, uintptr(XCStyle))
+func XMsg_CreateEx(dwExStyle xcc.WS_EX_, dwStyle xcc.WS_, lpClassName, title, text string, nFlags xcc.MessageBox_Flag_, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
+	r, _, _ := xMsg_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), common.StrPtr(title), common.StrPtr(text), uintptr(nFlags), hWndParent, uintptr(XCStyle))
 	return int(r)
 }
 
@@ -216,11 +216,11 @@ func XC_hWindowFromHWnd(hWnd uintptr) int {
 //
 // hXCGUI: 对象句柄.
 //
-// pName: 属性名.
+// name: 属性名.
 //
 // pValue: 属性值.
-func XC_SetProperty(hXCGUI int, pName string, pValue string) bool {
-	r, _, _ := xC_SetProperty.Call(uintptr(hXCGUI), common.StrPtr(pName), common.StrPtr(pValue))
+func XC_SetProperty(hXCGUI int, name string, pValue string) bool {
+	r, _, _ := xC_SetProperty.Call(uintptr(hXCGUI), common.StrPtr(name), common.StrPtr(pValue))
 	return r != 0
 }
 
@@ -228,9 +228,9 @@ func XC_SetProperty(hXCGUI int, pName string, pValue string) bool {
 //
 // hXCGUI: 对象句柄.
 //
-// pName: 属性名.
-func XC_GetProperty(hXCGUI int, pName string) string {
-	r, _, _ := xC_GetProperty.Call(uintptr(hXCGUI), common.StrPtr(pName))
+// name: 属性名.
+func XC_GetProperty(hXCGUI int, name string) string {
+	r, _, _ := xC_GetProperty.Call(uintptr(hXCGUI), common.StrPtr(name))
 	return common.UintPtrToString(r)
 }
 
@@ -272,9 +272,9 @@ func XC_GetObjectByID(hWindow int, nID int32) int {
 //
 // hWindow: 所属窗口句柄.
 //
-// pName: ID名称.
-func XC_GetObjectByIDName(hWindow int, pName string) int {
-	r, _, _ := xC_GetObjectByIDName.Call(uintptr(hWindow), common.StrPtr(pName))
+// name: ID名称.
+func XC_GetObjectByIDName(hWindow int, name string) int {
+	r, _, _ := xC_GetObjectByIDName.Call(uintptr(hWindow), common.StrPtr(name))
 	return int(r)
 }
 
@@ -288,17 +288,17 @@ func XC_GetObjectByUID(nUID int32) int {
 
 // 炫彩_取对象从UID名称, 通过UID名称获取对象句柄.
 //
-// pName: UID名称.
-func XC_GetObjectByUIDName(pName string) int {
-	r, _, _ := xC_GetObjectByUIDName.Call(common.StrPtr(pName))
+// name: UID名称.
+func XC_GetObjectByUIDName(name string) int {
+	r, _, _ := xC_GetObjectByUIDName.Call(common.StrPtr(name))
 	return int(r)
 }
 
 // 炫彩_取对象从名称, 通过name获取对象句柄.
 //
-// pName: name名称.
-func XC_GetObjectByName(pName string) int {
-	r, _, _ := xC_GetObjectByName.Call(common.StrPtr(pName))
+// name: name名称.
+func XC_GetObjectByName(name string) int {
+	r, _, _ := xC_GetObjectByName.Call(common.StrPtr(name))
 	return int(r)
 }
 
@@ -388,33 +388,33 @@ func XC_EnableAutoExitApp(bEnabel bool) {
 
 // 炫彩_取文本绘制大小.
 //
-// pString: 字符串.
+// str: 字符串.
 //
 // length: 字符串长度.
 //
 // hFontX: 字体.
 //
 // pOutSize: 接收返回大小.
-func XC_GetTextSize(pString string, length int32, hFontX int, pOutSize *SIZE) {
-	xC_GetTextSize.Call(common.StrPtr(pString), uintptr(length), uintptr(hFontX), uintptr(unsafe.Pointer(pOutSize)))
+func XC_GetTextSize(str string, length int32, hFontX int, pOutSize *SIZE) {
+	xC_GetTextSize.Call(common.StrPtr(str), uintptr(length), uintptr(hFontX), uintptr(unsafe.Pointer(pOutSize)))
 }
 
 // 炫彩_取文本显示大小.
 //
-// pString: 字符串.
+// str: 字符串.
 //
 // length: 字符串长度.
 //
 // hFontX: 字体.
 //
 // pOutSize: 接收返回大小.
-func XC_GetTextShowSize(pString string, length int32, hFontX int, pOutSize *SIZE) {
-	xC_GetTextShowSize.Call(common.StrPtr(pString), uintptr(length), uintptr(hFontX), uintptr(unsafe.Pointer(pOutSize)))
+func XC_GetTextShowSize(str string, length int32, hFontX int, pOutSize *SIZE) {
+	xC_GetTextShowSize.Call(common.StrPtr(str), uintptr(length), uintptr(hFontX), uintptr(unsafe.Pointer(pOutSize)))
 }
 
 // 炫彩_取文本显示大小扩展.
 //
-// pString: 字符串.
+// str: 字符串.
 //
 // length: 字符串长度.
 //
@@ -423,13 +423,13 @@ func XC_GetTextShowSize(pString string, length int32, hFontX int, pOutSize *SIZE
 // nTextAlign: 文本对齐方式, TextFormatFlag_, TextAlignFlag_, TextTrimming_.
 //
 // pOutSize: 接收返回大小.
-func XC_GetTextShowSizeEx(pString string, length int32, hFontX int, nTextAlign xcc.TextFormatFlag_, pOutSize *SIZE) {
-	xC_GetTextShowSizeEx.Call(common.StrPtr(pString), uintptr(length), uintptr(hFontX), uintptr(nTextAlign), uintptr(unsafe.Pointer(pOutSize)))
+func XC_GetTextShowSizeEx(str string, length int32, hFontX int, nTextAlign xcc.TextFormatFlag_, pOutSize *SIZE) {
+	xC_GetTextShowSizeEx.Call(common.StrPtr(str), uintptr(length), uintptr(hFontX), uintptr(nTextAlign), uintptr(unsafe.Pointer(pOutSize)))
 }
 
 // XC_GetTextShowRect 炫彩_取文本显示矩形.
 //
-// pString: 字符串.
+// str: 字符串.
 //
 // length: 字符串长度.
 //
@@ -440,8 +440,8 @@ func XC_GetTextShowSizeEx(pString string, length int32, hFontX int, nTextAlign x
 // width: 最大宽度.
 //
 // pOutSize: 接收返回大小.
-func XC_GetTextShowRect(pString string, length int32, hFontX int, nTextAlign xcc.TextFormatFlag_, width int32, pOutSize *SIZE) {
-	xC_GetTextShowRect.Call(common.StrPtr(pString), uintptr(length), uintptr(hFontX), uintptr(nTextAlign), uintptr(width), uintptr(unsafe.Pointer(pOutSize)))
+func XC_GetTextShowRect(str string, length int32, hFontX int, nTextAlign xcc.TextFormatFlag_, width int32, pOutSize *SIZE) {
+	xC_GetTextShowRect.Call(common.StrPtr(str), uintptr(length), uintptr(hFontX), uintptr(nTextAlign), uintptr(width), uintptr(unsafe.Pointer(pOutSize)))
 }
 
 // 炫彩_置默认字体.
@@ -462,7 +462,7 @@ func XC_AddFileSearchPath(pPath string) {
 //
 // pFont: LOGFONTW结构体指针.
 //
-// pName: 字体名称.
+// name: 字体名称.
 //
 // size: 字体大小.
 //
@@ -473,8 +473,8 @@ func XC_AddFileSearchPath(pPath string) {
 // bUnderline: 是否有下划线.
 //
 // bStrikeOut: 是否有删除线.
-func XC_InitFont(pFont *LOGFONTW, pName string, size int32, bBold bool, bItalic bool, bUnderline bool, bStrikeOut bool) {
-	xC_InitFont.Call(uintptr(unsafe.Pointer(pFont)), common.StrPtr(pName), uintptr(size), common.BoolPtr(bBold), common.BoolPtr(bItalic), common.BoolPtr(bUnderline), common.BoolPtr(bStrikeOut))
+func XC_InitFont(pFont *LOGFONTW, name string, size int32, bBold bool, bItalic bool, bUnderline bool, bStrikeOut bool) {
+	xC_InitFont.Call(uintptr(unsafe.Pointer(pFont)), common.StrPtr(name), uintptr(size), common.BoolPtr(bBold), common.BoolPtr(bItalic), common.BoolPtr(bUnderline), common.BoolPtr(bStrikeOut))
 }
 
 // 炫彩_分配内存, 在UI库中申请内存, 返回: 内存首地址.
@@ -494,11 +494,11 @@ func XC_Free(p uintptr) {
 
 // 炫彩_弹框, 弹出提示框.
 //
-// pTitle: 提示框标题.
+// title: 提示框标题.
 //
-// pText: 提示内容.
-func XC_Alert(pTitle, pText string) {
-	xC_Alert.Call(common.StrPtr(pTitle), common.StrPtr(pText))
+// text: 提示内容.
+func XC_Alert(title, text string) {
+	xC_Alert.Call(common.StrPtr(title), common.StrPtr(text))
 }
 
 // 对指定文件执行操作. 如果函数成功，则返回大于 32 的值。如果函数失败，则返回指示失败原因的错误值.
@@ -746,9 +746,9 @@ func XC_IsInit() bool {
 
 /* // 炫彩_打印调试信息, 打印调试信息到文件xcgui_debug.txt.[无效]
 //
-// pString: 字符串.
-func XDebug_OutputDebugStringW(pString string) int {
-	r, _, _ := xDebug_OutputDebugStringW.Call(common.StrPtr(pString))
+// str: 字符串.
+func XDebug_OutputDebugStringW(str string) int {
+	r, _, _ := xDebug_OutputDebugStringW.Call(common.StrPtr(str))
 	return int(r)
 }
 

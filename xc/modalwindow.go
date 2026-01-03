@@ -11,13 +11,13 @@ import (
 //
 // nHeight: 高度.
 //
-// pTitle: 窗口标题内容.
+// title: 窗口标题内容.
 //
 // hWndParent: 父窗口句柄.
 //
 // XCStyle: 炫彩窗口样式: xcc.Window_Style_.
-func XModalWnd_Create(nWidth, nHeight int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xModalWnd_Create.Call(uintptr(nWidth), uintptr(nHeight), common.StrPtr(pTitle), hWndParent, uintptr(XCStyle))
+func XModalWnd_Create(nWidth, nHeight int32, title string, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
+	r, _, _ := xModalWnd_Create.Call(uintptr(nWidth), uintptr(nHeight), common.StrPtr(title), hWndParent, uintptr(XCStyle))
 	return int(r)
 }
 
@@ -37,13 +37,13 @@ func XModalWnd_Create(nWidth, nHeight int32, pTitle string, hWndParent uintptr, 
 //
 // cy: 窗口高度.
 //
-// pTitle: 窗口名.
+// title: 窗口名.
 //
 // hWndParent: 父窗口.
 //
 // XCStyle: GUI库窗口样式: xcc.Window_Style_.
-func XModalWnd_CreateEx(dwExStyle, dwStyle uint32, lpClassName string, x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xModalWnd_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pTitle), hWndParent, uintptr(XCStyle))
+func XModalWnd_CreateEx(dwExStyle, dwStyle uint32, lpClassName string, x, y, cx, cy int32, title string, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
+	r, _, _ := xModalWnd_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(title), hWndParent, uintptr(XCStyle))
 	return int(r)
 }
 

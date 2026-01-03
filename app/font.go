@@ -15,13 +15,13 @@ func NewFont(size int32) *font.Font {
 
 // NewFontEX 字体_创建扩展. 创建炫彩字体, 失败返回 nil.
 //
-// pName: 字体名称.
+// name: 字体名称.
 //
 // size: 字体大小, 单位(pt, 磅).
 //
 // style: 字体样式, xcc.FontStyle_ .
-func NewFontEX(pName string, size int32, style xcc.FontStyle_) *font.Font {
-	return font.NewEX(pName, size, style)
+func NewFontEX(name string, size int32, style xcc.FontStyle_) *font.Font {
+	return font.NewEX(name, size, style)
 }
 
 // NewFontByLOGFONTW 字体_创建从LOGFONT. 创建炫彩字体, 失败返回 nil.
@@ -47,43 +47,43 @@ func NewFontByFont(pFont uintptr) *font.Font {
 
 // NewFontByFile 字体_创建从文件. 创建字体从文件, 失败返回 nil.
 //
-// pFontFile: 字体文件名.
+// fontFile: 字体文件名.
 //
 // size: 字体大小, 单位(pt, 磅).
 //
 // style: 字体样式, xcc.FontStyle_ .
-func NewFontByFile(pFontFile string, size int32, style xcc.FontStyle_) *font.Font {
-	return font.NewByFile(pFontFile, size, style)
+func NewFontByFile(fontFile string, size int32, style xcc.FontStyle_) *font.Font {
+	return font.NewByFile(fontFile, size, style)
 }
 
 // NewFontByZip 字体_创建从ZIP, 失败返回 nil.
 //
-// pZipFileName: zip文件名.
+// zipFileName: zip文件名.
 //
-// pFileName: 字体文件名.
+// fileName: 字体文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
 // fontSize: 字体大小, 单位(pt, 磅).
 //
 // style: 字体样式: xcc.FontStyle_ .
-func NewFontByZip(pZipFileName, pFileName, pPassword string, fontSize int32, style xcc.FontStyle_) *font.Font {
-	return font.NewByZip(pZipFileName, pFileName, pPassword, fontSize, style)
+func NewFontByZip(zipFileName, fileName, password string, fontSize int32, style xcc.FontStyle_) *font.Font {
+	return font.NewByZip(zipFileName, fileName, password, fontSize, style)
 }
 
 // NewFontByZipMem 字体_创建从内存ZIP, 失败返回 nil.
 //
 // data: zip数据.
 //
-// pFileName: 字体文件名.
+// fileName: 字体文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
 // fontSize: 字体大小, 单位(pt, 磅).
 //
 // style: 字体样式: xcc.FontStyle_ .
-func NewFontByZipMem(data []byte, pFileName, pPassword string, fontSize int32, style xcc.FontStyle_) *font.Font {
-	return font.NewByZipMem(data, pFileName, pPassword, fontSize, style)
+func NewFontByZipMem(data []byte, fileName, password string, fontSize int32, style xcc.FontStyle_) *font.Font {
+	return font.NewByZipMem(data, fileName, password, fontSize, style)
 }
 
 // NewFontByMem 字体_创建从内存. 创建炫彩字体从内存, 失败返回 nil.
@@ -101,15 +101,15 @@ func NewFontByMem(data []byte, fontSize int32, style xcc.FontStyle_) *font.Font 
 //
 // id: xx.
 //
-// pType: xx.
+// Type: xx.
 //
 // fontSize: 字体大小, 单位(pt, 磅).
 //
 // style: 字体样式, xcc.FontStyle_ .
 //
 // hModule: xx.
-func NewFontByRes(id int32, pType string, fontSize int32, style xcc.FontStyle_, hModule uintptr) *font.Font {
-	return font.NewByRes(id, pType, fontSize, style, hModule)
+func NewFontByRes(id int32, Type string, fontSize int32, style xcc.FontStyle_, hModule uintptr) *font.Font {
+	return font.NewByRes(id, Type, fontSize, style, hModule)
 }
 
 // NewFontByHandle 从句柄创建对象, 失败返回 nil.

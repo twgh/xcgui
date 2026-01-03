@@ -12,11 +12,11 @@ func XAdMap_Create() int {
 //
 // hAdapter: 数据适配器句柄.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // pValue: 值.
-func XAdMap_AddItemText(hAdapter int, pName string, pValue string) bool {
-	r, _, _ := xAdMap_AddItemText.Call(uintptr(hAdapter), common.StrPtr(pName), common.StrPtr(pValue))
+func XAdMap_AddItemText(hAdapter int, name string, pValue string) bool {
+	r, _, _ := xAdMap_AddItemText.Call(uintptr(hAdapter), common.StrPtr(name), common.StrPtr(pValue))
 	return r != 0
 }
 
@@ -24,11 +24,11 @@ func XAdMap_AddItemText(hAdapter int, pName string, pValue string) bool {
 //
 // hAdapter: 数据适配器句柄.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // hImage: 图片句柄.
-func XAdMap_AddItemImage(hAdapter int, pName string, hImage int) bool {
-	r, _, _ := xAdMap_AddItemImage.Call(uintptr(hAdapter), common.StrPtr(pName), uintptr(hImage))
+func XAdMap_AddItemImage(hAdapter int, name string, hImage int) bool {
+	r, _, _ := xAdMap_AddItemImage.Call(uintptr(hAdapter), common.StrPtr(name), uintptr(hImage))
 	return r != 0
 }
 
@@ -36,9 +36,9 @@ func XAdMap_AddItemImage(hAdapter int, pName string, hImage int) bool {
 //
 // hAdapter: 数据适配器句柄.
 //
-// pName: 字段称.
-func XAdMap_DeleteItem(hAdapter int, pName string) bool {
-	r, _, _ := xAdMap_DeleteItem.Call(uintptr(hAdapter), common.StrPtr(pName))
+// name: 字段称.
+func XAdMap_DeleteItem(hAdapter int, name string) bool {
+	r, _, _ := xAdMap_DeleteItem.Call(uintptr(hAdapter), common.StrPtr(name))
 	return r != 0
 }
 
@@ -54,9 +54,9 @@ func XAdMap_GetCount(hAdapter int) int32 {
 //
 // hAdapter: 数据适配器句柄.
 //
-// pName: 字段称.
-func XAdMap_GetItemText(hAdapter int, pName string) string {
-	r, _, _ := xAdMap_GetItemText.Call(uintptr(hAdapter), common.StrPtr(pName))
+// name: 字段称.
+func XAdMap_GetItemText(hAdapter int, name string) string {
+	r, _, _ := xAdMap_GetItemText.Call(uintptr(hAdapter), common.StrPtr(name))
 	return common.UintPtrToString(r)
 }
 
@@ -64,9 +64,9 @@ func XAdMap_GetItemText(hAdapter int, pName string) string {
 //
 // hAdapter: 数据适配器句柄.
 //
-// pName: 字段称.
-func XAdMap_GetItemImage(hAdapter int, pName string) int {
-	r, _, _ := xAdMap_GetItemImage.Call(uintptr(hAdapter), common.StrPtr(pName))
+// name: 字段称.
+func XAdMap_GetItemImage(hAdapter int, name string) int {
+	r, _, _ := xAdMap_GetItemImage.Call(uintptr(hAdapter), common.StrPtr(name))
 	return int(r)
 }
 
@@ -74,11 +74,11 @@ func XAdMap_GetItemImage(hAdapter int, pName string) int {
 //
 // hAdapter: 数据适配器句柄.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // pValue: 值.
-func XAdMap_SetItemText(hAdapter int, pName string, pValue string) bool {
-	r, _, _ := xAdMap_SetItemText.Call(uintptr(hAdapter), common.StrPtr(pName), common.StrPtr(pValue))
+func XAdMap_SetItemText(hAdapter int, name string, pValue string) bool {
+	r, _, _ := xAdMap_SetItemText.Call(uintptr(hAdapter), common.StrPtr(name), common.StrPtr(pValue))
 	return r != 0
 }
 
@@ -86,10 +86,10 @@ func XAdMap_SetItemText(hAdapter int, pName string, pValue string) bool {
 //
 // hAdapter: 数据适配器句柄.
 //
-// pName: 字段称.
+// name: 字段称.
 //
 // hImage: 值.
-func XAdMap_SetItemImage(hAdapter int, pName string, hImage int) bool {
-	r, _, _ := xAdMap_SetItemImage.Call(uintptr(hAdapter), common.StrPtr(pName), uintptr(hImage))
+func XAdMap_SetItemImage(hAdapter int, name string, hImage int) bool {
+	r, _, _ := xAdMap_SetItemImage.Call(uintptr(hAdapter), common.StrPtr(name), uintptr(hImage))
 	return r != 0
 }

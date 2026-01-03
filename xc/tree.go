@@ -517,15 +517,15 @@ func XTree_InsertItemText(hEle int, pValue string, nParentID, insertID int32) in
 //
 // hEle:.
 //
-// pName:.
+// name:.
 //
 // pValue:.
 //
 // nParentID:.
 //
 // insertID:.
-func XTree_InsertItemTextEx(hEle int, pName string, pValue string, nParentID, insertID int32) int32 {
-	r, _, _ := xTree_InsertItemTextEx.Call(uintptr(hEle), common.StrPtr(pName), common.StrPtr(pValue), uintptr(nParentID), uintptr(insertID))
+func XTree_InsertItemTextEx(hEle int, name string, pValue string, nParentID, insertID int32) int32 {
+	r, _, _ := xTree_InsertItemTextEx.Call(uintptr(hEle), common.StrPtr(name), common.StrPtr(pValue), uintptr(nParentID), uintptr(insertID))
 	return int32(r)
 }
 
@@ -547,15 +547,15 @@ func XTree_InsertItemImage(hEle int, hImage int, nParentID, insertID int32) int3
 //
 // hEle:.
 //
-// pName:.
+// name:.
 //
 // hImage:.
 //
 // nParentID:.
 //
 // insertID:.
-func XTree_InsertItemImageEx(hEle int, pName string, hImage int, nParentID, insertID int32) int32 {
-	r, _, _ := xTree_InsertItemImageEx.Call(uintptr(hEle), common.StrPtr(pName), uintptr(hImage), uintptr(nParentID), uintptr(insertID))
+func XTree_InsertItemImageEx(hEle int, name string, hImage int, nParentID, insertID int32) int32 {
+	r, _, _ := xTree_InsertItemImageEx.Call(uintptr(hEle), common.StrPtr(name), uintptr(hImage), uintptr(nParentID), uintptr(insertID))
 	return int32(r)
 }
 
@@ -595,11 +595,11 @@ func XTree_SetItemText(hEle int, nID, iColumn int32, pValue string) bool {
 //
 // nID:.
 //
-// pName:.
+// name:.
 //
 // pValue:.
-func XTree_SetItemTextEx(hEle int, nID int32, pName string, pValue string) bool {
-	r, _, _ := xTree_SetItemTextEx.Call(uintptr(hEle), uintptr(nID), common.StrPtr(pName), common.StrPtr(pValue))
+func XTree_SetItemTextEx(hEle int, nID int32, name string, pValue string) bool {
+	r, _, _ := xTree_SetItemTextEx.Call(uintptr(hEle), uintptr(nID), common.StrPtr(name), common.StrPtr(pValue))
 	return r != 0
 }
 
@@ -623,11 +623,11 @@ func XTree_SetItemImage(hEle int, nID, iColumn int32, hImage int) bool {
 //
 // nID:.
 //
-// pName:.
+// name:.
 //
 // hImage:.
-func XTree_SetItemImageEx(hEle int, nID int32, pName string, hImage int) bool {
-	r, _, _ := xTree_SetItemImageEx.Call(uintptr(hEle), uintptr(nID), common.StrPtr(pName), uintptr(hImage))
+func XTree_SetItemImageEx(hEle int, nID int32, name string, hImage int) bool {
+	r, _, _ := xTree_SetItemImageEx.Call(uintptr(hEle), uintptr(nID), common.StrPtr(name), uintptr(hImage))
 	return r != 0
 }
 
@@ -649,9 +649,9 @@ func XTree_GetItemText(hEle int, nID, iColumn int32) string {
 //
 // nID:.
 //
-// pName:.
-func XTree_GetItemTextEx(hEle int, nID int32, pName string) string {
-	r, _, _ := xTree_GetItemTextEx.Call(uintptr(hEle), uintptr(nID), common.StrPtr(pName))
+// name:.
+func XTree_GetItemTextEx(hEle int, nID int32, name string) string {
+	r, _, _ := xTree_GetItemTextEx.Call(uintptr(hEle), uintptr(nID), common.StrPtr(name))
 	return common.UintPtrToString(r)
 }
 
@@ -673,9 +673,9 @@ func XTree_GetItemImage(hEle int, nID, iColumn int32) int {
 //
 // nID:.
 //
-// pName:.
-func XTree_GetItemImageEx(hEle int, nID int32, pName string) int {
-	r, _, _ := xTree_GetItemImageEx.Call(uintptr(hEle), uintptr(nID), common.StrPtr(pName))
+// name:.
+func XTree_GetItemImageEx(hEle int, nID int32, name string) int {
+	r, _, _ := xTree_GetItemImageEx.Call(uintptr(hEle), uintptr(nID), common.StrPtr(name))
 	return int(r)
 }
 

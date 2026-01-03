@@ -15,11 +15,11 @@ import (
 //
 // cy: 高度.
 //
-// pName: 文本内容.
+// name: 文本内容.
 //
 // hParent: 父对象句柄.
-func XShapeText_Create(x, y, cx, cy int32, pName string, hParent int) int {
-	r, _, _ := xShapeText_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pName), uintptr(hParent))
+func XShapeText_Create(x, y, cx, cy int32, name string, hParent int) int {
+	r, _, _ := xShapeText_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(name), uintptr(hParent))
 	return int(r)
 }
 
@@ -27,9 +27,9 @@ func XShapeText_Create(x, y, cx, cy int32, pName string, hParent int) int {
 //
 // hTextBlock: 形状对象文本句柄.
 //
-// pName: 文本内容.
-func XShapeText_SetText(hTextBlock int, pName string) {
-	xShapeText_SetText.Call(uintptr(hTextBlock), common.StrPtr(pName))
+// name: 文本内容.
+func XShapeText_SetText(hTextBlock int, name string) {
+	xShapeText_SetText.Call(uintptr(hTextBlock), common.StrPtr(name))
 }
 
 // 形状文本_取文本, 获取文本内容.

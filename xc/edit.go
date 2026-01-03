@@ -189,9 +189,9 @@ func XEdit_FreeData(pData *Edit_Data_Copy_) {
 //
 // hEle: 元素句柄.
 //
-// pString: 文本内容.
-func XEdit_SetDefaultText(hEle int, pString string) {
-	xEdit_SetDefaultText.Call(uintptr(hEle), common.StrPtr(pString))
+// str: 文本内容.
+func XEdit_SetDefaultText(hEle int, str string) {
+	xEdit_SetDefaultText.Call(uintptr(hEle), common.StrPtr(str))
 }
 
 // 编辑框_置默认文本颜色.
@@ -234,9 +234,9 @@ func XEdit_SetTabSpace(hEle int, nSpace int32) {
 //
 // hEle: 元素句柄.
 //
-// pString: 字符串.
-func XEdit_SetText(hEle int, pString string) {
-	xEdit_SetText.Call(uintptr(hEle), common.StrPtr(pString))
+// str: 字符串.
+func XEdit_SetText(hEle int, str string) {
+	xEdit_SetText.Call(uintptr(hEle), common.StrPtr(str))
 }
 
 // 编辑框_置文本整数.
@@ -316,38 +316,38 @@ func XEdit_GetAt(hEle int, iRow, iCol int32) rune {
 //
 // iCol: 列索引.
 //
-// pString: 字符串.
-func XEdit_InsertText(hEle int, iRow, iCol int32, pString string) {
-	xEdit_InsertText.Call(uintptr(hEle), uintptr(iRow), uintptr(iCol), common.StrPtr(pString))
+// str: 字符串.
+func XEdit_InsertText(hEle int, iRow, iCol int32, str string) {
+	xEdit_InsertText.Call(uintptr(hEle), uintptr(iRow), uintptr(iCol), common.StrPtr(str))
 }
 
 // XEdit_AddTextUser 编辑框_插入文本模拟用户操作, 自动刷新UI, 支持撤销/恢复.
 //
 // hEle: 元素句柄.
 //
-// pString: 字符串.
-func XEdit_AddTextUser(hEle int, pString string) {
-	xEdit_AddTextUser.Call(uintptr(hEle), common.StrPtr(pString))
+// str: 字符串.
+func XEdit_AddTextUser(hEle int, str string) {
+	xEdit_AddTextUser.Call(uintptr(hEle), common.StrPtr(str))
 }
 
 // 编辑框_添加文本.
 //
 // hEle: 元素句柄.
 //
-// pString: 字符串.
-func XEdit_AddText(hEle int, pString string) {
-	xEdit_AddText.Call(uintptr(hEle), common.StrPtr(pString))
+// str: 字符串.
+func XEdit_AddText(hEle int, str string) {
+	xEdit_AddText.Call(uintptr(hEle), common.StrPtr(str))
 }
 
 // 编辑框_添加文本扩展.
 //
 // hEle: 元素句柄.
 //
-// pString: 字符串.
+// str: 字符串.
 //
 // iStyle: 样式索引.
-func XEdit_AddTextEx(hEle int, pString string, iStyle int32) {
-	xEdit_AddTextEx.Call(uintptr(hEle), common.StrPtr(pString), uintptr(iStyle))
+func XEdit_AddTextEx(hEle int, str string, iStyle int32) {
+	xEdit_AddTextEx.Call(uintptr(hEle), common.StrPtr(str), uintptr(iStyle))
 }
 
 // 编辑框_添加对象, 例如: 字体, 图片, UI对象, 返回样式索引.
@@ -898,11 +898,11 @@ func XEdit_GetChatFlags(hEle int, iRow int32) xcc.Chat_Flag_ {
 //
 // iCol: 列索引.
 //
-// pString: 字符串.
+// str: 字符串.
 //
 // iStyle: 样式.
-func XEdit_InsertTextEx(hEle int, iRow, iCol int32, pString string, iStyle int32) {
-	xEdit_InsertTextEx.Call(uintptr(hEle), uintptr(iRow), uintptr(iCol), common.StrPtr(pString), uintptr(iStyle))
+func XEdit_InsertTextEx(hEle int, iRow, iCol int32, str string, iStyle int32) {
+	xEdit_InsertTextEx.Call(uintptr(hEle), uintptr(iRow), uintptr(iCol), common.StrPtr(str), uintptr(iStyle))
 }
 
 // 编辑框_插入对象.

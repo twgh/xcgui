@@ -975,7 +975,7 @@ const (
 //
 // hInst: 包含要加载的图像的 DLL 或可执行文件 (.exe) 模块的句柄。 有关详细信息，请参阅 GetModuleHandle。若要 (图标、光标或位图文件) 加载预定义图像或独立资源，请将此参数设置为0.
 //
-// name: 要加载的图像。如果 hInst 参数为非0且 fuLoad 参数省略 LR_LOADFROMFILE， 则 name 指定 hInst 模块中的图像资源。如果要按名称从模块加载图像资源， 则 name 参数是指向包含映像资源名称的字符串. 如果要传字符串请用: common.StrPtr().
+// pName: 要加载的图像。如果 hInst 参数为非0且 fuLoad 参数省略 LR_LOADFROMFILE， 则 pName 指定 hInst 模块中的图像资源。如果要按名称从模块加载图像资源， 则 pName 参数是指向包含映像资源名称的字符串. 如果要传字符串请用: common.StrPtr().
 //
 // Type: 要加载的图像的类型。 wapi.IMAGE_ .
 //
@@ -986,8 +986,8 @@ const (
 // fuLoad: 此参数可使用以下一个或多个值: wapi.LR_ .
 //
 // 返回值: 返回 HICON 句柄.
-func LoadImageW(hInst uintptr, name uintptr, Type IMAGE_, cx, cy int32, fuLoad LR_) uintptr {
-	r, _, _ := loadImageW.Call(hInst, name, uintptr(Type), uintptr(cx), uintptr(cy), uintptr(fuLoad))
+func LoadImageW(hInst uintptr, pName uintptr, Type IMAGE_, cx, cy int32, fuLoad LR_) uintptr {
+	r, _, _ := loadImageW.Call(hInst, pName, uintptr(Type), uintptr(cx), uintptr(cy), uintptr(fuLoad))
 	return r
 }
 

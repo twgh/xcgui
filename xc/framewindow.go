@@ -18,13 +18,13 @@ import (
 //
 // cy: 窗口高度.
 //
-// pTitle: 窗口标题.
+// title: 窗口标题.
 //
 // hWndParent: 父窗口真实句柄.
 //
 // XCStyle: GUI库窗口样式: Window_Style_.
-func XFrameWnd_Create(x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xFrameWnd_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pTitle), hWndParent, uintptr(XCStyle))
+func XFrameWnd_Create(x, y, cx, cy int32, title string, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
+	r, _, _ := xFrameWnd_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(title), hWndParent, uintptr(XCStyle))
 	return int(r)
 }
 
@@ -44,13 +44,13 @@ func XFrameWnd_Create(x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCS
 //
 // cy: 窗口高度.
 //
-// pTitle: 窗口名.
+// title: 窗口名.
 //
 // hWndParent: 父窗口.
 //
 // XCStyle: GUI库窗口样式: Window_Style_.
-func XFrameWnd_CreateEx(dwExStyle, dwStyle uint32, lpClassName string, x, y, cx, cy int32, pTitle string, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xFrameWnd_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pTitle), hWndParent, uintptr(XCStyle))
+func XFrameWnd_CreateEx(dwExStyle, dwStyle uint32, lpClassName string, x, y, cx, cy int32, title string, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
+	r, _, _ := xFrameWnd_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(title), hWndParent, uintptr(XCStyle))
 	return int(r)
 }
 

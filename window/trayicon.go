@@ -102,15 +102,15 @@ func (t *TrayIcon) SetTips(pTips string) *TrayIcon {
 
 // SetPopupBalloon 托盘图标_置弹出气泡. 设置弹出气泡信息. 之后需调用 Modify 函数以应用修改.
 //
-// pTitle: 弹出气泡标题.
+// title: 弹出气泡标题.
 //
-// pText: 弹出气泡内容.
+// text: 弹出气泡内容.
 //
 // hBalloonIcon: 气泡图标. 可填0.
 //
 // flags: 标识, 可设置默认图标类型, 禁用声音等: xcc.TrayIcon_Flag_
-func (t *TrayIcon) SetPopupBalloon(pTitle, pText string, hBalloonIcon uintptr, flags xcc.TrayIcon_Flag_) *TrayIcon {
-	xc.XTrayIcon_SetPopupBalloon(pTitle, pText, hBalloonIcon, flags)
+func (t *TrayIcon) SetPopupBalloon(title, text string, hBalloonIcon uintptr, flags xcc.TrayIcon_Flag_) *TrayIcon {
+	xc.XTrayIcon_SetPopupBalloon(title, text, hBalloonIcon, flags)
 	t.Result = true
 	return t
 }

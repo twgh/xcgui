@@ -22,17 +22,17 @@ func XRes_SetLoadFileCallback(pFun FunLoadFile) {
 
 // 资源_取ID值, 获取资源ID整型值.
 //
-// pName: 资源ID名称.
-func XRes_GetIDValue(pName string) int32 {
-	r, _, _ := xRes_GetIDValue.Call(common.StrPtr(pName))
+// name: 资源ID名称.
+func XRes_GetIDValue(name string) int32 {
+	r, _, _ := xRes_GetIDValue.Call(common.StrPtr(name))
 	return int32(r)
 }
 
 // 资源_取图片, 查找资源图片.
 //
-// pName: 资源名称.
-func XRes_GetImage(pName string) int {
-	r, _, _ := xRes_GetImage.Call(common.StrPtr(pName))
+// name: 资源名称.
+func XRes_GetImage(name string) int {
+	r, _, _ := xRes_GetImage.Call(common.StrPtr(name))
 	return int(r)
 }
 
@@ -40,33 +40,33 @@ func XRes_GetImage(pName string) int {
 //
 // pFileName: 资源文件名.
 //
-// pName: 资源名称.
-func XRes_GetImageEx(pFileName string, pName string) int {
-	r, _, _ := xRes_GetImageEx.Call(common.StrPtr(pFileName), common.StrPtr(pName))
+// name: 资源名称.
+func XRes_GetImageEx(pFileName string, name string) int {
+	r, _, _ := xRes_GetImageEx.Call(common.StrPtr(pFileName), common.StrPtr(name))
 	return int(r)
 }
 
 // 资源_取颜色, 从资源中查找颜色.
 //
-// pName: 资源名称.
-func XRes_GetColor(pName string) uint32 {
-	r, _, _ := xRes_GetColor.Call(common.StrPtr(pName))
+// name: 资源名称.
+func XRes_GetColor(name string) uint32 {
+	r, _, _ := xRes_GetColor.Call(common.StrPtr(name))
 	return uint32(r)
 }
 
 // 资源_取字体, 从资源中查找字体.
 //
-// pName: 资源名称.
-func XRes_GetFont(pName string) int {
-	r, _, _ := xRes_GetFont.Call(common.StrPtr(pName))
+// name: 资源名称.
+func XRes_GetFont(name string) int {
+	r, _, _ := xRes_GetFont.Call(common.StrPtr(name))
 	return int(r)
 }
 
 // 资源_取背景管理器, 从资源中查找背景.
 //
-// pName: 资源名称.
-func XRes_GetBkM(pName string) int {
-	r, _, _ := xRes_GetBkM.Call(common.StrPtr(pName))
+// name: 资源名称.
+func XRes_GetBkM(name string) int {
+	r, _, _ := xRes_GetBkM.Call(common.StrPtr(name))
 	return int(r)
 }
 

@@ -275,9 +275,9 @@ func (e *Editor) GetExpandState() string {
 
 // 代码编辑框_设置折叠状态.
 //
-// pString: .
-func (e *Editor) SetExpandState(pString string) bool {
-	return xc.XEditor_SetExpandState(e.Handle, pString)
+// str: .
+func (e *Editor) SetExpandState(str string) bool {
+	return xc.XEditor_SetExpandState(e.Handle, str)
 }
 
 // 代码编辑框_获取缩进.

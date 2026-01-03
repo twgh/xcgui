@@ -133,9 +133,9 @@ func XTable_SetItemPadding(hShape int, leftSize, topSize, rightSize, bottomSize 
 //
 // iCol: 列索引.
 //
-// pText: 文本.
-func XTable_SetItemText(hShape int, iRow int32, iCol int32, pText string) {
-	xTable_SetItemText.Call(uintptr(hShape), uintptr(iRow), uintptr(iCol), common.StrPtr(pText))
+// text: 文本.
+func XTable_SetItemText(hShape int, iRow int32, iCol int32, text string) {
+	xTable_SetItemText.Call(uintptr(hShape), uintptr(iRow), uintptr(iCol), common.StrPtr(text))
 }
 
 // 表格_置项字体.
@@ -264,7 +264,7 @@ func XTable_GetColCount(hShape int) int32 {
 //
 // iCol: 列索引.
 //
-// pText: 文本.
+// text: 文本.
 //
 // textColor: 文本颜色, xc.RGBA 颜色.
 //
@@ -275,6 +275,6 @@ func XTable_GetColCount(hShape int) int32 {
 // bBkColor: 是否使用背景颜色.
 //
 // hFont: 炫彩字体句柄, 可为0.
-func XTable_SetItemTextEx(hShape int, iRow, iCol int32, pText string, textColor, bkColor uint32, bTextColor, bBkColor bool, hFont int) {
-	xTable_SetItemTextEx.Call(uintptr(hShape), uintptr(iRow), uintptr(iCol), common.StrPtr(pText), uintptr(textColor), uintptr(bkColor), common.BoolPtr(bTextColor), common.BoolPtr(bBkColor), uintptr(hFont))
+func XTable_SetItemTextEx(hShape int, iRow, iCol int32, text string, textColor, bkColor uint32, bTextColor, bBkColor bool, hFont int) {
+	xTable_SetItemTextEx.Call(uintptr(hShape), uintptr(iRow), uintptr(iCol), common.StrPtr(text), uintptr(textColor), uintptr(bkColor), common.BoolPtr(bTextColor), common.BoolPtr(bBkColor), uintptr(hFont))
 }

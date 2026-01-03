@@ -236,11 +236,11 @@ func XTemp_CreateNode(nType xcc.XC_OBJECT_TYPE) int {
 //
 // pNode: 节点指针.
 //
-// pName: 属性名.
+// name: 属性名.
 //
 // pAttr: 属性值.
-func XTemp_SetNodeAttribute(pNode int, pName string, pAttr string) bool {
-	r, _, _ := xTemp_SetNodeAttribute.Call(uintptr(pNode), common.StrPtr(pName), common.StrPtr(pAttr))
+func XTemp_SetNodeAttribute(pNode int, name string, pAttr string) bool {
+	r, _, _ := xTemp_SetNodeAttribute.Call(uintptr(pNode), common.StrPtr(name), common.StrPtr(pAttr))
 	return r != 0
 }
 
@@ -250,11 +250,11 @@ func XTemp_SetNodeAttribute(pNode int, pName string, pAttr string) bool {
 //
 // itemID: 模板项ID.
 //
-// pName: 属性名.
+// name: 属性名.
 //
 // pAttr: 属性值.
-func XTemp_SetNodeAttributeEx(pNode int, itemID int32, pName string, pAttr string) bool {
-	r, _, _ := xTemp_SetNodeAttributeEx.Call(uintptr(pNode), uintptr(itemID), common.StrPtr(pName), common.StrPtr(pAttr))
+func XTemp_SetNodeAttributeEx(pNode int, itemID int32, name string, pAttr string) bool {
+	r, _, _ := xTemp_SetNodeAttributeEx.Call(uintptr(pNode), uintptr(itemID), common.StrPtr(name), common.StrPtr(pAttr))
 	return r != 0
 }
 

@@ -62,9 +62,9 @@ func XComboBox_GetAdapter(hEle int) int {
 //
 // hEle: 元素句柄.
 //
-// pName: 字段名.
-func XComboBox_SetBindName(hEle int, pName string) {
-	xComboBox_SetBindName.Call(uintptr(hEle), common.StrPtr(pName))
+// name: 字段名.
+func XComboBox_SetBindName(hEle int, name string) {
+	xComboBox_SetBindName.Call(uintptr(hEle), common.StrPtr(name))
 }
 
 // 组合框_取下拉按钮坐标.
@@ -167,9 +167,9 @@ func XComboBox_GetState(hEle int) xcc.ComboBox_State_ {
 //
 // hEle: 元素句柄.
 //
-// pText:.
-func XComboBox_AddItemText(hEle int, pText string) int32 {
-	r, _, _ := xComboBox_AddItemText.Call(uintptr(hEle), common.StrPtr(pText))
+// text:.
+func XComboBox_AddItemText(hEle int, text string) int32 {
+	r, _, _ := xComboBox_AddItemText.Call(uintptr(hEle), common.StrPtr(text))
 	return int32(r)
 }
 
@@ -177,11 +177,11 @@ func XComboBox_AddItemText(hEle int, pText string) int32 {
 //
 // hEle: 元素句柄.
 //
-// pName: 字段名.
+// name: 字段名.
 //
-// pText: 文本.
-func XComboBox_AddItemTextEx(hEle int, pName string, pText string) int32 {
-	r, _, _ := xComboBox_AddItemTextEx.Call(uintptr(hEle), common.StrPtr(pName), common.StrPtr(pText))
+// text: 文本.
+func XComboBox_AddItemTextEx(hEle int, name string, text string) int32 {
+	r, _, _ := xComboBox_AddItemTextEx.Call(uintptr(hEle), common.StrPtr(name), common.StrPtr(text))
 	return int32(r)
 }
 
@@ -199,11 +199,11 @@ func XComboBox_AddItemImage(hEle int, hImage int) int32 {
 //
 // hEle: 元素句柄.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // hImage: 图片句柄.
-func XComboBox_AddItemImageEx(hEle int, pName string, hImage int) int32 {
-	r, _, _ := xComboBox_AddItemImageEx.Call(uintptr(hEle), common.StrPtr(pName), uintptr(hImage))
+func XComboBox_AddItemImageEx(hEle int, name string, hImage int) int32 {
+	r, _, _ := xComboBox_AddItemImageEx.Call(uintptr(hEle), common.StrPtr(name), uintptr(hImage))
 	return int32(r)
 }
 
@@ -213,9 +213,9 @@ func XComboBox_AddItemImageEx(hEle int, pName string, hImage int) int32 {
 //
 // iItem: 项索引.
 //
-// pText: 文本.
-func XComboBox_InsertItemText(hEle int, iItem int32, pText string) int32 {
-	r, _, _ := xComboBox_InsertItemText.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pText))
+// text: 文本.
+func XComboBox_InsertItemText(hEle int, iItem int32, text string) int32 {
+	r, _, _ := xComboBox_InsertItemText.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(text))
 	return int32(r)
 }
 
@@ -225,11 +225,11 @@ func XComboBox_InsertItemText(hEle int, iItem int32, pText string) int32 {
 //
 // iItem: 项索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
-// pText: 文本.
-func XComboBox_InsertItemTextEx(hEle int, iItem int32, pName string, pText string) int32 {
-	r, _, _ := xComboBox_InsertItemTextEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), common.StrPtr(pText))
+// text: 文本.
+func XComboBox_InsertItemTextEx(hEle int, iItem int32, name string, text string) int32 {
+	r, _, _ := xComboBox_InsertItemTextEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name), common.StrPtr(text))
 	return int32(r)
 }
 
@@ -251,11 +251,11 @@ func XComboBox_InsertItemImage(hEle int, iItem int32, hImage int) int32 {
 //
 // iItem: 项索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // hImage: 图片句柄.
-func XComboBox_InsertItemImageEx(hEle int, iItem int32, pName string, hImage int) int32 {
-	r, _, _ := xComboBox_InsertItemImageEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(hImage))
+func XComboBox_InsertItemImageEx(hEle int, iItem int32, name string, hImage int) int32 {
+	r, _, _ := xComboBox_InsertItemImageEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name), uintptr(hImage))
 	return int32(r)
 }
 
@@ -267,9 +267,9 @@ func XComboBox_InsertItemImageEx(hEle int, iItem int32, pName string, hImage int
 //
 // iColumn: 列索引.
 //
-// pText: 文本.
-func XComboBox_SetItemText(hEle int, iItem, iColumn int32, pText string) bool {
-	r, _, _ := xComboBox_SetItemText.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), common.StrPtr(pText))
+// text: 文本.
+func XComboBox_SetItemText(hEle int, iItem, iColumn int32, text string) bool {
+	r, _, _ := xComboBox_SetItemText.Call(uintptr(hEle), uintptr(iItem), uintptr(iColumn), common.StrPtr(text))
 	return r != 0
 }
 
@@ -279,11 +279,11 @@ func XComboBox_SetItemText(hEle int, iItem, iColumn int32, pText string) bool {
 //
 // iItem: 项索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
-// pText: 文本.
-func XComboBox_SetItemTextEx(hEle int, iItem int32, pName string, pText string) bool {
-	r, _, _ := xComboBox_SetItemTextEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), common.StrPtr(pText))
+// text: 文本.
+func XComboBox_SetItemTextEx(hEle int, iItem int32, name string, text string) bool {
+	r, _, _ := xComboBox_SetItemTextEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name), common.StrPtr(text))
 	return r != 0
 }
 
@@ -307,11 +307,11 @@ func XComboBox_SetItemImage(hEle int, iItem, iColumn int32, hImage int) bool {
 //
 // iItem: 项索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // hImage: 图片句柄.
-func XComboBox_SetItemImageEx(hEle int, iItem int32, pName string, hImage int) bool {
-	r, _, _ := xComboBox_SetItemImageEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(hImage))
+func XComboBox_SetItemImageEx(hEle int, iItem int32, name string, hImage int) bool {
+	r, _, _ := xComboBox_SetItemImageEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name), uintptr(hImage))
 	return r != 0
 }
 
@@ -335,11 +335,11 @@ func XComboBox_SetItemInt(hEle int, iItem, iColumn, nValue int32) bool {
 //
 // iItem: 项索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // nValue: 整数值.
-func XComboBox_SetItemIntEx(hEle int, iItem int32, pName string, nValue int32) bool {
-	r, _, _ := xComboBox_SetItemIntEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(nValue))
+func XComboBox_SetItemIntEx(hEle int, iItem int32, name string, nValue int32) bool {
+	r, _, _ := xComboBox_SetItemIntEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name), uintptr(nValue))
 	return r != 0
 }
 
@@ -363,11 +363,11 @@ func XComboBox_SetItemFloat(hEle int, iItem, iColumn int32, fFloat float32) bool
 //
 // iItem: 项索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // fFloat: 浮点数.
-func XComboBox_SetItemFloatEx(hEle int, iItem int32, pName string, fFloat float32) bool {
-	r, _, _ := xComboBox_SetItemFloatEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), common.Float32Ptr(fFloat))
+func XComboBox_SetItemFloatEx(hEle int, iItem int32, name string, fFloat float32) bool {
+	r, _, _ := xComboBox_SetItemFloatEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name), common.Float32Ptr(fFloat))
 	return r != 0
 }
 
@@ -389,9 +389,9 @@ func XComboBox_GetItemText(hEle int, iItem, iColumn int32) string {
 //
 // iItem: 项索引.
 //
-// pName: 字段名.
-func XComboBox_GetItemTextEx(hEle int, iItem int32, pName string) string {
-	r, _, _ := xComboBox_GetItemTextEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName))
+// name: 字段名.
+func XComboBox_GetItemTextEx(hEle int, iItem int32, name string) string {
+	r, _, _ := xComboBox_GetItemTextEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name))
 	return common.UintPtrToString(r)
 }
 
@@ -413,9 +413,9 @@ func XComboBox_GetItemImage(hEle int, iItem, iColumn int32) int {
 //
 // iItem: 项索引.
 //
-// pName: 字段名.
-func XComboBox_GetItemImageEx(hEle int, iItem int32, pName string) int {
-	r, _, _ := xComboBox_GetItemImageEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName))
+// name: 字段名.
+func XComboBox_GetItemImageEx(hEle int, iItem int32, name string) int {
+	r, _, _ := xComboBox_GetItemImageEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name))
 	return int(r)
 }
 
@@ -439,11 +439,11 @@ func XComboBox_GetItemInt(hEle int, iItem, iColumn int32, pOutValue *int32) bool
 //
 // iItem: 项索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // pOutValue: 接收返回整数值.
-func XComboBox_GetItemIntEx(hEle int, iItem int32, pName string, pOutValue *int32) bool {
-	r, _, _ := xComboBox_GetItemIntEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
+func XComboBox_GetItemIntEx(hEle int, iItem int32, name string, pOutValue *int32) bool {
+	r, _, _ := xComboBox_GetItemIntEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name), uintptr(unsafe.Pointer(pOutValue)))
 	return r != 0
 }
 
@@ -467,11 +467,11 @@ func XComboBox_GetItemFloat(hEle int, iItem, iColumn int32, pOutValue *float32) 
 //
 // iItem: 项索引.
 //
-// pName: 字段名.
+// name: 字段名.
 //
 // pOutValue: 接收返回浮点值.
-func XComboBox_GetItemFloatEx(hEle int, iItem int32, pName string, pOutValue *float32) bool {
-	r, _, _ := xComboBox_GetItemFloatEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(pName), uintptr(unsafe.Pointer(pOutValue)))
+func XComboBox_GetItemFloatEx(hEle int, iItem int32, name string, pOutValue *float32) bool {
+	r, _, _ := xComboBox_GetItemFloatEx.Call(uintptr(hEle), uintptr(iItem), common.StrPtr(name), uintptr(unsafe.Pointer(pOutValue)))
 	return r != 0
 }
 

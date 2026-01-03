@@ -16,11 +16,11 @@ import (
 //
 // cy: 高度.
 //
-// pName: 名称.
+// name: 名称.
 //
 // hParent: 父对象句柄.
-func XShapeGroupBox_Create(x, y, cx, cy int32, pName string, hParent int) int {
-	r, _, _ := xShapeGroupBox_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pName), uintptr(hParent))
+func XShapeGroupBox_Create(x, y, cx, cy int32, name string, hParent int) int {
+	r, _, _ := xShapeGroupBox_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(name), uintptr(hParent))
 	return int(r)
 }
 
@@ -77,9 +77,9 @@ func XShapeGroupBox_SetRoundAngle(hShape int, nWidth int32, nHeight int32) {
 //
 // hShape: 形状对象句柄.
 //
-// pText: 文本内容.
-func XShapeGroupBox_SetText(hShape int, pText string) {
-	xShapeGroupBox_SetText.Call(uintptr(hShape), common.StrPtr(pText))
+// text: 文本内容.
+func XShapeGroupBox_SetText(hShape int, text string) {
+	xShapeGroupBox_SetText.Call(uintptr(hShape), common.StrPtr(text))
 }
 
 // 形状组框_取文本偏移, 获取文本偏移量.

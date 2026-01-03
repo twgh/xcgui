@@ -20,13 +20,13 @@ func New(size int32) *Font {
 
 // NewEX 字体_创建扩展. 创建炫彩字体, 失败返回 nil.
 //
-// pName: 字体名称.
+// name: 字体名称.
 //
 // size: 字体大小, 单位(pt, 磅).
 //
 // style: 字体样式, xcc.FontStyle_ .
-func NewEX(pName string, size int32, style xcc.FontStyle_) *Font {
-	return NewByHandle(xc.XFont_CreateEx(pName, size, style))
+func NewEX(name string, size int32, style xcc.FontStyle_) *Font {
+	return NewByHandle(xc.XFont_CreateEx(name, size, style))
 }
 
 // NewByLOGFONTW 字体_创建从LOGFONT. 创建炫彩字体, 失败返回 nil.

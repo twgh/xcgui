@@ -220,9 +220,9 @@ func XC_LoadResourceFromStringW(pStringXML string, pFileName string) bool {
 //
 // pFileName: 样式文件名.
 //
-// pString: 字符串.
-func XC_LoadStyleFromStringW(pFileName string, pString string) bool {
-	r, _, _ := xC_LoadStyleFromStringW.Call(common.StrPtr(pFileName), common.StrPtr(pString))
+// str: 字符串.
+func XC_LoadStyleFromStringW(pFileName string, str string) bool {
+	r, _, _ := xC_LoadStyleFromStringW.Call(common.StrPtr(pFileName), common.StrPtr(str))
 	return r != 0
 }
 
@@ -291,8 +291,8 @@ func XC_LoadResourceFromString(pStringXML string, pFileName string) bool {
 //
 // pFileName: 样式文件名, 用于打印错误文件和定位关联资源文件位置.
 //
-// pString: 字符串.
-func XC_LoadStyleFromString(pFileName string, pString string) bool {
-	r, _, _ := xC_LoadStyleFromString.Call(strPtr(pFileName), strPtr(pString))
+// str: 字符串.
+func XC_LoadStyleFromString(pFileName string, str string) bool {
+	r, _, _ := xC_LoadStyleFromString.Call(strPtr(pFileName), strPtr(str))
 	return r!=0
 } */

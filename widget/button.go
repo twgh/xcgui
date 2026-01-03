@@ -20,11 +20,11 @@ type Button struct {
 //
 // cy: 高度.
 //
-// pName: 标题.
+// name: 标题.
 //
 // hParent: 父为窗口句柄或元素句柄.
-func NewButton(x, y, cx, cy int32, pName string, hParent int) *Button {
-	return NewButtonByHandle(xc.XBtn_Create(x, y, cx, cy, pName, hParent))
+func NewButton(x, y, cx, cy int32, name string, hParent int) *Button {
+	return NewButtonByHandle(xc.XBtn_Create(x, y, cx, cy, name, hParent))
 }
 
 // 从句柄创建对象, 失败返回 nil.
@@ -167,9 +167,9 @@ func (b *Button) SetIconSpace(size int32) *Button {
 
 // 按钮_置文本.
 //
-// pName: 文本内容.
-func (b *Button) SetText(pName string) *Button {
-	xc.XBtn_SetText(b.Handle, pName)
+// name: 文本内容.
+func (b *Button) SetText(name string) *Button {
+	xc.XBtn_SetText(b.Handle, name)
 	return b
 }
 

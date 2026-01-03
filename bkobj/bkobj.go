@@ -117,9 +117,9 @@ func (b *BkObj) EnableBorder(bEnable bool) *BkObj {
 
 // 背景对象_置文本.
 //
-// pText: 文本字符串.
-func (b *BkObj) SetText(pText string) *BkObj {
-	xc.XBkObj_SetText(b.Handle, pText)
+// text: 文本字符串.
+func (b *BkObj) SetText(text string) *BkObj {
+	xc.XBkObj_SetText(b.Handle, text)
 	return b
 }
 

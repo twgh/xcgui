@@ -15,11 +15,11 @@ import (
 //
 // cy: 高度.
 //
-// pName: 标题.
+// name: 标题.
 //
 // hParent: 父为窗口句柄或元素句柄.
-func XBtn_Create(x, y, cx, cy int32, pName string, hParent int) int {
-	r, _, _ := xBtn_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(pName), uintptr(hParent))
+func XBtn_Create(x, y, cx, cy int32, name string, hParent int) int {
+	r, _, _ := xBtn_Create.Call(uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(name), uintptr(hParent))
 	return int(r)
 }
 
@@ -170,9 +170,9 @@ func XBtn_SetIconSpace(hEle int, size int32) {
 //
 // hEle: 元素句柄.
 //
-// pName: 文本内容.
-func XBtn_SetText(hEle int, pName string) {
-	xBtn_SetText.Call(uintptr(hEle), common.StrPtr(pName))
+// name: 文本内容.
+func XBtn_SetText(hEle int, name string) {
+	xBtn_SetText.Call(uintptr(hEle), common.StrPtr(name))
 }
 
 // 按钮_取文本.

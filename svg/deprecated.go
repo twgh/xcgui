@@ -3,13 +3,13 @@ package svg
 // Deprecated
 //
 // !这是旧版函数, 请使用 NewByString
-func NewByStringUtf8(pString string) *Svg {
-	return NewByString(pString)
+func NewByStringUtf8(str string) *Svg {
+	return NewByString(str)
 }
 
 // Deprecated
 //
 // !这是旧版函数, 请使用 NewByString
-func NewByStringW(pString string) *Svg {
-	return NewByString(pString)
+func NewByStringW(str string) *Svg {
+	return NewByString(str)
 }

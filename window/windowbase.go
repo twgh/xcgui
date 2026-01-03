@@ -54,29 +54,29 @@ func (w *windowBase) EndModal(nResult xcc.MessageBox_Flag_) *windowBase {
 //   - xcc.MessageBox_Flag_Cancel: 点击取消按钮退出.
 //   - xcc.MessageBox_Flag_Other: 其他方式退出.
 //
-// pTitle: 标题.
+// title: 标题.
 //
-// pText: 内容文本.
+// text: 内容文本.
 //
 // nFlags: 标识: xcc.MessageBox_Flag_.
 //
 // XCStyle: xcc.Window_Style_.
-func (w *windowBase) MessageBox(pTitle, pText string, nFlags xcc.MessageBox_Flag_, XCStyle xcc.Window_Style_) xcc.MessageBox_Flag_ {
-	return xc.XC_MessageBox(pTitle, pText, nFlags, w.GetHWND(), XCStyle)
+func (w *windowBase) MessageBox(title, text string, nFlags xcc.MessageBox_Flag_, XCStyle xcc.Window_Style_) xcc.MessageBox_Flag_ {
+	return xc.XC_MessageBox(title, text, nFlags, w.GetHWND(), XCStyle)
 }
 
 // Msg_Create 消息框_创建, 返回消息框窗口对象.
 //
-// pTitle: 标题.
+// title: 标题.
 //
-// pText: 内容文本.
+// text: 内容文本.
 //
 // nFlags: 标识: xcc.MessageBox_Flag_.
 //
 // XCStyle: xcc.Window_Style_.
-func (w *windowBase) Msg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag_, XCStyle xcc.Window_Style_) *Window {
+func (w *windowBase) Msg_Create(title, text string, nFlags xcc.MessageBox_Flag_, XCStyle xcc.Window_Style_) *Window {
 	wd := &Window{}
-	hWindow := xc.XMsg_Create(pTitle, pText, nFlags, w.GetHWND(), XCStyle)
+	hWindow := xc.XMsg_Create(title, text, nFlags, w.GetHWND(), XCStyle)
 	if xc.XC_IsHWINDOW(hWindow) {
 		wd.SetHandle(hWindow)
 	}
@@ -91,16 +91,16 @@ func (w *windowBase) Msg_Create(pTitle, pText string, nFlags xcc.MessageBox_Flag
 //
 // lpClassName: 窗口类名.
 //
-// pTitle: 标题.
+// title: 标题.
 //
-// pText: 内容文本.
+// text: 内容文本.
 //
 // nFlags: 标识: xcc.MessageBox_Flag_.
 //
 // XCStyle: xcc.Window_Style_.
-func (w *windowBase) Msg_CreateEx(dwExStyle xcc.WS_EX_, dwStyle xcc.WS_, lpClassName, pTitle, pText string, nFlags xcc.MessageBox_Flag_, XCStyle xcc.Window_Style_) *Window {
+func (w *windowBase) Msg_CreateEx(dwExStyle xcc.WS_EX_, dwStyle xcc.WS_, lpClassName, title, text string, nFlags xcc.MessageBox_Flag_, XCStyle xcc.Window_Style_) *Window {
 	wd := &Window{}
-	hWindow := xc.XMsg_CreateEx(dwExStyle, dwStyle, lpClassName, pTitle, pText, nFlags, w.GetHWND(), XCStyle)
+	hWindow := xc.XMsg_CreateEx(dwExStyle, dwStyle, lpClassName, title, text, nFlags, w.GetHWND(), XCStyle)
 	if xc.XC_IsHWINDOW(hWindow) {
 		wd.SetHandle(hWindow)
 	}
@@ -143,9 +143,9 @@ func (w *windowBase) GetObjectByID(nID int32) int {
 
 // 炫彩_取对象从ID名称, 通过ID名称获取对象句柄.
 //
-// pName: ID名称.
-func (w *windowBase) GetObjectByIDName(pName string) int {
-	return xc.XC_GetObjectByIDName(w.Handle, pName)
+// name: ID名称.
+func (w *windowBase) GetObjectByIDName(name string) int {
+	return xc.XC_GetObjectByIDName(w.Handle, name)
 }
 
 // 窗口_显示.
@@ -487,9 +487,9 @@ func (w *windowBase) GetID() int32 {
 
 // 窗口_置名称.
 //
-// pName: name值, 字符串.
-func (w *windowBase) SetName(pName string) *windowBase {
-	xc.XWnd_SetName(w.Handle, pName)
+// name: name值, 字符串.
+func (w *windowBase) SetName(name string) *windowBase {
+	xc.XWnd_SetName(w.Handle, name)
 	return w
 }
 
@@ -958,9 +958,9 @@ func (w *windowBase) SetIcon(hImage int) *windowBase {
 
 // 窗口_置标题.
 //
-// pTitle: 标题文本.
-func (w *windowBase) SetTitle(pTitle string) *windowBase {
-	xc.XWnd_SetTitle(w.Handle, pTitle)
+// title: 标题文本.
+func (w *windowBase) SetTitle(title string) *windowBase {
+	xc.XWnd_SetTitle(w.Handle, title)
 	return w
 }
 
@@ -1046,24 +1046,24 @@ func (w *windowBase) ClearBkInfo() *windowBase {
 //
 // position: 位置, Position_Flag_.
 //
-// pTitle: 标题.
+// title: 标题.
 //
-// pText: 内容.
+// text: 内容.
 //
 // hIcon: 图标.
 //
 // skin: 外观类型, NotifyMsg_Skin_.
-func (w *windowBase) NotifyMsg_WindowPopup(position xcc.Position_Flag_, pTitle, pText string, hIcon int, skin xcc.NotifyMsg_Skin_) int {
-	return xc.XNotifyMsg_WindowPopup(w.Handle, position, pTitle, pText, hIcon, skin)
+func (w *windowBase) NotifyMsg_WindowPopup(position xcc.Position_Flag_, title, text string, hIcon int, skin xcc.NotifyMsg_Skin_) int {
+	return xc.XNotifyMsg_WindowPopup(w.Handle, position, title, text, hIcon, skin)
 }
 
 // 通知消息_窗口中弹出扩展, 使用基础元素作为面板, 弹出一个通知消息, 返回元素句柄, 通过此句柄可对其操作.
 //
 // position: 位置, Position_Flag_.
 //
-// pTitle: 标题.
+// title: 标题.
 //
-// pText: 内容.
+// text: 内容.
 //
 // hIcon: 图标.
 //
@@ -1076,8 +1076,8 @@ func (w *windowBase) NotifyMsg_WindowPopup(position xcc.Position_Flag_, pTitle, 
 // nWidth: 自定义宽度, -1(使用默认值).
 //
 // nHeight: 自定义高度, -1(使用默认值).
-func (w *windowBase) NotifyMsg_WindowPopupEx(position xcc.Position_Flag_, pTitle, pText string, hIcon int, skin xcc.NotifyMsg_Skin_, bBtnClose, bAutoClose bool, nWidth, nHeight int) int {
-	return xc.XNotifyMsg_WindowPopupEx(w.Handle, position, pTitle, pText, hIcon, skin, bBtnClose, bAutoClose, nWidth, nHeight)
+func (w *windowBase) NotifyMsg_WindowPopupEx(position xcc.Position_Flag_, title, text string, hIcon int, skin xcc.NotifyMsg_Skin_, bBtnClose, bAutoClose bool, nWidth, nHeight int) int {
+	return xc.XNotifyMsg_WindowPopupEx(w.Handle, position, title, text, hIcon, skin, bBtnClose, bAutoClose, nWidth, nHeight)
 }
 
 // 通知消息_置持续时间.
@@ -1142,9 +1142,9 @@ func (w *windowBase) NotifyMsg_SetBorderSize(left, top, right, bottom int32) *wi
 
 // 窗口_置背景, 返回设置的背景对象数量.
 //
-// pText: 背景内容字符串.
-func (w *windowBase) SetBkInfo(pText string) int32 {
-	return xc.XWnd_SetBkInfo(w.Handle, pText)
+// text: 背景内容字符串.
+func (w *windowBase) SetBkInfo(text string) int32 {
+	return xc.XWnd_SetBkInfo(w.Handle, text)
 }
 
 // 窗口_是否可拖动标题栏.
