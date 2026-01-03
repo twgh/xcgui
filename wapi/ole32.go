@@ -88,12 +88,3 @@ const (
 	COINIT_DISABLE_OLE1DDE   COINIT_ = 0x4 // 禁用 DDE 以支持 OLE1
 	COINIT_SPEED_OVER_MEMORY COINIT_ = 0x8 // 增加内存使用量，以尝试提高性能
 )
-
-const (
-	S_OK               syscall.Errno = 0x00000000
-	S_FALSE            syscall.Errno = 0x00000001
-	RPC_E_CHANGED_MODE syscall.Errno = 0x80010106 // 并发模型冲突（如 CoInitializeEx 调用不兼容）
-	E_INVALIDARG       syscall.Errno = 0x80070057 // 参数无效
-	E_OUTOFMEMORY      syscall.Errno = 0x8007000E // 内存不足
-	E_UNEXPECTED       syscall.Errno = 0x8000FFFF // 未知意外错误
-)
