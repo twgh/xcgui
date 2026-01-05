@@ -4,9 +4,26 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-/*
-// //////////////////////////////////// 旧版函数 //////////////////////////////////////
-*/
+// Deprecated
+//
+// !这是旧版函数, 请使用 GetSelectText
+func (e *Edit) GetSelectTextEx() string {
+	return e.GetSelectText()
+}
+
+// Deprecated
+//
+// !这是旧版函数, 请使用 GetTextRow
+func (e *Edit) GetTextRowEx(iRow int32) string {
+	return e.GetTextRow(iRow)
+}
+
+// Deprecated
+//
+// !这是旧版函数, 请使用 GetText
+func (e *Edit) GetTextEx() string {
+	return e.GetText()
+}
 
 // Deprecated
 //

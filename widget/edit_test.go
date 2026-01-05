@@ -19,7 +19,7 @@ func TestEdit_AddEvent_EditSet(t *testing.T) {
 		edit.EnableAutoWrap(true)
 
 		edit.AddEvent_Edit_Changed(func(hEle int, pbHandled *bool) int {
-			t.Log("编辑框内容改变:", edit.GetTextEx())
+			t.Log("编辑框内容改变:", edit.GetText())
 			return 0
 		})
 
