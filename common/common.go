@@ -397,14 +397,14 @@ func ErrorToErrno(err error) (syscall.Errno, bool) {
 //
 // b: 选择条件.
 //
-// v1: 当 b 为 true 时返回的值.
+// value1: 当 b 为 true 时返回的值.
 //
-// v2: 当 b 为 false 时返回的值.
-func Choose[T interface{}](b bool, v1, v2 T) T {
+// value2: 当 b 为 false 时返回的值.
+func Choose[T interface{}](b bool, value1, value2 T) T {
 	if b {
-		return v1
+		return value1
 	}
-	return v2
+	return value2
 }
 
 // ChooseValue 根据索引从参数列表中选择并返回一个值。
