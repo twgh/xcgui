@@ -3,6 +3,9 @@ package edge
 import (
 	"errors"
 	"io/fs"
+	"mime"
+	"path/filepath"
+	"strconv"
 	"strings"
 	"sync"
 	"syscall"
@@ -310,7 +313,7 @@ func (w *WebViewEventImpl) WebResourceRequested(sender *ICoreWebView2, args *ICo
 		uri := request.MustGetUri()
 
 		embedPath, embedFS := EmbedFSMapping.Match(uri)
-		if embedPath == "" || embedFS == nil {
+		if embedPath == "" || embedFS == nil || embedPath == "/" || strings.Contains(embedPath, "..") {
 			return 0
 		}
 
@@ -366,6 +369,18 @@ func (w *WebViewEventImpl) WebResourceRequested(sender *ICoreWebView2, args *ICo
 			}
 		}
 
+		// 获取响应头
+		headers, err := res.GetHeaders()
+		if err != nil {
+			ReportErrorAuto(errors.New("webResourceRequested, GetHeaders failed: " + err.Error()))
+		} else {
+			defer headers.Release()
+			headers.AppendHeader("Content-Type", getMimeType(embedPath))
+			headers.AppendHeader("Content-Length", strconv.Itoa(len(data)))
+			headers.AppendHeader("Cache-Control", "no-cache")
+			headers.AppendHeader("Access-Control-Allow-Origin", "*")
+		}
+
 		err = args.SetResponse(res)
 		if err != nil {
 			ReportErrorAuto(errors.New("webResourceRequested, SetResponse failed2: " + err.Error()))
@@ -373,6 +388,23 @@ func (w *WebViewEventImpl) WebResourceRequested(sender *ICoreWebView2, args *ICo
 		}
 	}
 	return ret
+}
+
+// getMimeType 根据文件路径返回 MIME 类型.
+// 如果无法确定，则返回 "application/octet-stream".
+func getMimeType(filePath string) string {
+	// 获取文件扩展名（带点，如 ".js"）
+	ext := filepath.Ext(filePath)
+
+	// 使用 mime.TypeByExtension 查找 MIME 类型
+	mimeType := mime.TypeByExtension(ext)
+
+	// 如果未识别，返回默认二进制流类型
+	if mimeType == "" {
+		return "application/octet-stream"
+	}
+
+	return mimeType
 }
 
 // NavigationCompleted 当导航完成时调用。
