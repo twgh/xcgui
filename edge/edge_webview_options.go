@@ -8,6 +8,7 @@ type WebViewOption func(*WebViewOptions)
 // WebViewOptions 选项.
 type WebViewOptions struct {
 	// WebView 的默认背景颜色。
+	//   - 使用 edge.NewColor 创建颜色.
 	//   - 此属性允许用户提前初始化 DefaultBackgroundColor，从而防止在 WebView2 加载期间，当背景色设置为白色以外的颜色时可能出现的白色闪烁。
 	//   - 通过早期初始化，颜色从一开始就保持一致。
 	//   - DefaultBackgroundColor 是在所有网页内容下方渲染的颜色。这意味着当没有加载网页内容时，WebView2 会渲染此颜色。如果 WebView2 中未定义背景色，它会使用 DefaultBackgroundColor 属性来渲染背景。默认情况下，此颜色设置为白色。
@@ -140,6 +141,7 @@ func WithScriptLocale(locale string) WebViewOption {
 }
 
 // WithDefaultBackgroundColor 设置 WebView 的默认背景颜色.
+//   - 使用 edge.NewColor 创建颜色.
 //   - 此属性允许用户提前初始化 DefaultBackgroundColor，从而防止在 WebView2 加载期间，当背景色设置为白色以外的颜色时可能出现的白色闪烁。
 //   - 通过早期初始化，颜色从一开始就保持一致。
 //   - DefaultBackgroundColor 是在所有网页内容下方渲染的颜色。这意味着当没有加载网页内容时，WebView2 会渲染此颜色。如果 WebView2 中未定义背景色，它会使用 DefaultBackgroundColor 属性来渲染背景。默认情况下，此颜色设置为白色。

@@ -24,6 +24,7 @@ func (i *ICoreWebView2ControllerOptions3) GetDefaultBackgroundColor() (*COREWEBV
 }
 
 // SetDefaultBackgroundColor 设置 WebView 的默认背景颜色。
+//   - 使用 edge.NewColor 创建颜色.
 //   - 此属性允许用户提前初始化 DefaultBackgroundColor，从而防止在 WebView2 加载期间，当背景色设置为白色以外的颜色时可能出现的白色闪烁。
 //   - 通过早期初始化，颜色从一开始就保持一致。初始化后，DefaultBackgroundColor 将返回使用此 API 设置的值。
 //   - DefaultBackgroundColor 可通过 WEBVIEW2_DEFAULT_BACKGROUND_COLOR 环境变量进行设置，对于正在使用此解决方案的情况，该环境变量将继续得到支持。建议从环境变量过渡到使用此 API 解决方案来应用该属性。需要重点强调的是，设置环境变量后，它会覆盖 DefaultBackgroundColor，并成为 DefaultBackgroundColor 的初始值。
