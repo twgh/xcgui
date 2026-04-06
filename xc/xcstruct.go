@@ -17,14 +17,14 @@ type Menu_DrawBackground_ struct {
 
 // Menu_DrawItem_ 菜单项自绘结构
 type Menu_DrawItem_ struct {
-	HMenu             int                 // 菜单句柄
-	HWindow           int                 // 当前弹出菜单项的窗口句柄
-	NID               int32               // ID
-	NState            xcc.Menu_Item_Flag_ // 状态: Menu_Item_Flag_
-	NShortcutKeyWidth int32               // 右侧快捷键占位宽度
-	RcItem            RECT                // 坐标
-	HIcon             int                 // 菜单项图标句柄
-	PText             uintptr             // 文本, 使用xc.UintPtrToString()函数转换到string
+	HMenu             int               // 菜单句柄
+	HWindow           int               // 当前弹出菜单项的窗口句柄
+	NID               int32             // ID
+	NState            xcc.CombinedState // 状态: xcc.MenuItem_State_Flag_
+	NShortcutKeyWidth int32             // 右侧快捷键占位宽度
+	RcItem            RECT              // 坐标
+	HIcon             int               // 菜单项图标句柄
+	PText             uintptr           // 文本, 使用 common.UintPtrToString() 函数转换到 string
 }
 
 // ListBox_Item_ 列表框项信息
@@ -139,7 +139,7 @@ type LOGFONTW struct {
 	LfClipPrecision  byte       // 剪辑精度
 	LfQuality        byte       // 输出质量
 	LfPitchAndFamily byte       // 字符间距
-	LfFaceName       [32]uint16 // 字体名称, 使用 xc.Font_Info_Name()函数转换为string.
+	LfFaceName       [32]uint16 // 字体名称, 使用 xc.Font_Info_Name() 函数转换为string.
 }
 
 // Editor 颜色信息
@@ -167,8 +167,9 @@ type Editor_Color_ struct {
 	ClrIndentTab   uint32 // 缩进TAB, xc.RGBA 颜色
 	ClrIndentSpace uint32 // 缩进遇到空格, xc.RGBA 颜色
 
-	ClrTipsDlg       uint32 // 弹出提示窗口背景色, xc.RGBA 颜色
-	ClrTipsDlgBorder uint32 // 弹出提示窗口描边色, xc.RGBA 颜色
+	ClrTipsDlg        uint32 // 弹出提示窗口背景色, xc.RGBA 颜色
+	ClrTipsDlgBorder  uint32 // 弹出提示窗口描边色, xc.RGBA 颜色
+	clrCallFunArgName uint32 // 调用函数显示参数名称的颜色, xc.RGBA 颜色
 
 	FunSplitLineMode int32 // 函数分割线-填充模式: 0:无, 1:线, 2:填充
 	CodeIndent       int32 // 代码缩进模式(TAB)  自由缩进  固定缩进

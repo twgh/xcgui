@@ -189,3 +189,19 @@ const (
 	Pane_State_Flag_Caption CombinedState = 0x0080 // 标题
 	Pane_State_Flag_Body    CombinedState = 0x0100 // 内容区
 )
+
+// 组合状态
+// 弹出菜单项状态标志
+// type MenuItem_State_Flag_ CombinedState
+
+const (
+	MenuItem_State_Flag_Leave     CombinedState = 0x0080 // 正常
+	MenuItem_State_Flag_Stay      CombinedState = 0x0001 // 鼠标停留
+	MenuItem_State_Flag_Check     CombinedState = 0x0002 // 勾选
+	MenuItem_State_Flag_Check_No  CombinedState = 0x0020 // 未勾选
+	MenuItem_State_Flag_Popup     CombinedState = 0x0004 // 弹出
+	MenuItem_State_Flag_Popup_No  CombinedState = 0x0040 // 非弹出
+	MenuItem_State_Flag_Separator CombinedState = 0x0008 // 分隔栏 ID号任意,ID号被忽略
+	MenuItem_State_Flag_Disable   CombinedState = 0x0010 // 禁用
+	MenuItem_State_Flag_Enable    CombinedState = 0x0100 // 启用
+)
