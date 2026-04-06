@@ -17,7 +17,7 @@ func init() {
 
 // GetVer 获取当前库版本所需的 xcgui.dll 的版本号.
 func GetVer() string {
-	return "3.3.9.1"
+	return "4.0.0.0"
 }
 
 // xcguiPath 是 xcgui.dll 的完整路径（目录+文件名）, 也可以是相对路径, 默认值为'xcgui.dll'.
