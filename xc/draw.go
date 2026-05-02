@@ -1389,3 +1389,23 @@ func XDraw_GetD2dBitmap(hDraw int) uintptr {
 	r, _, _ := xDraw_GetD2dBitmap.Call(uintptr(hDraw))
 	return r
 }
+
+// 绘制_转换坐标, 从当前UI对象客户区坐标转换到画布对齐坐标, 自动适应DPI, 便于用户使用第三方绘图接口.
+//
+// hDraw: 图形绘制句柄.
+//
+// pRect: 矩形坐标.
+func XDraw_ConvRect(hDraw int, pRect *RECT) {
+	xDraw_ConvRect.Call(uintptr(hDraw), uintptr(unsafe.Pointer(pRect)))
+}
+
+// 绘制_转换坐标XY, 从当前UI对象客户区坐标转换到画布对齐坐标, 自动适应DPI, 便于用户使用第三方绘图接口.
+//
+// hDraw: 图形绘制句柄.
+//
+// x: X坐标.
+//
+// y: Y坐标.
+func XDraw_ConvXY(hDraw int, x, y int32) {
+	xDraw_ConvXY.Call(uintptr(hDraw), uintptr(x), uintptr(y))
+}

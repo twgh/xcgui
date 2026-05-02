@@ -1256,3 +1256,21 @@ func (d *Draw) GetFontObj() *font.Font {
 func (d *Draw) GetD2dBitmap() uintptr {
 	return xc.XDraw_GetD2dBitmap(d.Handle)
 }
+
+// 绘制_转换坐标, 从当前UI对象客户区坐标转换到画布对齐坐标, 自动适应DPI, 便于用户使用第三方绘图接口.
+//
+// pRect: 矩形坐标.
+func (d *Draw) ConvRect(pRect *xc.RECT) *Draw {
+	xc.XDraw_ConvRect(d.Handle, pRect)
+	return d
+}
+
+// 绘制_转换坐标XY, 从当前UI对象客户区坐标转换到画布对齐坐标, 自动适应DPI, 便于用户使用第三方绘图接口.
+//
+// x: X坐标.
+//
+// y: Y坐标.
+func (d *Draw) ConvXY(x, y int32) *Draw {
+	xc.XDraw_ConvXY(d.Handle, x, y)
+	return d
+}
