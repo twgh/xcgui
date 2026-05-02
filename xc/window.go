@@ -1209,3 +1209,24 @@ func XWnd_SetDPI(hWindow int, nDPI int32) {
 func XWnd_DestroyWindow(hWindow int) {
 	xWnd_DestroyWindow.Call(uintptr(hWindow))
 }
+
+// 窗口_置鼠标悬停触发时间, 设置鼠标悬停触发时间间隔, 当鼠标移到目标UI元素上停留多久触发鼠标悬停事件.
+//
+// hWindow: 窗口句柄.
+//
+// time: 鼠标悬停触发时间间隔, 单位毫秒.
+func XWnd_SetMouseHoverTime(hWindow int, time int32) {
+	xWnd_SetMouseHoverTime.Call(uintptr(hWindow), uintptr(time))
+}
+
+// 窗口_调整到屏幕内, 调整窗口位置到屏幕内, 使其完全可见.
+//
+// hWindow: 窗口句柄.
+//
+// nBorderSpace: 窗口边框外围间隔大小.
+//
+// bCoverTaskBar: 窗口是否覆盖任务栏.
+func XWnd_AdjustInScreen(hWindow int, nBorderSpace int32, bCoverTaskBar bool) bool {
+	r, _, _ := xWnd_AdjustInScreen.Call(uintptr(hWindow), uintptr(nBorderSpace), common.BoolPtr(bCoverTaskBar))
+	return r != 0
+}

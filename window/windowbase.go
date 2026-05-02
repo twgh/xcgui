@@ -1476,6 +1476,23 @@ func (w *windowBase) DpiConvRound(i int32) int32 {
 	return xc.DpiConvRound(w.GetDPI(), i)
 }
 
+// 窗口_置鼠标悬停触发时间, 设置鼠标悬停触发时间间隔, 当鼠标移到目标UI元素上停留多久触发鼠标悬停事件.
+//
+// time: 鼠标悬停触发时间间隔, 单位毫秒.
+func (w *windowBase) SetMouseHoverTime(time int32) *windowBase {
+	xc.XWnd_SetMouseHoverTime(w.Handle, time)
+	return w
+}
+
+// 窗口_调整到屏幕内, 调整窗口位置到屏幕内, 使其完全可见.
+//
+// nBorderSpace: 窗口边框外围间隔大小.
+//
+// bCoverTaskBar: 窗口是否覆盖任务栏.
+func (w *windowBase) AdjustInScreen(nBorderSpace int32, bCoverTaskBar bool) bool {
+	return xc.XWnd_AdjustInScreen(w.Handle, nBorderSpace, bCoverTaskBar)
+}
+
 // ------------------------- AddEvent ------------------------- //
 
 // AddEvent_NCDestroy 添加窗口非客户区销毁事件. 在窗口销毁之后触发.
