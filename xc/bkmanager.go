@@ -181,3 +181,17 @@ func XBkM_GetObject(hBkInfoM int, id int32) int {
 	r, _, _ := xBkM_GetObject.Call(uintptr(hBkInfoM), uintptr(id))
 	return int(r)
 }
+
+// 背景_取指定状态文本颜色Ex.
+//
+// hBkInfoM: 背景管理器句柄.
+//
+// nState: 组合状态.
+//
+// nStateEx: 组合状态.
+//
+// color: 接收返回的 xc.RGBA 颜色.
+func XBkM_GetStateTextColorEx(hBkInfoM int, nState, nStateEx xcc.CombinedState, color *uint32) bool {
+	r, _, _ := xBkM_GetStateTextColor.Call(uintptr(hBkInfoM), uintptr(nState), uintptr(nStateEx), uintptr(unsafe.Pointer(color)))
+	return r != 0
+}

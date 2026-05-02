@@ -161,6 +161,17 @@ func (b *BkManager) GetStateTextColor(nState xcc.CombinedState, color *uint32) b
 	return xc.XBkM_GetStateTextColor(b.Handle, nState, color)
 }
 
+// 背景_取指定状态文本颜色Ex.
+//
+// nState: 组合状态.
+//
+// nStateEx: 组合状态.
+//
+// color: 接收返回的 xc.RGBA 颜色.
+func (b *BkManager) GetStateTextColorEx(nState, nStateEx xcc.CombinedState, color *uint32) bool {
+	return xc.XBkM_GetStateTextColorEx(b.Handle, nState, nStateEx, color)
+}
+
 // 背景_取背景对象, 返回 bkobj.BkObj 对象句柄.
 //
 // id: 背景对象ID.
