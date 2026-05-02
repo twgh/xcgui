@@ -154,3 +154,11 @@ func XSBar_GetButtonSlider(hEle int) int {
 	r, _, _ := xSBar_GetButtonSlider.Call(uintptr(hEle))
 	return int(r)
 }
+
+// 滚动条_取当前位置, 获取当前滚动位置.
+//
+// hEle: 元素句柄.
+func XSBar_GetCurPos(hEle int) int32 {
+	r, _, _ := xSBar_GetCurPos.Call(uintptr(hEle))
+	return int32(r)
+}

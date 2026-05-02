@@ -164,6 +164,11 @@ func (s *ScrollBar) GetButtonSliderObj() *Button {
 	return NewButtonByHandle(xc.XSBar_GetButtonSlider(s.Handle))
 }
 
+// 滚动条_取当前位置, 获取当前滚动位置.
+func (s *ScrollBar) XSBar_GetCurPos() int32 {
+	return xc.XSBar_GetCurPos(s.Handle)
+}
+
 // ------------------------- AddEvent ------------------------- //
 
 // AddEvent_SBar_Scroll 添加滚动条元素滚动事件.
