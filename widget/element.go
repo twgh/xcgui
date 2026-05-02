@@ -1162,6 +1162,13 @@ func (e *Element) SetTop(y int32, bRedraw bool) bool {
 	return xc.XEle_SetPosition(e.Handle, e.GetLeft(), y, bRedraw, xcc.AdjustLayout_All, 0) != 0
 }
 
+// 元素_置工具提示持续时间. 设置工具提示弹出显示多久消失, 需要先设置工具提示,然后再设置持续时间.
+//
+// nDuration: 持续时间.
+func (e *Element) SetToolTipDuration(nDuration int32) bool {
+	return xc.XEle_SetToolTipDuration(e.Handle, nDuration)
+}
+
 // ------------------------- AddEvent ------------------------- //
 
 // AddEvent_Destroy_End 添加元素销毁完成事件. 在销毁子对象之后触发.
