@@ -1,6 +1,8 @@
 package xc
 
 import (
+	"syscall"
+
 	"github.com/twgh/xcgui/xcc"
 )
 
@@ -10,98 +12,119 @@ import (
 
 // Deprecated
 //
-// !这是旧版函数, 请使用 xc.RGB2RGBA
+// !这是旧版函数, 请使用 GetXcguiObject
+func GetXcgui() *syscall.LazyDLL {
+	return GetXcguiObject()
+}
+
+// Deprecated
+//
+// !这是旧版函数, 请使用 DeleteDll
+func DelDll() error {
+	return DeleteDll()
+}
+
+// Deprecated
+//
+// !这是旧版函数, 请使用 GetVersion
+func GetVer() string {
+	return GetVersion()
+}
+
+// Deprecated
+//
+// !这是旧版函数, 请使用 RGB2RGBA
 func RGBA2(rgb uint32, a byte) uint32 {
 	return RGB2RGBA(rgb, a)
 }
 
 // Deprecated
 //
-// !这是旧版函数, 请使用 xc.XImage_LoadSvgString
+// !这是旧版函数, 请使用 XImage_LoadSvgString
 func XImage_LoadSvgStringW(str string) int {
 	return XImage_LoadSvgString(str)
 }
 
 // Deprecated
 //
-// !这是旧版函数, 请使用 xc.XImage_LoadSvgString
+// !这是旧版函数, 请使用 XImage_LoadSvgString
 func XImage_LoadSvgStringUtf8(str string) int {
 	return XImage_LoadSvgString(str)
 }
 
 // Deprecated
 //
-// !这是旧版函数, 请使用 xc.XSvg_LoadString
+// !这是旧版函数, 请使用 XSvg_LoadString
 func XSvg_LoadStringW(str string) int {
 	return XSvg_LoadString(str)
 }
 
 // Deprecated
 //
-// !这是旧版函数, 请使用 xc.XSvg_LoadString
+// !这是旧版函数, 请使用 XSvg_LoadString
 func XSvg_LoadStringUtf8(str string) int {
 	return XSvg_LoadString(str)
 }
 
 // Deprecated
 //
-// !这是旧版函数, 请使用 xc.RGBA
+// !这是旧版函数, 请使用 RGBA
 func ARGB(r, g, b, a byte) uint32 {
 	return RGBA(r, g, b, a)
 }
 
 // Deprecated
 //
-// !这是旧版函数, 请使用 xc.RGB2RGBA
+// !这是旧版函数, 请使用 RGB2RGBA
 func ARGB2(rgb uint32, a byte) uint32 {
 	return RGB2RGBA(rgb, a)
 }
 
 // Deprecated
 //
-// !这是旧版函数, 请使用 xc.RGB2RGBA
+// !这是旧版函数, 请使用 RGB2RGBA
 func RGB2ARGB(rgb uint32, a byte) uint32 {
 	return RGB2RGBA(rgb, a)
 }
 
 // Deprecated
 //
-// !这是旧版函数, 请使用 xc.HexRGB2RGBA
+// !这是旧版函数, 请使用 HexRGB2RGBA
 func HexRGB2ARGB(str string, a byte) uint32 {
 	return HexRGB2RGBA(str, a)
 }
 
 // Deprecated
 //
-// !这是旧版函数, 请使用 xc.RGBA
+// !这是旧版函数, 请使用 RGBA
 func ABGR(r, g, b, a byte) uint32 {
 	return RGBA(r, g, b, a)
 }
 
 // Deprecated
 //
-// !这是旧版函数, 请使用 xc.RGB2RGBA
+// !这是旧版函数, 请使用 RGB2RGBA
 func ABGR2(rgb uint32, a byte) uint32 {
 	return RGB2RGBA(rgb, a)
 }
 
 // Deprecated
 //
-// !这是旧版函数, 请使用 xc.HexRGB2RGBA
+// !这是旧版函数, 请使用 HexRGB2RGBA
 func HexRGB2ABGR(str string, a byte) uint32 {
 	return HexRGB2RGBA(str, a)
 }
 
 // Deprecated
 //
-// !这是旧版函数, 请使用 xc.RGB2RGBA
+// !这是旧版函数, 请使用 RGB2RGBA
 func RGB2ABGR(rgb uint32, a byte) uint32 {
 	return RGB2RGBA(rgb, a)
 }
 
 // Deprecated
 //
-// !这是旧版函数, 请使用 xc.XWnd_ClientToScreen 或 wapi.ClientToScreen
+// !这是旧版函数, 请使用 XWnd_ClientToScreen 或 wapi.ClientToScreen
 func ClientToScreen(hWindow int, pPoint *POINT) {
 	XWnd_ClientToScreen(hWindow, pPoint)
 }

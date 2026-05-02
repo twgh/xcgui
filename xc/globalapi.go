@@ -31,7 +31,7 @@ func IsUiThread() bool {
 //
 // bD2D: 是否启用D2D.
 func XInitXCGUI(bD2D bool) bool {
-	moudle := LoadXCGUI()
+	moudle := loadXCGUI()
 	if moudle.Handle() == 0 {
 		return false
 	}

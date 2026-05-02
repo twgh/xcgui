@@ -9,6 +9,7 @@ import (
 // Init 写出 xcgui.dll 到 windows 临时目录中 'xcgui+版本号+_编译时的目标架构+_CRC32' 文件夹里.
 //   - 如果 dll 已存在就不会写出了.
 //   - 使用完本函数后无需再调用 xc.SetXcguiPath(), 内部已自动操作.
+//   - 程序退出时如果想删除 xcgui.dll 可以调用 DeleteDll() 函数.
 func Init() error {
 	return xc.Init()
 }
@@ -17,8 +18,14 @@ func Init() error {
 //   - 如果 dll 已存在就不会写出了.
 //   - 使用完本函数后无需再调用 xc.SetXcguiPath(), 内部已自动操作.
 //   - 如果出错, 会弹窗提示错误, 然后退出程序.
+//   - 程序退出时如果想删除 xcgui.dll 可以调用 DeleteDll() 函数.
 func InitOrExit() {
 	xc.InitOrExit()
+}
+
+// DeleteDll 删除 xcgui.dll
+func DeleteDll() error {
+	return xc.DeleteDll()
 }
 
 // App 程序. 封装了炫彩的全局API.

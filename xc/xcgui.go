@@ -15,16 +15,16 @@ func init() {
 	runtime.LockOSThread()
 }
 
-// GetVer 获取当前库版本所需的 xcgui.dll 的版本号.
-func GetVer() string {
+// GetVersion 获取本库使用的 xcgui.dll 的版本号.
+func GetVersion() string {
 	return "4.0.0.0"
 }
 
 // xcguiPath 是 xcgui.dll 的完整路径（目录+文件名）, 也可以是相对路径, 默认值为'xcgui.dll'.
-//   - 如果你想要更改它的位置, 可以在 xc.LoadXCGUI() 之前调用 xc.SetXcguiPath() 更改为其他路径.
+//   - 如果你想要更改它的位置, 可以在 xc.loadXCGUI() 之前调用 xc.SetXcguiPath() 更改为其他路径.
 var xcguiPath = "xcgui.dll"
 
-// SetXcguiPath 手动设置 xcgui.dll 的路径. 未设置时, 默认值为'xcgui.dll'. 如果出错, 要么你输入的文件不存在, 要么你输入的不是 dll 文件.
+// SetXcguiPath 手动设置 xcgui.dll 的路径. 如果出错, 要么你输入的文件不存在, 要么你输入的不是 dll 文件.
 //
 // XcguiPath: dll 完整路径（目录+文件名）, 也可以是相对路径.
 func SetXcguiPath(XcguiPath string) error {
@@ -46,14 +46,15 @@ func SetXcguiPath(XcguiPath string) error {
 	return nil
 }
 
-// GetXcguiPath 获取设置的 xcgui.dll 的路径.
+// GetXcguiPath 获取 xcgui.dll 的路径.
 func GetXcguiPath() string {
 	return xcguiPath
 }
 
-// GetXcgui 获取加载的炫彩 dll 模块.
-//   - 你可以用这个来调用 dll 中的函数.
-func GetXcgui() *syscall.LazyDLL {
+// GetXcguiObject 获取加载的 xcgui.dll 对象.
+//   - 你可以用这个来调用 dll 中的函数, 未公开的函数也可以调用, 只要你知道函数名和参数.
+//   - 例: r, _, _ := GetXcguiObject().NewProc("XC_IsEnableD2D").Call()
+func GetXcguiObject() *syscall.LazyDLL {
 	return xcgui
 }
 
@@ -62,7 +63,7 @@ func GetXcgui() *syscall.LazyDLL {
 //   - 使用完本函数后无需再调用 xc.SetXcguiPath(), 内部已自动操作.
 func WriteDll(dll []byte) error {
 	tmpDir := os.TempDir()
-	tmpPath := filepath.Join(tmpDir, "xcgui"+GetVer()+"_"+runtime.GOARCH+"_"+CRC32)
+	tmpPath := filepath.Join(tmpDir, "xcgui"+GetVersion()+"_"+runtime.GOARCH+"_"+CRC32)
 	dllPath := filepath.Join(tmpPath, "xcgui.dll")
 	if PathExists2(dllPath) { // 已存在就不写出了
 		xcguiPath = dllPath
@@ -99,6 +100,7 @@ func WriteDllOrExit(dll []byte) {
 // Init 写出 xcgui.dll 到 windows 临时目录中 'xcgui+版本号+_编译时的目标架构+_CRC32' 文件夹里.
 //   - 如果 dll 已存在就不会写出了.
 //   - 使用完本函数后无需再调用 xc.SetXcguiPath(), 内部已自动操作.
+//   - 程序退出时如果想删除 xcgui.dll 可以调用 DeleteDll() 函数.
 func Init() error {
 	return WriteDll(DLL)
 }
@@ -107,13 +109,26 @@ func Init() error {
 //   - 如果 dll 已存在就不会写出了.
 //   - 使用完本函数后无需再调用 xc.SetXcguiPath(), 内部已自动操作.
 //   - 如果出错, 会弹窗提示错误, 然后退出程序.
+//   - 程序退出时如果想删除 xcgui.dll 可以调用 DeleteDll() 函数.
 func InitOrExit() {
 	WriteDllOrExit(DLL)
 }
 
-// DelDll 删除 xcguiPath 指向的文件, 其默认值为 xcgui.dll.
-func DelDll() error {
+// DeleteDll 删除 xcgui.dll
+func DeleteDll() error {
 	return os.Remove(xcguiPath)
+}
+
+// 保证 loadXCGUI 只运行一次.
+var once = sync.Once{}
+
+// loadXCGUI 将从 xcguiPath 加载 xcgui.dll.
+//   - 本函数在进程运行期间只需调用一次, 而且也只会被调用一次.
+//   - 如果你想要更改 xcgui.dll 的路径, 那么请在调用本函数之前调用 xc.SetXcguiPath().
+//   - 注意: app.New() 和 xc.XInitXCGUI() 函数内部会自动调用 xc.loadXCGUI(), 是不需要手动调用的.
+func loadXCGUI() *syscall.LazyDLL {
+	once.Do(_loadXCGUI)
+	return xcgui
 }
 
 var (
@@ -1949,20 +1964,6 @@ var (
 	xPropertyList_GetString         *syscall.LazyProc
 	xPropertyList_GetSize           *syscall.LazyProc
 )
-
-// 保证 LoadXCGUI 只运行一次.
-var once = sync.Once{}
-
-// LoadXCGUI 将从 xcguiPath 加载 xcgui.dll.
-//   - xcguiPath 的默认值是'xcgui.dll'
-//   - 本函数在进程运行期间只需调用一次, 而且也只会被调用一次.
-//   - 如果你想要更改 xcgui.dll 的路径, 那么请在调用本函数之前调用 xc.SetXcguiPath().
-//   - 注意: app.New() 和 xc.XInitXCGUI() 函数内部会自动调用 xc.LoadXCGUI(), 是不需要手动调用的.
-//   - 所以这个函数其实已经不需要公开了, 但为了兼容以前的代码还是保留公开状态.
-func LoadXCGUI() *syscall.LazyDLL {
-	once.Do(_loadXCGUI)
-	return xcgui
-}
 
 func _loadXCGUI() {
 	// Library.
