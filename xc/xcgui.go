@@ -205,6 +205,8 @@ var (
 	xC_GetHandleCount          *syscall.LazyProc
 	xC_SetD2dTextAntialiasMode *syscall.LazyProc
 	xC_IsInit                  *syscall.LazyProc
+	xC_SetCallBack_LoadLayout  *syscall.LazyProc
+	xC_LoadLayout_Create       *syscall.LazyProc
 
 	// UI Designer.
 	xC_LoadLayout       *syscall.LazyProc
@@ -350,6 +352,8 @@ var (
 	xWnd_ScreenToClient            *syscall.LazyProc
 	xWnd_SetDPI                    *syscall.LazyProc
 	xWnd_DestroyWindow             *syscall.LazyProc
+	xWnd_SetMouseHoverTime         *syscall.LazyProc
+	xWnd_AdjustInScreen            *syscall.LazyProc
 
 	// Widget.
 	xWidget_IsShow                 *syscall.LazyProc
@@ -529,6 +533,7 @@ var (
 	xEle_GetWndClientRectDPI        *syscall.LazyProc
 	xEle_PointClientToWndClientDPI  *syscall.LazyProc
 	xEle_RectClientToWndClientDPI   *syscall.LazyProc
+	xEle_SetToolTipDuration         *syscall.LazyProc
 
 	// FreameWindow.
 	xFrameWnd_Create                 *syscall.LazyProc
@@ -583,6 +588,12 @@ var (
 	xMenu_IsItemCheck          *syscall.LazyProc
 	xMenu_SetItemWidth         *syscall.LazyProc
 	xMenu_GetMenuBar           *syscall.LazyProc
+	xMenu_SetBkManager         *syscall.LazyProc
+	xMenu_GetBkManager         *syscall.LazyProc
+	xMenu_GetBkManagerEx       *syscall.LazyProc
+	xMenu_EnableCSS            *syscall.LazyProc
+	xMenu_SetCssName           *syscall.LazyProc
+	xMenu_GetCssName           *syscall.LazyProc
 
 	// ModalWindow.
 	xModalWnd_Create          *syscall.LazyProc
@@ -1041,23 +1052,24 @@ var (
 	xTable_GetColCount      *syscall.LazyProc
 
 	// BkManager.
-	xBkM_Create            *syscall.LazyProc
-	xBkM_Destroy           *syscall.LazyProc
-	xBkM_AddInfo           *syscall.LazyProc
-	xBkM_AddBorder         *syscall.LazyProc
-	xBkM_AddFill           *syscall.LazyProc
-	xBkM_AddImage          *syscall.LazyProc
-	xBkM_GetCount          *syscall.LazyProc
-	xBkM_Clear             *syscall.LazyProc
-	xBkM_Draw              *syscall.LazyProc
-	xBkM_DrawEx            *syscall.LazyProc
-	xBkM_EnableAutoDestroy *syscall.LazyProc
-	xBkM_AddRef            *syscall.LazyProc
-	xBkM_Release           *syscall.LazyProc
-	xBkM_GetRefCount       *syscall.LazyProc
-	xBkM_SetInfo           *syscall.LazyProc
-	xBkM_GetStateTextColor *syscall.LazyProc
-	xBkM_GetObject         *syscall.LazyProc
+	xBkM_Create              *syscall.LazyProc
+	xBkM_Destroy             *syscall.LazyProc
+	xBkM_AddInfo             *syscall.LazyProc
+	xBkM_AddBorder           *syscall.LazyProc
+	xBkM_AddFill             *syscall.LazyProc
+	xBkM_AddImage            *syscall.LazyProc
+	xBkM_GetCount            *syscall.LazyProc
+	xBkM_Clear               *syscall.LazyProc
+	xBkM_Draw                *syscall.LazyProc
+	xBkM_DrawEx              *syscall.LazyProc
+	xBkM_EnableAutoDestroy   *syscall.LazyProc
+	xBkM_AddRef              *syscall.LazyProc
+	xBkM_Release             *syscall.LazyProc
+	xBkM_GetRefCount         *syscall.LazyProc
+	xBkM_SetInfo             *syscall.LazyProc
+	xBkM_GetStateTextColor   *syscall.LazyProc
+	xBkM_GetObject           *syscall.LazyProc
+	xBkM_GetStateTextColorEx *syscall.LazyProc
 
 	// Draw.
 	xDraw_Create                  *syscall.LazyProc
@@ -1167,6 +1179,8 @@ var (
 	xDraw_ImageMaskEllipse        *syscall.LazyProc
 	xDraw_GetFont                 *syscall.LazyProc
 	xDraw_GetD2dBitmap            *syscall.LazyProc
+	xDraw_ConvRect                *syscall.LazyProc
+	xDraw_ConvXY                  *syscall.LazyProc
 
 	// Ease.
 	xEase_Linear  *syscall.LazyProc
@@ -1649,6 +1663,7 @@ var (
 	xSBar_GetButtonUp        *syscall.LazyProc
 	xSBar_GetButtonDown      *syscall.LazyProc
 	xSBar_GetButtonSlider    *syscall.LazyProc
+	xSBar_GetCurPos          *syscall.LazyProc
 
 	// ScrollView.
 	xSView_Create                  *syscall.LazyProc
@@ -1929,7 +1944,10 @@ var (
 	xTrayIcon_SetPopupBalloon    *syscall.LazyProc
 	xTrayIcon_SetCallbackMessage *syscall.LazyProc
 
+	// 其它.
 	xPGrid_EnableExpandCurGroupOnly *syscall.LazyProc
+	xPropertyList_GetString         *syscall.LazyProc
+	xPropertyList_GetSize           *syscall.LazyProc
 )
 
 // 保证 LoadXCGUI 只运行一次.
@@ -2040,6 +2058,8 @@ func _loadXCGUI() {
 	xC_GetHandleCount = xcgui.NewProc("XC_GetHandleCount")
 	xC_SetD2dTextAntialiasMode = xcgui.NewProc("XC_SetD2dTextAntialiasMode")
 	xC_IsInit = xcgui.NewProc("XC_IsInit")
+	xC_SetCallBack_LoadLayout = xcgui.NewProc("XC_SetCallBack_LoadLayout")
+	xC_LoadLayout_Create = xcgui.NewProc("XC_LoadLayout_Create")
 
 	// UI Designer.
 	xC_LoadLayout = xcgui.NewProc("XC_LoadLayout")
@@ -2180,6 +2200,8 @@ func _loadXCGUI() {
 	xWnd_ScreenToClient = xcgui.NewProc("XWnd_ScreenToClient")
 	xWnd_SetDPI = xcgui.NewProc("XWnd_SetDPI")
 	xWnd_DestroyWindow = xcgui.NewProc("XWnd_DestroyWindow")
+	xWnd_SetMouseHoverTime = xcgui.NewProc("XWnd_SetMouseHoverTime")
+	xWnd_AdjustInScreen = xcgui.NewProc("XWnd_AdjustInScreen")
 
 	// Widget.
 	xWidget_IsShow = xcgui.NewProc("XWidget_IsShow")
@@ -2359,6 +2381,7 @@ func _loadXCGUI() {
 	xEle_GetWndClientRectDPI = xcgui.NewProc("XEle_GetWndClientRectDPI")
 	xEle_PointClientToWndClientDPI = xcgui.NewProc("XEle_PointClientToWndClientDPI")
 	xEle_RectClientToWndClientDPI = xcgui.NewProc("XEle_RectClientToWndClientDPI")
+	xEle_SetToolTipDuration = xcgui.NewProc("XEle_SetToolTipDuration")
 
 	// FreameWindow.
 	xFrameWnd_Create = xcgui.NewProc("XFrameWnd_Create")
@@ -2413,6 +2436,12 @@ func _loadXCGUI() {
 	xMenu_IsItemCheck = xcgui.NewProc("XMenu_IsItemCheck")
 	xMenu_SetItemWidth = xcgui.NewProc("XMenu_SetItemWidth")
 	xMenu_GetMenuBar = xcgui.NewProc("XMenu_GetMenuBar")
+	xMenu_SetBkManager = xcgui.NewProc("XMenu_SetBkManager")
+	xMenu_GetBkManager = xcgui.NewProc("XMenu_GetBkManager")
+	xMenu_GetBkManagerEx = xcgui.NewProc("XMenu_GetBkManagerEx")
+	xMenu_EnableCSS = xcgui.NewProc("XMenu_EnableCSS")
+	xMenu_SetCssName = xcgui.NewProc("XMenu_SetCssName")
+	xMenu_GetCssName = xcgui.NewProc("XMenu_GetCssName")
 
 	// ModalWindow.
 	xModalWnd_Create = xcgui.NewProc("XModalWnd_Create")
@@ -2887,6 +2916,7 @@ func _loadXCGUI() {
 	xBkM_SetInfo = xcgui.NewProc("XBkM_SetInfo")
 	xBkM_GetStateTextColor = xcgui.NewProc("XBkM_GetStateTextColor")
 	xBkM_GetObject = xcgui.NewProc("XBkM_GetObject")
+	xBkM_GetStateTextColorEx = xcgui.NewProc("XBkM_GetStateTextColorEx")
 
 	// Draw.
 	xDraw_Create = xcgui.NewProc("XDraw_Create")
@@ -2996,6 +3026,8 @@ func _loadXCGUI() {
 	xDraw_ImageMaskEllipse = xcgui.NewProc("XDraw_ImageMaskEllipse")
 	xDraw_GetFont = xcgui.NewProc("XDraw_GetFont")
 	xDraw_GetD2dBitmap = xcgui.NewProc("XDraw_GetD2dBitmap")
+	xDraw_ConvRect = xcgui.NewProc("XDraw_ConvRect")
+	xDraw_ConvXY = xcgui.NewProc("XDraw_ConvXY")
 
 	// Ease.
 	xEase_Linear = xcgui.NewProc("XEase_Linear")
@@ -3478,6 +3510,7 @@ func _loadXCGUI() {
 	xSBar_GetButtonUp = xcgui.NewProc("XSBar_GetButtonUp")
 	xSBar_GetButtonDown = xcgui.NewProc("XSBar_GetButtonDown")
 	xSBar_GetButtonSlider = xcgui.NewProc("XSBar_GetButtonSlider")
+	xSBar_GetCurPos = xcgui.NewProc("XSBar_GetCurPos")
 
 	// ScrollView.
 	xSView_Create = xcgui.NewProc("XSView_Create")
@@ -3758,6 +3791,8 @@ func _loadXCGUI() {
 	xTrayIcon_SetPopupBalloon = xcgui.NewProc("XTrayIcon_SetPopupBalloon")
 	xTrayIcon_SetCallbackMessage = xcgui.NewProc("XTrayIcon_SetCallbackMessage")
 
-	// 其他.
+	// 其它.
 	xPGrid_EnableExpandCurGroupOnly = xcgui.NewProc("XPGrid_EnableExpandCurGroupOnly")
+	xPropertyList_GetString = xcgui.NewProc("XPropertyList_GetString")
+	xPropertyList_GetSize = xcgui.NewProc("XPropertyList_GetSize")
 }
