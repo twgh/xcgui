@@ -59,6 +59,42 @@ func MessageBox(title, text string, nFlags xcc.MessageBox_Flag_, hWndParent uint
 	return xc.XC_MessageBox(title, text, nFlags, hWndParent, XCStyle)
 }
 
+// Msg_Create 消息框_创建, 返回消息框窗口句柄.
+//
+// title: 标题.
+//
+// text: 内容文本.
+//
+// nFlags: 标识: xcc.MessageBox_Flag_.
+//
+// hWndParent: 父窗口句柄(真实的窗口句柄).
+//
+// XCStyle: xcc.Window_Style_.
+func Msg_Create(title, text string, nFlags xcc.MessageBox_Flag_, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
+	return xc.XMsg_Create(title, text, nFlags, hWndParent, XCStyle)
+}
+
+// Msg_CreateEx 消息框_创建扩展, 返回消息框窗口句柄.
+//
+// dwExStyle: 窗口扩展样式, xcc.WS_EX_ 常量组合.
+//
+// dwStyle: 窗口样式, xcc.WS_ 常量组合.
+//
+// className: 窗口类名.
+//
+// title: 标题.
+//
+// text: 内容文本.
+//
+// nFlags: 标识: xcc.MessageBox_Flag_.
+//
+// hWndParent: 父窗口句柄(真实的窗口句柄).
+//
+// XCStyle: xcc.Window_Style_.
+func Msg_CreateEx(dwExStyle xcc.WS_EX_, dwStyle xcc.WS_, className string, title, text string, nFlags xcc.MessageBox_Flag_, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
+	return xc.XMsg_CreateEx(dwExStyle, dwStyle, className, title, text, nFlags, hWndParent, XCStyle)
+}
+
 // 炫彩_发送窗口消息.
 //
 // hWindow: 窗口句柄.
@@ -943,4 +979,20 @@ func IsInit() bool {
 // IsUiThread 判断当前线程是否是 UI 线程.
 func IsUiThread() bool {
 	return xc.IsUiThread()
+}
+
+// 属性列表_取大小. 获取属性列表成员数量.
+//
+// propertylist: 属性列表.
+func PropertyList_GetSize(propertylist int) int32 {
+	return xc.XPropertyList_GetSize(propertylist)
+}
+
+// 属性列表_取文本. 从属性列表中, 获取指定属性名称的值.
+//
+// propertylist: 属性列表.
+//
+// name: 属性名.
+func PropertyList_GetString(propertylist int, name string) string {
+	return xc.XPropertyList_GetString(propertylist, name)
 }

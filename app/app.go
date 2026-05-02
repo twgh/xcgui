@@ -1175,3 +1175,19 @@ func (a *App) SetD2dTextAntialiasMode(mode int32) *App {
 func (a *App) IsInit() bool {
 	return xc.XC_IsInit()
 }
+
+// 属性列表_取大小. 获取属性列表成员数量.
+//
+// propertylist: 属性列表.
+func (a *App) PropertyList_GetSize(propertylist int) int32 {
+	return xc.XPropertyList_GetSize(propertylist)
+}
+
+// 属性列表_取文本. 从属性列表中, 获取指定属性名称的值.
+//
+// propertylist: 属性列表.
+//
+// name: 属性名.
+func (a *App) PropertyList_GetString(propertylist int, name string) string {
+	return xc.XPropertyList_GetString(propertylist, name)
+}

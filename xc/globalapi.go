@@ -744,6 +744,24 @@ func XC_IsInit() bool {
 	return r != 0
 }
 
+// 属性列表_取大小. 获取属性列表成员数量.
+//
+// propertylist: 属性列表.
+func XPropertyList_GetSize(propertylist int) int32 {
+	r, _, _ := xPropertyList_GetSize.Call(uintptr(propertylist))
+	return int32(r)
+}
+
+// 属性列表_取文本. 从属性列表中, 获取指定属性名称的值.
+//
+// propertylist: 属性列表.
+//
+// name: 属性名.
+func XPropertyList_GetString(propertylist int, name string) string {
+	r, _, _ := xPropertyList_GetString.Call(uintptr(propertylist), common.StrPtr(name))
+	return common.UintPtrToString(r)
+}
+
 /* // 炫彩_打印调试信息, 打印调试信息到文件xcgui_debug.txt.[无效]
 //
 // str: 字符串.
