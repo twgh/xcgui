@@ -3,8 +3,8 @@ package xcc
 // CombinedState 组合状态.
 type CombinedState uint32
 
-// Window_State_Flag_ 组合状态
-// 窗口状态
+// Window_State_Flag_ 窗口状态
+// 组合状态
 type Window_State_Flag_ uint32
 
 const (
@@ -17,6 +17,22 @@ const (
 	Window_State_Flag_Right_Leave  Window_State_Flag_ = 0x0020 // 窗口-right
 
 	Window_State_Flag_Layout_Body Window_State_Flag_ = 0x20000000 // 布局内容区
+)
+
+// Window_State_Flag_ 窗口状态
+// 组合状态
+// 为了不强制转换特意声明的常量
+
+const (
+	CombinedState_Window_State_Flag_Nothing      CombinedState = 0x0000 // 无
+	CombinedState_Window_State_Flag_Leave        CombinedState = 0x0001 // 整个窗口
+	CombinedState_Window_State_Flag_Body_Leave   CombinedState = 0x0002 // 窗口-body
+	CombinedState_Window_State_Flag_Top_Leave    CombinedState = 0x0004 // 窗口-top
+	CombinedState_Window_State_Flag_Bottom_Leave CombinedState = 0x0008 // 窗口-bottom
+	CombinedState_Window_State_Flag_Left_Leave   CombinedState = 0x0010 // 窗口-left
+	CombinedState_Window_State_Flag_Right_Leave  CombinedState = 0x0020 // 窗口-right
+
+	CombinedState_Window_State_Flag_Layout_Body CombinedState = 0x20000000 // 布局内容区
 )
 
 // 组合状态
@@ -39,15 +55,15 @@ const (
 // type Element_State_Flag_ CombinedState
 
 const (
-	Element_State_Flag_Nothing                  = CombinedState(Window_State_Flag_Nothing) // 无
-	Element_State_Flag_Enable     CombinedState = 0x0001                                   // 启用
-	Element_State_Flag_Disable    CombinedState = 0x0002                                   // 禁用
-	Element_State_Flag_Focus      CombinedState = 0x0004                                   // 焦点
-	Element_State_Flag_Focus_No   CombinedState = 0x0008                                   // 无焦点
-	Element_State_Flag_FocusEx    CombinedState = 0x40000000                               // 该元素或该元素的子元素拥有焦点
-	Element_State_Flag_FocusEx_No CombinedState = 0x80000000                               // 无焦点Ex
+	Element_State_Flag_Nothing                  = CombinedState_Window_State_Flag_Nothing // 无
+	Element_State_Flag_Enable     CombinedState = 0x0001                                  // 启用
+	Element_State_Flag_Disable    CombinedState = 0x0002                                  // 禁用
+	Element_State_Flag_Focus      CombinedState = 0x0004                                  // 焦点
+	Element_State_Flag_Focus_No   CombinedState = 0x0008                                  // 无焦点
+	Element_State_Flag_FocusEx    CombinedState = 0x40000000                              // 该元素或该元素的子元素拥有焦点
+	Element_State_Flag_FocusEx_No CombinedState = 0x80000000                              // 无焦点Ex
 
-	Layout_State_Flag_Layout_Body = CombinedState(Window_State_Flag_Layout_Body) // 布局内容区
+	Layout_State_Flag_Layout_Body = CombinedState_Window_State_Flag_Layout_Body // 布局内容区
 
 	Element_State_Flag_Leave CombinedState = 0x0010 // 鼠标离开
 	Element_State_Flag_Stay  CombinedState = 0x0020 // 为扩展模块保留
@@ -157,9 +173,9 @@ const (
 // type Layout_State_Flag_ CombinedState
 
 const (
-	Layout_State_Flag_Nothing               = CombinedState(Window_State_Flag_Nothing) // 无
-	Layout_State_Flag_Full    CombinedState = 0x0001                                   // 完整背景
-	Layout_State_Flag_Body    CombinedState = 0x0002                                   // 内容区域, 不包含边大小
+	Layout_State_Flag_Nothing               = CombinedState_Window_State_Flag_Nothing // 无
+	Layout_State_Flag_Full    CombinedState = 0x0001                                  // 完整背景
+	Layout_State_Flag_Body    CombinedState = 0x0002                                  // 内容区域, 不包含边大小
 )
 
 // 组合状态

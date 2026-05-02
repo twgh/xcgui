@@ -128,8 +128,8 @@ func (e *Edge) NewWebViewWithWindow(opts ...WebViewOption) (*window.Window, *Web
 		bkm := w.GetBkManagerObj()
 		if bkm != nil {
 			bkm.Clear()
-			bkm.AddFill(xcc.CombinedState(xcc.Window_State_Flag_Leave), xc.RGBA(255, 255, 255, 1), 0)
-			bkm.AddFill(xcc.CombinedState(xcc.Window_State_Flag_Top_Leave), options.XmlWindowOpts.TitleBarBgColor, 0)
+			bkm.AddFill(xcc.CombinedState_Window_State_Flag_Leave, xc.RGBA(255, 255, 255, 1), 0)
+			bkm.AddFill(xcc.CombinedState_Window_State_Flag_Top_Leave, options.XmlWindowOpts.TitleBarBgColor, 0)
 		}
 	}
 
@@ -155,8 +155,8 @@ func (w *WebView) SetXmlWindowTitleBarBgColor(color uint32) {
 	bkm := win.GetBkManagerObj()
 	if bkm != nil {
 		bkm.Clear()
-		bkm.AddFill(xcc.CombinedState(xcc.Window_State_Flag_Leave), xc.RGBA(255, 255, 255, 1), 0)
-		bkm.AddFill(xcc.CombinedState(xcc.Window_State_Flag_Top_Leave), color, 0)
+		bkm.AddFill(xcc.CombinedState_Window_State_Flag_Leave, xc.RGBA(255, 255, 255, 1), 0)
+		bkm.AddFill(xcc.CombinedState_Window_State_Flag_Top_Leave, color, 0)
 	}
 }
 
