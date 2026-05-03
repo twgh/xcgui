@@ -95,8 +95,12 @@ func (p *ProgressBar) EnableHorizon(bHorizon bool) *ProgressBar {
 // 进度条_启用缩放, 缩放进度贴图为当前进度区域(当前进度所显示区域), 否则为整体100进度区域.
 //
 // bStretch: 缩放.
-func (p *ProgressBar) EnableStretch(bStretch bool) *ProgressBar {
-	xc.XProgBar_EnableStretch(p.Handle, bStretch)
+func (p *ProgressBar) EnableStretch(bStretch ...bool) *ProgressBar {
+	stretch := true
+	if len(bStretch) > 0 {
+		stretch = bStretch[0]
+	}
+	xc.XProgBar_EnableStretch(p.Handle, stretch)
 	return p
 }
 

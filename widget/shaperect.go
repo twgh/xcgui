@@ -88,8 +88,12 @@ func (s *ShapeRect) GetRoundAngle(pWidth *int, pHeight *int32) *ShapeRect {
 // 形状矩形_启用边框, 启用绘制矩形边框.
 //
 // bEnable: 是否启用.
-func (s *ShapeRect) EnableBorder(bEnable bool) *ShapeRect {
-	xc.XShapeRect_EnableBorder(s.Handle, bEnable)
+func (s *ShapeRect) EnableBorder(bEnable ...bool) *ShapeRect {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XShapeRect_EnableBorder(s.Handle, enable)
 	return s
 }
 

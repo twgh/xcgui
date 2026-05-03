@@ -68,8 +68,12 @@ func (s *ShapeEllipse) SetFillColor(color uint32) *ShapeEllipse {
 // 形状圆_启用边框, 启用绘制圆边框.
 //
 // bEnable: 是否启用.
-func (s *ShapeEllipse) EnableBorder(bEnable bool) *ShapeEllipse {
-	xc.XShapeEllipse_EnableBorder(s.Handle, bEnable)
+func (s *ShapeEllipse) EnableBorder(bEnable ...bool) *ShapeEllipse {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XShapeEllipse_EnableBorder(s.Handle, enable)
 	return s
 }
 

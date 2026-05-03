@@ -54,8 +54,12 @@ func NewTextLinkByUIDName(name string) *TextLink {
 // 文本链接_启用离开状态下划线, 启用下划线, 鼠标离开状态.
 //
 // bEnable: 是否启用.
-func (t *TextLink) EnableUnderlineLeave(bEnable bool) *TextLink {
-	xc.XTextLink_EnableUnderlineLeave(t.Handle, bEnable)
+func (t *TextLink) EnableUnderlineLeave(bEnable ...bool) *TextLink {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XTextLink_EnableUnderlineLeave(t.Handle, enable)
 	return t
 }
 

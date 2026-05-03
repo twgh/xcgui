@@ -408,8 +408,12 @@ func (w *windowBase) EnableLayout(bEnable bool) *windowBase {
 // 窗口_启用布局覆盖边框.
 //
 // bEnable: 是否启用.
-func (w *windowBase) EnableLayoutOverlayBorder(bEnable bool) *windowBase {
-	xc.XWnd_EnableLayoutOverlayBorder(w.Handle, bEnable)
+func (w *windowBase) EnableLayoutOverlayBorder(bEnable ...bool) *windowBase {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XWnd_EnableLayoutOverlayBorder(w.Handle, enable)
 	return w
 }
 
@@ -1431,8 +1435,12 @@ func (w *windowBase) EnableAutoWrap(bEnable ...bool) *windowBase {
 // EnableOverflowHide 布局盒子_启用溢出隐藏.
 //
 // bEnable: 是否启用.
-func (w *windowBase) EnableOverflowHide(bEnable bool) *windowBase {
-	xc.XLayoutBox_EnableOverflowHide(w.Handle, bEnable)
+func (w *windowBase) EnableOverflowHide(bEnable ...bool) *windowBase {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XLayoutBox_EnableOverflowHide(w.Handle, enable)
 	return w
 }
 

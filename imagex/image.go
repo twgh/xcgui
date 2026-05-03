@@ -358,8 +358,12 @@ func (i *Image) SetSplitEqual(nCount, iIndex int32) *Image {
 // 图片_启用透明色, 启用或关闭图片透明色.
 //
 // bEnable: 启用TRUE.
-func (i *Image) EnableTranColor(bEnable bool) *Image {
-	xc.XImage_EnableTranColor(i.Handle, bEnable)
+func (i *Image) EnableTranColor(bEnable ...bool) *Image {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XImage_EnableTranColor(i.Handle, enable)
 	return i
 }
 

@@ -78,8 +78,12 @@ func (e *Edit) EnableAutoWrap(bEnable bool) *Edit {
 // 编辑框_启用只读.
 //
 // bEnable: 是否启用.
-func (e *Edit) EnableReadOnly(bEnable bool) *Edit {
-	xc.XEdit_EnableReadOnly(e.Handle, bEnable)
+func (e *Edit) EnableReadOnly(bEnable ...bool) *Edit {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XEdit_EnableReadOnly(e.Handle, enable)
 	return e
 }
 

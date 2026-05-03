@@ -156,8 +156,12 @@ func (m *Menu) EnableDrawBackground(bEnable bool) *Menu {
 // 菜单_启用用户绘制项, 是否有用户绘制菜单项, 如果启用XWM_MENU_DRAWITEM和XE_MENU_DRAWITEM事件有效.
 //
 // bEnable: 是否启用.
-func (m *Menu) EnableDrawItem(bEnable bool) *Menu {
-	xc.XMenu_EnableDrawItem(m.Handle, bEnable)
+func (m *Menu) EnableDrawItem(bEnable ...bool) *Menu {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XMenu_EnableDrawItem(m.Handle, enable)
 	return m
 }
 

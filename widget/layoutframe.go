@@ -73,8 +73,12 @@ LayoutBox-布局盒子
 // EnableHorizon 布局盒子_启用水平.
 //
 // bEnable: 是否启用.
-func (l *LayoutFrame) EnableHorizon(bEnable bool) *LayoutFrame {
-	xc.XLayoutBox_EnableHorizon(l.Handle, bEnable)
+func (l *LayoutFrame) EnableHorizon(bEnable ...bool) *LayoutFrame {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XLayoutBox_EnableHorizon(l.Handle, enable)
 	return l
 }
 

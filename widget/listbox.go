@@ -72,8 +72,12 @@ func NewListBoxByUIDName(name string) *ListBox {
 // 列表框_启用固定行高.
 //
 // bEnable: 是否启用.
-func (l *ListBox) EnableFixedRowHeight(bEnable bool) *ListBox {
-	xc.XListBox_EnableFixedRowHeight(l.Handle, bEnable)
+func (l *ListBox) EnableFixedRowHeight(bEnable ...bool) *ListBox {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XListBox_EnableFixedRowHeight(l.Handle, enable)
 	return l
 }
 

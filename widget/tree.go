@@ -74,8 +74,12 @@ func NewTreeByUIDName(name string) *Tree {
 // 列表树_启用拖动项, 启用拖动项功能.
 //
 // bEnable: 是否启用.
-func (t *Tree) EnableDragItem(bEnable bool) *Tree {
-	xc.XTree_EnableDragItem(t.Handle, bEnable)
+func (t *Tree) EnableDragItem(bEnable ...bool) *Tree {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XTree_EnableDragItem(t.Handle, enable)
 	return t
 }
 

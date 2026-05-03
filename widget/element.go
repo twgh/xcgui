@@ -456,8 +456,12 @@ func (e *Element) Enable(bEnable bool) *Element {
 // 元素_启用焦点, 启用焦点.
 //
 // bEnable: 是否启用.
-func (e *Element) EnableFocus(bEnable bool) *Element {
-	xc.XEle_EnableFocus(e.Handle, bEnable)
+func (e *Element) EnableFocus(bEnable ...bool) *Element {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XEle_EnableFocus(e.Handle, enable)
 	return e
 }
 
@@ -532,8 +536,12 @@ func (e *Element) EnableKeyTab(bEnable ...bool) *Element {
 // 元素_启用切换焦点, 启用接受通过键盘切换焦点.
 //
 // bEnable: 是否启用.
-func (e *Element) EnableSwitchFocus(bEnable bool) *Element {
-	xc.XEle_EnableSwitchFocus(e.Handle, bEnable)
+func (e *Element) EnableSwitchFocus(bEnable ...bool) *Element {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XEle_EnableSwitchFocus(e.Handle, enable)
 	return e
 }
 

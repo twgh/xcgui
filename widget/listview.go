@@ -177,8 +177,12 @@ func (l *ListView) EnableMultiSel(bEnable bool) *ListView {
 // 列表视_启用模板复用.
 //
 // bEnable: 是否启用.
-func (l *ListView) EnableTemplateReuse(bEnable bool) *ListView {
-	xc.XListView_EnableTemplateReuse(l.Handle, bEnable)
+func (l *ListView) EnableTemplateReuse(bEnable ...bool) *ListView {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XListView_EnableTemplateReuse(l.Handle, enable)
 	return l
 }
 

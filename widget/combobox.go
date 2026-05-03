@@ -138,8 +138,12 @@ func (c *ComboBox) SetItemTemplateXMLFromString(pStringXML string) *ComboBox {
 // 组合框_启用绘制下拉按钮, 是否绘制下拉按钮.
 //
 // bEnable: 是否绘制.
-func (c *ComboBox) EnableDrawButton(bEnable bool) *ComboBox {
-	xc.XComboBox_EnableDrawButton(c.Handle, bEnable)
+func (c *ComboBox) EnableDrawButton(bEnable ...bool) *ComboBox {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XComboBox_EnableDrawButton(c.Handle, enable)
 	return c
 }
 

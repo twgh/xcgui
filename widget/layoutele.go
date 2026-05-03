@@ -232,8 +232,12 @@ func (l *LayoutEle) IsEnableLayout() bool {
 // EnableLayout 布局_启用, 启用布局功能.
 //
 // bEnable: 是否启用.
-func (l *LayoutEle) EnableLayout(bEnable bool) *LayoutEle {
-	xc.XLayout_EnableLayout(l.Handle, bEnable)
+func (l *LayoutEle) EnableLayout(bEnable ...bool) *LayoutEle {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XLayout_EnableLayout(l.Handle, enable)
 	return l
 }
 
@@ -270,8 +274,12 @@ func (l *LayoutEle) EnableHorizon(bEnable bool) *LayoutEle {
 // EnableAutoWrap 布局盒子_启用自动换行.
 //
 // bEnable: 是否启用.
-func (l *LayoutEle) EnableAutoWrap(bEnable bool) *LayoutEle {
-	xc.XLayoutBox_EnableAutoWrap(l.Handle, bEnable)
+func (l *LayoutEle) EnableAutoWrap(bEnable ...bool) *LayoutEle {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XLayoutBox_EnableAutoWrap(l.Handle, enable)
 	return l
 }
 

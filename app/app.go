@@ -1129,8 +1129,12 @@ func (a *App) NotifyMsg_SetBorderSize(hWindow int, left, top, right, bottom int3
 // 炫彩_启用自动DPI. 当启用后, 创建窗口时自动检测DPI调整UI缩放, 处理DPI改变消息; 禁用后,当DPI改变,需要手动设置窗口DPI.
 //
 // bEnable: 是否启用.
-func (a *App) EnableAutoDPI(bEnable bool) *App {
-	xc.XC_EnableAutoDPI(bEnable)
+func (a *App) EnableAutoDPI(bEnable ...bool) *App {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XC_EnableAutoDPI(enable)
 	return a
 }
 

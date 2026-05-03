@@ -128,8 +128,12 @@ func (l *List) EnableRowBkFull(bFull bool) *List {
 // 列表_启用固定行高.
 //
 // bEnable: 是否启用.
-func (l *List) EnableFixedRowHeight(bEnable bool) *List {
-	xc.XList_EnableFixedRowHeight(l.Handle, bEnable)
+func (l *List) EnableFixedRowHeight(bEnable ...bool) *List {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XList_EnableFixedRowHeight(l.Handle, enable)
 	return l
 }
 

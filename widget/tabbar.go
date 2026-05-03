@@ -207,8 +207,12 @@ func (t *TabBar) EnableTile(bTile bool) *TabBar {
 // TAB条_启用下拉菜单按钮.
 //
 // bEnable:.
-func (t *TabBar) EnableDropMenu(bEnable bool) *TabBar {
-	xc.XTabBar_EnableDropMenu(t.Handle, bEnable)
+func (t *TabBar) EnableDropMenu(bEnable ...bool) *TabBar {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XTabBar_EnableDropMenu(t.Handle, enable)
 	return t
 }
 
