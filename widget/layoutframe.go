@@ -60,9 +60,13 @@ func NewLayoutFrameByUIDName(name string) *LayoutFrame {
 
 // ShowLayoutFrame 布局框架_显示布局边界.
 //
-// bEnable: 是否启用.
-func (l *LayoutFrame) ShowLayoutFrame(bEnable bool) *LayoutFrame {
-	xc.XLayoutFrame_ShowLayoutFrame(l.Handle, bEnable)
+// bEnable: 是否启用, 不填默认为 true.
+func (l *LayoutFrame) ShowLayoutFrame(bEnable ...bool) *LayoutFrame {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XLayoutFrame_ShowLayoutFrame(l.Handle, enable)
 	return l
 }
 

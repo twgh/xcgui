@@ -222,9 +222,13 @@ func (e *Editor) ExpandEx(iRow int32) *Editor {
 
 // 代码编辑框_展开全部.
 //
-// bExpand: 是否展开.
-func (e *Editor) ExpandAll(bExpand bool) *Editor {
-	xc.XEditor_ExpandAll(e.Handle, bExpand)
+// bExpand: 是否展开, 不填默认为 true.
+func (e *Editor) ExpandAll(bExpand ...bool) *Editor {
+	expand := true
+	if len(bExpand) > 0 {
+		expand = bExpand[0]
+	}
+	xc.XEditor_ExpandAll(e.Handle, expand)
 	return e
 }
 

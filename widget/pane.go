@@ -112,17 +112,25 @@ func (p *Pane) GetViewRect(pRect *xc.RECT) *Pane {
 
 // HidePane 窗格_隐藏.
 //
-// bGroupActivate: 当为窗格组成员时, 延迟处理窗格组成员激活的切换.
-func (p *Pane) HidePane(bGroupActivate bool) *Pane {
-	xc.XPane_HidePane(p.Handle, bGroupActivate)
+// bGroupActivate: 当为窗格组成员时, 延迟处理窗格组成员激活的切换, 不填默认为 true.
+func (p *Pane) HidePane(bGroupActivate ...bool) *Pane {
+	enable := true
+	if len(bGroupActivate) > 0 {
+		enable = bGroupActivate[0]
+	}
+	xc.XPane_HidePane(p.Handle, enable)
 	return p
 }
 
 // ShowPane 窗格_显示.
 //
-// bGroupActivate: 如果是窗格组成员, 那么窗格组切换当前窗格为显示状态.
-func (p *Pane) ShowPane(bGroupActivate bool) *Pane {
-	xc.XPane_ShowPane(p.Handle, bGroupActivate)
+// bGroupActivate: 如果是窗格组成员, 那么窗格组切换当前窗格为显示状态, 不填默认为 true.
+func (p *Pane) ShowPane(bGroupActivate ...bool) *Pane {
+	enable := true
+	if len(bGroupActivate) > 0 {
+		enable = bGroupActivate[0]
+	}
+	xc.XPane_ShowPane(p.Handle, enable)
 	return p
 }
 
@@ -186,8 +194,12 @@ func (p *Pane) GetButton(number int32) int {
 
 // 窗格_显示控制按钮. 显示或隐藏窗格上的控制按钮.
 //
-// bShow: 是否显示.
-func (p *Pane) ShowButton(bShow bool) *Pane {
-	xc.XPane_ShowButton(p.Handle, bShow)
+// bShow: 是否显示, 不填默认为 true.
+func (p *Pane) ShowButton(bShow ...bool) *Pane {
+	show := true
+	if len(bShow) > 0 {
+		show = bShow[0]
+	}
+	xc.XPane_ShowButton(p.Handle, show)
 	return p
 }

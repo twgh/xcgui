@@ -65,9 +65,13 @@ func (s *ScrollBar) GetRange() int32 {
 
 // 滚动条_显示上下按钮, 显示隐藏滚动条上下按钮.
 //
-// bShow: 是否显示.
-func (s *ScrollBar) ShowButton(bShow bool) *ScrollBar {
-	xc.XSBar_ShowButton(s.Handle, bShow)
+// bShow: 是否显示, 不填默认为 true.
+func (s *ScrollBar) ShowButton(bShow ...bool) *ScrollBar {
+	show := true
+	if len(bShow) > 0 {
+		show = bShow[0]
+	}
+	xc.XSBar_ShowButton(s.Handle, show)
 	return s
 }
 

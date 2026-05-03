@@ -110,8 +110,14 @@ func (w *WebView2) GetDocumentTitle() string {
 }
 
 // Show 显示或隐藏WebView。
-func (w *WebView2) Show(isShow bool) error {
-	return w.Controller.SetIsVisible(isShow)
+//
+// isShow: 是否显示, 不填默认为 true.
+func (w *WebView2) Show(isShow ...bool) error {
+	show := true
+	if len(isShow) > 0 {
+		show = isShow[0]
+	}
+	return w.Controller.SetIsVisible(show)
 }
 
 // Resize 重新设置WebView 窗口大小和宿主窗口的客户区大小一致.

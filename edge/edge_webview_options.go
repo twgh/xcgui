@@ -187,16 +187,28 @@ func WithWebViewSize(left, top, width, height int32) WebViewOption {
 }
 
 // WithFillParent 设置是否填充父, 如果为 true, 则 WebView 会填充父,  WebViewSize 里的固定坐标和尺寸会失效.
-func WithFillParent(enable bool) WebViewOption {
+//
+// enable: 是否填充父, 不填默认为 true.
+func WithFillParent(enable ...bool) WebViewOption {
+	e := true
+	if len(enable) > 0 {
+		e = enable[0]
+	}
 	return func(o *WebViewOptions) {
-		o.FillParent = enable
+		o.FillParent = e
 	}
 }
 
 // WithDebug 设置是否可打开开发者工具.
-func WithDebug(enable bool) WebViewOption {
+//
+// enable: 是否可打开开发者工具, 不填默认为 true.
+func WithDebug(enable ...bool) WebViewOption {
+	e := true
+	if len(enable) > 0 {
+		e = enable[0]
+	}
 	return func(o *WebViewOptions) {
-		o.Debug = enable
+		o.Debug = e
 	}
 }
 
@@ -205,51 +217,93 @@ func WithDebug(enable bool) WebViewOption {
 //   - 设置为拖动时，这些区域将被视为窗口的标题栏，支持拖动整个 WebView 及其宿主应用程序窗口；
 //   - 系统菜单在右键单击时显示，双击将触发最大化/恢复窗口大小。
 //   - ≥ 123.0.2420.47
-func WithAppDrag(enable bool) WebViewOption {
+//
+// enable: 是否启用非客户区域支持, 不填默认为 true.
+func WithAppDrag(enable ...bool) WebViewOption {
+	e := true
+	if len(enable) > 0 {
+		e = enable[0]
+	}
 	return func(o *WebViewOptions) {
-		o.AppDrag = enable
+		o.AppDrag = e
 	}
 }
 
 // WithAutoFocus 设置是否在窗口获得焦点时尝试保持 WebView 的焦点.
-func WithAutoFocus(enable bool) WebViewOption {
+//
+// enable: 是否在窗口获得焦点时尝试保持 WebView 的焦点, 不填默认为 true.
+func WithAutoFocus(enable ...bool) WebViewOption {
+	e := true
+	if len(enable) > 0 {
+		e = enable[0]
+	}
 	return func(o *WebViewOptions) {
-		o.AutoFocus = enable
+		o.AutoFocus = e
 	}
 }
 
 // WithPrivateMode 设置是否启用隐私模式.
-func WithPrivateMode(enable bool) WebViewOption {
+//
+// enable: 是否启用隐私模式, 不填默认为 true.
+func WithPrivateMode(enable ...bool) WebViewOption {
+	e := true
+	if len(enable) > 0 {
+		e = enable[0]
+	}
 	return func(o *WebViewOptions) {
-		o.PrivateMode = enable
+		o.PrivateMode = e
 	}
 }
 
-// WithDefaultContextMenus 设置是否启用默认的上下文菜单, 默认为 true.
-func WithDefaultContextMenus(enable bool) WebViewOption {
+// WithDefaultContextMenus 设置是否启用默认的上下文菜单.
+//
+// enable: 是否启用默认的上下文菜单, 不填默认为 true.
+func WithDefaultContextMenus(enable ...bool) WebViewOption {
+	e := true
+	if len(enable) > 0 {
+		e = enable[0]
+	}
 	return func(o *WebViewOptions) {
-		o.DefaultContextMenus = enable
+		o.DefaultContextMenus = e
 	}
 }
 
-// WithStatusBar 设置是否启用状态栏, 默认为 true.
-func WithStatusBar(enable bool) WebViewOption {
+// WithStatusBar 设置是否启用状态栏.
+//
+// enable: 是否启用状态栏, 不填默认为 true.
+func WithStatusBar(enable ...bool) WebViewOption {
+	e := true
+	if len(enable) > 0 {
+		e = enable[0]
+	}
 	return func(o *WebViewOptions) {
-		o.StatusBar = enable
+		o.StatusBar = e
 	}
 }
 
-// WithZoomControl 设置是否启用缩放控件, 控制是否可以缩放, 默认为 true.
-func WithZoomControl(enable bool) WebViewOption {
+// WithZoomControl 设置是否启用缩放控件, 控制是否可以缩放.
+//
+// enable: 是否启用缩放控件, 不填默认为 true.
+func WithZoomControl(enable ...bool) WebViewOption {
+	e := true
+	if len(enable) > 0 {
+		e = enable[0]
+	}
 	return func(o *WebViewOptions) {
-		o.ZoomControl = enable
+		o.ZoomControl = e
 	}
 }
 
-// WithBrowserAcceleratorKeys 设置是否启用浏览器快捷键, 是浏览器里面默认的一些快捷键, 组合键, 默认为 true.
-func WithBrowserAcceleratorKeys(enable bool) WebViewOption {
+// WithBrowserAcceleratorKeys 设置是否启用浏览器快捷键, 是浏览器里面默认的一些快捷键, 组合键.
+//
+// enable: 是否启用浏览器快捷键, 不填默认为 true.
+func WithBrowserAcceleratorKeys(enable ...bool) WebViewOption {
+	e := true
+	if len(enable) > 0 {
+		e = enable[0]
+	}
 	return func(o *WebViewOptions) {
-		o.BrowserAcceleratorKeys = enable
+		o.BrowserAcceleratorKeys = e
 	}
 }
 
@@ -361,9 +415,15 @@ func WithXmlWindowShadowAngleSize(size int32) WebViewOption {
 }
 
 // WithXmlWindowTitleBar 设置炫彩 XML 窗口是否启用标题栏.
-func WithXmlWindowTitleBar(enable bool) WebViewOption {
+//
+// enable: 是否启用标题栏, 不填默认为 true.
+func WithXmlWindowTitleBar(enable ...bool) WebViewOption {
+	e := true
+	if len(enable) > 0 {
+		e = enable[0]
+	}
 	return func(o *WebViewOptions) {
-		o.XmlWindowOpts.TitleBar = enable
+		o.XmlWindowOpts.TitleBar = e
 	}
 }
 

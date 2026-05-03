@@ -170,17 +170,25 @@ func (s *ScrollView) ScrollPosYV(posY int32) bool {
 
 // 滚动视_显示水平滚动条.
 //
-// bShow: 是否显示.
-func (s *ScrollView) ShowSBarH(bShow bool) *ScrollView {
-	xc.XSView_ShowSBarH(s.Handle, bShow)
+// bShow: 是否显示, 不填默认为 true.
+func (s *ScrollView) ShowSBarH(bShow ...bool) *ScrollView {
+	show := true
+	if len(bShow) > 0 {
+		show = bShow[0]
+	}
+	xc.XSView_ShowSBarH(s.Handle, show)
 	return s
 }
 
 // 滚动视_显示垂直滚动条.
 //
-// bShow: 是否显示.
-func (s *ScrollView) ShowSBarV(bShow bool) *ScrollView {
-	xc.XSView_ShowSBarV(s.Handle, bShow)
+// bShow: 是否显示, 不填默认为 true.
+func (s *ScrollView) ShowSBarV(bShow ...bool) *ScrollView {
+	show := true
+	if len(bShow) > 0 {
+		show = bShow[0]
+	}
+	xc.XSView_ShowSBarV(s.Handle, show)
 	return s
 }
 

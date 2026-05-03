@@ -243,9 +243,13 @@ func (l *LayoutEle) EnableLayout(bEnable ...bool) *LayoutEle {
 
 // ShowLayoutFrame 布局_显示布局边界, 显示布局边界.
 //
-// bEnable: 是否显示.
-func (l *LayoutEle) ShowLayoutFrame(bEnable bool) *LayoutEle {
-	xc.XLayout_ShowLayoutFrame(l.Handle, bEnable)
+// bEnable: 是否显示, 不填默认为 true.
+func (l *LayoutEle) ShowLayoutFrame(bEnable ...bool) *LayoutEle {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XLayout_ShowLayoutFrame(l.Handle, enable)
 	return l
 }
 

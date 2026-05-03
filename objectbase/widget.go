@@ -17,9 +17,13 @@ func (w *Widget) IsShow() bool {
 
 // 窗口组件_显示.
 //
-// bShow: 是否显示.
-func (w *Widget) Show(bShow bool) *Widget {
-	xc.XWidget_Show(w.Handle, bShow)
+// bShow: 是否显示, 不填默认为 true.
+func (w *Widget) Show(bShow ...bool) *Widget {
+	show := true
+	if len(bShow) > 0 {
+		show = bShow[0]
+	}
+	xc.XWidget_Show(w.Handle, show)
 	return w
 }
 

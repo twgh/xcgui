@@ -50,11 +50,15 @@ func (t *TrayIcon) IsOk() bool {
 
 // Show 托盘图标_显示. 从系统托盘显示或隐藏图标.
 //
-// isShow: 是否显示. 内部原理如下:
+// isShow: 是否显示, 不填默认为 true. 内部原理如下:
 //   - true: 执行 xc.XTrayIcon_Add().
 //   - false: 执行 xc.XTrayIcon_Del().
-func (t *TrayIcon) Show(isShow bool) *TrayIcon {
-	if isShow {
+func (t *TrayIcon) Show(isShow ...bool) *TrayIcon {
+	show := true
+	if len(isShow) > 0 {
+		show = isShow[0]
+	}
+	if show {
 		t.Result = xc.XTrayIcon_Add(t.HWindow, t.Id)
 	} else {
 		t.Result = xc.XTrayIcon_Del()

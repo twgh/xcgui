@@ -289,8 +289,12 @@ func (s *Svg) GetRotate(pAngle *float32, pX *float32, pY *float32, pbOffset *boo
 
 // SVG_显示, 显示或隐藏.
 //
-// bShow: 是否显示.
-func (s *Svg) Show(bShow bool) *Svg {
-	xc.XSvg_Show(s.Handle, bShow)
+// bShow: 是否显示, 不填默认为 true.
+func (s *Svg) Show(bShow ...bool) *Svg {
+	show := true
+	if len(bShow) > 0 {
+		show = bShow[0]
+	}
+	xc.XSvg_Show(s.Handle, show)
 	return s
 }

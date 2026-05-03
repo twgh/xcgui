@@ -447,9 +447,13 @@ func (e *Element) IsFocusEx() bool {
 
 // 元素_启用, 启用或禁用元素.
 //
-// bEnable: 启用或禁用.
-func (e *Element) Enable(bEnable bool) *Element {
-	xc.XEle_Enable(e.Handle, bEnable)
+// bEnable: 启用或禁用, 不填默认为 true.
+func (e *Element) Enable(bEnable ...bool) *Element {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XEle_Enable(e.Handle, enable)
 	return e
 }
 

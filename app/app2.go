@@ -366,9 +366,13 @@ func CombineRect(pDest *xc.RECT, pSrc1 *xc.RECT, pSrc2 *xc.RECT) {
 
 // 炫彩_显示布局边界, 显示布局对象边界.
 //
-// bShow: 是否显示.
-func ShowLayoutFrame(bShow bool) {
-	xc.XC_ShowLayoutFrame(bShow)
+// bShow: 是否显示, 不填默认为 true.
+func ShowLayoutFrame(bShow ...bool) {
+	enable := true
+	if len(bShow) > 0 {
+		enable = bShow[0]
+	}
+	xc.XC_ShowLayoutFrame(enable)
 }
 
 // 炫彩_启用资源监视器.
@@ -937,9 +941,13 @@ func LoadStyleFromStringW(fileName string, str string) bool {
 
 // 炫彩_显示边界.
 //
-// bShow: 是否显示.
-func ShowSvgFrame(bShow bool) {
-	xc.XC_ShowSvgFrame(bShow)
+// bShow: 是否显示, 不填默认为 true.
+func ShowSvgFrame(bShow ...bool) {
+	enable := true
+	if len(bShow) > 0 {
+		enable = bShow[0]
+	}
+	xc.XC_ShowSvgFrame(enable)
 }
 
 // 炫彩_启用自动DPI. 当启用后, 创建窗口时自动检测DPI调整UI缩放, 处理DPI改变消息; 禁用后,当DPI改变,需要手动设置窗口DPI.

@@ -447,9 +447,13 @@ func (w *windowBase) EnableLayoutOverlayBorder(bEnable ...bool) *windowBase {
 
 // 窗口_显示布局边界.
 //
-// bEnable: 是否启用.
-func (w *windowBase) ShowLayoutFrame(bEnable bool) *windowBase {
-	xc.XWnd_ShowLayoutFrame(w.Handle, bEnable)
+// bEnable: 是否启用, 不填默认为 true.
+func (w *windowBase) ShowLayoutFrame(bEnable ...bool) *windowBase {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XWnd_ShowLayoutFrame(w.Handle, enable)
 	return w
 }
 
@@ -742,9 +746,13 @@ func (w *windowBase) SetCaretColor(color uint32) *windowBase {
 
 // 窗口_显示插入符.
 //
-// bShow: 是否显示.
-func (w *windowBase) ShowCaret(bShow bool) *windowBase {
-	xc.XWnd_ShowCaret(w.Handle, bShow)
+// bShow: 是否显示, 不填默认为 true.
+func (w *windowBase) ShowCaret(bShow ...bool) *windowBase {
+	show := true
+	if len(bShow) > 0 {
+		show = bShow[0]
+	}
+	xc.XWnd_ShowCaret(w.Handle, show)
 	return w
 }
 
@@ -842,9 +850,13 @@ func (w *windowBase) GetRectDPI() xc.RECT {
 
 // 窗口_最大化.
 //
-// bMaximize: 是否最大化.
-func (w *windowBase) MaxWindow(bMaximize bool) *windowBase {
-	xc.XWnd_MaxWindow(w.Handle, bMaximize)
+// bMaximize: 是否最大化, 不填默认为 true.
+func (w *windowBase) MaxWindow(bMaximize ...bool) *windowBase {
+	maximize := true
+	if len(bMaximize) > 0 {
+		maximize = bMaximize[0]
+	}
+	xc.XWnd_MaxWindow(w.Handle, maximize)
 	return w
 }
 
@@ -983,9 +995,13 @@ func (w *windowBase) EnableDragFiles(bEnable ...bool) *windowBase {
 
 // 窗口_显示 显示隐藏窗口.
 //
-// bShow: 是否显示.
-func (w *windowBase) Show(bShow bool) *windowBase {
-	xc.XWnd_Show(w.Handle, bShow)
+// bShow: 是否显示, 不填默认为 true.
+func (w *windowBase) Show(bShow ...bool) *windowBase {
+	show := true
+	if len(bShow) > 0 {
+		show = bShow[0]
+	}
+	xc.XWnd_Show(w.Handle, show)
 	return w
 }
 

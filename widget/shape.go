@@ -123,9 +123,13 @@ func (s *Shape) GetContentSize(pSize *xc.SIZE) *Shape {
 
 // 形状_显示布局边界, 是否显示布局边界.
 //
-// bShow: 是否显示.
-func (s *Shape) ShowLayout(bShow bool) *Shape {
-	xc.XShape_ShowLayout(s.Handle, bShow)
+// bShow: 是否显示, 不填默认为 true.
+func (s *Shape) ShowLayout(bShow ...bool) *Shape {
+	show := true
+	if len(bShow) > 0 {
+		show = bShow[0]
+	}
+	xc.XShape_ShowLayout(s.Handle, show)
 	return s
 }
 
