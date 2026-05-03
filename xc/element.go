@@ -1188,9 +1188,9 @@ func XEle_RectClientToWndClientDPI(hEle int, pRect *RECT) {
 //
 // hEle: 元素句柄.
 //
-// bEnabel: 是否启用.
-func XPGrid_EnableExpandCurGroupOnly(hEle int, bEnabel bool) {
-	xPGrid_EnableExpandCurGroupOnly.Call(uintptr(hEle), common.BoolPtr(bEnabel))
+// bEnable: 是否启用.
+func XPGrid_EnableExpandCurGroupOnly(hEle int, bEnable bool) {
+	xPGrid_EnableExpandCurGroupOnly.Call(uintptr(hEle), common.BoolPtr(bEnable))
 }
 
 // 元素_置工具提示持续时间. 设置工具提示弹出显示多久消失, 需要先设置工具提示,然后再设置持续时间.

@@ -375,16 +375,16 @@ func XC_SetLayoutFrameColor(color uint32) {
 
 // 炫彩_启用错误弹窗, 启用错误弹出, 通过该接口可以设置遇到严重错误时不弹出消息提示框.
 //
-// bEnabel: 是否启用.
-func XC_EnableErrorMessageBox(bEnabel bool) {
-	xC_EnableErrorMessageBox.Call(common.BoolPtr(bEnabel))
+// bEnable: 是否启用.
+func XC_EnableErrorMessageBox(bEnable bool) {
+	xC_EnableErrorMessageBox.Call(common.BoolPtr(bEnable))
 }
 
 // 炫彩_启用自动退出程序, 启动或禁用自动退出程序, 当检测到所有用户创建的窗口都关闭时, 自动退出程序; 可调用 XC_PostQuitMessage() 手动退出程序.
 //
-// bEnabel: 是否启用.
-func XC_EnableAutoExitApp(bEnabel bool) {
-	xC_EnableAutoExitApp.Call(common.BoolPtr(bEnabel))
+// bEnable: 是否启用.
+func XC_EnableAutoExitApp(bEnable bool) {
+	xC_EnableAutoExitApp.Call(common.BoolPtr(bEnable))
 }
 
 // 炫彩_取文本绘制大小.
@@ -690,9 +690,9 @@ func XC_ShowSvgFrame(bShow bool) {
 
 // 炫彩_启用自动DPI. 当启用后, 创建窗口时自动检测DPI调整UI缩放, 处理DPI改变消息; 禁用后,当DPI改变,需要手动设置窗口DPI.
 //
-// bEnabel: 是否启用.
-func XC_EnableAutoDPI(bEnabel bool) {
-	xC_EnableAutoDPI.Call(common.BoolPtr(bEnabel))
+// bEnable: 是否启用.
+func XC_EnableAutoDPI(bEnable bool) {
+	xC_EnableAutoDPI.Call(common.BoolPtr(bEnable))
 }
 
 // 炫彩_启用DPI.
@@ -704,9 +704,9 @@ func XC_EnableAutoDPI(bEnabel bool) {
 //
 // 参考[MSDN](https://learn.microsoft.com/zh-cn/windows/win32/hidpi/setting-the-default-dpi-awareness-for-a-process)
 //
-// bEnabel: 是否启用.
-func XC_EnableDPI(bEnabel bool) bool {
-	r, _, _ := xC_EnableDPI.Call(common.BoolPtr(bEnabel))
+// bEnable: 是否启用.
+func XC_EnableDPI(bEnable bool) bool {
+	r, _, _ := xC_EnableDPI.Call(common.BoolPtr(bEnable))
 	return r != 0
 }
 
@@ -721,9 +721,9 @@ func XC_SetWindowIcon(hImage int) {
 //
 // 例如改变了按钮标题后, 将自动调用 xc.XEle_Redraw 更新UI, 默认不启用, 手动和自动各有优势.
 //
-// bEnabel: 是否启用.
-func XC_EnableAutoRedrawUI(bEnabel bool) {
-	xC_EnableAutoRedrawUI.Call(common.BoolPtr(bEnabel))
+// bEnable: 是否启用.
+func XC_EnableAutoRedrawUI(bEnable bool) {
+	xC_EnableAutoRedrawUI.Call(common.BoolPtr(bEnable))
 }
 
 // 炫彩_取句柄总数. 获取当前所使用的句柄总数量, 返回当前所使用的句柄总数量.

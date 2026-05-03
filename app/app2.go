@@ -379,16 +379,16 @@ func SetLayoutFrameColor(color uint32) {
 
 // 炫彩_启用错误弹窗, 启用错误弹出, 通过该接口可以设置遇到严重错误时不弹出消息提示框.
 //
-// bEnabel: 是否启用.
-func EnableErrorMessageBox(bEnabel bool) {
-	xc.XC_EnableErrorMessageBox(bEnabel)
+// bEnable: 是否启用.
+func EnableErrorMessageBox(bEnable bool) {
+	xc.XC_EnableErrorMessageBox(bEnable)
 }
 
 // 炫彩_启用自动退出程序, 启动或禁用自动退出程序, 当检测到所有用户创建的窗口都关闭时, 自动退出程序; 可调用 XC_PostQuitMessage() 手动退出程序.
 //
-// bEnabel: 是否启用.
-func EnableAutoExitApp(bEnabel bool) {
-	xc.XC_EnableAutoExitApp(bEnabel)
+// bEnable: 是否启用.
+func EnableAutoExitApp(bEnable bool) {
+	xc.XC_EnableAutoExitApp(bEnable)
 }
 
 // 炫彩_取文本绘制大小.
@@ -924,9 +924,9 @@ func ShowSvgFrame(bShow bool) {
 
 // 炫彩_启用自动DPI. 当启用后, 创建窗口时自动检测DPI调整UI缩放, 处理DPI改变消息; 禁用后,当DPI改变,需要手动设置窗口DPI.
 //
-// bEnabel: 是否启用.
-func EnableAutoDPI(bEnabel bool) {
-	xc.XC_EnableAutoDPI(bEnabel)
+// bEnable: 是否启用.
+func EnableAutoDPI(bEnable bool) {
+	xc.XC_EnableAutoDPI(bEnable)
 }
 
 // 炫彩_置窗口图标. 全局窗口图标, 所有未设置图标的窗口, 都将使用此默认图标.
@@ -945,18 +945,18 @@ func SetWindowIcon(hImage int) {
 //
 // 参考[MSDN](https://learn.microsoft.com/zh-cn/windows/win32/hidpi/setting-the-default-dpi-awareness-for-a-process)
 //
-// bEnabel: 是否启用.
-func EnableDPI(bEnabel bool) bool {
-	return xc.XC_EnableDPI(bEnabel)
+// bEnable: 是否启用.
+func EnableDPI(bEnable bool) bool {
+	return xc.XC_EnableDPI(bEnable)
 }
 
 // 炫彩_启用自动重绘UI. 当修改UI后将自动调用重绘函数更新UI.
 //
 // 例如改变了按钮标题后, 将自动调用 xc.XEle_Redraw 更新UI, 默认不启用, 手动和自动各有优势.
 //
-// bEnabel: 是否启用.
-func EnableAutoRedrawUI(bEnabel bool) {
-	xc.XC_EnableAutoRedrawUI(bEnabel)
+// bEnable: 是否启用.
+func EnableAutoRedrawUI(bEnable bool) {
+	xc.XC_EnableAutoRedrawUI(bEnable)
 }
 
 // 炫彩_取句柄总数. 获取当前所使用的句柄总数量, 返回当前所使用的句柄总数量.
