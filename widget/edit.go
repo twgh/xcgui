@@ -110,8 +110,12 @@ func (e *Edit) EnablePassword(bEnable ...bool) *Edit {
 // 编辑框_启用自动选择, 当获得焦点时,自动选择所有内容.
 //
 // bEnable: 是否启用.
-func (e *Edit) EnableAutoSelAll(bEnable bool) *Edit {
-	xc.XEdit_EnableAutoSelAll(e.Handle, bEnable)
+func (e *Edit) EnableAutoSelAll(bEnable ...bool) *Edit {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XEdit_EnableAutoSelAll(e.Handle, enable)
 	return e
 }
 

@@ -443,9 +443,13 @@ func (w *WebView) GetRoundRadius() int32 {
 // EnableAutoFocus 启用在窗口获得焦点时尝试保持 WebView 的焦点.
 //   - 内部会调用 xc.XWnd_EnableAutoFocus(w.hWindow, !bEnable)禁用/启用炫彩窗口的自动获取焦点
 //   - 如果不禁用炫彩窗口的自动获取焦点, 那焦点就会在炫彩窗口上
-func (w *WebView) EnableAutoFocus(bEnable bool) {
-	xc.XWnd_EnableAutoFocus(w.hWindow, !bEnable)
-	w.autoFocus = bEnable
+func (w *WebView) EnableAutoFocus(bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XWnd_EnableAutoFocus(w.hWindow, !enable)
+	w.autoFocus = enable
 }
 
 // EnableFillParent 启用填充父窗口.

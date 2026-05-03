@@ -378,8 +378,12 @@ func (i *Image) EnableAutoDestroy(bEnable ...bool) *Image {
 // 图片_启用居中, 启用或关闭图片居中显示，默认属性图片有效.
 //
 // bCenter: 是否居中显示.
-func (i *Image) EnableCenter(bCenter bool) *Image {
-	xc.XImage_EnableCenter(i.Handle, bCenter)
+func (i *Image) EnableCenter(bCenter ...bool) *Image {
+	enable := true
+	if len(bCenter) > 0 {
+		enable = bCenter[0]
+	}
+	xc.XImage_EnableCenter(i.Handle, enable)
 	return i
 }
 

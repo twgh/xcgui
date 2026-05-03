@@ -934,8 +934,12 @@ func (e *Element) SetCapture(b bool) *Element {
 // 元素_启用透明通道, 启用或关闭元素透明通道, 如果启用, 将强制设置元素背景不透明, 默认为启用, 此功能是为了兼容GDI不支持透明通道问题.
 //
 // bEnable: 启用或关闭.
-func (e *Element) EnableTransparentChannel(bEnable bool) *Element {
-	xc.XEle_EnableTransparentChannel(e.Handle, bEnable)
+func (e *Element) EnableTransparentChannel(bEnable ...bool) *Element {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XEle_EnableTransparentChannel(e.Handle, enable)
 	return e
 }
 

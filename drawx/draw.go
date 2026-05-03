@@ -308,8 +308,12 @@ func (d *Draw) ClearClip() *Draw {
 // 绘制_启用平滑模式.
 //
 // bEnable: 是否启用.
-func (d *Draw) EnableSmoothingMode(bEnable bool) *Draw {
-	xc.XDraw_EnableSmoothingMode(d.Handle, bEnable)
+func (d *Draw) EnableSmoothingMode(bEnable ...bool) *Draw {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XDraw_EnableSmoothingMode(d.Handle, enable)
 	return d
 }
 

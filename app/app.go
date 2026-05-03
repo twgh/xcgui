@@ -413,8 +413,12 @@ func (a *App) SetLayoutFrameColor(color uint32) *App {
 // 炫彩_启用错误弹窗, 启用错误弹出, 通过该接口可以设置遇到严重错误时不弹出消息提示框.
 //
 // bEnable: 是否启用.
-func (a *App) EnableErrorMessageBox(bEnable bool) *App {
-	xc.XC_EnableErrorMessageBox(bEnable)
+func (a *App) EnableErrorMessageBox(bEnable ...bool) *App {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XC_EnableErrorMessageBox(enable)
 	return a
 }
 

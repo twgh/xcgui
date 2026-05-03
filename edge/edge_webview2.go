@@ -296,11 +296,15 @@ func (w *WebView2) SetVirtualHostNameToFolderMapping(hostName string, folderPath
 
 // EnableVirtualHostNameToEmbedFSMapping 启用虚拟主机名和嵌入文件系统之间的映射。
 //   - 启用后, 该 WebView 可使用全局的虚拟主机名和嵌入文件系统之间的映射来处理请求。
-func (w *WebView2) EnableVirtualHostNameToEmbedFSMapping(enable bool) error {
+func (w *WebView2) EnableVirtualHostNameToEmbedFSMapping(enable ...bool) error {
+	isEnable := true
+	if len(enable) > 0 {
+		isEnable = enable[0]
+	}
 	var err error
 	filter := "http*://*"
 
-	if enable {
+	if isEnable {
 		if w.WebView2_22 == nil {
 			w.WebView2_22, err = w.CoreWebView.GetICoreWebView2_22()
 			if err == nil {
@@ -336,7 +340,7 @@ func (w *WebView2) EnableVirtualHostNameToEmbedFSMapping(enable bool) error {
 		}
 	}
 
-	w.enableVirtualHostNameToEmbedFSMapping = enable
+	w.enableVirtualHostNameToEmbedFSMapping = isEnable
 	return nil
 }
 

@@ -102,8 +102,12 @@ func (b *BkObj) SetRectRoundAngle(leftTop, leftBottom, rightTop, rightBottom int
 // 背景对象_启用填充, 启用绘制填充.
 //
 // bEnable: 是否启用.
-func (b *BkObj) EnableFill(bEnable bool) *BkObj {
-	xc.XBkObj_EnableFill(b.Handle, bEnable)
+func (b *BkObj) EnableFill(bEnable ...bool) *BkObj {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XBkObj_EnableFill(b.Handle, enable)
 	return b
 }
 

@@ -146,8 +146,12 @@ func (c *ComboBox) EnableDrawButton(bEnable bool) *ComboBox {
 // 组合框_启用编辑, 启用可编辑显示的文本内容.
 //
 // bEdit: TRUE可编辑.
-func (c *ComboBox) EnableEdit(bEdit bool) *ComboBox {
-	xc.XComboBox_EnableEdit(c.Handle, bEdit)
+func (c *ComboBox) EnableEdit(bEdit ...bool) *ComboBox {
+	enable := true
+	if len(bEdit) > 0 {
+		enable = bEdit[0]
+	}
+	xc.XComboBox_EnableEdit(c.Handle, enable)
 	return c
 }
 

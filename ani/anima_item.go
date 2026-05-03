@@ -15,8 +15,12 @@ type AnimaItem struct {
 // 例如对多个动画序列进行渐近式延迟, 在动画序列头标添加延时项(时间差), 当延时项完成时自动释放, 后续动画循环就形成一种时间差(因为对齐的时间差销毁了, 他们永远无法对齐时间).
 //
 // bEnable: 是否启用.
-func (a *AnimaItem) EnableCompleteRelease(bEnable bool) *AnimaItem {
-	xc.XAnimaItem_EnableCompleteRelease(a.Handle, bEnable)
+func (a *AnimaItem) EnableCompleteRelease(bEnable ...bool) *AnimaItem {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XAnimaItem_EnableCompleteRelease(a.Handle, enable)
 	return a
 }
 
