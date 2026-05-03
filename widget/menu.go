@@ -1,6 +1,7 @@
 package widget
 
 import (
+	"github.com/twgh/xcgui/bkmanager"
 	"github.com/twgh/xcgui/objectbase"
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
@@ -317,8 +318,71 @@ func (m *Menu) GetMenuBar() int {
 }
 
 // 菜单_取菜单条, 返回菜单条对象, 失败返回 nil.
-func (m *Menu) GetMenuBarobj() *MenuBar {
+func (m *Menu) GetMenuBarObj() *MenuBar {
 	return NewMenuBarByHandle(xc.XMenu_GetMenuBar(m.Handle))
+}
+
+// 菜单_置背景管理器.
+//
+// nType: 类型: 0菜单项, 1主菜单窗口背景, 2子菜单窗口背景.
+//
+// hBkInfoM: 背景管理器句柄.
+func (m *Menu) SetBkManager(nType int32, hBkInfoM int) *Menu {
+	xc.XMenu_SetBkManager(m.Handle, nType, hBkInfoM)
+	return m
+}
+
+// 菜单_取背景管理器, 返回背景管理器句柄.
+//
+// nType: 类型: 0菜单项, 1主菜单窗口背景, 2子菜单窗口背景.
+func (m *Menu) GetBkManager(nType int32) int {
+	return xc.XMenu_GetBkManager(m.Handle, nType)
+}
+
+// 菜单_取背景管理器, 返回背景管理器对象, 失败返回 nil.
+//
+// nType: 类型: 0菜单项, 1主菜单窗口背景, 2子菜单窗口背景.
+func (m *Menu) GetBkManagerObj(nType int32) *bkmanager.BkManager {
+	return bkmanager.NewByHandle(xc.XMenu_GetBkManager(m.Handle, nType))
+}
+
+// 菜单_取背景管理器Ex, 优先从资源中获取, 返回背景管理器句柄.
+//
+// nType: 类型: 0菜单项, 1主菜单窗口背景, 2子菜单窗口背景.
+func (m *Menu) GetBkManagerEx(nType int32) int {
+	return xc.XMenu_GetBkManagerEx(m.Handle, nType)
+}
+
+// 菜单_取背景管理器Ex, 返回背景管理器对象, 失败返回 nil.
+//
+// nType: 类型: 0菜单项, 1主菜单窗口背景, 2子菜单窗口背景.
+func (m *Menu) GetBkManagerObjEx(nType int32) *bkmanager.BkManager {
+	return bkmanager.NewByHandle(xc.XMenu_GetBkManagerEx(m.Handle, nType))
+}
+
+// 菜单_启用CSS.
+//
+// bEnable: 是否启用.
+func (m *Menu) EnableCSS(bEnable bool) *Menu {
+	xc.XMenu_EnableCSS(m.Handle, bEnable)
+	return m
+}
+
+// 菜单_置CSS名称, 设置CSS[套用样式]名称.
+//
+// nType: 类型: 0菜单项, 1主菜单窗口背景, 2子菜单窗口背景.
+//
+// name: 套用样式名称.
+func (m *Menu) SetCssName(nType int32, name string) *Menu {
+	xc.XMenu_SetCssName(m.Handle, nType, name)
+	return m
+}
+
+// 菜单_取CSS名称.
+//
+// nType: 类型: 0菜单项, 1主菜单窗口背景, 2子菜单窗口背景.
+func (m *Menu) GetCssName(nType int32) string {
+	return xc.XMenu_GetCssName(m.Handle, nType)
 }
 
 // ------------------------- AddEvent ------------------------- //

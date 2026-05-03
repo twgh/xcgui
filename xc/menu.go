@@ -355,3 +355,64 @@ func XMenu_GetMenuBar(hMenu int) int {
 	r, _, _ := xMenu_GetMenuBar.Call(uintptr(hMenu))
 	return int(r)
 }
+
+// 菜单_置背景管理器.
+//
+// hMenu: 菜单句柄.
+//
+// nType: 类型: 0菜单项, 1主菜单窗口背景, 2子菜单窗口背景.
+//
+// hBkInfoM: 背景管理器句柄.
+func XMenu_SetBkManager(hMenu int, nType int32, hBkInfoM int) {
+	xMenu_SetBkManager.Call(uintptr(hMenu), uintptr(nType), uintptr(hBkInfoM))
+}
+
+// 菜单_取背景管理器, 返回背景管理器句柄.
+//
+// hMenu: 菜单句柄.
+//
+// nType: 类型: 0菜单项, 1主菜单窗口背景, 2子菜单窗口背景.
+func XMenu_GetBkManager(hMenu int, nType int32) int {
+	r, _, _ := xMenu_GetBkManager.Call(uintptr(hMenu), uintptr(nType))
+	return int(r)
+}
+
+// 菜单_取背景管理器Ex, 优先从资源中获取, 返回背景管理器句柄.
+//
+// hMenu: 菜单句柄.
+//
+// nType: 类型: 0菜单项, 1主菜单窗口背景, 2子菜单窗口背景.
+func XMenu_GetBkManagerEx(hMenu int, nType int32) int {
+	r, _, _ := xMenu_GetBkManagerEx.Call(uintptr(hMenu), uintptr(nType))
+	return int(r)
+}
+
+// 菜单_启用CSS.
+//
+// hMenu: 菜单句柄.
+//
+// bEnable: 是否启用.
+func XMenu_EnableCSS(hMenu int, bEnable bool) {
+	xMenu_EnableCSS.Call(uintptr(hMenu), common.BoolPtr(bEnable))
+}
+
+// 菜单_置CSS名称, 设置CSS[套用样式]名称.
+//
+// hMenu: 菜单句柄.
+//
+// nType: 类型: 0菜单项, 1主菜单窗口背景, 2子菜单窗口背景.
+//
+// name: 套用样式名称.
+func XMenu_SetCssName(hMenu int, nType int32, name string) {
+	xMenu_SetCssName.Call(uintptr(hMenu), uintptr(nType), common.StrPtr(name))
+}
+
+// 菜单_取CSS名称.
+//
+// hMenu: 菜单句柄.
+//
+// nType: 类型: 0菜单项, 1主菜单窗口背景, 2子菜单窗口背景.
+func XMenu_GetCssName(hMenu int, nType int32) string {
+	r, _, _ := xMenu_GetCssName.Call(uintptr(hMenu), uintptr(nType))
+	return common.UintPtrToString(r)
+}
