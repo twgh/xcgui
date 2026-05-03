@@ -36,9 +36,13 @@ type App struct {
 //   - 默认会在程序运行目录和系统 system32 目录寻找并加载 xcgui.dll.
 //   - 如果你想要更改 xcgui.dll 的路径, 那么请在调用本函数之前调用 xc.SetXcguiPath().
 //
-// bD2D: 是否启用D2D.
-func New(bD2D bool) *App {
-	if !xc.XInitXCGUI(bD2D) {
+// bD2D: 是否启用D2D, 默认为 true.
+func New(bD2D ...bool) *App {
+	b := true
+	if len(bD2D) > 0 {
+		b = bD2D[0]
+	}
+	if !xc.XInitXCGUI(b) {
 		return nil
 	}
 	return &App{}
@@ -380,9 +384,13 @@ func (a *App) CombineRect(pDest *xc.RECT, pSrc1 *xc.RECT, pSrc2 *xc.RECT) *App {
 
 // 炫彩_显示布局边界, 显示布局对象边界.
 //
-// bShow: 是否显示.
-func (a *App) ShowLayoutFrame(bShow bool) *App {
-	xc.XC_ShowLayoutFrame(bShow)
+// bShow: 是否显示, 默认为 true.
+func (a *App) ShowLayoutFrame(bShow ...bool) *App {
+	show := true
+	if len(bShow) > 0 {
+		show = bShow[0]
+	}
+	xc.XC_ShowLayoutFrame(show)
 	return a
 }
 
@@ -1022,9 +1030,13 @@ func (a *App) LoadStyleFromStringW(fileName string, str string) bool {
 
 // 炫彩_显示边界.
 //
-// bShow: 是否显示.
-func (a *App) ShowSvgFrame(bShow bool) *App {
-	xc.XC_ShowSvgFrame(bShow)
+// bShow: 是否显示, 默认为 true.
+func (a *App) ShowSvgFrame(bShow ...bool) *App {
+	show := true
+	if len(bShow) > 0 {
+		show = bShow[0]
+	}
+	xc.XC_ShowSvgFrame(show)
 	return a
 }
 
