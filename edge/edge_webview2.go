@@ -139,7 +139,11 @@ func (w *WebView2) GetSettings() (*ICoreWebView2Settings, error) {
 
 // EnableBrowserAcceleratorKeys 设置是否启用浏览器快捷键。默认是启用的。
 //   - 此设置对 AcceleratorKeyPressed 事件没有影响。
-func (w *WebView2) EnableBrowserAcceleratorKeys(enable bool) error {
+func (w *WebView2) EnableBrowserAcceleratorKeys(enable ...bool) error {
+	bEnable := true
+	if len(enable) > 0 {
+		bEnable = enable[0]
+	}
 	settings, err := w.GetSettings()
 	if err != nil {
 		return err
@@ -152,7 +156,7 @@ func (w *WebView2) EnableBrowserAcceleratorKeys(enable bool) error {
 	}
 	defer s3.Release()
 
-	return s3.SetAreBrowserAcceleratorKeysEnabled(enable)
+	return s3.SetAreBrowserAcceleratorKeysEnabled(bEnable)
 }
 
 // NotifyParentWindowPositionChanged 通知父窗口位置已更改。

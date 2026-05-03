@@ -86,16 +86,24 @@ func (e *Edit) EnableReadOnly(bEnable bool) *Edit {
 // 编辑框_启用多行.
 //
 // bEnable:.
-func (e *Edit) EnableMultiLine(bEnable bool) *Edit {
-	xc.XEdit_EnableMultiLine(e.Handle, bEnable)
+func (e *Edit) EnableMultiLine(bEnable ...bool) *Edit {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XEdit_EnableMultiLine(e.Handle, enable)
 	return e
 }
 
 // 编辑框_启用密码, 启用密码模式(只支持默认类型编辑框).
 //
 // bEnable: 是否启用.
-func (e *Edit) EnablePassword(bEnable bool) *Edit {
-	xc.XEdit_EnablePassword(e.Handle, bEnable)
+func (e *Edit) EnablePassword(bEnable ...bool) *Edit {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XEdit_EnablePassword(e.Handle, enable)
 	return e
 }
 
@@ -110,8 +118,12 @@ func (e *Edit) EnableAutoSelAll(bEnable bool) *Edit {
 // 编辑框_启用自动取消选择, 当失去焦点时自动取消选择.
 //
 // bEnable: 是否启用.
-func (e *Edit) EnableAutoCancelSel(bEnable bool) *Edit {
-	xc.XEdit_EnableAutoCancelSel(e.Handle, bEnable)
+func (e *Edit) EnableAutoCancelSel(bEnable ...bool) *Edit {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XEdit_EnableAutoCancelSel(e.Handle, enable)
 	return e
 }
 

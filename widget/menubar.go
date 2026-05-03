@@ -79,8 +79,12 @@ func (m *MenuBar) DeleteButton(nIndex int32) bool {
 // 菜单条_启用自动宽度, 根据内容自动调整宽度. (已废弃)请使用内填充限制高度
 //
 // bEnable: 是否启用.
-func (m *MenuBar) EnableAutoWidth(bEnable bool) {
-	xc.XMenuBar_EnableAutoWidth(m.Handle, bEnable)
+func (m *MenuBar) EnableAutoWidth(bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XMenuBar_EnableAutoWidth(m.Handle, enable)
 }
 
 // 菜单条_取菜单按钮. 返回按钮句柄.

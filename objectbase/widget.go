@@ -26,8 +26,12 @@ func (w *Widget) Show(bShow bool) *Widget {
 // 窗口组件_启用布局控制.
 //
 // bEnable:.
-func (w *Widget) EnableLayoutControl(bEnable bool) *Widget {
-	xc.XWidget_EnableLayoutControl(w.Handle, bEnable)
+func (w *Widget) EnableLayoutControl(bEnable ...bool) *Widget {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XWidget_EnableLayoutControl(w.Handle, enable)
 	return w
 }
 

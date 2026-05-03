@@ -278,8 +278,12 @@ func (l *LayoutEle) EnableAutoWrap(bEnable bool) *LayoutEle {
 // EnableOverflowHide 布局盒子_启用溢出隐藏.
 //
 // bEnable: 是否启用.
-func (l *LayoutEle) EnableOverflowHide(bEnable bool) *LayoutEle {
-	xc.XLayoutBox_EnableOverflowHide(l.Handle, bEnable)
+func (l *LayoutEle) EnableOverflowHide(bEnable ...bool) *LayoutEle {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XLayoutBox_EnableOverflowHide(l.Handle, enable)
 	return l
 }
 

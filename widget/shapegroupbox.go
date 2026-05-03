@@ -126,8 +126,12 @@ func (s *ShapeGroupBox) GetRoundAngle(pWidth *int32, pHeight *int32) *ShapeGroup
 // 形状组框_启用圆角.
 //
 // bEnable: 是否启用.
-func (s *ShapeGroupBox) EnableRoundAngle(bEnable bool) *ShapeGroupBox {
-	xc.XShapeGroupBox_EnableRoundAngle(s.Handle, bEnable)
+func (s *ShapeGroupBox) EnableRoundAngle(bEnable ...bool) *ShapeGroupBox {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XShapeGroupBox_EnableRoundAngle(s.Handle, enable)
 	return s
 }
 

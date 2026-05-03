@@ -68,8 +68,12 @@ func (t *ToolBar) InsertSeparator(index int32, color uint32) int32 {
 // 工具条_启用下拉菜单, 启用下拉菜单, 显示隐藏的项.
 //
 // bEnable: 是否启用.
-func (t *ToolBar) EnableButtonMenu(bEnable bool) *ToolBar {
-	xc.XToolBar_EnableButtonMenu(t.Handle, bEnable)
+func (t *ToolBar) EnableButtonMenu(bEnable ...bool) *ToolBar {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XToolBar_EnableButtonMenu(t.Handle, enable)
 	return t
 }
 

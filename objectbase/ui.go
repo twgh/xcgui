@@ -26,8 +26,12 @@ func (u *UI) GetStyle() xcc.XC_OBJECT_STYLE {
 // EnableCSS 可视对象_启用CSS. 启用或禁用样式, 并且覆盖内嵌子元素属性, 例如: 滚动视图上的滚动条, 滚动条上的按钮.
 //
 // bEnable: 是否启用.
-func (u *UI) EnableCSS(bEnable bool) *UI {
-	xc.XUI_EnableCSS(u.Handle, bEnable)
+func (u *UI) EnableCSS(bEnable ...bool) *UI {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XUI_EnableCSS(u.Handle, enable)
 	return u
 }
 

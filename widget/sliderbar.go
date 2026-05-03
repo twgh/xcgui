@@ -113,8 +113,12 @@ func (s *SliderBar) GetButtonObj() *Button {
 // 滑动条_置水平, 设置水平或垂直.
 //
 // bHorizon: 水平或垂直.
-func (s *SliderBar) EnableHorizon(bHorizon bool) *SliderBar {
-	xc.XSliderBar_EnableHorizon(s.Handle, bHorizon)
+func (s *SliderBar) EnableHorizon(bHorizon ...bool) *SliderBar {
+	horizon := true
+	if len(bHorizon) > 0 {
+		horizon = bHorizon[0]
+	}
+	xc.XSliderBar_EnableHorizon(s.Handle, horizon)
 	return s
 }
 

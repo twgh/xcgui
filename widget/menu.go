@@ -363,8 +363,12 @@ func (m *Menu) GetBkManagerObjEx(nType int32) *bkmanager.BkManager {
 // 菜单_启用CSS.
 //
 // bEnable: 是否启用.
-func (m *Menu) EnableCSS(bEnable bool) *Menu {
-	xc.XMenu_EnableCSS(m.Handle, bEnable)
+func (m *Menu) EnableCSS(bEnable ...bool) *Menu {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XMenu_EnableCSS(m.Handle, enable)
 	return m
 }
 

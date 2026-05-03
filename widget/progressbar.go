@@ -103,8 +103,12 @@ func (p *ProgressBar) EnableStretch(bStretch bool) *ProgressBar {
 // 进度条_启用进度文本 显示进度值文本.
 //
 // bShow: 是否启用.
-func (p *ProgressBar) EnableShowText(bShow bool) *ProgressBar {
-	xc.XProgBar_EnableShowText(p.Handle, bShow)
+func (p *ProgressBar) EnableShowText(bShow ...bool) *ProgressBar {
+	show := true
+	if len(bShow) > 0 {
+		show = bShow[0]
+	}
+	xc.XProgBar_EnableShowText(p.Handle, show)
 	return p
 }
 

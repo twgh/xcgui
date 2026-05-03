@@ -88,8 +88,12 @@ func (l *List) InsertColumn(width, iItem int32) int32 {
 // 列表_启用多选, 启用或关闭多选功能.
 //
 // bEnable: 是否启用.
-func (l *List) EnableMultiSel(bEnable bool) *List {
-	xc.XList_EnableMultiSel(l.Handle, bEnable)
+func (l *List) EnableMultiSel(bEnable ...bool) *List {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XList_EnableMultiSel(l.Handle, enable)
 	return l
 }
 
@@ -104,8 +108,12 @@ func (l *List) EnableDragChangeColumnWidth(bEnable bool) *List {
 // 列表_启用垂直滚动条顶部对齐.
 //
 // bTop: 是否启用.
-func (l *List) EnableVScrollBarTop(bTop bool) *List {
-	xc.XList_EnableVScrollBarTop(l.Handle, bTop)
+func (l *List) EnableVScrollBarTop(bTop ...bool) *List {
+	top := true
+	if len(bTop) > 0 {
+		top = bTop[0]
+	}
+	xc.XList_EnableVScrollBarTop(l.Handle, top)
 	return l
 }
 
@@ -128,8 +136,12 @@ func (l *List) EnableFixedRowHeight(bEnable bool) *List {
 // 列表_启用模板复用.
 //
 // bEnable: 是否启用.
-func (l *List) EnableTemplateReuse(bEnable bool) *List {
-	xc.XList_EnableTemplateReuse(l.Handle, bEnable)
+func (l *List) EnableTemplateReuse(bEnable ...bool) *List {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XList_EnableTemplateReuse(l.Handle, enable)
 	return l
 }
 

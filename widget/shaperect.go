@@ -104,7 +104,11 @@ func (s *ShapeRect) EnableFill(bEnable bool) *ShapeRect {
 // 形状矩形_启用圆角.
 //
 // bEnable: 是否启用.
-func (s *ShapeRect) EnableRoundAngle(bEnable bool) *ShapeRect {
-	xc.XShapeRect_EnableRoundAngle(s.Handle, bEnable)
+func (s *ShapeRect) EnableRoundAngle(bEnable ...bool) *ShapeRect {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XShapeRect_EnableRoundAngle(s.Handle, enable)
 	return s
 }

@@ -480,8 +480,12 @@ func (e *Element) EnableDrawBorder(bEnable bool) *Element {
 // 元素_启用画布, 启用或禁用背景画布; 如果禁用那么将绘制在父的画布之上, 也就是说他没有自己的画布.
 //
 // bEnable: 是否启用.
-func (e *Element) EnableCanvas(bEnable bool) *Element {
-	xc.XEle_EnableCanvas(e.Handle, bEnable)
+func (e *Element) EnableCanvas(bEnable ...bool) *Element {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XEle_EnableCanvas(e.Handle, enable)
 	return e
 }
 
@@ -496,8 +500,12 @@ func (e *Element) EnableEvent_XE_PAINT_END(bEnable bool) *Element {
 // 元素_启用背景透明.
 //
 // bEnable: 是否启用.
-func (e *Element) EnableBkTransparent(bEnable bool) *Element {
-	xc.XEle_EnableBkTransparent(e.Handle, bEnable)
+func (e *Element) EnableBkTransparent(bEnable ...bool) *Element {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XEle_EnableBkTransparent(e.Handle, enable)
 	return e
 }
 
@@ -512,8 +520,12 @@ func (e *Element) EnableMouseThrough(bEnable bool) *Element {
 // 元素_启用接收TAB, 启用接收Tab输入.
 //
 // bEnable: 是否启用.
-func (e *Element) EnableKeyTab(bEnable bool) *Element {
-	xc.XEle_EnableKeyTab(e.Handle, bEnable)
+func (e *Element) EnableKeyTab(bEnable ...bool) *Element {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XEle_EnableKeyTab(e.Handle, enable)
 	return e
 }
 

@@ -187,8 +187,12 @@ func (s *ScrollView) ShowSBarV(bShow bool) *ScrollView {
 // 滚动视_启用自动显示滚动条.
 //
 // bEnable: 是否启用.
-func (s *ScrollView) EnableAutoShowScrollBar(bEnable bool) *ScrollView {
-	xc.XSView_EnableAutoShowScrollBar(s.Handle, bEnable)
+func (s *ScrollView) EnableAutoShowScrollBar(bEnable ...bool) *ScrollView {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XSView_EnableAutoShowScrollBar(s.Handle, enable)
 	return s
 }
 

@@ -316,8 +316,12 @@ func (d *Draw) EnableSmoothingMode(bEnable bool) *Draw {
 // 绘制_启用窗口透明判断, 当启用之后, 调用GDI+函数时, 如果参数alpha=255, 将自动修改为254, 应对GDI+的bug, 否则透明通道异常.
 //
 // bTransparent: 是否启用.
-func (d *Draw) EnableWndTransparent(bTransparent bool) *Draw {
-	xc.XDraw_EnableWndTransparent(d.Handle, bTransparent)
+func (d *Draw) EnableWndTransparent(bTransparent ...bool) *Draw {
+	enable := true
+	if len(bTransparent) > 0 {
+		enable = bTransparent[0]
+	}
+	xc.XDraw_EnableWndTransparent(d.Handle, enable)
 	return d
 }
 

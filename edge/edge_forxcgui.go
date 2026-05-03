@@ -450,8 +450,12 @@ func (w *WebView) EnableAutoFocus(bEnable bool) {
 
 // EnableFillParent 启用填充父窗口.
 //   - 启用后 WebView 中设置的固定位置与大小会无效.
-func (w *WebView) EnableFillParent(bEnable bool) {
-	w.fillParent = bEnable
+func (w *WebView) EnableFillParent(bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	w.fillParent = enable
 }
 
 // IsAutoFocus 是否在窗口获得焦点时尝试保持 WebView 的焦点.

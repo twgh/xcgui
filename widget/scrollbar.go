@@ -98,8 +98,12 @@ func (s *ScrollBar) SetSliderPadding(nPadding int32) *ScrollBar {
 // 滚动条_置水平, 设置水平或者垂直.
 //
 // bHorizon: 水平或垂直.
-func (s *ScrollBar) EnableHorizon(bHorizon bool) bool {
-	return xc.XSBar_EnableHorizon(s.Handle, bHorizon)
+func (s *ScrollBar) EnableHorizon(bHorizon ...bool) bool {
+	horizon := true
+	if len(bHorizon) > 0 {
+		horizon = bHorizon[0]
+	}
+	return xc.XSBar_EnableHorizon(s.Handle, horizon)
 }
 
 // 滚动条_取滑块最大长度.

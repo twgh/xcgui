@@ -76,7 +76,11 @@ func (s *ShapeEllipse) EnableBorder(bEnable bool) *ShapeEllipse {
 // 形状圆_启用填充, 启用填充圆.
 //
 // bEnable: 是否启用.
-func (s *ShapeEllipse) EnableFill(bEnable bool) *ShapeEllipse {
-	xc.XShapeEllipse_EnableFill(s.Handle, bEnable)
+func (s *ShapeEllipse) EnableFill(bEnable ...bool) *ShapeEllipse {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XShapeEllipse_EnableFill(s.Handle, enable)
 	return s
 }

@@ -110,8 +110,12 @@ func (b *BkObj) EnableFill(bEnable bool) *BkObj {
 // 背景对象_启用边框, 启用绘制边框.
 //
 // bEnable: 是否启用.
-func (b *BkObj) EnableBorder(bEnable bool) *BkObj {
-	xc.XBkObj_EnableBorder(b.Handle, bEnable)
+func (b *BkObj) EnableBorder(bEnable ...bool) *BkObj {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XBkObj_EnableBorder(b.Handle, enable)
 	return b
 }
 

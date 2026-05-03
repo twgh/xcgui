@@ -66,8 +66,12 @@ func (d *DateTime) GetStyle() int32 {
 // 日期_启用分割栏为斜线, 切换分割栏为: 斜线或横线.
 //
 // bSlash: TRUE: 斜线, FALSE: 横线.
-func (d *DateTime) EnableSplitSlash(bSlash bool) *DateTime {
-	xc.XDateTime_EnableSplitSlash(d.Handle, bSlash)
+func (d *DateTime) EnableSplitSlash(bSlash ...bool) *DateTime {
+	slash := true
+	if len(bSlash) > 0 {
+		slash = bSlash[0]
+	}
+	xc.XDateTime_EnableSplitSlash(d.Handle, slash)
 	return d
 }
 

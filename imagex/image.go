@@ -366,8 +366,12 @@ func (i *Image) EnableTranColor(bEnable bool) *Image {
 // 图片_启用自动销毁, 启用或关闭自动销毁, 当与UI元素关联时有效.
 //
 // bEnable: 启用自动销毁TRUE.
-func (i *Image) EnableAutoDestroy(bEnable bool) *Image {
-	xc.XImage_EnableAutoDestroy(i.Handle, bEnable)
+func (i *Image) EnableAutoDestroy(bEnable ...bool) *Image {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XImage_EnableAutoDestroy(i.Handle, enable)
 	return i
 }
 

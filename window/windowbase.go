@@ -17,8 +17,12 @@ type windowBase struct {
 // 模态窗口_启用自动关闭, 是否自动关闭窗口, 当窗口失去焦点时.
 //
 // bEnable: 开启开关.
-func (w *windowBase) EnableAutoClose(bEnable bool) *windowBase {
-	xc.XModalWnd_EnableAutoClose(w.Handle, bEnable)
+func (w *windowBase) EnableAutoClose(bEnable ...bool) *windowBase {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XModalWnd_EnableAutoClose(w.Handle, enable)
 	return w
 }
 
@@ -364,8 +368,12 @@ func (w *windowBase) EnableDrawBk(bEnable bool) *windowBase {
 // 窗口_启用自动焦点. 当鼠标左键按下是否获得焦点.
 //
 // bEnable: 是否启用.
-func (w *windowBase) EnableAutoFocus(bEnable bool) *windowBase {
-	xc.XWnd_EnableAutoFocus(w.Handle, bEnable)
+func (w *windowBase) EnableAutoFocus(bEnable ...bool) *windowBase {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XWnd_EnableAutoFocus(w.Handle, enable)
 	return w
 }
 
@@ -380,8 +388,12 @@ func (w *windowBase) EnableMaxWindow(bEnable bool) *windowBase {
 // 窗口_启用限制窗口大小.
 //
 // bEnable: 是否启用.
-func (w *windowBase) EnableLimitWindowSize(bEnable bool) *windowBase {
-	xc.XWnd_EnableLimitWindowSize(w.Handle, bEnable)
+func (w *windowBase) EnableLimitWindowSize(bEnable ...bool) *windowBase {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XWnd_EnableLimitWindowSize(w.Handle, enable)
 	return w
 }
 
@@ -1407,8 +1419,12 @@ func (w *windowBase) EnableHorizon(bEnable bool) *windowBase {
 // EnableAutoWrap 布局盒子_启用自动换行.
 //
 // bEnable: 是否启用.
-func (w *windowBase) EnableAutoWrap(bEnable bool) *windowBase {
-	xc.XLayoutBox_EnableAutoWrap(w.Handle, bEnable)
+func (w *windowBase) EnableAutoWrap(bEnable ...bool) *windowBase {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XLayoutBox_EnableAutoWrap(w.Handle, enable)
 	return w
 }
 

@@ -100,8 +100,12 @@ func (t *Tree) EnableExpand(bEnable bool) *Tree {
 // 列表树_启用模板复用.
 //
 // bEnable: 是否启用.
-func (t *Tree) EnableTemplateReuse(bEnable bool) *Tree {
-	xc.XTree_EnableTemplateReuse(t.Handle, bEnable)
+func (t *Tree) EnableTemplateReuse(bEnable ...bool) *Tree {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XTree_EnableTemplateReuse(t.Handle, enable)
 	return t
 }
 

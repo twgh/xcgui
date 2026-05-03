@@ -393,8 +393,12 @@ func (a *App) EnableDebugFile(bEnable bool) *App {
 // 炫彩_启用资源监视器.
 //
 // bEnable: 是否启用.
-func (a *App) EnableResMonitor(bEnable bool) *App {
-	xc.XC_EnableResMonitor(bEnable)
+func (a *App) EnableResMonitor(bEnable ...bool) *App {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XC_EnableResMonitor(enable)
 	return a
 }
 
@@ -1153,8 +1157,12 @@ func (a *App) EnableDPI(bEnable bool) bool {
 // 例如改变了按钮标题后, 将自动调用 xc.XEle_Redraw 更新UI, 默认不启用, 手动和自动各有优势.
 //
 // bEnable: 是否启用.
-func (a *App) EnableAutoRedrawUI(bEnable bool) *App {
-	xc.XC_EnableAutoRedrawUI(bEnable)
+func (a *App) EnableAutoRedrawUI(bEnable ...bool) *App {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XC_EnableAutoRedrawUI(enable)
 	return a
 }
 

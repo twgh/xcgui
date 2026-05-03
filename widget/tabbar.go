@@ -215,8 +215,12 @@ func (t *TabBar) EnableDropMenu(bEnable bool) *TabBar {
 // TAB条_启用标签带关闭按钮, 启用关闭标签功能.
 //
 // bEnable: 是否启用.
-func (t *TabBar) EnableClose(bEnable bool) *TabBar {
-	xc.XTabBar_EnableClose(t.Handle, bEnable)
+func (t *TabBar) EnableClose(bEnable ...bool) *TabBar {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XTabBar_EnableClose(t.Handle, enable)
 	return t
 }
 

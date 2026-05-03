@@ -50,7 +50,11 @@ func (a *AnimaItem) GetUserData() int {
 // 动画项_启用自动销毁.
 //
 // bEnable: 是否启用.
-func (a *AnimaItem) EnableAutoDestroy(bEnable bool) *AnimaItem {
-	xc.XAnimaItem_EnableAutoDestroy(a.Handle, bEnable)
+func (a *AnimaItem) EnableAutoDestroy(bEnable ...bool) *AnimaItem {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XAnimaItem_EnableAutoDestroy(a.Handle, enable)
 	return a
 }

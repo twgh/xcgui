@@ -154,8 +154,12 @@ func (c *ComboBox) EnableEdit(bEdit bool) *ComboBox {
 // 组合框_启用下拉列表高度固定大小, 启用/关闭下拉列表高度固定大小.
 //
 // bEnable: 是否启用.
-func (c *ComboBox) EnableDropHeightFixed(bEnable bool) *ComboBox {
-	xc.XComboBox_EnableDropHeightFixed(c.Handle, bEnable)
+func (c *ComboBox) EnableDropHeightFixed(bEnable ...bool) *ComboBox {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XComboBox_EnableDropHeightFixed(c.Handle, enable)
 	return c
 }
 

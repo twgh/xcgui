@@ -62,8 +62,12 @@ func (t *TextLink) EnableUnderlineLeave(bEnable bool) *TextLink {
 // 文本链接_停留状态下划线, 启用下划线, 鼠标停留状态.
 //
 // bEnable: 是否启用.
-func (t *TextLink) EnableUnderlineStay(bEnable bool) *TextLink {
-	xc.XTextLink_EnableUnderlineStay(t.Handle, bEnable)
+func (t *TextLink) EnableUnderlineStay(bEnable ...bool) *TextLink {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XTextLink_EnableUnderlineStay(t.Handle, enable)
 	return t
 }
 

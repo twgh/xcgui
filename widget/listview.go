@@ -185,8 +185,12 @@ func (l *ListView) EnableTemplateReuse(bEnable bool) *ListView {
 // 列表视_启用虚表.
 //
 // bEnable: 是否启用.
-func (l *ListView) EnableVirtualTable(bEnable bool) *ListView {
-	xc.XListView_EnableVirtualTable(l.Handle, bEnable)
+func (l *ListView) EnableVirtualTable(bEnable ...bool) *ListView {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XListView_EnableVirtualTable(l.Handle, enable)
 	return l
 }
 

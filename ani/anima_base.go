@@ -40,8 +40,12 @@ func (a *animaBase) GetObjectUI() int {
 // 动画_启用自动销毁, TRUE: 当引用计数为0时自动销毁, FALSE: 手动销毁.
 //
 // bEnable: 是否启用.
-func (a *animaBase) EnableAutoDestroy(bEnable bool) *animaBase {
-	xc.XAnima_EnableAutoDestroy(a.Handle, bEnable)
+func (a *animaBase) EnableAutoDestroy(bEnable ...bool) *animaBase {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XAnima_EnableAutoDestroy(a.Handle, enable)
 	return a
 }
 

@@ -163,8 +163,12 @@ func (s *Svg) GetViewBox(pViewBox *xc.RECT) *Svg {
 // SVG_启用自动销毁.
 //
 // bEnable: 是否自动销毁.
-func (s *Svg) EnableAutoDestroy(bEnable bool) *Svg {
-	xc.XSvg_EnableAutoDestroy(s.Handle, bEnable)
+func (s *Svg) EnableAutoDestroy(bEnable ...bool) *Svg {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XSvg_EnableAutoDestroy(s.Handle, enable)
 	return s
 }
 
