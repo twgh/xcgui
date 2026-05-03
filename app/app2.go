@@ -9,8 +9,12 @@ import (
 // 炫彩_启用debug文件.
 //
 // bEnable: 是否启用.
-func EnableDebugFile(bEnable bool) {
-	xc.XC_EnableDebugFile(bEnable)
+func EnableDebugFile(bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XC_EnableDebugFile(enable)
 }
 
 // DebugToFileInfo 炫彩_输出调试信息到文件, 打印调试信息到文件xcgui_debug.txt.
@@ -332,8 +336,12 @@ func SetTextRenderingHint(nType int32) {
 // 炫彩_启用GDI绘制文本, 将影响到以下函数: XDraw_TextOut, XDraw_TextOutEx, XDraw_TextOutA.
 //
 // bEnable: 是否启用.
-func EnableGdiDrawText(bEnable bool) {
-	xc.XC_EnableGdiDrawText(bEnable)
+func EnableGdiDrawText(bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XC_EnableGdiDrawText(enable)
 }
 
 // 炫彩_判断矩形相交, 判断两个矩形是否相交及重叠.
@@ -366,8 +374,12 @@ func ShowLayoutFrame(bShow bool) {
 // 炫彩_启用资源监视器.
 //
 // bEnable: 是否启用.
-func EnableResMonitor(bEnable bool) {
-	xc.XC_EnableResMonitor(bEnable)
+func EnableResMonitor(bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XC_EnableResMonitor(enable)
 }
 
 // 炫彩_置布局边界颜色.
@@ -380,15 +392,23 @@ func SetLayoutFrameColor(color uint32) {
 // 炫彩_启用错误弹窗, 启用错误弹出, 通过该接口可以设置遇到严重错误时不弹出消息提示框.
 //
 // bEnable: 是否启用.
-func EnableErrorMessageBox(bEnable bool) {
-	xc.XC_EnableErrorMessageBox(bEnable)
+func EnableErrorMessageBox(bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XC_EnableErrorMessageBox(enable)
 }
 
 // 炫彩_启用自动退出程序, 启动或禁用自动退出程序, 当检测到所有用户创建的窗口都关闭时, 自动退出程序; 可调用 XC_PostQuitMessage() 手动退出程序.
 //
 // bEnable: 是否启用.
-func EnableAutoExitApp(bEnable bool) {
-	xc.XC_EnableAutoExitApp(bEnable)
+func EnableAutoExitApp(bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XC_EnableAutoExitApp(enable)
 }
 
 // 炫彩_取文本绘制大小.
@@ -925,8 +945,12 @@ func ShowSvgFrame(bShow bool) {
 // 炫彩_启用自动DPI. 当启用后, 创建窗口时自动检测DPI调整UI缩放, 处理DPI改变消息; 禁用后,当DPI改变,需要手动设置窗口DPI.
 //
 // bEnable: 是否启用.
-func EnableAutoDPI(bEnable bool) {
-	xc.XC_EnableAutoDPI(bEnable)
+func EnableAutoDPI(bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XC_EnableAutoDPI(enable)
 }
 
 // 炫彩_置窗口图标. 全局窗口图标, 所有未设置图标的窗口, 都将使用此默认图标.
@@ -945,9 +969,13 @@ func SetWindowIcon(hImage int) {
 //
 // 参考[MSDN](https://learn.microsoft.com/zh-cn/windows/win32/hidpi/setting-the-default-dpi-awareness-for-a-process)
 //
-// bEnable: 是否启用.
-func EnableDPI(bEnable bool) bool {
-	return xc.XC_EnableDPI(bEnable)
+// bEnable: 是否启用, 不填默认为 true.
+func EnableDPI(bEnable ...bool) bool {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	return xc.XC_EnableDPI(enable)
 }
 
 // 炫彩_启用自动重绘UI. 当修改UI后将自动调用重绘函数更新UI.
@@ -955,8 +983,12 @@ func EnableDPI(bEnable bool) bool {
 // 例如改变了按钮标题后, 将自动调用 xc.XEle_Redraw 更新UI, 默认不启用, 手动和自动各有优势.
 //
 // bEnable: 是否启用.
-func EnableAutoRedrawUI(bEnable bool) {
-	xc.XC_EnableAutoRedrawUI(bEnable)
+func EnableAutoRedrawUI(bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XC_EnableAutoRedrawUI(enable)
 }
 
 // 炫彩_取句柄总数. 获取当前所使用的句柄总数量, 返回当前所使用的句柄总数量.

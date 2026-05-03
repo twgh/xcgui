@@ -5,8 +5,12 @@ import "github.com/twgh/xcgui/xc"
 // 资源_启用延迟加载, 启用延迟加载; 图片文件, 列表项模板文件.
 //
 // bEnable: 是否启用.
-func EnableDelayLoad(bEnable bool) {
-	xc.XRes_EnableDelayLoad(bEnable)
+func EnableDelayLoad(bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XRes_EnableDelayLoad(enable)
 }
 
 // 资源_置文件加载回调, 设置文件加载回调函数.

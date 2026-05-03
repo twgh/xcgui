@@ -36,7 +36,7 @@ type App struct {
 //   - 默认会在程序运行目录和系统 system32 目录寻找并加载 xcgui.dll.
 //   - 如果你想要更改 xcgui.dll 的路径, 那么请在调用本函数之前调用 xc.SetXcguiPath().
 //
-// bD2D: 是否启用D2D, 默认为 true.
+// bD2D: 是否启用D2D, 不填默认为 true.
 func New(bD2D ...bool) *App {
 	b := true
 	if len(bD2D) > 0 {
@@ -384,7 +384,7 @@ func (a *App) CombineRect(pDest *xc.RECT, pSrc1 *xc.RECT, pSrc2 *xc.RECT) *App {
 
 // 炫彩_显示布局边界, 显示布局对象边界.
 //
-// bShow: 是否显示, 默认为 true.
+// bShow: 是否显示, 不填默认为 true.
 func (a *App) ShowLayoutFrame(bShow ...bool) *App {
 	show := true
 	if len(bShow) > 0 {
@@ -1030,7 +1030,7 @@ func (a *App) LoadStyleFromStringW(fileName string, str string) bool {
 
 // 炫彩_显示边界.
 //
-// bShow: 是否显示, 默认为 true.
+// bShow: 是否显示, 不填默认为 true.
 func (a *App) ShowSvgFrame(bShow ...bool) *App {
 	show := true
 	if len(bShow) > 0 {

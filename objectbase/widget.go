@@ -63,24 +63,36 @@ func (w *Widget) GetHWINDOW() int {
 // 窗口组件_布局项_启用换行, 强制换行.
 //
 // bWrap: 是否换行.
-func (w *Widget) LayoutItem_EnableWrap(bWrap bool) *Widget {
-	xc.XWidget_LayoutItem_EnableWrap(w.Handle, bWrap)
+func (w *Widget) LayoutItem_EnableWrap(bWrap ...bool) *Widget {
+	enable := true
+	if len(bWrap) > 0 {
+		enable = bWrap[0]
+	}
+	xc.XWidget_LayoutItem_EnableWrap(w.Handle, enable)
 	return w
 }
 
 // 窗口组件_布局项_启用交换, 根据水平垂直布局变换, 交换属性(宽度,高度,最小宽度,最小高度).
 //
 // bEnable: 是否启用.
-func (w *Widget) LayoutItem_EnableSwap(bEnable bool) *Widget {
-	xc.XWidget_LayoutItem_EnableSwap(w.Handle, bEnable)
+func (w *Widget) LayoutItem_EnableSwap(bEnable ...bool) *Widget {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XWidget_LayoutItem_EnableSwap(w.Handle, enable)
 	return w
 }
 
 // 窗口组件_布局项_启用浮动, 向反方向对齐.
 //
 // bFloat: 是否浮动.
-func (w *Widget) LayoutItem_EnableFloat(bFloat bool) *Widget {
-	xc.XWidget_LayoutItem_EnableFloat(w.Handle, bFloat)
+func (w *Widget) LayoutItem_EnableFloat(bFloat ...bool) *Widget {
+	enable := true
+	if len(bFloat) > 0 {
+		enable = bFloat[0]
+	}
+	xc.XWidget_LayoutItem_EnableFloat(w.Handle, enable)
 	return w
 }
 
