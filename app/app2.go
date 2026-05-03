@@ -996,3 +996,30 @@ func PropertyList_GetSize(propertylist int) int32 {
 func PropertyList_GetString(propertylist int, name string) string {
 	return xc.XPropertyList_GetString(propertylist, name)
 }
+
+// LoadLayout_Create 炫彩_加载布局文件_创建, 返回创建的UI对象句柄.
+//   - 当调用 xc.XC_LoadLayout 时遇到扩展对象, 用户可在回调函数中创建内置UI对象.
+//
+// data: 内部使用, 包含布局文件相关信息.
+//
+// propertylist: 属性列表.
+//
+// uiType: UI类型, xcc.XC_OBJECT_TYPE.
+//
+// hParent: 父句柄.
+func LoadLayout_Create(data, propertylist int, uiType xcc.XC_OBJECT_TYPE, hParent int) int {
+	return xc.XC_LoadLayout_Create(data, propertylist, uiType, hParent)
+}
+
+// SetCallBack_LoadLayout 炫彩_置回调_加载布局文件.
+//   - 为加载布局文件设置回调函数, 当调用 xc.XC_LoadLayout 时遇到扩展对象, 回调用户设置的回调函数, 让用户在回调函数中创建扩展对象.
+//
+// callback: 回调函数.
+func SetCallBack_LoadLayout(callback xc.FunLoadLayout) {
+	xc.XC_SetCallBack_LoadLayout(callback)
+}
+
+// RemoveCallBack_LoadLayout 炫彩_移除布局加载回调.
+func RemoveCallBack_LoadLayout() {
+	xc.XC_RemoveCallBack_LoadLayout()
+}

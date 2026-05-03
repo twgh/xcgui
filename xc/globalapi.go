@@ -1,6 +1,7 @@
 package xc
 
 import (
+	"sync"
 	"syscall"
 	"unsafe"
 
@@ -760,6 +761,68 @@ func XPropertyList_GetSize(propertylist int) int32 {
 func XPropertyList_GetString(propertylist int, name string) string {
 	r, _, _ := xPropertyList_GetString.Call(uintptr(propertylist), common.StrPtr(name))
 	return common.UintPtrToString(r)
+}
+
+// XC_LoadLayout_Create 炫彩_加载布局文件_创建, 返回创建的UI对象句柄.
+//   - 当调用 XC_LoadLayout 时遇到扩展对象, 用户可在回调函数中创建内置UI对象.
+//
+// data: 内部使用, 包含布局文件相关信息.
+//
+// propertylist: 属性列表.
+//
+// uiType: UI类型, xcc.XC_OBJECT_TYPE.
+//
+// hParent: 父句柄.
+func XC_LoadLayout_Create(data, propertylist int, uiType xcc.XC_OBJECT_TYPE, hParent int) int {
+	r, _, _ := xC_LoadLayout_Create.Call(uintptr(data), uintptr(propertylist), uintptr(uiType), uintptr(hParent))
+	return int(r)
+}
+
+// XC_SetCallBack_LoadLayout 炫彩_置回调_加载布局文件.
+//   - 为加载布局文件设置回调函数, 当调用 XC_LoadLayout 时遇到扩展对象, 回调用户设置的回调函数, 让用户在回调函数中创建扩展对象.
+//
+// callback: 回调函数.
+func XC_SetCallBack_LoadLayout(callback FunLoadLayout) {
+	loadLayoutCallbackOnce.Do(func() {
+		loadLayoutCallbackPtr = syscall.NewCallback(loadLayoutCallbackShell)
+	})
+	loadLayoutCallback = callback
+	xC_SetCallBack_LoadLayout.Call(loadLayoutCallbackPtr)
+}
+
+// XC_RemoveCallBack_LoadLayout 炫彩_移除布局加载回调.
+func XC_RemoveCallBack_LoadLayout() {
+	loadLayoutCallback = nil
+}
+
+var (
+	// loadLayoutCallback 布局加载回调
+	loadLayoutCallback FunLoadLayout
+	// loadLayoutCallbackPtr 布局加载回调函数指针
+	loadLayoutCallbackPtr uintptr
+	// loadLayoutCallbackOnce 布局加载回调单次执行
+	loadLayoutCallbackOnce sync.Once
+)
+
+// FunLoadLayout 加载布局文件回调, 用于 XC_SetCallBack_LoadLayout.
+//
+// fileName: 布局文件名.
+//
+// uiName: 布局文件名.
+//
+// data: 包含布局文件相关信息.
+//
+// propertylist: 属性列表.
+//
+// hParent: 父对象句柄.
+type FunLoadLayout func(fileName, uiName string, data, propertylist, hParent int) int
+
+// loadLayoutCallbackShell 布局加载回调函数壳
+func loadLayoutCallbackShell(fileName, uiName uintptr, data, propertylist, hParent int) int {
+	if loadLayoutCallback != nil {
+		return loadLayoutCallback(common.UintPtrToString(fileName), common.UintPtrToString(uiName), data, propertylist, hParent)
+	}
+	return 0
 }
 
 /* // 炫彩_打印调试信息, 打印调试信息到文件xcgui_debug.txt.[无效]
