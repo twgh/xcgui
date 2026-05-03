@@ -53,8 +53,12 @@ func NewEditorByUIDName(name string) *Editor {
 /*// 代码编辑框_启用空格选择自动匹配项.
 //
 // bEnable: 是否启用.
-func (e *Editor) EnableAutoMatchSpaseSelect(bEnable bool) int {
-	return xc.XEditor_EnableAutoMatchSpaseSelect(e.Handle, bEnable)
+func (e *Editor) EnableAutoMatchSpaseSelect(bEnable ...bool) int {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	return xc.XEditor_EnableAutoMatchSpaseSelect(e.Handle, enable)
 }*/
 
 // 代码编辑框_判断断点.

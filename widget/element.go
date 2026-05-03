@@ -468,16 +468,24 @@ func (e *Element) EnableFocus(bEnable ...bool) *Element {
 // 元素_启用绘制焦点.
 //
 // bEnable: 是否启用.
-func (e *Element) EnableDrawFocus(bEnable bool) *Element {
-	xc.XEle_EnableDrawFocus(e.Handle, bEnable)
+func (e *Element) EnableDrawFocus(bEnable ...bool) *Element {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XEle_EnableDrawFocus(e.Handle, enable)
 	return e
 }
 
 // 元素_启用绘制边框, 启用或禁用绘制默认边框.
 //
 // bEnable: 是否启用.
-func (e *Element) EnableDrawBorder(bEnable bool) *Element {
-	xc.XEle_EnableDrawBorder(e.Handle, bEnable)
+func (e *Element) EnableDrawBorder(bEnable ...bool) *Element {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XEle_EnableDrawBorder(e.Handle, enable)
 	return e
 }
 
@@ -496,8 +504,12 @@ func (e *Element) EnableCanvas(bEnable ...bool) *Element {
 // 元素_启用事件_XE_PAINT_END.
 //
 // bEnable: 是否启用.
-func (e *Element) EnableEvent_XE_PAINT_END(bEnable bool) *Element {
-	xc.XEle_EnableEvent_XE_PAINT_END(e.Handle, bEnable)
+func (e *Element) EnableEvent_XE_PAINT_END(bEnable ...bool) *Element {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XEle_EnableEvent_XE_PAINT_END(e.Handle, enable)
 	return e
 }
 
@@ -516,8 +528,12 @@ func (e *Element) EnableBkTransparent(bEnable ...bool) *Element {
 // 元素_启用鼠标穿透. 启用鼠标穿透, 如果启用, 那么该元素不能接收到鼠标事件, 但是他的子元素不受影响, 任然可以接收鼠标事件.
 //
 // bEnable: 是否启用.
-func (e *Element) EnableMouseThrough(bEnable bool) *Element {
-	xc.XEle_EnableMouseThrough(e.Handle, bEnable)
+func (e *Element) EnableMouseThrough(bEnable ...bool) *Element {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XEle_EnableMouseThrough(e.Handle, enable)
 	return e
 }
 
@@ -548,8 +564,12 @@ func (e *Element) EnableSwitchFocus(bEnable ...bool) *Element {
 // 元素_启用事件_XE_MOUSEWHEEL, 启用接收鼠标滚动事件, 如果禁用那么事件会传递给父元素.
 //
 // bEnable: 是否启用.
-func (e *Element) EnableEvent_XE_MOUSEWHEEL(bEnable bool) *Element {
-	xc.XEle_EnableEvent_XE_MOUSEWHEEL(e.Handle, bEnable)
+func (e *Element) EnableEvent_XE_MOUSEWHEEL(bEnable ...bool) *Element {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XEle_EnableEvent_XE_MOUSEWHEEL(e.Handle, enable)
 	return e
 }
 
@@ -583,8 +603,12 @@ func (e *Element) GetZOrder() int32 {
 // 元素_启用置顶, 设置元素置顶.
 //
 // bTopmost: 是否置顶显示.
-func (e *Element) EnableTopmost(bTopmost bool) bool {
-	return xc.XEle_EnableTopmost(e.Handle, bTopmost)
+func (e *Element) EnableTopmost(bTopmost ...bool) bool {
+	enable := true
+	if len(bTopmost) > 0 {
+		enable = bTopmost[0]
+	}
+	return xc.XEle_EnableTopmost(e.Handle, enable)
 }
 
 // 元素_重绘.

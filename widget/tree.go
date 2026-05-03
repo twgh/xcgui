@@ -96,8 +96,12 @@ func (t *Tree) EnableConnectLine(bEnable bool, bSolid bool) *Tree {
 // 列表树_启用展开, 启动或关闭默认展开功能, 如果开启新插入的项将自动展开.
 //
 // bEnable: 是否启用.
-func (t *Tree) EnableExpand(bEnable bool) *Tree {
-	xc.XTree_EnableExpand(t.Handle, bEnable)
+func (t *Tree) EnableExpand(bEnable ...bool) *Tree {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XTree_EnableExpand(t.Handle, enable)
 	return t
 }
 

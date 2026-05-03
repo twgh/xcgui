@@ -85,8 +85,12 @@ func (l *LayoutFrame) EnableHorizon(bEnable ...bool) *LayoutFrame {
 // EnableAutoWrap 布局盒子_启用自动换行.
 //
 // bEnable: 是否启用.
-func (l *LayoutFrame) EnableAutoWrap(bEnable bool) *LayoutFrame {
-	xc.XLayoutBox_EnableAutoWrap(l.Handle, bEnable)
+func (l *LayoutFrame) EnableAutoWrap(bEnable ...bool) *LayoutFrame {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XLayoutBox_EnableAutoWrap(l.Handle, enable)
 	return l
 }
 

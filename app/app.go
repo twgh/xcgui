@@ -348,8 +348,12 @@ func (a *App) SetTextRenderingHint(nType int32) *App {
 // 炫彩_启用GDI绘制文本, 将影响到以下函数: XDraw_TextOut, XDraw_TextOutEx, XDraw_TextOutA.
 //
 // bEnable: 是否启用.
-func (a *App) EnableGdiDrawText(bEnable bool) *App {
-	xc.XC_EnableGdiDrawText(bEnable)
+func (a *App) EnableGdiDrawText(bEnable ...bool) *App {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XC_EnableGdiDrawText(enable)
 	return a
 }
 
@@ -385,8 +389,12 @@ func (a *App) ShowLayoutFrame(bShow bool) *App {
 // 炫彩_启用debug文件.
 //
 // bEnable: 是否启用.
-func (a *App) EnableDebugFile(bEnable bool) *App {
-	xc.XC_EnableDebugFile(bEnable)
+func (a *App) EnableDebugFile(bEnable ...bool) *App {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XC_EnableDebugFile(enable)
 	return a
 }
 
@@ -425,8 +433,12 @@ func (a *App) EnableErrorMessageBox(bEnable ...bool) *App {
 // 炫彩_启用自动退出程序, 启动或禁用自动退出程序, 当检测到所有用户创建的窗口都关闭时, 自动退出程序; 可调用 XC_PostQuitMessage() 手动退出程序.
 //
 // bEnable: 是否启用.
-func (a *App) EnableAutoExitApp(bEnable bool) *App {
-	xc.XC_EnableAutoExitApp(bEnable)
+func (a *App) EnableAutoExitApp(bEnable ...bool) *App {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XC_EnableAutoExitApp(enable)
 	return a
 }
 
@@ -1156,8 +1168,12 @@ func (a *App) SetWindowIcon(hImage int) *App {
 // 参考[MSDN](https://learn.microsoft.com/zh-cn/windows/win32/hidpi/setting-the-default-dpi-awareness-for-a-process)
 //
 // bEnable: 是否启用.
-func (a *App) EnableDPI(bEnable bool) bool {
-	return xc.XC_EnableDPI(bEnable)
+func (a *App) EnableDPI(bEnable ...bool) bool {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	return xc.XC_EnableDPI(enable)
 }
 
 // 炫彩_启用自动重绘UI. 当修改UI后将自动调用重绘函数更新UI.

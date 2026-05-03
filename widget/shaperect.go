@@ -100,8 +100,12 @@ func (s *ShapeRect) EnableBorder(bEnable ...bool) *ShapeRect {
 // 形状矩形_启用填充, 启用填充矩形.
 //
 // bEnable: 是否启用.
-func (s *ShapeRect) EnableFill(bEnable bool) *ShapeRect {
-	xc.XShapeRect_EnableFill(s.Handle, bEnable)
+func (s *ShapeRect) EnableFill(bEnable ...bool) *ShapeRect {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XShapeRect_EnableFill(s.Handle, enable)
 	return s
 }
 

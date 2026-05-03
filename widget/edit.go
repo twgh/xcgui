@@ -70,8 +70,12 @@ func NewEditByUIDName(name string) *Edit {
 // 编辑框_启用自动换行.
 //
 // bEnable: 是否启用.
-func (e *Edit) EnableAutoWrap(bEnable bool) *Edit {
-	xc.XEdit_EnableAutoWrap(e.Handle, bEnable)
+func (e *Edit) EnableAutoWrap(bEnable ...bool) *Edit {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XEdit_EnableAutoWrap(e.Handle, enable)
 	return e
 }
 

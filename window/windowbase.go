@@ -29,8 +29,12 @@ func (w *windowBase) EnableAutoClose(bEnable ...bool) *windowBase {
 // 模态窗口_启用ESC关闭, 当用户按ESC键时自动关闭模态窗口.
 //
 // bEnable: 是否启用.
-func (w *windowBase) EnableEscClose(bEnable bool) *windowBase {
-	xc.XModalWnd_EnableEscClose(w.Handle, bEnable)
+func (w *windowBase) EnableEscClose(bEnable ...bool) *windowBase {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XModalWnd_EnableEscClose(w.Handle, enable)
 	return w
 }
 
@@ -336,32 +340,48 @@ func (w *windowBase) GetCursor() uintptr {
 // 窗口_启用拖动边框.
 //
 // bEnable: 是否启用.
-func (w *windowBase) EnableDragBorder(bEnable bool) *windowBase {
-	xc.XWnd_EnableDragBorder(w.Handle, bEnable)
+func (w *windowBase) EnableDragBorder(bEnable ...bool) *windowBase {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XWnd_EnableDragBorder(w.Handle, enable)
 	return w
 }
 
 // 窗口_启用拖动窗口.
 //
 // bEnable: 是否启用.
-func (w *windowBase) EnableDragWindow(bEnable bool) *windowBase {
-	xc.XWnd_EnableDragWindow(w.Handle, bEnable)
+func (w *windowBase) EnableDragWindow(bEnable ...bool) *windowBase {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XWnd_EnableDragWindow(w.Handle, enable)
 	return w
 }
 
 // 窗口_启用拖动标题栏.
 //
 // bEnable: 是否启用.
-func (w *windowBase) EnableDragCaption(bEnable bool) *windowBase {
-	xc.XWnd_EnableDragCaption(w.Handle, bEnable)
+func (w *windowBase) EnableDragCaption(bEnable ...bool) *windowBase {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XWnd_EnableDragCaption(w.Handle, enable)
 	return w
 }
 
 // 窗口_启用绘制背景.
 //
 // bEnable: 是否启用.
-func (w *windowBase) EnableDrawBk(bEnable bool) *windowBase {
-	xc.XWnd_EnableDrawBk(w.Handle, bEnable)
+func (w *windowBase) EnableDrawBk(bEnable ...bool) *windowBase {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XWnd_EnableDrawBk(w.Handle, enable)
 	return w
 }
 
@@ -380,8 +400,12 @@ func (w *windowBase) EnableAutoFocus(bEnable ...bool) *windowBase {
 // 窗口_启用允许最大化.
 //
 // bEnable: 是否启用.
-func (w *windowBase) EnableMaxWindow(bEnable bool) *windowBase {
-	xc.XWnd_EnableMaxWindow(w.Handle, bEnable)
+func (w *windowBase) EnableMaxWindow(bEnable ...bool) *windowBase {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XWnd_EnableMaxWindow(w.Handle, enable)
 	return w
 }
 
@@ -400,8 +424,12 @@ func (w *windowBase) EnableLimitWindowSize(bEnable ...bool) *windowBase {
 // 窗口_启用布局.
 //
 // bEnable: 是否启用.
-func (w *windowBase) EnableLayout(bEnable bool) *windowBase {
-	xc.XWnd_EnableLayout(w.Handle, bEnable)
+func (w *windowBase) EnableLayout(bEnable ...bool) *windowBase {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XWnd_EnableLayout(w.Handle, enable)
 	return w
 }
 
@@ -944,8 +972,12 @@ func (w *windowBase) GetTransparentType() xcc.Window_Transparent_ {
 // 窗口_启用拖放文件.
 //
 // bEnable: 是否启用.
-func (w *windowBase) EnableDragFiles(bEnable bool) *windowBase {
-	xc.XWnd_EnableDragFiles(w.Handle, bEnable)
+func (w *windowBase) EnableDragFiles(bEnable ...bool) *windowBase {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XWnd_EnableDragFiles(w.Handle, enable)
 	return w
 }
 
@@ -1415,8 +1447,12 @@ LayoutBox-布局盒子
 // EnableHorizon 布局盒子_启用水平.
 //
 // bEnable: 是否启用.
-func (w *windowBase) EnableHorizon(bEnable bool) *windowBase {
-	xc.XLayoutBox_EnableHorizon(w.Handle, bEnable)
+func (w *windowBase) EnableHorizon(bEnable ...bool) *windowBase {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XLayoutBox_EnableHorizon(w.Handle, enable)
 	return w
 }
 

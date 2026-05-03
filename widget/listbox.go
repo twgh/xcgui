@@ -96,8 +96,12 @@ func (l *ListBox) EnableTemplateReuse(bEnable ...bool) *ListBox {
 // 列表框_启用虚表.
 //
 // bEnable: 是否启用.
-func (l *ListBox) EnableVirtualTable(bEnable bool) *ListBox {
-	xc.XListBox_EnableVirtualTable(l.Handle, bEnable)
+func (l *ListBox) EnableVirtualTable(bEnable ...bool) *ListBox {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XListBox_EnableVirtualTable(l.Handle, enable)
 	return l
 }
 

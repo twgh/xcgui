@@ -87,8 +87,12 @@ func (p *ProgressBar) GetPos() int32 {
 // 进度条_置水平, 设置水平或垂直.
 //
 // bHorizon: 水平或垂直.
-func (p *ProgressBar) EnableHorizon(bHorizon bool) *ProgressBar {
-	xc.XProgBar_EnableHorizon(p.Handle, bHorizon)
+func (p *ProgressBar) EnableHorizon(bHorizon ...bool) *ProgressBar {
+	enable := true
+	if len(bHorizon) > 0 {
+		enable = bHorizon[0]
+	}
+	xc.XProgBar_EnableHorizon(p.Handle, enable)
 	return p
 }
 

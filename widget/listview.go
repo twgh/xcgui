@@ -169,8 +169,12 @@ func (l *ListView) HitTestOffset(pPt *xc.POINT, pOutGroup *int32, pOutItem *int3
 // 列表视_启用多选.
 //
 // bEnable: 是否启用.
-func (l *ListView) EnableMultiSel(bEnable bool) *ListView {
-	xc.XListView_EnableMultiSel(l.Handle, bEnable)
+func (l *ListView) EnableMultiSel(bEnable ...bool) *ListView {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XListView_EnableMultiSel(l.Handle, enable)
 	return l
 }
 

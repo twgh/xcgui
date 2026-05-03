@@ -148,8 +148,12 @@ func (m *Menu) SetAutoDestroy(bAuto bool) *Menu {
 // 菜单_启用用户绘制背景, 是否有用户绘制菜单背景, 如果启用XWM_MENU_DRAW_BACKGROUND和XE_MENU_DRAW_BACKGROUND事件有效.
 //
 // bEnable: 是否启用.
-func (m *Menu) EnableDrawBackground(bEnable bool) *Menu {
-	xc.XMenu_EnableDrawBackground(m.Handle, bEnable)
+func (m *Menu) EnableDrawBackground(bEnable ...bool) *Menu {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XMenu_EnableDrawBackground(m.Handle, enable)
 	return m
 }
 

@@ -199,8 +199,12 @@ func (t *TabBar) SetDown() *TabBar {
 // TAB条_启用平铺, 平铺标签, 每个标签显示相同大小.
 //
 // bTile: 是否启用.
-func (t *TabBar) EnableTile(bTile bool) *TabBar {
-	xc.XTabBar_EnableTile(t.Handle, bTile)
+func (t *TabBar) EnableTile(bTile ...bool) *TabBar {
+	enable := true
+	if len(bTile) > 0 {
+		enable = bTile[0]
+	}
+	xc.XTabBar_EnableTile(t.Handle, enable)
 	return t
 }
 

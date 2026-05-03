@@ -100,8 +100,12 @@ func (l *List) EnableMultiSel(bEnable ...bool) *List {
 // 列表_启用拖动更改列宽, 启用拖动改变列宽度.
 //
 // bEnable: 是否启用.
-func (l *List) EnableDragChangeColumnWidth(bEnable bool) *List {
-	xc.XList_EnableDragChangeColumnWidth(l.Handle, bEnable)
+func (l *List) EnableDragChangeColumnWidth(bEnable ...bool) *List {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XList_EnableDragChangeColumnWidth(l.Handle, enable)
 	return l
 }
 
@@ -120,8 +124,12 @@ func (l *List) EnableVScrollBarTop(bTop ...bool) *List {
 // 列表_启用行背景铺满.
 //
 // bFull: 是否启用.
-func (l *List) EnableRowBkFull(bFull bool) *List {
-	xc.XList_EnableRowBkFull(l.Handle, bFull)
+func (l *List) EnableRowBkFull(bFull ...bool) *List {
+	enable := true
+	if len(bFull) > 0 {
+		enable = bFull[0]
+	}
+	xc.XList_EnableRowBkFull(l.Handle, enable)
 	return l
 }
 
@@ -152,8 +160,12 @@ func (l *List) EnableTemplateReuse(bEnable ...bool) *List {
 // 列表_启用虚表.
 //
 // bEnable: 是否启用.
-func (l *List) EnableVirtualTable(bEnable bool) *List {
-	xc.XList_EnableVirtualTable(l.Handle, bEnable)
+func (l *List) EnableVirtualTable(bEnable ...bool) *List {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xc.XList_EnableVirtualTable(l.Handle, enable)
 	return l
 }
 
