@@ -71,7 +71,7 @@ func NewListBoxByUIDName(name string) *ListBox {
 
 // 列表框_启用固定行高.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (l *ListBox) EnableFixedRowHeight(bEnable ...bool) *ListBox {
 	enable := true
 	if len(bEnable) > 0 {
@@ -83,7 +83,7 @@ func (l *ListBox) EnableFixedRowHeight(bEnable ...bool) *ListBox {
 
 // 列表框_启用模板复用.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (l *ListBox) EnableTemplateReuse(bEnable ...bool) *ListBox {
 	enable := true
 	if len(bEnable) > 0 {
@@ -95,7 +95,7 @@ func (l *ListBox) EnableTemplateReuse(bEnable ...bool) *ListBox {
 
 // 列表框_启用虚表.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (l *ListBox) EnableVirtualTable(bEnable ...bool) *ListBox {
 	enable := true
 	if len(bEnable) > 0 {
@@ -314,7 +314,7 @@ func (l *ListBox) GetTemplateObject(iItem, nTempItemID int32) int {
 
 // 列表框_启用多选, 是否启用多行选择功能.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (l *ListBox) EnableMultiSel(bEnable ...bool) *ListBox {
 	enable := true
 	if len(bEnable) > 0 {

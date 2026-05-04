@@ -459,7 +459,7 @@ func (e *Element) Enable(bEnable ...bool) *Element {
 
 // 元素_启用焦点, 启用焦点.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (e *Element) EnableFocus(bEnable ...bool) *Element {
 	enable := true
 	if len(bEnable) > 0 {
@@ -471,7 +471,7 @@ func (e *Element) EnableFocus(bEnable ...bool) *Element {
 
 // 元素_启用绘制焦点.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (e *Element) EnableDrawFocus(bEnable ...bool) *Element {
 	enable := true
 	if len(bEnable) > 0 {
@@ -483,7 +483,7 @@ func (e *Element) EnableDrawFocus(bEnable ...bool) *Element {
 
 // 元素_启用绘制边框, 启用或禁用绘制默认边框.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (e *Element) EnableDrawBorder(bEnable ...bool) *Element {
 	enable := true
 	if len(bEnable) > 0 {
@@ -495,7 +495,7 @@ func (e *Element) EnableDrawBorder(bEnable ...bool) *Element {
 
 // 元素_启用画布, 启用或禁用背景画布; 如果禁用那么将绘制在父的画布之上, 也就是说他没有自己的画布.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (e *Element) EnableCanvas(bEnable ...bool) *Element {
 	enable := true
 	if len(bEnable) > 0 {
@@ -507,7 +507,7 @@ func (e *Element) EnableCanvas(bEnable ...bool) *Element {
 
 // 元素_启用事件_XE_PAINT_END.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (e *Element) EnableEvent_XE_PAINT_END(bEnable ...bool) *Element {
 	enable := true
 	if len(bEnable) > 0 {
@@ -519,7 +519,7 @@ func (e *Element) EnableEvent_XE_PAINT_END(bEnable ...bool) *Element {
 
 // 元素_启用背景透明.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (e *Element) EnableBkTransparent(bEnable ...bool) *Element {
 	enable := true
 	if len(bEnable) > 0 {
@@ -531,7 +531,7 @@ func (e *Element) EnableBkTransparent(bEnable ...bool) *Element {
 
 // 元素_启用鼠标穿透. 启用鼠标穿透, 如果启用, 那么该元素不能接收到鼠标事件, 但是他的子元素不受影响, 任然可以接收鼠标事件.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (e *Element) EnableMouseThrough(bEnable ...bool) *Element {
 	enable := true
 	if len(bEnable) > 0 {
@@ -543,7 +543,7 @@ func (e *Element) EnableMouseThrough(bEnable ...bool) *Element {
 
 // 元素_启用接收TAB, 启用接收Tab输入.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (e *Element) EnableKeyTab(bEnable ...bool) *Element {
 	enable := true
 	if len(bEnable) > 0 {
@@ -555,7 +555,7 @@ func (e *Element) EnableKeyTab(bEnable ...bool) *Element {
 
 // 元素_启用切换焦点, 启用接受通过键盘切换焦点.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (e *Element) EnableSwitchFocus(bEnable ...bool) *Element {
 	enable := true
 	if len(bEnable) > 0 {
@@ -567,7 +567,7 @@ func (e *Element) EnableSwitchFocus(bEnable ...bool) *Element {
 
 // 元素_启用事件_XE_MOUSEWHEEL, 启用接收鼠标滚动事件, 如果禁用那么事件会传递给父元素.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (e *Element) EnableEvent_XE_MOUSEWHEEL(bEnable ...bool) *Element {
 	enable := true
 	if len(bEnable) > 0 {
@@ -606,7 +606,7 @@ func (e *Element) GetZOrder() int32 {
 
 // 元素_启用置顶, 设置元素置顶.
 //
-// bTopmost: 是否置顶显示.
+// bTopmost: 是否置顶显示, 不填默认为 true.
 func (e *Element) EnableTopmost(bTopmost ...bool) bool {
 	enable := true
 	if len(bTopmost) > 0 {
@@ -617,7 +617,7 @@ func (e *Element) EnableTopmost(bTopmost ...bool) bool {
 
 // 元素_重绘.
 //
-// bImmediate: 是否立即重绘, 通常为false即可.
+// bImmediate: 是否立即重绘, 通常为 false 即可, 不填默认为 false.
 func (e *Element) Redraw(bImmediate ...bool) *Element {
 	b := false
 	if len(bImmediate) > 0 {
@@ -969,7 +969,7 @@ func (e *Element) SetCapture(b bool) *Element {
 
 // 元素_启用透明通道, 启用或关闭元素透明通道, 如果启用, 将强制设置元素背景不透明, 默认为启用, 此功能是为了兼容GDI不支持透明通道问题.
 //
-// bEnable: 启用或关闭.
+// bEnable: 启用或关闭, 不填默认为 true.
 func (e *Element) EnableTransparentChannel(bEnable ...bool) *Element {
 	enable := true
 	if len(bEnable) > 0 {

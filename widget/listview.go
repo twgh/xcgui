@@ -168,7 +168,7 @@ func (l *ListView) HitTestOffset(pPt *xc.POINT, pOutGroup *int32, pOutItem *int3
 
 // 列表视_启用多选.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (l *ListView) EnableMultiSel(bEnable ...bool) *ListView {
 	enable := true
 	if len(bEnable) > 0 {
@@ -180,7 +180,7 @@ func (l *ListView) EnableMultiSel(bEnable ...bool) *ListView {
 
 // 列表视_启用模板复用.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (l *ListView) EnableTemplateReuse(bEnable ...bool) *ListView {
 	enable := true
 	if len(bEnable) > 0 {
@@ -192,7 +192,7 @@ func (l *ListView) EnableTemplateReuse(bEnable ...bool) *ListView {
 
 // 列表视_启用虚表.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (l *ListView) EnableVirtualTable(bEnable ...bool) *ListView {
 	enable := true
 	if len(bEnable) > 0 {

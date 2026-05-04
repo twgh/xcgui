@@ -52,7 +52,7 @@ func NewEditorByUIDName(name string) *Editor {
 
 /*// 代码编辑框_启用空格选择自动匹配项.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (e *Editor) EnableAutoMatchSpaseSelect(bEnable ...bool) int {
 	enable := true
 	if len(bEnable) > 0 {

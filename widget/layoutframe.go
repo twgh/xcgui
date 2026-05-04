@@ -76,7 +76,7 @@ LayoutBox-布局盒子
 
 // EnableHorizon 布局盒子_启用水平.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (l *LayoutFrame) EnableHorizon(bEnable ...bool) *LayoutFrame {
 	enable := true
 	if len(bEnable) > 0 {
@@ -88,7 +88,7 @@ func (l *LayoutFrame) EnableHorizon(bEnable ...bool) *LayoutFrame {
 
 // EnableAutoWrap 布局盒子_启用自动换行.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (l *LayoutFrame) EnableAutoWrap(bEnable ...bool) *LayoutFrame {
 	enable := true
 	if len(bEnable) > 0 {
@@ -100,7 +100,7 @@ func (l *LayoutFrame) EnableAutoWrap(bEnable ...bool) *LayoutFrame {
 
 // EnableOverflowHide 布局盒子_启用溢出隐藏.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (l *LayoutFrame) EnableOverflowHide(bEnable ...bool) *LayoutFrame {
 	enable := true
 	if len(bEnable) > 0 {

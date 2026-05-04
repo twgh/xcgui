@@ -87,7 +87,7 @@ func (l *List) InsertColumn(width, iItem int32) int32 {
 
 // 列表_启用多选, 启用或关闭多选功能.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (l *List) EnableMultiSel(bEnable ...bool) *List {
 	enable := true
 	if len(bEnable) > 0 {
@@ -99,7 +99,7 @@ func (l *List) EnableMultiSel(bEnable ...bool) *List {
 
 // 列表_启用拖动更改列宽, 启用拖动改变列宽度.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (l *List) EnableDragChangeColumnWidth(bEnable ...bool) *List {
 	enable := true
 	if len(bEnable) > 0 {
@@ -111,7 +111,7 @@ func (l *List) EnableDragChangeColumnWidth(bEnable ...bool) *List {
 
 // 列表_启用垂直滚动条顶部对齐.
 //
-// bTop: 是否启用.
+// bTop: 是否启用, 不填默认为 true.
 func (l *List) EnableVScrollBarTop(bTop ...bool) *List {
 	top := true
 	if len(bTop) > 0 {
@@ -123,7 +123,7 @@ func (l *List) EnableVScrollBarTop(bTop ...bool) *List {
 
 // 列表_启用行背景铺满.
 //
-// bFull: 是否启用.
+// bFull: 是否启用, 不填默认为 true.
 func (l *List) EnableRowBkFull(bFull ...bool) *List {
 	enable := true
 	if len(bFull) > 0 {
@@ -135,7 +135,7 @@ func (l *List) EnableRowBkFull(bFull ...bool) *List {
 
 // 列表_启用固定行高.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (l *List) EnableFixedRowHeight(bEnable ...bool) *List {
 	enable := true
 	if len(bEnable) > 0 {
@@ -147,7 +147,7 @@ func (l *List) EnableFixedRowHeight(bEnable ...bool) *List {
 
 // 列表_启用模板复用.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (l *List) EnableTemplateReuse(bEnable ...bool) *List {
 	enable := true
 	if len(bEnable) > 0 {
@@ -159,7 +159,7 @@ func (l *List) EnableTemplateReuse(bEnable ...bool) *List {
 
 // 列表_启用虚表.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (l *List) EnableVirtualTable(bEnable ...bool) *List {
 	enable := true
 	if len(bEnable) > 0 {

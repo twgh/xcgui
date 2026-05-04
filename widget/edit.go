@@ -69,7 +69,7 @@ func NewEditByUIDName(name string) *Edit {
 
 // 编辑框_启用自动换行.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (e *Edit) EnableAutoWrap(bEnable ...bool) *Edit {
 	enable := true
 	if len(bEnable) > 0 {
@@ -81,7 +81,7 @@ func (e *Edit) EnableAutoWrap(bEnable ...bool) *Edit {
 
 // 编辑框_启用只读.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (e *Edit) EnableReadOnly(bEnable ...bool) *Edit {
 	enable := true
 	if len(bEnable) > 0 {
@@ -93,7 +93,7 @@ func (e *Edit) EnableReadOnly(bEnable ...bool) *Edit {
 
 // 编辑框_启用多行.
 //
-// bEnable:.
+// bEnable: 是否启用, 不填默认为 true.
 func (e *Edit) EnableMultiLine(bEnable ...bool) *Edit {
 	enable := true
 	if len(bEnable) > 0 {
@@ -105,7 +105,7 @@ func (e *Edit) EnableMultiLine(bEnable ...bool) *Edit {
 
 // 编辑框_启用密码, 启用密码模式(只支持默认类型编辑框).
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (e *Edit) EnablePassword(bEnable ...bool) *Edit {
 	enable := true
 	if len(bEnable) > 0 {
@@ -117,7 +117,7 @@ func (e *Edit) EnablePassword(bEnable ...bool) *Edit {
 
 // 编辑框_启用自动选择, 当获得焦点时,自动选择所有内容.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (e *Edit) EnableAutoSelAll(bEnable ...bool) *Edit {
 	enable := true
 	if len(bEnable) > 0 {
@@ -129,7 +129,7 @@ func (e *Edit) EnableAutoSelAll(bEnable ...bool) *Edit {
 
 // 编辑框_启用自动取消选择, 当失去焦点时自动取消选择.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (e *Edit) EnableAutoCancelSel(bEnable ...bool) *Edit {
 	enable := true
 	if len(bEnable) > 0 {
