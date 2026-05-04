@@ -16,7 +16,7 @@ type windowBase struct {
 
 // 模态窗口_启用自动关闭, 是否自动关闭窗口, 当窗口失去焦点时.
 //
-// bEnable: 开启开关.
+// bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableAutoClose(bEnable ...bool) *windowBase {
 	enable := true
 	if len(bEnable) > 0 {
@@ -28,7 +28,7 @@ func (w *windowBase) EnableAutoClose(bEnable ...bool) *windowBase {
 
 // 模态窗口_启用ESC关闭, 当用户按ESC键时自动关闭模态窗口.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableEscClose(bEnable ...bool) *windowBase {
 	enable := true
 	if len(bEnable) > 0 {
@@ -165,7 +165,7 @@ func (w *windowBase) ShowWindow(nCmdShow xcc.SW_) bool {
 
 // 窗口_置顶.
 //
-// bTop: 是否置顶.
+// bTop: 是否置顶, 不填默认为 true.
 func (w *windowBase) SetTop(bTop ...bool) *windowBase {
 	xc.XWnd_SetTop(w.Handle, bTop...)
 	return w
@@ -250,7 +250,7 @@ func (w *windowBase) GetHWND() uintptr {
 
 // 窗口_重绘.
 //
-// bImmediate: 是否立即重绘, 通常为 false 即可.
+// bImmediate: 是否立即重绘, 通常为 false 即可. 不填默认为 false.
 func (w *windowBase) Redraw(bImmediate ...bool) *windowBase {
 	b := false
 	if len(bImmediate) > 0 {
@@ -339,7 +339,7 @@ func (w *windowBase) GetCursor() uintptr {
 
 // 窗口_启用拖动边框.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableDragBorder(bEnable ...bool) *windowBase {
 	enable := true
 	if len(bEnable) > 0 {
@@ -351,7 +351,7 @@ func (w *windowBase) EnableDragBorder(bEnable ...bool) *windowBase {
 
 // 窗口_启用拖动窗口.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableDragWindow(bEnable ...bool) *windowBase {
 	enable := true
 	if len(bEnable) > 0 {
@@ -363,7 +363,7 @@ func (w *windowBase) EnableDragWindow(bEnable ...bool) *windowBase {
 
 // 窗口_启用拖动标题栏.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableDragCaption(bEnable ...bool) *windowBase {
 	enable := true
 	if len(bEnable) > 0 {
@@ -375,7 +375,7 @@ func (w *windowBase) EnableDragCaption(bEnable ...bool) *windowBase {
 
 // 窗口_启用绘制背景.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableDrawBk(bEnable ...bool) *windowBase {
 	enable := true
 	if len(bEnable) > 0 {
@@ -387,7 +387,7 @@ func (w *windowBase) EnableDrawBk(bEnable ...bool) *windowBase {
 
 // 窗口_启用自动焦点. 当鼠标左键按下是否获得焦点.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableAutoFocus(bEnable ...bool) *windowBase {
 	enable := true
 	if len(bEnable) > 0 {
@@ -399,7 +399,7 @@ func (w *windowBase) EnableAutoFocus(bEnable ...bool) *windowBase {
 
 // 窗口_启用允许最大化.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableMaxWindow(bEnable ...bool) *windowBase {
 	enable := true
 	if len(bEnable) > 0 {
@@ -411,7 +411,7 @@ func (w *windowBase) EnableMaxWindow(bEnable ...bool) *windowBase {
 
 // 窗口_启用限制窗口大小.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableLimitWindowSize(bEnable ...bool) *windowBase {
 	enable := true
 	if len(bEnable) > 0 {
@@ -423,7 +423,7 @@ func (w *windowBase) EnableLimitWindowSize(bEnable ...bool) *windowBase {
 
 // 窗口_启用布局.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableLayout(bEnable ...bool) *windowBase {
 	enable := true
 	if len(bEnable) > 0 {
@@ -435,7 +435,7 @@ func (w *windowBase) EnableLayout(bEnable ...bool) *windowBase {
 
 // 窗口_启用布局覆盖边框.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableLayoutOverlayBorder(bEnable ...bool) *windowBase {
 	enable := true
 	if len(bEnable) > 0 {
@@ -983,7 +983,7 @@ func (w *windowBase) GetTransparentType() xcc.Window_Transparent_ {
 
 // 窗口_启用拖放文件.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableDragFiles(bEnable ...bool) *windowBase {
 	enable := true
 	if len(bEnable) > 0 {
@@ -1462,7 +1462,7 @@ LayoutBox-布局盒子
 
 // EnableHorizon 布局盒子_启用水平.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableHorizon(bEnable ...bool) *windowBase {
 	enable := true
 	if len(bEnable) > 0 {
@@ -1474,7 +1474,7 @@ func (w *windowBase) EnableHorizon(bEnable ...bool) *windowBase {
 
 // EnableAutoWrap 布局盒子_启用自动换行.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableAutoWrap(bEnable ...bool) *windowBase {
 	enable := true
 	if len(bEnable) > 0 {
@@ -1486,7 +1486,7 @@ func (w *windowBase) EnableAutoWrap(bEnable ...bool) *windowBase {
 
 // EnableOverflowHide 布局盒子_启用溢出隐藏.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableOverflowHide(bEnable ...bool) *windowBase {
 	enable := true
 	if len(bEnable) > 0 {

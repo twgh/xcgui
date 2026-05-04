@@ -87,7 +87,7 @@ func (s *ShapeRect) GetRoundAngle(pWidth *int, pHeight *int32) *ShapeRect {
 
 // 形状矩形_启用边框, 启用绘制矩形边框.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (s *ShapeRect) EnableBorder(bEnable ...bool) *ShapeRect {
 	enable := true
 	if len(bEnable) > 0 {
@@ -99,7 +99,7 @@ func (s *ShapeRect) EnableBorder(bEnable ...bool) *ShapeRect {
 
 // 形状矩形_启用填充, 启用填充矩形.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (s *ShapeRect) EnableFill(bEnable ...bool) *ShapeRect {
 	enable := true
 	if len(bEnable) > 0 {
@@ -111,7 +111,7 @@ func (s *ShapeRect) EnableFill(bEnable ...bool) *ShapeRect {
 
 // 形状矩形_启用圆角.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (s *ShapeRect) EnableRoundAngle(bEnable ...bool) *ShapeRect {
 	enable := true
 	if len(bEnable) > 0 {

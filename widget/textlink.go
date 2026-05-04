@@ -53,7 +53,7 @@ func NewTextLinkByUIDName(name string) *TextLink {
 
 // 文本链接_启用离开状态下划线, 启用下划线, 鼠标离开状态.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (t *TextLink) EnableUnderlineLeave(bEnable ...bool) *TextLink {
 	enable := true
 	if len(bEnable) > 0 {
@@ -65,7 +65,7 @@ func (t *TextLink) EnableUnderlineLeave(bEnable ...bool) *TextLink {
 
 // 文本链接_停留状态下划线, 启用下划线, 鼠标停留状态.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (t *TextLink) EnableUnderlineStay(bEnable ...bool) *TextLink {
 	enable := true
 	if len(bEnable) > 0 {

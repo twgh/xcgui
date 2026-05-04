@@ -198,7 +198,7 @@ func (t *TabBar) SetDown() *TabBar {
 
 // TAB条_启用平铺, 平铺标签, 每个标签显示相同大小.
 //
-// bTile: 是否启用.
+// bTile: 是否启用, 不填默认为 true.
 func (t *TabBar) EnableTile(bTile ...bool) *TabBar {
 	enable := true
 	if len(bTile) > 0 {
@@ -210,7 +210,7 @@ func (t *TabBar) EnableTile(bTile ...bool) *TabBar {
 
 // TAB条_启用下拉菜单按钮.
 //
-// bEnable:.
+// bEnable: 是否启用, 不填默认为 true.
 func (t *TabBar) EnableDropMenu(bEnable ...bool) *TabBar {
 	enable := true
 	if len(bEnable) > 0 {
@@ -222,7 +222,7 @@ func (t *TabBar) EnableDropMenu(bEnable ...bool) *TabBar {
 
 // TAB条_启用标签带关闭按钮, 启用关闭标签功能.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (t *TabBar) EnableClose(bEnable ...bool) *TabBar {
 	enable := true
 	if len(bEnable) > 0 {

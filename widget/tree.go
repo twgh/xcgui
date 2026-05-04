@@ -73,7 +73,7 @@ func NewTreeByUIDName(name string) *Tree {
 
 // 列表树_启用拖动项, 启用拖动项功能.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (t *Tree) EnableDragItem(bEnable ...bool) *Tree {
 	enable := true
 	if len(bEnable) > 0 {
@@ -95,7 +95,7 @@ func (t *Tree) EnableConnectLine(bEnable bool, bSolid bool) *Tree {
 
 // 列表树_启用展开, 启动或关闭默认展开功能, 如果开启新插入的项将自动展开.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (t *Tree) EnableExpand(bEnable ...bool) *Tree {
 	enable := true
 	if len(bEnable) > 0 {
@@ -107,7 +107,7 @@ func (t *Tree) EnableExpand(bEnable ...bool) *Tree {
 
 // 列表树_启用模板复用.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (t *Tree) EnableTemplateReuse(bEnable ...bool) *Tree {
 	enable := true
 	if len(bEnable) > 0 {
