@@ -1250,9 +1250,9 @@ func (w *windowBase) SetCaptionMargin(left, top, right, bottom int32) *windowBas
 
 // SetTopEx 窗口_置顶Ex.
 //
-// b: 是否置顶.
-func (w *windowBase) SetTopEx(b bool) bool {
-	return wnd.SetTop(w.GetHWND(), b)
+// bTop: 是否置顶, 不填默认为 true.
+func (w *windowBase) SetTopEx(bTop ...bool) bool {
+	return wnd.SetTop(w.GetHWND(), bTop...)
 }
 
 // 窗口_置窗口位置. 封装系统API SetWindowPos(), 内部做了DPI适配.

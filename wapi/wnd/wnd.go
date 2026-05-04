@@ -12,8 +12,12 @@ import (
 //
 // hWnd: 窗口真实句柄.
 //
-// b: 是否置顶.
-func SetTop(hWnd uintptr, b bool) bool {
+// bTop: 是否置顶, 不填默认为 true.
+func SetTop(hWnd uintptr, bTop ...bool) bool {
+	b := true
+	if len(bTop) > 0 {
+		b = bTop[0]
+	}
 	hWndInsertAfter := wapi.HWND_TOPMOST
 	if !b {
 		hWndInsertAfter = wapi.HWND_NOTOPMOST
