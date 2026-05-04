@@ -149,7 +149,7 @@ func (c *ComboBox) EnableDrawButton(bEnable ...bool) *ComboBox {
 
 // 组合框_启用编辑, 启用可编辑显示的文本内容.
 //
-// bEdit: TRUE可编辑.
+// bEdit: 是否启用编辑, 不填默认为 true.
 func (c *ComboBox) EnableEdit(bEdit ...bool) *ComboBox {
 	enable := true
 	if len(bEdit) > 0 {

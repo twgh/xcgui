@@ -351,7 +351,7 @@ func (a *App) SetTextRenderingHint(nType int32) *App {
 
 // 炫彩_启用GDI绘制文本, 将影响到以下函数: XDraw_TextOut, XDraw_TextOutEx, XDraw_TextOutA.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (a *App) EnableGdiDrawText(bEnable ...bool) *App {
 	enable := true
 	if len(bEnable) > 0 {
@@ -396,7 +396,7 @@ func (a *App) ShowLayoutFrame(bShow ...bool) *App {
 
 // 炫彩_启用debug文件.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (a *App) EnableDebugFile(bEnable ...bool) *App {
 	enable := true
 	if len(bEnable) > 0 {
@@ -408,7 +408,7 @@ func (a *App) EnableDebugFile(bEnable ...bool) *App {
 
 // 炫彩_启用资源监视器.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (a *App) EnableResMonitor(bEnable ...bool) *App {
 	enable := true
 	if len(bEnable) > 0 {
@@ -428,7 +428,7 @@ func (a *App) SetLayoutFrameColor(color uint32) *App {
 
 // 炫彩_启用错误弹窗, 启用错误弹出, 通过该接口可以设置遇到严重错误时不弹出消息提示框.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (a *App) EnableErrorMessageBox(bEnable ...bool) *App {
 	enable := true
 	if len(bEnable) > 0 {
@@ -440,7 +440,7 @@ func (a *App) EnableErrorMessageBox(bEnable ...bool) *App {
 
 // 炫彩_启用自动退出程序, 启动或禁用自动退出程序, 当检测到所有用户创建的窗口都关闭时, 自动退出程序; 可调用 XC_PostQuitMessage() 手动退出程序.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (a *App) EnableAutoExitApp(bEnable ...bool) *App {
 	enable := true
 	if len(bEnable) > 0 {
@@ -1152,7 +1152,7 @@ func (a *App) NotifyMsg_SetBorderSize(hWindow int, left, top, right, bottom int3
 
 // 炫彩_启用自动DPI. 当启用后, 创建窗口时自动检测DPI调整UI缩放, 处理DPI改变消息; 禁用后,当DPI改变,需要手动设置窗口DPI.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (a *App) EnableAutoDPI(bEnable ...bool) *App {
 	enable := true
 	if len(bEnable) > 0 {
@@ -1192,7 +1192,7 @@ func (a *App) EnableDPI(bEnable ...bool) bool {
 //
 // 例如改变了按钮标题后, 将自动调用 xc.XEle_Redraw 更新UI, 默认不启用, 手动和自动各有优势.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (a *App) EnableAutoRedrawUI(bEnable ...bool) *App {
 	enable := true
 	if len(bEnable) > 0 {

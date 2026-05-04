@@ -357,7 +357,7 @@ func (i *Image) SetSplitEqual(nCount, iIndex int32) *Image {
 
 // 图片_启用透明色, 启用或关闭图片透明色.
 //
-// bEnable: 启用TRUE.
+// bEnable: 是否启用, 不填默认为 true.
 func (i *Image) EnableTranColor(bEnable ...bool) *Image {
 	enable := true
 	if len(bEnable) > 0 {
@@ -369,7 +369,7 @@ func (i *Image) EnableTranColor(bEnable ...bool) *Image {
 
 // 图片_启用自动销毁, 启用或关闭自动销毁, 当与UI元素关联时有效.
 //
-// bEnable: 启用自动销毁TRUE.
+// bEnable: 是否启用自动销毁, 不填默认为 true.
 func (i *Image) EnableAutoDestroy(bEnable ...bool) *Image {
 	enable := true
 	if len(bEnable) > 0 {

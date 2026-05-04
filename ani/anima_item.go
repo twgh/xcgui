@@ -14,7 +14,7 @@ type AnimaItem struct {
 //
 // 例如对多个动画序列进行渐近式延迟, 在动画序列头标添加延时项(时间差), 当延时项完成时自动释放, 后续动画循环就形成一种时间差(因为对齐的时间差销毁了, 他们永远无法对齐时间).
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (a *AnimaItem) EnableCompleteRelease(bEnable ...bool) *AnimaItem {
 	enable := true
 	if len(bEnable) > 0 {
@@ -53,7 +53,7 @@ func (a *AnimaItem) GetUserData() int {
 
 // 动画项_启用自动销毁.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (a *AnimaItem) EnableAutoDestroy(bEnable ...bool) *AnimaItem {
 	enable := true
 	if len(bEnable) > 0 {

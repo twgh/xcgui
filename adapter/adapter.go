@@ -33,7 +33,7 @@ func (a *adapter) Destroy() *adapter {
 
 // 数据适配器_启用自动销毁.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (a *adapter) EnableAutoDestroy(bEnable ...bool) *adapter {
 	enable := true
 	if len(bEnable) > 0 {

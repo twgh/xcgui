@@ -39,7 +39,7 @@ func (a *animaBase) GetObjectUI() int {
 
 // 动画_启用自动销毁, TRUE: 当引用计数为0时自动销毁, FALSE: 手动销毁.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (a *animaBase) EnableAutoDestroy(bEnable ...bool) *animaBase {
 	enable := true
 	if len(bEnable) > 0 {
