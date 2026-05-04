@@ -67,7 +67,7 @@ func (s *ShapeEllipse) SetFillColor(color uint32) *ShapeEllipse {
 
 // 形状圆_启用边框, 启用绘制圆边框.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (s *ShapeEllipse) EnableBorder(bEnable ...bool) *ShapeEllipse {
 	enable := true
 	if len(bEnable) > 0 {
@@ -79,7 +79,7 @@ func (s *ShapeEllipse) EnableBorder(bEnable ...bool) *ShapeEllipse {
 
 // 形状圆_启用填充, 启用填充圆.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (s *ShapeEllipse) EnableFill(bEnable ...bool) *ShapeEllipse {
 	enable := true
 	if len(bEnable) > 0 {

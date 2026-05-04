@@ -125,7 +125,7 @@ func (s *ShapeGroupBox) GetRoundAngle(pWidth *int32, pHeight *int32) *ShapeGroup
 
 // 形状组框_启用圆角.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (s *ShapeGroupBox) EnableRoundAngle(bEnable ...bool) *ShapeGroupBox {
 	enable := true
 	if len(bEnable) > 0 {

@@ -101,7 +101,7 @@ func (s *ScrollBar) SetSliderPadding(nPadding int32) *ScrollBar {
 
 // 滚动条_置水平, 设置水平或者垂直.
 //
-// bHorizon: 水平或垂直.
+// bHorizon: true为水平, false为垂直. 不填默认为 true.
 func (s *ScrollBar) EnableHorizon(bHorizon ...bool) bool {
 	horizon := true
 	if len(bHorizon) > 0 {

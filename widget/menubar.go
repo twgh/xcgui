@@ -78,7 +78,7 @@ func (m *MenuBar) DeleteButton(nIndex int32) bool {
 
 // 菜单条_启用自动宽度, 根据内容自动调整宽度. (已废弃)请使用内填充限制高度
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (m *MenuBar) EnableAutoWidth(bEnable ...bool) {
 	enable := true
 	if len(bEnable) > 0 {

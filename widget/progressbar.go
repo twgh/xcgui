@@ -86,7 +86,7 @@ func (p *ProgressBar) GetPos() int32 {
 
 // 进度条_置水平, 设置水平或垂直.
 //
-// bHorizon: 水平或垂直.
+// bHorizon: true为水平, false为垂直. 不填默认为 true.
 func (p *ProgressBar) EnableHorizon(bHorizon ...bool) *ProgressBar {
 	enable := true
 	if len(bHorizon) > 0 {
@@ -98,7 +98,7 @@ func (p *ProgressBar) EnableHorizon(bHorizon ...bool) *ProgressBar {
 
 // 进度条_启用缩放, 缩放进度贴图为当前进度区域(当前进度所显示区域), 否则为整体100进度区域.
 //
-// bStretch: 缩放.
+// bStretch: 是否启用缩放, 不填默认为 true.
 func (p *ProgressBar) EnableStretch(bStretch ...bool) *ProgressBar {
 	stretch := true
 	if len(bStretch) > 0 {
@@ -110,7 +110,7 @@ func (p *ProgressBar) EnableStretch(bStretch ...bool) *ProgressBar {
 
 // 进度条_启用进度文本 显示进度值文本.
 //
-// bShow: 是否启用.
+// bShow: 是否启用, 不填默认为 true.
 func (p *ProgressBar) EnableShowText(bShow ...bool) *ProgressBar {
 	show := true
 	if len(bShow) > 0 {

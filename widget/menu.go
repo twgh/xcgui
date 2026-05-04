@@ -147,7 +147,7 @@ func (m *Menu) SetAutoDestroy(bAuto bool) *Menu {
 
 // 菜单_启用用户绘制背景, 是否有用户绘制菜单背景, 如果启用XWM_MENU_DRAW_BACKGROUND和XE_MENU_DRAW_BACKGROUND事件有效.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (m *Menu) EnableDrawBackground(bEnable ...bool) *Menu {
 	enable := true
 	if len(bEnable) > 0 {
@@ -159,7 +159,7 @@ func (m *Menu) EnableDrawBackground(bEnable ...bool) *Menu {
 
 // 菜单_启用用户绘制项, 是否有用户绘制菜单项, 如果启用XWM_MENU_DRAWITEM和XE_MENU_DRAWITEM事件有效.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (m *Menu) EnableDrawItem(bEnable ...bool) *Menu {
 	enable := true
 	if len(bEnable) > 0 {
@@ -370,7 +370,7 @@ func (m *Menu) GetBkManagerObjEx(nType int32) *bkmanager.BkManager {
 
 // 菜单_启用CSS.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (m *Menu) EnableCSS(bEnable ...bool) *Menu {
 	enable := true
 	if len(bEnable) > 0 {

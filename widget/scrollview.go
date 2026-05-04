@@ -194,7 +194,7 @@ func (s *ScrollView) ShowSBarV(bShow ...bool) *ScrollView {
 
 // 滚动视_启用自动显示滚动条.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (s *ScrollView) EnableAutoShowScrollBar(bEnable ...bool) *ScrollView {
 	enable := true
 	if len(bEnable) > 0 {
