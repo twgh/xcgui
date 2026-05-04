@@ -101,7 +101,7 @@ func (b *BkObj) SetRectRoundAngle(leftTop, leftBottom, rightTop, rightBottom int
 
 // 背景对象_启用填充, 启用绘制填充.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (b *BkObj) EnableFill(bEnable ...bool) *BkObj {
 	enable := true
 	if len(bEnable) > 0 {
@@ -113,7 +113,7 @@ func (b *BkObj) EnableFill(bEnable ...bool) *BkObj {
 
 // 背景对象_启用边框, 启用绘制边框.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (b *BkObj) EnableBorder(bEnable ...bool) *BkObj {
 	enable := true
 	if len(bEnable) > 0 {

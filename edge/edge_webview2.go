@@ -75,7 +75,7 @@ func (w *WebView2) GetSource() string {
 
 // Refresh 网页_刷新, 调用 js 代码刷新(location.reload). 必须在 UI 线程执行.
 //
-// forceReload: 是否强制刷新, 默认为false. 为 true 时，浏览器会强制重新加载页面，忽略缓存。这意味着无论页面是否已经在本地缓存中，都会从服务器重新获取资源。
+// forceReload: 是否强制刷新, 不填默认为 false. 为 true 时，浏览器会强制重新加载页面，忽略缓存。这意味着无论页面是否已经在本地缓存中，都会从服务器重新获取资源。
 func (w *WebView2) Refresh(forceReload ...bool) error {
 	b := ""
 	if len(forceReload) > 0 && forceReload[0] {
@@ -145,6 +145,8 @@ func (w *WebView2) GetSettings() (*ICoreWebView2Settings, error) {
 
 // EnableBrowserAcceleratorKeys 设置是否启用浏览器快捷键。默认是启用的。
 //   - 此设置对 AcceleratorKeyPressed 事件没有影响。
+//
+// enable: 是否启用, 不填默认为 true.
 func (w *WebView2) EnableBrowserAcceleratorKeys(enable ...bool) error {
 	bEnable := true
 	if len(enable) > 0 {
@@ -302,6 +304,8 @@ func (w *WebView2) SetVirtualHostNameToFolderMapping(hostName string, folderPath
 
 // EnableVirtualHostNameToEmbedFSMapping 启用虚拟主机名和嵌入文件系统之间的映射。
 //   - 启用后, 该 WebView 可使用全局的虚拟主机名和嵌入文件系统之间的映射来处理请求。
+//
+// enable: 是否启用, 不填默认为 true.
 func (w *WebView2) EnableVirtualHostNameToEmbedFSMapping(enable ...bool) error {
 	isEnable := true
 	if len(enable) > 0 {

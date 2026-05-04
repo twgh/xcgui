@@ -307,7 +307,7 @@ func (d *Draw) ClearClip() *Draw {
 
 // 绘制_启用平滑模式.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (d *Draw) EnableSmoothingMode(bEnable ...bool) *Draw {
 	enable := true
 	if len(bEnable) > 0 {
@@ -319,7 +319,7 @@ func (d *Draw) EnableSmoothingMode(bEnable ...bool) *Draw {
 
 // 绘制_启用窗口透明判断, 当启用之后, 调用GDI+函数时, 如果参数alpha=255, 将自动修改为254, 应对GDI+的bug, 否则透明通道异常.
 //
-// bTransparent: 是否启用.
+// bTransparent: 是否启用, 不填默认为 true.
 func (d *Draw) EnableWndTransparent(bTransparent ...bool) *Draw {
 	enable := true
 	if len(bTransparent) > 0 {
