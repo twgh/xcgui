@@ -137,7 +137,7 @@ func (c *ComboBox) SetItemTemplateXMLFromString(pStringXML string) *ComboBox {
 
 // 组合框_启用绘制下拉按钮, 是否绘制下拉按钮.
 //
-// bEnable: 是否绘制.
+// bEnable: 是否绘制, 不填默认为 true.
 func (c *ComboBox) EnableDrawButton(bEnable ...bool) *ComboBox {
 	enable := true
 	if len(bEnable) > 0 {
@@ -161,7 +161,7 @@ func (c *ComboBox) EnableEdit(bEdit ...bool) *ComboBox {
 
 // 组合框_启用下拉列表高度固定大小, 启用/关闭下拉列表高度固定大小.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (c *ComboBox) EnableDropHeightFixed(bEnable ...bool) *ComboBox {
 	enable := true
 	if len(bEnable) > 0 {

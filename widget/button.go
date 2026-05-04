@@ -223,7 +223,7 @@ func (b *Button) EnableAnimation(bEnable bool, bLoopPlay bool) *Button {
 
 // 按钮_启用热键前缀. 对当前文本内容处理, 将&符号后面的一个字符加上下划线.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (b *Button) EnableHotkeyPrefix(bEnable ...bool) *Button {
 	enable := true
 	if len(bEnable) > 0 {

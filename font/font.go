@@ -138,7 +138,7 @@ func NewByName(name string) *Font {
 
 // EnableAutoDestroy 字体_启用自动销毁. 是否自动销毁.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (f *Font) EnableAutoDestroy(bEnable ...bool) *Font {
 	enable := true
 	if len(bEnable) > 0 {

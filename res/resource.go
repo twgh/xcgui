@@ -4,7 +4,7 @@ import "github.com/twgh/xcgui/xc"
 
 // 资源_启用延迟加载, 启用延迟加载; 图片文件, 列表项模板文件.
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func EnableDelayLoad(bEnable ...bool) {
 	enable := true
 	if len(bEnable) > 0 {

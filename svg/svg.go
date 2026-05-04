@@ -162,7 +162,7 @@ func (s *Svg) GetViewBox(pViewBox *xc.RECT) *Svg {
 
 // SVG_启用自动销毁.
 //
-// bEnable: 是否自动销毁.
+// bEnable: 是否自动销毁, 不填默认为 true.
 func (s *Svg) EnableAutoDestroy(bEnable ...bool) *Svg {
 	enable := true
 	if len(bEnable) > 0 {

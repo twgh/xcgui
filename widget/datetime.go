@@ -65,7 +65,7 @@ func (d *DateTime) GetStyle() int32 {
 
 // 日期_启用分割栏为斜线, 切换分割栏为: 斜线或横线.
 //
-// bSlash: TRUE: 斜线, FALSE: 横线.
+// bSlash: TRUE: 斜线, FALSE: 横线, 不填默认为 true.
 func (d *DateTime) EnableSplitSlash(bSlash ...bool) *DateTime {
 	slash := true
 	if len(bSlash) > 0 {

@@ -29,7 +29,7 @@ func (w *Widget) Show(bShow ...bool) *Widget {
 
 // 窗口组件_启用布局控制.
 //
-// bEnable:.
+// bEnable: 是否启用, 不填默认为 true.
 func (w *Widget) EnableLayoutControl(bEnable ...bool) *Widget {
 	enable := true
 	if len(bEnable) > 0 {
@@ -66,7 +66,7 @@ func (w *Widget) GetHWINDOW() int {
 
 // 窗口组件_布局项_启用换行, 强制换行.
 //
-// bWrap: 是否换行.
+// bWrap: 是否换行, 不填默认为 true.
 func (w *Widget) LayoutItem_EnableWrap(bWrap ...bool) *Widget {
 	enable := true
 	if len(bWrap) > 0 {
@@ -78,7 +78,7 @@ func (w *Widget) LayoutItem_EnableWrap(bWrap ...bool) *Widget {
 
 // 窗口组件_布局项_启用交换, 根据水平垂直布局变换, 交换属性(宽度,高度,最小宽度,最小高度).
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (w *Widget) LayoutItem_EnableSwap(bEnable ...bool) *Widget {
 	enable := true
 	if len(bEnable) > 0 {
@@ -90,7 +90,7 @@ func (w *Widget) LayoutItem_EnableSwap(bEnable ...bool) *Widget {
 
 // 窗口组件_布局项_启用浮动, 向反方向对齐.
 //
-// bFloat: 是否浮动.
+// bFloat: 是否浮动, 不填默认为 true.
 func (w *Widget) LayoutItem_EnableFloat(bFloat ...bool) *Widget {
 	enable := true
 	if len(bFloat) > 0 {
