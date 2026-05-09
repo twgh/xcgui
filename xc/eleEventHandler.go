@@ -108,7 +108,7 @@ func (e *elementEventBus) GetCallBacks(hEle int, eventType xcc.XE_) []CbInfo {
 	return e.EventInfoMap[hEle][eventType].Cbs
 }
 
-// RemoveAllCallBack 移除指定元素的所有事件以及 CallBack.
+// RemoveAllCallBack 移除指定元素的所有事件的 CallBack.
 //
 // hEle: 元素句柄.
 func (e *elementEventBus) RemoveAllCallBack(hEle int) {
@@ -137,7 +137,7 @@ func (e *elementEventBus) RemoveCallBack(hEle int, eventType xcc.XE_, id int) {
 	}
 }
 
-// SetCallBack 设置指定元素指定事件的指定 ID 的回调函数.
+// SetCallBack 设置指定元素指定事件的指定 ID 的 CallBack.
 //
 // hEle: 元素句柄.
 //

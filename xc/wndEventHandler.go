@@ -95,7 +95,7 @@ func (w *windowEventBus) GetCallBacks(hWindow int, eventType xcc.WM_) []CbInfo {
 	return w.EventInfoMap[hWindow][eventType].Cbs
 }
 
-// RemoveAllCallBack 移除指定窗口的所有事件以及 CallBack.
+// RemoveAllCallBack 移除指定窗口的所有事件的 CallBack.
 //
 // hWindow: 窗口句柄.
 func (w *windowEventBus) RemoveAllCallBack(hWindow int) {
@@ -124,7 +124,7 @@ func (w *windowEventBus) RemoveCallBack(hWindow int, eventType xcc.WM_, id int) 
 	}
 }
 
-// SetCallBack 设置指定窗口指定事件的指定 ID 的回调函数.
+// SetCallBack 设置指定窗口指定事件的指定 ID 的 CallBack.
 //
 // hWindow: 窗口句柄.
 //
