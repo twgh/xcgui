@@ -7,11 +7,13 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-var EleEventHandler = newEleEventHandler()
+// EleEventBus 元素事件总线
+var EleEventBus = newEleEventBus()
 
-type eleEventHandler struct {
-	sync.RWMutex
+// 元素事件总线
+type eleEventBus struct {
 	EventInfoMap map[int]map[xcc.XE_]eventInfo // 元素事件信息map
+	mu           sync.RWMutex
 }
 
 type eventInfo struct {
@@ -19,8 +21,9 @@ type eventInfo struct {
 	EvnetFuncPtr uintptr
 }
 
-func newEleEventHandler() *eleEventHandler {
-	return &eleEventHandler{
+// 创建新的元素事件总线
+func newEleEventBus() *eleEventBus {
+	return &eleEventBus{
 		EventInfoMap: make(map[int]map[xcc.XE_]eventInfo),
 	}
 }
@@ -38,9 +41,9 @@ func newEleEventHandler() *eleEventHandler {
 // allowAddingMultiple: 是否允许添加多个回调函数, 默认为 false.
 //   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 //   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-func (h *eleEventHandler) AddCallBack(hEle int, eventType xcc.XE_, eventFunc interface{}, cb interface{}, allowAddingMultiple ...bool) int {
-	h.Lock()
-	defer h.Unlock()
+func (h *eleEventBus) AddCallBack(hEle int, eventType xcc.XE_, eventFunc interface{}, cb interface{}, allowAddingMultiple ...bool) int {
+	h.mu.Lock()
+	defer h.mu.Unlock()
 
 	// 注册元素销毁完成事件. 在这里移除元素的所有事件.
 	if !h.regEleDestroyEnd(hEle) {
@@ -83,24 +86,24 @@ func (h *eleEventHandler) AddCallBack(hEle int, eventType xcc.XE_, eventFunc int
 }
 
 // GetCallBacks 获取指定元素指定事件的回调函数数组.
-func (h *eleEventHandler) GetCallBacks(hEle int, eventType xcc.XE_) []interface{} {
-	h.RLock()
-	defer h.RUnlock()
+func (h *eleEventBus) GetCallBacks(hEle int, eventType xcc.XE_) []interface{} {
+	h.mu.RLock()
+	defer h.mu.RUnlock()
 	return h.EventInfoMap[hEle][eventType].Cbs
 }
 
 // RemoveAllCallBack 从 map 里移除指定元素的所有事件以及CallBack.
-func (h *eleEventHandler) RemoveAllCallBack(hEle int) {
-	h.Lock()
+func (h *eleEventBus) RemoveAllCallBack(hEle int) {
+	h.mu.Lock()
 	delete(h.EventInfoMap, hEle)
-	h.Unlock()
+	h.mu.Unlock()
 }
 
 // RemoveCallBack 从 map 里移除指定元素指定事件的指定索引的 CallBack.
 //   - 当只是想让一个 CallBack 失效时, 使用 SetCallBack 把该 CallBack 设置为 nil 更好, 因为你移除一个 CallBack, 会导致后面的 CallBack 的索引往前移动一位, 那你添加 CallBack 时记录的索引就没法用了.
-func (h *eleEventHandler) RemoveCallBack(hEle int, eventType xcc.XE_, index int) bool {
-	h.Lock()
-	defer h.Unlock()
+func (h *eleEventBus) RemoveCallBack(hEle int, eventType xcc.XE_, index int) bool {
+	h.mu.Lock()
+	defer h.mu.Unlock()
 	info := h.EventInfoMap[hEle][eventType]
 	l := len(info.Cbs)
 	if l == 0 {
@@ -116,9 +119,9 @@ func (h *eleEventHandler) RemoveCallBack(hEle int, eventType xcc.XE_, index int)
 
 // SetCallBack 设置指定元素指定事件的指定索引的回调函数.
 //   - 当只是想让一个 CallBack 失效时, 直接把该 CallBack 设置为 nil 比使用 RemoveCallBack 更好, 因为你移除一个 CallBack, 会导致后面的 CallBack 的索引往前移动一位, 那你添加 CallBack 时记录的索引就没法用了.
-func (h *eleEventHandler) SetCallBack(hEle int, eventType xcc.XE_, index int, cb interface{}) bool {
-	h.Lock()
-	defer h.Unlock()
+func (h *eleEventBus) SetCallBack(hEle int, eventType xcc.XE_, index int, cb interface{}) bool {
+	h.mu.Lock()
+	defer h.mu.Unlock()
 	info := h.EventInfoMap[hEle][eventType]
 	l := len(info.Cbs)
 	if l == 0 { // 空
@@ -133,14 +136,14 @@ func (h *eleEventHandler) SetCallBack(hEle int, eventType xcc.XE_, index int, cb
 }
 
 // RemoveEvent 从 map 里移除指定元素的指定事件的所有CallBack.
-func (h *eleEventHandler) RemoveEvent(hEle int, eventType xcc.XE_) {
-	h.Lock()
-	defer h.Unlock()
+func (h *eleEventBus) RemoveEvent(hEle int, eventType xcc.XE_) {
+	h.mu.Lock()
+	defer h.mu.Unlock()
 	delete(h.EventInfoMap[hEle], eventType)
 }
 
 // regEleDestroyEnd 注册元素销毁完成事件. 每个元素只注册一次.
-func (h *eleEventHandler) regEleDestroyEnd(hEle int) bool {
+func (h *eleEventBus) regEleDestroyEnd(hEle int) bool {
 	if XC_GetProperty(hEle, "IsRegEleDestroyEnd") == "1" {
 		return true
 	}
@@ -162,7 +165,7 @@ func (h *eleEventHandler) regEleDestroyEnd(hEle int) bool {
 //
 // OnXE_DESTROY_END 元素销毁完成事件. 在销毁子对象之后触发.
 func OnXE_DESTROY_END(hEle int, pbHandled *bool) int {
-	cbs := EleEventHandler.GetCallBacks(hEle, xcc.XE_DESTROY_END)
+	cbs := EleEventBus.GetCallBacks(hEle, xcc.XE_DESTROY_END)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].(XE_DESTROY_END1); ok {
@@ -173,6 +176,6 @@ func OnXE_DESTROY_END(hEle int, pbHandled *bool) int {
 		}
 	}
 
-	EleEventHandler.RemoveAllCallBack(hEle)
+	EleEventBus.RemoveAllCallBack(hEle)
 	return ret
 }
