@@ -175,12 +175,12 @@ func (w *windowBase) SetTop(bTop ...bool) *windowBase {
 //
 // nEvent: 事件类型: xcc.WM_, xcc.XWM_.
 //
-// index: 使用 AddEvent_ 函数返回的回调函数索引.
+// id: 使用 AddEvent_ 函数返回的回调函数 ID.
 //   - 为空时, 直接移除事件.
-//   - 不为空时, 移除指定索引的回调函数.
-func (w *windowBase) RemoveEvent(nEvent xcc.WM_, index ...int) *windowBase {
-	if len(index) > 0 {
-		xc.WndEventBus.RemoveCallBack(w.Handle, nEvent, index[0])
+//   - 不为空时, 移除指定 ID 的回调函数.
+func (w *windowBase) RemoveEvent(nEvent xcc.WM_, id ...int) *windowBase {
+	if len(id) > 0 {
+		xc.WndEventBus.RemoveCallBack(w.Handle, nEvent, id[0])
 	} else { // 移除事件
 		cbPtr := xc.WndEventBus.EventInfoMap[w.Handle][nEvent].EvnetFuncPtr
 		if cbPtr > 0 {

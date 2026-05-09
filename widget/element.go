@@ -82,12 +82,12 @@ func (e *Element) RemoveEventC(nEvent xcc.XE_, fn interface{}) bool {
 //
 // nEvent: 事件类型: xcc.XE_.
 //
-// index: 使用 AddEvent_ 函数返回的回调函数索引.
+// id: 使用 AddEvent_ 函数返回的回调函数 ID.
 //   - 为空时, 直接移除事件.
-//   - 不为空时, 移除指定索引的回调函数.
-func (e *Element) RemoveEvent(nEvent xcc.XE_, index ...int) *Element {
-	if len(index) > 0 {
-		xc.EleEventBus.RemoveCallBack(e.Handle, nEvent, index[0])
+//   - 不为空时, 移除指定 ID 的回调函数.
+func (e *Element) RemoveEvent(nEvent xcc.XE_, id ...int) *Element {
+	if len(id) > 0 {
+		xc.EleEventBus.RemoveCallBack(e.Handle, nEvent, id[0])
 	} else {
 		cbPtr := xc.EleEventBus.EventInfoMap[e.Handle][nEvent].EvnetFuncPtr
 		if cbPtr > 0 {
