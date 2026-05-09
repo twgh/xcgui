@@ -247,12 +247,12 @@ func (b *Button) ClearAnimation() *Button {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (b *Button) AddEvent_BnClick(fn xc.XE_BNCLICK1, allowAddingMultiple ...bool) int {
-	return xc.EleEventHandler.AddCallBack(b.Handle, xcc.XE_BNCLICK, onXE_BNCLICK, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallBack(b.Handle, xcc.XE_BNCLICK, onXE_BNCLICK, fn, allowAddingMultiple...)
 }
 
 // onXE_BNCLICK 按钮点击事件.
 func onXE_BNCLICK(hEle int, pbHandled *bool) int {
-	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_BNCLICK)
+	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_BNCLICK)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].(xc.XE_BNCLICK1); ok {
@@ -271,12 +271,12 @@ func onXE_BNCLICK(hEle int, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (b *Button) AddEvent_Button_Check(fn xc.XE_BUTTON_CHECK1, allowAddingMultiple ...bool) int {
-	return xc.EleEventHandler.AddCallBack(b.Handle, xcc.XE_BUTTON_CHECK, onXE_BUTTON_CHECK, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallBack(b.Handle, xcc.XE_BUTTON_CHECK, onXE_BUTTON_CHECK, fn, allowAddingMultiple...)
 }
 
 // onXE_BUTTON_CHECK 按钮选中事件.
 func onXE_BUTTON_CHECK(hEle int, bCheck bool, pbHandled *bool) int {
-	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_BUTTON_CHECK)
+	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_BUTTON_CHECK)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].(xc.XE_BUTTON_CHECK1); ok {

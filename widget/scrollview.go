@@ -252,12 +252,12 @@ func (s *ScrollView) ScrollBottom() bool {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (s *ScrollView) AddEvent_ScrollView_Scroll_H(fn xc.XE_SCROLLVIEW_SCROLL_H1, allowAddingMultiple ...bool) int {
-	return xc.EleEventHandler.AddCallBack(s.Handle, xcc.XE_SCROLLVIEW_SCROLL_H, onXE_SCROLLVIEW_SCROLL_H, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallBack(s.Handle, xcc.XE_SCROLLVIEW_SCROLL_H, onXE_SCROLLVIEW_SCROLL_H, fn, allowAddingMultiple...)
 }
 
 // onXE_SCROLLVIEW_SCROLL_H 滚动视图元素水平滚动事件.
 func onXE_SCROLLVIEW_SCROLL_H(hEle int, pos int32, pbHandled *bool) int {
-	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_SCROLLVIEW_SCROLL_H)
+	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_SCROLLVIEW_SCROLL_H)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].(xc.XE_SCROLLVIEW_SCROLL_H1); ok {
@@ -276,12 +276,12 @@ func onXE_SCROLLVIEW_SCROLL_H(hEle int, pos int32, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (s *ScrollView) AddEvent_ScrollView_Scroll_V(fn xc.XE_SCROLLVIEW_SCROLL_V1, allowAddingMultiple ...bool) int {
-	return xc.EleEventHandler.AddCallBack(s.Handle, xcc.XE_SCROLLVIEW_SCROLL_V, onXE_SCROLLVIEW_SCROLL_V, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallBack(s.Handle, xcc.XE_SCROLLVIEW_SCROLL_V, onXE_SCROLLVIEW_SCROLL_V, fn, allowAddingMultiple...)
 }
 
 // onXE_SCROLLVIEW_SCROLL_V 滚动视图元素垂直滚动事件.
 func onXE_SCROLLVIEW_SCROLL_V(hEle int, pos int32, pbHandled *bool) int {
-	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_SCROLLVIEW_SCROLL_V)
+	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_SCROLLVIEW_SCROLL_V)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].(xc.XE_SCROLLVIEW_SCROLL_V1); ok {

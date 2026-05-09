@@ -136,12 +136,12 @@ func (p *ProgressBar) SetColorLoad(color uint32) *ProgressBar {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (p *ProgressBar) AddEvent_ProgressBar_Change(fn xc.XE_PROGRESSBAR_CHANGE1, allowAddingMultiple ...bool) int {
-	return xc.EleEventHandler.AddCallBack(p.Handle, xcc.XE_PROGRESSBAR_CHANGE, onXE_PROGRESSBAR_CHANGE, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallBack(p.Handle, xcc.XE_PROGRESSBAR_CHANGE, onXE_PROGRESSBAR_CHANGE, fn, allowAddingMultiple...)
 }
 
 // onXE_PROGRESSBAR_CHANGE 进度条元素进度改变事件.
 func onXE_PROGRESSBAR_CHANGE(hEle int, pos int32, pbHandled *bool) int {
-	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_PROGRESSBAR_CHANGE)
+	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_PROGRESSBAR_CHANGE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].(xc.XE_PROGRESSBAR_CHANGE1); ok {

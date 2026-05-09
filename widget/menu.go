@@ -411,7 +411,7 @@ func (m *Menu) AddEvent_Menu_Select(hWindowOrhEle int, fn func(hWindowOrhEle int
 	if xc.XC_IsHWINDOW(hWindowOrhEle) {
 		ret = xc.WndEventHandler.AddCallBack(hWindowOrhEle, xcc.XWM_MENU_SELECT, xc.OnXWM_MENU_SELECT, fn, allowAddingMultiple...)
 	} else if xc.XC_IsHELE(hWindowOrhEle) {
-		ret = xc.EleEventHandler.AddCallBack(hWindowOrhEle, xcc.XE_MENU_SELECT, onXE_MENU_SELECT, fn, allowAddingMultiple...)
+		ret = xc.EleEventBus.AddCallBack(hWindowOrhEle, xcc.XE_MENU_SELECT, onXE_MENU_SELECT, fn, allowAddingMultiple...)
 	}
 	return ret
 }
@@ -428,7 +428,7 @@ func (m *Menu) AddEvent_Menu_Popup(hWindowOrhEle int, fn func(hWindowOrhEle int,
 	if xc.XC_IsHWINDOW(hWindowOrhEle) {
 		ret = xc.WndEventHandler.AddCallBack(hWindowOrhEle, xcc.XWM_MENU_POPUP, xc.OnXWM_MENU_POPUP, fn, allowAddingMultiple...)
 	} else if xc.XC_IsHELE(hWindowOrhEle) {
-		ret = xc.EleEventHandler.AddCallBack(hWindowOrhEle, xcc.XE_MENU_POPUP, onXE_MENU_POPUP, fn, allowAddingMultiple...)
+		ret = xc.EleEventBus.AddCallBack(hWindowOrhEle, xcc.XE_MENU_POPUP, onXE_MENU_POPUP, fn, allowAddingMultiple...)
 	}
 	return ret
 }
@@ -445,7 +445,7 @@ func (m *Menu) AddEvent_Menu_Exit(hWindowOrhEle int, fn func(hWindowOrhEle int, 
 	if xc.XC_IsHWINDOW(hWindowOrhEle) {
 		ret = xc.WndEventHandler.AddCallBack(hWindowOrhEle, xcc.XWM_MENU_EXIT, xc.OnXWM_MENU_EXIT, fn, allowAddingMultiple...)
 	} else if xc.XC_IsHELE(hWindowOrhEle) {
-		ret = xc.EleEventHandler.AddCallBack(hWindowOrhEle, xcc.XE_MENU_EXIT, onXE_MENU_EXIT, fn, allowAddingMultiple...)
+		ret = xc.EleEventBus.AddCallBack(hWindowOrhEle, xcc.XE_MENU_EXIT, onXE_MENU_EXIT, fn, allowAddingMultiple...)
 	}
 	return ret
 }
@@ -462,7 +462,7 @@ func (m *Menu) AddEvent_Menu_Popup_Wnd(hWindowOrhEle int, fn func(hWindowOrhEle 
 	if xc.XC_IsHWINDOW(hWindowOrhEle) {
 		ret = xc.WndEventHandler.AddCallBack(hWindowOrhEle, xcc.XWM_MENU_POPUP_WND, xc.OnXWM_MENU_POPUP_WND, fn, allowAddingMultiple...)
 	} else if xc.XC_IsHELE(hWindowOrhEle) {
-		ret = xc.EleEventHandler.AddCallBack(hWindowOrhEle, xcc.XE_MENU_POPUP_WND, onXE_MENU_POPUP_WND, fn, allowAddingMultiple...)
+		ret = xc.EleEventBus.AddCallBack(hWindowOrhEle, xcc.XE_MENU_POPUP_WND, onXE_MENU_POPUP_WND, fn, allowAddingMultiple...)
 	}
 	return ret
 }
@@ -479,7 +479,7 @@ func (m *Menu) AddEvent_Menu_Draw_Background(hWindowOrhEle int, fn func(hEle int
 	if xc.XC_IsHWINDOW(hWindowOrhEle) {
 		ret = xc.WndEventHandler.AddCallBack(hWindowOrhEle, xcc.XWM_MENU_DRAW_BACKGROUND, xc.OnXWM_MENU_DRAW_BACKGROUND, fn, allowAddingMultiple...)
 	} else if xc.XC_IsHELE(hWindowOrhEle) {
-		ret = xc.EleEventHandler.AddCallBack(hWindowOrhEle, xcc.XE_MENU_DRAW_BACKGROUND, onXE_MENU_DRAW_BACKGROUND, fn, allowAddingMultiple...)
+		ret = xc.EleEventBus.AddCallBack(hWindowOrhEle, xcc.XE_MENU_DRAW_BACKGROUND, onXE_MENU_DRAW_BACKGROUND, fn, allowAddingMultiple...)
 	}
 	return ret
 }
@@ -496,7 +496,7 @@ func (m *Menu) AddEvent_Menu_DrawItem(hWindowOrhEle int, fn func(hWindowOrhEle i
 	if xc.XC_IsHWINDOW(hWindowOrhEle) {
 		ret = xc.WndEventHandler.AddCallBack(hWindowOrhEle, xcc.XWM_MENU_DRAWITEM, xc.OnXWM_MENU_DRAWITEM, fn, allowAddingMultiple...)
 	} else if xc.XC_IsHELE(hWindowOrhEle) {
-		ret = xc.EleEventHandler.AddCallBack(hWindowOrhEle, xcc.XE_MENU_DRAWITEM, onXE_MENU_DRAWITEM, fn, allowAddingMultiple...)
+		ret = xc.EleEventBus.AddCallBack(hWindowOrhEle, xcc.XE_MENU_DRAWITEM, onXE_MENU_DRAWITEM, fn, allowAddingMultiple...)
 	}
 	return ret
 }

@@ -510,12 +510,12 @@ func (c *ComboBox) GetItemTemplateObj() *tmpl.ListItemTemplate {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (c *ComboBox) AddEvent_ComboBox_Select_End(fn xc.XE_COMBOBOX_SELECT_END1, allowAddingMultiple ...bool) int {
-	return xc.EleEventHandler.AddCallBack(c.Handle, xcc.XE_COMBOBOX_SELECT_END, onXE_COMBOBOX_SELECT_END, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallBack(c.Handle, xcc.XE_COMBOBOX_SELECT_END, onXE_COMBOBOX_SELECT_END, fn, allowAddingMultiple...)
 }
 
 // onXE_COMBOBOX_SELECT_END 组合框下拉列表项选择完成事件, 编辑框内容已经改变.
 func onXE_COMBOBOX_SELECT_END(hEle int, iItem int32, pbHandled *bool) int {
-	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_COMBOBOX_SELECT_END)
+	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_COMBOBOX_SELECT_END)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].(xc.XE_COMBOBOX_SELECT_END1); ok {
@@ -534,12 +534,12 @@ func onXE_COMBOBOX_SELECT_END(hEle int, iItem int32, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (c *ComboBox) AddEvent_Combobox_Select(fn xc.XE_COMBOBOX_SELECT1, allowAddingMultiple ...bool) int {
-	return xc.EleEventHandler.AddCallBack(c.Handle, xcc.XE_COMBOBOX_SELECT, onXE_COMBOBOX_SELECT, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallBack(c.Handle, xcc.XE_COMBOBOX_SELECT, onXE_COMBOBOX_SELECT, fn, allowAddingMultiple...)
 }
 
 // onXE_COMBOBOX_SELECT 组合框下拉列表项选择事件.
 func onXE_COMBOBOX_SELECT(hEle int, iItem int32, pbHandled *bool) int {
-	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_COMBOBOX_SELECT)
+	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_COMBOBOX_SELECT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].(xc.XE_COMBOBOX_SELECT1); ok {
@@ -558,12 +558,12 @@ func onXE_COMBOBOX_SELECT(hEle int, iItem int32, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (c *ComboBox) AddEvent_Combobox_Popup_List(fn xc.XE_COMBOBOX_POPUP_LIST1, allowAddingMultiple ...bool) int {
-	return xc.EleEventHandler.AddCallBack(c.Handle, xcc.XE_COMBOBOX_POPUP_LIST, onXE_COMBOBOX_POPUP_LIST, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallBack(c.Handle, xcc.XE_COMBOBOX_POPUP_LIST, onXE_COMBOBOX_POPUP_LIST, fn, allowAddingMultiple...)
 }
 
 // onXE_COMBOBOX_POPUP_LIST 组合框下拉列表弹出事件.
 func onXE_COMBOBOX_POPUP_LIST(hEle int, hWindow int, hListBox int, pbHandled *bool) int {
-	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_COMBOBOX_POPUP_LIST)
+	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_COMBOBOX_POPUP_LIST)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].(xc.XE_COMBOBOX_POPUP_LIST1); ok {
@@ -582,12 +582,12 @@ func onXE_COMBOBOX_POPUP_LIST(hEle int, hWindow int, hListBox int, pbHandled *bo
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (c *ComboBox) AddEvent_Combobox_Exit_List(fn xc.XE_COMBOBOX_EXIT_LIST1, allowAddingMultiple ...bool) int {
-	return xc.EleEventHandler.AddCallBack(c.Handle, xcc.XE_COMBOBOX_EXIT_LIST, onXE_COMBOBOX_EXIT_LIST, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallBack(c.Handle, xcc.XE_COMBOBOX_EXIT_LIST, onXE_COMBOBOX_EXIT_LIST, fn, allowAddingMultiple...)
 }
 
 // onXE_COMBOBOX_EXIT_LIST 组合框下拉列表退出事件.
 func onXE_COMBOBOX_EXIT_LIST(hEle int, pbHandled *bool) int {
-	cbs := xc.EleEventHandler.GetCallBacks(hEle, xcc.XE_COMBOBOX_EXIT_LIST)
+	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_COMBOBOX_EXIT_LIST)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].(xc.XE_COMBOBOX_EXIT_LIST1); ok {
