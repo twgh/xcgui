@@ -67,9 +67,9 @@ func XEle_RemoveEventC(hEle int, nEvent xcc.XE_, fun interface{}) bool {
 //
 // nEvent: 事件类型: xcc.XE_.
 //
-// pFun: 事件函数指针, 使用 syscall.NewCallback() 生成.
-func XEle_RegEventCEx(hEle int, nEvent xcc.XE_, pFun uintptr) bool {
-	r, _, _ := xEle_RegEventC.Call(uintptr(hEle), uintptr(nEvent), pFun)
+// pFn: 事件函数指针, 使用 syscall.NewCallback() 生成.
+func XEle_RegEventCEx(hEle int, nEvent xcc.XE_, pFn uintptr) bool {
+	r, _, _ := xEle_RegEventC.Call(uintptr(hEle), uintptr(nEvent), pFn)
 	return r != 0
 }
 
@@ -79,9 +79,9 @@ func XEle_RegEventCEx(hEle int, nEvent xcc.XE_, pFun uintptr) bool {
 //
 // nEvent: 事件类型: xcc.XE_.
 //
-// pFun: 事件函数指针, 使用 syscall.NewCallback() 生成.
-func XEle_RegEventC1Ex(hEle int, nEvent xcc.XE_, pFun uintptr) bool {
-	r, _, _ := xEle_RegEventC1.Call(uintptr(hEle), uintptr(nEvent), pFun)
+// pFn: 事件函数指针, 使用 syscall.NewCallback() 生成.
+func XEle_RegEventC1Ex(hEle int, nEvent xcc.XE_, pFn uintptr) bool {
+	r, _, _ := xEle_RegEventC1.Call(uintptr(hEle), uintptr(nEvent), pFn)
 	return r != 0
 }
 
@@ -91,9 +91,9 @@ func XEle_RegEventC1Ex(hEle int, nEvent xcc.XE_, pFun uintptr) bool {
 //
 // nEvent: 事件类型: xcc.XE_.
 //
-// pFun: 事件函数指针, 使用 syscall.NewCallback() 生成.
-func XEle_RemoveEventCEx(hEle int, nEvent xcc.XE_, pFun uintptr) bool {
-	r, _, _ := xEle_RemoveEventC.Call(uintptr(hEle), uintptr(nEvent), pFun)
+// pFn: 事件函数指针, 使用 syscall.NewCallback() 生成.
+func XEle_RemoveEventCEx(hEle int, nEvent xcc.XE_, pFn uintptr) bool {
+	r, _, _ := xEle_RemoveEventC.Call(uintptr(hEle), uintptr(nEvent), pFn)
 	return r != 0
 }
 

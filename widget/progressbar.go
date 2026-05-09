@@ -132,11 +132,11 @@ func (p *ProgressBar) SetColorLoad(color uint32) *ProgressBar {
 
 // AddEvent_ProgressBar_Change 添加进度条元素进度改变事件.
 //
-// pFun: 回调函数.
+// fn: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (p *ProgressBar) AddEvent_ProgressBar_Change(pFun xc.XE_PROGRESSBAR_CHANGE1, allowAddingMultiple ...bool) int {
-	return xc.EleEventHandler.AddCallBack(p.Handle, xcc.XE_PROGRESSBAR_CHANGE, onXE_PROGRESSBAR_CHANGE, pFun, allowAddingMultiple...)
+func (p *ProgressBar) AddEvent_ProgressBar_Change(fn xc.XE_PROGRESSBAR_CHANGE1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(p.Handle, xcc.XE_PROGRESSBAR_CHANGE, onXE_PROGRESSBAR_CHANGE, fn, allowAddingMultiple...)
 }
 
 // onXE_PROGRESSBAR_CHANGE 进度条元素进度改变事件.
@@ -157,11 +157,11 @@ func onXE_PROGRESSBAR_CHANGE(hEle int, pos int32, pbHandled *bool) int {
 // ------------------------- 事件 ------------------------- //
 
 // 进度条元素,进度改变事件.
-func (p *ProgressBar) Event_PROGRESSBAR_CHANGE(pFun xc.XE_PROGRESSBAR_CHANGE) bool {
-	return xc.XEle_RegEventC(p.Handle, xcc.XE_PROGRESSBAR_CHANGE, pFun)
+func (p *ProgressBar) Event_PROGRESSBAR_CHANGE(fn xc.XE_PROGRESSBAR_CHANGE) bool {
+	return xc.XEle_RegEventC(p.Handle, xcc.XE_PROGRESSBAR_CHANGE, fn)
 }
 
 // 进度条元素,进度改变事件.
-func (p *ProgressBar) Event_PROGRESSBAR_CHANGE1(pFun xc.XE_PROGRESSBAR_CHANGE1) bool {
-	return xc.XEle_RegEventC1(p.Handle, xcc.XE_PROGRESSBAR_CHANGE, pFun)
+func (p *ProgressBar) Event_PROGRESSBAR_CHANGE1(fn xc.XE_PROGRESSBAR_CHANGE1) bool {
+	return xc.XEle_RegEventC1(p.Handle, xcc.XE_PROGRESSBAR_CHANGE, fn)
 }

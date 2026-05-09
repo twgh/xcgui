@@ -181,11 +181,11 @@ func (s *ScrollBar) XSBar_GetCurPos() int32 {
 
 // AddEvent_SBar_Scroll 添加滚动条元素滚动事件.
 //
-// pFun: 回调函数.
+// fn: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (s *ScrollBar) AddEvent_SBar_Scroll(pFun xc.XE_SBAR_SCROLL1, allowAddingMultiple ...bool) int {
-	return xc.EleEventHandler.AddCallBack(s.Handle, xcc.XE_SBAR_SCROLL, onXE_SBAR_SCROLL, pFun, allowAddingMultiple...)
+func (s *ScrollBar) AddEvent_SBar_Scroll(fn xc.XE_SBAR_SCROLL1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(s.Handle, xcc.XE_SBAR_SCROLL, onXE_SBAR_SCROLL, fn, allowAddingMultiple...)
 }
 
 // onXE_SBAR_SCROLL 滚动条元素滚动事件处理.
@@ -206,11 +206,11 @@ func onXE_SBAR_SCROLL(hEle int, pos int32, pbHandled *bool) int {
 // ------------------------- 事件 ------------------------- //
 
 // 滚动条元素滚动事件,滚动条触发.
-func (s *ScrollBar) Event_SBAR_SCROLL(pFun xc.XE_SBAR_SCROLL) bool {
-	return xc.XEle_RegEventC(s.Handle, xcc.XE_SBAR_SCROLL, pFun)
+func (s *ScrollBar) Event_SBAR_SCROLL(fn xc.XE_SBAR_SCROLL) bool {
+	return xc.XEle_RegEventC(s.Handle, xcc.XE_SBAR_SCROLL, fn)
 }
 
 // 滚动条元素滚动事件,滚动条触发.
-func (s *ScrollBar) Event_SBAR_SCROLL1(pFun xc.XE_SBAR_SCROLL1) bool {
-	return xc.XEle_RegEventC1(s.Handle, xcc.XE_SBAR_SCROLL, pFun)
+func (s *ScrollBar) Event_SBAR_SCROLL1(fn xc.XE_SBAR_SCROLL1) bool {
+	return xc.XEle_RegEventC1(s.Handle, xcc.XE_SBAR_SCROLL, fn)
 }

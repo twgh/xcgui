@@ -15,9 +15,9 @@ func XRes_EnableDelayLoad(bEnable bool) {
 
 // 资源_置文件加载回调, 设置文件加载回调函数.
 //
-// pFun: 回调函数.
-func XRes_SetLoadFileCallback(pFun FunLoadFile) {
-	xRes_SetLoadFileCallback.Call(syscall.NewCallback(pFun))
+// fn: 回调函数.
+func XRes_SetLoadFileCallback(fn FunLoadFile) {
+	xRes_SetLoadFileCallback.Call(syscall.NewCallback(fn))
 }
 
 // 资源_取ID值, 获取资源ID整型值.

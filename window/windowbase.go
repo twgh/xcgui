@@ -222,9 +222,9 @@ func (w *windowBase) RemoveEventC(nEvent xcc.WM_, fn interface{}) bool {
 //
 // nEvent: 事件类型: xcc.WM_, xcc.XWM_.
 //
-// pFun: 事件函数指针, 使用 syscall.NewCallback() 生成..
-func (w *windowBase) RemoveEventCEx(nEvent xcc.WM_, pFun uintptr) bool {
-	return xc.XWnd_RemoveEventCEx(w.Handle, nEvent, pFun)
+// pFn: 事件函数指针, 使用 syscall.NewCallback() 生成..
+func (w *windowBase) RemoveEventCEx(nEvent xcc.WM_, pFn uintptr) bool {
+	return xc.XWnd_RemoveEventCEx(w.Handle, nEvent, pFn)
 }
 
 // 窗口_添加子对象.

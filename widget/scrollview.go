@@ -248,11 +248,11 @@ func (s *ScrollView) ScrollBottom() bool {
 
 // AddEvent_ScrollView_Scroll_H 添加滚动视图元素水平滚动事件.
 //
-// pFun: 回调函数.
+// fn: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (s *ScrollView) AddEvent_ScrollView_Scroll_H(pFun xc.XE_SCROLLVIEW_SCROLL_H1, allowAddingMultiple ...bool) int {
-	return xc.EleEventHandler.AddCallBack(s.Handle, xcc.XE_SCROLLVIEW_SCROLL_H, onXE_SCROLLVIEW_SCROLL_H, pFun, allowAddingMultiple...)
+func (s *ScrollView) AddEvent_ScrollView_Scroll_H(fn xc.XE_SCROLLVIEW_SCROLL_H1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(s.Handle, xcc.XE_SCROLLVIEW_SCROLL_H, onXE_SCROLLVIEW_SCROLL_H, fn, allowAddingMultiple...)
 }
 
 // onXE_SCROLLVIEW_SCROLL_H 滚动视图元素水平滚动事件.
@@ -272,11 +272,11 @@ func onXE_SCROLLVIEW_SCROLL_H(hEle int, pos int32, pbHandled *bool) int {
 
 // AddEvent_ScrollView_Scroll_V 添加滚动视图元素垂直滚动事件.
 //
-// pFun: 回调函数.
+// fn: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (s *ScrollView) AddEvent_ScrollView_Scroll_V(pFun xc.XE_SCROLLVIEW_SCROLL_V1, allowAddingMultiple ...bool) int {
-	return xc.EleEventHandler.AddCallBack(s.Handle, xcc.XE_SCROLLVIEW_SCROLL_V, onXE_SCROLLVIEW_SCROLL_V, pFun, allowAddingMultiple...)
+func (s *ScrollView) AddEvent_ScrollView_Scroll_V(fn xc.XE_SCROLLVIEW_SCROLL_V1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(s.Handle, xcc.XE_SCROLLVIEW_SCROLL_V, onXE_SCROLLVIEW_SCROLL_V, fn, allowAddingMultiple...)
 }
 
 // onXE_SCROLLVIEW_SCROLL_V 滚动视图元素垂直滚动事件.
@@ -297,21 +297,21 @@ func onXE_SCROLLVIEW_SCROLL_V(hEle int, pos int32, pbHandled *bool) int {
 // ------------------------- 事件 ------------------------- //
 
 // 滚动视图元素水平滚动事件,滚动视图触发.
-func (s *ScrollView) Event_SCROLLVIEW_SCROLL_H(pFun xc.XE_SCROLLVIEW_SCROLL_H) bool {
-	return xc.XEle_RegEventC(s.Handle, xcc.XE_SCROLLVIEW_SCROLL_H, pFun)
+func (s *ScrollView) Event_SCROLLVIEW_SCROLL_H(fn xc.XE_SCROLLVIEW_SCROLL_H) bool {
+	return xc.XEle_RegEventC(s.Handle, xcc.XE_SCROLLVIEW_SCROLL_H, fn)
 }
 
 // 滚动视图元素水平滚动事件,滚动视图触发.
-func (s *ScrollView) Event_SCROLLVIEW_SCROLL_H1(pFun xc.XE_SCROLLVIEW_SCROLL_H1) bool {
-	return xc.XEle_RegEventC1(s.Handle, xcc.XE_SCROLLVIEW_SCROLL_H, pFun)
+func (s *ScrollView) Event_SCROLLVIEW_SCROLL_H1(fn xc.XE_SCROLLVIEW_SCROLL_H1) bool {
+	return xc.XEle_RegEventC1(s.Handle, xcc.XE_SCROLLVIEW_SCROLL_H, fn)
 }
 
 // 滚动视图元素垂直滚动事件,滚动视图触发.
-func (s *ScrollView) Event_SCROLLVIEW_SCROLL_V(pFun xc.XE_SCROLLVIEW_SCROLL_V) bool {
-	return xc.XEle_RegEventC(s.Handle, xcc.XE_SCROLLVIEW_SCROLL_V, pFun)
+func (s *ScrollView) Event_SCROLLVIEW_SCROLL_V(fn xc.XE_SCROLLVIEW_SCROLL_V) bool {
+	return xc.XEle_RegEventC(s.Handle, xcc.XE_SCROLLVIEW_SCROLL_V, fn)
 }
 
 // 滚动视图元素垂直滚动事件,滚动视图触发.
-func (s *ScrollView) Event_SCROLLVIEW_SCROLL_V1(pFun xc.XE_SCROLLVIEW_SCROLL_V1) bool {
-	return xc.XEle_RegEventC1(s.Handle, xcc.XE_SCROLLVIEW_SCROLL_V, pFun)
+func (s *ScrollView) Event_SCROLLVIEW_SCROLL_V1(fn xc.XE_SCROLLVIEW_SCROLL_V1) bool {
+	return xc.XEle_RegEventC1(s.Handle, xcc.XE_SCROLLVIEW_SCROLL_V, fn)
 }

@@ -314,11 +314,11 @@ func (e *Editor) SetAutoMatchMode(mode int32) *Editor {
 
 // AddEvent_Editor_Modify_Rows 添加多行内容改变事件. 例如:区块注释操作, 区块缩进操作, 代码格式化. iRow: 开始行. nRows: 改变行数量.
 //
-// pFun: 回调函数.
+// fn: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Editor) AddEvent_Editor_Modify_Rows(pFun xc.XE_EDITOR_MODIFY_ROWS1, allowAddingMultiple ...bool) int {
-	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_EDITOR_MODIFY_ROWS, onXE_EDITOR_MODIFY_ROWS, pFun, allowAddingMultiple...)
+func (e *Editor) AddEvent_Editor_Modify_Rows(fn xc.XE_EDITOR_MODIFY_ROWS1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_EDITOR_MODIFY_ROWS, onXE_EDITOR_MODIFY_ROWS, fn, allowAddingMultiple...)
 }
 
 // onXE_EDITOR_MODIFY_ROWS 多行内容改变事件. 例如:区块注释操作, 区块缩进操作, 代码格式化. iRow: 开始行. nRows: 改变行数量.
@@ -338,11 +338,11 @@ func onXE_EDITOR_MODIFY_ROWS(hEle int, iRow int32, nRows int32, pbHandled *bool)
 
 // AddEvent_Editor_SetBreakPoint 添加代码编辑框设置断点事件.
 //
-// pFun: 回调函数.
+// fn: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Editor) AddEvent_Editor_SetBreakPoint(pFun xc.XE_EDITOR_SETBREAKPOINT1, allowAddingMultiple ...bool) int {
-	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_EDITOR_SETBREAKPOINT, onXE_EDITOR_SETBREAKPOINT, pFun, allowAddingMultiple...)
+func (e *Editor) AddEvent_Editor_SetBreakPoint(fn xc.XE_EDITOR_SETBREAKPOINT1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_EDITOR_SETBREAKPOINT, onXE_EDITOR_SETBREAKPOINT, fn, allowAddingMultiple...)
 }
 
 // onXE_EDITOR_SETBREAKPOINT 代码编辑框设置断点事件.
@@ -362,11 +362,11 @@ func onXE_EDITOR_SETBREAKPOINT(hEle int, iRow int32, bCheck bool, pbHandled *boo
 
 // AddEvent_Editor_RemoveBreakPoint 添加代码编辑框移除断点事件.
 //
-// pFun: 回调函数.
+// fn: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Editor) AddEvent_Editor_RemoveBreakPoint(pFun xc.XE_EDITOR_REMOVEBREAKPOINT1, allowAddingMultiple ...bool) int {
-	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_EDITOR_REMOVEBREAKPOINT, onXE_EDITOR_REMOVEBREAKPOINT, pFun, allowAddingMultiple...)
+func (e *Editor) AddEvent_Editor_RemoveBreakPoint(fn xc.XE_EDITOR_REMOVEBREAKPOINT1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_EDITOR_REMOVEBREAKPOINT, onXE_EDITOR_REMOVEBREAKPOINT, fn, allowAddingMultiple...)
 }
 
 // onXE_EDITOR_REMOVEBREAKPOINT 代码编辑框移除断点事件.
@@ -386,11 +386,11 @@ func onXE_EDITOR_REMOVEBREAKPOINT(hEle int, iRow int32, pbHandled *bool) int {
 
 // AddEvent_Editor_AutoMatch_Select 添加代码编辑框自动匹配选择事件.
 //
-// pFun: 回调函数.
+// fn: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (e *Editor) AddEvent_Editor_AutoMatch_Select(pFun xc.XE_EDITOR_AUTOMATCH_SELECT1, allowAddingMultiple ...bool) int {
-	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_EDITOR_AUTOMATCH_SELECT, onXE_EDITOR_AUTOMATCH_SELECT, pFun, allowAddingMultiple...)
+func (e *Editor) AddEvent_Editor_AutoMatch_Select(fn xc.XE_EDITOR_AUTOMATCH_SELECT1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(e.Handle, xcc.XE_EDITOR_AUTOMATCH_SELECT, onXE_EDITOR_AUTOMATCH_SELECT, fn, allowAddingMultiple...)
 }
 
 // onXE_EDITOR_AUTOMATCH_SELECT 代码编辑框自动匹配选择事件.
@@ -411,41 +411,41 @@ func onXE_EDITOR_AUTOMATCH_SELECT(hEle int, iRow int32, nRows int32, pbHandled *
 // ------------------------- 事件 ------------------------- //
 
 // 多行内容改变事件 例如:区块注释操作, 区块缩进操作, 代码格式化.
-func (e *Editor) Event_EDITOR_MODIFY_ROWS(pFun xc.XE_EDITOR_MODIFY_ROWS) bool {
-	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDITOR_MODIFY_ROWS, pFun)
+func (e *Editor) Event_EDITOR_MODIFY_ROWS(fn xc.XE_EDITOR_MODIFY_ROWS) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDITOR_MODIFY_ROWS, fn)
 }
 
 // 多行内容改变事件 例如:区块注释操作, 区块缩进操作, 代码格式化.
-func (e *Editor) Event_EDITOR_MODIFY_ROWS1(pFun xc.XE_EDITOR_MODIFY_ROWS1) bool {
-	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDITOR_MODIFY_ROWS, pFun)
+func (e *Editor) Event_EDITOR_MODIFY_ROWS1(fn xc.XE_EDITOR_MODIFY_ROWS1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDITOR_MODIFY_ROWS, fn)
 }
 
 // 代码编辑框_设置断点.
-func (e *Editor) Event_EDITOR_SETBREAKPOINT(pFun xc.XE_EDITOR_SETBREAKPOINT) bool {
-	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDITOR_SETBREAKPOINT, pFun)
+func (e *Editor) Event_EDITOR_SETBREAKPOINT(fn xc.XE_EDITOR_SETBREAKPOINT) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDITOR_SETBREAKPOINT, fn)
 }
 
 // 代码编辑框_设置断点.
-func (e *Editor) Event_EDITOR_SETBREAKPOINT1(pFun xc.XE_EDITOR_SETBREAKPOINT1) bool {
-	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDITOR_SETBREAKPOINT, pFun)
+func (e *Editor) Event_EDITOR_SETBREAKPOINT1(fn xc.XE_EDITOR_SETBREAKPOINT1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDITOR_SETBREAKPOINT, fn)
 }
 
 // 代码编辑框_移除断点.
-func (e *Editor) Event_EDITOR_REMOVEBREAKPOINT(pFun xc.XE_EDITOR_REMOVEBREAKPOINT) bool {
-	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDITOR_REMOVEBREAKPOINT, pFun)
+func (e *Editor) Event_EDITOR_REMOVEBREAKPOINT(fn xc.XE_EDITOR_REMOVEBREAKPOINT) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDITOR_REMOVEBREAKPOINT, fn)
 }
 
 // 代码编辑框_移除断点.
-func (e *Editor) Event_EDITOR_REMOVEBREAKPOINT1(pFun xc.XE_EDITOR_REMOVEBREAKPOINT1) bool {
-	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDITOR_REMOVEBREAKPOINT, pFun)
+func (e *Editor) Event_EDITOR_REMOVEBREAKPOINT1(fn xc.XE_EDITOR_REMOVEBREAKPOINT1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDITOR_REMOVEBREAKPOINT, fn)
 }
 
 // 代码编辑框_自动匹配选择.
-func (e *Editor) Event_EDITOR_AUTOMATCH_SELECT(pFun xc.XE_EDITOR_AUTOMATCH_SELECT) bool {
-	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDITOR_AUTOMATCH_SELECT, pFun)
+func (e *Editor) Event_EDITOR_AUTOMATCH_SELECT(fn xc.XE_EDITOR_AUTOMATCH_SELECT) bool {
+	return xc.XEle_RegEventC(e.Handle, xcc.XE_EDITOR_AUTOMATCH_SELECT, fn)
 }
 
 // 代码编辑框_自动匹配选择.
-func (e *Editor) Event_EDITOR_AUTOMATCH_SELECT1(pFun xc.XE_EDITOR_AUTOMATCH_SELECT1) bool {
-	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDITOR_AUTOMATCH_SELECT, pFun)
+func (e *Editor) Event_EDITOR_AUTOMATCH_SELECT1(fn xc.XE_EDITOR_AUTOMATCH_SELECT1) bool {
+	return xc.XEle_RegEventC1(e.Handle, xcc.XE_EDITOR_AUTOMATCH_SELECT, fn)
 }

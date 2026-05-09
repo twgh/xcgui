@@ -121,11 +121,11 @@ func (m *MonthCal) SetTextColor(nFlag int32, color uint32) *MonthCal {
 
 // AddEvent_MonthCal_Change 添加月历元素日期改变事件.
 //
-// pFun: 回调函数.
+// fn: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (m *MonthCal) AddEvent_MonthCal_Change(pFun xc.XE_MONTHCAL_CHANGE1, allowAddingMultiple ...bool) int {
-	return xc.EleEventHandler.AddCallBack(m.Handle, xcc.XE_MONTHCAL_CHANGE, onXE_MONTHCAL_CHANGE, pFun, allowAddingMultiple...)
+func (m *MonthCal) AddEvent_MonthCal_Change(fn xc.XE_MONTHCAL_CHANGE1, allowAddingMultiple ...bool) int {
+	return xc.EleEventHandler.AddCallBack(m.Handle, xcc.XE_MONTHCAL_CHANGE, onXE_MONTHCAL_CHANGE, fn, allowAddingMultiple...)
 }
 
 // onXE_MONTHCAL_CHANGE 月历元素日期改变事件.
@@ -146,11 +146,11 @@ func onXE_MONTHCAL_CHANGE(hEle int, pbHandled *bool) int {
 // ------------------------- 事件 ------------------------- //
 
 // 月历元素日期改变事件.
-func (m *MonthCal) Event_MONTHCAL_CHANGE(pFun xc.XE_MONTHCAL_CHANGE) bool {
-	return xc.XEle_RegEventC(m.Handle, xcc.XE_MONTHCAL_CHANGE, pFun)
+func (m *MonthCal) Event_MONTHCAL_CHANGE(fn xc.XE_MONTHCAL_CHANGE) bool {
+	return xc.XEle_RegEventC(m.Handle, xcc.XE_MONTHCAL_CHANGE, fn)
 }
 
 // 月历元素日期改变事件.
-func (m *MonthCal) Event_MONTHCAL_CHANGE1(pFun xc.XE_MONTHCAL_CHANGE1) bool {
-	return xc.XEle_RegEventC1(m.Handle, xcc.XE_MONTHCAL_CHANGE, pFun)
+func (m *MonthCal) Event_MONTHCAL_CHANGE1(fn xc.XE_MONTHCAL_CHANGE1) bool {
+	return xc.XEle_RegEventC1(m.Handle, xcc.XE_MONTHCAL_CHANGE, fn)
 }

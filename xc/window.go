@@ -120,9 +120,9 @@ func XWnd_RemoveEventC(hWindow int, nEvent xcc.WM_, fun interface{}) bool {
 //
 // nEvent: 事件类型: xcc.WM_, xcc.XWM_ .
 //
-// pFun: 事件函数指针, 使用 syscall.NewCallback() 生成.
-func XWnd_RegEventCEx(hWindow int, nEvent xcc.WM_, pFun uintptr) bool {
-	r, _, _ := xWnd_RegEventC.Call(uintptr(hWindow), uintptr(nEvent), pFun)
+// pFn: 事件函数指针, 使用 syscall.NewCallback() 生成.
+func XWnd_RegEventCEx(hWindow int, nEvent xcc.WM_, pFn uintptr) bool {
+	r, _, _ := xWnd_RegEventC.Call(uintptr(hWindow), uintptr(nEvent), pFn)
 	return r != 0
 }
 
@@ -132,9 +132,9 @@ func XWnd_RegEventCEx(hWindow int, nEvent xcc.WM_, pFun uintptr) bool {
 //
 // nEvent: 事件类型: xcc.WM_, xcc.XWM_.
 //
-// pFun: 事件函数指针, 使用 syscall.NewCallback() 生成.
-func XWnd_RegEventC1Ex(hWindow int, nEvent xcc.WM_, pFun uintptr) bool {
-	r, _, _ := xWnd_RegEventC1.Call(uintptr(hWindow), uintptr(nEvent), pFun)
+// pFn: 事件函数指针, 使用 syscall.NewCallback() 生成.
+func XWnd_RegEventC1Ex(hWindow int, nEvent xcc.WM_, pFn uintptr) bool {
+	r, _, _ := xWnd_RegEventC1.Call(uintptr(hWindow), uintptr(nEvent), pFn)
 	return r != 0
 }
 
@@ -144,9 +144,9 @@ func XWnd_RegEventC1Ex(hWindow int, nEvent xcc.WM_, pFun uintptr) bool {
 //
 // nEvent: 事件类型: xcc.WM_, xcc.XWM_.
 //
-// pFun: 事件函数指针, 使用 syscall.NewCallback() 生成.
-func XWnd_RemoveEventCEx(hWindow int, nEvent xcc.WM_, pFun uintptr) bool {
-	r, _, _ := xWnd_RemoveEventC.Call(uintptr(hWindow), uintptr(nEvent), pFun)
+// pFn: 事件函数指针, 使用 syscall.NewCallback() 生成.
+func XWnd_RemoveEventCEx(hWindow int, nEvent xcc.WM_, pFn uintptr) bool {
+	r, _, _ := xWnd_RemoveEventC.Call(uintptr(hWindow), uintptr(nEvent), pFn)
 	return r != 0
 }
 
