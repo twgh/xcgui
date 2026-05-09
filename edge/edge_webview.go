@@ -239,22 +239,22 @@ func (w *WebView) SetSize(width, height int32) {
 //   - 可以是多个层级: a.b.c.name, 调用方式: a.b.c.name().
 //   - 每个层级的命名规则都必须和 js 变量命名规则一致.
 //
-// fun: 必须是一个函数:
+// fn: 必须是一个函数:
 //   - 函数参数可使用基本类型, 其它的自行测试, 暂不支持[]byte.
 //   - 函数可以没有返回值.
 //   - 函数返回值可以是一个值或一个error.
 //   - 函数返回值可以是一个值和一个error.
-func (w *WebView) Bind(name string, fun interface{}) error {
+func (w *WebView) Bind(name string, fn interface{}) error {
 	if name == "" {
 		return errors.New("name is empty")
 	}
 	if strings.Contains(name, " ") {
 		return errors.New("name can't contain spaces")
 	}
-	if fun == nil {
-		return errors.New("fun is nil")
+	if fn == nil {
+		return errors.New("fn is nil")
 	}
-	v := reflect.ValueOf(fun)
+	v := reflect.ValueOf(fn)
 	if v.Kind() != reflect.Func {
 		return errors.New("only functions can be bound")
 	}
@@ -263,7 +263,7 @@ func (w *WebView) Bind(name string, fun interface{}) error {
 	}
 
 	w.rwxBindings.Lock()
-	w.bindings[name] = fun
+	w.bindings[name] = fn
 	w.rwxBindings.Unlock()
 
 	initCode := fmt.Sprintf(`(function() {

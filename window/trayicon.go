@@ -131,18 +131,18 @@ func (t *TrayIcon) Reset() *TrayIcon {
 //
 // hWindow: 炫彩窗口句柄.
 //
-// fun: 回调函数.
+// fn: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数.
-func (t *TrayIcon) AddEvent_TrayIcon(hWindow int, fun xc.XWM_TRAYICON, allowAddingMultiple ...bool) int {
-	return xc.WndEventHandler.AddCallBack(hWindow, xcc.XWM_TRAYICON, onXWM_TRAYICON, fun, allowAddingMultiple...)
+func (t *TrayIcon) AddEvent_TrayIcon(hWindow int, fn xc.XWM_TRAYICON, allowAddingMultiple ...bool) int {
+	return xc.WndEventHandler.AddCallBack(hWindow, xcc.XWM_TRAYICON, onXWM_TRAYICON, fn, allowAddingMultiple...)
 }
 
 // 托盘图标事件.
 //
 // hWindow: 炫彩窗口句柄.
-func (t *TrayIcon) Event_TRAYICON(hWindow int, fun xc.XWM_TRAYICON) bool {
-	return xc.XWnd_RegEventC(hWindow, xcc.XWM_TRAYICON, fun)
+func (t *TrayIcon) Event_TRAYICON(hWindow int, fn xc.XWM_TRAYICON) bool {
+	return xc.XWnd_RegEventC(hWindow, xcc.XWM_TRAYICON, fn)
 }
 
 // 获取元素在slice中的索引, 找不到则返回-1.

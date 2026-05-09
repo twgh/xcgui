@@ -55,27 +55,27 @@ func NewElementByUIDName(name string) *Element {
 //
 // nEvent: 事件类型: xcc.XE_.
 //
-// fun: 事件函数.
-func (e *Element) RegEventC(nEvent xcc.XE_, fun interface{}) bool {
-	return xc.XEle_RegEventC(e.Handle, nEvent, fun)
+// fn: 事件函数.
+func (e *Element) RegEventC(nEvent xcc.XE_, fn interface{}) bool {
+	return xc.XEle_RegEventC(e.Handle, nEvent, fn)
 }
 
 // 元素_注册事件C1, 注册事件C1方式, 省略1参数.
 //
 // nEvent: 事件类型: xcc.XE_.
 //
-// fun: 事件函数.
-func (e *Element) RegEventC1(nEvent xcc.XE_, fun interface{}) bool {
-	return xc.XEle_RegEventC1(e.Handle, nEvent, fun)
+// fn: 事件函数.
+func (e *Element) RegEventC1(nEvent xcc.XE_, fn interface{}) bool {
+	return xc.XEle_RegEventC1(e.Handle, nEvent, fn)
 }
 
 // 元素_移除事件C.
 //
 // nEvent: 事件类型: xcc.XE_.
 //
-// fun: 事件函数.
-func (e *Element) RemoveEventC(nEvent xcc.XE_, fun interface{}) bool {
-	return xc.XEle_RemoveEventC(e.Handle, nEvent, fun)
+// fn: 事件函数.
+func (e *Element) RemoveEventC(nEvent xcc.XE_, fn interface{}) bool {
+	return xc.XEle_RemoveEventC(e.Handle, nEvent, fn)
 }
 
 // 元素_移除事件. 只适用于 AddEvent_ 方式添加的事件.
