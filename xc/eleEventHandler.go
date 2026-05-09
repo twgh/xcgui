@@ -26,7 +26,7 @@ type CbInfo struct {
 type EventInfo struct {
 	Cbs          []CbInfo
 	EvnetFuncPtr uintptr
-	nextID       int // 用于生成身份标识
+	nextID       int // 用于生成唯一的 ID
 }
 
 // 创建新的元素事件总线
@@ -82,7 +82,7 @@ func (e *elementEventBus) AddCallBack(hEle int, eventType xcc.XE_, eventFunc int
 		isAddingMultiple = allowAddingMultiple[0]
 	}
 
-	// 生成一个身份标识
+	// 生成唯一的 ID
 	id := info.nextID
 	info.nextID++
 	newCbInfo := CbInfo{ID: id, CB: cb}

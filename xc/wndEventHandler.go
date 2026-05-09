@@ -69,7 +69,7 @@ func (w *windowEventBus) AddCallBack(hWindow int, eventType xcc.WM_, eventFunc i
 		isAddingMultiple = allowAddingMultiple[0]
 	}
 
-	// 生成一个身份标识
+	// 生成唯一的 ID
 	id := info.nextID
 	info.nextID++
 	newCbInfo := CbInfo{ID: id, CB: cb}
