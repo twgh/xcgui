@@ -117,6 +117,17 @@ func (e *elementEventBus) RemoveAllCallBack(hEle int) {
 	e.mu.Unlock()
 }
 
+// RemoveCallBacks 移除指定元素指定事件的所有 CallBack.
+//
+// hEle: 元素句柄.
+//
+// eventType: 事件类型, xcc.XE_.
+func (e *elementEventBus) RemoveCallBacks(hEle int, eventType xcc.XE_) {
+	e.mu.Lock()
+	defer e.mu.Unlock()
+	delete(e.EventInfoMap[hEle], eventType)
+}
+
 // RemoveCallBack 移除指定元素指定事件的指定 ID 的 CallBack.
 //
 // hEle: 元素句柄.
@@ -157,17 +168,6 @@ func (e *elementEventBus) SetCallBack(hEle int, eventType xcc.XE_, id int, cb in
 			e.EventInfoMap[hEle][eventType] = eInfo
 		}
 	}
-}
-
-// RemoveEvent 移除指定元素指定事件的所有 CallBack.
-//
-// hEle: 元素句柄.
-//
-// eventType: 事件类型, xcc.XE_.
-func (e *elementEventBus) RemoveEvent(hEle int, eventType xcc.XE_) {
-	e.mu.Lock()
-	defer e.mu.Unlock()
-	delete(e.EventInfoMap[hEle], eventType)
 }
 
 // regEleDestroyEnd 注册元素销毁完成事件. 每个元素只注册一次.

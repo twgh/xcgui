@@ -186,7 +186,7 @@ func (w *windowBase) RemoveEvent(nEvent xcc.WM_, id ...int) *windowBase {
 		if cbPtr > 0 {
 			xc.XWnd_RemoveEventCEx(w.Handle, nEvent, cbPtr)
 		}
-		xc.WndEventBus.RemoveEvent(w.Handle, nEvent)
+		xc.WndEventBus.RemoveCallbacks(w.Handle, nEvent)
 	}
 	return w
 }

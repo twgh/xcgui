@@ -104,6 +104,17 @@ func (w *windowEventBus) RemoveAllCallBack(hWindow int) {
 	w.mu.Unlock()
 }
 
+// RemoveCallbacks 移除指定窗口指定事件的所有 CallBack.
+//
+// hWindow: 窗口句柄.
+//
+// eventType: 事件类型, xcc.WM_.
+func (w *windowEventBus) RemoveCallbacks(hWindow int, eventType xcc.WM_) {
+	w.mu.Lock()
+	defer w.mu.Unlock()
+	delete(w.EventInfoMap[hWindow], eventType)
+}
+
 // RemoveCallBack 移除指定窗口指定事件的指定 ID 的 CallBack.
 //
 // hWindow: 窗口句柄.
@@ -144,17 +155,6 @@ func (w *windowEventBus) SetCallBack(hWindow int, eventType xcc.WM_, id int, cb 
 			w.EventInfoMap[hWindow][eventType] = eInfo
 		}
 	}
-}
-
-// RemoveEvent 移除指定窗口指定事件的所有 CallBack.
-//
-// hWindow: 窗口句柄.
-//
-// eventType: 事件类型, xcc.WM_.
-func (w *windowEventBus) RemoveEvent(hWindow int, eventType xcc.WM_) {
-	w.mu.Lock()
-	defer w.mu.Unlock()
-	delete(w.EventInfoMap[hWindow], eventType)
 }
 
 // regWndNCDestroy 注册窗口非客户区销毁事件. 每个窗口只注册一次.

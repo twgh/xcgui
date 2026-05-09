@@ -93,7 +93,7 @@ func (e *Element) RemoveEvent(nEvent xcc.XE_, id ...int) *Element {
 		if cbPtr > 0 {
 			xc.XEle_RegEventCEx(e.Handle, nEvent, cbPtr)
 		}
-		xc.EleEventBus.RemoveEvent(e.Handle, nEvent)
+		xc.EleEventBus.RemoveCallBacks(e.Handle, nEvent)
 	}
 	return e
 }
