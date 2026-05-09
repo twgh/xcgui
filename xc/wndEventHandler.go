@@ -8,17 +8,17 @@ import (
 )
 
 // WndEventBus 窗口事件总线
-var WndEventBus = newWndEventBus()
+var WndEventBus = newWindowEventBus()
 
 // 窗口事件总线
-type wndEventBus struct {
+type windowEventBus struct {
 	EventInfoMap map[int]map[xcc.WM_]EventInfo // 事件信息map
 	mu           sync.RWMutex
 }
 
 // 创建新的窗口事件总线
-func newWndEventBus() *wndEventBus {
-	return &wndEventBus{
+func newWindowEventBus() *windowEventBus {
+	return &windowEventBus{
 		EventInfoMap: make(map[int]map[xcc.WM_]EventInfo),
 	}
 }
@@ -36,17 +36,17 @@ func newWndEventBus() *wndEventBus {
 // allowAddingMultiple: 是否允许添加多个回调函数, 默认为 false.
 //   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 //   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-func (h *wndEventBus) AddCallBack(hWindow int, eventType xcc.WM_, eventFunc interface{}, cb interface{}, allowAddingMultiple ...bool) int {
-	h.mu.Lock()
-	defer h.mu.Unlock()
+func (w *windowEventBus) AddCallBack(hWindow int, eventType xcc.WM_, eventFunc interface{}, cb interface{}, allowAddingMultiple ...bool) int {
+	w.mu.Lock()
+	defer w.mu.Unlock()
 
 	// 注册窗口非客户区销毁事件. 在这里移除窗口的所有事件.
-	if !h.regWndNCDestroy(hWindow) {
+	if !w.regWndNCDestroy(hWindow) {
 		return -1
 	}
 
 	// 获取窗口的事件回调函数map
-	eventMap := h.EventInfoMap[hWindow]
+	eventMap := w.EventInfoMap[hWindow]
 	if eventMap == nil {
 		eventMap = make(map[xcc.WM_]EventInfo)
 	}
@@ -80,7 +80,7 @@ func (h *wndEventBus) AddCallBack(hWindow int, eventType xcc.WM_, eventFunc inte
 		info.Cbs = []CbInfo{newCbInfo}
 	}
 	eventMap[eventType] = info
-	h.EventInfoMap[hWindow] = eventMap
+	w.EventInfoMap[hWindow] = eventMap
 	return id
 }
 
@@ -89,19 +89,19 @@ func (h *wndEventBus) AddCallBack(hWindow int, eventType xcc.WM_, eventFunc inte
 // hWindow: 窗口句柄.
 //
 // eventType: 事件类型, xcc.WM_.
-func (h *wndEventBus) GetCallBacks(hWindow int, eventType xcc.WM_) []CbInfo {
-	h.mu.RLock()
-	defer h.mu.RUnlock()
-	return h.EventInfoMap[hWindow][eventType].Cbs
+func (w *windowEventBus) GetCallBacks(hWindow int, eventType xcc.WM_) []CbInfo {
+	w.mu.RLock()
+	defer w.mu.RUnlock()
+	return w.EventInfoMap[hWindow][eventType].Cbs
 }
 
 // RemoveAllCallBack 移除指定窗口的所有事件以及 CallBack.
 //
 // hWindow: 窗口句柄.
-func (h *wndEventBus) RemoveAllCallBack(hWindow int) {
-	h.mu.Lock()
-	delete(h.EventInfoMap, hWindow)
-	h.mu.Unlock()
+func (w *windowEventBus) RemoveAllCallBack(hWindow int) {
+	w.mu.Lock()
+	delete(w.EventInfoMap, hWindow)
+	w.mu.Unlock()
 }
 
 // RemoveCallBack 移除指定窗口指定事件的指定 ID 的 CallBack.
@@ -111,15 +111,15 @@ func (h *wndEventBus) RemoveAllCallBack(hWindow int) {
 // eventType: 事件类型, xcc.WM_.
 //
 // id: 回调函数 ID.
-func (h *wndEventBus) RemoveCallBack(hWindow int, eventType xcc.WM_, id int) {
-	h.mu.Lock()
-	defer h.mu.Unlock()
+func (w *windowEventBus) RemoveCallBack(hWindow int, eventType xcc.WM_, id int) {
+	w.mu.Lock()
+	defer w.mu.Unlock()
 
-	eInfo := h.EventInfoMap[hWindow][eventType]
+	eInfo := w.EventInfoMap[hWindow][eventType]
 	for i, cbinfo := range eInfo.Cbs {
 		if id == cbinfo.ID {
 			eInfo.Cbs = append(eInfo.Cbs[:i], eInfo.Cbs[i+1:]...)
-			h.EventInfoMap[hWindow][eventType] = eInfo
+			w.EventInfoMap[hWindow][eventType] = eInfo
 		}
 	}
 }
@@ -133,15 +133,15 @@ func (h *wndEventBus) RemoveCallBack(hWindow int, eventType xcc.WM_, id int) {
 // id: 回调函数 ID.
 //
 // cb: 回调函数.
-func (h *wndEventBus) SetCallBack(hWindow int, eventType xcc.WM_, id int, cb interface{}) {
-	h.mu.Lock()
-	defer h.mu.Unlock()
+func (w *windowEventBus) SetCallBack(hWindow int, eventType xcc.WM_, id int, cb interface{}) {
+	w.mu.Lock()
+	defer w.mu.Unlock()
 
-	eInfo := h.EventInfoMap[hWindow][eventType]
+	eInfo := w.EventInfoMap[hWindow][eventType]
 	for i, cbinfo := range eInfo.Cbs {
 		if id == cbinfo.ID {
 			eInfo.Cbs[i].CB = cb
-			h.EventInfoMap[hWindow][eventType] = eInfo
+			w.EventInfoMap[hWindow][eventType] = eInfo
 		}
 	}
 }
@@ -151,26 +151,26 @@ func (h *wndEventBus) SetCallBack(hWindow int, eventType xcc.WM_, id int, cb int
 // hWindow: 窗口句柄.
 //
 // eventType: 事件类型, xcc.WM_.
-func (h *wndEventBus) RemoveEvent(hWindow int, eventType xcc.WM_) {
-	h.mu.Lock()
-	defer h.mu.Unlock()
-	delete(h.EventInfoMap[hWindow], eventType)
+func (w *windowEventBus) RemoveEvent(hWindow int, eventType xcc.WM_) {
+	w.mu.Lock()
+	defer w.mu.Unlock()
+	delete(w.EventInfoMap[hWindow], eventType)
 }
 
 // regWndNCDestroy 注册窗口非客户区销毁事件. 每个窗口只注册一次.
-func (h *wndEventBus) regWndNCDestroy(hWindow int) bool {
+func (w *windowEventBus) regWndNCDestroy(hWindow int) bool {
 	if XC_GetProperty(hWindow, "IsRegWndNCDestroy") == "1" {
 		return true
 	}
 	cbPtr := syscall.NewCallback(OnWM_NCDESTROY)
 	if XWnd_RegEventC1Ex(hWindow, xcc.WM_NCDESTROY, cbPtr) {
 		XC_SetProperty(hWindow, "IsRegWndNCDestroy", "1")
-		m := h.EventInfoMap[hWindow]
+		m := w.EventInfoMap[hWindow]
 		if m == nil {
 			m = make(map[xcc.WM_]EventInfo)
 		}
 		m[xcc.WM_NCDESTROY] = EventInfo{EvnetFuncPtr: cbPtr}
-		h.EventInfoMap[hWindow] = m
+		w.EventInfoMap[hWindow] = m
 		return true
 	}
 	return false
