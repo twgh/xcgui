@@ -60,9 +60,9 @@ func NewByZip(nType xcc.ListItemTemp_Type_, pZipFile string, pFileName string, p
 //
 // pPassword: zip密码.
 //
-// hModule: 模块句柄, 可填0.
-func NewByZipRes(nType xcc.ListItemTemp_Type_, id int32, pFileName string, pPassword string, hModule uintptr) *ListItemTemplate {
-	return NewByHandle(xc.XTemp_LoadZipRes(nType, id, pFileName, pPassword, hModule))
+// hModule: 模块句柄, 不填默认为0.
+func NewByZipRes(nType xcc.ListItemTemp_Type_, id int32, pFileName string, pPassword string, hModule ...uintptr) *ListItemTemplate {
+	return NewByHandle(xc.XTemp_LoadZipRes(nType, id, pFileName, pPassword, hModule...))
 }
 
 // 模板_加载从内存ZIP, 加载项模板从内存 zip 压缩包中, 失败返回 nil.
@@ -347,9 +347,9 @@ func LoadObjFromMemEx(nType xcc.ListItemTemp_Type_, data []byte) (*ListItemTempl
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
 //
-// hModule: 模块句柄, 可填0.
-func LoadZipResEx(nType xcc.ListItemTemp_Type_, id int32, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int, hModule uintptr) bool {
-	return xc.XTemp_LoadZipResEx(nType, id, pFileName, pPassword, pOutTemp1, pOutTemp2, hModule)
+// hModule: 模块句柄, 不填默认为0.
+func LoadZipResEx(nType xcc.ListItemTemp_Type_, id int32, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int, hModule ...uintptr) bool {
+	return xc.XTemp_LoadZipResEx(nType, id, pFileName, pPassword, pOutTemp1, pOutTemp2, hModule...)
 }
 
 // 项模板_加载从资源ZIP扩展. 加载项模板文件从RC资源ZIP, 返回模板对象, 失败返回 nil.
@@ -362,10 +362,10 @@ func LoadZipResEx(nType xcc.ListItemTemp_Type_, id int32, pFileName string, pPas
 //
 // pPassword: zip密码.
 //
-// hModule: 模块句柄, 可填0.
-func LoadObjZipResEx(nType xcc.ListItemTemp_Type_, id int32, pFileName string, pPassword string, hModule uintptr) (*ListItemTemplate, *ListItemTemplate) {
+// hModule: 模块句柄, 不填默认为0.
+func LoadObjZipResEx(nType xcc.ListItemTemp_Type_, id int32, pFileName string, pPassword string, hModule ...uintptr) (*ListItemTemplate, *ListItemTemplate) {
 	var pOutTemp1, pOutTemp2 int
-	if !xc.XTemp_LoadZipResEx(nType, id, pFileName, pPassword, &pOutTemp1, &pOutTemp2, hModule) {
+	if !xc.XTemp_LoadZipResEx(nType, id, pFileName, pPassword, &pOutTemp1, &pOutTemp2, hModule...) {
 		return nil, nil
 	}
 	return NewByHandle(pOutTemp1), NewByHandle(pOutTemp2)

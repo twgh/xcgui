@@ -304,9 +304,9 @@ func (e *Element) InsertChild(hChild int, index int32) bool {
 //
 // nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
-// nAdjustNo: 调整布局流水号, 可填0.
-func (e *Element) SetRect(pRect *xc.RECT, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int32 {
-	return xc.XEle_SetRect(e.Handle, pRect, bRedraw, nFlags, nAdjustNo)
+// nAdjustNo: 调整布局流水号, 不填默认为0.
+func (e *Element) SetRect(pRect *xc.RECT, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo ...uint32) int32 {
+	return xc.XEle_SetRect(e.Handle, pRect, bRedraw, nFlags, nAdjustNo...)
 }
 
 // 元素_置坐标扩展, 如果坐标未改变返回0, 如果大小改变返回2(触发XE_SIZE), 否则返回1.
@@ -323,9 +323,9 @@ func (e *Element) SetRect(pRect *xc.RECT, bRedraw bool, nFlags xcc.AdjustLayout_
 //
 // nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
-// nAdjustNo: 调整布局流水号, 可填0.
-func (e *Element) SetRectEx(x, y, cx, cy int32, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int32 {
-	return xc.XEle_SetRectEx(e.Handle, x, y, cx, cy, bRedraw, nFlags, nAdjustNo)
+// nAdjustNo: 调整布局流水号, 不填默认为0.
+func (e *Element) SetRectEx(x, y, cx, cy int32, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo ...uint32) int32 {
+	return xc.XEle_SetRectEx(e.Handle, x, y, cx, cy, bRedraw, nFlags, nAdjustNo...)
 }
 
 // 元素_置逻辑坐标, 如果坐标未改变返回0, 如果大小改变返回2(触发XE_SIZE), 否则返回1.
@@ -336,9 +336,9 @@ func (e *Element) SetRectEx(x, y, cx, cy int32, bRedraw bool, nFlags xcc.AdjustL
 //
 // nFlags: 调整布局标识位: xcc.AdjustLayout_. 此参数将会传入XE_SIZE ,XE_ADJUSTLAYOUT 事件回调.
 //
-// nAdjustNo: 调整布局流水号, 可填0.
-func (e *Element) SetRectLogic(pRect *xc.RECT, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int32 {
-	return xc.XEle_SetRectLogic(e.Handle, pRect, bRedraw, nFlags, nAdjustNo)
+// nAdjustNo: 调整布局流水号, 不填默认为0.
+func (e *Element) SetRectLogic(pRect *xc.RECT, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo ...uint32) int32 {
+	return xc.XEle_SetRectLogic(e.Handle, pRect, bRedraw, nFlags, nAdjustNo...)
 }
 
 // 元素_移动, 如果坐标未改变返回0, 如果大小改变返回2(触发XE_SIZE), 否则返回1.
@@ -351,9 +351,9 @@ func (e *Element) SetRectLogic(pRect *xc.RECT, bRedraw bool, nFlags xcc.AdjustLa
 //
 // nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
-// nAdjustNo: 调整布局流水号, 可填0.
-func (e *Element) SetPosition(x, y int32, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int32 {
-	return xc.XEle_SetPosition(e.Handle, x, y, bRedraw, nFlags, nAdjustNo)
+// nAdjustNo: 调整布局流水号, 不填默认为0.
+func (e *Element) SetPosition(x, y int32, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo ...uint32) int32 {
+	return xc.XEle_SetPosition(e.Handle, x, y, bRedraw, nFlags, nAdjustNo...)
 }
 
 // 元素_移动逻辑坐标, 移动元素坐标, 逻辑坐标, 包含滚动视图偏移. 如果坐标未改变返回0, 如果大小改变返回2(触发XE_SIZE), 否则返回1.
@@ -366,9 +366,9 @@ func (e *Element) SetPosition(x, y int32, bRedraw bool, nFlags xcc.AdjustLayout_
 //
 // nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
-// nAdjustNo: 调整布局流水号, 可填0.
-func (e *Element) SetPositionLogic(x, y int32, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int32 {
-	return xc.XEle_SetPositionLogic(e.Handle, x, y, bRedraw, nFlags, nAdjustNo)
+// nAdjustNo: 调整布局流水号, 不填默认为0.
+func (e *Element) SetPositionLogic(x, y int32, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo ...uint32) int32 {
+	return xc.XEle_SetPositionLogic(e.Handle, x, y, bRedraw, nFlags, nAdjustNo...)
 }
 
 // 元素_判断绘制焦点.
@@ -1030,9 +1030,9 @@ func (e *Element) PopupToolTip(x, y int32) *Element {
 
 // 元素_调整布局.
 //
-// nAdjustNo: 调整布局流水号, 可填0.
-func (e *Element) AdjustLayout(nAdjustNo uint32) *Element {
-	xc.XEle_AdjustLayout(e.Handle, nAdjustNo)
+// nAdjustNo: 调整布局流水号, 不填默认为0.
+func (e *Element) AdjustLayout(nAdjustNo ...uint32) *Element {
+	xc.XEle_AdjustLayout(e.Handle, nAdjustNo...)
 	return e
 }
 
@@ -1040,9 +1040,9 @@ func (e *Element) AdjustLayout(nAdjustNo uint32) *Element {
 //
 // nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
-// nAdjustNo: 调整布局流水号, 可填0.
-func (e *Element) AdjustLayoutEx(nFlags xcc.AdjustLayout_, nAdjustNo uint32) *Element {
-	xc.XEle_AdjustLayoutEx(e.Handle, nFlags, nAdjustNo)
+// nAdjustNo: 调整布局流水号, 不填默认为0.
+func (e *Element) AdjustLayoutEx(nFlags xcc.AdjustLayout_, nAdjustNo ...uint32) *Element {
+	xc.XEle_AdjustLayoutEx(e.Handle, nFlags, nAdjustNo...)
 	return e
 }
 
@@ -1078,9 +1078,9 @@ func (e *Element) GetPositionEx() xc.POINT {
 //
 // nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
-// nAdjustNo: 调整布局流水号, 可填0.
-func (e *Element) SetSize(nWidth, nHeight int32, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int32 {
-	return xc.XEle_SetSize(e.Handle, nWidth, nHeight, bRedraw, nFlags, nAdjustNo)
+// nAdjustNo: 调整布局流水号, 不填默认为0.
+func (e *Element) SetSize(nWidth, nHeight int32, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo ...uint32) int32 {
+	return xc.XEle_SetSize(e.Handle, nWidth, nHeight, bRedraw, nFlags, nAdjustNo...)
 }
 
 // 元素_取大小.

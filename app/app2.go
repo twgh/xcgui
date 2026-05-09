@@ -640,9 +640,9 @@ func LoadLayoutZipMem(data []byte, fileName string, password string, hParent int
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 //
-// hModule: 模块句柄, 可填0.
-func LoadLayoutZipResEx(id int32, fileName string, password, prefixName string, hParent int, hParentWnd, hAttachWnd, hModule uintptr) int {
-	return xc.XC_LoadLayoutZipResEx(id, fileName, password, prefixName, hParent, hParentWnd, hAttachWnd, hModule)
+// hModule: 模块句柄, 不填默认为0.
+func LoadLayoutZipResEx(id int32, fileName string, password, prefixName string, hParent int, hParentWnd, hAttachWnd uintptr, hModule ...uintptr) int {
+	return xc.XC_LoadLayoutZipResEx(id, fileName, password, prefixName, hParent, hParentWnd, hAttachWnd, hModule...)
 }
 
 // 炫彩_加载资源文件资源ZIP. 加载资源文件从RC资源zip压缩包中.
@@ -653,9 +653,9 @@ func LoadLayoutZipResEx(id int32, fileName string, password, prefixName string, 
 //
 // password: zip压缩包密码.
 //
-// hModule: 模块句柄, 可填0.
-func LoadResourceZipRes(id int32, fileName string, password string, hModule uintptr) bool {
-	return xc.XC_LoadResourceZipRes(id, fileName, password, hModule)
+// hModule: 模块句柄, 不填默认为0.
+func LoadResourceZipRes(id int32, fileName string, password string, hModule ...uintptr) bool {
+	return xc.XC_LoadResourceZipRes(id, fileName, password, hModule...)
 }
 
 // 炫彩_加载样式文件从资源ZIP. 从RC资源中的ZIP包中, 加载样式文件.
@@ -666,9 +666,9 @@ func LoadResourceZipRes(id int32, fileName string, password string, hModule uint
 //
 // password: 密码.
 //
-// hModule: 模块句柄, 可填0.
-func LoadStyleZipRes(id int32, fileName string, password string, hModule uintptr) bool {
-	return xc.XC_LoadStyleZipRes(id, fileName, password, hModule)
+// hModule: 模块句柄, 不填默认为0.
+func LoadStyleZipRes(id int32, fileName string, password string, hModule ...uintptr) bool {
+	return xc.XC_LoadStyleZipRes(id, fileName, password, hModule...)
 }
 
 // 炫彩_加载布局文件从字符串W, 加载布局文件从内存字符串, 返回窗口句柄或布局句柄或元素句柄.

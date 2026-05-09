@@ -99,9 +99,9 @@ func NewImageByZip(zipFileName string, fileName string, password string) *imagex
 //
 // password: ZIP压缩包密码.
 //
-// hModule: 模块句柄, 可填0.
-func NewImageByZipRes(id int32, fileName string, password string, hModule uintptr) *imagex.Image {
-	return imagex.NewByZipRes(id, fileName, password, hModule)
+// hModule: 模块句柄, 不填默认为0.
+func NewImageByZipRes(id int32, fileName string, password string, hModule ...uintptr) *imagex.Image {
+	return imagex.NewByZipRes(id, fileName, password, hModule...)
 }
 
 // 图片_加载从ZIP自适应, 加载图片从ZIP压缩包, 自适应图片, 失败返回 nil.

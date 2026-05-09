@@ -107,9 +107,9 @@ func NewByZip(pZipFileName string, pFileName string, pPassword string) *Image {
 //
 // pPassword: ZIP 压缩包密码.
 //
-// hModule: 模块句柄, 可填0.
-func NewByZipRes(id int32, pFileName string, pPassword string, hModule uintptr) *Image {
-	return NewByHandle(xc.XImage_LoadZipRes(id, pFileName, pPassword, hModule))
+// hModule: 模块句柄, 不填默认为0.
+func NewByZipRes(id int32, pFileName string, pPassword string, hModule ...uintptr) *Image {
+	return NewByHandle(xc.XImage_LoadZipRes(id, pFileName, pPassword, hModule...))
 }
 
 // 图片_加载从ZIP自适应, 加载图片从ZIP压缩包, 自适应图片, 失败返回 nil.

@@ -133,9 +133,9 @@ func NewModalWindowByLayoutEx(pFileName, pPrefixName string, hParent int, hParen
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 //
-// hModule: 模块句柄, 可填0.
-func NewModalWindowByLayoutZipResEx(id int32, pFileName, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd, hModule uintptr) *ModalWindow {
-	return NewModalWindowByHandle(xc.XC_LoadLayoutZipResEx(id, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd, hModule))
+// hModule: 模块句柄, 不填默认为0.
+func NewModalWindowByLayoutZipResEx(id int32, pFileName, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr, hModule ...uintptr) *ModalWindow {
+	return NewModalWindowByHandle(xc.XC_LoadLayoutZipResEx(id, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd, hModule...))
 }
 
 // NewModalWindowByLayoutZipEx 从压缩包中的布局文件创建对象, 失败返回 nil.

@@ -923,9 +923,13 @@ func XListView_SetItemTemplateXMLFromMem(hEle int, data []byte) bool {
 //
 // pPassword: zip密码.
 //
-// hModule: 模块句柄, 可填0.
-func XListView_SetItemTemplateXMLFromZipRes(hEle int, id int32, pFileName string, pPassword string, hModule uintptr) bool {
-	r, _, _ := xListView_SetItemTemplateXMLFromZipRes.Call(uintptr(hEle), uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), hModule)
+// hModule: 模块句柄, 不填默认为0.
+func XListView_SetItemTemplateXMLFromZipRes(hEle int, id int32, pFileName string, pPassword string, hModule ...uintptr) bool {
+	module := uintptr(0)
+	if len(hModule) > 0 {
+		module = hModule[0]
+	}
+	r, _, _ := xListView_SetItemTemplateXMLFromZipRes.Call(uintptr(hEle), uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), module)
 	return r != 0
 }
 

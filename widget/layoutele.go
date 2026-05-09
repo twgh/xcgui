@@ -86,9 +86,9 @@ func NewLayoutEleByLayoutZip(pZipFileName string, pFileName string, pPassword st
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 //
-// hModule: 模块句柄, 可填0.
-func NewLayoutEleByLayoutZipResEx(id int32, pFileName, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd, hModule uintptr) *LayoutEle {
-	return NewLayoutEleByHandle(xc.XC_LoadLayoutZipResEx(id, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd, hModule))
+// hModule: 模块句柄, 不填默认为0.
+func NewLayoutEleByLayoutZipResEx(id int32, pFileName, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr, hModule ...uintptr) *LayoutEle {
+	return NewLayoutEleByHandle(xc.XC_LoadLayoutZipResEx(id, pFileName, pPassword, pPrefixName, hParent, hParentWnd, hAttachWnd, hModule...))
 }
 
 // NewLayoutEleByLayoutZipMem 从内存压缩包中的布局文件创建对象, 失败返回 nil.

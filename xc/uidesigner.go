@@ -242,9 +242,13 @@ func XC_LoadStyleFromStringW(pFileName string, str string) bool {
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 //
-// hModule: 模块句柄, 可填0.
-func XC_LoadLayoutZipResEx(id int32, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd, hModule uintptr) int {
-	r, _, _ := xC_LoadLayoutZipResEx.Call(uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), common.StrPtr(pPrefixName), uintptr(hParent), hParentWnd, hAttachWnd, hModule)
+// hModule: 模块句柄, 不填默认为0.
+func XC_LoadLayoutZipResEx(id int32, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr, hModule ...uintptr) int {
+	module := uintptr(0)
+	if len(hModule) > 0 {
+		module = hModule[0]
+	}
+	r, _, _ := xC_LoadLayoutZipResEx.Call(uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), common.StrPtr(pPrefixName), uintptr(hParent), hParentWnd, hAttachWnd, module)
 	return int(r)
 }
 
@@ -256,9 +260,13 @@ func XC_LoadLayoutZipResEx(id int32, pFileName string, pPassword, pPrefixName st
 //
 // pPassword: zip压缩包密码.
 //
-// hModule: 模块句柄, 可填0.
-func XC_LoadResourceZipRes(id int32, pFileName string, pPassword string, hModule uintptr) bool {
-	r, _, _ := xC_LoadResourceZipRes.Call(uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), hModule)
+// hModule: 模块句柄, 不填默认为0.
+func XC_LoadResourceZipRes(id int32, pFileName string, pPassword string, hModule ...uintptr) bool {
+	module := uintptr(0)
+	if len(hModule) > 0 {
+		module = hModule[0]
+	}
+	r, _, _ := xC_LoadResourceZipRes.Call(uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), module)
 	return r != 0
 }
 
@@ -270,9 +278,13 @@ func XC_LoadResourceZipRes(id int32, pFileName string, pPassword string, hModule
 //
 // pPassword: 密码.
 //
-// hModule: 模块句柄, 可填0.
-func XC_LoadStyleZipRes(id int32, pFileName string, pPassword string, hModule uintptr) bool {
-	r, _, _ := xC_LoadStyleZipRes.Call(uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), hModule)
+// hModule: 模块句柄, 不填默认为0.
+func XC_LoadStyleZipRes(id int32, pFileName string, pPassword string, hModule ...uintptr) bool {
+	module := uintptr(0)
+	if len(hModule) > 0 {
+		module = hModule[0]
+	}
+	r, _, _ := xC_LoadStyleZipRes.Call(uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), module)
 	return r != 0
 }
 

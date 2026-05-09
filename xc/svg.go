@@ -54,9 +54,13 @@ func XSvg_LoadZip(pZipFileName, pFileName, pPassword string) int {
 //
 // pPassword: zip密码.
 //
-// hModule: 模块句柄, 可填0.
-func XSvg_LoadZipRes(id int32, pFileName, pPassword string, hModule uintptr) int {
-	r, _, _ := xSvg_LoadZipRes.Call(uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), hModule)
+// hModule: 模块句柄, 不填默认为0.
+func XSvg_LoadZipRes(id int32, pFileName, pPassword string, hModule ...uintptr) int {
+	module := uintptr(0)
+	if len(hModule) > 0 {
+		module = hModule[0]
+	}
+	r, _, _ := xSvg_LoadZipRes.Call(uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), module)
 	return int(r)
 }
 

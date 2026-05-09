@@ -282,9 +282,13 @@ func XEle_InsertChild(hEle int, hChild int, index int32) bool {
 //
 // nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
-// nAdjustNo: 调整布局流水号, 可填0.
-func XEle_SetRect(hEle int, pRect *RECT, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int32 {
-	r, _, _ := xEle_SetRect.Call(uintptr(hEle), uintptr(unsafe.Pointer(pRect)), common.BoolPtr(bRedraw), uintptr(nFlags), uintptr(nAdjustNo))
+// nAdjustNo: 调整布局流水号, 不填默认为0.
+func XEle_SetRect(hEle int, pRect *RECT, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo ...uint32) int32 {
+	adjustNo := uint32(0)
+	if len(nAdjustNo) > 0 {
+		adjustNo = nAdjustNo[0]
+	}
+	r, _, _ := xEle_SetRect.Call(uintptr(hEle), uintptr(unsafe.Pointer(pRect)), common.BoolPtr(bRedraw), uintptr(nFlags), uintptr(adjustNo))
 	return int32(r)
 }
 
@@ -304,9 +308,13 @@ func XEle_SetRect(hEle int, pRect *RECT, bRedraw bool, nFlags xcc.AdjustLayout_,
 //
 // nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
-// nAdjustNo: 调整布局流水号, 可填0.
-func XEle_SetRectEx(hEle int, x, y, cx, cy int32, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int32 {
-	r, _, _ := xEle_SetRectEx.Call(uintptr(hEle), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.BoolPtr(bRedraw), uintptr(nFlags), uintptr(nAdjustNo))
+// nAdjustNo: 调整布局流水号, 不填默认为0.
+func XEle_SetRectEx(hEle int, x, y, cx, cy int32, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo ...uint32) int32 {
+	adjustNo := uint32(0)
+	if len(nAdjustNo) > 0 {
+		adjustNo = nAdjustNo[0]
+	}
+	r, _, _ := xEle_SetRectEx.Call(uintptr(hEle), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.BoolPtr(bRedraw), uintptr(nFlags), uintptr(adjustNo))
 	return int32(r)
 }
 
@@ -320,9 +328,13 @@ func XEle_SetRectEx(hEle int, x, y, cx, cy int32, bRedraw bool, nFlags xcc.Adjus
 //
 // nFlags: 调整布局标识位: xcc.AdjustLayout_ , 此参数将会传入XE_SIZE ,XE_ADJUSTLAYOUT 事件回调.
 //
-// nAdjustNo: 调整布局流水号, 可填0.
-func XEle_SetRectLogic(hEle int, pRect *RECT, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int32 {
-	r, _, _ := xEle_SetRectLogic.Call(uintptr(hEle), uintptr(unsafe.Pointer(pRect)), common.BoolPtr(bRedraw), uintptr(nFlags), uintptr(nAdjustNo))
+// nAdjustNo: 调整布局流水号, 不填默认为0.
+func XEle_SetRectLogic(hEle int, pRect *RECT, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo ...uint32) int32 {
+	adjustNo := uint32(0)
+	if len(nAdjustNo) > 0 {
+		adjustNo = nAdjustNo[0]
+	}
+	r, _, _ := xEle_SetRectLogic.Call(uintptr(hEle), uintptr(unsafe.Pointer(pRect)), common.BoolPtr(bRedraw), uintptr(nFlags), uintptr(adjustNo))
 	return int32(r)
 }
 
@@ -338,9 +350,13 @@ func XEle_SetRectLogic(hEle int, pRect *RECT, bRedraw bool, nFlags xcc.AdjustLay
 //
 // nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
-// nAdjustNo: 调整布局流水号, 可填0.
-func XEle_SetPosition(hEle int, x, y int32, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int32 {
-	r, _, _ := xEle_SetPosition.Call(uintptr(hEle), uintptr(x), uintptr(y), common.BoolPtr(bRedraw), uintptr(nFlags), uintptr(nAdjustNo))
+// nAdjustNo: 调整布局流水号, 不填默认为0.
+func XEle_SetPosition(hEle int, x, y int32, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo ...uint32) int32 {
+	adjustNo := uint32(0)
+	if len(nAdjustNo) > 0 {
+		adjustNo = nAdjustNo[0]
+	}
+	r, _, _ := xEle_SetPosition.Call(uintptr(hEle), uintptr(x), uintptr(y), common.BoolPtr(bRedraw), uintptr(nFlags), uintptr(adjustNo))
 	return int32(r)
 }
 
@@ -356,9 +372,13 @@ func XEle_SetPosition(hEle int, x, y int32, bRedraw bool, nFlags xcc.AdjustLayou
 //
 // nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
-// nAdjustNo: 调整布局流水号, 可填0.
-func XEle_SetPositionLogic(hEle int, x, y int32, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int32 {
-	r, _, _ := xEle_SetPositionLogic.Call(uintptr(hEle), uintptr(x), uintptr(y), common.BoolPtr(bRedraw), uintptr(nFlags), uintptr(nAdjustNo))
+// nAdjustNo: 调整布局流水号, 不填默认为0.
+func XEle_SetPositionLogic(hEle int, x, y int32, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo ...uint32) int32 {
+	adjustNo := uint32(0)
+	if len(nAdjustNo) > 0 {
+		adjustNo = nAdjustNo[0]
+	}
+	r, _, _ := xEle_SetPositionLogic.Call(uintptr(hEle), uintptr(x), uintptr(y), common.BoolPtr(bRedraw), uintptr(nFlags), uintptr(adjustNo))
 	return int32(r)
 }
 
@@ -1083,9 +1103,13 @@ func XEle_PopupToolTip(hEle int, x, y int32) {
 //
 // hEle: 元素句柄.
 //
-// nAdjustNo: 调整布局流水号, 可填0.
-func XEle_AdjustLayout(hEle int, nAdjustNo uint32) {
-	xEle_AdjustLayout.Call(uintptr(hEle), uintptr(nAdjustNo))
+// nAdjustNo: 调整布局流水号, 不填默认为0.
+func XEle_AdjustLayout(hEle int, nAdjustNo ...uint32) {
+	adjustNo := uint32(0)
+	if len(nAdjustNo) > 0 {
+		adjustNo = nAdjustNo[0]
+	}
+	xEle_AdjustLayout.Call(uintptr(hEle), uintptr(adjustNo))
 }
 
 // 元素_调整布局扩展.
@@ -1094,9 +1118,13 @@ func XEle_AdjustLayout(hEle int, nAdjustNo uint32) {
 //
 // nFlags: 调整标识.
 //
-// nAdjustNo: 调整布局流水号, 可填0.
-func XEle_AdjustLayoutEx(hEle int, nFlags xcc.AdjustLayout_, nAdjustNo uint32) {
-	xEle_AdjustLayoutEx.Call(uintptr(hEle), uintptr(nFlags), uintptr(nAdjustNo))
+// nAdjustNo: 调整布局流水号, 不填默认为0.
+func XEle_AdjustLayoutEx(hEle int, nFlags xcc.AdjustLayout_, nAdjustNo ...uint32) {
+	adjustNo := uint32(0)
+	if len(nAdjustNo) > 0 {
+		adjustNo = nAdjustNo[0]
+	}
+	xEle_AdjustLayoutEx.Call(uintptr(hEle), uintptr(nFlags), uintptr(adjustNo))
 }
 
 // 元素_取透明度, 返回透明度.
@@ -1130,9 +1158,13 @@ func XEle_GetPosition(hEle int, pOutX, pOutY *int32) {
 //
 // nFlags: 调整布局标识位: xcc.AdjustLayout_.
 //
-// nAdjustNo: 调整布局流水号, 可填0.
-func XEle_SetSize(hEle int, nWidth, nHeight int32, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo uint32) int32 {
-	r, _, _ := xEle_SetSize.Call(uintptr(hEle), uintptr(nWidth), uintptr(nHeight), common.BoolPtr(bRedraw), uintptr(nFlags), uintptr(nAdjustNo))
+// nAdjustNo: 调整布局流水号, 不填默认为0.
+func XEle_SetSize(hEle int, nWidth, nHeight int32, bRedraw bool, nFlags xcc.AdjustLayout_, nAdjustNo ...uint32) int32 {
+	adjustNo := uint32(0)
+	if len(nAdjustNo) > 0 {
+		adjustNo = nAdjustNo[0]
+	}
+	r, _, _ := xEle_SetSize.Call(uintptr(hEle), uintptr(nWidth), uintptr(nHeight), common.BoolPtr(bRedraw), uintptr(nFlags), uintptr(adjustNo))
 	return int32(r)
 }
 

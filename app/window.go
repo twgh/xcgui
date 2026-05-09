@@ -167,9 +167,9 @@ func NewWindowByLayoutZipEx(zipFileName string, fileName string, password, prefi
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 //
-// hModule: 模块句柄, 可填0.
-func NewWindowByLayoutZipResEx(id int32, fileName, password, prefixName string, hParent int, hParentWnd, hAttachWnd, hModule uintptr) *window.Window {
-	return window.NewByLayoutZipResEx(id, fileName, password, prefixName, hParent, hParentWnd, hAttachWnd, hModule)
+// hModule: 模块句柄, 不填默认为0.
+func NewWindowByLayoutZipResEx(id int32, fileName, password, prefixName string, hParent int, hParentWnd, hAttachWnd uintptr, hModule ...uintptr) *window.Window {
+	return window.NewByLayoutZipResEx(id, fileName, password, prefixName, hParent, hParentWnd, hAttachWnd, hModule...)
 }
 
 // NewWindowByLayoutZipMemEx 从内存压缩包中的布局文件创建窗口对象, 失败返回nil.

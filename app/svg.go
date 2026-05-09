@@ -37,9 +37,9 @@ func NewSvgByZip(zipFileName, fileName, password string) *svg.Svg {
 //
 // password: zip 密码.
 //
-// hModule: 模块句柄, 可填0.
-func NewSvgByZipRes(id int32, fileName, password string, hModule uintptr) *svg.Svg {
-	return svg.NewByZipRes(id, fileName, password, hModule)
+// hModule: 模块句柄, 不填默认为0.
+func NewSvgByZipRes(id int32, fileName, password string, hModule ...uintptr) *svg.Svg {
+	return svg.NewByZipRes(id, fileName, password, hModule...)
 }
 
 // NewSvgByZipMem SVG_加载从内存ZIP, 返回 Svg 对象, 失败返回 nil.
