@@ -75,8 +75,8 @@ func (i *ICoreWebView2Profile7) AddBrowserExtensionEx(impl *WebViewEventImpl, ex
 	} else {
 		c = cb
 	}
-	_, _ = WvEventHandler.AddCallBack(impl, "ProfileAddBrowserExtensionCompleted", c, nil)
-	handler := WvEventHandler.GetHandler(impl, "ProfileAddBrowserExtensionCompleted")
+	_, _ = WvEventBus.AddCallBack(impl, "ProfileAddBrowserExtensionCompleted", c, nil)
+	handler := WvEventBus.GetHandler(impl, "ProfileAddBrowserExtensionCompleted")
 	return i.AddBrowserExtension(extensionFolderPath, (*ICoreWebView2ProfileAddBrowserExtensionCompletedHandler)(handler))
 }
 
@@ -94,7 +94,7 @@ func (i *ICoreWebView2Profile7) GetBrowserExtensionsEx(impl *WebViewEventImpl, c
 	} else {
 		c = cb
 	}
-	_, _ = WvEventHandler.AddCallBack(impl, "ProfileGetBrowserExtensionsCompleted", c, nil)
-	handler := WvEventHandler.GetHandler(impl, "ProfileGetBrowserExtensionsCompleted")
+	_, _ = WvEventBus.AddCallBack(impl, "ProfileGetBrowserExtensionsCompleted", c, nil)
+	handler := WvEventBus.GetHandler(impl, "ProfileGetBrowserExtensionsCompleted")
 	return i.GetBrowserExtensions((*ICoreWebView2ProfileGetBrowserExtensionsCompletedHandler)(handler))
 }

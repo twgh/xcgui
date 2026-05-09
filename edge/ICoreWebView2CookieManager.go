@@ -243,8 +243,8 @@ func (i *ICoreWebView2CookieManager) GetCookiesEx(impl *WebViewEventImpl, uri st
 	} else {
 		c = cb
 	}
-	_, _ = WvEventHandler.AddCallBack(impl, "GetCookiesCompleted", c, nil)
-	handler := WvEventHandler.GetHandler(impl, "GetCookiesCompleted")
+	_, _ = WvEventBus.AddCallBack(impl, "GetCookiesCompleted", c, nil)
+	handler := WvEventBus.GetHandler(impl, "GetCookiesCompleted")
 	return i.GetCookies(uri, (*ICoreWebView2GetCookiesCompletedHandler)(handler))
 }
 

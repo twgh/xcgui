@@ -68,8 +68,8 @@ func (i *ICoreWebView2Profile4) SetPermissionStateEx(impl *WebViewEventImpl, per
 	} else {
 		c = cb
 	}
-	_, _ = WvEventHandler.AddCallBack(impl, "SetPermissionStateCompleted", c, nil)
-	handler := WvEventHandler.GetHandler(impl, "SetPermissionStateCompleted")
+	_, _ = WvEventBus.AddCallBack(impl, "SetPermissionStateCompleted", c, nil)
+	handler := WvEventBus.GetHandler(impl, "SetPermissionStateCompleted")
 	return i.SetPermissionState(permissionKind, origin, state, (*ICoreWebView2SetPermissionStateCompletedHandler)(handler))
 }
 
@@ -85,7 +85,7 @@ func (i *ICoreWebView2Profile4) GetNonDefaultPermissionSettingsEx(impl *WebViewE
 	} else {
 		c = cb
 	}
-	_, _ = WvEventHandler.AddCallBack(impl, "GetNonDefaultPermissionSettingsCompleted", c, nil)
-	handler := WvEventHandler.GetHandler(impl, "GetNonDefaultPermissionSettingsCompleted")
+	_, _ = WvEventBus.AddCallBack(impl, "GetNonDefaultPermissionSettingsCompleted", c, nil)
+	handler := WvEventBus.GetHandler(impl, "GetNonDefaultPermissionSettingsCompleted")
 	return i.GetNonDefaultPermissionSettings((*ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler)(handler))
 }

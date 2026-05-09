@@ -16,7 +16,7 @@ type ICoreWebView2Frame7 struct {
 //   - 当新的直接子级 iframe 创建时触发。
 //   - 处理此事件可获取 ICoreWebView2Frame 对象。使用 ICoreWebView2Frame 的销毁事件来监听该 iframe 何时消失。
 func (i *ICoreWebView2Frame7) Event_FrameChildFrameCreated(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *ICoreWebView2FrameCreatedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
-	return WvEventHandler.AddCallBack(impl, "FrameChildFrameCreated", cb, i, allowAddingMultiple...)
+	return WvEventBus.AddCallBack(impl, "FrameChildFrameCreated", cb, i, allowAddingMultiple...)
 }
 
 // AddFrameCreated 添加框架创建事件处理程序。

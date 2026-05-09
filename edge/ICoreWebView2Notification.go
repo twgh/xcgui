@@ -58,7 +58,7 @@ func (i *ICoreWebView2Notification) QueryInterface(refiid, object unsafe.Pointer
 // Event_NotificationCloseRequested 通知关闭请求事件。
 //   - 当通知被网页代码关闭时（例如通过 notification.close()）触发。由于这是来自网页代码的操作，因此无需调用 ReportClosed。
 func (i *ICoreWebView2Notification) Event_NotificationCloseRequested(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Notification, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
-	return WvEventHandler.AddCallBack(impl, "NotificationCloseRequested", cb, i, allowAddingMultiple...)
+	return WvEventBus.AddCallBack(impl, "NotificationCloseRequested", cb, i, allowAddingMultiple...)
 }
 
 // AddCloseRequested 添加通知关闭请求事件处理程序。

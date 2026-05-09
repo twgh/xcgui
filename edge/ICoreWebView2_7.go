@@ -52,7 +52,7 @@ func (i *ICoreWebView2_7) PrintToPdfEx(impl *WebViewEventImpl, resultFilePath st
 	} else {
 		c = cb
 	}
-	_, _ = WvEventHandler.AddCallBack(impl, "PrintToPdfCompleted", c, nil)
-	handler := WvEventHandler.GetHandler(impl, "PrintToPdfCompleted")
+	_, _ = WvEventBus.AddCallBack(impl, "PrintToPdfCompleted", c, nil)
+	handler := WvEventBus.GetHandler(impl, "PrintToPdfCompleted")
 	return i.PrintToPdf(resultFilePath, printSettings, (*ICoreWebView2PrintToPdfCompletedHandler)(handler))
 }

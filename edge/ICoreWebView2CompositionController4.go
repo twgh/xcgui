@@ -35,7 +35,7 @@ func (i *ICoreWebView2CompositionController4) QueryNonClientRegion(kind COREWEBV
 //   - 当应用 HTML 中标记为非客户端的区域发生变化时触发.
 //   - 这种变化包括新区域被标记、区域被取消标记，或者区域类型被改为其他类型。
 func (i *ICoreWebView2CompositionController4) Event_NonClientRegionChanged(impl *WebViewEventImpl, cb func(sender *ICoreWebView2CompositionController, args *ICoreWebView2NonClientRegionChangedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
-	return WvEventHandler.AddCallBack(impl, "NonClientRegionChanged", cb, i, allowAddingMultiple...)
+	return WvEventBus.AddCallBack(impl, "NonClientRegionChanged", cb, i, allowAddingMultiple...)
 }
 
 // AddNonClientRegionChanged 添加非客户端区域变更事件处理程序。

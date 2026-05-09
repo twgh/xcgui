@@ -47,7 +47,7 @@ func (i *ICoreWebView2_21) ExecuteScriptWithResultEx(impl *WebViewEventImpl, jav
 	} else {
 		c = cb
 	}
-	_, _ = WvEventHandler.AddCallBack(impl, "ExecuteScriptWithResultCompleted", c, nil)
-	handler := WvEventHandler.GetHandler(impl, "ExecuteScriptWithResultCompleted")
+	_, _ = WvEventBus.AddCallBack(impl, "ExecuteScriptWithResultCompleted", c, nil)
+	handler := WvEventBus.GetHandler(impl, "ExecuteScriptWithResultCompleted")
 	return i.ExecuteScriptWithResult(javaScript, (*ICoreWebView2ExecuteScriptWithResultCompletedHandler)(handler))
 }

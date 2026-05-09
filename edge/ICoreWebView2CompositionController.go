@@ -129,7 +129,7 @@ func (i *ICoreWebView2CompositionController) GetSystemCursorID() (uint32, error)
 
 // Event_CursorChanged 光标改变事件.
 func (i *ICoreWebView2CompositionController) Event_CursorChanged(impl *WebViewEventImpl, cb func(sender *ICoreWebView2CompositionController, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
-	return WvEventHandler.AddCallBack(impl, "CursorChanged", cb, i, allowAddingMultiple...)
+	return WvEventBus.AddCallBack(impl, "CursorChanged", cb, i, allowAddingMultiple...)
 }
 
 // AddCursorChanged 添加光标改变事件处理程序.

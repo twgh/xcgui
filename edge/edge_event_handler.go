@@ -6,25 +6,28 @@ import (
 	"unsafe"
 )
 
-// WvEventHandler 是 WebView 事件处理器.
-var WvEventHandler = newWebviewEventHandler()
+// WvEventBus 是 WebView 事件总线
+var WvEventBus = newWebviewEventBus()
 
-type webviewEventHandler struct {
-	sync.RWMutex
+// WebView 事件总线
+type webviewEventBus struct {
 	// 事件信息map
-	EventInfoMap map[*WebViewEventImpl]map[string]eventInfo
+	EventInfoMap map[*WebViewEventImpl]map[string]EventInfo
+	mu           sync.RWMutex
 }
 
-type eventInfo struct {
+// EventInfo 事件信息
+type EventInfo struct {
 	Cbs                 []interface{}
 	EventHandlerPointer unsafe.Pointer
-	// EventToken 添加事件时返回的事件令牌, 用于移除事件的参数
+	// EventToken 添加事件时返回的事件令牌, 用于移除事件
 	EventToken *EventRegistrationToken
 }
 
-func newWebviewEventHandler() *webviewEventHandler {
-	return &webviewEventHandler{
-		EventInfoMap: make(map[*WebViewEventImpl]map[string]eventInfo),
+// 创建新的 WebView 事件总线
+func newWebviewEventBus() *webviewEventBus {
+	return &webviewEventBus{
+		EventInfoMap: make(map[*WebViewEventImpl]map[string]EventInfo),
 	}
 }
 
@@ -41,14 +44,14 @@ func newWebviewEventHandler() *webviewEventHandler {
 // allowAddingMultiple: 是否允许添加多个回调函数, 默认为 false.
 //   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 //   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType string, cb interface{}, obj interface{}, allowAddingMultiple ...bool) (int, error) {
-	h.Lock()
-	defer h.Unlock()
+func (h *webviewEventBus) AddCallBack(impl *WebViewEventImpl, eventType string, cb interface{}, obj interface{}, allowAddingMultiple ...bool) (int, error) {
+	h.mu.Lock()
+	defer h.mu.Unlock()
 
 	// 获取对象的事件回调函数map
 	eventMap := h.EventInfoMap[impl]
 	if eventMap == nil {
-		eventMap = make(map[string]eventInfo)
+		eventMap = make(map[string]EventInfo)
 	}
 
 	info, ok := eventMap[eventType]
@@ -858,23 +861,23 @@ func (h *webviewEventHandler) AddCallBack(impl *WebViewEventImpl, eventType stri
 }
 
 // GetHandler 获取指定对象指定事件的 EventHandler.
-func (h *webviewEventHandler) GetHandler(impl *WebViewEventImpl, eventType string) unsafe.Pointer {
-	h.RLock()
-	defer h.RUnlock()
+func (h *webviewEventBus) GetHandler(impl *WebViewEventImpl, eventType string) unsafe.Pointer {
+	h.mu.RLock()
+	defer h.mu.RUnlock()
 	return h.EventInfoMap[impl][eventType].EventHandlerPointer
 }
 
 // GetEventToken 获取指定对象指定事件的 EventToken.
-func (h *webviewEventHandler) GetEventToken(impl *WebViewEventImpl, eventType string) *EventRegistrationToken {
-	h.RLock()
-	defer h.RUnlock()
+func (h *webviewEventBus) GetEventToken(impl *WebViewEventImpl, eventType string) *EventRegistrationToken {
+	h.mu.RLock()
+	defer h.mu.RUnlock()
 	return h.EventInfoMap[impl][eventType].EventToken
 }
 
 // ReleaseEventHandler 释放指定对象的指定事件的 EventHandler 且移除该事件的 CallBack.
-func (h *webviewEventHandler) ReleaseEventHandler(impl *WebViewEventImpl, eventType string) {
-	h.Lock()
-	defer h.Unlock()
+func (h *webviewEventBus) ReleaseEventHandler(impl *WebViewEventImpl, eventType string) {
+	h.mu.Lock()
+	defer h.mu.Unlock()
 	eventMap := h.EventInfoMap[impl]
 	info := eventMap[eventType]
 	if info.EventHandlerPointer != nil {
@@ -884,9 +887,9 @@ func (h *webviewEventHandler) ReleaseEventHandler(impl *WebViewEventImpl, eventT
 }
 
 // ReleaseAllEventHandler 释放指定对象的所有事件的 EventHandler, 且移除该对象的所有事件以及CallBack.
-func (h *webviewEventHandler) ReleaseAllEventHandler(impl *WebViewEventImpl) {
-	h.Lock()
-	defer h.Unlock()
+func (h *webviewEventBus) ReleaseAllEventHandler(impl *WebViewEventImpl) {
+	h.mu.Lock()
+	defer h.mu.Unlock()
 	eventMap := h.EventInfoMap[impl]
 	for _, info := range eventMap {
 		if info.EventHandlerPointer != nil {
@@ -897,24 +900,24 @@ func (h *webviewEventHandler) ReleaseAllEventHandler(impl *WebViewEventImpl) {
 }
 
 // GetCallBacks 获取指定对象指定事件的回调函数数组.
-func (h *webviewEventHandler) GetCallBacks(impl *WebViewEventImpl, eventType string) []interface{} {
-	h.RLock()
-	defer h.RUnlock()
+func (h *webviewEventBus) GetCallBacks(impl *WebViewEventImpl, eventType string) []interface{} {
+	h.mu.RLock()
+	defer h.mu.RUnlock()
 	return h.EventInfoMap[impl][eventType].Cbs
 }
 
 // RemoveAllCallBack 从 map 里移除指定对象的所有事件以及CallBack.
-func (h *webviewEventHandler) RemoveAllCallBack(impl *WebViewEventImpl) {
-	h.Lock()
+func (h *webviewEventBus) RemoveAllCallBack(impl *WebViewEventImpl) {
+	h.mu.Lock()
 	delete(h.EventInfoMap, impl)
-	h.Unlock()
+	h.mu.Unlock()
 }
 
 // RemoveCallBack 从 map 里移除指定对象指定事件的指定索引的 CallBack.
 //   - 当只是想让一个 CallBack 失效时, 使用 SetCallBack 把该 CallBack 设置为 nil 更好, 因为你移除一个 CallBack, 会导致后面的 CallBack 的索引往前移动一位, 那你添加 CallBack 时记录的索引就没法用了.
-func (h *webviewEventHandler) RemoveCallBack(impl *WebViewEventImpl, eventType string, index int) bool {
-	h.Lock()
-	defer h.Unlock()
+func (h *webviewEventBus) RemoveCallBack(impl *WebViewEventImpl, eventType string, index int) bool {
+	h.mu.Lock()
+	defer h.mu.Unlock()
 	info := h.EventInfoMap[impl][eventType]
 	l := len(info.Cbs)
 	if l == 0 {
@@ -930,9 +933,9 @@ func (h *webviewEventHandler) RemoveCallBack(impl *WebViewEventImpl, eventType s
 
 // SetCallBack 设置指定对象指定事件的指定索引的 CallBack.
 //   - 当只是想让一个 CallBack 失效时, 直接把该 CallBack 设置为 nil 比使用 RemoveCallBack 更好, 因为你移除一个 CallBack, 会导致后面的 CallBack 的索引往前移动一位, 那你添加 CallBack 时记录的索引就没法用了.
-func (h *webviewEventHandler) SetCallBack(impl *WebViewEventImpl, eventType string, index int, cb interface{}) bool {
-	h.Lock()
-	defer h.Unlock()
+func (h *webviewEventBus) SetCallBack(impl *WebViewEventImpl, eventType string, index int, cb interface{}) bool {
+	h.mu.Lock()
+	defer h.mu.Unlock()
 	info := h.EventInfoMap[impl][eventType]
 	l := len(info.Cbs)
 	if l == 0 { // 空
@@ -947,8 +950,8 @@ func (h *webviewEventHandler) SetCallBack(impl *WebViewEventImpl, eventType stri
 }
 
 // RemoveEvent 从 map 里移除指定对象的指定事件的所有CallBack.
-func (h *webviewEventHandler) RemoveEvent(impl *WebViewEventImpl, eventType string) {
-	h.Lock()
-	defer h.Unlock()
+func (h *webviewEventBus) RemoveEvent(impl *WebViewEventImpl, eventType string) {
+	h.mu.Lock()
+	defer h.mu.Unlock()
 	delete(h.EventInfoMap[impl], eventType)
 }

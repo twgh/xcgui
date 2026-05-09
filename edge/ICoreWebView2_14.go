@@ -64,7 +64,7 @@ func (i *ICoreWebView2_14) ClearServerCertificateErrorActionsEx(impl *WebViewEve
 	} else {
 		c = cb
 	}
-	_, _ = WvEventHandler.AddCallBack(impl, "ClearServerCertificateErrorActionsCompleted", c, nil)
-	handler := WvEventHandler.GetHandler(impl, "ClearServerCertificateErrorActionsCompleted")
+	_, _ = WvEventBus.AddCallBack(impl, "ClearServerCertificateErrorActionsCompleted", c, nil)
+	handler := WvEventBus.GetHandler(impl, "ClearServerCertificateErrorActionsCompleted")
 	return i.ClearServerCertificateErrorActions((*ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler)(handler))
 }

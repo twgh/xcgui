@@ -588,8 +588,8 @@ func (i *ICoreWebView2) ExecuteScriptEx(impl *WebViewEventImpl, javaScript strin
 	} else {
 		c = cb
 	}
-	_, _ = WvEventHandler.AddCallBack(impl, "ExecuteScriptCompleted", c, nil)
-	handler := WvEventHandler.GetHandler(impl, "ExecuteScriptCompleted")
+	_, _ = WvEventBus.AddCallBack(impl, "ExecuteScriptCompleted", c, nil)
+	handler := WvEventBus.GetHandler(impl, "ExecuteScriptCompleted")
 	return i.ExecuteScript(javaScript, (*ICoreWebView2ExecuteScriptCompletedHandler)(handler))
 }
 
@@ -706,8 +706,8 @@ func (i *ICoreWebView2) AddScriptToExecuteOnDocumentCreatedEx(impl *WebViewEvent
 	} else {
 		c = cb
 	}
-	_, _ = WvEventHandler.AddCallBack(impl, "AddScriptToExecuteOnDocumentCreatedCompleted", c, nil)
-	handler := WvEventHandler.GetHandler(impl, "AddScriptToExecuteOnDocumentCreatedCompleted")
+	_, _ = WvEventBus.AddCallBack(impl, "AddScriptToExecuteOnDocumentCreatedCompleted", c, nil)
+	handler := WvEventBus.GetHandler(impl, "AddScriptToExecuteOnDocumentCreatedCompleted")
 	return i.AddScriptToExecuteOnDocumentCreated(javaScript, (*ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler)(handler))
 }
 
@@ -969,8 +969,8 @@ func (i *ICoreWebView2) CapturePreviewEx(impl *WebViewEventImpl, imageFormat COR
 	} else {
 		c = cb
 	}
-	_, _ = WvEventHandler.AddCallBack(impl, "CapturePreviewCompleted", c, nil)
-	handler := WvEventHandler.GetHandler(impl, "CapturePreviewCompleted")
+	_, _ = WvEventBus.AddCallBack(impl, "CapturePreviewCompleted", c, nil)
+	handler := WvEventBus.GetHandler(impl, "CapturePreviewCompleted")
 	return i.CapturePreview(imageFormat, imageStream, (*ICoreWebView2CapturePreviewCompletedHandler)(handler))
 }
 
@@ -1143,8 +1143,8 @@ func (i *ICoreWebView2) CallDevToolsProtocolMethodEx(impl *WebViewEventImpl, met
 	} else {
 		c = cb
 	}
-	_, _ = WvEventHandler.AddCallBack(impl, "CallDevToolsProtocolMethodCompleted", c, nil)
-	handler := WvEventHandler.GetHandler(impl, "CallDevToolsProtocolMethodCompleted")
+	_, _ = WvEventBus.AddCallBack(impl, "CallDevToolsProtocolMethodCompleted", c, nil)
+	handler := WvEventBus.GetHandler(impl, "CallDevToolsProtocolMethodCompleted")
 	return i.CallDevToolsProtocolMethod(methodName, parametersAsJson, (*ICoreWebView2CallDevToolsProtocolMethodCompletedHandler)(handler))
 }
 

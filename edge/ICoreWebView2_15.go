@@ -95,8 +95,8 @@ func (i *ICoreWebView2_15) GetFaviconEx(impl *WebViewEventImpl, format COREWEBVI
 	} else {
 		c = cb
 	}
-	_, _ = WvEventHandler.AddCallBack(impl, "GetFaviconCompleted", c, nil)
-	handler := WvEventHandler.GetHandler(impl, "GetFaviconCompleted")
+	_, _ = WvEventBus.AddCallBack(impl, "GetFaviconCompleted", c, nil)
+	handler := WvEventBus.GetHandler(impl, "GetFaviconCompleted")
 	return i.GetFavicon(format, (*ICoreWebView2GetFaviconCompletedHandler)(handler))
 }
 

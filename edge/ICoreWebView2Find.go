@@ -75,13 +75,13 @@ func (i *ICoreWebView2Find) GetMatchCount() (int32, error) {
 //   - 当当前活动的查找匹配项索引发生变化时触发。
 //   - 这种情况可能发生在用户导航到不同的匹配项时，或者在通过编程方式更改活动匹配项时。
 func (i *ICoreWebView2Find) Event_FindActiveMatchIndexChanged(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Find) uintptr, allowAddingMultiple ...bool) (int, error) {
-	return WvEventHandler.AddCallBack(impl, "FindActiveMatchIndexChanged", cb, i, allowAddingMultiple...)
+	return WvEventBus.AddCallBack(impl, "FindActiveMatchIndexChanged", cb, i, allowAddingMultiple...)
 }
 
 // Event_FindMatchCountChanged 查找匹配项数量更改事件。
 //   - 当文档中的匹配项总数因新的查找会话或文档更改而发生变化时，会引发此事件。
 func (i *ICoreWebView2Find) Event_FindMatchCountChanged(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Find) uintptr, allowAddingMultiple ...bool) (int, error) {
-	return WvEventHandler.AddCallBack(impl, "FindMatchCountChanged", cb, i, allowAddingMultiple...)
+	return WvEventBus.AddCallBack(impl, "FindMatchCountChanged", cb, i, allowAddingMultiple...)
 }
 
 // AddActiveMatchIndexChangedEventHandler 添加活动匹配项索引更改事件处理程序。
@@ -175,8 +175,8 @@ func (i *ICoreWebView2Find) StartEx(impl *WebViewEventImpl, options *ICoreWebVie
 	} else {
 		c = cb
 	}
-	_, _ = WvEventHandler.AddCallBack(impl, "FindStartCompleted", c, nil)
-	handler := WvEventHandler.GetHandler(impl, "FindStartCompleted")
+	_, _ = WvEventBus.AddCallBack(impl, "FindStartCompleted", c, nil)
+	handler := WvEventBus.GetHandler(impl, "FindStartCompleted")
 	return i.Start(options, (*ICoreWebView2FindStartCompletedHandler)(handler))
 }
 

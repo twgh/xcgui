@@ -114,8 +114,8 @@ func (i *ICoreWebView2WebResourceResponseView) GetContentEx(impl *WebViewEventIm
 	} else {
 		c = cb
 	}
-	_, _ = WvEventHandler.AddCallBack(impl, "WebResourceResponseViewGetContentCompleted", c, nil)
-	handler := WvEventHandler.GetHandler(impl, "WebResourceResponseViewGetContentCompleted")
+	_, _ = WvEventBus.AddCallBack(impl, "WebResourceResponseViewGetContentCompleted", c, nil)
+	handler := WvEventBus.GetHandler(impl, "WebResourceResponseViewGetContentCompleted")
 	return i.GetContent((*ICoreWebView2WebResourceResponseViewGetContentCompletedHandler)(handler))
 }
 

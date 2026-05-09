@@ -209,7 +209,7 @@ func wndproc(hwnd uintptr, message uint32, wParam, lParam uintptr) uintptr {
 //   - 释放 WebView2_ 系列对象.
 //   - 释放 Controller 和 CoreWebView.
 func clearWebView2(w *WebView) error {
-	WvEventHandler.ReleaseAllEventHandler(&w.WebViewEventImpl)
+	WvEventBus.ReleaseAllEventHandler(&w.WebViewEventImpl)
 	w.ReleaseWebView2_Objs()
 
 	var err error

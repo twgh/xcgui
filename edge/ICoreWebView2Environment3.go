@@ -44,8 +44,8 @@ func (i *ICoreWebView2Environment3) CreateCoreWebView2CompositionControllerEx(im
 	} else {
 		c = cb
 	}
-	_, _ = WvEventHandler.AddCallBack(impl, "CreateCoreWebView2CompositionControllerCompleted", c, nil)
-	handler := WvEventHandler.GetHandler(impl, "CreateCoreWebView2CompositionControllerCompleted")
+	_, _ = WvEventBus.AddCallBack(impl, "CreateCoreWebView2CompositionControllerCompleted", c, nil)
+	handler := WvEventBus.GetHandler(impl, "CreateCoreWebView2CompositionControllerCompleted")
 	return i.CreateCoreWebView2CompositionController(parentWindow, (*ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler)(handler))
 }
 

@@ -20,7 +20,7 @@ type ICoreWebView2Frame2 struct {
 //   - 重定向也会引发此事件，且导航 ID 与原始导航 ID 相同。
 //   - 在所有 NavigationStarting 和 ICoreWebView2.FrameNavigationStarting 事件处理程序返回之前，导航将被阻止。
 func (i *ICoreWebView2Frame2) Event_FrameNavigationStarting(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *ICoreWebView2NavigationStartingEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
-	return WvEventHandler.AddCallBack(impl, "FrameNavigationStarting", cb, i, allowAddingMultiple...)
+	return WvEventBus.AddCallBack(impl, "FrameNavigationStarting", cb, i, allowAddingMultiple...)
 }
 
 // Event_FrameContentLoading 框架内容加载事件.
@@ -28,20 +28,20 @@ func (i *ICoreWebView2Frame2) Event_FrameNavigationStarting(impl *WebViewEventIm
 //   - 如果发生同页面导航（例如通过 fragment 导航或 history.pushState 导航），ContentLoading 不会触发。
 //   - 此操作在 NavigationStarting 之后、NavigationCompleted 事件之前发生。
 func (i *ICoreWebView2Frame2) Event_FrameContentLoading(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *ICoreWebView2ContentLoadingEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
-	return WvEventHandler.AddCallBack(impl, "FrameContentLoading", cb, i, allowAddingMultiple...)
+	return WvEventBus.AddCallBack(impl, "FrameContentLoading", cb, i, allowAddingMultiple...)
 }
 
 // Event_FrameNavigationCompleted 框架导航完成事件.
 //   - NavigationCompleted 在 ICoreWebView2Frame 完全加载时（与 body.onload 同时运行）或加载因错误而停止时运行。
 func (i *ICoreWebView2Frame2) Event_FrameNavigationCompleted(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *ICoreWebView2NavigationCompletedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
-	return WvEventHandler.AddCallBack(impl, "FrameNavigationCompleted", cb, i, allowAddingMultiple...)
+	return WvEventBus.AddCallBack(impl, "FrameNavigationCompleted", cb, i, allowAddingMultiple...)
 }
 
 // Event_FrameDOMContentLoaded 框架 DOM 内容加载完成事件.
 //   - 当 iframe 的 html 文档被解析后，会触发 DOMContentLoaded 事件。
 //   - 这与 html 中文档的 DOMContentLoaded 事件是一致的。
 func (i *ICoreWebView2Frame2) Event_FrameDOMContentLoaded(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *ICoreWebView2DOMContentLoadedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
-	return WvEventHandler.AddCallBack(impl, "FrameDOMContentLoaded", cb, i, allowAddingMultiple...)
+	return WvEventBus.AddCallBack(impl, "FrameDOMContentLoaded", cb, i, allowAddingMultiple...)
 }
 
 // Event_FrameWebMessageReceived 框架 Web 消息接收事件.
@@ -49,7 +49,7 @@ func (i *ICoreWebView2Frame2) Event_FrameDOMContentLoaded(impl *WebViewEventImpl
 //   - postMessage 函数为 void postMessage(object)，其中 object 是任何支持 JSON 转换的对象。
 //   - 当框架调用 postMessage 时，对象参数会转换为 JSON 字符串，并异步发送到宿主进程。这将导致处理程序的 Invoke 方法被调用，该 JSON 字符串作为其参数。
 func (i *ICoreWebView2Frame2) Event_FrameWebMessageReceived(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
-	return WvEventHandler.AddCallBack(impl, "FrameWebMessageReceived", cb, i, allowAddingMultiple...)
+	return WvEventBus.AddCallBack(impl, "FrameWebMessageReceived", cb, i, allowAddingMultiple...)
 }
 
 // AddNavigationStarting 添加导航开始事件处理程序。
@@ -209,8 +209,8 @@ func (i *ICoreWebView2Frame2) ExecuteScriptEx(impl *WebViewEventImpl, javaScript
 	} else {
 		c = cb
 	}
-	_, _ = WvEventHandler.AddCallBack(impl, "ExecuteScriptCompleted", c, nil)
-	handler := WvEventHandler.GetHandler(impl, "ExecuteScriptCompleted")
+	_, _ = WvEventBus.AddCallBack(impl, "ExecuteScriptCompleted", c, nil)
+	handler := WvEventBus.GetHandler(impl, "ExecuteScriptCompleted")
 	return i.ExecuteScript(javaScript, (*ICoreWebView2ExecuteScriptCompletedHandler)(handler))
 }
 

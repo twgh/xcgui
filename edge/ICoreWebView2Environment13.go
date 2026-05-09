@@ -36,7 +36,7 @@ func (i *ICoreWebView2Environment13) GetProcessExtendedInfosEx(impl *WebViewEven
 	} else {
 		c = cb
 	}
-	_, _ = WvEventHandler.AddCallBack(impl, "GetProcessExtendedInfosCompleted", c, nil)
-	handler := WvEventHandler.GetHandler(impl, "GetProcessExtendedInfosCompleted")
+	_, _ = WvEventBus.AddCallBack(impl, "GetProcessExtendedInfosCompleted", c, nil)
+	handler := WvEventBus.GetHandler(impl, "GetProcessExtendedInfosCompleted")
 	return i.GetProcessExtendedInfos((*ICoreWebView2GetProcessExtendedInfosCompletedHandler)(handler))
 }
