@@ -255,7 +255,7 @@ func onXE_BNCLICK(hEle int, pbHandled *bool) int {
 	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_BNCLICK)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(xc.XE_BNCLICK1); ok {
+		if cb, ok := cbs[i].CB.(xc.XE_BNCLICK1); ok {
 			ret = cb(hEle, pbHandled)
 		}
 		if *pbHandled {
@@ -279,7 +279,7 @@ func onXE_BUTTON_CHECK(hEle int, bCheck bool, pbHandled *bool) int {
 	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_BUTTON_CHECK)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(xc.XE_BUTTON_CHECK1); ok {
+		if cb, ok := cbs[i].CB.(xc.XE_BUTTON_CHECK1); ok {
 			ret = cb(hEle, bCheck, pbHandled)
 		}
 		if *pbHandled {

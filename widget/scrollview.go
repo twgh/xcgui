@@ -260,7 +260,7 @@ func onXE_SCROLLVIEW_SCROLL_H(hEle int, pos int32, pbHandled *bool) int {
 	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_SCROLLVIEW_SCROLL_H)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(xc.XE_SCROLLVIEW_SCROLL_H1); ok {
+		if cb, ok := cbs[i].CB.(xc.XE_SCROLLVIEW_SCROLL_H1); ok {
 			ret = cb(hEle, pos, pbHandled)
 		}
 		if *pbHandled {
@@ -284,7 +284,7 @@ func onXE_SCROLLVIEW_SCROLL_V(hEle int, pos int32, pbHandled *bool) int {
 	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_SCROLLVIEW_SCROLL_V)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(xc.XE_SCROLLVIEW_SCROLL_V1); ok {
+		if cb, ok := cbs[i].CB.(xc.XE_SCROLLVIEW_SCROLL_V1); ok {
 			ret = cb(hEle, pos, pbHandled)
 		}
 		if *pbHandled {

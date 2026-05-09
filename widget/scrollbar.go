@@ -193,7 +193,7 @@ func onXE_SBAR_SCROLL(hEle int, pos int32, pbHandled *bool) int {
 	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_SBAR_SCROLL)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(xc.XE_SBAR_SCROLL1); ok {
+		if cb, ok := cbs[i].CB.(xc.XE_SBAR_SCROLL1); ok {
 			ret = cb(hEle, pos, pbHandled)
 		}
 		if *pbHandled {
