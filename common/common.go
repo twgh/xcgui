@@ -393,13 +393,13 @@ func ErrorToErrno(err error) (syscall.Errno, bool) {
 	return 0, false
 }
 
-// Choose 根据条件选择返回两个值中的一个.
+// Choose 根据条件选择返回两个值中的一个, 类似于三元运算符.
 //
-// b: 选择条件.
+// b: 选择条件. true 返回 value1, false 返回 value2.
 //
-// value1: 当 b 为 true 时返回的值.
+// value1: 值1.
 //
-// value2: 当 b 为 false 时返回的值.
+// value2: 值2.
 func Choose[T interface{}](b bool, value1, value2 T) T {
 	if b {
 		return value1
@@ -407,7 +407,7 @@ func Choose[T interface{}](b bool, value1, value2 T) T {
 	return value2
 }
 
-// ChooseValue 根据索引从参数列表中选择并返回一个值。
+// ChooseValue 根据索引从参数列表中选择并返回一个值, 类似于从数组中取值又不想创建一个数组。
 //
 // i: 索引. 如果小于 0 或者大于最大可选择项，将会 painc。
 //
