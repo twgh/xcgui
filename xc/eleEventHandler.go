@@ -40,7 +40,7 @@ func newEleEventBus() *eleEventBus {
 //
 // hEle: 元素句柄.
 //
-// eventType: 事件类型.
+// eventType: 事件类型, xcc.XE_.
 //
 // eventFunc: 事件函数.
 //
@@ -101,7 +101,7 @@ func (h *eleEventBus) AddCallBack(hEle int, eventType xcc.XE_, eventFunc interfa
 //
 // hEle: 元素句柄.
 //
-// eventType: 事件类型.
+// eventType: 事件类型, xcc.XE_.
 func (h *eleEventBus) GetCallBacks(hEle int, eventType xcc.XE_) []CbInfo {
 	h.mu.RLock()
 	defer h.mu.RUnlock()
@@ -121,7 +121,7 @@ func (h *eleEventBus) RemoveAllCallBack(hEle int) {
 //
 // hEle: 元素句柄.
 //
-// eventType: 事件类型.
+// eventType: 事件类型, xcc.XE_.
 //
 // id: 回调函数 ID.
 func (h *eleEventBus) RemoveCallBack(hEle int, eventType xcc.XE_, id int) {
@@ -141,7 +141,7 @@ func (h *eleEventBus) RemoveCallBack(hEle int, eventType xcc.XE_, id int) {
 //
 // hEle: 元素句柄.
 //
-// eventType: 事件类型.
+// eventType: 事件类型, xcc.XE_.
 //
 // id: 回调函数 ID.
 //
@@ -163,7 +163,7 @@ func (h *eleEventBus) SetCallBack(hEle int, eventType xcc.XE_, id int, cb interf
 //
 // hEle: 元素句柄.
 //
-// eventType: 事件类型.
+// eventType: 事件类型, xcc.XE_.
 func (h *eleEventBus) RemoveEvent(hEle int, eventType xcc.XE_) {
 	h.mu.Lock()
 	defer h.mu.Unlock()
