@@ -192,6 +192,6 @@ func XBkM_GetObject(hBkInfoM int, id int32) int {
 //
 // color: 接收返回的 xc.RGBA 颜色.
 func XBkM_GetStateTextColorEx(hBkInfoM int, nState, nStateEx xcc.CombinedState, color *uint32) bool {
-	r, _, _ := xBkM_GetStateTextColor.Call(uintptr(hBkInfoM), uintptr(nState), uintptr(nStateEx), uintptr(unsafe.Pointer(color)))
+	r, _, _ := xBkM_GetStateTextColorEx.Call(uintptr(hBkInfoM), uintptr(nState), uintptr(nStateEx), uintptr(unsafe.Pointer(color)))
 	return r != 0
 }
