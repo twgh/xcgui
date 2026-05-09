@@ -34,7 +34,7 @@ func ComAddRef(obj unsafe.Pointer) uintptr {
 	// 获取 vtable 指针
 	vtable := *(*uintptr)(obj)
 	// 获取 AddRef 函数地址, 在 vtable 中的索引是1
-	releaseFunc := *(*uintptr)(unsafe.Pointer(vtable + ptrSize))
+	releaseFunc := *(*uintptr)(unsafe.Add(unsafe.Pointer(vtable), ptrSize))
 	// 调用 AddRef 函数 (stdcall约定)
 	r, _, _ := syscall.SyscallN(releaseFunc, uintptr(obj))
 	return r
@@ -45,7 +45,7 @@ func ComRelease(obj unsafe.Pointer) uintptr {
 	// 获取 vtable 指针
 	vtable := *(*uintptr)(obj)
 	// 获取 Release 函数地址, 在 vtable 中的索引是2
-	releaseFunc := *(*uintptr)(unsafe.Pointer(vtable + 2*ptrSize))
+	releaseFunc := *(*uintptr)(unsafe.Add(unsafe.Pointer(vtable), 2*ptrSize))
 	// 调用 Release 函数 (stdcall约定)
 	r, _, _ := syscall.SyscallN(releaseFunc, uintptr(obj))
 	return r

@@ -60,8 +60,11 @@ func createFloatCallback(targetFn uintptr) uintptr {
 	}
 
 	// 将机器码写入内存
-	for i, b := range code {
-		*(*byte)(unsafe.Pointer(mem + uintptr(i))) = b
-	}
+	// 1. 将 mem (uintptr) 转换为 unsafe.Pointer
+	// 2. 再转换为 *byte 指针
+	// 3. 使用 unsafe.Slice 创建一个长度为 len(code) 的字节切片
+	// 4. 将机器码拷贝到内存
+	executableMemory := unsafe.Slice((*byte)(unsafe.Pointer(mem)), len(code))
+	copy(executableMemory, code)
 	return mem
 }
