@@ -63,7 +63,7 @@ func (i *ICoreWebView2_25) ShowSaveAsUIEx(impl *WebViewEventImpl, cb func(errorC
 	} else {
 		c = cb
 	}
-	_, _ = WvEventBus.AddCallBack(impl, "ShowSaveAsUICompleted", c, nil)
+	_, _ = WvEventBus.AddCallback(impl, "ShowSaveAsUICompleted", c, nil)
 	handler := WvEventBus.GetHandler(impl, "ShowSaveAsUICompleted")
 	return i.ShowSaveAsUI((*ICoreWebView2ShowSaveAsUICompletedHandler)(handler))
 }

@@ -1250,15 +1250,15 @@ func (a *App) LoadLayout_Create(data, propertylist int, uiType xcc.XC_OBJECT_TYP
 	return xc.XC_LoadLayout_Create(data, propertylist, uiType, hParent)
 }
 
-// SetCallBack_LoadLayout 炫彩_置回调_加载布局文件.
+// SetCallback_LoadLayout 炫彩_置回调_加载布局文件.
 //   - 为加载布局文件设置回调函数, 当调用 xc.XC_LoadLayout 时遇到扩展对象, 回调用户设置的回调函数, 让用户在回调函数中创建扩展对象.
 //
 // callback: 回调函数.
-func (a *App) SetCallBack_LoadLayout(callback xc.FunLoadLayout) {
-	xc.XC_SetCallBack_LoadLayout(callback)
+func (a *App) SetCallback_LoadLayout(callback xc.FunLoadLayout) {
+	xc.XC_SetCallback_LoadLayout(callback)
 }
 
-// RemoveCallBack_LoadLayout 炫彩_移除布局加载回调.
-func (a *App) RemoveCallBack_LoadLayout() {
-	xc.XC_RemoveCallBack_LoadLayout()
+// RemoveCallback_LoadLayout 炫彩_移除布局加载回调.
+func (a *App) RemoveCallback_LoadLayout() {
+	xc.XC_RemoveCallback_LoadLayout()
 }

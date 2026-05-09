@@ -220,7 +220,7 @@ var (
 	xC_GetHandleCount          *syscall.LazyProc
 	xC_SetD2dTextAntialiasMode *syscall.LazyProc
 	xC_IsInit                  *syscall.LazyProc
-	xC_SetCallBack_LoadLayout  *syscall.LazyProc
+	xC_SetCallback_LoadLayout  *syscall.LazyProc
 	xC_LoadLayout_Create       *syscall.LazyProc
 
 	// UI Designer.
@@ -1895,7 +1895,7 @@ var (
 	xAnimaItem_EnableCompleteRelease *syscall.LazyProc
 	xAnima_EnableAutoDestroy         *syscall.LazyProc
 	xAnima_DestroyObjectUI           *syscall.LazyProc
-	xAnima_SetCallBack               *syscall.LazyProc
+	xAnima_SetCallback               *syscall.LazyProc
 	xAnima_SetUserData               *syscall.LazyProc
 	xAnima_GetUserData               *syscall.LazyProc
 	xAnima_Stop                      *syscall.LazyProc
@@ -2059,7 +2059,7 @@ func _loadXCGUI() {
 	xC_GetHandleCount = xcgui.NewProc("XC_GetHandleCount")
 	xC_SetD2dTextAntialiasMode = xcgui.NewProc("XC_SetD2dTextAntialiasMode")
 	xC_IsInit = xcgui.NewProc("XC_IsInit")
-	xC_SetCallBack_LoadLayout = xcgui.NewProc("XC_SetCallBack_LoadLayout")
+	xC_SetCallback_LoadLayout = xcgui.NewProc("XC_SetCallBack_LoadLayout")
 	xC_LoadLayout_Create = xcgui.NewProc("XC_LoadLayout_Create")
 
 	// UI Designer.
@@ -3728,7 +3728,7 @@ func _loadXCGUI() {
 	xAnimaItem_EnableCompleteRelease = xcgui.NewProc("XAnimaItem_EnableCompleteRelease")
 	xAnima_EnableAutoDestroy = xcgui.NewProc("XAnima_EnableAutoDestroy")
 	xAnima_DestroyObjectUI = xcgui.NewProc("XAnima_DestroyObjectUI")
-	xAnima_SetCallBack = xcgui.NewProc("XAnima_SetCallBack")
+	xAnima_SetCallback = xcgui.NewProc("XAnima_SetCallback")
 	xAnima_SetUserData = xcgui.NewProc("XAnima_SetUserData")
 	xAnima_GetUserData = xcgui.NewProc("XAnima_GetUserData")
 	xAnima_Stop = xcgui.NewProc("XAnima_Stop")

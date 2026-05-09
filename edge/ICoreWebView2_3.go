@@ -62,7 +62,7 @@ func (i *ICoreWebView2_3) TrySuspendEx(impl *WebViewEventImpl, cb func(errorCode
 	} else {
 		c = cb
 	}
-	_, _ = WvEventBus.AddCallBack(impl, "TrySuspendCompleted", c, nil)
+	_, _ = WvEventBus.AddCallback(impl, "TrySuspendCompleted", c, nil)
 	handler := WvEventBus.GetHandler(impl, "TrySuspendCompleted")
 	return i.TrySuspend((*ICoreWebView2TrySuspendCompletedHandler)(handler))
 }

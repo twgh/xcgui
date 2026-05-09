@@ -130,12 +130,12 @@ func (s *SliderBar) EnableHorizon(bHorizon ...bool) *SliderBar {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (s *SliderBar) AddEvent_SliderBar_Change(fn xc.XE_SLIDERBAR_CHANGE1, allowAddingMultiple ...bool) int {
-	return xc.EleEventBus.AddCallBack(s.Handle, xcc.XE_SLIDERBAR_CHANGE, onXE_SLIDERBAR_CHANGE, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallback(s.Handle, xcc.XE_SLIDERBAR_CHANGE, onXE_SLIDERBAR_CHANGE, fn, allowAddingMultiple...)
 }
 
 // onXE_SLIDERBAR_CHANGE 滑动条元素滑块位置改变事件.
 func onXE_SLIDERBAR_CHANGE(hEle int, pos int32, pbHandled *bool) int {
-	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_SLIDERBAR_CHANGE)
+	cbs := xc.EleEventBus.GetCallbacks(hEle, xcc.XE_SLIDERBAR_CHANGE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XE_SLIDERBAR_CHANGE1); ok {

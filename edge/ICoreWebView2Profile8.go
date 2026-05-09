@@ -31,7 +31,7 @@ func (i *ICoreWebView2Profile8) Delete() error {
 //   - 当配置文件被标记为删除时触发。
 //   - 触发此事件时，ICoreWebView2Profile 及其对应的 ICoreWebView2 已关闭，且无法再使用。
 func (i *ICoreWebView2Profile8) Event_ProfileDeleted(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Profile, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
-	return WvEventBus.AddCallBack(impl, "ProfileDeleted", cb, i, allowAddingMultiple...)
+	return WvEventBus.AddCallback(impl, "ProfileDeleted", cb, i, allowAddingMultiple...)
 }
 
 // AddDeleted 添加配置文件删除事件的处理程序。

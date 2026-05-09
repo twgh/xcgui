@@ -730,12 +730,12 @@ func (l *ListBox) GetItemHeight(iItem int32, pHeight, pSelHeight *int32) *ListBo
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (l *ListBox) AddEvent_ListBox_Temp_Create(fn xc.XE_LISTBOX_TEMP_CREATE1, allowAddingMultiple ...bool) int {
-	return xc.EleEventBus.AddCallBack(l.Handle, xcc.XE_LISTBOX_TEMP_CREATE, onXE_LISTBOX_TEMP_CREATE, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LISTBOX_TEMP_CREATE, onXE_LISTBOX_TEMP_CREATE, fn, allowAddingMultiple...)
 }
 
 // onXE_LISTBOX_TEMP_CREATE 列表框项模板创建事件.
 func onXE_LISTBOX_TEMP_CREATE(hEle int, pItem *xc.ListBox_Item_, nFlag int32, pbHandled *bool) int {
-	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_LISTBOX_TEMP_CREATE)
+	cbs := xc.EleEventBus.GetCallbacks(hEle, xcc.XE_LISTBOX_TEMP_CREATE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XE_LISTBOX_TEMP_CREATE1); ok {
@@ -755,12 +755,12 @@ func onXE_LISTBOX_TEMP_CREATE(hEle int, pItem *xc.ListBox_Item_, nFlag int32, pb
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (l *ListBox) AddEvent_ListBox_Temp_Create_End(fn xc.XE_LISTBOX_TEMP_CREATE_END1, allowAddingMultiple ...bool) int {
-	return xc.EleEventBus.AddCallBack(l.Handle, xcc.XE_LISTBOX_TEMP_CREATE_END, onXE_LISTBOX_TEMP_CREATE_END, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LISTBOX_TEMP_CREATE_END, onXE_LISTBOX_TEMP_CREATE_END, fn, allowAddingMultiple...)
 }
 
 // onXE_LISTBOX_TEMP_CREATE_END 列表框项模板创建完成事件.
 func onXE_LISTBOX_TEMP_CREATE_END(hEle int, pItem *xc.ListBox_Item_, nFlag int32, pbHandled *bool) int {
-	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_LISTBOX_TEMP_CREATE_END)
+	cbs := xc.EleEventBus.GetCallbacks(hEle, xcc.XE_LISTBOX_TEMP_CREATE_END)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XE_LISTBOX_TEMP_CREATE_END1); ok {
@@ -780,12 +780,12 @@ func onXE_LISTBOX_TEMP_CREATE_END(hEle int, pItem *xc.ListBox_Item_, nFlag int32
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (l *ListBox) AddEvent_ListBox_Temp_Destroy(fn xc.XE_LISTBOX_TEMP_DESTROY1, allowAddingMultiple ...bool) int {
-	return xc.EleEventBus.AddCallBack(l.Handle, xcc.XE_LISTBOX_TEMP_DESTROY, onXE_LISTBOX_TEMP_DESTROY, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LISTBOX_TEMP_DESTROY, onXE_LISTBOX_TEMP_DESTROY, fn, allowAddingMultiple...)
 }
 
 // onXE_LISTBOX_TEMP_DESTROY 列表框项模板销毁事件.
 func onXE_LISTBOX_TEMP_DESTROY(hEle int, pItem *xc.ListBox_Item_, nFlag int, pbHandled *bool) int {
-	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_LISTBOX_TEMP_DESTROY)
+	cbs := xc.EleEventBus.GetCallbacks(hEle, xcc.XE_LISTBOX_TEMP_DESTROY)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XE_LISTBOX_TEMP_DESTROY1); ok {
@@ -804,12 +804,12 @@ func onXE_LISTBOX_TEMP_DESTROY(hEle int, pItem *xc.ListBox_Item_, nFlag int, pbH
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (l *ListBox) AddEvent_ListBox_Temp_Adjust_Coordinate(fn xc.XE_LISTBOX_TEMP_ADJUST_COORDINATE1, allowAddingMultiple ...bool) int {
-	return xc.EleEventBus.AddCallBack(l.Handle, xcc.XE_LISTBOX_TEMP_ADJUST_COORDINATE, onXE_LISTBOX_TEMP_ADJUST_COORDINATE, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LISTBOX_TEMP_ADJUST_COORDINATE, onXE_LISTBOX_TEMP_ADJUST_COORDINATE, fn, allowAddingMultiple...)
 }
 
 // onXE_LISTBOX_TEMP_ADJUST_COORDINATE 列表框项模板调整坐标事件.
 func onXE_LISTBOX_TEMP_ADJUST_COORDINATE(hEle int, pItem *xc.ListBox_Item_, pbHandled *bool) int {
-	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_LISTBOX_TEMP_ADJUST_COORDINATE)
+	cbs := xc.EleEventBus.GetCallbacks(hEle, xcc.XE_LISTBOX_TEMP_ADJUST_COORDINATE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XE_LISTBOX_TEMP_ADJUST_COORDINATE1); ok {
@@ -828,12 +828,12 @@ func onXE_LISTBOX_TEMP_ADJUST_COORDINATE(hEle int, pItem *xc.ListBox_Item_, pbHa
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (l *ListBox) AddEvent_ListBox_DrawItem(fn xc.XE_LISTBOX_DRAWITEM1, allowAddingMultiple ...bool) int {
-	return xc.EleEventBus.AddCallBack(l.Handle, xcc.XE_LISTBOX_DRAWITEM, onXE_LISTBOX_DRAWITEM, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LISTBOX_DRAWITEM, onXE_LISTBOX_DRAWITEM, fn, allowAddingMultiple...)
 }
 
 // onXE_LISTBOX_DRAWITEM 列表框项绘制事件.
 func onXE_LISTBOX_DRAWITEM(hEle int, hDraw int, pItem *xc.ListBox_Item_, pbHandled *bool) int {
-	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_LISTBOX_DRAWITEM)
+	cbs := xc.EleEventBus.GetCallbacks(hEle, xcc.XE_LISTBOX_DRAWITEM)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XE_LISTBOX_DRAWITEM1); ok {
@@ -852,12 +852,12 @@ func onXE_LISTBOX_DRAWITEM(hEle int, hDraw int, pItem *xc.ListBox_Item_, pbHandl
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (l *ListBox) AddEvent_ListBox_Select(fn xc.XE_LISTBOX_SELECT1, allowAddingMultiple ...bool) int {
-	return xc.EleEventBus.AddCallBack(l.Handle, xcc.XE_LISTBOX_SELECT, onXE_LISTBOX_SELECT, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LISTBOX_SELECT, onXE_LISTBOX_SELECT, fn, allowAddingMultiple...)
 }
 
 // onXE_LISTBOX_SELECT 列表框项选择事件.
 func onXE_LISTBOX_SELECT(hEle int, iItem int32, pbHandled *bool) int {
-	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_LISTBOX_SELECT)
+	cbs := xc.EleEventBus.GetCallbacks(hEle, xcc.XE_LISTBOX_SELECT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XE_LISTBOX_SELECT1); ok {

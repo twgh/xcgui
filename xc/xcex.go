@@ -10,14 +10,14 @@ import (
 )
 
 var (
-	uiThreadCallBackFunc func(data int) int                      // 真实执行的
-	uiThreadCallBackPtr  = syscall.NewCallback(uiThreadCallBack) // 壳
+	uiThreadCallbackFunc func(data int) int                      // 真实执行的
+	uiThreadCallbackPtr  = syscall.NewCallback(uiThreadCallback) // 壳
 	utLock               sync.Mutex
 )
 
-// uiThreadCallBack UI线程回调函数
-func uiThreadCallBack(data int) int {
-	return uiThreadCallBackFunc(data)
+// uiThreadCallback UI线程回调函数
+func uiThreadCallback(data int) int {
+	return uiThreadCallbackFunc(data)
 }
 
 // XC_CallUiThreadEx 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
@@ -29,8 +29,8 @@ func uiThreadCallBack(data int) int {
 func XC_CallUiThreadEx(f func(data int) int, data int) int {
 	utLock.Lock()
 	defer utLock.Unlock()
-	uiThreadCallBackFunc = f
-	r, _, _ := xC_CallUiThread.Call(uiThreadCallBackPtr, uintptr(data))
+	uiThreadCallbackFunc = f
+	r, _, _ := xC_CallUiThread.Call(uiThreadCallbackPtr, uintptr(data))
 	return int(r)
 }
 
@@ -42,11 +42,11 @@ func XC_CallUiThreadEx(f func(data int) int, data int) int {
 func XC_CallUT(f func()) {
 	utLock.Lock()
 	defer utLock.Unlock()
-	uiThreadCallBackFunc = func(data int) int {
+	uiThreadCallbackFunc = func(data int) int {
 		f()
 		return 0
 	}
-	xC_CallUiThread.Call(uiThreadCallBackPtr, uintptr(0))
+	xC_CallUiThread.Call(uiThreadCallbackPtr, uintptr(0))
 }
 
 // UI 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
@@ -68,7 +68,7 @@ func CallUTAny(f func(data ...interface{}) int, data ...interface{}) int {
 	utLock.Lock()
 	defer utLock.Unlock()
 
-	uiThreadCallBackFunc = func(args int) int {
+	uiThreadCallbackFunc = func(args int) int {
 		s := common.UintPtrToSliceWithCap(uintptr(args))
 		return f(s...)
 	}
@@ -86,7 +86,7 @@ func CallUTAny(f func(data ...interface{}) int, data ...interface{}) int {
 
 		dataPtr = uintptr(unsafe.Pointer(&dataCopy[0]))
 	}
-	r, _, _ := xC_CallUiThread.Call(uiThreadCallBackPtr, dataPtr)
+	r, _, _ := xC_CallUiThread.Call(uiThreadCallbackPtr, dataPtr)
 	return int(r)
 }
 
@@ -122,7 +122,7 @@ func AutoAny(f func(data ...interface{}) int, data ...interface{}) int {
 
 // UiThreader 用于在UI线程操作UI.
 type UiThreader interface {
-	UiThreadCallBack(data int) int // 回调函数, 把操作UI的代码写在这里面.
+	UiThreadCallback(data int) int // 回调函数, 把操作UI的代码写在这里面.
 }
 
 // XC_CallUiThreader 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI. 与 XC_CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数.
@@ -133,8 +133,8 @@ type UiThreader interface {
 func XC_CallUiThreader(u UiThreader, data int) int {
 	utLock.Lock()
 	defer utLock.Unlock()
-	uiThreadCallBackFunc = u.UiThreadCallBack
-	r, _, _ := xC_CallUiThread.Call(uiThreadCallBackPtr, uintptr(data))
+	uiThreadCallbackFunc = u.UiThreadCallback
+	r, _, _ := xC_CallUiThread.Call(uiThreadCallbackPtr, uintptr(data))
 	return int(r)
 }
 

@@ -816,12 +816,12 @@ func (e *Edit) ClipboardCopyAll() bool {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (e *Edit) AddEvent_Edit_Set(fn xc.XE_EDIT_SET1, allowAddingMultiple ...bool) int {
-	return xc.EleEventBus.AddCallBack(e.Handle, xcc.XE_EDIT_SET, onXE_EDIT_SET, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_EDIT_SET, onXE_EDIT_SET, fn, allowAddingMultiple...)
 }
 
 // onXE_EDIT_SET 编辑框设置事件.
 func onXE_EDIT_SET(hEle int, pbHandled *bool) int {
-	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_EDIT_SET)
+	cbs := xc.EleEventBus.GetCallbacks(hEle, xcc.XE_EDIT_SET)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XE_EDIT_SET1); ok {
@@ -840,12 +840,12 @@ func onXE_EDIT_SET(hEle int, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (e *Edit) AddEvent_Edit_DrawRow(fn xc.XE_EDIT_DRAWROW1, allowAddingMultiple ...bool) int {
-	return xc.EleEventBus.AddCallBack(e.Handle, xcc.XE_EDIT_DRAWROW, onXE_EDIT_DRAWROW, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_EDIT_DRAWROW, onXE_EDIT_DRAWROW, fn, allowAddingMultiple...)
 }
 
 // onXE_EDIT_DRAWROW 编辑框绘制行事件.
 func onXE_EDIT_DRAWROW(hEle int, hDraw int, iRow int32, pbHandled *bool) int {
-	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_EDIT_DRAWROW)
+	cbs := xc.EleEventBus.GetCallbacks(hEle, xcc.XE_EDIT_DRAWROW)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XE_EDIT_DRAWROW1); ok {
@@ -864,12 +864,12 @@ func onXE_EDIT_DRAWROW(hEle int, hDraw int, iRow int32, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (e *Edit) AddEvent_Edit_Changed(fn xc.XE_EDIT_CHANGED1, allowAddingMultiple ...bool) int {
-	return xc.EleEventBus.AddCallBack(e.Handle, xcc.XE_EDIT_CHANGED, onXE_EDIT_CHANGED, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_EDIT_CHANGED, onXE_EDIT_CHANGED, fn, allowAddingMultiple...)
 }
 
 // onXE_EDIT_CHANGED 编辑框内容被改变事件.
 func onXE_EDIT_CHANGED(hEle int, pbHandled *bool) int {
-	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_EDIT_CHANGED)
+	cbs := xc.EleEventBus.GetCallbacks(hEle, xcc.XE_EDIT_CHANGED)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XE_EDIT_CHANGED1); ok {
@@ -888,12 +888,12 @@ func onXE_EDIT_CHANGED(hEle int, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (e *Edit) AddEvent_Edit_Pos_Changed(fn xc.XE_EDIT_POS_CHANGED1, allowAddingMultiple ...bool) int {
-	return xc.EleEventBus.AddCallBack(e.Handle, xcc.XE_EDIT_POS_CHANGED, onXE_EDIT_POS_CHANGED, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_EDIT_POS_CHANGED, onXE_EDIT_POS_CHANGED, fn, allowAddingMultiple...)
 }
 
 // onXE_EDIT_POS_CHANGED 编辑框光标位置被改变事件.
 func onXE_EDIT_POS_CHANGED(hEle int, iPos int32, pbHandled *bool) int {
-	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_EDIT_POS_CHANGED)
+	cbs := xc.EleEventBus.GetCallbacks(hEle, xcc.XE_EDIT_POS_CHANGED)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XE_EDIT_POS_CHANGED1); ok {
@@ -912,12 +912,12 @@ func onXE_EDIT_POS_CHANGED(hEle int, iPos int32, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (e *Edit) AddEvent_Edit_Style_Changed(fn xc.XE_EDIT_STYLE_CHANGED1, allowAddingMultiple ...bool) int {
-	return xc.EleEventBus.AddCallBack(e.Handle, xcc.XE_EDIT_STYLE_CHANGED, onXE_EDIT_STYLE_CHANGED, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_EDIT_STYLE_CHANGED, onXE_EDIT_STYLE_CHANGED, fn, allowAddingMultiple...)
 }
 
 // onXE_EDIT_STYLE_CHANGED 编辑框样式被改变事件.
 func onXE_EDIT_STYLE_CHANGED(hEle int, iStyle int32, pbHandled *bool) int {
-	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_EDIT_STYLE_CHANGED)
+	cbs := xc.EleEventBus.GetCallbacks(hEle, xcc.XE_EDIT_STYLE_CHANGED)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XE_EDIT_STYLE_CHANGED1); ok {
@@ -936,12 +936,12 @@ func onXE_EDIT_STYLE_CHANGED(hEle int, iStyle int32, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (e *Edit) AddEvent_Edit_Enter_Get_TabAlign(fn xc.XE_EDIT_ENTER_GET_TABALIGN1, allowAddingMultiple ...bool) int {
-	return xc.EleEventBus.AddCallBack(e.Handle, xcc.XE_EDIT_ENTER_GET_TABALIGN, onXE_EDIT_ENTER_GET_TABALIGN, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_EDIT_ENTER_GET_TABALIGN, onXE_EDIT_ENTER_GET_TABALIGN, fn, allowAddingMultiple...)
 }
 
 // onXE_EDIT_ENTER_GET_TABALIGN 编辑框回车TAB对齐事件.
 func onXE_EDIT_ENTER_GET_TABALIGN(hEle int, pbHandled *bool) int {
-	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_EDIT_ENTER_GET_TABALIGN)
+	cbs := xc.EleEventBus.GetCallbacks(hEle, xcc.XE_EDIT_ENTER_GET_TABALIGN)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XE_EDIT_ENTER_GET_TABALIGN1); ok {
@@ -962,12 +962,12 @@ func onXE_EDIT_ENTER_GET_TABALIGN(hEle int, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (e *Edit) AddEvent_Edit_Row_Changed(fn xc.XE_EDIT_ROW_CHANGED1, allowAddingMultiple ...bool) int {
-	return xc.EleEventBus.AddCallBack(e.Handle, xcc.XE_EDIT_ROW_CHANGED, onXE_EDIT_ROW_CHANGED, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_EDIT_ROW_CHANGED, onXE_EDIT_ROW_CHANGED, fn, allowAddingMultiple...)
 }
 
 // onXE_EDIT_ROW_CHANGED 编辑框行被改变事件.
 func onXE_EDIT_ROW_CHANGED(hEle int, iRow int32, nChangeRows int32, pbHandled *bool) int {
-	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_EDIT_ROW_CHANGED)
+	cbs := xc.EleEventBus.GetCallbacks(hEle, xcc.XE_EDIT_ROW_CHANGED)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XE_EDIT_ROW_CHANGED1); ok {
@@ -986,12 +986,12 @@ func onXE_EDIT_ROW_CHANGED(hEle int, iRow int32, nChangeRows int32, pbHandled *b
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (e *Edit) AddEvent_Edit_SwapRow(fn xc.XE_EDIT_SWAPROW1, allowAddingMultiple ...bool) int {
-	return xc.EleEventBus.AddCallBack(e.Handle, xcc.XE_EDIT_SWAPROW, onXE_EDIT_SWAPROW, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_EDIT_SWAPROW, onXE_EDIT_SWAPROW, fn, allowAddingMultiple...)
 }
 
 // onXE_EDIT_SWAPROW 编辑框交换行事件.
 func onXE_EDIT_SWAPROW(hEle int, iRow int32, bArrowUp int32, pbHandled *bool) int {
-	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_EDIT_SWAPROW)
+	cbs := xc.EleEventBus.GetCallbacks(hEle, xcc.XE_EDIT_SWAPROW)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XE_EDIT_SWAPROW1); ok {
@@ -1010,12 +1010,12 @@ func onXE_EDIT_SWAPROW(hEle int, iRow int32, bArrowUp int32, pbHandled *bool) in
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (e *Edit) AddEvent_Edit_Color_Change(fn xc.XE_EDIT_COLOR_CHANGE1, allowAddingMultiple ...bool) int {
-	return xc.EleEventBus.AddCallBack(e.Handle, xcc.XE_EDIT_COLOR_CHANGE, onXE_EDIT_COLOR_CHANGE, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_EDIT_COLOR_CHANGE, onXE_EDIT_COLOR_CHANGE, fn, allowAddingMultiple...)
 }
 
 // onXE_EDIT_COLOR_CHANGE 编辑框颜色被改变事件.
 func onXE_EDIT_COLOR_CHANGE(hEle int, color uint32, pbHandled *bool) int {
-	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_EDIT_COLOR_CHANGE)
+	cbs := xc.EleEventBus.GetCallbacks(hEle, xcc.XE_EDIT_COLOR_CHANGE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XE_EDIT_COLOR_CHANGE1); ok {

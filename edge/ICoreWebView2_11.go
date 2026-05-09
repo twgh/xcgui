@@ -65,7 +65,7 @@ func (i *ICoreWebView2_11) CallDevToolsProtocolMethodForSessionEx(impl *WebViewE
 	} else {
 		c = cb
 	}
-	_, _ = WvEventBus.AddCallBack(impl, "CallDevToolsProtocolMethodCompleted", c, nil)
+	_, _ = WvEventBus.AddCallback(impl, "CallDevToolsProtocolMethodCompleted", c, nil)
 	handler := WvEventBus.GetHandler(impl, "CallDevToolsProtocolMethodCompleted")
 	return i.CallDevToolsProtocolMethodForSession(sessionId, methodName, parametersAsJson, (*ICoreWebView2CallDevToolsProtocolMethodCompletedHandler)(handler))
 }

@@ -52,14 +52,14 @@ func (a *animaBase) EnableAutoDestroy(bEnable ...bool) *animaBase {
 // 动画_置回调.
 //
 // callback: 回调函数.
-func (a *animaBase) SetCallBack(callback xc.FunAnimation) *animaBase {
-	xc.XAnima_SetCallBack(a.Handle, callback)
+func (a *animaBase) SetCallback(callback xc.FunAnimation) *animaBase {
+	xc.XAnima_SetCallback(a.Handle, callback)
 	return a
 }
 
 // 动画_移除回调.
-func (a *animaBase) RemoveCallBack() *animaBase {
-	xc.XAnima_RemoveCallBack(a.Handle)
+func (a *animaBase) RemoveCallback() *animaBase {
+	xc.XAnima_RemoveCallback(a.Handle)
 	return a
 }
 

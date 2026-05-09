@@ -63,7 +63,7 @@ func (w *WebViewEventImpl) SetPermission(kind COREWEBVIEW2_PERMISSION_KIND, stat
 
 // TrySuspendCompleted 尝试挂起 WebView 后调用, 以获取执行结果.
 func (w *WebViewEventImpl) TrySuspendCompleted(errorCode syscall.Errno, isSuccessful bool) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "TrySuspendCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "TrySuspendCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(errorCode syscall.Errno, isSuccessful bool) uintptr); ok {
@@ -76,7 +76,7 @@ func (w *WebViewEventImpl) TrySuspendCompleted(errorCode syscall.Errno, isSucces
 // ExecuteScriptCompleted 执行 js 脚本完成后调用, 以获取执行结果.
 func (w *WebViewEventImpl) ExecuteScriptCompleted(errorCode syscall.Errno, result *uint16) uintptr {
 	var str string
-	cbs := WvEventBus.GetCallBacks(w, "ExecuteScriptCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "ExecuteScriptCompleted")
 	n := len(cbs)
 	if n > 0 {
 		if errors.Is(errorCode, wapi.S_OK) && result != nil && *result != 0 {
@@ -95,7 +95,7 @@ func (w *WebViewEventImpl) ExecuteScriptCompleted(errorCode syscall.Errno, resul
 // CallDevToolsProtocolMethodCompleted 调用 DevTools 协议方法完成后调用, 以获取执行结果.
 func (w *WebViewEventImpl) CallDevToolsProtocolMethodCompleted(errorCode syscall.Errno, result *uint16) uintptr {
 	var str string
-	cbs := WvEventBus.GetCallBacks(w, "CallDevToolsProtocolMethodCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "CallDevToolsProtocolMethodCompleted")
 	n := len(cbs)
 	if n > 0 {
 		if errors.Is(errorCode, wapi.S_OK) && result != nil && *result != 0 {
@@ -114,7 +114,7 @@ func (w *WebViewEventImpl) CallDevToolsProtocolMethodCompleted(errorCode syscall
 // AddScriptToExecuteOnDocumentCreatedCompleted 添加 js 脚本完成后调用, 以获取执行结果.
 func (w *WebViewEventImpl) AddScriptToExecuteOnDocumentCreatedCompleted(errorCode syscall.Errno, id *uint16) uintptr {
 	var str string
-	cbs := WvEventBus.GetCallBacks(w, "AddScriptToExecuteOnDocumentCreatedCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "AddScriptToExecuteOnDocumentCreatedCompleted")
 	n := len(cbs)
 	if n > 0 {
 		if errors.Is(errorCode, wapi.S_OK) && id != nil && *id != 0 {
@@ -132,7 +132,7 @@ func (w *WebViewEventImpl) AddScriptToExecuteOnDocumentCreatedCompleted(errorCod
 
 // GetCookiesCompleted 获取 cookies 完成后调用, 以获取执行结果.
 func (w *WebViewEventImpl) GetCookiesCompleted(errorCode syscall.Errno, cookies *ICoreWebView2CookieList) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "GetCookiesCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "GetCookiesCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(errorCode syscall.Errno, cookies *ICoreWebView2CookieList) uintptr); ok {
@@ -144,7 +144,7 @@ func (w *WebViewEventImpl) GetCookiesCompleted(errorCode syscall.Errno, cookies 
 
 // CapturePreviewCompleted 截图完成时调用.
 func (w *WebViewEventImpl) CapturePreviewCompleted(errorCode syscall.Errno) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "CapturePreviewCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "CapturePreviewCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(errorCode syscall.Errno) uintptr); ok {
@@ -161,7 +161,7 @@ func (w *WebViewEventImpl) WebResourceResponseViewGetContentCompleted(errorCode 
 	}
 
 	var bs []byte
-	cbs := WvEventBus.GetCallBacks(w, "WebResourceResponseViewGetContentCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "WebResourceResponseViewGetContentCompleted")
 	n := len(cbs)
 	if n > 0 {
 		if errors.Is(errorCode, wapi.S_OK) && result != nil {
@@ -186,7 +186,7 @@ func (w *WebViewEventImpl) WebResourceResponseViewGetContentCompleted(errorCode 
 
 // DocumentTitleChanged 在文档标题发生变化时调用.
 func (w *WebViewEventImpl) DocumentTitleChanged(sender *ICoreWebView2, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "DocumentTitleChanged")
+	cbs := WvEventBus.GetCallbacks(w, "DocumentTitleChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *IUnknown) uintptr); ok {
@@ -198,7 +198,7 @@ func (w *WebViewEventImpl) DocumentTitleChanged(sender *ICoreWebView2, args *IUn
 
 // RasterizationScaleChanged 在光栅化缩放比例发生变化时调用.
 func (w *WebViewEventImpl) RasterizationScaleChanged(sender *ICoreWebView2Controller, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "RasterizationScaleChanged")
+	cbs := WvEventBus.GetCallbacks(w, "RasterizationScaleChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2Controller, args *IUnknown) uintptr); ok {
@@ -210,7 +210,7 @@ func (w *WebViewEventImpl) RasterizationScaleChanged(sender *ICoreWebView2Contro
 
 // WindowCloseRequested 在窗口关闭请求时调用.
 func (w *WebViewEventImpl) WindowCloseRequested(sender *ICoreWebView2, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "WindowCloseRequested")
+	cbs := WvEventBus.GetCallbacks(w, "WindowCloseRequested")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *IUnknown) uintptr); ok {
@@ -222,7 +222,7 @@ func (w *WebViewEventImpl) WindowCloseRequested(sender *ICoreWebView2, args *IUn
 
 // SourceChanged 当源改变时调用。
 func (w *WebViewEventImpl) SourceChanged(sender *ICoreWebView2, args *ICoreWebView2SourceChangedEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "SourceChanged")
+	cbs := WvEventBus.GetCallbacks(w, "SourceChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2SourceChangedEventArgs) uintptr); ok {
@@ -234,7 +234,7 @@ func (w *WebViewEventImpl) SourceChanged(sender *ICoreWebView2, args *ICoreWebVi
 
 // NewWindowRequested 当收到新窗口请求时调用。
 func (w *WebViewEventImpl) NewWindowRequested(sender *ICoreWebView2, args *ICoreWebView2NewWindowRequestedEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "NewWindowRequested")
+	cbs := WvEventBus.GetCallbacks(w, "NewWindowRequested")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2NewWindowRequestedEventArgs) uintptr); ok {
@@ -258,7 +258,7 @@ func (w *WebViewEventImpl) PermissionRequested(sender *ICoreWebView2, args *ICor
 		ReportErrorAuto(err)
 	}
 
-	cbs := WvEventBus.GetCallBacks(w, "PermissionRequested")
+	cbs := WvEventBus.GetCallbacks(w, "PermissionRequested")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2PermissionRequestedEventArgs) uintptr); ok {
@@ -279,7 +279,7 @@ func (w *WebViewEventImpl) WebMessageReceived(sender *ICoreWebView2, args *ICore
 		}
 	}
 
-	cbs := WvEventBus.GetCallBacks(w, "WebMessageReceived")
+	cbs := WvEventBus.GetCallbacks(w, "WebMessageReceived")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr); ok {
@@ -295,7 +295,7 @@ var firstCreateWebResourceResponse bool
 func (w *WebViewEventImpl) WebResourceRequested(sender *ICoreWebView2, args *ICoreWebView2WebResourceRequestedEventArgs) uintptr {
 	var ret uintptr
 	defer func() {
-		cbs := WvEventBus.GetCallBacks(w, "WebResourceRequested")
+		cbs := WvEventBus.GetCallbacks(w, "WebResourceRequested")
 		for i := len(cbs) - 1; i >= 0; i-- {
 			if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2WebResourceRequestedEventArgs) uintptr); ok {
 				ret = cb(sender, args)
@@ -409,7 +409,7 @@ func getMimeType(filePath string) string {
 
 // NavigationCompleted 当导航完成时调用。
 func (w *WebViewEventImpl) NavigationCompleted(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "NavigationCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "NavigationCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr); ok {
@@ -421,7 +421,7 @@ func (w *WebViewEventImpl) NavigationCompleted(sender *ICoreWebView2, args *ICor
 
 // Frame_NavigationCompleted 当 ICoreWebView2 的框架导航完成时调用。
 func (w *WebViewEventImpl) Frame_NavigationCompleted(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "Frame_NavigationCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "Frame_NavigationCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr); ok {
@@ -433,7 +433,7 @@ func (w *WebViewEventImpl) Frame_NavigationCompleted(sender *ICoreWebView2, args
 
 // Frame_NavigationStarting 当 ICoreWebView2 的框架导航开始时调用。
 func (w *WebViewEventImpl) Frame_NavigationStarting(sender *ICoreWebView2, args *ICoreWebView2NavigationStartingEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "Frame_NavigationStarting")
+	cbs := WvEventBus.GetCallbacks(w, "Frame_NavigationStarting")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2NavigationStartingEventArgs) uintptr); ok {
@@ -445,7 +445,7 @@ func (w *WebViewEventImpl) Frame_NavigationStarting(sender *ICoreWebView2, args 
 
 // NavigationStarting 当导航开始时调用。
 func (w *WebViewEventImpl) NavigationStarting(sender *ICoreWebView2, args *ICoreWebView2NavigationStartingEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "NavigationStarting")
+	cbs := WvEventBus.GetCallbacks(w, "NavigationStarting")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2NavigationStartingEventArgs) uintptr); ok {
@@ -457,7 +457,7 @@ func (w *WebViewEventImpl) NavigationStarting(sender *ICoreWebView2, args *ICore
 
 // AcceleratorKeyPressed 当使用快捷键时调用。
 func (w *WebViewEventImpl) AcceleratorKeyPressed(sender *ICoreWebView2Controller, args *ICoreWebView2AcceleratorKeyPressedEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "AcceleratorKeyPressed")
+	cbs := WvEventBus.GetCallbacks(w, "AcceleratorKeyPressed")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2Controller, args *ICoreWebView2AcceleratorKeyPressedEventArgs) uintptr); ok {
@@ -469,7 +469,7 @@ func (w *WebViewEventImpl) AcceleratorKeyPressed(sender *ICoreWebView2Controller
 
 // ContentLoading 当 WebView 控件开始加载内容时调用。
 func (w *WebViewEventImpl) ContentLoading(sender *ICoreWebView2, args *ICoreWebView2ContentLoadingEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "ContentLoading")
+	cbs := WvEventBus.GetCallbacks(w, "ContentLoading")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2ContentLoadingEventArgs) uintptr); ok {
@@ -481,7 +481,7 @@ func (w *WebViewEventImpl) ContentLoading(sender *ICoreWebView2, args *ICoreWebV
 
 // ContainsFullScreenElementChanged 当 ContainsFullScreenElement(是否包含全屏元素) 属性改变时调用。
 func (w *WebViewEventImpl) ContainsFullScreenElementChanged(sender *ICoreWebView2, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "ContainsFullScreenElementChanged")
+	cbs := WvEventBus.GetCallbacks(w, "ContainsFullScreenElementChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *IUnknown) uintptr); ok {
@@ -493,7 +493,7 @@ func (w *WebViewEventImpl) ContainsFullScreenElementChanged(sender *ICoreWebView
 
 // ProcessFailed 当 Webview 的进程因任何原因失败时调用。
 func (w *WebViewEventImpl) ProcessFailed(sender *ICoreWebView2, args *ICoreWebView2ProcessFailedEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "ProcessFailed")
+	cbs := WvEventBus.GetCallbacks(w, "ProcessFailed")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2ProcessFailedEventArgs) uintptr); ok {
@@ -505,7 +505,7 @@ func (w *WebViewEventImpl) ProcessFailed(sender *ICoreWebView2, args *ICoreWebVi
 
 // HistoryChanged 在联合会话历史记录发生更改时引发，该历史记录由顶级和手动框架导航组成。
 func (w *WebViewEventImpl) HistoryChanged(sender *ICoreWebView2, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "HistoryChanged")
+	cbs := WvEventBus.GetCallbacks(w, "HistoryChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *IUnknown) uintptr); ok {
@@ -517,7 +517,7 @@ func (w *WebViewEventImpl) HistoryChanged(sender *ICoreWebView2, args *IUnknown)
 
 // ScriptDialogOpening 当脚本对话框打开时调用。alert、confirm、prompt 或 beforeunload。
 func (w *WebViewEventImpl) ScriptDialogOpening(sender *ICoreWebView2, args *ICoreWebView2ScriptDialogOpeningEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "ScriptDialogOpening")
+	cbs := WvEventBus.GetCallbacks(w, "ScriptDialogOpening")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2ScriptDialogOpeningEventArgs) uintptr); ok {
@@ -529,7 +529,7 @@ func (w *WebViewEventImpl) ScriptDialogOpening(sender *ICoreWebView2, args *ICor
 
 // DevToolsProtocolEventReceived 当收到来自 DevTools 协议的事件时调用。
 func (w *WebViewEventImpl) DevToolsProtocolEventReceived(sender *ICoreWebView2, args *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "DevToolsProtocolEventReceived")
+	cbs := WvEventBus.GetCallbacks(w, "DevToolsProtocolEventReceived")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) uintptr); ok {
@@ -545,7 +545,7 @@ func (w *WebViewEventImpl) DevToolsProtocolEventReceived(sender *ICoreWebView2, 
 //   - 无法保证 WebView 处理响应的顺序与宿主应用的处理程序运行的顺序。
 //   - 应用的处理程序不会阻止 WebView 处理响应。
 func (w *WebViewEventImpl) WebResourceResponseReceived(sender *ICoreWebView2, args *ICoreWebView2WebResourceResponseReceivedEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "WebResourceResponseReceived")
+	cbs := WvEventBus.GetCallbacks(w, "WebResourceResponseReceived")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2WebResourceResponseReceivedEventArgs) uintptr); ok {
@@ -557,7 +557,7 @@ func (w *WebViewEventImpl) WebResourceResponseReceived(sender *ICoreWebView2, ar
 
 // DOMContentLoaded 当初始 HTML 文档解析完成时触发。
 func (w *WebViewEventImpl) DOMContentLoaded(sender *ICoreWebView2, args *ICoreWebView2DOMContentLoadedEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "DOMContentLoaded")
+	cbs := WvEventBus.GetCallbacks(w, "DOMContentLoaded")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2DOMContentLoadedEventArgs) uintptr); ok {
@@ -569,7 +569,7 @@ func (w *WebViewEventImpl) DOMContentLoaded(sender *ICoreWebView2, args *ICoreWe
 
 // FrameCreated 当创建新的 iframe 时触发。
 func (w *WebViewEventImpl) FrameCreated(sender *ICoreWebView2, args *ICoreWebView2FrameCreatedEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "FrameCreated")
+	cbs := WvEventBus.GetCallbacks(w, "FrameCreated")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2FrameCreatedEventArgs) uintptr); ok {
@@ -581,7 +581,7 @@ func (w *WebViewEventImpl) FrameCreated(sender *ICoreWebView2, args *ICoreWebVie
 
 // FrameNameChanged 当框架名称更改时调用。
 func (w *WebViewEventImpl) FrameNameChanged(sender *ICoreWebView2Frame, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "FrameNameChanged")
+	cbs := WvEventBus.GetCallbacks(w, "FrameNameChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2Frame, args *IUnknown) uintptr); ok {
@@ -593,7 +593,7 @@ func (w *WebViewEventImpl) FrameNameChanged(sender *ICoreWebView2Frame, args *IU
 
 // FrameDestroyed 当框架被销毁时调用。
 func (w *WebViewEventImpl) FrameDestroyed(sender *ICoreWebView2Frame, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "FrameDestroyed")
+	cbs := WvEventBus.GetCallbacks(w, "FrameDestroyed")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2Frame, args *IUnknown) uintptr); ok {
@@ -605,7 +605,7 @@ func (w *WebViewEventImpl) FrameDestroyed(sender *ICoreWebView2Frame, args *IUnk
 
 // DownloadStarting 当下载开始时调用。
 func (w *WebViewEventImpl) DownloadStarting(sender *ICoreWebView2, args *ICoreWebView2DownloadStartingEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "DownloadStarting")
+	cbs := WvEventBus.GetCallbacks(w, "DownloadStarting")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2DownloadStartingEventArgs) uintptr); ok {
@@ -617,7 +617,7 @@ func (w *WebViewEventImpl) DownloadStarting(sender *ICoreWebView2, args *ICoreWe
 
 // BytesReceivedChanged 当下载的字节数更改时调用。
 func (w *WebViewEventImpl) BytesReceivedChanged(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "BytesReceivedChanged")
+	cbs := WvEventBus.GetCallbacks(w, "BytesReceivedChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr); ok {
@@ -629,7 +629,7 @@ func (w *WebViewEventImpl) BytesReceivedChanged(sender *ICoreWebView2DownloadOpe
 
 // ClientCertificateRequested 当 WebView2 向需要客户端证书进行 HTTP 身份验证的 HTTP 服务器发出请求时触发.
 func (w *WebViewEventImpl) ClientCertificateRequested(sender *ICoreWebView2, args *ICoreWebView2ClientCertificateRequestedEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "ClientCertificateRequested")
+	cbs := WvEventBus.GetCallbacks(w, "ClientCertificateRequested")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2ClientCertificateRequestedEventArgs) uintptr); ok {
@@ -641,7 +641,7 @@ func (w *WebViewEventImpl) ClientCertificateRequested(sender *ICoreWebView2, arg
 
 // IsMutedChanged 当 WebView 的静音状态更改时调用。
 func (w *WebViewEventImpl) IsMutedChanged(sender *ICoreWebView2, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "IsMutedChanged")
+	cbs := WvEventBus.GetCallbacks(w, "IsMutedChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *IUnknown) uintptr); ok {
@@ -653,7 +653,7 @@ func (w *WebViewEventImpl) IsMutedChanged(sender *ICoreWebView2, args *IUnknown)
 
 // DocumentPlayingAudioChanged 当文档播放音频状态改变时调用。
 func (w *WebViewEventImpl) DocumentPlayingAudioChanged(sender *ICoreWebView2, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "DocumentPlayingAudioChanged")
+	cbs := WvEventBus.GetCallbacks(w, "DocumentPlayingAudioChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *IUnknown) uintptr); ok {
@@ -665,7 +665,7 @@ func (w *WebViewEventImpl) DocumentPlayingAudioChanged(sender *ICoreWebView2, ar
 
 // ContextMenuRequested 当用户请求上下文菜单，且 WebView 内部的内容未禁用上下文菜单时调用。
 func (w *WebViewEventImpl) ContextMenuRequested(sender *ICoreWebView2, args *ICoreWebView2ContextMenuRequestedEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "ContextMenuRequested")
+	cbs := WvEventBus.GetCallbacks(w, "ContextMenuRequested")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2ContextMenuRequestedEventArgs) uintptr); ok {
@@ -677,7 +677,7 @@ func (w *WebViewEventImpl) ContextMenuRequested(sender *ICoreWebView2, args *ICo
 
 // CustomItemSelected 当用户选择自定义上下文菜单项时调用。
 func (w *WebViewEventImpl) CustomItemSelected(sender *ICoreWebView2ContextMenuItem, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "CustomItemSelected")
+	cbs := WvEventBus.GetCallbacks(w, "CustomItemSelected")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2ContextMenuItem, args *IUnknown) uintptr); ok {
@@ -689,7 +689,7 @@ func (w *WebViewEventImpl) CustomItemSelected(sender *ICoreWebView2ContextMenuIt
 
 // CreateCoreWebView2CompositionControllerCompleted 当创建 WebView2CompositionController 完成时调用。
 func (w *WebViewEventImpl) CreateCoreWebView2CompositionControllerCompleted(errorCode syscall.Errno, result *ICoreWebView2CompositionController) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "CreateCoreWebView2CompositionControllerCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "CreateCoreWebView2CompositionControllerCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(errorCode syscall.Errno, result *ICoreWebView2CompositionController) uintptr); ok {
@@ -701,7 +701,7 @@ func (w *WebViewEventImpl) CreateCoreWebView2CompositionControllerCompleted(erro
 
 // CursorChanged 当光标更改时调用。
 func (w *WebViewEventImpl) CursorChanged(sender *ICoreWebView2CompositionController, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "CursorChanged")
+	cbs := WvEventBus.GetCallbacks(w, "CursorChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2CompositionController, args *IUnknown) uintptr); ok {
@@ -713,7 +713,7 @@ func (w *WebViewEventImpl) CursorChanged(sender *ICoreWebView2CompositionControl
 
 // BrowserProcessExited 当浏览器进程退出时调用。
 func (w *WebViewEventImpl) BrowserProcessExited(sender *ICoreWebView2Environment, args *ICoreWebView2BrowserProcessExitedEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "BrowserProcessExited")
+	cbs := WvEventBus.GetCallbacks(w, "BrowserProcessExited")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2Environment, args *ICoreWebView2BrowserProcessExitedEventArgs) uintptr); ok {
@@ -725,7 +725,7 @@ func (w *WebViewEventImpl) BrowserProcessExited(sender *ICoreWebView2Environment
 
 // ProcessInfosChanged 当 WebView2 环境中的进程信息发生更改时调用。
 func (w *WebViewEventImpl) ProcessInfosChanged(sender *ICoreWebView2Environment, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "ProcessInfosChanged")
+	cbs := WvEventBus.GetCallbacks(w, "ProcessInfosChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2Environment, args *IUnknown) uintptr); ok {
@@ -737,7 +737,7 @@ func (w *WebViewEventImpl) ProcessInfosChanged(sender *ICoreWebView2Environment,
 
 // GetProcessExtendedInfosCompleted 获取进程扩展信息完成时调用。
 func (w *WebViewEventImpl) GetProcessExtendedInfosCompleted(errorCode syscall.Errno, result *ICoreWebView2ProcessExtendedInfoCollection) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "GetProcessExtendedInfosCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "GetProcessExtendedInfosCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(errorCode syscall.Errno, result *ICoreWebView2ProcessExtendedInfoCollection) uintptr); ok {
@@ -751,7 +751,7 @@ func (w *WebViewEventImpl) GetProcessExtendedInfosCompleted(errorCode syscall.Er
 //   - 首次导航到新文档时，无论该文档是否在 HTML 中声明了网站图标，只要其图标与之前的图标不同，就会触发 FaviconChanged 事件。
 //   - 如果 HTML 中声明了网站图标或通过脚本设置了网站图标，该事件将再次触发。随后可以通过 GetFavicon 和 GetFaviconUri 方法获取网站图标信息。
 func (w *WebViewEventImpl) FaviconChanged(sender *ICoreWebView2, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "FaviconChanged")
+	cbs := WvEventBus.GetCallbacks(w, "FaviconChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *IUnknown) uintptr); ok {
@@ -768,7 +768,7 @@ func (w *WebViewEventImpl) GetFaviconCompleted(errorCode syscall.Errno, faviconS
 	}
 
 	var bs []byte
-	cbs := WvEventBus.GetCallBacks(w, "GetFaviconCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "GetFaviconCompleted")
 	n := len(cbs)
 	if n > 0 {
 		if errors.Is(errorCode, wapi.S_OK) && faviconStream != nil {
@@ -792,7 +792,7 @@ func (w *WebViewEventImpl) GetFaviconCompleted(errorCode syscall.Errno, faviconS
 // ZoomFactorChanged 当 WebView 的缩放因子改变时调用。
 //   - WebView 会关联每个网站最后使用的缩放比例。导航到不同页面时，缩放比例可能会发生变化。当因导航变化导致缩放比例改变时，ZoomFactorChanged 事件会在 ContentLoading 事件之后立即运行。
 func (w *WebViewEventImpl) ZoomFactorChanged(sender *ICoreWebView2Controller, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "ZoomFactorChanged")
+	cbs := WvEventBus.GetCallbacks(w, "ZoomFactorChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2Controller, args *IUnknown) uintptr); ok {
@@ -805,7 +805,7 @@ func (w *WebViewEventImpl) ZoomFactorChanged(sender *ICoreWebView2Controller, ar
 // MoveFocusRequested 移动焦点请求时调用。
 //   - MoveFocusRequested 在用户尝试按 Tab 键离开 WebView 时运行。此事件运行时，WebView 的焦点尚未改变。
 func (w *WebViewEventImpl) MoveFocusRequested(sender *ICoreWebView2Controller, args *ICoreWebView2MoveFocusRequestedEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "MoveFocusRequested")
+	cbs := WvEventBus.GetCallbacks(w, "MoveFocusRequested")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2Controller, args *ICoreWebView2MoveFocusRequestedEventArgs) uintptr); ok {
@@ -817,7 +817,7 @@ func (w *WebViewEventImpl) MoveFocusRequested(sender *ICoreWebView2Controller, a
 
 // FocusChanged 焦点变化时调用(当前仅用于 GotFocus 事件)。
 func (w *WebViewEventImpl) FocusChanged(sender *ICoreWebView2Controller, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "FocusChanged")
+	cbs := WvEventBus.GetCallbacks(w, "FocusChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2Controller, args *IUnknown) uintptr); ok {
@@ -829,7 +829,7 @@ func (w *WebViewEventImpl) FocusChanged(sender *ICoreWebView2Controller, args *I
 
 // LostFocus 失去焦点时调用。
 func (w *WebViewEventImpl) LostFocus(sender *ICoreWebView2Controller, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "LostFocus")
+	cbs := WvEventBus.GetCallbacks(w, "LostFocus")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2Controller, args *IUnknown) uintptr); ok {
@@ -841,7 +841,7 @@ func (w *WebViewEventImpl) LostFocus(sender *ICoreWebView2Controller, args *IUnk
 
 // NewBrowserVersionAvailable 当有新版本的 WebView2 运行时可用时调用。
 func (w *WebViewEventImpl) NewBrowserVersionAvailable(sender *ICoreWebView2Environment, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "NewBrowserVersionAvailable")
+	cbs := WvEventBus.GetCallbacks(w, "NewBrowserVersionAvailable")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2Environment, args *IUnknown) uintptr); ok {
@@ -853,7 +853,7 @@ func (w *WebViewEventImpl) NewBrowserVersionAvailable(sender *ICoreWebView2Envir
 
 // EstimatedEndTimeChanged 当下载的预计结束时间更改时调用。
 func (w *WebViewEventImpl) EstimatedEndTimeChanged(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "EstimatedEndTimeChanged")
+	cbs := WvEventBus.GetCallbacks(w, "EstimatedEndTimeChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr); ok {
@@ -865,7 +865,7 @@ func (w *WebViewEventImpl) EstimatedEndTimeChanged(sender *ICoreWebView2Download
 
 // PrintToPdfCompleted 当打印到 PDF 操作完成时调用。
 func (w *WebViewEventImpl) PrintToPdfCompleted(errorCode syscall.Errno, isSuccessful bool) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "PrintToPdfCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "PrintToPdfCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(errorCode syscall.Errno, isSuccessful bool) uintptr); ok {
@@ -877,7 +877,7 @@ func (w *WebViewEventImpl) PrintToPdfCompleted(errorCode syscall.Errno, isSucces
 
 // StateChanged 当下载的状态更改时调用。
 func (w *WebViewEventImpl) StateChanged(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "StateChanged")
+	cbs := WvEventBus.GetCallbacks(w, "StateChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr); ok {
@@ -891,7 +891,7 @@ func (w *WebViewEventImpl) StateChanged(sender *ICoreWebView2DownloadOperation, 
 //   - 此事件在 DownloadStarting 事件之后发生。
 //   - 在 DownloadStartingEventArgs 上设置 Handled 属性会禁用默认下载对话框，并确保此事件永远不会被触发。
 func (w *WebViewEventImpl) IsDefaultDownloadDialogOpenChanged(sender *ICoreWebView2, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "IsDefaultDownloadDialogOpenChanged")
+	cbs := WvEventBus.GetCallbacks(w, "IsDefaultDownloadDialogOpenChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *IUnknown) uintptr); ok {
@@ -905,7 +905,7 @@ func (w *WebViewEventImpl) IsDefaultDownloadDialogOpenChanged(sender *ICoreWebVi
 //   - 主机可以提供包含身份验证凭据的响应，也可以取消请求。
 //   - 如果主机将 Cancel 属性设置为 false，但未在 Response 属性上提供 UserName 或 Password 属性，那么 WebView2 将向用户显示默认的身份验证质询对话框提示。
 func (w *WebViewEventImpl) BasicAuthenticationRequested(sender *ICoreWebView2, args *ICoreWebView2BasicAuthenticationRequestedEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "BasicAuthenticationRequested")
+	cbs := WvEventBus.GetCallbacks(w, "BasicAuthenticationRequested")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2BasicAuthenticationRequestedEventArgs) uintptr); ok {
@@ -918,7 +918,7 @@ func (w *WebViewEventImpl) BasicAuthenticationRequested(sender *ICoreWebView2, a
 // StatusBarTextChanged 当状态栏文本改变时调用。
 //   - 当 WebView 显示状态消息、URL 或空字符串（表示隐藏状态栏）时触发。
 func (w *WebViewEventImpl) StatusBarTextChanged(sender *ICoreWebView2, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "StatusBarTextChanged")
+	cbs := WvEventBus.GetCallbacks(w, "StatusBarTextChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *IUnknown) uintptr); ok {
@@ -932,7 +932,7 @@ func (w *WebViewEventImpl) StatusBarTextChanged(sender *ICoreWebView2, args *IUn
 //   - 此事件将针对所有网络资源触发，并紧随 WebResourceRequested 事件之后。
 //   - 如果不处理该事件，WebView2 会在导航时向用户显示默认的 TLS 插页式错误页面，而对于非导航操作，Web 请求会被取消。
 func (w *WebViewEventImpl) ServerCertificateErrorDetected(sender *ICoreWebView2, args *ICoreWebView2ServerCertificateErrorDetectedEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "ServerCertificateErrorDetected")
+	cbs := WvEventBus.GetCallbacks(w, "ServerCertificateErrorDetected")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2ServerCertificateErrorDetectedEventArgs) uintptr); ok {
@@ -944,7 +944,7 @@ func (w *WebViewEventImpl) ServerCertificateErrorDetected(sender *ICoreWebView2,
 
 // ClearServerCertificateErrorActionsCompleted 当清除服务器证书错误操作完成时调用。
 func (w *WebViewEventImpl) ClearServerCertificateErrorActionsCompleted(errorCode syscall.Errno) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "ClearServerCertificateErrorActionsCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "ClearServerCertificateErrorActionsCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(errorCode syscall.Errno) uintptr); ok {
@@ -956,7 +956,7 @@ func (w *WebViewEventImpl) ClearServerCertificateErrorActionsCompleted(errorCode
 
 // PrintCompleted 当 ICoreWebView2_16.Print 方法执行完成时调用。
 func (w *WebViewEventImpl) PrintCompleted(errorCode syscall.Errno, result COREWEBVIEW2_PRINT_STATUS) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "PrintCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "PrintCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(errorCode syscall.Errno, result COREWEBVIEW2_PRINT_STATUS) uintptr); ok {
@@ -973,7 +973,7 @@ func (w *WebViewEventImpl) PrintToPdfStreamCompleted(errorCode syscall.Errno, pd
 	}
 
 	var bs []byte
-	cbs := WvEventBus.GetCallBacks(w, "PrintToPdfStreamCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "PrintToPdfStreamCompleted")
 	n := len(cbs)
 	if n > 0 {
 		if errors.Is(errorCode, wapi.S_OK) && pdfStream != nil {
@@ -1004,7 +1004,7 @@ func (w *WebViewEventImpl) PrintToPdfStreamCompleted(errorCode syscall.Errno, pd
 //   - LaunchingExternalUriScheme 事件将在 NavigationStarting 事件之后、NavigationCompleted 事件之前触发。
 //   - 导航到外部 URI 方案时，默认的 ICoreWebView2Settings 也会更新。如果 ICoreWebView2Settings 接口上的某个设置已更改，导航到外部 URI 方案将触发 ICoreWebView2Settings 更新。
 func (w *WebViewEventImpl) LaunchingExternalUriScheme(sender *ICoreWebView2, args *ICoreWebView2LaunchingExternalUriSchemeEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "LaunchingExternalUriScheme")
+	cbs := WvEventBus.GetCallbacks(w, "LaunchingExternalUriScheme")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2LaunchingExternalUriSchemeEventArgs) uintptr); ok {
@@ -1016,7 +1016,7 @@ func (w *WebViewEventImpl) LaunchingExternalUriScheme(sender *ICoreWebView2, arg
 
 // ExecuteScriptWithResultCompleted 当 ICoreWebView2_21.ExecuteScriptWithResult 方法执行完成时调用。
 func (w *WebViewEventImpl) ExecuteScriptWithResultCompleted(errorCode syscall.Errno, args *ICoreWebView2ExecuteScriptResult) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "ExecuteScriptWithResultCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "ExecuteScriptWithResultCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(errorCode syscall.Errno, args *ICoreWebView2ExecuteScriptResult) uintptr); ok {
@@ -1030,7 +1030,7 @@ func (w *WebViewEventImpl) ExecuteScriptWithResultCompleted(errorCode syscall.Er
 //   - 如果未对事件参数执行延迟操作，那么在 DOM 通知创建调用（即 Notification()）之后的后续脚本会被阻塞，直到事件处理程序返回。
 //   - 如果执行了延迟操作，脚本会被阻塞，直到延迟完成。
 func (w *WebViewEventImpl) NotificationReceived(sender *ICoreWebView2, args *ICoreWebView2NotificationReceivedEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "NotificationReceived")
+	cbs := WvEventBus.GetCallbacks(w, "NotificationReceived")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2NotificationReceivedEventArgs) uintptr); ok {
@@ -1043,7 +1043,7 @@ func (w *WebViewEventImpl) NotificationReceived(sender *ICoreWebView2, args *ICo
 // NotificationCloseRequested 当通知被网页代码关闭时（例如通过 notification.close()）触发。
 //   - 由于这是来自网页代码的操作，因此无需调用 ReportClosed。
 func (w *WebViewEventImpl) NotificationCloseRequested(sender *ICoreWebView2Notification, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "NotificationCloseRequested")
+	cbs := WvEventBus.GetCallbacks(w, "NotificationCloseRequested")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2Notification, args *IUnknown) uintptr); ok {
@@ -1055,7 +1055,7 @@ func (w *WebViewEventImpl) NotificationCloseRequested(sender *ICoreWebView2Notif
 
 // SaveAsUIShowing 当通过编程方式或手动方式触发“另存为”时调用。
 func (w *WebViewEventImpl) SaveAsUIShowing(sender *ICoreWebView2, args *ICoreWebView2SaveAsUIShowingEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "SaveAsUIShowing")
+	cbs := WvEventBus.GetCallbacks(w, "SaveAsUIShowing")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2SaveAsUIShowingEventArgs) uintptr); ok {
@@ -1067,7 +1067,7 @@ func (w *WebViewEventImpl) SaveAsUIShowing(sender *ICoreWebView2, args *ICoreWeb
 
 // ShowSaveAsUICompleted 当"另存为"UI操作完成时调用。
 func (w *WebViewEventImpl) ShowSaveAsUICompleted(errorCode syscall.Errno, result COREWEBVIEW2_SAVE_AS_UI_RESULT) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "ShowSaveAsUICompleted")
+	cbs := WvEventBus.GetCallbacks(w, "ShowSaveAsUICompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(errorCode syscall.Errno, result COREWEBVIEW2_SAVE_AS_UI_RESULT) uintptr); ok {
@@ -1079,7 +1079,7 @@ func (w *WebViewEventImpl) ShowSaveAsUICompleted(errorCode syscall.Errno, result
 
 // SaveFileSecurityCheckStarting 在系统 FileTypePolicy 检查危险文件扩展名列表时触发。
 func (w *WebViewEventImpl) SaveFileSecurityCheckStarting(sender *ICoreWebView2, args *ICoreWebView2SaveFileSecurityCheckStartingEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "SaveFileSecurityCheckStarting")
+	cbs := WvEventBus.GetCallbacks(w, "SaveFileSecurityCheckStarting")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2SaveFileSecurityCheckStartingEventArgs) uintptr); ok {
@@ -1091,7 +1091,7 @@ func (w *WebViewEventImpl) SaveFileSecurityCheckStarting(sender *ICoreWebView2, 
 
 // ScreenCaptureStarting 当屏幕截图开始时调用。
 func (w *WebViewEventImpl) ScreenCaptureStarting(sender *ICoreWebView2, args *ICoreWebView2ScreenCaptureStartingEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "ScreenCaptureStarting")
+	cbs := WvEventBus.GetCallbacks(w, "ScreenCaptureStarting")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2, args *ICoreWebView2ScreenCaptureStartingEventArgs) uintptr); ok {
@@ -1103,7 +1103,7 @@ func (w *WebViewEventImpl) ScreenCaptureStarting(sender *ICoreWebView2, args *IC
 
 // BrowserExtensionRemoveCompleted 浏览器扩展移除完成时调用。
 func (w *WebViewEventImpl) BrowserExtensionRemoveCompleted(errorCode syscall.Errno) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "BrowserExtensionRemoveCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "BrowserExtensionRemoveCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(errorCode syscall.Errno) uintptr); ok {
@@ -1115,7 +1115,7 @@ func (w *WebViewEventImpl) BrowserExtensionRemoveCompleted(errorCode syscall.Err
 
 // BrowserExtensionEnableCompleted 浏览器扩展启用完成时调用。
 func (w *WebViewEventImpl) BrowserExtensionEnableCompleted(errorCode syscall.Errno) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "BrowserExtensionEnableCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "BrowserExtensionEnableCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(errorCode syscall.Errno) uintptr); ok {
@@ -1127,7 +1127,7 @@ func (w *WebViewEventImpl) BrowserExtensionEnableCompleted(errorCode syscall.Err
 
 // FrameNavigationStarting 框架导航开始时调用。
 func (w *WebViewEventImpl) FrameNavigationStarting(sender *ICoreWebView2Frame, args *ICoreWebView2NavigationStartingEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "FrameNavigationStarting")
+	cbs := WvEventBus.GetCallbacks(w, "FrameNavigationStarting")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2Frame, args *ICoreWebView2NavigationStartingEventArgs) uintptr); ok {
@@ -1139,7 +1139,7 @@ func (w *WebViewEventImpl) FrameNavigationStarting(sender *ICoreWebView2Frame, a
 
 // FrameContentLoading 当框架内容加载时调用。
 func (w *WebViewEventImpl) FrameContentLoading(sender *ICoreWebView2Frame, args *ICoreWebView2ContentLoadingEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "FrameContentLoading")
+	cbs := WvEventBus.GetCallbacks(w, "FrameContentLoading")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2Frame, args *ICoreWebView2ContentLoadingEventArgs) uintptr); ok {
@@ -1151,7 +1151,7 @@ func (w *WebViewEventImpl) FrameContentLoading(sender *ICoreWebView2Frame, args 
 
 // ProfileAddBrowserExtensionCompleted 添加浏览器扩展完成时调用。
 func (w *WebViewEventImpl) ProfileAddBrowserExtensionCompleted(errorCode syscall.Errno, result *ICoreWebView2BrowserExtension) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "ProfileAddBrowserExtensionCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "ProfileAddBrowserExtensionCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(errorCode syscall.Errno, result *ICoreWebView2BrowserExtension) uintptr); ok {
@@ -1163,7 +1163,7 @@ func (w *WebViewEventImpl) ProfileAddBrowserExtensionCompleted(errorCode syscall
 
 // ProfileGetBrowserExtensionsCompleted 获取浏览器扩展列表完成时调用。
 func (w *WebViewEventImpl) ProfileGetBrowserExtensionsCompleted(errorCode syscall.Errno, result *ICoreWebView2BrowserExtensionList) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "ProfileGetBrowserExtensionsCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "ProfileGetBrowserExtensionsCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(errorCode syscall.Errno, result *ICoreWebView2BrowserExtensionList) uintptr); ok {
@@ -1175,7 +1175,7 @@ func (w *WebViewEventImpl) ProfileGetBrowserExtensionsCompleted(errorCode syscal
 
 // ProfileDeleted 当配置文件被标记为删除时调用。
 func (w *WebViewEventImpl) ProfileDeleted(sender *ICoreWebView2Profile, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "ProfileDeleted")
+	cbs := WvEventBus.GetCallbacks(w, "ProfileDeleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2Profile, args *IUnknown) uintptr); ok {
@@ -1187,7 +1187,7 @@ func (w *WebViewEventImpl) ProfileDeleted(sender *ICoreWebView2Profile, args *IU
 
 // FrameNavigationCompleted 当框架导航完成时调用。
 func (w *WebViewEventImpl) FrameNavigationCompleted(sender *ICoreWebView2Frame, args *ICoreWebView2NavigationCompletedEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "FrameNavigationCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "FrameNavigationCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2Frame, args *ICoreWebView2NavigationCompletedEventArgs) uintptr); ok {
@@ -1199,7 +1199,7 @@ func (w *WebViewEventImpl) FrameNavigationCompleted(sender *ICoreWebView2Frame, 
 
 // FrameDOMContentLoaded 当框架 DOM 内容加载完成时调用。
 func (w *WebViewEventImpl) FrameDOMContentLoaded(sender *ICoreWebView2Frame, args *ICoreWebView2DOMContentLoadedEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "FrameDOMContentLoaded")
+	cbs := WvEventBus.GetCallbacks(w, "FrameDOMContentLoaded")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2Frame, args *ICoreWebView2DOMContentLoadedEventArgs) uintptr); ok {
@@ -1211,7 +1211,7 @@ func (w *WebViewEventImpl) FrameDOMContentLoaded(sender *ICoreWebView2Frame, arg
 
 // ClearBrowsingDataCompleted 清除浏览数据完成时调用。
 func (w *WebViewEventImpl) ClearBrowsingDataCompleted(errorCode syscall.Errno) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "ClearBrowsingDataCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "ClearBrowsingDataCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(errorCode syscall.Errno) uintptr); ok {
@@ -1223,7 +1223,7 @@ func (w *WebViewEventImpl) ClearBrowsingDataCompleted(errorCode syscall.Errno) u
 
 // SetPermissionStateCompleted 设置权限状态完成时调用。
 func (w *WebViewEventImpl) SetPermissionStateCompleted(errorCode syscall.Errno) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "SetPermissionStateCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "SetPermissionStateCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(errorCode syscall.Errno) uintptr); ok {
@@ -1235,7 +1235,7 @@ func (w *WebViewEventImpl) SetPermissionStateCompleted(errorCode syscall.Errno) 
 
 // GetNonDefaultPermissionSettingsCompleted 获取非默认权限设置完成时调用。
 func (w *WebViewEventImpl) GetNonDefaultPermissionSettingsCompleted(errorCode syscall.Errno, result *ICoreWebView2PermissionSettingCollectionView) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "GetNonDefaultPermissionSettingsCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "GetNonDefaultPermissionSettingsCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(errorCode syscall.Errno, result *ICoreWebView2PermissionSettingCollectionView) uintptr); ok {
@@ -1247,7 +1247,7 @@ func (w *WebViewEventImpl) GetNonDefaultPermissionSettingsCompleted(errorCode sy
 
 // FrameWebMessageReceived 当框架接收到 Web 消息时调用
 func (w *WebViewEventImpl) FrameWebMessageReceived(sender *ICoreWebView2Frame, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "FrameWebMessageReceived")
+	cbs := WvEventBus.GetCallbacks(w, "FrameWebMessageReceived")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2Frame, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr); ok {
@@ -1259,7 +1259,7 @@ func (w *WebViewEventImpl) FrameWebMessageReceived(sender *ICoreWebView2Frame, a
 
 // FramePermissionRequested 当 iframe 及其任何子 iframe 中的内容请求访问特权资源时触发。
 func (w *WebViewEventImpl) FramePermissionRequested(sender *ICoreWebView2Frame, args *ICoreWebView2PermissionRequestedEventArgs2) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "FramePermissionRequested")
+	cbs := WvEventBus.GetCallbacks(w, "FramePermissionRequested")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2Frame, args *ICoreWebView2PermissionRequestedEventArgs2) uintptr); ok {
@@ -1271,7 +1271,7 @@ func (w *WebViewEventImpl) FramePermissionRequested(sender *ICoreWebView2Frame, 
 
 // FrameScreenCaptureStarting 当 iframe 或其任何子 iframe 中的内容通过 getDisplayMedia() 请求使用屏幕捕获 API 的权限时触发.
 func (w *WebViewEventImpl) FrameScreenCaptureStarting(sender *ICoreWebView2Frame, args *ICoreWebView2ScreenCaptureStartingEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "FrameScreenCaptureStarting")
+	cbs := WvEventBus.GetCallbacks(w, "FrameScreenCaptureStarting")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2Frame, args *ICoreWebView2ScreenCaptureStartingEventArgs) uintptr); ok {
@@ -1283,7 +1283,7 @@ func (w *WebViewEventImpl) FrameScreenCaptureStarting(sender *ICoreWebView2Frame
 
 // FrameChildFrameCreated 当新的直接子级 iframe 创建时触发。
 func (w *WebViewEventImpl) FrameChildFrameCreated(sender *ICoreWebView2Frame, args *ICoreWebView2FrameCreatedEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "FrameChildFrameCreated")
+	cbs := WvEventBus.GetCallbacks(w, "FrameChildFrameCreated")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2Frame, args *ICoreWebView2FrameCreatedEventArgs) uintptr); ok {
@@ -1295,7 +1295,7 @@ func (w *WebViewEventImpl) FrameChildFrameCreated(sender *ICoreWebView2Frame, ar
 
 // FindActiveMatchIndexChanged 查找活动匹配项索引更改时调用。
 func (w *WebViewEventImpl) FindActiveMatchIndexChanged(sender *ICoreWebView2Find, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "FindActiveMatchIndexChanged")
+	cbs := WvEventBus.GetCallbacks(w, "FindActiveMatchIndexChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2Find, args *IUnknown) uintptr); ok {
@@ -1307,7 +1307,7 @@ func (w *WebViewEventImpl) FindActiveMatchIndexChanged(sender *ICoreWebView2Find
 
 // FindMatchCountChanged 查找匹配项数量更改时调用。
 func (w *WebViewEventImpl) FindMatchCountChanged(sender *ICoreWebView2Find, args *IUnknown) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "FindMatchCountChanged")
+	cbs := WvEventBus.GetCallbacks(w, "FindMatchCountChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2Find, args *IUnknown) uintptr); ok {
@@ -1319,7 +1319,7 @@ func (w *WebViewEventImpl) FindMatchCountChanged(sender *ICoreWebView2Find, args
 
 // FindStartCompleted 查找开始完成时调用。
 func (w *WebViewEventImpl) FindStartCompleted(errorCode syscall.Errno) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "FindStartCompleted")
+	cbs := WvEventBus.GetCallbacks(w, "FindStartCompleted")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(errorCode syscall.Errno) uintptr); ok {
@@ -1332,7 +1332,7 @@ func (w *WebViewEventImpl) FindStartCompleted(errorCode syscall.Errno) uintptr {
 // NonClientRegionChanged 当应用 HTML 中标记为非客户端的区域发生变化时触发.
 //   - 这种变化包括新区域被标记、区域被取消标记，或者区域类型被改为其他类型。
 func (w *WebViewEventImpl) NonClientRegionChanged(sender *ICoreWebView2CompositionController, args *ICoreWebView2NonClientRegionChangedEventArgs) uintptr {
-	cbs := WvEventBus.GetCallBacks(w, "NonClientRegionChanged")
+	cbs := WvEventBus.GetCallbacks(w, "NonClientRegionChanged")
 	var ret uintptr
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2CompositionController, args *ICoreWebView2NonClientRegionChangedEventArgs) uintptr); ok {

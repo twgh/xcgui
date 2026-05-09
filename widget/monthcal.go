@@ -125,12 +125,12 @@ func (m *MonthCal) SetTextColor(nFlag int32, color uint32) *MonthCal {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (m *MonthCal) AddEvent_MonthCal_Change(fn xc.XE_MONTHCAL_CHANGE1, allowAddingMultiple ...bool) int {
-	return xc.EleEventBus.AddCallBack(m.Handle, xcc.XE_MONTHCAL_CHANGE, onXE_MONTHCAL_CHANGE, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallback(m.Handle, xcc.XE_MONTHCAL_CHANGE, onXE_MONTHCAL_CHANGE, fn, allowAddingMultiple...)
 }
 
 // onXE_MONTHCAL_CHANGE 月历元素日期改变事件.
 func onXE_MONTHCAL_CHANGE(hEle int, pbHandled *bool) int {
-	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_MONTHCAL_CHANGE)
+	cbs := xc.EleEventBus.GetCallbacks(hEle, xcc.XE_MONTHCAL_CHANGE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XE_MONTHCAL_CHANGE1); ok {

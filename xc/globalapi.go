@@ -778,20 +778,20 @@ func XC_LoadLayout_Create(data, propertylist int, uiType xcc.XC_OBJECT_TYPE, hPa
 	return int(r)
 }
 
-// XC_SetCallBack_LoadLayout 炫彩_置回调_加载布局文件.
+// XC_SetCallback_LoadLayout 炫彩_置回调_加载布局文件.
 //   - 为加载布局文件设置回调函数, 当调用 XC_LoadLayout 时遇到扩展对象, 回调用户设置的回调函数, 让用户在回调函数中创建扩展对象.
 //
 // callback: 回调函数.
-func XC_SetCallBack_LoadLayout(callback FunLoadLayout) {
+func XC_SetCallback_LoadLayout(callback FunLoadLayout) {
 	loadLayoutCallbackOnce.Do(func() {
 		loadLayoutCallbackPtr = syscall.NewCallback(loadLayoutCallbackShell)
 	})
 	loadLayoutCallback = callback
-	xC_SetCallBack_LoadLayout.Call(loadLayoutCallbackPtr)
+	xC_SetCallback_LoadLayout.Call(loadLayoutCallbackPtr)
 }
 
-// XC_RemoveCallBack_LoadLayout 炫彩_移除布局加载回调.
-func XC_RemoveCallBack_LoadLayout() {
+// XC_RemoveCallback_LoadLayout 炫彩_移除布局加载回调.
+func XC_RemoveCallback_LoadLayout() {
 	loadLayoutCallback = nil
 }
 
@@ -804,7 +804,7 @@ var (
 	loadLayoutCallbackOnce sync.Once
 )
 
-// FunLoadLayout 加载布局文件回调, 用于 XC_SetCallBack_LoadLayout.
+// FunLoadLayout 加载布局文件回调, 用于 XC_SetCallback_LoadLayout.
 //
 // fileName: 布局文件名.
 //

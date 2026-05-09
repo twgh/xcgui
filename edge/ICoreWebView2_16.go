@@ -44,7 +44,7 @@ func (i *ICoreWebView2_16) PrintEx(impl *WebViewEventImpl, printSettings *ICoreW
 	} else {
 		c = cb
 	}
-	_, _ = WvEventBus.AddCallBack(impl, "PrintCompleted", c, nil)
+	_, _ = WvEventBus.AddCallback(impl, "PrintCompleted", c, nil)
 	handler := WvEventBus.GetHandler(impl, "PrintCompleted")
 	return i.Print(printSettings, (*ICoreWebView2PrintCompletedHandler)(handler))
 }
@@ -96,7 +96,7 @@ func (i *ICoreWebView2_16) PrintToPdfStreamEx(impl *WebViewEventImpl, printSetti
 	} else {
 		c = cb
 	}
-	_, _ = WvEventBus.AddCallBack(impl, "PrintToPdfStreamCompleted", c, nil)
+	_, _ = WvEventBus.AddCallback(impl, "PrintToPdfStreamCompleted", c, nil)
 	handler := WvEventBus.GetHandler(impl, "PrintToPdfStreamCompleted")
 	return i.PrintToPdfStream(printSettings, (*ICoreWebView2PrintToPdfStreamCompletedHandler)(handler))
 }

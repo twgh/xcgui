@@ -534,20 +534,20 @@ func animaCallbackShell(hAnimation int, flag int32) int {
 // hAnimationEx: 动画序列或动画组句柄.
 //
 // callback: 回调函数.
-func XAnima_SetCallBack(hAnimationEx int, callback FunAnimation) {
+func XAnima_SetCallback(hAnimationEx int, callback FunAnimation) {
 	animaCallbackOnce.Do(func() {
 		animaCallbackPtr = syscall.NewCallback(animaCallbackShell)
 	})
 	animaCallbackLock.Lock()
 	animaCallbacks[hAnimationEx] = callback
-	xAnima_SetCallBack.Call(uintptr(hAnimationEx), animaCallbackPtr)
+	xAnima_SetCallback.Call(uintptr(hAnimationEx), animaCallbackPtr)
 	animaCallbackLock.Unlock()
 }
 
 // 动画_移除回调.
 //
 // hAnimationEx: 动画序列或动画组句柄.
-func XAnima_RemoveCallBack(hAnimationEx int) {
+func XAnima_RemoveCallback(hAnimationEx int) {
 	animaCallbackLock.Lock()
 	delete(animaCallbacks, hAnimationEx)
 	animaCallbackLock.Unlock()

@@ -7,24 +7,24 @@ import (
 )
 
 // 全局错误回调
-var webviewErrorCallBack func(err *WebViewError)
+var webviewErrorCallback func(err *WebViewError)
 
-// SetErrorCallBack 设置全局 WebView 错误回调. 调用 Must 系列方法时, 出错会触发该回调. 还有一些不方便直接 return 的地方也会把错误报告到该回调.
-func SetErrorCallBack(cb func(*WebViewError)) {
-	webviewErrorCallBack = cb
+// SetErrorCallback 设置全局 WebView 错误回调. 调用 Must 系列方法时, 出错会触发该回调. 还有一些不方便直接 return 的地方也会把错误报告到该回调.
+func SetErrorCallback(cb func(*WebViewError)) {
+	webviewErrorCallback = cb
 }
 
 // ReportError 报告错误到全局错误回调.
 func ReportError(method string, err error) {
-	if err != nil && webviewErrorCallBack != nil {
-		webviewErrorCallBack(NewWebViewError(method, err))
+	if err != nil && webviewErrorCallback != nil {
+		webviewErrorCallback(NewWebViewError(method, err))
 	}
 }
 
 // ReportErrorAuto 报告错误到全局错误回调, 自动获取调用者信息.
 func ReportErrorAuto(err error) {
-	if err != nil && webviewErrorCallBack != nil {
-		webviewErrorCallBack(NewWebViewErrorWithSkip(err, 2))
+	if err != nil && webviewErrorCallback != nil {
+		webviewErrorCallback(NewWebViewErrorWithSkip(err, 2))
 	}
 }
 

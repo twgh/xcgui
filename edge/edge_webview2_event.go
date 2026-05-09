@@ -11,7 +11,7 @@ func (w *WebViewEventImpl) Event_DocumentTitleChanged(cb func(sender *ICoreWebVi
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "DocumentTitleChanged", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "DocumentTitleChanged", c, nil, allowAddingMultiple...)
 }
 
 // Event_RasterizationScaleChanged 光栅化缩放比例改变事件.
@@ -23,7 +23,7 @@ func (w *WebViewEventImpl) Event_RasterizationScaleChanged(cb func(sender *ICore
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "RasterizationScaleChanged", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "RasterizationScaleChanged", c, nil, allowAddingMultiple...)
 }
 
 // Event_WindowCloseRequested 窗口关闭请求事件.
@@ -36,7 +36,7 @@ func (w *WebViewEventImpl) Event_WindowCloseRequested(cb func(sender *ICoreWebVi
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "WindowCloseRequested", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "WindowCloseRequested", c, nil, allowAddingMultiple...)
 }
 
 // Event_SourceChanged 源改变事件.
@@ -51,7 +51,7 @@ func (w *WebViewEventImpl) Event_SourceChanged(cb func(sender *ICoreWebView2, ar
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "SourceChanged", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "SourceChanged", c, nil, allowAddingMultiple...)
 }
 
 // Event_NewWindowRequested 新窗口请求事件.
@@ -65,7 +65,7 @@ func (w *WebViewEventImpl) Event_NewWindowRequested(cb func(sender *ICoreWebView
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "NewWindowRequested", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "NewWindowRequested", c, nil, allowAddingMultiple...)
 }
 
 // Event_PermissionRequested 权限请求事件.
@@ -77,7 +77,7 @@ func (w *WebViewEventImpl) Event_PermissionRequested(cb func(sender *ICoreWebVie
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "PermissionRequested", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "PermissionRequested", c, nil, allowAddingMultiple...)
 }
 
 // Event_WebMessageReceived 网页消息事件.
@@ -90,7 +90,7 @@ func (w *WebViewEventImpl) Event_WebMessageReceived(cb func(sender *ICoreWebView
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "WebMessageReceived", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "WebMessageReceived", c, nil, allowAddingMultiple...)
 }
 
 // Event_WebResourceRequested 网页资源请求事件.
@@ -101,7 +101,7 @@ func (w *WebViewEventImpl) Event_WebResourceRequested(cb func(sender *ICoreWebVi
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "WebResourceRequested", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "WebResourceRequested", c, nil, allowAddingMultiple...)
 }
 
 // Event_NavigationCompleted 导航完成事件.
@@ -113,7 +113,7 @@ func (w *WebViewEventImpl) Event_NavigationCompleted(cb func(sender *ICoreWebVie
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "NavigationCompleted", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "NavigationCompleted", c, nil, allowAddingMultiple...)
 }
 
 // Event_Frame_NavigationCompleted 框架导航完成事件.
@@ -125,7 +125,7 @@ func (w *WebViewEventImpl) Event_Frame_NavigationCompleted(cb func(sender *ICore
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "Frame_NavigationCompleted", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "Frame_NavigationCompleted", c, nil, allowAddingMultiple...)
 }
 
 // Event_Frame_NavigationStarting 是 ICoreWebView2 的框架导航开始事件。
@@ -138,7 +138,7 @@ func (w *WebViewEventImpl) Event_Frame_NavigationStarting(cb func(sender *ICoreW
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "Frame_NavigationStarting", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "Frame_NavigationStarting", c, nil, allowAddingMultiple...)
 }
 
 // Event_NavigationStarting 导航开始事件.
@@ -151,7 +151,7 @@ func (w *WebViewEventImpl) Event_NavigationStarting(cb func(sender *ICoreWebView
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "NavigationStarting", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "NavigationStarting", c, nil, allowAddingMultiple...)
 }
 
 // Event_AcceleratorKeyPressed 快捷键事件.
@@ -163,7 +163,7 @@ func (w *WebViewEventImpl) Event_AcceleratorKeyPressed(cb func(sender *ICoreWebV
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "AcceleratorKeyPressed", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "AcceleratorKeyPressed", c, nil, allowAddingMultiple...)
 }
 
 // Event_ContentLoading 网页内容正在加载事件.
@@ -177,7 +177,7 @@ func (w *WebViewEventImpl) Event_ContentLoading(cb func(sender *ICoreWebView2, a
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "ContentLoading", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "ContentLoading", c, nil, allowAddingMultiple...)
 }
 
 // Event_ContainsFullScreenElementChanged 全屏元素状态改变事件.
@@ -189,7 +189,7 @@ func (w *WebViewEventImpl) Event_ContainsFullScreenElementChanged(cb func(sender
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "ContainsFullScreenElementChanged", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "ContainsFullScreenElementChanged", c, nil, allowAddingMultiple...)
 }
 
 // Event_ProcessFailed 进程失败事件.
@@ -201,7 +201,7 @@ func (w *WebViewEventImpl) Event_ProcessFailed(cb func(sender *ICoreWebView2, ar
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "ProcessFailed", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "ProcessFailed", c, nil, allowAddingMultiple...)
 }
 
 // Event_HistoryChanged 历史记录改变事件.
@@ -213,7 +213,7 @@ func (w *WebViewEventImpl) Event_HistoryChanged(cb func(sender *ICoreWebView2, a
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "HistoryChanged", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "HistoryChanged", c, nil, allowAddingMultiple...)
 }
 
 // Event_ScriptDialogOpening 脚本对话框打开事件.
@@ -227,7 +227,7 @@ func (w *WebViewEventImpl) Event_ScriptDialogOpening(cb func(sender *ICoreWebVie
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "ScriptDialogOpening", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "ScriptDialogOpening", c, nil, allowAddingMultiple...)
 }
 
 // Event_WebResourceResponseReceived 是 Web 资源响应接收事件.
@@ -242,7 +242,7 @@ func (w *WebViewEventImpl) Event_WebResourceResponseReceived(cb func(sender *ICo
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "WebResourceResponseReceived", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "WebResourceResponseReceived", c, nil, allowAddingMultiple...)
 }
 
 // Event_DOMContentLoaded 是 DOM 内容加载完成事件.
@@ -254,7 +254,7 @@ func (w *WebViewEventImpl) Event_DOMContentLoaded(cb func(sender *ICoreWebView2,
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "DOMContentLoaded", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "DOMContentLoaded", c, nil, allowAddingMultiple...)
 }
 
 // Event_FrameCreated 框架创建完成事件.
@@ -267,7 +267,7 @@ func (w *WebViewEventImpl) Event_FrameCreated(cb func(sender *ICoreWebView2, arg
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "FrameCreated", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "FrameCreated", c, nil, allowAddingMultiple...)
 }
 
 // Event_DownloadStarting 下载开始事件.
@@ -284,7 +284,7 @@ func (w *WebViewEventImpl) Event_DownloadStarting(cb func(sender *ICoreWebView2,
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "DownloadStarting", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "DownloadStarting", c, nil, allowAddingMultiple...)
 }
 
 // Event_ClientCertificateRequested 客户端证书请求事件.
@@ -297,7 +297,7 @@ func (w *WebViewEventImpl) Event_ClientCertificateRequested(cb func(sender *ICor
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "ClientCertificateRequested", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "ClientCertificateRequested", c, nil, allowAddingMultiple...)
 }
 
 // Event_IsMutedChanged 静音状态改变事件.
@@ -309,7 +309,7 @@ func (w *WebViewEventImpl) Event_IsMutedChanged(cb func(sender *ICoreWebView2, a
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "IsMutedChanged", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "IsMutedChanged", c, nil, allowAddingMultiple...)
 }
 
 // Event_DocumentPlayingAudioChanged 文档播放音频状态改变事件.
@@ -320,7 +320,7 @@ func (w *WebViewEventImpl) Event_DocumentPlayingAudioChanged(cb func(sender *ICo
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "DocumentPlayingAudioChanged", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "DocumentPlayingAudioChanged", c, nil, allowAddingMultiple...)
 }
 
 // Event_ContextMenuRequested 上下文菜单请求事件.
@@ -334,7 +334,7 @@ func (w *WebViewEventImpl) Event_ContextMenuRequested(cb func(sender *ICoreWebVi
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "ContextMenuRequested", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "ContextMenuRequested", c, nil, allowAddingMultiple...)
 }
 
 // Event_BrowserProcessExited 浏览器进程退出事件.
@@ -346,7 +346,7 @@ func (w *WebViewEventImpl) Event_BrowserProcessExited(cb func(sender *ICoreWebVi
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "BrowserProcessExited", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "BrowserProcessExited", c, nil, allowAddingMultiple...)
 }
 
 // Event_ProcessInfosChanged 进程信息变更事件.
@@ -358,7 +358,7 @@ func (w *WebViewEventImpl) Event_ProcessInfosChanged(cb func(sender *ICoreWebVie
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "ProcessInfosChanged", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "ProcessInfosChanged", c, nil, allowAddingMultiple...)
 }
 
 // Event_FaviconChanged 网站图标改变事件.
@@ -372,7 +372,7 @@ func (w *WebViewEventImpl) Event_FaviconChanged(cb func(sender *ICoreWebView2, a
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "FaviconChanged", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "FaviconChanged", c, nil, allowAddingMultiple...)
 }
 
 // Event_ZoomFactorChanged 缩放因子改变事件.
@@ -385,7 +385,7 @@ func (w *WebViewEventImpl) Event_ZoomFactorChanged(cb func(sender *ICoreWebView2
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "ZoomFactorChanged", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "ZoomFactorChanged", c, nil, allowAddingMultiple...)
 }
 
 // Event_MoveFocusRequested 移动焦点请求事件.
@@ -397,7 +397,7 @@ func (w *WebViewEventImpl) Event_MoveFocusRequested(cb func(sender *ICoreWebView
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "MoveFocusRequested", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "MoveFocusRequested", c, nil, allowAddingMultiple...)
 }
 
 // Event_GotFocus 获得焦点事件.
@@ -409,7 +409,7 @@ func (w *WebViewEventImpl) Event_GotFocus(cb func(sender *ICoreWebView2Controlle
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "FocusChanged", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "FocusChanged", c, nil, allowAddingMultiple...)
 }
 
 // Event_LostFocus 失去焦点事件.
@@ -421,7 +421,7 @@ func (w *WebViewEventImpl) Event_LostFocus(cb func(sender *ICoreWebView2Controll
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "LostFocus", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "LostFocus", c, nil, allowAddingMultiple...)
 }
 
 // Event_NewBrowserVersionAvailable 新浏览器版本可用事件.
@@ -433,7 +433,7 @@ func (w *WebViewEventImpl) Event_NewBrowserVersionAvailable(cb func(sender *ICor
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "NewBrowserVersionAvailable", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "NewBrowserVersionAvailable", c, nil, allowAddingMultiple...)
 }
 
 // Event_IsDefaultDownloadDialogOpenChanged 默认下载对话框打开状态变化事件.
@@ -446,7 +446,7 @@ func (w *WebViewEventImpl) Event_IsDefaultDownloadDialogOpenChanged(cb func(send
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "IsDefaultDownloadDialogOpenChanged", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "IsDefaultDownloadDialogOpenChanged", c, nil, allowAddingMultiple...)
 }
 
 // Event_BasicAuthenticationRequested 基本身份验证请求事件.
@@ -459,7 +459,7 @@ func (w *WebViewEventImpl) Event_BasicAuthenticationRequested(cb func(sender *IC
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "BasicAuthenticationRequested", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "BasicAuthenticationRequested", c, nil, allowAddingMultiple...)
 }
 
 // Event_StatusBarTextChanged 状态栏文本改变事件.
@@ -471,7 +471,7 @@ func (w *WebViewEventImpl) Event_StatusBarTextChanged(cb func(sender *ICoreWebVi
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "StatusBarTextChanged", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "StatusBarTextChanged", c, nil, allowAddingMultiple...)
 }
 
 // Event_ServerCertificateErrorDetected 检测到服务器证书错误事件.
@@ -485,7 +485,7 @@ func (w *WebViewEventImpl) Event_ServerCertificateErrorDetected(cb func(sender *
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "ServerCertificateErrorDetected", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "ServerCertificateErrorDetected", c, nil, allowAddingMultiple...)
 }
 
 // Event_LaunchingExternalUriScheme 启动外部 URI 方案事件。
@@ -505,7 +505,7 @@ func (w *WebViewEventImpl) Event_LaunchingExternalUriScheme(cb func(sender *ICor
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "LaunchingExternalUriScheme", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "LaunchingExternalUriScheme", c, nil, allowAddingMultiple...)
 }
 
 // Event_NotificationReceived 通知接收事件。
@@ -518,7 +518,7 @@ func (w *WebViewEventImpl) Event_NotificationReceived(cb func(sender *ICoreWebVi
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "NotificationReceived", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "NotificationReceived", c, nil, allowAddingMultiple...)
 }
 
 // Event_SaveAsUIShowing 另存为界面显示事件。
@@ -530,7 +530,7 @@ func (w *WebViewEventImpl) Event_SaveAsUIShowing(cb func(sender *ICoreWebView2, 
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "SaveAsUIShowing", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "SaveAsUIShowing", c, nil, allowAddingMultiple...)
 }
 
 // Event_SaveFileSecurityCheckStarting 保存文件安全检查开始事件
@@ -542,7 +542,7 @@ func (w *WebViewEventImpl) Event_SaveFileSecurityCheckStarting(cb func(sender *I
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "SaveFileSecurityCheckStarting", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "SaveFileSecurityCheckStarting", c, nil, allowAddingMultiple...)
 }
 
 // Event_ScreenCaptureStarting 屏幕截图开始事件。
@@ -553,5 +553,5 @@ func (w *WebViewEventImpl) Event_ScreenCaptureStarting(cb func(sender *ICoreWebV
 	} else {
 		c = cb
 	}
-	return WvEventBus.AddCallBack(w, "ScreenCaptureStarting", c, nil, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "ScreenCaptureStarting", c, nil, allowAddingMultiple...)
 }

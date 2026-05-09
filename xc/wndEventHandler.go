@@ -23,7 +23,7 @@ func newWindowEventBus() *windowEventBus {
 	}
 }
 
-// AddCallBack 添加回调函数, 返回回调函数 ID, 失败返回 -1.
+// AddCallback 添加回调函数, 返回回调函数 ID, 失败返回 -1.
 //
 // hWindow: 炫彩窗口句柄.
 //
@@ -36,7 +36,7 @@ func newWindowEventBus() *windowEventBus {
 // allowAddingMultiple: 是否允许添加多个回调函数, 默认为 false.
 //   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 //   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-func (w *windowEventBus) AddCallBack(hWindow int, eventType xcc.WM_, eventFunc interface{}, cb interface{}, allowAddingMultiple ...bool) int {
+func (w *windowEventBus) AddCallback(hWindow int, eventType xcc.WM_, eventFunc interface{}, cb interface{}, allowAddingMultiple ...bool) int {
 	w.mu.Lock()
 	defer w.mu.Unlock()
 
@@ -84,27 +84,27 @@ func (w *windowEventBus) AddCallBack(hWindow int, eventType xcc.WM_, eventFunc i
 	return id
 }
 
-// GetCallBacks 获取指定窗口指定事件的回调函数数组.
+// GetCallbacks 获取指定窗口指定事件的回调函数数组.
 //
 // hWindow: 窗口句柄.
 //
 // eventType: 事件类型, xcc.WM_.
-func (w *windowEventBus) GetCallBacks(hWindow int, eventType xcc.WM_) []CbInfo {
+func (w *windowEventBus) GetCallbacks(hWindow int, eventType xcc.WM_) []CbInfo {
 	w.mu.RLock()
 	defer w.mu.RUnlock()
 	return w.EventInfoMap[hWindow][eventType].Cbs
 }
 
-// RemoveAllCallBack 移除指定窗口的所有事件的 CallBack.
+// RemoveAllCallback 移除指定窗口的所有事件的 Callback.
 //
 // hWindow: 窗口句柄.
-func (w *windowEventBus) RemoveAllCallBack(hWindow int) {
+func (w *windowEventBus) RemoveAllCallback(hWindow int) {
 	w.mu.Lock()
 	delete(w.EventInfoMap, hWindow)
 	w.mu.Unlock()
 }
 
-// RemoveCallbacks 移除指定窗口指定事件的所有 CallBack.
+// RemoveCallbacks 移除指定窗口指定事件的所有 Callback.
 //
 // hWindow: 窗口句柄.
 //
@@ -115,14 +115,14 @@ func (w *windowEventBus) RemoveCallbacks(hWindow int, eventType xcc.WM_) {
 	delete(w.EventInfoMap[hWindow], eventType)
 }
 
-// RemoveCallBack 移除指定窗口指定事件的指定 ID 的 CallBack.
+// RemoveCallback 移除指定窗口指定事件的指定 ID 的 Callback.
 //
 // hWindow: 窗口句柄.
 //
 // eventType: 事件类型, xcc.WM_.
 //
 // id: 回调函数 ID.
-func (w *windowEventBus) RemoveCallBack(hWindow int, eventType xcc.WM_, id int) {
+func (w *windowEventBus) RemoveCallback(hWindow int, eventType xcc.WM_, id int) {
 	w.mu.Lock()
 	defer w.mu.Unlock()
 
@@ -135,7 +135,7 @@ func (w *windowEventBus) RemoveCallBack(hWindow int, eventType xcc.WM_, id int) 
 	}
 }
 
-// SetCallBack 设置指定窗口指定事件的指定 ID 的 CallBack.
+// SetCallback 设置指定窗口指定事件的指定 ID 的 Callback.
 //
 // hWindow: 窗口句柄.
 //
@@ -144,7 +144,7 @@ func (w *windowEventBus) RemoveCallBack(hWindow int, eventType xcc.WM_, id int) 
 // id: 回调函数 ID.
 //
 // cb: 回调函数.
-func (w *windowEventBus) SetCallBack(hWindow int, eventType xcc.WM_, id int, cb interface{}) {
+func (w *windowEventBus) SetCallback(hWindow int, eventType xcc.WM_, id int, cb interface{}) {
 	w.mu.Lock()
 	defer w.mu.Unlock()
 
@@ -180,7 +180,7 @@ func (w *windowEventBus) regWndNCDestroy(hWindow int) bool {
 //
 // OnWM_NCDESTROY 窗口非客户区销毁事件.
 func OnWM_NCDESTROY(hWindow int, pbHandled *bool) int {
-	cbs := WndEventBus.GetCallBacks(hWindow, xcc.WM_NCDESTROY)
+	cbs := WndEventBus.GetCallbacks(hWindow, xcc.WM_NCDESTROY)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(WM_NCDESTROY1); ok {
@@ -191,7 +191,7 @@ func OnWM_NCDESTROY(hWindow int, pbHandled *bool) int {
 		}
 	}
 
-	WndEventBus.RemoveAllCallBack(hWindow)
+	WndEventBus.RemoveAllCallback(hWindow)
 	return ret
 }
 
@@ -199,7 +199,7 @@ func OnWM_NCDESTROY(hWindow int, pbHandled *bool) int {
 //
 // OnXWM_MENU_POPUP 菜单弹出事件.
 func OnXWM_MENU_POPUP(hWindow int, hMenu int, pbHandled *bool) int {
-	cbs := WndEventBus.GetCallBacks(hWindow, xcc.XWM_MENU_POPUP)
+	cbs := WndEventBus.GetCallbacks(hWindow, xcc.XWM_MENU_POPUP)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(hWindow int, hMenu int, pbHandled *bool) int); ok {
@@ -216,7 +216,7 @@ func OnXWM_MENU_POPUP(hWindow int, hMenu int, pbHandled *bool) int {
 //
 // OnXWM_MENU_POPUP_WND 菜单弹出窗口事件.
 func OnXWM_MENU_POPUP_WND(hWindow int, hMenu int, pInfo *Menu_PopupWnd_, pbHandled *bool) int {
-	cbs := WndEventBus.GetCallBacks(hWindow, xcc.XWM_MENU_POPUP_WND)
+	cbs := WndEventBus.GetCallbacks(hWindow, xcc.XWM_MENU_POPUP_WND)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(hWindow int, hMenu int, pInfo *Menu_PopupWnd_, pbHandled *bool) int); ok {
@@ -233,7 +233,7 @@ func OnXWM_MENU_POPUP_WND(hWindow int, hMenu int, pInfo *Menu_PopupWnd_, pbHandl
 //
 // OnXWM_MENU_SELECT 菜单选择事件.
 func OnXWM_MENU_SELECT(hWindow int, nID int32, pbHandled *bool) int {
-	cbs := WndEventBus.GetCallBacks(hWindow, xcc.XWM_MENU_SELECT)
+	cbs := WndEventBus.GetCallbacks(hWindow, xcc.XWM_MENU_SELECT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(hWindow int, nID int32, pbHandled *bool) int); ok {
@@ -250,7 +250,7 @@ func OnXWM_MENU_SELECT(hWindow int, nID int32, pbHandled *bool) int {
 //
 // OnXWM_MENU_EXIT 菜单退出事件.
 func OnXWM_MENU_EXIT(hWindow int, pbHandled *bool) int {
-	cbs := WndEventBus.GetCallBacks(hWindow, xcc.XWM_MENU_EXIT)
+	cbs := WndEventBus.GetCallbacks(hWindow, xcc.XWM_MENU_EXIT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(hWindow int, pbHandled *bool) int); ok {
@@ -267,7 +267,7 @@ func OnXWM_MENU_EXIT(hWindow int, pbHandled *bool) int {
 //
 // OnXWM_MENU_DRAW_BACKGROUND 绘制菜单背景事件.
 func OnXWM_MENU_DRAW_BACKGROUND(hWindow int, hDraw int, pInfo *Menu_DrawBackground_, pbHandled *bool) int {
-	cbs := WndEventBus.GetCallBacks(hWindow, xcc.XWM_MENU_DRAW_BACKGROUND)
+	cbs := WndEventBus.GetCallbacks(hWindow, xcc.XWM_MENU_DRAW_BACKGROUND)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(hWindow int, hDraw int, pInfo *Menu_DrawBackground_, pbHandled *bool) int); ok {
@@ -284,7 +284,7 @@ func OnXWM_MENU_DRAW_BACKGROUND(hWindow int, hDraw int, pInfo *Menu_DrawBackgrou
 //
 // OnXWM_MENU_DRAWITEM 绘制菜单项事件.
 func OnXWM_MENU_DRAWITEM(hWindow int, hDraw int, pInfo *Menu_DrawItem_, pbHandled *bool) int {
-	cbs := WndEventBus.GetCallBacks(hWindow, xcc.XWM_MENU_DRAWITEM)
+	cbs := WndEventBus.GetCallbacks(hWindow, xcc.XWM_MENU_DRAWITEM)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(func(hWindow int, hDraw int, pInfo *Menu_DrawItem_, pbHandled *bool) int); ok {

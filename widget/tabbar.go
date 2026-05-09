@@ -276,12 +276,12 @@ func (t *TabBar) ShowLabel(index int32, bShow bool) bool {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (t *TabBar) AddEvent_TabBar_Select(fn xc.XE_TABBAR_SELECT1, allowAddingMultiple ...bool) int {
-	return xc.EleEventBus.AddCallBack(t.Handle, xcc.XE_TABBAR_SELECT, onXE_TABBAR_SELECT, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallback(t.Handle, xcc.XE_TABBAR_SELECT, onXE_TABBAR_SELECT, fn, allowAddingMultiple...)
 }
 
 // onXE_TABBAR_SELECT 标签按钮选择改变事件.
 func onXE_TABBAR_SELECT(hEle int, iItem int32, pbHandled *bool) int {
-	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_TABBAR_SELECT)
+	cbs := xc.EleEventBus.GetCallbacks(hEle, xcc.XE_TABBAR_SELECT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XE_TABBAR_SELECT1); ok {
@@ -301,12 +301,12 @@ func onXE_TABBAR_SELECT(hEle int, iItem int32, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (t *TabBar) AddEvent_TabBar_Delete(fn xc.XE_TABBAR_DELETE1, allowAddingMultiple ...bool) int {
-	return xc.EleEventBus.AddCallBack(t.Handle, xcc.XE_TABBAR_DELETE, onXE_TABBAR_DELETE, fn, allowAddingMultiple...)
+	return xc.EleEventBus.AddCallback(t.Handle, xcc.XE_TABBAR_DELETE, onXE_TABBAR_DELETE, fn, allowAddingMultiple...)
 }
 
 // onXE_TABBAR_DELETE 标签按钮删除事件.
 func onXE_TABBAR_DELETE(hEle int, iItem int32, pbHandled *bool) int {
-	cbs := xc.EleEventBus.GetCallBacks(hEle, xcc.XE_TABBAR_DELETE)
+	cbs := xc.EleEventBus.GetCallbacks(hEle, xcc.XE_TABBAR_DELETE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XE_TABBAR_DELETE1); ok {

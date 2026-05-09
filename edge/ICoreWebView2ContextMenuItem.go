@@ -217,7 +217,7 @@ func (i *ICoreWebView2ContextMenuItem) GetChildren() (*ICoreWebView2ContextMenuI
 // Event_CustomItemSelected 自定义菜单项选中事件.
 //   - 此事件仅针对最终开发人员创建的上下文菜单项引发。
 func (i *ICoreWebView2ContextMenuItem) Event_CustomItemSelected(w *WebViewEventImpl, cb func(sender *ICoreWebView2ContextMenuItem, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
-	return WvEventBus.AddCallBack(w, "CustomItemSelected", cb, i, allowAddingMultiple...)
+	return WvEventBus.AddCallback(w, "CustomItemSelected", cb, i, allowAddingMultiple...)
 }
 
 // AddCustomItemSelected 添加自定义菜单项选中事件处理程序.

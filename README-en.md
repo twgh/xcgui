@@ -156,7 +156,7 @@ In XCGUI, a single event type can have multiple callback handler functions regis
 
 All events in XCGUI are predefined within various classes and come in two forms, distinguished by their prefixes: AddEvent or Event. Generally, using functions of the AddEvent type is sufficient.
 
-The difference is as follows: Since the event callback functions are created using syscall.NewCallBack, this method has a limitation of creating only about 2000 callback functions. Exceeding this limit will cause a panic. When using Event-type functions to register events and the callback function is an anonymous function, a new callback function is created each time. Without proper control, this could exceed the 2000-function limit. In contrast, AddEvent-type functions reuse already created callback functions, allowing you to freely use anonymous functions as event callbacks without worrying about exceeding the 2000-function limit.
+The difference is as follows: Since the event callback functions are created using syscall.NewCallback, this method has a limitation of creating only about 2000 callback functions. Exceeding this limit will cause a panic. When using Event-type functions to register events and the callback function is an anonymous function, a new callback function is created each time. Without proper control, this could exceed the 2000-function limit. In contrast, AddEvent-type functions reuse already created callback functions, allowing you to freely use anonymous functions as event callbacks without worrying about exceeding the 2000-function limit.
 
 ## About version numbers
 

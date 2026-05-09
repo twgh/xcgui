@@ -180,7 +180,7 @@ func (w *windowBase) SetTop(bTop ...bool) *windowBase {
 //   - 不为空时, 移除指定 ID 的回调函数.
 func (w *windowBase) RemoveEvent(nEvent xcc.WM_, id ...int) *windowBase {
 	if len(id) > 0 {
-		xc.WndEventBus.RemoveCallBack(w.Handle, nEvent, id[0])
+		xc.WndEventBus.RemoveCallback(w.Handle, nEvent, id[0])
 	} else { // 移除事件
 		cbPtr := xc.WndEventBus.EventInfoMap[w.Handle][nEvent].EvnetFuncPtr
 		if cbPtr > 0 {
@@ -1577,7 +1577,7 @@ func (w *windowBase) AdjustInScreen(nBorderSpace int32, bCoverTaskBar bool) bool
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_NCDestroy(fn xc.WM_NCDESTROY1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.WM_NCDESTROY, xc.OnWM_NCDESTROY, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.WM_NCDESTROY, xc.OnWM_NCDESTROY, fn, allowAddingMultiple...)
 }
 
 // AddEvent_DockPopup 添加框架窗口码头弹出窗格事件. 当用户点击码头上的按钮时, 显示对应的窗格, 当失去焦点时自动隐藏窗格.
@@ -1586,12 +1586,12 @@ func (w *windowBase) AddEvent_NCDestroy(fn xc.WM_NCDESTROY1, allowAddingMultiple
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_DockPopup(fn xc.XWM_DOCK_POPUP1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.XWM_DOCK_POPUP, onXWM_DOCK_POPUP, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.XWM_DOCK_POPUP, onXWM_DOCK_POPUP, fn, allowAddingMultiple...)
 }
 
 // onXWM_DOCK_POPUP 框架窗口码头弹出窗格事件.
 func onXWM_DOCK_POPUP(hWindow int, hWindowDock, hPane int, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.XWM_DOCK_POPUP)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.XWM_DOCK_POPUP)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XWM_DOCK_POPUP1); ok {
@@ -1610,12 +1610,12 @@ func onXWM_DOCK_POPUP(hWindow int, hWindowDock, hPane int, pbHandled *bool) int 
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_WindProc(fn xc.XWM_WINDPROC1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.XWM_WINDPROC, onXWM_WINDPROC, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.XWM_WINDPROC, onXWM_WINDPROC, fn, allowAddingMultiple...)
 }
 
 // onXWM_WINDPROC 窗口消息过程事件.
 func onXWM_WINDPROC(hWindow int, message uint32, wParam, lParam uintptr, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.XWM_WINDPROC)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.XWM_WINDPROC)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XWM_WINDPROC1); ok {
@@ -1634,12 +1634,12 @@ func onXWM_WINDPROC(hWindow int, message uint32, wParam, lParam uintptr, pbHandl
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_XC_Timer(fn xc.XWM_XC_TIMER1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.XWM_XC_TIMER, onXWM_XC_TIMER, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.XWM_XC_TIMER, onXWM_XC_TIMER, fn, allowAddingMultiple...)
 }
 
 // onXWM_XC_TIMER 炫彩定时器事件.
 func onXWM_XC_TIMER(hWindow int, nIDEvent uint, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.XWM_XC_TIMER)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.XWM_XC_TIMER)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XWM_XC_TIMER1); ok {
@@ -1658,12 +1658,12 @@ func onXWM_XC_TIMER(hWindow int, nIDEvent uint, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_SetFocus_Ele(fn xc.XWM_SETFOCUS_ELE1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.XWM_SETFOCUS_ELE, onXWM_SETFOCUS_ELE, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.XWM_SETFOCUS_ELE, onXWM_SETFOCUS_ELE, fn, allowAddingMultiple...)
 }
 
 // onXWM_SETFOCUS_ELE 窗口置焦点元素事件. 指定元素获得焦点.
 func onXWM_SETFOCUS_ELE(hWindow int, hEle int, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.XWM_SETFOCUS_ELE)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.XWM_SETFOCUS_ELE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XWM_SETFOCUS_ELE1); ok {
@@ -1682,12 +1682,12 @@ func onXWM_SETFOCUS_ELE(hWindow int, hEle int, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_Float_Pane(fn xc.XWM_FLOAT_PANE1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.XWM_FLOAT_PANE, onXWM_FLOAT_PANE, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.XWM_FLOAT_PANE, onXWM_FLOAT_PANE, fn, allowAddingMultiple...)
 }
 
 // onXWM_FLOAT_PANE 浮动窗格事件.
 func onXWM_FLOAT_PANE(hWindow int, hFloatWnd int, hPane int, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.XWM_FLOAT_PANE)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.XWM_FLOAT_PANE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XWM_FLOAT_PANE1); ok {
@@ -1706,12 +1706,12 @@ func onXWM_FLOAT_PANE(hWindow int, hFloatWnd int, hPane int, pbHandled *bool) in
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_Paint_End(fn xc.XWM_PAINT_END1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.XWM_PAINT_END, onXWM_PAINT_END, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.XWM_PAINT_END, onXWM_PAINT_END, fn, allowAddingMultiple...)
 }
 
 // onXWM_PAINT_END 窗口绘制完成事件.
 func onXWM_PAINT_END(hWindow int, hDraw int, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.XWM_PAINT_END)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.XWM_PAINT_END)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XWM_PAINT_END1); ok {
@@ -1730,12 +1730,12 @@ func onXWM_PAINT_END(hWindow int, hDraw int, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_Paint_Display(fn xc.XWM_PAINT_DISPLAY1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.XWM_PAINT_DISPLAY, onXWM_PAINT_DISPLAY, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.XWM_PAINT_DISPLAY, onXWM_PAINT_DISPLAY, fn, allowAddingMultiple...)
 }
 
 // onXWM_PAINT_DISPLAY 窗口绘制完成并且已经显示到屏幕事件.
 func onXWM_PAINT_DISPLAY(hWindow int, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.XWM_PAINT_DISPLAY)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.XWM_PAINT_DISPLAY)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XWM_PAINT_DISPLAY1); ok {
@@ -1754,12 +1754,12 @@ func onXWM_PAINT_DISPLAY(hWindow int, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_BodyView_Rect(fn xc.XWM_BODYVIEW_RECT1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.XWM_BODYVIEW_RECT, onXWM_BODYVIEW_RECT, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.XWM_BODYVIEW_RECT, onXWM_BODYVIEW_RECT, fn, allowAddingMultiple...)
 }
 
 // onXWM_BODYVIEW_RECT 框架窗口主视图坐标改变事件.
 func onXWM_BODYVIEW_RECT(hWindow int, width, height int32, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.XWM_BODYVIEW_RECT)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.XWM_BODYVIEW_RECT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XWM_BODYVIEW_RECT1); ok {
@@ -1779,12 +1779,12 @@ func onXWM_BODYVIEW_RECT(hWindow int, width, height int32, pbHandled *bool) int 
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_FloatWnd_Drag(fn xc.XWM_FLOATWND_DRAG1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.XWM_FLOATWND_DRAG, onXWM_FLOATWND_DRAG, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.XWM_FLOATWND_DRAG, onXWM_FLOATWND_DRAG, fn, allowAddingMultiple...)
 }
 
 // onXWM_FLOATWND_DRAG 浮动窗口拖动事件.
 func onXWM_FLOATWND_DRAG(hWindow int, hFloatWnd int, hArray *[6]int, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.XWM_FLOATWND_DRAG)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.XWM_FLOATWND_DRAG)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XWM_FLOATWND_DRAG1); ok {
@@ -1803,12 +1803,12 @@ func onXWM_FLOATWND_DRAG(hWindow int, hFloatWnd int, hArray *[6]int, pbHandled *
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_Paint(fn xc.WM_PAINT1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.WM_PAINT, onWM_PAINT, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.WM_PAINT, onWM_PAINT, fn, allowAddingMultiple...)
 }
 
 // onWM_PAINT 窗口绘制事件.
 func onWM_PAINT(hWindow int, hDraw int, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.WM_PAINT)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.WM_PAINT)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.WM_PAINT1); ok {
@@ -1827,12 +1827,12 @@ func onWM_PAINT(hWindow int, hDraw int, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_Close(fn xc.WM_CLOSE1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.WM_CLOSE, onWM_CLOSE, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.WM_CLOSE, onWM_CLOSE, fn, allowAddingMultiple...)
 }
 
 // onWM_CLOSE 窗口关闭事件.
 func onWM_CLOSE(hWindow int, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.WM_CLOSE)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.WM_CLOSE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.WM_CLOSE1); ok {
@@ -1851,12 +1851,12 @@ func onWM_CLOSE(hWindow int, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_Destroy(fn xc.WM_DESTROY1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.WM_DESTROY, onWM_DESTROY, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.WM_DESTROY, onWM_DESTROY, fn, allowAddingMultiple...)
 }
 
 // onWM_DESTROY 窗口销毁事件.
 func onWM_DESTROY(hWindow int, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.WM_DESTROY)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.WM_DESTROY)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.WM_DESTROY1); ok {
@@ -1875,12 +1875,12 @@ func onWM_DESTROY(hWindow int, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_MouseMove(fn xc.WM_MOUSEMOVE1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.WM_MOUSEMOVE, onWM_MOUSEMOVE, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.WM_MOUSEMOVE, onWM_MOUSEMOVE, fn, allowAddingMultiple...)
 }
 
 // onWM_MOUSEMOVE 窗口鼠标移动事件.
 func onWM_MOUSEMOVE(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.WM_MOUSEMOVE)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.WM_MOUSEMOVE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.WM_MOUSEMOVE1); ok {
@@ -1899,12 +1899,12 @@ func onWM_MOUSEMOVE(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) in
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_LButtonDown(fn xc.WM_LBUTTONDOWN1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.WM_LBUTTONDOWN, onWM_LBUTTONDOWN, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.WM_LBUTTONDOWN, onWM_LBUTTONDOWN, fn, allowAddingMultiple...)
 }
 
 // onWM_LBUTTONDOWN 窗口鼠标左键按下事件.
 func onWM_LBUTTONDOWN(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.WM_LBUTTONDOWN)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.WM_LBUTTONDOWN)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.WM_LBUTTONDOWN1); ok {
@@ -1923,12 +1923,12 @@ func onWM_LBUTTONDOWN(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) 
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_LButtonUp(fn xc.WM_LBUTTONUP1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.WM_LBUTTONUP, onWM_LBUTTONUP, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.WM_LBUTTONUP, onWM_LBUTTONUP, fn, allowAddingMultiple...)
 }
 
 // onWM_LBUTTONUP 窗口鼠标左键弹起事件.
 func onWM_LBUTTONUP(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.WM_LBUTTONUP)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.WM_LBUTTONUP)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.WM_LBUTTONUP1); ok {
@@ -1947,12 +1947,12 @@ func onWM_LBUTTONUP(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) in
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_RButtonDown(fn xc.WM_RBUTTONDOWN1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.WM_RBUTTONDOWN, onWM_RBUTTONDOWN, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.WM_RBUTTONDOWN, onWM_RBUTTONDOWN, fn, allowAddingMultiple...)
 }
 
 // onWM_RBUTTONDOWN 窗口鼠标右键按下事件.
 func onWM_RBUTTONDOWN(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.WM_RBUTTONDOWN)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.WM_RBUTTONDOWN)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.WM_RBUTTONDOWN1); ok {
@@ -1971,12 +1971,12 @@ func onWM_RBUTTONDOWN(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) 
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_RButtonUp(fn xc.WM_RBUTTONUP1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.WM_RBUTTONUP, onWM_RBUTTONUP, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.WM_RBUTTONUP, onWM_RBUTTONUP, fn, allowAddingMultiple...)
 }
 
 // onWM_RBUTTONUP 窗口鼠标右键弹起事件.
 func onWM_RBUTTONUP(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.WM_RBUTTONUP)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.WM_RBUTTONUP)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.WM_RBUTTONUP1); ok {
@@ -1995,12 +1995,12 @@ func onWM_RBUTTONUP(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) in
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_LButtonDBClick(fn xc.WM_LBUTTONDBLCLK1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.WM_LBUTTONDBLCLK, onWM_LBUTTONDBLCLK, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.WM_LBUTTONDBLCLK, onWM_LBUTTONDBLCLK, fn, allowAddingMultiple...)
 }
 
 // onWM_LBUTTONDBLCLK 窗口鼠标左键双击事件.
 func onWM_LBUTTONDBLCLK(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.WM_LBUTTONDBLCLK)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.WM_LBUTTONDBLCLK)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.WM_LBUTTONDBLCLK1); ok {
@@ -2019,12 +2019,12 @@ func onWM_LBUTTONDBLCLK(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_RButtonDBClick(fn xc.WM_RBUTTONDBLCLK1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.WM_RBUTTONDBLCLK, onWM_RBUTTONDBLCLK, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.WM_RBUTTONDBLCLK, onWM_RBUTTONDBLCLK, fn, allowAddingMultiple...)
 }
 
 // onWM_RBUTTONDBLCLK 窗口鼠标右键双击事件.
 func onWM_RBUTTONDBLCLK(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.WM_RBUTTONDBLCLK)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.WM_RBUTTONDBLCLK)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.WM_RBUTTONDBLCLK1); ok {
@@ -2043,12 +2043,12 @@ func onWM_RBUTTONDBLCLK(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_MouseWheel(fn xc.WM_MOUSEWHEEL1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.WM_MOUSEWHEEL, onWM_MOUSEWHEEL, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.WM_MOUSEWHEEL, onWM_MOUSEWHEEL, fn, allowAddingMultiple...)
 }
 
 // onWM_MOUSEWHEEL 窗口鼠标滚轮滚动事件.
 func onWM_MOUSEWHEEL(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.WM_MOUSEWHEEL)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.WM_MOUSEWHEEL)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.WM_MOUSEWHEEL1); ok {
@@ -2067,12 +2067,12 @@ func onWM_MOUSEWHEEL(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) i
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_ExitSizeMove(fn xc.WM_EXITSIZEMOVE1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.WM_EXITSIZEMOVE, onWM_EXITSIZEMOVE, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.WM_EXITSIZEMOVE, onWM_EXITSIZEMOVE, fn, allowAddingMultiple...)
 }
 
 // onWM_EXITSIZEMOVE 窗口退出移动或调整大小模式循环事件.
 func onWM_EXITSIZEMOVE(hWindow int, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.WM_EXITSIZEMOVE)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.WM_EXITSIZEMOVE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.WM_EXITSIZEMOVE1); ok {
@@ -2091,12 +2091,12 @@ func onWM_EXITSIZEMOVE(hWindow int, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_MouseHover(fn xc.WM_MOUSEHOVER1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.WM_MOUSEHOVER, onWM_MOUSEHOVER, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.WM_MOUSEHOVER, onWM_MOUSEHOVER, fn, allowAddingMultiple...)
 }
 
 // onWM_MOUSEHOVER 窗口鼠标进入事件.
 func onWM_MOUSEHOVER(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.WM_MOUSEHOVER)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.WM_MOUSEHOVER)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.WM_MOUSEHOVER1); ok {
@@ -2115,12 +2115,12 @@ func onWM_MOUSEHOVER(hWindow int, nFlags uint, pPt *xc.POINT, pbHandled *bool) i
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_MouseLeave(fn xc.WM_MOUSELEAVE1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.WM_MOUSELEAVE, onWM_MOUSELEAVE, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.WM_MOUSELEAVE, onWM_MOUSELEAVE, fn, allowAddingMultiple...)
 }
 
 // onWM_MOUSELEAVE 窗口鼠标离开事件.
 func onWM_MOUSELEAVE(hWindow int, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.WM_MOUSELEAVE)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.WM_MOUSELEAVE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.WM_MOUSELEAVE1); ok {
@@ -2139,12 +2139,12 @@ func onWM_MOUSELEAVE(hWindow int, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_Size(fn xc.WM_SIZE1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.WM_SIZE, onWM_SIZE, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.WM_SIZE, onWM_SIZE, fn, allowAddingMultiple...)
 }
 
 // onWM_SIZE 窗口大小改变事件.
 func onWM_SIZE(hWindow int, nFlags uint, pPt *xc.SIZE, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.WM_SIZE)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.WM_SIZE)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.WM_SIZE1); ok {
@@ -2163,12 +2163,12 @@ func onWM_SIZE(hWindow int, nFlags uint, pPt *xc.SIZE, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_Timer(fn xc.WM_TIMER1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.WM_TIMER, onWM_TIMER, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.WM_TIMER, onWM_TIMER, fn, allowAddingMultiple...)
 }
 
 // onWM_TIMER 窗口定时器事件.
 func onWM_TIMER(hWindow int, nIDEvent uint, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.WM_TIMER)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.WM_TIMER)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.WM_TIMER1); ok {
@@ -2187,12 +2187,12 @@ func onWM_TIMER(hWindow int, nIDEvent uint, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_SetFocus(fn xc.WM_SETFOCUS1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.WM_SETFOCUS, onWM_SETFOCUS, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.WM_SETFOCUS, onWM_SETFOCUS, fn, allowAddingMultiple...)
 }
 
 // onWM_SETFOCUS 窗口获得焦点事件.
 func onWM_SETFOCUS(hWindow int, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.WM_SETFOCUS)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.WM_SETFOCUS)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.WM_SETFOCUS1); ok {
@@ -2211,12 +2211,12 @@ func onWM_SETFOCUS(hWindow int, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_KillFocus(fn xc.WM_KILLFOCUS1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.WM_KILLFOCUS, onWM_KILLFOCUS, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.WM_KILLFOCUS, onWM_KILLFOCUS, fn, allowAddingMultiple...)
 }
 
 // onWM_KILLFOCUS 窗口失去焦点事件.
 func onWM_KILLFOCUS(hWindow int, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.WM_KILLFOCUS)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.WM_KILLFOCUS)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.WM_KILLFOCUS1); ok {
@@ -2235,12 +2235,12 @@ func onWM_KILLFOCUS(hWindow int, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_KeyDown(fn xc.WM_KEYDOWN1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.WM_KEYDOWN, onWM_KEYDOWN, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.WM_KEYDOWN, onWM_KEYDOWN, fn, allowAddingMultiple...)
 }
 
 // onWM_KEYDOWN 窗口键盘按键事件.
 func onWM_KEYDOWN(hWindow int, wParam, lParam uintptr, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.WM_KEYDOWN)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.WM_KEYDOWN)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.WM_KEYDOWN1); ok {
@@ -2259,12 +2259,12 @@ func onWM_KEYDOWN(hWindow int, wParam, lParam uintptr, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_CaptureChanged(fn xc.WM_CAPTURECHANGED1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.WM_CAPTURECHANGED, onWM_CAPTURECHANGED, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.WM_CAPTURECHANGED, onWM_CAPTURECHANGED, fn, allowAddingMultiple...)
 }
 
 // onWM_CAPTURECHANGED 窗口鼠标捕获改变事件.
 func onWM_CAPTURECHANGED(hWindow int, hWnd uintptr, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.WM_CAPTURECHANGED)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.WM_CAPTURECHANGED)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.WM_CAPTURECHANGED1); ok {
@@ -2283,12 +2283,12 @@ func onWM_CAPTURECHANGED(hWindow int, hWnd uintptr, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_SetCursor(fn xc.WM_SETCURSOR1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.WM_SETCURSOR, onWM_SETCURSOR, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.WM_SETCURSOR, onWM_SETCURSOR, fn, allowAddingMultiple...)
 }
 
 // onWM_SETCURSOR 窗口设置鼠标光标事件.
 func onWM_SETCURSOR(hWindow int, wParam, lParam uintptr, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.WM_SETCURSOR)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.WM_SETCURSOR)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.WM_SETCURSOR1); ok {
@@ -2307,12 +2307,12 @@ func onWM_SETCURSOR(hWindow int, wParam, lParam uintptr, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_Char(fn xc.WM_CHAR1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.WM_CHAR, onWM_CHAR, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.WM_CHAR, onWM_CHAR, fn, allowAddingMultiple...)
 }
 
 // onWM_CHAR 窗口字符事件.
 func onWM_CHAR(hWindow int, wParam, lParam uintptr, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.WM_CHAR)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.WM_CHAR)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.WM_CHAR1); ok {
@@ -2331,12 +2331,12 @@ func onWM_CHAR(hWindow int, wParam, lParam uintptr, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_DropFiles(fn xc.WM_DROPFILES1, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.WM_DROPFILES, onWM_DROPFILES, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.WM_DROPFILES, onWM_DROPFILES, fn, allowAddingMultiple...)
 }
 
 // onWM_DROPFILES 拖动文件到窗口事件.
 func onWM_DROPFILES(hWindow int, hDropInfo uintptr, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.WM_DROPFILES)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.WM_DROPFILES)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.WM_DROPFILES1); ok {
@@ -2355,12 +2355,12 @@ func onWM_DROPFILES(hWindow int, hDropInfo uintptr, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_TrayIcon(fn xc.XWM_TRAYICON, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.XWM_TRAYICON, onXWM_TRAYICON, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.XWM_TRAYICON, onXWM_TRAYICON, fn, allowAddingMultiple...)
 }
 
 // onXWM_TRAYICON 托盘图标事件.
 func onXWM_TRAYICON(hWindow int, wParam, lParam uintptr, pbHandled *bool) int {
-	cbs := xc.WndEventBus.GetCallBacks(hWindow, xcc.XWM_TRAYICON)
+	cbs := xc.WndEventBus.GetCallbacks(hWindow, xcc.XWM_TRAYICON)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
 		if cb, ok := cbs[i].CB.(xc.XWM_TRAYICON); ok {
@@ -2381,32 +2381,32 @@ func onXWM_TRAYICON(hWindow int, wParam, lParam uintptr, pbHandled *bool) int {
 //
 // allowAddingMultiple: 允许添加多个回调函数.
 func (w *windowBase) AddEvent_Menu_Popup(fn func(hWindow int, hMenu int, pbHandled *bool) int, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.XWM_MENU_POPUP, xc.OnXWM_MENU_POPUP, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.XWM_MENU_POPUP, xc.OnXWM_MENU_POPUP, fn, allowAddingMultiple...)
 }
 
 // 菜单弹出窗口事件.
 func (w *windowBase) AddEvent_Menu_PopupWnd(fn func(hWindow int, hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.XWM_MENU_POPUP_WND, xc.OnXWM_MENU_POPUP_WND, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.XWM_MENU_POPUP_WND, xc.OnXWM_MENU_POPUP_WND, fn, allowAddingMultiple...)
 }
 
 // 菜单选择事件.
 func (w *windowBase) AddEvent_Menu_Select(fn func(hWindow int, nID int32, pbHandled *bool) int, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.XWM_MENU_SELECT, xc.OnXWM_MENU_SELECT, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.XWM_MENU_SELECT, xc.OnXWM_MENU_SELECT, fn, allowAddingMultiple...)
 }
 
 // 菜单退出事件.
 func (w *windowBase) AddEvent_Menu_Exit(fn func(hWindow int, pbHandled *bool) int, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.XWM_MENU_EXIT, xc.OnXWM_MENU_EXIT, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.XWM_MENU_EXIT, xc.OnXWM_MENU_EXIT, fn, allowAddingMultiple...)
 }
 
 // 绘制菜单背景事件.
 func (w *windowBase) AddEvent_Menu_DrawBackground(fn func(hWindow int, hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.XWM_MENU_DRAW_BACKGROUND, xc.OnXWM_MENU_DRAW_BACKGROUND, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.XWM_MENU_DRAW_BACKGROUND, xc.OnXWM_MENU_DRAW_BACKGROUND, fn, allowAddingMultiple...)
 }
 
 // 绘制菜单项事件.
 func (w *windowBase) AddEvent_Menu_DrawItem(fn func(hWindow int, hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int, allowAddingMultiple ...bool) int {
-	return xc.WndEventBus.AddCallBack(w.Handle, xcc.XWM_MENU_DRAWITEM, xc.OnXWM_MENU_DRAWITEM, fn, allowAddingMultiple...)
+	return xc.WndEventBus.AddCallback(w.Handle, xcc.XWM_MENU_DRAWITEM, xc.OnXWM_MENU_DRAWITEM, fn, allowAddingMultiple...)
 }
 
 // ------------------------- 事件 ------------------------- //

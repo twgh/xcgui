@@ -588,7 +588,7 @@ func (i *ICoreWebView2) ExecuteScriptEx(impl *WebViewEventImpl, javaScript strin
 	} else {
 		c = cb
 	}
-	_, _ = WvEventBus.AddCallBack(impl, "ExecuteScriptCompleted", c, nil)
+	_, _ = WvEventBus.AddCallback(impl, "ExecuteScriptCompleted", c, nil)
 	handler := WvEventBus.GetHandler(impl, "ExecuteScriptCompleted")
 	return i.ExecuteScript(javaScript, (*ICoreWebView2ExecuteScriptCompletedHandler)(handler))
 }
@@ -706,7 +706,7 @@ func (i *ICoreWebView2) AddScriptToExecuteOnDocumentCreatedEx(impl *WebViewEvent
 	} else {
 		c = cb
 	}
-	_, _ = WvEventBus.AddCallBack(impl, "AddScriptToExecuteOnDocumentCreatedCompleted", c, nil)
+	_, _ = WvEventBus.AddCallback(impl, "AddScriptToExecuteOnDocumentCreatedCompleted", c, nil)
 	handler := WvEventBus.GetHandler(impl, "AddScriptToExecuteOnDocumentCreatedCompleted")
 	return i.AddScriptToExecuteOnDocumentCreated(javaScript, (*ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler)(handler))
 }
@@ -969,7 +969,7 @@ func (i *ICoreWebView2) CapturePreviewEx(impl *WebViewEventImpl, imageFormat COR
 	} else {
 		c = cb
 	}
-	_, _ = WvEventBus.AddCallBack(impl, "CapturePreviewCompleted", c, nil)
+	_, _ = WvEventBus.AddCallback(impl, "CapturePreviewCompleted", c, nil)
 	handler := WvEventBus.GetHandler(impl, "CapturePreviewCompleted")
 	return i.CapturePreview(imageFormat, imageStream, (*ICoreWebView2CapturePreviewCompletedHandler)(handler))
 }
@@ -1143,7 +1143,7 @@ func (i *ICoreWebView2) CallDevToolsProtocolMethodEx(impl *WebViewEventImpl, met
 	} else {
 		c = cb
 	}
-	_, _ = WvEventBus.AddCallBack(impl, "CallDevToolsProtocolMethodCompleted", c, nil)
+	_, _ = WvEventBus.AddCallback(impl, "CallDevToolsProtocolMethodCompleted", c, nil)
 	handler := WvEventBus.GetHandler(impl, "CallDevToolsProtocolMethodCompleted")
 	return i.CallDevToolsProtocolMethod(methodName, parametersAsJson, (*ICoreWebView2CallDevToolsProtocolMethodCompletedHandler)(handler))
 }
