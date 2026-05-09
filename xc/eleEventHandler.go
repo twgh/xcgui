@@ -12,23 +12,31 @@ var EleEventBus = newEleEventBus()
 
 // 元素事件总线
 type eleEventBus struct {
-	EventInfoMap map[int]map[xcc.XE_]eventInfo // 元素事件信息map
+	EventInfoMap map[int]map[xcc.XE_]EventInfo // 事件信息map
 	mu           sync.RWMutex
 }
 
-type eventInfo struct {
-	Cbs          []interface{}
+// CbInfo 回调函数信息
+type CbInfo struct {
+	ID int         // 身份标识
+	CB interface{} // 实际的回调函数
+}
+
+// EventInfo 事件信息
+type EventInfo struct {
+	Cbs          []CbInfo
 	EvnetFuncPtr uintptr
+	nextID       int // 用于生成身份标识
 }
 
 // 创建新的元素事件总线
 func newEleEventBus() *eleEventBus {
 	return &eleEventBus{
-		EventInfoMap: make(map[int]map[xcc.XE_]eventInfo),
+		EventInfoMap: make(map[int]map[xcc.XE_]EventInfo),
 	}
 }
 
-// AddCallBack 添加回调函数, 返回回调函数索引, 失败返回 -1.
+// AddCallBack 添加回调函数, 返回回调函数 ID, 失败返回 -1.
 //
 // hEle: 元素句柄.
 //
@@ -53,7 +61,7 @@ func (h *eleEventBus) AddCallBack(hEle int, eventType xcc.XE_, eventFunc interfa
 	// 获取元素的事件回调函数map
 	eventMap := h.EventInfoMap[hEle]
 	if eventMap == nil {
-		eventMap = make(map[xcc.XE_]eventInfo)
+		eventMap = make(map[xcc.XE_]EventInfo)
 	}
 
 	info, ok := eventMap[eventType]
@@ -73,69 +81,89 @@ func (h *eleEventBus) AddCallBack(hEle int, eventType xcc.XE_, eventFunc interfa
 	if len(allowAddingMultiple) > 0 {
 		isAddingMultiple = allowAddingMultiple[0]
 	}
-	idnex := 0
+
+	// 生成一个身份标识
+	id := info.nextID
+	info.nextID++
+	newCbInfo := CbInfo{ID: id, CB: cb}
+
 	if isAddingMultiple {
-		info.Cbs = append(info.Cbs, cb)
-		idnex = len(info.Cbs) - 1
+		info.Cbs = append(info.Cbs, newCbInfo)
 	} else {
-		info.Cbs = []interface{}{cb}
+		info.Cbs = []CbInfo{newCbInfo}
 	}
 	eventMap[eventType] = info
 	h.EventInfoMap[hEle] = eventMap
-	return idnex
+	return id
 }
 
 // GetCallBacks 获取指定元素指定事件的回调函数数组.
-func (h *eleEventBus) GetCallBacks(hEle int, eventType xcc.XE_) []interface{} {
+//
+// hEle: 元素句柄.
+//
+// eventType: 事件类型.
+func (h *eleEventBus) GetCallBacks(hEle int, eventType xcc.XE_) []CbInfo {
 	h.mu.RLock()
 	defer h.mu.RUnlock()
 	return h.EventInfoMap[hEle][eventType].Cbs
 }
 
-// RemoveAllCallBack 从 map 里移除指定元素的所有事件以及CallBack.
+// RemoveAllCallBack 移除指定元素的所有事件以及 CallBack.
+//
+// hEle: 元素句柄.
 func (h *eleEventBus) RemoveAllCallBack(hEle int) {
 	h.mu.Lock()
 	delete(h.EventInfoMap, hEle)
 	h.mu.Unlock()
 }
 
-// RemoveCallBack 从 map 里移除指定元素指定事件的指定索引的 CallBack.
-//   - 当只是想让一个 CallBack 失效时, 使用 SetCallBack 把该 CallBack 设置为 nil 更好, 因为你移除一个 CallBack, 会导致后面的 CallBack 的索引往前移动一位, 那你添加 CallBack 时记录的索引就没法用了.
-func (h *eleEventBus) RemoveCallBack(hEle int, eventType xcc.XE_, index int) bool {
+// RemoveCallBack 移除指定元素指定事件的指定 ID 的 CallBack.
+//
+// hEle: 元素句柄.
+//
+// eventType: 事件类型.
+//
+// id: 回调函数 ID.
+func (h *eleEventBus) RemoveCallBack(hEle int, eventType xcc.XE_, id int) {
 	h.mu.Lock()
 	defer h.mu.Unlock()
-	info := h.EventInfoMap[hEle][eventType]
-	l := len(info.Cbs)
-	if l == 0 {
-		return true
+
+	eInfo := h.EventInfoMap[hEle][eventType]
+	for i, cbinfo := range eInfo.Cbs {
+		if id == cbinfo.ID {
+			eInfo.Cbs = append(eInfo.Cbs[:i], eInfo.Cbs[i+1:]...)
+			h.EventInfoMap[hEle][eventType] = eInfo
+		}
 	}
-	if index >= l {
-		return false
-	}
-	info.Cbs = append(info.Cbs[:index], info.Cbs[index+1:]...)
-	h.EventInfoMap[hEle][eventType] = info
-	return true
 }
 
-// SetCallBack 设置指定元素指定事件的指定索引的回调函数.
-//   - 当只是想让一个 CallBack 失效时, 直接把该 CallBack 设置为 nil 比使用 RemoveCallBack 更好, 因为你移除一个 CallBack, 会导致后面的 CallBack 的索引往前移动一位, 那你添加 CallBack 时记录的索引就没法用了.
-func (h *eleEventBus) SetCallBack(hEle int, eventType xcc.XE_, index int, cb interface{}) bool {
+// SetCallBack 设置指定元素指定事件的指定 ID 的回调函数.
+//
+// hEle: 元素句柄.
+//
+// eventType: 事件类型.
+//
+// id: 回调函数 ID.
+//
+// cb: 回调函数.
+func (h *eleEventBus) SetCallBack(hEle int, eventType xcc.XE_, id int, cb interface{}) {
 	h.mu.Lock()
 	defer h.mu.Unlock()
-	info := h.EventInfoMap[hEle][eventType]
-	l := len(info.Cbs)
-	if l == 0 { // 空
-		return false
+
+	eInfo := h.EventInfoMap[hEle][eventType]
+	for i, cbinfo := range eInfo.Cbs {
+		if id == cbinfo.ID {
+			eInfo.Cbs[i].CB = cb
+			h.EventInfoMap[hEle][eventType] = eInfo
+		}
 	}
-	if index >= l { // 越界
-		return false
-	}
-	info.Cbs[index] = cb
-	h.EventInfoMap[hEle][eventType] = info
-	return true
 }
 
-// RemoveEvent 从 map 里移除指定元素的指定事件的所有CallBack.
+// RemoveEvent 移除指定元素指定事件的所有 CallBack.
+//
+// hEle: 元素句柄.
+//
+// eventType: 事件类型.
 func (h *eleEventBus) RemoveEvent(hEle int, eventType xcc.XE_) {
 	h.mu.Lock()
 	defer h.mu.Unlock()
@@ -152,9 +180,9 @@ func (h *eleEventBus) regEleDestroyEnd(hEle int) bool {
 		XC_SetProperty(hEle, "IsRegEleDestroyEnd", "1")
 		m := h.EventInfoMap[hEle]
 		if m == nil {
-			m = make(map[xcc.XE_]eventInfo)
+			m = make(map[xcc.XE_]EventInfo)
 		}
-		m[xcc.XE_DESTROY_END] = eventInfo{EvnetFuncPtr: cbPtr}
+		m[xcc.XE_DESTROY_END] = EventInfo{EvnetFuncPtr: cbPtr}
 		h.EventInfoMap[hEle] = m
 		return true
 	}
@@ -168,7 +196,7 @@ func OnXE_DESTROY_END(hEle int, pbHandled *bool) int {
 	cbs := EleEventBus.GetCallBacks(hEle, xcc.XE_DESTROY_END)
 	var ret int
 	for i := len(cbs) - 1; i >= 0; i-- {
-		if cb, ok := cbs[i].(XE_DESTROY_END1); ok {
+		if cb, ok := cbs[i].CB.(XE_DESTROY_END1); ok {
 			ret = cb(hEle, pbHandled)
 		}
 		if *pbHandled {
