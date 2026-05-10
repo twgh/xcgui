@@ -164,11 +164,7 @@ func (s *Svg) GetViewBox(pViewBox *xc.RECT) *Svg {
 //
 // bEnable: 是否自动销毁, 不填默认为 true.
 func (s *Svg) EnableAutoDestroy(bEnable ...bool) *Svg {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XSvg_EnableAutoDestroy(s.Handle, enable)
+	xc.XSvg_EnableAutoDestroy(s.Handle, bEnable...)
 	return s
 }
 
@@ -291,10 +287,6 @@ func (s *Svg) GetRotate(pAngle *float32, pX *float32, pY *float32, pbOffset *boo
 //
 // bShow: 是否显示, 不填默认为 true.
 func (s *Svg) Show(bShow ...bool) *Svg {
-	show := true
-	if len(bShow) > 0 {
-		show = bShow[0]
-	}
-	xc.XSvg_Show(s.Handle, show)
+	xc.XSvg_Show(s.Handle, bShow...)
 	return s
 }

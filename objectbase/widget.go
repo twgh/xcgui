@@ -19,11 +19,7 @@ func (w *Widget) IsShow() bool {
 //
 // bShow: 是否显示, 不填默认为 true.
 func (w *Widget) Show(bShow ...bool) *Widget {
-	show := true
-	if len(bShow) > 0 {
-		show = bShow[0]
-	}
-	xc.XWidget_Show(w.Handle, show)
+	xc.XWidget_Show(w.Handle, bShow...)
 	return w
 }
 
@@ -31,11 +27,7 @@ func (w *Widget) Show(bShow ...bool) *Widget {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (w *Widget) EnableLayoutControl(bEnable ...bool) *Widget {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XWidget_EnableLayoutControl(w.Handle, enable)
+	xc.XWidget_EnableLayoutControl(w.Handle, bEnable...)
 	return w
 }
 
@@ -68,11 +60,7 @@ func (w *Widget) GetHWINDOW() int {
 //
 // bWrap: 是否换行, 不填默认为 true.
 func (w *Widget) LayoutItem_EnableWrap(bWrap ...bool) *Widget {
-	enable := true
-	if len(bWrap) > 0 {
-		enable = bWrap[0]
-	}
-	xc.XWidget_LayoutItem_EnableWrap(w.Handle, enable)
+	xc.XWidget_LayoutItem_EnableWrap(w.Handle, bWrap...)
 	return w
 }
 
@@ -80,11 +68,7 @@ func (w *Widget) LayoutItem_EnableWrap(bWrap ...bool) *Widget {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (w *Widget) LayoutItem_EnableSwap(bEnable ...bool) *Widget {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XWidget_LayoutItem_EnableSwap(w.Handle, enable)
+	xc.XWidget_LayoutItem_EnableSwap(w.Handle, bEnable...)
 	return w
 }
 
@@ -92,11 +76,7 @@ func (w *Widget) LayoutItem_EnableSwap(bEnable ...bool) *Widget {
 //
 // bFloat: 是否浮动, 不填默认为 true.
 func (w *Widget) LayoutItem_EnableFloat(bFloat ...bool) *Widget {
-	enable := true
-	if len(bFloat) > 0 {
-		enable = bFloat[0]
-	}
-	xc.XWidget_LayoutItem_EnableFloat(w.Handle, enable)
+	xc.XWidget_LayoutItem_EnableFloat(w.Handle, bFloat...)
 	return w
 }
 

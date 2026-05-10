@@ -360,27 +360,39 @@ func XImage_SetSplitEqual(hImage int, nCount int32, iIndex int32) {
 //
 // hImage: 图片句柄.
 //
-// bEnable: 启用TRUE.
-func XImage_EnableTranColor(hImage int, bEnable bool) {
-	xImage_EnableTranColor.Call(uintptr(hImage), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XImage_EnableTranColor(hImage int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xImage_EnableTranColor.Call(uintptr(hImage), common.BoolPtr(enable))
 }
 
 // 图片_启用自动销毁, 启用或关闭自动销毁, 当与UI元素关联时有效.
 //
 // hImage: 图片句柄.
 //
-// bEnable: 启用自动销毁TRUE.
-func XImage_EnableAutoDestroy(hImage int, bEnable bool) {
-	xImage_EnableAutoDestroy.Call(uintptr(hImage), common.BoolPtr(bEnable))
+// bEnable: 是否启用自动销毁, 不填默认为 true.
+func XImage_EnableAutoDestroy(hImage int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xImage_EnableAutoDestroy.Call(uintptr(hImage), common.BoolPtr(enable))
 }
 
 // 图片_启用居中, 启用或关闭图片居中显示，默认属性图片有效.
 //
 // hImage: 图片句柄.
 //
-// bCenter: 是否居中显示.
-func XImage_EnableCenter(hImage int, bCenter bool) {
-	xImage_EnableCenter.Call(uintptr(hImage), common.BoolPtr(bCenter))
+// bCenter: 是否居中显示, 不填默认为 true.
+func XImage_EnableCenter(hImage int, bCenter ...bool) {
+	enable := true
+	if len(bCenter) > 0 {
+		enable = bCenter[0]
+	}
+	xImage_EnableCenter.Call(uintptr(hImage), common.BoolPtr(enable))
 }
 
 // 图片_判断居中, 判断图片是否居中显示.

@@ -27,18 +27,26 @@ func XUI_GetStyle(hXCGUI int) xcc.XC_OBJECT_STYLE {
 //
 // hXCGUI: 对象句柄.
 //
-// bEnable: 是否启用.
-func XUI_EnableCSS(hXCGUI int, bEnable bool) {
-	xUI_EnableCSS.Call(uintptr(hXCGUI), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XUI_EnableCSS(hXCGUI int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xUI_EnableCSS.Call(uintptr(hXCGUI), common.BoolPtr(enable))
 }
 
 // XUI_EnableCssEx 可视对象_启用CSS, 启用或禁用样式, 仅设置自身属性, 不包含内嵌子元素属性, 例如: 滚动视图上的滚动条, 滚动条上的按钮
 //
 // hXCGUI: 对象句柄.
 //
-// bEnable: 是否启用.
-func XUI_EnableCssEx(hXCGUI int, bEnable bool) {
-	xUI_EnableCssEx.Call(uintptr(hXCGUI), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XUI_EnableCssEx(hXCGUI int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xUI_EnableCssEx.Call(uintptr(hXCGUI), common.BoolPtr(enable))
 }
 
 // XUI_SetCssName 可视对象_置CSS名称, 设置CSS[套用样式]名称.

@@ -359,11 +359,7 @@ func (i *Image) SetSplitEqual(nCount, iIndex int32) *Image {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (i *Image) EnableTranColor(bEnable ...bool) *Image {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XImage_EnableTranColor(i.Handle, enable)
+	xc.XImage_EnableTranColor(i.Handle, bEnable...)
 	return i
 }
 
@@ -371,11 +367,7 @@ func (i *Image) EnableTranColor(bEnable ...bool) *Image {
 //
 // bEnable: 是否启用自动销毁, 不填默认为 true.
 func (i *Image) EnableAutoDestroy(bEnable ...bool) *Image {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XImage_EnableAutoDestroy(i.Handle, enable)
+	xc.XImage_EnableAutoDestroy(i.Handle, bEnable...)
 	return i
 }
 
@@ -383,11 +375,7 @@ func (i *Image) EnableAutoDestroy(bEnable ...bool) *Image {
 //
 // bCenter: 是否居中显示, 不填默认为 true.
 func (i *Image) EnableCenter(bCenter ...bool) *Image {
-	enable := true
-	if len(bCenter) > 0 {
-		enable = bCenter[0]
-	}
-	xc.XImage_EnableCenter(i.Handle, enable)
+	xc.XImage_EnableCenter(i.Handle, bCenter...)
 	return i
 }
 

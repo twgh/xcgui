@@ -27,11 +27,7 @@ func (u *UI) GetStyle() xcc.XC_OBJECT_STYLE {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (u *UI) EnableCSS(bEnable ...bool) *UI {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XUI_EnableCSS(u.Handle, enable)
+	xc.XUI_EnableCSS(u.Handle, bEnable...)
 	return u
 }
 
@@ -39,11 +35,7 @@ func (u *UI) EnableCSS(bEnable ...bool) *UI {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (u *UI) EnableCssEx(bEnable ...bool) *UI {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XUI_EnableCssEx(u.Handle, enable)
+	xc.XUI_EnableCssEx(u.Handle, bEnable...)
 	return u
 }
 

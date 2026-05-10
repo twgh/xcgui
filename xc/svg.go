@@ -171,9 +171,13 @@ func XSvg_GetViewBox(hSvg int, pViewBox *RECT) {
 //
 // hSvg: SVG句柄.
 //
-// bEnable: 是否自动销毁.
-func XSvg_EnableAutoDestroy(hSvg int, bEnable bool) {
-	xSvg_EnableAutoDestroy.Call(uintptr(hSvg), common.BoolPtr(bEnable))
+// bEnable: 是否自动销毁, 不填默认为 true.
+func XSvg_EnableAutoDestroy(hSvg int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xSvg_EnableAutoDestroy.Call(uintptr(hSvg), common.BoolPtr(enable))
 }
 
 // SVG_增加引用计数.
@@ -319,7 +323,11 @@ func XSvg_GetRotate(hSvg int, pAngle *float32, pX *float32, pY *float32, pbOffse
 //
 // hSvg: SVG句柄.
 //
-// bShow: 是否显示.
-func XSvg_Show(hSvg int, bShow bool) {
-	xSvg_Show.Call(uintptr(hSvg), common.BoolPtr(bShow))
+// bShow: 是否显示, 不填默认为 true.
+func XSvg_Show(hSvg int, bShow ...bool) {
+	show := true
+	if len(bShow) > 0 {
+		show = bShow[0]
+	}
+	xSvg_Show.Call(uintptr(hSvg), common.BoolPtr(show))
 }

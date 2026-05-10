@@ -19,18 +19,26 @@ func XWidget_IsShow(hXCGUI int) bool {
 //
 // hXCGUI: 对象句柄.
 //
-// bShow: 是否显示.
-func XWidget_Show(hXCGUI int, bShow bool) {
-	xWidget_Show.Call(uintptr(hXCGUI), common.BoolPtr(bShow))
+// bShow: 是否显示, 不填默认为 true.
+func XWidget_Show(hXCGUI int, bShow ...bool) {
+	show := true
+	if len(bShow) > 0 {
+		show = bShow[0]
+	}
+	xWidget_Show.Call(uintptr(hXCGUI), common.BoolPtr(show))
 }
 
 // 窗口组件_启用布局控制.
 //
-// hXCGUI:.
+// hXCGUI: 对象句柄.
 //
-// bEnable:.
-func XWidget_EnableLayoutControl(hXCGUI int, bEnable bool) {
-	xWidget_EnableLayoutControl.Call(uintptr(hXCGUI), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XWidget_EnableLayoutControl(hXCGUI int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xWidget_EnableLayoutControl.Call(uintptr(hXCGUI), common.BoolPtr(enable))
 }
 
 // 窗口组件_是否布局控制.
@@ -77,27 +85,39 @@ func XWidget_GetHWINDOW(hXCGUI int) int {
 //
 // hXCGUI: UI对象句柄.
 //
-// bWrap: 是否换行.
-func XWidget_LayoutItem_EnableWrap(hXCGUI int, bWrap bool) {
-	xWidget_LayoutItem_EnableWrap.Call(uintptr(hXCGUI), common.BoolPtr(bWrap))
+// bWrap: 是否换行, 不填默认为 true.
+func XWidget_LayoutItem_EnableWrap(hXCGUI int, bWrap ...bool) {
+	enable := true
+	if len(bWrap) > 0 {
+		enable = bWrap[0]
+	}
+	xWidget_LayoutItem_EnableWrap.Call(uintptr(hXCGUI), common.BoolPtr(enable))
 }
 
 // 窗口组件_布局项_启用交换, 根据水平垂直布局变换, 交换属性(宽度,高度,最小宽度,最小高度).
 //
 // hXCGUI: UI对象句柄.
 //
-// bEnable: 是否启用.
-func XWidget_LayoutItem_EnableSwap(hXCGUI int, bEnable bool) {
-	xWidget_LayoutItem_EnableSwap.Call(uintptr(hXCGUI), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XWidget_LayoutItem_EnableSwap(hXCGUI int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xWidget_LayoutItem_EnableSwap.Call(uintptr(hXCGUI), common.BoolPtr(enable))
 }
 
 // 窗口组件_布局项_启用浮动, 向反方向对齐.
 //
 // hXCGUI: UI对象句柄.
 //
-// bFloat: 是否浮动.
-func XWidget_LayoutItem_EnableFloat(hXCGUI int, bFloat bool) {
-	xWidget_LayoutItem_EnableFloat.Call(uintptr(hXCGUI), common.BoolPtr(bFloat))
+// bFloat: 是否浮动, 不填默认为 true.
+func XWidget_LayoutItem_EnableFloat(hXCGUI int, bFloat ...bool) {
+	enable := true
+	if len(bFloat) > 0 {
+		enable = bFloat[0]
+	}
+	xWidget_LayoutItem_EnableFloat.Call(uintptr(hXCGUI), common.BoolPtr(enable))
 }
 
 // 窗口组件_布局项_置宽度.
