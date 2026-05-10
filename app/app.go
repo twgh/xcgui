@@ -38,11 +38,7 @@ type App struct {
 //
 // bD2D: 是否启用D2D, 不填默认为 true.
 func New(bD2D ...bool) *App {
-	b := true
-	if len(bD2D) > 0 {
-		b = bD2D[0]
-	}
-	if !xc.XInitXCGUI(b) {
+	if !xc.XInitXCGUI(bD2D...) {
 		return nil
 	}
 	return &App{}
@@ -353,11 +349,7 @@ func (a *App) SetTextRenderingHint(nType int32) *App {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (a *App) EnableGdiDrawText(bEnable ...bool) *App {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XC_EnableGdiDrawText(enable)
+	xc.XC_EnableGdiDrawText(bEnable...)
 	return a
 }
 
@@ -386,11 +378,7 @@ func (a *App) CombineRect(pDest *xc.RECT, pSrc1 *xc.RECT, pSrc2 *xc.RECT) *App {
 //
 // bShow: 是否显示, 不填默认为 true.
 func (a *App) ShowLayoutFrame(bShow ...bool) *App {
-	show := true
-	if len(bShow) > 0 {
-		show = bShow[0]
-	}
-	xc.XC_ShowLayoutFrame(show)
+	xc.XC_ShowLayoutFrame(bShow...)
 	return a
 }
 
@@ -398,11 +386,7 @@ func (a *App) ShowLayoutFrame(bShow ...bool) *App {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (a *App) EnableDebugFile(bEnable ...bool) *App {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XC_EnableDebugFile(enable)
+	xc.XC_EnableDebugFile(bEnable...)
 	return a
 }
 
@@ -410,11 +394,7 @@ func (a *App) EnableDebugFile(bEnable ...bool) *App {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (a *App) EnableResMonitor(bEnable ...bool) *App {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XC_EnableResMonitor(enable)
+	xc.XC_EnableResMonitor(bEnable...)
 	return a
 }
 
@@ -430,11 +410,7 @@ func (a *App) SetLayoutFrameColor(color uint32) *App {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (a *App) EnableErrorMessageBox(bEnable ...bool) *App {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XC_EnableErrorMessageBox(enable)
+	xc.XC_EnableErrorMessageBox(bEnable...)
 	return a
 }
 
@@ -442,11 +418,7 @@ func (a *App) EnableErrorMessageBox(bEnable ...bool) *App {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (a *App) EnableAutoExitApp(bEnable ...bool) *App {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XC_EnableAutoExitApp(enable)
+	xc.XC_EnableAutoExitApp(bEnable...)
 	return a
 }
 
@@ -1032,11 +1004,7 @@ func (a *App) LoadStyleFromStringW(fileName string, str string) bool {
 //
 // bShow: 是否显示, 不填默认为 true.
 func (a *App) ShowSvgFrame(bShow ...bool) *App {
-	show := true
-	if len(bShow) > 0 {
-		show = bShow[0]
-	}
-	xc.XC_ShowSvgFrame(show)
+	xc.XC_ShowSvgFrame(bShow...)
 	return a
 }
 
@@ -1154,11 +1122,7 @@ func (a *App) NotifyMsg_SetBorderSize(hWindow int, left, top, right, bottom int3
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (a *App) EnableAutoDPI(bEnable ...bool) *App {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XC_EnableAutoDPI(enable)
+	xc.XC_EnableAutoDPI(bEnable...)
 	return a
 }
 
@@ -1179,13 +1143,9 @@ func (a *App) SetWindowIcon(hImage int) *App {
 //
 // 参考[MSDN](https://learn.microsoft.com/zh-cn/windows/win32/hidpi/setting-the-default-dpi-awareness-for-a-process)
 //
-// bEnable: 是否启用.
+// bEnable: 是否启用, 不填默认为 true.
 func (a *App) EnableDPI(bEnable ...bool) bool {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	return xc.XC_EnableDPI(enable)
+	return xc.XC_EnableDPI(bEnable...)
 }
 
 // 炫彩_启用自动重绘UI. 当修改UI后将自动调用重绘函数更新UI.
@@ -1194,11 +1154,7 @@ func (a *App) EnableDPI(bEnable ...bool) bool {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (a *App) EnableAutoRedrawUI(bEnable ...bool) *App {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XC_EnableAutoRedrawUI(enable)
+	xc.XC_EnableAutoRedrawUI(bEnable...)
 	return a
 }
 

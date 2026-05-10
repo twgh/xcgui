@@ -30,14 +30,18 @@ func IsUiThread() bool {
 
 // XInitXCGUI 炫彩_初始化.
 //
-// bD2D: 是否启用D2D.
-func XInitXCGUI(bD2D bool) bool {
+// bD2D: 是否启用D2D, 不填默认为 true.
+func XInitXCGUI(bD2D ...bool) bool {
+	b := true
+	if len(bD2D) > 0 {
+		b = bD2D[0]
+	}
 	moudle := loadXCGUI()
 	if moudle.Handle() == 0 {
 		return false
 	}
 
-	r, _, _ := xInitXCGUI.Call(common.BoolPtr(bD2D))
+	r, _, _ := xInitXCGUI.Call(common.BoolPtr(b))
 	if r != 0 {
 		ThreadId = getCurrentThreadId()
 		return true
@@ -319,9 +323,13 @@ func XC_SetTextRenderingHint(nType int32) {
 
 // 炫彩_启用GDI绘制文本, 将影响到以下函数: XDraw_TextOut, XDraw_TextOutEx, XDraw_TextOutA.
 //
-// bEnable: 是否启用.
-func XC_EnableGdiDrawText(bEnable bool) {
-	xC_EnableGdiDrawText.Call(common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XC_EnableGdiDrawText(bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xC_EnableGdiDrawText.Call(common.BoolPtr(enable))
 }
 
 // 炫彩_判断矩形相交, 判断两个矩形是否相交及重叠.
@@ -347,23 +355,35 @@ func XC_CombineRect(pDest *RECT, pSrc1 *RECT, pSrc2 *RECT) {
 
 // 炫彩_显示布局边界, 显示布局对象边界.
 //
-// bShow: 是否显示.
-func XC_ShowLayoutFrame(bShow bool) {
-	xC_ShowLayoutFrame.Call(common.BoolPtr(bShow))
+// bShow: 是否显示, 不填默认为 true.
+func XC_ShowLayoutFrame(bShow ...bool) {
+	show := true
+	if len(bShow) > 0 {
+		show = bShow[0]
+	}
+	xC_ShowLayoutFrame.Call(common.BoolPtr(show))
 }
 
 // 炫彩_启用debug文件.
 //
-// bEnable: 是否启用.
-func XC_EnableDebugFile(bEnable bool) {
-	xC_EnableDebugFile.Call(common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XC_EnableDebugFile(bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xC_EnableDebugFile.Call(common.BoolPtr(enable))
 }
 
 // 炫彩_启用资源监视器.
 //
-// bEnable: 是否启用.
-func XC_EnableResMonitor(bEnable bool) {
-	xC_EnableResMonitor.Call(common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XC_EnableResMonitor(bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xC_EnableResMonitor.Call(common.BoolPtr(enable))
 }
 
 // 炫彩_置布局边界颜色.
@@ -375,16 +395,24 @@ func XC_SetLayoutFrameColor(color uint32) {
 
 // 炫彩_启用错误弹窗, 启用错误弹出, 通过该接口可以设置遇到严重错误时不弹出消息提示框.
 //
-// bEnable: 是否启用.
-func XC_EnableErrorMessageBox(bEnable bool) {
-	xC_EnableErrorMessageBox.Call(common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XC_EnableErrorMessageBox(bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xC_EnableErrorMessageBox.Call(common.BoolPtr(enable))
 }
 
 // 炫彩_启用自动退出程序, 启动或禁用自动退出程序, 当检测到所有用户创建的窗口都关闭时, 自动退出程序; 可调用 XC_PostQuitMessage() 手动退出程序.
 //
-// bEnable: 是否启用.
-func XC_EnableAutoExitApp(bEnable bool) {
-	xC_EnableAutoExitApp.Call(common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XC_EnableAutoExitApp(bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xC_EnableAutoExitApp.Call(common.BoolPtr(enable))
 }
 
 // 炫彩_取文本绘制大小.
@@ -683,16 +711,24 @@ func XDebug_Print(level int32, pInfo string) {
 
 // 炫彩_显示边界.
 //
-// bShow: 是否显示.
-func XC_ShowSvgFrame(bShow bool) {
-	xC_ShowSvgFrame.Call(common.BoolPtr(bShow))
+// 	bShow: 是否显示, 不填默认为 true.
+func XC_ShowSvgFrame(bShow ...bool) {
+	show := true
+	if len(bShow) > 0 {
+		show = bShow[0]
+	}
+	xC_ShowSvgFrame.Call(common.BoolPtr(show))
 }
 
 // 炫彩_启用自动DPI. 当启用后, 创建窗口时自动检测DPI调整UI缩放, 处理DPI改变消息; 禁用后,当DPI改变,需要手动设置窗口DPI.
 //
-// bEnable: 是否启用.
-func XC_EnableAutoDPI(bEnable bool) {
-	xC_EnableAutoDPI.Call(common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XC_EnableAutoDPI(bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xC_EnableAutoDPI.Call(common.BoolPtr(enable))
 }
 
 // 炫彩_启用DPI.
@@ -704,9 +740,13 @@ func XC_EnableAutoDPI(bEnable bool) {
 //
 // 参考[MSDN](https://learn.microsoft.com/zh-cn/windows/win32/hidpi/setting-the-default-dpi-awareness-for-a-process)
 //
-// bEnable: 是否启用.
-func XC_EnableDPI(bEnable bool) bool {
-	r, _, _ := xC_EnableDPI.Call(common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XC_EnableDPI(bEnable ...bool) bool {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	r, _, _ := xC_EnableDPI.Call(common.BoolPtr(enable))
 	return r != 0
 }
 
@@ -721,9 +761,13 @@ func XC_SetWindowIcon(hImage int) {
 //
 // 例如改变了按钮标题后, 将自动调用 xc.XEle_Redraw 更新UI, 默认不启用, 手动和自动各有优势.
 //
-// bEnable: 是否启用.
-func XC_EnableAutoRedrawUI(bEnable bool) {
-	xC_EnableAutoRedrawUI.Call(common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XC_EnableAutoRedrawUI(bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xC_EnableAutoRedrawUI.Call(common.BoolPtr(enable))
 }
 
 // 炫彩_取句柄总数. 获取当前所使用的句柄总数量, 返回当前所使用的句柄总数量.

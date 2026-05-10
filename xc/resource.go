@@ -8,9 +8,13 @@ import (
 
 // 资源_启用延迟加载, 启用延迟加载; 图片文件, 列表项模板文件.
 //
-// bEnable: 是否启用.
-func XRes_EnableDelayLoad(bEnable bool) {
-	xRes_EnableDelayLoad.Call(common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XRes_EnableDelayLoad(bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xRes_EnableDelayLoad.Call(common.BoolPtr(enable))
 }
 
 // 资源_置文件加载回调, 设置文件加载回调函数.
