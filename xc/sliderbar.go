@@ -91,7 +91,11 @@ func XSliderBar_GetButton(hEle int) int {
 //
 // hEle: 元素句柄.
 //
-// bHorizon: 水平或垂直.
-func XSliderBar_EnableHorizon(hEle int, bHorizon bool) {
-	xSliderBar_EnableHorizon.Call(uintptr(hEle), common.BoolPtr(bHorizon))
+// bHorizon: true为水平, false为垂直. 不填默认为 true.
+func XSliderBar_EnableHorizon(hEle int, bHorizon ...bool) {
+	horizon := true
+	if len(bHorizon) > 0 {
+		horizon = bHorizon[0]
+	}
+	xSliderBar_EnableHorizon.Call(uintptr(hEle), common.BoolPtr(horizon))
 }

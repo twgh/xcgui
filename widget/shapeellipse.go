@@ -69,11 +69,7 @@ func (s *ShapeEllipse) SetFillColor(color uint32) *ShapeEllipse {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (s *ShapeEllipse) EnableBorder(bEnable ...bool) *ShapeEllipse {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XShapeEllipse_EnableBorder(s.Handle, enable)
+	xc.XShapeEllipse_EnableBorder(s.Handle, bEnable...)
 	return s
 }
 
@@ -81,10 +77,6 @@ func (s *ShapeEllipse) EnableBorder(bEnable ...bool) *ShapeEllipse {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (s *ShapeEllipse) EnableFill(bEnable ...bool) *ShapeEllipse {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XShapeEllipse_EnableFill(s.Handle, enable)
+	xc.XShapeEllipse_EnableFill(s.Handle, bEnable...)
 	return s
 }

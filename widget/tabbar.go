@@ -200,11 +200,7 @@ func (t *TabBar) SetDown() *TabBar {
 //
 // bTile: 是否启用, 不填默认为 true.
 func (t *TabBar) EnableTile(bTile ...bool) *TabBar {
-	enable := true
-	if len(bTile) > 0 {
-		enable = bTile[0]
-	}
-	xc.XTabBar_EnableTile(t.Handle, enable)
+	xc.XTabBar_EnableTile(t.Handle, bTile...)
 	return t
 }
 
@@ -212,11 +208,7 @@ func (t *TabBar) EnableTile(bTile ...bool) *TabBar {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (t *TabBar) EnableDropMenu(bEnable ...bool) *TabBar {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XTabBar_EnableDropMenu(t.Handle, enable)
+	xc.XTabBar_EnableDropMenu(t.Handle, bEnable...)
 	return t
 }
 
@@ -224,11 +216,7 @@ func (t *TabBar) EnableDropMenu(bEnable ...bool) *TabBar {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (t *TabBar) EnableClose(bEnable ...bool) *TabBar {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XTabBar_EnableClose(t.Handle, enable)
+	xc.XTabBar_EnableClose(t.Handle, bEnable...)
 	return t
 }
 

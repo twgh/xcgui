@@ -115,9 +115,13 @@ func XShape_GetContentSize(hShape int, pSize *SIZE) {
 //
 // hShape: 形状对象句柄.
 //
-// bShow: 是否显示.
-func XShape_ShowLayout(hShape int, bShow bool) {
-	xShape_ShowLayout.Call(uintptr(hShape), common.BoolPtr(bShow))
+// bShow: 是否显示, 不填默认为 true.
+func XShape_ShowLayout(hShape int, bShow ...bool) {
+	show := true
+	if len(bShow) > 0 {
+		show = bShow[0]
+	}
+	xShape_ShowLayout.Call(uintptr(hShape), common.BoolPtr(show))
 }
 
 // 形状_调整布局.

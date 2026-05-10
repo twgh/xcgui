@@ -201,27 +201,39 @@ func XTabBar_SetDown(hEle int) {
 //
 // hEle: 元素句柄.
 //
-// bTile: 是否启用.
-func XTabBar_EnableTile(hEle int, bTile bool) {
-	xTabBar_EnableTile.Call(uintptr(hEle), common.BoolPtr(bTile))
+// bTile: 是否启用, 不填默认为 true.
+func XTabBar_EnableTile(hEle int, bTile ...bool) {
+	tile := true
+	if len(bTile) > 0 {
+		tile = bTile[0]
+	}
+	xTabBar_EnableTile.Call(uintptr(hEle), common.BoolPtr(tile))
 }
 
 // TAB条_启用下拉菜单按钮.
 //
 // hEle: 元素句柄.
 //
-// bEnable:.
-func XTabBar_EnableDropMenu(hEle int, bEnable bool) {
-	xTabBar_EnableDropMenu.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XTabBar_EnableDropMenu(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xTabBar_EnableDropMenu.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // TAB条_启用标签带关闭按钮, 启用关闭标签功能.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XTabBar_EnableClose(hEle int, bEnable bool) {
-	xTabBar_EnableClose.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XTabBar_EnableClose(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xTabBar_EnableClose.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // TAB条_置关闭按钮大小, 设置关闭按钮大小.

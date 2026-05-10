@@ -172,11 +172,7 @@ func (s *ScrollView) ScrollPosYV(posY int32) bool {
 //
 // bShow: 是否显示, 不填默认为 true.
 func (s *ScrollView) ShowSBarH(bShow ...bool) *ScrollView {
-	show := true
-	if len(bShow) > 0 {
-		show = bShow[0]
-	}
-	xc.XSView_ShowSBarH(s.Handle, show)
+	xc.XSView_ShowSBarH(s.Handle, bShow...)
 	return s
 }
 
@@ -184,11 +180,7 @@ func (s *ScrollView) ShowSBarH(bShow ...bool) *ScrollView {
 //
 // bShow: 是否显示, 不填默认为 true.
 func (s *ScrollView) ShowSBarV(bShow ...bool) *ScrollView {
-	show := true
-	if len(bShow) > 0 {
-		show = bShow[0]
-	}
-	xc.XSView_ShowSBarV(s.Handle, show)
+	xc.XSView_ShowSBarV(s.Handle, bShow...)
 	return s
 }
 
@@ -196,11 +188,7 @@ func (s *ScrollView) ShowSBarV(bShow ...bool) *ScrollView {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (s *ScrollView) EnableAutoShowScrollBar(bEnable ...bool) *ScrollView {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XSView_EnableAutoShowScrollBar(s.Handle, enable)
+	xc.XSView_EnableAutoShowScrollBar(s.Handle, bEnable...)
 	return s
 }
 

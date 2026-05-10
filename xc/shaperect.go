@@ -65,25 +65,37 @@ func XShapeRect_GetRoundAngle(hShape int, pWidth *int, pHeight *int32) {
 //
 // hShape: 形状对象句柄.
 //
-// bEnable: 是否启用.
-func XShapeRect_EnableBorder(hShape int, bEnable bool) {
-	xShapeRect_EnableBorder.Call(uintptr(hShape), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XShapeRect_EnableBorder(hShape int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xShapeRect_EnableBorder.Call(uintptr(hShape), common.BoolPtr(enable))
 }
 
 // 形状矩形_启用填充, 启用填充矩形.
 //
 // hShape: 形状对象句柄.
 //
-// bEnable: 是否启用.
-func XShapeRect_EnableFill(hShape int, bEnable bool) {
-	xShapeRect_EnableFill.Call(uintptr(hShape), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XShapeRect_EnableFill(hShape int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xShapeRect_EnableFill.Call(uintptr(hShape), common.BoolPtr(enable))
 }
 
 // 形状矩形_启用圆角.
 //
 // hShape: 形状对象句柄.
 //
-// bEnable: 是否启用.
-func XShapeRect_EnableRoundAngle(hShape int, bEnable bool) {
-	xShapeRect_EnableRoundAngle.Call(uintptr(hShape), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XShapeRect_EnableRoundAngle(hShape int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xShapeRect_EnableRoundAngle.Call(uintptr(hShape), common.BoolPtr(enable))
 }

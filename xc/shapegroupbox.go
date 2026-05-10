@@ -108,9 +108,13 @@ func XShapeGroupBox_GetRoundAngle(hShape int, pWidth *int32, pHeight *int32) {
 //
 // hShape: 形状对象句柄.
 //
-// bEnable: 是否启用.
-func XShapeGroupBox_EnableRoundAngle(hShape int, bEnable bool) {
-	xShapeGroupBox_EnableRoundAngle.Call(uintptr(hShape), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XShapeGroupBox_EnableRoundAngle(hShape int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xShapeGroupBox_EnableRoundAngle.Call(uintptr(hShape), common.BoolPtr(enable))
 }
 
 // 形状组框_取文本.

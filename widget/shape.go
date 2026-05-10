@@ -125,11 +125,7 @@ func (s *Shape) GetContentSize(pSize *xc.SIZE) *Shape {
 //
 // bShow: 是否显示, 不填默认为 true.
 func (s *Shape) ShowLayout(bShow ...bool) *Shape {
-	show := true
-	if len(bShow) > 0 {
-		show = bShow[0]
-	}
-	xc.XShape_ShowLayout(s.Handle, show)
+	xc.XShape_ShowLayout(s.Handle, bShow...)
 	return s
 }
 

@@ -89,11 +89,7 @@ func (s *ShapeRect) GetRoundAngle(pWidth *int, pHeight *int32) *ShapeRect {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (s *ShapeRect) EnableBorder(bEnable ...bool) *ShapeRect {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XShapeRect_EnableBorder(s.Handle, enable)
+	xc.XShapeRect_EnableBorder(s.Handle, bEnable...)
 	return s
 }
 
@@ -101,11 +97,7 @@ func (s *ShapeRect) EnableBorder(bEnable ...bool) *ShapeRect {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (s *ShapeRect) EnableFill(bEnable ...bool) *ShapeRect {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XShapeRect_EnableFill(s.Handle, enable)
+	xc.XShapeRect_EnableFill(s.Handle, bEnable...)
 	return s
 }
 
@@ -113,10 +105,6 @@ func (s *ShapeRect) EnableFill(bEnable ...bool) *ShapeRect {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (s *ShapeRect) EnableRoundAngle(bEnable ...bool) *ShapeRect {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XShapeRect_EnableRoundAngle(s.Handle, enable)
+	xc.XShapeRect_EnableRoundAngle(s.Handle, bEnable...)
 	return s
 }

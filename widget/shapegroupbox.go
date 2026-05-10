@@ -127,11 +127,7 @@ func (s *ShapeGroupBox) GetRoundAngle(pWidth *int32, pHeight *int32) *ShapeGroup
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (s *ShapeGroupBox) EnableRoundAngle(bEnable ...bool) *ShapeGroupBox {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XShapeGroupBox_EnableRoundAngle(s.Handle, enable)
+	xc.XShapeGroupBox_EnableRoundAngle(s.Handle, bEnable...)
 	return s
 }
 

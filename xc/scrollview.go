@@ -173,27 +173,39 @@ func XSView_ScrollPosYV(hEle int, posY int32) bool {
 //
 // hEle: 元素句柄.
 //
-// bShow: 是否显示.
-func XSView_ShowSBarH(hEle int, bShow bool) {
-	xSView_ShowSBarH.Call(uintptr(hEle), common.BoolPtr(bShow))
+// bShow: 是否显示, 不填默认为 true.
+func XSView_ShowSBarH(hEle int, bShow ...bool) {
+	show := true
+	if len(bShow) > 0 {
+		show = bShow[0]
+	}
+	xSView_ShowSBarH.Call(uintptr(hEle), common.BoolPtr(show))
 }
 
 // 滚动视_显示垂直滚动条.
 //
 // hEle: 元素句柄.
 //
-// bShow: 是否显示.
-func XSView_ShowSBarV(hEle int, bShow bool) {
-	xSView_ShowSBarV.Call(uintptr(hEle), common.BoolPtr(bShow))
+// bShow: 是否显示, 不填默认为 true.
+func XSView_ShowSBarV(hEle int, bShow ...bool) {
+	show := true
+	if len(bShow) > 0 {
+		show = bShow[0]
+	}
+	xSView_ShowSBarV.Call(uintptr(hEle), common.BoolPtr(show))
 }
 
 // 滚动视_启用自动显示滚动条.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XSView_EnableAutoShowScrollBar(hEle int, bEnable bool) {
-	xSView_EnableAutoShowScrollBar.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XSView_EnableAutoShowScrollBar(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xSView_EnableAutoShowScrollBar.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 滚动视_向左滚动.
