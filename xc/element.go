@@ -502,99 +502,143 @@ func XEle_IsFocusEx(hEle int) bool {
 //
 // hEle: 元素句柄.
 //
-// bEnable: 启用或禁用.
-func XEle_Enable(hEle int, bEnable bool) {
-	xEle_Enable.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 启用或禁用, 不填默认为 true.
+func XEle_Enable(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xEle_Enable.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 元素_启用焦点, 启用焦点.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XEle_EnableFocus(hEle int, bEnable bool) {
-	xEle_EnableFocus.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XEle_EnableFocus(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xEle_EnableFocus.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 元素_启用绘制焦点.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XEle_EnableDrawFocus(hEle int, bEnable bool) {
-	xEle_EnableDrawFocus.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XEle_EnableDrawFocus(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xEle_EnableDrawFocus.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 元素_启用绘制边框, 启用或禁用绘制默认边框.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XEle_EnableDrawBorder(hEle int, bEnable bool) {
-	xEle_EnableDrawBorder.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XEle_EnableDrawBorder(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xEle_EnableDrawBorder.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 元素_启用画布, 启用或禁用背景画布; 如果禁用那么将绘制在父的画布之上, 也就是说他没有自己的画布.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XEle_EnableCanvas(hEle int, bEnable bool) {
-	xEle_EnableCanvas.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XEle_EnableCanvas(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xEle_EnableCanvas.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 元素_启用事件_XE_PAINT_END.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XEle_EnableEvent_XE_PAINT_END(hEle int, bEnable bool) {
-	xEle_EnableEvent_XE_PAINT_END.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XEle_EnableEvent_XE_PAINT_END(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xEle_EnableEvent_XE_PAINT_END.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 元素_启用背景透明.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XEle_EnableBkTransparent(hEle int, bEnable bool) {
-	xEle_EnableBkTransparent.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XEle_EnableBkTransparent(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xEle_EnableBkTransparent.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 元素_启用鼠标穿透. 启用鼠标穿透, 如果启用, 那么该元素不能接收到鼠标事件, 但是他的子元素不受影响, 任然可以接收鼠标事件.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XEle_EnableMouseThrough(hEle int, bEnable bool) {
-	xEle_EnableMouseThrough.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XEle_EnableMouseThrough(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xEle_EnableMouseThrough.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 元素_启用接收TAB, 启用接收Tab输入.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XEle_EnableKeyTab(hEle int, bEnable bool) {
-	xEle_EnableKeyTab.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XEle_EnableKeyTab(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xEle_EnableKeyTab.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 元素_启用切换焦点, 启用接受通过键盘切换焦点.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XEle_EnableSwitchFocus(hEle int, bEnable bool) {
-	xEle_EnableSwitchFocus.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XEle_EnableSwitchFocus(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xEle_EnableSwitchFocus.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 元素_启用事件_XE_MOUSEWHEEL, 启用接收鼠标滚动事件, 如果禁用那么事件会传递给父元素.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XEle_EnableEvent_XE_MOUSEWHEEL(hEle int, bEnable bool) {
-	xEle_EnableEvent_XE_MOUSEWHEEL.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XEle_EnableEvent_XE_MOUSEWHEEL(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xEle_EnableEvent_XE_MOUSEWHEEL.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 元素_移除, 移除元素, 但不销毁.
@@ -638,9 +682,13 @@ func XEle_GetZOrder(hEle int) int32 {
 //
 // hEle: 元素句柄.
 //
-// bTopmost: 是否置顶显示.
-func XEle_EnableTopmost(hEle int, bTopmost bool) bool {
-	r, _, _ := xEle_EnableTopmost.Call(uintptr(hEle), common.BoolPtr(bTopmost))
+// bTopmost: 是否置顶显示, 不填默认为 true.
+func XEle_EnableTopmost(hEle int, bTopmost ...bool) bool {
+	topmost := true
+	if len(bTopmost) > 0 {
+		topmost = bTopmost[0]
+	}
+	r, _, _ := xEle_EnableTopmost.Call(uintptr(hEle), common.BoolPtr(topmost))
 	return r != 0
 }
 
@@ -663,7 +711,7 @@ func XEle_Redraw(hEle int, bImmediate ...bool) {
 //
 // pRect: 相对于元素客户区坐标.
 //
-// bImmediate: 是否立即重绘.
+// bImmediate: 是否立即重绘, 不填默认为 false.
 func XEle_RedrawRect(hEle int, pRect *RECT, bImmediate ...bool) {
 	b := false
 	if len(bImmediate) > 0 {
@@ -1033,9 +1081,13 @@ func XEle_SetCapture(hEle int, b bool) {
 //
 // hEle: 元素句柄.
 //
-// bEnable: 启用或关闭.
-func XEle_EnableTransparentChannel(hEle int, bEnable bool) {
-	xEle_EnableTransparentChannel.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 启用或关闭, 不填默认为 true.
+func XEle_EnableTransparentChannel(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xEle_EnableTransparentChannel.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 元素_置炫彩定时器, 设置元素定时器.

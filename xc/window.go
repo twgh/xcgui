@@ -69,7 +69,7 @@ func XWnd_ShowWindow(hWindow int, nCmdShow xcc.SW_) bool {
 //
 // hWindow: 窗口句柄.
 //
-// bTop: 是否置顶. 默认为true.
+// bTop: 是否置顶. 不填默认为true.
 func XWnd_SetTop(hWindow int, bTop ...bool) {
 	isTop := true
 	if len(bTop) > 0 {
@@ -184,7 +184,7 @@ func XWnd_GetHWND(hWindow int) uintptr {
 //
 // hWindow: 窗口资源句柄.
 //
-// bImmediate: 是否立即重绘, 默认为否.
+// bImmediate: 是否立即重绘, 不填默认为 false.
 func XWnd_Redraw(hWindow int, bImmediate ...bool) {
 	b := false
 	if len(bImmediate) > 0 {
@@ -199,7 +199,7 @@ func XWnd_Redraw(hWindow int, bImmediate ...bool) {
 //
 // pRect: 需要重绘的区域坐标.
 //
-// bImmediate: TRUE立即重绘, FALSE放入消息队列延迟重绘.
+// bImmediate: TRUE立即重绘, FALSE放入消息队列延迟重绘, 不填默认为 false.
 func XWnd_RedrawRect(hWindow int, pRect *RECT, bImmediate ...bool) {
 	b := false
 	if len(bImmediate) > 0 {

@@ -446,11 +446,7 @@ func (e *Element) IsFocusEx() bool {
 //
 // bEnable: 启用或禁用, 不填默认为 true.
 func (e *Element) Enable(bEnable ...bool) *Element {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XEle_Enable(e.Handle, enable)
+	xc.XEle_Enable(e.Handle, bEnable...)
 	return e
 }
 
@@ -458,11 +454,7 @@ func (e *Element) Enable(bEnable ...bool) *Element {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (e *Element) EnableFocus(bEnable ...bool) *Element {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XEle_EnableFocus(e.Handle, enable)
+	xc.XEle_EnableFocus(e.Handle, bEnable...)
 	return e
 }
 
@@ -470,11 +462,7 @@ func (e *Element) EnableFocus(bEnable ...bool) *Element {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (e *Element) EnableDrawFocus(bEnable ...bool) *Element {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XEle_EnableDrawFocus(e.Handle, enable)
+	xc.XEle_EnableDrawFocus(e.Handle, bEnable...)
 	return e
 }
 
@@ -482,11 +470,7 @@ func (e *Element) EnableDrawFocus(bEnable ...bool) *Element {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (e *Element) EnableDrawBorder(bEnable ...bool) *Element {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XEle_EnableDrawBorder(e.Handle, enable)
+	xc.XEle_EnableDrawBorder(e.Handle, bEnable...)
 	return e
 }
 
@@ -494,11 +478,7 @@ func (e *Element) EnableDrawBorder(bEnable ...bool) *Element {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (e *Element) EnableCanvas(bEnable ...bool) *Element {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XEle_EnableCanvas(e.Handle, enable)
+	xc.XEle_EnableCanvas(e.Handle, bEnable...)
 	return e
 }
 
@@ -506,11 +486,7 @@ func (e *Element) EnableCanvas(bEnable ...bool) *Element {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (e *Element) EnableEvent_XE_PAINT_END(bEnable ...bool) *Element {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XEle_EnableEvent_XE_PAINT_END(e.Handle, enable)
+	xc.XEle_EnableEvent_XE_PAINT_END(e.Handle, bEnable...)
 	return e
 }
 
@@ -518,11 +494,7 @@ func (e *Element) EnableEvent_XE_PAINT_END(bEnable ...bool) *Element {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (e *Element) EnableBkTransparent(bEnable ...bool) *Element {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XEle_EnableBkTransparent(e.Handle, enable)
+	xc.XEle_EnableBkTransparent(e.Handle, bEnable...)
 	return e
 }
 
@@ -530,11 +502,7 @@ func (e *Element) EnableBkTransparent(bEnable ...bool) *Element {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (e *Element) EnableMouseThrough(bEnable ...bool) *Element {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XEle_EnableMouseThrough(e.Handle, enable)
+	xc.XEle_EnableMouseThrough(e.Handle, bEnable...)
 	return e
 }
 
@@ -542,11 +510,7 @@ func (e *Element) EnableMouseThrough(bEnable ...bool) *Element {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (e *Element) EnableKeyTab(bEnable ...bool) *Element {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XEle_EnableKeyTab(e.Handle, enable)
+	xc.XEle_EnableKeyTab(e.Handle, bEnable...)
 	return e
 }
 
@@ -554,11 +518,7 @@ func (e *Element) EnableKeyTab(bEnable ...bool) *Element {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (e *Element) EnableSwitchFocus(bEnable ...bool) *Element {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XEle_EnableSwitchFocus(e.Handle, enable)
+	xc.XEle_EnableSwitchFocus(e.Handle, bEnable...)
 	return e
 }
 
@@ -566,11 +526,7 @@ func (e *Element) EnableSwitchFocus(bEnable ...bool) *Element {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (e *Element) EnableEvent_XE_MOUSEWHEEL(bEnable ...bool) *Element {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XEle_EnableEvent_XE_MOUSEWHEEL(e.Handle, enable)
+	xc.XEle_EnableEvent_XE_MOUSEWHEEL(e.Handle, bEnable...)
 	return e
 }
 
@@ -605,22 +561,14 @@ func (e *Element) GetZOrder() int32 {
 //
 // bTopmost: 是否置顶显示, 不填默认为 true.
 func (e *Element) EnableTopmost(bTopmost ...bool) bool {
-	enable := true
-	if len(bTopmost) > 0 {
-		enable = bTopmost[0]
-	}
-	return xc.XEle_EnableTopmost(e.Handle, enable)
+	return xc.XEle_EnableTopmost(e.Handle, bTopmost...)
 }
 
 // 元素_重绘.
 //
 // bImmediate: 是否立即重绘, 通常为 false 即可, 不填默认为 false.
 func (e *Element) Redraw(bImmediate ...bool) *Element {
-	b := false
-	if len(bImmediate) > 0 {
-		b = bImmediate[0]
-	}
-	xc.XEle_Redraw(e.Handle, b)
+	xc.XEle_Redraw(e.Handle, bImmediate...)
 	return e
 }
 
@@ -628,13 +576,9 @@ func (e *Element) Redraw(bImmediate ...bool) *Element {
 //
 // pRect: 相对于元素客户区坐标.
 //
-// bImmediate: 是否立即重绘.
+// bImmediate: 是否立即重绘, 不填默认为 false.
 func (e *Element) RedrawRect(pRect *xc.RECT, bImmediate ...bool) *Element {
-	b := false
-	if len(bImmediate) > 0 {
-		b = bImmediate[0]
-	}
-	xc.XEle_RedrawRect(e.Handle, pRect, b)
+	xc.XEle_RedrawRect(e.Handle, pRect, bImmediate...)
 	return e
 }
 
@@ -968,11 +912,7 @@ func (e *Element) SetCapture(b bool) *Element {
 //
 // bEnable: 启用或关闭, 不填默认为 true.
 func (e *Element) EnableTransparentChannel(bEnable ...bool) *Element {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XEle_EnableTransparentChannel(e.Handle, enable)
+	xc.XEle_EnableTransparentChannel(e.Handle, bEnable...)
 	return e
 }
 

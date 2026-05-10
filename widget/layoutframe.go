@@ -62,11 +62,7 @@ func NewLayoutFrameByUIDName(name string) *LayoutFrame {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (l *LayoutFrame) ShowLayoutFrame(bEnable ...bool) *LayoutFrame {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XLayoutFrame_ShowLayoutFrame(l.Handle, enable)
+	xc.XLayoutFrame_ShowLayoutFrame(l.Handle, bEnable...)
 	return l
 }
 
@@ -78,11 +74,7 @@ LayoutBox-布局盒子
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (l *LayoutFrame) EnableHorizon(bEnable ...bool) *LayoutFrame {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XLayoutBox_EnableHorizon(l.Handle, enable)
+	xc.XLayoutBox_EnableHorizon(l.Handle, bEnable...)
 	return l
 }
 
@@ -90,11 +82,7 @@ func (l *LayoutFrame) EnableHorizon(bEnable ...bool) *LayoutFrame {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (l *LayoutFrame) EnableAutoWrap(bEnable ...bool) *LayoutFrame {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XLayoutBox_EnableAutoWrap(l.Handle, enable)
+	xc.XLayoutBox_EnableAutoWrap(l.Handle, bEnable...)
 	return l
 }
 
@@ -102,11 +90,7 @@ func (l *LayoutFrame) EnableAutoWrap(bEnable ...bool) *LayoutFrame {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (l *LayoutFrame) EnableOverflowHide(bEnable ...bool) *LayoutFrame {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XLayoutBox_EnableOverflowHide(l.Handle, enable)
+	xc.XLayoutBox_EnableOverflowHide(l.Handle, bEnable...)
 	return l
 }
 

@@ -22,7 +22,11 @@ func XLayoutFrame_Create(x, y, cx, cy int32, hParent int) int {
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XLayoutFrame_ShowLayoutFrame(hEle int, bEnable bool) {
-	xLayoutFrame_ShowLayoutFrame.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XLayoutFrame_ShowLayoutFrame(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xLayoutFrame_ShowLayoutFrame.Call(uintptr(hEle), common.BoolPtr(enable))
 }

@@ -9,27 +9,39 @@ import (
 //
 // hLayoutBox: 窗口或布局元素或布局框架句柄.
 //
-// bEnable: 是否启用.
-func XLayoutBox_EnableHorizon(hLayoutBox int, bEnable bool) {
-	xLayoutBox_EnableHorizon.Call(uintptr(hLayoutBox), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XLayoutBox_EnableHorizon(hLayoutBox int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xLayoutBox_EnableHorizon.Call(uintptr(hLayoutBox), common.BoolPtr(enable))
 }
 
 // 布局盒子_启用自动换行.
 //
 // hLayoutBox: 窗口或布局元素或布局框架句柄.
 //
-// bEnable: 是否启用.
-func XLayoutBox_EnableAutoWrap(hLayoutBox int, bEnable bool) {
-	xLayoutBox_EnableAutoWrap.Call(uintptr(hLayoutBox), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XLayoutBox_EnableAutoWrap(hLayoutBox int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xLayoutBox_EnableAutoWrap.Call(uintptr(hLayoutBox), common.BoolPtr(enable))
 }
 
 // 布局盒子_启用溢出隐藏.
 //
 // hLayoutBox: 窗口或布局元素或布局框架句柄.
 //
-// bEnable: 是否启用.
-func XLayoutBox_EnableOverflowHide(hLayoutBox int, bEnable bool) {
-	xLayoutBox_EnableOverflowHide.Call(uintptr(hLayoutBox), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XLayoutBox_EnableOverflowHide(hLayoutBox int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xLayoutBox_EnableOverflowHide.Call(uintptr(hLayoutBox), common.BoolPtr(enable))
 }
 
 // XLayoutBox_SetAlignH 布局盒子_置水平对齐.

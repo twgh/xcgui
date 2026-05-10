@@ -38,18 +38,26 @@ func XLayout_IsEnableLayout(hEle int) bool {
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XLayout_EnableLayout(hEle int, bEnable bool) {
-	xLayout_EnableLayout.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XLayout_EnableLayout(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xLayout_EnableLayout.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 布局_显示布局边界, 显示布局边界.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否显示.
-func XLayout_ShowLayoutFrame(hEle int, bEnable bool) {
-	xLayout_ShowLayoutFrame.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否显示, 不填默认为 true.
+func XLayout_ShowLayoutFrame(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xLayout_ShowLayoutFrame.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 布局_取内宽度, 获取宽度,不包含内边距大小.
