@@ -82,19 +82,30 @@ func (e *elementEventBus) AddCallback(hEle int, eventType xcc.XE_, eventFunc int
 		isAddingMultiple = allowAddingMultiple[0]
 	}
 
-	// 生成唯一的 ID
-	id := info.nextID
-	info.nextID++
-	newCbInfo := CbInfo{ID: id, CB: cb}
+	newCbInfo := CbInfo{ID: info.nextID, CB: cb}
 
 	if isAddingMultiple {
+		info.nextID++
 		info.Cbs = append(info.Cbs, newCbInfo)
 	} else {
+		info.nextID = 0 // 因为覆盖了旧的回调函数, 所以重置为0
+		newCbInfo.ID = 0
 		info.Cbs = []CbInfo{newCbInfo}
 	}
 	eventMap[eventType] = info
 	e.EventInfoMap[hEle] = eventMap
-	return id
+	return newCbInfo.ID
+}
+
+// GetEventFuncPtr 获取指定元素指定事件的事件函数指针.
+//
+// hEle: 元素句柄.
+//
+// eventType: 事件类型, xcc.XE_.
+func (e *elementEventBus) GetEventFuncPtr(hEle int, eventType xcc.XE_) uintptr {
+	e.mu.RLock()
+	defer e.mu.RUnlock()
+	return e.EventInfoMap[hEle][eventType].EvnetFuncPtr
 }
 
 // GetCallbacks 获取指定元素指定事件的回调函数数组.
@@ -108,13 +119,28 @@ func (e *elementEventBus) GetCallbacks(hEle int, eventType xcc.XE_) []CbInfo {
 	return e.EventInfoMap[hEle][eventType].Cbs
 }
 
+// RemoveEvent 移除指定元素的指定事件以及该事件的 Callbacks.
+//
+// hEle: 元素句柄.
+//
+// nEvent: 事件类型: xcc.XE_.
+func (e *elementEventBus) RemoveEvent(hEle int, nEvent xcc.XE_) *elementEventBus {
+	cbPtr := EleEventBus.GetEventFuncPtr(hEle, nEvent)
+	if cbPtr > 0 {
+		XEle_RemoveEventCEx(hEle, nEvent, cbPtr)
+	}
+	EleEventBus.RemoveCallbacks(hEle, nEvent)
+	return e
+}
+
 // RemoveAllCallback 移除指定元素的所有事件的 Callback.
 //
 // hEle: 元素句柄.
-func (e *elementEventBus) RemoveAllCallback(hEle int) {
+func (e *elementEventBus) RemoveAllCallback(hEle int) *elementEventBus {
 	e.mu.Lock()
 	delete(e.EventInfoMap, hEle)
 	e.mu.Unlock()
+	return e
 }
 
 // RemoveCallbacks 移除指定元素指定事件的所有 Callback.
@@ -122,10 +148,11 @@ func (e *elementEventBus) RemoveAllCallback(hEle int) {
 // hEle: 元素句柄.
 //
 // eventType: 事件类型, xcc.XE_.
-func (e *elementEventBus) RemoveCallbacks(hEle int, eventType xcc.XE_) {
+func (e *elementEventBus) RemoveCallbacks(hEle int, eventType xcc.XE_) *elementEventBus {
 	e.mu.Lock()
 	defer e.mu.Unlock()
 	delete(e.EventInfoMap[hEle], eventType)
+	return e
 }
 
 // RemoveCallback 移除指定元素指定事件的指定 ID 的 Callback.
@@ -135,7 +162,7 @@ func (e *elementEventBus) RemoveCallbacks(hEle int, eventType xcc.XE_) {
 // eventType: 事件类型, xcc.XE_.
 //
 // id: 回调函数 ID.
-func (e *elementEventBus) RemoveCallback(hEle int, eventType xcc.XE_, id int) {
+func (e *elementEventBus) RemoveCallback(hEle int, eventType xcc.XE_, id int) *elementEventBus {
 	e.mu.Lock()
 	defer e.mu.Unlock()
 
@@ -146,6 +173,7 @@ func (e *elementEventBus) RemoveCallback(hEle int, eventType xcc.XE_, id int) {
 			e.EventInfoMap[hEle][eventType] = eInfo
 		}
 	}
+	return e
 }
 
 // SetCallback 设置指定元素指定事件的指定 ID 的 Callback.
@@ -157,7 +185,7 @@ func (e *elementEventBus) RemoveCallback(hEle int, eventType xcc.XE_, id int) {
 // id: 回调函数 ID.
 //
 // cb: 回调函数.
-func (e *elementEventBus) SetCallback(hEle int, eventType xcc.XE_, id int, cb interface{}) {
+func (e *elementEventBus) SetCallback(hEle int, eventType xcc.XE_, id int, cb interface{}) *elementEventBus {
 	e.mu.Lock()
 	defer e.mu.Unlock()
 
@@ -168,6 +196,7 @@ func (e *elementEventBus) SetCallback(hEle int, eventType xcc.XE_, id int, cb in
 			e.EventInfoMap[hEle][eventType] = eInfo
 		}
 	}
+	return e
 }
 
 // regEleDestroyEnd 注册元素销毁完成事件. 每个元素只注册一次.

@@ -27,7 +27,7 @@ func newWindowEventBus() *windowEventBus {
 //
 // hWindow: 炫彩窗口句柄.
 //
-// eventType: 事件类型, xcc.WM_.
+// eventType: 事件类型, xcc.WM_, xcc.XWM_.
 //
 // eventFunc: 事件函数.
 //
@@ -69,60 +69,87 @@ func (w *windowEventBus) AddCallback(hWindow int, eventType xcc.WM_, eventFunc i
 		isAddingMultiple = allowAddingMultiple[0]
 	}
 
-	// 生成唯一的 ID
-	id := info.nextID
-	info.nextID++
-	newCbInfo := CbInfo{ID: id, CB: cb}
+	newCbInfo := CbInfo{ID: info.nextID, CB: cb}
 
 	if isAddingMultiple {
+		info.nextID++
 		info.Cbs = append(info.Cbs, newCbInfo)
 	} else {
+		info.nextID = 0 // 因为覆盖了旧的回调函数, 所以重置为0
+		newCbInfo.ID = 0
 		info.Cbs = []CbInfo{newCbInfo}
 	}
 	eventMap[eventType] = info
 	w.EventInfoMap[hWindow] = eventMap
-	return id
+	return newCbInfo.ID
+}
+
+// GetEventFuncPtr 获取指定窗口指定事件的事件函数指针.
+//
+// hWindow: 窗口句柄.
+//
+// eventType: 事件类型, xcc.WM_, xcc.XWM_.
+func (w *windowEventBus) GetEventFuncPtr(hWindow int, eventType xcc.WM_) uintptr {
+	w.mu.RLock()
+	defer w.mu.RUnlock()
+	return w.EventInfoMap[hWindow][eventType].EvnetFuncPtr
 }
 
 // GetCallbacks 获取指定窗口指定事件的回调函数数组.
 //
 // hWindow: 窗口句柄.
 //
-// eventType: 事件类型, xcc.WM_.
+// eventType: 事件类型, xcc.WM_, xcc.XWM_.
 func (w *windowEventBus) GetCallbacks(hWindow int, eventType xcc.WM_) []CbInfo {
 	w.mu.RLock()
 	defer w.mu.RUnlock()
 	return w.EventInfoMap[hWindow][eventType].Cbs
 }
 
+// RemoveEvent 移除指定元素的指定事件以及该事件的 Callbacks.
+//
+// hWindow: 窗口句柄.
+//
+// nEvent: 事件类型, xcc.WM_, xcc.XWM_.
+func (w *windowEventBus) RemoveEvent(hWindow int, nEvent xcc.WM_) *windowEventBus {
+	cbPtr := WndEventBus.GetEventFuncPtr(hWindow, nEvent)
+	if cbPtr > 0 {
+		XWnd_RemoveEventCEx(hWindow, nEvent, cbPtr)
+	}
+	WndEventBus.RemoveCallbacks(hWindow, nEvent)
+	return w
+}
+
 // RemoveAllCallback 移除指定窗口的所有事件的 Callback.
 //
 // hWindow: 窗口句柄.
-func (w *windowEventBus) RemoveAllCallback(hWindow int) {
+func (w *windowEventBus) RemoveAllCallback(hWindow int) *windowEventBus {
 	w.mu.Lock()
 	delete(w.EventInfoMap, hWindow)
 	w.mu.Unlock()
+	return w
 }
 
 // RemoveCallbacks 移除指定窗口指定事件的所有 Callback.
 //
 // hWindow: 窗口句柄.
 //
-// eventType: 事件类型, xcc.WM_.
-func (w *windowEventBus) RemoveCallbacks(hWindow int, eventType xcc.WM_) {
+// eventType: 事件类型, xcc.WM_, xcc.XWM_.
+func (w *windowEventBus) RemoveCallbacks(hWindow int, eventType xcc.WM_) *windowEventBus {
 	w.mu.Lock()
 	defer w.mu.Unlock()
 	delete(w.EventInfoMap[hWindow], eventType)
+	return w
 }
 
 // RemoveCallback 移除指定窗口指定事件的指定 ID 的 Callback.
 //
 // hWindow: 窗口句柄.
 //
-// eventType: 事件类型, xcc.WM_.
+// eventType: 事件类型, xcc.WM_, xcc.XWM_.
 //
 // id: 回调函数 ID.
-func (w *windowEventBus) RemoveCallback(hWindow int, eventType xcc.WM_, id int) {
+func (w *windowEventBus) RemoveCallback(hWindow int, eventType xcc.WM_, id int) *windowEventBus {
 	w.mu.Lock()
 	defer w.mu.Unlock()
 
@@ -133,18 +160,19 @@ func (w *windowEventBus) RemoveCallback(hWindow int, eventType xcc.WM_, id int) 
 			w.EventInfoMap[hWindow][eventType] = eInfo
 		}
 	}
+	return w
 }
 
 // SetCallback 设置指定窗口指定事件的指定 ID 的 Callback.
 //
 // hWindow: 窗口句柄.
 //
-// eventType: 事件类型, xcc.WM_.
+// eventType: 事件类型, xcc.WM_, xcc.XWM_.
 //
 // id: 回调函数 ID.
 //
 // cb: 回调函数.
-func (w *windowEventBus) SetCallback(hWindow int, eventType xcc.WM_, id int, cb interface{}) {
+func (w *windowEventBus) SetCallback(hWindow int, eventType xcc.WM_, id int, cb interface{}) *windowEventBus {
 	w.mu.Lock()
 	defer w.mu.Unlock()
 
@@ -155,6 +183,7 @@ func (w *windowEventBus) SetCallback(hWindow int, eventType xcc.WM_, id int, cb 
 			w.EventInfoMap[hWindow][eventType] = eInfo
 		}
 	}
+	return w
 }
 
 // regWndNCDestroy 注册窗口非客户区销毁事件. 每个窗口只注册一次.
