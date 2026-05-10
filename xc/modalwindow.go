@@ -51,9 +51,13 @@ func XModalWnd_CreateEx(dwExStyle, dwStyle uint32, lpClassName string, x, y, cx,
 //
 // hWindow: 模态窗口句柄.
 //
-// bEnable: 开启开关.
-func XModalWnd_EnableAutoClose(hWindow int, bEnable bool) int {
-	r, _, _ := xModalWnd_EnableAutoClose.Call(uintptr(hWindow), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XModalWnd_EnableAutoClose(hWindow int, bEnable ...bool) int {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	r, _, _ := xModalWnd_EnableAutoClose.Call(uintptr(hWindow), common.BoolPtr(enable))
 	return int(r)
 }
 
@@ -61,9 +65,13 @@ func XModalWnd_EnableAutoClose(hWindow int, bEnable bool) int {
 //
 // hWindow: 模态窗口句柄.
 //
-// bEnable: 是否启用.
-func XModalWnd_EnableEscClose(hWindow int, bEnable bool) int {
-	r, _, _ := xModalWnd_EnableEscClose.Call(uintptr(hWindow), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XModalWnd_EnableEscClose(hWindow int, bEnable ...bool) int {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	r, _, _ := xModalWnd_EnableEscClose.Call(uintptr(hWindow), common.BoolPtr(enable))
 	return int(r)
 }
 

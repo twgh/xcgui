@@ -18,11 +18,7 @@ type windowBase struct {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableAutoClose(bEnable ...bool) *windowBase {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XModalWnd_EnableAutoClose(w.Handle, enable)
+	xc.XModalWnd_EnableAutoClose(w.Handle, bEnable...)
 	return w
 }
 
@@ -30,11 +26,7 @@ func (w *windowBase) EnableAutoClose(bEnable ...bool) *windowBase {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableEscClose(bEnable ...bool) *windowBase {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XModalWnd_EnableEscClose(w.Handle, enable)
+	xc.XModalWnd_EnableEscClose(w.Handle, bEnable...)
 	return w
 }
 
@@ -249,11 +241,7 @@ func (w *windowBase) GetHWND() uintptr {
 //
 // bImmediate: 是否立即重绘, 通常为 false 即可. 不填默认为 false.
 func (w *windowBase) Redraw(bImmediate ...bool) *windowBase {
-	b := false
-	if len(bImmediate) > 0 {
-		b = bImmediate[0]
-	}
-	xc.XWnd_Redraw(w.Handle, b)
+	xc.XWnd_Redraw(w.Handle, bImmediate...)
 	return w
 }
 
@@ -263,11 +251,7 @@ func (w *windowBase) Redraw(bImmediate ...bool) *windowBase {
 //
 // bImmediate: TRUE立即重绘, FALSE放入消息队列延迟重绘.
 func (w *windowBase) RedrawRect(pRect *xc.RECT, bImmediate ...bool) *windowBase {
-	b := false
-	if len(bImmediate) > 0 {
-		b = bImmediate[0]
-	}
-	xc.XWnd_RedrawRect(w.Handle, pRect, b)
+	xc.XWnd_RedrawRect(w.Handle, pRect, bImmediate...)
 	return w
 }
 
@@ -338,11 +322,7 @@ func (w *windowBase) GetCursor() uintptr {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableDragBorder(bEnable ...bool) *windowBase {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XWnd_EnableDragBorder(w.Handle, enable)
+	xc.XWnd_EnableDragBorder(w.Handle, bEnable...)
 	return w
 }
 
@@ -350,11 +330,7 @@ func (w *windowBase) EnableDragBorder(bEnable ...bool) *windowBase {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableDragWindow(bEnable ...bool) *windowBase {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XWnd_EnableDragWindow(w.Handle, enable)
+	xc.XWnd_EnableDragWindow(w.Handle, bEnable...)
 	return w
 }
 
@@ -362,11 +338,7 @@ func (w *windowBase) EnableDragWindow(bEnable ...bool) *windowBase {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableDragCaption(bEnable ...bool) *windowBase {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XWnd_EnableDragCaption(w.Handle, enable)
+	xc.XWnd_EnableDragCaption(w.Handle, bEnable...)
 	return w
 }
 
@@ -374,11 +346,7 @@ func (w *windowBase) EnableDragCaption(bEnable ...bool) *windowBase {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableDrawBk(bEnable ...bool) *windowBase {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XWnd_EnableDrawBk(w.Handle, enable)
+	xc.XWnd_EnableDrawBk(w.Handle, bEnable...)
 	return w
 }
 
@@ -386,11 +354,7 @@ func (w *windowBase) EnableDrawBk(bEnable ...bool) *windowBase {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableAutoFocus(bEnable ...bool) *windowBase {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XWnd_EnableAutoFocus(w.Handle, enable)
+	xc.XWnd_EnableAutoFocus(w.Handle, bEnable...)
 	return w
 }
 
@@ -398,11 +362,7 @@ func (w *windowBase) EnableAutoFocus(bEnable ...bool) *windowBase {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableMaxWindow(bEnable ...bool) *windowBase {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XWnd_EnableMaxWindow(w.Handle, enable)
+	xc.XWnd_EnableMaxWindow(w.Handle, bEnable...)
 	return w
 }
 
@@ -410,11 +370,7 @@ func (w *windowBase) EnableMaxWindow(bEnable ...bool) *windowBase {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableLimitWindowSize(bEnable ...bool) *windowBase {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XWnd_EnableLimitWindowSize(w.Handle, enable)
+	xc.XWnd_EnableLimitWindowSize(w.Handle, bEnable...)
 	return w
 }
 
@@ -422,11 +378,7 @@ func (w *windowBase) EnableLimitWindowSize(bEnable ...bool) *windowBase {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableLayout(bEnable ...bool) *windowBase {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XWnd_EnableLayout(w.Handle, enable)
+	xc.XWnd_EnableLayout(w.Handle, bEnable...)
 	return w
 }
 
@@ -434,11 +386,7 @@ func (w *windowBase) EnableLayout(bEnable ...bool) *windowBase {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableLayoutOverlayBorder(bEnable ...bool) *windowBase {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XWnd_EnableLayoutOverlayBorder(w.Handle, enable)
+	xc.XWnd_EnableLayoutOverlayBorder(w.Handle, bEnable...)
 	return w
 }
 
@@ -741,11 +689,7 @@ func (w *windowBase) SetCaretColor(color uint32) *windowBase {
 //
 // bShow: 是否显示, 不填默认为 true.
 func (w *windowBase) ShowCaret(bShow ...bool) *windowBase {
-	show := true
-	if len(bShow) > 0 {
-		show = bShow[0]
-	}
-	xc.XWnd_ShowCaret(w.Handle, show)
+	xc.XWnd_ShowCaret(w.Handle, bShow...)
 	return w
 }
 
@@ -845,11 +789,7 @@ func (w *windowBase) GetRectDPI() xc.RECT {
 //
 // bMaximize: 是否最大化, 不填默认为 true.
 func (w *windowBase) MaxWindow(bMaximize ...bool) *windowBase {
-	maximize := true
-	if len(bMaximize) > 0 {
-		maximize = bMaximize[0]
-	}
-	xc.XWnd_MaxWindow(w.Handle, maximize)
+	xc.XWnd_MaxWindow(w.Handle, bMaximize...)
 	return w
 }
 
@@ -978,11 +918,7 @@ func (w *windowBase) GetTransparentType() xcc.Window_Transparent_ {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableDragFiles(bEnable ...bool) *windowBase {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XWnd_EnableDragFiles(w.Handle, enable)
+	xc.XWnd_EnableDragFiles(w.Handle, bEnable...)
 	return w
 }
 
@@ -990,11 +926,7 @@ func (w *windowBase) EnableDragFiles(bEnable ...bool) *windowBase {
 //
 // bShow: 是否显示, 不填默认为 true.
 func (w *windowBase) Show(bShow ...bool) *windowBase {
-	show := true
-	if len(bShow) > 0 {
-		show = bShow[0]
-	}
-	xc.XWnd_Show(w.Handle, show)
+	xc.XWnd_Show(w.Handle, bShow...)
 	return w
 }
 
@@ -1457,11 +1389,7 @@ LayoutBox-布局盒子
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableHorizon(bEnable ...bool) *windowBase {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XLayoutBox_EnableHorizon(w.Handle, enable)
+	xc.XLayoutBox_EnableHorizon(w.Handle, bEnable...)
 	return w
 }
 
@@ -1469,11 +1397,7 @@ func (w *windowBase) EnableHorizon(bEnable ...bool) *windowBase {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableAutoWrap(bEnable ...bool) *windowBase {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XLayoutBox_EnableAutoWrap(w.Handle, enable)
+	xc.XLayoutBox_EnableAutoWrap(w.Handle, bEnable...)
 	return w
 }
 
@@ -1481,11 +1405,7 @@ func (w *windowBase) EnableAutoWrap(bEnable ...bool) *windowBase {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) EnableOverflowHide(bEnable ...bool) *windowBase {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XLayoutBox_EnableOverflowHide(w.Handle, enable)
+	xc.XLayoutBox_EnableOverflowHide(w.Handle, bEnable...)
 	return w
 }
 

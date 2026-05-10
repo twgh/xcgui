@@ -291,81 +291,117 @@ func XWnd_GetCursor(hWindow int) uintptr {
 //
 // hWindow: 窗口句柄.
 //
-// bEnable: 是否启用.
-func XWnd_EnableDragBorder(hWindow int, bEnable bool) {
-	xWnd_EnableDragBorder.Call(uintptr(hWindow), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XWnd_EnableDragBorder(hWindow int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xWnd_EnableDragBorder.Call(uintptr(hWindow), common.BoolPtr(enable))
 }
 
 // 窗口_启用拖动窗口.
 //
 // hWindow: 窗口句柄.
 //
-// bEnable: 是否启用.
-func XWnd_EnableDragWindow(hWindow int, bEnable bool) {
-	xWnd_EnableDragWindow.Call(uintptr(hWindow), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XWnd_EnableDragWindow(hWindow int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xWnd_EnableDragWindow.Call(uintptr(hWindow), common.BoolPtr(enable))
 }
 
 // 窗口_启用拖动标题栏.
 //
 // hWindow: 窗口句柄.
 //
-// bEnable: 是否启用.
-func XWnd_EnableDragCaption(hWindow int, bEnable bool) {
-	xWnd_EnableDragCaption.Call(uintptr(hWindow), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XWnd_EnableDragCaption(hWindow int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xWnd_EnableDragCaption.Call(uintptr(hWindow), common.BoolPtr(enable))
 }
 
 // 窗口_启用绘制背景.
 //
 // hWindow: 窗口句柄.
 //
-// bEnable: 是否启用.
-func XWnd_EnableDrawBk(hWindow int, bEnable bool) {
-	xWnd_EnableDrawBk.Call(uintptr(hWindow), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XWnd_EnableDrawBk(hWindow int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xWnd_EnableDrawBk.Call(uintptr(hWindow), common.BoolPtr(enable))
 }
 
 // 窗口_启用自动焦点. 当鼠标左键按下是否获得焦点.
 //
 // hWindow: 窗口句柄.
 //
-// bEnable: 是否启用.
-func XWnd_EnableAutoFocus(hWindow int, bEnable bool) {
-	xWnd_EnableAutoFocus.Call(uintptr(hWindow), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XWnd_EnableAutoFocus(hWindow int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xWnd_EnableAutoFocus.Call(uintptr(hWindow), common.BoolPtr(enable))
 }
 
 // 窗口_启用允许最大化.
 //
 // hWindow: 窗口句柄.
 //
-// bEnable: 是否启用.
-func XWnd_EnableMaxWindow(hWindow int, bEnable bool) {
-	xWnd_EnableMaxWindow.Call(uintptr(hWindow), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XWnd_EnableMaxWindow(hWindow int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xWnd_EnableMaxWindow.Call(uintptr(hWindow), common.BoolPtr(enable))
 }
 
 // 窗口_启用限制窗口大小.
 //
 // hWindow: 窗口句柄.
 //
-// bEnable: 是否启用.
-func XWnd_EnableLimitWindowSize(hWindow int, bEnable bool) {
-	xWnd_EnableLimitWindowSize.Call(uintptr(hWindow), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XWnd_EnableLimitWindowSize(hWindow int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xWnd_EnableLimitWindowSize.Call(uintptr(hWindow), common.BoolPtr(enable))
 }
 
 // 窗口_启用布局.
 //
 // hWindow: 窗口句柄.
 //
-// bEnable: 是否启用.
-func XWnd_EnableLayout(hWindow int, bEnable bool) {
-	xWnd_EnableLayout.Call(uintptr(hWindow), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XWnd_EnableLayout(hWindow int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xWnd_EnableLayout.Call(uintptr(hWindow), common.BoolPtr(enable))
 }
 
 // 窗口_启用布局覆盖边框.
 //
 // hWindow: 窗口句柄.
 //
-// bEnable: 是否启用.
-func XWnd_EnableLayoutOverlayBorder(hWindow int, bEnable bool) {
-	xWnd_EnableLayoutOverlayBorder.Call(uintptr(hWindow), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XWnd_EnableLayoutOverlayBorder(hWindow int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xWnd_EnableLayoutOverlayBorder.Call(uintptr(hWindow), common.BoolPtr(enable))
 }
 
 // 窗口_显示布局边界.
@@ -702,9 +738,13 @@ func XWnd_SetCaretColor(hWindow int, color uint32) {
 //
 // hWindow: 窗口句柄.
 //
-// bShow: 是否显示.
-func XWnd_ShowCaret(hWindow int, bShow bool) {
-	xWnd_ShowCaret.Call(uintptr(hWindow), common.BoolPtr(bShow))
+// bShow: 是否显示, 不填默认为 true.
+func XWnd_ShowCaret(hWindow int, bShow ...bool) {
+	show := true
+	if len(bShow) > 0 {
+		show = bShow[0]
+	}
+	xWnd_ShowCaret.Call(uintptr(hWindow), common.BoolPtr(show))
 }
 
 // 窗口_销毁插入符.
@@ -774,9 +814,13 @@ func XWnd_GetRect(hWindow int, pRect *RECT) {
 //
 // hWindow: 窗口句柄.
 //
-// bMaximize: 是否最大化.
-func XWnd_MaxWindow(hWindow int, bMaximize bool) {
-	xWnd_MaxWindow.Call(uintptr(hWindow), common.BoolPtr(bMaximize))
+// bMaximize: 是否最大化, 不填默认为 true.
+func XWnd_MaxWindow(hWindow int, bMaximize ...bool) {
+	maximize := true
+	if len(bMaximize) > 0 {
+		maximize = bMaximize[0]
+	}
+	xWnd_MaxWindow.Call(uintptr(hWindow), common.BoolPtr(maximize))
 }
 
 // 窗口_置定时器.
@@ -931,9 +975,13 @@ func XWnd_Attach(hWnd uintptr, XCStyle xcc.Window_Style_) int {
 //
 // hWindow: 窗口句柄.
 //
-// bEnable: 是否启用.
-func XWnd_EnableDragFiles(hWindow int, bEnable bool) bool {
-	r, _, _ := xWnd_EnableDragFiles.Call(uintptr(hWindow), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XWnd_EnableDragFiles(hWindow int, bEnable ...bool) bool {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	r, _, _ := xWnd_EnableDragFiles.Call(uintptr(hWindow), common.BoolPtr(enable))
 	return r != 0
 }
 
@@ -941,9 +989,13 @@ func XWnd_EnableDragFiles(hWindow int, bEnable bool) bool {
 //
 // hWindow: 窗口句柄.
 //
-// bShow: 是否显示.
-func XWnd_Show(hWindow int, bShow bool) {
-	xWnd_Show.Call(uintptr(hWindow), common.BoolPtr(bShow))
+// bShow: 是否显示, 不填默认为 true.
+func XWnd_Show(hWindow int, bShow ...bool) {
+	show := true
+	if len(bShow) > 0 {
+		show = bShow[0]
+	}
+	xWnd_Show.Call(uintptr(hWindow), common.BoolPtr(show))
 }
 
 // 窗口_取插入符信息, 获取插入符信息, 返回: 插入符元素句柄.
