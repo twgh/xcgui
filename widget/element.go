@@ -78,22 +78,19 @@ func (e *Element) RemoveEventC(nEvent xcc.XE_, fn interface{}) bool {
 	return xc.XEle_RemoveEventC(e.Handle, nEvent, fn)
 }
 
-// 元素_移除事件. 只适用于 AddEvent_ 方式添加的事件.
+// 元素_移除事件, 移除指定元素的指定事件或指定事件的指定 Callback.
+//   - 只适用于 AddEvent_ 方式添加的事件.
 //
 // nEvent: 事件类型: xcc.XE_.
 //
 // id: 使用 AddEvent_ 函数返回的回调函数 ID.
 //   - 为空时, 直接移除事件.
-//   - 不为空时, 移除指定 ID 的回调函数.
+//   - 不为空时, 移除该事件指定 ID 的回调函数.
 func (e *Element) RemoveEvent(nEvent xcc.XE_, id ...int) *Element {
 	if len(id) > 0 {
 		xc.EleEventBus.RemoveCallback(e.Handle, nEvent, id[0])
 	} else {
-		cbPtr := xc.EleEventBus.EventInfoMap[e.Handle][nEvent].EvnetFuncPtr
-		if cbPtr > 0 {
-			xc.XEle_RegEventCEx(e.Handle, nEvent, cbPtr)
-		}
-		xc.EleEventBus.RemoveCallbacks(e.Handle, nEvent)
+		xc.EleEventBus.RemoveEvent(e.Handle, nEvent)
 	}
 	return e
 }
