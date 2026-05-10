@@ -12,42 +12,82 @@ type ICoreWebView2Frame2 struct {
 	ICoreWebView2Frame
 }
 
-// Event_FrameNavigationStarting 框架导航开始事件.
+// Event_FrameNavigationStarting 框架导航开始事件. 返回回调函数 ID.
 //   - 框架导航会引发 NavigationStarting 事件和 ICoreWebView2.FrameNavigationStarting 事件。
 //   - 当前框架的所有 FrameNavigationStarting 事件处理程序将在 NavigationStarting 事件处理程序之前运行。
 //   - 所有事件处理程序共享一个通用的 NavigationStartingEventArgs 对象。
 //   - 最后更改 NavigationStartingEventArgs.Cancel 属性的事件处理程序将决定是否取消框架导航。
 //   - 重定向也会引发此事件，且导航 ID 与原始导航 ID 相同。
 //   - 在所有 NavigationStarting 和 ICoreWebView2.FrameNavigationStarting 事件处理程序返回之前，导航将被阻止。
+//
+// impl: *WebViewEventImpl.
+//
+// cb: 回调函数.
+//
+// allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
+//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
+//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (i *ICoreWebView2Frame2) Event_FrameNavigationStarting(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *ICoreWebView2NavigationStartingEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	return WvEventBus.AddCallback(impl, "FrameNavigationStarting", cb, i, allowAddingMultiple...)
 }
 
-// Event_FrameContentLoading 框架内容加载事件.
+// Event_FrameContentLoading 框架内容加载事件. 返回回调函数 ID.
 //   - ContentLoading 在任何内容加载前触发，包括通过 AddScriptToExecuteOnDocumentCreated 添加的脚本。
 //   - 如果发生同页面导航（例如通过 fragment 导航或 history.pushState 导航），ContentLoading 不会触发。
 //   - 此操作在 NavigationStarting 之后、NavigationCompleted 事件之前发生。
+//
+// impl: *WebViewEventImpl.
+//
+// cb: 回调函数.
+//
+// allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
+//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
+//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (i *ICoreWebView2Frame2) Event_FrameContentLoading(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *ICoreWebView2ContentLoadingEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	return WvEventBus.AddCallback(impl, "FrameContentLoading", cb, i, allowAddingMultiple...)
 }
 
-// Event_FrameNavigationCompleted 框架导航完成事件.
+// Event_FrameNavigationCompleted 框架导航完成事件. 返回回调函数 ID.
 //   - NavigationCompleted 在 ICoreWebView2Frame 完全加载时（与 body.onload 同时运行）或加载因错误而停止时运行。
+//
+// impl: *WebViewEventImpl.
+//
+// cb: 回调函数.
+//
+// allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
+//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
+//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (i *ICoreWebView2Frame2) Event_FrameNavigationCompleted(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *ICoreWebView2NavigationCompletedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	return WvEventBus.AddCallback(impl, "FrameNavigationCompleted", cb, i, allowAddingMultiple...)
 }
 
-// Event_FrameDOMContentLoaded 框架 DOM 内容加载完成事件.
+// Event_FrameDOMContentLoaded 框架 DOM 内容加载完成事件. 返回回调函数 ID.
 //   - 当 iframe 的 html 文档被解析后，会触发 DOMContentLoaded 事件。
 //   - 这与 html 中文档的 DOMContentLoaded 事件是一致的。
+//
+// impl: *WebViewEventImpl.
+//
+// cb: 回调函数.
+//
+// allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
+//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
+//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (i *ICoreWebView2Frame2) Event_FrameDOMContentLoaded(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *ICoreWebView2DOMContentLoadedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	return WvEventBus.AddCallback(impl, "FrameDOMContentLoaded", cb, i, allowAddingMultiple...)
 }
 
-// Event_FrameWebMessageReceived 框架 Web 消息接收事件.
+// Event_FrameWebMessageReceived 框架 Web 消息接收事件. 返回回调函数 ID.
 //   - 当 ICoreWebView2Settings.IsWebMessageEnabled 设置已启用且框架文档运行 window.chrome.webview.postMessage 时，WebMessageReceived 会运行。
 //   - postMessage 函数为 void postMessage(object)，其中 object 是任何支持 JSON 转换的对象。
 //   - 当框架调用 postMessage 时，对象参数会转换为 JSON 字符串，并异步发送到宿主进程。这将导致处理程序的 Invoke 方法被调用，该 JSON 字符串作为其参数。
+//
+// impl: *WebViewEventImpl.
+//
+// cb: 回调函数.
+//
+// allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
+//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
+//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (i *ICoreWebView2Frame2) Event_FrameWebMessageReceived(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	return WvEventBus.AddCallback(impl, "FrameWebMessageReceived", cb, i, allowAddingMultiple...)
 }

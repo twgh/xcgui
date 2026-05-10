@@ -56,8 +56,16 @@ func (i *ICoreWebView2DownloadOperation) QueryInterface(refiid, object unsafe.Po
 	return nil
 }
 
-// Event_BytesReceivedChanged 下载字节改变事件.
+// Event_BytesReceivedChanged 下载字节改变事件. 返回回调函数 ID.
 //   - 当下载的字节数发生更改时触发。
+//
+// w: *WebViewEventImpl.
+//
+// cb: 回调函数.
+//
+// allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
+//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
+//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (i *ICoreWebView2DownloadOperation) Event_BytesReceivedChanged(w *WebViewEventImpl, cb func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
 	return WvEventBus.AddCallback(w, "BytesReceivedChanged", cb, i, allowAddingMultiple...)
 }
@@ -270,7 +278,15 @@ func (i *ICoreWebView2DownloadOperation) GetCanResume() (bool, error) {
 	return canResume, nil
 }
 
-// Event_EstimatedEndTimeChanged 预计结束时间改变事件.
+// Event_EstimatedEndTimeChanged 预计结束时间改变事件. 返回回调函数 ID.
+//
+// w: *WebViewEventImpl.
+//
+// cb: 回调函数.
+//
+// allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
+//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
+//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (i *ICoreWebView2DownloadOperation) Event_EstimatedEndTimeChanged(w *WebViewEventImpl, cb func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
 	return WvEventBus.AddCallback(w, "EstimatedEndTimeChanged", cb, i, allowAddingMultiple...)
 }
@@ -300,7 +316,15 @@ func (i *ICoreWebView2DownloadOperation) RemoveEstimatedEndTimeChanged(token Eve
 	return nil
 }
 
-// Event_StateChanged 下载状态改变事件.
+// Event_StateChanged 下载状态改变事件. 返回回调函数 ID.
+//
+// w: *WebViewEventImpl.
+//
+// cb: 回调函数.
+//
+// allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
+//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
+//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (i *ICoreWebView2DownloadOperation) Event_StateChanged(w *WebViewEventImpl, cb func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
 	return WvEventBus.AddCallback(w, "StateChanged", cb, i, allowAddingMultiple...)
 }

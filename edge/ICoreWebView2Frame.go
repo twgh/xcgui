@@ -89,14 +89,30 @@ func (i *ICoreWebView2Frame) GetName() (string, error) {
 	return result, nil
 }
 
-// Event_FrameNameChanged 框架名称改变事件.
+// Event_FrameNameChanged 框架名称改变事件. 返回回调函数 ID.
 //   - 当 iframe 更改其 window.name 属性时触发。
+//
+// impl: *WebViewEventImpl.
+//
+// cb: 回调函数.
+//
+// allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
+//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
+//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (i *ICoreWebView2Frame) Event_FrameNameChanged(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
 	return WvEventBus.AddCallback(impl, "FrameNameChanged", cb, i, allowAddingMultiple...)
 }
 
-// Event_FrameDestroyed 框架销毁事件.
+// Event_FrameDestroyed 框架销毁事件. 返回回调函数 ID.
 //   - 当与此 ICoreWebView2Frame 对象对应的 iframe 被移除或包含该 iframe 的文档被销毁时触发。
+//
+// impl: *WebViewEventImpl.
+//
+// cb: 回调函数.
+//
+// allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
+//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
+//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (i *ICoreWebView2Frame) Event_FrameDestroyed(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
 	return WvEventBus.AddCallback(impl, "FrameDestroyed", cb, i, allowAddingMultiple...)
 }

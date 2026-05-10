@@ -71,15 +71,31 @@ func (i *ICoreWebView2Find) GetMatchCount() (int32, error) {
 	return value, nil
 }
 
-// Event_FindActiveMatchIndexChanged 查找活动匹配项索引更改事件。
+// Event_FindActiveMatchIndexChanged 查找活动匹配项索引更改事件。返回回调函数 ID.
 //   - 当当前活动的查找匹配项索引发生变化时触发。
 //   - 这种情况可能发生在用户导航到不同的匹配项时，或者在通过编程方式更改活动匹配项时。
+//
+// impl: *WebViewEventImpl.
+//
+// cb: 回调函数.
+//
+// allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
+//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
+//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (i *ICoreWebView2Find) Event_FindActiveMatchIndexChanged(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Find) uintptr, allowAddingMultiple ...bool) (int, error) {
 	return WvEventBus.AddCallback(impl, "FindActiveMatchIndexChanged", cb, i, allowAddingMultiple...)
 }
 
-// Event_FindMatchCountChanged 查找匹配项数量更改事件。
+// Event_FindMatchCountChanged 查找匹配项数量更改事件。返回回调函数 ID.
 //   - 当文档中的匹配项总数因新的查找会话或文档更改而发生变化时，会引发此事件。
+//
+// impl: *WebViewEventImpl.
+//
+// cb: 回调函数.
+//
+// allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
+//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
+//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (i *ICoreWebView2Find) Event_FindMatchCountChanged(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Find) uintptr, allowAddingMultiple ...bool) (int, error) {
 	return WvEventBus.AddCallback(impl, "FindMatchCountChanged", cb, i, allowAddingMultiple...)
 }
