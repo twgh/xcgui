@@ -43,9 +43,13 @@ func XDateTime_GetStyle(hEle int) int32 {
 //
 // hEle: 元素句柄.
 //
-// bSlash: TRUE: 斜线, FALSE: 横线.
-func XDateTime_EnableSplitSlash(hEle int, bSlash bool) {
-	xDateTime_EnableSplitSlash.Call(uintptr(hEle), common.BoolPtr(bSlash))
+// bSlash: TRUE: 斜线, FALSE: 横线, 不填默认为 true.
+func XDateTime_EnableSplitSlash(hEle int, bSlash ...bool) {
+	slash := true
+	if len(bSlash) > 0 {
+		slash = bSlash[0]
+	}
+	xDateTime_EnableSplitSlash.Call(uintptr(hEle), common.BoolPtr(slash))
 }
 
 // 日期_取内部按钮, 获取内部按钮元素.

@@ -25,9 +25,13 @@ func XEditor_Create(x, y, cx, cy int32, hParent int) int {
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XEditor_EnableAutoMatchSpaseSelect(hEle int, bEnable bool) int {
-	r, _, _ := xEditor_EnableAutoMatchSpaseSelect.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XEditor_EnableAutoMatchSpaseSelect(hEle int, bEnable ...bool) int {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	r, _, _ := xEditor_EnableAutoMatchSpaseSelect.Call(uintptr(hEle), common.BoolPtr(enable))
 	return int(r)
 }*/
 
@@ -254,9 +258,13 @@ func XEditor_ExpandEx(hEle int, iRow int32) {
 //
 // hEle: 元素句柄.
 //
-// bExpand: 是否展开.
-func XEditor_ExpandAll(hEle int, bExpand bool) {
-	xEditor_ExpandAll.Call(uintptr(hEle), common.BoolPtr(bExpand))
+// bExpand: 是否展开, 不填默认为 true.
+func XEditor_ExpandAll(hEle int, bExpand ...bool) {
+	expand := true
+	if len(bExpand) > 0 {
+		expand = bExpand[0]
+	}
+	xEditor_ExpandAll.Call(uintptr(hEle), common.BoolPtr(expand))
 }
 
 // 代码编辑框_展开指定行.

@@ -139,11 +139,7 @@ func (c *ComboBox) SetItemTemplateXMLFromString(pStringXML string) *ComboBox {
 //
 // bEnable: 是否绘制, 不填默认为 true.
 func (c *ComboBox) EnableDrawButton(bEnable ...bool) *ComboBox {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XComboBox_EnableDrawButton(c.Handle, enable)
+	xc.XComboBox_EnableDrawButton(c.Handle, bEnable...)
 	return c
 }
 
@@ -151,11 +147,7 @@ func (c *ComboBox) EnableDrawButton(bEnable ...bool) *ComboBox {
 //
 // bEdit: 是否启用编辑, 不填默认为 true.
 func (c *ComboBox) EnableEdit(bEdit ...bool) *ComboBox {
-	enable := true
-	if len(bEdit) > 0 {
-		enable = bEdit[0]
-	}
-	xc.XComboBox_EnableEdit(c.Handle, enable)
+	xc.XComboBox_EnableEdit(c.Handle, bEdit...)
 	return c
 }
 
@@ -163,11 +155,7 @@ func (c *ComboBox) EnableEdit(bEdit ...bool) *ComboBox {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (c *ComboBox) EnableDropHeightFixed(bEnable ...bool) *ComboBox {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XComboBox_EnableDropHeightFixed(c.Handle, enable)
+	xc.XComboBox_EnableDropHeightFixed(c.Handle, bEnable...)
 	return c
 }
 

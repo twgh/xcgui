@@ -71,11 +71,7 @@ func NewEditByUIDName(name string) *Edit {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (e *Edit) EnableAutoWrap(bEnable ...bool) *Edit {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XEdit_EnableAutoWrap(e.Handle, enable)
+	xc.XEdit_EnableAutoWrap(e.Handle, bEnable...)
 	return e
 }
 
@@ -83,11 +79,7 @@ func (e *Edit) EnableAutoWrap(bEnable ...bool) *Edit {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (e *Edit) EnableReadOnly(bEnable ...bool) *Edit {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XEdit_EnableReadOnly(e.Handle, enable)
+	xc.XEdit_EnableReadOnly(e.Handle, bEnable...)
 	return e
 }
 
@@ -95,11 +87,7 @@ func (e *Edit) EnableReadOnly(bEnable ...bool) *Edit {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (e *Edit) EnableMultiLine(bEnable ...bool) *Edit {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XEdit_EnableMultiLine(e.Handle, enable)
+	xc.XEdit_EnableMultiLine(e.Handle, bEnable...)
 	return e
 }
 
@@ -107,11 +95,7 @@ func (e *Edit) EnableMultiLine(bEnable ...bool) *Edit {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (e *Edit) EnablePassword(bEnable ...bool) *Edit {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XEdit_EnablePassword(e.Handle, enable)
+	xc.XEdit_EnablePassword(e.Handle, bEnable...)
 	return e
 }
 
@@ -119,11 +103,7 @@ func (e *Edit) EnablePassword(bEnable ...bool) *Edit {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (e *Edit) EnableAutoSelAll(bEnable ...bool) *Edit {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XEdit_EnableAutoSelAll(e.Handle, enable)
+	xc.XEdit_EnableAutoSelAll(e.Handle, bEnable...)
 	return e
 }
 
@@ -131,11 +111,7 @@ func (e *Edit) EnableAutoSelAll(bEnable ...bool) *Edit {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (e *Edit) EnableAutoCancelSel(bEnable ...bool) *Edit {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XEdit_EnableAutoCancelSel(e.Handle, enable)
+	xc.XEdit_EnableAutoCancelSel(e.Handle, bEnable...)
 	return e
 }
 

@@ -47,54 +47,78 @@ func XEdit_CreateEx(x, y, cx, cy int32, nType xcc.Edit_Type_, hParent int) int {
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XEdit_EnableAutoWrap(hEle int, bEnable bool) {
-	xEdit_EnableAutoWrap.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XEdit_EnableAutoWrap(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xEdit_EnableAutoWrap.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 编辑框_启用只读.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XEdit_EnableReadOnly(hEle int, bEnable bool) {
-	xEdit_EnableReadOnly.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XEdit_EnableReadOnly(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xEdit_EnableReadOnly.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 编辑框_启用多行.
 //
-// hEle:.
+// hEle: 元素句柄.
 //
-// bEnable:.
-func XEdit_EnableMultiLine(hEle int, bEnable bool) {
-	xEdit_EnableMultiLine.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XEdit_EnableMultiLine(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xEdit_EnableMultiLine.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 编辑框_启用密码, 启用密码模式(只支持默认类型编辑框).
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XEdit_EnablePassword(hEle int, bEnable bool) {
-	xEdit_EnablePassword.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XEdit_EnablePassword(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xEdit_EnablePassword.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 编辑框_启用自动选择, 当获得焦点时,自动选择所有内容.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XEdit_EnableAutoSelAll(hEle int, bEnable bool) {
-	xEdit_EnableAutoSelAll.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XEdit_EnableAutoSelAll(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xEdit_EnableAutoSelAll.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 编辑框_启用自动取消选择, 当失去焦点时自动取消选择.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XEdit_EnableAutoCancelSel(hEle int, bEnable bool) {
-	xEdit_EnableAutoCancelSel.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XEdit_EnableAutoCancelSel(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xEdit_EnableAutoCancelSel.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 编辑框_是否只读.

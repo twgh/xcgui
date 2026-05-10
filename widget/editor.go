@@ -54,11 +54,7 @@ func NewEditorByUIDName(name string) *Editor {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (e *Editor) EnableAutoMatchSpaseSelect(bEnable ...bool) int {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	return xc.XEditor_EnableAutoMatchSpaseSelect(e.Handle, enable)
+	return xc.XEditor_EnableAutoMatchSpaseSelect(e.Handle, bEnable...)
 }*/
 
 // 代码编辑框_判断断点.
@@ -224,11 +220,7 @@ func (e *Editor) ExpandEx(iRow int32) *Editor {
 //
 // bExpand: 是否展开, 不填默认为 true.
 func (e *Editor) ExpandAll(bExpand ...bool) *Editor {
-	expand := true
-	if len(bExpand) > 0 {
-		expand = bExpand[0]
-	}
-	xc.XEditor_ExpandAll(e.Handle, expand)
+	xc.XEditor_ExpandAll(e.Handle, bExpand...)
 	return e
 }
 

@@ -237,9 +237,13 @@ func XBtn_EnableAnimation(hEle int, bEnable bool, bLoopPlay bool) {
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XBtn_EnableHotkeyPrefix(hEle int, bEnable bool) {
-	xBtn_EnableHotkeyPrefix.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XBtn_EnableHotkeyPrefix(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xBtn_EnableHotkeyPrefix.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 按钮_清除动画.

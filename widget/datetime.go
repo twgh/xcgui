@@ -67,11 +67,7 @@ func (d *DateTime) GetStyle() int32 {
 //
 // bSlash: TRUE: 斜线, FALSE: 横线, 不填默认为 true.
 func (d *DateTime) EnableSplitSlash(bSlash ...bool) *DateTime {
-	slash := true
-	if len(bSlash) > 0 {
-		slash = bSlash[0]
-	}
-	xc.XDateTime_EnableSplitSlash(d.Handle, slash)
+	xc.XDateTime_EnableSplitSlash(d.Handle, bSlash...)
 	return d
 }
 

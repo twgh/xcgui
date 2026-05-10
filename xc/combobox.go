@@ -125,27 +125,39 @@ func XComboBox_SetItemTemplateXMLFromString(hEle int, pStringXML string) {
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否绘制.
-func XComboBox_EnableDrawButton(hEle int, bEnable bool) {
-	xComboBox_EnableDrawButton.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否绘制, 不填默认为 true.
+func XComboBox_EnableDrawButton(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xComboBox_EnableDrawButton.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 组合框_启用编辑, 启用可编辑显示的文本内容.
 //
 // hEle: 元素句柄.
 //
-// bEdit: TRUE可编辑.
-func XComboBox_EnableEdit(hEle int, bEdit bool) {
-	xComboBox_EnableEdit.Call(uintptr(hEle), common.BoolPtr(bEdit))
+// bEdit: TRUE可编辑, 不填默认为 true.
+func XComboBox_EnableEdit(hEle int, bEdit ...bool) {
+	enable := true
+	if len(bEdit) > 0 {
+		enable = bEdit[0]
+	}
+	xComboBox_EnableEdit.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 组合框_启用下拉列表高度固定大小, 启用/关闭下拉列表高度固定大小.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XComboBox_EnableDropHeightFixed(hEle int, bEnable bool) {
-	xComboBox_EnableDropHeightFixed.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XComboBox_EnableDropHeightFixed(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xComboBox_EnableDropHeightFixed.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 组合框_取选择项, 获取组合框下拉列表中选择项索引.
