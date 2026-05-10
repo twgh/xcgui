@@ -89,11 +89,7 @@ func (l *List) InsertColumn(width, iItem int32) int32 {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (l *List) EnableMultiSel(bEnable ...bool) *List {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XList_EnableMultiSel(l.Handle, enable)
+	xc.XList_EnableMultiSel(l.Handle, bEnable...)
 	return l
 }
 
@@ -101,11 +97,7 @@ func (l *List) EnableMultiSel(bEnable ...bool) *List {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (l *List) EnableDragChangeColumnWidth(bEnable ...bool) *List {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XList_EnableDragChangeColumnWidth(l.Handle, enable)
+	xc.XList_EnableDragChangeColumnWidth(l.Handle, bEnable...)
 	return l
 }
 
@@ -113,11 +105,7 @@ func (l *List) EnableDragChangeColumnWidth(bEnable ...bool) *List {
 //
 // bTop: 是否启用, 不填默认为 true.
 func (l *List) EnableVScrollBarTop(bTop ...bool) *List {
-	top := true
-	if len(bTop) > 0 {
-		top = bTop[0]
-	}
-	xc.XList_EnableVScrollBarTop(l.Handle, top)
+	xc.XList_EnableVScrollBarTop(l.Handle, bTop...)
 	return l
 }
 
@@ -125,11 +113,7 @@ func (l *List) EnableVScrollBarTop(bTop ...bool) *List {
 //
 // bFull: 是否启用, 不填默认为 true.
 func (l *List) EnableRowBkFull(bFull ...bool) *List {
-	enable := true
-	if len(bFull) > 0 {
-		enable = bFull[0]
-	}
-	xc.XList_EnableRowBkFull(l.Handle, enable)
+	xc.XList_EnableRowBkFull(l.Handle, bFull...)
 	return l
 }
 
@@ -137,11 +121,7 @@ func (l *List) EnableRowBkFull(bFull ...bool) *List {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (l *List) EnableFixedRowHeight(bEnable ...bool) *List {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XList_EnableFixedRowHeight(l.Handle, enable)
+	xc.XList_EnableFixedRowHeight(l.Handle, bEnable...)
 	return l
 }
 
@@ -149,11 +129,7 @@ func (l *List) EnableFixedRowHeight(bEnable ...bool) *List {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (l *List) EnableTemplateReuse(bEnable ...bool) *List {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XList_EnableTemplateReuse(l.Handle, enable)
+	xc.XList_EnableTemplateReuse(l.Handle, bEnable...)
 	return l
 }
 
@@ -161,11 +137,7 @@ func (l *List) EnableTemplateReuse(bEnable ...bool) *List {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (l *List) EnableVirtualTable(bEnable ...bool) *List {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XList_EnableVirtualTable(l.Handle, enable)
+	xc.XList_EnableVirtualTable(l.Handle, bEnable...)
 	return l
 }
 

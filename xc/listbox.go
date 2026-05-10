@@ -46,27 +46,39 @@ func XListBox_CreateEx(x, y, cx, cy int32, hParent, col_extend_count int32) int 
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XListBox_EnableFixedRowHeight(hEle int, bEnable bool) {
-	xListBox_EnableFixedRowHeight.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XListBox_EnableFixedRowHeight(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xListBox_EnableFixedRowHeight.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 列表框_启用模板复用.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XListBox_EnableTemplateReuse(hEle int, bEnable bool) {
-	xListBox_EnableTemplateReuse.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XListBox_EnableTemplateReuse(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xListBox_EnableTemplateReuse.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 列表框_启用虚表.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XListBox_EnableVirtualTable(hEle int, bEnable bool) {
-	xListBox_EnableVirtualTable.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XListBox_EnableVirtualTable(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xListBox_EnableVirtualTable.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 列表框_置虚表行数.
@@ -354,9 +366,13 @@ func XListBox_GetTemplateObject(hEle int, iItem, nTempItemID int32) int {
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XListBox_EnableMultiSel(hEle int, bEnable bool) {
-	xListBox_EnableMultiSel.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XListBox_EnableMultiSel(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xListBox_EnableMultiSel.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 列表框_创建数据适配器, 创建数据适配器并绑定, 根据绑定的项模板初始化数据适配器的列, 返回适配器句柄.

@@ -169,27 +169,39 @@ func XListView_HitTestOffset(hEle int, pPt *POINT, pOutGroup *int32, pOutItem *i
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XListView_EnableMultiSel(hEle int, bEnable bool) {
-	xListView_EnableMultiSel.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XListView_EnableMultiSel(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xListView_EnableMultiSel.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 列表视_启用模板复用.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XListView_EnableTemplateReuse(hEle int, bEnable bool) {
-	xListView_EnableTemplateReuse.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XListView_EnableTemplateReuse(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xListView_EnableTemplateReuse.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 列表视_启用虚表.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XListView_EnableVirtualTable(hEle int, bEnable bool) {
-	xListView_EnableVirtualTable.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XListView_EnableVirtualTable(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xListView_EnableVirtualTable.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 列表视_置虚表项数量.

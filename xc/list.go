@@ -68,63 +68,91 @@ func XList_InsertColumn(hEle int, width int32, iItem int32) int32 {
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XList_EnableMultiSel(hEle int, bEnable bool) {
-	xList_EnableMultiSel.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XList_EnableMultiSel(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xList_EnableMultiSel.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 列表_启用拖动更改列宽, 启用拖动改变列宽度.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XList_EnableDragChangeColumnWidth(hEle int, bEnable bool) {
-	xList_EnableDragChangeColumnWidth.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XList_EnableDragChangeColumnWidth(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xList_EnableDragChangeColumnWidth.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 列表_启用垂直滚动条顶部对齐.
 //
 // hEle: 元素句柄.
 //
-// bTop: 是否启用.
-func XList_EnableVScrollBarTop(hEle int, bTop bool) {
-	xList_EnableVScrollBarTop.Call(uintptr(hEle), common.BoolPtr(bTop))
+// bTop: 是否启用, 不填默认为 true.
+func XList_EnableVScrollBarTop(hEle int, bTop ...bool) {
+	top := true
+	if len(bTop) > 0 {
+		top = bTop[0]
+	}
+	xList_EnableVScrollBarTop.Call(uintptr(hEle), common.BoolPtr(top))
 }
 
 // 列表_启用行背景铺满.
 //
 // hEle: 元素句柄.
 //
-// bFull: 是否启用.
-func XList_EnableRowBkFull(hEle int, bFull bool) {
-	xList_EnableRowBkFull.Call(uintptr(hEle), common.BoolPtr(bFull))
+// bFull: 是否启用, 不填默认为 true.
+func XList_EnableRowBkFull(hEle int, bFull ...bool) {
+	full := true
+	if len(bFull) > 0 {
+		full = bFull[0]
+	}
+	xList_EnableRowBkFull.Call(uintptr(hEle), common.BoolPtr(full))
 }
 
 // 列表_启用固定行高.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XList_EnableFixedRowHeight(hEle int, bEnable bool) {
-	xList_EnableFixedRowHeight.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XList_EnableFixedRowHeight(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xList_EnableFixedRowHeight.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 列表_启用模板复用.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XList_EnableTemplateReuse(hEle int, bEnable bool) {
-	xList_EnableTemplateReuse.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XList_EnableTemplateReuse(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xList_EnableTemplateReuse.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 列表_启用虚表.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XList_EnableVirtualTable(hEle int, bEnable bool) {
-	xList_EnableVirtualTable.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XList_EnableVirtualTable(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xList_EnableVirtualTable.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 列表_置虚表行数.

@@ -170,11 +170,7 @@ func (l *ListView) HitTestOffset(pPt *xc.POINT, pOutGroup *int32, pOutItem *int3
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (l *ListView) EnableMultiSel(bEnable ...bool) *ListView {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XListView_EnableMultiSel(l.Handle, enable)
+	xc.XListView_EnableMultiSel(l.Handle, bEnable...)
 	return l
 }
 
@@ -182,11 +178,7 @@ func (l *ListView) EnableMultiSel(bEnable ...bool) *ListView {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (l *ListView) EnableTemplateReuse(bEnable ...bool) *ListView {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XListView_EnableTemplateReuse(l.Handle, enable)
+	xc.XListView_EnableTemplateReuse(l.Handle, bEnable...)
 	return l
 }
 
@@ -194,11 +186,7 @@ func (l *ListView) EnableTemplateReuse(bEnable ...bool) *ListView {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (l *ListView) EnableVirtualTable(bEnable ...bool) *ListView {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XListView_EnableVirtualTable(l.Handle, enable)
+	xc.XListView_EnableVirtualTable(l.Handle, bEnable...)
 	return l
 }
 

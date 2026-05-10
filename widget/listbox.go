@@ -73,11 +73,7 @@ func NewListBoxByUIDName(name string) *ListBox {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (l *ListBox) EnableFixedRowHeight(bEnable ...bool) *ListBox {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XListBox_EnableFixedRowHeight(l.Handle, enable)
+	xc.XListBox_EnableFixedRowHeight(l.Handle, bEnable...)
 	return l
 }
 
@@ -85,11 +81,7 @@ func (l *ListBox) EnableFixedRowHeight(bEnable ...bool) *ListBox {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (l *ListBox) EnableTemplateReuse(bEnable ...bool) *ListBox {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XListBox_EnableTemplateReuse(l.Handle, enable)
+	xc.XListBox_EnableTemplateReuse(l.Handle, bEnable...)
 	return l
 }
 
@@ -97,11 +89,7 @@ func (l *ListBox) EnableTemplateReuse(bEnable ...bool) *ListBox {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (l *ListBox) EnableVirtualTable(bEnable ...bool) *ListBox {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XListBox_EnableVirtualTable(l.Handle, enable)
+	xc.XListBox_EnableVirtualTable(l.Handle, bEnable...)
 	return l
 }
 
@@ -316,11 +304,7 @@ func (l *ListBox) GetTemplateObject(iItem, nTempItemID int32) int {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (l *ListBox) EnableMultiSel(bEnable ...bool) *ListBox {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XListBox_EnableMultiSel(l.Handle, enable)
+	xc.XListBox_EnableMultiSel(l.Handle, bEnable...)
 	return l
 }
 
