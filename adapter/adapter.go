@@ -35,10 +35,6 @@ func (a *adapter) Destroy() *adapter {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (a *adapter) EnableAutoDestroy(bEnable ...bool) *adapter {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XAd_EnableAutoDestroy(a.Handle, enable)
+	xc.XAd_EnableAutoDestroy(a.Handle, bEnable...)
 	return a
 }

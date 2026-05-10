@@ -41,11 +41,7 @@ func (a *animaBase) GetObjectUI() int {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (a *animaBase) EnableAutoDestroy(bEnable ...bool) *animaBase {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XAnima_EnableAutoDestroy(a.Handle, enable)
+	xc.XAnima_EnableAutoDestroy(a.Handle, bEnable...)
 	return a
 }
 

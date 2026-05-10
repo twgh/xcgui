@@ -16,11 +16,7 @@ type AnimaItem struct {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (a *AnimaItem) EnableCompleteRelease(bEnable ...bool) *AnimaItem {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XAnimaItem_EnableCompleteRelease(a.Handle, enable)
+	xc.XAnimaItem_EnableCompleteRelease(a.Handle, bEnable...)
 	return a
 }
 
@@ -55,10 +51,6 @@ func (a *AnimaItem) GetUserData() int {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (a *AnimaItem) EnableAutoDestroy(bEnable ...bool) *AnimaItem {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XAnimaItem_EnableAutoDestroy(a.Handle, enable)
+	xc.XAnimaItem_EnableAutoDestroy(a.Handle, bEnable...)
 	return a
 }

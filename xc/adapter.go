@@ -37,7 +37,11 @@ func XAd_Destroy(hAdapter int) {
 //
 // hAdapter: 数据适配器句柄.
 //
-// bEnable: 是否启用.
-func XAd_EnableAutoDestroy(hAdapter int, bEnable bool) {
-	xAd_EnableAutoDestroy.Call(uintptr(hAdapter), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XAd_EnableAutoDestroy(hAdapter int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xAd_EnableAutoDestroy.Call(uintptr(hAdapter), common.BoolPtr(enable))
 }

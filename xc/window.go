@@ -372,9 +372,13 @@ func XWnd_EnableLayoutOverlayBorder(hWindow int, bEnable bool) {
 //
 // hWindow: 窗口句柄.
 //
-// bEnable: 是否启用.
-func XWnd_ShowLayoutFrame(hWindow int, bEnable bool) {
-	xWnd_ShowLayoutFrame.Call(uintptr(hWindow), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XWnd_ShowLayoutFrame(hWindow int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xWnd_ShowLayoutFrame.Call(uintptr(hWindow), common.BoolPtr(enable))
 }
 
 // 窗口_判断启用布局.

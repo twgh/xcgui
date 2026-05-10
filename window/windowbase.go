@@ -446,11 +446,7 @@ func (w *windowBase) EnableLayoutOverlayBorder(bEnable ...bool) *windowBase {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (w *windowBase) ShowLayoutFrame(bEnable ...bool) *windowBase {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XWnd_ShowLayoutFrame(w.Handle, enable)
+	xc.XWnd_ShowLayoutFrame(w.Handle, bEnable...)
 	return w
 }
 

@@ -479,18 +479,26 @@ func XAnima_GetObjectUI(hAnimation int) int {
 //
 // hAnimationItem: 动画项句柄.
 //
-// bEnable: 是否启用.
-func XAnimaItem_EnableCompleteRelease(hAnimationItem int, bEnable bool) {
-	xAnimaItem_EnableCompleteRelease.Call(uintptr(hAnimationItem), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XAnimaItem_EnableCompleteRelease(hAnimationItem int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xAnimaItem_EnableCompleteRelease.Call(uintptr(hAnimationItem), common.BoolPtr(enable))
 }
 
 // 动画_启用自动销毁, TRUE: 当引用计数为0时自动销毁, FALSE: 手动销毁.
 //
 // hAnimation: 动画项或动画序列或动画组句柄.
 //
-// bEnable: 是否启用.
-func XAnima_EnableAutoDestroy(hAnimation int, bEnable bool) {
-	xAnima_EnableAutoDestroy.Call(uintptr(hAnimation), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XAnima_EnableAutoDestroy(hAnimation int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xAnima_EnableAutoDestroy.Call(uintptr(hAnimation), common.BoolPtr(enable))
 }
 
 // 动画_销毁UI对象, 返回动画项句柄.
@@ -615,9 +623,13 @@ func XAnimaItem_GetUserData(hAnimationItem int) int {
 //
 // hAnimationItem: 动画项句柄.
 //
-// bEnable: 是否启用.
-func XAnimaItem_EnableAutoDestroy(hAnimationItem int, bEnable bool) {
-	xAnimaItem_EnableAutoDestroy.Call(uintptr(hAnimationItem), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XAnimaItem_EnableAutoDestroy(hAnimationItem int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xAnimaItem_EnableAutoDestroy.Call(uintptr(hAnimationItem), common.BoolPtr(enable))
 }
 
 // 动画_延迟扩展, 可以作为一个空动画, 然后在回调里处理自己的算法, 返回动画项句柄.
