@@ -183,7 +183,7 @@ func (s *ScrollBar) XSBar_GetCurPos() int32 {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (s *ScrollBar) AddEvent_SBar_Scroll(fn xc.XE_SBAR_SCROLL1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(s.Handle, xcc.XE_SBAR_SCROLL, onXE_SBAR_SCROLL, fn, allowAddingMultiple...)
 }

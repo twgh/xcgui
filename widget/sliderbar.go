@@ -128,7 +128,7 @@ func (s *SliderBar) EnableHorizon(bHorizon ...bool) *SliderBar {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (s *SliderBar) AddEvent_SliderBar_Change(fn xc.XE_SLIDERBAR_CHANGE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(s.Handle, xcc.XE_SLIDERBAR_CHANGE, onXE_SLIDERBAR_CHANGE, fn, allowAddingMultiple...)
 }

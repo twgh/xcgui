@@ -169,7 +169,7 @@ func (d *DateTime) Popup() *DateTime {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (d *DateTime) AddEvent_DateTime_Change(fn xc.XE_DATETIME_CHANGE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(d.Handle, xcc.XE_DATETIME_CHANGE, onXE_DATETIME_CHANGE, fn, allowAddingMultiple...)
 }
@@ -193,7 +193,7 @@ func onXE_DATETIME_CHANGE(hEle int, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (d *DateTime) AddEvent_DateTime_Popup_MonthCal(fn xc.XE_DATETIME_POPUP_MONTHCAL1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(d.Handle, xcc.XE_DATETIME_POPUP_MONTHCAL, onXE_DATETIME_POPUP_MONTHCAL, fn, allowAddingMultiple...)
 }
@@ -217,7 +217,7 @@ func onXE_DATETIME_POPUP_MONTHCAL(hEle int, hMonthCalWnd int, hMonthCal int, pbH
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (d *DateTime) AddEvent_DateTime_Exit_MonthCal(fn xc.XE_DATETIME_EXIT_MONTHCAL1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(d.Handle, xcc.XE_DATETIME_EXIT_MONTHCAL, onXE_DATETIME_EXIT_MONTHCAL, fn, allowAddingMultiple...)
 }

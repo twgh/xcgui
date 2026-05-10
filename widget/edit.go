@@ -814,7 +814,7 @@ func (e *Edit) ClipboardCopyAll() bool {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Edit) AddEvent_Edit_Set(fn xc.XE_EDIT_SET1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_EDIT_SET, onXE_EDIT_SET, fn, allowAddingMultiple...)
 }
@@ -838,7 +838,7 @@ func onXE_EDIT_SET(hEle int, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Edit) AddEvent_Edit_DrawRow(fn xc.XE_EDIT_DRAWROW1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_EDIT_DRAWROW, onXE_EDIT_DRAWROW, fn, allowAddingMultiple...)
 }
@@ -862,7 +862,7 @@ func onXE_EDIT_DRAWROW(hEle int, hDraw int, iRow int32, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Edit) AddEvent_Edit_Changed(fn xc.XE_EDIT_CHANGED1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_EDIT_CHANGED, onXE_EDIT_CHANGED, fn, allowAddingMultiple...)
 }
@@ -886,7 +886,7 @@ func onXE_EDIT_CHANGED(hEle int, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Edit) AddEvent_Edit_Pos_Changed(fn xc.XE_EDIT_POS_CHANGED1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_EDIT_POS_CHANGED, onXE_EDIT_POS_CHANGED, fn, allowAddingMultiple...)
 }
@@ -910,7 +910,7 @@ func onXE_EDIT_POS_CHANGED(hEle int, iPos int32, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Edit) AddEvent_Edit_Style_Changed(fn xc.XE_EDIT_STYLE_CHANGED1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_EDIT_STYLE_CHANGED, onXE_EDIT_STYLE_CHANGED, fn, allowAddingMultiple...)
 }
@@ -934,7 +934,7 @@ func onXE_EDIT_STYLE_CHANGED(hEle int, iStyle int32, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Edit) AddEvent_Edit_Enter_Get_TabAlign(fn xc.XE_EDIT_ENTER_GET_TABALIGN1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_EDIT_ENTER_GET_TABALIGN, onXE_EDIT_ENTER_GET_TABALIGN, fn, allowAddingMultiple...)
 }
@@ -960,7 +960,7 @@ func onXE_EDIT_ENTER_GET_TABALIGN(hEle int, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Edit) AddEvent_Edit_Row_Changed(fn xc.XE_EDIT_ROW_CHANGED1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_EDIT_ROW_CHANGED, onXE_EDIT_ROW_CHANGED, fn, allowAddingMultiple...)
 }
@@ -984,7 +984,7 @@ func onXE_EDIT_ROW_CHANGED(hEle int, iRow int32, nChangeRows int32, pbHandled *b
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Edit) AddEvent_Edit_SwapRow(fn xc.XE_EDIT_SWAPROW1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_EDIT_SWAPROW, onXE_EDIT_SWAPROW, fn, allowAddingMultiple...)
 }
@@ -1008,7 +1008,7 @@ func onXE_EDIT_SWAPROW(hEle int, iRow int32, bArrowUp int32, pbHandled *bool) in
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Edit) AddEvent_Edit_Color_Change(fn xc.XE_EDIT_COLOR_CHANGE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_EDIT_COLOR_CHANGE, onXE_EDIT_COLOR_CHANGE, fn, allowAddingMultiple...)
 }

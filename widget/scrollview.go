@@ -250,7 +250,7 @@ func (s *ScrollView) ScrollBottom() bool {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (s *ScrollView) AddEvent_ScrollView_Scroll_H(fn xc.XE_SCROLLVIEW_SCROLL_H1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(s.Handle, xcc.XE_SCROLLVIEW_SCROLL_H, onXE_SCROLLVIEW_SCROLL_H, fn, allowAddingMultiple...)
 }
@@ -274,7 +274,7 @@ func onXE_SCROLLVIEW_SCROLL_H(hEle int, pos int32, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (s *ScrollView) AddEvent_ScrollView_Scroll_V(fn xc.XE_SCROLLVIEW_SCROLL_V1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(s.Handle, xcc.XE_SCROLLVIEW_SCROLL_V, onXE_SCROLLVIEW_SCROLL_V, fn, allowAddingMultiple...)
 }

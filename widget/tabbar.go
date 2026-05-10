@@ -274,7 +274,7 @@ func (t *TabBar) ShowLabel(index int32, bShow bool) bool {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (t *TabBar) AddEvent_TabBar_Select(fn xc.XE_TABBAR_SELECT1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(t.Handle, xcc.XE_TABBAR_SELECT, onXE_TABBAR_SELECT, fn, allowAddingMultiple...)
 }
@@ -299,7 +299,7 @@ func onXE_TABBAR_SELECT(hEle int, iItem int32, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (t *TabBar) AddEvent_TabBar_Delete(fn xc.XE_TABBAR_DELETE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(t.Handle, xcc.XE_TABBAR_DELETE, onXE_TABBAR_DELETE, fn, allowAddingMultiple...)
 }

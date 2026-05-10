@@ -1224,7 +1224,7 @@ func (e *Element) SetToolTipDuration(nDuration int32) bool {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_Destroy_End(fn xc.XE_DESTROY_END1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_DESTROY_END, xc.OnXE_DESTROY_END, fn, allowAddingMultiple...)
 }
@@ -1233,7 +1233,7 @@ func (e *Element) AddEvent_Destroy_End(fn xc.XE_DESTROY_END1, allowAddingMultipl
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_EleProce(fn xc.XE_ELEPROCE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_ELEPROCE, onXE_ELEPROCE, fn, allowAddingMultiple...)
 }
@@ -1257,7 +1257,7 @@ func onXE_ELEPROCE(hEle int, nEvent uint32, wParam, lParam uintptr, pbHandled *b
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_Paint(fn xc.XE_PAINT1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_PAINT, onXE_PAINT, fn, allowAddingMultiple...)
 }
@@ -1281,7 +1281,7 @@ func onXE_PAINT(hEle int, hDraw int, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_Paint_End(fn xc.XE_PAINT_END1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_PAINT_END, onXE_PAINT_END, fn, allowAddingMultiple...)
 }
@@ -1305,7 +1305,7 @@ func onXE_PAINT_END(hEle int, hDraw int, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_Paint_Scrollview(fn xc.XE_PAINT_SCROLLVIEW1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_PAINT_SCROLLVIEW, onXE_PAINT_SCROLLVIEW, fn, allowAddingMultiple...)
 }
@@ -1329,7 +1329,7 @@ func onXE_PAINT_SCROLLVIEW(hEle int, hDraw int, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_MouseMove(fn xc.XE_MOUSEMOVE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_MOUSEMOVE, onXE_MOUSEMOVE, fn, allowAddingMultiple...)
 }
@@ -1353,7 +1353,7 @@ func onXE_MOUSEMOVE(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_MouseStay(fn xc.XE_MOUSESTAY1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_MOUSESTAY, onXE_MOUSESTAY, fn, allowAddingMultiple...)
 }
@@ -1377,7 +1377,7 @@ func onXE_MOUSESTAY(hEle int, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_MouseHover(fn xc.XE_MOUSEHOVER1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_MOUSEHOVER, onXE_MOUSEHOVER, fn, allowAddingMultiple...)
 }
@@ -1401,7 +1401,7 @@ func onXE_MOUSEHOVER(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_MouseLeave(fn xc.XE_MOUSELEAVE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_MOUSELEAVE, onXE_MOUSELEAVE, fn, allowAddingMultiple...)
 }
@@ -1425,7 +1425,7 @@ func onXE_MOUSELEAVE(hEle int, hEleStay int, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_MouseWheel(fn xc.XE_MOUSEWHEEL1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_MOUSEWHEEL, onXE_MOUSEWHEEL, fn, allowAddingMultiple...)
 }
@@ -1449,7 +1449,7 @@ func onXE_MOUSEWHEEL(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_LButtonDown(fn xc.XE_LBUTTONDOWN1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_LBUTTONDOWN, onXE_LBUTTONDOWN, fn, allowAddingMultiple...)
 }
@@ -1473,7 +1473,7 @@ func onXE_LBUTTONDOWN(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int 
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_LButtonUp(fn xc.XE_LBUTTONUP1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_LBUTTONUP, onXE_LBUTTONUP, fn, allowAddingMultiple...)
 }
@@ -1497,7 +1497,7 @@ func onXE_LBUTTONUP(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_RButtonDown(fn xc.XE_RBUTTONDOWN1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_RBUTTONDOWN, onXE_RBUTTONDOWN, fn, allowAddingMultiple...)
 }
@@ -1521,7 +1521,7 @@ func onXE_RBUTTONDOWN(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int 
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_RButtonUp(fn xc.XE_RBUTTONUP1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_RBUTTONUP, onXE_RBUTTONUP, fn, allowAddingMultiple...)
 }
@@ -1545,7 +1545,7 @@ func onXE_RBUTTONUP(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_LButtonDBClick(fn xc.XE_LBUTTONDBCLICK1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_LBUTTONDBCLICK, onXE_LBUTTONDBCLICK, fn, allowAddingMultiple...)
 }
@@ -1569,7 +1569,7 @@ func onXE_LBUTTONDBCLICK(hEle int, nFlags int, pPt *xc.POINT, pbHandled *bool) i
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_XC_Timer(fn xc.XE_XC_TIMER1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_XC_TIMER, onXE_XC_TIMER, fn, allowAddingMultiple...)
 }
@@ -1593,7 +1593,7 @@ func onXE_XC_TIMER(hEle int, nTimerID int, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_AdjustLayout(fn xc.XE_ADJUSTLAYOUT1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_ADJUSTLAYOUT, onXE_ADJUSTLAYOUT, fn, allowAddingMultiple...)
 }
@@ -1617,7 +1617,7 @@ func onXE_ADJUSTLAYOUT(hEle int, nFlags int32, nAdjustNo uint32, pbHandled *bool
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_ToolTip_Popup(fn xc.XE_TOOLTIP_POPUP1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_TOOLTIP_POPUP, onXE_TOOLTIP_POPUP, fn, allowAddingMultiple...)
 }
@@ -1641,7 +1641,7 @@ func onXE_TOOLTIP_POPUP(hEle int, hWindow int, pText uintptr, pbHandled *bool) i
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_AdjustLayout_End(fn xc.XE_ADJUSTLAYOUT_END1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_ADJUSTLAYOUT_END, onXE_ADJUSTLAYOUT_END, fn, allowAddingMultiple...)
 }
@@ -1665,7 +1665,7 @@ func onXE_ADJUSTLAYOUT_END(hEle int, nFlags xcc.AdjustLayout_, nAdjustNo uint32,
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_SetFocus(fn xc.XE_SETFOCUS1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_SETFOCUS, onXE_SETFOCUS, fn, allowAddingMultiple...)
 }
@@ -1689,7 +1689,7 @@ func onXE_SETFOCUS(hEle int, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_KillFocus(fn xc.XE_KILLFOCUS1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_KILLFOCUS, onXE_KILLFOCUS, fn, allowAddingMultiple...)
 }
@@ -1713,7 +1713,7 @@ func onXE_KILLFOCUS(hEle int, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_Destroy(fn xc.XE_DESTROY1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_DESTROY, onXE_DESTROY, fn, allowAddingMultiple...)
 }
@@ -1737,7 +1737,7 @@ func onXE_DESTROY(hEle int, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_Size(fn xc.XE_SIZE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_SIZE, onXE_SIZE, fn, allowAddingMultiple...)
 }
@@ -1761,7 +1761,7 @@ func onXE_SIZE(hEle int, nFlags xcc.AdjustLayout_, nAdjustNo uint32, pbHandled *
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_Show(fn xc.XE_SHOW1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_SHOW, onXE_SHOW, fn, allowAddingMultiple...)
 }
@@ -1785,7 +1785,7 @@ func onXE_SHOW(hEle int, bShow bool, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_SetFont(fn xc.XE_SETFONT1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_SETFONT, onXE_SETFONT, fn, allowAddingMultiple...)
 }
@@ -1809,7 +1809,7 @@ func onXE_SETFONT(hEle int, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_KeyDown(fn xc.XE_KEYDOWN1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_KEYDOWN, onXE_KEYDOWN, fn, allowAddingMultiple...)
 }
@@ -1833,7 +1833,7 @@ func onXE_KEYDOWN(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_KeyUp(fn xc.XE_KEYUP1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_KEYUP, onXE_KEYUP, fn, allowAddingMultiple...)
 }
@@ -1857,7 +1857,7 @@ func onXE_KEYUP(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_SysKeyDown(fn xc.XE_SYSKEYDOWN1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_SYSKEYDOWN, onXE_SYSKEYDOWN, fn, allowAddingMultiple...)
 }
@@ -1881,7 +1881,7 @@ func onXE_SYSKEYDOWN(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_SysKeyUp(fn xc.XE_SYSKEYUP1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_SYSKEYUP, onXE_SYSKEYUP, fn, allowAddingMultiple...)
 }
@@ -1905,7 +1905,7 @@ func onXE_SYSKEYUP(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_Char(fn xc.XE_CHAR1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_CHAR, onXE_CHAR, fn, allowAddingMultiple...)
 }
@@ -1929,7 +1929,7 @@ func onXE_CHAR(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_SetCapture(fn xc.XE_SETCAPTURE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_SETCAPTURE, onXE_SETCAPTURE, fn, allowAddingMultiple...)
 }
@@ -1953,7 +1953,7 @@ func onXE_SETCAPTURE(hEle int, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_KillCapture(fn xc.XE_KILLCAPTURE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_KILLCAPTURE, onXE_KILLCAPTURE, fn, allowAddingMultiple...)
 }
@@ -1977,7 +1977,7 @@ func onXE_KILLCAPTURE(hEle int, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_SetCursor(fn xc.XE_SETCURSOR1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_SETCURSOR, onXE_SETCURSOR, fn, allowAddingMultiple...)
 }
@@ -2001,7 +2001,7 @@ func onXE_SETCURSOR(hEle int, wParam, lParam uintptr, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_DropFiles(fn xc.XE_DROPFILES1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_DROPFILES, onXE_DROPFILES, fn, allowAddingMultiple...)
 }
@@ -2025,7 +2025,7 @@ func onXE_DROPFILES(hEle int, hDropInfo uintptr, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_Menu_Select(fn func(hEle int, nID int32, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_MENU_SELECT, onXE_MENU_SELECT, fn, allowAddingMultiple...)
 }
@@ -2049,7 +2049,7 @@ func onXE_MENU_SELECT(hEle int, nID int32, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_Menu_Popup(fn func(hEle int, HMENUX int, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_MENU_POPUP, onXE_MENU_POPUP, fn, allowAddingMultiple...)
 }
@@ -2073,7 +2073,7 @@ func onXE_MENU_POPUP(hEle int, HMENUX int, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_Menu_Exit(fn func(hEle int, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_MENU_EXIT, onXE_MENU_EXIT, fn, allowAddingMultiple...)
 }
@@ -2097,7 +2097,7 @@ func onXE_MENU_EXIT(hEle int, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_Menu_Popup_Wnd(fn func(hEle int, hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_MENU_POPUP_WND, onXE_MENU_POPUP_WND, fn, allowAddingMultiple...)
 }
@@ -2121,7 +2121,7 @@ func onXE_MENU_POPUP_WND(hEle int, hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandle
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_Menu_Draw_Background(fn func(hEle int, hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_MENU_DRAW_BACKGROUND, onXE_MENU_DRAW_BACKGROUND, fn, allowAddingMultiple...)
 }
@@ -2145,7 +2145,7 @@ func onXE_MENU_DRAW_BACKGROUND(hEle int, hDraw int, pInfo *xc.Menu_DrawBackgroun
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Element) AddEvent_Menu_DrawItem(fn func(hEle int, hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_MENU_DRAWITEM, onXE_MENU_DRAWITEM, fn, allowAddingMultiple...)
 }

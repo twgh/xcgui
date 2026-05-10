@@ -728,7 +728,7 @@ func (l *ListBox) GetItemHeight(iItem int32, pHeight, pSelHeight *int32) *ListBo
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *ListBox) AddEvent_ListBox_Temp_Create(fn xc.XE_LISTBOX_TEMP_CREATE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LISTBOX_TEMP_CREATE, onXE_LISTBOX_TEMP_CREATE, fn, allowAddingMultiple...)
 }
@@ -753,7 +753,7 @@ func onXE_LISTBOX_TEMP_CREATE(hEle int, pItem *xc.ListBox_Item_, nFlag int32, pb
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *ListBox) AddEvent_ListBox_Temp_Create_End(fn xc.XE_LISTBOX_TEMP_CREATE_END1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LISTBOX_TEMP_CREATE_END, onXE_LISTBOX_TEMP_CREATE_END, fn, allowAddingMultiple...)
 }
@@ -778,7 +778,7 @@ func onXE_LISTBOX_TEMP_CREATE_END(hEle int, pItem *xc.ListBox_Item_, nFlag int32
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *ListBox) AddEvent_ListBox_Temp_Destroy(fn xc.XE_LISTBOX_TEMP_DESTROY1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LISTBOX_TEMP_DESTROY, onXE_LISTBOX_TEMP_DESTROY, fn, allowAddingMultiple...)
 }
@@ -802,7 +802,7 @@ func onXE_LISTBOX_TEMP_DESTROY(hEle int, pItem *xc.ListBox_Item_, nFlag int, pbH
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *ListBox) AddEvent_ListBox_Temp_Adjust_Coordinate(fn xc.XE_LISTBOX_TEMP_ADJUST_COORDINATE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LISTBOX_TEMP_ADJUST_COORDINATE, onXE_LISTBOX_TEMP_ADJUST_COORDINATE, fn, allowAddingMultiple...)
 }
@@ -826,7 +826,7 @@ func onXE_LISTBOX_TEMP_ADJUST_COORDINATE(hEle int, pItem *xc.ListBox_Item_, pbHa
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *ListBox) AddEvent_ListBox_DrawItem(fn xc.XE_LISTBOX_DRAWITEM1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LISTBOX_DRAWITEM, onXE_LISTBOX_DRAWITEM, fn, allowAddingMultiple...)
 }
@@ -850,7 +850,7 @@ func onXE_LISTBOX_DRAWITEM(hEle int, hDraw int, pItem *xc.ListBox_Item_, pbHandl
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *ListBox) AddEvent_ListBox_Select(fn xc.XE_LISTBOX_SELECT1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LISTBOX_SELECT, onXE_LISTBOX_SELECT, fn, allowAddingMultiple...)
 }

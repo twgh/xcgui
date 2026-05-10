@@ -405,7 +405,7 @@ func (m *Menu) GetCssName(nType int32) string {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (m *Menu) AddEvent_Menu_Select(hWindowOrhEle int, fn func(hWindowOrhEle int, nID int32, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	ret := -1
 	if xc.XC_IsHWINDOW(hWindowOrhEle) {
@@ -422,7 +422,7 @@ func (m *Menu) AddEvent_Menu_Select(hWindowOrhEle int, fn func(hWindowOrhEle int
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (m *Menu) AddEvent_Menu_Popup(hWindowOrhEle int, fn func(hWindowOrhEle int, HMENUX int, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	ret := -1
 	if xc.XC_IsHWINDOW(hWindowOrhEle) {
@@ -439,7 +439,7 @@ func (m *Menu) AddEvent_Menu_Popup(hWindowOrhEle int, fn func(hWindowOrhEle int,
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (m *Menu) AddEvent_Menu_Exit(hWindowOrhEle int, fn func(hWindowOrhEle int, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	ret := -1
 	if xc.XC_IsHWINDOW(hWindowOrhEle) {
@@ -456,7 +456,7 @@ func (m *Menu) AddEvent_Menu_Exit(hWindowOrhEle int, fn func(hWindowOrhEle int, 
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (m *Menu) AddEvent_Menu_Popup_Wnd(hWindowOrhEle int, fn func(hWindowOrhEle int, hMenu int, pInfo *xc.Menu_PopupWnd_, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	ret := -1
 	if xc.XC_IsHWINDOW(hWindowOrhEle) {
@@ -473,7 +473,7 @@ func (m *Menu) AddEvent_Menu_Popup_Wnd(hWindowOrhEle int, fn func(hWindowOrhEle 
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (m *Menu) AddEvent_Menu_Draw_Background(hWindowOrhEle int, fn func(hEle int, hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	ret := -1
 	if xc.XC_IsHWINDOW(hWindowOrhEle) {
@@ -490,7 +490,7 @@ func (m *Menu) AddEvent_Menu_Draw_Background(hWindowOrhEle int, fn func(hEle int
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (m *Menu) AddEvent_Menu_DrawItem(hWindowOrhEle int, fn func(hWindowOrhEle int, hDraw int, pInfo *xc.Menu_DrawItem_, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	ret := -1
 	if xc.XC_IsHWINDOW(hWindowOrhEle) {

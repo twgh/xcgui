@@ -134,7 +134,7 @@ func (p *ProgressBar) SetColorLoad(color uint32) *ProgressBar {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (p *ProgressBar) AddEvent_ProgressBar_Change(fn xc.XE_PROGRESSBAR_CHANGE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(p.Handle, xcc.XE_PROGRESSBAR_CHANGE, onXE_PROGRESSBAR_CHANGE, fn, allowAddingMultiple...)
 }

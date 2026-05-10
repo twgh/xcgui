@@ -133,7 +133,7 @@ func (t *TrayIcon) Reset() *TrayIcon {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (t *TrayIcon) AddEvent_TrayIcon(hWindow int, fn xc.XWM_TRAYICON, allowAddingMultiple ...bool) int {
 	return xc.WndEventBus.AddCallback(hWindow, xcc.XWM_TRAYICON, onXWM_TRAYICON, fn, allowAddingMultiple...)
 }

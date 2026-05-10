@@ -123,7 +123,7 @@ func (m *MonthCal) SetTextColor(nFlag int32, color uint32) *MonthCal {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (m *MonthCal) AddEvent_MonthCal_Change(fn xc.XE_MONTHCAL_CHANGE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(m.Handle, xcc.XE_MONTHCAL_CHANGE, onXE_MONTHCAL_CHANGE, fn, allowAddingMultiple...)
 }

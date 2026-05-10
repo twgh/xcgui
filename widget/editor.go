@@ -316,7 +316,7 @@ func (e *Editor) SetAutoMatchMode(mode int32) *Editor {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Editor) AddEvent_Editor_Modify_Rows(fn xc.XE_EDITOR_MODIFY_ROWS1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_EDITOR_MODIFY_ROWS, onXE_EDITOR_MODIFY_ROWS, fn, allowAddingMultiple...)
 }
@@ -340,7 +340,7 @@ func onXE_EDITOR_MODIFY_ROWS(hEle int, iRow int32, nRows int32, pbHandled *bool)
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Editor) AddEvent_Editor_SetBreakPoint(fn xc.XE_EDITOR_SETBREAKPOINT1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_EDITOR_SETBREAKPOINT, onXE_EDITOR_SETBREAKPOINT, fn, allowAddingMultiple...)
 }
@@ -364,7 +364,7 @@ func onXE_EDITOR_SETBREAKPOINT(hEle int, iRow int32, bCheck bool, pbHandled *boo
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Editor) AddEvent_Editor_RemoveBreakPoint(fn xc.XE_EDITOR_REMOVEBREAKPOINT1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_EDITOR_REMOVEBREAKPOINT, onXE_EDITOR_REMOVEBREAKPOINT, fn, allowAddingMultiple...)
 }
@@ -388,7 +388,7 @@ func onXE_EDITOR_REMOVEBREAKPOINT(hEle int, iRow int32, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (e *Editor) AddEvent_Editor_AutoMatch_Select(fn xc.XE_EDITOR_AUTOMATCH_SELECT1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(e.Handle, xcc.XE_EDITOR_AUTOMATCH_SELECT, onXE_EDITOR_AUTOMATCH_SELECT, fn, allowAddingMultiple...)
 }

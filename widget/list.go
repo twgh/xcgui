@@ -984,7 +984,7 @@ func (l *List) CreateAdapters(col_extend_count int32) bool {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *List) AddEvent_List_Temp_Create(fn xc.XE_LIST_TEMP_CREATE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LIST_TEMP_CREATE, onXE_LIST_TEMP_CREATE, fn, allowAddingMultiple...)
 }
@@ -1009,7 +1009,7 @@ func onXE_LIST_TEMP_CREATE(hEle int, pItem *xc.List_Item_, nFlag int32, pbHandle
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *List) AddEvent_List_Temp_Create_End(fn xc.XE_LIST_TEMP_CREATE_END1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LIST_TEMP_CREATE_END, onXE_LIST_TEMP_CREATE_END, fn, allowAddingMultiple...)
 }
@@ -1034,7 +1034,7 @@ func onXE_LIST_TEMP_CREATE_END(hEle int, pItem *xc.List_Item_, nFlag int32, pbHa
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *List) AddEvent_List_Temp_Destroy(fn xc.XE_LIST_TEMP_DESTROY1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LIST_TEMP_DESTROY, onXE_LIST_TEMP_DESTROY, fn, allowAddingMultiple...)
 }
@@ -1058,7 +1058,7 @@ func onXE_LIST_TEMP_DESTROY(hEle int, pItem *xc.List_Item_, nFlag int32, pbHandl
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *List) AddEvent_List_Temp_Adjust_Coordinate(fn xc.XE_LIST_TEMP_ADJUST_COORDINATE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LIST_TEMP_ADJUST_COORDINATE, onXE_LIST_TEMP_ADJUST_COORDINATE, fn, allowAddingMultiple...)
 }
@@ -1082,7 +1082,7 @@ func onXE_LIST_TEMP_ADJUST_COORDINATE(hEle int, pItem *xc.List_Item_, pbHandled 
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *List) AddEvent_List_DrawItem(fn xc.XE_LIST_DRAWITEM1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LIST_DRAWITEM, onXE_LIST_DRAWITEM, fn, allowAddingMultiple...)
 }
@@ -1106,7 +1106,7 @@ func onXE_LIST_DRAWITEM(hEle int, hDraw int, pItem *xc.List_Item_, pbHandled *bo
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *List) AddEvent_List_Select(fn xc.XE_LIST_SELECT1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LIST_SELECT, onXE_LIST_SELECT, fn, allowAddingMultiple...)
 }
@@ -1130,7 +1130,7 @@ func onXE_LIST_SELECT(hEle int, iItem int32, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *List) AddEvent_List_Header_DrawItem(fn xc.XE_LIST_HEADER_DRAWITEM1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LIST_HEADER_DRAWITEM, onXE_LIST_HEADER_DRAWITEM, fn, allowAddingMultiple...)
 }
@@ -1154,7 +1154,7 @@ func onXE_LIST_HEADER_DRAWITEM(hEle int, hDraw int, pItem *xc.List_Header_Item_,
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *List) AddEvent_List_Header_Click(fn xc.XE_LIST_HEADER_CLICK1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LIST_HEADER_CLICK, onXE_LIST_HEADER_CLICK, fn, allowAddingMultiple...)
 }
@@ -1178,7 +1178,7 @@ func onXE_LIST_HEADER_CLICK(hEle int, iItem int32, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *List) AddEvent_List_Header_Width_Change(fn xc.XE_LIST_HEADER_WIDTH_CHANGE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LIST_HEADER_WIDTH_CHANGE, onXE_LIST_HEADER_WIDTH_CHANGE, fn, allowAddingMultiple...)
 }
@@ -1202,7 +1202,7 @@ func onXE_LIST_HEADER_WIDTH_CHANGE(hEle int, iItem int32, nWidth int32, pbHandle
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *List) AddEvent_List_Header_Temp_Create(fn xc.XE_LIST_HEADER_TEMP_CREATE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LIST_HEADER_TEMP_CREATE, onXE_LIST_HEADER_TEMP_CREATE, fn, allowAddingMultiple...)
 }
@@ -1226,7 +1226,7 @@ func onXE_LIST_HEADER_TEMP_CREATE(hEle int, pItem *xc.List_Header_Item_, pbHandl
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *List) AddEvent_List_Header_Temp_Create_End(fn xc.XE_LIST_HEADER_TEMP_CREATE_END1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LIST_HEADER_TEMP_CREATE_END, onXE_LIST_HEADER_TEMP_CREATE_END, fn, allowAddingMultiple...)
 }
@@ -1250,7 +1250,7 @@ func onXE_LIST_HEADER_TEMP_CREATE_END(hEle int, pItem *xc.List_Header_Item_, pbH
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *List) AddEvent_List_Header_Temp_Destroy(fn xc.XE_LIST_HEADER_TEMP_DESTROY1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LIST_HEADER_TEMP_DESTROY, onXE_LIST_HEADER_TEMP_DESTROY, fn, allowAddingMultiple...)
 }
@@ -1274,7 +1274,7 @@ func onXE_LIST_HEADER_TEMP_DESTROY(hEle int, pItem *xc.List_Header_Item_, pbHand
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *List) AddEvent_List_Header_Temp_Adjust_Coordinate(fn xc.XE_LIST_HEADER_TEMP_ADJUST_COORDINATE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LIST_HEADER_TEMP_ADJUST_COORDINATE, onXE_LIST_HEADER_TEMP_ADJUST_COORDINATE, fn, allowAddingMultiple...)
 }

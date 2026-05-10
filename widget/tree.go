@@ -647,7 +647,7 @@ func (t *Tree) GetItemTemplateObj() *tmpl.ListItemTemplate {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (t *Tree) AddEvent_Tree_Temp_Create(fn xc.XE_TREE_TEMP_CREATE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(t.Handle, xcc.XE_TREE_TEMP_CREATE, onXE_TREE_TEMP_CREATE, fn, allowAddingMultiple...)
 }
@@ -672,7 +672,7 @@ func onXE_TREE_TEMP_CREATE(hEle int, pItem *xc.Tree_Item_, nFlag int32, pbHandle
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (t *Tree) AddEvent_Tree_Temp_Create_End(fn xc.XE_TREE_TEMP_CREATE_END1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(t.Handle, xcc.XE_TREE_TEMP_CREATE_END, onXE_TREE_TEMP_CREATE_END, fn, allowAddingMultiple...)
 }
@@ -697,7 +697,7 @@ func onXE_TREE_TEMP_CREATE_END(hEle int, pItem *xc.Tree_Item_, nFlag int32, pbHa
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (t *Tree) AddEvent_Tree_Temp_Destroy(fn xc.XE_TREE_TEMP_DESTROY1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(t.Handle, xcc.XE_TREE_TEMP_DESTROY, onXE_TREE_TEMP_DESTROY, fn, allowAddingMultiple...)
 }
@@ -721,7 +721,7 @@ func onXE_TREE_TEMP_DESTROY(hEle int, pItem *xc.Tree_Item_, nFlag int32, pbHandl
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (t *Tree) AddEvent_Tree_Temp_Adjust_Coordinate(fn xc.XE_TREE_TEMP_ADJUST_COORDINATE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(t.Handle, xcc.XE_TREE_TEMP_ADJUST_COORDINATE, onXE_TREE_TEMP_ADJUST_COORDINATE, fn, allowAddingMultiple...)
 }
@@ -745,7 +745,7 @@ func onXE_TREE_TEMP_ADJUST_COORDINATE(hEle int, pItem *xc.Tree_Item_, pbHandled 
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (t *Tree) AddEvent_Tree_DrawItem(fn xc.XE_TREE_DRAWITEM1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(t.Handle, xcc.XE_TREE_DRAWITEM, onXE_TREE_DRAWITEM, fn, allowAddingMultiple...)
 }
@@ -769,7 +769,7 @@ func onXE_TREE_DRAWITEM(hEle int, hDraw int, pItem *xc.Tree_Item_, pbHandled *bo
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (t *Tree) AddEvent_Tree_Select(fn xc.XE_TREE_SELECT1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(t.Handle, xcc.XE_TREE_SELECT, onXE_TREE_SELECT, fn, allowAddingMultiple...)
 }
@@ -793,7 +793,7 @@ func onXE_TREE_SELECT(hEle int, nItemID int32, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (t *Tree) AddEvent_Tree_Expand(fn xc.XE_TREE_EXPAND1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(t.Handle, xcc.XE_TREE_EXPAND, onXE_TREE_EXPAND, fn, allowAddingMultiple...)
 }
@@ -817,7 +817,7 @@ func onXE_TREE_EXPAND(hEle int, id int32, bExpand bool, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (t *Tree) AddEvent_Tree_Drag_Item_Ing(fn xc.XE_TREE_DRAG_ITEM_ING1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(t.Handle, xcc.XE_TREE_DRAG_ITEM_ING, onXE_TREE_DRAG_ITEM_ING, fn, allowAddingMultiple...)
 }
@@ -841,7 +841,7 @@ func onXE_TREE_DRAG_ITEM_ING(hEle int, pInfo *xc.Tree_Drag_Item_, pbHandled *boo
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (t *Tree) AddEvent_Tree_Drag_Item(fn xc.XE_TREE_DRAG_ITEM1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(t.Handle, xcc.XE_TREE_DRAG_ITEM, onXE_TREE_DRAG_ITEM, fn, allowAddingMultiple...)
 }

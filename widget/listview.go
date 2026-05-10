@@ -815,7 +815,7 @@ func (l *ListView) GetItemTemplateGroupObj() *tmpl.ListItemTemplate {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *ListView) AddEvent_ListView_Temp_Create(fn xc.XE_LISTVIEW_TEMP_CREATE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LISTVIEW_TEMP_CREATE, onXE_LISTVIEW_TEMP_CREATE, fn, allowAddingMultiple...)
 }
@@ -840,7 +840,7 @@ func onXE_LISTVIEW_TEMP_CREATE(hEle int, pItem *xc.ListView_Item_, nFlag int32, 
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *ListView) AddEvent_ListView_Temp_Create_End(fn xc.XE_LISTVIEW_TEMP_CREATE_END1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LISTVIEW_TEMP_CREATE_END, onXE_LISTVIEW_TEMP_CREATE_END, fn, allowAddingMultiple...)
 }
@@ -865,7 +865,7 @@ func onXE_LISTVIEW_TEMP_CREATE_END(hEle int, pItem *xc.ListView_Item_, nFlag int
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *ListView) AddEvent_ListView_Temp_Destroy(fn xc.XE_LISTVIEW_TEMP_DESTROY1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LISTVIEW_TEMP_DESTROY, onXE_LISTVIEW_TEMP_DESTROY, fn, allowAddingMultiple...)
 }
@@ -889,7 +889,7 @@ func onXE_LISTVIEW_TEMP_DESTROY(hEle int, pItem *xc.ListView_Item_, nFlag int32,
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *ListView) AddEvent_ListView_Temp_Adjust_Coordinate(fn xc.XE_LISTVIEW_TEMP_ADJUST_COORDINATE1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LISTVIEW_TEMP_ADJUST_COORDINATE, onXE_LISTVIEW_TEMP_ADJUST_COORDINATE, fn, allowAddingMultiple...)
 }
@@ -913,7 +913,7 @@ func onXE_LISTVIEW_TEMP_ADJUST_COORDINATE(hEle int, pItem *xc.ListView_Item_, pb
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *ListView) AddEvent_ListView_DrawItem(fn xc.XE_LISTVIEW_DRAWITEM1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LISTVIEW_DRAWITEM, onXE_LISTVIEW_DRAWITEM, fn, allowAddingMultiple...)
 }
@@ -937,7 +937,7 @@ func onXE_LISTVIEW_DRAWITEM(hEle int, hDraw int, pItem *xc.ListView_Item_, pbHan
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *ListView) AddEvent_ListView_Select(fn xc.XE_LISTVIEW_SELECT1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LISTVIEW_SELECT, onXE_LISTVIEW_SELECT, fn, allowAddingMultiple...)
 }
@@ -961,7 +961,7 @@ func onXE_LISTVIEW_SELECT(hEle int, iGroup int32, iItem int32, pbHandled *bool) 
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (l *ListView) AddEvent_ListView_Expand(fn xc.XE_LISTVIEW_EXPAND1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(l.Handle, xcc.XE_LISTVIEW_EXPAND, onXE_LISTVIEW_EXPAND, fn, allowAddingMultiple...)
 }

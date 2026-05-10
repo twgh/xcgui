@@ -245,7 +245,7 @@ func (b *Button) ClearAnimation() *Button {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (b *Button) AddEvent_BnClick(fn xc.XE_BNCLICK1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(b.Handle, xcc.XE_BNCLICK, onXE_BNCLICK, fn, allowAddingMultiple...)
 }
@@ -269,7 +269,7 @@ func onXE_BNCLICK(hEle int, pbHandled *bool) int {
 //
 // fn: 回调函数.
 //
-// allowAddingMultiple: 允许添加多个回调函数.
+// allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
 func (b *Button) AddEvent_Button_Check(fn xc.XE_BUTTON_CHECK1, allowAddingMultiple ...bool) int {
 	return xc.EleEventBus.AddCallback(b.Handle, xcc.XE_BUTTON_CHECK, onXE_BUTTON_CHECK, fn, allowAddingMultiple...)
 }
