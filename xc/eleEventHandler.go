@@ -46,9 +46,9 @@ func newElementEventBus() *elementEventBus {
 //
 // cb: 回调函数. 不能为 nil.
 //
-// allowAddingMultiple: 是否允许添加多个回调函数, 默认为 false.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
+// allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
 //   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
+//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (e *elementEventBus) AddCallback(hEle int, eventType xcc.XE_, eventFunc interface{}, cb interface{}, allowAddingMultiple ...bool) int {
 	e.mu.Lock()
 	defer e.mu.Unlock()
@@ -77,7 +77,7 @@ func (e *elementEventBus) AddCallback(hEle int, eventType xcc.XE_, eventFunc int
 		}
 	}
 
-	isAddingMultiple := false
+	isAddingMultiple := true
 	if len(allowAddingMultiple) > 0 {
 		isAddingMultiple = allowAddingMultiple[0]
 	}
