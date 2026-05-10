@@ -12,10 +12,18 @@ type ICoreWebView2Frame6 struct {
 	ICoreWebView2Frame5
 }
 
-// Event_FrameScreenCaptureStarting 框架屏幕截图开始事件.
+// Event_FrameScreenCaptureStarting 框架屏幕截图开始事件. 返回回调函数 ID.
 //   - 当 iframe 或其任何子 iframe 中的内容通过 getDisplayMedia() 请求使用屏幕捕获 API 的权限时触发.
 //   - 这与 ICoreWebView2 上的 ScreenCaptureStarting 事件相关。在 iframe 请求屏幕捕获的情况下，这两个事件都会被触发。ICoreWebView2 上的事件处理程序之前，会先调用 ICoreWebView2Frame 的事件处理程序。
 //   - 如果在 ICoreWebView2Frame 事件处理程序中将 ScreenCaptureStartingEventArgs 的 Handled 属性设置为 TRUE，那么 ICoreWebView2 上将不会触发该事件，其事件处理程序也不会被调用。
+//
+// impl: *WebViewEventImpl.
+//
+// cb: 回调函数.
+//
+// allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
+//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
+//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (i *ICoreWebView2Frame6) Event_FrameScreenCaptureStarting(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *ICoreWebView2ScreenCaptureStartingEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	return WvEventBus.AddCallback(impl, "FrameScreenCaptureStarting", cb, i, allowAddingMultiple...)
 }

@@ -12,11 +12,19 @@ type ICoreWebView2Frame3 struct {
 	ICoreWebView2Frame2
 }
 
-// Event_FramePermissionRequested 框架权限请求事件.
+// Event_FramePermissionRequested 框架权限请求事件. 返回回调函数 ID.
 //   - 当 iframe 及其任何子 iframe 中的内容请求访问特权资源时触发。
 //   - 这与 PermissionRequested 事件以及 ICoreWebView2 有关。在 iframe 请求权限的情况下，这两个事件都会被触发。ICoreWebView2Frame的事件处理程序将在 ICoreWebView2 的事件处理程序之前被调用。
 //   - 如果在 ICoreWebView2Frame 事件处理程序中，PermissionRequestedEventArgs 的 Handled 属性被设置为 TRUE，那么该事件将不会在 ICoreWebView2 上触发，其事件处理程序也不会被调用。
 //   - 在嵌套 iframe 的情况下，如果在当前嵌套 iframe 中处理了 PermissionRequested 事件（即 PermissionRequestedEventArgs 的 Handled 属性设置为 TRUE），则不会在父级 ICoreWebView2Frame 上引发该事件。但是，如果该嵌套 iframe 中未处理 PermissionRequested 事件，该事件将从其最近的已跟踪父级 ICoreWebView2Frame 引发。它会遍历父框架链直至主框架，直到某个父框架处理该请求为止。
+//
+// impl: *WebViewEventImpl.
+//
+// cb: 回调函数.
+//
+// allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
+//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
+//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (i *ICoreWebView2Frame3) Event_FramePermissionRequested(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *ICoreWebView2PermissionRequestedEventArgs2) uintptr, allowAddingMultiple ...bool) (int, error) {
 	return WvEventBus.AddCallback(impl, "FramePermissionRequested", cb, i, allowAddingMultiple...)
 }

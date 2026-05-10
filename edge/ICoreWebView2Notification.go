@@ -55,8 +55,16 @@ func (i *ICoreWebView2Notification) QueryInterface(refiid, object unsafe.Pointer
 	return nil
 }
 
-// Event_NotificationCloseRequested 通知关闭请求事件。
+// Event_NotificationCloseRequested 通知关闭请求事件。 返回回调函数 ID.
 //   - 当通知被网页代码关闭时（例如通过 notification.close()）触发。由于这是来自网页代码的操作，因此无需调用 ReportClosed。
+//
+// impl: *WebViewEventImpl.
+//
+// cb: 回调函数.
+//
+// allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
+//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
+//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (i *ICoreWebView2Notification) Event_NotificationCloseRequested(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Notification, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
 	return WvEventBus.AddCallback(impl, "NotificationCloseRequested", cb, i, allowAddingMultiple...)
 }
