@@ -1,6 +1,7 @@
 package widget
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/twgh/xcgui/app"
@@ -15,10 +16,11 @@ func TestButton_AddEvent_BnClick(t *testing.T) {
 		btn1 := NewButton(20, 40, 100, 30, "按钮1", w.Handle)
 		// 即使使用匿名函数作为事件回调, 循环超过2000次也不会报错: too many callbacks
 		for i := 0; i < 2100; i++ {
-			btn1.AddEvent_BnClick(func(hEle int, pbHandled *bool) int {
+			id := btn1.AddEvent_BnClick(func(hEle int, pbHandled *bool) int {
 				t.Log("触发按钮1事件")
 				return 0
-			})
+			}, false)
+			fmt.Println("id:", id)
 		}
 		btn1.AddEvent_Destroy_End(func(hEle int, pbHandled *bool) int {
 			t.Log("触发按钮1销毁事件")
