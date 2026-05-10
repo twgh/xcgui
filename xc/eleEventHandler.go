@@ -171,6 +171,7 @@ func (e *elementEventBus) RemoveCallback(hEle int, eventType xcc.XE_, id int) *e
 		if id == cbinfo.ID {
 			eInfo.Cbs = append(eInfo.Cbs[:i], eInfo.Cbs[i+1:]...)
 			e.EventInfoMap[hEle][eventType] = eInfo
+			break
 		}
 	}
 	return e
@@ -194,6 +195,7 @@ func (e *elementEventBus) SetCallback(hEle int, eventType xcc.XE_, id int, cb in
 		if id == cbinfo.ID {
 			eInfo.Cbs[i].CB = cb
 			e.EventInfoMap[hEle][eventType] = eInfo
+			break
 		}
 	}
 	return e

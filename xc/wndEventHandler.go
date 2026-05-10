@@ -158,6 +158,7 @@ func (w *windowEventBus) RemoveCallback(hWindow int, eventType xcc.WM_, id int) 
 		if id == cbinfo.ID {
 			eInfo.Cbs = append(eInfo.Cbs[:i], eInfo.Cbs[i+1:]...)
 			w.EventInfoMap[hWindow][eventType] = eInfo
+			break
 		}
 	}
 	return w
@@ -181,6 +182,7 @@ func (w *windowEventBus) SetCallback(hWindow int, eventType xcc.WM_, id int, cb 
 		if id == cbinfo.ID {
 			eInfo.Cbs[i].CB = cb
 			w.EventInfoMap[hWindow][eventType] = eInfo
+			break
 		}
 	}
 	return w

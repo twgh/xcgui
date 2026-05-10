@@ -896,7 +896,7 @@ func (w *webviewEventBus) GetEventToken(impl *WebViewEventImpl, eventType string
 // impl: WebViewEventImpl 对象.
 //
 // eventType: 事件类型, 如: NavigationCompleted.
-func (w *webviewEventBus) ReleaseEventHandler(impl *WebViewEventImpl, eventType string) {
+func (w *webviewEventBus) ReleaseEventHandler(impl *WebViewEventImpl, eventType string) *webviewEventBus {
 	w.mu.Lock()
 	defer w.mu.Unlock()
 	eventMap := w.EventInfoMap[impl]
@@ -905,12 +905,14 @@ func (w *webviewEventBus) ReleaseEventHandler(impl *WebViewEventImpl, eventType 
 		ComRelease(info.EventHandlerPointer)
 	}
 	delete(eventMap, eventType)
+	w.EventInfoMap[impl] = eventMap
+	return w
 }
 
 // ReleaseAllEventHandler 释放指定对象所有事件的 EventHandler, 且移除该对象所有事件的 Callback.
 //
 // impl: WebViewEventImpl 对象.
-func (w *webviewEventBus) ReleaseAllEventHandler(impl *WebViewEventImpl) {
+func (w *webviewEventBus) ReleaseAllEventHandler(impl *WebViewEventImpl) *webviewEventBus {
 	w.mu.Lock()
 	defer w.mu.Unlock()
 	eventMap := w.EventInfoMap[impl]
@@ -920,6 +922,7 @@ func (w *webviewEventBus) ReleaseAllEventHandler(impl *WebViewEventImpl) {
 		}
 	}
 	delete(w.EventInfoMap, impl)
+	return w
 }
 
 // GetCallbacks 获取指定对象指定事件的回调函数数组.
@@ -936,10 +939,11 @@ func (w *webviewEventBus) GetCallbacks(impl *WebViewEventImpl, eventType string)
 // RemoveAllCallback 移除指定对象的所有事件的 Callback.
 //
 // impl: WebViewEventImpl 对象.
-func (w *webviewEventBus) RemoveAllCallback(impl *WebViewEventImpl) {
+func (w *webviewEventBus) RemoveAllCallback(impl *WebViewEventImpl) *webviewEventBus {
 	w.mu.Lock()
 	delete(w.EventInfoMap, impl)
 	w.mu.Unlock()
+	return w
 }
 
 // RemoveCallbacks 移除指定对象指定事件的所有 Callback.
@@ -947,10 +951,11 @@ func (w *webviewEventBus) RemoveAllCallback(impl *WebViewEventImpl) {
 // impl: WebViewEventImpl 对象.
 //
 // eventType: 事件类型, 如: NavigationCompleted.
-func (w *webviewEventBus) RemoveCallbacks(impl *WebViewEventImpl, eventType string) {
+func (w *webviewEventBus) RemoveCallbacks(impl *WebViewEventImpl, eventType string) *webviewEventBus {
 	w.mu.Lock()
 	defer w.mu.Unlock()
 	delete(w.EventInfoMap[impl], eventType)
+	return w
 }
 
 // RemoveCallback 移除指定对象指定事件的指定 ID 的 Callback.
@@ -960,7 +965,7 @@ func (w *webviewEventBus) RemoveCallbacks(impl *WebViewEventImpl, eventType stri
 // eventType: 事件类型, 如: NavigationCompleted.
 //
 // id: 回调函数 ID.
-func (w *webviewEventBus) RemoveCallback(impl *WebViewEventImpl, eventType string, id int) {
+func (w *webviewEventBus) RemoveCallback(impl *WebViewEventImpl, eventType string, id int) *webviewEventBus {
 	w.mu.Lock()
 	defer w.mu.Unlock()
 
@@ -969,8 +974,10 @@ func (w *webviewEventBus) RemoveCallback(impl *WebViewEventImpl, eventType strin
 		if cbinfo.ID == id {
 			eInfo.Cbs = append(eInfo.Cbs[:i], eInfo.Cbs[i+1:]...)
 			w.EventInfoMap[impl][eventType] = eInfo
+			break
 		}
 	}
+	return w
 }
 
 // SetCallback 设置指定对象指定事件的指定 ID 的 Callback.
@@ -982,7 +989,7 @@ func (w *webviewEventBus) RemoveCallback(impl *WebViewEventImpl, eventType strin
 // id: 回调函数 ID.
 //
 // cb: 回调函数.
-func (w *webviewEventBus) SetCallback(impl *WebViewEventImpl, eventType string, id int, cb interface{}) {
+func (w *webviewEventBus) SetCallback(impl *WebViewEventImpl, eventType string, id int, cb interface{}) *webviewEventBus {
 	w.mu.Lock()
 	defer w.mu.Unlock()
 
@@ -991,6 +998,8 @@ func (w *webviewEventBus) SetCallback(impl *WebViewEventImpl, eventType string, 
 		if cbinfo.ID == id {
 			eInfo.Cbs[i].CB = cb
 			w.EventInfoMap[impl][eventType] = eInfo
+			break
 		}
 	}
+	return w
 }
