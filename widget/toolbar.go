@@ -69,11 +69,7 @@ func (t *ToolBar) InsertSeparator(index int32, color uint32) int32 {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (t *ToolBar) EnableButtonMenu(bEnable ...bool) *ToolBar {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XToolBar_EnableButtonMenu(t.Handle, enable)
+	xc.XToolBar_EnableButtonMenu(t.Handle, bEnable...)
 	return t
 }
 

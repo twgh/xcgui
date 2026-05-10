@@ -55,11 +55,7 @@ func NewTextLinkByUIDName(name string) *TextLink {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (t *TextLink) EnableUnderlineLeave(bEnable ...bool) *TextLink {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XTextLink_EnableUnderlineLeave(t.Handle, enable)
+	xc.XTextLink_EnableUnderlineLeave(t.Handle, bEnable...)
 	return t
 }
 
@@ -67,11 +63,7 @@ func (t *TextLink) EnableUnderlineLeave(bEnable ...bool) *TextLink {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (t *TextLink) EnableUnderlineStay(bEnable ...bool) *TextLink {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XTextLink_EnableUnderlineStay(t.Handle, enable)
+	xc.XTextLink_EnableUnderlineStay(t.Handle, bEnable...)
 	return t
 }
 

@@ -24,18 +24,26 @@ func XTextLink_Create(x, y, cx, cy int32, name string, hParent int) int {
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XTextLink_EnableUnderlineLeave(hEle int, bEnable bool) {
-	xTextLink_EnableUnderlineLeave.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XTextLink_EnableUnderlineLeave(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xTextLink_EnableUnderlineLeave.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 文本链接_停留状态下划线, 启用下划线, 鼠标停留状态.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XTextLink_EnableUnderlineStay(hEle int, bEnable bool) {
-	xTextLink_EnableUnderlineStay.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XTextLink_EnableUnderlineStay(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xTextLink_EnableUnderlineStay.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 文本链接_置停留状态文本颜色, 设置文本颜色, 鼠标停留状态.

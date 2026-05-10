@@ -75,11 +75,7 @@ func NewTreeByUIDName(name string) *Tree {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (t *Tree) EnableDragItem(bEnable ...bool) *Tree {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XTree_EnableDragItem(t.Handle, enable)
+	xc.XTree_EnableDragItem(t.Handle, bEnable...)
 	return t
 }
 
@@ -97,11 +93,7 @@ func (t *Tree) EnableConnectLine(bEnable bool, bSolid bool) *Tree {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (t *Tree) EnableExpand(bEnable ...bool) *Tree {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XTree_EnableExpand(t.Handle, enable)
+	xc.XTree_EnableExpand(t.Handle, bEnable...)
 	return t
 }
 
@@ -109,11 +101,7 @@ func (t *Tree) EnableExpand(bEnable ...bool) *Tree {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (t *Tree) EnableTemplateReuse(bEnable ...bool) *Tree {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XTree_EnableTemplateReuse(t.Handle, enable)
+	xc.XTree_EnableTemplateReuse(t.Handle, bEnable...)
 	return t
 }
 

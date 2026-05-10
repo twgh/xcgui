@@ -46,9 +46,13 @@ func XToolBar_InsertSeparator(hEle int, index int32, color uint32) int32 {
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XToolBar_EnableButtonMenu(hEle int, bEnable bool) {
-	xToolBar_EnableButtonMenu.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XToolBar_EnableButtonMenu(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xToolBar_EnableButtonMenu.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 工具条_取元素, 获取工具条上指定元素, 返回元素句柄.

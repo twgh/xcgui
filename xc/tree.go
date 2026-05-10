@@ -46,9 +46,13 @@ func XTree_CreateEx(x, y, cx, cy int32, hParent, col_extend_count int32) int {
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XTree_EnableDragItem(hEle int, bEnable bool) {
-	xTree_EnableDragItem.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XTree_EnableDragItem(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xTree_EnableDragItem.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 列表树_启用连接线, 启用或禁用显示项的连接线.
@@ -66,18 +70,26 @@ func XTree_EnableConnectLine(hEle int, bEnable bool, bSolid bool) {
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XTree_EnableExpand(hEle int, bEnable bool) {
-	xTree_EnableExpand.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XTree_EnableExpand(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xTree_EnableExpand.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 列表树_启用模板复用.
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XTree_EnableTemplateReuse(hEle int, bEnable bool) {
-	xTree_EnableTemplateReuse.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XTree_EnableTemplateReuse(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xTree_EnableTemplateReuse.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 列表树_置连接线颜色.
