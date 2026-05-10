@@ -31,9 +31,17 @@ func (i *ICoreWebView2CompositionController4) QueryNonClientRegion(kind COREWEBV
 	return rects, nil
 }
 
-// Event_NonClientRegionChanged 非客户端区域变更事件.
+// Event_NonClientRegionChanged 非客户端区域变更事件. 返回回调函数 ID.
 //   - 当应用 HTML 中标记为非客户端的区域发生变化时触发.
 //   - 这种变化包括新区域被标记、区域被取消标记，或者区域类型被改为其他类型。
+//
+// impl: *WebViewEventImpl.
+//
+// cb: 回调函数.
+//
+// allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
+//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
+//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (i *ICoreWebView2CompositionController4) Event_NonClientRegionChanged(impl *WebViewEventImpl, cb func(sender *ICoreWebView2CompositionController, args *ICoreWebView2NonClientRegionChangedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	return WvEventBus.AddCallback(impl, "NonClientRegionChanged", cb, i, allowAddingMultiple...)
 }

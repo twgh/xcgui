@@ -127,7 +127,16 @@ func (i *ICoreWebView2CompositionController) GetSystemCursorID() (uint32, error)
 	return systemCursorID, nil
 }
 
-// Event_CursorChanged 光标改变事件.
+// Event_CursorChanged 光标改变事件. 返回回调函数 ID.
+//   - 当 WebView 的光标发生变化时触发。
+//
+// impl: *WebViewEventImpl.
+//
+// cb: 回调函数.
+//
+// allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
+//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
+//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (i *ICoreWebView2CompositionController) Event_CursorChanged(impl *WebViewEventImpl, cb func(sender *ICoreWebView2CompositionController, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
 	return WvEventBus.AddCallback(impl, "CursorChanged", cb, i, allowAddingMultiple...)
 }

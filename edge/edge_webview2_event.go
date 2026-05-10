@@ -4,6 +4,12 @@ package edge
 
 // Event_DocumentTitleChanged 文档标题改变事件.
 //   - 当 Webview 的 DocumentTitle 属性发生变化时, DocumentTitleChanged 会运行，并且可能在 NavigationCompleted 事件之前或之后运行。
+//
+// cb: 回调函数.
+//
+// allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
+//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
+//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_DocumentTitleChanged(cb func(sender *ICoreWebView2, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
