@@ -114,11 +114,7 @@ func (p *Pane) GetViewRect(pRect *xc.RECT) *Pane {
 //
 // bGroupActivate: 当为窗格组成员时, 延迟处理窗格组成员激活的切换, 不填默认为 true.
 func (p *Pane) HidePane(bGroupActivate ...bool) *Pane {
-	enable := true
-	if len(bGroupActivate) > 0 {
-		enable = bGroupActivate[0]
-	}
-	xc.XPane_HidePane(p.Handle, enable)
+	xc.XPane_HidePane(p.Handle, bGroupActivate...)
 	return p
 }
 
@@ -126,11 +122,7 @@ func (p *Pane) HidePane(bGroupActivate ...bool) *Pane {
 //
 // bGroupActivate: 如果是窗格组成员, 那么窗格组切换当前窗格为显示状态, 不填默认为 true.
 func (p *Pane) ShowPane(bGroupActivate ...bool) *Pane {
-	enable := true
-	if len(bGroupActivate) > 0 {
-		enable = bGroupActivate[0]
-	}
-	xc.XPane_ShowPane(p.Handle, enable)
+	xc.XPane_ShowPane(p.Handle, bGroupActivate...)
 	return p
 }
 
@@ -196,10 +188,6 @@ func (p *Pane) GetButton(number int32) int {
 //
 // bShow: 是否显示, 不填默认为 true.
 func (p *Pane) ShowButton(bShow ...bool) *Pane {
-	show := true
-	if len(bShow) > 0 {
-		show = bShow[0]
-	}
-	xc.XPane_ShowButton(p.Handle, show)
+	xc.XPane_ShowButton(p.Handle, bShow...)
 	return p
 }

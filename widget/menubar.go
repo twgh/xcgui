@@ -80,11 +80,7 @@ func (m *MenuBar) DeleteButton(nIndex int32) bool {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (m *MenuBar) EnableAutoWidth(bEnable ...bool) {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XMenuBar_EnableAutoWidth(m.Handle, enable)
+	xc.XMenuBar_EnableAutoWidth(m.Handle, bEnable...)
 }
 
 // 菜单条_取菜单按钮. 返回按钮句柄.

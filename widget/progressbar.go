@@ -88,11 +88,7 @@ func (p *ProgressBar) GetPos() int32 {
 //
 // bHorizon: true为水平, false为垂直. 不填默认为 true.
 func (p *ProgressBar) EnableHorizon(bHorizon ...bool) *ProgressBar {
-	enable := true
-	if len(bHorizon) > 0 {
-		enable = bHorizon[0]
-	}
-	xc.XProgBar_EnableHorizon(p.Handle, enable)
+	xc.XProgBar_EnableHorizon(p.Handle, bHorizon...)
 	return p
 }
 
@@ -100,11 +96,7 @@ func (p *ProgressBar) EnableHorizon(bHorizon ...bool) *ProgressBar {
 //
 // bStretch: 是否启用缩放, 不填默认为 true.
 func (p *ProgressBar) EnableStretch(bStretch ...bool) *ProgressBar {
-	stretch := true
-	if len(bStretch) > 0 {
-		stretch = bStretch[0]
-	}
-	xc.XProgBar_EnableStretch(p.Handle, stretch)
+	xc.XProgBar_EnableStretch(p.Handle, bStretch...)
 	return p
 }
 
@@ -112,11 +104,7 @@ func (p *ProgressBar) EnableStretch(bStretch ...bool) *ProgressBar {
 //
 // bShow: 是否启用, 不填默认为 true.
 func (p *ProgressBar) EnableShowText(bShow ...bool) *ProgressBar {
-	show := true
-	if len(bShow) > 0 {
-		show = bShow[0]
-	}
-	xc.XProgBar_EnableShowText(p.Handle, show)
+	xc.XProgBar_EnableShowText(p.Handle, bShow...)
 	return p
 }
 

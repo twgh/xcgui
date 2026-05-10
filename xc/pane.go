@@ -105,18 +105,26 @@ func XPane_GetViewRect(hEle int, pRect *RECT) {
 //
 // hEleL: 元素句柄.
 //
-// bGroupActivate: 当为窗格组成员时, 延迟处理窗格组成员激活的切换.
-func XPane_HidePane(hEle int, bGroupActivate bool) {
-	xPane_HidePane.Call(uintptr(hEle), common.BoolPtr(bGroupActivate))
+// bGroupActivate: 当为窗格组成员时, 延迟处理窗格组成员激活的切换, 不填默认为 true.
+func XPane_HidePane(hEle int, bGroupActivate ...bool) {
+	enable := true
+	if len(bGroupActivate) > 0 {
+		enable = bGroupActivate[0]
+	}
+	xPane_HidePane.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // XPane_ShowPane 窗格_显示.
 //
 // hEle: 元素句柄.
 //
-// bGroupActivate: 如果是窗格组成员, 那么窗格组切换当前窗格为显示状态.
-func XPane_ShowPane(hEle int, bGroupActivate bool) {
-	xPane_ShowPane.Call(uintptr(hEle), common.BoolPtr(bGroupActivate))
+// bGroupActivate: 如果是窗格组成员, 那么窗格组切换当前窗格为显示状态, 不填默认为 true.
+func XPane_ShowPane(hEle int, bGroupActivate ...bool) {
+	enable := true
+	if len(bGroupActivate) > 0 {
+		enable = bGroupActivate[0]
+	}
+	xPane_ShowPane.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 窗格_停靠, 窗格停靠到码头.
@@ -195,7 +203,11 @@ func XPane_GetButton(hEle int, number int32) int {
 //
 // hEle: 元素句柄.
 //
-// bShow: 是否显示.
-func XPane_ShowButton(hEle int, bShow bool) {
-	xPane_ShowButton.Call(uintptr(hEle), common.BoolPtr(bShow))
+// bShow: 是否显示, 不填默认为 true.
+func XPane_ShowButton(hEle int, bShow ...bool) {
+	show := true
+	if len(bShow) > 0 {
+		show = bShow[0]
+	}
+	xPane_ShowButton.Call(uintptr(hEle), common.BoolPtr(show))
 }

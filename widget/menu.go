@@ -149,11 +149,7 @@ func (m *Menu) SetAutoDestroy(bAuto bool) *Menu {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (m *Menu) EnableDrawBackground(bEnable ...bool) *Menu {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XMenu_EnableDrawBackground(m.Handle, enable)
+	xc.XMenu_EnableDrawBackground(m.Handle, bEnable...)
 	return m
 }
 
@@ -161,11 +157,7 @@ func (m *Menu) EnableDrawBackground(bEnable ...bool) *Menu {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (m *Menu) EnableDrawItem(bEnable ...bool) *Menu {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XMenu_EnableDrawItem(m.Handle, enable)
+	xc.XMenu_EnableDrawItem(m.Handle, bEnable...)
 	return m
 }
 
@@ -372,11 +364,7 @@ func (m *Menu) GetBkManagerObjEx(nType int32) *bkmanager.BkManager {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (m *Menu) EnableCSS(bEnable ...bool) *Menu {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XMenu_EnableCSS(m.Handle, enable)
+	xc.XMenu_EnableCSS(m.Handle, bEnable...)
 	return m
 }
 

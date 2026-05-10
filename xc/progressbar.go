@@ -65,27 +65,39 @@ func XProgBar_GetPos(hEle int) int32 {
 //
 // hEle: 元素句柄.
 //
-// bHorizon: 水平或垂直.
-func XProgBar_EnableHorizon(hEle int, bHorizon bool) {
-	xProgBar_EnableHorizon.Call(uintptr(hEle), common.BoolPtr(bHorizon))
+// bHorizon: true为水平, false为垂直. 不填默认为 true.
+func XProgBar_EnableHorizon(hEle int, bHorizon ...bool) {
+	horizon := true
+	if len(bHorizon) > 0 {
+		horizon = bHorizon[0]
+	}
+	xProgBar_EnableHorizon.Call(uintptr(hEle), common.BoolPtr(horizon))
 }
 
 // 进度条_启用缩放, 缩放进度贴图为当前进度区域(当前进度所显示区域), 否则为整体100进度区域.
 //
 // hEle: 元素句柄.
 //
-// bStretch: 缩放.
-func XProgBar_EnableStretch(hEle int, bStretch bool) {
-	xProgBar_EnableStretch.Call(uintptr(hEle), common.BoolPtr(bStretch))
+// bStretch: 是否启用缩放, 不填默认为 true.
+func XProgBar_EnableStretch(hEle int, bStretch ...bool) {
+	stretch := true
+	if len(bStretch) > 0 {
+		stretch = bStretch[0]
+	}
+	xProgBar_EnableStretch.Call(uintptr(hEle), common.BoolPtr(stretch))
 }
 
 // 进度条_启用进度文本 显示进度值文本.
 //
 // hEle: 元素句柄.
 //
-// bShow: 是否启用.
-func XProgBar_EnableShowText(hEle int, bShow bool) {
-	xProgBar_EnableShowText.Call(uintptr(hEle), common.BoolPtr(bShow))
+// bShow: 是否启用, 不填默认为 true.
+func XProgBar_EnableShowText(hEle int, bShow ...bool) {
+	show := true
+	if len(bShow) > 0 {
+		show = bShow[0]
+	}
+	xProgBar_EnableShowText.Call(uintptr(hEle), common.BoolPtr(show))
 }
 
 // 进度条_置进度颜色. 设置进度颜色.

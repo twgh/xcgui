@@ -39,9 +39,13 @@ func XSBar_GetRange(hEle int) int32 {
 //
 // hEle: 元素句柄.
 //
-// bShow: 是否显示.
-func XSBar_ShowButton(hEle int, bShow bool) {
-	xSBar_ShowButton.Call(uintptr(hEle), common.BoolPtr(bShow))
+// bShow: 是否显示, 不填默认为 true.
+func XSBar_ShowButton(hEle int, bShow ...bool) {
+	show := true
+	if len(bShow) > 0 {
+		show = bShow[0]
+	}
+	xSBar_ShowButton.Call(uintptr(hEle), common.BoolPtr(show))
 }
 
 // 滚动条_置滑块长度.
@@ -75,9 +79,13 @@ func XSBar_SetSliderPadding(hEle int, nPadding int32) {
 //
 // hEle: 元素句柄.
 //
-// bHorizon: 水平或垂直.
-func XSBar_EnableHorizon(hEle int, bHorizon bool) bool {
-	r, _, _ := xSBar_EnableHorizon.Call(uintptr(hEle), common.BoolPtr(bHorizon))
+// bHorizon: true为水平, false为垂直. 不填默认为 true.
+func XSBar_EnableHorizon(hEle int, bHorizon ...bool) bool {
+	horizon := true
+	if len(bHorizon) > 0 {
+		horizon = bHorizon[0]
+	}
+	r, _, _ := xSBar_EnableHorizon.Call(uintptr(hEle), common.BoolPtr(horizon))
 	return r != 0
 }
 

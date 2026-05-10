@@ -138,18 +138,26 @@ func XMenu_SetAutoDestroy(hMenu int, bAuto bool) {
 //
 // hMenu: 菜单句柄.
 //
-// bEnable: 是否启用.
-func XMenu_EnableDrawBackground(hMenu int, bEnable bool) {
-	xMenu_EnableDrawBackground.Call(uintptr(hMenu), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XMenu_EnableDrawBackground(hMenu int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xMenu_EnableDrawBackground.Call(uintptr(hMenu), common.BoolPtr(enable))
 }
 
 // 菜单_启用用户绘制项, 是否有用户绘制菜单项, 如果启用XWM_MENU_DRAWITEM和XE_MENU_DRAWITEM事件有效.
 //
 // hMenu: 菜单句柄.
 //
-// bEnable: 是否启用.
-func XMenu_EnableDrawItem(hMenu int, bEnable bool) {
-	xMenu_EnableDrawItem.Call(uintptr(hMenu), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XMenu_EnableDrawItem(hMenu int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xMenu_EnableDrawItem.Call(uintptr(hMenu), common.BoolPtr(enable))
 }
 
 // 菜单_弹出.
@@ -391,9 +399,13 @@ func XMenu_GetBkManagerEx(hMenu int, nType int32) int {
 //
 // hMenu: 菜单句柄.
 //
-// bEnable: 是否启用.
-func XMenu_EnableCSS(hMenu int, bEnable bool) {
-	xMenu_EnableCSS.Call(uintptr(hMenu), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XMenu_EnableCSS(hMenu int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xMenu_EnableCSS.Call(uintptr(hMenu), common.BoolPtr(enable))
 }
 
 // 菜单_置CSS名称, 设置CSS[套用样式]名称.

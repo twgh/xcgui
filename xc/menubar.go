@@ -61,9 +61,13 @@ func XMenuBar_DeleteButton(hEle int, nIndex int32) bool {
 //
 // hEle: 元素句柄.
 //
-// bEnable: 是否启用.
-func XMenuBar_EnableAutoWidth(hEle int, bEnable bool) {
-	xMenuBar_EnableAutoWidth.Call(uintptr(hEle), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XMenuBar_EnableAutoWidth(hEle int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xMenuBar_EnableAutoWidth.Call(uintptr(hEle), common.BoolPtr(enable))
 }
 
 // 菜单条_取菜单按钮. 返回按钮句柄.
