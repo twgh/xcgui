@@ -123,9 +123,13 @@ func XBkM_DrawEx(hBkInfoM int, nState xcc.CombinedState, hDraw int, pRect *RECT,
 //
 // hBkInfoM: 背景管理器句柄.
 //
-// bEnable: 是否启用.
-func XBkM_EnableAutoDestroy(hBkInfoM int, bEnable bool) {
-	xBkM_EnableAutoDestroy.Call(uintptr(hBkInfoM), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XBkM_EnableAutoDestroy(hBkInfoM int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xBkM_EnableAutoDestroy.Call(uintptr(hBkInfoM), common.BoolPtr(enable))
 }
 
 // 背景_增加引用计数.

@@ -124,11 +124,7 @@ func (b *BkManager) DrawEx(nState xcc.CombinedState, hDraw int, pRect *xc.RECT, 
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (b *BkManager) EnableAutoDestroy(bEnable ...bool) *BkManager {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XBkM_EnableAutoDestroy(b.Handle, enable)
+	xc.XBkM_EnableAutoDestroy(b.Handle, bEnable...)
 	return b
 }
 

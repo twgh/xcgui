@@ -327,18 +327,26 @@ func XDraw_ClearClip(hDraw int) {
 //
 // hDraw: 图形绘制句柄.
 //
-// bEnable: 是否启用.
-func XDraw_EnableSmoothingMode(hDraw int, bEnable bool) {
-	xDraw_EnableSmoothingMode.Call(uintptr(hDraw), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XDraw_EnableSmoothingMode(hDraw int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xDraw_EnableSmoothingMode.Call(uintptr(hDraw), common.BoolPtr(enable))
 }
 
 // 绘制_启用窗口透明判断, 当启用之后, 调用GDI+函数时, 如果参数alpha=255, 将自动修改为254, 应对GDI+的bug, 否则透明通道异常.
 //
 // hDraw: 图形绘制句柄.
 //
-// bTransparent: 是否启用.
-func XDraw_EnableWndTransparent(hDraw int, bTransparent bool) {
-	xDraw_EnableWndTransparent.Call(uintptr(hDraw), common.BoolPtr(bTransparent))
+// bTransparent: 是否启用, 不填默认为 true.
+func XDraw_EnableWndTransparent(hDraw int, bTransparent ...bool) {
+	enable := true
+	if len(bTransparent) > 0 {
+		enable = bTransparent[0]
+	}
+	xDraw_EnableWndTransparent.Call(uintptr(hDraw), common.BoolPtr(enable))
 }
 
 // 绘制_创建实心画刷, GDI创建具有指定的纯色逻辑刷.

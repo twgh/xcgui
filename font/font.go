@@ -140,11 +140,7 @@ func NewByName(name string) *Font {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (f *Font) EnableAutoDestroy(bEnable ...bool) *Font {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XFont_EnableAutoDestroy(f.Handle, enable)
+	xc.XFont_EnableAutoDestroy(f.Handle, bEnable...)
 	return f
 }
 

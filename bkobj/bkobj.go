@@ -103,11 +103,7 @@ func (b *BkObj) SetRectRoundAngle(leftTop, leftBottom, rightTop, rightBottom int
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (b *BkObj) EnableFill(bEnable ...bool) *BkObj {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XBkObj_EnableFill(b.Handle, enable)
+	xc.XBkObj_EnableFill(b.Handle, bEnable...)
 	return b
 }
 
@@ -115,11 +111,7 @@ func (b *BkObj) EnableFill(bEnable ...bool) *BkObj {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (b *BkObj) EnableBorder(bEnable ...bool) *BkObj {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XBkObj_EnableBorder(b.Handle, enable)
+	xc.XBkObj_EnableBorder(b.Handle, bEnable...)
 	return b
 }
 

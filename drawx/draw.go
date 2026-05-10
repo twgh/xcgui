@@ -309,11 +309,7 @@ func (d *Draw) ClearClip() *Draw {
 //
 // bEnable: 是否启用, 不填默认为 true.
 func (d *Draw) EnableSmoothingMode(bEnable ...bool) *Draw {
-	enable := true
-	if len(bEnable) > 0 {
-		enable = bEnable[0]
-	}
-	xc.XDraw_EnableSmoothingMode(d.Handle, enable)
+	xc.XDraw_EnableSmoothingMode(d.Handle, bEnable...)
 	return d
 }
 
@@ -321,11 +317,7 @@ func (d *Draw) EnableSmoothingMode(bEnable ...bool) *Draw {
 //
 // bTransparent: 是否启用, 不填默认为 true.
 func (d *Draw) EnableWndTransparent(bTransparent ...bool) *Draw {
-	enable := true
-	if len(bTransparent) > 0 {
-		enable = bTransparent[0]
-	}
-	xc.XDraw_EnableWndTransparent(d.Handle, enable)
+	xc.XDraw_EnableWndTransparent(d.Handle, bTransparent...)
 	return d
 }
 

@@ -127,9 +127,13 @@ func XFont_CreateFromRes(id int32, pType string, fontSize int32, style xcc.FontS
 //
 // hFontX: 字体句柄.
 //
-// bEnable: 是否启用.
-func XFont_EnableAutoDestroy(hFontX int, bEnable bool) {
-	xFont_EnableAutoDestroy.Call(uintptr(hFontX), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XFont_EnableAutoDestroy(hFontX int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xFont_EnableAutoDestroy.Call(uintptr(hFontX), common.BoolPtr(enable))
 }
 
 // XFont_GetFont 字体_取Font. 获取字体. 返回 GDI+ Font指针.

@@ -96,18 +96,26 @@ func XBkObj_SetRectRoundAngle(hObj int, leftTop, leftBottom, rightTop, rightBott
 //
 // hObj: 背景对象句柄.
 //
-// bEnable: 是否启用.
-func XBkObj_EnableFill(hObj int, bEnable bool) {
-	xBkObj_EnableFill.Call(uintptr(hObj), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XBkObj_EnableFill(hObj int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xBkObj_EnableFill.Call(uintptr(hObj), common.BoolPtr(enable))
 }
 
 // 背景对象_启用边框, 启用绘制边框.
 //
 // hObj: 背景对象句柄.
 //
-// bEnable: 是否启用.
-func XBkObj_EnableBorder(hObj int, bEnable bool) {
-	xBkObj_EnableBorder.Call(uintptr(hObj), common.BoolPtr(bEnable))
+// bEnable: 是否启用, 不填默认为 true.
+func XBkObj_EnableBorder(hObj int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xBkObj_EnableBorder.Call(uintptr(hObj), common.BoolPtr(enable))
 }
 
 // 背景对象_置文本.
