@@ -773,16 +773,18 @@ func (w *windowBase) GetRectEx() xc.RECT {
 	return rc
 }
 
-// 窗口_取坐标ex. 返回的坐标已经根据窗口dpi进行换算了, 换算后的结果就是屏幕上显示的真实坐标了.
+// 窗口_取坐标ex. 返回的坐标已经根据窗口 dpi 进行换算了, 换算后的结果就是屏幕上显示的真实坐标了.
 func (w *windowBase) GetRectDPI() xc.RECT {
 	rc := xc.RECT{}
 	xc.XWnd_GetRect(w.Handle, &rc)
 	dpi := xc.XWnd_GetDPI(w.Handle)
-	rc.Left = xc.DpiConvRound(dpi, rc.Left)
-	rc.Top = xc.DpiConvRound(dpi, rc.Top)
-	rc.Right = xc.DpiConvRound(dpi, rc.Right)
-	rc.Bottom = xc.DpiConvRound(dpi, rc.Bottom)
-	return rc
+
+	var rc2 xc.RECT
+	rc2.Left = xc.DpiConvRound(dpi, rc.Left)
+	rc2.Top = xc.DpiConvRound(dpi, rc.Top)
+	rc2.Right = xc.DpiConvRound(dpi, rc.Right)
+	rc2.Bottom = xc.DpiConvRound(dpi, rc.Bottom)
+	return rc2
 }
 
 // 窗口_最大化.
