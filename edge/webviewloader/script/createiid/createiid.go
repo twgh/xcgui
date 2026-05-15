@@ -78,5 +78,5 @@ func main() {
 	}
 	outFile.WriteString(")\n")
 
-	fmt.Printf("成功生成 %s, IID 数量: %s\n", outputFile, len(constants))
+	fmt.Printf("成功生成 %s, IID 数量: %d\n", outputFile, len(constants))
 }
