@@ -167,8 +167,8 @@ func (e *elementEventBus) RemoveCallback(hEle int, eventType xcc.XE_, id int) *e
 	defer e.mu.Unlock()
 
 	eInfo := e.EventInfoMap[hEle][eventType]
-	for i, cbinfo := range eInfo.Cbs {
-		if id == cbinfo.ID {
+	for i := range eInfo.Cbs {
+		if id == eInfo.Cbs[i].ID {
 			eInfo.Cbs = append(eInfo.Cbs[:i], eInfo.Cbs[i+1:]...)
 			e.EventInfoMap[hEle][eventType] = eInfo
 			break
@@ -191,8 +191,8 @@ func (e *elementEventBus) SetCallback(hEle int, eventType xcc.XE_, id int, cb in
 	defer e.mu.Unlock()
 
 	eInfo := e.EventInfoMap[hEle][eventType]
-	for i, cbinfo := range eInfo.Cbs {
-		if id == cbinfo.ID {
+	for i := range eInfo.Cbs {
+		if id == eInfo.Cbs[i].ID {
 			eInfo.Cbs[i].CB = cb
 			e.EventInfoMap[hEle][eventType] = eInfo
 			break

@@ -154,8 +154,8 @@ func (w *windowEventBus) RemoveCallback(hWindow int, eventType xcc.WM_, id int) 
 	defer w.mu.Unlock()
 
 	eInfo := w.EventInfoMap[hWindow][eventType]
-	for i, cbinfo := range eInfo.Cbs {
-		if id == cbinfo.ID {
+	for i := range eInfo.Cbs {
+		if id == eInfo.Cbs[i].ID {
 			eInfo.Cbs = append(eInfo.Cbs[:i], eInfo.Cbs[i+1:]...)
 			w.EventInfoMap[hWindow][eventType] = eInfo
 			break
@@ -178,8 +178,8 @@ func (w *windowEventBus) SetCallback(hWindow int, eventType xcc.WM_, id int, cb 
 	defer w.mu.Unlock()
 
 	eInfo := w.EventInfoMap[hWindow][eventType]
-	for i, cbinfo := range eInfo.Cbs {
-		if id == cbinfo.ID {
+	for i := range eInfo.Cbs {
+		if id == eInfo.Cbs[i].ID {
 			eInfo.Cbs[i].CB = cb
 			w.EventInfoMap[hWindow][eventType] = eInfo
 			break

@@ -418,8 +418,8 @@ func ChooseValue[T interface{}](i int, value ...T) T {
 
 // SliceIndexOf 获取元素在 slice 中第一个找到的索引, 找不到则返回 -1.
 func SliceIndexOf[T comparable](slice []T, target T) int {
-	for i, v := range slice {
-		if v == target {
+	for i := range slice {
+		if slice[i] == target {
 			return i
 		}
 	}

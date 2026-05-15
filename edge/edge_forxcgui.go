@@ -59,8 +59,8 @@ func (e *Edge) NewWebView(hParent int, opts ...WebViewOption) (*WebView, error) 
 	// 获取默认 WebView 配置
 	options := defaultWebViewOptions()
 	// 应用所有选项
-	for _, opt := range opts {
-		opt(options)
+	for i := range opts {
+		opts[i](options)
 	}
 
 	return newWebView(e, hParent, options)
@@ -79,8 +79,8 @@ func (e *Edge) NewWebViewWithWindow(opts ...WebViewOption) (*window.Window, *Web
 	// 获取默认 WebView 配置
 	options := defaultWebViewOptions()
 	// 应用所有选项
-	for _, opt := range opts {
-		opt(options)
+	for i := range opts {
+		opts[i](options)
 	}
 
 	xmlStr := options.XmlWindowOpts.XmlStr

@@ -970,8 +970,8 @@ func (w *webviewEventBus) RemoveCallback(impl *WebViewEventImpl, eventType strin
 	defer w.mu.Unlock()
 
 	eInfo := w.EventInfoMap[impl][eventType]
-	for i, cbinfo := range eInfo.Cbs {
-		if cbinfo.ID == id {
+	for i := range eInfo.Cbs {
+		if eInfo.Cbs[i].ID == id {
 			eInfo.Cbs = append(eInfo.Cbs[:i], eInfo.Cbs[i+1:]...)
 			w.EventInfoMap[impl][eventType] = eInfo
 			break
@@ -994,8 +994,8 @@ func (w *webviewEventBus) SetCallback(impl *WebViewEventImpl, eventType string, 
 	defer w.mu.Unlock()
 
 	eInfo := w.EventInfoMap[impl][eventType]
-	for i, cbinfo := range eInfo.Cbs {
-		if cbinfo.ID == id {
+	for i := range eInfo.Cbs {
+		if eInfo.Cbs[i].ID == id {
 			eInfo.Cbs[i].CB = cb
 			w.EventInfoMap[impl][eventType] = eInfo
 			break
