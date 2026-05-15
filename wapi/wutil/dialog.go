@@ -210,9 +210,10 @@ func OpenFileEx(opt OpenFileOption) []string {
 
 	slice := common.Uint16SliceToStringSlice(lpstrFile)
 	length := len(slice)
-	if length == 0 {
+	switch length {
+	case 0:
 		return nil
-	} else if length == 1 { // 只选择了一个文件
+	case 1: // 只选择了一个文件
 		return slice
 	}
 
