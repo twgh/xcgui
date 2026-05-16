@@ -427,7 +427,7 @@ func XImage_GetHeight(hImage int) int32 {
 	return int32(r)
 }
 
-// 图片_取图片源.
+// 图片_取图片源, 返回图片源句柄.
 //
 // hImage: 图片句柄.
 func XImage_GetImageSrc(hImage int) int {
@@ -499,28 +499,56 @@ func XImage_GetGdiplusBitmap(hImage int) uintptr {
 	return r
 }
 
-// 图片_加载从数据, 从内存加载原始像素数据(BGRA32位格式), 1个像素占4个字节,分别是(R,G,B,A), 返回炫彩图片句柄.
+// 图片_加载从数据, 从内存加载原始像素数据(BGRA32位格式), 1个像素占4个字节,分别是(B,G,R,A), 返回炫彩图片句柄.
 //
-// data: 数据地址.
+// data: 数据(BGRA32位格式).
 //
 // width: 图片宽度.
 //
 // height: 图片高度.
-func XImage_LoadFromData(data uintptr, width, height int32) int {
-	r, _, _ := xImage_LoadFromData.Call(data, uintptr(width), uintptr(height))
+func XImage_LoadFromData(data []byte, width, height int32) int {
+	r, _, _ := xImage_LoadFromData.Call(common.ByteSliceDataPtr(&data), uintptr(width), uintptr(height))
 	return int(r)
 }
 
-// 图片_修改数据, 修改图片内存数据(BGRA32位格式), 1个像素占4个字节,分别是(R,G,B,A).
+// 图片_修改数据, 修改图片内存数据(BGRA32位格式), 1个像素占4个字节,分别是(B,G,R,A).
 //
 // hImage: 图片句柄.
 //
-// data: 数据地址.
+// data: 数据(BGRA32位格式).
 //
 // width: 图片宽度.
 //
 // height: 图片高度.
-func XImage_ModifyData(hImage int, data uintptr, width, height int32) int {
-	r, _, _ := xImage_ModifyData.Call(uintptr(hImage), data, uintptr(width), uintptr(height))
+func XImage_ModifyData(hImage int, data []byte, width, height int32) int {
+	r, _, _ := xImage_ModifyData.Call(uintptr(hImage), common.ByteSliceDataPtr(&data), uintptr(width), uintptr(height))
+	return int(r)
+}
+
+// 图片_加载从数据RGBA, 从内存加载原始像素数据(RGBA32位格式), 1个像素占4个字节,分别是(R,G,B,A), 返回炫彩图片句柄.
+//
+// data: 数据(RGBA32位格式).
+//
+// width: 图片宽度.
+//
+// height: 图片高度.
+func XImage_LoadFromDataRGBA(data []byte, width, height int32) int {
+	d := common.RGBABytesToBGRA(data)
+	r, _, _ := xImage_LoadFromData.Call(common.ByteSliceDataPtr(&d), uintptr(width), uintptr(height))
+	return int(r)
+}
+
+// 图片_修改数据RGBA, 修改图片内存数据(RGBA32位格式), 1个像素占4个字节,分别是(R,G,B,A).
+//
+// hImage: 图片句柄.
+//
+// data: 数据(RGBA32位格式).
+//
+// width: 图片宽度.
+//
+// height: 图片高度.
+func XImage_ModifyDataRGBA(hImage int, data []byte, width, height int32) int {
+	d := common.RGBABytesToBGRA(data)
+	r, _, _ := xImage_ModifyData.Call(uintptr(hImage), common.ByteSliceDataPtr(&d), uintptr(width), uintptr(height))
 	return int(r)
 }

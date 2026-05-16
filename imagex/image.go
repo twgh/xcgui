@@ -7,7 +7,9 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// Image 炫彩图片.
+// Image 炫彩图片操作
+//   - 提供了图片的加载, 销毁及配合UI元素的贴图显示, 当图片接口关联到一个UI元素后, 它会自动销毁图片接口, 否则需要你手动销毁.
+//   - 主要支持: 加载图片文件格式: bmp,jpg,png,gif,ico. 从文件加载, 从程序资源加载, 从压缩包中加载, 自适应图片, 平铺, 透明色支持.
 type Image struct {
 	objectbase.ObjectBase
 }
@@ -275,15 +277,26 @@ func NewByNameEx(fileName, name string) *Image {
 	return NewByHandle(xc.XRes_GetImageEx(fileName, name))
 }
 
-// 图片_加载从数据, 从内存加载原始像素数据(BGRA32位格式), 1个像素占4个字节,分别是(R,G,B,A), 返回炫彩图片句柄, 失败返回 nil.
+// 图片_加载从数据, 从内存加载原始像素数据(BGRA32位格式), 1个像素占4个字节,分别是(B,G,R,A), 返回炫彩图片句柄, 失败返回 nil.
 //
-// data: 数据地址.
+// data: 数据(BGRA32位格式).
 //
 // width: 图片宽度.
 //
 // height: 图片高度.
-func NewByData(data uintptr, width, height int32) *Image {
+func NewByData(data []byte, width, height int32) *Image {
 	return NewByHandle(xc.XImage_LoadFromData(data, width, height))
+}
+
+// 图片_加载从数据RGBA, 从内存加载原始像素数据(RGBA32位格式), 1个像素占4个字节,分别是(R,G,B,A), 返回炫彩图片句柄.
+//
+// data: 数据(RGBA32位格式).
+//
+// width: 图片宽度.
+//
+// height: 图片高度.
+func NewByDataRGBA(data []byte, width, height int32) *Image {
+	return NewByHandle(xc.XImage_LoadFromDataRGBA(data, width, height))
 }
 
 // 图片_取SVG, 返回 Svg 句柄.
@@ -410,14 +423,14 @@ func (i *Image) GetHeight() int32 {
 	return xc.XImage_GetHeight(i.Handle)
 }
 
-// 图片_取图片源.
+// 图片_取图片源, 返回图片源句柄.
 func (i *Image) GetImageSrc() int {
 	return xc.XImage_GetImageSrc(i.Handle)
 }
 
-// 图片_取图片源, 返回图片对象, 失败返回 nil.
-func (i *Image) GetImageSrcObj() *Image {
-	return NewByHandle(xc.XImage_GetImageSrc(i.Handle))
+// 图片_取图片源, 返回图片源对象, 失败返回 nil.
+func (i *Image) GetImageSrcObj() *ImageSrc {
+	return NewImageSrcByHandle(xc.XImage_GetImageSrc(i.Handle))
 }
 
 // 图片_增加引用计数.
@@ -463,13 +476,24 @@ func (i *Image) GetGdiplusBitmap() uintptr {
 	return xc.XImage_GetGdiplusBitmap(i.Handle)
 }
 
-// 图片_修改数据, 修改图片内存数据(BGRA32位格式), 1个像素占4个字节,分别是(R,G,B,A).
+// 图片_修改数据, 修改图片内存数据(BGRA32位格式), 1个像素占4个字节,分别是(B,G,R,A).
 //
-// data: 数据地址.
+// data: 数据(BGRA32位格式).
 //
 // width: 图片宽度.
 //
 // height: 图片高度.
-func (i *Image) ModifyData(data uintptr, width, height int32) int {
+func (i *Image) ModifyData(data []byte, width, height int32) int {
 	return xc.XImage_ModifyData(i.Handle, data, width, height)
+}
+
+// 图片_修改数据RGBA, 修改图片内存数据(RGBA32位格式), 1个像素占4个字节,分别是(R,G,B,A).
+//
+// data: 数据(RGBA32位格式).
+//
+// width: 图片宽度.
+//
+// height: 图片高度.
+func (i *Image) ModifyDataRGBA(data []byte, width, height int32) int {
+	return xc.XImage_ModifyDataRGBA(i.Handle, data, width, height)
 }
