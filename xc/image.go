@@ -482,3 +482,45 @@ func XImage_GetSvg(hImage int) int {
 func XImage_SetScaleSize(hImage int, width, height int32) {
 	xImage_SetScaleSize.Call(uintptr(hImage), uintptr(width), uintptr(height))
 }
+
+// 图片_取WicBitmap. 获取WIC位图指针, 返回 IWICBitmapSource*.
+//
+// hImage: 图片句柄.
+func XImage_GetWicBitMap(hImage int) uintptr {
+	r, _, _ := xImage_GetWicBitMap.Call(uintptr(hImage))
+	return r
+}
+
+// 图片_取GdiplusBitmap. 获取GDI+位图指针, 返回 Gdiplus::Bitmap*.
+//
+// hImage: 图片句柄.
+func XImage_GetGdiplusBitmap(hImage int) uintptr {
+	r, _, _ := xImage_GetGdiplusBitmap.Call(uintptr(hImage))
+	return r
+}
+
+// 图片_加载从数据, 从内存加载原始像素数据(BGRA32位格式), 1个像素占4个字节,分别是(R,G,B,A), 返回炫彩图片句柄.
+//
+// data: 数据地址.
+//
+// width: 图片宽度.
+//
+// height: 图片高度.
+func XImage_LoadFromData(data uintptr, width, height int32) int {
+	r, _, _ := xImage_LoadFromData.Call(data, uintptr(width), uintptr(height))
+	return int(r)
+}
+
+// 图片_修改数据, 修改图片内存数据(BGRA32位格式), 1个像素占4个字节,分别是(R,G,B,A).
+//
+// hImage: 图片句柄.
+//
+// data: 数据地址.
+//
+// width: 图片宽度.
+//
+// height: 图片高度.
+func XImage_ModifyData(hImage int, data uintptr, width, height int32) int {
+	r, _, _ := xImage_ModifyData.Call(uintptr(hImage), data, uintptr(width), uintptr(height))
+	return int(r)
+}

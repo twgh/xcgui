@@ -275,6 +275,17 @@ func NewByNameEx(fileName, name string) *Image {
 	return NewByHandle(xc.XRes_GetImageEx(fileName, name))
 }
 
+// 图片_加载从数据, 从内存加载原始像素数据(BGRA32位格式), 1个像素占4个字节,分别是(R,G,B,A), 返回炫彩图片句柄, 失败返回 nil.
+//
+// data: 数据地址.
+//
+// width: 图片宽度.
+//
+// height: 图片高度.
+func NewByData(data uintptr, width, height int32) *Image {
+	return NewByHandle(xc.XImage_LoadFromData(data, width, height))
+}
+
 // 图片_取SVG, 返回 Svg 句柄.
 func (i *Image) GetSvg() int {
 	return xc.XImage_GetSvg(i.Handle)
@@ -440,4 +451,25 @@ func (i *Image) Destroy() *Image {
 func (i *Image) SetScaleSize(width, height int32) *Image {
 	xc.XImage_SetScaleSize(i.Handle, width, height)
 	return i
+}
+
+// 图片_取WicBitmap. 获取WIC位图指针, 返回 IWICBitmapSource*.
+func (i *Image) GetWicBitmap() uintptr {
+	return xc.XImage_GetWicBitMap(i.Handle)
+}
+
+// 图片_取GdiplusBitmap. 获取GDI+位图指针, 返回 Gdiplus::Bitmap*.
+func (i *Image) GetGdiplusBitmap() uintptr {
+	return xc.XImage_GetGdiplusBitmap(i.Handle)
+}
+
+// 图片_修改数据, 修改图片内存数据(BGRA32位格式), 1个像素占4个字节,分别是(R,G,B,A).
+//
+// data: 数据地址.
+//
+// width: 图片宽度.
+//
+// height: 图片高度.
+func (i *Image) ModifyData(data uintptr, width, height int32) int {
+	return xc.XImage_ModifyData(i.Handle, data, width, height)
 }
