@@ -428,3 +428,12 @@ func XMenu_GetCssName(hMenu int, nType int32) string {
 	r, _, _ := xMenu_GetCssName.Call(uintptr(hMenu), uintptr(nType))
 	return common.UintPtrToString(r)
 }
+
+// 菜单_置左侧宽度. 设置左侧区域宽度.
+//
+// hMenu: 菜单句柄.
+//
+// nWidth: 宽度.
+func XMenu_SetLeftWidth(hMenu int, nWidth int32) {
+	xMenu_SetLeftWidth.Call(uintptr(hMenu), uintptr(nWidth))
+}

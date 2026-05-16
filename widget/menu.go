@@ -385,6 +385,14 @@ func (m *Menu) GetCssName(nType int32) string {
 	return xc.XMenu_GetCssName(m.Handle, nType)
 }
 
+// 菜单_置左侧宽度. 设置左侧区域宽度.
+//
+// nWidth: 宽度.
+func (m *Menu) SetLeftWidth(nWidth int32) *Menu {
+	xc.XMenu_SetLeftWidth(m.Handle, nWidth)
+	return m
+}
+
 // ------------------------- AddEvent ------------------------- //
 
 // AddEvent_Menu_Select 添加弹出菜单项选择事件.
