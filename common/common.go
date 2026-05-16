@@ -445,3 +445,28 @@ func GetLowWord(dwValue uint32) uint16 {
 func GetHighWord(dwValue uint32) uint16 {
 	return uint16((dwValue >> 16) & 0xFFFF)
 }
+
+// RGBABytesToBGRA 将原始的 RGBA 像素字节切片转换为 C 接口要求的 BGRA32 格式。
+//
+// data: 原始的 RGBA 格式像素数据，长度必须是 4 的倍数。
+func RGBABytesToBGRA(data []byte) []byte {
+	return swapRB(data)
+}
+
+// BGRABytesToRGBA 将原始的 BGRA 像素字节切片转换为 Go 标准库要求的 RGBA 格式。
+//
+// data: 原始的 BGRA 格式像素数据，长度必须是 4 的倍数。
+func BGRABytesToRGBA(data []byte) []byte {
+	return swapRB(data)
+}
+
+// swapRB 交换像素数据中的 R 和 B 通道（适用于 RGBA <-> BGRA 互转）
+func swapRB(data []byte) []byte {
+	buf := make([]byte, len(data))
+	for i := 0; i < len(data); i += 4 {
+		buf[i], buf[i+2] = data[i+2], data[i] // 直接交换 R 和 B
+		buf[i+1] = data[i+1]
+		buf[i+3] = data[i+3]
+	}
+	return buf
+}
