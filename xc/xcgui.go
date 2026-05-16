@@ -222,6 +222,7 @@ var (
 	xC_IsInit                  *syscall.LazyProc
 	xC_SetCallback_LoadLayout  *syscall.LazyProc
 	xC_LoadLayout_Create       *syscall.LazyProc
+	xC_EnableWindowSysNc       *syscall.LazyProc
 
 	// UI Designer.
 	xC_LoadLayout       *syscall.LazyProc
@@ -609,6 +610,7 @@ var (
 	xMenu_EnableCSS            *syscall.LazyProc
 	xMenu_SetCssName           *syscall.LazyProc
 	xMenu_GetCssName           *syscall.LazyProc
+	xMenu_SetLeftWidth         *syscall.LazyProc
 
 	// ModalWindow.
 	xModalWnd_Create          *syscall.LazyProc
@@ -1278,8 +1280,16 @@ var (
 	xImage_GetSvg         *syscall.LazyProc
 	xImage_LoadSvgStringW *syscall.LazyProc
 	// xImage_LoadSvgStringUtf8 *syscall.LazyProc
-	xImage_SetScaleSize *syscall.LazyProc
-	xImage_LoadZipRes   *syscall.LazyProc
+	xImage_SetScaleSize      *syscall.LazyProc
+	xImage_LoadZipRes        *syscall.LazyProc
+	xImage_GetWicBitMap      *syscall.LazyProc
+	xImage_GetGdiplusBitmap  *syscall.LazyProc
+	xImage_LoadFromData      *syscall.LazyProc
+	xImage_ModifyData        *syscall.LazyProc
+	xImgSrc_LoadFromData     *syscall.LazyProc
+	xImgSrc_ModifyData       *syscall.LazyProc
+	xImgSrc_GetWicBitMap     *syscall.LazyProc
+	xImgSrc_GetGdiplusBitmap *syscall.LazyProc
 
 	// Svg.
 	xSvg_LoadFile *syscall.LazyProc
@@ -1313,8 +1323,10 @@ var (
 	xSvg_Show               *syscall.LazyProc
 	xSvg_LoadStringW        *syscall.LazyProc
 	// xSvg_LoadStringUtf8     *syscall.LazyProc
-	xSvg_LoadZipMem *syscall.LazyProc
-	xSvg_LoadZipRes *syscall.LazyProc
+	xSvg_LoadZipMem       *syscall.LazyProc
+	xSvg_LoadZipRes       *syscall.LazyProc
+	xSvg_EnableAlignPixel *syscall.LazyProc
+	xSvg_EnableAntialias  *syscall.LazyProc
 
 	// ListItemTemplate.
 	xTemp_Load               *syscall.LazyProc
@@ -2061,6 +2073,7 @@ func _loadXCGUI() {
 	xC_IsInit = xcgui.NewProc("XC_IsInit")
 	xC_SetCallback_LoadLayout = xcgui.NewProc("XC_SetCallBack_LoadLayout")
 	xC_LoadLayout_Create = xcgui.NewProc("XC_LoadLayout_Create")
+	xC_EnableWindowSysNc = xcgui.NewProc("XC_EnableWindowSysNc")
 
 	// UI Designer.
 	xC_LoadLayout = xcgui.NewProc("XC_LoadLayout")
@@ -2443,6 +2456,7 @@ func _loadXCGUI() {
 	xMenu_EnableCSS = xcgui.NewProc("XMenu_EnableCSS")
 	xMenu_SetCssName = xcgui.NewProc("XMenu_SetCssName")
 	xMenu_GetCssName = xcgui.NewProc("XMenu_GetCssName")
+	xMenu_SetLeftWidth = xcgui.NewProc("XMenu_SetLeftWidth")
 
 	// ModalWindow.
 	xModalWnd_Create = xcgui.NewProc("XModalWnd_Create")
@@ -3113,6 +3127,14 @@ func _loadXCGUI() {
 	// xImage_LoadSvgStringUtf8 = xcgui.NewProc("XImage_LoadSvgStringUtf8")
 	xImage_SetScaleSize = xcgui.NewProc("XImage_SetScaleSize")
 	xImage_LoadZipRes = xcgui.NewProc("XImage_LoadZipRes")
+	xImage_GetWicBitMap = xcgui.NewProc("XImage_GetWicBitMap")
+	xImage_GetGdiplusBitmap = xcgui.NewProc("XImage_GetGdiplusBitmap")
+	xImage_LoadFromData = xcgui.NewProc("XImage_LoadFromData")
+	xImage_ModifyData = xcgui.NewProc("XImage_ModifyData")
+	xImgSrc_LoadFromData = xcgui.NewProc("XImgSrc_LoadFromData")
+	xImgSrc_ModifyData = xcgui.NewProc("XImgSrc_ModifyData")
+	xImgSrc_GetWicBitMap = xcgui.NewProc("XImgSrc_GetWicBitMap")
+	xImgSrc_GetGdiplusBitmap = xcgui.NewProc("XImgSrc_GetGdiplusBitmap")
 
 	// Svg.
 	xSvg_LoadFile = xcgui.NewProc("XSvg_LoadFile")
@@ -3148,6 +3170,8 @@ func _loadXCGUI() {
 	// xSvg_LoadStringUtf8 = xcgui.NewProc("XSvg_LoadStringUtf8")
 	xSvg_LoadZipMem = xcgui.NewProc("XSvg_LoadZipMem")
 	xSvg_LoadZipRes = xcgui.NewProc("XSvg_LoadZipRes")
+	xSvg_EnableAlignPixel = xcgui.NewProc("XSvg_EnableAlignPixel")
+	xSvg_EnableAntialias = xcgui.NewProc("XSvg_EnableAntialias")
 
 	// ListItemTemplate.
 	xTemp_Load = xcgui.NewProc("XTemp_Load")
