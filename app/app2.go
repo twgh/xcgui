@@ -951,12 +951,18 @@ func EnableDPI(bEnable ...bool) bool {
 }
 
 // 炫彩_启用自动重绘UI. 当修改UI后将自动调用重绘函数更新UI.
-//
-// 例如改变了按钮标题后, 将自动调用 xc.XEle_Redraw 更新UI, 默认不启用, 手动和自动各有优势.
+//   - 例如改变了按钮标题后, 将自动调用 xc.XEle_Redraw 更新UI, 默认不启用, 手动和自动各有优势.
 //
 // bEnable: 是否启用, 不填默认为 true.
 func EnableAutoRedrawUI(bEnable ...bool) {
 	xc.XC_EnableAutoRedrawUI(bEnable...)
+}
+
+// 炫彩_启用窗口系统非客户区. 当启用后拥有系统非客户区样式, 替代模拟非客户区.
+//
+// bEnable: 是否启用, 不填默认为 true.
+func EnableWindowSysNc(bEnable ...bool) {
+	xc.XC_EnableWindowSysNc(bEnable...)
 }
 
 // 炫彩_取句柄总数. 获取当前所使用的句柄总数量, 返回当前所使用的句柄总数量.
