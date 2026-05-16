@@ -485,8 +485,8 @@ func InitFont(pFont *xc.LOGFONTW, name string, size int32, bBold bool, bItalic b
 // 炫彩_分配内存, 在UI库中申请内存, 返回: 内存首地址.
 //
 // size: 大小, 字节为单位.
-func Malloc(size int32) {
-	xc.XC_Malloc(size)
+func Malloc(size int32) uintptr {
+	return xc.XC_Malloc(size)
 }
 
 // 炫彩_释放内存, 在UI库中释放内存.
