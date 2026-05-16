@@ -80,8 +80,6 @@ func (i *ICoreWebView2Find) GetMatchCount() (int32, error) {
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (i *ICoreWebView2Find) Event_FindActiveMatchIndexChanged(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Find) uintptr, allowAddingMultiple ...bool) (int, error) {
 	return WvEventBus.AddCallback(impl, "FindActiveMatchIndexChanged", cb, i, allowAddingMultiple...)
 }
@@ -94,8 +92,6 @@ func (i *ICoreWebView2Find) Event_FindActiveMatchIndexChanged(impl *WebViewEvent
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (i *ICoreWebView2Find) Event_FindMatchCountChanged(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Find) uintptr, allowAddingMultiple ...bool) (int, error) {
 	return WvEventBus.AddCallback(impl, "FindMatchCountChanged", cb, i, allowAddingMultiple...)
 }

@@ -8,8 +8,6 @@ package edge
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_DocumentTitleChanged(cb func(sender *ICoreWebView2, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -26,8 +24,6 @@ func (w *WebViewEventImpl) Event_DocumentTitleChanged(cb func(sender *ICoreWebVi
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_RasterizationScaleChanged(cb func(sender *ICoreWebView2Controller, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -45,8 +41,6 @@ func (w *WebViewEventImpl) Event_RasterizationScaleChanged(cb func(sender *ICore
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_WindowCloseRequested(cb func(sender *ICoreWebView2, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -66,8 +60,6 @@ func (w *WebViewEventImpl) Event_WindowCloseRequested(cb func(sender *ICoreWebVi
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_SourceChanged(cb func(sender *ICoreWebView2, args *ICoreWebView2SourceChangedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -86,8 +78,6 @@ func (w *WebViewEventImpl) Event_SourceChanged(cb func(sender *ICoreWebView2, ar
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_NewWindowRequested(cb func(sender *ICoreWebView2, args *ICoreWebView2NewWindowRequestedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -104,8 +94,6 @@ func (w *WebViewEventImpl) Event_NewWindowRequested(cb func(sender *ICoreWebView
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_PermissionRequested(cb func(sender *ICoreWebView2, args *ICoreWebView2PermissionRequestedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -123,8 +111,6 @@ func (w *WebViewEventImpl) Event_PermissionRequested(cb func(sender *ICoreWebVie
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_WebMessageReceived(cb func(sender *ICoreWebView2, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -140,8 +126,6 @@ func (w *WebViewEventImpl) Event_WebMessageReceived(cb func(sender *ICoreWebView
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_WebResourceRequested(cb func(sender *ICoreWebView2, args *ICoreWebView2WebResourceRequestedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -158,8 +142,6 @@ func (w *WebViewEventImpl) Event_WebResourceRequested(cb func(sender *ICoreWebVi
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_NavigationCompleted(cb func(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -176,8 +158,6 @@ func (w *WebViewEventImpl) Event_NavigationCompleted(cb func(sender *ICoreWebVie
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_Frame_NavigationCompleted(cb func(sender *ICoreWebView2, args *ICoreWebView2NavigationCompletedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -195,8 +175,6 @@ func (w *WebViewEventImpl) Event_Frame_NavigationCompleted(cb func(sender *ICore
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_Frame_NavigationStarting(cb func(sender *ICoreWebView2, args *ICoreWebView2NavigationStartingEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -214,8 +192,6 @@ func (w *WebViewEventImpl) Event_Frame_NavigationStarting(cb func(sender *ICoreW
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_NavigationStarting(cb func(sender *ICoreWebView2, args *ICoreWebView2NavigationStartingEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -232,8 +208,6 @@ func (w *WebViewEventImpl) Event_NavigationStarting(cb func(sender *ICoreWebView
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_AcceleratorKeyPressed(cb func(sender *ICoreWebView2Controller, args *ICoreWebView2AcceleratorKeyPressedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -252,8 +226,6 @@ func (w *WebViewEventImpl) Event_AcceleratorKeyPressed(cb func(sender *ICoreWebV
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_ContentLoading(cb func(sender *ICoreWebView2, args *ICoreWebView2ContentLoadingEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -270,8 +242,6 @@ func (w *WebViewEventImpl) Event_ContentLoading(cb func(sender *ICoreWebView2, a
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_ContainsFullScreenElementChanged(cb func(sender *ICoreWebView2, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -288,8 +258,6 @@ func (w *WebViewEventImpl) Event_ContainsFullScreenElementChanged(cb func(sender
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_ProcessFailed(cb func(sender *ICoreWebView2, args *ICoreWebView2ProcessFailedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -306,8 +274,6 @@ func (w *WebViewEventImpl) Event_ProcessFailed(cb func(sender *ICoreWebView2, ar
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_HistoryChanged(cb func(sender *ICoreWebView2, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -326,8 +292,6 @@ func (w *WebViewEventImpl) Event_HistoryChanged(cb func(sender *ICoreWebView2, a
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_ScriptDialogOpening(cb func(sender *ICoreWebView2, args *ICoreWebView2ScriptDialogOpeningEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -347,8 +311,6 @@ func (w *WebViewEventImpl) Event_ScriptDialogOpening(cb func(sender *ICoreWebVie
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_WebResourceResponseReceived(cb func(sender *ICoreWebView2, args *ICoreWebView2WebResourceResponseReceivedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -365,8 +327,6 @@ func (w *WebViewEventImpl) Event_WebResourceResponseReceived(cb func(sender *ICo
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_DOMContentLoaded(cb func(sender *ICoreWebView2, args *ICoreWebView2DOMContentLoadedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -384,8 +344,6 @@ func (w *WebViewEventImpl) Event_DOMContentLoaded(cb func(sender *ICoreWebView2,
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_FrameCreated(cb func(sender *ICoreWebView2, args *ICoreWebView2FrameCreatedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -407,8 +365,6 @@ func (w *WebViewEventImpl) Event_FrameCreated(cb func(sender *ICoreWebView2, arg
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_DownloadStarting(cb func(sender *ICoreWebView2, args *ICoreWebView2DownloadStartingEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -426,8 +382,6 @@ func (w *WebViewEventImpl) Event_DownloadStarting(cb func(sender *ICoreWebView2,
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_ClientCertificateRequested(cb func(sender *ICoreWebView2, args *ICoreWebView2ClientCertificateRequestedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -444,8 +398,6 @@ func (w *WebViewEventImpl) Event_ClientCertificateRequested(cb func(sender *ICor
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_IsMutedChanged(cb func(sender *ICoreWebView2, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -461,8 +413,6 @@ func (w *WebViewEventImpl) Event_IsMutedChanged(cb func(sender *ICoreWebView2, a
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_DocumentPlayingAudioChanged(cb func(sender *ICoreWebView2, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -481,8 +431,6 @@ func (w *WebViewEventImpl) Event_DocumentPlayingAudioChanged(cb func(sender *ICo
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_ContextMenuRequested(cb func(sender *ICoreWebView2, args *ICoreWebView2ContextMenuRequestedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -499,8 +447,6 @@ func (w *WebViewEventImpl) Event_ContextMenuRequested(cb func(sender *ICoreWebVi
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_BrowserProcessExited(cb func(sender *ICoreWebView2, args *ICoreWebView2BrowserProcessExitedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -517,8 +463,6 @@ func (w *WebViewEventImpl) Event_BrowserProcessExited(cb func(sender *ICoreWebVi
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_ProcessInfosChanged(cb func(sender *ICoreWebView2Environment, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -537,8 +481,6 @@ func (w *WebViewEventImpl) Event_ProcessInfosChanged(cb func(sender *ICoreWebVie
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_FaviconChanged(cb func(sender *ICoreWebView2, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -556,8 +498,6 @@ func (w *WebViewEventImpl) Event_FaviconChanged(cb func(sender *ICoreWebView2, a
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_ZoomFactorChanged(cb func(sender *ICoreWebView2Controller, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -574,8 +514,6 @@ func (w *WebViewEventImpl) Event_ZoomFactorChanged(cb func(sender *ICoreWebView2
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_MoveFocusRequested(cb func(sender *ICoreWebView2Controller, args *ICoreWebView2MoveFocusRequestedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -592,8 +530,6 @@ func (w *WebViewEventImpl) Event_MoveFocusRequested(cb func(sender *ICoreWebView
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_GotFocus(cb func(sender *ICoreWebView2Controller, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -610,8 +546,6 @@ func (w *WebViewEventImpl) Event_GotFocus(cb func(sender *ICoreWebView2Controlle
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_LostFocus(cb func(sender *ICoreWebView2Controller, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -628,8 +562,6 @@ func (w *WebViewEventImpl) Event_LostFocus(cb func(sender *ICoreWebView2Controll
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_NewBrowserVersionAvailable(cb func(sender *ICoreWebView2Environment, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -647,8 +579,6 @@ func (w *WebViewEventImpl) Event_NewBrowserVersionAvailable(cb func(sender *ICor
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_IsDefaultDownloadDialogOpenChanged(cb func(sender *ICoreWebView2, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -666,8 +596,6 @@ func (w *WebViewEventImpl) Event_IsDefaultDownloadDialogOpenChanged(cb func(send
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_BasicAuthenticationRequested(cb func(sender *ICoreWebView2, args *ICoreWebView2BasicAuthenticationRequestedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -684,8 +612,6 @@ func (w *WebViewEventImpl) Event_BasicAuthenticationRequested(cb func(sender *IC
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_StatusBarTextChanged(cb func(sender *ICoreWebView2, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -704,8 +630,6 @@ func (w *WebViewEventImpl) Event_StatusBarTextChanged(cb func(sender *ICoreWebVi
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_ServerCertificateErrorDetected(cb func(sender *ICoreWebView2, args *ICoreWebView2ServerCertificateErrorDetectedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -730,8 +654,6 @@ func (w *WebViewEventImpl) Event_ServerCertificateErrorDetected(cb func(sender *
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_LaunchingExternalUriScheme(cb func(sender *ICoreWebView2, args *ICoreWebView2LaunchingExternalUriSchemeEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -749,8 +671,6 @@ func (w *WebViewEventImpl) Event_LaunchingExternalUriScheme(cb func(sender *ICor
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_NotificationReceived(cb func(sender *ICoreWebView2, args *ICoreWebView2NotificationReceivedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -767,8 +687,6 @@ func (w *WebViewEventImpl) Event_NotificationReceived(cb func(sender *ICoreWebVi
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_SaveAsUIShowing(cb func(sender *ICoreWebView2, args *ICoreWebView2SaveAsUIShowingEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -785,8 +703,6 @@ func (w *WebViewEventImpl) Event_SaveAsUIShowing(cb func(sender *ICoreWebView2, 
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_SaveFileSecurityCheckStarting(cb func(sender *ICoreWebView2, args *ICoreWebView2SaveFileSecurityCheckStartingEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {
@@ -802,8 +718,6 @@ func (w *WebViewEventImpl) Event_SaveFileSecurityCheckStarting(cb func(sender *I
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (w *WebViewEventImpl) Event_ScreenCaptureStarting(cb func(sender *ICoreWebView2, args *ICoreWebView2ScreenCaptureStartingEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	var c interface{}
 	if cb == nil {

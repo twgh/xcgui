@@ -25,8 +25,6 @@ type ICoreWebView2Frame2 struct {
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (i *ICoreWebView2Frame2) Event_FrameNavigationStarting(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *ICoreWebView2NavigationStartingEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	return WvEventBus.AddCallback(impl, "FrameNavigationStarting", cb, i, allowAddingMultiple...)
 }
@@ -41,8 +39,6 @@ func (i *ICoreWebView2Frame2) Event_FrameNavigationStarting(impl *WebViewEventIm
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (i *ICoreWebView2Frame2) Event_FrameContentLoading(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *ICoreWebView2ContentLoadingEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	return WvEventBus.AddCallback(impl, "FrameContentLoading", cb, i, allowAddingMultiple...)
 }
@@ -55,8 +51,6 @@ func (i *ICoreWebView2Frame2) Event_FrameContentLoading(impl *WebViewEventImpl, 
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (i *ICoreWebView2Frame2) Event_FrameNavigationCompleted(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *ICoreWebView2NavigationCompletedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	return WvEventBus.AddCallback(impl, "FrameNavigationCompleted", cb, i, allowAddingMultiple...)
 }
@@ -70,8 +64,6 @@ func (i *ICoreWebView2Frame2) Event_FrameNavigationCompleted(impl *WebViewEventI
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (i *ICoreWebView2Frame2) Event_FrameDOMContentLoaded(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *ICoreWebView2DOMContentLoadedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	return WvEventBus.AddCallback(impl, "FrameDOMContentLoaded", cb, i, allowAddingMultiple...)
 }
@@ -86,8 +78,6 @@ func (i *ICoreWebView2Frame2) Event_FrameDOMContentLoaded(impl *WebViewEventImpl
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-//   - 如果为 true, 当你添加多次时, 会添加多个回调函数, 执行顺序是先执行最后添加的, 倒序执行.
-//   - 如果为 false, 那么无论你添加多少次, 都只会有一个回调函数, 也就是说会覆盖旧的回调函数.
 func (i *ICoreWebView2Frame2) Event_FrameWebMessageReceived(impl *WebViewEventImpl, cb func(sender *ICoreWebView2Frame, args *ICoreWebView2WebMessageReceivedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
 	return WvEventBus.AddCallback(impl, "FrameWebMessageReceived", cb, i, allowAddingMultiple...)
 }
