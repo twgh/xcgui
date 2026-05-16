@@ -331,3 +331,29 @@ func XSvg_Show(hSvg int, bShow ...bool) {
 	}
 	xSvg_Show.Call(uintptr(hSvg), common.BoolPtr(show))
 }
+
+// SVG_启用像素对齐, 默认未启用, 如果SVG出现模糊, 可以启用像素对齐功能.
+//
+// hSvg: SVG句柄.
+//
+// bEnable: 是否启用, 不填默认为 true.
+func XSvg_EnableAlignPixel(hSvg int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xSvg_EnableAlignPixel.Call(uintptr(hSvg), common.BoolPtr(enable))
+}
+
+// SVG_启用抗锯齿, 默认已启用, 特殊情况为了让SVG更清晰, 可能需要关闭抗锯齿.
+//
+// hSvg: SVG句柄.
+//
+// bEnable: 是否启用, 不填默认为 true.
+func XSvg_EnableAntialias(hSvg int, bEnable ...bool) {
+	enable := true
+	if len(bEnable) > 0 {
+		enable = bEnable[0]
+	}
+	xSvg_EnableAntialias.Call(uintptr(hSvg), common.BoolPtr(enable))
+}

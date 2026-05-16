@@ -290,3 +290,19 @@ func (s *Svg) Show(bShow ...bool) *Svg {
 	xc.XSvg_Show(s.Handle, bShow...)
 	return s
 }
+
+// SVG_启用像素对齐, 默认未启用, 如果SVG出现模糊, 可以启用像素对齐功能.
+//
+// bEnable: 是否启用, 不填默认为 true.
+func (s *Svg) EnableAlignPixel(bEnable ...bool) *Svg {
+	xc.XSvg_EnableAlignPixel(s.Handle, bEnable...)
+	return s
+}
+
+// SVG_启用抗锯齿, 默认已启用, 特殊情况为了让SVG更清晰, 可能需要关闭抗锯齿.
+//
+// bEnable: 是否启用, 不填默认为 true.
+func (s *Svg) EnableAntialias(bEnable ...bool) *Svg {
+	xc.XSvg_EnableAntialias(s.Handle, bEnable...)
+	return s
+}
