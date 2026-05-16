@@ -6,4 +6,4 @@ import _ "embed"
 var DLL []byte
 
 // xcgui.dll 的 CRC32 值
-const CRC32 = "C5763A85"
+const CRC32 = "B502FCA1"
