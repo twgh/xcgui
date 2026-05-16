@@ -221,3 +221,12 @@ const (
 	MenuItem_State_Flag_Disable   CombinedState = 0x0010 // 禁用
 	MenuItem_State_Flag_Enable    CombinedState = 0x0100 // 启用
 )
+
+// 组合状态
+// 进度条状态
+// type ProgressBar_State_Flag_ CombinedState
+
+const (
+	ProgressBar_State_Flag_Background CombinedState = 0x080 // 进度条进度背景
+	ProgressBar_State_Flag_Foreground CombinedState = 0x100 // 进度条进度前景
+)
