@@ -1,6 +1,8 @@
 package imagex
 
 import (
+	"image"
+
 	"github.com/twgh/xcgui/objectbase"
 	"github.com/twgh/xcgui/xc"
 )
@@ -136,6 +138,35 @@ func NewImageSrcByHBITMAP(hBitmap uintptr) *ImageSrc {
 	return NewImageSrcByHandle(xc.XImgSrc_LoadFromHBITMAP(hBitmap))
 }
 
+// NewImageSrcByData 图片源_加载从数据, 从内存加载原始像素数据(BGRA32位格式), 1个像素占4个字节,分别是(B,G,R,A), 失败返回 nil.
+//
+// data: 数据(BGRA32位格式).
+//
+// width: 图片宽度.
+//
+// height: 图片高度.
+func NewImageSrcByData(data []byte, width, height int32) *ImageSrc {
+	return NewImageSrcByHandle(xc.XImgSrc_LoadFromData(data, width, height))
+}
+
+// NewImageSrcByDataRGBA 图片源_加载从数据RGBA, 从内存加载原始像素数据(RGBA32位格式), 1个像素占4个字节,分别是(R,G,B,A), 失败返回 nil.
+//
+// data: 数据(RGBA32位格式).
+//
+// width: 图片宽度.
+//
+// height: 图片高度.
+func NewImageSrcByDataRGBA(data []byte, width, height int32) *ImageSrc {
+	return NewImageSrcByHandle(xc.XImgSrc_LoadFromDataRGBA(data, width, height))
+}
+
+// NewImageSrcByGoImage 图片源_加载从GoImage, 失败返回 nil.
+//
+// img: *image.RGBA.
+func NewImageSrcByGoImage(img *image.RGBA) *ImageSrc {
+	return NewImageSrcByHandle(xc.XImgSrc_LoadFromGoImage(img))
+}
+
 // NewImageSrcByHandle 从句柄创建对象, 失败返回 nil.
 //
 // handle: 图片句柄.
@@ -192,4 +223,43 @@ func (i *ImageSrc) GetRefCount() int32 {
 func (i *ImageSrc) Destroy() *ImageSrc {
 	xc.XImgSrc_Destroy(i.Handle)
 	return i
+}
+
+// ModifyData 图片源_修改数据, 修改图片内存数据(BGRA32位格式), 1个像素占4个字节,分别是(B,G,R,A).
+//
+// data: 数据(BGRA32位格式).
+//
+// width: 图片宽度.
+//
+// height: 图片高度.
+func (i *ImageSrc) ModifyData(data []byte, width, height int32) bool {
+	return xc.XImgSrc_ModifyData(i.Handle, data, width, height)
+}
+
+// ModifyDataRGBA 图片源_修改数据RGBA, 修改图片内存数据(RGBA32位格式), 1个像素占4个字节,分别是(R,G,B,A).
+//
+// data: 数据(RGBA32位格式).
+//
+// width: 图片宽度.
+//
+// height: 图片高度.
+func (i *ImageSrc) ModifyDataRGBA(data []byte, width, height int32) bool {
+	return xc.XImgSrc_ModifyDataRGBA(i.Handle, data, width, height)
+}
+
+// ModifyDataGoImage 图片源_修改数据从GoImage, 修改图片内存数据.
+//
+// img: *image.RGBA.
+func (i *ImageSrc) ModifyDataGoImage(img *image.RGBA) bool {
+	return xc.XImgSrc_ModifyDataGoImage(i.Handle, img)
+}
+
+// GetWicBitMap 图片源_取WicBitmap. 获取WIC位图指针, 返回 IWICBitmapSource*.
+func (i *ImageSrc) GetWicBitMap() uintptr {
+	return xc.XImgSrc_GetWicBitMap(i.Handle)
+}
+
+// GetGdiplusBitmap 图片源_取GdiplusBitmap. 获取GDI+位图指针, 返回 Gdiplus::Bitmap*.
+func (i *ImageSrc) GetGdiplusBitmap() uintptr {
+	return xc.XImgSrc_GetGdiplusBitmap(i.Handle)
 }
