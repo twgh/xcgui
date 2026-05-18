@@ -1,6 +1,8 @@
 package xc
 
 import (
+	"image"
+
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/xcc"
 )
@@ -507,6 +509,9 @@ func XImage_GetGdiplusBitmap(hImage int) uintptr {
 //
 // height: 图片高度.
 func XImage_LoadFromData(data []byte, width, height int32) int {
+	if len(data) < int(width*height*4) {
+		return 0
+	}
 	r, _, _ := xImage_LoadFromData.Call(common.ByteSliceDataPtr(&data), uintptr(width), uintptr(height))
 	return int(r)
 }
@@ -520,9 +525,12 @@ func XImage_LoadFromData(data []byte, width, height int32) int {
 // width: 图片宽度.
 //
 // height: 图片高度.
-func XImage_ModifyData(hImage int, data []byte, width, height int32) int {
+func XImage_ModifyData(hImage int, data []byte, width, height int32) bool {
+	if len(data) < int(width*height*4) {
+		return false
+	}
 	r, _, _ := xImage_ModifyData.Call(uintptr(hImage), common.ByteSliceDataPtr(&data), uintptr(width), uintptr(height))
-	return int(r)
+	return r != 0
 }
 
 // 图片_加载从数据RGBA, 从内存加载原始像素数据(RGBA32位格式), 1个像素占4个字节,分别是(R,G,B,A), 返回炫彩图片句柄.
@@ -533,6 +541,9 @@ func XImage_ModifyData(hImage int, data []byte, width, height int32) int {
 //
 // height: 图片高度.
 func XImage_LoadFromDataRGBA(data []byte, width, height int32) int {
+	if len(data) < int(width*height*4) {
+		return 0
+	}
 	d := common.RGBABytesToBGRA(data)
 	r, _, _ := xImage_LoadFromData.Call(common.ByteSliceDataPtr(&d), uintptr(width), uintptr(height))
 	return int(r)
@@ -547,8 +558,31 @@ func XImage_LoadFromDataRGBA(data []byte, width, height int32) int {
 // width: 图片宽度.
 //
 // height: 图片高度.
-func XImage_ModifyDataRGBA(hImage int, data []byte, width, height int32) int {
+func XImage_ModifyDataRGBA(hImage int, data []byte, width, height int32) bool {
+	if len(data) < int(width*height*4) {
+		return false
+	}
 	d := common.RGBABytesToBGRA(data)
 	r, _, _ := xImage_ModifyData.Call(uintptr(hImage), common.ByteSliceDataPtr(&d), uintptr(width), uintptr(height))
+	return r != 0
+}
+
+// 图片_加载从GoImage, 返回炫彩图片句柄.
+//
+// img: *image.RGBA.
+func XImage_LoadFromGoImage(img *image.RGBA) int {
+	d := common.RGBABytesToBGRA(img.Pix)
+	r, _, _ := xImage_LoadFromData.Call(common.ByteSliceDataPtr(&d), uintptr(img.Rect.Dx()), uintptr(img.Rect.Dy()))
 	return int(r)
+}
+
+// 图片_修改数据从GoImage, 修改图片内存数据.
+//
+// hImage: 图片句柄.
+//
+// img: *image.RGBA.
+func XImage_ModifyDataGoImage(hImage int, img *image.RGBA) bool {
+	d := common.RGBABytesToBGRA(img.Pix)
+	r, _, _ := xImage_ModifyData.Call(uintptr(hImage), common.ByteSliceDataPtr(&d), uintptr(img.Rect.Dx()), uintptr(img.Rect.Dy()))
+	return r != 0
 }
