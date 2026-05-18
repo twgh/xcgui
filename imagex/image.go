@@ -1,6 +1,8 @@
 package imagex
 
 import (
+	"image"
+
 	"github.com/twgh/xcgui/objectbase"
 	"github.com/twgh/xcgui/svg"
 	"github.com/twgh/xcgui/xc"
@@ -299,6 +301,13 @@ func NewByDataRGBA(data []byte, width, height int32) *Image {
 	return NewByHandle(xc.XImage_LoadFromDataRGBA(data, width, height))
 }
 
+// 图片_加载从GoImage, 返回炫彩图片对象.
+//
+// img: *image.RGBA.
+func NewByGoImage(img *image.RGBA) *Image {
+	return NewByHandle(xc.XImage_LoadFromGoImage(img))
+}
+
 // 图片_取SVG, 返回 Svg 句柄.
 func (i *Image) GetSvg() int {
 	return xc.XImage_GetSvg(i.Handle)
@@ -483,7 +492,7 @@ func (i *Image) GetGdiplusBitmap() uintptr {
 // width: 图片宽度.
 //
 // height: 图片高度.
-func (i *Image) ModifyData(data []byte, width, height int32) int {
+func (i *Image) ModifyData(data []byte, width, height int32) bool {
 	return xc.XImage_ModifyData(i.Handle, data, width, height)
 }
 
@@ -494,6 +503,13 @@ func (i *Image) ModifyData(data []byte, width, height int32) int {
 // width: 图片宽度.
 //
 // height: 图片高度.
-func (i *Image) ModifyDataRGBA(data []byte, width, height int32) int {
+func (i *Image) ModifyDataRGBA(data []byte, width, height int32) bool {
 	return xc.XImage_ModifyDataRGBA(i.Handle, data, width, height)
+}
+
+// 图片_修改数据从GoImage, 修改图片内存数据.
+//
+// img: *image.RGBA.
+func (i *Image) ModifyDataGoImage(img *image.RGBA) bool {
+	return xc.XImage_ModifyDataGoImage(i.Handle, img)
 }
