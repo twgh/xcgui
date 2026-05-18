@@ -1292,26 +1292,26 @@ var (
 	xImgSrc_ModifyData          *syscall.LazyProc
 	xImgSrc_GetWicBitMap        *syscall.LazyProc
 	xImgSrc_GetGdiplusBitmap    *syscall.LazyProc
-	XImgSrc_LoadFile            *syscall.LazyProc
-	XImgSrc_LoadFileRect        *syscall.LazyProc
-	XImgSrc_LoadRes             *syscall.LazyProc
-	XImgSrc_LoadZip             *syscall.LazyProc
-	XImgSrc_LoadZipRect         *syscall.LazyProc
-	XImgSrc_LoadZipMem          *syscall.LazyProc
-	XImgSrc_LoadMemory          *syscall.LazyProc
-	XImgSrc_LoadMemoryRect      *syscall.LazyProc
-	XImgSrc_LoadFromImage       *syscall.LazyProc
-	XImgSrc_LoadFromExtractIcon *syscall.LazyProc
-	XImgSrc_LoadFromHICON       *syscall.LazyProc
-	XImgSrc_LoadFromHBITMAP     *syscall.LazyProc
-	XImgSrc_EnableAutoDestroy   *syscall.LazyProc
-	XImgSrc_GetWidth            *syscall.LazyProc
-	XImgSrc_GetHeight           *syscall.LazyProc
-	XImgSrc_GetFile             *syscall.LazyProc
-	XImgSrc_AddRef              *syscall.LazyProc
-	XImgSrc_Release             *syscall.LazyProc
-	XImgSrc_GetRefCount         *syscall.LazyProc
-	XImgSrc_Destroy             *syscall.LazyProc
+	xImgSrc_LoadFile            *syscall.LazyProc
+	xImgSrc_LoadFileRect        *syscall.LazyProc
+	xImgSrc_LoadRes             *syscall.LazyProc
+	xImgSrc_LoadZip             *syscall.LazyProc
+	xImgSrc_LoadZipRect         *syscall.LazyProc
+	xImgSrc_LoadZipMem          *syscall.LazyProc
+	xImgSrc_LoadMemory          *syscall.LazyProc
+	xImgSrc_LoadMemoryRect      *syscall.LazyProc
+	xImgSrc_LoadFromImage       *syscall.LazyProc
+	xImgSrc_LoadFromExtractIcon *syscall.LazyProc
+	xImgSrc_LoadFromHICON       *syscall.LazyProc
+	xImgSrc_LoadFromHBITMAP     *syscall.LazyProc
+	xImgSrc_EnableAutoDestroy   *syscall.LazyProc
+	xImgSrc_GetWidth            *syscall.LazyProc
+	xImgSrc_GetHeight           *syscall.LazyProc
+	xImgSrc_GetFile             *syscall.LazyProc
+	xImgSrc_AddRef              *syscall.LazyProc
+	xImgSrc_Release             *syscall.LazyProc
+	xImgSrc_GetRefCount         *syscall.LazyProc
+	xImgSrc_Destroy             *syscall.LazyProc
 
 	// Svg.
 	xSvg_LoadFile *syscall.LazyProc
@@ -3159,26 +3159,26 @@ func _loadXCGUI() {
 	xImgSrc_ModifyData = xcgui.NewProc("XImgSrc_ModifyData")
 	xImgSrc_GetWicBitMap = xcgui.NewProc("XImgSrc_GetWicBitMap")
 	xImgSrc_GetGdiplusBitmap = xcgui.NewProc("XImgSrc_GetGdiplusBitmap")
-	XImgSrc_LoadFile = xcgui.NewProc("XImgSrc_LoadFile")
-	XImgSrc_LoadFileRect = xcgui.NewProc("XImgSrc_LoadFileRect")
-	XImgSrc_LoadRes = xcgui.NewProc("XImgSrc_LoadRes")
-	XImgSrc_LoadZip = xcgui.NewProc("XImgSrc_LoadZip")
-	XImgSrc_LoadZipRect = xcgui.NewProc("XImgSrc_LoadZipRect")
-	XImgSrc_LoadZipMem = xcgui.NewProc("XImgSrc_LoadZipMem")
-	XImgSrc_LoadMemory = xcgui.NewProc("XImgSrc_LoadMemory")
-	XImgSrc_LoadMemoryRect = xcgui.NewProc("XImgSrc_LoadMemoryRect")
-	XImgSrc_LoadFromImage = xcgui.NewProc("XImgSrc_LoadFromImage")
-	XImgSrc_LoadFromExtractIcon = xcgui.NewProc("XImgSrc_LoadFromExtractIcon")
-	XImgSrc_LoadFromHICON = xcgui.NewProc("XImgSrc_LoadFromHICON")
-	XImgSrc_LoadFromHBITMAP = xcgui.NewProc("XImgSrc_LoadFromHBITMAP")
-	XImgSrc_EnableAutoDestroy = xcgui.NewProc("XImgSrc_EnableAutoDestroy")
-	XImgSrc_GetWidth = xcgui.NewProc("XImgSrc_GetWidth")
-	XImgSrc_GetHeight = xcgui.NewProc("XImgSrc_GetHeight")
-	XImgSrc_GetFile = xcgui.NewProc("XImgSrc_GetFile")
-	XImgSrc_AddRef = xcgui.NewProc("XImgSrc_AddRef")
-	XImgSrc_Release = xcgui.NewProc("XImgSrc_Release")
-	XImgSrc_GetRefCount = xcgui.NewProc("XImgSrc_GetRefCount")
-	XImgSrc_Destroy = xcgui.NewProc("XImgSrc_Destroy")
+	xImgSrc_LoadFile = xcgui.NewProc("XImgSrc_LoadFile")
+	xImgSrc_LoadFileRect = xcgui.NewProc("XImgSrc_LoadFileRect")
+	xImgSrc_LoadRes = xcgui.NewProc("XImgSrc_LoadRes")
+	xImgSrc_LoadZip = xcgui.NewProc("XImgSrc_LoadZip")
+	xImgSrc_LoadZipRect = xcgui.NewProc("XImgSrc_LoadZipRect")
+	xImgSrc_LoadZipMem = xcgui.NewProc("XImgSrc_LoadZipMem")
+	xImgSrc_LoadMemory = xcgui.NewProc("XImgSrc_LoadMemory")
+	xImgSrc_LoadMemoryRect = xcgui.NewProc("XImgSrc_LoadMemoryRect")
+	xImgSrc_LoadFromImage = xcgui.NewProc("XImgSrc_LoadFromImage")
+	xImgSrc_LoadFromExtractIcon = xcgui.NewProc("XImgSrc_LoadFromExtractIcon")
+	xImgSrc_LoadFromHICON = xcgui.NewProc("XImgSrc_LoadFromHICON")
+	xImgSrc_LoadFromHBITMAP = xcgui.NewProc("XImgSrc_LoadFromHBITMAP")
+	xImgSrc_EnableAutoDestroy = xcgui.NewProc("XImgSrc_EnableAutoDestroy")
+	xImgSrc_GetWidth = xcgui.NewProc("XImgSrc_GetWidth")
+	xImgSrc_GetHeight = xcgui.NewProc("XImgSrc_GetHeight")
+	xImgSrc_GetFile = xcgui.NewProc("XImgSrc_GetFile")
+	xImgSrc_AddRef = xcgui.NewProc("XImgSrc_AddRef")
+	xImgSrc_Release = xcgui.NewProc("XImgSrc_Release")
+	xImgSrc_GetRefCount = xcgui.NewProc("XImgSrc_GetRefCount")
+	xImgSrc_Destroy = xcgui.NewProc("XImgSrc_Destroy")
 
 	// Svg.
 	xSvg_LoadFile = xcgui.NewProc("XSvg_LoadFile")
