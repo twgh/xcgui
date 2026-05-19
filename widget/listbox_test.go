@@ -1,19 +1,21 @@
-package widget
+package widget_test
 
 import (
 	"fmt"
+	"testing"
+
 	"github.com/twgh/xcgui/app"
 	"github.com/twgh/xcgui/tf"
+	"github.com/twgh/xcgui/widget"
 	"github.com/twgh/xcgui/window"
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
-	"testing"
 )
 
 func TestListBox_AddEvent_ListBox_Select(t *testing.T) {
 	tf.TFunc(func(a *app.App, w *window.Window) {
 		// 创建ListBox
-		lb := NewListBox(12, 33, 400, 350, w.Handle)
+		lb := widget.NewListBox(12, 33, 400, 350, w.Handle)
 		// 创建数据适配器, 这个必须创建, 存储数据的
 		lb.CreateAdapter()
 		lb.ShowSBarV(true)

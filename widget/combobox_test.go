@@ -1,17 +1,19 @@
-package widget
+package widget_test
 
 import (
-	"github.com/twgh/xcgui/app"
-	"github.com/twgh/xcgui/tf"
-	"github.com/twgh/xcgui/window"
-	"github.com/twgh/xcgui/xc"
 	"strconv"
 	"testing"
+
+	"github.com/twgh/xcgui/app"
+	"github.com/twgh/xcgui/tf"
+	"github.com/twgh/xcgui/widget"
+	"github.com/twgh/xcgui/window"
+	"github.com/twgh/xcgui/xc"
 )
 
 func TestComboBox_AddEvent_COMBOBOX_SELECT_END(t *testing.T) {
 	tf.TFunc(func(a *app.App, w *window.Window) {
-		cbb := NewComboBox(20, 40, 200, 35, w.Handle)
+		cbb := widget.NewComboBox(20, 40, 200, 35, w.Handle)
 		cbb.CreateAdapter()
 		cbb.EnableEdit(false)
 		for i := 0; i < 5; i++ {

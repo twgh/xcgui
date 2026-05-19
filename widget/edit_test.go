@@ -1,4 +1,4 @@
-package widget
+package widget_test
 
 import (
 	"math/rand"
@@ -7,13 +7,14 @@ import (
 
 	"github.com/twgh/xcgui/app"
 	"github.com/twgh/xcgui/tf"
+	"github.com/twgh/xcgui/widget"
 	"github.com/twgh/xcgui/window"
 )
 
 func TestEdit_AddEvent_EditSet(t *testing.T) {
 	rand.Seed(time.Now().UnixNano())
 	tf.TFunc(func(a *app.App, w *window.Window) {
-		edit := NewEdit(20, 40, 200, 200, w.Handle)
+		edit := widget.NewEdit(20, 40, 200, 200, w.Handle)
 		edit.EnableMultiLine(true)
 		edit.ShowSBarV(true)
 		edit.EnableAutoWrap(true)
@@ -38,7 +39,7 @@ func TestEdit_AddEvent_EditSet(t *testing.T) {
 			return 0
 		})
 
-		btn := NewButton(240, 40, 200, 30, "按钮", w.Handle)
+		btn := widget.NewButton(240, 40, 200, 30, "按钮", w.Handle)
 		btn.AddEvent_BnClick(func(hEle int, pbHandled *bool) int {
 			edit.SetDefaultTextColor(rand.Uint32())
 			edit.SetCaretColor(rand.Uint32())

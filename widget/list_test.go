@@ -1,17 +1,19 @@
-package widget
+package widget_test
 
 import (
+	"testing"
+
 	"github.com/twgh/xcgui/app"
 	"github.com/twgh/xcgui/tf"
+	"github.com/twgh/xcgui/widget"
 	"github.com/twgh/xcgui/window"
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
-	"testing"
 )
 
 func TestList_AddEvent_List_Select(t *testing.T) {
 	tf.TFunc(func(a *app.App, w *window.Window) {
-		list := NewList(20, 40, 500, 350, w.Handle)
+		list := widget.NewList(20, 40, 500, 350, w.Handle)
 		list.CreateAdapters(3)
 		// 添加列
 		list.AddColumnText(147, "name1", "Column1")

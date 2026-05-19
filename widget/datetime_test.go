@@ -1,15 +1,17 @@
-package widget
+package widget_test
 
 import (
+	"testing"
+
 	"github.com/twgh/xcgui/app"
 	"github.com/twgh/xcgui/tf"
+	"github.com/twgh/xcgui/widget"
 	"github.com/twgh/xcgui/window"
-	"testing"
 )
 
 func TestDateTime_AddEvent_DateTimeChange(t *testing.T) {
 	tf.TFunc(func(a *app.App, w *window.Window) {
-		date := NewDateTime(20, 40, 150, 35, w.Handle)
+		date := widget.NewDateTime(20, 40, 150, 35, w.Handle)
 		date.AddEvent_DateTime_Change(func(hEle int, pbHandled *bool) int {
 			y, m, d := date.GetDateEx()
 			h, m, s := date.GetTimeEx()
@@ -27,7 +29,7 @@ func TestDateTime_AddEvent_DateTimeChange(t *testing.T) {
 			return 0
 		})
 
-		Time := NewDateTime(240, 40, 150, 35, w.Handle)
+		Time := widget.NewDateTime(240, 40, 150, 35, w.Handle)
 		Time.SetStyle(1)
 	})
 }
