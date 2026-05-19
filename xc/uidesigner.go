@@ -152,17 +152,17 @@ func XC_LoadStyle(fileName string) bool {
 
 // 炫彩_加载样式文件ZIP.
 //
-// pZipFile: ZIP文件名.
+// zipFile: ZIP文件名.
 //
 // fileName: 文件名.
 //
 // password: 密码, 不填默认为空.
-func XC_LoadStyleZip(pZipFile string, fileName string, password ...string) bool {
+func XC_LoadStyleZip(zipFile string, fileName string, password ...string) bool {
 	pwd := ""
 	if len(password) > 0 {
 		pwd = password[0]
 	}
-	r, _, _ := xC_LoadStyleZip.Call(common.StrPtr(pZipFile), common.StrPtr(fileName), common.StrPtr(pwd))
+	r, _, _ := xC_LoadStyleZip.Call(common.StrPtr(zipFile), common.StrPtr(fileName), common.StrPtr(pwd))
 	return r != 0
 }
 

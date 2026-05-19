@@ -22,17 +22,17 @@ func XTemp_Load(nType xcc.ListItemTemp_Type_, fileName string) int {
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
-// pZipFile: zip文件.
+// zipFile: zip文件.
 //
 // fileName: 文件名.
 //
 // password: zip密码, 不填默认为空.
-func XTemp_LoadZip(nType xcc.ListItemTemp_Type_, pZipFile string, fileName string, password ...string) int {
+func XTemp_LoadZip(nType xcc.ListItemTemp_Type_, zipFile string, fileName string, password ...string) int {
 	pwd := ""
 	if len(password) > 0 {
 		pwd = password[0]
 	}
-	r, _, _ := xTemp_LoadZip.Call(uintptr(nType), common.StrPtr(pZipFile), common.StrPtr(fileName), common.StrPtr(pwd))
+	r, _, _ := xTemp_LoadZip.Call(uintptr(nType), common.StrPtr(zipFile), common.StrPtr(fileName), common.StrPtr(pwd))
 	return int(r)
 }
 
@@ -140,7 +140,7 @@ func XTemp_LoadZipResEx(nType xcc.ListItemTemp_Type_, id int32, fileName string,
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
-// pZipFile: zip文件.
+// zipFile: zip文件.
 //
 // fileName: 文件名.
 //
@@ -149,8 +149,8 @@ func XTemp_LoadZipResEx(nType xcc.ListItemTemp_Type_, id int32, fileName string,
 // pOutTemp1: 返回模板句柄1, 项模板.
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
-func XTemp_LoadZipEx(nType xcc.ListItemTemp_Type_, pZipFile string, fileName string, password string, pOutTemp1 *int, pOutTemp2 *int) bool {
-	r, _, _ := xTemp_LoadZipEx.Call(uintptr(nType), common.StrPtr(pZipFile), common.StrPtr(fileName), common.StrPtr(password), uintptr(unsafe.Pointer(pOutTemp1)), uintptr(unsafe.Pointer(pOutTemp2)))
+func XTemp_LoadZipEx(nType xcc.ListItemTemp_Type_, zipFile string, fileName string, password string, pOutTemp1 *int, pOutTemp2 *int) bool {
+	r, _, _ := xTemp_LoadZipEx.Call(uintptr(nType), common.StrPtr(zipFile), common.StrPtr(fileName), common.StrPtr(password), uintptr(unsafe.Pointer(pOutTemp1)), uintptr(unsafe.Pointer(pOutTemp2)))
 	return r != 0
 }
 

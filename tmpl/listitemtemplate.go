@@ -41,13 +41,13 @@ func NewByXML(nType xcc.ListItemTemp_Type_, fileName string) *ListItemTemplate {
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
-// pZipFile: zip文件.
+// zipFile: zip文件.
 //
 // fileName: 文件名.
 //
 // password: zip密码, 不填默认为空.
-func NewByZip(nType xcc.ListItemTemp_Type_, pZipFile string, fileName string, password ...string) *ListItemTemplate {
-	return NewByHandle(xc.XTemp_LoadZip(nType, pZipFile, fileName, password...))
+func NewByZip(nType xcc.ListItemTemp_Type_, zipFile string, fileName string, password ...string) *ListItemTemplate {
+	return NewByHandle(xc.XTemp_LoadZip(nType, zipFile, fileName, password...))
 }
 
 // 模板_加载从ZIP, 加载项模板从zip压缩包中, 失败返回 nil.
@@ -201,7 +201,7 @@ func LoadObjEx(nType xcc.ListItemTemp_Type_, fileName string) (*ListItemTemplate
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
-// pZipFile: zip文件.
+// zipFile: zip文件.
 //
 // fileName: 文件名.
 //
@@ -210,15 +210,15 @@ func LoadObjEx(nType xcc.ListItemTemp_Type_, fileName string) (*ListItemTemplate
 // pOutTemp1: 返回模板句柄1, 项模板.
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
-func LoadZipEx(nType xcc.ListItemTemp_Type_, pZipFile string, fileName string, password string, pOutTemp1 *int, pOutTemp2 *int) bool {
-	return xc.XTemp_LoadZipEx(nType, pZipFile, fileName, password, pOutTemp1, pOutTemp2)
+func LoadZipEx(nType xcc.ListItemTemp_Type_, zipFile string, fileName string, password string, pOutTemp1 *int, pOutTemp2 *int) bool {
+	return xc.XTemp_LoadZipEx(nType, zipFile, fileName, password, pOutTemp1, pOutTemp2)
 }
 
 // 模板_加载从ZIP扩展, 加载项模板从zip压缩包中, 返回模板对象, 失败返回 nil.
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
-// pZipFile: zip文件.
+// zipFile: zip文件.
 //
 // fileName: 文件名.
 //
@@ -227,13 +227,13 @@ func LoadZipEx(nType xcc.ListItemTemp_Type_, pZipFile string, fileName string, p
 // 返回值:
 //   - 项模板对象.
 //   - 列表头模板对象或列表视组模板对象.
-func LoadObjZipEx(nType xcc.ListItemTemp_Type_, pZipFile string, fileName string, password ...string) (*ListItemTemplate, *ListItemTemplate) {
+func LoadObjZipEx(nType xcc.ListItemTemp_Type_, zipFile string, fileName string, password ...string) (*ListItemTemplate, *ListItemTemplate) {
 	var pOutTemp1, pOutTemp2 int
 	pwd := ""
 	if len(password) > 0 {
 		pwd = password[0]
 	}
-	if !xc.XTemp_LoadZipEx(nType, pZipFile, fileName, pwd, &pOutTemp1, &pOutTemp2) {
+	if !xc.XTemp_LoadZipEx(nType, zipFile, fileName, pwd, &pOutTemp1, &pOutTemp2) {
 		return nil, nil
 	}
 	return NewByHandle(pOutTemp1), NewByHandle(pOutTemp2)
