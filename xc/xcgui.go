@@ -371,6 +371,13 @@ var (
 	xWnd_SetMouseHoverTime         *syscall.LazyProc
 	xWnd_AdjustInScreen            *syscall.LazyProc
 
+	// FloatWindow.
+	xFloatWnd_EnableCaptionContent  *syscall.LazyProc
+	xFloatWnd_GetCaptionShapeText   *syscall.LazyProc
+	xFloatWnd_GetCaptionButtonClose *syscall.LazyProc
+	xFloatWnd_SetTitle              *syscall.LazyProc
+	xFloatWnd_GetTitle              *syscall.LazyProc
+
 	// Widget.
 	xWidget_IsShow                 *syscall.LazyProc
 	xWidget_Show                   *syscall.LazyProc
@@ -2238,6 +2245,13 @@ func _loadXCGUI() {
 	xWnd_DestroyWindow = xcgui.NewProc("XWnd_DestroyWindow")
 	xWnd_SetMouseHoverTime = xcgui.NewProc("XWnd_SetMouseHoverTime")
 	xWnd_AdjustInScreen = xcgui.NewProc("XWnd_AdjustInScreen")
+
+	// FloatWindow.
+	xFloatWnd_EnableCaptionContent = xcgui.NewProc("XFloatWnd_EnableCaptionContent")
+	xFloatWnd_GetCaptionShapeText = xcgui.NewProc("XFloatWnd_GetCaptionShapeText")
+	xFloatWnd_GetCaptionButtonClose = xcgui.NewProc("XFloatWnd_GetCaptionButtonClose")
+	xFloatWnd_SetTitle = xcgui.NewProc("XFloatWnd_SetTitle")
+	xFloatWnd_GetTitle = xcgui.NewProc("XFloatWnd_GetTitle")
 
 	// Widget.
 	xWidget_IsShow = xcgui.NewProc("XWidget_IsShow")
