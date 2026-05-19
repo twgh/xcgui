@@ -927,3 +927,38 @@ func XC_ftow(fValue int) int {
 	return int(r)
 }
 */
+
+// XC_SetType 炫彩_置类型.
+//
+// hXCGUI: 炫彩对象句柄.
+//
+// nType: 类型, XC_OBJECT_TYPE, 以XC_开头的常量.
+func XC_SetType(hXCGUI int, nType xcc.XC_OBJECT_TYPE) {
+	xC_SetType.Call(uintptr(hXCGUI), uintptr(nType))
+}
+
+// XC_AddType 炫彩_添加类型.
+//
+// hXCGUI: 炫彩对象句柄.
+//
+// nType: 类型, XC_OBJECT_TYPE, 以XC_开头的常量.
+func XC_AddType(hXCGUI int, nType xcc.XC_OBJECT_TYPE) {
+	xC_AddType.Call(uintptr(hXCGUI), uintptr(nType))
+}
+
+// XC_BindData 炫彩_绑定数据.
+//
+// hXCGUI: 炫彩对象句柄.
+//
+// data: 绑定数据.
+func XC_BindData(hXCGUI int, data int) {
+	xC_BindData.Call(uintptr(hXCGUI), uintptr(data))
+}
+
+// XC_GetBindData 炫彩_取绑定数据. 返回绑定数据.
+//
+// hXCGUI: 炫彩对象句柄.
+func XC_GetBindData(hXCGUI int) int {
+	r, _, _ := xC_GetBindData.Call(uintptr(hXCGUI))
+	return int(r)
+}

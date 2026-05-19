@@ -223,6 +223,10 @@ var (
 	xC_SetCallback_LoadLayout  *syscall.LazyProc
 	xC_LoadLayout_Create       *syscall.LazyProc
 	xC_EnableWindowSysNc       *syscall.LazyProc
+	xC_SetType                 *syscall.LazyProc
+	xC_AddType                 *syscall.LazyProc
+	xC_BindData                *syscall.LazyProc
+	xC_GetBindData             *syscall.LazyProc
 
 	// UI Designer.
 	xC_LoadLayout       *syscall.LazyProc
@@ -2103,6 +2107,10 @@ func _loadXCGUI() {
 	xC_SetCallback_LoadLayout = xcgui.NewProc("XC_SetCallBack_LoadLayout")
 	xC_LoadLayout_Create = xcgui.NewProc("XC_LoadLayout_Create")
 	xC_EnableWindowSysNc = xcgui.NewProc("XC_EnableWindowSysNc")
+	xC_SetType = xcgui.NewProc("_XC_SetType")
+	xC_AddType = xcgui.NewProc("_XC_AddType")
+	xC_BindData = xcgui.NewProc("_XC_BindData")
+	xC_GetBindData = xcgui.NewProc("_XC_GetBindData")
 
 	// UI Designer.
 	xC_LoadLayout = xcgui.NewProc("XC_LoadLayout")

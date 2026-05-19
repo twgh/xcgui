@@ -191,16 +191,18 @@ func (a *App) CallUiThreadEx(pCall func(data int) int, data int) int {
 // CallUT 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI. 与 CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数. 回调函数没有参数也没有返回值.
 //
 // f: 回调函数, 没有参数也没有返回值, 可以直接使用匿名函数.
-func (a *App) CallUT(f func()) {
+func (a *App) CallUT(f func()) *App {
 	xc.XC_CallUT(f)
+	return a
 }
 
 // UI 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
 //   - 是 CallUT 的简写.
 //
 // f: 回调函数, 没有参数也没有返回值, 可以直接使用匿名函数.
-func (a *App) UI(f func()) {
+func (a *App) UI(f func()) *App {
 	xc.XC_CallUT(f)
+	return a
 }
 
 // CallUiThreader 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI. 与 CallUiThread 的区别是: 本函数没有2000个回调上限的限制, 回调函数可以直接使用匿名函数.
@@ -1216,11 +1218,50 @@ func (a *App) LoadLayout_Create(data, propertylist int, uiType xcc.XC_OBJECT_TYP
 //   - 为加载布局文件设置回调函数, 当调用 xc.XC_LoadLayout 时遇到扩展对象, 回调用户设置的回调函数, 让用户在回调函数中创建扩展对象.
 //
 // callback: 回调函数.
-func (a *App) SetCallback_LoadLayout(callback xc.FunLoadLayout) {
+func (a *App) SetCallback_LoadLayout(callback xc.FunLoadLayout) *App {
 	xc.XC_SetCallback_LoadLayout(callback)
+	return a
 }
 
 // RemoveCallback_LoadLayout 炫彩_移除布局加载回调.
-func (a *App) RemoveCallback_LoadLayout() {
+func (a *App) RemoveCallback_LoadLayout() *App {
 	xc.XC_RemoveCallback_LoadLayout()
+	return a
+}
+
+// SetType 炫彩_置类型.
+//
+// hXCGUI: 炫彩对象句柄.
+//
+// nType: 类型, XC_OBJECT_TYPE, 以XC_开头的常量.
+func (a *App) SetType(hXCGUI int, nType xcc.XC_OBJECT_TYPE) *App {
+	xc.XC_SetType(hXCGUI, nType)
+	return a
+}
+
+// AddType 炫彩_添加类型.
+//
+// hXCGUI: 炫彩对象句柄.
+//
+// nType: 类型, XC_OBJECT_TYPE, 以XC_开头的常量.
+func (a *App) AddType(hXCGUI int, nType xcc.XC_OBJECT_TYPE) *App {
+	xc.XC_AddType(hXCGUI, nType)
+	return a
+}
+
+// BindData 炫彩_绑定数据.
+//
+// hXCGUI: 炫彩对象句柄.
+//
+// data: 绑定数据.
+func (a *App) BindData(hXCGUI int, data int) *App {
+	xc.XC_BindData(hXCGUI, data)
+	return a
+}
+
+// GetBindData 炫彩_取绑定数据. 返回绑定数据.
+//
+// hXCGUI: 炫彩对象句柄.
+func (a *App) GetBindData(hXCGUI int) int {
+	return xc.XC_GetBindData(hXCGUI)
 }

@@ -1029,3 +1029,37 @@ func SetCallback_LoadLayout(callback xc.FunLoadLayout) {
 func RemoveCallback_LoadLayout() {
 	xc.XC_RemoveCallback_LoadLayout()
 }
+
+// SetType 炫彩_置类型.
+//
+// hXCGUI: 炫彩对象句柄.
+//
+// nType: 类型, XC_OBJECT_TYPE, 以XC_开头的常量.
+func SetType(hXCGUI int, nType xcc.XC_OBJECT_TYPE) {
+	xc.XC_SetType(hXCGUI, nType)
+}
+
+// AddType 炫彩_添加类型.
+//
+// hXCGUI: 炫彩对象句柄.
+//
+// nType: 类型, XC_OBJECT_TYPE, 以XC_开头的常量.
+func AddType(hXCGUI int, nType xcc.XC_OBJECT_TYPE) {
+	xc.XC_AddType(hXCGUI, nType)
+}
+
+// BindData 炫彩_绑定数据.
+//
+// hXCGUI: 炫彩对象句柄.
+//
+// data: 绑定数据.
+func BindData(hXCGUI int, data int) {
+	xc.XC_BindData(hXCGUI, data)
+}
+
+// GetBindData 炫彩_取绑定数据. 返回绑定数据.
+//
+// hXCGUI: 炫彩对象句柄.
+func GetBindData(hXCGUI int) int {
+	return xc.XC_GetBindData(hXCGUI)
+}
