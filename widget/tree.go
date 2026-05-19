@@ -169,16 +169,16 @@ func (t *Tree) SetItemTemplateSel(hTemp int) bool {
 
 // 列表树_置项模板从字符串, 设置项模板文件.
 //
-// pStringXML: 字符串.
-func (t *Tree) SetItemTemplateXMLFromString(pStringXML string) bool {
-	return xc.XTree_SetItemTemplateXMLFromString(t.Handle, pStringXML)
+// xmlStr: 字符串.
+func (t *Tree) SetItemTemplateXMLFromString(xmlStr string) bool {
+	return xc.XTree_SetItemTemplateXMLFromString(t.Handle, xmlStr)
 }
 
 // 列表树_置选择项模板从字符串, 设置项模板文件, 项选中状态.
 //
-// pStringXML: 字符串.
-func (t *Tree) SetItemTemplateXMLSelFromString(pStringXML string) bool {
-	return xc.XTree_SetItemTemplateXMLSelFromString(t.Handle, pStringXML)
+// xmlStr: 字符串.
+func (t *Tree) SetItemTemplateXMLSelFromString(xmlStr string) bool {
+	return xc.XTree_SetItemTemplateXMLSelFromString(t.Handle, xmlStr)
 }
 
 // 列表树_置项背景绘制标志, 设置是否绘制指定状态下项的背景.

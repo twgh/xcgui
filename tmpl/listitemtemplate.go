@@ -91,9 +91,9 @@ func NewByXmlMem(nType xcc.ListItemTemp_Type_, data []byte) *ListItemTemplate {
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
-// pStringXML: 字符串.
-func NewByString(nType xcc.ListItemTemp_Type_, pStringXML string) *ListItemTemplate {
-	return NewByHandle(xc.XTemp_LoadFromString(nType, pStringXML))
+// xmlStr: 字符串.
+func NewByString(nType xcc.ListItemTemp_Type_, xmlStr string) *ListItemTemplate {
+	return NewByHandle(xc.XTemp_LoadFromString(nType, xmlStr))
 }
 
 // 模板_克隆, 复制一份新的项模板, 返回模板对象, 失败返回 nil.
@@ -285,27 +285,27 @@ func LoadObjZipMemEx(nType xcc.ListItemTemp_Type_, data []byte, fileName string,
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
-// pStringXML: 字符串内容.
+// xmlStr: 字符串内容.
 //
 // pOutTemp1: 返回模板句柄1, 项模板.
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
-func LoadFromStringEx(nType xcc.ListItemTemp_Type_, pStringXML string, pOutTemp1 *int, pOutTemp2 *int) bool {
-	return xc.XTemp_LoadFromStringEx(nType, pStringXML, pOutTemp1, pOutTemp2)
+func LoadFromStringEx(nType xcc.ListItemTemp_Type_, xmlStr string, pOutTemp1 *int, pOutTemp2 *int) bool {
+	return xc.XTemp_LoadFromStringEx(nType, xmlStr, pOutTemp1, pOutTemp2)
 }
 
 // 模板_加载从字符串扩展, 加载项模板文件从内存字符串, 返回模板对象, 失败返回 nil.
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
-// pStringXML: 字符串内容.
+// xmlStr: 字符串内容.
 //
 // 返回值:
 //   - 项模板对象.
 //   - 列表头模板对象或列表视组模板对象.
-func LoadObjFromStringEx(nType xcc.ListItemTemp_Type_, pStringXML string) (*ListItemTemplate, *ListItemTemplate) {
+func LoadObjFromStringEx(nType xcc.ListItemTemp_Type_, xmlStr string) (*ListItemTemplate, *ListItemTemplate) {
 	var pOutTemp1, pOutTemp2 int
-	if !xc.XTemp_LoadFromStringEx(nType, pStringXML, &pOutTemp1, &pOutTemp2) {
+	if !xc.XTemp_LoadFromStringEx(nType, xmlStr, &pOutTemp1, &pOutTemp2) {
 		return nil, nil
 	}
 	return NewByHandle(pOutTemp1), NewByHandle(pOutTemp2)

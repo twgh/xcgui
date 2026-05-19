@@ -176,9 +176,9 @@ func XTemp_LoadZipMemEx(nType xcc.ListItemTemp_Type_, data []byte, fileName stri
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
-// pStringXML: 字符串.
-func XTemp_LoadFromString(nType xcc.ListItemTemp_Type_, pStringXML string) int {
-	r, _, _ := xTemp_LoadFromString.Call(uintptr(nType), XC_wtoa(pStringXML))
+// xmlStr: 字符串.
+func XTemp_LoadFromString(nType xcc.ListItemTemp_Type_, xmlStr string) int {
+	r, _, _ := xTemp_LoadFromString.Call(uintptr(nType), XC_wtoa(xmlStr))
 	return int(r)
 }
 
@@ -186,13 +186,13 @@ func XTemp_LoadFromString(nType xcc.ListItemTemp_Type_, pStringXML string) int {
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
-// pStringXML: 字符串内容.
+// xmlStr: 字符串内容.
 //
 // pOutTemp1: 返回模板句柄1, 项模板.
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
-func XTemp_LoadFromStringEx(nType xcc.ListItemTemp_Type_, pStringXML string, pOutTemp1 *int, pOutTemp2 *int) bool {
-	r, _, _ := xTemp_LoadFromStringEx.Call(uintptr(nType), XC_wtoa(pStringXML), uintptr(unsafe.Pointer(pOutTemp1)), uintptr(unsafe.Pointer(pOutTemp2)))
+func XTemp_LoadFromStringEx(nType xcc.ListItemTemp_Type_, xmlStr string, pOutTemp1 *int, pOutTemp2 *int) bool {
+	r, _, _ := xTemp_LoadFromStringEx.Call(uintptr(nType), XC_wtoa(xmlStr), uintptr(unsafe.Pointer(pOutTemp1)), uintptr(unsafe.Pointer(pOutTemp2)))
 	return r != 0
 }
 

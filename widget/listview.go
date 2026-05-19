@@ -101,9 +101,9 @@ func (l *ListView) SetItemTemplateXML(pXmlFile string) bool {
 
 // 列表视_置项模板从字符串.
 //
-// pStringXML: 字符串.
-func (l *ListView) SetItemTemplateXMLFromString(pStringXML string) bool {
-	return xc.XListView_SetItemTemplateXMLFromString(l.Handle, pStringXML)
+// xmlStr: 字符串.
+func (l *ListView) SetItemTemplateXMLFromString(xmlStr string) bool {
+	return xc.XListView_SetItemTemplateXMLFromString(l.Handle, xmlStr)
 }
 
 // 列表视_置项模板, 置列表项模板.

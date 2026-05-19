@@ -22,19 +22,19 @@ func XC_LoadLayout(fileName string, hParent int, hAttachWnd ...uintptr) int {
 //
 // fileName: 布局文件名.
 //
-// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+// prefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
 //
 // hParent: 父对象句柄, 窗口句柄或UI元素句柄.
 //
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
-func XC_LoadLayoutEx(fileName, pPrefixName string, hParent int, hParentWnd uintptr, hAttachWnd ...uintptr) int {
+func XC_LoadLayoutEx(fileName, prefixName string, hParent int, hParentWnd uintptr, hAttachWnd ...uintptr) int {
 	hwndAttach := uintptr(0)
 	if len(hAttachWnd) > 0 {
 		hwndAttach = hAttachWnd[0]
 	}
-	r, _, _ := xC_LoadLayoutEx.Call(common.StrPtr(fileName), common.StrPtr(pPrefixName), uintptr(hParent), hParentWnd, hwndAttach)
+	r, _, _ := xC_LoadLayoutEx.Call(common.StrPtr(fileName), common.StrPtr(prefixName), uintptr(hParent), hParentWnd, hwndAttach)
 	return int(r)
 }
 
@@ -66,19 +66,19 @@ func XC_LoadLayoutZip(zipFileName string, fileName string, password string, hPar
 //
 // password: zip密码.
 //
-// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+// prefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
 //
 // hParent: 父对象句柄, 窗口句柄或UI元素句柄.
 //
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
-func XC_LoadLayoutZipEx(zipFileName string, fileName string, password, pPrefixName string, hParent int, hParentWnd uintptr, hAttachWnd ...uintptr) int {
+func XC_LoadLayoutZipEx(zipFileName string, fileName string, password, prefixName string, hParent int, hParentWnd uintptr, hAttachWnd ...uintptr) int {
 	hwndAttach := uintptr(0)
 	if len(hAttachWnd) > 0 {
 		hwndAttach = hAttachWnd[0]
 	}
-	r, _, _ := xC_LoadLayoutZipEx.Call(common.StrPtr(zipFileName), common.StrPtr(fileName), common.StrPtr(password), common.StrPtr(pPrefixName), uintptr(hParent), hParentWnd, hwndAttach)
+	r, _, _ := xC_LoadLayoutZipEx.Call(common.StrPtr(zipFileName), common.StrPtr(fileName), common.StrPtr(password), common.StrPtr(prefixName), uintptr(hParent), hParentWnd, hwndAttach)
 	return int(r)
 }
 
@@ -110,71 +110,71 @@ func XC_LoadLayoutZipMem(data []byte, fileName string, password string, hParent 
 //
 // password: zip密码.
 //
-// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+// prefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
 //
 // hParent: 父对象句柄, 窗口句柄或UI元素句柄.
 //
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
-func XC_LoadLayoutZipMemEx(data []byte, fileName string, password, pPrefixName string, hParent int, hParentWnd uintptr, hAttachWnd ...uintptr) int {
+func XC_LoadLayoutZipMemEx(data []byte, fileName string, password, prefixName string, hParent int, hParentWnd uintptr, hAttachWnd ...uintptr) int {
 	hwndAttach := uintptr(0)
 	if len(hAttachWnd) > 0 {
 		hwndAttach = hAttachWnd[0]
 	}
-	r, _, _ := xC_LoadLayoutZipMemEx.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(fileName), common.StrPtr(password), common.StrPtr(pPrefixName), uintptr(hParent), hParentWnd, hwndAttach)
+	r, _, _ := xC_LoadLayoutZipMemEx.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(fileName), common.StrPtr(password), common.StrPtr(prefixName), uintptr(hParent), hParentWnd, hwndAttach)
 	return int(r)
 }
 
 /* // 炫彩_加载布局文件从字符串, 加载布局文件从内存字符串, 返回窗口句柄或布局句柄或元素句柄.
 //
-// pStringXML: 字符串.
+// xmlStr: 字符串.
 //
 // hParent: 父对象.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
-func XC_LoadLayoutFromString(pStringXML string, hParent int, hAttachWnd ...uintptr) int {
+func XC_LoadLayoutFromString(xmlStr string, hParent int, hAttachWnd ...uintptr) int {
 	hwndAttach := uintptr(0)
 	if len(hAttachWnd) > 0 {
 		hwndAttach = hAttachWnd[0]
 	}
-	r, _, _ := xC_LoadLayoutFromString.Call(XC_wtoa(pStringXML), uintptr(hParent), hwndAttach)
+	r, _, _ := xC_LoadLayoutFromString.Call(XC_wtoa(xmlStr), uintptr(hParent), hwndAttach)
 	return int(r)
 } */
 
 // 炫彩_加载布局文件从字符串W, 加载布局文件从内存字符串, 返回窗口句柄或布局句柄或元素句柄.
 //
-// pStringXML: 字符串.
+// xmlStr: 字符串.
 //
 // hParent: 父对象句柄, 窗口句柄或UI元素句柄.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
-func XC_LoadLayoutFromStringW(pStringXML string, hParent int, hAttachWnd ...uintptr) int {
+func XC_LoadLayoutFromStringW(xmlStr string, hParent int, hAttachWnd ...uintptr) int {
 	hwndAttach := uintptr(0)
 	if len(hAttachWnd) > 0 {
 		hwndAttach = hAttachWnd[0]
 	}
-	r, _, _ := xC_LoadLayoutFromStringUtf8.Call(XC_wtoutf8(pStringXML), uintptr(hParent), hwndAttach)
+	r, _, _ := xC_LoadLayoutFromStringUtf8.Call(XC_wtoutf8(xmlStr), uintptr(hParent), hwndAttach)
 	return int(r)
 }
 
 // 炫彩_加载布局文件从字符串WEx, 加载布局文件从内存字符串, 返回窗口句柄或布局句柄或元素句柄.
 //
-// pStringXML: 字符串.
+// xmlStr: 字符串.
 //
-// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+// prefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
 //
 // hParent: 父对象句柄, 窗口句柄或UI元素句柄.
 //
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
-func XC_LoadLayoutFromStringWEx(pStringXML, pPrefixName string, hParent int, hParentWnd uintptr, hAttachWnd ...uintptr) int {
+func XC_LoadLayoutFromStringWEx(xmlStr, prefixName string, hParent int, hParentWnd uintptr, hAttachWnd ...uintptr) int {
 	hwndAttach := uintptr(0)
 	if len(hAttachWnd) > 0 {
 		hwndAttach = hAttachWnd[0]
 	}
-	r, _, _ := xC_LoadLayoutFromStringUtf8Ex.Call(XC_wtoutf8(pStringXML), common.StrPtr(pPrefixName), uintptr(hParent), hParentWnd, hwndAttach)
+	r, _, _ := xC_LoadLayoutFromStringUtf8Ex.Call(XC_wtoutf8(xmlStr), common.StrPtr(prefixName), uintptr(hParent), hParentWnd, hwndAttach)
 	return int(r)
 }
 
@@ -260,11 +260,11 @@ func XC_LoadResourceZipMem(data []byte, fileName string, password ...string) boo
 
 // 炫彩_加载资源文件从字符串W.
 //
-// pStringXML: 字符串.
+// xmlStr: 字符串.
 //
 // fileName: 资源文件名.
-func XC_LoadResourceFromStringW(pStringXML string, fileName string) bool {
-	r, _, _ := xC_LoadResourceFromStringUtf8.Call(XC_wtoutf8(pStringXML), common.StrPtr(fileName))
+func XC_LoadResourceFromStringW(xmlStr string, fileName string) bool {
+	r, _, _ := xC_LoadResourceFromStringUtf8.Call(XC_wtoutf8(xmlStr), common.StrPtr(fileName))
 	return r != 0
 }
 
@@ -286,7 +286,7 @@ func XC_LoadStyleFromStringW(fileName string, str string) bool {
 //
 // password: zip密码.
 //
-// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+// prefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
 //
 // hParent: 父对象句柄, 窗口句柄或UI元素句柄, 可填0.
 //
@@ -295,12 +295,12 @@ func XC_LoadStyleFromStringW(fileName string, str string) bool {
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 //
 // hModule: 模块句柄, 不填默认为0.
-func XC_LoadLayoutZipResEx(id int32, fileName string, password, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr, hModule ...uintptr) int {
+func XC_LoadLayoutZipResEx(id int32, fileName string, password, prefixName string, hParent int, hParentWnd, hAttachWnd uintptr, hModule ...uintptr) int {
 	module := uintptr(0)
 	if len(hModule) > 0 {
 		module = hModule[0]
 	}
-	r, _, _ := xC_LoadLayoutZipResEx.Call(uintptr(id), common.StrPtr(fileName), common.StrPtr(password), common.StrPtr(pPrefixName), uintptr(hParent), hParentWnd, hAttachWnd, module)
+	r, _, _ := xC_LoadLayoutZipResEx.Call(uintptr(id), common.StrPtr(fileName), common.StrPtr(password), common.StrPtr(prefixName), uintptr(hParent), hParentWnd, hAttachWnd, module)
 	return int(r)
 }
 
@@ -343,11 +343,11 @@ func XC_LoadStyleZipRes(id int32, fileName string, password string, hModule ...u
 /*
 // 炫彩_加载资源文件从字符串.
 //
-// pStringXML: 字符串.
+// xmlStr: 字符串.
 //
 // fileName: 资源文件名.
-func XC_LoadResourceFromString(pStringXML string, fileName string) bool {
-	r, _, _ := xC_LoadResourceFromString.Call(strPtr(pStringXML), strPtr(fileName))
+func XC_LoadResourceFromString(xmlStr string, fileName string) bool {
+	r, _, _ := xC_LoadResourceFromString.Call(strPtr(xmlStr), strPtr(fileName))
 	return r!=0
 }
 

@@ -174,9 +174,9 @@ func XTree_SetItemTemplateSel(hEle int, hTemp int) bool {
 //
 // hEle: 元素句柄.
 //
-// pStringXML: 字符串.
-func XTree_SetItemTemplateXMLFromString(hEle int, pStringXML string) bool {
-	r, _, _ := xTree_SetItemTemplateXMLFromString.Call(uintptr(hEle), XC_wtoa(pStringXML))
+// xmlStr: 字符串.
+func XTree_SetItemTemplateXMLFromString(hEle int, xmlStr string) bool {
+	r, _, _ := xTree_SetItemTemplateXMLFromString.Call(uintptr(hEle), XC_wtoa(xmlStr))
 	return r != 0
 }
 
@@ -184,9 +184,9 @@ func XTree_SetItemTemplateXMLFromString(hEle int, pStringXML string) bool {
 //
 // hEle: 元素句柄.
 //
-// pStringXML: 字符串.
-func XTree_SetItemTemplateXMLSelFromString(hEle int, pStringXML string) bool {
-	r, _, _ := xTree_SetItemTemplateXMLSelFromString.Call(uintptr(hEle), XC_wtoa(pStringXML))
+// xmlStr: 字符串.
+func XTree_SetItemTemplateXMLSelFromString(hEle int, xmlStr string) bool {
+	r, _, _ := xTree_SetItemTemplateXMLSelFromString.Call(uintptr(hEle), XC_wtoa(xmlStr))
 	return r != 0
 }
 

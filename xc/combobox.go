@@ -116,9 +116,9 @@ func XComboBox_SetItemTemplateXML(hEle int, pXmlFile string) {
 //
 // hEle: 元素句柄.
 //
-// pStringXML: 字符串.
-func XComboBox_SetItemTemplateXMLFromString(hEle int, pStringXML string) {
-	xComboBox_SetItemTemplateXMLFromString.Call(uintptr(hEle), XC_wtoa(pStringXML))
+// xmlStr: 字符串.
+func XComboBox_SetItemTemplateXMLFromString(hEle int, xmlStr string) {
+	xComboBox_SetItemTemplateXMLFromString.Call(uintptr(hEle), XC_wtoa(xmlStr))
 }
 
 // 组合框_启用绘制下拉按钮, 是否绘制下拉按钮.

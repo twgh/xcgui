@@ -81,9 +81,9 @@ func XListView_SetItemTemplateXML(hEle int, pXmlFile string) bool {
 //
 // hEle: 元素句柄.
 //
-// pStringXML: 字符串.
-func XListView_SetItemTemplateXMLFromString(hEle int, pStringXML string) bool {
-	r, _, _ := xListView_SetItemTemplateXMLFromString.Call(uintptr(hEle), XC_wtoa(pStringXML))
+// xmlStr: 字符串.
+func XListView_SetItemTemplateXMLFromString(hEle int, xmlStr string) bool {
+	r, _, _ := xListView_SetItemTemplateXMLFromString.Call(uintptr(hEle), XC_wtoa(xmlStr))
 	return r != 0
 }
 

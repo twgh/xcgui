@@ -344,9 +344,9 @@ func XListBox_SetItemTemplate(hEle int, hTemp int) bool {
 //
 // hEle: 元素句柄.
 //
-// pStringXML: 字符串.
-func XListBox_SetItemTemplateXMLFromString(hEle int, pStringXML string) bool {
-	r, _, _ := xListBox_SetItemTemplateXMLFromString.Call(uintptr(hEle), XC_wtoa(pStringXML))
+// xmlStr: 字符串.
+func XListBox_SetItemTemplateXMLFromString(hEle int, xmlStr string) bool {
+	r, _, _ := xListBox_SetItemTemplateXMLFromString.Call(uintptr(hEle), XC_wtoa(xmlStr))
 	return r != 0
 }
 
