@@ -30,9 +30,9 @@ func NewByString(str string) *Svg {
 //
 // fileName: svg 文件名.
 //
-// password: zip 密码.
-func NewByZip(zipFileName, fileName, password string) *Svg {
-	return NewByHandle(xc.XSvg_LoadZip(zipFileName, fileName, password))
+// password: zip 密码, 不填默认为空.
+func NewByZip(zipFileName, fileName string, password ...string) *Svg {
+	return NewByHandle(xc.XSvg_LoadZip(zipFileName, fileName, password...))
 }
 
 // NewByZipRes SVG_加载从资源ZIP, 返回 SVG 对象, 失败返回 nil.
@@ -54,9 +54,9 @@ func NewByZipRes(id int32, fileName, password string, hModule ...uintptr) *Svg {
 //
 // fileName: svg 文件名.
 //
-// password: zip 密码.
-func NewByZipMem(data []byte, fileName, password string) *Svg {
-	return NewByHandle(xc.XSvg_LoadZipMem(data, fileName, password))
+// password: zip 密码, 不填默认为空.
+func NewByZipMem(data []byte, fileName string, password ...string) *Svg {
+	return NewByHandle(xc.XSvg_LoadZipMem(data, fileName, password...))
 }
 
 // NewByRes SVG_加载从资源, 返回 Svg 对象, 失败返回 nil.

@@ -45,9 +45,9 @@ func NewByXML(nType xcc.ListItemTemp_Type_, fileName string) *ListItemTemplate {
 //
 // fileName: 文件名.
 //
-// password: zip密码.
-func NewByZip(nType xcc.ListItemTemp_Type_, pZipFile string, fileName string, password string) *ListItemTemplate {
-	return NewByHandle(xc.XTemp_LoadZip(nType, pZipFile, fileName, password))
+// password: zip密码, 不填默认为空.
+func NewByZip(nType xcc.ListItemTemp_Type_, pZipFile string, fileName string, password ...string) *ListItemTemplate {
+	return NewByHandle(xc.XTemp_LoadZip(nType, pZipFile, fileName, password...))
 }
 
 // 模板_加载从ZIP, 加载项模板从zip压缩包中, 失败返回 nil.
@@ -73,9 +73,9 @@ func NewByZipRes(nType xcc.ListItemTemp_Type_, id int32, fileName string, passwo
 //
 // fileName: 文件名.
 //
-// password: zip密码.
-func NewByZipMem(nType xcc.ListItemTemp_Type_, data []byte, fileName string, password string) *ListItemTemplate {
-	return NewByHandle(xc.XTemp_LoadZipMem(nType, data, fileName, password))
+// password: zip密码, 不填默认为空.
+func NewByZipMem(nType xcc.ListItemTemp_Type_, data []byte, fileName string, password ...string) *ListItemTemplate {
+	return NewByHandle(xc.XTemp_LoadZipMem(nType, data, fileName, password...))
 }
 
 // 项模板_加载从内存. 加载项模板文件从内存, 失败返回 nil.
@@ -222,14 +222,18 @@ func LoadZipEx(nType xcc.ListItemTemp_Type_, pZipFile string, fileName string, p
 //
 // fileName: 文件名.
 //
-// password: zip密码.
+// password: zip密码, 不填默认为空.
 //
 // 返回值:
 //   - 项模板对象.
 //   - 列表头模板对象或列表视组模板对象.
-func LoadObjZipEx(nType xcc.ListItemTemp_Type_, pZipFile string, fileName string, password string) (*ListItemTemplate, *ListItemTemplate) {
+func LoadObjZipEx(nType xcc.ListItemTemp_Type_, pZipFile string, fileName string, password ...string) (*ListItemTemplate, *ListItemTemplate) {
 	var pOutTemp1, pOutTemp2 int
-	if !xc.XTemp_LoadZipEx(nType, pZipFile, fileName, password, &pOutTemp1, &pOutTemp2) {
+	pwd := ""
+	if len(password) > 0 {
+		pwd = password[0]
+	}
+	if !xc.XTemp_LoadZipEx(nType, pZipFile, fileName, pwd, &pOutTemp1, &pOutTemp2) {
 		return nil, nil
 	}
 	return NewByHandle(pOutTemp1), NewByHandle(pOutTemp2)
@@ -260,14 +264,18 @@ func LoadZipMemEx(nType xcc.ListItemTemp_Type_, data []byte, fileName string, pa
 //
 // fileName: 文件名.
 //
-// password: zip密码.
+// password: zip密码, 不填默认为空.
 //
 // 返回值:
 //   - 项模板对象.
 //   - 列表头模板对象或列表视组模板对象.
-func LoadObjZipMemEx(nType xcc.ListItemTemp_Type_, data []byte, fileName string, password string) (*ListItemTemplate, *ListItemTemplate) {
+func LoadObjZipMemEx(nType xcc.ListItemTemp_Type_, data []byte, fileName string, password ...string) (*ListItemTemplate, *ListItemTemplate) {
 	var pOutTemp1, pOutTemp2 int
-	if !xc.XTemp_LoadZipMemEx(nType, data, fileName, password, &pOutTemp1, &pOutTemp2) {
+	pwd := ""
+	if len(password) > 0 {
+		pwd = password[0]
+	}
+	if !xc.XTemp_LoadZipMemEx(nType, data, fileName, pwd, &pOutTemp1, &pOutTemp2) {
 		return nil, nil
 	}
 	return NewByHandle(pOutTemp1), NewByHandle(pOutTemp2)

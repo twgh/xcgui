@@ -98,9 +98,9 @@ func NewByRes(id int32, Type string, bStretch bool, hModule uintptr) *Image {
 //
 // fileName: 图片文件名.
 //
-// password: ZIP 压缩包密码.
-func NewByZip(zipFileName string, fileName string, password string) *Image {
-	return NewByHandle(xc.XImage_LoadZip(zipFileName, fileName, password))
+// password: ZIP 压缩包密码, 不填默认为空.
+func NewByZip(zipFileName string, fileName string, password ...string) *Image {
+	return NewByHandle(xc.XImage_LoadZip(zipFileName, fileName, password...))
 }
 
 // 图片_加载从资源ZIP, 失败返回 nil.
@@ -160,9 +160,9 @@ func NewByZipRect(zipFileName string, fileName string, password string, x, y, cx
 //
 // fileName: 图片名称.
 //
-// password: zip 压缩包密码.
-func NewByZipMem(data []byte, fileName string, password string) *Image {
-	return NewByHandle(xc.XImage_LoadZipMem(data, fileName, password))
+// password: zip 压缩包密码, 不填默认为空.
+func NewByZipMem(data []byte, fileName string, password ...string) *Image {
+	return NewByHandle(xc.XImage_LoadZipMem(data, fileName, password...))
 }
 
 // 图片_加载从内存, 加载流图片, 失败返回 nil.

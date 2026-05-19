@@ -53,9 +53,9 @@ func NewImageSrcByRes(id int32, Type string, hModule ...uintptr) *ImageSrc {
 //
 // fileName: 图片文件名.
 //
-// password: ZIP压缩包密码.
-func NewImageSrcByZip(zipFileName, fileName string, password string) *ImageSrc {
-	return NewImageSrcByHandle(xc.XImgSrc_LoadZip(zipFileName, fileName, password))
+// password: ZIP压缩包密码, 不填默认为空.
+func NewImageSrcByZip(zipFileName, fileName string, password ...string) *ImageSrc {
+	return NewImageSrcByHandle(xc.XImgSrc_LoadZip(zipFileName, fileName, password...))
 }
 
 // NewImageSrcByZipRect 图片源_加载从ZIP指定区域, 加载ZIP图片, 指定区位置及大小, 失败返回 nil.
@@ -83,9 +83,9 @@ func NewImageSrcByZipRect(zipFileName, fileName, password string, x, y, cx, cy i
 //
 // fileName: 图片名称.
 //
-// password: zip压缩包密码.
-func NewImageSrcByZipMem(data []byte, fileName string, password string) *ImageSrc {
-	return NewImageSrcByHandle(xc.XImgSrc_LoadZipMem(data, fileName, password))
+// password: zip压缩包密码, 不填默认为空.
+func NewImageSrcByZipMem(data []byte, fileName string, password ...string) *ImageSrc {
+	return NewImageSrcByHandle(xc.XImgSrc_LoadZipMem(data, fileName, password...))
 }
 
 // NewImageSrcByMem 图片源_加载从内存, 加载流图片, 失败返回 nil.
