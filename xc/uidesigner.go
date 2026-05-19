@@ -4,19 +4,19 @@ import "github.com/twgh/xcgui/common"
 
 // 炫彩_加载布局文件, 返回窗口句柄或布局句柄或元素句柄.
 //
-// pFileName: 布局文件名.
+// fileName: 布局文件名.
 //
 // hParent: 父对象句柄, 窗口句柄或UI元素句柄.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func XC_LoadLayout(pFileName string, hParent int, hAttachWnd uintptr) int {
-	r, _, _ := xC_LoadLayout.Call(common.StrPtr(pFileName), uintptr(hParent), hAttachWnd)
+func XC_LoadLayout(fileName string, hParent int, hAttachWnd uintptr) int {
+	r, _, _ := xC_LoadLayout.Call(common.StrPtr(fileName), uintptr(hParent), hAttachWnd)
 	return int(r)
 }
 
 // 炫彩_加载布局文件Ex, 返回窗口句柄或布局句柄或元素句柄.
 //
-// pFileName: 布局文件名.
+// fileName: 布局文件名.
 //
 // pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
 //
@@ -25,34 +25,34 @@ func XC_LoadLayout(pFileName string, hParent int, hAttachWnd uintptr) int {
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func XC_LoadLayoutEx(pFileName, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
-	r, _, _ := xC_LoadLayoutEx.Call(common.StrPtr(pFileName), common.StrPtr(pPrefixName), uintptr(hParent), hParentWnd, hAttachWnd)
+func XC_LoadLayoutEx(fileName, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
+	r, _, _ := xC_LoadLayoutEx.Call(common.StrPtr(fileName), common.StrPtr(pPrefixName), uintptr(hParent), hParentWnd, hAttachWnd)
 	return int(r)
 }
 
 // 炫彩_加载布局文件ZIP, 加载布局文件从zip压缩包中, 返回窗口句柄或布局句柄或元素句柄.
 //
-// pZipFileName: zip文件名.
+// zipFileName: zip文件名.
 //
-// pFileName: 布局文件名.
+// fileName: 布局文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
 // hParent: 父对象句柄, 窗口句柄或UI元素句柄.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func XC_LoadLayoutZip(pZipFileName string, pFileName string, pPassword string, hParent int, hAttachWnd uintptr) int {
-	r, _, _ := xC_LoadLayoutZip.Call(common.StrPtr(pZipFileName), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(hParent), hAttachWnd)
+func XC_LoadLayoutZip(zipFileName string, fileName string, password string, hParent int, hAttachWnd uintptr) int {
+	r, _, _ := xC_LoadLayoutZip.Call(common.StrPtr(zipFileName), common.StrPtr(fileName), common.StrPtr(password), uintptr(hParent), hAttachWnd)
 	return int(r)
 }
 
 // 炫彩_加载布局文件ZIPEx, 加载布局文件从zip压缩包中, 返回窗口句柄或布局句柄或元素句柄.
 //
-// pZipFileName: zip文件名.
+// zipFileName: zip文件名.
 //
-// pFileName: 布局文件名.
+// fileName: 布局文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
 // pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
 //
@@ -61,8 +61,8 @@ func XC_LoadLayoutZip(pZipFileName string, pFileName string, pPassword string, h
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func XC_LoadLayoutZipEx(pZipFileName string, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
-	r, _, _ := xC_LoadLayoutZipEx.Call(common.StrPtr(pZipFileName), common.StrPtr(pFileName), common.StrPtr(pPassword), common.StrPtr(pPrefixName), uintptr(hParent), hParentWnd, hAttachWnd)
+func XC_LoadLayoutZipEx(zipFileName string, fileName string, password, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
+	r, _, _ := xC_LoadLayoutZipEx.Call(common.StrPtr(zipFileName), common.StrPtr(fileName), common.StrPtr(password), common.StrPtr(pPrefixName), uintptr(hParent), hParentWnd, hAttachWnd)
 	return int(r)
 }
 
@@ -70,15 +70,15 @@ func XC_LoadLayoutZipEx(pZipFileName string, pFileName string, pPassword, pPrefi
 //
 // data: 布局文件数据.
 //
-// pFileName: 布局文件名.
+// fileName: 布局文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
 // hParent: 父对象句柄, 窗口句柄或UI元素句柄.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func XC_LoadLayoutZipMem(data []byte, pFileName string, pPassword string, hParent int, hAttachWnd uintptr) int {
-	r, _, _ := xC_LoadLayoutZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(hParent), hAttachWnd)
+func XC_LoadLayoutZipMem(data []byte, fileName string, password string, hParent int, hAttachWnd uintptr) int {
+	r, _, _ := xC_LoadLayoutZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(fileName), common.StrPtr(password), uintptr(hParent), hAttachWnd)
 	return int(r)
 }
 
@@ -86,9 +86,9 @@ func XC_LoadLayoutZipMem(data []byte, pFileName string, pPassword string, hParen
 //
 // data: 布局文件数据.
 //
-// pFileName: 布局文件名.
+// fileName: 布局文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
 // pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
 //
@@ -97,8 +97,8 @@ func XC_LoadLayoutZipMem(data []byte, pFileName string, pPassword string, hParen
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func XC_LoadLayoutZipMemEx(data []byte, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
-	r, _, _ := xC_LoadLayoutZipMemEx.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(pFileName), common.StrPtr(pPassword), common.StrPtr(pPrefixName), uintptr(hParent), hParentWnd, hAttachWnd)
+func XC_LoadLayoutZipMemEx(data []byte, fileName string, password, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
+	r, _, _ := xC_LoadLayoutZipMemEx.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(fileName), common.StrPtr(password), common.StrPtr(pPrefixName), uintptr(hParent), hParentWnd, hAttachWnd)
 	return int(r)
 }
 
@@ -144,9 +144,9 @@ func XC_LoadLayoutFromStringWEx(pStringXML, pPrefixName string, hParent int, hPa
 
 // 炫彩_加载样式文件.
 //
-// pFileName: 样式文件名称.
-func XC_LoadStyle(pFileName string) bool {
-	r, _, _ := xC_LoadStyle.Call(common.StrPtr(pFileName))
+// fileName: 样式文件名称.
+func XC_LoadStyle(fileName string) bool {
+	r, _, _ := xC_LoadStyle.Call(common.StrPtr(fileName))
 	return r != 0
 }
 
@@ -154,11 +154,11 @@ func XC_LoadStyle(pFileName string) bool {
 //
 // pZipFile: ZIP文件名.
 //
-// pFileName: 文件名.
+// fileName: 文件名.
 //
-// pPassword: 密码.
-func XC_LoadStyleZip(pZipFile string, pFileName string, pPassword string) bool {
-	r, _, _ := xC_LoadStyleZip.Call(common.StrPtr(pZipFile), common.StrPtr(pFileName), common.StrPtr(pPassword))
+// password: 密码.
+func XC_LoadStyleZip(pZipFile string, fileName string, password string) bool {
+	r, _, _ := xC_LoadStyleZip.Call(common.StrPtr(pZipFile), common.StrPtr(fileName), common.StrPtr(password))
 	return r != 0
 }
 
@@ -166,31 +166,31 @@ func XC_LoadStyleZip(pZipFile string, pFileName string, pPassword string) bool {
 //
 // data: 样式文件数据.
 //
-// pFileName: 文件名.
+// fileName: 文件名.
 //
-// pPassword: 密码.
-func XC_LoadStyleZipMem(data []byte, pFileName string, pPassword string) bool {
-	r, _, _ := xC_LoadStyleZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(pFileName), common.StrPtr(pPassword))
+// password: 密码.
+func XC_LoadStyleZipMem(data []byte, fileName string, password string) bool {
+	r, _, _ := xC_LoadStyleZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(fileName), common.StrPtr(password))
 	return r != 0
 }
 
 // 炫彩_加载资源文件.
 //
-// pFileName: 资源文件名.
-func XC_LoadResource(pFileName string) bool {
-	r, _, _ := xC_LoadResource.Call(common.StrPtr(pFileName))
+// fileName: 资源文件名.
+func XC_LoadResource(fileName string) bool {
+	r, _, _ := xC_LoadResource.Call(common.StrPtr(fileName))
 	return r != 0
 }
 
 // 炫彩_加载资源文件ZIP.
 //
-// pZipFileName: zip文件名.
+// zipFileName: zip文件名.
 //
-// pFileName: 资源文件名.
+// fileName: 资源文件名.
 //
-// pPassword: zip压缩包密码.
-func XC_LoadResourceZip(pZipFileName string, pFileName string, pPassword string) bool {
-	r, _, _ := xC_LoadResourceZip.Call(common.StrPtr(pZipFileName), common.StrPtr(pFileName), common.StrPtr(pPassword))
+// password: zip压缩包密码.
+func XC_LoadResourceZip(zipFileName string, fileName string, password string) bool {
+	r, _, _ := xC_LoadResourceZip.Call(common.StrPtr(zipFileName), common.StrPtr(fileName), common.StrPtr(password))
 	return r != 0
 }
 
@@ -198,11 +198,11 @@ func XC_LoadResourceZip(pZipFileName string, pFileName string, pPassword string)
 //
 // data: 资源文件数据.
 //
-// pFileName: 资源文件名.
+// fileName: 资源文件名.
 //
-// pPassword: zip压缩包密码.
-func XC_LoadResourceZipMem(data []byte, pFileName string, pPassword string) bool {
-	r, _, _ := xC_LoadResourceZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(pFileName), common.StrPtr(pPassword))
+// password: zip压缩包密码.
+func XC_LoadResourceZipMem(data []byte, fileName string, password string) bool {
+	r, _, _ := xC_LoadResourceZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(fileName), common.StrPtr(password))
 	return r != 0
 }
 
@@ -210,19 +210,19 @@ func XC_LoadResourceZipMem(data []byte, pFileName string, pPassword string) bool
 //
 // pStringXML: 字符串.
 //
-// pFileName: 资源文件名.
-func XC_LoadResourceFromStringW(pStringXML string, pFileName string) bool {
-	r, _, _ := xC_LoadResourceFromStringUtf8.Call(XC_wtoutf8(pStringXML), common.StrPtr(pFileName))
+// fileName: 资源文件名.
+func XC_LoadResourceFromStringW(pStringXML string, fileName string) bool {
+	r, _, _ := xC_LoadResourceFromStringUtf8.Call(XC_wtoutf8(pStringXML), common.StrPtr(fileName))
 	return r != 0
 }
 
 // 炫彩_加载样式文件从字符串W.
 //
-// pFileName: 样式文件名.
+// fileName: 样式文件名.
 //
 // str: 字符串.
-func XC_LoadStyleFromStringW(pFileName string, str string) bool {
-	r, _, _ := xC_LoadStyleFromStringW.Call(common.StrPtr(pFileName), common.StrPtr(str))
+func XC_LoadStyleFromStringW(fileName string, str string) bool {
+	r, _, _ := xC_LoadStyleFromStringW.Call(common.StrPtr(fileName), common.StrPtr(str))
 	return r != 0
 }
 
@@ -230,9 +230,9 @@ func XC_LoadStyleFromStringW(pFileName string, str string) bool {
 //
 // id: RC资源ID.
 //
-// pFileName: 布局文件名.
+// fileName: 布局文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
 // pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
 //
@@ -243,12 +243,12 @@ func XC_LoadStyleFromStringW(pFileName string, str string) bool {
 // hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
 //
 // hModule: 模块句柄, 不填默认为0.
-func XC_LoadLayoutZipResEx(id int32, pFileName string, pPassword, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr, hModule ...uintptr) int {
+func XC_LoadLayoutZipResEx(id int32, fileName string, password, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr, hModule ...uintptr) int {
 	module := uintptr(0)
 	if len(hModule) > 0 {
 		module = hModule[0]
 	}
-	r, _, _ := xC_LoadLayoutZipResEx.Call(uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), common.StrPtr(pPrefixName), uintptr(hParent), hParentWnd, hAttachWnd, module)
+	r, _, _ := xC_LoadLayoutZipResEx.Call(uintptr(id), common.StrPtr(fileName), common.StrPtr(password), common.StrPtr(pPrefixName), uintptr(hParent), hParentWnd, hAttachWnd, module)
 	return int(r)
 }
 
@@ -256,17 +256,17 @@ func XC_LoadLayoutZipResEx(id int32, pFileName string, pPassword, pPrefixName st
 //
 // id: RC资源ID.
 //
-// pFileName: 资源文件名.
+// fileName: 资源文件名.
 //
-// pPassword: zip压缩包密码.
+// password: zip压缩包密码.
 //
 // hModule: 模块句柄, 不填默认为0.
-func XC_LoadResourceZipRes(id int32, pFileName string, pPassword string, hModule ...uintptr) bool {
+func XC_LoadResourceZipRes(id int32, fileName string, password string, hModule ...uintptr) bool {
 	module := uintptr(0)
 	if len(hModule) > 0 {
 		module = hModule[0]
 	}
-	r, _, _ := xC_LoadResourceZipRes.Call(uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), module)
+	r, _, _ := xC_LoadResourceZipRes.Call(uintptr(id), common.StrPtr(fileName), common.StrPtr(password), module)
 	return r != 0
 }
 
@@ -274,17 +274,17 @@ func XC_LoadResourceZipRes(id int32, pFileName string, pPassword string, hModule
 //
 // id: RC资源ID.
 //
-// pFileName: 文件名.
+// fileName: 文件名.
 //
-// pPassword: 密码.
+// password: 密码.
 //
 // hModule: 模块句柄, 不填默认为0.
-func XC_LoadStyleZipRes(id int32, pFileName string, pPassword string, hModule ...uintptr) bool {
+func XC_LoadStyleZipRes(id int32, fileName string, password string, hModule ...uintptr) bool {
 	module := uintptr(0)
 	if len(hModule) > 0 {
 		module = hModule[0]
 	}
-	r, _, _ := xC_LoadStyleZipRes.Call(uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), module)
+	r, _, _ := xC_LoadStyleZipRes.Call(uintptr(id), common.StrPtr(fileName), common.StrPtr(password), module)
 	return r != 0
 }
 
@@ -293,18 +293,18 @@ func XC_LoadStyleZipRes(id int32, pFileName string, pPassword string, hModule ..
 //
 // pStringXML: 字符串.
 //
-// pFileName: 资源文件名.
-func XC_LoadResourceFromString(pStringXML string, pFileName string) bool {
-	r, _, _ := xC_LoadResourceFromString.Call(strPtr(pStringXML), strPtr(pFileName))
+// fileName: 资源文件名.
+func XC_LoadResourceFromString(pStringXML string, fileName string) bool {
+	r, _, _ := xC_LoadResourceFromString.Call(strPtr(pStringXML), strPtr(fileName))
 	return r!=0
 }
 
 // 炫彩_加载样式文件从字符串.
 //
-// pFileName: 样式文件名, 用于打印错误文件和定位关联资源文件位置.
+// fileName: 样式文件名, 用于打印错误文件和定位关联资源文件位置.
 //
 // str: 字符串.
-func XC_LoadStyleFromString(pFileName string, str string) bool {
-	r, _, _ := xC_LoadStyleFromString.Call(strPtr(pFileName), strPtr(str))
+func XC_LoadStyleFromString(fileName string, str string) bool {
+	r, _, _ := xC_LoadStyleFromString.Call(strPtr(fileName), strPtr(str))
 	return r!=0
 } */

@@ -12,9 +12,9 @@ import (
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
-// pFileName: 文件名.
-func XTemp_Load(nType xcc.ListItemTemp_Type_, pFileName string) int {
-	r, _, _ := xTemp_Load.Call(uintptr(nType), common.StrPtr(pFileName))
+// fileName: 文件名.
+func XTemp_Load(nType xcc.ListItemTemp_Type_, fileName string) int {
+	r, _, _ := xTemp_Load.Call(uintptr(nType), common.StrPtr(fileName))
 	return int(r)
 }
 
@@ -24,11 +24,11 @@ func XTemp_Load(nType xcc.ListItemTemp_Type_, pFileName string) int {
 //
 // pZipFile: zip文件.
 //
-// pFileName: 文件名.
+// fileName: 文件名.
 //
-// pPassword: zip密码.
-func XTemp_LoadZip(nType xcc.ListItemTemp_Type_, pZipFile string, pFileName string, pPassword string) int {
-	r, _, _ := xTemp_LoadZip.Call(uintptr(nType), common.StrPtr(pZipFile), common.StrPtr(pFileName), common.StrPtr(pPassword))
+// password: zip密码.
+func XTemp_LoadZip(nType xcc.ListItemTemp_Type_, pZipFile string, fileName string, password string) int {
+	r, _, _ := xTemp_LoadZip.Call(uintptr(nType), common.StrPtr(pZipFile), common.StrPtr(fileName), common.StrPtr(password))
 	return int(r)
 }
 
@@ -38,11 +38,11 @@ func XTemp_LoadZip(nType xcc.ListItemTemp_Type_, pZipFile string, pFileName stri
 //
 // data: 内存块数据.
 //
-// pFileName: 文件名.
+// fileName: 文件名.
 //
-// pPassword: zip密码.
-func XTemp_LoadZipMem(nType xcc.ListItemTemp_Type_, data []byte, pFileName string, pPassword string) int {
-	r, _, _ := xTemp_LoadZipMem.Call(uintptr(nType), common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(pFileName), common.StrPtr(pPassword))
+// password: zip密码.
+func XTemp_LoadZipMem(nType xcc.ListItemTemp_Type_, data []byte, fileName string, password string) int {
+	r, _, _ := xTemp_LoadZipMem.Call(uintptr(nType), common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(fileName), common.StrPtr(password))
 	return int(r)
 }
 
@@ -50,13 +50,13 @@ func XTemp_LoadZipMem(nType xcc.ListItemTemp_Type_, data []byte, pFileName strin
 //
 // nType: 模板类型, xcc.ListItemTemp_Type_.
 //
-// pFileName: 文件名.
+// fileName: 文件名.
 //
 // pOutTemp1: 返回模板句柄1, 项模板.
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
-func XTemp_LoadEx(nType xcc.ListItemTemp_Type_, pFileName string, pOutTemp1 *int, pOutTemp2 *int) bool {
-	r, _, _ := xTemp_LoadEx.Call(uintptr(nType), common.StrPtr(pFileName), uintptr(unsafe.Pointer(pOutTemp1)), uintptr(unsafe.Pointer(pOutTemp2)))
+func XTemp_LoadEx(nType xcc.ListItemTemp_Type_, fileName string, pOutTemp1 *int, pOutTemp2 *int) bool {
+	r, _, _ := xTemp_LoadEx.Call(uintptr(nType), common.StrPtr(fileName), uintptr(unsafe.Pointer(pOutTemp1)), uintptr(unsafe.Pointer(pOutTemp2)))
 	return r != 0
 }
 
@@ -90,17 +90,17 @@ func XTemp_LoadFromMemEx(nType xcc.ListItemTemp_Type_, data []byte, pOutTemp1 *i
 //
 // id: RC资源ID.
 //
-// pFileName: 模板文件名.
+// fileName: 模板文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
 // hModule: 模块句柄, 不填默认为0.
-func XTemp_LoadZipRes(nType xcc.ListItemTemp_Type_, id int32, pFileName string, pPassword string, hModule ...uintptr) int {
+func XTemp_LoadZipRes(nType xcc.ListItemTemp_Type_, id int32, fileName string, password string, hModule ...uintptr) int {
 	module := uintptr(0)
 	if len(hModule) > 0 {
 		module = hModule[0]
 	}
-	r, _, _ := xTemp_LoadZipRes.Call(uintptr(nType), uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), module)
+	r, _, _ := xTemp_LoadZipRes.Call(uintptr(nType), uintptr(id), common.StrPtr(fileName), common.StrPtr(password), module)
 	return int(r)
 }
 
@@ -110,21 +110,21 @@ func XTemp_LoadZipRes(nType xcc.ListItemTemp_Type_, id int32, pFileName string, 
 //
 // id: RC资源ID.
 //
-// pFileName: 模板文件名.
+// fileName: 模板文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
 // pOutTemp1: 返回模板句柄1, 项模板.
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
 //
 // hModule: 模块句柄, 不填默认为0.
-func XTemp_LoadZipResEx(nType xcc.ListItemTemp_Type_, id int32, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int, hModule ...uintptr) bool {
+func XTemp_LoadZipResEx(nType xcc.ListItemTemp_Type_, id int32, fileName string, password string, pOutTemp1 *int, pOutTemp2 *int, hModule ...uintptr) bool {
 	module := uintptr(0)
 	if len(hModule) > 0 {
 		module = hModule[0]
 	}
-	r, _, _ := xTemp_LoadZipResEx.Call(uintptr(nType), uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(unsafe.Pointer(pOutTemp1)), uintptr(unsafe.Pointer(pOutTemp2)), module)
+	r, _, _ := xTemp_LoadZipResEx.Call(uintptr(nType), uintptr(id), common.StrPtr(fileName), common.StrPtr(password), uintptr(unsafe.Pointer(pOutTemp1)), uintptr(unsafe.Pointer(pOutTemp2)), module)
 	return r != 0
 }
 
@@ -134,15 +134,15 @@ func XTemp_LoadZipResEx(nType xcc.ListItemTemp_Type_, id int32, pFileName string
 //
 // pZipFile: zip文件.
 //
-// pFileName: 文件名.
+// fileName: 文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
 // pOutTemp1: 返回模板句柄1, 项模板.
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
-func XTemp_LoadZipEx(nType xcc.ListItemTemp_Type_, pZipFile string, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int) bool {
-	r, _, _ := xTemp_LoadZipEx.Call(uintptr(nType), common.StrPtr(pZipFile), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(unsafe.Pointer(pOutTemp1)), uintptr(unsafe.Pointer(pOutTemp2)))
+func XTemp_LoadZipEx(nType xcc.ListItemTemp_Type_, pZipFile string, fileName string, password string, pOutTemp1 *int, pOutTemp2 *int) bool {
+	r, _, _ := xTemp_LoadZipEx.Call(uintptr(nType), common.StrPtr(pZipFile), common.StrPtr(fileName), common.StrPtr(password), uintptr(unsafe.Pointer(pOutTemp1)), uintptr(unsafe.Pointer(pOutTemp2)))
 	return r != 0
 }
 
@@ -152,15 +152,15 @@ func XTemp_LoadZipEx(nType xcc.ListItemTemp_Type_, pZipFile string, pFileName st
 //
 // data: 内存块数据.
 //
-// pFileName: 文件名.
+// fileName: 文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
 // pOutTemp1: 返回模板句柄1, 项模板.
 //
 // pOutTemp2: 返回模板句柄2, 列表头模板或列表视组模板.
-func XTemp_LoadZipMemEx(nType xcc.ListItemTemp_Type_, data []byte, pFileName string, pPassword string, pOutTemp1 *int, pOutTemp2 *int) bool {
-	r, _, _ := xTemp_LoadZipMemEx.Call(uintptr(nType), common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(unsafe.Pointer(pOutTemp1)), uintptr(unsafe.Pointer(pOutTemp2)))
+func XTemp_LoadZipMemEx(nType xcc.ListItemTemp_Type_, data []byte, fileName string, password string, pOutTemp1 *int, pOutTemp2 *int) bool {
+	r, _, _ := xTemp_LoadZipMemEx.Call(uintptr(nType), common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(fileName), common.StrPtr(password), uintptr(unsafe.Pointer(pOutTemp1)), uintptr(unsafe.Pointer(pOutTemp2)))
 	return r != 0
 }
 

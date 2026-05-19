@@ -471,13 +471,13 @@ func (c *ComboBox) SetItemTemplateXMLFromMem(data []byte) bool {
 //
 // id: RC资源ID.
 //
-// pFileName: 文件名.
+// fileName: 文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
 // hModule: 模块句柄, 不填默认为0.
-func (c *ComboBox) SetItemTemplateXMLFromZipRes(id int32, pFileName string, pPassword string, hModule ...uintptr) bool {
-	return xc.XComboBox_SetItemTemplateXMLFromZipRes(c.Handle, id, pFileName, pPassword, hModule...)
+func (c *ComboBox) SetItemTemplateXMLFromZipRes(id int32, fileName string, password string, hModule ...uintptr) bool {
+	return xc.XComboBox_SetItemTemplateXMLFromZipRes(c.Handle, id, fileName, password, hModule...)
 }
 
 // 组合框_取项模板, 返回项模板句柄.

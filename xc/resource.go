@@ -42,11 +42,11 @@ func XRes_GetImage(name string) int {
 
 // 资源_取图片扩展, 从指定的资源文件中查找图片.
 //
-// pFileName: 资源文件名.
+// fileName: 资源文件名.
 //
 // name: 资源名称.
-func XRes_GetImageEx(pFileName string, name string) int {
-	r, _, _ := xRes_GetImageEx.Call(common.StrPtr(pFileName), common.StrPtr(name))
+func XRes_GetImageEx(fileName string, name string) int {
+	r, _, _ := xRes_GetImageEx.Call(common.StrPtr(fileName), common.StrPtr(name))
 	return int(r)
 }
 
@@ -75,4 +75,4 @@ func XRes_GetBkM(name string) int {
 }
 
 // FunLoadFile 图片资源文件加载回调.
-type FunLoadFile func(pFileName uintptr) bool
+type FunLoadFile func(fileName uintptr) bool

@@ -767,13 +767,13 @@ func (l *ListView) SetItemTemplateXMLFromMem(data []byte) bool {
 //
 // id: RC资源ID.
 //
-// pFileName: 文件名.
+// fileName: 文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
 // hModule: 模块句柄, 不填默认为0.
-func (l *ListView) SetItemTemplateXMLFromZipRes(id int32, pFileName string, pPassword string, hModule ...uintptr) bool {
-	return xc.XListView_SetItemTemplateXMLFromZipRes(l.Handle, id, pFileName, pPassword, hModule...)
+func (l *ListView) SetItemTemplateXMLFromZipRes(id int32, fileName string, password string, hModule ...uintptr) bool {
+	return xc.XListView_SetItemTemplateXMLFromZipRes(l.Handle, id, fileName, password, hModule...)
 }
 
 // 列表视_取项模板, 返回项模板句柄.

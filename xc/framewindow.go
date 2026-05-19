@@ -98,9 +98,13 @@ func XFrameWnd_SetTabBarHeight(hWindow int, nHeight int32) int {
 //
 // hWindow: 窗口句柄.
 //
-// pFileName: 文件名，如果文件名为空，将使用默认文件名frameWnd_layout.xml.
-func XFrameWnd_SaveLayoutToFile(hWindow int, pFileName string) bool {
-	r, _, _ := xFrameWnd_SaveLayoutToFile.Call(uintptr(hWindow), common.StrPtr(pFileName))
+// fileName: 文件名，如果文件名为空，将使用默认文件名frameWnd_layout.xml.
+func XFrameWnd_SaveLayoutToFile(hWindow int, fileName ...string) bool {
+	name := ""
+	if len(fileName) > 0 {
+		name = fileName[0]
+	}
+	r, _, _ := xFrameWnd_SaveLayoutToFile.Call(uintptr(hWindow), common.StrPtr(name))
 	return r != 0
 }
 
@@ -112,9 +116,13 @@ func XFrameWnd_SaveLayoutToFile(hWindow int, pFileName string) bool {
 //
 // nPaneCount: 窗格数量.
 //
-// pFileName: 文件名，如果文件名为空，将使用默认文件名frameWnd_layout.xml.
-func XFrameWnd_LoadLayoutFile(hWindow int, aPaneList []int, nPaneCount int32, pFileName string) bool {
-	r, _, _ := xFrameWnd_LoadLayoutFile.Call(uintptr(hWindow), uintptr(unsafe.Pointer(&aPaneList[0])), uintptr(nPaneCount), common.StrPtr(pFileName))
+// fileName: 文件名，如果文件名为空，将使用默认文件名frameWnd_layout.xml.
+func XFrameWnd_LoadLayoutFile(hWindow int, aPaneList []int, nPaneCount int32, fileName ...string) bool {
+	name := ""
+	if len(fileName) > 0 {
+		name = fileName[0]
+	}
+	r, _, _ := xFrameWnd_LoadLayoutFile.Call(uintptr(hWindow), uintptr(unsafe.Pointer(&aPaneList[0])), uintptr(nPaneCount), common.StrPtr(name))
 	return r != 0
 }
 

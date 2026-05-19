@@ -1,8 +1,9 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/common"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 
 	"github.com/twgh/xcgui/xcc"
 )
@@ -65,17 +66,17 @@ func XFont_CreateFromFile(pFontFile string, size int32, style xcc.FontStyle_) in
 
 // XFont_CreateFromZip 字体_创建从ZIP. 返回炫彩字体句柄.
 //
-// pZipFileName: zip文件名.
+// zipFileName: zip文件名.
 //
-// pFileName: 字体文件名.
+// fileName: 字体文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
 // fontSize: 字体大小, 单位(pt, 磅).
 //
 // style: 字体样式: xcc.FontStyle_ .
-func XFont_CreateFromZip(pZipFileName, pFileName, pPassword string, fontSize int32, style xcc.FontStyle_) int {
-	r, _, _ := xFont_CreateFromZip.Call(common.StrPtr(pZipFileName), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(fontSize), uintptr(style))
+func XFont_CreateFromZip(zipFileName, fileName, password string, fontSize int32, style xcc.FontStyle_) int {
+	r, _, _ := xFont_CreateFromZip.Call(common.StrPtr(zipFileName), common.StrPtr(fileName), common.StrPtr(password), uintptr(fontSize), uintptr(style))
 	return int(r)
 }
 
@@ -83,15 +84,15 @@ func XFont_CreateFromZip(pZipFileName, pFileName, pPassword string, fontSize int
 //
 // data: zip数据.
 //
-// pFileName: 字体文件名.
+// fileName: 字体文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
 // fontSize: 字体大小, 单位(pt, 磅).
 //
 // style: 字体样式: xcc.FontStyle_ .
-func XFont_CreateFromZipMem(data []byte, pFileName, pPassword string, fontSize int32, style xcc.FontStyle_) int {
-	r, _, _ := xFont_CreateFromZipMem.Call(common.ByteSliceDataPtr(&data), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(fontSize), uintptr(style))
+func XFont_CreateFromZipMem(data []byte, fileName, password string, fontSize int32, style xcc.FontStyle_) int {
+	r, _, _ := xFont_CreateFromZipMem.Call(common.ByteSliceDataPtr(&data), common.StrPtr(fileName), common.StrPtr(password), uintptr(fontSize), uintptr(style))
 	return int(r)
 }
 
@@ -111,15 +112,15 @@ func XFont_CreateFromMem(data []byte, fontSize int32, style xcc.FontStyle_) int 
 //
 // id: xx.
 //
-// pType: xx.
+// Type: xx.
 //
 // fontSize: 字体大小, 单位(pt, 磅).
 //
 // style: 字体样式, xcc.FontStyle_ .
 //
 // hModule: xx.
-func XFont_CreateFromRes(id int32, pType string, fontSize int32, style xcc.FontStyle_, hModule uintptr) int {
-	r, _, _ := xFont_CreateFromRes.Call(uintptr(id), common.StrPtr(pType), uintptr(fontSize), uintptr(style), hModule)
+func XFont_CreateFromRes(id int32, Type string, fontSize int32, style xcc.FontStyle_, hModule uintptr) int {
+	r, _, _ := xFont_CreateFromRes.Call(uintptr(id), common.StrPtr(Type), uintptr(fontSize), uintptr(style), hModule)
 	return int(r)
 }
 

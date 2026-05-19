@@ -63,32 +63,32 @@ func NewByFile(pFontFile string, size int32, style xcc.FontStyle_) *Font {
 
 // NewByZip 字体_创建从ZIP, 失败返回 nil.
 //
-// pZipFileName: zip文件名.
+// zipFileName: zip文件名.
 //
-// pFileName: 字体文件名.
+// fileName: 字体文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
 // fontSize: 字体大小, 单位(pt, 磅).
 //
 // style: 字体样式: xcc.FontStyle_ .
-func NewByZip(pZipFileName, pFileName, pPassword string, fontSize int32, style xcc.FontStyle_) *Font {
-	return NewByHandle(xc.XFont_CreateFromZip(pZipFileName, pFileName, pPassword, fontSize, style))
+func NewByZip(zipFileName, fileName, password string, fontSize int32, style xcc.FontStyle_) *Font {
+	return NewByHandle(xc.XFont_CreateFromZip(zipFileName, fileName, password, fontSize, style))
 }
 
 // NewByZipMem 字体_创建从内存ZIP, 失败返回 nil.
 //
 // data: zip数据.
 //
-// pFileName: 字体文件名.
+// fileName: 字体文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
 // fontSize: 字体大小, 单位(pt, 磅).
 //
 // style: 字体样式: xcc.FontStyle_ .
-func NewByZipMem(data []byte, pFileName, pPassword string, fontSize int32, style xcc.FontStyle_) *Font {
-	return NewByHandle(xc.XFont_CreateFromZipMem(data, pFileName, pPassword, fontSize, style))
+func NewByZipMem(data []byte, fileName, password string, fontSize int32, style xcc.FontStyle_) *Font {
+	return NewByHandle(xc.XFont_CreateFromZipMem(data, fileName, password, fontSize, style))
 }
 
 // NewByMem 字体_创建从内存. 创建炫彩字体从内存, 失败返回 nil.
@@ -106,15 +106,15 @@ func NewByMem(data []byte, fontSize int32, style xcc.FontStyle_) *Font {
 //
 // id: xx.
 //
-// pType: xx.
+// Type: xx.
 //
 // fontSize: 字体大小, 单位(pt, 磅).
 //
 // style: 字体样式, xcc.FontStyle_ .
 //
 // hModule: xx.
-func NewByRes(id int32, pType string, fontSize int32, style xcc.FontStyle_, hModule uintptr) *Font {
-	return NewByHandle(xc.XFont_CreateFromRes(id, pType, fontSize, style, hModule))
+func NewByRes(id int32, Type string, fontSize int32, style xcc.FontStyle_, hModule uintptr) *Font {
+	return NewByHandle(xc.XFont_CreateFromRes(id, Type, fontSize, style, hModule))
 }
 
 // NewByHandle 从句柄创建对象, 失败返回 nil.

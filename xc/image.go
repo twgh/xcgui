@@ -17,15 +17,15 @@ func XImage_LoadSrc(hImageSrc int) int {
 
 // 图片_加载从文件.
 //
-// pFileName: 图片文件.
-func XImage_LoadFile(pFileName string) int {
-	r, _, _ := xImage_LoadFile.Call(common.StrPtr(pFileName))
+// fileName: 图片文件.
+func XImage_LoadFile(fileName string) int {
+	r, _, _ := xImage_LoadFile.Call(common.StrPtr(fileName))
 	return int(r)
 }
 
 // 图片_加载从文件自适应, 加载图片从文件, 自适应图片.
 //
-// pFileName: 图片文件.
+// fileName: 图片文件.
 //
 // leftSize: 坐标.
 //
@@ -34,14 +34,14 @@ func XImage_LoadFile(pFileName string) int {
 // rightSize: 坐标.
 //
 // bottomSize: 坐标.
-func XImage_LoadFileAdaptive(pFileName string, leftSize, topSize, rightSize, bottomSize int32) int {
-	r, _, _ := xImage_LoadFileAdaptive.Call(common.StrPtr(pFileName), uintptr(leftSize), uintptr(topSize), uintptr(rightSize), uintptr(bottomSize))
+func XImage_LoadFileAdaptive(fileName string, leftSize, topSize, rightSize, bottomSize int32) int {
+	r, _, _ := xImage_LoadFileAdaptive.Call(common.StrPtr(fileName), uintptr(leftSize), uintptr(topSize), uintptr(rightSize), uintptr(bottomSize))
 	return int(r)
 }
 
 // 图片_加载从文件指定区域, 加载图片, 指定区位置及大小.
 //
-// pFileName: 图片文件.
+// fileName: 图片文件.
 //
 // x: 坐标.
 //
@@ -50,8 +50,8 @@ func XImage_LoadFileAdaptive(pFileName string, leftSize, topSize, rightSize, bot
 // cx: 宽度.
 //
 // cy: 高度.
-func XImage_LoadFileRect(pFileName string, x, y, cx, cy int32) int {
-	r, _, _ := xImage_LoadFileRect.Call(common.StrPtr(pFileName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy))
+func XImage_LoadFileRect(fileName string, x, y, cx, cy int32) int {
+	r, _, _ := xImage_LoadFileRect.Call(common.StrPtr(fileName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy))
 	return int(r)
 }
 
@@ -59,7 +59,7 @@ func XImage_LoadFileRect(pFileName string, x, y, cx, cy int32) int {
 //
 // id: 资源ID.
 //
-// pType: 资源类型.
+// Type: 资源类型.
 //
 // leftSize: 坐标.
 //
@@ -70,8 +70,8 @@ func XImage_LoadFileRect(pFileName string, x, y, cx, cy int32) int {
 // bottomSize: 坐标.
 //
 // hModule:	从指定模块加载, 例如:DLL, EXE; 如果为空, 从当前EXE加载.
-func XImage_LoadResAdaptive(id int32, pType string, leftSize, topSize, rightSize, bottomSize int32, hModule uintptr) int {
-	r, _, _ := xImage_LoadResAdaptive.Call(uintptr(id), common.StrPtr(pType), uintptr(leftSize), uintptr(topSize), uintptr(rightSize), uintptr(bottomSize), hModule)
+func XImage_LoadResAdaptive(id int32, Type string, leftSize, topSize, rightSize, bottomSize int32, hModule uintptr) int {
+	r, _, _ := xImage_LoadResAdaptive.Call(uintptr(id), common.StrPtr(Type), uintptr(leftSize), uintptr(topSize), uintptr(rightSize), uintptr(bottomSize), hModule)
 	return int(r)
 }
 
@@ -79,25 +79,25 @@ func XImage_LoadResAdaptive(id int32, pType string, leftSize, topSize, rightSize
 //
 // id: 资源ID.
 //
-// pType: 资源类型.
+// Type: 资源类型.
 //
 // bStretch: 是否拉伸图片.
 //
 // hModule:	从指定模块加载, 例如:DLL, EXE; 如果为空, 从当前EXE加载.
-func XImage_LoadRes(id int32, pType string, bStretch bool, hModule uintptr) int {
-	r, _, _ := xImage_LoadRes.Call(uintptr(id), common.StrPtr(pType), common.BoolPtr(bStretch), hModule)
+func XImage_LoadRes(id int32, Type string, bStretch bool, hModule uintptr) int {
+	r, _, _ := xImage_LoadRes.Call(uintptr(id), common.StrPtr(Type), common.BoolPtr(bStretch), hModule)
 	return int(r)
 }
 
 // 图片_加载从ZIP, 加载图片从ZIP压缩包.
 //
-// pZipFileName: ZIP压缩包文件名.
+// zipFileName: ZIP压缩包文件名.
 //
-// pFileName: 图片文件名.
+// fileName: 图片文件名.
 //
-// pPassword: ZIP压缩包密码.
-func XImage_LoadZip(pZipFileName string, pFileName string, pPassword string) int {
-	r, _, _ := xImage_LoadZip.Call(common.StrPtr(pZipFileName), common.StrPtr(pFileName), common.StrPtr(pPassword))
+// password: ZIP压缩包密码.
+func XImage_LoadZip(zipFileName string, fileName string, password string) int {
+	r, _, _ := xImage_LoadZip.Call(common.StrPtr(zipFileName), common.StrPtr(fileName), common.StrPtr(password))
 	return int(r)
 }
 
@@ -105,27 +105,27 @@ func XImage_LoadZip(pZipFileName string, pFileName string, pPassword string) int
 //
 // id: RC资源ID.
 //
-// pFileName: 图片文件名.
+// fileName: 图片文件名.
 //
-// pPassword: ZIP压缩包密码.
+// password: ZIP压缩包密码.
 //
 // hModule: 模块句柄, 不填默认为0.
-func XImage_LoadZipRes(id int32, pFileName string, pPassword string, hModule ...uintptr) int {
+func XImage_LoadZipRes(id int32, fileName string, password string, hModule ...uintptr) int {
 	module := uintptr(0)
 	if len(hModule) > 0 {
 		module = hModule[0]
 	}
-	r, _, _ := xImage_LoadZipRes.Call(uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), module)
+	r, _, _ := xImage_LoadZipRes.Call(uintptr(id), common.StrPtr(fileName), common.StrPtr(password), module)
 	return int(r)
 }
 
 // 图片_加载从ZIP自适应, 加载图片从ZIP压缩包, 自适应图片.
 //
-// pZipFileName: ZIP压缩包文件名.
+// zipFileName: ZIP压缩包文件名.
 //
-// pFileName: 图片文件名.
+// fileName: 图片文件名.
 //
-// pPassword: ZIP压缩包密码.
+// password: ZIP压缩包密码.
 //
 // x1: 坐标.
 //
@@ -134,18 +134,18 @@ func XImage_LoadZipRes(id int32, pFileName string, pPassword string, hModule ...
 // y1: 坐标.
 //
 // y2: 坐标.
-func XImage_LoadZipAdaptive(pZipFileName string, pFileName string, pPassword string, x1, x2, y1, y2 int32) int {
-	r, _, _ := xImage_LoadZipAdaptive.Call(common.StrPtr(pZipFileName), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(x1), uintptr(x2), uintptr(y1), uintptr(y2))
+func XImage_LoadZipAdaptive(zipFileName string, fileName string, password string, x1, x2, y1, y2 int32) int {
+	r, _, _ := xImage_LoadZipAdaptive.Call(common.StrPtr(zipFileName), common.StrPtr(fileName), common.StrPtr(password), uintptr(x1), uintptr(x2), uintptr(y1), uintptr(y2))
 	return int(r)
 }
 
 // 图片_加载从ZIP指定区域, 加载ZIP图片, 指定区位置及大小.
 //
-// pZipFileName: ZIP文件.
+// zipFileName: ZIP文件.
 //
-// pFileName: 图片名称.
+// fileName: 图片名称.
 //
-// pPassword: 密码.
+// password: 密码.
 //
 // x: 坐标.
 //
@@ -154,8 +154,8 @@ func XImage_LoadZipAdaptive(pZipFileName string, pFileName string, pPassword str
 // cx: 宽度.
 //
 // cy: 高度.
-func XImage_LoadZipRect(pZipFileName string, pFileName string, pPassword string, x, y, cx, cy int32) int {
-	r, _, _ := xImage_LoadZipRect.Call(common.StrPtr(pZipFileName), common.StrPtr(pFileName), common.StrPtr(pPassword), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy))
+func XImage_LoadZipRect(zipFileName string, fileName string, password string, x, y, cx, cy int32) int {
+	r, _, _ := xImage_LoadZipRect.Call(common.StrPtr(zipFileName), common.StrPtr(fileName), common.StrPtr(password), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy))
 	return int(r)
 }
 
@@ -163,11 +163,11 @@ func XImage_LoadZipRect(pZipFileName string, pFileName string, pPassword string,
 //
 // data: 图片数据.
 //
-// pFileName: 图片名称.
+// fileName: 图片名称.
 //
-// pPassword: zip压缩包密码.
-func XImage_LoadZipMem(data []byte, pFileName string, pPassword string) int {
-	r, _, _ := xImage_LoadZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(pFileName), common.StrPtr(pPassword))
+// password: zip压缩包密码.
+func XImage_LoadZipMem(data []byte, fileName string, password string) int {
+	r, _, _ := xImage_LoadZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(fileName), common.StrPtr(password))
 	return int(r)
 }
 
@@ -221,9 +221,9 @@ func XImage_LoadFromImage(pImage uintptr) int {
 
 // 图片_加载文件图标, 加载文件图标, 从一个EXE文件或DLL文件或图标文件; 例如:*.exe文件的图标.
 //
-// pFileName: 文件名.
-func XImage_LoadFromExtractIcon(pFileName string) int {
-	r, _, _ := xImage_LoadFromExtractIcon.Call(common.StrPtr(pFileName))
+// fileName: 文件名.
+func XImage_LoadFromExtractIcon(fileName string) int {
+	r, _, _ := xImage_LoadFromExtractIcon.Call(common.StrPtr(fileName))
 	return int(r)
 }
 
@@ -253,9 +253,9 @@ func XImage_LoadSvg(hSvg int) int {
 
 // 图片_加载从SVG文件, 返回炫彩图片句柄.
 //
-// pFileName: 文件名.
-func XImage_LoadSvgFile(pFileName string) int {
-	r, _, _ := xImage_LoadSvgFile.Call(common.StrPtr(pFileName))
+// fileName: 文件名.
+func XImage_LoadSvgFile(fileName string) int {
+	r, _, _ := xImage_LoadSvgFile.Call(common.StrPtr(fileName))
 	return int(r)
 }
 

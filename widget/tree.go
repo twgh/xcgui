@@ -609,13 +609,13 @@ func (t *Tree) SetItemTemplateXMLFromMem(data []byte) bool {
 //
 // id: RC资源ID.
 //
-// pFileName: 文件名.
+// fileName: 文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
 // hModule: 模块句柄, 不填默认为0.
-func (t *Tree) SetItemTemplateXMLFromZipRes(id int32, pFileName string, pPassword string, hModule ...uintptr) bool {
-	return xc.XTree_SetItemTemplateXMLFromZipRes(t.Handle, id, pFileName, pPassword, hModule...)
+func (t *Tree) SetItemTemplateXMLFromZipRes(id int32, fileName string, password string, hModule ...uintptr) bool {
+	return xc.XTree_SetItemTemplateXMLFromZipRes(t.Handle, id, fileName, password, hModule...)
 }
 
 // 列表树_取项模板, 返回项模板句柄.

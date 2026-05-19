@@ -36,11 +36,11 @@ func GetImage(name string) int {
 
 // 资源_取图片扩展, 从指定的资源文件中查找图片.
 //
-// pFileName: 资源文件名.
+// fileName: 资源文件名.
 //
 // name: 资源名称.
-func GetImageEx(pFileName string, name string) int {
-	return xc.XRes_GetImageEx(pFileName, name)
+func GetImageEx(fileName string, name string) int {
+	return xc.XRes_GetImageEx(fileName, name)
 }
 
 // 资源_取颜色, 从资源中查找颜色.

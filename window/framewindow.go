@@ -113,9 +113,9 @@ func (fw *FrameWindow) SetTabBarHeight(nHeight int32) *FrameWindow {
 
 // 框架窗口_保存布局到文件, 保存布局信息到文件.
 //
-// pFileName: 文件名，如果文件名为空，将使用默认文件名frameWnd_layout.xml.
-func (fw *FrameWindow) SaveLayoutToFile(pFileName string) bool {
-	return xc.XFrameWnd_SaveLayoutToFile(fw.Handle, pFileName)
+// fileName: 文件名，如果文件名为空，将使用默认文件名frameWnd_layout.xml.
+func (fw *FrameWindow) SaveLayoutToFile(fileName ...string) bool {
+	return xc.XFrameWnd_SaveLayoutToFile(fw.Handle, fileName...)
 }
 
 // 框架窗口_加载布局信息文件, 加载布局信息文件.
@@ -124,9 +124,9 @@ func (fw *FrameWindow) SaveLayoutToFile(pFileName string) bool {
 //
 // nPaneCount: 窗格数量.
 //
-// pFileName: 文件名，如果文件名为空，将使用默认文件名frameWnd_layout.xml.
-func (fw *FrameWindow) LoadLayoutFile(aPaneList []int, nPaneCount int32, pFileName string) bool {
-	return xc.XFrameWnd_LoadLayoutFile(fw.Handle, aPaneList, nPaneCount, pFileName)
+// fileName: 文件名，如果文件名为空，将使用默认文件名frameWnd_layout.xml.
+func (fw *FrameWindow) LoadLayoutFile(aPaneList []int, nPaneCount int32, fileName ...string) bool {
+	return xc.XFrameWnd_LoadLayoutFile(fw.Handle, aPaneList, nPaneCount, fileName...)
 }
 
 // 框架窗口_添加窗格, 添加窗格到框架窗口.

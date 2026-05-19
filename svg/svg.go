@@ -12,9 +12,9 @@ type Svg struct {
 
 // NewByFile SVG_加载从文件, 返回 Svg 对象, 失败返回 nil.
 //
-// pFileName: 文件名.
-func NewByFile(pFileName string) *Svg {
-	return NewByHandle(xc.XSvg_LoadFile(pFileName))
+// fileName: 文件名.
+func NewByFile(fileName string) *Svg {
+	return NewByHandle(xc.XSvg_LoadFile(fileName))
 }
 
 // NewByString SVG_加载从字符串, 返回 Svg 对象, 失败返回 nil.
@@ -26,48 +26,48 @@ func NewByString(str string) *Svg {
 
 // NewByZip SVG_加载从ZIP, 返回 Svg 对象, 失败返回 nil.
 //
-// pZipFileName: zip 文件名.
+// zipFileName: zip 文件名.
 //
-// pFileName: svg 文件名.
+// fileName: svg 文件名.
 //
-// pPassword: zip 密码.
-func NewByZip(pZipFileName, pFileName, pPassword string) *Svg {
-	return NewByHandle(xc.XSvg_LoadZip(pZipFileName, pFileName, pPassword))
+// password: zip 密码.
+func NewByZip(zipFileName, fileName, password string) *Svg {
+	return NewByHandle(xc.XSvg_LoadZip(zipFileName, fileName, password))
 }
 
 // NewByZipRes SVG_加载从资源ZIP, 返回 SVG 对象, 失败返回 nil.
 //
 // id: 资源 ID.
 //
-// pFileName: svg 文件名.
+// fileName: svg 文件名.
 //
-// pPassword: zip 密码.
+// password: zip 密码.
 //
 // hModule: 模块句柄, 不填默认为0.
-func NewByZipRes(id int32, pFileName, pPassword string, hModule ...uintptr) *Svg {
-	return NewByHandle(xc.XSvg_LoadZipRes(id, pFileName, pPassword, hModule...))
+func NewByZipRes(id int32, fileName, password string, hModule ...uintptr) *Svg {
+	return NewByHandle(xc.XSvg_LoadZipRes(id, fileName, password, hModule...))
 }
 
 // NewByZipMem SVG_加载从内存ZIP, 返回 Svg 对象, 失败返回 nil.
 //
 // data: zip 数据.
 //
-// pFileName: svg 文件名.
+// fileName: svg 文件名.
 //
-// pPassword: zip 密码.
-func NewByZipMem(data []byte, pFileName, pPassword string) *Svg {
-	return NewByHandle(xc.XSvg_LoadZipMem(data, pFileName, pPassword))
+// password: zip 密码.
+func NewByZipMem(data []byte, fileName, password string) *Svg {
+	return NewByHandle(xc.XSvg_LoadZipMem(data, fileName, password))
 }
 
 // NewByRes SVG_加载从资源, 返回 Svg 对象, 失败返回 nil.
 //
 // id: 资源 ID.
 //
-// pType: 资源类型. 在 rc 资源文件中.
+// Type: 资源类型. 在 rc 资源文件中.
 //
 // hModule: 从指定模块加载.
-func NewByRes(id int32, pType string, hModule uintptr) *Svg {
-	return NewByHandle(xc.XSvg_LoadRes(id, pType, hModule))
+func NewByRes(id int32, Type string, hModule uintptr) *Svg {
+	return NewByHandle(xc.XSvg_LoadRes(id, Type, hModule))
 }
 
 // NewByHandle 从句柄创建 Svg 对象, 失败返回 nil.

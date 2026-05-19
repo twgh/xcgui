@@ -8,9 +8,9 @@ import (
 
 // SVG_加载从文件, 返回SVG句柄.
 //
-// pFileName: 文件名.
-func XSvg_LoadFile(pFileName string) int {
-	r, _, _ := xSvg_LoadFile.Call(common.StrPtr(pFileName))
+// fileName: 文件名.
+func XSvg_LoadFile(fileName string) int {
+	r, _, _ := xSvg_LoadFile.Call(common.StrPtr(fileName))
 	return int(r)
 }
 
@@ -26,23 +26,23 @@ func XSvg_LoadString(str string) int {
 //
 // data: zip数据.
 //
-// pFileName: svg文件名.
+// fileName: svg文件名.
 //
-// pPassword: zip密码.
-func XSvg_LoadZipMem(data []byte, pFileName, pPassword string) int {
-	r, _, _ := xSvg_LoadZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(pFileName), common.StrPtr(pPassword))
+// password: zip密码.
+func XSvg_LoadZipMem(data []byte, fileName, password string) int {
+	r, _, _ := xSvg_LoadZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(fileName), common.StrPtr(password))
 	return int(r)
 }
 
 // SVG_加载从ZIP, 返回SVG句柄.
 //
-// pZipFileName: zip文件名.
+// zipFileName: zip文件名.
 //
-// pFileName: svg文件名.
+// fileName: svg文件名.
 //
-// pPassword: zip密码.
-func XSvg_LoadZip(pZipFileName, pFileName, pPassword string) int {
-	r, _, _ := xSvg_LoadZip.Call(common.StrPtr(pZipFileName), common.StrPtr(pFileName), common.StrPtr(pPassword))
+// password: zip密码.
+func XSvg_LoadZip(zipFileName, fileName, password string) int {
+	r, _, _ := xSvg_LoadZip.Call(common.StrPtr(zipFileName), common.StrPtr(fileName), common.StrPtr(password))
 	return int(r)
 }
 
@@ -50,17 +50,17 @@ func XSvg_LoadZip(pZipFileName, pFileName, pPassword string) int {
 //
 // id: 资源ID.
 //
-// pFileName: svg文件名.
+// fileName: svg文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
 // hModule: 模块句柄, 不填默认为0.
-func XSvg_LoadZipRes(id int32, pFileName, pPassword string, hModule ...uintptr) int {
+func XSvg_LoadZipRes(id int32, fileName, password string, hModule ...uintptr) int {
 	module := uintptr(0)
 	if len(hModule) > 0 {
 		module = hModule[0]
 	}
-	r, _, _ := xSvg_LoadZipRes.Call(uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), module)
+	r, _, _ := xSvg_LoadZipRes.Call(uintptr(id), common.StrPtr(fileName), common.StrPtr(password), module)
 	return int(r)
 }
 
@@ -68,11 +68,11 @@ func XSvg_LoadZipRes(id int32, pFileName, pPassword string, hModule ...uintptr) 
 //
 // id: 资源ID.
 //
-// pType: 资源类型.在rc资源文件中.
+// Type: 资源类型.在rc资源文件中.
 //
 // hModule: 从指定模块加载.
-func XSvg_LoadRes(id int32, pType string, hModule uintptr) int {
-	r, _, _ := xSvg_LoadRes.Call(uintptr(id), common.StrPtr(pType), hModule)
+func XSvg_LoadRes(id int32, Type string, hModule uintptr) int {
+	r, _, _ := xSvg_LoadRes.Call(uintptr(id), common.StrPtr(Type), hModule)
 	return int(r)
 }
 

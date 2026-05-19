@@ -827,17 +827,17 @@ func XListBox_SetItemTemplateXMLFromMem(hEle int, data []byte) bool {
 //
 // id: RC资源ID.
 //
-// pFileName: 项模板文件名.
+// fileName: 项模板文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
 // hModule: 模块句柄, 不填默认为0.
-func XListBox_SetItemTemplateXMLFromZipRes(hEle int, id int32, pFileName string, pPassword string, hModule ...uintptr) bool {
+func XListBox_SetItemTemplateXMLFromZipRes(hEle int, id int32, fileName string, password string, hModule ...uintptr) bool {
 	module := uintptr(0)
 	if len(hModule) > 0 {
 		module = hModule[0]
 	}
-	r, _, _ := xListBox_SetItemTemplateXMLFromZipRes.Call(uintptr(hEle), uintptr(id), common.StrPtr(pFileName), common.StrPtr(pPassword), module)
+	r, _, _ := xListBox_SetItemTemplateXMLFromZipRes.Call(uintptr(hEle), uintptr(id), common.StrPtr(fileName), common.StrPtr(password), module)
 	return r != 0
 }
 

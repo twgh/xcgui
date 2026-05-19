@@ -25,14 +25,14 @@ func NewBySrc(hImageSrc int) *Image {
 
 // 图片_加载从文件, 失败返回 nil.
 //
-// pFileName: 图片文件.
-func NewByFile(pFileName string) *Image {
-	return NewByHandle(xc.XImage_LoadFile(pFileName))
+// fileName: 图片文件.
+func NewByFile(fileName string) *Image {
+	return NewByHandle(xc.XImage_LoadFile(fileName))
 }
 
 // 图片_加载从文件自适应, 加载图片从文件, 自适应图片, 失败返回 nil.
 //
-// pFileName: 图片文件.
+// fileName: 图片文件.
 //
 // leftSize: 坐标.
 //
@@ -41,13 +41,13 @@ func NewByFile(pFileName string) *Image {
 // rightSize: 坐标.
 //
 // bottomSize: 坐标.
-func NewByFileAdaptive(pFileName string, leftSize, topSize, rightSize, bottomSize int32) *Image {
-	return NewByHandle(xc.XImage_LoadFileAdaptive(pFileName, leftSize, topSize, rightSize, bottomSize))
+func NewByFileAdaptive(fileName string, leftSize, topSize, rightSize, bottomSize int32) *Image {
+	return NewByHandle(xc.XImage_LoadFileAdaptive(fileName, leftSize, topSize, rightSize, bottomSize))
 }
 
 // 图片_加载从文件指定区域, 加载图片, 指定区位置及大小, 失败返回 nil.
 //
-// pFileName: 图片文件.
+// fileName: 图片文件.
 //
 // x: 坐标.
 //
@@ -56,15 +56,15 @@ func NewByFileAdaptive(pFileName string, leftSize, topSize, rightSize, bottomSiz
 // cx: 宽度.
 //
 // cy: 高度.
-func NewByFileRect(pFileName string, x, y, cx, cy int32) *Image {
-	return NewByHandle(xc.XImage_LoadFileRect(pFileName, x, y, cx, cy))
+func NewByFileRect(fileName string, x, y, cx, cy int32) *Image {
+	return NewByHandle(xc.XImage_LoadFileRect(fileName, x, y, cx, cy))
 }
 
 // 图片_加载从资源自适应, 加载图片从资源, 自适应图片, 失败返回 nil.
 //
 // id: 资源 ID.
 //
-// pType: 资源类型.
+// Type: 资源类型.
 //
 // leftSize: 坐标.
 //
@@ -75,54 +75,54 @@ func NewByFileRect(pFileName string, x, y, cx, cy int32) *Image {
 // bottomSize: 坐标.
 //
 // hModule:	从指定模块加载, 例如: DLL, EXE; 如果为空, 从当前 EXE 加载.
-func NewByResAdaptive(id int32, pType string, leftSize, topSize, rightSize, bottomSize int32, hModule uintptr) *Image {
-	return NewByHandle(xc.XImage_LoadResAdaptive(id, pType, leftSize, topSize, rightSize, bottomSize, hModule))
+func NewByResAdaptive(id int32, Type string, leftSize, topSize, rightSize, bottomSize int32, hModule uintptr) *Image {
+	return NewByHandle(xc.XImage_LoadResAdaptive(id, Type, leftSize, topSize, rightSize, bottomSize, hModule))
 }
 
 // 图片_加载从资源, 失败返回 nil.
 //
 // id: 资源 ID.
 //
-// pType: 资源类型.
+// Type: 资源类型.
 //
 // bStretch: 是否拉伸图片.
 //
 // hModule:	从指定模块加载, 例如: DLL, EXE; 如果为空, 从当前 EXE 加载.
-func NewByRes(id int32, pType string, bStretch bool, hModule uintptr) *Image {
-	return NewByHandle(xc.XImage_LoadRes(id, pType, bStretch, hModule))
+func NewByRes(id int32, Type string, bStretch bool, hModule uintptr) *Image {
+	return NewByHandle(xc.XImage_LoadRes(id, Type, bStretch, hModule))
 }
 
 // 图片_加载从ZIP, 加载图片从 ZIP 压缩包, 失败返回 nil.
 //
-// pZipFileName: ZIP 压缩包文件名.
+// zipFileName: ZIP 压缩包文件名.
 //
-// pFileName: 图片文件名.
+// fileName: 图片文件名.
 //
-// pPassword: ZIP 压缩包密码.
-func NewByZip(pZipFileName string, pFileName string, pPassword string) *Image {
-	return NewByHandle(xc.XImage_LoadZip(pZipFileName, pFileName, pPassword))
+// password: ZIP 压缩包密码.
+func NewByZip(zipFileName string, fileName string, password string) *Image {
+	return NewByHandle(xc.XImage_LoadZip(zipFileName, fileName, password))
 }
 
 // 图片_加载从资源ZIP, 失败返回 nil.
 //
 // id: RC 资源 ID.
 //
-// pFileName: 图片文件名.
+// fileName: 图片文件名.
 //
-// pPassword: ZIP 压缩包密码.
+// password: ZIP 压缩包密码.
 //
 // hModule: 模块句柄, 不填默认为0.
-func NewByZipRes(id int32, pFileName string, pPassword string, hModule ...uintptr) *Image {
-	return NewByHandle(xc.XImage_LoadZipRes(id, pFileName, pPassword, hModule...))
+func NewByZipRes(id int32, fileName string, password string, hModule ...uintptr) *Image {
+	return NewByHandle(xc.XImage_LoadZipRes(id, fileName, password, hModule...))
 }
 
 // 图片_加载从ZIP自适应, 加载图片从ZIP压缩包, 自适应图片, 失败返回 nil.
 //
-// pZipFileName: ZIP 压缩包文件名.
+// zipFileName: ZIP 压缩包文件名.
 //
-// pFileName: 图片文件名.
+// fileName: 图片文件名.
 //
-// pPassword: ZIP 压缩包密码.
+// password: ZIP 压缩包密码.
 //
 // x1: 坐标.
 //
@@ -131,17 +131,17 @@ func NewByZipRes(id int32, pFileName string, pPassword string, hModule ...uintpt
 // y1: 坐标.
 //
 // y2: 坐标.
-func NewByZipAdaptive(pZipFileName string, pFileName string, pPassword string, x1, x2, y1, y2 int32) *Image {
-	return NewByHandle(xc.XImage_LoadZipAdaptive(pZipFileName, pFileName, pPassword, x1, x2, y1, y2))
+func NewByZipAdaptive(zipFileName string, fileName string, password string, x1, x2, y1, y2 int32) *Image {
+	return NewByHandle(xc.XImage_LoadZipAdaptive(zipFileName, fileName, password, x1, x2, y1, y2))
 }
 
 // 图片_加载从ZIP指定区域, 加载ZIP图片, 指定区位置及大小, 失败返回 nil.
 //
-// pZipFileName: ZIP 文件.
+// zipFileName: ZIP 文件.
 //
-// pFileName: 图片名称.
+// fileName: 图片名称.
 //
-// pPassword: 密码.
+// password: 密码.
 //
 // x: 坐标.
 //
@@ -150,19 +150,19 @@ func NewByZipAdaptive(pZipFileName string, pFileName string, pPassword string, x
 // cx: 宽度.
 //
 // cy: 高度.
-func NewByZipRect(pZipFileName string, pFileName string, pPassword string, x, y, cx, cy int32) *Image {
-	return NewByHandle(xc.XImage_LoadZipRect(pZipFileName, pFileName, pPassword, x, y, cx, cy))
+func NewByZipRect(zipFileName string, fileName string, password string, x, y, cx, cy int32) *Image {
+	return NewByHandle(xc.XImage_LoadZipRect(zipFileName, fileName, password, x, y, cx, cy))
 }
 
 // 图片_加载从内存ZIP, 失败返回 nil.
 //
 // data: 图片数据.
 //
-// pFileName: 图片名称.
+// fileName: 图片名称.
 //
-// pPassword: zip 压缩包密码.
-func NewByZipMem(data []byte, pFileName string, pPassword string) *Image {
-	return NewByHandle(xc.XImage_LoadZipMem(data, pFileName, pPassword))
+// password: zip 压缩包密码.
+func NewByZipMem(data []byte, fileName string, password string) *Image {
+	return NewByHandle(xc.XImage_LoadZipMem(data, fileName, password))
 }
 
 // 图片_加载从内存, 加载流图片, 失败返回 nil.
@@ -211,9 +211,9 @@ func NewByImage(pImage uintptr) *Image {
 
 // 图片_加载文件图标, 加载文件图标, 从一个EXE文件或DLL文件或图标文件; 例如:*.exe文件的图标, 失败返回 nil.
 //
-// pFileName: 文件名.
-func NewByExtractIcon(pFileName string) *Image {
-	return NewByHandle(xc.XImage_LoadFromExtractIcon(pFileName))
+// fileName: 文件名.
+func NewByExtractIcon(fileName string) *Image {
+	return NewByHandle(xc.XImage_LoadFromExtractIcon(fileName))
 }
 
 // 图片_加载从HICON, 创建一个炫彩图片句柄, 从一个现有的图标句柄 HICON, 失败返回 nil.
@@ -239,9 +239,9 @@ func NewBySvg(hSvg int) *Image {
 
 // 图片_加载从SVG文件, 失败返回 nil.
 //
-// pFileName: 文件名.
-func NewBySvgFile(pFileName string) *Image {
-	return NewByHandle(xc.XImage_LoadSvgFile(pFileName))
+// fileName: 文件名.
+func NewBySvgFile(fileName string) *Image {
+	return NewByHandle(xc.XImage_LoadSvgFile(fileName))
 }
 
 // 图片_加载从SVG字符串, 失败返回 nil.
@@ -272,7 +272,7 @@ func NewByName(name string) *Image {
 
 // NewByNameEx 从指定的资源文件中, 根据 name 创建对象, 失败返回 nil.
 //
-// pFileName: 资源文件名.
+// fileName: 资源文件名.
 //
 // name: 资源名称.
 func NewByNameEx(fileName, name string) *Image {

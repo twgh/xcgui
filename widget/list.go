@@ -915,13 +915,13 @@ func (l *List) SetItemTemplateXMLFromMem(data []byte) bool {
 //
 // id: RC资源ID.
 //
-// pFileName: 项模板文件名.
+// fileName: 项模板文件名.
 //
-// pPassword: zip密码.
+// password: zip密码.
 //
 // hModule: 模块句柄, 不填默认为0.
-func (l *List) SetItemTemplateXMLFromZipRes(id int32, pFileName string, pPassword string, hModule ...uintptr) bool {
-	return xc.XList_SetItemTemplateXMLFromZipRes(l.Handle, id, pFileName, pPassword, hModule...)
+func (l *List) SetItemTemplateXMLFromZipRes(id int32, fileName string, password string, hModule ...uintptr) bool {
+	return xc.XList_SetItemTemplateXMLFromZipRes(l.Handle, id, fileName, password, hModule...)
 }
 
 // 列表_添加列文本2, 返回列索引. 简化版本.
