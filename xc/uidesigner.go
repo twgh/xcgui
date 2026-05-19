@@ -8,9 +8,13 @@ import "github.com/twgh/xcgui/common"
 //
 // hParent: 父对象句柄, 窗口句柄或UI元素句柄.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func XC_LoadLayout(fileName string, hParent int, hAttachWnd uintptr) int {
-	r, _, _ := xC_LoadLayout.Call(common.StrPtr(fileName), uintptr(hParent), hAttachWnd)
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func XC_LoadLayout(fileName string, hParent int, hAttachWnd ...uintptr) int {
+	hwndAttach := uintptr(0)
+	if len(hAttachWnd) > 0 {
+		hwndAttach = hAttachWnd[0]
+	}
+	r, _, _ := xC_LoadLayout.Call(common.StrPtr(fileName), uintptr(hParent), hwndAttach)
 	return int(r)
 }
 
@@ -24,9 +28,13 @@ func XC_LoadLayout(fileName string, hParent int, hAttachWnd uintptr) int {
 //
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func XC_LoadLayoutEx(fileName, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
-	r, _, _ := xC_LoadLayoutEx.Call(common.StrPtr(fileName), common.StrPtr(pPrefixName), uintptr(hParent), hParentWnd, hAttachWnd)
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func XC_LoadLayoutEx(fileName, pPrefixName string, hParent int, hParentWnd uintptr, hAttachWnd ...uintptr) int {
+	hwndAttach := uintptr(0)
+	if len(hAttachWnd) > 0 {
+		hwndAttach = hAttachWnd[0]
+	}
+	r, _, _ := xC_LoadLayoutEx.Call(common.StrPtr(fileName), common.StrPtr(pPrefixName), uintptr(hParent), hParentWnd, hwndAttach)
 	return int(r)
 }
 
@@ -40,9 +48,13 @@ func XC_LoadLayoutEx(fileName, pPrefixName string, hParent int, hParentWnd, hAtt
 //
 // hParent: 父对象句柄, 窗口句柄或UI元素句柄.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func XC_LoadLayoutZip(zipFileName string, fileName string, password string, hParent int, hAttachWnd uintptr) int {
-	r, _, _ := xC_LoadLayoutZip.Call(common.StrPtr(zipFileName), common.StrPtr(fileName), common.StrPtr(password), uintptr(hParent), hAttachWnd)
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func XC_LoadLayoutZip(zipFileName string, fileName string, password string, hParent int, hAttachWnd ...uintptr) int {
+	hwndAttach := uintptr(0)
+	if len(hAttachWnd) > 0 {
+		hwndAttach = hAttachWnd[0]
+	}
+	r, _, _ := xC_LoadLayoutZip.Call(common.StrPtr(zipFileName), common.StrPtr(fileName), common.StrPtr(password), uintptr(hParent), hwndAttach)
 	return int(r)
 }
 
@@ -60,9 +72,13 @@ func XC_LoadLayoutZip(zipFileName string, fileName string, password string, hPar
 //
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func XC_LoadLayoutZipEx(zipFileName string, fileName string, password, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
-	r, _, _ := xC_LoadLayoutZipEx.Call(common.StrPtr(zipFileName), common.StrPtr(fileName), common.StrPtr(password), common.StrPtr(pPrefixName), uintptr(hParent), hParentWnd, hAttachWnd)
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func XC_LoadLayoutZipEx(zipFileName string, fileName string, password, pPrefixName string, hParent int, hParentWnd uintptr, hAttachWnd ...uintptr) int {
+	hwndAttach := uintptr(0)
+	if len(hAttachWnd) > 0 {
+		hwndAttach = hAttachWnd[0]
+	}
+	r, _, _ := xC_LoadLayoutZipEx.Call(common.StrPtr(zipFileName), common.StrPtr(fileName), common.StrPtr(password), common.StrPtr(pPrefixName), uintptr(hParent), hParentWnd, hwndAttach)
 	return int(r)
 }
 
@@ -76,9 +92,13 @@ func XC_LoadLayoutZipEx(zipFileName string, fileName string, password, pPrefixNa
 //
 // hParent: 父对象句柄, 窗口句柄或UI元素句柄.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func XC_LoadLayoutZipMem(data []byte, fileName string, password string, hParent int, hAttachWnd uintptr) int {
-	r, _, _ := xC_LoadLayoutZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(fileName), common.StrPtr(password), uintptr(hParent), hAttachWnd)
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func XC_LoadLayoutZipMem(data []byte, fileName string, password string, hParent int, hAttachWnd ...uintptr) int {
+	hwndAttach := uintptr(0)
+	if len(hAttachWnd) > 0 {
+		hwndAttach = hAttachWnd[0]
+	}
+	r, _, _ := xC_LoadLayoutZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(fileName), common.StrPtr(password), uintptr(hParent), hwndAttach)
 	return int(r)
 }
 
@@ -96,9 +116,13 @@ func XC_LoadLayoutZipMem(data []byte, fileName string, password string, hParent 
 //
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func XC_LoadLayoutZipMemEx(data []byte, fileName string, password, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
-	r, _, _ := xC_LoadLayoutZipMemEx.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(fileName), common.StrPtr(password), common.StrPtr(pPrefixName), uintptr(hParent), hParentWnd, hAttachWnd)
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func XC_LoadLayoutZipMemEx(data []byte, fileName string, password, pPrefixName string, hParent int, hParentWnd uintptr, hAttachWnd ...uintptr) int {
+	hwndAttach := uintptr(0)
+	if len(hAttachWnd) > 0 {
+		hwndAttach = hAttachWnd[0]
+	}
+	r, _, _ := xC_LoadLayoutZipMemEx.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(fileName), common.StrPtr(password), common.StrPtr(pPrefixName), uintptr(hParent), hParentWnd, hwndAttach)
 	return int(r)
 }
 
@@ -108,9 +132,13 @@ func XC_LoadLayoutZipMemEx(data []byte, fileName string, password, pPrefixName s
 //
 // hParent: 父对象.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func XC_LoadLayoutFromString(pStringXML string, hParent int, hAttachWnd uintptr) int {
-	r, _, _ := xC_LoadLayoutFromString.Call(XC_wtoa(pStringXML), uintptr(hParent), hAttachWnd)
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func XC_LoadLayoutFromString(pStringXML string, hParent int, hAttachWnd ...uintptr) int {
+	hwndAttach := uintptr(0)
+	if len(hAttachWnd) > 0 {
+		hwndAttach = hAttachWnd[0]
+	}
+	r, _, _ := xC_LoadLayoutFromString.Call(XC_wtoa(pStringXML), uintptr(hParent), hwndAttach)
 	return int(r)
 } */
 
@@ -120,9 +148,13 @@ func XC_LoadLayoutFromString(pStringXML string, hParent int, hAttachWnd uintptr)
 //
 // hParent: 父对象句柄, 窗口句柄或UI元素句柄.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func XC_LoadLayoutFromStringW(pStringXML string, hParent int, hAttachWnd uintptr) int {
-	r, _, _ := xC_LoadLayoutFromStringUtf8.Call(XC_wtoutf8(pStringXML), uintptr(hParent), hAttachWnd)
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func XC_LoadLayoutFromStringW(pStringXML string, hParent int, hAttachWnd ...uintptr) int {
+	hwndAttach := uintptr(0)
+	if len(hAttachWnd) > 0 {
+		hwndAttach = hAttachWnd[0]
+	}
+	r, _, _ := xC_LoadLayoutFromStringUtf8.Call(XC_wtoutf8(pStringXML), uintptr(hParent), hwndAttach)
 	return int(r)
 }
 
@@ -136,9 +168,13 @@ func XC_LoadLayoutFromStringW(pStringXML string, hParent int, hAttachWnd uintptr
 //
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func XC_LoadLayoutFromStringWEx(pStringXML, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
-	r, _, _ := xC_LoadLayoutFromStringUtf8Ex.Call(XC_wtoutf8(pStringXML), common.StrPtr(pPrefixName), uintptr(hParent), hParentWnd, hAttachWnd)
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func XC_LoadLayoutFromStringWEx(pStringXML, pPrefixName string, hParent int, hParentWnd uintptr, hAttachWnd ...uintptr) int {
+	hwndAttach := uintptr(0)
+	if len(hAttachWnd) > 0 {
+		hwndAttach = hAttachWnd[0]
+	}
+	r, _, _ := xC_LoadLayoutFromStringUtf8Ex.Call(XC_wtoutf8(pStringXML), common.StrPtr(pPrefixName), uintptr(hParent), hParentWnd, hwndAttach)
 	return int(r)
 }
 
