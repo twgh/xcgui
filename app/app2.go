@@ -565,9 +565,9 @@ func PostQuitMessage(nExitCode int32) {
 //
 // hParent: 父对象句柄.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func LoadLayout(fileName string, hParent int, hAttachWnd uintptr) int {
-	return xc.XC_LoadLayout(fileName, hParent, hAttachWnd)
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func LoadLayout(fileName string, hParent int, hAttachWnd ...uintptr) int {
+	return xc.XC_LoadLayout(fileName, hParent, hAttachWnd...)
 }
 
 // 炫彩_加载布局文件ZIP, 加载布局文件从zip压缩包中, 返回窗口句柄或布局句柄或元素句柄.
@@ -580,9 +580,9 @@ func LoadLayout(fileName string, hParent int, hAttachWnd uintptr) int {
 //
 // hParent: 父对象句柄.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func LoadLayoutZip(zipFileName string, fileName string, password string, hParent int, hAttachWnd uintptr) int {
-	return xc.XC_LoadLayoutZip(zipFileName, fileName, password, hParent, hAttachWnd)
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func LoadLayoutZip(zipFileName string, fileName string, password string, hParent int, hAttachWnd ...uintptr) int {
+	return xc.XC_LoadLayoutZip(zipFileName, fileName, password, hParent, hAttachWnd...)
 }
 
 // 炫彩_加载布局文件内存ZIP, 加载布局文件从zip压缩包中, 返回窗口句柄或布局句柄或元素句柄.
@@ -595,9 +595,9 @@ func LoadLayoutZip(zipFileName string, fileName string, password string, hParent
 //
 // hParent: 父对象句柄.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func LoadLayoutZipMem(data []byte, fileName string, password string, hParent int, hAttachWnd uintptr) int {
-	return xc.XC_LoadLayoutZipMem(data, fileName, password, hParent, hAttachWnd)
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func LoadLayoutZipMem(data []byte, fileName string, password string, hParent int, hAttachWnd ...uintptr) int {
+	return xc.XC_LoadLayoutZipMem(data, fileName, password, hParent, hAttachWnd...)
 }
 
 // 炫彩_加载布局文件资源ZIP扩展. 加载布局文件从RC资源zip压缩包中, 返回窗口句柄或元素句柄.
@@ -653,9 +653,9 @@ func LoadStyleZipRes(id int32, fileName string, password string, hModule ...uint
 //
 // hParent: 父对象.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func LoadLayoutFromStringW(xmlStr string, hParent int, hAttachWnd uintptr) int {
-	return xc.XC_LoadLayoutFromStringW(xmlStr, hParent, hAttachWnd)
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func LoadLayoutFromStringW(xmlStr string, hParent int, hAttachWnd ...uintptr) int {
+	return xc.XC_LoadLayoutFromStringW(xmlStr, hParent, hAttachWnd...)
 }
 
 // 炫彩_加载布局文件Ex, 返回窗口句柄或布局句柄或元素句柄.
@@ -668,9 +668,9 @@ func LoadLayoutFromStringW(xmlStr string, hParent int, hAttachWnd uintptr) int {
 //
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func LoadLayoutEx(fileName, prefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
-	return xc.XC_LoadLayoutEx(fileName, prefixName, hParent, hParentWnd, hAttachWnd)
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func LoadLayoutEx(fileName, prefixName string, hParent int, hParentWnd uintptr, hAttachWnd ...uintptr) int {
+	return xc.XC_LoadLayoutEx(fileName, prefixName, hParent, hParentWnd, hAttachWnd...)
 }
 
 // 炫彩_加载布局文件ZIPEx, 加载布局文件从zip压缩包中, 返回窗口句柄或布局句柄或元素句柄.
@@ -687,9 +687,9 @@ func LoadLayoutEx(fileName, prefixName string, hParent int, hParentWnd, hAttachW
 //
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func LoadLayoutZipEx(zipFileName string, fileName string, password, prefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
-	return xc.XC_LoadLayoutZipEx(zipFileName, fileName, password, prefixName, hParent, hParentWnd, hAttachWnd)
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func LoadLayoutZipEx(zipFileName string, fileName string, password, prefixName string, hParent int, hParentWnd uintptr, hAttachWnd ...uintptr) int {
+	return xc.XC_LoadLayoutZipEx(zipFileName, fileName, password, prefixName, hParent, hParentWnd, hAttachWnd...)
 }
 
 // 炫彩_加载布局文件内存ZIPEx, 加载布局文件从zip压缩包中, 返回窗口句柄或布局句柄或元素句柄.
@@ -706,9 +706,9 @@ func LoadLayoutZipEx(zipFileName string, fileName string, password, prefixName s
 //
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func LoadLayoutZipMemEx(data []byte, fileName string, password, prefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
-	return xc.XC_LoadLayoutZipMemEx(data, fileName, password, prefixName, hParent, hParentWnd, hAttachWnd)
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func LoadLayoutZipMemEx(data []byte, fileName string, password, prefixName string, hParent int, hParentWnd uintptr, hAttachWnd ...uintptr) int {
+	return xc.XC_LoadLayoutZipMemEx(data, fileName, password, prefixName, hParent, hParentWnd, hAttachWnd...)
 }
 
 // 炫彩_加载布局文件从字符串WEx, 加载布局文件从内存字符串, 返回窗口句柄或布局句柄或元素句柄.
@@ -721,9 +721,9 @@ func LoadLayoutZipMemEx(data []byte, fileName string, password, prefixName strin
 //
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func LoadLayoutFromStringWEx(xmlStr, prefixName string, hParent int, hParentWnd, hAttachWnd uintptr) int {
-	return xc.XC_LoadLayoutFromStringWEx(xmlStr, prefixName, hParent, hParentWnd, hAttachWnd)
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func LoadLayoutFromStringWEx(xmlStr, prefixName string, hParent int, hParentWnd uintptr, hAttachWnd ...uintptr) int {
+	return xc.XC_LoadLayoutFromStringWEx(xmlStr, prefixName, hParent, hParentWnd, hAttachWnd...)
 }
 
 // 炫彩_加载样式文件.

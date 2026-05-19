@@ -56,9 +56,9 @@ func NewModalWindowEx(dwExStyle, dwStyle uint32, lpClassName string, x, y, cx, c
 //
 // hParent: 父对象句柄.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func NewModalWindowByLayout(fileName string, hParent int, hAttachWnd uintptr) *ModalWindow {
-	return NewModalWindowByHandle(xc.XC_LoadLayout(fileName, hParent, hAttachWnd))
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func NewModalWindowByLayout(fileName string, hParent int, hAttachWnd ...uintptr) *ModalWindow {
+	return NewModalWindowByHandle(xc.XC_LoadLayout(fileName, hParent, hAttachWnd...))
 }
 
 // NewModalWindowByLayoutZip 从压缩包中的布局文件创建对象, 失败返回 nil.
@@ -71,9 +71,9 @@ func NewModalWindowByLayout(fileName string, hParent int, hAttachWnd uintptr) *M
 //
 // hParent: 父对象句柄.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func NewModalWindowByLayoutZip(zipFileName string, fileName string, password string, hParent int, hAttachWnd uintptr) *ModalWindow {
-	return NewModalWindowByHandle(xc.XC_LoadLayoutZip(zipFileName, fileName, password, hParent, hAttachWnd))
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func NewModalWindowByLayoutZip(zipFileName string, fileName string, password string, hParent int, hAttachWnd ...uintptr) *ModalWindow {
+	return NewModalWindowByHandle(xc.XC_LoadLayoutZip(zipFileName, fileName, password, hParent, hAttachWnd...))
 }
 
 // NewModalWindowByLayoutZipMem 从内存压缩包中的布局文件创建对象, 失败返回 nil.
@@ -86,9 +86,9 @@ func NewModalWindowByLayoutZip(zipFileName string, fileName string, password str
 //
 // hParent: 父对象句柄.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func NewModalWindowByLayoutZipMem(data []byte, fileName string, password string, hParent int, hAttachWnd uintptr) *ModalWindow {
-	return NewModalWindowByHandle(xc.XC_LoadLayoutZipMem(data, fileName, password, hParent, hAttachWnd))
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func NewModalWindowByLayoutZipMem(data []byte, fileName string, password string, hParent int, hAttachWnd ...uintptr) *ModalWindow {
+	return NewModalWindowByHandle(xc.XC_LoadLayoutZipMem(data, fileName, password, hParent, hAttachWnd...))
 }
 
 // NewModalWindowByLayoutStringW 从布局文件字符串W创建对象, 失败返回 nil.
@@ -97,9 +97,9 @@ func NewModalWindowByLayoutZipMem(data []byte, fileName string, password string,
 //
 // hParent: 父对象.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func NewModalWindowByLayoutStringW(pStringXML string, hParent int, hAttachWnd uintptr) *ModalWindow {
-	return NewModalWindowByHandle(xc.XC_LoadLayoutFromStringW(pStringXML, hParent, hAttachWnd))
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func NewModalWindowByLayoutStringW(pStringXML string, hParent int, hAttachWnd ...uintptr) *ModalWindow {
+	return NewModalWindowByHandle(xc.XC_LoadLayoutFromStringW(pStringXML, hParent, hAttachWnd...))
 }
 
 // NewModalWindowByLayoutEx 从布局文件创建对象, 失败返回 nil.
@@ -112,9 +112,9 @@ func NewModalWindowByLayoutStringW(pStringXML string, hParent int, hAttachWnd ui
 //
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func NewModalWindowByLayoutEx(fileName, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) *ModalWindow {
-	return NewModalWindowByHandle(xc.XC_LoadLayoutEx(fileName, pPrefixName, hParent, hParentWnd, hAttachWnd))
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func NewModalWindowByLayoutEx(fileName, pPrefixName string, hParent int, hParentWnd uintptr, hAttachWnd ...uintptr) *ModalWindow {
+	return NewModalWindowByHandle(xc.XC_LoadLayoutEx(fileName, pPrefixName, hParent, hParentWnd, hAttachWnd...))
 }
 
 // NewModalWindowByLayoutZipResEx 从RC资源zip压缩包中的布局文件创建对象, 失败返回 nil.
@@ -152,9 +152,9 @@ func NewModalWindowByLayoutZipResEx(id int32, fileName, password, pPrefixName st
 //
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func NewModalWindowByLayoutZipEx(zipFileName string, fileName string, password, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) *ModalWindow {
-	return NewModalWindowByHandle(xc.XC_LoadLayoutZipEx(zipFileName, fileName, password, pPrefixName, hParent, hParentWnd, hAttachWnd))
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func NewModalWindowByLayoutZipEx(zipFileName string, fileName string, password, pPrefixName string, hParent int, hParentWnd uintptr, hAttachWnd ...uintptr) *ModalWindow {
+	return NewModalWindowByHandle(xc.XC_LoadLayoutZipEx(zipFileName, fileName, password, pPrefixName, hParent, hParentWnd, hAttachWnd...))
 }
 
 // NewModalWindowByLayoutZipMemEx 从内存压缩包中的布局文件创建对象, 失败返回 nil.
@@ -171,9 +171,9 @@ func NewModalWindowByLayoutZipEx(zipFileName string, fileName string, password, 
 //
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func NewModalWindowByLayoutZipMemEx(data []byte, fileName string, password, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) *ModalWindow {
-	return NewModalWindowByHandle(xc.XC_LoadLayoutZipMemEx(data, fileName, password, pPrefixName, hParent, hParentWnd, hAttachWnd))
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func NewModalWindowByLayoutZipMemEx(data []byte, fileName string, password, pPrefixName string, hParent int, hParentWnd uintptr, hAttachWnd ...uintptr) *ModalWindow {
+	return NewModalWindowByHandle(xc.XC_LoadLayoutZipMemEx(data, fileName, password, pPrefixName, hParent, hParentWnd, hAttachWnd...))
 }
 
 // NewModalWindowByLayoutStringWEx 从布局文件字符串W创建对象, 失败返回 nil.
@@ -186,9 +186,9 @@ func NewModalWindowByLayoutZipMemEx(data []byte, fileName string, password, pPre
 //
 // hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
 //
-// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
-func NewModalWindowByLayoutStringWEx(pStringXML, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr) *ModalWindow {
-	return NewModalWindowByHandle(xc.XC_LoadLayoutFromStringWEx(pStringXML, pPrefixName, hParent, hParentWnd, hAttachWnd))
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func NewModalWindowByLayoutStringWEx(pStringXML, pPrefixName string, hParent int, hParentWnd uintptr, hAttachWnd ...uintptr) *ModalWindow {
+	return NewModalWindowByHandle(xc.XC_LoadLayoutFromStringWEx(pStringXML, pPrefixName, hParent, hParentWnd, hAttachWnd...))
 }
 
 // 模态窗口_附加窗口, 返回窗口对象, 失败返回 nil.
