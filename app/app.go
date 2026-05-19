@@ -793,9 +793,9 @@ func (a *App) LoadStyle(fileName string) bool {
 //
 // fileName: 文件名.
 //
-// password: 密码.
-func (a *App) LoadStyleZip(zipFile string, fileName string, password string) bool {
-	return xc.XC_LoadStyleZip(zipFile, fileName, password)
+// password: 密码, 不填默认为空.
+func (a *App) LoadStyleZip(zipFile string, fileName string, password ...string) bool {
+	return xc.XC_LoadStyleZip(zipFile, fileName, password...)
 }
 
 // 炫彩_加载样式文件从内存ZIP.
@@ -804,9 +804,9 @@ func (a *App) LoadStyleZip(zipFile string, fileName string, password string) boo
 //
 // fileName: 文件名.
 //
-// password: 密码.
-func (a *App) LoadStyleZipMem(data []byte, fileName string, password string) bool {
-	return xc.XC_LoadStyleZipMem(data, fileName, password)
+// password: 密码, 不填默认为空.
+func (a *App) LoadStyleZipMem(data []byte, fileName string, password ...string) bool {
+	return xc.XC_LoadStyleZipMem(data, fileName, password...)
 }
 
 // 炫彩_加载资源文件.
@@ -822,9 +822,9 @@ func (a *App) LoadResource(fileName string) bool {
 //
 // fileName: 资源文件名.
 //
-// password: zip压缩包密码.
-func (a *App) LoadResourceZip(zipFileName string, fileName string, password string) bool {
-	return xc.XC_LoadResourceZip(zipFileName, fileName, password)
+// password: zip压缩包密码, 不填默认为空.
+func (a *App) LoadResourceZip(zipFileName string, fileName string, password ...string) bool {
+	return xc.XC_LoadResourceZip(zipFileName, fileName, password...)
 }
 
 // 炫彩_加载资源文件内存ZIP.
@@ -833,9 +833,9 @@ func (a *App) LoadResourceZip(zipFileName string, fileName string, password stri
 //
 // fileName: 资源文件名.
 //
-// password: zip压缩包密码.
-func (a *App) LoadResourceZipMem(data []byte, fileName string, password string) bool {
-	return xc.XC_LoadResourceZipMem(data, fileName, password)
+// password: zip压缩包密码, 不填默认为空.
+func (a *App) LoadResourceZipMem(data []byte, fileName string, password ...string) bool {
+	return xc.XC_LoadResourceZipMem(data, fileName, password...)
 }
 
 // 炫彩_加载资源文件从字符串W.
