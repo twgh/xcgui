@@ -28,9 +28,13 @@ func XSvg_LoadString(str string) int {
 //
 // fileName: svg文件名.
 //
-// password: zip密码.
-func XSvg_LoadZipMem(data []byte, fileName, password string) int {
-	r, _, _ := xSvg_LoadZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(fileName), common.StrPtr(password))
+// password: zip密码, 不填默认为空.
+func XSvg_LoadZipMem(data []byte, fileName string, password ...string) int {
+	pwd := ""
+	if len(password) > 0 {
+		pwd = password[0]
+	}
+	r, _, _ := xSvg_LoadZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(fileName), common.StrPtr(pwd))
 	return int(r)
 }
 
@@ -40,9 +44,13 @@ func XSvg_LoadZipMem(data []byte, fileName, password string) int {
 //
 // fileName: svg文件名.
 //
-// password: zip密码.
-func XSvg_LoadZip(zipFileName, fileName, password string) int {
-	r, _, _ := xSvg_LoadZip.Call(common.StrPtr(zipFileName), common.StrPtr(fileName), common.StrPtr(password))
+// password: zip密码, 不填默认为空.
+func XSvg_LoadZip(zipFileName, fileName string, password ...string) int {
+	pwd := ""
+	if len(password) > 0 {
+		pwd = password[0]
+	}
+	r, _, _ := xSvg_LoadZip.Call(common.StrPtr(zipFileName), common.StrPtr(fileName), common.StrPtr(pwd))
 	return int(r)
 }
 

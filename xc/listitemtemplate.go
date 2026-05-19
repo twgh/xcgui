@@ -26,9 +26,13 @@ func XTemp_Load(nType xcc.ListItemTemp_Type_, fileName string) int {
 //
 // fileName: 文件名.
 //
-// password: zip密码.
-func XTemp_LoadZip(nType xcc.ListItemTemp_Type_, pZipFile string, fileName string, password string) int {
-	r, _, _ := xTemp_LoadZip.Call(uintptr(nType), common.StrPtr(pZipFile), common.StrPtr(fileName), common.StrPtr(password))
+// password: zip密码, 不填默认为空.
+func XTemp_LoadZip(nType xcc.ListItemTemp_Type_, pZipFile string, fileName string, password ...string) int {
+	pwd := ""
+	if len(password) > 0 {
+		pwd = password[0]
+	}
+	r, _, _ := xTemp_LoadZip.Call(uintptr(nType), common.StrPtr(pZipFile), common.StrPtr(fileName), common.StrPtr(pwd))
 	return int(r)
 }
 
@@ -40,9 +44,13 @@ func XTemp_LoadZip(nType xcc.ListItemTemp_Type_, pZipFile string, fileName strin
 //
 // fileName: 文件名.
 //
-// password: zip密码.
-func XTemp_LoadZipMem(nType xcc.ListItemTemp_Type_, data []byte, fileName string, password string) int {
-	r, _, _ := xTemp_LoadZipMem.Call(uintptr(nType), common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(fileName), common.StrPtr(password))
+// password: zip密码, 不填默认为空.
+func XTemp_LoadZipMem(nType xcc.ListItemTemp_Type_, data []byte, fileName string, password ...string) int {
+	pwd := ""
+	if len(password) > 0 {
+		pwd = password[0]
+	}
+	r, _, _ := xTemp_LoadZipMem.Call(uintptr(nType), common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(fileName), common.StrPtr(pwd))
 	return int(r)
 }
 

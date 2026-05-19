@@ -52,9 +52,13 @@ func XImgSrc_LoadRes(id int32, Type string, hModule ...uintptr) int {
 //
 // fileName: 图片文件名.
 //
-// password: ZIP压缩包密码.
-func XImgSrc_LoadZip(zipFileName, fileName string, password string) int {
-	r, _, _ := xImgSrc_LoadZip.Call(common.StrPtr(zipFileName), common.StrPtr(fileName), common.StrPtr(password))
+// password: ZIP压缩包密码, 不填默认为空.
+func XImgSrc_LoadZip(zipFileName, fileName string, password ...string) int {
+	pwd := ""
+	if len(password) > 0 {
+		pwd = password[0]
+	}
+	r, _, _ := xImgSrc_LoadZip.Call(common.StrPtr(zipFileName), common.StrPtr(fileName), common.StrPtr(pwd))
 	return int(r)
 }
 
@@ -84,9 +88,13 @@ func XImgSrc_LoadZipRect(zipFileName, fileName, password string, x, y, cx, cy in
 //
 // fileName: 图片名称.
 //
-// password: zip压缩包密码.
-func XImgSrc_LoadZipMem(data []byte, fileName string, password string) int {
-	r, _, _ := xImgSrc_LoadZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(fileName), common.StrPtr(password))
+// password: zip压缩包密码, 不填默认为空.
+func XImgSrc_LoadZipMem(data []byte, fileName string, password ...string) int {
+	pwd := ""
+	if len(password) > 0 {
+		pwd = password[0]
+	}
+	r, _, _ := xImgSrc_LoadZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(fileName), common.StrPtr(pwd))
 	return int(r)
 }
 

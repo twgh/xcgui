@@ -156,9 +156,13 @@ func XC_LoadStyle(fileName string) bool {
 //
 // fileName: 文件名.
 //
-// password: 密码.
-func XC_LoadStyleZip(pZipFile string, fileName string, password string) bool {
-	r, _, _ := xC_LoadStyleZip.Call(common.StrPtr(pZipFile), common.StrPtr(fileName), common.StrPtr(password))
+// password: 密码, 不填默认为空.
+func XC_LoadStyleZip(pZipFile string, fileName string, password ...string) bool {
+	pwd := ""
+	if len(password) > 0 {
+		pwd = password[0]
+	}
+	r, _, _ := xC_LoadStyleZip.Call(common.StrPtr(pZipFile), common.StrPtr(fileName), common.StrPtr(pwd))
 	return r != 0
 }
 
@@ -168,9 +172,13 @@ func XC_LoadStyleZip(pZipFile string, fileName string, password string) bool {
 //
 // fileName: 文件名.
 //
-// password: 密码.
-func XC_LoadStyleZipMem(data []byte, fileName string, password string) bool {
-	r, _, _ := xC_LoadStyleZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(fileName), common.StrPtr(password))
+// password: 密码, 不填默认为空.
+func XC_LoadStyleZipMem(data []byte, fileName string, password ...string) bool {
+	pwd := ""
+	if len(password) > 0 {
+		pwd = password[0]
+	}
+	r, _, _ := xC_LoadStyleZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(fileName), common.StrPtr(pwd))
 	return r != 0
 }
 
@@ -188,9 +196,13 @@ func XC_LoadResource(fileName string) bool {
 //
 // fileName: 资源文件名.
 //
-// password: zip压缩包密码.
-func XC_LoadResourceZip(zipFileName string, fileName string, password string) bool {
-	r, _, _ := xC_LoadResourceZip.Call(common.StrPtr(zipFileName), common.StrPtr(fileName), common.StrPtr(password))
+// password: zip压缩包密码, 不填默认为空.
+func XC_LoadResourceZip(zipFileName string, fileName string, password ...string) bool {
+	pwd := ""
+	if len(password) > 0 {
+		pwd = password[0]
+	}
+	r, _, _ := xC_LoadResourceZip.Call(common.StrPtr(zipFileName), common.StrPtr(fileName), common.StrPtr(pwd))
 	return r != 0
 }
 
@@ -200,9 +212,13 @@ func XC_LoadResourceZip(zipFileName string, fileName string, password string) bo
 //
 // fileName: 资源文件名.
 //
-// password: zip压缩包密码.
-func XC_LoadResourceZipMem(data []byte, fileName string, password string) bool {
-	r, _, _ := xC_LoadResourceZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(fileName), common.StrPtr(password))
+// password: zip压缩包密码, 不填默认为空.
+func XC_LoadResourceZipMem(data []byte, fileName string, password ...string) bool {
+	pwd := ""
+	if len(password) > 0 {
+		pwd = password[0]
+	}
+	r, _, _ := xC_LoadResourceZipMem.Call(common.ByteSliceDataPtr(&data), uintptr(len(data)), common.StrPtr(fileName), common.StrPtr(pwd))
 	return r != 0
 }
 
