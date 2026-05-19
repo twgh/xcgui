@@ -14,41 +14,6 @@ type windowBase struct {
 	objectbase.UI
 }
 
-// 模态窗口_启用自动关闭, 是否自动关闭窗口, 当窗口失去焦点时.
-//
-// bEnable: 是否启用, 不填默认为 true.
-func (w *windowBase) EnableAutoClose(bEnable ...bool) *windowBase {
-	xc.XModalWnd_EnableAutoClose(w.Handle, bEnable...)
-	return w
-}
-
-// 模态窗口_启用ESC关闭, 当用户按ESC键时自动关闭模态窗口.
-//
-// bEnable: 是否启用, 不填默认为 true.
-func (w *windowBase) EnableEscClose(bEnable ...bool) *windowBase {
-	xc.XModalWnd_EnableEscClose(w.Handle, bEnable...)
-	return w
-}
-
-// 模态窗口_启动, 启动显示模态窗口, 当窗口关闭时返回:
-//   - xcc.MessageBox_Flag_Ok: 点击确定按钮退出.
-//   - xcc.MessageBox_Flag_Cancel: 点击取消按钮退出.
-//   - xcc.MessageBox_Flag_Other: 其他方式退出.
-func (w *windowBase) DoModal() xcc.MessageBox_Flag_ {
-	return xc.XModalWnd_DoModal(w.Handle)
-}
-
-// 模态窗口_结束, 结束模态窗口.
-//
-// nResult: 用作 xc.XModalWnd_DoModal 的返回值:
-//   - xcc.MessageBox_Flag_Ok: 点击确定按钮退出.
-//   - xcc.MessageBox_Flag_Cancel: 点击取消按钮退出.
-//   - xcc.MessageBox_Flag_Other: 其他方式退出.
-func (w *windowBase) EndModal(nResult xcc.MessageBox_Flag_) *windowBase {
-	xc.XModalWnd_EndModal(w.Handle, nResult)
-	return w
-}
-
 // MessageBox 炫彩_消息框. 返回值如下:
 //   - xcc.MessageBox_Flag_Ok: 点击确定按钮退出.
 //   - xcc.MessageBox_Flag_Cancel: 点击取消按钮退出.
