@@ -54,6 +54,147 @@ func NewFrameWindowEx(dwExStyle, dwStyle uint32, lpClassName string, x, y, cx, c
 	return NewFrameWindowByHandle(xc.XFrameWnd_CreateEx(dwExStyle, dwStyle, lpClassName, x, y, cx, cy, title, hWndParent, XCStyle))
 }
 
+// NewFrameWindowByLayout 从布局文件创建对象, 失败返回 nil.
+//
+// fileName: 布局文件名.
+//
+// hParent: 父对象句柄.
+//
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func NewFrameWindowByLayout(fileName string, hParent int, hAttachWnd ...uintptr) *FrameWindow {
+	return NewFrameWindowByHandle(xc.XC_LoadLayout(fileName, hParent, hAttachWnd...))
+}
+
+// NewFrameWindowByLayoutZip 从压缩包中的布局文件创建对象, 失败返回 nil.
+//
+// zipFileName: zip文件名.
+//
+// fileName: 布局文件名.
+//
+// password: zip密码.
+//
+// hParent: 父对象句柄.
+//
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func NewFrameWindowByLayoutZip(zipFileName string, fileName string, password string, hParent int, hAttachWnd ...uintptr) *FrameWindow {
+	return NewFrameWindowByHandle(xc.XC_LoadLayoutZip(zipFileName, fileName, password, hParent, hAttachWnd...))
+}
+
+// NewFrameWindowByLayoutZipMem 从内存压缩包中的布局文件创建对象, 失败返回 nil.
+//
+// data: 布局文件数据.
+//
+// fileName: 布局文件名.
+//
+// password: zip密码.
+//
+// hParent: 父对象句柄.
+//
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func NewFrameWindowByLayoutZipMem(data []byte, fileName string, password string, hParent int, hAttachWnd ...uintptr) *FrameWindow {
+	return NewFrameWindowByHandle(xc.XC_LoadLayoutZipMem(data, fileName, password, hParent, hAttachWnd...))
+}
+
+// NewFrameWindowByLayoutString 从布局文件字符串W创建对象, 失败返回 nil.
+//
+// pStringXML: 字符串.
+//
+// hParent: 父对象.
+//
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func NewFrameWindowByLayoutString(pStringXML string, hParent int, hAttachWnd ...uintptr) *FrameWindow {
+	return NewFrameWindowByHandle(xc.XC_LoadLayoutFromStringW(pStringXML, hParent, hAttachWnd...))
+}
+
+// NewFrameWindowByLayoutEx 从布局文件创建对象, 失败返回 nil.
+//
+// fileName: 布局文件名.
+//
+// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+//
+// hParent: 父对象句柄.
+//
+// hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
+//
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func NewFrameWindowByLayoutEx(fileName, pPrefixName string, hParent int, hParentWnd uintptr, hAttachWnd ...uintptr) *FrameWindow {
+	return NewFrameWindowByHandle(xc.XC_LoadLayoutEx(fileName, pPrefixName, hParent, hParentWnd, hAttachWnd...))
+}
+
+// NewFrameWindowByLayoutZipResEx 从RC资源zip压缩包中的布局文件创建对象, 失败返回 nil.
+//
+// id: RC资源ID.
+//
+// fileName: 布局文件名.
+//
+// password: zip密码.
+//
+// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+//
+// hParent: 父对象句柄.
+//
+// hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
+//
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 可填0.
+//
+// hModule: 模块句柄, 不填默认为0.
+func NewFrameWindowByLayoutZipResEx(id int32, fileName, password, pPrefixName string, hParent int, hParentWnd, hAttachWnd uintptr, hModule ...uintptr) *FrameWindow {
+	return NewFrameWindowByHandle(xc.XC_LoadLayoutZipResEx(id, fileName, password, pPrefixName, hParent, hParentWnd, hAttachWnd, hModule...))
+}
+
+// NewFrameWindowByLayoutZipEx 从压缩包中的布局文件创建对象, 失败返回 nil.
+//
+// zipFileName: zip文件名.
+//
+// fileName: 布局文件名.
+//
+// password: zip密码.
+//
+// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+//
+// hParent: 父对象句柄.
+//
+// hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
+//
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func NewFrameWindowByLayoutZipEx(zipFileName string, fileName string, password, pPrefixName string, hParent int, hParentWnd uintptr, hAttachWnd ...uintptr) *FrameWindow {
+	return NewFrameWindowByHandle(xc.XC_LoadLayoutZipEx(zipFileName, fileName, password, pPrefixName, hParent, hParentWnd, hAttachWnd...))
+}
+
+// NewFrameWindowByLayoutZipMemEx 从内存压缩包中的布局文件创建对象, 失败返回 nil.
+//
+// data: 布局文件数据.
+//
+// fileName: 布局文件名.
+//
+// password: zip密码.
+//
+// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+//
+// hParent: 父对象句柄.
+//
+// hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
+//
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func NewFrameWindowByLayoutZipMemEx(data []byte, fileName string, password, pPrefixName string, hParent int, hParentWnd uintptr, hAttachWnd ...uintptr) *FrameWindow {
+	return NewFrameWindowByHandle(xc.XC_LoadLayoutZipMemEx(data, fileName, password, pPrefixName, hParent, hParentWnd, hAttachWnd...))
+}
+
+// NewFrameWindowByLayoutStringEx 从布局文件字符串W创建对象, 失败返回 nil.
+//
+// pStringXML: 字符串.
+//
+// pPrefixName: 名称(name)前缀, 可选参数; 给当前布局文件中所有name属性增加前缀, 那么name属性值为: 前缀 + name.
+//
+// hParent: 父对象.
+//
+// hParentWnd: 父窗口句柄HWND, 提供给第三方窗口使用.
+//
+// hAttachWnd: 附加窗口句柄, 附加到指定的窗口, 不填默认为0.
+func NewFrameWindowByLayoutStringEx(pStringXML, pPrefixName string, hParent int, hParentWnd uintptr, hAttachWnd ...uintptr) *FrameWindow {
+	return NewFrameWindowByHandle(xc.XC_LoadLayoutFromStringWEx(pStringXML, pPrefixName, hParent, hParentWnd, hAttachWnd...))
+}
+
 // 从句柄创建对象, 失败返回 nil.
 func NewFrameWindowByHandle(handle int) *FrameWindow {
 	if handle <= 0 {
