@@ -15,7 +15,7 @@ import (
 
 // GetVersion 返回本库使用的 WebView2 运行时版本号。更高版本也可用, 是兼容低版本的。
 func GetVersion() string {
-	return "143.0.3650.58"
+	return "148.0.3967.48"
 }
 
 // WebView2DownloadLink 是 WebView2 运行时小型引导程序下载地址.
