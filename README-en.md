@@ -1,7 +1,7 @@
 <h1 align="center">XCGUI</h1>
 <p align="center">
-    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.399-blue" alt="release"></a>
-    <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-3.3.9.1-blue" alt="XCGUI"></a>
+    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.4.0-blue" alt="release"></a>
+    <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-4.0-blue" alt="XCGUI"></a>
    <a href="https://golang.org"> <img src="https://img.shields.io/badge/golang-≥1.18-blue" alt="golang"></a>
     <a href="https://pkg.go.dev/github.com/twgh/xcgui"><img src="https://img.shields.io/badge/go.dev-reference-brightgreen" alt="GoDoc"></a>
     <a href="https://raw.githubusercontent.com/twgh/xcgui/refs/heads/main/xcgui%20license.txt"><img src="https://img.shields.io/badge/License-MIT-brightgreen" alt="License"></a>
@@ -12,6 +12,7 @@
     <a href="http://www.xcgui.com/doc-ui/">Official Doc</a>&nbsp;&nbsp;
 	<a href="http://mall.xcgui.com">Official Resource</a>
 </p>
+
 
 
 ## Introduction
@@ -178,6 +179,7 @@ These classes are encapsulated based on more than a thousand functions in the xc
 | window       | Window           | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/window#Window) |
 | window       | FrameWindow      | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/window#FrameWindow) |
 | window       | ModalWindow      | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/window#ModalWindow) |
+| window       | FloatWindow      | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/window#FloatWindow) |
 | window       | TrayIcon         | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/window#TrayIcon) |
 | edge         | Edge             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/edge#Edge)    |
 | edge         | WebView          | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/edge#WebView) |
@@ -221,7 +223,8 @@ These classes are encapsulated based on more than a thousand functions in the xc
 | bkmanager    | BkManager        | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/bkmanager#BkManager) |
 | bkobj        | BkObj            | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/bkobj#BkObj)  |
 | font         | Font             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/font#Font)    |
-| imagex       | Imagex           | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/imagex#Image) |
+| imagex       | Image            | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/imagex#Image) |
+| imagex       | ImageSrc         | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/imagex#ImageSrc) |
 | svg          | Svg              | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/svg#Svg)      |
 | tmpl         | ListItemTemplate | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/tmpl#ListItemTemplate) |
 | tmpl         | Node             | √                   | [Doc](https://pkg.go.dev/github.com/twgh/xcgui/tmpl#Node)    |

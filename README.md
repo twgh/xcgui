@@ -1,7 +1,7 @@
 <h1 align="center">XCGUI</h1>
 <p align="center">
-    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.3.399-blue" alt="release"></a>
-    <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-3.3.9.1-blue" alt="XCGUI"></a>
+    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.4.0-blue" alt="release"></a>
+    <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-4.0-blue" alt="XCGUI"></a>
    <a href="https://golang.org"> <img src="https://img.shields.io/badge/golang-≥1.18-blue" alt="golang"></a>
     <a href="https://pkg.go.dev/github.com/twgh/xcgui"><img src="https://img.shields.io/badge/go.dev-reference-brightgreen" alt="GoDoc"></a>
     <a href="https://raw.githubusercontent.com/twgh/xcgui/refs/heads/main/xcgui%20license.txt"><img src="https://img.shields.io/badge/License-MIT-brightgreen" alt="License"></a>
@@ -12,6 +12,7 @@
 	<a href="https://pkg.go.dev/github.com/twgh/xcgui">项目文档</a>&nbsp;&nbsp;
 	<a href="http://mall.xcgui.com">官方资源</a>
 </p>
+
 
 
 ## 介绍
@@ -183,6 +184,7 @@ xc 包里包含 xcgui.dll 里所有的 API，有近 2000 个函数，不习惯�
 | 窗口              | window     | Window          | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/window#Window)           |
 | 框架窗口            | window     | FrameWindow     | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/window#FrameWindow)      |
 | 模态窗口            | window     | ModalWindow     | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/window#ModalWindow)      |
+| 浮动窗口 | window | FloatWindow | √ | [文档](https://pkg.go.dev/github.com/twgh/xcgui/window#FloatWindow) |
 | 托盘图标            | window     | TrayIcon        | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/window#TrayIcon)         |
 | WebView 环境 | edge | Edge | √ | [文档](https://pkg.go.dev/github.com/twgh/xcgui/edge#Edge) |
 | WebView        | edge    | WebView         | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/edge#WebView)     |
@@ -226,7 +228,8 @@ xc 包里包含 xcgui.dll 里所有的 API，有近 2000 个函数，不习惯�
 | 背景管理器           | bkmanager  | BkManager       | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/bkmanager#BkManager)     |
 | 背景对象            | bkobj      | BkObj           | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/bkobj#BkObj)             |
 | 字体              | font       | Font            | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/font#Font)               |
-| 图片操作            | imagex     | Image           | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/imagex#Image)            |
+| 图片操作            | imagex    | Image           | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/imagex#Image)            |
+| 图片源 | imagex | ImageSrc | √ | [文档](https://pkg.go.dev/github.com/twgh/xcgui/imagex#ImageSrc) |
 | SVG矢量图形         | svg        | Svg             | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/svg#Svg)                 |
 | 列表项模板           | tmpl       | ListItemTemplate | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/tmpl#ListItemTemplate)   |
 | 节点              | tmpl       | Node            | √            | [文档](https://pkg.go.dev/github.com/twgh/xcgui/tmpl#Node)               |
