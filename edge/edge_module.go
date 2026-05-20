@@ -17,7 +17,7 @@ import (
 
 // 返回内置的 WebView2Loader.dll 的版本号。
 func getWebView2LoaderVersion() string {
-	return "1.0.3650.58"
+	return "1.0.3967.48"
 }
 
 // 返回内置的 WebView2Helper.dll 的版本号。
