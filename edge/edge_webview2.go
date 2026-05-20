@@ -273,6 +273,47 @@ func (w *WebView2) GetCookies(uri string, cb func(errorCode syscall.Errno, cooki
 	return CookieManager.GetCookiesEx(&w.WebViewEventImpl, uri, cb)
 }
 
+// DeleteAllCookies 删除同一配置文件下的所有 Cookie。
+func (w *WebView2) DeleteAllCookies() error {
+	CookieManager, err := w.GetGetCookieManager()
+	if err != nil {
+		return err
+	}
+	return CookieManager.DeleteAllCookies()
+}
+
+// DeleteCookiesWithDomainAndPath 删除具有匹配名称和域/路径对的 Cookie。
+//   - Cookie名称是必需的。
+//   - 如果指定了域，则仅删除具有确切域的 Cookie。
+//   - 如果指定了路径，则仅删除具有准确路径的 Cookie。
+//
+// name: cookie 的名称.
+//
+// domain: cookie 的域.
+//
+// path: cookie 的路径.
+func (w *WebView2) DeleteCookiesWithDomainAndPath(name, domain, path string) error {
+	CookieManager, err := w.GetGetCookieManager()
+	if err != nil {
+		return err
+	}
+	return CookieManager.DeleteCookiesWithDomainAndPath(name, domain, path)
+}
+
+// DeleteCookies 删除具有匹配名称和 uri 的 Cookie。
+//   - Cookie 名称是必需的。删除域和路径与提供的 URI 匹配的具有给定名称的所有 Cookie。
+//
+// name: cookie 的名称.
+//
+// uri: .
+func (w *WebView2) DeleteCookies(name, uri string) error {
+	CookieManager, err := w.GetGetCookieManager()
+	if err != nil {
+		return err
+	}
+	return CookieManager.DeleteCookies(name, uri)
+}
+
 // CapturePreview 捕获 Webview 的预览图像。
 //
 // imageFormat: 图像格式枚举值.
