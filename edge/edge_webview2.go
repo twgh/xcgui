@@ -246,8 +246,8 @@ func (w *WebView2) IsSuspended() bool {
 	return w.WebView2_3.MustGetIsSuspended()
 }
 
-// GetGetCookieManager 获取 ICoreWebView2CookieManager 对象，用于管理 Cookie。
-func (w *WebView2) GetGetCookieManager() (*ICoreWebView2CookieManager, error) {
+// GetCookieManager 获取 ICoreWebView2CookieManager 对象，用于管理 Cookie。
+func (w *WebView2) GetCookieManager() (*ICoreWebView2CookieManager, error) {
 	if w.WebView2_2 == nil {
 		var err error
 		w.WebView2_2, err = w.CoreWebView.GetICoreWebView2_2()
@@ -266,19 +266,23 @@ func (w *WebView2) GetGetCookieManager() (*ICoreWebView2CookieManager, error) {
 //
 // cb: 接收结果的回调函数.
 func (w *WebView2) GetCookies(uri string, cb func(errorCode syscall.Errno, cookies *ICoreWebView2CookieList) uintptr) error {
-	CookieManager, err := w.GetGetCookieManager()
+	CookieManager, err := w.GetCookieManager()
 	if err != nil {
 		return err
 	}
+	defer CookieManager.Release()
+
 	return CookieManager.GetCookiesEx(&w.WebViewEventImpl, uri, cb)
 }
 
 // DeleteAllCookies 删除同一配置文件下的所有 Cookie。
 func (w *WebView2) DeleteAllCookies() error {
-	CookieManager, err := w.GetGetCookieManager()
+	CookieManager, err := w.GetCookieManager()
 	if err != nil {
 		return err
 	}
+	defer CookieManager.Release()
+
 	return CookieManager.DeleteAllCookies()
 }
 
@@ -293,10 +297,12 @@ func (w *WebView2) DeleteAllCookies() error {
 //
 // path: cookie 的路径.
 func (w *WebView2) DeleteCookiesWithDomainAndPath(name, domain, path string) error {
-	CookieManager, err := w.GetGetCookieManager()
+	CookieManager, err := w.GetCookieManager()
 	if err != nil {
 		return err
 	}
+	defer CookieManager.Release()
+
 	return CookieManager.DeleteCookiesWithDomainAndPath(name, domain, path)
 }
 
@@ -307,11 +313,109 @@ func (w *WebView2) DeleteCookiesWithDomainAndPath(name, domain, path string) err
 //
 // uri: .
 func (w *WebView2) DeleteCookies(name, uri string) error {
-	CookieManager, err := w.GetGetCookieManager()
+	CookieManager, err := w.GetCookieManager()
 	if err != nil {
 		return err
 	}
+	defer CookieManager.Release()
+
 	return CookieManager.DeleteCookies(name, uri)
+}
+
+// DeleteCookie 删除名称和域/路径对与指定 cookie 的名称和路径对匹配的 cookie。
+//
+// name: cookie 的名称。
+//
+// domain: cookie 的域。
+//
+// path: cookie 的路径。
+func (w *WebView2) DeleteCookie(name, domain, path string) error {
+	CookieManager, err := w.GetCookieManager()
+	if err != nil {
+		return err
+	}
+	defer CookieManager.Release()
+
+	// 创建 Cookie 对象
+	cookie, err := CookieManager.CreateCookie(name, "", domain, path)
+	if err != nil {
+		return err
+	}
+	defer cookie.Release()
+
+	return CookieManager.DeleteCookie(cookie)
+}
+
+// SetCookie 设置 Cookie.
+//   - 如果不存在，则会创建 Cookie.
+//   - 这是封装的便捷方法, 如果你想自定义, 请使用 GetCookieManager 获取 ICoreWebView2CookieManager 对象后自行操作.
+//
+// name: cookie 的名称。
+//
+// value: cookie 的值。
+//
+// domain: cookie 的域。
+//
+// path: cookie 的路径。
+//
+// options: 可选参数，可以设置 Cookie 的额外属性，按顺序可填 0-4 个：
+//   - float64: 过期时间（秒），-1.0 表示会话 Cookie
+//   - edge.COREWEBVIEW2_COOKIE_SAME_SITE_KIND: SameSite 属性
+//   - bool: 是否安全 (Secure)
+//   - bool: 是否为 HttpOnly
+func (w *WebView2) SetCookie(name, value, domain, path string, options ...any) error {
+	CookieManager, err := w.GetCookieManager()
+	if err != nil {
+		return err
+	}
+	defer CookieManager.Release()
+
+	// 创建 Cookie 对象
+	cookie, err := CookieManager.CreateCookie(name, value, domain, path)
+	if err != nil {
+		return err
+	}
+	defer cookie.Release()
+
+	// 处理可选参数
+	if len(options) > 0 {
+		// 过期时间
+		if expires, ok := options[0].(float64); ok {
+			if err := cookie.SetExpires(expires); err != nil {
+				return err
+			}
+		}
+	}
+
+	if len(options) > 1 {
+		// SameSite
+		if sameSite, ok := options[1].(COREWEBVIEW2_COOKIE_SAME_SITE_KIND); ok {
+			if err := cookie.SetSameSite(sameSite); err != nil {
+				return err
+			}
+		}
+	}
+
+	if len(options) > 2 {
+		// Secure
+		if isSecure, ok := options[2].(bool); ok {
+			if err := cookie.SetIsSecure(isSecure); err != nil {
+				return err
+			}
+		}
+	}
+
+	if len(options) > 3 {
+		// HttpOnly
+		if isHttpOnly, ok := options[3].(bool); ok {
+			if err := cookie.SetIsHttpOnly(isHttpOnly); err != nil {
+				return err
+			}
+		}
+	}
+
+	// 添加或更新 Cookie
+	return CookieManager.AddOrUpdateCookie(cookie)
 }
 
 // CapturePreview 捕获 Webview 的预览图像。
