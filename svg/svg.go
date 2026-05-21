@@ -291,6 +291,10 @@ func (s *Svg) Show(bShow ...bool) *Svg {
 	return s
 }
 
+// Deprecated
+//
+// todo: 暂不可用, 此 dll 版本是 2026-03-31, 没有此函数, 下个 dll 版本才有, 但那个版本svg有BUG暂不使用
+//
 // SVG_启用像素对齐, 默认未启用, 如果SVG出现模糊, 可以启用像素对齐功能.
 //
 // bEnable: 是否启用, 不填默认为 true.
@@ -299,6 +303,10 @@ func (s *Svg) EnableAlignPixel(bEnable ...bool) *Svg {
 	return s
 }
 
+// Deprecated
+//
+// todo: 暂不可用, 此 dll 版本是 2026-03-31, 没有此函数, 下个 dll 版本才有, 但那个版本svg有BUG暂不使用
+//
 // SVG_启用抗锯齿, 默认已启用, 特殊情况为了让SVG更清晰, 可能需要关闭抗锯齿.
 //
 // bEnable: 是否启用, 不填默认为 true.
