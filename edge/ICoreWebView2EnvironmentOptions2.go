@@ -53,7 +53,7 @@ func (i *ICoreWebView2EnvironmentOptions2) GetExclusiveUserDataFolderAccess() (b
 	return value, nil
 }
 
-// SetExclusiveUserDataFolderAccess 设置其他进程是否可以从使用相同用户数据文件夹创建的 WebView2Environment 创建 WebView2，从而共享同一个 WebView 浏览器进程实例。默认为 false。
+// SetExclusiveUserDataFolderAccess 设置是否禁止其他进程使用相同用户数据文件夹创建的 WebView2Environment 创建 WebView2，从而共享同一个 WebView 浏览器进程实例。默认为 false 是允许共享, 为 true 时不允许共享。
 func (i *ICoreWebView2EnvironmentOptions2) SetExclusiveUserDataFolderAccess(value bool) error {
 	r, _, _ := i.Vtbl.PutExclusiveUserDataFolderAccess.Call(
 		uintptr(unsafe.Pointer(i)),

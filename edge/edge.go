@@ -82,7 +82,7 @@ type EnvOptions struct {
 	//   - 通用 Windows 平台应用还必须声明 enterpriseCloudSSORestricted 功能，单点登录 (SSO) 才能正常工作。
 	AllowSingleSignOnUsingOSPrimaryAccount bool
 
-	// 其他进程是否可以从使用相同用户数据文件夹创建的 WebView2Environment 创建 WebView2，从而共享同一个 WebView 浏览器进程实例。默认为 false。
+	// 是否禁止其它进程使用相同用户数据文件夹创建的 WebView2Environment 创建 WebView2，从而共享同一个 WebView 浏览器进程实例。默认为 false 是允许共享, 为 true 时不允许共享。
 	ExclusiveUserDataFolderAccess bool
 
 	// Windows 是否会将崩溃数据发送到 Microsoft 端点。默认为 false。
