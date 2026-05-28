@@ -9,15 +9,31 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
+// uiThreadCallbackItem 回调项
+type uiThreadCallbackItem struct {
+	callback func(data int) int
+	data     int
+	keepAlive interface{} // 保持对数据的引用，防止被垃圾回收
+}
+
 var (
-	uiThreadCallbackFunc func(data int) int                      // 真实执行的
-	uiThreadCallbackPtr  = syscall.NewCallback(uiThreadCallback) // 壳
-	utLock               sync.Mutex
+	uiThreadCallbackPtr = syscall.NewCallback(uiThreadCallback) // 壳
+	uiThreadCallbacks   = make(map[int]*uiThreadCallbackItem)   // 回调函数表
+	uiThreadCallbackID  int                                     // 自增ID
+	utLock              sync.Mutex
 )
 
 // uiThreadCallback UI线程回调函数
-func uiThreadCallback(data int) int {
-	return uiThreadCallbackFunc(data)
+func uiThreadCallback(callbackID int) int {
+	utLock.Lock()
+	item, ok := uiThreadCallbacks[callbackID]
+	delete(uiThreadCallbacks, callbackID)
+	utLock.Unlock()
+
+	if ok {
+		return item.callback(item.data)
+	}
+	return 0
 }
 
 // XC_CallUiThreadEx 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
@@ -28,9 +44,11 @@ func uiThreadCallback(data int) int {
 // data: 传进回调函数的用户自定义数据.
 func XC_CallUiThreadEx(f func(data int) int, data int) int {
 	utLock.Lock()
-	defer utLock.Unlock()
-	uiThreadCallbackFunc = f
-	r, _, _ := xC_CallUiThread.Call(uiThreadCallbackPtr, uintptr(data))
+	uiThreadCallbackID++
+	callbackID := uiThreadCallbackID
+	uiThreadCallbacks[callbackID] = &uiThreadCallbackItem{callback: f, data: data}
+	utLock.Unlock()
+	r, _, _ := xC_CallUiThread.Call(uiThreadCallbackPtr, uintptr(callbackID))
 	return int(r)
 }
 
@@ -41,12 +59,17 @@ func XC_CallUiThreadEx(f func(data int) int, data int) int {
 // f: 回调函数, 没有参数也没有返回值, 可以直接使用匿名函数.
 func XC_CallUT(f func()) {
 	utLock.Lock()
-	defer utLock.Unlock()
-	uiThreadCallbackFunc = func(data int) int {
-		f()
-		return 0
+	uiThreadCallbackID++
+	callbackID := uiThreadCallbackID
+	uiThreadCallbacks[callbackID] = &uiThreadCallbackItem{
+		callback: func(data int) int {
+			f()
+			return 0
+		},
+		data: 0,
 	}
-	xC_CallUiThread.Call(uiThreadCallbackPtr, uintptr(0))
+	utLock.Unlock()
+	xC_CallUiThread.Call(uiThreadCallbackPtr, uintptr(callbackID))
 }
 
 // UI 炫彩_调用界面线程, 调用UI线程, 设置回调函数, 在回调函数里操作UI.
@@ -65,19 +88,14 @@ func UI(f func()) {
 //
 // data: 传进回调函数的用户自定义数据.
 func CallUTAny(f func(data ...interface{}) int, data ...interface{}) int {
-	utLock.Lock()
-	defer utLock.Unlock()
-
-	uiThreadCallbackFunc = func(args int) int {
-		s := common.UintPtrToSliceWithCap(uintptr(args))
-		return f(s...)
-	}
-
-	var dataPtr uintptr
+	var (
+		dataPtr  uintptr
+		dataCopy []interface{}
+	)
 	dataLen := len(data)
 	if dataLen > 0 {
 		// 创建新切片, 第0个元素是切片长度, 后面是参数数据
-		dataCopy := make([]interface{}, dataLen+1)
+		dataCopy = make([]interface{}, dataLen+1)
 		dataCopy[0] = dataLen + 1
 
 		for i := 1; i < dataLen+1; i++ {
@@ -86,7 +104,21 @@ func CallUTAny(f func(data ...interface{}) int, data ...interface{}) int {
 
 		dataPtr = uintptr(unsafe.Pointer(&dataCopy[0]))
 	}
-	r, _, _ := xC_CallUiThread.Call(uiThreadCallbackPtr, dataPtr)
+
+	utLock.Lock()
+	uiThreadCallbackID++
+	callbackID := uiThreadCallbackID
+	uiThreadCallbacks[callbackID] = &uiThreadCallbackItem{
+		callback: func(args int) int {
+			s := common.UintPtrToSliceWithCap(uintptr(args))
+			return f(s...)
+		},
+		data:      int(dataPtr),
+		keepAlive: dataCopy, // 保持对数据的引用，防止被垃圾回收
+	}
+	utLock.Unlock()
+
+	r, _, _ := xC_CallUiThread.Call(uiThreadCallbackPtr, uintptr(callbackID))
 	return int(r)
 }
 
@@ -132,9 +164,14 @@ type UiThreader interface {
 // data: 传进回调函数的用户自定义数据.
 func XC_CallUiThreader(u UiThreader, data int) int {
 	utLock.Lock()
-	defer utLock.Unlock()
-	uiThreadCallbackFunc = u.UiThreadCallback
-	r, _, _ := xC_CallUiThread.Call(uiThreadCallbackPtr, uintptr(data))
+	uiThreadCallbackID++
+	callbackID := uiThreadCallbackID
+	uiThreadCallbacks[callbackID] = &uiThreadCallbackItem{
+		callback: u.UiThreadCallback,
+		data:     data,
+	}
+	utLock.Unlock()
+	r, _, _ := xC_CallUiThread.Call(uiThreadCallbackPtr, uintptr(callbackID))
 	return int(r)
 }
 

@@ -529,8 +529,8 @@ var (
 // animaCallbackShell 动画回调函数壳
 func animaCallbackShell(hAnimation int, flag int32) int {
 	animaCallbackLock.Lock()
-	defer animaCallbackLock.Unlock()
 	callback, ok := animaCallbacks[hAnimation]
+	animaCallbackLock.Unlock()
 	if ok {
 		callback(hAnimation, flag)
 	}
@@ -548,8 +548,8 @@ func XAnima_SetCallback(hAnimationEx int, callback FunAnimation) {
 	})
 	animaCallbackLock.Lock()
 	animaCallbacks[hAnimationEx] = callback
-	xAnima_SetCallback.Call(uintptr(hAnimationEx), animaCallbackPtr)
 	animaCallbackLock.Unlock()
+	xAnima_SetCallback.Call(uintptr(hAnimationEx), animaCallbackPtr)
 }
 
 // 动画_移除回调.
@@ -676,8 +676,8 @@ var (
 // animaItemCallbackShell 动画项回调函数壳
 func animaItemCallbackShell(hAnimation int, posBits uint32) int {
 	animaItemCallbackLock.RLock()
-	defer animaItemCallbackLock.RUnlock()
 	callback, ok := animaItemCallbacks[hAnimation]
+	animaItemCallbackLock.RUnlock()
 	if ok {
 		return callback(hAnimation, math.Float32frombits(posBits))
 	}
@@ -693,8 +693,8 @@ func XAnimaItem_SetCallback(hAnimationItem int, callback FunAnimationItem) {
 	cbPtr := getAnimaItemCallbackPtr()
 	animaItemCallbackLock.Lock()
 	animaItemCallbacks[hAnimationItem] = callback
-	xAnimaItem_SetCallback.Call(uintptr(hAnimationItem), cbPtr)
 	animaItemCallbackLock.Unlock()
+	xAnimaItem_SetCallback.Call(uintptr(hAnimationItem), cbPtr)
 }
 
 // 动画项_移除回调.
