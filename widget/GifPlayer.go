@@ -80,11 +80,14 @@ func (p *GifPlayer) Play(hEle int, fullEle bool, loopCount int, onFrame ...func(
 	if len(onFrame) > 0 {
 		gph.OnFrame = onFrame[0]
 	}
-	// 最大帧索引
-	gph.maxFrame = len(p.HImages) - 1
 
+	// 初始化状态（需要加锁）
+	gph.mu.Lock()
+	gph.maxFrame = len(p.HImages) - 1
 	gph.stopped = false
 	gph.paused = false
+	gph.mu.Unlock()
+
 	go func() {
 		for {
 			if gph.isReturn() {
@@ -146,8 +149,6 @@ type GifPlayerHandler struct {
 	// 帧事件, 此事件是在 UI 线程执行的
 	OnFrame func(h *GifPlayerHandler, frame int)
 
-	rwx sync.RWMutex
-
 	mu   sync.Mutex
 	cond *sync.Cond
 
@@ -166,24 +167,19 @@ func NewGifPlayerHandler() *GifPlayerHandler {
 }
 
 func (g *GifPlayerHandler) isReturn() bool {
-	// 状态检查
 	g.mu.Lock()
+	defer g.mu.Unlock()
+
 	// 优先检查停止状态
 	if g.stopped {
-		g.mu.Unlock()
 		return true
 	}
-	// 严格循环检查暂停条件
+	// 循环等待暂停结束
 	for g.paused && !g.stopped {
 		g.cond.Wait()
 	}
 	// 再次确认是否停止
-	if g.stopped {
-		g.mu.Unlock()
-		return true
-	}
-	g.mu.Unlock()
-	return false
+	return g.stopped
 }
 
 // SetCurrentFrame 设置当前帧索引.
@@ -191,15 +187,15 @@ func (g *GifPlayerHandler) SetCurrentFrame(frame int) {
 	if frame < 0 {
 		frame = 0
 	}
-	g.rwx.Lock()
+	g.mu.Lock()
 	g.curFrame = frame
-	g.rwx.Unlock()
+	g.mu.Unlock()
 }
 
 // GetCurrentFrame 获取当前帧索引.
 func (g *GifPlayerHandler) GetCurrentFrame() int {
-	g.rwx.RLock()
-	defer g.rwx.RUnlock()
+	g.mu.Lock()
+	defer g.mu.Unlock()
 	return g.curFrame
 }
 
@@ -208,15 +204,15 @@ func (g *GifPlayerHandler) SetMaxFrame(frame int) {
 	if frame < 0 {
 		return
 	}
-	g.rwx.Lock()
+	g.mu.Lock()
 	g.maxFrame = frame
-	g.rwx.Unlock()
+	g.mu.Unlock()
 }
 
 // GetMaxFrame 获取最大帧索引.
 func (g *GifPlayerHandler) GetMaxFrame() int {
-	g.rwx.RLock()
-	defer g.rwx.RUnlock()
+	g.mu.Lock()
+	defer g.mu.Unlock()
 	return g.maxFrame
 }
 
