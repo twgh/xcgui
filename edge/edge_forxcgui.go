@@ -52,9 +52,9 @@ type WebView struct {
 //
 // hParent: 炫彩窗口或元素句柄.
 //
-// opts: WebView 选项, 使用 edge.WithXXX 系列函数.
+// opts: WebView 选项, 使用 edge.WithXXX, edge.DisableXXX 系列函数.
 //   - 可查看 WebViewOptions.
-//   - 其中默认启用的 WebView 选项可查看 DefaultEnabledWebViewOptions.
+//   - 其中默认启用的 WebView 选项可查看 DefaultEnabledWebViewOptions, 用 edge.DisableXXX 禁用.
 func (e *Edge) NewWebView(hParent int, opts ...WebViewOption) (*WebView, error) {
 	// 获取默认 WebView 配置
 	options := defaultWebViewOptions()
@@ -72,9 +72,9 @@ func (e *Edge) NewWebView(hParent int, opts ...WebViewOption) (*WebView, error) 
 //   - 需注意默认 XML 中的炫彩窗口是没有标题栏的, 也就是你要完全用 HTML 来做界面.
 //   - 如果需要标题栏, 请在 opts 参数中使用 edge.WithXmlWindowTitleBar(true).
 //
-// opts: WebView 选项, 使用 edge.WithXXX 系列函数.
+// opts: WebView 选项, 使用 edge.WithXXX, edge.DisableXXX 系列函数.
 //   - 可查看 WebViewOptions.
-//   - 其中默认启用的 WebView 选项可查看 DefaultEnabledWebViewOptions.
+//   - 其中默认启用的 WebView 选项可查看 DefaultEnabledWebViewOptions, 用 edge.DisableXXX 禁用.
 func (e *Edge) NewWebViewWithWindow(opts ...WebViewOption) (*window.Window, *WebView, error) {
 	// 获取默认 WebView 配置
 	options := defaultWebViewOptions()

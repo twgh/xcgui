@@ -307,6 +307,50 @@ func WithBrowserAcceleratorKeys(enable ...bool) WebViewOption {
 	}
 }
 
+// DisableDefaultContextMenus 禁用默认的上下文菜单.
+//
+// disable: 是否禁用默认的上下文菜单, 不填默认为 true.
+func DisableDefaultContextMenus(disable ...bool) WebViewOption {
+	d := true
+	if len(disable) > 0 {
+		d = disable[0]
+	}
+	return WithDefaultContextMenus(!d)
+}
+
+// DisableStatusBar 禁用状态栏.
+//
+// disable: 是否禁用状态栏, 不填默认为 true.
+func DisableStatusBar(disable ...bool) WebViewOption {
+	d := true
+	if len(disable) > 0 {
+		d = disable[0]
+	}
+	return WithStatusBar(!d)
+}
+
+// DisableZoomControl 禁用缩放控件, 控制是否可以缩放.
+//
+// disable: 是否禁用缩放控件, 不填默认为 true.
+func DisableZoomControl(disable ...bool) WebViewOption {
+	d := true
+	if len(disable) > 0 {
+		d = disable[0]
+	}
+	return WithZoomControl(!d)
+}
+
+// DisableBrowserAcceleratorKeys 禁用浏览器快捷键, 是浏览器里面默认的一些快捷键, 组合键.
+//
+// disable: 是否禁用浏览器快捷键, 不填默认为 true.
+func DisableBrowserAcceleratorKeys(disable ...bool) WebViewOption {
+	d := true
+	if len(disable) > 0 {
+		d = disable[0]
+	}
+	return WithBrowserAcceleratorKeys(!d)
+}
+
 // XmlWindowOptions 炫彩 XML 窗口选项.
 //   - 在 Edge.NewWebViewWithWindow 函数中生效.
 type XmlWindowOptions struct {
