@@ -596,6 +596,12 @@ func (w *windowBase) CloseWindow() *windowBase {
 	return w
 }
 
+// 窗口_关闭. 和 CloseWindow 相同.
+func (w *windowBase) Close() *windowBase {
+	xc.XWnd_CloseWindow(w.Handle)
+	return w
+}
+
 // 窗口_调整布局.
 func (w *windowBase) AdjustLayout() *windowBase {
 	xc.XWnd_AdjustLayout(w.Handle)
@@ -1216,6 +1222,12 @@ func (w *windowBase) SetDPI(nDPI int32) *windowBase {
 
 // 窗口_销毁.
 func (w *windowBase) DestroyWindow() *windowBase {
+	xc.XWnd_DestroyWindow(w.Handle)
+	return w
+}
+
+// 窗口_销毁. 和 DestroyWindow 相同.
+func (w *windowBase) Destroy() *windowBase {
 	xc.XWnd_DestroyWindow(w.Handle)
 	return w
 }
