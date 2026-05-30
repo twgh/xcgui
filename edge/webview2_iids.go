@@ -264,4 +264,7 @@ const (
 	IID_ICoreWebView2WebResourceResponseView = "79701053-7759-4162-8f7d-f1b3f084928d"
 	IID_ICoreWebView2PrintToPdfCompletedHandler = "ccf1ef04-fd8e-4d5f-b2de-0983e41b8c36"
 	IID_ICoreWebView2PrintToPdfStreamCompletedHandler = "4c9f8229-8f93-444f-a711-2c0dfd6359d5"
+	IID_ICoreWebView2CompositionController5 = "8d0f82eb-7c33-5a4c-9108-84ca28ccc3b4"
+	IID_ICoreWebView2DragStartingEventHandler = "3b149321-83c3-5d1f-b03f-a42899bc1c15"
+	IID_ICoreWebView2DragStartingEventArgs = "8b8d9c7e-2f1a-4e6b-9d5a-3c8f7b9e1a2d"
 )

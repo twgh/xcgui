@@ -36,6 +36,9 @@ type ICoreWebView2CompositionControllerVtbl struct {
 	QueryNonClientRegion         ComProc
 	AddNonClientRegionChanged    ComProc
 	RemoveNonClientRegionChanged ComProc
+	// 5
+	AddDragStarting    ComProc
+	RemoveDragStarting ComProc
 }
 
 func (i *ICoreWebView2CompositionController) AddRef() uintptr {
@@ -191,6 +194,15 @@ func (i *ICoreWebView2CompositionController) GetICoreWebView2CompositionControll
 	return result, err
 }
 
+// GetICoreWebView2CompositionController5 获取 ICoreWebView2CompositionController5。
+func (i *ICoreWebView2CompositionController) GetICoreWebView2CompositionController5() (*ICoreWebView2CompositionController5, error) {
+	var result *ICoreWebView2CompositionController5
+	err := i.QueryInterface(
+		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2CompositionController5)),
+		unsafe.Pointer(&result))
+	return result, err
+}
+
 // MustGetRootVisualTarget 获取根视觉目标。RootVisualTarget 是宿主应用程序可视化树中的一个可视化对象。出错时会触发全局错误回调。
 //   - 此视觉对象是 WebView 将连接其视觉树的位置。应用使用此视觉对象在应用内定位 WebView。应用仍需要使用 Bounds 属性来调整 WebView 的大小。
 //   - RootVisualTarget 属性可以是 IDCompositionVisual 或 Windows::UI::Composition::ContainerVisual。 WebView 将在从属性设置器返回之前，将其视觉树连接到提供的视觉对象。
@@ -235,6 +247,13 @@ func (i *ICoreWebView2CompositionController) MustGetICoreWebView2CompositionCont
 // MustGetICoreWebView2CompositionController4 获取 ICoreWebView2CompositionController4。出错时会触发全局错误回调。
 func (i *ICoreWebView2CompositionController) MustGetICoreWebView2CompositionController4() *ICoreWebView2CompositionController4 {
 	result, err := i.GetICoreWebView2CompositionController4()
+	ReportErrorAuto(err)
+	return result
+}
+
+// MustGetICoreWebView2CompositionController5 获取 ICoreWebView2CompositionController5。出错时会触发全局错误回调。
+func (i *ICoreWebView2CompositionController) MustGetICoreWebView2CompositionController5() *ICoreWebView2CompositionController5 {
+	result, err := i.GetICoreWebView2CompositionController5()
 	ReportErrorAuto(err)
 	return result
 }

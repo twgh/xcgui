@@ -1341,3 +1341,15 @@ func (w *WebViewEventImpl) NonClientRegionChanged(sender *ICoreWebView2Compositi
 	}
 	return ret
 }
+
+// DragStarting 当用户开始拖拽操作时触发。
+func (w *WebViewEventImpl) DragStarting(sender *ICoreWebView2CompositionController, args *ICoreWebView2DragStartingEventArgs) uintptr {
+	cbs := WvEventBus.GetCallbacks(w, "DragStarting")
+	var ret uintptr
+	for i := len(cbs) - 1; i >= 0; i-- {
+		if cb, ok := cbs[i].CB.(func(sender *ICoreWebView2CompositionController, args *ICoreWebView2DragStartingEventArgs) uintptr); ok {
+			ret = cb(sender, args)
+		}
+	}
+	return ret
+}

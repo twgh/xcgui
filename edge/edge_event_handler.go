@@ -86,6 +86,18 @@ func (w *webviewEventBus) AddCallback(impl *WebViewEventImpl, eventType string, 
 				return -1, err
 			}
 			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
+		case "DragStarting":
+			obj2, ok := obj.(*ICoreWebView2CompositionController5)
+			if !ok {
+				return -1, errors.New("obj is not *ICoreWebView2CompositionController5")
+			}
+			eventHandler := NewICoreWebView2DragStartingEventHandler(impl)
+			err := obj2.AddDragStarting(eventHandler, info.EventToken)
+			if err != nil {
+				eventHandler.Release()
+				return -1, err
+			}
+			info.EventHandlerPointer = unsafe.Pointer(eventHandler)
 		case "FindActiveMatchIndexChanged":
 			obj2, ok := obj.(*ICoreWebView2Find)
 			if !ok {
