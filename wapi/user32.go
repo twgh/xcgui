@@ -1015,11 +1015,11 @@ func FindWindowW(lpClassName, lpWindowName string) uintptr {
 //
 // 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-RegisterWindowMessageW.
 //
-// lpString: 要注册的消息.
+// str: 要注册的消息.
 //
 // 返回值: 如果成功注册消息，则返回值是范围0xC000到0xFFFF的消息标识符. 如果函数失败，则返回值为零.
-func RegisterWindowMessageW(lpString string) int {
-	r, _, _ := registerWindowMessageW.Call(common.StrPtr(lpString))
+func RegisterWindowMessageW(str string) int {
+	r, _, _ := registerWindowMessageW.Call(common.StrPtr(str))
 	return int(r)
 }
 
