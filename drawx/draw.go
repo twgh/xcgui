@@ -112,11 +112,9 @@ func (d *Draw) DrawArcF(x, y, nWidth, nHeight, startAngle, sweepAngle float32) *
 //
 // points: 坐标点数组.
 //
-// count: 数组大小.
-//
 // tension: 大于或等于0.0F的值，指定曲线的张力, D2D 忽略此参数。.
-func (d *Draw) DrawCurve(points []xc.POINT, count int32, tension float32) *Draw {
-	xc.XDraw_DrawCurve(d.Handle, points, count, tension)
+func (d *Draw) DrawCurve(points []xc.POINT, tension float32) *Draw {
+	xc.XDraw_DrawCurve(d.Handle, points, tension)
 	return d
 }
 
@@ -124,11 +122,9 @@ func (d *Draw) DrawCurve(points []xc.POINT, count int32, tension float32) *Draw 
 //
 // points: 坐标点数组.
 //
-// count: 数组大小.
-//
 // tension: 大于或等于0.0F的值，指定曲线的张力, D2D 忽略此参数。.
-func (d *Draw) DrawCurveF(points []xc.POINTF, count int32, tension float32) *Draw {
-	xc.XDraw_DrawCurveF(d.Handle, points, count, tension)
+func (d *Draw) DrawCurveF(points []xc.POINTF, tension float32) *Draw {
+	xc.XDraw_DrawCurveF(d.Handle, points, tension)
 	return d
 }
 
@@ -163,20 +159,16 @@ func (d *Draw) DrawLineF(x1, y1, x2, y2 float32) *Draw {
 // 绘制_多边形, 绘制多边形.
 //
 // points: 顶点坐标数组.
-//
-// nCount: 顶点数量.
-func (d *Draw) DrawPolygon(points []xc.POINT, nCount int32) *Draw {
-	xc.XDraw_DrawPolygon(d.Handle, points, nCount)
+func (d *Draw) DrawPolygon(points []xc.POINT) *Draw {
+	xc.XDraw_DrawPolygon(d.Handle, points)
 	return d
 }
 
 // 绘制_多边形F, 绘制多边形.
 //
 // points: 顶点坐标数组.
-//
-// nCount: 顶点数量.
-func (d *Draw) DrawPolygonF(points []xc.POINTF, nCount int32) *Draw {
-	xc.XDraw_DrawPolygonF(d.Handle, points, nCount)
+func (d *Draw) DrawPolygonF(points []xc.POINTF) *Draw {
+	xc.XDraw_DrawPolygonF(d.Handle, points)
 	return d
 }
 
@@ -371,17 +363,15 @@ func (d *Draw) GDI_CreateRoundRectRgn(nLeftRect, nTopRect, nRightRect, nBottomRe
 
 // 绘制_创建多边形区域, GDI创建一个多边形区域, 成功返回区域句柄, 失败返回NULL.
 //
-// pPt: POINT数组.
-//
-// cPoints: 数组大小.
+// points: POINT数组.
 //
 // fnPolyFillMode: 多边形填充模式, 指定用于确定在该地区的像素填充模式,这个参数可以是下列值之一.
 //
 // ALTERNATE Selects alternate mode (fills area between odd-numbered and even-numbered polygon sides on each scan line).
 //
 // WINDING Selects winding mode (fills any region with a nonzero winding value).
-func (d *Draw) GDI_CreatePolygonRgn(pPt []xc.POINT, cPoints, fnPolyFillMode int32) uintptr {
-	return xc.XDraw_GDI_CreatePolygonRgn(d.Handle, pPt, cPoints, fnPolyFillMode)
+func (d *Draw) GDI_CreatePolygonRgn(points []xc.POINT, fnPolyFillMode int32) uintptr {
+	return xc.XDraw_GDI_CreatePolygonRgn(d.Handle, points, fnPolyFillMode)
 }
 
 // 绘制_GDI_椭圆.
@@ -718,11 +708,9 @@ func (d *Draw) GDI_LineTo(nXEnd, nYEnd int32) bool {
 
 // 绘制_折线, Polyline() 参见MSDN.
 //
-// pArrayPt: 参见MSDN.
-//
-// arrayPtSize: 参见MSDN.
-func (d *Draw) GDI_Polyline(pArrayPt []xc.POINT, arrayPtSize int32) bool {
-	return xc.XDraw_GDI_Polyline(d.Handle, pArrayPt, arrayPtSize)
+// points: 参见MSDN.
+func (d *Draw) GDI_Polyline(points []xc.POINT) bool {
+	return xc.XDraw_GDI_Polyline(d.Handle, points)
 }
 
 // 绘制_置像素颜色, 函数设置在指定的坐标到指定的颜色的像素. 如果函数成功返回RGB值, 如果失败返回-1.
@@ -832,20 +820,16 @@ func (d *Draw) GDI_AlphaBlend(nXOriginDest, nYOriginDest, nWidthDest, nHeightDes
 // 绘制_填充多边形, 填充多边形.
 //
 // points: 顶点坐标数组.
-//
-// nCount: 顶点数量.
-func (d *Draw) FillPolygon(points []xc.POINT, nCount int32) *Draw {
-	xc.XDraw_FillPolygon(d.Handle, points, nCount)
+func (d *Draw) FillPolygon(points []xc.POINT) *Draw {
+	xc.XDraw_FillPolygon(d.Handle, points)
 	return d
 }
 
 // 绘制_填充多边形F, 填充多边形.
 //
 // points: 顶点坐标数组.
-//
-// nCount: 顶点数量.
-func (d *Draw) FillPolygonF(points []xc.POINTF, nCount int32) *Draw {
-	xc.XDraw_FillPolygonF(d.Handle, points, nCount)
+func (d *Draw) FillPolygonF(points []xc.POINTF) *Draw {
+	xc.XDraw_FillPolygonF(d.Handle, points)
 	return d
 }
 
@@ -1034,45 +1018,45 @@ func (d *Draw) ImageMask(hImageFrame int, hImageFrameMask int, pRect *xc.RECT, x
 
 // 绘制_文本指定矩形, DrawText() 参见MSDN.
 //
-// lpString: 字符串.
+// str: 字符串.
 //
 // lpRect: 坐标.
-func (d *Draw) DrawText(lpString string, lpRect *xc.RECT) *Draw {
-	xc.XDraw_DrawText(d.Handle, lpString, lpRect)
+func (d *Draw) DrawText(str string, lpRect *xc.RECT) *Draw {
+	xc.XDraw_DrawText(d.Handle, str, lpRect)
 	return d
 }
 
 // 绘制_文本指定矩形F, DrawText() 参见MSDN.
 //
-// lpString: 字符串.
+// str: 字符串.
 //
 // lpRect: 坐标.
-func (d *Draw) DrawTextF(lpString string, lpRect *xc.RECTF) *Draw {
-	xc.XDraw_DrawTextF(d.Handle, lpString, lpRect)
+func (d *Draw) DrawTextF(str string, lpRect *xc.RECTF) *Draw {
+	xc.XDraw_DrawTextF(d.Handle, str, lpRect)
 	return d
 }
 
 // 绘制_文本下划线.
 //
-// lpString: 字符串.
+// str: 字符串.
 //
 // lpRect: 坐标.
 //
 // colorLine: 下划线颜色, xc.RGBA 颜色.
-func (d *Draw) DrawTextUnderline(lpString string, lpRect *xc.RECT, colorLine uint32) *Draw {
-	xc.XDraw_DrawTextUnderline(d.Handle, lpString, lpRect, colorLine)
+func (d *Draw) DrawTextUnderline(str string, lpRect *xc.RECT, colorLine uint32) *Draw {
+	xc.XDraw_DrawTextUnderline(d.Handle, str, lpRect, colorLine)
 	return d
 }
 
 // 绘制_文本下划线F.
 //
-// lpString: 字符串.
+// str: 字符串.
 //
 // lpRect: 坐标.
 //
 // colorLine: 下划线颜色, xc.RGBA 颜色.
-func (d *Draw) DrawTextUnderlineF(lpString string, lpRect *xc.RECTF, colorLine uint32) *Draw {
-	xc.XDraw_DrawTextUnderlineF(d.Handle, lpString, lpRect, colorLine)
+func (d *Draw) DrawTextUnderlineF(str string, lpRect *xc.RECTF, colorLine uint32) *Draw {
+	xc.XDraw_DrawTextUnderlineF(d.Handle, str, lpRect, colorLine)
 	return d
 }
 
@@ -1082,11 +1066,11 @@ func (d *Draw) DrawTextUnderlineF(lpString string, lpRect *xc.RECTF, colorLine u
 //
 // nYStart: XX.
 //
-// lpString: XX.
+// str: XX.
 //
 // cbString: XX.
-func (d *Draw) TextOut(nXStart, nYStart int32, lpString string, cbString string) *Draw {
-	xc.XDraw_TextOut(d.Handle, nXStart, nYStart, lpString, cbString)
+func (d *Draw) TextOut(nXStart, nYStart int32, str string, cbString string) *Draw {
+	xc.XDraw_TextOut(d.Handle, nXStart, nYStart, str, cbString)
 	return d
 }
 
@@ -1096,11 +1080,11 @@ func (d *Draw) TextOut(nXStart, nYStart int32, lpString string, cbString string)
 //
 // nYStart: XX.
 //
-// lpString: XX.
+// str: XX.
 //
 // cbString: XX.
-func (d *Draw) TextOutF(nXStart, nYStart float32, lpString string, cbString string) *Draw {
-	xc.XDraw_TextOutF(d.Handle, nXStart, nYStart, lpString, cbString)
+func (d *Draw) TextOutF(nXStart, nYStart float32, str string, cbString string) *Draw {
+	xc.XDraw_TextOutF(d.Handle, nXStart, nYStart, str, cbString)
 	return d
 }
 
@@ -1110,9 +1094,9 @@ func (d *Draw) TextOutF(nXStart, nYStart float32, lpString string, cbString stri
 //
 // nYStart: XX.
 //
-// lpString: XX.
-func (d *Draw) TextOutEx(nXStart, nYStart int32, lpString string) *Draw {
-	xc.XDraw_TextOutEx(d.Handle, nXStart, nYStart, lpString)
+// str: XX.
+func (d *Draw) TextOutEx(nXStart, nYStart int32, str string) *Draw {
+	xc.XDraw_TextOutEx(d.Handle, nXStart, nYStart, str)
 	return d
 }
 
@@ -1122,9 +1106,9 @@ func (d *Draw) TextOutEx(nXStart, nYStart int32, lpString string) *Draw {
 //
 // nYStart: XX.
 //
-// lpString: XX.
-func (d *Draw) TextOutExF(nXStart, nYStart float32, lpString string) *Draw {
-	xc.XDraw_TextOutExF(d.Handle, nXStart, nYStart, lpString)
+// str: XX.
+func (d *Draw) TextOutExF(nXStart, nYStart float32, str string) *Draw {
+	xc.XDraw_TextOutExF(d.Handle, nXStart, nYStart, str)
 	return d
 }
 
@@ -1134,9 +1118,9 @@ func (d *Draw) TextOutExF(nXStart, nYStart float32, lpString string) *Draw {
 //
 // nYStart: XX.
 //
-// lpString: XX.
-func (d *Draw) TextOutA(nXStart, nYStart int32, lpString string) *Draw {
-	xc.XDraw_TextOutA(d.Handle, nXStart, nYStart, lpString)
+// str: XX.
+func (d *Draw) TextOutA(nXStart, nYStart int32, str string) *Draw {
+	xc.XDraw_TextOutA(d.Handle, nXStart, nYStart, str)
 	return d
 }
 
@@ -1146,9 +1130,9 @@ func (d *Draw) TextOutA(nXStart, nYStart int32, lpString string) *Draw {
 //
 // nYStart: XX.
 //
-// lpString: XX.
-func (d *Draw) TextOutAF(nXStart, nYStart float32, lpString string) *Draw {
-	xc.XDraw_TextOutAF(d.Handle, nXStart, nYStart, lpString)
+// str: XX.
+func (d *Draw) TextOutAF(nXStart, nYStart float32, str string) *Draw {
+	xc.XDraw_TextOutAF(d.Handle, nXStart, nYStart, str)
 	return d
 }
 

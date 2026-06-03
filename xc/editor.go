@@ -1,8 +1,9 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/common"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 )
 
 // 代码编辑框_创建, 返回元素句柄.
@@ -205,12 +206,8 @@ func XEditor_GetBreakpointCount(hEle int) int32 {
 // hEle: 元素句柄.
 //
 // aPoints: 接收断点数组.
-//
-// nCount: 数组大小.
-func XEditor_GetBreakpoints(hEle int, aPoints *[]int32, nCount int32) int32 {
-	if nCount < 1 {
-		return 0
-	}
+func XEditor_GetBreakpoints(hEle int, aPoints *[]int32) int32 {
+	nCount := XEditor_GetBreakpointCount(hEle)
 	*aPoints = make([]int32, nCount)
 	r, _, _ := xEditor_GetBreakpoints.Call(uintptr(hEle), uintptr(unsafe.Pointer(&(*aPoints)[0])), uintptr(nCount))
 	return int32(r)

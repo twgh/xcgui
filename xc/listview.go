@@ -304,12 +304,8 @@ func XListView_GetSelectItemCount(hEle int) int32 {
 // hEle: 元素句柄.
 //
 // pArray: 数组.
-//
-// nArraySize: 数组大小.
-func XListView_GetSelectAll(hEle int, pArray *[]ListView_Item_Id_, nArraySize int32) int32 {
-	if nArraySize < 1 {
-		return 0
-	}
+func XListView_GetSelectAll(hEle int, pArray *[]ListView_Item_Id_) int32 {
+	nArraySize := XListView_GetSelectItemCount(hEle)
 	*pArray = make([]ListView_Item_Id_, nArraySize)
 	r, _, _ := xListView_GetSelectAll.Call(uintptr(hEle), uintptr(unsafe.Pointer(&(*pArray)[0])), uintptr(nArraySize))
 	return int32(r)

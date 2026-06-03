@@ -177,10 +177,8 @@ func (l *ListBox) CancelSelectAll() bool {
 // 列表框_取全部选择, 获取所有选择项, 返回接收数量.
 //
 // pArray: 数组缓冲区.
-//
-// nArraySize: 数组大小.
-func (l *ListBox) GetSelectAll(pArray *[]int32, nArraySize int32) int32 {
-	return xc.XListBox_GetSelectAll(l.Handle, pArray, nArraySize)
+func (l *ListBox) GetSelectAll(pArray *[]int32) int32 {
+	return xc.XListBox_GetSelectAll(l.Handle, pArray)
 }
 
 // 列表框_取选择项数量, 获取选择项数量.

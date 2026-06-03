@@ -270,10 +270,8 @@ func (l *ListView) GetSelectItemCount() int32 {
 // 列表视_取选择项全部, 获取选择的项ID, 返回接收项数量.
 //
 // pArray: 数组.
-//
-// nArraySize: 数组大小.
-func (l *ListView) GetSelectAll(pArray *[]xc.ListView_Item_Id_, nArraySize int32) int32 {
-	return xc.XListView_GetSelectAll(l.Handle, pArray, nArraySize)
+func (l *ListView) GetSelectAll(pArray *[]xc.ListView_Item_Id_) int32 {
+	return xc.XListView_GetSelectAll(l.Handle, pArray)
 }
 
 // 列表视_置选择项全部, 选择所有的项.

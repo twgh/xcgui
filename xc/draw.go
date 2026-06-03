@@ -107,11 +107,9 @@ func XDraw_DrawArcF(hDraw int, x, y, nWidth, nHeight, startAngle, sweepAngle flo
 //
 // points: 坐标点数组.
 //
-// count: 数组大小.
-//
 // tension: 大于或等于0.0F的值，指定曲线的张力, D2D 忽略此参数.
-func XDraw_DrawCurve(hDraw int, points []POINT, count int32, tension float32) {
-	xDraw_DrawCurve.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&points[0])), uintptr(count), common.Float32Ptr(tension))
+func XDraw_DrawCurve(hDraw int, points []POINT, tension float32) {
+	xDraw_DrawCurve.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&points[0])), uintptr(len(points)), common.Float32Ptr(tension))
 }
 
 // 绘制_曲线F, D2D暂时留空.
@@ -120,11 +118,9 @@ func XDraw_DrawCurve(hDraw int, points []POINT, count int32, tension float32) {
 //
 // points: 坐标点数组.
 //
-// count: 数组大小.
-//
 // tension: 大于或等于0.0F的值，指定曲线的张力, D2D 忽略此参数.
-func XDraw_DrawCurveF(hDraw int, points []POINTF, count int32, tension float32) {
-	xDraw_DrawCurveF.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&points[0])), uintptr(count), common.Float32Ptr(tension))
+func XDraw_DrawCurveF(hDraw int, points []POINTF, tension float32) {
+	xDraw_DrawCurveF.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&points[0])), uintptr(len(points)), common.Float32Ptr(tension))
 }
 
 // 绘制_线条.
@@ -162,10 +158,8 @@ func XDraw_DrawLineF(hDraw int, x1, y1, x2, y2 float32) {
 // hDraw: 图形绘制句柄.
 //
 // points: 顶点坐标数组.
-//
-// nCount: 顶点数量.
-func XDraw_DrawPolygon(hDraw int, points []POINT, nCount int32) {
-	xDraw_DrawPolygon.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&points[0])), uintptr(nCount))
+func XDraw_DrawPolygon(hDraw int, points []POINT) {
+	xDraw_DrawPolygon.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&points[0])), uintptr(len(points)))
 }
 
 // 绘制_多边形F, 绘制多边形.
@@ -173,10 +167,8 @@ func XDraw_DrawPolygon(hDraw int, points []POINT, nCount int32) {
 // hDraw: 图形绘制句柄.
 //
 // points: 顶点坐标数组.
-//
-// nCount: 顶点数量.
-func XDraw_DrawPolygonF(hDraw int, points []POINTF, nCount int32) {
-	xDraw_DrawPolygonF.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&points[0])), uintptr(nCount))
+func XDraw_DrawPolygonF(hDraw int, points []POINTF) {
+	xDraw_DrawPolygonF.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&points[0])), uintptr(len(points)))
 }
 
 // 绘制_矩形, 绘制矩形边框.
@@ -413,17 +405,15 @@ func XDraw_GDI_CreateRoundRectRgn(hDraw int, nLeftRect, nTopRect, nRightRect, nB
 //
 // hDraw: 图形绘制句柄.
 //
-// pPt: POINT数组.
-//
-// cPoints: 数组大小.
+// points: POINT数组.
 //
 // fnPolyFillMode: 多边形填充模式, 指定用于确定在该地区的像素填充模式,这个参数可以是下列值之一.
 //
 // ALTERNATE Selects alternate mode (fills area between odd-numbered and even-numbered polygon sides on each scan line).
 //
 // WINDING Selects winding mode (fills any region with a nonzero winding value).
-func XDraw_GDI_CreatePolygonRgn(hDraw int, pPt []POINT, cPoints, fnPolyFillMode int32) uintptr {
-	r, _, _ := xDraw_GDI_CreatePolygonRgn.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&pPt[0])), uintptr(cPoints), uintptr(fnPolyFillMode))
+func XDraw_GDI_CreatePolygonRgn(hDraw int, points []POINT, fnPolyFillMode int32) uintptr {
+	r, _, _ := xDraw_GDI_CreatePolygonRgn.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&points[0])), uintptr(len(points)), uintptr(fnPolyFillMode))
 	return r
 }
 
@@ -794,11 +784,9 @@ func XDraw_GDI_LineTo(hDraw int, nXEnd, nYEnd int32) bool {
 //
 // hDraw: 图形绘制句柄.
 //
-// pArrayPt: 参见MSDN.
-//
-// arrayPtSize: 参见MSDN.
-func XDraw_GDI_Polyline(hDraw int, pArrayPt []POINT, arrayPtSize int32) bool {
-	r, _, _ := xDraw_GDI_Polyline.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&pArrayPt[0])), uintptr(arrayPtSize))
+// points: 参见MSDN.
+func XDraw_GDI_Polyline(hDraw int, points []POINT) bool {
+	r, _, _ := xDraw_GDI_Polyline.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&points[0])), uintptr(len(points)))
 	return r != 0
 }
 
@@ -939,10 +927,8 @@ func XDraw_GDI_Ellipse(hDraw int, pRect *RECT) bool {
 // hDraw: 图形绘制句柄.
 //
 // points: 顶点坐标数组.
-//
-// nCount: 顶点数量.
-func XDraw_FillPolygon(hDraw int, points []POINT, nCount int32) {
-	xDraw_FillPolygon.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&points[0])), uintptr(nCount))
+func XDraw_FillPolygon(hDraw int, points []POINT) {
+	xDraw_FillPolygon.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&points[0])), uintptr(len(points)))
 }
 
 // 绘制_填充多边形F, 填充多边形.
@@ -950,10 +936,8 @@ func XDraw_FillPolygon(hDraw int, points []POINT, nCount int32) {
 // hDraw: 图形绘制句柄.
 //
 // points: 顶点坐标数组.
-//
-// nCount: 顶点数量.
-func XDraw_FillPolygonF(hDraw int, points []POINTF, nCount int32) {
-	xDraw_FillPolygonF.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&points[0])), uintptr(nCount))
+func XDraw_FillPolygonF(hDraw int, points []POINTF) {
+	xDraw_FillPolygonF.Call(uintptr(hDraw), uintptr(unsafe.Pointer(&points[0])), uintptr(len(points)))
 }
 
 // 绘制_图片.
@@ -1186,48 +1170,48 @@ func XDraw_ImageMaskEllipse(hDraw int, hImageFrame int, pRect *RECT, pRcMask *RE
 //
 // hDraw: 图形绘制句柄.
 //
-// lpString: 字符串.
+// str: 字符串.
 //
 // lpRect: 坐标.
-func XDraw_DrawText(hDraw int, lpString string, lpRect *RECT) {
-	xDraw_DrawText.Call(uintptr(hDraw), common.StrPtr(lpString), uintptr(int32(len([]rune(lpString)))), uintptr(unsafe.Pointer(lpRect)))
+func XDraw_DrawText(hDraw int, str string, lpRect *RECT) {
+	xDraw_DrawText.Call(uintptr(hDraw), common.StrPtr(str), uintptr(int32(len([]rune(str)))), uintptr(unsafe.Pointer(lpRect)))
 }
 
 // 绘制_文本指定矩形F, DrawText() 参见MSDN.
 //
 // hDraw: 图形绘制句柄.
 //
-// lpString: 字符串.
+// str: 字符串.
 //
 // lpRect: 坐标.
-func XDraw_DrawTextF(hDraw int, lpString string, lpRect *RECTF) {
-	xDraw_DrawTextF.Call(uintptr(hDraw), common.StrPtr(lpString), uintptr(int32(len([]rune(lpString)))), uintptr(unsafe.Pointer(lpRect)))
+func XDraw_DrawTextF(hDraw int, str string, lpRect *RECTF) {
+	xDraw_DrawTextF.Call(uintptr(hDraw), common.StrPtr(str), uintptr(int32(len([]rune(str)))), uintptr(unsafe.Pointer(lpRect)))
 }
 
 // 绘制_文本下划线.
 //
 // hDraw: 图形绘制句柄.
 //
-// lpString: 字符串.
+// str: 字符串.
 //
 // lpRect: 坐标.
 //
 // colorLine: 下划线颜色, xc.RGBA 颜色.
-func XDraw_DrawTextUnderline(hDraw int, lpString string, lpRect *RECT, colorLine uint32) {
-	xDraw_DrawTextUnderline.Call(uintptr(hDraw), common.StrPtr(lpString), uintptr(int32(len([]rune(lpString)))), uintptr(unsafe.Pointer(lpRect)), uintptr(colorLine))
+func XDraw_DrawTextUnderline(hDraw int, str string, lpRect *RECT, colorLine uint32) {
+	xDraw_DrawTextUnderline.Call(uintptr(hDraw), common.StrPtr(str), uintptr(int32(len([]rune(str)))), uintptr(unsafe.Pointer(lpRect)), uintptr(colorLine))
 }
 
 // 绘制_文本下划线F.
 //
 // hDraw: 图形绘制句柄.
 //
-// lpString: 字符串.
+// str: 字符串.
 //
 // lpRect: 坐标.
 //
 // colorLine: 下划线颜色, xc.RGBA 颜色.
-func XDraw_DrawTextUnderlineF(hDraw int, lpString string, lpRect *RECTF, colorLine uint32) {
-	xDraw_DrawTextUnderlineF.Call(uintptr(hDraw), common.StrPtr(lpString), uintptr(int32(len([]rune(lpString)))), uintptr(unsafe.Pointer(lpRect)), uintptr(colorLine))
+func XDraw_DrawTextUnderlineF(hDraw int, str string, lpRect *RECTF, colorLine uint32) {
+	xDraw_DrawTextUnderlineF.Call(uintptr(hDraw), common.StrPtr(str), uintptr(int32(len([]rune(str)))), uintptr(unsafe.Pointer(lpRect)), uintptr(colorLine))
 }
 
 // 绘制_文本, TextOut() 参见MSDN.
@@ -1238,11 +1222,11 @@ func XDraw_DrawTextUnderlineF(hDraw int, lpString string, lpRect *RECTF, colorLi
 //
 // nYStart: XX.
 //
-// lpString: XX.
+// str: XX.
 //
 // cbString: XX.
-func XDraw_TextOut(hDraw int, nXStart, nYStart int32, lpString string, cbString string) {
-	xDraw_TextOut.Call(uintptr(hDraw), uintptr(nXStart), uintptr(nYStart), common.StrPtr(lpString), common.StrPtr(cbString))
+func XDraw_TextOut(hDraw int, nXStart, nYStart int32, str string, cbString string) {
+	xDraw_TextOut.Call(uintptr(hDraw), uintptr(nXStart), uintptr(nYStart), common.StrPtr(str), common.StrPtr(cbString))
 }
 
 // 绘制_文本F, TextOut() 参见MSDN.
@@ -1253,11 +1237,11 @@ func XDraw_TextOut(hDraw int, nXStart, nYStart int32, lpString string, cbString 
 //
 // nYStart: XX.
 //
-// lpString: XX.
+// str: XX.
 //
 // cbString: XX.
-func XDraw_TextOutF(hDraw int, nXStart, nYStart float32, lpString string, cbString string) {
-	xDraw_TextOutF.Call(uintptr(hDraw), common.Float32Ptr(nXStart), common.Float32Ptr(nYStart), common.StrPtr(lpString), common.StrPtr(cbString))
+func XDraw_TextOutF(hDraw int, nXStart, nYStart float32, str string, cbString string) {
+	xDraw_TextOutF.Call(uintptr(hDraw), common.Float32Ptr(nXStart), common.Float32Ptr(nYStart), common.StrPtr(str), common.StrPtr(cbString))
 }
 
 // 绘制_文本扩展, TextOut() 参见MSDN.
@@ -1268,9 +1252,9 @@ func XDraw_TextOutF(hDraw int, nXStart, nYStart float32, lpString string, cbStri
 //
 // nYStart: XX.
 //
-// lpString: XX.
-func XDraw_TextOutEx(hDraw int, nXStart, nYStart int32, lpString string) {
-	xDraw_TextOutEx.Call(uintptr(hDraw), uintptr(nXStart), uintptr(nYStart), common.StrPtr(lpString))
+// str: XX.
+func XDraw_TextOutEx(hDraw int, nXStart, nYStart int32, str string) {
+	xDraw_TextOutEx.Call(uintptr(hDraw), uintptr(nXStart), uintptr(nYStart), common.StrPtr(str))
 }
 
 // 绘制_文本扩展F, TextOut() 参见MSDN.
@@ -1281,9 +1265,9 @@ func XDraw_TextOutEx(hDraw int, nXStart, nYStart int32, lpString string) {
 //
 // nYStart: XX.
 //
-// lpString: XX.
-func XDraw_TextOutExF(hDraw int, nXStart, nYStart float32, lpString string) {
-	xDraw_TextOutExF.Call(uintptr(hDraw), common.Float32Ptr(nXStart), common.Float32Ptr(nYStart), common.StrPtr(lpString))
+// str: XX.
+func XDraw_TextOutExF(hDraw int, nXStart, nYStart float32, str string) {
+	xDraw_TextOutExF.Call(uintptr(hDraw), common.Float32Ptr(nXStart), common.Float32Ptr(nYStart), common.StrPtr(str))
 }
 
 // 绘制_文本A, TextOut() 参见MSDN.
@@ -1294,9 +1278,9 @@ func XDraw_TextOutExF(hDraw int, nXStart, nYStart float32, lpString string) {
 //
 // nYStart: XX.
 //
-// lpString: XX.
-func XDraw_TextOutA(hDraw int, nXStart, nYStart int32, lpString string) {
-	xDraw_TextOutA.Call(uintptr(hDraw), uintptr(nXStart), uintptr(nYStart), common.StrPtr(lpString))
+// str: XX.
+func XDraw_TextOutA(hDraw int, nXStart, nYStart int32, str string) {
+	xDraw_TextOutA.Call(uintptr(hDraw), uintptr(nXStart), uintptr(nYStart), common.StrPtr(str))
 }
 
 // 绘制_文本AF, TextOut() 参见MSDN.
@@ -1307,9 +1291,9 @@ func XDraw_TextOutA(hDraw int, nXStart, nYStart int32, lpString string) {
 //
 // nYStart: XX.
 //
-// lpString: XX.
-func XDraw_TextOutAF(hDraw int, nXStart, nYStart float32, lpString string) {
-	xDraw_TextOutAF.Call(uintptr(hDraw), common.Float32Ptr(nXStart), common.Float32Ptr(nYStart), common.StrPtr(lpString))
+// str: XX.
+func XDraw_TextOutAF(hDraw int, nXStart, nYStart float32, str string) {
+	xDraw_TextOutAF.Call(uintptr(hDraw), common.Float32Ptr(nXStart), common.Float32Ptr(nYStart), common.StrPtr(str))
 }
 
 // 绘制_设置文本渲染提示.

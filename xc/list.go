@@ -311,12 +311,8 @@ func XList_SetSelectAll(hEle int) {
 // hEle: 元素句柄.
 //
 // pArray: 接收行索引数组.
-//
-// nArraySize: 数组大小.
-func XList_GetSelectAll(hEle int, pArray *[]int32, nArraySize int32) int32 {
-	if nArraySize < 1 {
-		return 0
-	}
+func XList_GetSelectAll(hEle int, pArray *[]int32) int32 {
+	nArraySize := XList_GetSelectRowCount(hEle)
 	*pArray = make([]int32, nArraySize)
 	r, _, _ := xList_GetSelectAll.Call(uintptr(hEle), uintptr(unsafe.Pointer(&(*pArray)[0])), uintptr(nArraySize))
 	return int32(r)

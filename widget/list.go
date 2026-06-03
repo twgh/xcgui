@@ -264,10 +264,8 @@ func (l *List) SetSelectAll() *List {
 // 列表_取全部选择, 获取全部选择的行, 返回行数量.
 //
 // pArray: 接收行索引数组.
-//
-// nArraySize: 数组大小.
-func (l *List) GetSelectAll(pArray *[]int32, nArraySize int32) int32 {
-	return xc.XList_GetSelectAll(l.Handle, pArray, nArraySize)
+func (l *List) GetSelectAll(pArray *[]int32) int32 {
+	return xc.XList_GetSelectAll(l.Handle, pArray)
 }
 
 // 列表_显示指定行, 滚动视图让指定行可见.

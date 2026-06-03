@@ -180,10 +180,8 @@ func (e *Editor) GetBreakpointCount() int32 {
 // 代码编辑框_取全部断点, 返回实际获取断点数量.
 //
 // aPoints: 接收断点数组.
-//
-// nCount: 数组大小.
-func (e *Editor) GetBreakpoints(aPoints *[]int32, nCount int32) int32 {
-	return xc.XEditor_GetBreakpoints(e.Handle, aPoints, nCount)
+func (e *Editor) GetBreakpoints(aPoints *[]int32) int32 {
+	return xc.XEditor_GetBreakpoints(e.Handle, aPoints)
 }
 
 // 代码编辑框_设置当前行, 跳过收缩行.
