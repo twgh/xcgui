@@ -26,8 +26,9 @@ English | [简体中文](./README.md)
 - Has a free UI designer tool: rapid development tools, what you see is what you get, a highly customizable system (DIY), making UI development easier.
 - Support Direct2D, hardware acceleration, can make full use of hardware features to create high-performance, high-quality 2D graphics.
 - Support WebView2, can use front-end technology stack to develop interfaces.
+- Using the [go-xcgui-dev](https://github.com/twgh/go-xcgui-dev) skill can prevent AI hallucinations.
 - [Usage Guide](https://mcn1fno5w69l.feishu.cn/wiki/space/7489022357177139219?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home) There are introductory tutorials and common questions in it, you can take a look and avoid detours.
-- Other related projects：[xcgui-example](https://github.com/twgh/xcgui-example)，[xc-elementui](https://github.com/twgh/xc-elementui)
+- Other related projects：[xcgui-example](https://github.com/twgh/xcgui-example)，[xc](https://github.com/twgh/xc)，[xc-elementui](https://github.com/twgh/xc-elementui)
 
 ## Get
 

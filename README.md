@@ -26,8 +26,9 @@
 - 拥有免费的 UI 设计器：快速开发工具，所见即所得，高度自定义系统(DIY)，让 UI 开发变的更加简单。
 - 支持 Direct2D，硬件加速，能更大程度的发挥硬件特性，创建高性能，高质量的 2D 图形。
 - 支持 WebView2，可使用前端技术栈开发界面。
+- 使用 [go-xcgui-dev](https://github.com/twgh/go-xcgui-dev) 技能可避免 AI 产生幻觉。
 - [使用指南](https://mcn1fno5w69l.feishu.cn/wiki/space/7489022357177139219?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home) 里有入门教程和常见问题，可以看一下，少走弯路。
-- 其它相关项目：[xcgui-example](https://github.com/twgh/xcgui-example)，[xc-elementui](https://github.com/twgh/xc-elementui)
+- 其它相关项目：[xcgui-example](https://github.com/twgh/xcgui-example)，[xc](https://github.com/twgh/xc)，[xc-elementui](https://github.com/twgh/xc-elementui)
 - 官方 QQ 群 (能回答问题的人多)：[2283812](https://jq.qq.com/?_wv=1027&k=AiXY4uMc)，只聊 Go 语言版的 QQ 群：[793788011](https://jq.qq.com/?_wv=1027&k=bkKgsYYk)
 
 ## 获取
