@@ -188,11 +188,11 @@ func (d *Draw) DrawRectF(pRect *xc.RECTF) *Draw {
 	return d
 }
 
-// 绘制_置偏移, 设置坐标偏移量, X向左偏移为负数, 向右偏移为正数.
+// 绘制_置偏移, 设置坐标偏移量.
 //
-// x: X轴偏移量.
+// x: X轴偏移量, 向左偏移为负数, 向右偏移为正数.
 //
-// y: Y轴偏移量.
+// y: Y轴偏移量, 向上偏移为负数, 向下偏移为正数.
 func (d *Draw) SetOffset(x, y int32) *Draw {
 	xc.XDraw_SetOffset(d.Handle, x, y)
 	return d

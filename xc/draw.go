@@ -189,15 +189,15 @@ func XDraw_DrawRectF(hDraw int, pRect *RECTF) {
 	xDraw_DrawRectF.Call(uintptr(hDraw), uintptr(unsafe.Pointer(pRect)))
 }
 
-// 绘制_置偏移, 设置坐标偏移量, X向左偏移为负数, 向右偏移为正数.
+// 绘制_置偏移, 设置坐标偏移量.
 //
 // hDraw: 图形绘制句柄.
 //
-// x: X轴偏移量.
+// x: X轴偏移量, 向左偏移为负数, 向右偏移为正数.
 //
-// y: Y轴偏移量.
+// y: Y轴偏移量, 向上偏移为负数, 向下偏移为正数.
 func XDraw_SetOffset(hDraw int, x, y int32) {
-	xDraw_SetOffset.Call(uintptr(hDraw), uintptr(x), uintptr(y))
+	xDraw_SetOffset.Call(uintptr(hDraw), uintptr(-x), uintptr(-y))
 }
 
 // 绘制_取偏移, 获取坐标偏移量, X向左偏移为负数, 向右偏移为正数.
