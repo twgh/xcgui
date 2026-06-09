@@ -50,6 +50,7 @@ func ParseRGB(color uint32) (r, g, b byte) {
 }
 
 // RGBA 根据 r, g, b, a 组合成炫彩使用的颜色.
+//   - 返回值的位布局为 0xAABBGGRR，在 Windows 小端序下内存字节排列为 [R, G, B, A].
 //
 // r: 红色分量.
 //
