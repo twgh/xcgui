@@ -1,6 +1,6 @@
 <h1 align="center">XCGUI</h1>
 <p align="center">
-    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.4.0-blue" alt="release"></a>
+    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.4.1-blue" alt="release"></a>
     <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-4.0-blue" alt="XCGUI"></a>
    <a href="https://golang.org"> <img src="https://img.shields.io/badge/golang-≥1.18-blue" alt="golang"></a>
     <a href="https://pkg.go.dev/github.com/twgh/xcgui"><img src="https://img.shields.io/badge/go.dev-reference-brightgreen" alt="GoDoc"></a>
@@ -12,6 +12,7 @@
     <a href="http://www.xcgui.com/doc-ui/">Official Doc</a>&nbsp;&nbsp;
 	<a href="http://mall.xcgui.com">Official Resource</a>
 </p>
+
 
 
 
@@ -158,10 +159,6 @@ In XCGUI, a single event type can have multiple callback handler functions regis
 All events in XCGUI are predefined within various classes and come in two forms, distinguished by their prefixes: AddEvent or Event. Generally, using functions of the AddEvent type is sufficient.
 
 The difference is as follows: Since the event callback functions are created using syscall.NewCallback, this method has a limitation of creating only about 2000 callback functions. Exceeding this limit will cause a panic. When using Event-type functions to register events and the callback function is an anonymous function, a new callback function is created each time. Without proper control, this could exceed the 2000-function limit. In contrast, AddEvent-type functions reuse already created callback functions, allowing you to freely use anonymous functions as event callbacks without worrying about exceeding the 2000-function limit.
-
-## About version numbers
-
-Take `1.3.330` as an example, 1 only means that the library is the official version, 3.33 represents the official 3.3.3 version of XCGUI, the last 0 represents the first version based on the 3.33 package, If there is an update based on 3.33, then it will add up.
 
 ## JetBrains Open Source Certificate Support
 
