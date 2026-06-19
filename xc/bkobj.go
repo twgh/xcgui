@@ -8,7 +8,14 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-// 背景对象_置外间距, 外间距与对齐标识(BkObject_Align_Flag_)互相依赖.
+// 背景对象_置外间距.
+//   - 外间距与对齐标识 (xcc.BkObject_Align_Flag_) 互相依赖.
+//   - 当水平居中时 left 代表宽度;
+//   - 当垂直居中时 top 代表高度;
+//   - 当对齐 left 时 right 代表宽度;
+//   - 当对齐 right 时 left 代表宽度;
+//   - 当对齐 top 时 bottom 代表宽度;
+//   - 当对齐 bottom 时 top 代表宽度;
 //
 // hObj: 背景对象句柄.
 //
