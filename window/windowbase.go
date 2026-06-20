@@ -136,13 +136,15 @@ func (w *windowBase) SetTop(bTop ...bool) *windowBase {
 // id: 使用 AddEvent_ 函数返回的回调函数 ID.
 //   - 为空时, 直接移除事件.
 //   - 不为空时, 移除该事件指定 ID 的回调函数.
-func (w *windowBase) RemoveEvent(nEvent xcc.WM_, id ...int) *windowBase {
+func (w *windowBase) RemoveEvent(nEvent xcc.WM_, id ...int) bool {
 	if len(id) > 0 {
 		xc.WndEventBus.RemoveCallback(w.Handle, nEvent, id[0])
 	} else { // 移除事件
-		xc.WndEventBus.RemoveEvent(w.Handle, nEvent)
+		if !xc.WndEventBus.RemoveEvent(w.Handle, nEvent) {
+			return false
+		}
 	}
-	return w
+	return true
 }
 
 // 窗口_注册事件C.
