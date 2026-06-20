@@ -86,13 +86,15 @@ func (e *Element) RemoveEventC(nEvent xcc.XE_, fn interface{}) bool {
 // id: 使用 AddEvent_ 函数返回的回调函数 ID.
 //   - 为空时, 直接移除事件.
 //   - 不为空时, 移除该事件指定 ID 的回调函数.
-func (e *Element) RemoveEvent(nEvent xcc.XE_, id ...int) *Element {
+func (e *Element) RemoveEvent(nEvent xcc.XE_, id ...int) bool {
 	if len(id) > 0 {
 		xc.EleEventBus.RemoveCallback(e.Handle, nEvent, id[0])
 	} else {
-		xc.EleEventBus.RemoveEvent(e.Handle, nEvent)
+		if !xc.EleEventBus.RemoveEvent(e.Handle, nEvent) {
+			return false
+		}
 	}
-	return e
+	return true
 }
 
 // 元素_注册事件CEx, 注册事件C方式, 省略2参数, 和非Ex版相比只是最后一个参数不同.
@@ -1086,23 +1088,12 @@ func (e *Element) RectClientToWndClientDPI(pRect *xc.RECT) *Element {
 
 // SetFocus 元素_置焦点.
 func (e *Element) SetFocus() bool {
-	hParent := 0
-	hEle := e.Handle
-	for {
-		hParent = xc.XWidget_GetParent(hEle)
-		if xc.XC_IsHWINDOW(hParent) {
-			break
-		}
-
-		if hParent == 0 {
-			return false
-		}
-
-		hEle = hParent
+	if !xc.XC_IsHELE(e.Handle) {
+		return false
 	}
 
-	xc.XWnd_SetFocusEle(hParent, e.Handle)
-	return true
+	hWindow := xc.XWidget_GetHWINDOW(e.Handle)
+	return xc.XWnd_SetFocusEle(hWindow, e.Handle)
 }
 
 // GetLeft 元素_取左边.
