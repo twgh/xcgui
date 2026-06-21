@@ -23,7 +23,7 @@ func newWindowEventBus() *windowEventBus {
 	}
 }
 
-// AddCallback 添加回调函数, 返回回调函数 ID, 失败返回 -1.
+// AddCallback 添加回调函数, 返回回调函数 ID, 从 0 开始, 失败返回 -1.
 //
 // hWindow: 炫彩窗口句柄.
 //
@@ -111,13 +111,17 @@ func (w *windowEventBus) GetCallbacks(hWindow int, eventType xcc.WM_) []CbInfo {
 // hWindow: 窗口句柄.
 //
 // nEvent: 事件类型, xcc.WM_, xcc.XWM_.
-func (w *windowEventBus) RemoveEvent(hWindow int, nEvent xcc.WM_) *windowEventBus {
+func (w *windowEventBus) RemoveEvent(hWindow int, nEvent xcc.WM_) bool {
 	cbPtr := WndEventBus.GetEventFuncPtr(hWindow, nEvent)
 	if cbPtr > 0 {
-		XWnd_RemoveEventCEx(hWindow, nEvent, cbPtr)
+		if !XWnd_RemoveEventCEx(hWindow, nEvent, cbPtr) {
+			return false
+		}
+	} else {
+		return false
 	}
 	WndEventBus.RemoveCallbacks(hWindow, nEvent)
-	return w
+	return true
 }
 
 // RemoveAllCallback 移除指定窗口的所有事件的 Callback.

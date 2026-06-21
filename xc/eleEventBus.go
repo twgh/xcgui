@@ -36,7 +36,7 @@ func newElementEventBus() *elementEventBus {
 	}
 }
 
-// AddCallback 添加回调函数, 返回回调函数 ID, 失败返回 -1.
+// AddCallback 添加回调函数, 返回回调函数 ID, 从 0 开始, 失败返回 -1.
 //
 // hEle: 元素句柄.
 //
@@ -124,13 +124,17 @@ func (e *elementEventBus) GetCallbacks(hEle int, eventType xcc.XE_) []CbInfo {
 // hEle: 元素句柄.
 //
 // nEvent: 事件类型: xcc.XE_.
-func (e *elementEventBus) RemoveEvent(hEle int, nEvent xcc.XE_) *elementEventBus {
+func (e *elementEventBus) RemoveEvent(hEle int, nEvent xcc.XE_) bool {
 	cbPtr := EleEventBus.GetEventFuncPtr(hEle, nEvent)
 	if cbPtr > 0 {
-		XEle_RemoveEventCEx(hEle, nEvent, cbPtr)
+		if !XEle_RemoveEventCEx(hEle, nEvent, cbPtr) {
+			return false
+		}
+	} else {
+		return false
 	}
 	EleEventBus.RemoveCallbacks(hEle, nEvent)
-	return e
+	return true
 }
 
 // RemoveAllCallback 移除指定元素的所有事件的 Callback.
