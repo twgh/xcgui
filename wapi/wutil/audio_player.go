@@ -5,19 +5,22 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+	"path/filepath"
 	"strings"
 
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
 )
 
-// AudioPlayer 音频播放器.
+// AudioPlayer 音频播放器, 使用 wapi.MciSendString 实现, 仅支持 mp3, m4a, wav 格式.
 //   - 注意: 尽量在调用 Open() 的线程调用其它方法.
 //   - 尽可能统一在 UI 线程调用, 否则可能调用失败.
+//   - wav 不支持设置音量.
 type AudioPlayer struct {
 	// Alias 音频别名.
 	//   - 这是在 Open() 时内部指定的.
 	//   - 可用于自行调用 MCI 命令.
+	//   - 只读的, 不要修改.
 	Alias string
 }
 
@@ -34,9 +37,34 @@ func (ap *AudioPlayer) Open(fileName string) error {
 	if ap.Alias != "" {
 		return nil
 	}
-
 	alias := "audio_" + generateID()
-	cmd := fmt.Sprintf(`open "%s" alias %s`, fileName, alias)
+
+	// 将相对路径转为绝对路径，MCI 对相对路径的支持很差
+	if absPath, err := filepath.Abs(fileName); err == nil {
+		fileName = absPath
+	}
+
+	// 根据扩展名显式指定 type，避免 MCI 自动检测失败
+	var deviceType string
+	ext := strings.ToLower(filepath.Ext(fileName))
+	switch ext {
+	case ".wav":
+		deviceType = "waveaudio"
+	case ".mp3":
+		deviceType = "mpegvideo" // mciSendString 中 mp3 的设备类型是 mpegvideo
+	default:
+		deviceType = "" // 其他格式尝试自动检测
+	}
+
+	// 加上扩展名, 在设置音量时要判断是否 wav
+	alias += ext
+
+	var cmd string
+	if deviceType != "" {
+		cmd = fmt.Sprintf(`open "%s" type %s alias %s`, fileName, deviceType, alias)
+	} else {
+		cmd = fmt.Sprintf(`open "%s" alias %s`, fileName, alias)
+	}
 
 	err := _MciSendString(cmd)
 	if err != nil {
@@ -49,7 +77,7 @@ func (ap *AudioPlayer) Open(fileName string) error {
 
 // PlayOptions 播放选项.
 type PlayOptions struct {
-	// Volume 音量 (0-1000), 不支持某些音频格式.
+	// Volume 音量 (0-1000), 不支持 wav.
 	Volume *int
 	// Wait 是否等待播放完成.
 	Wait bool
@@ -167,12 +195,16 @@ func (ap *AudioPlayer) Close() error {
 	return nil
 }
 
-// SetVolume 设置音量, 不支持某些音频格式.
+// SetVolume 设置音量, 不支持 wav.
 //
 // volume: 音量范围, 0-1000.
 func (ap *AudioPlayer) SetVolume(volume int) error {
 	if ap.Alias == "" {
 		return fmt.Errorf("must open the audio first")
+	}
+
+	if strings.HasSuffix(ap.Alias, ".wav") {
+		return nil // 静默处理：WAV 不支持音量控制是正常现象
 	}
 
 	if volume < 0 {
@@ -200,10 +232,14 @@ func (ap *AudioPlayer) SetVolume(volume int) error {
 	return _MciSendString(cmd)
 }
 
-// GetVolume 获取音量.
+// GetVolume 获取音量, 不支持 wav.
 func (ap *AudioPlayer) GetVolume() (int, error) {
 	if ap.Alias == "" {
 		return 0, fmt.Errorf("must open the audio first")
+	}
+
+	if strings.HasSuffix(ap.Alias, ".wav") {
+		return 0, fmt.Errorf("wav does not support volume control")
 	}
 
 	// 查询音量
