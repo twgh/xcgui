@@ -12,7 +12,7 @@ import (
 	"github.com/twgh/xcgui/wapi"
 )
 
-// AudioPlayer 音频播放器, 使用 wapi.MciSendString 实现, 仅支持 mp3, m4a, wav 格式.
+// AudioPlayer 音频播放器, 使用 wapi.MciSendString 实现, 仅支持 mp3, wma, wav 格式.
 //   - 注意: 尽量在调用 Open() 的线程调用其它方法.
 //   - 尽可能统一在 UI 线程调用, 否则可能调用失败.
 //   - wav 不支持设置音量.
