@@ -59,9 +59,9 @@ func (b *Button) IsCheck() bool {
 
 // 按钮_置选中, 设置选中状态.
 //
-// bCheck: 是否选中.
-func (b *Button) SetCheck(bCheck bool) bool {
-	return xc.XBtn_SetCheck(b.Handle, bCheck)
+// bCheck: 是否选中, 不填默认为 true.
+func (b *Button) SetCheck(bCheck ...bool) bool {
+	return xc.XBtn_SetCheck(b.Handle, bCheck...)
 }
 
 // SetState 按钮_置状态.

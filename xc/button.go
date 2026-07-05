@@ -35,9 +35,13 @@ func XBtn_IsCheck(hEle int) bool {
 //
 // hEle: 元素句柄.
 //
-// bCheck: 是否选中.
-func XBtn_SetCheck(hEle int, bCheck bool) bool {
-	r, _, _ := xBtn_SetCheck.Call(uintptr(hEle), common.BoolPtr(bCheck))
+// bCheck: 是否选中, 不填默认为 true.
+func XBtn_SetCheck(hEle int, bCheck ...bool) bool {
+	check := true
+	if len(bCheck) > 0 {
+		check = bCheck[0]
+	}
+	r, _, _ := xBtn_SetCheck.Call(uintptr(hEle), common.BoolPtr(check))
 	return r != 0
 }
 
