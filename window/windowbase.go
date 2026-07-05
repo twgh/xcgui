@@ -928,6 +928,22 @@ func (w *windowBase) SetIcon(hImage int) *windowBase {
 	return w
 }
 
+// 窗口_置小图标, 任务栏预览窗口左上角的图标.
+//
+// hIcon: 图标句柄, HICON.
+func (w *windowBase) SetSmallIcon(hIcon uintptr) *windowBase {
+	xc.XWnd_SetSmallIcon(w.Handle, hIcon)
+	return w
+}
+
+// 窗口_置大图标, 任务栏图标和 Alt+Tab 页面中的图标.
+//
+// hIcon: 图标句柄, HICON.
+func (w *windowBase) SetBigIcon(hIcon uintptr) *windowBase {
+	xc.XWnd_SetBigIcon(w.Handle, hIcon)
+	return w
+}
+
 // 窗口_置标题.
 //
 // title: 标题文本.

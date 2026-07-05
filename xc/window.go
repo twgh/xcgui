@@ -1023,6 +1023,24 @@ func XWnd_SetIcon(hWindow, hImage int) {
 	xWnd_SetIcon.Call(uintptr(hWindow), uintptr(hImage))
 }
 
+// 窗口_置小图标, 任务栏预览窗口左上角的图标.
+//
+// hWindow: 窗口句柄.
+//
+// hIcon: 图标句柄, HICON.
+func XWnd_SetSmallIcon(hWindow int, hIcon uintptr) {
+	XC_SendMessage(hWindow, uint32(xcc.WM_SETICON), xcc.ICON_SMALL, hIcon)
+}
+
+// 窗口_置大图标, 任务栏图标和 Alt+Tab 页面中的图标.
+//
+// hWindow: 窗口句柄.
+//
+// hIcon: 图标句柄, HICON.
+func XWnd_SetBigIcon(hWindow int, hIcon uintptr) {
+	XC_SendMessage(hWindow, uint32(xcc.WM_SETICON), xcc.ICON_BIG, hIcon)
+}
+
 // 窗口_置标题.
 //
 // hWindow: 窗口句柄.
