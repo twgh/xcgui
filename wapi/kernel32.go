@@ -26,6 +26,7 @@ var (
 	procGetCurrentProcessId = Kernel32.NewProc("GetCurrentProcessId")
 	procGetModuleHandleEx   = Kernel32.NewProc("GetModuleHandleExW")
 	procGetCurrentThreadId  = Kernel32.NewProc("GetCurrentThreadId")
+	mulDiv                  = Kernel32.NewProc("MulDiv")
 )
 
 // GetCurrentThreadId 检索调用线程的线程标识符。在线程终止之前，线程标识符将在整个系统中唯一标识线程。
@@ -221,5 +222,32 @@ func GlobalFree(hMem uintptr) uintptr {
 // 返回值: 返回值是调用线程的最后一个错误代码.
 func GetLastError() int32 {
 	r, _, _ := getLastError.Call()
+	return int32(r)
+}
+
+// MulDiv 将两个 32 位值相乘，对得到的 64 位中间结果除以第三个 32 位值，最终结果四舍五入为最接近的整数。
+//   - 物理像素是屏幕硬件上真实存在的发光点，逻辑像素是为了适应不同屏幕，抽象出来的一种“虚拟尺寸单位”。
+//   - Windows 规定：96 DPI 是标准基准
+//   - 将物理像素转为逻辑像素: MulDiv(物理像素, 96, dpi), dpi = 144 相当于 150% 缩放
+//   - 将逻辑像素转为物理像素: MulDiv(逻辑像素, dpi, 96)
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winbase/nf-winbase-muldiv.
+//
+// nNumber: 被乘数.
+//
+// nNumerator: 乘数.
+//
+// nDenominator: 除数.
+//
+// 返回值:
+//   - 如果函数成功，则返回值是乘除法的最终结果，四舍五入为最接近的整数。
+//   - 如果函数失败，则返回值为 -1。失败的原因包括溢出或 nDenominator 参数为 0。
+//   - 如果失败，请调用 GetLastError 获取更多错误信息.
+func MulDiv(nNumber, nNumerator, nDenominator int32) int32 {
+	r, _, _ := mulDiv.Call(
+		uintptr(nNumber),
+		uintptr(nNumerator),
+		uintptr(nDenominator),
+	)
 	return int32(r)
 }
