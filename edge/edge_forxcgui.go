@@ -52,7 +52,7 @@ type WebView struct {
 //
 // hParent: 炫彩窗口或元素句柄.
 //
-// opts: WebView 选项, 使用 edge.WithXXX, edge.DisableXXX 系列函数.
+// opts: WebView 选项, 使用 edge.WithXXX, edge.DisableXXX 系列函数, 不包含 edge.WithXmlWindowXXX 系列函数.
 //   - 可查看 WebViewOptions.
 //   - 其中默认启用的 WebView 选项可查看 DefaultEnabledWebViewOptions, 用 edge.DisableXXX 禁用.
 func (e *Edge) NewWebView(hParent int, opts ...WebViewOption) (*WebView, error) {
