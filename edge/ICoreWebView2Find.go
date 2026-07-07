@@ -187,7 +187,7 @@ func (i *ICoreWebView2Find) StartEx(impl *WebViewEventImpl, options *ICoreWebVie
 	} else {
 		c = cb
 	}
-	_, _ = WvEventBus.AddCallback(impl, "FindStartCompleted", c, nil)
+	_, _ = WvEventBus.AddCallback(impl, "FindStartCompleted", c, nil, false)
 	handler := WvEventBus.GetHandler(impl, "FindStartCompleted")
 	return i.Start(options, (*ICoreWebView2FindStartCompletedHandler)(handler))
 }

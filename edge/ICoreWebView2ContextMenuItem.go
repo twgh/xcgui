@@ -217,13 +217,13 @@ func (i *ICoreWebView2ContextMenuItem) GetChildren() (*ICoreWebView2ContextMenuI
 // Event_CustomItemSelected 自定义菜单项选中事件. 返回回调函数 ID.
 //   - 此事件仅针对最终开发人员创建的上下文菜单项引发。
 //
-// w: *WebViewEventImpl.
+// impl: *WebViewEventImpl.
 //
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-func (i *ICoreWebView2ContextMenuItem) Event_CustomItemSelected(w *WebViewEventImpl, cb func(sender *ICoreWebView2ContextMenuItem, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
-	return WvEventBus.AddCallback(w, "CustomItemSelected", cb, i, allowAddingMultiple...)
+func (i *ICoreWebView2ContextMenuItem) Event_CustomItemSelected(impl *WebViewEventImpl, cb func(sender *ICoreWebView2ContextMenuItem, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
+	return WvEventBus.AddCallback(impl, "CustomItemSelected", cb, i, allowAddingMultiple...)
 }
 
 // AddCustomItemSelected 添加自定义菜单项选中事件处理程序.

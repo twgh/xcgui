@@ -59,13 +59,13 @@ func (i *ICoreWebView2DownloadOperation) QueryInterface(refiid, object unsafe.Po
 // Event_BytesReceivedChanged 下载字节改变事件. 返回回调函数 ID.
 //   - 当下载的字节数发生更改时触发。
 //
-// w: *WebViewEventImpl.
+// impl: *WebViewEventImpl.
 //
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-func (i *ICoreWebView2DownloadOperation) Event_BytesReceivedChanged(w *WebViewEventImpl, cb func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
-	return WvEventBus.AddCallback(w, "BytesReceivedChanged", cb, i, allowAddingMultiple...)
+func (i *ICoreWebView2DownloadOperation) Event_BytesReceivedChanged(impl *WebViewEventImpl, cb func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
+	return WvEventBus.AddCallback(impl, "BytesReceivedChanged", cb, i, allowAddingMultiple...)
 }
 
 // AddBytesReceivedChanged 添加接收到的字节数改变事件处理程序.
@@ -278,13 +278,13 @@ func (i *ICoreWebView2DownloadOperation) GetCanResume() (bool, error) {
 
 // Event_EstimatedEndTimeChanged 预计结束时间改变事件. 返回回调函数 ID.
 //
-// w: *WebViewEventImpl.
+// impl: *WebViewEventImpl.
 //
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-func (i *ICoreWebView2DownloadOperation) Event_EstimatedEndTimeChanged(w *WebViewEventImpl, cb func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
-	return WvEventBus.AddCallback(w, "EstimatedEndTimeChanged", cb, i, allowAddingMultiple...)
+func (i *ICoreWebView2DownloadOperation) Event_EstimatedEndTimeChanged(impl *WebViewEventImpl, cb func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
+	return WvEventBus.AddCallback(impl, "EstimatedEndTimeChanged", cb, i, allowAddingMultiple...)
 }
 
 // AddEstimatedEndTimeChanged 添加预计结束时间改变事件处理程序.
@@ -314,13 +314,13 @@ func (i *ICoreWebView2DownloadOperation) RemoveEstimatedEndTimeChanged(token Eve
 
 // Event_StateChanged 下载状态改变事件. 返回回调函数 ID.
 //
-// w: *WebViewEventImpl.
+// impl: *WebViewEventImpl.
 //
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-func (i *ICoreWebView2DownloadOperation) Event_StateChanged(w *WebViewEventImpl, cb func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
-	return WvEventBus.AddCallback(w, "StateChanged", cb, i, allowAddingMultiple...)
+func (i *ICoreWebView2DownloadOperation) Event_StateChanged(impl *WebViewEventImpl, cb func(sender *ICoreWebView2DownloadOperation, args *IUnknown) uintptr, allowAddingMultiple ...bool) (int, error) {
+	return WvEventBus.AddCallback(impl, "StateChanged", cb, i, allowAddingMultiple...)
 }
 
 // AddStateChanged 添加状态改变事件处理程序.

@@ -105,7 +105,7 @@ func (i *ICoreWebView2BrowserExtension) RemoveEx(impl *WebViewEventImpl, cb func
 	} else {
 		c = cb
 	}
-	_, _ = WvEventBus.AddCallback(impl, "BrowserExtensionRemoveCompleted", c, nil)
+	_, _ = WvEventBus.AddCallback(impl, "BrowserExtensionRemoveCompleted", c, nil, false)
 	handler := WvEventBus.GetHandler(impl, "BrowserExtensionRemoveCompleted")
 	return i.Remove((*ICoreWebView2BrowserExtensionRemoveCompletedHandler)(handler))
 }
@@ -157,7 +157,7 @@ func (i *ICoreWebView2BrowserExtension) EnableEx(impl *WebViewEventImpl, isEnabl
 	} else {
 		c = cb
 	}
-	_, _ = WvEventBus.AddCallback(impl, "BrowserExtensionEnableCompleted", c, nil)
+	_, _ = WvEventBus.AddCallback(impl, "BrowserExtensionEnableCompleted", c, nil, false)
 	handler := WvEventBus.GetHandler(impl, "BrowserExtensionEnableCompleted")
 	return i.Enable(isEnabled, (*ICoreWebView2BrowserExtensionEnableCompletedHandler)(handler))
 }

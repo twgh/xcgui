@@ -39,13 +39,13 @@ func (i *ICoreWebView2DevToolsProtocolEventReceiver) QueryInterface(refiid, obje
 // Event_DevToolsProtocolEventReceived 是 DevTools 协议事件接收事件. 返回回调函数 ID.
 //   - DevToolsProtocolEventReceived 在收到来自 DevTools 协议的事件时运行。
 //
-// w: *WebViewEventImpl.
+// impl: *WebViewEventImpl.
 //
 // cb: 回调函数.
 //
 // allowAddingMultiple: 是否允许添加多个回调函数, 不填默认为 true.
-func (i *ICoreWebView2DevToolsProtocolEventReceiver) Event_DevToolsProtocolEventReceived(w *WebViewEventImpl, cb func(sender *ICoreWebView2, args *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
-	return WvEventBus.AddCallback(w, "DevToolsProtocolEventReceived", cb, i, allowAddingMultiple...)
+func (i *ICoreWebView2DevToolsProtocolEventReceiver) Event_DevToolsProtocolEventReceived(impl *WebViewEventImpl, cb func(sender *ICoreWebView2, args *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) uintptr, allowAddingMultiple ...bool) (int, error) {
+	return WvEventBus.AddCallback(impl, "DevToolsProtocolEventReceived", cb, i, allowAddingMultiple...)
 }
 
 // AddDevToolsProtocolEventReceived 添加 DevTools 协议事件接收处理程序.

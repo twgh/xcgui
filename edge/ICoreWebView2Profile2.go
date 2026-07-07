@@ -72,7 +72,7 @@ func (i *ICoreWebView2Profile2) ClearBrowsingDataEx(impl *WebViewEventImpl, data
 	} else {
 		c = cb
 	}
-	_, _ = WvEventBus.AddCallback(impl, "ClearBrowsingDataCompleted", c, nil)
+	_, _ = WvEventBus.AddCallback(impl, "ClearBrowsingDataCompleted", c, nil, false)
 	handler := WvEventBus.GetHandler(impl, "ClearBrowsingDataCompleted")
 	return i.ClearBrowsingData(dataKinds, (*ICoreWebView2ClearBrowsingDataCompletedHandler)(handler))
 }
@@ -93,7 +93,7 @@ func (i *ICoreWebView2Profile2) ClearBrowsingDataInTimeRangeEx(impl *WebViewEven
 	} else {
 		c = cb
 	}
-	_, _ = WvEventBus.AddCallback(impl, "ClearBrowsingDataCompleted", c, nil)
+	_, _ = WvEventBus.AddCallback(impl, "ClearBrowsingDataCompleted", c, nil, false)
 	handler := WvEventBus.GetHandler(impl, "ClearBrowsingDataCompleted")
 	return i.ClearBrowsingDataInTimeRange(dataKinds, startTime, endTime, (*ICoreWebView2ClearBrowsingDataCompletedHandler)(handler))
 }
@@ -110,7 +110,7 @@ func (i *ICoreWebView2Profile2) ClearBrowsingDataAllEx(impl *WebViewEventImpl, c
 	} else {
 		c = cb
 	}
-	_, _ = WvEventBus.AddCallback(impl, "ClearBrowsingDataCompleted", c, nil)
+	_, _ = WvEventBus.AddCallback(impl, "ClearBrowsingDataCompleted", c, nil, false)
 	handler := WvEventBus.GetHandler(impl, "ClearBrowsingDataCompleted")
 	return i.ClearBrowsingDataAll((*ICoreWebView2ClearBrowsingDataCompletedHandler)(handler))
 }
