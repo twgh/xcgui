@@ -1,6 +1,8 @@
 package app
 
 import (
+	"time"
+
 	"github.com/twgh/xcgui/font"
 	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
@@ -1062,4 +1064,13 @@ func BindData(hXCGUI int, data int) {
 // hXCGUI: 炫彩对象句柄.
 func GetBindData(hXCGUI int) int {
 	return xc.XC_GetBindData(hXCGUI)
+}
+
+// AfterFunc 会等待指定的时间过去，然后在一个独立的 goroutine 中调用 UI 线程来执行函数 f。
+//   - 它返回一个 Timer，你可以通过调用该 Timer 的 Stop 方法来取消这次调用。
+//   - 注意：返回的 Timer 的 C 字段不会被使用，且始终为 nil。
+func AfterFunc(d time.Duration, f func()) *time.Timer {
+	return time.AfterFunc(d, func() {
+		xc.XC_CallUT(f)
+	})
 }
