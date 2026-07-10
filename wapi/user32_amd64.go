@@ -2,6 +2,11 @@
 
 package wapi
 
+var (
+	procSetWindowLongPtrW = User32.NewProc("SetWindowLongPtrW")
+	procGetWindowLongPtrW = User32.NewProc("GetWindowLongPtrW")
+)
+
 // SetWindowLongPtrW 更改指定窗口的属性。该函数还会在额外的窗口内存中设置指定偏移量的值。返回设置前的属性值。如果函数失败，返回值为 0。在 386 架构中, 内部使用的是 SetWindowLongW.
 //
 // 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-SetWindowLongPtrW.
