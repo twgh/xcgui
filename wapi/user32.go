@@ -47,8 +47,6 @@ var (
 	setWindowsHookExW                          = User32.NewProc("SetWindowsHookExW")
 	unhookWindowsHookEx                        = User32.NewProc("UnhookWindowsHookEx")
 	callNextHookEx                             = User32.NewProc("CallNextHookEx")
-	procSetWindowLongPtrW                      = User32.NewProc("SetWindowLongPtrW")
-	procGetWindowLongPtrW                      = User32.NewProc("GetWindowLongPtrW")
 	procPhysicalToLogicalPointForPerMonitorDPI = User32.NewProc("PhysicalToLogicalPointForPerMonitorDPI")
 	procMoveWindow                             = User32.NewProc("MoveWindow")
 	procSetParent                              = User32.NewProc("SetParent")
@@ -76,8 +74,7 @@ var (
 	procSetCursor                              = User32.NewProc("SetCursor")
 	procGetWindowRect                          = User32.NewProc("GetWindowRect")
 	procSetWindowRgn                           = User32.NewProc("SetWindowRgn")
-	procSetWindowLongW                         = User32.NewProc("SetWindowLongW")
-	procGetWindowLongW                         = User32.NewProc("GetWindowLongW")
+	procSetCursorPos                           = User32.NewProc("SetCursorPos")
 )
 
 // SetWindowRgn 设置窗口的窗口区域。窗口区域确定窗口中系统允许绘制的区域。系统不显示窗口区域外部的窗口的任何部分。
@@ -1707,3 +1704,15 @@ const (
 const (
 	TOUCH_FLAG_NONE uint32 = 0x00000000 // 默认
 )
+
+// SetCursorPos 将光标移动到指定的屏幕坐标。如果新坐标不在由最新 ClipCursor 函数调用设置的屏幕矩形内，则系统会自动调整坐标，使光标停留在矩形内。
+//
+// 详情: https://docs.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-SetCursorPos.
+//
+// x: 光标的新 x 坐标（以屏幕坐标为单位）.
+//
+// y: 光标的新 y 坐标（以屏幕坐标表示）.
+func SetCursorPos(x, y int32) bool {
+	r, _, _ := procSetCursorPos.Call(uintptr(x), uintptr(y))
+	return r != 0
+}

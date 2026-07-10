@@ -117,3 +117,12 @@ func TestGetSystemMetrics(t *testing.T) {
 	y := wapi.GetSystemMetrics(wapi.SM_CYSCREEN)
 	fmt.Println("屏幕宽高:", x, y)
 }
+
+func TestSetCursorPos(t *testing.T) {
+	tf.TFunc(func(a *app.App, w *window.Window) {
+		widget.NewButton(20, 50, 200, 30, "SetCursorPos", w.Handle).AddEvent_BnClick(func(hEle int, pbHandled *bool) int {
+			wapi.SetCursorPos(500, 500)
+			return 0
+		})
+	})
+}
