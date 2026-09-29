@@ -69,6 +69,7 @@ type WebViewOptions struct {
 
 // WebViewSize 是 WebView 的固定位置与大小.
 //   - 当 WebViewOptions.FillParent 为 true 时, 此选项会失效.
+//   - 大小不会超出父窗口(元素)的范围, 超出时会被限制(WebView 宿主是原生窗口, 不会被炫彩窗口裁剪).
 type WebViewSize struct {
 	Left   int32
 	Top    int32

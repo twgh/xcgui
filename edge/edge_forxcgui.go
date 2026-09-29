@@ -325,6 +325,22 @@ func (w *WebView) UpdateSize() {
 		top = rcClient.Top + w.size.Top
 		width = w.size.Width
 		height = w.size.Height
+
+		// WebView 宿主是一个原生窗口, 它不会被炫彩窗口裁剪, 所以大小不能超出父窗口(元素)的范围,
+		// 否则会盖到窗口的阴影上(阴影区域不在窗口主体里, 但仍在原生窗口的客户区里).
+		// 例如窗口宽 1100, 左右各有 8px 阴影, 窗口主体只有 1084 宽, 此时 1100 宽的 WebView 右边就会超出 16px.
+		if width > rcClient.Right-left {
+			width = rcClient.Right - left
+		}
+		if height > rcClient.Bottom-top {
+			height = rcClient.Bottom - top
+		}
+		if width < 0 {
+			width = 0
+		}
+		if height < 0 {
+			height = 0
+		}
 	}
 
 	dpi := int32(96)
