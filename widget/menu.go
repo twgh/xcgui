@@ -470,7 +470,7 @@ func (m *Menu) AddEvent_Menu_Popup_Wnd(hWindowOrhEle int, fn func(hWindowOrhEle 
 // fn: 回调函数.
 //
 // allowAddingMultiple: 允许添加多个回调函数, 不填默认为 true.
-func (m *Menu) AddEvent_Menu_Draw_Background(hWindowOrhEle int, fn func(hEle int, hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int, allowAddingMultiple ...bool) int {
+func (m *Menu) AddEvent_Menu_Draw_Background(hWindowOrhEle int, fn func(hWindowOrhEle int, hDraw int, pInfo *xc.Menu_DrawBackground_, pbHandled *bool) int, allowAddingMultiple ...bool) int {
 	ret := -1
 	if xc.XC_IsHWINDOW(hWindowOrhEle) {
 		ret = xc.WndEventBus.AddCallback(hWindowOrhEle, xcc.XWM_MENU_DRAW_BACKGROUND, xc.OnXWM_MENU_DRAW_BACKGROUND, fn, allowAddingMultiple...)
