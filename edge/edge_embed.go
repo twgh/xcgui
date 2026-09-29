@@ -35,10 +35,20 @@ func DeleteAllVirtualHostNameToEmbedFSMapping() {
 	EmbedFSMapping.DeleteAll()
 }
 
-// JoinUrlHeader 给虚拟主机名拼接 URL 头,
-// 返回: "http://" + hostName
-func JoinUrlHeader(hostName string) string {
-	return "http://" + hostName
+// JoinUrlHeader 给虚拟主机名拼接 URL 头.
+//   - isHttps 不填时返回: "https://" + hostName, 填 false 时返回: "http://" + hostName.
+//   - 默认用 https:// 是因为它的页面属于安全上下文(secure context), 地理位置, 摄像头, 麦克风, 剪贴板
+//     等 API 才可用; 而 http:// 的页面不是安全上下文, 页面调用这些 API 会被浏览器直接拒绝.
+//   - 注意: https:// 的页面里不能引用 http:// 的绝对地址(会被当成混合内容拦截), 页面内请使用相对地址.
+//
+// hostName: 虚拟主机名.
+//
+// isHttps: 是否使用 https, 不填默认为 true.
+func JoinUrlHeader(hostName string, isHttps ...bool) string {
+	if len(isHttps) > 0 && !isHttps[0] {
+		return "http://" + hostName
+	}
+	return "https://" + hostName
 }
 
 // Edge 虚拟主机名和嵌入文件系统之间的映射.
@@ -117,13 +127,15 @@ func (f *embedFsMapping) Has(hostName string) bool {
 }
 
 // Match 匹配指定 URI, 如果匹配到了, 返回 uri 删除了虚拟主机名后的字符串(也就是嵌入文件系统中的文件路径)和嵌入文件系统.
+//   - http:// 和 https:// 都可以匹配到.
 //   - 如果没有匹配到, 则返回空字符串和 nil.
 func (f *embedFsMapping) Match(uri string) (string, fs.FS) {
-	var hostName string
 	for k, v := range f.m {
-		hostName = "http://" + k + "/"
-		if strings.HasPrefix(uri, hostName) {
-			return strings.TrimPrefix(uri, hostName), v
+		for _, scheme := range []string{"http://", "https://"} {
+			urlPrefix := scheme + k + "/"
+			if strings.HasPrefix(uri, urlPrefix) {
+				return strings.TrimPrefix(uri, urlPrefix), v
+			}
 		}
 	}
 	return "", nil
