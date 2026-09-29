@@ -6,6 +6,7 @@ import (
 
 	"github.com/twgh/xcgui/app"
 	"github.com/twgh/xcgui/tf"
+	"github.com/twgh/xcgui/wapi"
 	"github.com/twgh/xcgui/widget"
 	"github.com/twgh/xcgui/window"
 	"github.com/twgh/xcgui/xc"
@@ -49,4 +50,13 @@ func TestHexRGB2RGBA(t *testing.T) {
 func TestParseRGBA(t *testing.T) {
 	fmt.Println(xc.ParseRGBA(xc.RGBA(200, 200, 200, 200)))
 	fmt.Println(xc.ParseRGB(xc.RGB(200, 200, 200)))
+}
+
+func TestDpiConvRound(t *testing.T) {
+	for i := int32(1); i < 2560; i++ {
+		if xc.DpiConvRound(144, i) != wapi.MulDiv(i, 144, 96) {
+			fmt.Println(i)
+		}
+	}
+	fmt.Println("对比结束")
 }
