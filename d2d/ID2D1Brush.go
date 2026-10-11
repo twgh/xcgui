@@ -13,9 +13,9 @@ type ID2D1Brush struct {
 
 type ID2D1BrushVtbl struct {
 	ID2D1ResourceVtbl
-	SetOpacity   ComProc // 4 (void; 形参是 float, 见包注释 ABI 规则 1 —— 本包不实现)
-	SetTransform ComProc // 5 (void; 形参是 D2D1_MATRIX_3X2_F(含 float32), 同样不能用 syscall 调用)
-	GetOpacity   ComProc // 6 (注意: **按值返回 FLOAT**, 在 XMM0 里, 不能用 syscall 读)
+	SetOpacity   ComProc // 4 (void; 形参是**按值 float** → 要用 wapi/com 的转发器, 见包注释 ABI 规则 1)
+	SetTransform ComProc // 5 (void; 形参是 D2D1_MATRIX_3X2_F **指针**, 可直接调 —— 本包暂未封装)
+	GetOpacity   ComProc // 6 (注意: **按值返回 FLOAT**, 在 XMM0 里, syscall 读不到 —— 要 com.CallWithFloat32RetFloat)
 	GetTransform ComProc // 7 (void; 出参 D2D1_MATRIX_3X2_F*)
 }
 

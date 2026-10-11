@@ -86,6 +86,32 @@ func NewRenderTargetByHandle(h uintptr) *ID2D1RenderTarget {
 	return (*ID2D1RenderTarget)(com.InterfacePtr(h))
 }
 
+// SetTransform 设置渲染目标的变换矩阵(影响之后的所有绘制).
+//
+// 矩阵按**指针**传递, 所以走普通 syscall 调用即可 —— 不受包注释 ABI 规则 1(按值 float 形参走 XMM)
+// 的限制. 用完后记得把矩阵设回单位矩阵(IdentityMatrix()), 否则同一渲染目标上的后续绘制会被变换.
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1rendertarget-settransform
+func (i *ID2D1RenderTarget) SetTransform(transform *D2D1_MATRIX_3X2_F) {
+	if i == nil {
+		return
+	}
+	// SetTransform 返回 void, 没有 HRESULT 可查.
+	i.vtbl().SetTransform.Call(uintptr(unsafe.Pointer(i)), uintptr(unsafe.Pointer(transform)))
+}
+
+// GetTransform 读回当前变换矩阵(出参, 同样是 void 方法).
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1rendertarget-gettransform
+func (i *ID2D1RenderTarget) GetTransform() (D2D1_MATRIX_3X2_F, error) {
+	var m D2D1_MATRIX_3X2_F
+	if i == nil {
+		return m, errors.New("d2d: 渲染目标为空")
+	}
+	i.vtbl().GetTransform.Call(uintptr(unsafe.Pointer(i)), uintptr(unsafe.Pointer(&m)))
+	return m, nil
+}
+
 // CreateSolidColorBrush 创建纯色画刷(画刷属性传 NULL, 用默认值; 透明度由颜色自身的 alpha 承担).
 //
 // 画刷是**设备相关**资源: 只能给创建它的渲染目标使用, 用完必须 Release. 一般不必缓存 ——

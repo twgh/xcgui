@@ -22,6 +22,17 @@ func TestNewColorF(t *testing.T) {
 	}
 }
 
+func TestMatrixConstructors(t *testing.T) {
+	id := IdentityMatrix()
+	if id != (D2D1_MATRIX_3X2_F{M11: 1, M22: 1}) {
+		t.Errorf("IdentityMatrix = %+v", id)
+	}
+	tr := TranslationMatrix(10, 20)
+	if tr.M11 != 1 || tr.M22 != 1 || tr.DX != 10 || tr.DY != 20 {
+		t.Errorf("TranslationMatrix = %+v", tr)
+	}
+}
+
 func TestPointArg(t *testing.T) {
 	got := pointArg(D2D1_POINT_2F{X: 1.5, Y: -2.25})
 	want := uintptr(math.Float32bits(1.5)) | uintptr(math.Float32bits(-2.25))<<32

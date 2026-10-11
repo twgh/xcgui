@@ -41,9 +41,14 @@
 //     CreatePathGeometry / Open(只有出参)、CreateSolidColorBrush(颜色按**指针**传)、
 //     FillGeometry(全是指针/整数)、SimplifiedGeometrySink 的 SetFillMode/BeginFigure/AddLines/
 //     EndFigure. 虚表里其余方法照列(为了索引正确), 但标注了不能这样调用的原因 —— 例如
-//     ID2D1RenderTarget::DrawGeometry 的线宽是 float 形参(想要带描边的几何, 只能在 CPU 侧把描边
-//     展开成填充多边形再 FillGeometry), ID2D1Brush::SetTransform 的矩阵含 float32.
+//     ID2D1RenderTarget::DrawGeometry 的线宽是**按值 float**(想带描边只能先在 CPU 侧把描边展开成
+//     填充多边形再 FillGeometry).
+//
+//     另注意区分: **"按值传的 float" 与 "指向浮点结构的指针" 是两回事** —— 后者不受本规则限制,
+//     照常封装即可, 例如 SetTransform(矩阵指针)、CreateSolidColorBrush(颜色指针).
+//
 //  2. 按值传递的 8 字节结构体要打包成一个 64 位整数: D2D1_POINT_2F 用 pointArg 打包.
+//
 //  3. 其余参数一律用指针/整数传是安全的.
 //
 // # 坐标: 直通调用拿不到"当前 UI 对象"的变换与裁剪

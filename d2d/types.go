@@ -31,6 +31,29 @@ type D2D1_RECT_F struct {
 	Left, Top, Right, Bottom float32
 }
 
+// D2D1_MATRIX_3X2_F 是 3x2 仿射变换矩阵, 按指针传递:
+//
+//	| M11 M12 |
+//	| M21 M22 |
+//	| DX  DY  |
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/direct2d/d2d1-matrix-3x2-f
+type D2D1_MATRIX_3X2_F struct {
+	M11, M12 float32
+	M21, M22 float32
+	DX, DY   float32
+}
+
+// IdentityMatrix 返回单位矩阵.
+func IdentityMatrix() D2D1_MATRIX_3X2_F {
+	return D2D1_MATRIX_3X2_F{M11: 1, M22: 1}
+}
+
+// TranslationMatrix 返回平移矩阵(把绘制内容整体位移 dx/dy).
+func TranslationMatrix(dx, dy float32) D2D1_MATRIX_3X2_F {
+	return D2D1_MATRIX_3X2_F{M11: 1, M22: 1, DX: dx, DY: dy}
+}
+
 // D2D1_FILL_MODE 填充模式.
 //
 // https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/ne-d2d1-d2d1_fill_mode
