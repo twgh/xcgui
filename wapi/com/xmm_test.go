@@ -52,6 +52,32 @@ func TestXmmArgsLayout(t *testing.T) {
 	}
 }
 
+// 第 5 个参数必须真的落到栈上 —— 用 ReadProcessMemory 读自己进程里的一个变量验证:
+// 它的第 5 个参数是"实际读到的字节数", 传对的话写回 8.
+func TestCallWithFloat32Stack1(t *testing.T) {
+	read := syscall.NewLazyDLL("kernel32.dll").NewProc("ReadProcessMemory")
+	if err := read.Find(); err != nil {
+		t.Skipf("找不到 kernel32.ReadProcessMemory: %v", err)
+	}
+	secret := uint64(0x1122334455667788)
+	var buf uint64
+	var n uintptr
+	const curProcess = ^uintptr(0) // GetCurrentProcess() 伪句柄 = -1
+	r := CallWithFloat32Stack1(read.Addr(),
+		[4]uintptr{curProcess, uintptr(unsafe.Pointer(&secret)), uintptr(unsafe.Pointer(&buf)), 8},
+		[4]float32{},
+		uintptr(unsafe.Pointer(&n)))
+	if r == 0 {
+		t.Fatal("ReadProcessMemory 返回 0(失败)")
+	}
+	if buf != secret {
+		t.Errorf("读回 %#x, 期望 %#x", buf, secret)
+	}
+	if n != 8 {
+		t.Errorf("第 5 个参数(读到的字节数) = %d, 期望 8 —— 说明它没被正确压栈", n)
+	}
+}
+
 // 空函数指针必须安全返回 0(否则会 CALL 到地址 0).
 func TestCallWithNilFn(t *testing.T) {
 	if CallWithFloat32(0, [4]uintptr{}, [4]float32{}) != 0 {

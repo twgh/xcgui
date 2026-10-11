@@ -73,6 +73,25 @@ func (i *ID2D1Factory) CreatePathGeometry() (*ID2D1PathGeometry, error) {
 	return geometry, nil
 }
 
+// CreateStrokeStyle 创建描边样式(线帽 / 连接 / 虚线). 自定义虚线段(dashes)传 NULL, 即用内置虚线样式.
+//
+// 描边样式是**设备无关**资源(归属工厂), 建议建一次缓存起来(见 RoundStrokeStyleProperties: 圆角连接 +
+// 圆头的 SVG 语义).
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1factory-createstrokestyle(constd2d1_stroke_style_properties_constfloat_uint32_id2d1strokestyle)
+func (i *ID2D1Factory) CreateStrokeStyle(props *D2D1_STROKE_STYLE_PROPERTIES) (*ID2D1StrokeStyle, error) {
+	if i == nil {
+		return nil, errors.New("d2d: 工厂为空(未开启 D2D?)")
+	}
+	var style *ID2D1StrokeStyle
+	r, _, _ := i.vtbl().CreateStrokeStyle.Call(uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(props)), 0, 0, uintptr(unsafe.Pointer(&style)))
+	if r != 0 {
+		return nil, errno(r)
+	}
+	return style, nil
+}
+
 // NewGeometry 一步构造一条可用几何(便利方法, 不是 SDK 原生 API).
 //
 // figures 是若干**闭合**折线(扁平 x,y 点对, 每条至少 3 个点; 点数不足的会被跳过).
@@ -82,6 +101,32 @@ func (i *ID2D1Factory) CreatePathGeometry() (*ID2D1PathGeometry, error) {
 // 内部按 CreatePathGeometry → Open → BeginFigure/AddLines/EndFigure → Close 走完整流程,
 // 并做合法性自检; 任一步失败返回错误与 nil(调用方应走回落路径, 而不是硬画).
 func (i *ID2D1Factory) NewGeometry(figures [][]float32) (*ID2D1PathGeometry, error) {
+	closed := make([]GeometryFigure, 0, len(figures))
+	for _, figure := range figures {
+		if len(figure) < 6 { // 闭合填充至少 3 个点, 否则围不出面积
+			continue
+		}
+		closed = append(closed, GeometryFigure{Points: figure, Closed: true})
+	}
+	if len(closed) == 0 {
+		return nil, errors.New("d2d: 没有一个 figure 至少有 3 个点")
+	}
+	return i.NewGeometryFigures(closed)
+}
+
+// GeometryFigure 几何里的一条子路径: 扁平 x,y 点对 + 是否闭合.
+//
+// **描边用途(如 lucide 图标的折线)必须 Closed=false** —— 闭合会多画一段收尾线(三角形折线变回形针);
+// 填充用途要 Closed=true. 至少 2 个点才有意义(单点既围不出面积也描不出线).
+type GeometryFigure struct {
+	Points []float32
+	Closed bool
+}
+
+// NewGeometryFigures 按给定子路径构造几何(每条可分别开/闭), 填充模式 WINDING, 末尾做合法性自检.
+//
+// 与 NewGeometry 的关系: 后者是"全部闭合 + 至少 3 个点"的便捷形式, 内部就是转成本函数再建.
+func (i *ID2D1Factory) NewGeometryFigures(figures []GeometryFigure) (*ID2D1PathGeometry, error) {
 	geometry, err := i.CreatePathGeometry()
 	if err != nil {
 		return nil, err
@@ -94,18 +139,22 @@ func (i *ID2D1Factory) NewGeometry(figures [][]float32) (*ID2D1PathGeometry, err
 	sink.SetFillMode(D2D1_FILL_MODE_WINDING)
 	n := 0
 	for _, figure := range figures {
-		if len(figure) < 6 { // 少于 3 个点围不出面积
+		if len(figure.Points) < 4 { // 少于 2 个点
 			continue
 		}
-		sink.BeginFigure(D2D1_POINT_2F{X: figure[0], Y: figure[1]}, D2D1_FIGURE_BEGIN_FILLED)
-		sink.AddLines(figure[2:])
-		sink.EndFigure(D2D1_FIGURE_END_CLOSED)
+		end := D2D1_FIGURE_END_OPEN
+		if figure.Closed {
+			end = D2D1_FIGURE_END_CLOSED
+		}
+		sink.BeginFigure(D2D1_POINT_2F{X: figure.Points[0], Y: figure.Points[1]}, D2D1_FIGURE_BEGIN_FILLED)
+		sink.AddLines(figure.Points[2:])
+		sink.EndFigure(end)
 		n++
 	}
 	if n == 0 {
 		sink.Release()
 		geometry.Release()
-		return nil, errors.New("d2d: 没有一个 figure 至少有 3 个点")
+		return nil, errors.New("d2d: 没有一个子路径至少有 2 个点")
 	}
 	if err := sink.Close(); err != nil { // Close 成功后几何写入器自动释放
 		geometry.Release()

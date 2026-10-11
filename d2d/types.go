@@ -44,6 +44,82 @@ type D2D1_MATRIX_3X2_F struct {
 	DX, DY   float32
 }
 
+// D2D1_CAP_STYLE 线帽样式.
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/ne-d2d1-d2d1_cap_style
+type D2D1_CAP_STYLE int32
+
+const (
+	D2D1_CAP_STYLE_FLAT D2D1_CAP_STYLE = iota
+	D2D1_CAP_STYLE_SQUARE
+	D2D1_CAP_STYLE_ROUND
+	D2D1_CAP_STYLE_TRIANGLE
+)
+
+// D2D1_DASH_CAP_STYLE 虚线端点样式(取值同 D2D1_CAP_STYLE).
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/ne-d2d1-d2d1_dash_cap_style
+type D2D1_DASH_CAP_STYLE int32
+
+const (
+	D2D1_DASH_CAP_STYLE_FLAT D2D1_DASH_CAP_STYLE = iota
+	D2D1_DASH_CAP_STYLE_SQUARE
+	D2D1_DASH_CAP_STYLE_ROUND
+	D2D1_DASH_CAP_STYLE_TRIANGLE
+)
+
+// D2D1_LINE_JOIN 连接样式.
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/ne-d2d1-d2d1_line_join
+type D2D1_LINE_JOIN int32
+
+const (
+	D2D1_LINE_JOIN_MITER D2D1_LINE_JOIN = iota
+	D2D1_LINE_JOIN_BEVEL
+	D2D1_LINE_JOIN_ROUND
+	D2D1_LINE_JOIN_MITER_OR_BEVEL
+)
+
+// D2D1_DASH_STYLE 虚线样式.
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/ne-d2d1-d2d1_dash_style
+type D2D1_DASH_STYLE int32
+
+const (
+	D2D1_DASH_STYLE_SOLID D2D1_DASH_STYLE = iota
+	D2D1_DASH_STYLE_DASH
+	D2D1_DASH_STYLE_DOT
+	D2D1_DASH_STYLE_DASH_DOT
+	D2D1_DASH_STYLE_DASH_DOT_DOT
+	D2D1_DASH_STYLE_CUSTOM
+)
+
+// D2D1_STROKE_STYLE_PROPERTIES 描边样式属性(按指针传给 ID2D1Factory::CreateStrokeStyle).
+//
+// 字段顺序即 C 结构体布局(4 个枚举 + 1 个 float + 1 个枚举 = 24 字节), 不要改.
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/ns-d2d1-d2d1_stroke_style_properties
+type D2D1_STROKE_STYLE_PROPERTIES struct {
+	StartCap   D2D1_CAP_STYLE
+	EndCap     D2D1_CAP_STYLE
+	DashCap    D2D1_DASH_CAP_STYLE
+	LineJoin   D2D1_LINE_JOIN
+	MiterLimit float32
+	DashStyle  D2D1_DASH_STYLE
+}
+
+// RoundStrokeStyleProperties 返回"圆角连接 + 圆头 + 实线"的描边属性 —— 即 SVG 里
+// `stroke-linecap="round" stroke-linejoin="round"` 的语义(lucide 图标就是这个).
+func RoundStrokeStyleProperties() D2D1_STROKE_STYLE_PROPERTIES {
+	return D2D1_STROKE_STYLE_PROPERTIES{
+		StartCap:  D2D1_CAP_STYLE_ROUND,
+		EndCap:    D2D1_CAP_STYLE_ROUND,
+		DashCap:   D2D1_DASH_CAP_STYLE_ROUND,
+		LineJoin:  D2D1_LINE_JOIN_ROUND,
+		DashStyle: D2D1_DASH_STYLE_SOLID,
+	}
+}
+
 // IdentityMatrix 返回单位矩阵.
 func IdentityMatrix() D2D1_MATRIX_3X2_F {
 	return D2D1_MATRIX_3X2_F{M11: 1, M22: 1}

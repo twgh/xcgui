@@ -55,14 +55,22 @@ func TestVtblIndexLayout(t *testing.T) {
 
 	var factory ID2D1FactoryVtbl
 	check("ID2D1Factory.CreatePathGeometry", unsafe.Offsetof(factory.CreatePathGeometry), 10*p)
+	check("ID2D1Factory.CreateStrokeStyle", unsafe.Offsetof(factory.CreateStrokeStyle), 11*p)
 	check("ID2D1Factory.Release", unsafe.Offsetof(factory.Release), 2*p)
 
 	var rt ID2D1RenderTargetVtbl
 	check("ID2D1RenderTarget.GetFactory", unsafe.Offsetof(rt.GetFactory), 3*p)
 	check("ID2D1RenderTarget.CreateSolidColorBrush", unsafe.Offsetof(rt.CreateSolidColorBrush), 8*p)
+	check("ID2D1RenderTarget.DrawGeometry", unsafe.Offsetof(rt.DrawGeometry), 22*p)
 	check("ID2D1RenderTarget.FillGeometry", unsafe.Offsetof(rt.FillGeometry), 23*p)
 	check("ID2D1RenderTarget.SetTransform", unsafe.Offsetof(rt.SetTransform), 30*p)
 	check("ID2D1RenderTarget.IsSupported", unsafe.Offsetof(rt.IsSupported), 50*p)
+
+	var stroke ID2D1StrokeStyleVtbl
+	check("ID2D1StrokeStyle.GetStartCap", unsafe.Offsetof(stroke.GetStartCap), 4*p)
+	check("ID2D1StrokeStyle.GetLineJoin", unsafe.Offsetof(stroke.GetLineJoin), 8*p)
+	check("ID2D1StrokeStyle.GetDashStyle", unsafe.Offsetof(stroke.GetDashStyle), 10*p)
+	check("ID2D1StrokeStyle.GetDashes", unsafe.Offsetof(stroke.GetDashes), 12*p)
 
 	var path ID2D1PathGeometryVtbl
 	check("ID2D1PathGeometry.GetBounds", unsafe.Offsetof(path.GetBounds), 4*p)
@@ -98,6 +106,7 @@ func TestStructLayout(t *testing.T) {
 		{"ID2D1PathGeometry", unsafe.Sizeof(ID2D1PathGeometry{})},
 		{"ID2D1Brush", unsafe.Sizeof(ID2D1Brush{})},
 		{"ID2D1SolidColorBrush", unsafe.Sizeof(ID2D1SolidColorBrush{})},
+		{"ID2D1StrokeStyle", unsafe.Sizeof(ID2D1StrokeStyle{})},
 		{"ID2D1SimplifiedGeometrySink", unsafe.Sizeof(ID2D1SimplifiedGeometrySink{})},
 		{"ID2D1GeometrySink", unsafe.Sizeof(ID2D1GeometrySink{})},
 	}
@@ -227,5 +236,13 @@ func TestNilSafety(t *testing.T) {
 	var base *ID2D1Brush
 	if base.Release() != 0 {
 		t.Error("nil 画刷 Release 应返回 0")
+	}
+
+	var style *ID2D1StrokeStyle
+	if style.Release() != 0 {
+		t.Error("nil 描边样式 Release 应返回 0")
+	}
+	if style.GetLineJoin() != 0 {
+		t.Error("nil 描边样式 GetLineJoin 应返回 0")
 	}
 }

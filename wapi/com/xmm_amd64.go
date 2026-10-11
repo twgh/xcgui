@@ -38,6 +38,15 @@ type xmmArgs64 struct {
 	x3   uint64
 }
 
+// xmmArgsS1 在 xmmArgs 之上多一个**栈参数**(第 5 个参数, x64 约定里超出 4 个整数寄存器就压栈).
+//
+// 偏移: fn=0, this=8, a1=16, a2=24, a3=32, x0=40, x1=44, x2=48, x3=52, **stack0=56**.
+type xmmArgsS1 struct {
+	fn, this, a1, a2, a3 uintptr
+	x0, x1, x2, x3       uint32
+	stack0               uintptr
+}
+
 // xmmTrampoline32 / xmmTrampoline64 由 xmm_amd64.s 实现, 按 **Windows x64 约定**接收参数
 // (RCX = 参数块指针, 返回 RAX).
 //
@@ -61,10 +70,16 @@ func xmmTrampoline64()
 //go:noescape
 func xmmTrampoline32RetFloat()
 
+// xmmTrampoline32S1 同 xmmTrampoline32, 另把参数块里的 stack0 放到第 5 个参数位(见 .s).
+//
+//go:noescape
+func xmmTrampoline32S1()
+
 var (
 	xmmTrampoline32PC         = reflect.ValueOf(xmmTrampoline32).Pointer()
 	xmmTrampoline64PC         = reflect.ValueOf(xmmTrampoline64).Pointer()
 	xmmTrampoline32RetFloatPC = reflect.ValueOf(xmmTrampoline32RetFloat).Pointer()
+	xmmTrampoline32S1PC       = reflect.ValueOf(xmmTrampoline32S1).Pointer()
 )
 
 // CallWithFloat32 调用"整数/指针 + float32 混合形参"的 COM 方法(仅 amd64; 386 见包注释).
@@ -135,6 +150,40 @@ func CallWithFloat32RetFloat(fn uintptr, ints [4]uintptr, flts [4]float32) float
 	}
 	r, _, _ := syscall.SyscallN(xmmTrampoline32RetFloatPC, uintptr(unsafe.Pointer(&args)))
 	return math.Float32frombits(uint32(r))
+}
+
+// CallWithFloat32Stack1 同 CallWithFloat32, 但目标方法还有**第 5 个参数**(超出 4 个整数寄存器,
+// 按 Windows x64 约定压栈).
+//
+// 典型用例: `ID2D1RenderTarget::DrawGeometry(geometry, brush, FLOAT strokeWidth, ID2D1StrokeStyle *style)`
+// —— 按"位置计数"布局(见包注释第 3 条)参数落位是: this→RCX, geometry→RDX, brush→R8,
+// strokeWidth→**XMM3**, style→**栈**; 于是:
+//
+//	com.CallWithFloat32Stack1(uintptr(vtbl.DrawGeometry),
+//		[4]uintptr{this, geometry, brush, 0},        // R9 无对应参数, 随便填
+//		[4]float32{0, 0, 0, strokeWidth},            // 线宽在 XMM3
+//		uintptr(unsafe.Pointer(strokeStyle)))        // 第 5 个参数压栈(NULL 也行)
+//
+// 这条布局是真机实测出来的: 按"独立计数"把线宽塞 XMM0、样式塞 R9 时, 调用不崩但整帧渲染被搞坏
+// (窗口全黑); 按位置计数(线宽 XMM3 + 样式压栈)则正确画出描边 —— 与 SetOpacity 读 XMM1 的规律一致.
+func CallWithFloat32Stack1(fn uintptr, ints [4]uintptr, flts [4]float32, stack0 uintptr) uintptr {
+	if fn == 0 {
+		return 0
+	}
+	args := xmmArgsS1{
+		fn:     fn,
+		this:   ints[0],
+		a1:     ints[1],
+		a2:     ints[2],
+		a3:     ints[3],
+		x0:     math.Float32bits(flts[0]),
+		x1:     math.Float32bits(flts[1]),
+		x2:     math.Float32bits(flts[2]),
+		x3:     math.Float32bits(flts[3]),
+		stack0: stack0,
+	}
+	r, _, _ := syscall.SyscallN(xmmTrampoline32S1PC, uintptr(unsafe.Pointer(&args)))
+	return r
 }
 
 // CallWithFloat64 同 CallWithFloat32, 但浮点形参是 float64(填 XMM0~XMM3 用 MOVSD).

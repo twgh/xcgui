@@ -36,6 +36,10 @@
 //     填 0.5, 只有 XMM1 生效; 这类接口按"参数位置"编号(this 占位置 0). 换新接口前先用
 //     "写一个值 + 用 getter 读回"验证一次槽位; 也要注意目标方法可能因**对象状态**而崩(例如 DPI=0
 //     的渲染目标上 SetDpi 必崩), 那不是传参问题, 换纯属性 setter 验证.
+//  4. **第 5 个及以后的参数要压栈**(x64 约定: 超出 RCX/RDX/R8/R9 的放 [RSP+32] 起, 前 32 字节是
+//     shadow space): 用 CallWithFloat32Stack1("4 个整数/指针 + 浮点 + 1 个栈参数"). 实测用例
+//     ID2D1RenderTarget::DrawGeometry(geometry, brush, FLOAT strokeWidth, ID2D1StrokeStyle *style) ——
+//     按位置计数落位是 this→RCX / geometry→RDX / brush→R8 / strokeWidth→XMM3 / style→栈.
 //
 // 附: edge 的 amd64 分支用 math.Float64bits 打包传 double(edge/edge_amd64.go), 按上面的机制
 // **不保证生效**(是否"碰巧能用"取决于调用点 XMM 的残留值); 它的 386 分支才是符合 ABI 的写法.

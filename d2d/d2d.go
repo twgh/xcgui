@@ -85,6 +85,14 @@ func (i *ID2D1SolidColorBrush) Release() uintptr {
 	return i.ID2D1Brush.Release()
 }
 
+// Release 释放描边样式(nil 安全).
+func (i *ID2D1StrokeStyle) Release() uintptr {
+	if i == nil {
+		return 0
+	}
+	return i.ID2D1Resource.Release()
+}
+
 // Release 释放几何写入器(nil 安全; Close 成功时已自动释放).
 func (i *ID2D1SimplifiedGeometrySink) Release() uintptr {
 	if i == nil {
@@ -115,6 +123,7 @@ var (
 	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1PathGeometry{}))-int(unsafe.Sizeof(uintptr(0)))]
 	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1Brush{}))-int(unsafe.Sizeof(uintptr(0)))]
 	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1SolidColorBrush{}))-int(unsafe.Sizeof(uintptr(0)))]
+	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1StrokeStyle{}))-int(unsafe.Sizeof(uintptr(0)))]
 	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1SimplifiedGeometrySink{}))-int(unsafe.Sizeof(uintptr(0)))]
 	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1GeometrySink{}))-int(unsafe.Sizeof(uintptr(0)))]
 	_ = [1]struct{}{}[int(unsafe.Sizeof(IUnknownVtbl{}))-int(3*unsafe.Sizeof(uintptr(0)))]
