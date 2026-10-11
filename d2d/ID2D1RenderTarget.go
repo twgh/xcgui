@@ -1,0 +1,140 @@
+package d2d
+
+import (
+	"errors"
+	"unsafe"
+
+	"github.com/twgh/xcgui/wapi/com"
+)
+
+// ID2D1RenderTarget 是 Direct2D 的渲染目标, 所有绘制调用都落在它上面.
+//
+// 它由 xcgui 的绘制模块持有(见 xc.XDraw_GetD2dRenderTarget), 这里只是借用, 不要 Release;
+// 只在绘制回调内使用.
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nn-d2d1-id2d1rendertarget
+type ID2D1RenderTarget struct {
+	ID2D1Resource
+}
+
+type ID2D1RenderTargetVtbl struct {
+	ID2D1ResourceVtbl
+	CreateBitmap                 ComProc // 4
+	CreateBitmapFromWicBitmap    ComProc // 5
+	CreateSharedBitmap           ComProc // 6
+	CreateBitmapBrush            ComProc // 7
+	CreateSolidColorBrush        ComProc // 8
+	CreateGradientStopCollection ComProc // 9
+	CreateLinearGradientBrush    ComProc // 10
+	CreateRadialGradientBrush    ComProc // 11
+	CreateCompatibleRenderTarget ComProc // 12
+	CreateLayer                  ComProc // 13
+	CreateMesh                   ComProc // 14
+	DrawLine                     ComProc // 15
+	DrawRectangle                ComProc // 16
+	FillRectangle                ComProc // 17
+	DrawRoundedRectangle         ComProc // 18
+	FillRoundedRectangle         ComProc // 19
+	DrawEllipse                  ComProc // 20
+	FillEllipse                  ComProc // 21
+	DrawGeometry                 ComProc // 22
+	FillGeometry                 ComProc // 23
+	FillMesh                     ComProc // 24
+	FillOpacityMask              ComProc // 25
+	DrawBitmap                   ComProc // 26
+	DrawText                     ComProc // 27
+	DrawTextLayout               ComProc // 28
+	DrawGlyphRun                 ComProc // 29
+	SetTransform                 ComProc // 30
+	GetTransform                 ComProc // 31
+	SetAntialiasMode             ComProc // 32
+	GetAntialiasMode             ComProc // 33
+	SetTextAntialiasMode         ComProc // 34
+	GetTextAntialiasMode         ComProc // 35
+	SetTextRenderingParams       ComProc // 36
+	GetTextRenderingParams       ComProc // 37
+	SetTags                      ComProc // 38
+	GetTags                      ComProc // 39
+	PushLayer                    ComProc // 40
+	PopLayer                     ComProc // 41
+	Flush                        ComProc // 42
+	EndDraw                      ComProc // 43
+	GetPixelFormat               ComProc // 44
+	SetDpi                       ComProc // 45
+	GetDpi                       ComProc // 46
+	GetSize                      ComProc // 47
+	GetPixelSize                 ComProc // 48
+	GetMaximumBitmapSize         ComProc // 49
+	IsSupported                  ComProc // 50
+}
+
+// vtbl 取本接口的虚表(见 ID2D1Factory.vtbl 的说明: 必须取 i.Vtbl, 不能把对象地址当虚表).
+func (i *ID2D1RenderTarget) vtbl() *ID2D1RenderTargetVtbl {
+	if i == nil {
+		return nil
+	}
+	return (*ID2D1RenderTargetVtbl)(unsafe.Pointer(i.Vtbl))
+}
+
+// NewRenderTargetByHandle 从 xc.XDraw_GetD2dRenderTarget(hDraw) 的返回值构造渲染目标对象.
+//
+// GDI 渲染模式(GDI 模式没有 D2D 目标)下句柄为 0, 此时返回 nil —— 调用方据此走回落路径.
+func NewRenderTargetByHandle(h uintptr) *ID2D1RenderTarget {
+	if h == 0 {
+		return nil
+	}
+	return (*ID2D1RenderTarget)(com.InterfacePtr(h))
+}
+
+// CreateSolidColorBrush 创建纯色画刷(画刷属性传 NULL, 用默认值; 透明度由颜色自身的 alpha 承担).
+//
+// 画刷是**设备相关**资源: 只能给创建它的渲染目标使用, 用完必须 Release. 一般不必缓存 ——
+// 直接调 FillGeometryColor 即可.
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1rendertarget-createsolidcolorbrush(constd2d1_color_f_constd2d1_brush_properties_id2d1solidcolorbrush)
+func (i *ID2D1RenderTarget) CreateSolidColorBrush(color *D2D1_COLOR_F) (*ID2D1SolidColorBrush, error) {
+	if i == nil {
+		return nil, errors.New("d2d: 渲染目标为空")
+	}
+	var brush *ID2D1SolidColorBrush
+	r, _, _ := i.vtbl().CreateSolidColorBrush.Call(uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(color)), 0, uintptr(unsafe.Pointer(&brush)))
+	if r != 0 {
+		return nil, errno(r)
+	}
+	return brush, nil
+}
+
+// FillGeometry 用画刷填充几何(图层传 NULL, 即不做图层混合).
+//
+// 出图前先做一次几何合法性自检: 坏几何(索引错位 / 没 Close 成功)会让 xcgui 整帧不呈现 ——
+// 宁可这一笔不画, 也不能把坏几何喂进去.
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1rendertarget-fillgeometry
+func (i *ID2D1RenderTarget) FillGeometry(geometry *ID2D1PathGeometry, brush *ID2D1Brush) error {
+	if i == nil {
+		return errors.New("d2d: 渲染目标为空")
+	}
+	if !geometry.Usable() {
+		return errors.New("d2d: 几何不可用(未 Close 成功或已释放)")
+	}
+	if brush == nil {
+		return errors.New("d2d: 画刷为空")
+	}
+	// FillGeometry 返回 void, 没有 HRESULT 可查(照直觉去查返回值的做法在这里是错的).
+	i.vtbl().FillGeometry.Call(uintptr(unsafe.Pointer(i)), uintptr(unsafe.Pointer(geometry)),
+		uintptr(unsafe.Pointer(brush)), 0)
+	return nil
+}
+
+// FillGeometryColor 建画刷 → 填充 → 立刻释放画刷(便利方法, 不是 SDK 原生 API).
+//
+// 画刷是设备相关资源, "每帧即建即放"最省心; 实测建画刷的代价远小于几何本身.
+func (i *ID2D1RenderTarget) FillGeometryColor(geometry *ID2D1PathGeometry, color D2D1_COLOR_F) error {
+	brush, err := i.CreateSolidColorBrush(&color)
+	if err != nil {
+		return err
+	}
+	defer brush.Release()
+	return i.FillGeometry(geometry, &brush.ID2D1Brush) // ID2D1SolidColorBrush 嵌入 ID2D1Brush, 直接取地址即可
+}

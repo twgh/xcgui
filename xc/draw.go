@@ -804,7 +804,17 @@ func XDraw_GDI_SetPixel(hDraw int, X, Y int32, crColor uint32) uint32 {
 	return uint32(r)
 }
 
-// 绘制_取D2D渲染目标, 返回 *ID2D1RenderTarget.
+// 绘制_取D2D渲染目标, 返回 *ID2D1RenderTarget, 开启D2D有效(未开启返回 0).
+//
+// 拿到的是裸接口指针, 可以直接调用 Direct2D 的方法(纯 Go, 不需要 cgo, 抗锯齿同样生效),
+// 例如建路径几何并填充; 常用封装见 github.com/twgh/xcgui/d2d 包.
+//
+// 注意三点:
+//  1. 返回值的 vtable 布局是 ID2D1RenderTarget, 若将来换成 ID2D1DeviceContext, 方法索引全部不同;
+//  2. 直通调用拿不到"当前UI对象"的变换与裁剪(炫彩是在刷新自己的绘制命令时才施加它们), 直接按
+//     客户区坐标绘制会落到父级(窗口)坐标系里(表现为画到了窗口左上角) —— 必须先 XDraw_ConvRect
+//     把客户区坐标换算成画布对齐坐标, 换算结果是**物理像素**, 不要再乘 DPI;
+//  3. 该对象由 xcgui 持有, 借用即可, 不要 Release.
 //
 // hDraw: 图形绘制句柄.
 func XDraw_GetD2dRenderTarget(hDraw int) uintptr {
@@ -1383,6 +1393,10 @@ func XDraw_GetD2dBitmap(hDraw int) uintptr {
 }
 
 // 绘制_转换坐标, 从当前UI对象客户区坐标转换到画布对齐坐标, 自动适应DPI, 便于用户使用第三方绘图接口.
+//
+// 用直通方式(如 XDraw_GetD2dRenderTarget)自己绘制时, 必须先经过本函数换算: 炫彩只在刷新自己的
+// 绘制命令时才施加元素偏移与裁剪, 直通调用发生在绘制回调里、命令队列之前, 拿到的是父级(窗口)
+// 坐标系. 换算结果就是**物理像素**, 直接喂给第三方接口即可, 不要再乘 DPI. 见 d2d 包.
 //
 // hDraw: 图形绘制句柄.
 //
