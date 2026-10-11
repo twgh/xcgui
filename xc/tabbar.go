@@ -1,8 +1,9 @@
 package xc
 
 import (
-	"github.com/twgh/xcgui/common"
 	"unsafe"
+
+	"github.com/twgh/xcgui/common"
 )
 
 // TAB条_创建, 创建tabBar元素, 返回元素句柄.
@@ -157,21 +158,6 @@ func XTabBar_GetindexByEle(hEle int, hLabel int) int32 {
 // spacing: 标签间隔大小.
 func XTabBar_SetLabelSpacing(hEle int, spacing int32) {
 	xTabBar_SetLabelSpacing.Call(uintptr(hEle), uintptr(spacing))
-}
-
-// TAB条_置边距, 设置内容与边框的间隔大小.
-//
-// hEle: 元素句柄.
-//
-// left: 左边间隔大小.
-//
-// top: 上边间隔大小.
-//
-// right: 右边间隔大小.
-//
-// bottom: 下边间隔大小.
-func XTabBar_SetPadding(hEle int, left, top, right, bottom int32) {
-	xTabBar_SetPadding.Call(uintptr(hEle), uintptr(left), uintptr(top), uintptr(right), uintptr(bottom))
 }
 
 // TAB条_置选择, 设置选择标签.

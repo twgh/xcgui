@@ -162,7 +162,8 @@ func (t *TabBar) SetLabelSpacing(spacing int32) *TabBar {
 	return t
 }
 
-// TAB条_置边距, 设置内容与边框的间隔大小.
+// !API 不存在
+/* // TAB条_置边距, 设置内容与边框的间隔大小.
 //
 // left: 左边间隔大小.
 //
@@ -174,7 +175,7 @@ func (t *TabBar) SetLabelSpacing(spacing int32) *TabBar {
 func (t *TabBar) SetPadding(left, top, right, bottom int32) *TabBar {
 	xc.XTabBar_SetPadding(t.Handle, left, top, right, bottom)
 	return t
-}
+} */
 
 // TAB条_置选择, 设置选择标签.
 //
