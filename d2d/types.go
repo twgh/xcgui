@@ -31,6 +31,29 @@ type D2D1_RECT_F struct {
 	Left, Top, Right, Bottom float32
 }
 
+// D2D1_ELLIPSE 椭圆: 中心点 + 两个半径, 按指针传递(DrawEllipse / FillEllipse / CreateEllipseGeometry).
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/ns-d2d1-d2d1_ellipse
+type D2D1_ELLIPSE struct {
+	Point   D2D1_POINT_2F
+	RadiusX float32
+	RadiusY float32
+}
+
+// NewEllipse 从中心与半径构造椭圆.
+func NewEllipse(cx, cy, rx, ry float32) D2D1_ELLIPSE {
+	return D2D1_ELLIPSE{Point: D2D1_POINT_2F{X: cx, Y: cy}, RadiusX: rx, RadiusY: ry}
+}
+
+// D2D1_ROUNDED_RECT 圆角矩形, 按指针传递(CreateRoundedRectangleGeometry).
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/ns-d2d1-d2d1_rounded_rect
+type D2D1_ROUNDED_RECT struct {
+	Rect    D2D1_RECT_F
+	RadiusX float32
+	RadiusY float32
+}
+
 // D2D1_MATRIX_3X2_F 是 3x2 仿射变换矩阵, 按指针传递:
 //
 //	| M11 M12 |

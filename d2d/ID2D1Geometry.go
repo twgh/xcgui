@@ -55,6 +55,21 @@ func (i *ID2D1Geometry) GetBounds() (D2D1_RECT_F, error) {
 	return rc, nil
 }
 
+// Usable 用 ID2D1Geometry::GetBounds 判断几何是否真的可用(HRESULT 成功且包围盒有限).
+//
+// 为什么必须有这一关: 索引错位或**没 Close 成功**的几何喂给 FillGeometry 会让 xcgui 整帧不
+// 呈现 —— 窗口彻底隐形(连边框都没有)、进程不崩、日志正常, 只信截图. 未 Close 的几何在这里
+// 返回 D2DERR_WRONG_STATE(0x88990001).
+//
+// 本包所有"画几何"的方法(绘制/填充)内部都会先过这一关.
+func (i *ID2D1Geometry) Usable() bool {
+	if i == nil {
+		return false
+	}
+	rc, err := i.GetBounds()
+	return err == nil && finiteRect(rc)
+}
+
 // finiteRect 判断包围盒是否有限(几何损坏时可能出现 NaN/Inf).
 func finiteRect(rc D2D1_RECT_F) bool {
 	for _, v := range [4]float32{rc.Left, rc.Top, rc.Right, rc.Bottom} {

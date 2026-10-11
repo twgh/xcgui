@@ -73,6 +73,66 @@ func (i *ID2D1Factory) CreatePathGeometry() (*ID2D1PathGeometry, error) {
 	return geometry, nil
 }
 
+// CreateRectangleGeometry 创建矩形几何.
+//
+// 矩形/圆角矩形/椭圆要反复绘制或填充时, 建几何比每次调 DrawRectangle/FillRectangle 更省
+// (几何可缓存复用, 见 GeometryCache).
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1factory-createrectanglegeometry(constd2d1_rect_f_id2d1rectanglegeometry)
+func (i *ID2D1Factory) CreateRectangleGeometry(rect *D2D1_RECT_F) (*ID2D1RectangleGeometry, error) {
+	if i == nil {
+		return nil, errors.New("d2d: 工厂为空(未开启 D2D?)")
+	}
+	if rect == nil {
+		return nil, errors.New("d2d: 矩形为空")
+	}
+	var geometry *ID2D1RectangleGeometry
+	r, _, _ := i.vtbl().CreateRectangleGeometry.Call(uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(rect)), uintptr(unsafe.Pointer(&geometry)))
+	if r != 0 {
+		return nil, errno(r)
+	}
+	return geometry, nil
+}
+
+// CreateRoundedRectangleGeometry 创建圆角矩形几何.
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1factory-createroundedrectanglegeometry(constd2d1_rounded_rect_id2d1roundedrectanglegeometry)
+func (i *ID2D1Factory) CreateRoundedRectangleGeometry(rr *D2D1_ROUNDED_RECT) (*ID2D1RoundedRectangleGeometry, error) {
+	if i == nil {
+		return nil, errors.New("d2d: 工厂为空(未开启 D2D?)")
+	}
+	if rr == nil {
+		return nil, errors.New("d2d: 圆角矩形为空")
+	}
+	var geometry *ID2D1RoundedRectangleGeometry
+	r, _, _ := i.vtbl().CreateRoundedRectangleGeometry.Call(uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(rr)), uintptr(unsafe.Pointer(&geometry)))
+	if r != 0 {
+		return nil, errno(r)
+	}
+	return geometry, nil
+}
+
+// CreateEllipseGeometry 创建椭圆几何.
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1factory-createellipsegeometry(constd2d1_ellipse_id2d1ellipsegeometry)
+func (i *ID2D1Factory) CreateEllipseGeometry(ellipse *D2D1_ELLIPSE) (*ID2D1EllipseGeometry, error) {
+	if i == nil {
+		return nil, errors.New("d2d: 工厂为空(未开启 D2D?)")
+	}
+	if ellipse == nil {
+		return nil, errors.New("d2d: 椭圆为空")
+	}
+	var geometry *ID2D1EllipseGeometry
+	r, _, _ := i.vtbl().CreateEllipseGeometry.Call(uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(ellipse)), uintptr(unsafe.Pointer(&geometry)))
+	if r != 0 {
+		return nil, errno(r)
+	}
+	return geometry, nil
+}
+
 // CreateStrokeStyle 创建描边样式(线帽 / 连接 / 虚线). 自定义虚线段(dashes)传 NULL, 即用内置虚线样式.
 //
 // 描边样式是**设备无关**资源(归属工厂), 建议建一次缓存起来(见 RoundStrokeStyleProperties: 圆角连接 +

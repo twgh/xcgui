@@ -2,6 +2,7 @@ package d2d
 
 import (
 	"errors"
+	"math"
 	"unsafe"
 
 	"github.com/twgh/xcgui/wapi/com"
@@ -137,7 +138,7 @@ func (i *ID2D1RenderTarget) CreateSolidColorBrush(color *D2D1_COLOR_F) (*ID2D1So
 // 宁可这一笔不画, 也不能把坏几何喂进去.
 //
 // https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1rendertarget-fillgeometry
-func (i *ID2D1RenderTarget) FillGeometry(geometry *ID2D1PathGeometry, brush *ID2D1Brush) error {
+func (i *ID2D1RenderTarget) FillGeometry(geometry *ID2D1Geometry, brush *ID2D1Brush) error {
 	if i == nil {
 		return errors.New("d2d: 渲染目标为空")
 	}
@@ -156,12 +157,15 @@ func (i *ID2D1RenderTarget) FillGeometry(geometry *ID2D1PathGeometry, brush *ID2
 // DrawGeometry 用画刷给几何**描边**(线宽 + 可选描边样式) —— 折线的展开由 Direct2D 负责, 线帽与连接
 // 样式由 style 决定(传 nil = 默认: 平头 + 斜接; 圆角语义见 RoundStrokeStyleProperties).
 //
+// 几何可以是任意几何(路径/矩形/圆角矩形/椭圆), 传基类视图 —— 路径几何用 Base(),
+// 其它几何类型自带 Base().
+//
 // 为什么值得用它而不是"CPU 把描边展开成填充多边形再 FillGeometry": 实测同样画 2 万次, DrawGeometry
 // 约 20ms、填充**已展开**的环约 80ms(4 倍), 而且省掉展开代码、圆角/圆帽由 D2D 保证. 代价是线宽参数
-// 在 XMM3、style 压栈 —— 见 wapi/com.CallWithFloat32Stack1 的说明(布局真机实测过).
+// 在 XMM3、style 压栈 —— 见 wapi/com.CallWithFloat32Stack 的说明(布局真机实测过).
 //
 // https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1rendertarget-drawgeometry
-func (i *ID2D1RenderTarget) DrawGeometry(geometry *ID2D1PathGeometry, brush *ID2D1Brush, strokeWidth float32, style *ID2D1StrokeStyle) error {
+func (i *ID2D1RenderTarget) DrawGeometry(geometry *ID2D1Geometry, brush *ID2D1Brush, strokeWidth float32, style *ID2D1StrokeStyle) error {
 	if i == nil {
 		return errors.New("d2d: 渲染目标为空")
 	}
@@ -172,7 +176,7 @@ func (i *ID2D1RenderTarget) DrawGeometry(geometry *ID2D1PathGeometry, brush *ID2
 		return errors.New("d2d: 画刷为空")
 	}
 	// DrawGeometry 返回 void, 没有 HRESULT 可查.
-	com.CallWithFloat32Stack1(uintptr(i.vtbl().DrawGeometry),
+	com.CallWithFloat32Stack(uintptr(i.vtbl().DrawGeometry),
 		[4]uintptr{
 			uintptr(unsafe.Pointer(i)),
 			uintptr(unsafe.Pointer(geometry)),
@@ -180,12 +184,12 @@ func (i *ID2D1RenderTarget) DrawGeometry(geometry *ID2D1PathGeometry, brush *ID2
 			0, // R9 无对应参数(按位置计数: 线宽在 XMM3, style 压栈)
 		},
 		[4]float32{0, 0, 0, strokeWidth},
-		uintptr(unsafe.Pointer(style)))
+		[4]uintptr{uintptr(unsafe.Pointer(style))})
 	return nil
 }
 
 // DrawGeometryColor 建画刷 → 描边 → 立刻释放画刷(便利方法, 不是 SDK 原生 API).
-func (i *ID2D1RenderTarget) DrawGeometryColor(geometry *ID2D1PathGeometry, color D2D1_COLOR_F, strokeWidth float32, style *ID2D1StrokeStyle) error {
+func (i *ID2D1RenderTarget) DrawGeometryColor(geometry *ID2D1Geometry, color D2D1_COLOR_F, strokeWidth float32, style *ID2D1StrokeStyle) error {
 	brush, err := i.CreateSolidColorBrush(&color)
 	if err != nil {
 		return err
@@ -197,11 +201,171 @@ func (i *ID2D1RenderTarget) DrawGeometryColor(geometry *ID2D1PathGeometry, color
 // FillGeometryColor 建画刷 → 填充 → 立刻释放画刷(便利方法, 不是 SDK 原生 API).
 //
 // 画刷是设备相关资源, "每帧即建即放"最省心; 实测建画刷的代价远小于几何本身.
-func (i *ID2D1RenderTarget) FillGeometryColor(geometry *ID2D1PathGeometry, color D2D1_COLOR_F) error {
+func (i *ID2D1RenderTarget) FillGeometryColor(geometry *ID2D1Geometry, color D2D1_COLOR_F) error {
 	brush, err := i.CreateSolidColorBrush(&color)
 	if err != nil {
 		return err
 	}
 	defer brush.Release()
 	return i.FillGeometry(geometry, &brush.ID2D1Brush) // ID2D1SolidColorBrush 嵌入 ID2D1Brush, 直接取地址即可
+}
+
+// ---------------- 基本图元(直线 / 矩形 / 椭圆) ----------------
+//
+// 这几个是 D2D 的"第一梯队"绘制口, 不必先建几何(矩形/椭圆若要反复用, 也可以建几何再绘制/填充,
+// 见 CreateRectangleGeometry / CreateRoundedRectangleGeometry / CreateEllipseGeometry).
+//
+// 形参里的线宽(FLOAT)同样踩"按位置计数"布局(见 wapi/com.CallWithFloat32Stack):
+//   - 4 个参数的(矩形/椭圆): 线宽在 XMM3, 样式在栈[0];
+//   - 5 个参数的(直线): 线宽在**栈[0]**(位置 4 —— 前 4 个 XMM 槽已被位置 0~3 占掉), 样式在栈[1].
+
+// DrawLine 画一条直线.
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1rendertarget-drawline
+func (i *ID2D1RenderTarget) DrawLine(p0, p1 D2D1_POINT_2F, brush *ID2D1Brush, strokeWidth float32, style *ID2D1StrokeStyle) error {
+	if i == nil {
+		return errors.New("d2d: 渲染目标为空")
+	}
+	if brush == nil {
+		return errors.New("d2d: 画刷为空")
+	}
+	// DrawLine 返回 void. 栈上的 float 占 8 字节槽, 值放低 4 字节.
+	com.CallWithFloat32Stack(uintptr(i.vtbl().DrawLine),
+		[4]uintptr{
+			uintptr(unsafe.Pointer(i)),
+			pointArg(p0),
+			pointArg(p1),
+			uintptr(unsafe.Pointer(brush)),
+		},
+		[4]float32{},
+		[4]uintptr{uintptr(math.Float32bits(strokeWidth)), uintptr(unsafe.Pointer(style))})
+	return nil
+}
+
+// DrawLineColor 建画刷 → 画线 → 立刻释放画刷(便利方法, 不是 SDK 原生 API).
+func (i *ID2D1RenderTarget) DrawLineColor(p0, p1 D2D1_POINT_2F, color D2D1_COLOR_F, strokeWidth float32, style *ID2D1StrokeStyle) error {
+	brush, err := i.CreateSolidColorBrush(&color)
+	if err != nil {
+		return err
+	}
+	defer brush.Release()
+	return i.DrawLine(p0, p1, &brush.ID2D1Brush, strokeWidth, style)
+}
+
+// DrawRectangle 描边矩形.
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1rendertarget-drawrectangle
+func (i *ID2D1RenderTarget) DrawRectangle(rect *D2D1_RECT_F, brush *ID2D1Brush, strokeWidth float32, style *ID2D1StrokeStyle) error {
+	if i == nil {
+		return errors.New("d2d: 渲染目标为空")
+	}
+	if rect == nil {
+		return errors.New("d2d: 矩形为空")
+	}
+	if brush == nil {
+		return errors.New("d2d: 画刷为空")
+	}
+	com.CallWithFloat32Stack(uintptr(i.vtbl().DrawRectangle),
+		[4]uintptr{uintptr(unsafe.Pointer(i)), uintptr(unsafe.Pointer(rect)),
+			uintptr(unsafe.Pointer(brush)), 0},
+		[4]float32{0, 0, 0, strokeWidth},
+		[4]uintptr{uintptr(unsafe.Pointer(style))})
+	return nil
+}
+
+// DrawRectangleColor 建画刷 → 描边矩形 → 立刻释放画刷(便利方法, 不是 SDK 原生 API).
+func (i *ID2D1RenderTarget) DrawRectangleColor(rect *D2D1_RECT_F, color D2D1_COLOR_F, strokeWidth float32, style *ID2D1StrokeStyle) error {
+	brush, err := i.CreateSolidColorBrush(&color)
+	if err != nil {
+		return err
+	}
+	defer brush.Release()
+	return i.DrawRectangle(rect, &brush.ID2D1Brush, strokeWidth, style)
+}
+
+// FillRectangle 填充矩形.
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1rendertarget-fillrectangle
+func (i *ID2D1RenderTarget) FillRectangle(rect *D2D1_RECT_F, brush *ID2D1Brush) error {
+	if i == nil {
+		return errors.New("d2d: 渲染目标为空")
+	}
+	if rect == nil {
+		return errors.New("d2d: 矩形为空")
+	}
+	if brush == nil {
+		return errors.New("d2d: 画刷为空")
+	}
+	i.vtbl().FillRectangle.Call(uintptr(unsafe.Pointer(i)), uintptr(unsafe.Pointer(rect)),
+		uintptr(unsafe.Pointer(brush)), 0)
+	return nil
+}
+
+// FillRectangleColor 建画刷 → 填充矩形 → 立刻释放画刷(便利方法, 不是 SDK 原生 API).
+func (i *ID2D1RenderTarget) FillRectangleColor(rect *D2D1_RECT_F, color D2D1_COLOR_F) error {
+	brush, err := i.CreateSolidColorBrush(&color)
+	if err != nil {
+		return err
+	}
+	defer brush.Release()
+	return i.FillRectangle(rect, &brush.ID2D1Brush)
+}
+
+// DrawEllipse 描边椭圆.
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1rendertarget-drawellipse
+func (i *ID2D1RenderTarget) DrawEllipse(ellipse *D2D1_ELLIPSE, brush *ID2D1Brush, strokeWidth float32, style *ID2D1StrokeStyle) error {
+	if i == nil {
+		return errors.New("d2d: 渲染目标为空")
+	}
+	if ellipse == nil {
+		return errors.New("d2d: 椭圆为空")
+	}
+	if brush == nil {
+		return errors.New("d2d: 画刷为空")
+	}
+	com.CallWithFloat32Stack(uintptr(i.vtbl().DrawEllipse),
+		[4]uintptr{uintptr(unsafe.Pointer(i)), uintptr(unsafe.Pointer(ellipse)),
+			uintptr(unsafe.Pointer(brush)), 0},
+		[4]float32{0, 0, 0, strokeWidth},
+		[4]uintptr{uintptr(unsafe.Pointer(style))})
+	return nil
+}
+
+// DrawEllipseColor 建画刷 → 描边椭圆 → 立刻释放画刷(便利方法, 不是 SDK 原生 API).
+func (i *ID2D1RenderTarget) DrawEllipseColor(ellipse *D2D1_ELLIPSE, color D2D1_COLOR_F, strokeWidth float32, style *ID2D1StrokeStyle) error {
+	brush, err := i.CreateSolidColorBrush(&color)
+	if err != nil {
+		return err
+	}
+	defer brush.Release()
+	return i.DrawEllipse(ellipse, &brush.ID2D1Brush, strokeWidth, style)
+}
+
+// FillEllipse 填充椭圆.
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1rendertarget-fillellipse
+func (i *ID2D1RenderTarget) FillEllipse(ellipse *D2D1_ELLIPSE, brush *ID2D1Brush) error {
+	if i == nil {
+		return errors.New("d2d: 渲染目标为空")
+	}
+	if ellipse == nil {
+		return errors.New("d2d: 椭圆为空")
+	}
+	if brush == nil {
+		return errors.New("d2d: 画刷为空")
+	}
+	i.vtbl().FillEllipse.Call(uintptr(unsafe.Pointer(i)), uintptr(unsafe.Pointer(ellipse)),
+		uintptr(unsafe.Pointer(brush)), 0)
+	return nil
+}
+
+// FillEllipseColor 建画刷 → 填充椭圆 → 立刻释放画刷(便利方法, 不是 SDK 原生 API).
+func (i *ID2D1RenderTarget) FillEllipseColor(ellipse *D2D1_ELLIPSE, color D2D1_COLOR_F) error {
+	brush, err := i.CreateSolidColorBrush(&color)
+	if err != nil {
+		return err
+	}
+	defer brush.Release()
+	return i.FillEllipse(ellipse, &brush.ID2D1Brush)
 }

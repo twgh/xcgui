@@ -69,11 +69,11 @@ TEXT ·xmmTrampoline32RetFloat(SB), NOSPLIT, $0-0
 	MOVQ  X0, AX
 	RET
 
-// func xmmTrampoline32S1()  —— 同 xmmTrampoline32, 另把参数块里的 stack0 放到**第 5 个参数位**.
+// func xmmTrampoline32Stack()  —— 同 xmmTrampoline32, 另把参数块里的 4 个栈参数放到**第 5~8 个参数位**.
 //
-// 第 5 个参数(x64 约定)在 [RSP+32]: 前 32 字节是 shadow space, 之后才是栈参数. 这里 SUBQ $48
-// (16 的倍数, 保持调用点对齐; 同时给出 32 shadow + 8 栈参数位 + 8 余量).
-TEXT ·xmmTrampoline32S1(SB), NOSPLIT, $0-0
+// 第 5 个参数(x64 约定)在 [RSP+32]: 前 32 字节是 shadow space, 之后依次是第 5、6、7、8 个. 这里
+// SUBQ $64(16 的倍数, 保持调用点对齐; 同时给出 32 shadow + 4×8 栈参数位).
+TEXT ·xmmTrampoline32Stack(SB), NOSPLIT, $0-0
 	MOVQ  CX, R10
 	MOVQ  0(R10), AX
 	MOVQ  8(R10), CX
@@ -84,9 +84,15 @@ TEXT ·xmmTrampoline32S1(SB), NOSPLIT, $0-0
 	MOVSS 44(R10), X1
 	MOVSS 48(R10), X2
 	MOVSS 52(R10), X3
+	SUBQ  $64, SP
 	MOVQ  56(R10), R11
-	SUBQ  $48, SP
 	MOVQ  R11, 32(SP)
+	MOVQ  64(R10), R11
+	MOVQ  R11, 40(SP)
+	MOVQ  72(R10), R11
+	MOVQ  R11, 48(SP)
+	MOVQ  80(R10), R11
+	MOVQ  R11, 56(SP)
 	CALL  AX
-	ADDQ  $48, SP
+	ADDQ  $64, SP
 	RET

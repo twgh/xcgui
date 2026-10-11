@@ -54,7 +54,11 @@ func TestXmmArgsLayout(t *testing.T) {
 
 // 第 5 个参数必须真的落到栈上 —— 用 ReadProcessMemory 读自己进程里的一个变量验证:
 // 它的第 5 个参数是"实际读到的字节数", 传对的话写回 8.
-func TestCallWithFloat32Stack1(t *testing.T) {
+//
+// (第 6~8 个栈槽的顺序不在这里验 —— 没有现成的"第 6 个参数是出参"的无副作用 API;
+// 真实用例的端到端验证交给 d2d 的探针: DrawLine 的 lineWidth 在栈[0]、strokeStyle 在栈[1],
+// 抓图能同时看出"线宽对不对"和"线帽圆不圆".)
+func TestCallWithFloat32Stack(t *testing.T) {
 	read := syscall.NewLazyDLL("kernel32.dll").NewProc("ReadProcessMemory")
 	if err := read.Find(); err != nil {
 		t.Skipf("找不到 kernel32.ReadProcessMemory: %v", err)
@@ -63,10 +67,10 @@ func TestCallWithFloat32Stack1(t *testing.T) {
 	var buf uint64
 	var n uintptr
 	const curProcess = ^uintptr(0) // GetCurrentProcess() 伪句柄 = -1
-	r := CallWithFloat32Stack1(read.Addr(),
+	r := CallWithFloat32Stack(read.Addr(),
 		[4]uintptr{curProcess, uintptr(unsafe.Pointer(&secret)), uintptr(unsafe.Pointer(&buf)), 8},
 		[4]float32{},
-		uintptr(unsafe.Pointer(&n)))
+		[4]uintptr{uintptr(unsafe.Pointer(&n))}) // 第 5 个参数; 其余槽填 0
 	if r == 0 {
 		t.Fatal("ReadProcessMemory 返回 0(失败)")
 	}

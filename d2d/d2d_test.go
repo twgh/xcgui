@@ -54,6 +54,9 @@ func TestVtblIndexLayout(t *testing.T) {
 	}
 
 	var factory ID2D1FactoryVtbl
+	check("ID2D1Factory.CreateRectangleGeometry", unsafe.Offsetof(factory.CreateRectangleGeometry), 5*p)
+	check("ID2D1Factory.CreateRoundedRectangleGeometry", unsafe.Offsetof(factory.CreateRoundedRectangleGeometry), 6*p)
+	check("ID2D1Factory.CreateEllipseGeometry", unsafe.Offsetof(factory.CreateEllipseGeometry), 7*p)
 	check("ID2D1Factory.CreatePathGeometry", unsafe.Offsetof(factory.CreatePathGeometry), 10*p)
 	check("ID2D1Factory.CreateStrokeStyle", unsafe.Offsetof(factory.CreateStrokeStyle), 11*p)
 	check("ID2D1Factory.Release", unsafe.Offsetof(factory.Release), 2*p)
@@ -61,6 +64,11 @@ func TestVtblIndexLayout(t *testing.T) {
 	var rt ID2D1RenderTargetVtbl
 	check("ID2D1RenderTarget.GetFactory", unsafe.Offsetof(rt.GetFactory), 3*p)
 	check("ID2D1RenderTarget.CreateSolidColorBrush", unsafe.Offsetof(rt.CreateSolidColorBrush), 8*p)
+	check("ID2D1RenderTarget.DrawLine", unsafe.Offsetof(rt.DrawLine), 15*p)
+	check("ID2D1RenderTarget.DrawRectangle", unsafe.Offsetof(rt.DrawRectangle), 16*p)
+	check("ID2D1RenderTarget.FillRectangle", unsafe.Offsetof(rt.FillRectangle), 17*p)
+	check("ID2D1RenderTarget.DrawEllipse", unsafe.Offsetof(rt.DrawEllipse), 20*p)
+	check("ID2D1RenderTarget.FillEllipse", unsafe.Offsetof(rt.FillEllipse), 21*p)
 	check("ID2D1RenderTarget.DrawGeometry", unsafe.Offsetof(rt.DrawGeometry), 22*p)
 	check("ID2D1RenderTarget.FillGeometry", unsafe.Offsetof(rt.FillGeometry), 23*p)
 	check("ID2D1RenderTarget.SetTransform", unsafe.Offsetof(rt.SetTransform), 30*p)
@@ -85,6 +93,14 @@ func TestVtblIndexLayout(t *testing.T) {
 	check("ID2D1GeometrySink.Close", unsafe.Offsetof(sink.Close), 9*p)
 	check("ID2D1GeometrySink.AddArc", unsafe.Offsetof(sink.AddArc), 14*p)
 
+	// 三种形状几何: 都以 GetXxx 收尾(槽 17)
+	var rect ID2D1RectangleGeometryVtbl
+	check("ID2D1RectangleGeometry.GetRect", unsafe.Offsetof(rect.GetRect), 17*p)
+	var rounded ID2D1RoundedRectangleGeometryVtbl
+	check("ID2D1RoundedRectangleGeometry.GetRoundedRect", unsafe.Offsetof(rounded.GetRoundedRect), 17*p)
+	var ellipse ID2D1EllipseGeometryVtbl
+	check("ID2D1EllipseGeometry.GetEllipse", unsafe.Offsetof(ellipse.GetEllipse), 17*p)
+
 	var brush ID2D1SolidColorBrushVtbl
 	check("ID2D1SolidColorBrush.SetOpacity", unsafe.Offsetof(brush.SetOpacity), 4*p)
 	check("ID2D1SolidColorBrush.SetColor", unsafe.Offsetof(brush.SetColor), 8*p)
@@ -104,6 +120,9 @@ func TestStructLayout(t *testing.T) {
 		{"ID2D1RenderTarget", unsafe.Sizeof(ID2D1RenderTarget{})},
 		{"ID2D1Geometry", unsafe.Sizeof(ID2D1Geometry{})},
 		{"ID2D1PathGeometry", unsafe.Sizeof(ID2D1PathGeometry{})},
+		{"ID2D1RectangleGeometry", unsafe.Sizeof(ID2D1RectangleGeometry{})},
+		{"ID2D1RoundedRectangleGeometry", unsafe.Sizeof(ID2D1RoundedRectangleGeometry{})},
+		{"ID2D1EllipseGeometry", unsafe.Sizeof(ID2D1EllipseGeometry{})},
 		{"ID2D1Brush", unsafe.Sizeof(ID2D1Brush{})},
 		{"ID2D1SolidColorBrush", unsafe.Sizeof(ID2D1SolidColorBrush{})},
 		{"ID2D1StrokeStyle", unsafe.Sizeof(ID2D1StrokeStyle{})},
@@ -136,12 +155,34 @@ func TestMethodReuseThroughEmbedding(t *testing.T) {
 	if path.Release() != 0 {
 		t.Error("nil 几何 Release 应返回 0")
 	}
-	if path.Usable() { // Usable 是自己判空的自有方法
-		t.Error("nil 几何不该 Usable")
+	if path.Base() != nil {
+		t.Error("nil 几何的 Base 应返回 nil")
 	}
 	var sink *ID2D1GeometrySink
 	if sink.Release() != 0 {
 		t.Error("nil 写入器 Release 应返回 0")
+	}
+
+	// Usable 定义在 ID2D1Geometry 上(自有方法), 只对基类指针判空安全:
+	// 对 nil 的 *ID2D1PathGeometry 调它, 编译器要先解引用到嵌入字段, 会 panic —— 与其它被提升的
+	// 基类方法一个语义(调用方拿到 nil 必须先判空).
+	var g *ID2D1Geometry
+	if g.Usable() {
+		t.Error("nil 几何不该 Usable")
+	}
+
+	// 三种形状几何同样 nil 安全(Release / Base)
+	var rg *ID2D1RectangleGeometry
+	if rg.Release() != 0 || rg.Base() != nil {
+		t.Error("nil 矩形几何的 Release/Base 行为不对")
+	}
+	var rr *ID2D1RoundedRectangleGeometry
+	if rr.Release() != 0 || rr.Base() != nil {
+		t.Error("nil 圆角矩形几何的 Release/Base 行为不对")
+	}
+	var eg *ID2D1EllipseGeometry
+	if eg.Release() != 0 || eg.Base() != nil {
+		t.Error("nil 椭圆几何的 Release/Base 行为不对")
 	}
 }
 
@@ -210,7 +251,7 @@ func TestNilSafety(t *testing.T) {
 	}
 
 	var geometry *ID2D1PathGeometry
-	if geometry.Usable() {
+	if (*ID2D1Geometry)(nil).Usable() { // Usable 是基类的自有方法, 只对基类指针判空安全
 		t.Error("nil 几何不该 Usable")
 	}
 	geometry.Release()

@@ -69,6 +69,30 @@ func (i *ID2D1PathGeometry) Release() uintptr {
 	return i.ID2D1Geometry.Release()
 }
 
+// Release 释放矩形几何(nil 安全).
+func (i *ID2D1RectangleGeometry) Release() uintptr {
+	if i == nil {
+		return 0
+	}
+	return i.ID2D1Geometry.Release()
+}
+
+// Release 释放圆角矩形几何(nil 安全).
+func (i *ID2D1RoundedRectangleGeometry) Release() uintptr {
+	if i == nil {
+		return 0
+	}
+	return i.ID2D1Geometry.Release()
+}
+
+// Release 释放椭圆几何(nil 安全).
+func (i *ID2D1EllipseGeometry) Release() uintptr {
+	if i == nil {
+		return 0
+	}
+	return i.ID2D1Geometry.Release()
+}
+
 // Release 减少引用计数(nil 安全).
 func (i *ID2D1Brush) Release() uintptr {
 	if i == nil {
@@ -121,6 +145,9 @@ var (
 	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1RenderTarget{}))-int(unsafe.Sizeof(uintptr(0)))]
 	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1Geometry{}))-int(unsafe.Sizeof(uintptr(0)))]
 	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1PathGeometry{}))-int(unsafe.Sizeof(uintptr(0)))]
+	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1RectangleGeometry{}))-int(unsafe.Sizeof(uintptr(0)))]
+	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1RoundedRectangleGeometry{}))-int(unsafe.Sizeof(uintptr(0)))]
+	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1EllipseGeometry{}))-int(unsafe.Sizeof(uintptr(0)))]
 	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1Brush{}))-int(unsafe.Sizeof(uintptr(0)))]
 	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1SolidColorBrush{}))-int(unsafe.Sizeof(uintptr(0)))]
 	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1StrokeStyle{}))-int(unsafe.Sizeof(uintptr(0)))]

@@ -35,14 +35,16 @@
 //
 //  1. 形参里出现 float32/float64 的方法在 **amd64** 上不能用 syscall 直接调 —— 浮点参数走 XMM
 //     寄存器, 而 syscall.SyscallN 只能设置通用寄存器(位打包也不行, 实测 SetDpi(float,float)
-//     直接崩). 要调这类方法请用 wapi/com 的汇编转发器(CallWithFloat32/CallWithFloat64/
-//     CallWithFloat32RetFloat) —— 注意浮点槽号可能不是 XMM0, 见该包注释的"汇编转发器"一节.
-//     **386** 下则按位拆成 32 位槽压栈即可. 本包自己只用"形参全是整数/指针"的方法:
-//     CreatePathGeometry / Open(只有出参)、CreateSolidColorBrush(颜色按**指针**传)、
-//     FillGeometry(全是指针/整数)、SimplifiedGeometrySink 的 SetFillMode/BeginFigure/AddLines/
-//     EndFigure. 虚表里其余方法照列(为了索引正确), 但标注了不能这样调用的原因 —— 例如
-//     ID2D1RenderTarget::DrawGeometry 的线宽是**按值 float**(想带描边只能先在 CPU 侧把描边展开成
-//     填充多边形再 FillGeometry).
+//     直接崩). 本包已经把常用的这类方法封装好了, 直接用方法即可:
+//
+//     DrawGeometry / FillGeometry —— 线宽在 XMM3、描边样式压栈(见 wapi/com.CallWithFloat32Stack)
+//     DrawLine / DrawRectangle / DrawEllipse —— 线宽按"位置计数"落位; 直线是 5 个参数, 线宽在**栈[0]**
+//     FillRectangle / FillEllipse —— 无浮点形参, 普通调用
+//
+//     自己写新封装时注意三条(细节见 wapi/com 的包注释): ① 浮点槽号按**参数位置**编号(this 占
+//     位置 0; 实测 SetOpacity 读 XMM1、DrawGeometry 的线宽读 XMM3); ② 超出 4 个寄存器的参数压栈,
+//     **栈上的 float 占 8 字节槽、值放低 4 字节**; ③ 用 CallWithFloat32Stack(最多 4 个栈参数).
+//     **386** 下没有 XMM 问题, 按位拆成 32 位槽压栈即可.
 //
 //     另注意区分: **"按值传的 float" 与 "指向浮点结构的指针" 是两回事** —— 后者不受本规则限制,
 //     照常封装即可, 例如 SetTransform(矩阵指针)、CreateSolidColorBrush(颜色指针).
@@ -65,9 +67,10 @@
 //   - xcgui 持有的对象(ID2D1Factory / ID2D1RenderTarget)用 NewFactoryByHandle /
 //     NewRenderTargetByHandle **借用**: 调用方不要 Release(设备重建时对象由 xcgui 销毁),
 //     并且只在绘制回调内使用.
-//   - 本包创建的对象(ID2D1PathGeometry / ID2D1SolidColorBrush)用完必须 Release.
-//     几何是**设备无关**资源(归属 ID2D1Factory), 可以长期缓存复用, 但工厂换了(设备重建)要整体
-//     释放重建; 画刷是**设备相关**资源(只能由创建它的渲染目标使用), 建议即建即放.
+//   - 本包创建的对象(各种几何 / ID2D1SolidColorBrush / ID2D1StrokeStyle)用完必须 Release.
+//     几何与描边样式是**设备无关**资源(归属 ID2D1Factory), 可以长期缓存复用, 但工厂换了(设备重建)
+//     要整体释放重建 —— 缓存这层直接用 **GeometryCache**(按工厂作废、失败也记, 见 cache.go);
+//     画刷是**设备相关**资源(只能由创建它的渲染目标使用), 建议即建即放.
 //
 // # 示例(在 AddEvent_Paint 的绘制回调内)
 //
@@ -90,6 +93,16 @@
 //	defer geometry.Release() // 长期缓存时不要 defer, 见"生命周期"
 //
 //	rt.FillGeometryColor(geometry, d2d.NewColorF(0, 120, 215, 255))
+//
+// 不必建几何的"轻量画法"(基本图元):
+//
+//	rc := d2d.D2D1_RECT_F{Left: 10, Top: 10, Right: 110, Bottom: 60}
+//	rt.FillRectangleColor(&rc, d2d.NewColorF(0, 120, 215, 255))
+//	rt.DrawRectangleColor(&rc, d2d.NewColorF(200, 0, 0, 255), 2, nil) // 描边: 线宽 + 样式(nil=默认)
+//	rt.DrawLineColor(d2d.D2D1_POINT_2F{X: 10, Y: 80}, d2d.D2D1_POINT_2F{X: 110, Y: 80},
+//		d2d.NewColorF(0, 120, 215, 255), 3, nil)
+//	rt.FillEllipseColor(&d2d.D2D1_ELLIPSE{Point: d2d.D2D1_POINT_2F{X: 60, Y: 140}, RadiusX: 40, RadiusY: 20},
+//		d2d.NewColorF(0, 160, 0, 255))
 //
 // 相关文档:
 //   - ID2D1RenderTarget: https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nn-d2d1-id2d1rendertarget

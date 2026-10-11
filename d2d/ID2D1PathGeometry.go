@@ -42,15 +42,11 @@ func (i *ID2D1PathGeometry) Open() (*ID2D1GeometrySink, error) {
 	return sink, nil
 }
 
-// Usable 用 ID2D1Geometry::GetBounds 判断几何是否真的可用(HRESULT 成功且包围盒有限).
-//
-// 为什么必须有这一关: 索引错位或**没 Close 成功**的几何喂给 FillGeometry 会让 xcgui 整帧不
-// 呈现 —— 窗口彻底隐形(连边框都没有)、进程不崩、日志正常, 只信截图. 未 Close 的几何在这里
-// 返回 D2DERR_WRONG_STATE(0x88990001).
-func (i *ID2D1PathGeometry) Usable() bool {
+// Base 取基类视图 —— ID2D1RenderTarget 的绘制/填充方法要的是 *ID2D1Geometry(矩形/椭圆等几何
+// 同样如此), Go 不会自动把 *ID2D1PathGeometry 提升成它, 用本方法转一下.
+func (i *ID2D1PathGeometry) Base() *ID2D1Geometry {
 	if i == nil {
-		return false
+		return nil
 	}
-	rc, err := i.GetBounds() // 继承自嵌入的 ID2D1Geometry
-	return err == nil && finiteRect(rc)
+	return &i.ID2D1Geometry
 }
