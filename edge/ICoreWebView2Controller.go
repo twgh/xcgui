@@ -5,7 +5,7 @@ import (
 	"unsafe"
 
 	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/wapi/com"
 	"github.com/twgh/xcgui/xc"
 )
 
@@ -335,7 +335,7 @@ func (i *ICoreWebView2Controller) RemoveLostFocus(token EventRegistrationToken) 
 // GetICoreWebView2Controller2 获取 ICoreWebView2Controller2 对象。
 func (i *ICoreWebView2Controller) GetICoreWebView2Controller2() (*ICoreWebView2Controller2, error) {
 	var result *ICoreWebView2Controller2
-	iidICoreWebView2Controller2 := wapi.NewGUID(IID_ICoreWebView2Controller2)
+	iidICoreWebView2Controller2 := com.NewGUID(IID_ICoreWebView2Controller2)
 	err := i.QueryInterface(
 		unsafe.Pointer(iidICoreWebView2Controller2),
 		unsafe.Pointer(&result))
@@ -345,7 +345,7 @@ func (i *ICoreWebView2Controller) GetICoreWebView2Controller2() (*ICoreWebView2C
 // GetICoreWebView2Controller3 获取 ICoreWebView2Controller3 对象。
 func (i *ICoreWebView2Controller) GetICoreWebView2Controller3() (*ICoreWebView2Controller3, error) {
 	var result *ICoreWebView2Controller3
-	iidICoreWebView2Controller3 := wapi.NewGUID(IID_ICoreWebView2Controller3)
+	iidICoreWebView2Controller3 := com.NewGUID(IID_ICoreWebView2Controller3)
 	err := i.QueryInterface(
 		unsafe.Pointer(iidICoreWebView2Controller3),
 		unsafe.Pointer(&result))
@@ -355,7 +355,7 @@ func (i *ICoreWebView2Controller) GetICoreWebView2Controller3() (*ICoreWebView2C
 // GetICoreWebView2Controller4 获取 ICoreWebView2Controller4 对象。
 func (i *ICoreWebView2Controller) GetICoreWebView2Controller4() (*ICoreWebView2Controller4, error) {
 	var result *ICoreWebView2Controller4
-	iidICoreWebView2Controller4 := wapi.NewGUID(IID_ICoreWebView2Controller4)
+	iidICoreWebView2Controller4 := com.NewGUID(IID_ICoreWebView2Controller4)
 	err := i.QueryInterface(
 		unsafe.Pointer(iidICoreWebView2Controller4),
 		unsafe.Pointer(&result))

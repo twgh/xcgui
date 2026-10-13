@@ -1,8 +1,6 @@
 package edge
 
 import (
-	"sync/atomic"
-
 	"syscall"
 	"unsafe"
 )
@@ -22,8 +20,6 @@ type IUnknownVtbl struct {
 // IUnknown 封装了 COM 基础的 IUnknown 接口.
 type IUnknown struct {
 	Vtbl *IUnknownVtbl
-	impl IUnknownImpl
-	ref  int32
 }
 
 func (i *IUnknown) AddRef() uintptr {
@@ -42,36 +38,6 @@ func (i *IUnknown) QueryInterface(refiid, object unsafe.Pointer) error {
 		return syscall.Errno(r)
 	}
 	return nil
-}
-
-// NewIUnknown 创建一个新的 IUnknown 实例
-func NewIUnknown(impl IUnknownImpl) *IUnknown {
-	return &IUnknown{
-		Vtbl: &IUnknownVtbl{
-			QueryInterface: NewComProc(queryInterface),
-			AddRef:         NewComProc(addRef),
-			Release:        NewComProc(release),
-		},
-		impl: impl,
-		ref:  1,
-	}
-}
-
-func queryInterface(this *IUnknown, refiid, object unsafe.Pointer) uintptr {
-	return this.impl.QueryInterface(refiid, object)
-}
-
-func addRef(this *IUnknown) uintptr {
-	atomic.AddInt32(&this.ref, 1)
-	return this.impl.AddRef()
-}
-
-func release(this *IUnknown) uintptr {
-	ref := atomic.AddInt32(&this.ref, -1)
-	if ref == 0 {
-		this.impl.Release()
-	}
-	return uintptr(ref)
 }
 
 type IUnknown_Impl struct {

@@ -3,6 +3,7 @@ package edge
 import (
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/wapi/com"
 
 	"syscall"
 	"unsafe"
@@ -145,7 +146,7 @@ func (i *ICoreWebView2NavigationStartingEventArgs) SetCancel(cancel bool) error 
 func (i *ICoreWebView2NavigationStartingEventArgs) GetICoreWebView2NavigationStartingEventArgs2() (*ICoreWebView2NavigationStartingEventArgs2, error) {
 	var result *ICoreWebView2NavigationStartingEventArgs2
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2NavigationStartingEventArgs2)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2NavigationStartingEventArgs2)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -154,7 +155,7 @@ func (i *ICoreWebView2NavigationStartingEventArgs) GetICoreWebView2NavigationSta
 func (i *ICoreWebView2NavigationStartingEventArgs) GetICoreWebView2NavigationStartingEventArgs3() (*ICoreWebView2NavigationStartingEventArgs3, error) {
 	var result *ICoreWebView2NavigationStartingEventArgs3
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2NavigationStartingEventArgs3)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2NavigationStartingEventArgs3)),
 		unsafe.Pointer(&result))
 	return result, err
 }

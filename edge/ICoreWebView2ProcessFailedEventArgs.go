@@ -4,7 +4,7 @@ import (
 	"syscall"
 	"unsafe"
 
-	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/wapi/com"
 )
 
 // ICoreWebView2ProcessFailedEventArgs 是进程失败事件的事件参数。
@@ -61,7 +61,7 @@ func (i *ICoreWebView2ProcessFailedEventArgs) GetProcessFailedKind() (COREWEBVIE
 func (i *ICoreWebView2ProcessFailedEventArgs) GetICoreWebView2ProcessFailedEventArgs2() (*ICoreWebView2ProcessFailedEventArgs2, error) {
 	var result *ICoreWebView2ProcessFailedEventArgs2
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2ProcessFailedEventArgs2)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2ProcessFailedEventArgs2)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -70,7 +70,7 @@ func (i *ICoreWebView2ProcessFailedEventArgs) GetICoreWebView2ProcessFailedEvent
 func (i *ICoreWebView2ProcessFailedEventArgs) GetICoreWebView2ProcessFailedEventArgs3() (*ICoreWebView2ProcessFailedEventArgs3, error) {
 	var result *ICoreWebView2ProcessFailedEventArgs3
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2ProcessFailedEventArgs3)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2ProcessFailedEventArgs3)),
 		unsafe.Pointer(&result))
 	return result, err
 }

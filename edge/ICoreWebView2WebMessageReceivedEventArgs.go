@@ -3,6 +3,7 @@ package edge
 import (
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/wapi/com"
 
 	"syscall"
 	"unsafe"
@@ -92,7 +93,7 @@ func (i *ICoreWebView2WebMessageReceivedEventArgs) GetSource() (string, error) {
 func (i *ICoreWebView2WebMessageReceivedEventArgs) GetICoreWebView2WebMessageReceivedEventArgs2() (*ICoreWebView2WebMessageReceivedEventArgs2, error) {
 	var result *ICoreWebView2WebMessageReceivedEventArgs2
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2WebMessageReceivedEventArgs2)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2WebMessageReceivedEventArgs2)),
 		unsafe.Pointer(&result))
 	return result, err
 }

@@ -5,7 +5,7 @@ import (
 	"unsafe"
 
 	"github.com/twgh/xcgui/common"
-	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/wapi/com"
 )
 
 // ICoreWebView2AcceleratorKeyPressedEventArgs 是 AcceleratorKeyPressed 事件的事件参数。
@@ -140,7 +140,7 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetHandled() (bool, error)
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetICoreWebView2AcceleratorKeyPressedEventArgs2() (*ICoreWebView2AcceleratorKeyPressedEventArgs2, error) {
 	var result *ICoreWebView2AcceleratorKeyPressedEventArgs2
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2AcceleratorKeyPressedEventArgs2)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2AcceleratorKeyPressedEventArgs2)),
 		unsafe.Pointer(&result))
 	return result, err
 }

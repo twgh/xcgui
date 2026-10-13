@@ -4,7 +4,7 @@ import (
 	"syscall"
 	"unsafe"
 
-	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/wapi/com"
 )
 
 // ICoreWebView2NavigationCompletedEventArgs 是导航完成事件的参数。
@@ -84,7 +84,7 @@ func (i *ICoreWebView2NavigationCompletedEventArgs) GetNavigationId() (uint64, e
 func (i *ICoreWebView2NavigationCompletedEventArgs) GetICoreWebView2NavigationCompletedEventArgs2() (*ICoreWebView2NavigationCompletedEventArgs2, error) {
 	var result *ICoreWebView2NavigationCompletedEventArgs2
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2NavigationCompletedEventArgs2)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2NavigationCompletedEventArgs2)),
 		unsafe.Pointer(&result))
 	return result, err
 }

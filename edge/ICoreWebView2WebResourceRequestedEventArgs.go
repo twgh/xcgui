@@ -4,7 +4,7 @@ import (
 	"syscall"
 	"unsafe"
 
-	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/wapi/com"
 )
 
 // ICoreWebView2WebResourceRequestedEventArgs 是 WebResourceRequested 事件的事件参数。
@@ -113,7 +113,7 @@ func (i *ICoreWebView2WebResourceRequestedEventArgs) GetResourceContext() (COREW
 func (i *ICoreWebView2WebResourceRequestedEventArgs) GetICoreWebView2WebResourceRequestedEventArgs2() (*ICoreWebView2WebResourceRequestedEventArgs2, error) {
 	var result *ICoreWebView2WebResourceRequestedEventArgs2
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2WebResourceRequestedEventArgs2)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2WebResourceRequestedEventArgs2)),
 		unsafe.Pointer(&result))
 	return result, err
 }

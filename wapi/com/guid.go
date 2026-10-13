@@ -1,4 +1,4 @@
-package wapi
+package com
 
 import "unsafe"
 
@@ -211,9 +211,9 @@ func putByteHex(dst, src []byte) {
 	}
 }
 
-// IsEqualGUID compares two GUID.
+// IsEqualGUID 比较两个 GUID。
 //
-// Not constant time comparison.
+// 不是常数时间比较。
 func IsEqualGUID(guid1 *GUID, guid2 *GUID) bool {
 	return guid1.Data1 == guid2.Data1 &&
 		guid1.Data2 == guid2.Data2 &&

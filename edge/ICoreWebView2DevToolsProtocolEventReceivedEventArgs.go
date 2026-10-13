@@ -6,6 +6,7 @@ import (
 
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/wapi/com"
 )
 
 // ICoreWebView2DevToolsProtocolEventReceivedEventArgs 是 DevTools 协议事件的参数。
@@ -59,7 +60,7 @@ func (i *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) GetParameterObject
 func (i *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) GetICoreWebView2DevToolsProtocolEventReceivedEventArgs2() (*ICoreWebView2DevToolsProtocolEventReceivedEventArgs2, error) {
 	var result *ICoreWebView2DevToolsProtocolEventReceivedEventArgs2
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2DevToolsProtocolEventReceivedEventArgs2)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2DevToolsProtocolEventReceivedEventArgs2)),
 		unsafe.Pointer(&result))
 	return result, err
 }

@@ -5,6 +5,7 @@ import (
 	"unsafe"
 
 	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi/com"
 
 	"github.com/twgh/xcgui/wapi"
 )
@@ -98,7 +99,7 @@ func (i *ICoreWebView2FrameInfo) MustGetSource() string {
 func (i *ICoreWebView2FrameInfo) GetICoreWebView2FrameInfo2() (*ICoreWebView2FrameInfo2, error) {
 	var result *ICoreWebView2FrameInfo2
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2FrameInfo2)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2FrameInfo2)),
 		unsafe.Pointer(&result))
 	return result, err
 }

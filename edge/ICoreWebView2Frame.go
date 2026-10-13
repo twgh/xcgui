@@ -6,6 +6,7 @@ import (
 
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/wapi/com"
 )
 
 // ICoreWebView2Frame 提供对 iframe 信息的直接访问。
@@ -237,7 +238,7 @@ func (i *ICoreWebView2Frame) IsDestroyed() (bool, error) {
 func (i *ICoreWebView2Frame) GetICoreWebView2Frame2() (*ICoreWebView2Frame2, error) {
 	var result *ICoreWebView2Frame2
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Frame2)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Frame2)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -246,7 +247,7 @@ func (i *ICoreWebView2Frame) GetICoreWebView2Frame2() (*ICoreWebView2Frame2, err
 func (i *ICoreWebView2Frame) GetICoreWebView2Frame3() (*ICoreWebView2Frame3, error) {
 	var result *ICoreWebView2Frame3
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Frame3)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Frame3)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -255,7 +256,7 @@ func (i *ICoreWebView2Frame) GetICoreWebView2Frame3() (*ICoreWebView2Frame3, err
 func (i *ICoreWebView2Frame) GetICoreWebView2Frame4() (*ICoreWebView2Frame4, error) {
 	var result *ICoreWebView2Frame4
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Frame4)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Frame4)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -264,7 +265,7 @@ func (i *ICoreWebView2Frame) GetICoreWebView2Frame4() (*ICoreWebView2Frame4, err
 func (i *ICoreWebView2Frame) GetICoreWebView2Frame5() (*ICoreWebView2Frame5, error) {
 	var result *ICoreWebView2Frame5
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Frame5)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Frame5)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -273,7 +274,7 @@ func (i *ICoreWebView2Frame) GetICoreWebView2Frame5() (*ICoreWebView2Frame5, err
 func (i *ICoreWebView2Frame) GetICoreWebView2Frame6() (*ICoreWebView2Frame6, error) {
 	var result *ICoreWebView2Frame6
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Frame6)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Frame6)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -282,7 +283,7 @@ func (i *ICoreWebView2Frame) GetICoreWebView2Frame6() (*ICoreWebView2Frame6, err
 func (i *ICoreWebView2Frame) GetICoreWebView2Frame7() (*ICoreWebView2Frame7, error) {
 	var result *ICoreWebView2Frame7
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Frame7)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Frame7)),
 		unsafe.Pointer(&result))
 	return result, err
 }

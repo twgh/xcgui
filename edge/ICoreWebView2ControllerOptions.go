@@ -5,6 +5,7 @@ import (
 	"unsafe"
 
 	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi/com"
 
 	"github.com/twgh/xcgui/wapi"
 )
@@ -113,7 +114,7 @@ func (i *ICoreWebView2ControllerOptions) SetIsInPrivateModeEnabled(value bool) e
 // GetICoreWebView2ControllerOptions2 获取 ICoreWebView2ControllerOptions2 接口。
 func (i *ICoreWebView2ControllerOptions) GetICoreWebView2ControllerOptions2() (*ICoreWebView2ControllerOptions2, error) {
 	var result *ICoreWebView2ControllerOptions2
-	iidICoreWebView2ControllerOptions2 := wapi.NewGUID(IID_ICoreWebView2ControllerOptions2)
+	iidICoreWebView2ControllerOptions2 := com.NewGUID(IID_ICoreWebView2ControllerOptions2)
 	err := i.QueryInterface(
 		unsafe.Pointer(iidICoreWebView2ControllerOptions2),
 		unsafe.Pointer(&result))
@@ -126,7 +127,7 @@ func (i *ICoreWebView2ControllerOptions) GetICoreWebView2ControllerOptions2() (*
 // GetICoreWebView2ControllerOptions3 获取 ICoreWebView2ControllerOptions3 接口。
 func (i *ICoreWebView2ControllerOptions) GetICoreWebView2ControllerOptions3() (*ICoreWebView2ControllerOptions3, error) {
 	var result *ICoreWebView2ControllerOptions3
-	iidICoreWebView2ControllerOptions3 := wapi.NewGUID(IID_ICoreWebView2ControllerOptions3)
+	iidICoreWebView2ControllerOptions3 := com.NewGUID(IID_ICoreWebView2ControllerOptions3)
 	err := i.QueryInterface(
 		unsafe.Pointer(iidICoreWebView2ControllerOptions3),
 		unsafe.Pointer(&result))
@@ -139,7 +140,7 @@ func (i *ICoreWebView2ControllerOptions) GetICoreWebView2ControllerOptions3() (*
 // GetICoreWebView2ControllerOptions4 获取 ICoreWebView2ControllerOptions4 接口。
 func (i *ICoreWebView2ControllerOptions) GetICoreWebView2ControllerOptions4() (*ICoreWebView2ControllerOptions4, error) {
 	var result *ICoreWebView2ControllerOptions4
-	iidICoreWebView2ControllerOptions4 := wapi.NewGUID(IID_ICoreWebView2ControllerOptions4)
+	iidICoreWebView2ControllerOptions4 := com.NewGUID(IID_ICoreWebView2ControllerOptions4)
 	err := i.QueryInterface(
 		unsafe.Pointer(iidICoreWebView2ControllerOptions4),
 		unsafe.Pointer(&result))

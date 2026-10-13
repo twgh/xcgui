@@ -6,6 +6,7 @@ import (
 
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/wapi/com"
 )
 
 // ICoreWebView2PrintSettings 提供用于配置打印设置的接口。
@@ -440,7 +441,7 @@ func (i *ICoreWebView2PrintSettings) SetFooterUri(footerUri string) error {
 func (i *ICoreWebView2PrintSettings) GetICoreWebView2PrintSettings2() (*ICoreWebView2PrintSettings2, error) {
 	var result *ICoreWebView2PrintSettings2
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2PrintSettings2)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2PrintSettings2)),
 		unsafe.Pointer(&result))
 	return result, err
 }

@@ -3,6 +3,7 @@ package edge
 import (
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/wapi/com"
 
 	"syscall"
 	"unsafe"
@@ -161,7 +162,7 @@ func (i *ICoreWebView2Environment) RemoveNewBrowserVersionAvailable(token EventR
 func (i *ICoreWebView2Environment) GetICoreWebView2Environment2() (*ICoreWebView2Environment2, error) {
 	var result *ICoreWebView2Environment2
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Environment2)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Environment2)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -170,7 +171,7 @@ func (i *ICoreWebView2Environment) GetICoreWebView2Environment2() (*ICoreWebView
 func (i *ICoreWebView2Environment) GetICoreWebView2Environment3() (*ICoreWebView2Environment3, error) {
 	var result *ICoreWebView2Environment3
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Environment3)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Environment3)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -179,7 +180,7 @@ func (i *ICoreWebView2Environment) GetICoreWebView2Environment3() (*ICoreWebView
 func (i *ICoreWebView2Environment) GetICoreWebView2Environment4() (*ICoreWebView2Environment4, error) {
 	var result *ICoreWebView2Environment4
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Environment4)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Environment4)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -188,7 +189,7 @@ func (i *ICoreWebView2Environment) GetICoreWebView2Environment4() (*ICoreWebView
 func (i *ICoreWebView2Environment) GetICoreWebView2Environment5() (*ICoreWebView2Environment5, error) {
 	var result *ICoreWebView2Environment5
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Environment5)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Environment5)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -197,7 +198,7 @@ func (i *ICoreWebView2Environment) GetICoreWebView2Environment5() (*ICoreWebView
 func (i *ICoreWebView2Environment) GetICoreWebView2Environment6() (*ICoreWebView2Environment6, error) {
 	var result *ICoreWebView2Environment6
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Environment6)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Environment6)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -206,7 +207,7 @@ func (i *ICoreWebView2Environment) GetICoreWebView2Environment6() (*ICoreWebView
 func (i *ICoreWebView2Environment) GetICoreWebView2Environment7() (*ICoreWebView2Environment7, error) {
 	var result *ICoreWebView2Environment7
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Environment7)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Environment7)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -215,7 +216,7 @@ func (i *ICoreWebView2Environment) GetICoreWebView2Environment7() (*ICoreWebView
 func (i *ICoreWebView2Environment) GetICoreWebView2Environment8() (*ICoreWebView2Environment8, error) {
 	var result *ICoreWebView2Environment8
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Environment8)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Environment8)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -224,7 +225,7 @@ func (i *ICoreWebView2Environment) GetICoreWebView2Environment8() (*ICoreWebView
 func (i *ICoreWebView2Environment) GetICoreWebView2Environment9() (*ICoreWebView2Environment9, error) {
 	var result *ICoreWebView2Environment9
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Environment9)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Environment9)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -233,7 +234,7 @@ func (i *ICoreWebView2Environment) GetICoreWebView2Environment9() (*ICoreWebView
 func (i *ICoreWebView2Environment) GetICoreWebView2Environment10() (*ICoreWebView2Environment10, error) {
 	var result *ICoreWebView2Environment10
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Environment10)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Environment10)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -242,7 +243,7 @@ func (i *ICoreWebView2Environment) GetICoreWebView2Environment10() (*ICoreWebVie
 func (i *ICoreWebView2Environment) GetICoreWebView2Environment11() (*ICoreWebView2Environment11, error) {
 	var result *ICoreWebView2Environment11
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Environment11)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Environment11)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -251,7 +252,7 @@ func (i *ICoreWebView2Environment) GetICoreWebView2Environment11() (*ICoreWebVie
 func (i *ICoreWebView2Environment) GetICoreWebView2Environment12() (*ICoreWebView2Environment12, error) {
 	var result *ICoreWebView2Environment12
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Environment12)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Environment12)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -260,7 +261,7 @@ func (i *ICoreWebView2Environment) GetICoreWebView2Environment12() (*ICoreWebVie
 func (i *ICoreWebView2Environment) GetICoreWebView2Environment13() (*ICoreWebView2Environment13, error) {
 	var result *ICoreWebView2Environment13
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Environment13)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Environment13)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -269,7 +270,7 @@ func (i *ICoreWebView2Environment) GetICoreWebView2Environment13() (*ICoreWebVie
 func (i *ICoreWebView2Environment) GetICoreWebView2Environment14() (*ICoreWebView2Environment14, error) {
 	var result *ICoreWebView2Environment14
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Environment14)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Environment14)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -278,7 +279,7 @@ func (i *ICoreWebView2Environment) GetICoreWebView2Environment14() (*ICoreWebVie
 func (i *ICoreWebView2Environment) GetICoreWebView2Environment15() (*ICoreWebView2Environment15, error) {
 	var result *ICoreWebView2Environment15
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Environment15)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Environment15)),
 		unsafe.Pointer(&result))
 	return result, err
 }

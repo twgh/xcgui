@@ -3,6 +3,7 @@ package edge
 import (
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/wapi/com"
 
 	"syscall"
 	"unsafe"
@@ -177,7 +178,7 @@ func (i *ICoreWebView2EnvironmentOptions) SetAllowSingleSignOnUsingOSPrimaryAcco
 func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions2() (*ICoreWebView2EnvironmentOptions2, error) {
 	var result *ICoreWebView2EnvironmentOptions2
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2EnvironmentOptions2)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2EnvironmentOptions2)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -186,7 +187,7 @@ func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions2() 
 func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions3() (*ICoreWebView2EnvironmentOptions3, error) {
 	var result *ICoreWebView2EnvironmentOptions3
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2EnvironmentOptions3)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2EnvironmentOptions3)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -195,7 +196,7 @@ func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions3() 
 func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions4() (*ICoreWebView2EnvironmentOptions4, error) {
 	var result *ICoreWebView2EnvironmentOptions4
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2EnvironmentOptions4)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2EnvironmentOptions4)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -204,7 +205,7 @@ func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions4() 
 func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions5() (*ICoreWebView2EnvironmentOptions5, error) {
 	var result *ICoreWebView2EnvironmentOptions5
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2EnvironmentOptions5)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2EnvironmentOptions5)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -213,7 +214,7 @@ func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions5() 
 func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions6() (*ICoreWebView2EnvironmentOptions6, error) {
 	var result *ICoreWebView2EnvironmentOptions6
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2EnvironmentOptions6)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2EnvironmentOptions6)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -222,7 +223,7 @@ func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions6() 
 func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions7() (*ICoreWebView2EnvironmentOptions7, error) {
 	var result *ICoreWebView2EnvironmentOptions7
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2EnvironmentOptions7)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2EnvironmentOptions7)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -231,7 +232,7 @@ func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions7() 
 func (i *ICoreWebView2EnvironmentOptions) GetICoreWebView2EnvironmentOptions8() (*ICoreWebView2EnvironmentOptions8, error) {
 	var result *ICoreWebView2EnvironmentOptions8
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2EnvironmentOptions8)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2EnvironmentOptions8)),
 		unsafe.Pointer(&result))
 	return result, err
 }

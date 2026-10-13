@@ -3,6 +3,7 @@ package edge
 import (
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/wapi/com"
 
 	"syscall"
 	"unsafe"
@@ -132,7 +133,7 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) GetDeferral() (*ICoreWebView
 func (i *ICoreWebView2PermissionRequestedEventArgs) GetICoreWebView2PermissionRequestedEventArgs2() (*ICoreWebView2PermissionRequestedEventArgs2, error) {
 	var result *ICoreWebView2PermissionRequestedEventArgs2
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2PermissionRequestedEventArgs2)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2PermissionRequestedEventArgs2)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -141,7 +142,7 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) GetICoreWebView2PermissionRe
 func (i *ICoreWebView2PermissionRequestedEventArgs) GetICoreWebView2PermissionRequestedEventArgs3() (*ICoreWebView2PermissionRequestedEventArgs3, error) {
 	var result *ICoreWebView2PermissionRequestedEventArgs3
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2PermissionRequestedEventArgs3)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2PermissionRequestedEventArgs3)),
 		unsafe.Pointer(&result))
 	return result, err
 }

@@ -6,6 +6,7 @@ import (
 
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/wapi/com"
 )
 
 // ICoreWebView2Profile 提供一组用于配置 Profile 对象的属性。
@@ -171,7 +172,7 @@ func (i *ICoreWebView2Profile) SetPreferredColorScheme(value COREWEBVIEW2_PREFER
 func (i *ICoreWebView2Profile) GetICoreWebView2Profile2() (*ICoreWebView2Profile2, error) {
 	var result *ICoreWebView2Profile2
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Profile2)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Profile2)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -180,7 +181,7 @@ func (i *ICoreWebView2Profile) GetICoreWebView2Profile2() (*ICoreWebView2Profile
 func (i *ICoreWebView2Profile) GetICoreWebView2Profile3() (*ICoreWebView2Profile3, error) {
 	var result *ICoreWebView2Profile3
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Profile3)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Profile3)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -189,7 +190,7 @@ func (i *ICoreWebView2Profile) GetICoreWebView2Profile3() (*ICoreWebView2Profile
 func (i *ICoreWebView2Profile) GetICoreWebView2Profile4() (*ICoreWebView2Profile4, error) {
 	var result *ICoreWebView2Profile4
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Profile4)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Profile4)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -198,7 +199,7 @@ func (i *ICoreWebView2Profile) GetICoreWebView2Profile4() (*ICoreWebView2Profile
 func (i *ICoreWebView2Profile) GetICoreWebView2Profile5() (*ICoreWebView2Profile5, error) {
 	var result *ICoreWebView2Profile5
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Profile5)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Profile5)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -207,7 +208,7 @@ func (i *ICoreWebView2Profile) GetICoreWebView2Profile5() (*ICoreWebView2Profile
 func (i *ICoreWebView2Profile) GetICoreWebView2Profile6() (*ICoreWebView2Profile6, error) {
 	var result *ICoreWebView2Profile6
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Profile6)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Profile6)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -216,7 +217,7 @@ func (i *ICoreWebView2Profile) GetICoreWebView2Profile6() (*ICoreWebView2Profile
 func (i *ICoreWebView2Profile) GetICoreWebView2Profile7() (*ICoreWebView2Profile7, error) {
 	var result *ICoreWebView2Profile7
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Profile7)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Profile7)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -225,7 +226,7 @@ func (i *ICoreWebView2Profile) GetICoreWebView2Profile7() (*ICoreWebView2Profile
 func (i *ICoreWebView2Profile) GetICoreWebView2Profile8() (*ICoreWebView2Profile8, error) {
 	var result *ICoreWebView2Profile8
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2Profile8)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2Profile8)),
 		unsafe.Pointer(&result))
 	return result, err
 }

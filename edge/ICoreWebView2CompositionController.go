@@ -4,7 +4,7 @@ import (
 	"syscall"
 	"unsafe"
 
-	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/wapi/com"
 )
 
 // ICoreWebView2CompositionController 用于支持可视化承载 WebView.
@@ -171,7 +171,7 @@ func (i *ICoreWebView2CompositionController) RemoveCursorChanged(token EventRegi
 func (i *ICoreWebView2CompositionController) GetICoreWebView2CompositionController2() (*ICoreWebView2CompositionController2, error) {
 	var result *ICoreWebView2CompositionController2
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2CompositionController2)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2CompositionController2)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -180,7 +180,7 @@ func (i *ICoreWebView2CompositionController) GetICoreWebView2CompositionControll
 func (i *ICoreWebView2CompositionController) GetICoreWebView2CompositionController3() (*ICoreWebView2CompositionController3, error) {
 	var result *ICoreWebView2CompositionController3
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2CompositionController3)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2CompositionController3)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -189,7 +189,7 @@ func (i *ICoreWebView2CompositionController) GetICoreWebView2CompositionControll
 func (i *ICoreWebView2CompositionController) GetICoreWebView2CompositionController4() (*ICoreWebView2CompositionController4, error) {
 	var result *ICoreWebView2CompositionController4
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2CompositionController4)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2CompositionController4)),
 		unsafe.Pointer(&result))
 	return result, err
 }
@@ -198,7 +198,7 @@ func (i *ICoreWebView2CompositionController) GetICoreWebView2CompositionControll
 func (i *ICoreWebView2CompositionController) GetICoreWebView2CompositionController5() (*ICoreWebView2CompositionController5, error) {
 	var result *ICoreWebView2CompositionController5
 	err := i.QueryInterface(
-		unsafe.Pointer(wapi.NewGUID(IID_ICoreWebView2CompositionController5)),
+		unsafe.Pointer(com.NewGUID(IID_ICoreWebView2CompositionController5)),
 		unsafe.Pointer(&result))
 	return result, err
 }
