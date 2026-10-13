@@ -4,7 +4,7 @@ import (
 	"syscall"
 	"unsafe"
 
-	"github.com/twgh/xcgui/xc"
+	"github.com/twgh/xcgui/wapi/types"
 	"github.com/twgh/xcgui/xcc"
 
 	"github.com/twgh/xcgui/common"
@@ -127,14 +127,14 @@ func GetAsyncKeyState(vKey int32) int16 {
 
 // AdjustWindowRect 计算窗口矩形的所需大小，以便客户区域具有指定的大小。返回的窗口矩形用于传递给 CreateWindowEx 函数来创建具有指定客户区域大小的窗口。
 //
-// lpRect: 指向 xc.RECT 结构的指针，该结构包含客户区域所需的大小。返回时，结构包含窗口所需的大小。
+// lpRect: 指向 types.RECT 结构的指针，该结构包含客户区域所需的大小。返回时，结构包含窗口所需的大小。
 //
 // dwStyle: 要创建的窗口的窗口样式。此参数可以是以下值的组合：xcc.WS_ . 不能指定 xcc.WS_OVERLAPPED 样式。
 //
 // bMenu: 指示窗口是否有菜单。
 //
 // https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-AdjustWindowRect.
-func AdjustWindowRect(lpRect *xc.RECT, dwStyle xcc.WS_, bMenu bool) bool {
+func AdjustWindowRect(lpRect *types.RECT, dwStyle xcc.WS_, bMenu bool) bool {
 	ret, _, _ := procAdjustWindowRect.Call(
 		uintptr(unsafe.Pointer(lpRect)),
 		uintptr(dwStyle),
@@ -163,10 +163,10 @@ func SetWindowText(hWnd uintptr, str string) bool {
 //
 // hWnd: 要获取其客户区坐标的窗口句柄。
 //
-// lpRect: 指向 xc.RECT 结构的指针，该结构接收客户区的坐标。左上角坐标为(0,0)，右下角坐标指定宽度和高度。
+// lpRect: 指向 types.RECT 结构的指针，该结构接收客户区的坐标。左上角坐标为(0,0)，右下角坐标指定宽度和高度。
 //
 // https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetClientRect.
-func GetClientRect(hWnd uintptr, lpRect *xc.RECT) bool {
+func GetClientRect(hWnd uintptr, lpRect *types.RECT) bool {
 	ret, _, _ := procGetClientRect.Call(
 		hWnd,
 		uintptr(unsafe.Pointer(lpRect)),
@@ -178,10 +178,10 @@ func GetClientRect(hWnd uintptr, lpRect *xc.RECT) bool {
 //
 // hWnd: 窗口句柄。
 //
-// lpRect: 指向 xc.RECT 结构的指针，该结构接收窗口左上角和右下角的屏幕坐标。
+// lpRect: 指向 types.RECT 结构的指针，该结构接收窗口左上角和右下角的屏幕坐标。
 //
 // https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetWindowRect.
-func GetWindowRect(hWnd uintptr, lpRect *xc.RECT) bool {
+func GetWindowRect(hWnd uintptr, lpRect *types.RECT) bool {
 	ret, _, _ := procGetWindowRect.Call(
 		hWnd,
 		uintptr(unsafe.Pointer(lpRect)),
@@ -1451,11 +1451,6 @@ type MSG struct {
 	LParam  uintptr
 	Time    uint32
 	Pt      POINT
-}
-
-type POINT struct {
-	X int32
-	Y int32
 }
 
 // SendMessageW 将指定的消息发送到一个或多个窗口。SendMessage函数调用指定窗口的窗口过程，直到窗口过程处理完消息才返回.

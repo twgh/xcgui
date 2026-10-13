@@ -5,8 +5,8 @@ import (
 	"unsafe"
 
 	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi/types"
 
-	"github.com/twgh/xcgui/xc"
 	"github.com/twgh/xcgui/xcc"
 )
 
@@ -61,7 +61,7 @@ func DragFinish(hDrop uintptr) {
 // ppt: 接收鼠标指针的坐标.
 //
 // 返回值: 如果拖放发生在窗口的客户区, 返回true；否则返回false.
-func DragQueryPoint(hDrop uintptr, ppt *xc.POINT) bool {
+func DragQueryPoint(hDrop uintptr, ppt *types.POINT) bool {
 	r, _, _ := dragQueryPoint.Call(hDrop, uintptr(unsafe.Pointer(ppt)))
 	return r != 0
 }

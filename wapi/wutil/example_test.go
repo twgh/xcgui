@@ -2,9 +2,11 @@ package wutil_test
 
 import (
 	"fmt"
+
 	"github.com/twgh/xcgui/app"
 	"github.com/twgh/xcgui/tf"
 	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/wapi/types"
 	"github.com/twgh/xcgui/wapi/wutil"
 	"github.com/twgh/xcgui/widget"
 	"github.com/twgh/xcgui/window"
@@ -52,7 +54,7 @@ func ExampleNewHookMouse() {
 		checkBtn.EnableBkTransparent(true)
 
 		// 注册事件_窗口鼠标右键按下, 用来检测是否真的拦截了鼠标右键按下消息
-		w.Event_RBUTTONDOWN(func(nFlags uint, pPt *xc.POINT, pbHandled *bool) int {
+		w.Event_RBUTTONDOWN(func(nFlags uint, pPt *types.POINT, pbHandled *bool) int {
 			xc.XC_Alert("提示", fmt.Sprintf("响应了炫彩窗口鼠标右键被按下消息, 证明没有被拦截, nFlags: %d, pPt: %v", nFlags, pPt))
 			return 0
 		})

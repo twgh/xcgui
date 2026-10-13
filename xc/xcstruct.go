@@ -1,6 +1,15 @@
 package xc
 
-import "github.com/twgh/xcgui/xcc"
+import (
+	"github.com/twgh/xcgui/wapi/types"
+	"github.com/twgh/xcgui/xcc"
+)
+
+type RECT = types.RECT
+type RECTF = types.RECTF
+type POINT = types.POINT
+type POINTF = types.POINTF
+type SIZE = types.SIZE
 
 // Menu_PopupWnd_ 菜单-弹出窗口信息
 type Menu_PopupWnd_ struct {
@@ -93,35 +102,6 @@ type ListView_Item_ struct {
 	RcItem    RECT                 // 整个区域,包含边框
 	HLayout   int                  // 布局对象
 	HTemp     int                  // 列表项模板
-}
-
-type RECT struct {
-	Left   int32
-	Top    int32
-	Right  int32
-	Bottom int32
-}
-
-type RECTF struct {
-	Left   float32
-	Top    float32
-	Right  float32
-	Bottom float32
-}
-
-type POINT struct {
-	X int32
-	Y int32
-}
-
-type POINTF struct {
-	X float32
-	Y float32
-}
-
-type SIZE struct {
-	CX int32
-	CY int32
 }
 
 // LOGFONTW 字体属性
