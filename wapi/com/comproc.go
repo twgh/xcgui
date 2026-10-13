@@ -6,7 +6,7 @@ import "syscall"
 type ComProc uintptr
 
 // NewComProc 从 Go 函数创建一个新的 COM 过程(自己实现 COM 对象、需要把 Go 回调塞进虚表时用).
-func NewComProc(fn interface{}) ComProc {
+func NewComProc(fn any) ComProc {
 	return ComProc(syscall.NewCallback(fn))
 }
 
