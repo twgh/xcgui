@@ -807,7 +807,7 @@ func XDraw_GDI_SetPixel(hDraw int, X, Y int32, crColor uint32) uint32 {
 // 绘制_取D2D渲染目标, 返回 *ID2D1RenderTarget, 开启D2D有效(未开启返回 0).
 //
 // 拿到的是裸接口指针, 可以直接调用 Direct2D 的方法(纯 Go, 不需要 cgo, 抗锯齿同样生效),
-// 例如建路径几何并填充; 常用封装见 github.com/twgh/xcgui/d2d 包.
+// 例如建路径几何并填充; 常用封装见 github.com/twgh/xcgui/wapi/d2d 包.
 //
 // 注意三点:
 //  1. 返回值的 vtable 布局是 ID2D1RenderTarget, 若将来换成 ID2D1DeviceContext, 方法索引全部不同;
