@@ -5,6 +5,8 @@ import (
 	"math"
 	"strconv"
 	"unicode"
+
+	"github.com/twgh/xcgui/wapi/d2d"
 )
 
 // Point 折线上的一个点.
@@ -24,6 +26,14 @@ type SubPath struct {
 	// Closed 表示这条子路径以 Z 收尾(首尾相连). 渲染时把它映射成几何的"闭合"标志
 	// (d2d.GeometryFigure.Closed), **不要**自己补一个重复点.
 	Closed bool
+	// Color 是这条子路径**自己**的颜色(#rrggbb / #rgb 形式的 fill, 或 fill="none" 时的
+	// stroke); 只在 HasColor 为 true 时有意义.
+	Color d2d.D2D1_COLOR_F
+	// HasColor 为 false 表示子路径没带可用颜色(currentColor / 没写 / 命名色 / rgb() /
+	// url(#渐变) 都算), 绘制时用调用方给的颜色(即 SVG 里 currentColor 的取值).
+	//
+	// ParsePath 解析单独一条 path 数据时无从判定(一律 false); ParseDoc 按元素(含 <g> 继承)填.
+	HasColor bool
 }
 
 // PathError path 数据不合法.
@@ -184,7 +194,7 @@ func ParsePath(d string) ([]SubPath, error) {
 			x, y = sx, sy
 			cmd = 'M' // 规范: Z 后若直接跟坐标, 按 M(绝对)处理
 		case 'C', 'S', 'Q', 'T':
-			ok = parseCurve(cmd, rel, sc, &x, &y, &lastC, &lastQ, &hasC, &hasQ, push, bezier)
+			ok = parseCurve(cmd, rel, sc, &x, &y, &lastC, &lastQ, &hasC, &hasQ, bezier)
 		case 'A':
 			// 圆弧: 端点参数化转多段三次贝塞尔(每段圆心角 <= 90°)。
 			// 参数依次 rx ry rot largeArc sweep x y —— 中间两个标志位是**单字符**,
@@ -311,7 +321,7 @@ func (sc *scanner) flag() (float32, bool) {
 // parseCurve 处理三次/二次贝塞尔相关命令(C/S/Q/T), 返回是否解析成功。
 func parseCurve(cmd byte, rel bool, sc *scanner,
 	x, y *float32, lastC, lastQ *Point, hasC, hasQ *bool,
-	push func(float32, float32), bezier func(float32, float32, float32, float32, float32, float32, float32, float32)) bool {
+	bezier func(float32, float32, float32, float32, float32, float32, float32, float32)) bool {
 
 	// 参数个数: C=6, S/Q=4, T=2
 	upper := unicode.ToUpper(rune(cmd))

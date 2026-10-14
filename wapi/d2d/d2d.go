@@ -53,6 +53,14 @@ func (i *ID2D1RenderTarget) Release() uintptr {
 	return i.ID2D1Resource.Release()
 }
 
+// Release 释放 DC 渲染目标(nil 安全).
+func (i *ID2D1DCRenderTarget) Release() uintptr {
+	if i == nil {
+		return 0
+	}
+	return i.ID2D1RenderTarget.Release()
+}
+
 // Release 减少引用计数(nil 安全).
 func (i *ID2D1Geometry) Release() uintptr {
 	if i == nil {
@@ -133,25 +141,28 @@ func (i *ID2D1GeometrySink) Release() uintptr {
 	return i.ID2D1SimplifiedGeometrySink.Release()
 }
 
+const ptrSize = int(unsafe.Sizeof(uintptr(0)))
+
 // 布局不变量(编译期断言): 这些接口结构体都是"值嵌入单字段基类"串起来的, 必须只有一个指针大小 ——
 // 那样它的地址才是 COM 对象的地址、它的首字段才是真实虚表指针, 各接口的 vtbl() 重解释才成立.
 //
 // 谁要是往嵌入链上加了字段, 这里会**编译失败**(数组索引非 0 越界), 而不是等运行期画出满屏乱码.
 // 断言写法: [1]struct{}{}[size-ptrSize] —— size 必须是 ptrSize, 索引 0 才合法.
 var (
-	_ = [1]struct{}{}[int(unsafe.Sizeof(IUnknown{}))-int(unsafe.Sizeof(uintptr(0)))]
-	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1Resource{}))-int(unsafe.Sizeof(uintptr(0)))]
-	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1Factory{}))-int(unsafe.Sizeof(uintptr(0)))]
-	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1RenderTarget{}))-int(unsafe.Sizeof(uintptr(0)))]
-	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1Geometry{}))-int(unsafe.Sizeof(uintptr(0)))]
-	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1PathGeometry{}))-int(unsafe.Sizeof(uintptr(0)))]
-	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1RectangleGeometry{}))-int(unsafe.Sizeof(uintptr(0)))]
-	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1RoundedRectangleGeometry{}))-int(unsafe.Sizeof(uintptr(0)))]
-	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1EllipseGeometry{}))-int(unsafe.Sizeof(uintptr(0)))]
-	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1Brush{}))-int(unsafe.Sizeof(uintptr(0)))]
-	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1SolidColorBrush{}))-int(unsafe.Sizeof(uintptr(0)))]
-	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1StrokeStyle{}))-int(unsafe.Sizeof(uintptr(0)))]
-	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1SimplifiedGeometrySink{}))-int(unsafe.Sizeof(uintptr(0)))]
-	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1GeometrySink{}))-int(unsafe.Sizeof(uintptr(0)))]
-	_ = [1]struct{}{}[int(unsafe.Sizeof(IUnknownVtbl{}))-int(3*unsafe.Sizeof(uintptr(0)))]
+	_ = [1]struct{}{}[int(unsafe.Sizeof(IUnknown{}))-ptrSize]
+	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1Resource{}))-ptrSize]
+	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1Factory{}))-ptrSize]
+	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1RenderTarget{}))-ptrSize]
+	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1DCRenderTarget{}))-ptrSize]
+	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1Geometry{}))-ptrSize]
+	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1PathGeometry{}))-ptrSize]
+	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1RectangleGeometry{}))-ptrSize]
+	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1RoundedRectangleGeometry{}))-ptrSize]
+	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1EllipseGeometry{}))-ptrSize]
+	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1Brush{}))-ptrSize]
+	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1SolidColorBrush{}))-ptrSize]
+	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1StrokeStyle{}))-ptrSize]
+	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1SimplifiedGeometrySink{}))-ptrSize]
+	_ = [1]struct{}{}[int(unsafe.Sizeof(ID2D1GeometrySink{}))-ptrSize]
+	_ = [1]struct{}{}[int(unsafe.Sizeof(IUnknownVtbl{}))-int(3*ptrSize)]
 )

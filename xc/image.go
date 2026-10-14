@@ -2,8 +2,11 @@ package xc
 
 import (
 	"image"
+	"os"
 
 	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/svgp"
+	"github.com/twgh/xcgui/wapi/d2d"
 	"github.com/twgh/xcgui/xcc"
 )
 
@@ -273,6 +276,81 @@ func XImage_LoadSvgFile(fileName string) int {
 func XImage_LoadSvgString(str string) int {
 	r, _, _ := xImage_LoadSvgStringW.Call(common.StrPtr(str))
 	return int(r)
+}
+
+// 图片_加载从SVG字符串D2D, 用**纯 Go(Direct2D)**把一段 SVG 渲染成图片句柄; 失败返回 0.
+//
+// svgText: 整段 SVG(`<svg viewBox="…"><path d="…"/></svg>`), 或裸的 `<path d="…"/>` 片段.
+//
+// size: 图片边长(**物理像素**, 正方形). 非方形 viewBox 按较长边等比缩放(与图标约定一致).
+//
+// color: xc.RGBA 颜色, 它只决定 SVG 里 **currentColor 的取值**:
+//   - 单色图标(lucide / heroicons / feather): path 全是 currentColor → 整体就是 color;
+//   - 多色图标(iconfont 彩色图标): path 自带 fill="#xxx" → 用它自己的色, color 不影响它.
+//
+// 线宽取 SVG 的 stroke-width(没有则按 lucide 惯例 2), 不另给参数.
+//
+// 与 DLL 版的 XImage_LoadSvgString 的区别: 解析与渲染都在纯 Go 侧(svgp + d2d), 图标站的
+// 紧凑写法("a.25.25 0 00.407.195")与圆弧都能正确解析, fill="none" 的子路径不会被糊成填充块;
+// 而且**不依赖 app.New(true) 的 D2D 初始化** —— GDI 渲染模式(app.New(false))甚至"还没建窗口"
+// 时也能出图. 环境里没有 D2D(d2d1.dll)或 SVG 解析失败时返回 0.
+//
+// 用法:
+//
+//	hImg := xc.XImage_LoadSvgStringD2D(svgText, 32, xc.RGBA(255, 255, 255, 255))
+//	if hImg == 0 { /* 解析失败或渲染失败 */ }
+//	xc.XEle_SetBkImage(ele, hImg) // 或任何吃图片句柄的 API
+func XImage_LoadSvgStringD2D(svgText string, size int32, color uint32) int {
+	doc, err := svgp.ParseDoc(svgText)
+	if err != nil {
+		return 0
+	}
+	return imageFromSvgDoc(doc, size, color)
+}
+
+// 图片_加载从SVG文件D2D, 同 XImage_LoadSvgStringD2D, 从文件读 SVG(内部 os.ReadFile).
+//
+// path: SVG 文件的路径.
+//
+// size: 图片边长(物理像素), 正方形.
+//
+// color: xc.RGBA 颜色, 只决定 SVG 里 currentColor 的取值(见 XImage_LoadSvgStringD2D).
+func XImage_LoadSvgFileD2D(path string, size int32, color uint32) int {
+	b, err := os.ReadFile(path)
+	if err != nil {
+		return 0
+	}
+	return XImage_LoadSvgStringD2D(string(b), size, color)
+}
+
+// imageFromSvgDoc 把解析好的 SVG 文档渲染成图片句柄(0 = 失败); 两个 D2D 入口的公共后半程.
+func imageFromSvgDoc(doc *svgp.Doc, size int32, color uint32) int {
+	if size <= 0 {
+		return 0
+	}
+	// viewBox → 目标像素: 较长边为 size、左上角对原点(ScaleTo 内部做 min-x/min-y 平移).
+	subs := svgp.ScaleTo(doc.Paths, doc.ViewBox, float32(size))
+	scale := float32(svgp.ScaleFactor(doc.ViewBox, float64(size)))
+	strokeWidth := float32(doc.StrokeWidth)
+	if strokeWidth <= 0 {
+		strokeWidth = 2 // lucide 惯例(24 网格单位)
+	}
+	strokeWidth *= scale
+
+	img, err := svgp.RenderToRGBA(subs, size, d2dColor(color), strokeWidth, nil)
+	if err != nil {
+		return 0
+	}
+	// 走 GoImage 而不是 HBITMAP: 它内部按"RGBA → BGRA 拷贝 + XImage_LoadFromData"落地,
+	// 像素已经拷进图片里, 不依赖 DIB 的生命周期, 也不受 HBITMAP 那条路 alpha 语义的影响.
+	return XImage_LoadFromGoImage(img)
+}
+
+// d2dColor 把炫彩颜色(xc.RGBA 的产物)转成 D2D 颜色; 字节序: 低 8 位是 R(见 xc.RGBA).
+//
+// color: xc.RGBA 颜色.
+func d2dColor(color uint32) d2d.D2D1_COLOR_F {
+	return d2d.NewColorF(byte(color), byte(color>>8), byte(color>>16), byte(color>>24))
 }
 
 // 图片_判断缩放, 是否为拉伸图片句柄.

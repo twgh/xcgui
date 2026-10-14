@@ -41,8 +41,6 @@ func (i *ID2D1Geometry) vtbl() *ID2D1GeometryVtbl {
 //
 // 注意: GetBounds 的 transform 是 _In_opt_(可传 NULL); 而 ComputeArea/ComputeLength 的首参
 // worldTransform 是 _In_(不能传 NULL, 传了就崩) —— 本包因此只封装了允许 NULL 的 GetBounds.
-//
-// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1geometry-getbounds
 func (i *ID2D1Geometry) GetBounds() (D2D1_RECT_F, error) {
 	var rc D2D1_RECT_F
 	if i == nil {

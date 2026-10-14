@@ -3,7 +3,7 @@ package svgp
 import (
 	"errors"
 
-	"github.com/twgh/xcgui/d2d"
+	"github.com/twgh/xcgui/wapi/d2d"
 )
 
 // Geometries 一组可直接绘制的几何: 描边子路径与填充子路径分开(图标通常只有描边一侧).
@@ -57,6 +57,69 @@ func NewGeometries(f *d2d.ID2D1Factory, subs []SubPath, scale float32) (Geometri
 		return g, errors.New("svgp: 没有可用的子路径(每条至少 2 个点)")
 	}
 	return g, nil
+}
+
+// ColorGroup 一组**同色**几何: 颜色 + 该颜色下按填充/描边分好的几何.
+//
+// 它是多色 SVG(iconfont 的彩色图标: 每条 path 自带 fill="#xxx")的中间形态 —— 绘制就是逐组
+// 走 Geometries.Draw. 单色图标(全部 currentColor)只会得到 1 组.
+type ColorGroup struct {
+	// Color 是该组的颜色: 子路径自带的色(HasColor=true), 或调用方给的 override.
+	Color d2d.D2D1_COLOR_F
+	// Geom 是该颜色下的几何(描边 + 填充两侧, 见 Geometries).
+	Geom Geometries
+}
+
+// Release 释放该组的几何(nil 安全).
+func (g ColorGroup) Release() { g.Geom.Release() }
+
+// NewColorGroups 按"颜色 + 填充/描边"把子路径分组建几何(for 多色图标).
+//
+// override 用于 **HasColor=false** 的子路径(currentColor / 没写颜色 / 解析不了的色),
+// 也就是"整体单色"图标的颜色来源; HasColor=true 的子路径用自己解析出来的色.
+// 其余参数语义与 NewGeometries 一致(scale 是统一缩放; 组的先后顺序 = 颜色首次出现的顺序).
+//
+// 某组建不出几何(点太少等)会被跳过; **全部**组都建不出来才返回 error.
+func NewColorGroups(f *d2d.ID2D1Factory, subs []SubPath, scale float32, override d2d.D2D1_COLOR_F) ([]ColorGroup, error) {
+	if f == nil {
+		return nil, errors.New("svgp: d2d 工厂为空(未开启 D2D?)")
+	}
+	type groupKey struct {
+		color d2d.D2D1_COLOR_F
+		fill  bool
+	}
+	keys := make([]groupKey, 0, 4)
+	buckets := make(map[groupKey][]SubPath)
+	for _, sub := range subs {
+		c := override
+		if sub.HasColor {
+			c = sub.Color
+		}
+		k := groupKey{color: c, fill: sub.Filled}
+		if _, ok := buckets[k]; !ok {
+			keys = append(keys, k)
+		}
+		buckets[k] = append(buckets[k], sub)
+	}
+	groups := make([]ColorGroup, 0, len(keys))
+	for _, k := range keys {
+		g, err := NewGeometries(f, buckets[k], scale)
+		if err != nil {
+			continue // 这一组建不出来就跳过它(整体都建不出来时下面统一报错)
+		}
+		groups = append(groups, ColorGroup{Color: k.color, Geom: g})
+	}
+	if len(groups) == 0 {
+		return nil, errors.New("svgp: 没有可用的子路径(每条至少 2 个点)")
+	}
+	return groups, nil
+}
+
+// ReleaseColorGroups 释放全部分组的几何(便利函数, nil 安全).
+func ReleaseColorGroups(groups []ColorGroup) {
+	for _, g := range groups {
+		g.Release()
+	}
 }
 
 // Empty 两条几何都没有.

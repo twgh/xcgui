@@ -59,7 +59,7 @@
 // 回调里、命令队列之前, 因此拿到的是**父级(窗口)坐标系**. 直接按客户区坐标绘制会跑到窗口左上角
 // (典型症状: 幽灵态按钮的图标"消失", 其实画到标题栏底下去了).
 //
-// 正解: 先用 xc.XDraw_ConvRect(hDraw, *xc.RECT) 把"当前 UI 对象的客户区坐标"换算成"画布对齐
+// 正解: 先用 xc.XDraw_ConvRect(hDraw, *types.RECT) 把"当前 UI 对象的客户区坐标"换算成"画布对齐
 // 坐标"(自动含元素偏移 + DPI 缩放), 换算结果就是**物理像素**, 不要再乘 DPI.
 //
 // # 生命周期: 谁持有谁释放
@@ -71,6 +71,31 @@
 //     几何与描边样式是**设备无关**资源(归属 ID2D1Factory), 可以长期缓存复用, 但工厂换了(设备重建)
 //     要整体释放重建 —— 缓存这层直接用 **GeometryCache**(按工厂作废、失败也记, 见 cache.go);
 //     画刷是**设备相关**资源(只能由创建它的渲染目标使用), 建议即建即放.
+//
+// # 离屏渲染(与炫彩无关的一条路)
+//
+// 不想往窗口上画、而是要**一张图片**时, 用自建工厂 + DC 渲染目标:
+//
+//	factory, err := d2d.D2D1CreateFactory(d2d.D2D1_FACTORY_TYPE_SINGLE_THREADED) // 独立工厂
+//	dib, err := gdi.NewDIB(32, 32)                     // 32bpp 位图 + 内存 DC(像素可直读)
+//	props := d2d.NewDCRenderTargetProperties()         // BGRA + 预乘 alpha + 96 DPI
+//	rt, err := factory.CreateDCRenderTarget(&props)
+//	rt.BindDC(dib.HDC(), &types.RECT{Left: 0, Top: 0, Right: 32, Bottom: 32})
+//
+//	rt.BeginDraw()
+//	rt.Clear(nil)                                      // DIB 内存不保证是零, 先清干净
+//	rt.FillRectangleColor(...)                         // 随便画
+//	rt.EndDraw()                                       // 到这一步像素才写进 DIB
+//
+//	pixels := dib.Pixels()                             // 预乘 BGRA, top-down; a=0 的像素全 0
+//
+// 三个要点:
+//   - **自建工厂不依赖炫彩**: app.New(false)(GDI 渲染)甚至"还没建窗口"时都能用;
+//   - DC 渲染目标只输出**预乘** BGRA, 要非预乘就得自己反预乘(c = round(c×255/a));
+//   - 清屏用 Clear(nil) —— CreateDIBSection 的内存不保证是零.
+//
+// svgp.RenderToRGBA 就是这条路的完整样例(SVG → RGBA 位图), 按尺寸复用 DIB/渲染目标,
+// 照抄时可以先读它.
 //
 // # 示例(在 AddEvent_Paint 的绘制回调内)
 //

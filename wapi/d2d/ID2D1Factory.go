@@ -58,8 +58,6 @@ func NewFactoryByHandle(h uintptr) *ID2D1Factory {
 // CreatePathGeometry 创建一条空路径几何.
 //
 // 几何是设备无关资源(归属工厂), 可以长期缓存复用; 但它由本包创建, 用完必须 Release.
-//
-// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1factory-createpathgeometry(id2d1pathgeometry)
 func (i *ID2D1Factory) CreatePathGeometry() (*ID2D1PathGeometry, error) {
 	if i == nil {
 		return nil, errors.New("d2d: 工厂为空(未开启 D2D?)")
@@ -77,8 +75,6 @@ func (i *ID2D1Factory) CreatePathGeometry() (*ID2D1PathGeometry, error) {
 //
 // 矩形/圆角矩形/椭圆要反复绘制或填充时, 建几何比每次调 DrawRectangle/FillRectangle 更省
 // (几何可缓存复用, 见 GeometryCache).
-//
-// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1factory-createrectanglegeometry(constd2d1_rect_f_id2d1rectanglegeometry)
 func (i *ID2D1Factory) CreateRectangleGeometry(rect *D2D1_RECT_F) (*ID2D1RectangleGeometry, error) {
 	if i == nil {
 		return nil, errors.New("d2d: 工厂为空(未开启 D2D?)")
@@ -96,8 +92,6 @@ func (i *ID2D1Factory) CreateRectangleGeometry(rect *D2D1_RECT_F) (*ID2D1Rectang
 }
 
 // CreateRoundedRectangleGeometry 创建圆角矩形几何.
-//
-// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1factory-createroundedrectanglegeometry(constd2d1_rounded_rect_id2d1roundedrectanglegeometry)
 func (i *ID2D1Factory) CreateRoundedRectangleGeometry(rr *D2D1_ROUNDED_RECT) (*ID2D1RoundedRectangleGeometry, error) {
 	if i == nil {
 		return nil, errors.New("d2d: 工厂为空(未开启 D2D?)")
@@ -115,8 +109,6 @@ func (i *ID2D1Factory) CreateRoundedRectangleGeometry(rr *D2D1_ROUNDED_RECT) (*I
 }
 
 // CreateEllipseGeometry 创建椭圆几何.
-//
-// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1factory-createellipsegeometry(constd2d1_ellipse_id2d1ellipsegeometry)
 func (i *ID2D1Factory) CreateEllipseGeometry(ellipse *D2D1_ELLIPSE) (*ID2D1EllipseGeometry, error) {
 	if i == nil {
 		return nil, errors.New("d2d: 工厂为空(未开启 D2D?)")
@@ -137,8 +129,6 @@ func (i *ID2D1Factory) CreateEllipseGeometry(ellipse *D2D1_ELLIPSE) (*ID2D1Ellip
 //
 // 描边样式是**设备无关**资源(归属工厂), 建议建一次缓存起来(见 RoundStrokeStyleProperties: 圆角连接 +
 // 圆头的 SVG 语义).
-//
-// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1factory-createstrokestyle(constd2d1_stroke_style_properties_constfloat_uint32_id2d1strokestyle)
 func (i *ID2D1Factory) CreateStrokeStyle(props *D2D1_STROKE_STYLE_PROPERTIES) (*ID2D1StrokeStyle, error) {
 	if i == nil {
 		return nil, errors.New("d2d: 工厂为空(未开启 D2D?)")
@@ -150,6 +140,26 @@ func (i *ID2D1Factory) CreateStrokeStyle(props *D2D1_STROKE_STYLE_PROPERTIES) (*
 		return nil, errno(r)
 	}
 	return style, nil
+}
+
+// CreateDCRenderTarget 创建"画到 GDI 设备上下文"的渲染目标 —— 离屏渲染成一张可读像素的图片
+// 就走它(配合 gdi.NewDIB 的 32bpp DIB, 见 RenderToRGBA 那种用法).
+//
+// props 一般用 NewDCRenderTargetProperties(); 建出来的渲染目标是**设备相关**资源, 用完必须 Release.
+func (i *ID2D1Factory) CreateDCRenderTarget(props *D2D1_RENDER_TARGET_PROPERTIES) (*ID2D1DCRenderTarget, error) {
+	if i == nil {
+		return nil, errors.New("d2d: 工厂为空(未开启 D2D?)")
+	}
+	if props == nil {
+		return nil, errors.New("d2d: 渲染目标属性为空")
+	}
+	var rt *ID2D1DCRenderTarget
+	r, _, _ := i.vtbl().CreateDCRenderTarget.Call(uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(props)), uintptr(unsafe.Pointer(&rt)))
+	if r != 0 {
+		return nil, errno(r)
+	}
+	return rt, nil
 }
 
 // NewGeometry 一步构造一条可用几何(便利方法, 不是 SDK 原生 API).

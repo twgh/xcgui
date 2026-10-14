@@ -251,6 +251,43 @@ func NewBySvgString(str string) *Image {
 	return NewByHandle(xc.XImage_LoadSvgString(str))
 }
 
+// 图片_加载从SVG字符串D2D, 用**纯 Go(Direct2D)**把一段 SVG 渲染成图片句柄; 失败返回 nil.
+//
+// svgText: 整段 SVG(`<svg viewBox="…"><path d="…"/></svg>`), 或裸的 `<path d="…"/>` 片段.
+//
+// size: 图片边长(**物理像素**, 正方形). 非方形 viewBox 按较长边等比缩放(与图标约定一致).
+//
+// color: xc.RGBA 颜色, 它只决定 SVG 里 **currentColor 的取值**:
+//   - 单色图标(lucide / heroicons / feather): path 全是 currentColor → 整体就是 color;
+//   - 多色图标(iconfont 彩色图标): path 自带 fill="#xxx" → 用它自己的色, color 不影响它.
+//
+// 线宽取 SVG 的 stroke-width(没有则按 lucide 惯例 2), 不另给参数.
+//
+// 与 DLL 版的 NewBySvgString 的区别: 解析与渲染都在纯 Go 侧(svgp + d2d), 图标站的
+// 紧凑写法("a.25.25 0 00.407.195")与圆弧都能正确解析, fill="none" 的子路径不会被糊成填充块;
+// 而且**不依赖 app.New(true) 的 D2D 初始化** —— GDI 渲染模式(app.New(false))甚至"还没建窗口"
+// 时也能出图. 环境里没有 D2D(d2d1.dll)或 SVG 解析失败时返回 0.
+//
+// 用法:
+//
+//	hImg := imagex.NewBySvgStringD2D(svgText, 32, xc.RGBA(255, 255, 255, 255))
+//	if hImg == 0 { /* 解析失败或渲染失败 */ }
+//	xc.XEle_SetBkImage(ele, hImg) // 或任何吃图片句柄的 API
+func NewBySvgStringD2D(svgText string, size int32, color uint32) *Image {
+	return NewByHandle(xc.XImage_LoadSvgStringD2D(svgText, size, color))
+}
+
+// 图片_加载从SVG文件D2D, 同 NewBySvgStringD2D, 从文件读 SVG(内部 os.ReadFile), 失败返回 nil.
+//
+// path: SVG 文件的路径.
+//
+// size: 图片边长(物理像素), 正方形.
+//
+// color: xc.RGBA 颜色, 只决定 SVG 里 currentColor 的取值(见 NewBySvgStringD2D).
+func NewBySvgFileD2D(path string, size int32, color uint32) *Image {
+	return NewByHandle(xc.XImage_LoadSvgFileD2D(path, size, color))
+}
+
 // NewByHandle 从句柄创建对象, 失败返回 nil.
 //
 // handle: 图片句柄.

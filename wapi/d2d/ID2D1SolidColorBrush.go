@@ -27,8 +27,6 @@ func (i *ID2D1SolidColorBrush) vtbl() *ID2D1SolidColorBrushVtbl {
 }
 
 // SetColor 改画刷颜色(void 方法; 画刷已创建的情况下改色比重新建一个更省).
-//
-// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1solidcolorbrush-setcolor
 func (i *ID2D1SolidColorBrush) SetColor(color D2D1_COLOR_F) {
 	if i == nil {
 		return

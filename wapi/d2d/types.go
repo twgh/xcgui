@@ -153,6 +153,130 @@ func TranslationMatrix(dx, dy float32) D2D1_MATRIX_3X2_F {
 	return D2D1_MATRIX_3X2_F{M11: 1, M22: 1, DX: dx, DY: dy}
 }
 
+// DXGI_FORMAT 是 DXGI 的像素格式枚举(这里只列出用得到的值).
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/dxgiformat/ne-dxgiformat-dxgi_format
+type DXGI_FORMAT uint32
+
+const (
+	// DXGI_FORMAT_B8G8R8A8_UNORM 32bpp 蓝绿红 + alpha, 每通道 8 位; 就是 GDI 的 32bpp DIB 布局.
+	DXGI_FORMAT_B8G8R8A8_UNORM DXGI_FORMAT = 87
+	// DXGI_FORMAT_B8G8R8A8_UNORM_SRGB 同上但走 sRGB 色彩空间(GDI 的 DIB 用它会被 D2D 拒绝).
+	DXGI_FORMAT_B8G8R8A8_UNORM_SRGB DXGI_FORMAT = 91
+)
+
+// D2D1_ALPHA_MODE 像素里 alpha 通道的语义.
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/dcommon/ne-dcommon-d2d1_alpha_mode
+type D2D1_ALPHA_MODE uint32
+
+const (
+	// D2D1_ALPHA_MODE_UNKNOWN alpha 语义未知(由渲染目标自行决定).
+	D2D1_ALPHA_MODE_UNKNOWN D2D1_ALPHA_MODE = 0
+	// D2D1_ALPHA_MODE_PREMULTIPLIED 预乘: 颜色分量已经乘过 alpha(c×a/255). D2D 的 DC 渲染目标
+	// 只支持这一种带 alpha 的语义, 取出的像素因此要**反预乘**一趟.
+	D2D1_ALPHA_MODE_PREMULTIPLIED D2D1_ALPHA_MODE = 1
+	// D2D1_ALPHA_MODE_STRAIGHT 直通(非预乘)alpha —— DC 渲染目标不支持.
+	D2D1_ALPHA_MODE_STRAIGHT D2D1_ALPHA_MODE = 2
+	// D2D1_ALPHA_MODE_IGNORE 忽略 alpha(当作不透明).
+	D2D1_ALPHA_MODE_IGNORE D2D1_ALPHA_MODE = 3
+)
+
+// D2D1_PIXEL_FORMAT 像素格式: DXGI 格式 + alpha 语义. 按值嵌在渲染目标属性里(不是指针).
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/dcommon/ns-dcommon-d2d1_pixel_format
+type D2D1_PIXEL_FORMAT struct {
+	Format    DXGI_FORMAT
+	AlphaMode D2D1_ALPHA_MODE
+}
+
+// D2D1_RENDER_TARGET_TYPE 渲染目标的实现类型: 硬件 / 软件 / 默认.
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/ne-d2d1-d2d1_render_target_type
+type D2D1_RENDER_TARGET_TYPE uint32
+
+const (
+	// D2D1_RENDER_TARGET_TYPE_DEFAULT 默认(能用硬件就用硬件).
+	D2D1_RENDER_TARGET_TYPE_DEFAULT D2D1_RENDER_TARGET_TYPE = 0
+	// D2D1_RENDER_TARGET_TYPE_SOFTWARE 强制软件渲染.
+	D2D1_RENDER_TARGET_TYPE_SOFTWARE D2D1_RENDER_TARGET_TYPE = 1
+	// D2D1_RENDER_TARGET_TYPE_HARDWARE 强制硬件渲染.
+	D2D1_RENDER_TARGET_TYPE_HARDWARE D2D1_RENDER_TARGET_TYPE = 2
+)
+
+// D2D1_RENDER_TARGET_USAGE 渲染目标的用途(远程/兼容 GDI 的开关).
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/ne-d2d1-d2d1_render_target_usage
+type D2D1_RENDER_TARGET_USAGE uint32
+
+const (
+	// D2D1_RENDER_TARGET_USAGE_NONE 无特殊用途.
+	D2D1_RENDER_TARGET_USAGE_NONE D2D1_RENDER_TARGET_USAGE = 0x00000000
+	// D2D1_RENDER_TARGET_USAGE_FORCE_BITMAP_REMOTING 允许远程会话里回落到位图重映射.
+	D2D1_RENDER_TARGET_USAGE_FORCE_BITMAP_REMOTING D2D1_RENDER_TARGET_USAGE = 0x00000001
+	// D2D1_RENDER_TARGET_USAGE_GDI_COMPATIBLE 允许 GDI 与 D2D 混画(会降低性能).
+	D2D1_RENDER_TARGET_USAGE_GDI_COMPATIBLE D2D1_RENDER_TARGET_USAGE = 0x00000002
+)
+
+// D2D1_FEATURE_LEVEL 渲染目标要求的最低功能级别.
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/ne-d2d1-d2d1_feature_level
+type D2D1_FEATURE_LEVEL uint32
+
+const (
+	// D2D1_FEATURE_LEVEL_DEFAULT 默认(D2D 自行决定).
+	D2D1_FEATURE_LEVEL_DEFAULT D2D1_FEATURE_LEVEL = 0
+	// D2D1_FEATURE_LEVEL_9 Direct3D 9 级功能.
+	D2D1_FEATURE_LEVEL_9 D2D1_FEATURE_LEVEL = 0x9100
+	// D2D1_FEATURE_LEVEL_10 Direct3D 10 级功能.
+	D2D1_FEATURE_LEVEL_10 D2D1_FEATURE_LEVEL = 0xa000
+)
+
+// D2D1_FACTORY_TYPE 工厂的线程模型.
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/ne-d2d1-d2d1_factory_type
+type D2D1_FACTORY_TYPE uint32
+
+const (
+	// D2D1_FACTORY_TYPE_SINGLE_THREADED 单线程工厂: 建资源不带锁, 更快, 但**调用方**要自己保证
+	// 同一时刻只有一个线程在用(d2d1.dll 的 D2D1CreateFactory 默认推荐值).
+	D2D1_FACTORY_TYPE_SINGLE_THREADED D2D1_FACTORY_TYPE = 0
+	// D2D1_FACTORY_TYPE_MULTI_THREADED 多线程工厂: 内部加锁, 但会拉低单线程下的性能.
+	D2D1_FACTORY_TYPE_MULTI_THREADED D2D1_FACTORY_TYPE = 1
+)
+
+// D2D1_RENDER_TARGET_PROPERTIES 渲染目标的属性(按指针传给 CreateDCRenderTarget / IsSupported).
+//
+// 字段顺序即 C 结构体布局(type 4 字节 + pixelFormat 8 字节 + dpi 8 字节 + usage 4 字节 +
+// minLevel 4 字节 = 28 字节), 不要改.
+//
+// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/ns-d2d1-d2d1_render_target_properties
+type D2D1_RENDER_TARGET_PROPERTIES struct {
+	Type        D2D1_RENDER_TARGET_TYPE
+	PixelFormat D2D1_PIXEL_FORMAT
+	DpiX        float32
+	DpiY        float32
+	Usage       D2D1_RENDER_TARGET_USAGE
+	MinLevel    D2D1_FEATURE_LEVEL
+}
+
+// NewDCRenderTargetProperties 返回"32bpp BGRA + 预乘 alpha + 96 DPI"的属性 —— 离屏渲染成
+// 一张可读出像素的图片(见 RenderToRGBA)用的就是这套: 96 DPI 让 1 DIP == 1 像素, 画布坐标即
+// 目标像素坐标, 不用再做 DPI 换算.
+func NewDCRenderTargetProperties() D2D1_RENDER_TARGET_PROPERTIES {
+	return D2D1_RENDER_TARGET_PROPERTIES{
+		Type: D2D1_RENDER_TARGET_TYPE_DEFAULT,
+		PixelFormat: D2D1_PIXEL_FORMAT{
+			Format:    DXGI_FORMAT_B8G8R8A8_UNORM,
+			AlphaMode: D2D1_ALPHA_MODE_PREMULTIPLIED,
+		},
+		DpiX:     96,
+		DpiY:     96,
+		Usage:    D2D1_RENDER_TARGET_USAGE_NONE,
+		MinLevel: D2D1_FEATURE_LEVEL_DEFAULT,
+	}
+}
+
 // D2D1_FILL_MODE 填充模式.
 //
 // https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/ne-d2d1-d2d1_fill_mode

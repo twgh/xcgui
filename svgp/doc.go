@@ -9,6 +9,10 @@
 // 支持:
 //   - 全部 path 命令: M L H V Z C S Q T A(含相对形式, 含 SVG 允许的紧凑写法 "a.25.25 0 00.407.195");
 //   - <svg> / <g> / <path> 三个元素, 含 fill / stroke / stroke-width 的**继承**;
+//   - 颜色: #rrggbb / #rgb(以及 #rgba / #rrggbbaa)形式的 fill 或 stroke 会保留在子路径上
+//     (见 SubPath.Color / HasColor), 于是**多色图标**(iconfont 的彩色图标: 每条 path 自带
+//     fill="#xxx")也能出对色 —— 渲染时用 NewColorGroups 按颜色分组; 其余写法(currentColor /
+//     命名色 / rgb() / url(#渐变))算"没颜色", 由调用方给的颜色兜底;
 //   - viewBox 提取(缩放交给 ScaleTo), 多个 <path> 合并.
 //
 // 不支持(碰到就忽略, 不报错):
@@ -34,8 +38,26 @@
 //	defer geoms.Release()
 //	err = geoms.Draw(rt, color, 2, style)                    // 描边走 DrawGeometry, 填充走 FillGeometry
 //
+// 同一段代码也支持多色图标 —— 把 NewGeometries 换成 NewColorGroups, 逐组绘制:
+//
+//	groups, err := svgp.NewColorGroups(factory, subs, 1, color) // 子路径按"颜色 + 填充/描边"分组
+//	defer svgp.ReleaseColorGroups(groups)
+//	for _, g := range groups {
+//		g.Geom.Draw(rt, g.Color, 2, style)
+//	}
+//
+// 把 SVG 渲染成**一张图片**(不与窗口/绘制回调绑定, 即"离屏"):
+//
+//	doc, err := svgp.ParseDoc(svgText)
+//	subs := svgp.ScaleTo(doc.Paths, doc.ViewBox, 32)                 // 目标像素网格
+//	img, err := svgp.RenderToRGBA(subs, 32, color, 2*32.0/24, nil)   // 线宽按 viewBox 换算
+//	// img 是**非预乘** RGBA, 可直接喂 xc.XImage_LoadFromGoImage 拿图片句柄
+//
+// RenderToRGBA 自建 D2D 工厂(不依赖炫彩初始化), 所以 GDI 渲染模式(app.New(false))、
+// 甚至"还没建窗口"时都能用; 内部按尺寸复用离屏目标, 32px 图标单次约 0.5ms 量级.
+//
 // # 与 d2d 的关系
 //
-// 本包只做"数据 → 折线 → 几何", 绘制靠同仓的 github.com/twgh/xcgui/d2d(直通系统 Direct2D).
+// 本包只做"数据 → 折线 → 几何", 绘制靠同仓的 github.com/twgh/xcgui/wapi/d2d(直通系统 Direct2D).
 // 几何是设备无关资源(归属工厂), 建议配合 d2d.GeometryCache 按 key 缓存, 不要每帧重建.
 package svgp

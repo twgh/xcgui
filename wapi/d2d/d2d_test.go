@@ -4,6 +4,9 @@ import (
 	"math"
 	"testing"
 	"unsafe"
+
+	"github.com/twgh/xcgui/wapi/gdi"
+	"github.com/twgh/xcgui/wapi/types"
 )
 
 func TestNewColorF(t *testing.T) {
@@ -59,6 +62,7 @@ func TestVtblIndexLayout(t *testing.T) {
 	check("ID2D1Factory.CreateEllipseGeometry", unsafe.Offsetof(factory.CreateEllipseGeometry), 7*p)
 	check("ID2D1Factory.CreatePathGeometry", unsafe.Offsetof(factory.CreatePathGeometry), 10*p)
 	check("ID2D1Factory.CreateStrokeStyle", unsafe.Offsetof(factory.CreateStrokeStyle), 11*p)
+	check("ID2D1Factory.CreateDCRenderTarget", unsafe.Offsetof(factory.CreateDCRenderTarget), 16*p)
 	check("ID2D1Factory.Release", unsafe.Offsetof(factory.Release), 2*p)
 
 	var rt ID2D1RenderTargetVtbl
@@ -72,7 +76,28 @@ func TestVtblIndexLayout(t *testing.T) {
 	check("ID2D1RenderTarget.DrawGeometry", unsafe.Offsetof(rt.DrawGeometry), 22*p)
 	check("ID2D1RenderTarget.FillGeometry", unsafe.Offsetof(rt.FillGeometry), 23*p)
 	check("ID2D1RenderTarget.SetTransform", unsafe.Offsetof(rt.SetTransform), 30*p)
-	check("ID2D1RenderTarget.IsSupported", unsafe.Offsetof(rt.IsSupported), 50*p)
+	// Flush 之后到 IsSupported 这段是"离屏渲染才发现少列了"的槽(d2d1.h 里它们一直都在):
+	// SaveDrawingState 起 6 个 + BeginDraw 补齐之后, 整张虚表才与 SDK 逐槽对齐.
+	// 照着 d2d1.h 一个方法一个槽数过来(0=QueryInterface), 顺序错一格就会调到邻居方法.
+	check("ID2D1RenderTarget.Flush", unsafe.Offsetof(rt.Flush), 42*p)
+	check("ID2D1RenderTarget.SaveDrawingState", unsafe.Offsetof(rt.SaveDrawingState), 43*p)
+	check("ID2D1RenderTarget.RestoreDrawingState", unsafe.Offsetof(rt.RestoreDrawingState), 44*p)
+	check("ID2D1RenderTarget.PushAxisAlignedClip", unsafe.Offsetof(rt.PushAxisAlignedClip), 45*p)
+	check("ID2D1RenderTarget.PopAxisAlignedClip", unsafe.Offsetof(rt.PopAxisAlignedClip), 46*p)
+	check("ID2D1RenderTarget.Clear", unsafe.Offsetof(rt.Clear), 47*p)
+	check("ID2D1RenderTarget.BeginDraw", unsafe.Offsetof(rt.BeginDraw), 48*p)
+	check("ID2D1RenderTarget.EndDraw", unsafe.Offsetof(rt.EndDraw), 49*p)
+	check("ID2D1RenderTarget.GetPixelFormat", unsafe.Offsetof(rt.GetPixelFormat), 50*p)
+	check("ID2D1RenderTarget.SetDpi", unsafe.Offsetof(rt.SetDpi), 51*p)
+	check("ID2D1RenderTarget.GetDpi", unsafe.Offsetof(rt.GetDpi), 52*p)
+	check("ID2D1RenderTarget.GetSize", unsafe.Offsetof(rt.GetSize), 53*p)
+	check("ID2D1RenderTarget.GetPixelSize", unsafe.Offsetof(rt.GetPixelSize), 54*p)
+	check("ID2D1RenderTarget.GetMaximumBitmapSize", unsafe.Offsetof(rt.GetMaximumBitmapSize), 55*p)
+	check("ID2D1RenderTarget.IsSupported", unsafe.Offsetof(rt.IsSupported), 56*p)
+
+	// DC 渲染目标: ID2D1RenderTarget 的 57 个槽(0~56)之后就是 BindDC.
+	var dcrt ID2D1DCRenderTargetVtbl
+	check("ID2D1DCRenderTarget.BindDC", unsafe.Offsetof(dcrt.BindDC), 57*p)
 
 	var stroke ID2D1StrokeStyleVtbl
 	check("ID2D1StrokeStyle.GetStartCap", unsafe.Offsetof(stroke.GetStartCap), 4*p)
@@ -118,6 +143,7 @@ func TestStructLayout(t *testing.T) {
 		{"ID2D1Resource", unsafe.Sizeof(ID2D1Resource{})},
 		{"ID2D1Factory", unsafe.Sizeof(ID2D1Factory{})},
 		{"ID2D1RenderTarget", unsafe.Sizeof(ID2D1RenderTarget{})},
+		{"ID2D1DCRenderTarget", unsafe.Sizeof(ID2D1DCRenderTarget{})},
 		{"ID2D1Geometry", unsafe.Sizeof(ID2D1Geometry{})},
 		{"ID2D1PathGeometry", unsafe.Sizeof(ID2D1PathGeometry{})},
 		{"ID2D1RectangleGeometry", unsafe.Sizeof(ID2D1RectangleGeometry{})},
@@ -133,6 +159,61 @@ func TestStructLayout(t *testing.T) {
 		if c.size != ptrSize {
 			t.Errorf("%s 大小 = %d 字节, 期望 %d(一个虚表指针) —— 嵌入链上不允许加字段", c.name, c.size, ptrSize)
 		}
+	}
+}
+
+// 独立工厂 + DIB + DC 渲染目标的真机往返: "往离屏位图上画"这条路不依赖 xcgui.dll
+// (app.New(false) / 还没建窗口时也能用), 把 SVG 渲染成图片句柄靠的就是它.
+// 环境里没有 D2D(d2d1.dll) 时跳过, 不阻塞其它测试.
+func TestCreateDCRenderTargetRoundTrip(t *testing.T) {
+	f, err := D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED)
+	if err != nil {
+		t.Skipf("d2d1.dll 或 D2D 不可用: %v", err)
+	}
+	defer f.Release()
+
+	const w, h = 8, 4
+	dib, err := gdi.NewDIB(w, h)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer dib.Close()
+	if dib.Width() != w || dib.Height() != h {
+		t.Errorf("DIB 尺寸 = %dx%d, 想要 %dx%d", dib.Width(), dib.Height(), w, h)
+	}
+	if got := len(dib.Pixels()); got != w*h*4 {
+		t.Fatalf("像素字节数 = %d, 想要 %d", got, w*h*4)
+	}
+
+	props := NewDCRenderTargetProperties()
+	rt, err := f.CreateDCRenderTarget(&props)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer rt.Release()
+
+	if err := rt.BindDC(dib.HDC(), &types.RECT{Left: 0, Top: 0, Right: w, Bottom: h}); err != nil {
+		t.Fatal(err)
+	}
+	rt.BeginDraw()
+	rt.Clear(nil) // 清成透明黑
+	rc := D2D1_RECT_F{Left: 0, Top: 0, Right: w / 2, Bottom: h}
+	if err := rt.FillRectangleColor(&rc, NewColorF(255, 0, 0, 255)); err != nil {
+		t.Fatal(err)
+	}
+	if err := rt.EndDraw(); err != nil {
+		t.Fatal(err)
+	}
+
+	px := dib.Pixels()
+	// top-down + 预乘: 左上角(已画不透明红)应是 BGRA(0,0,255,255).
+	if b, g, r, a := px[0], px[1], px[2], px[3]; b != 0 || g != 0 || r != 255 || a != 255 {
+		t.Errorf("左上角像素 = BGRA(%d,%d,%d,%d), 想要 (0,0,255,255)", b, g, r, a)
+	}
+	// 右半(没画)应还是 Clear 过的透明黑(证明 top-down 行序与 Clear 都生效).
+	off := (1*w + (w - 1)) * 4 // 第 2 行最右一列
+	if b, g, r, a := px[off], px[off+1], px[off+2], px[off+3]; b != 0 || g != 0 || r != 0 || a != 0 {
+		t.Errorf("未绘制区域像素 = BGRA(%d,%d,%d,%d), 想要全 0", b, g, r, a)
 	}
 }
 
@@ -286,4 +367,30 @@ func TestNilSafety(t *testing.T) {
 	if style.GetLineJoin() != 0 {
 		t.Error("nil 描边样式 GetLineJoin 应返回 0")
 	}
+
+	// 离屏渲染那条路(独立工厂 → DIB → DC 渲染目标)在 nil 上同样只报错不崩.
+	var dcf *ID2D1Factory
+	if _, err := dcf.CreateDCRenderTarget(nil); err == nil {
+		t.Error("空工厂建 DC 渲染目标应报错")
+	}
+	var dcrt *ID2D1DCRenderTarget
+	if dcrt.Release() != 0 {
+		t.Error("nil DC 渲染目标 Release 应返回 0")
+	}
+	if err := dcrt.BindDC(0, nil); err == nil {
+		t.Error("nil DC 渲染目标 BindDC 应报错")
+	}
+	// EndDraw/Clear/BeginDraw 定义在 ID2D1RenderTarget 上, 对 nil 的 **DC 渲染目标**调用会先
+	// 解引用嵌入字段而 panic(值嵌入的语义) —— 这里按基类指针测.
+	var baseRT *ID2D1RenderTarget
+	if err := baseRT.EndDraw(); err == nil {
+		t.Error("nil 渲染目标 EndDraw 应报错")
+	}
+	baseRT.BeginDraw() // void, 只判空不崩
+	baseRT.Clear(nil)
+	var d *gdi.DIB
+	if d.HDC() != 0 || d.Width() != 0 || d.Height() != 0 || d.Pixels() != nil {
+		t.Error("nil DIB 的访问器应返回零值")
+	}
+	d.Close() // nil 安全
 }

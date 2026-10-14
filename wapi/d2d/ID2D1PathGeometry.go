@@ -28,8 +28,6 @@ func (i *ID2D1PathGeometry) vtbl() *ID2D1PathGeometryVtbl {
 }
 
 // Open 获取几何写入器, 用于往里写子路径; 写完后必须 Close.
-//
-// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1pathgeometry-open
 func (i *ID2D1PathGeometry) Open() (*ID2D1GeometrySink, error) {
 	if i == nil {
 		return nil, errGeometryNil

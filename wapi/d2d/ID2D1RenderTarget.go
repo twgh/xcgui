@@ -59,14 +59,20 @@ type ID2D1RenderTargetVtbl struct {
 	PushLayer                    ComProc // 40
 	PopLayer                     ComProc // 41
 	Flush                        ComProc // 42
-	EndDraw                      ComProc // 43
-	GetPixelFormat               ComProc // 44
-	SetDpi                       ComProc // 45
-	GetDpi                       ComProc // 46
-	GetSize                      ComProc // 47
-	GetPixelSize                 ComProc // 48
-	GetMaximumBitmapSize         ComProc // 49
-	IsSupported                  ComProc // 50
+	SaveDrawingState             ComProc // 43
+	RestoreDrawingState          ComProc // 44
+	PushAxisAlignedClip          ComProc // 45
+	PopAxisAlignedClip           ComProc // 46
+	Clear                        ComProc // 47
+	BeginDraw                    ComProc // 48
+	EndDraw                      ComProc // 49
+	GetPixelFormat               ComProc // 50
+	SetDpi                       ComProc // 51
+	GetDpi                       ComProc // 52
+	GetSize                      ComProc // 53
+	GetPixelSize                 ComProc // 54
+	GetMaximumBitmapSize         ComProc // 55
+	IsSupported                  ComProc // 56
 }
 
 // vtbl 取本接口的虚表(见 ID2D1Factory.vtbl 的说明: 必须取 i.Vtbl, 不能把对象地址当虚表).
@@ -91,8 +97,6 @@ func NewRenderTargetByHandle(h uintptr) *ID2D1RenderTarget {
 //
 // 矩阵按**指针**传递, 所以走普通 syscall 调用即可 —— 不受包注释 ABI 规则 1(按值 float 形参走 XMM)
 // 的限制. 用完后记得把矩阵设回单位矩阵(IdentityMatrix()), 否则同一渲染目标上的后续绘制会被变换.
-//
-// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1rendertarget-settransform
 func (i *ID2D1RenderTarget) SetTransform(transform *D2D1_MATRIX_3X2_F) {
 	if i == nil {
 		return
@@ -102,8 +106,6 @@ func (i *ID2D1RenderTarget) SetTransform(transform *D2D1_MATRIX_3X2_F) {
 }
 
 // GetTransform 读回当前变换矩阵(出参, 同样是 void 方法).
-//
-// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1rendertarget-gettransform
 func (i *ID2D1RenderTarget) GetTransform() (D2D1_MATRIX_3X2_F, error) {
 	var m D2D1_MATRIX_3X2_F
 	if i == nil {
@@ -117,8 +119,6 @@ func (i *ID2D1RenderTarget) GetTransform() (D2D1_MATRIX_3X2_F, error) {
 //
 // 画刷是**设备相关**资源: 只能给创建它的渲染目标使用, 用完必须 Release. 一般不必缓存 ——
 // 直接调 FillGeometryColor 即可.
-//
-// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1rendertarget-createsolidcolorbrush(constd2d1_color_f_constd2d1_brush_properties_id2d1solidcolorbrush)
 func (i *ID2D1RenderTarget) CreateSolidColorBrush(color *D2D1_COLOR_F) (*ID2D1SolidColorBrush, error) {
 	if i == nil {
 		return nil, errors.New("d2d: 渲染目标为空")
@@ -136,8 +136,6 @@ func (i *ID2D1RenderTarget) CreateSolidColorBrush(color *D2D1_COLOR_F) (*ID2D1So
 //
 // 出图前先做一次几何合法性自检: 坏几何(索引错位 / 没 Close 成功)会让 xcgui 整帧不呈现 ——
 // 宁可这一笔不画, 也不能把坏几何喂进去.
-//
-// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1rendertarget-fillgeometry
 func (i *ID2D1RenderTarget) FillGeometry(geometry *ID2D1Geometry, brush *ID2D1Brush) error {
 	if i == nil {
 		return errors.New("d2d: 渲染目标为空")
@@ -163,8 +161,6 @@ func (i *ID2D1RenderTarget) FillGeometry(geometry *ID2D1Geometry, brush *ID2D1Br
 // 为什么值得用它而不是"CPU 把描边展开成填充多边形再 FillGeometry": 实测同样画 2 万次, DrawGeometry
 // 约 20ms、填充**已展开**的环约 80ms(4 倍), 而且省掉展开代码、圆角/圆帽由 D2D 保证. 代价是线宽参数
 // 在 XMM3、style 压栈 —— 见 wapi/com.CallWithFloat32Stack 的说明(布局真机实测过).
-//
-// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1rendertarget-drawgeometry
 func (i *ID2D1RenderTarget) DrawGeometry(geometry *ID2D1Geometry, brush *ID2D1Brush, strokeWidth float32, style *ID2D1StrokeStyle) error {
 	if i == nil {
 		return errors.New("d2d: 渲染目标为空")
@@ -220,8 +216,6 @@ func (i *ID2D1RenderTarget) FillGeometryColor(geometry *ID2D1Geometry, color D2D
 //   - 5 个参数的(直线): 线宽在**栈[0]**(位置 4 —— 前 4 个 XMM 槽已被位置 0~3 占掉), 样式在栈[1].
 
 // DrawLine 画一条直线.
-//
-// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1rendertarget-drawline
 func (i *ID2D1RenderTarget) DrawLine(p0, p1 D2D1_POINT_2F, brush *ID2D1Brush, strokeWidth float32, style *ID2D1StrokeStyle) error {
 	if i == nil {
 		return errors.New("d2d: 渲染目标为空")
@@ -253,8 +247,6 @@ func (i *ID2D1RenderTarget) DrawLineColor(p0, p1 D2D1_POINT_2F, color D2D1_COLOR
 }
 
 // DrawRectangle 描边矩形.
-//
-// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1rendertarget-drawrectangle
 func (i *ID2D1RenderTarget) DrawRectangle(rect *D2D1_RECT_F, brush *ID2D1Brush, strokeWidth float32, style *ID2D1StrokeStyle) error {
 	if i == nil {
 		return errors.New("d2d: 渲染目标为空")
@@ -284,8 +276,6 @@ func (i *ID2D1RenderTarget) DrawRectangleColor(rect *D2D1_RECT_F, color D2D1_COL
 }
 
 // FillRectangle 填充矩形.
-//
-// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1rendertarget-fillrectangle
 func (i *ID2D1RenderTarget) FillRectangle(rect *D2D1_RECT_F, brush *ID2D1Brush) error {
 	if i == nil {
 		return errors.New("d2d: 渲染目标为空")
@@ -312,8 +302,6 @@ func (i *ID2D1RenderTarget) FillRectangleColor(rect *D2D1_RECT_F, color D2D1_COL
 }
 
 // DrawEllipse 描边椭圆.
-//
-// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1rendertarget-drawellipse
 func (i *ID2D1RenderTarget) DrawEllipse(ellipse *D2D1_ELLIPSE, brush *ID2D1Brush, strokeWidth float32, style *ID2D1StrokeStyle) error {
 	if i == nil {
 		return errors.New("d2d: 渲染目标为空")
@@ -343,8 +331,6 @@ func (i *ID2D1RenderTarget) DrawEllipseColor(ellipse *D2D1_ELLIPSE, color D2D1_C
 }
 
 // FillEllipse 填充椭圆.
-//
-// https://learn.microsoft.com/zh-cn/windows/win32/api/d2d1/nf-d2d1-id2d1rendertarget-fillellipse
 func (i *ID2D1RenderTarget) FillEllipse(ellipse *D2D1_ELLIPSE, brush *ID2D1Brush) error {
 	if i == nil {
 		return errors.New("d2d: 渲染目标为空")
@@ -368,4 +354,37 @@ func (i *ID2D1RenderTarget) FillEllipseColor(ellipse *D2D1_ELLIPSE, color D2D1_C
 	}
 	defer brush.Release()
 	return i.FillEllipse(ellipse, &brush.ID2D1Brush)
+}
+
+// Clear 把整个渲染目标清成一个颜色(传 nil = 透明黑).
+//
+// 离屏渲染为什么必须先清: CreateDIBSection 拿到的内存**不保证是零**, 透明像素里可能残留随机
+// 颜色/alpha. 只能在 BeginDraw 与 EndDraw 之间调用.
+func (i *ID2D1RenderTarget) Clear(color *D2D1_COLOR_F) {
+	if i == nil {
+		return
+	}
+	i.vtbl().Clear.Call(uintptr(unsafe.Pointer(i)), uintptr(unsafe.Pointer(color)))
+}
+
+// BeginDraw 开始一批绘制 —— 绘制调用只能夹在 BeginDraw 与 EndDraw 之间.
+func (i *ID2D1RenderTarget) BeginDraw() {
+	if i == nil {
+		return
+	}
+	i.vtbl().BeginDraw.Call(uintptr(unsafe.Pointer(i)))
+}
+
+// EndDraw 结束绘制并提交(DC 渲染目标到这一步才把像素真正写进 DIB); 返回绘制期间累积的错误状态.
+//
+// 标签出参(tag1/tag2)传 NULL —— 本包不使用 D2D 的调试标签.
+func (i *ID2D1RenderTarget) EndDraw() error {
+	if i == nil {
+		return errors.New("d2d: 渲染目标为空")
+	}
+	r, _, _ := i.vtbl().EndDraw.Call(uintptr(unsafe.Pointer(i)), 0, 0)
+	if r != 0 {
+		return errno(r)
+	}
+	return nil
 }
