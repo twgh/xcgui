@@ -75,7 +75,29 @@ var (
 	procGetWindowRect                          = User32.NewProc("GetWindowRect")
 	procSetWindowRgn                           = User32.NewProc("SetWindowRgn")
 	procSetCursorPos                           = User32.NewProc("SetCursorPos")
+	procGetForegroundWindow                    = User32.NewProc("GetForegroundWindow")
+	procIsIconic                               = User32.NewProc("IsIconic")
 )
+
+// GetForegroundWindow 检索前台窗口的句柄，用户当前正在使用的窗口。
+//   - 系统为创建前台窗口的线程分配的优先级略高于其他线程的优先级。
+//   - 在某些情况下（例如，当窗口丢失激活时），前台窗口可以为 NULL。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-GetForegroundWindow.
+func GetForegroundWindow() uintptr {
+	r, _, _ := procGetForegroundWindow.Call()
+	return r
+}
+
+// IsIconic 判断窗口是否已最小化。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-IsIconic.
+//
+// hWnd: 窗口句柄。
+func IsIconic(hWnd uintptr) bool {
+	r, _, _ := procIsIconic.Call(hWnd)
+	return r != 0
+}
 
 // SetWindowRgn 设置窗口的窗口区域。窗口区域确定窗口中系统允许绘制的区域。系统不显示窗口区域外部的窗口的任何部分。
 //
