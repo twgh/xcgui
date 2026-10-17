@@ -130,7 +130,7 @@ func (w *WebViewEventImpl) AddScriptToExecuteOnDocumentCreatedCompleted(errorCod
 	return ret
 }
 
-// GetCookiesCompleted 获取 cookies 完成后调用, 以获取执行结果.
+// GetCookiesCompleted 获取 cookies 完成后调用, 以获取执行结果. 回调里的 cookieList 归运行时所有，不要 Release.
 func (w *WebViewEventImpl) GetCookiesCompleted(errorCode syscall.Errno, cookies *ICoreWebView2CookieList) uintptr {
 	cbs := WvEventBus.GetCallbacks(w, "GetCookiesCompleted")
 	var ret uintptr

@@ -46,6 +46,7 @@ func _ICoreWebView2GetCookiesCompletedHandlerInvoke(this *ICoreWebView2GetCookie
 
 type _ICoreWebView2GetCookiesCompletedHandlerImpl interface {
 	IUnknownImpl
+	// 回调里的 cookieList 归运行时所有，不要 Release.
 	GetCookiesCompleted(errorCode syscall.Errno, cookies *ICoreWebView2CookieList) uintptr
 }
 

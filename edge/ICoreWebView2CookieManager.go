@@ -207,6 +207,7 @@ func (i *ICoreWebView2CookieManager) DeleteCookies(name, uri string) error {
 // GetCookies 获取与指定 URI 匹配的所有 Cookie。
 //   - 如果 uri 为空字符串，则返回同一配置文件下的所有 Cookie。
 //   - 你可以通过调用 ICoreWebView2CookieManager.AddOrUpdateCookie 来修改 Cookie 对象，所做的更改将应用到WebView中。
+//   - 回调里的 cookieList 归运行时所有，不要 Release.
 //
 // uri: 要匹配的 URI.
 func (i *ICoreWebView2CookieManager) GetCookies(uri string, handler *ICoreWebView2GetCookiesCompletedHandler) error {
@@ -235,7 +236,7 @@ func (i *ICoreWebView2CookieManager) GetCookies(uri string, handler *ICoreWebVie
 //
 // uri: 要匹配的 URI.
 //
-// cb: 接收结果的回调函数.
+// cb: 接收结果的回调函数. 回调里的 cookieList 归运行时所有，不要 Release.
 func (i *ICoreWebView2CookieManager) GetCookiesEx(impl *WebViewEventImpl, uri string, cb func(errorCode syscall.Errno, cookies *ICoreWebView2CookieList) uintptr) error {
 	var c interface{}
 	if cb == nil {
