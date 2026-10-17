@@ -313,6 +313,10 @@ func XList_SetSelectAll(hEle int) {
 // pArray: 接收行索引数组.
 func XList_GetSelectAll(hEle int, pArray *[]int32) int32 {
 	nArraySize := XList_GetSelectRowCount(hEle)
+	if nArraySize <= 0 {
+		*pArray = []int32{}
+		return 0
+	}
 	*pArray = make([]int32, nArraySize)
 	r, _, _ := xList_GetSelectAll.Call(uintptr(hEle), uintptr(unsafe.Pointer(&(*pArray)[0])), uintptr(nArraySize))
 	return int32(r)

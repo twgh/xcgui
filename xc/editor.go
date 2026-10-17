@@ -208,6 +208,10 @@ func XEditor_GetBreakpointCount(hEle int) int32 {
 // aPoints: 接收断点数组.
 func XEditor_GetBreakpoints(hEle int, aPoints *[]int32) int32 {
 	nCount := XEditor_GetBreakpointCount(hEle)
+	if nCount <= 0 {
+		*aPoints = []int32{}
+		return 0
+	}
 	*aPoints = make([]int32, nCount)
 	r, _, _ := xEditor_GetBreakpoints.Call(uintptr(hEle), uintptr(unsafe.Pointer(&(*aPoints)[0])), uintptr(nCount))
 	return int32(r)
