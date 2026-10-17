@@ -80,6 +80,13 @@ func (s *Shape) GetRect(pRect *xc.RECT) *Shape {
 	return s
 }
 
+// 形状_取坐标Ex.
+func (s *Shape) GetRectEx() xc.RECT {
+	var rc xc.RECT
+	xc.XShape_GetRect(s.Handle, &rc)
+	return rc
+}
+
 // 形状_置坐标.
 //
 // pRect: 坐标.
@@ -105,12 +112,26 @@ func (s *Shape) GetRectLogic(pRect *xc.RECT) *Shape {
 	return s
 }
 
+// 形状_取逻辑坐标Ex, 获取元素坐标, 逻辑坐标, 包含滚动视图偏移.
+func (s *Shape) GetRectLogicEx() xc.RECT {
+	var rc xc.RECT
+	xc.XShape_GetRectLogic(s.Handle, &rc)
+	return rc
+}
+
 // 形状_取基于窗口客户区坐标, 基于窗口客户区坐标.
 //
 // pRect: 坐标.
 func (s *Shape) GetWndClientRect(pRect *xc.RECT) *Shape {
 	xc.XShape_GetWndClientRect(s.Handle, pRect)
 	return s
+}
+
+// 形状_取基于窗口客户区坐标Ex, 基于窗口客户区坐标.
+func (s *Shape) GetWndClientRectEx() xc.RECT {
+	var rc xc.RECT
+	xc.XShape_GetWndClientRect(s.Handle, &rc)
+	return rc
 }
 
 // 形状_取内容大小 ,仅计算有效内容, 填充父, 权重依赖父级所以无法计算.
