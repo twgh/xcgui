@@ -67,7 +67,7 @@ type List_Item_ struct {
 	ISubItem  int32                // 子项索引
 	NUserData int                  // 用户数据
 	NState    xcc.List_Item_State_ // 状态: List_Item_State_
-	RcItem    RECT                 // 未使用
+	RcItem    RECT                 // 项坐标
 	HLayout   int                  // 布局对象句柄
 	HTemp     int                  // 列表项模板句柄
 }
