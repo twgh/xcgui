@@ -31,7 +31,7 @@ func NewModalWindow(nWidth, nHeight int32, title string, hWndParent uintptr, XCS
 //
 // dwStyle: 窗口样式.
 //
-// lpClassName: 窗口类名.
+// className: 窗口类名.
 //
 // x: 窗口左上角x坐标.
 //
@@ -46,8 +46,8 @@ func NewModalWindow(nWidth, nHeight int32, title string, hWndParent uintptr, XCS
 // hWndParent: 父窗口.
 //
 // XCStyle: GUI库窗口样式: xcc.Window_Style_.
-func NewModalWindowEx(dwExStyle, dwStyle uint32, lpClassName string, x, y, cx, cy int32, title string, hWndParent uintptr, XCStyle xcc.Window_Style_) *ModalWindow {
-	return NewModalWindowByHandle(xc.XModalWnd_CreateEx(dwExStyle, dwStyle, title, x, y, cx, cy, lpClassName, hWndParent, XCStyle))
+func NewModalWindowEx(dwExStyle, dwStyle uint32, className string, x, y, cx, cy int32, title string, hWndParent uintptr, XCStyle xcc.Window_Style_) *ModalWindow {
+	return NewModalWindowByHandle(xc.XModalWnd_CreateEx(dwExStyle, dwStyle, title, x, y, cx, cy, className, hWndParent, XCStyle))
 }
 
 // NewModalWindowByLayout 从布局文件创建对象, 失败返回 nil.

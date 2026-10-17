@@ -34,7 +34,7 @@ func XFrameWnd_Create(x, y, cx, cy int32, title string, hWndParent uintptr, XCSt
 //
 // dwStyle: 窗口样式.
 //
-// lpClassName: 窗口类名.
+// className: 窗口类名.
 //
 // x: 窗口左上角x坐标.
 //
@@ -49,8 +49,8 @@ func XFrameWnd_Create(x, y, cx, cy int32, title string, hWndParent uintptr, XCSt
 // hWndParent: 父窗口.
 //
 // XCStyle: GUI库窗口样式: Window_Style_.
-func XFrameWnd_CreateEx(dwExStyle, dwStyle uint32, lpClassName string, x, y, cx, cy int32, title string, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xFrameWnd_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(title), hWndParent, uintptr(XCStyle))
+func XFrameWnd_CreateEx(dwExStyle, dwStyle uint32, className string, x, y, cx, cy int32, title string, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
+	r, _, _ := xFrameWnd_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(className), uintptr(x), uintptr(y), uintptr(cx), uintptr(cy), common.StrPtr(title), hWndParent, uintptr(XCStyle))
 	return int(r)
 }
 

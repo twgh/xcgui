@@ -119,7 +119,7 @@ func XMsg_Create(title, text string, nFlags xcc.MessageBox_Flag_, hWndParent uin
 //
 // dwStyle: 窗口样式, xcc.WS_ 常量组合.
 //
-// lpClassName: 窗口类名.
+// className: 窗口类名.
 //
 // title: 标题.
 //
@@ -130,8 +130,8 @@ func XMsg_Create(title, text string, nFlags xcc.MessageBox_Flag_, hWndParent uin
 // hWndParent: 父窗口句柄(真实的窗口句柄).
 //
 // XCStyle: xcc.Window_Style_.
-func XMsg_CreateEx(dwExStyle xcc.WS_EX_, dwStyle xcc.WS_, lpClassName, title, text string, nFlags xcc.MessageBox_Flag_, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
-	r, _, _ := xMsg_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(lpClassName), common.StrPtr(title), common.StrPtr(text), uintptr(nFlags), hWndParent, uintptr(XCStyle))
+func XMsg_CreateEx(dwExStyle xcc.WS_EX_, dwStyle xcc.WS_, className, title, text string, nFlags xcc.MessageBox_Flag_, hWndParent uintptr, XCStyle xcc.Window_Style_) int {
+	r, _, _ := xMsg_CreateEx.Call(uintptr(dwExStyle), uintptr(dwStyle), common.StrPtr(className), common.StrPtr(title), common.StrPtr(text), uintptr(nFlags), hWndParent, uintptr(XCStyle))
 	return int(r)
 }
 

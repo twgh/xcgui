@@ -35,7 +35,7 @@ func New(x, y, cx, cy int32, title string, hWndParent uintptr, XCStyle xcc.Windo
 //
 // dwStyle: 窗口样式. xcc.WS_ .
 //
-// lpClassName: 窗口类名.
+// className: 窗口类名.
 //
 // x: 窗口左上角x坐标.
 //
@@ -50,8 +50,8 @@ func New(x, y, cx, cy int32, title string, hWndParent uintptr, XCStyle xcc.Windo
 // hWndParent: 父窗口(真实窗口句柄).
 //
 // XCStyle: 窗口样式, xcc.Window_Style_.
-func NewEx(dwExStyle xcc.WS_EX_, dwStyle xcc.WS_, lpClassName string, x, y, cx, cy int32, title string, hWndParent uintptr, XCStyle xcc.Window_Style_) *Window {
-	return NewByHandle(xc.XWnd_CreateEx(dwExStyle, dwStyle, lpClassName, x, y, cx, cy, title, hWndParent, XCStyle))
+func NewEx(dwExStyle xcc.WS_EX_, dwStyle xcc.WS_, className string, x, y, cx, cy int32, title string, hWndParent uintptr, XCStyle xcc.Window_Style_) *Window {
+	return NewByHandle(xc.XWnd_CreateEx(dwExStyle, dwStyle, className, x, y, cx, cy, title, hWndParent, XCStyle))
 }
 
 // Attach 窗口_附加窗口, 返回窗口对象, 失败返回 nil.

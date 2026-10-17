@@ -35,7 +35,7 @@ func NewFrameWindow(x, y, cx, cy int32, title string, hWndParent uintptr, XCStyl
 //
 // dwStyle: 窗口样式.
 //
-// lpClassName: 窗口类名.
+// className: 窗口类名.
 //
 // x: 窗口左上角x坐标.
 //
@@ -50,8 +50,8 @@ func NewFrameWindow(x, y, cx, cy int32, title string, hWndParent uintptr, XCStyl
 // hWndParent: 父窗口.
 //
 // XCStyle: GUI库窗口样式: Window_Style_.
-func NewFrameWindowEx(dwExStyle, dwStyle uint32, lpClassName string, x, y, cx, cy int32, title string, hWndParent uintptr, XCStyle xcc.Window_Style_) *FrameWindow {
-	return NewFrameWindowByHandle(xc.XFrameWnd_CreateEx(dwExStyle, dwStyle, lpClassName, x, y, cx, cy, title, hWndParent, XCStyle))
+func NewFrameWindowEx(dwExStyle, dwStyle uint32, className string, x, y, cx, cy int32, title string, hWndParent uintptr, XCStyle xcc.Window_Style_) *FrameWindow {
+	return NewFrameWindowByHandle(xc.XFrameWnd_CreateEx(dwExStyle, dwStyle, className, x, y, cx, cy, title, hWndParent, XCStyle))
 }
 
 // NewFrameWindowByLayout 从布局文件创建对象, 失败返回 nil.

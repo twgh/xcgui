@@ -54,7 +54,7 @@ func (w *windowBase) Msg_Create(title, text string, nFlags xcc.MessageBox_Flag_,
 //
 // dwStyle: 窗口样式, xcc.WS_ 常量组合.
 //
-// lpClassName: 窗口类名.
+// className: 窗口类名.
 //
 // title: 标题.
 //
@@ -63,9 +63,9 @@ func (w *windowBase) Msg_Create(title, text string, nFlags xcc.MessageBox_Flag_,
 // nFlags: 标识: xcc.MessageBox_Flag_.
 //
 // XCStyle: xcc.Window_Style_.
-func (w *windowBase) Msg_CreateEx(dwExStyle xcc.WS_EX_, dwStyle xcc.WS_, lpClassName, title, text string, nFlags xcc.MessageBox_Flag_, XCStyle xcc.Window_Style_) *Window {
+func (w *windowBase) Msg_CreateEx(dwExStyle xcc.WS_EX_, dwStyle xcc.WS_, className, title, text string, nFlags xcc.MessageBox_Flag_, XCStyle xcc.Window_Style_) *Window {
 	wd := &Window{}
-	hWindow := xc.XMsg_CreateEx(dwExStyle, dwStyle, lpClassName, title, text, nFlags, w.GetHWND(), XCStyle)
+	hWindow := xc.XMsg_CreateEx(dwExStyle, dwStyle, className, title, text, nFlags, w.GetHWND(), XCStyle)
 	if xc.XC_IsHWINDOW(hWindow) {
 		wd.SetHandle(hWindow)
 	}
