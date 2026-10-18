@@ -123,9 +123,9 @@ func (i *ICoreWebView2PrintSettings) GetScaleFactor() (float64, error) {
 //   - 缩放因子是一个介于 0.1 和 2.0 之间的值。默认值为 1.0。
 //   - 如果提供的值无效，则返回 wapi.E_INVALIDARG, 且当前值不会更改。
 func (i *ICoreWebView2PrintSettings) SetScaleFactor(scaleFactor float64) error {
-	r, _, _ := i.Vtbl.PutScaleFactor.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&scaleFactor)),
+	r := com.Call(uintptr(i.Vtbl.PutScaleFactor),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.F64(scaleFactor),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -149,9 +149,9 @@ func (i *ICoreWebView2PrintSettings) GetPageWidth() (float64, error) {
 // SetPageWidth 设置页面宽度（以英寸为单位）。
 //   - 默认宽度为 8.5 英寸。
 func (i *ICoreWebView2PrintSettings) SetPageWidth(pageWidth float64) error {
-	r, _, _ := i.Vtbl.PutPageWidth.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&pageWidth)),
+	r := com.Call(uintptr(i.Vtbl.PutPageWidth),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.F64(pageWidth),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -176,9 +176,9 @@ func (i *ICoreWebView2PrintSettings) GetPageHeight() (float64, error) {
 //   - 默认高度为11英寸。
 //   - 如果页面高度小于或等于零，则返回 wapi.E_INVALIDARG，且当前值不会更改。
 func (i *ICoreWebView2PrintSettings) SetPageHeight(pageHeight float64) error {
-	r, _, _ := i.Vtbl.PutPageHeight.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&pageHeight)),
+	r := com.Call(uintptr(i.Vtbl.PutPageHeight),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.F64(pageHeight),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -203,9 +203,9 @@ func (i *ICoreWebView2PrintSettings) GetMarginTop() (float64, error) {
 //   - 默认值为1厘米，约0.4英寸。
 //   - 边距不能小于零。如果提供的值无效，将返回 wapi.E_INVALIDARG，且当前值不会更改。
 func (i *ICoreWebView2PrintSettings) SetMarginTop(marginTop float64) error {
-	r, _, _ := i.Vtbl.PutMarginTop.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&marginTop)),
+	r := com.Call(uintptr(i.Vtbl.PutMarginTop),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.F64(marginTop),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -230,9 +230,9 @@ func (i *ICoreWebView2PrintSettings) GetMarginBottom() (float64, error) {
 //   - 默认值为1厘米，约0.4英寸。
 //   - 边距不能小于零。如果提供的值无效，将返回 wapi.E_INVALIDARG，且当前值不会更改。
 func (i *ICoreWebView2PrintSettings) SetMarginBottom(marginBottom float64) error {
-	r, _, _ := i.Vtbl.PutMarginBottom.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&marginBottom)),
+	r := com.Call(uintptr(i.Vtbl.PutMarginBottom),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.F64(marginBottom),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -257,9 +257,9 @@ func (i *ICoreWebView2PrintSettings) GetMarginLeft() (float64, error) {
 //   - 默认值为1厘米，即约0.4英寸。
 //   - 边距不能小于零。如果提供的值无效，将返回 wapi.E_INVALIDARG，且当前值不会更改。
 func (i *ICoreWebView2PrintSettings) SetMarginLeft(marginLeft float64) error {
-	r, _, _ := i.Vtbl.PutMarginLeft.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&marginLeft)),
+	r := com.Call(uintptr(i.Vtbl.PutMarginLeft),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.F64(marginLeft),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -284,9 +284,9 @@ func (i *ICoreWebView2PrintSettings) GetMarginRight() (float64, error) {
 //   - 默认值为1厘米，即约0.4英寸。
 //   - 边距不能小于零。如果提供的值无效，将返回 wapi.E_INVALIDARG，且当前值不会更改。
 func (i *ICoreWebView2PrintSettings) SetMarginRight(marginRight float64) error {
-	r, _, _ := i.Vtbl.PutMarginRight.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&marginRight)),
+	r := com.Call(uintptr(i.Vtbl.PutMarginRight),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.F64(marginRight),
 	)
 	if r != 0 {
 		return syscall.Errno(r)

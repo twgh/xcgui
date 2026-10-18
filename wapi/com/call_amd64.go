@@ -3,6 +3,7 @@
 package com
 
 import (
+	"runtime"
 	"syscall"
 	"unsafe"
 )
@@ -31,35 +32,37 @@ func Call(fn uintptr, args ...Arg) uintptr {
 	var a xmmArgsStack
 	a.fn = fn
 	for i, arg := range args {
+		kind, bits := normArg(arg)
 		switch {
 		case i >= 4:
 			// 栈槽统一 8 字节; 浮点(仅 float32 会走到这里)放低 4 字节.
-			a.stack[i-4] = uintptr(arg.bits)
-		case arg.kind == argFloat32:
+			a.stack[i-4] = uintptr(bits)
+		case kind == argFloat32:
 			switch i {
 			case 0:
-				a.x0 = uint32(arg.bits)
+				a.x0 = uint32(bits)
 			case 1:
-				a.x1 = uint32(arg.bits)
+				a.x1 = uint32(bits)
 			case 2:
-				a.x2 = uint32(arg.bits)
+				a.x2 = uint32(bits)
 			case 3:
-				a.x3 = uint32(arg.bits)
+				a.x3 = uint32(bits)
 			}
 		default: // argInt / argInt64
 			switch i {
 			case 0:
-				a.this = uintptr(arg.bits)
+				a.this = uintptr(bits)
 			case 1:
-				a.a1 = uintptr(arg.bits)
+				a.a1 = uintptr(bits)
 			case 2:
-				a.a2 = uintptr(arg.bits)
+				a.a2 = uintptr(bits)
 			case 3:
-				a.a3 = uintptr(arg.bits)
+				a.a3 = uintptr(bits)
 			}
 		}
 	}
 	r, _, _ := syscall.SyscallN(xmmTrampoline32StackPC, uintptr(unsafe.Pointer(&a)))
+	runtime.KeepAlive(args) // 结构体实参靠 args 里的 unsafe.Pointer 续命
 	return r
 }
 
@@ -72,33 +75,35 @@ func callFloat64(fn uintptr, args []Arg) uintptr {
 	var a xmmArgs64
 	a.fn = fn
 	for i, arg := range args {
-		switch arg.kind {
+		kind, bits := normArg(arg)
+		switch kind {
 		case argFloat32:
 			panic("com.Call: 同一次调用里不要混用 float32 与 float64 形参")
 		case argFloat64:
 			switch i {
 			case 0:
-				a.x0 = arg.bits
+				a.x0 = bits
 			case 1:
-				a.x1 = arg.bits
+				a.x1 = bits
 			case 2:
-				a.x2 = arg.bits
+				a.x2 = bits
 			case 3:
-				a.x3 = arg.bits
+				a.x3 = bits
 			}
 		default: // argInt / argInt64
 			switch i {
 			case 0:
-				a.this = uintptr(arg.bits)
+				a.this = uintptr(bits)
 			case 1:
-				a.a1 = uintptr(arg.bits)
+				a.a1 = uintptr(bits)
 			case 2:
-				a.a2 = uintptr(arg.bits)
+				a.a2 = uintptr(bits)
 			case 3:
-				a.a3 = uintptr(arg.bits)
+				a.a3 = uintptr(bits)
 			}
 		}
 	}
 	r, _, _ := syscall.SyscallN(xmmTrampoline64PC, uintptr(unsafe.Pointer(&a)))
+	runtime.KeepAlive(args)
 	return r
 }

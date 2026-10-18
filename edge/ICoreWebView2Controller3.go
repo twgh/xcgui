@@ -3,6 +3,8 @@ package edge
 import (
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/wapi/com"
 )
 
 // ICoreWebView2Controller3 是 ICoreWebView2Controller2 的延续，添加了光栅化缩放和边界模式控制功能.
@@ -27,9 +29,9 @@ func (i *ICoreWebView2Controller3) GetRasterizationScale() (float64, error) {
 
 // SetRasterizationScale 设置光栅化缩放比例.
 func (i *ICoreWebView2Controller3) SetRasterizationScale(scale float64) error {
-	r, _, _ := i.Vtbl.PutRasterizationScale.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(scale),
+	r := com.Call(uintptr(i.Vtbl.PutRasterizationScale),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.F64(scale), // scale 是按值传递的 double: amd64 走 XMM、386 占两个栈槽, 由 com.F64 按架构落位.
 	)
 	if r != 0 {
 		return syscall.Errno(r)

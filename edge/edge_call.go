@@ -1,12 +1,18 @@
-//go:build amd64
-
 package edge
 
+// 本文件里的方法有一个共同点: 形参里带**按值传递的结构体**(RECT / POINT)或**按值传递的 double**,
+// 而这两种实参在 386 与 amd64 上的落位规则完全不同:
+//
+//   - amd64: 超过 8 字节的结构体按引用传(指针), 8 字节及以下打包成一个位置槽; 浮点走 XMM 寄存器;
+//   - 386: 全部按序压栈, 结构体按 4 字节槽展开, double 占两个槽.
+//
+// 统一走 wapi/com.Call —— 按签名顺序列出实参, 由它按架构落位, 一份代码两个架构都对.
+
 import (
-	"math"
 	"syscall"
 	"unsafe"
 
+	"github.com/twgh/xcgui/wapi/com"
 	"github.com/twgh/xcgui/xc"
 )
 
@@ -14,9 +20,9 @@ import (
 //
 // bounds: WebView 的边界矩形。
 func (i *ICoreWebView2Controller) SetBounds(bounds xc.RECT) error {
-	r, _, _ := i.Vtbl.PutBounds.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&bounds)),
+	r := com.Call(uintptr(i.Vtbl.PutBounds),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.StructOf(&bounds),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -25,12 +31,12 @@ func (i *ICoreWebView2Controller) SetBounds(bounds xc.RECT) error {
 }
 
 // SetZoomFactor 设置 WebView 的缩放系数。
+//
+// zoomFactor: 缩放系数。
 func (i *ICoreWebView2Controller) SetZoomFactor(zoomFactor float64) error {
-	// 将浮点数转换为 uint64（保持位模式）
-	zoomBits := math.Float64bits(zoomFactor)
-	r, _, _ := i.Vtbl.PutZoomFactor.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(zoomBits), // 传递浮点数的位模式
+	r := com.Call(uintptr(i.Vtbl.PutZoomFactor),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.F64(zoomFactor), // double 是按值形参: amd64 走 XMM、386 占两个栈槽, 由 com.F64 处理。
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -44,12 +50,10 @@ func (i *ICoreWebView2Controller) SetZoomFactor(zoomFactor float64) error {
 //
 // zoomFactor: 缩放系数.
 func (i *ICoreWebView2Controller) SetBoundsAndZoomFactor(bounds xc.RECT, zoomFactor float64) error {
-	// 将浮点数转换为 uint64（保持位模式）
-	zoomBits := math.Float64bits(zoomFactor)
-	r, _, _ := i.Vtbl.SetBoundsAndZoomFactor.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&bounds)),
-		uintptr(zoomBits),
+	r := com.Call(uintptr(i.Vtbl.SetBoundsAndZoomFactor),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.StructOf(&bounds),
+		com.F64(zoomFactor),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -59,9 +63,9 @@ func (i *ICoreWebView2Controller) SetBoundsAndZoomFactor(bounds xc.RECT, zoomFac
 
 // SetPointerDeviceRect 设置指针设备矩形区域.
 func (i *ICoreWebView2PointerInfo) SetPointerDeviceRect(rect xc.RECT) error {
-	r, _, _ := i.Vtbl.PutPointerDeviceRect.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&rect)),
+	r := com.Call(uintptr(i.Vtbl.PutPointerDeviceRect),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.StructOf(&rect),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -71,9 +75,9 @@ func (i *ICoreWebView2PointerInfo) SetPointerDeviceRect(rect xc.RECT) error {
 
 // SetDisplayRect 设置显示矩形区域.
 func (i *ICoreWebView2PointerInfo) SetDisplayRect(rect xc.RECT) error {
-	r, _, _ := i.Vtbl.PutDisplayRect.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&rect)),
+	r := com.Call(uintptr(i.Vtbl.PutDisplayRect),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.StructOf(&rect),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -83,9 +87,9 @@ func (i *ICoreWebView2PointerInfo) SetDisplayRect(rect xc.RECT) error {
 
 // SetTouchContact 设置触摸接触区域.
 func (i *ICoreWebView2PointerInfo) SetTouchContact(rect xc.RECT) error {
-	r, _, _ := i.Vtbl.PutTouchContact.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&rect)),
+	r := com.Call(uintptr(i.Vtbl.PutTouchContact),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.StructOf(&rect),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -95,9 +99,9 @@ func (i *ICoreWebView2PointerInfo) SetTouchContact(rect xc.RECT) error {
 
 // SetTouchContactRaw 设置原始触摸接触区域.
 func (i *ICoreWebView2PointerInfo) SetTouchContactRaw(rect xc.RECT) error {
-	r, _, _ := i.Vtbl.PutTouchContactRaw.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&rect)),
+	r := com.Call(uintptr(i.Vtbl.PutTouchContactRaw),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.StructOf(&rect),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -111,9 +115,9 @@ func (i *ICoreWebView2PointerInfo) SetTouchContactRaw(rect xc.RECT) error {
 //   - 使用(0, 0)可使对话框与 WebView 角对齐且无边距。
 //   - 应在初始化期间设置角对齐方式和边距，以确保在首次计算布局时它们能正确应用，否则它们将不会生效，直到下次 WebView 位置或大小更新。
 func (i *ICoreWebView2_9) SetDefaultDownloadDialogMargin(margin xc.POINT) error {
-	r, _, _ := i.Vtbl.PutDefaultDownloadDialogMargin.Call(
-		uintptr(unsafe.Pointer(i)),
-		xc.PointToUintptr(margin),
+	r := com.Call(uintptr(i.Vtbl.PutDefaultDownloadDialogMargin),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.StructOf(&margin),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -123,9 +127,9 @@ func (i *ICoreWebView2_9) SetDefaultDownloadDialogMargin(margin xc.POINT) error 
 
 // SetPixelLocation 设置像素位置.
 func (i *ICoreWebView2PointerInfo) SetPixelLocation(point xc.POINT) error {
-	r, _, _ := i.Vtbl.PutPixelLocation.Call(
-		uintptr(unsafe.Pointer(i)),
-		xc.PointToUintptr(point),
+	r := com.Call(uintptr(i.Vtbl.PutPixelLocation),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.StructOf(&point),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -135,9 +139,9 @@ func (i *ICoreWebView2PointerInfo) SetPixelLocation(point xc.POINT) error {
 
 // SetHimetricLocation 设置 HIMETRIC 坐标位置.
 func (i *ICoreWebView2PointerInfo) SetHimetricLocation(point xc.POINT) error {
-	r, _, _ := i.Vtbl.PutHimetricLocation.Call(
-		uintptr(unsafe.Pointer(i)),
-		xc.PointToUintptr(point),
+	r := com.Call(uintptr(i.Vtbl.PutHimetricLocation),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.StructOf(&point),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -147,9 +151,9 @@ func (i *ICoreWebView2PointerInfo) SetHimetricLocation(point xc.POINT) error {
 
 // SetPixelLocationRaw 设置原始像素坐标位置.
 func (i *ICoreWebView2PointerInfo) SetPixelLocationRaw(point xc.POINT) error {
-	r, _, _ := i.Vtbl.PutPixelLocationRaw.Call(
-		uintptr(unsafe.Pointer(i)),
-		xc.PointToUintptr(point),
+	r := com.Call(uintptr(i.Vtbl.PutPixelLocationRaw),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.StructOf(&point),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -159,9 +163,9 @@ func (i *ICoreWebView2PointerInfo) SetPixelLocationRaw(point xc.POINT) error {
 
 // SetHimetricLocationRaw 设置原始 HIMETRIC 坐标位置.
 func (i *ICoreWebView2PointerInfo) SetHimetricLocationRaw(point xc.POINT) error {
-	r, _, _ := i.Vtbl.PutHimetricLocationRaw.Call(
-		uintptr(unsafe.Pointer(i)),
-		xc.PointToUintptr(point),
+	r := com.Call(uintptr(i.Vtbl.PutHimetricLocationRaw),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.StructOf(&point),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -180,12 +184,12 @@ func (i *ICoreWebView2PointerInfo) SetHimetricLocationRaw(point xc.POINT) error 
 //   - 若要跟踪在 WebView 中开始且可能移动到 WebView 和宿主应用程序外部的鼠标事件，建议调用 SetCapture 和 ReleaseCapture。
 //   - 若要关闭悬停弹出窗口，也建议发送 COREWEBVIEW2_MOUSE_EVENT_KIND_LEAVE 消息。
 func (i *ICoreWebView2CompositionController) SendMouseInput(eventKind COREWEBVIEW2_MOUSE_EVENT_KIND, virtualKeys COREWEBVIEW2_MOUSE_EVENT_VIRTUAL_KEYS, mouseData uint32, point xc.POINT) error {
-	r, _, _ := i.Vtbl.SendMouseInput.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(eventKind),
-		uintptr(virtualKeys),
-		uintptr(mouseData),
-		xc.PointToUintptr(point),
+	r := com.Call(uintptr(i.Vtbl.SendMouseInput),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.U(uintptr(eventKind)),
+		com.U(uintptr(virtualKeys)),
+		com.U(uintptr(mouseData)),
+		com.StructOf(&point),
 	)
 	if r != 0 {
 		return syscall.Errno(r)
@@ -207,12 +211,12 @@ func (i *ICoreWebView2CompositionController) SendMouseInput(eventKind COREWEBVIE
 // 返回值: 指示目标将对拖拽操作执行的操作。
 func (i *ICoreWebView2CompositionController3) DragEnter(dataObject unsafe.Pointer, keyState uint32, point xc.POINT) (uint32, error) {
 	var effect uint32
-	r, _, _ := i.Vtbl.DragEnter.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(dataObject),
-		uintptr(keyState),
-		xc.PointToUintptr(point),
-		uintptr(unsafe.Pointer(&effect)),
+	r := com.Call(uintptr(i.Vtbl.DragEnter),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.U(uintptr(dataObject)),
+		com.U(uintptr(keyState)),
+		com.StructOf(&point),
+		com.U(uintptr(unsafe.Pointer(&effect))),
 	)
 	if r != 0 {
 		return 0, syscall.Errno(r)
@@ -232,11 +236,11 @@ func (i *ICoreWebView2CompositionController3) DragEnter(dataObject unsafe.Pointe
 // 返回值: 指示目标将对拖拽操作执行的操作。
 func (i *ICoreWebView2CompositionController3) DragOver(keyState uint32, point xc.POINT) (uint32, error) {
 	var effect uint32
-	r, _, _ := i.Vtbl.DragOver.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(keyState),
-		xc.PointToUintptr(point),
-		uintptr(unsafe.Pointer(&effect)),
+	r := com.Call(uintptr(i.Vtbl.DragOver),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.U(uintptr(keyState)),
+		com.StructOf(&point),
+		com.U(uintptr(unsafe.Pointer(&effect))),
 	)
 	if r != 0 {
 		return 0, syscall.Errno(r)
@@ -258,12 +262,12 @@ func (i *ICoreWebView2CompositionController3) DragOver(keyState uint32, point xc
 // 返回值: 指示目标将对拖拽操作执行的操作。
 func (i *ICoreWebView2CompositionController3) Drop(dataObject unsafe.Pointer, keyState uint32, point xc.POINT) (uint32, error) {
 	var effect uint32
-	r, _, _ := i.Vtbl.Drop.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(dataObject),
-		uintptr(keyState),
-		xc.PointToUintptr(point),
-		uintptr(unsafe.Pointer(&effect)),
+	r := com.Call(uintptr(i.Vtbl.Drop),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.U(uintptr(dataObject)),
+		com.U(uintptr(keyState)),
+		com.StructOf(&point),
+		com.U(uintptr(unsafe.Pointer(&effect))),
 	)
 	if r != 0 {
 		return 0, syscall.Errno(r)
@@ -277,10 +281,10 @@ func (i *ICoreWebView2CompositionController3) Drop(dataObject unsafe.Pointer, ke
 // point: 指定要检查的点坐标。
 func (i *ICoreWebView2CompositionController4) GetNonClientRegionAtPoint(point xc.POINT) (COREWEBVIEW2_NON_CLIENT_REGION_KIND, error) {
 	var value COREWEBVIEW2_NON_CLIENT_REGION_KIND
-	r, _, _ := i.Vtbl.GetNonClientRegionAtPoint.Call(
-		uintptr(unsafe.Pointer(i)),
-		xc.PointToUintptr(point),
-		uintptr(unsafe.Pointer(&value)),
+	r := com.Call(uintptr(i.Vtbl.GetNonClientRegionAtPoint),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.StructOf(&point),
+		com.U(uintptr(unsafe.Pointer(&value))),
 	)
 	if r != 0 {
 		return 0, syscall.Errno(r)

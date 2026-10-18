@@ -3,6 +3,7 @@ package edge
 import (
 	"github.com/twgh/xcgui/common"
 	"github.com/twgh/xcgui/wapi"
+	"github.com/twgh/xcgui/wapi/com"
 
 	"syscall"
 	"unsafe"
@@ -229,9 +230,9 @@ func (i *ICoreWebView2Cookie) SetSameSite(sameSite COREWEBVIEW2_COOKIE_SAME_SITE
 //   - Cookie 是会话 Cookie，如果 Expires 设置为 -1.0，则 Cookie 不会持久。
 //   - 不允许 NaN、无穷大和除 -1.0 以外的任何负值集。
 func (i *ICoreWebView2Cookie) SetExpires(expires float64) error {
-	r, _, _ := i.Vtbl.PutExpires.Call(
-		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&expires)),
+	r := com.Call(uintptr(i.Vtbl.PutExpires),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.F64(expires),
 	)
 	if r != 0 {
 		return syscall.Errno(r)

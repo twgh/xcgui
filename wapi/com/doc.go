@@ -3,12 +3,12 @@
 //
 // 使用方:
 //   - d2d(直通 Direct2D): 用它映射 ID2D1* 接口, 再按各接口的虚表结构体(定义在 d2d 包里)重解释调用;
-//   - edge(WebView2) 自有一份同源实现(尚未迁移), 它按 GOARCH 分了 edge_386.go / edge_amd64.go
-//     两套参数传递写法 —— 见下一节.
+//   - edge(WebView2): 它自有一套 ComProc, 但形参里带浮点/按值结构体的方法都走本包的 Call 了
+//     (见 edge/edge_call.go).
 //
 // # 参数传递(386 与 amd64 不同)
 //
-// 首选 **Call**: 按被调方签名里的实参顺序(连 this 一起)用 U / U64 / F32 / F64 列出来, 各架构的
+// 首选 **Call**: 按被调方签名里的实参顺序(连 this 一起)用 U / Struct / F32 / F64 列出来, 各架构的
 // 落位规则由它处理 —— 细节见 call.go. 下面两段是它背后的机制, 手写封装(以及读懂历史代码)时才会用到.
 //
 // 调用一律经过 syscall.SyscallN, 而它**只能设置通用寄存器**; 两种架构下的写法因此不同:
@@ -16,7 +16,7 @@
 //   - **386**(stdcall, 参数全部走栈):
 //     结构体(如 RECT/POINT)**按值拆成 4/2 个 32 位槽**逐个压栈即可;
 //     float32/float64 也**按位拆成 32 位槽**压栈(float64 占两个槽, 见 common.Float64ToUint32Pair)——
-//     这是完全符合 ABI 的做法. edge/edge_386.go 就是这么写的.
+//     这是完全符合 ABI 的做法. 旧实现 edge/edge_386.go 就是这么写的.
 //   - **amd64**(Microsoft x64 约定):
 //     8 字节以上的结构体**按引用传递**, 所以"按值传结构体"的方法要**传指针**;
 //     浮点参数走 XMM0~XMM3, 与通用寄存器是**两套独立**的 —— 用 SyscallN 直接传(哪怕是位打包)是
@@ -43,7 +43,4 @@
 //     shadow space): 用 CallWithFloat32Stack1("4 个整数/指针 + 浮点 + 1 个栈参数"). 实测用例
 //     ID2D1RenderTarget::DrawGeometry(geometry, brush, FLOAT strokeWidth, ID2D1StrokeStyle *style) ——
 //     按位置计数落位是 this→RCX / geometry→RDX / brush→R8 / strokeWidth→XMM3 / style→栈.
-//
-// 附: edge 的 amd64 分支用 math.Float64bits 打包传 double(edge/edge_amd64.go), 按上面的机制
-// **不保证生效**(是否"碰巧能用"取决于调用点 XMM 的残留值); 它的 386 分支才是符合 ABI 的写法.
 package com
