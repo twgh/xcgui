@@ -24,6 +24,7 @@ import (
 	"runtime/debug"
 	"sync"
 	"syscall"
+	"time"
 	"unsafe"
 
 	"github.com/twgh/xcgui/wapi"
@@ -34,7 +35,8 @@ import (
 //	api: 弹窗来源的 Win32 API, 为 "MessageBoxW" 或 "MessageBoxA".
 //	text: 弹窗正文, 例如 "在API:XEle_Redraw()中, 输入句柄可能无效[0x1869F].\n\n\n是否终止程序?"
 //	caption: 弹窗标题, 一般为 "XCGUI-错误提示!".
-type ErrorHookHandler func(api, text, caption string)
+//	stack: 当前的 Go 调用栈(debug.Stack() 的结果), 可以直接写入自己的日志, 不用再自己抓.
+type ErrorHookHandler func(api, text, caption string, stack string)
 
 var (
 	errorHookMu        sync.Mutex
@@ -112,8 +114,9 @@ func SetErrorHookLogFile(path string) {
 	errorHookLogFile = path
 }
 
-func defaultErrorHookHandler(api, text, caption string) {
-	msg := fmt.Sprintf("[XCGUI错误] %s 标题=%q 内容=%q\n%s", api, caption, text, debug.Stack())
+func defaultErrorHookHandler(api, text, caption string, stack string) {
+	msg := fmt.Sprintf("%s [XCGUI错误] %s 标题=%q 内容=%q\n%s",
+		time.Now().Format("2006-01-02 15:04:05.000"), api, caption, text, stack)
 
 	// 正式版用 -H windowsgui 编译, 没有控制台也没有有效的 stderr 句柄, 输出到 stderr 会被直接丢弃,
 	// 所以这里写文件为主, OutputDebugString 为辅(可在 DebugView 或 IDE 输出窗口看到).
@@ -165,11 +168,14 @@ func onXCGUIErrorMessageBoxA(hWnd, text, caption, uType uintptr) uintptr {
 }
 
 func handleErrorBox(api, text, caption string) {
+	// 必须在这里取栈: 此时调用链还在(回调 -> dll -> xc 函数 -> 用户代码), debug.Stack 才能拿到完整栈.
+	stack := string(debug.Stack())
+
 	errorHookMu.Lock()
 	handler := errorHookHandler
 	errorHookMu.Unlock()
 	if handler != nil {
-		handler(api, text, caption)
+		handler(api, text, caption, stack)
 	}
 }
 
