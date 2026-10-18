@@ -27,6 +27,9 @@ var (
 	procGetModuleHandleEx   = Kernel32.NewProc("GetModuleHandleExW")
 	procGetCurrentThreadId  = Kernel32.NewProc("GetCurrentThreadId")
 	mulDiv                  = Kernel32.NewProc("MulDiv")
+	procVirtualAlloc        = Kernel32.NewProc("VirtualAlloc")
+	procVirtualProtect      = Kernel32.NewProc("VirtualProtect")
+	procMultiByteToWideChar = Kernel32.NewProc("MultiByteToWideChar")
 )
 
 // GetCurrentThreadId 检索调用线程的线程标识符。在线程终止之前，线程标识符将在整个系统中唯一标识线程。
@@ -249,5 +252,101 @@ func MulDiv(nNumber, nNumerator, nDenominator int32) int32 {
 		uintptr(nNumerator),
 		uintptr(nDenominator),
 	)
+	return int32(r)
+}
+
+// PAGE_ 内存页保护属性, 在 VirtualAlloc 和 VirtualProtect 中使用.
+type PAGE_ uint32
+
+const (
+	PAGE_NOACCESS          PAGE_ = 0x01 // 禁止访问该区域. 如果尝试读取、写入或执行, 将引发访问冲突.
+	PAGE_READONLY          PAGE_ = 0x02 // 允许读取.
+	PAGE_READWRITE         PAGE_ = 0x04 // 允许读写.
+	PAGE_WRITECOPY         PAGE_ = 0x08 // 允许写入, 但写时复制.
+	PAGE_EXECUTE           PAGE_ = 0x10 // 允许执行.
+	PAGE_EXECUTE_READ      PAGE_ = 0x20 // 允许执行和读取.
+	PAGE_EXECUTE_READWRITE PAGE_ = 0x40 // 允许执行、读取和写入.
+	PAGE_EXECUTE_WRITECOPY PAGE_ = 0x80 // 允许执行和写入, 但写时复制.
+)
+
+// MEM_ 内存分配类型, 在 VirtualAlloc 中使用.
+type MEM_ uint32
+
+const (
+	MEM_COMMIT  MEM_ = 0x00001000 // 为指定的保留内存页分配内存.
+	MEM_RESERVE MEM_ = 0x00002000 // 保留进程的虚拟地址空间范围.
+	MEM_RELEASE MEM_ = 0x00008000 // 释放指定的保留内存页.
+	MEM_FREE    MEM_ = 0x00010000 // 释放已占用的内存页.
+	MEM_RESET   MEM_ = 0x00080000 // 将指定的内存页重置为未提交状态.
+)
+
+// VirtualAlloc 在调用进程的虚拟地址空间中保留、提交或更改内存区域的状态. 函数分配的内存初始化为零.
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/memoryapi/nf-memoryapi-virtualalloc.
+//
+// lpAddress: 要分配的区域的起始地址. 如果为 0, 则由系统决定分配位置.
+//
+// dwSize: 要分配的区域的大小, 以字节为单位.
+//
+// flAllocationType: 内存分配类型, 是以下值的组合: wapi.MEM_.
+//
+// flProtect: 内存页保护属性, 是以下值之一: wapi.PAGE_.
+//
+// 返回值: 如果函数成功, 则返回值是分配的内存区域的基址; 如果函数失败, 则返回值为 0.
+func VirtualAlloc(lpAddress, dwSize uintptr, flAllocationType MEM_, flProtect PAGE_) uintptr {
+	r, _, _ := procVirtualAlloc.Call(lpAddress, dwSize, uintptr(flAllocationType), uintptr(flProtect))
+	return r
+}
+
+// VirtualProtect 更改调用进程的虚拟地址空间中已提交页面的保护.
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/memoryapi/nf-memoryapi-virtualprotect.
+//
+// lpAddress: 要更改访问保护的页面区域的起始地址.
+//
+// dwSize: 要更改访问保护的区域的大小, 以字节为单位.
+//
+// flNewProtect: 新的内存保护属性, 是以下值之一: wapi.PAGE_.
+//
+// lpflOldProtect: 指向一个变量的指针, 该变量接收指定页区域的第一个页的当前访问保护属性. 如果此参数为 nil, 则该函数会失败.
+//
+// 返回值: 如果函数成功, 则返回值为 true; 如果函数失败, 则返回值为 false.
+func VirtualProtect(lpAddress, dwSize uintptr, flNewProtect PAGE_, lpflOldProtect *PAGE_) bool {
+	r, _, _ := procVirtualProtect.Call(lpAddress, dwSize, uintptr(flNewProtect), uintptr(unsafe.Pointer(lpflOldProtect)))
+	return r != 0
+}
+
+// CODE_PAGE_ 代码页, 在 MultiByteToWideChar 和 WideCharToMultiByte 中使用.
+type CODE_PAGE_ uint32
+
+const (
+	CP_ACP        CODE_PAGE_ = 0     // 系统的默认 ANSI 代码页.
+	CP_OEMCP      CODE_PAGE_ = 1     // 系统的默认 OEM 代码页.
+	CP_MACCP      CODE_PAGE_ = 2     // 系统的默认 Macintosh 代码页.
+	CP_THREAD_ACP CODE_PAGE_ = 3     // 当前线程的 ANSI 代码页.
+	CP_SYMBOL     CODE_PAGE_ = 42    // 符号代码页.
+	CP_UTF7       CODE_PAGE_ = 65000 // UTF-7 代码页.
+	CP_UTF8       CODE_PAGE_ = 65001 // UTF-8 代码页.
+)
+
+// MultiByteToWideChar 将字符串映射到 UTF-16 (宽字符) 字符串.
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/stringapiset/nf-stringapiset-multibytetowidechar.
+//
+// codePage: 代码页, 是以下值之一: wapi.CODE_PAGE_.
+//
+// dwFlags: 指示转换类型的标志. 如果该值为 0, 则函数在转换失败时返回 0, 并且不会更改输出缓冲区. 详见官方文档.
+//
+// lpMultiByteStr: 使用 common.StrPtr 生成. 要转换的字符串.
+//
+// cbMultiByte: lpMultiByteStr 字符串的大小, 以字节为单位. 如果为 -1, 则该字符串以 NullStr 结尾, 并且函数会计算长度.
+//
+// lpWideCharStr: 接收转换后字符串的缓冲区. 如果为 0, 则该函数返回所需的缓冲区大小.
+//
+// cchWideChar: lpWideCharStr 缓冲区的大小, 以字符为单位(UTF-16 码元).
+//
+// 返回值: 如果函数成功, 则返回值是写入缓冲区的字符数; 如果函数失败, 则返回值为 0.
+func MultiByteToWideChar(codePage CODE_PAGE_, dwFlags uint32, lpMultiByteStr uintptr, cbMultiByte int32, lpWideCharStr uintptr, cchWideChar int32) int32 {
+	r, _, _ := procMultiByteToWideChar.Call(uintptr(codePage), uintptr(dwFlags), lpMultiByteStr, uintptr(cbMultiByte), lpWideCharStr, uintptr(cchWideChar))
 	return int32(r)
 }
