@@ -13,12 +13,12 @@ var errGeometryNil = errors.New("d2d: 几何为空")
 // errno 把 HRESULT 包成 error.
 func errno(r uintptr) error { return syscall.Errno(r) }
 
-// pointArg 把 D2D1_POINT_2F(按值传递的两个 float32)打包成一个 64 位整数.
+// pointArg 把 D2D1_POINT_2F(按值传递的两个 float32)打包成一个 64 位整数, 交给 com.U64 传.
 //
-// 之所以要打包: syscall.SyscallN 只能传通用寄存器, 浮点形参走 XMM 寄存器传不进去, 而"按值传递
-// 的 8 字节结构体"在 x64 调用约定里正好走一个通用寄存器 —— 打包成一个 uintptr 就能原样传进去.
-func pointArg(p D2D1_POINT_2F) uintptr {
-	return uintptr(math.Float32bits(p.X)) | uintptr(math.Float32bits(p.Y))<<32
+// 之所以要打包: 按值传递的 8 字节结构体在 x64 约定里正好占一个位置槽(走一个通用寄存器);
+// 386 下 com.U64 会把它拆成低/高两个 32 位槽压栈.
+func pointArg(p D2D1_POINT_2F) uint64 {
+	return uint64(math.Float32bits(p.X)) | uint64(math.Float32bits(p.Y))<<32
 }
 
 // ---------------- nil 安全 ----------------

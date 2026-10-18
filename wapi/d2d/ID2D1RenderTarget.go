@@ -2,7 +2,6 @@ package d2d
 
 import (
 	"errors"
-	"math"
 	"unsafe"
 
 	"github.com/twgh/xcgui/wapi/com"
@@ -160,7 +159,7 @@ func (i *ID2D1RenderTarget) FillGeometry(geometry *ID2D1Geometry, brush *ID2D1Br
 //
 // 为什么值得用它而不是"CPU 把描边展开成填充多边形再 FillGeometry": 实测同样画 2 万次, DrawGeometry
 // 约 20ms、填充**已展开**的环约 80ms(4 倍), 而且省掉展开代码、圆角/圆帽由 D2D 保证. 代价是线宽参数
-// 在 XMM3、style 压栈 —— 见 wapi/com.CallWithFloat32Stack 的说明(布局真机实测过).
+// 在 XMM3、style 压栈 —— 见 wapi/com.Call 的说明(布局真机实测过).
 func (i *ID2D1RenderTarget) DrawGeometry(geometry *ID2D1Geometry, brush *ID2D1Brush, strokeWidth float32, style *ID2D1StrokeStyle) error {
 	if i == nil {
 		return errors.New("d2d: 渲染目标为空")
@@ -172,15 +171,12 @@ func (i *ID2D1RenderTarget) DrawGeometry(geometry *ID2D1Geometry, brush *ID2D1Br
 		return errors.New("d2d: 画刷为空")
 	}
 	// DrawGeometry 返回 void, 没有 HRESULT 可查.
-	com.CallWithFloat32Stack(uintptr(i.vtbl().DrawGeometry),
-		[4]uintptr{
-			uintptr(unsafe.Pointer(i)),
-			uintptr(unsafe.Pointer(geometry)),
-			uintptr(unsafe.Pointer(brush)),
-			0, // R9 无对应参数(按位置计数: 线宽在 XMM3, style 压栈)
-		},
-		[4]float32{0, 0, 0, strokeWidth},
-		[4]uintptr{uintptr(unsafe.Pointer(style))})
+	com.Call(uintptr(i.vtbl().DrawGeometry),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.U(uintptr(unsafe.Pointer(geometry))),
+		com.U(uintptr(unsafe.Pointer(brush))),
+		com.F32(strokeWidth), // 位置 3 → amd64 的 XMM3
+		com.U(uintptr(unsafe.Pointer(style))))
 	return nil
 }
 
@@ -211,9 +207,11 @@ func (i *ID2D1RenderTarget) FillGeometryColor(geometry *ID2D1Geometry, color D2D
 // 这几个是 D2D 的"第一梯队"绘制口, 不必先建几何(矩形/椭圆若要反复用, 也可以建几何再绘制/填充,
 // 见 CreateRectangleGeometry / CreateRoundedRectangleGeometry / CreateEllipseGeometry).
 //
-// 形参里的线宽(FLOAT)同样踩"按位置计数"布局(见 wapi/com.CallWithFloat32Stack):
+// 形参里的线宽(FLOAT)同样踩"按位置计数"布局(见 wapi/com.Call):
 //   - 4 个参数的(矩形/椭圆): 线宽在 XMM3, 样式在栈[0];
 //   - 5 个参数的(直线): 线宽在**栈[0]**(位置 4 —— 前 4 个 XMM 槽已被位置 0~3 占掉), 样式在栈[1].
+//
+// 386 下这些差异都由 com.Call 抹平了, 上面的说明只描述 amd64 的落位.
 
 // DrawLine 画一条直线.
 func (i *ID2D1RenderTarget) DrawLine(p0, p1 D2D1_POINT_2F, brush *ID2D1Brush, strokeWidth float32, style *ID2D1StrokeStyle) error {
@@ -223,16 +221,14 @@ func (i *ID2D1RenderTarget) DrawLine(p0, p1 D2D1_POINT_2F, brush *ID2D1Brush, st
 	if brush == nil {
 		return errors.New("d2d: 画刷为空")
 	}
-	// DrawLine 返回 void. 栈上的 float 占 8 字节槽, 值放低 4 字节.
-	com.CallWithFloat32Stack(uintptr(i.vtbl().DrawLine),
-		[4]uintptr{
-			uintptr(unsafe.Pointer(i)),
-			pointArg(p0),
-			pointArg(p1),
-			uintptr(unsafe.Pointer(brush)),
-		},
-		[4]float32{},
-		[4]uintptr{uintptr(math.Float32bits(strokeWidth)), uintptr(unsafe.Pointer(style))})
+	// DrawLine 返回 void. 5 个形参: 位置 4 的线宽与位置 5 的 style 在 amd64 上都压栈.
+	com.Call(uintptr(i.vtbl().DrawLine),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.U64(pointArg(p0)),
+		com.U64(pointArg(p1)),
+		com.U(uintptr(unsafe.Pointer(brush))),
+		com.F32(strokeWidth),
+		com.U(uintptr(unsafe.Pointer(style))))
 	return nil
 }
 
@@ -257,11 +253,12 @@ func (i *ID2D1RenderTarget) DrawRectangle(rect *D2D1_RECT_F, brush *ID2D1Brush, 
 	if brush == nil {
 		return errors.New("d2d: 画刷为空")
 	}
-	com.CallWithFloat32Stack(uintptr(i.vtbl().DrawRectangle),
-		[4]uintptr{uintptr(unsafe.Pointer(i)), uintptr(unsafe.Pointer(rect)),
-			uintptr(unsafe.Pointer(brush)), 0},
-		[4]float32{0, 0, 0, strokeWidth},
-		[4]uintptr{uintptr(unsafe.Pointer(style))})
+	com.Call(uintptr(i.vtbl().DrawRectangle),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.U(uintptr(unsafe.Pointer(rect))),
+		com.U(uintptr(unsafe.Pointer(brush))),
+		com.F32(strokeWidth), // 位置 3 → amd64 的 XMM3
+		com.U(uintptr(unsafe.Pointer(style))))
 	return nil
 }
 
@@ -312,11 +309,12 @@ func (i *ID2D1RenderTarget) DrawEllipse(ellipse *D2D1_ELLIPSE, brush *ID2D1Brush
 	if brush == nil {
 		return errors.New("d2d: 画刷为空")
 	}
-	com.CallWithFloat32Stack(uintptr(i.vtbl().DrawEllipse),
-		[4]uintptr{uintptr(unsafe.Pointer(i)), uintptr(unsafe.Pointer(ellipse)),
-			uintptr(unsafe.Pointer(brush)), 0},
-		[4]float32{0, 0, 0, strokeWidth},
-		[4]uintptr{uintptr(unsafe.Pointer(style))})
+	com.Call(uintptr(i.vtbl().DrawEllipse),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.U(uintptr(unsafe.Pointer(ellipse))),
+		com.U(uintptr(unsafe.Pointer(brush))),
+		com.F32(strokeWidth), // 位置 3 → amd64 的 XMM3
+		com.U(uintptr(unsafe.Pointer(style))))
 	return nil
 }
 

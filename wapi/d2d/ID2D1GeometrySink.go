@@ -4,6 +4,8 @@ import (
 	"errors"
 	"runtime"
 	"unsafe"
+
+	"github.com/twgh/xcgui/wapi/com"
 )
 
 // ID2D1GeometrySink 是几何写入器(在 SimplifiedGeometrySink 之上再追加曲线与弧).
@@ -38,12 +40,17 @@ func (i *ID2D1GeometrySink) SetFillMode(fillMode D2D1_FILL_MODE) {
 	i.vtbl().SetFillMode.Call(uintptr(unsafe.Pointer(i)), uintptr(fillMode))
 }
 
-// BeginFigure 开始一条子路径(void 方法); 点的两个 float32 分量按值打包成一个 64 位整数传递.
+// BeginFigure 开始一条子路径(void 方法).
+//
+// 点按值传递(8 字节结构体): 打包成 64 位整数后用 com.U64 传, 386 下它会自动拆成两个槽.
 func (i *ID2D1GeometrySink) BeginFigure(point D2D1_POINT_2F, figureBegin D2D1_FIGURE_BEGIN) {
 	if i == nil {
 		return
 	}
-	i.vtbl().BeginFigure.Call(uintptr(unsafe.Pointer(i)), pointArg(point), uintptr(figureBegin))
+	com.Call(uintptr(i.vtbl().BeginFigure),
+		com.U(uintptr(unsafe.Pointer(i))),
+		com.U64(pointArg(point)),
+		com.U(uintptr(figureBegin)))
 }
 
 // AddLines 追加折线顶点(void 方法).

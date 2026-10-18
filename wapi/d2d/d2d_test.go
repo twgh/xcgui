@@ -38,7 +38,7 @@ func TestMatrixConstructors(t *testing.T) {
 
 func TestPointArg(t *testing.T) {
 	got := pointArg(D2D1_POINT_2F{X: 1.5, Y: -2.25})
-	want := uintptr(math.Float32bits(1.5)) | uintptr(math.Float32bits(-2.25))<<32
+	want := uint64(math.Float32bits(1.5)) | uint64(math.Float32bits(-2.25))<<32
 	if got != want {
 		t.Errorf("pointArg = %#x, 期望 %#x", got, want)
 	}
@@ -215,6 +215,86 @@ func TestCreateDCRenderTargetRoundTrip(t *testing.T) {
 	if b, g, r, a := px[off], px[off+1], px[off+2], px[off+3]; b != 0 || g != 0 || r != 0 || a != 0 {
 		t.Errorf("未绘制区域像素 = BGRA(%d,%d,%d,%d), 想要全 0", b, g, r, a)
 	}
+}
+
+// 描边路径的端到端探针: 线宽是**按值 float**, 在 amd64 上 DrawRectangle 会把它放进 XMM3(位置 3)、
+// 把 style 压到栈[0]; DrawLine 的线宽更靠后, 落在栈[0]. 这两条正是 com.Call 的两种落位分支,
+// 抓图能同时看出"寄存器里的线宽生效了"和"压栈参数没串位".
+//
+// 对 386 同样有意义: 那边全部按序压栈, 8 字节点结构体由 com.U64 拆成两个槽.
+func TestStrokePrimitives(t *testing.T) {
+	f, err := D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED)
+	if err != nil {
+		t.Skipf("d2d1.dll 或 D2D 不可用: %v", err)
+	}
+	defer f.Release()
+
+	const w, h = 16, 16
+	red := NewColorF(255, 0, 0, 255)
+
+	// draw 在 w×h 的离屏位图上执行一次绘制, 返回 BGRA(预乘) 像素.
+	draw := func(t *testing.T, code func(rt *ID2D1DCRenderTarget)) []byte {
+		t.Helper()
+		dib, err := gdi.NewDIB(w, h)
+		if err != nil {
+			t.Fatal(err)
+		}
+		defer dib.Close()
+		props := NewDCRenderTargetProperties()
+		rt, err := f.CreateDCRenderTarget(&props)
+		if err != nil {
+			t.Fatal(err)
+		}
+		defer rt.Release()
+		if err := rt.BindDC(dib.HDC(), &types.RECT{Left: 0, Top: 0, Right: w, Bottom: h}); err != nil {
+			t.Fatal(err)
+		}
+		rt.BeginDraw()
+		rt.Clear(nil)
+		code(rt)
+		if err := rt.EndDraw(); err != nil {
+			t.Fatal(err)
+		}
+		// dib 在本函数返回时关闭, 像素要先拷出来, 不能把 DIB 内存里的切片带出去.
+		px := make([]byte, len(dib.Pixels()))
+		copy(px, dib.Pixels())
+		return px
+	}
+	at := func(px []byte, x, y int) (b, g, r, a byte) {
+		o := (y*w + x) * 4
+		return px[o], px[o+1], px[o+2], px[o+3]
+	}
+	isRed := func(t *testing.T, px []byte, x, y int, what string) {
+		t.Helper()
+		if b, g, r, a := at(px, x, y); r < 200 || g > 60 || b > 60 || a < 200 {
+			t.Errorf("%s 的像素 (%d,%d) = BGRA(%d,%d,%d,%d), 想要不透明红", what, x, y, b, g, r, a)
+		}
+	}
+	isEmpty := func(t *testing.T, px []byte, x, y int, what string) {
+		t.Helper()
+		if b, g, r, a := at(px, x, y); b|g|r|a != 0 {
+			t.Errorf("%s 的像素 (%d,%d) = BGRA(%d,%d,%d,%d), 想要全 0", what, x, y, b, g, r, a)
+		}
+	}
+
+	// 线宽 4 的矩形描边: 上边框覆盖 y∈[0,4), 内部(8,8)不该被填.
+	px := draw(t, func(rt *ID2D1DCRenderTarget) {
+		rc := D2D1_RECT_F{Left: 2, Top: 2, Right: 14, Bottom: 14}
+		if err := rt.DrawRectangleColor(&rc, red, 4, nil); err != nil {
+			t.Error(err)
+		}
+	})
+	isRed(t, px, 8, 2, "DrawRectangle 上边框")
+	isEmpty(t, px, 8, 8, "DrawRectangle 内部")
+
+	// 线宽 4 的直线: 位置 4 → amd64 的栈[0], 覆盖 y∈[6,10).
+	px = draw(t, func(rt *ID2D1DCRenderTarget) {
+		if err := rt.DrawLineColor(D2D1_POINT_2F{X: 0, Y: 8}, D2D1_POINT_2F{X: 16, Y: 8}, red, 4, nil); err != nil {
+			t.Error(err)
+		}
+	})
+	isRed(t, px, 8, 8, "DrawLine 线身")
+	isEmpty(t, px, 8, 0, "DrawLine 线外")
 }
 
 // 嵌入让子接口直接继承基类方法(编译期保证): AddRef/Release/QueryInterface 只在 IUnknown 上实现一次,

@@ -37,14 +37,15 @@
 //     寄存器, 而 syscall.SyscallN 只能设置通用寄存器(位打包也不行, 实测 SetDpi(float,float)
 //     直接崩). 本包已经把常用的这类方法封装好了, 直接用方法即可:
 //
-//     DrawGeometry / FillGeometry —— 线宽在 XMM3、描边样式压栈(见 wapi/com.CallWithFloat32Stack)
+//     DrawGeometry / FillGeometry —— 线宽在 XMM3、描边样式压栈(见 wapi/com.Call)
 //     DrawLine / DrawRectangle / DrawEllipse —— 线宽按"位置计数"落位; 直线是 5 个参数, 线宽在**栈[0]**
 //     FillRectangle / FillEllipse —— 无浮点形参, 普通调用
 //
-//     自己写新封装时注意三条(细节见 wapi/com 的包注释): ① 浮点槽号按**参数位置**编号(this 占
-//     位置 0; 实测 SetOpacity 读 XMM1、DrawGeometry 的线宽读 XMM3); ② 超出 4 个寄存器的参数压栈,
-//     **栈上的 float 占 8 字节槽、值放低 4 字节**; ③ 用 CallWithFloat32Stack(最多 4 个栈参数).
-//     **386** 下没有 XMM 问题, 按位拆成 32 位槽压栈即可.
+//     自己写新封装时用 **wapi/com.Call**: 按被调方签名顺序把实参写成 com.U / com.U64 / com.F32,
+//     amd64 的"位置编号 + 寄存器/压栈"和 386 的"按序压栈"都由它处理(细节见 wapi/com 的包注释):
+//     ① 浮点槽号按**参数位置**编号(this 占位置 0; 实测 SetOpacity 读 XMM1、DrawGeometry 的线宽读
+//     XMM3); ② 超出 4 个寄存器的参数压栈, **栈上的 float 占 8 字节槽、值放低 4 字节**;
+//     ③ **386** 下没有 XMM 问题, com.U64 会自动把 8 字节值拆成 32 位槽压栈.
 //
 //     另注意区分: **"按值传的 float" 与 "指向浮点结构的指针" 是两回事** —— 后者不受本规则限制,
 //     照常封装即可, 例如 SetTransform(矩阵指针)、CreateSolidColorBrush(颜色指针).
