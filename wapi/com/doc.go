@@ -15,16 +15,17 @@
 //
 //   - **386**(stdcall, 参数全部走栈):
 //     结构体(如 RECT/POINT)**按值拆成 4/2 个 32 位槽**逐个压栈即可;
-//     float32/float64 也**按位拆成 32 位槽**压栈(float64 占两个槽, 见 common.Float64ToUint32Pair)——
-//     这是完全符合 ABI 的做法. 旧实现 edge/edge_386.go 就是这么写的.
+//     float32/float64 也**按位拆成 32 位槽**压栈(float64 占两个槽) —— 这是完全符合 ABI 的做法,
+//     Call 的 386 实现就是这么铺的(不需要汇编转发器).
 //   - **amd64**(Microsoft x64 约定):
 //     8 字节以上的结构体**按引用传递**, 所以"按值传结构体"的方法要**传指针**;
 //     浮点参数走 XMM0~XMM3, 与通用寄存器是**两套独立**的 —— 用 SyscallN 直接传(哪怕是位打包)是
 //     **无效的**: 实测 ID2D1RenderTarget::SetDpi(float, float) 位打包调用直接崩溃
 //     (现场 rax/r9 = 0x42C00000, 正是 96.0f 的位模式 —— 值确实进了通用寄存器, 被调方从 XMM
 //     读到的却是垃圾).
-//     要用这类方法, 走本包的 **CallWithFloat32 / CallWithFloat64 / CallWithFloat32RetFloat**
-//     (最后那个用于"按值返回 float"的方法) —— 靠一小段汇编转发器把两类寄存器都摆好, 见下节.
+//     要用这类方法, 走本包的 **Call**(它内部就是靠下面这套转发器); 手写封装时也可以直接用
+//     **CallWithFloat32 / CallWithFloat64 / CallWithFloat32RetFloat**(最后那个用于"按值返回 float"
+//     的方法) —— 靠一小段汇编转发器把两类寄存器都摆好, 见下节.
 //
 // # 汇编转发器(仅 amd64): 把浮点送进去的三个坑
 //
