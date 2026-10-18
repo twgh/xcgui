@@ -20,6 +20,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"path/filepath"
 	"runtime/debug"
 	"sync"
 	"syscall"
@@ -38,17 +39,19 @@ type ErrorHookHandler func(api, text, caption string)
 var (
 	errorHookMu        sync.Mutex
 	errorHookInstalled bool
-	errorHookHandler   ErrorHookHandler = defaultErrorHookHandler
-	errorHookReturn                     = uintptr(wapi.ID_NO) // 默认等价于点"否"
-	msgBoxWCallback    uintptr                                // MessageBoxW 的替换函数地址
-	msgBoxACallback    uintptr                                // MessageBoxA 的替换函数地址
+	errorHookHandler   ErrorHookHandler  = defaultErrorHookHandler
+	errorHookReturn                      = uintptr(wapi.ID_NO) // 默认等价于点"否"
+	msgBoxWCallback    uintptr                                 // MessageBoxW 的替换函数地址
+	msgBoxACallback    uintptr                                 // MessageBoxA 的替换函数地址
+	errorHookLogFile   = "xcgui_err.log"                       // 默认处理写日志的文件路径
 )
 
 // InstallErrorHook 安装 xcgui.dll 内部错误弹窗的拦截钩子.
 //   - 必须在 xcgui.dll 加载之后调用, 即 app.New() 或 xc.XInitXCGUI() 之后.
 //   - 可重复调用, 只有第一次会真正修改导入表.
-//   - handler 可选, 不填则使用默认处理: 打印到 stderr 并追加写入当前目录的 xcgui_err.log.
-//   - 只建议在调试时使用, 正式发布时请移除, 因为杀软可能对 IAT 改写有意见.
+//   - handler 可选, 不填则使用默认处理: 把错误内容和 Go 调用栈追加写入 xcgui_err.log, 同时
+//     输出到 OutputDebugString(DebugView / IDE 输出窗口可见); 只有存在控制台时才写 stderr.
+//   - 建议在调试时使用, 因为杀软可能对 IAT 改写有意见.
 func InstallErrorHook(handler ...ErrorHookHandler) error {
 	errorHookMu.Lock()
 	defer errorHookMu.Unlock()
@@ -100,15 +103,55 @@ func SetErrorHookReturnButton(id wapi.ID_) {
 	errorHookReturn = uintptr(id)
 }
 
+// SetErrorHookLogFile 设置默认处理写日志的文件路径, 默认 "xcgui_err.log"(相对当前工作目录, 该目录不可写时写到临时目录).
+//   - 传空字符串则不写文件, 但要注意: 没有控制台的程序完全看不到错误内容.
+//   - 正式版建议设置成程序自己的日志目录, 例如 filepath.Join(日志目录, "xcgui_err.log").
+func SetErrorHookLogFile(path string) {
+	errorHookMu.Lock()
+	defer errorHookMu.Unlock()
+	errorHookLogFile = path
+}
+
 func defaultErrorHookHandler(api, text, caption string) {
-	line := fmt.Sprintf("[XCGUI错误] %s 标题=%q 内容=%q\n", api, caption, text)
-	// GUI 程序没有控制台, 所以同时写文件.
-	_, _ = os.Stderr.WriteString(line)
-	debug.PrintStack()
-	if f, err := os.OpenFile("xcgui_err.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666); err == nil {
-		_, _ = f.WriteString(line)
-		_ = f.Close()
+	msg := fmt.Sprintf("[XCGUI错误] %s 标题=%q 内容=%q\n%s", api, caption, text, debug.Stack())
+
+	// 正式版用 -H windowsgui 编译, 没有控制台也没有有效的 stderr 句柄, 输出到 stderr 会被直接丢弃,
+	// 所以这里写文件为主, OutputDebugString 为辅(可在 DebugView 或 IDE 输出窗口看到).
+	appendErrorLog(msg)
+	wapi.OutputDebugString(msg)
+
+	// 只有存在控制台(或启动方重定向了标准错误)时才写 stderr.
+	if h := wapi.GetStdHandle(wapi.STD_ERROR_HANDLE); h != 0 && h != ^uintptr(0) {
+		_, _ = os.Stderr.WriteString(msg)
 	}
+}
+
+// appendErrorLog 把文本追加到 errorHookLogFile, 该文件不可写时退回到临时目录.
+func appendErrorLog(s string) {
+	path := getErrorHookLogFile()
+	if path == "" {
+		return
+	}
+	if appendFile(path, s) {
+		return
+	}
+	_ = appendFile(filepath.Join(os.TempDir(), filepath.Base(path)), s)
+}
+
+func getErrorHookLogFile() string {
+	errorHookMu.Lock()
+	defer errorHookMu.Unlock()
+	return errorHookLogFile
+}
+
+func appendFile(path, s string) bool {
+	f, err := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
+	if err != nil {
+		return false
+	}
+	_, err = f.WriteString(s)
+	_ = f.Close()
+	return err == nil
 }
 
 func onXCGUIErrorMessageBoxW(hWnd, text, caption, uType uintptr) uintptr {
