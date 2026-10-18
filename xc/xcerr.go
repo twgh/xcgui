@@ -53,7 +53,7 @@ var (
 //   - 可重复调用, 只有第一次会真正修改导入表.
 //   - handler 可选, 不填则使用默认处理: 把错误内容和 Go 调用栈追加写入 xcgui_err.log, 同时
 //     输出到 OutputDebugString(DebugView / IDE 输出窗口可见); 只有存在控制台时才写 stderr.
-//   - 建议在调试时使用, 因为杀软可能对 IAT 改写有意见.
+//   - 建议在开发阶段时使用, 因为杀软可能对 IAT 改写有意见.
 func InstallErrorHook(handler ...ErrorHookHandler) error {
 	errorHookMu.Lock()
 	defer errorHookMu.Unlock()
