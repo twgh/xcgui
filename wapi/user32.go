@@ -1195,15 +1195,15 @@ const (
 //
 // hWnd: 要创建的消息框的所有者窗口的句柄。如果此参数为0，则消息框没有所有者窗口.
 //
-// lpText: 要显示的消息。如果字符串由多行组成，您可以在每行之间使用换行符分隔各行.
+// text: 要显示的消息。如果字符串由多行组成，您可以在每行之间使用换行符分隔各行.
 //
-// lpCaption: 对话框标题。如果此参数为空，则默认标题为Error.
+// caption: 对话框标题。如果此参数为空，则默认标题为Error.
 //
 // uType: 对话框的内容和行为, 是以下值的组合: wapi.MB_.
 //
 // 返回值: 如果函数失败，则返回值为0; 成功则返回一个整数，指示用户单击了哪个按钮.
-func MessageBoxW(hWnd uintptr, lpText, lpCaption string, uType MB_) ID_ {
-	r, _, _ := messageBoxW.Call(hWnd, common.StrPtr(lpText), common.StrPtr(lpCaption), uintptr(uType))
+func MessageBoxW(hWnd uintptr, text, caption string, uType MB_) ID_ {
+	r, _, _ := messageBoxW.Call(hWnd, common.StrPtr(text), common.StrPtr(caption), uintptr(uType))
 	return ID_(r)
 }
 
