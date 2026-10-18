@@ -30,6 +30,8 @@ var (
 	procVirtualAlloc        = Kernel32.NewProc("VirtualAlloc")
 	procVirtualProtect      = Kernel32.NewProc("VirtualProtect")
 	procMultiByteToWideChar = Kernel32.NewProc("MultiByteToWideChar")
+	procGetStdHandle        = Kernel32.NewProc("GetStdHandle")
+	procOutputDebugStringW  = Kernel32.NewProc("OutputDebugStringW")
 )
 
 // GetCurrentThreadId 检索调用线程的线程标识符。在线程终止之前，线程标识符将在整个系统中唯一标识线程。
@@ -349,4 +351,38 @@ const (
 func MultiByteToWideChar(codePage CODE_PAGE_, dwFlags uint32, lpMultiByteStr uintptr, cbMultiByte int32, lpWideCharStr uintptr, cchWideChar int32) int32 {
 	r, _, _ := procMultiByteToWideChar.Call(uintptr(codePage), uintptr(dwFlags), lpMultiByteStr, uintptr(cbMultiByte), lpWideCharStr, uintptr(cchWideChar))
 	return int32(r)
+}
+
+// STD_HANDLE_ 标准设备句柄类型, 在 GetStdHandle 中使用.
+type STD_HANDLE_ uint32
+
+const (
+	STD_INPUT_HANDLE  STD_HANDLE_ = 0xFFFFFFF6 // 标准输入设备句柄(-10).
+	STD_OUTPUT_HANDLE STD_HANDLE_ = 0xFFFFFFF5 // 标准输出设备句柄(-11).
+	STD_ERROR_HANDLE  STD_HANDLE_ = 0xFFFFFFF4 // 标准错误设备句柄(-12).
+)
+
+// GetStdHandle 检索指定标准设备的句柄(标准输入、标准输出或标准错误).
+//   - 使用 -H windowsgui 编译的程序没有控制台, 此时返回值为 0, 写入 os.Stderr 的内容会被丢弃.
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/console/getstdhandle.
+//
+// nStdHandle: 标准设备, 是以下值之一: wapi.STD_INPUT_HANDLE, wapi.STD_OUTPUT_HANDLE, wapi.STD_ERROR_HANDLE.
+//
+// 返回值: 如果函数成功, 则返回值是指定设备的句柄; 如果失败, 则返回 INVALID_HANDLE_VALUE. 如果没有与调用进程关联的控制台, 则返回 0.
+func GetStdHandle(nStdHandle STD_HANDLE_) uintptr {
+	r, _, _ := procGetStdHandle.Call(uintptr(nStdHandle))
+	return r
+}
+
+// OutputDebugString 将字符串发送到调试器进行显示.
+//   - 没有调试器时该函数不做任何事; 字符串会显示在 DebugView、VS/GoLand 等 IDE 的输出窗口中.
+//   - 程序没有控制台时, 这是除写文件外唯一能看到输出内容的途径.
+//   - 字符串需要以 NullStr 结尾, 且不会自动追加换行符.
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/debugapi/nf-debugapi-outputdebugstringw.
+//
+// lpOutputString: 要显示的以 NullStr 结尾的字符串.
+func OutputDebugString(lpOutputString string) {
+	_, _, _ = procOutputDebugStringW.Call(common.StrPtr(lpOutputString))
 }
