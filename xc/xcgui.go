@@ -8,7 +8,7 @@ import (
 	"sync"
 	"syscall"
 
-	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
 )
 
 func init() {
@@ -91,8 +91,7 @@ func WriteDll(dll []byte) error {
 func WriteDllOrExit(dll []byte) {
 	err := WriteDll(dll)
 	if err != nil {
-		user32 := syscall.NewLazyDLL("user32.dll")
-		user32.NewProc("MessageBoxW").Call(0, common.StrPtr("写出 xcgui.dll 失败: "+err.Error()), common.StrPtr("提示"), uintptr(0x00000010))
+		wapi.MessageBoxW(0, "写出 xcgui.dll 失败: "+err.Error(), "提示", wapi.MB_IconError)
 		os.Exit(1)
 	}
 }

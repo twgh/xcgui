@@ -6,26 +6,16 @@ import (
 	"unsafe"
 
 	"github.com/twgh/xcgui/common"
+	"github.com/twgh/xcgui/wapi"
 	"github.com/twgh/xcgui/xcc"
 )
-
-var (
-	kernel32               = syscall.NewLazyDLL("kernel32.dll")
-	procGetCurrentThreadId = kernel32.NewProc("GetCurrentThreadId")
-)
-
-// 获取当前线程ID.
-func getCurrentThreadId() uint32 {
-	r, _, _ := procGetCurrentThreadId.Call()
-	return uint32(r)
-}
 
 // ThreadId 是 UI 线程 ID. 会在炫彩初始化时赋值.
 var ThreadId uint32
 
 // IsUiThread 判断当前线程是否是 UI 线程.
 func IsUiThread() bool {
-	return ThreadId == getCurrentThreadId()
+	return ThreadId == wapi.GetCurrentThreadId()
 }
 
 // XInitXCGUI 炫彩_初始化.
@@ -43,7 +33,7 @@ func XInitXCGUI(bD2D ...bool) bool {
 
 	r, _, _ := xInitXCGUI.Call(common.BoolPtr(b))
 	if r != 0 {
-		ThreadId = getCurrentThreadId()
+		ThreadId = wapi.GetCurrentThreadId()
 		return true
 	}
 	return false

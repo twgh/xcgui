@@ -3,6 +3,8 @@ package xc
 import (
 	"syscall"
 	"unsafe"
+
+	"github.com/twgh/xcgui/wapi"
 )
 
 // getAnimaItemCallbackPtr 获取动画项回调函数指针
@@ -12,11 +14,6 @@ func getAnimaItemCallbackPtr() uintptr {
 	})
 	return animaItemCallbackPtr
 }
-
-// Windows API: VirtualAlloc
-var (
-	virtualAlloc = kernel32.NewProc("VirtualAlloc")
-)
 
 // 汇编代码（机器码）.
 // 功能：将 XMM1 (float) 移动到 RDX，然后跳转到 Go 函数.
@@ -48,13 +45,7 @@ func createFloatCallback(targetFn uintptr) uintptr {
 	}
 
 	// 分配可执行内存
-	// MEM_COMMIT (0x1000) | MEM_RESERVE (0x2000), PAGE_EXECUTE_READWRITE (0x40)
-	mem, _, _ := virtualAlloc.Call(
-		0,
-		uintptr(len(code)),
-		0x1000|0x2000,
-		0x40)
-
+	mem := wapi.VirtualAlloc(0, uintptr(len(code)), wapi.MEM_COMMIT|wapi.MEM_RESERVE, wapi.PAGE_EXECUTE_READWRITE)
 	if mem == 0 {
 		panic("VirtualAlloc failed")
 	}
