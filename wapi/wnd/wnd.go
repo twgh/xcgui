@@ -6,7 +6,6 @@ import (
 
 	"github.com/twgh/xcgui/wapi"
 	"github.com/twgh/xcgui/wapi/gdi"
-	"github.com/twgh/xcgui/wapi/types"
 )
 
 // SetTop 窗口_置顶.
@@ -72,7 +71,7 @@ func GetHWND(className, title string) uintptr {
 // radius: 圆角半径, 单位 px. 没有处理dpi, 需要的话自行传入处理后的值.
 func SetWindowRound(hwnd uintptr, radius int32) error {
 	// 获取窗口尺寸
-	var rect types.RECT
+	var rect wapi.RECT
 	if !wapi.GetWindowRect(hwnd, &rect) {
 		return errors.New("failed to get window rect")
 	}

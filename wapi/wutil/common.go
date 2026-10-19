@@ -5,7 +5,6 @@ import (
 	"syscall"
 
 	"github.com/twgh/xcgui/wapi"
-	"github.com/twgh/xcgui/wapi/types"
 )
 
 // GetDropFiles 获取拖放进来的文件.
@@ -28,8 +27,8 @@ func GetDropFiles(hDropInfo uintptr) []string {
 }
 
 // GetTaskbarRect 获取任务栏矩形.
-func GetTaskbarRect() (types.RECT, error) {
-	var rc types.RECT
+func GetTaskbarRect() (wapi.RECT, error) {
+	var rc wapi.RECT
 	// 1. 查找任务栏窗口句柄
 	// 任务栏的类名固定为 "Shell_TrayWnd"
 	hwnd := wapi.FindWindowW("Shell_TrayWnd", "")
