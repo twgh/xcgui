@@ -1,6 +1,6 @@
 <h1 align="center">XCGUI</h1>
 <p align="center">
-    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.4.2-blue" alt="release"></a>
+    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.4.3-blue" alt="release"></a>
     <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-4.0-blue" alt="XCGUI"></a>
    <a href="https://golang.org"> <img src="https://img.shields.io/badge/golang-≥1.18-blue" alt="golang"></a>
     <a href="https://pkg.go.dev/github.com/twgh/xcgui"><img src="https://img.shields.io/badge/go.dev-reference-brightgreen" alt="GoDoc"></a>
@@ -29,13 +29,19 @@ English | [简体中文](./README.md)
 - Support WebView2, can use front-end technology stack to develop interfaces.
 - Using the [go-xcgui-dev](https://github.com/twgh/go-xcgui-dev) skill can prevent AI hallucinations.
 - [Usage Guide](https://mcn1fno5w69l.feishu.cn/wiki/space/7489022357177139219?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home) There are introductory tutorials and common questions in it, you can take a look and avoid detours.
-- Other related projects：[xcgui-example](https://github.com/twgh/xcgui-example)，[xc](https://github.com/twgh/xc)，[xc-elementui](https://github.com/twgh/xc-elementui)
+- Other related projects：[xcgui-example](https://github.com/twgh/xcgui-example)，[xc](https://github.com/twgh/xc)，[xui](https://github.com/twgh/xui)
 
 ## Get
 
 ```bash
 go get -u github.com/twgh/xcgui
 ```
+
+## Recommended to use XUI for rapid development
+
+[xui](https://github.com/twgh/xui) — Shadcn-style xcgui self-drawn components
+
+![xui](https://s41.ax1x.com/2026/10/19/pn0t240.png)
 
 ## Visualization UI Designer
 
@@ -91,7 +97,7 @@ The network disk contains `Interface Designer` and `chm help documentation`
 
 ## Simple window(Pure code)
 
-[![SimpleWindow](https://s1.ax1x.com/2022/11/22/z14kAs.jpg)](https://github.com/twgh/xcgui-example/tree/main/Basic/SimpleWindow)
+[![SimpleWindow](https://s41.ax1x.com/2026/10/19/pn0Y5TI.png)](https://github.com/twgh/xcgui-example/tree/main/Basic/SimpleWindow)
 
 ```go
 package main
@@ -165,8 +171,6 @@ The difference is as follows: Since the event callback functions are created usi
 ## JetBrains Open Source Certificate Support
 
 The `xcgui` project has always been under the [GoLand](https://www.jetbrains.com/go/?from=xcgui) integrated development environment, based on **free JetBrains Open Source license(s)** genuine free license, I would like to express my gratitude here.
-
-[<img src="https://s1.ax1x.com/2022/05/24/XiFI6x.png" alt="jetbrains.png" />](https://www.jetbrains.com/?from=xcgui)
 
 ## Schedule
 

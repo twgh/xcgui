@@ -1,6 +1,6 @@
 <h1 align="center">XCGUI</h1>
 <p align="center">
-    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.4.2-blue" alt="release"></a>
+    <a href="https://github.com/twgh/xcgui/releases"><img src="https://img.shields.io/badge/release-1.4.3-blue" alt="release"></a>
     <a href="http://www.xcgui.com"><img src="https://img.shields.io/badge/XCGUI-4.0-blue" alt="XCGUI"></a>
    <a href="https://golang.org"> <img src="https://img.shields.io/badge/golang-≥1.18-blue" alt="golang"></a>
     <a href="https://pkg.go.dev/github.com/twgh/xcgui"><img src="https://img.shields.io/badge/go.dev-reference-brightgreen" alt="GoDoc"></a>
@@ -27,9 +27,9 @@
 - 拥有免费的 UI 设计器：快速开发工具，所见即所得，高度自定义系统(DIY)，让 UI 开发变的更加简单。
 - 支持 Direct2D，硬件加速，能更大程度的发挥硬件特性，创建高性能，高质量的 2D 图形。
 - 支持 WebView2，可使用前端技术栈开发界面。
-- 使用 [go-xcgui-dev](https://github.com/twgh/go-xcgui-dev) 技能可避免 AI 产生幻觉。
+- 推荐使用 [go-xcgui-dev](https://github.com/twgh/go-xcgui-dev) 技能可避免 AI 产生幻觉。
 - [使用指南](https://mcn1fno5w69l.feishu.cn/wiki/space/7489022357177139219?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home) 里有入门教程和常见问题，可以看一下，少走弯路。
-- 其它相关项目：[xcgui-example](https://github.com/twgh/xcgui-example)，[xc](https://github.com/twgh/xc)，[xc-elementui](https://github.com/twgh/xc-elementui)
+- 其它相关项目：[xcgui-example](https://github.com/twgh/xcgui-example)，[xc](https://github.com/twgh/xc)，[xui](https://github.com/twgh/xui)
 - 官方 QQ 群 (能回答问题的人多)：[2283812](https://jq.qq.com/?_wv=1027&k=AiXY4uMc)，只聊 Go 语言版的 QQ 群：[793788011](https://jq.qq.com/?_wv=1027&k=bkKgsYYk)
 
 ## 获取
@@ -37,6 +37,12 @@
 ```bash
 go get -u github.com/twgh/xcgui
 ```
+
+## 推荐使用 XUI 进行快速开发
+
+[xui](https://github.com/twgh/xui) — shadcn 风格的 xcgui 自绘组件
+
+![xui](https://s41.ax1x.com/2026/10/19/pn0t240.png)
 
 ## 可视化 UI 设计器
 
@@ -89,7 +95,7 @@ func main() {
 
 ## 简单窗口（纯代码）
 
-[![SimpleWindow](https://s1.ax1x.com/2022/11/22/z14kAs.jpg)](https://github.com/twgh/xcgui-example/tree/main/Basic/SimpleWindow)
+[![SimpleWindow](https://s41.ax1x.com/2026/10/19/pn0Y5TI.png)](https://github.com/twgh/xcgui-example/tree/main/Basic/SimpleWindow)
 
 ```go
 package main
@@ -170,8 +176,6 @@ xc 包里包含 xcgui.dll 里所有的 API，有近 2000 个函数，不习惯�
 ## JetBrains 开源证书支持
 
 `xcgui` 项目一直以来都是在 [JetBrains](https://www.jetbrains.com/?from=xcgui) 公司旗下的 [GoLand](https://www.jetbrains.com/go/?from=xcgui) 集成开发环境中进行开发，基于 **free JetBrains Open Source license(s)** 正版免费授权，在此表达我的谢意。
-
-[<img src="https://s1.ax1x.com/2022/05/24/XiFI6x.png" alt="jetbrains.png" />](https://www.jetbrains.com/?from=xcgui)
 
 ## 模块继承关系
 
