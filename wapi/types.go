@@ -10,3 +10,5 @@ type DWORD uint32
 type HRESULT uintptr
 
 type POINT = types.POINT
+
+type RECT = types.RECT
