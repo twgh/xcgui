@@ -1,4 +1,4 @@
-// Package types 存放基础结构体。
+// Package types 存放基础结构体, 有多个包共用的, 比如 xc 包和 wapi 包会用到。
 package types
 
 type RECT struct {
