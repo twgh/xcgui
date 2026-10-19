@@ -77,6 +77,11 @@ var (
 	procSetCursorPos                           = User32.NewProc("SetCursorPos")
 	procGetForegroundWindow                    = User32.NewProc("GetForegroundWindow")
 	procIsIconic                               = User32.NewProc("IsIconic")
+	procGetWindowDC                            = User32.NewProc("GetWindowDC")
+	procReleaseDC                              = User32.NewProc("ReleaseDC")
+	procPrintWindow                            = User32.NewProc("PrintWindow")
+	procMonitorFromWindow                      = User32.NewProc("MonitorFromWindow")
+	procGetMonitorInfoW                        = User32.NewProc("GetMonitorInfoW")
 )
 
 // GetForegroundWindow 检索前台窗口的句柄，用户当前正在使用的窗口。
@@ -1732,4 +1737,131 @@ const (
 func SetCursorPos(x, y int32) bool {
 	r, _, _ := procSetCursorPos.Call(uintptr(x), uintptr(y))
 	return r != 0
+}
+
+// GetWindowDC 检索整个窗口的设备上下文(DC), 包括非客户区(标题栏 / 菜单 / 滚动条).
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-getwindowdc.
+//
+// hWnd: 窗口句柄. 传 0 时取整个屏幕的 DC.
+//
+// 返回值: 成功返回 DC 句柄, 失败返回 0. 用完必须 ReleaseDC(必须由取它的线程释放).
+//
+// 注意: 窗口 DC 的坐标原点是**整窗左上角**(含标题栏与边框), 不是客户区.
+// 想抓 D2D 自绘窗口的内容请用 PrintWindow(见 wapi.PrintWindow), 从窗口 DC BitBlt
+// 拿到的是纯黑(实测).
+func GetWindowDC(hWnd uintptr) uintptr {
+	ret, _, _ := procGetWindowDC.Call(hWnd)
+	return ret
+}
+
+// ReleaseDC 释放由 GetDC / GetWindowDC 取得的 DC.
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-releasedc.
+//
+// hWnd: 窗口句柄.
+//
+// hDC: 要释放的 DC 句柄.
+//
+// 返回值: 成功返回 true.
+//
+// 注意:
+//   - 只能释放公共 DC(GetDC / GetWindowDC 取得的); CreateDC / CreateCompatibleDC 建的
+//     要用 DeleteDC.
+//   - 必须由取得 DC 的线程释放. 缓存 DC 不释放会很快耗尽可用的 DC(每进程限额).
+func ReleaseDC(hWnd, hDC uintptr) bool {
+	ret, _, _ := procReleaseDC.Call(hWnd, hDC)
+	return ret != 0
+}
+
+// PrintWindow 把窗口的完整内容画到指定 DC 中(由 DWM 提供, 被遮挡的窗口也能抓到).
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-printwindow.
+//
+// hWnd: 窗口句柄.
+//
+// hdcBlt: 目标 DC 的句柄(通常是内存 DC, 里面选好一块 DIB).
+//
+// nFlags: 绘制选项, 取值之一: wapi.PW_CLIENTONLY / wapi.PW_RENDERFULLCONTENT.
+//
+// 返回值: 成功返回 true, 失败返回 false.
+//
+// 注意(实测, 见 DESIGN 第八节 47):
+//   - 按 1:1 **物理像素**把整窗画进目标 DC 并**裁剪**到 DIB 尺寸, 不会缩放填满 ——
+//     DIB 必须给足窗口的物理像素尺寸, 想要小图只能自己降采样.
+//   - 窗口矩形含阴影边带(Window_Transparent_Shadow)时会把边带抓成黑色(alpha 丢失).
+func PrintWindow(hWnd, hdcBlt uintptr, nFlags PW_) bool {
+	ret, _, _ := procPrintWindow.Call(hWnd, hdcBlt, uintptr(nFlags))
+	return ret != 0
+}
+
+// PW_ 是 PrintWindow 的 nFlags 取值.
+type PW_ uint32
+
+const (
+	// PW_CLIENTONLY 只绘制客户区. 用这个档位时 PrintWindow 的绘制结果不受窗口遮挡影响,
+	// 但**不含**非客户区(标题栏 / 边框).
+	PW_CLIENTONLY PW_ = 0x00000001
+	// PW_RENDERFULLCONTENT 绘制整个窗口(含非客户区, 并走 DWM 的完整合成结果 —— 对
+	// Direct2D / DirectComposition 自绘窗口是唯一能拿到内容的档位). Windows 8.1 起支持.
+	PW_RENDERFULLCONTENT PW_ = 0x00000002
+)
+
+// MonitorFromWindow 取与窗口关系最密切的显示器句柄.
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-monitorfromwindow.
+//
+// hWnd: 窗口句柄.
+//
+// dwFlags: 窗口不在任何显示器上时的判定方式, 取值之一: wapi.MONITOR_DEFAULTTO*.
+//
+// 返回值: 显示器句柄(HMONITOR). 失败或按 MONITOR_DEFAULTTONULL 且没有相交显示器时返回 0.
+func MonitorFromWindow(hWnd uintptr, dwFlags MONITOR_) uintptr {
+	ret, _, _ := procMonitorFromWindow.Call(hWnd, uintptr(dwFlags))
+	return ret
+}
+
+// MONITOR_ 是 MonitorFromWindow / MonitorFromPoint 等函数的 dwFlags 取值.
+type MONITOR_ uint32
+
+const (
+	MONITOR_DEFAULTTONULL    MONITOR_ = 0 // 没有相交的显示器时返回 0
+	MONITOR_DEFAULTTOPRIMARY MONITOR_ = 1 // 没有相交的显示器时返回主显示器
+	MONITOR_DEFAULTTONEAREST MONITOR_ = 2 // 没有相交的显示器时返回最近的那个
+)
+
+const (
+	// MONITORINFOF_PRIMARY 表示该显示器是主显示器(MONITORINFO.DwFlags 的标志位).
+	MONITORINFOF_PRIMARY uint32 = 0x00000001
+)
+
+// GetMonitorInfo 取显示器的信息: 整屏矩形 rcMonitor 与**工作区**矩形 rcWork.
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-getmonitorinfow.
+//
+// hMonitor: 显示器句柄(MonitorFromWindow / MonitorFromPoint / EnumDisplayMonitors 取得).
+//
+// lpmi: 接收信息的结构体指针. CbSize 由本函数填好, 调用方不用管.
+//
+// 返回值: 成功返回 true.
+//
+// 注意: 坐标是**物理像素**且以虚拟屏幕左上角为原点; 做弹层夹边界时用 RcWork(已扣掉
+// 任务栏 / 停靠栏), 用整屏 rcMonitor 会被任务栏盖住.
+func GetMonitorInfo(hMonitor uintptr, lpmi *MONITORINFO) bool {
+	if lpmi == nil {
+		return false
+	}
+	lpmi.CbSize = uint32(unsafe.Sizeof(*lpmi))
+	ret, _, _ := procGetMonitorInfoW.Call(hMonitor, uintptr(unsafe.Pointer(lpmi)))
+	return ret != 0
+}
+
+// MONITORINFO 描述一个显示器的信息(见 wapi.GetMonitorInfo)。
+//
+// 详情: https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/ns-winuser-monitorinfo.
+type MONITORINFO struct {
+	CbSize    uint32     // 结构体大小(字节), 由 wapi.GetMonitorInfo 填好, 调用方不用管
+	RcMonitor types.RECT // 显示器整屏矩形(物理像素)
+	RcWork    types.RECT // 工作区矩形(已扣掉任务栏 / 停靠栏, 物理像素)
+	DwFlags   uint32     // 标志位, 见 wapi.MONITORINFOF_PRIMARY
 }

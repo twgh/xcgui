@@ -126,3 +126,32 @@ func TestSetCursorPos(t *testing.T) {
 		})
 	})
 }
+
+func TestGetMonitorInfo(t *testing.T) {
+	hMon := wapi.MonitorFromWindow(wapi.GetDesktopWindow(), wapi.MONITOR_DEFAULTTONEAREST)
+	if hMon == 0 {
+		t.Fatal("MonitorFromWindow 返回 0")
+	}
+	var mi wapi.MONITORINFO
+	if !wapi.GetMonitorInfo(hMon, &mi) {
+		t.Fatal("GetMonitorInfo 失败")
+	}
+	fmt.Println("显示器句柄:", hMon)
+	fmt.Println("监视器矩形:", mi.RcMonitor)
+	fmt.Println("工作区矩形:", mi.RcWork)
+	fmt.Println("主显示器:", mi.DwFlags&wapi.MONITORINFOF_PRIMARY != 0)
+	if mi.RcWork.Right <= mi.RcWork.Left || mi.RcWork.Bottom <= mi.RcWork.Top {
+		t.Fatal("工作区矩形无效")
+	}
+}
+
+func TestGetWindowDC(t *testing.T) {
+	hWnd := wapi.GetDesktopWindow()
+	hDC := wapi.GetWindowDC(hWnd)
+	if hDC == 0 {
+		t.Fatal("GetWindowDC 失败")
+	}
+	if !wapi.ReleaseDC(hWnd, hDC) {
+		t.Fatal("ReleaseDC 失败")
+	}
+}
