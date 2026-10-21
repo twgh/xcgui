@@ -40,7 +40,13 @@ go get -u github.com/twgh/xcgui
 
 ## 推荐使用 XUI 进行快速开发
 
-[xui](https://github.com/twgh/xui) — shadcn 风格的 xcgui 自绘组件
+[XUI — shadcn 风格的 xcgui 自绘组件](https://github.com/twgh/xui)
+
+**一条命令初始化项目**
+
+```bash
+go run github.com/twgh/xui/cmd/xui@latest init -n myapp
+```
 
 ![xui](https://s41.ax1x.com/2026/10/19/pn0t240.png)
 

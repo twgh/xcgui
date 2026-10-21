@@ -39,7 +39,13 @@ go get -u github.com/twgh/xcgui
 
 ## Recommended to use XUI for rapid development
 
-[xui](https://github.com/twgh/xui) — Shadcn-style xcgui self-drawn components
+[XUI — Shadcn-style xcgui self-drawn components](https://github.com/twgh/xui)
+
+**Initialize a project with one command**
+
+```bash
+go run github.com/twgh/xui/cmd/xui@latest init -n myapp
+```
 
 ![xui](https://s41.ax1x.com/2026/10/19/pn0t240.png)
 
