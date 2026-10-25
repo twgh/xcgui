@@ -8,14 +8,10 @@
     <br><br>
     <a href="https://mcn1fno5w69l.feishu.cn/wiki/space/7489022357177139219?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home">使用指南</a>&nbsp;&nbsp;
     <a href="https://github.com/twgh/xcgui-example">程序示例</a>&nbsp;&nbsp;
+    <a href="https://pkg.go.dev/github.com/twgh/xcgui">项目文档</a>&nbsp;&nbsp;
     <a href="http://www.xcgui.com/doc-ui/">官方文档</a>&nbsp;&nbsp;
-	<a href="https://pkg.go.dev/github.com/twgh/xcgui">项目文档</a>&nbsp;&nbsp;
 	<a href="http://mall.xcgui.com">官方资源</a>
 </p>
-
-
-
-
 
 ## 介绍
 
@@ -42,7 +38,15 @@ go get -u github.com/twgh/xcgui
 
 [XUI — shadcn 风格的 xcgui 自绘组件](https://github.com/twgh/xui)
 
-**一条命令初始化项目**
+#### 直接运行示例(想先看效果)
+
+不想先建项目时, 可以直接运行仓库里的 demo (全部组件 + 亮/暗主题切换):
+
+```
+go run github.com/twgh/xui/demo@latest
+```
+
+#### 一条命令初始化项目
 
 ```bash
 go run github.com/twgh/xui/cmd/xui@latest init -n myapp

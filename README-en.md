@@ -13,10 +13,6 @@
 	<a href="http://mall.xcgui.com">Official Resource</a>
 </p>
 
-
-
-
-
 ## Introduction
 
 English | [简体中文](./README.md)
@@ -41,7 +37,15 @@ go get -u github.com/twgh/xcgui
 
 [XUI — Shadcn-style xcgui self-drawn components](https://github.com/twgh/xui)
 
-**Initialize a project with one command**
+#### Run the example directly (want to see the effect first)
+
+If you don't want to build the project first, you can run the demo in the repository (all components + light/dark theme toggle):
+
+```
+go run github.com/twgh/xui/demo@latest
+```
+
+#### Initialize a project with one command
 
 ```bash
 go run github.com/twgh/xui/cmd/xui@latest init -n myapp
