@@ -52,7 +52,13 @@ go run github.com/twgh/xui/demo@latest
 go run github.com/twgh/xui/cmd/xui@latest init -n myapp
 ```
 
-![xui](https://s41.ax1x.com/2026/10/19/pn0t240.png)
+![xui](https://s41.ax1x.com/2026/11/01/pngSYCR.png)
+
+#### 安装 XUI CLI
+
+```
+go install github.com/twgh/xui/cmd/xui@latest
+```
 
 ## 可视化 UI 设计器
 
