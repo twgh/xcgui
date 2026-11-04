@@ -34,9 +34,12 @@
 go get -u github.com/twgh/xcgui
 ```
 
-## 推荐使用 XUI 进行快速开发
+## 可使用 XUI 组件库进行快速开发
 
-[XUI — shadcn 风格的 xcgui 自绘组件](https://github.com/twgh/xui)
+[XUI — shadcn 风格的 xcgui 自绘组件库](https://github.com/twgh/xui)
+
+XUI 是一个专为 XCGUI 打造的现代化组件库，采用 shadcn 风格设计。
+它充分展现了 XCGUI 的潜力与灵活性，让开发者能快速构建出简洁美观、高度可定制的用户界面。
 
 #### 直接运行示例(想先看效果)
 
@@ -111,7 +114,7 @@ func main() {
 
 ## 简单窗口（纯代码）
 
-[![SimpleWindow](https://s41.ax1x.com/2026/10/19/pn0Y5TI.png)](https://github.com/twgh/xcgui-example/tree/main/Basic/SimpleWindow)
+[![SimpleWindow](https://s41.ax1x.com/2026/11/04/pn2xmid.png)](https://github.com/twgh/xcgui-example/tree/main/Basic/SimpleWindow)
 
 ```go
 package main
@@ -126,7 +129,7 @@ import (
 
 func main() {
 	// 1.初始化UI库
-    app.Init()
+	app.Init()
 	a := app.New(true)
 	// 启用自适应 DPI
 	a.EnableAutoDPI(true).EnableDPI(true)
@@ -163,9 +166,9 @@ const svgIcon = `<svg t="1669088647057" class="icon" viewBox="0 0 1024 1024" ver
 
 ## 常量
 
-xcc 包里都是常量，需要用到 xcc 包常量的参数注释都是类似图片这样的，复制 `Window_Transparent_` 到 [xcc包](https://pkg.go.dev/github.com/twgh/xcgui/xcc#pkg-constants) 里搜索即可看到相关常量及注释：
+xcc 包里都是常量，如果看到类似图片这样的注释，复制 `Window_Transparent_` 到 [xcc包](https://pkg.go.dev/github.com/twgh/xcgui/xcc#pkg-constants) 里搜索即可看到相关常量及注释：
 
-[![注释](https://s4.ax1x.com/2021/12/22/TQvQzt.png)](https://github.com/twgh/xcgui/blob/main/window/windowbase.go#L630)
+[![注释](https://s41.ax1x.com/2026/11/04/pn2zGX6.png)](https://github.com/twgh/xcgui/blob/main/window/windowbase.go)
 
 ## 命令介绍
 

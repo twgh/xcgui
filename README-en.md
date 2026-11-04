@@ -37,6 +37,8 @@ go get -u github.com/twgh/xcgui
 
 [XUI — Shadcn-style xcgui self-drawn components](https://github.com/twgh/xui)
 
+XUI is a modern component library designed specifically for XCGUI, featuring a shadcn-style design. It fully demonstrates the potential and flexibility of XCGUI, enabling developers to quickly build clean, beautiful, and highly customizable user interfaces.
+
 #### Run the example directly (want to see the effect first)
 
 If you don't want to build the project first, you can run the demo in the repository (all components + light/dark theme toggle):
@@ -113,7 +115,7 @@ The network disk contains `Interface Designer` and `chm help documentation`
 
 ## Simple window(Pure code)
 
-[![SimpleWindow](https://s41.ax1x.com/2026/10/19/pn0Y5TI.png)](https://github.com/twgh/xcgui-example/tree/main/Basic/SimpleWindow)
+[![SimpleWindow](https://s41.ax1x.com/2026/11/04/pn2xmid.png)](https://github.com/twgh/xcgui-example/tree/main/Basic/SimpleWindow)
 
 ```go
 package main
